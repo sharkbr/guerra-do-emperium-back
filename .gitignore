@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------
+# Guerra do Emperium - o que NAO vai para o git
+#
+# A arvore rathena/ tem o proprio .gitignore, que continua valendo: os padroes
+# ancorados com "/" ali (ex.: /conf/import, /*.exe) sao relativos a rathena/,
+# nao a raiz do repositorio. Ele ja cobre os artefatos de build do emulador.
+# Este arquivo cobre o que e especifico do projeto.
+# ---------------------------------------------------------------------------
+
+# --- Assets de cliente: pesados e licenciados, nunca no git ---
+*.grf
+*.gpf
+*.rgz
+/client/
+/cliente/
+/data/
+
+# --- Audio do cliente ---
+*.mp3
+*.wav
+*.ogg
+BGM/
+
+# --- Map cache gerado por nos ---
+# Atencao: db/map_cache.dat, db/re/ e db/pre-re/ do rAthena vanilla ficam
+# VERSIONADOS de proposito - sem eles o map-server nao sobe num clone limpo, e
+# regerar exige o GRF do cliente. Quando passarmos a gerar cache do GRF bRO,
+# reavaliar e mover para ca.
+*.mcache
+
+# --- Binarios compilados do servidor ---
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.iobj
+*.ipdb
+*.exp
+*.idb
+
+# --- Dumps e backups do banco (o schema versionado e sql-files/) ---
+*.sql.gz
+*.sql.zip
+*.sql.bz2
+*.dump
+/backups/
+/dumps/
+
+# --- Logs ---
+*.log
+/log/
+
+# --- Qualquer coisa com senha ---
+# Reforco: rathena/.gitignore ja ignora /conf/import e /conf/msg_conf/import.
+**/conf/import/
+**/conf/msg_conf/import/
+*.secret
+.env
+.env.*
+
+# --- Sistema operacional e editores ---
+.DS_Store
+.AppleDouble
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.vs/

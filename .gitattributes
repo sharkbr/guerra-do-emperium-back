@@ -1,0 +1,15 @@
+* text=auto
+
+# O dono edita as vezes no Windows, as vezes no Mac: "text=auto" normaliza para
+# LF no repositorio e devolve a quebra de linha nativa no checkout. Arquivos
+# binarios (GRF, map_cache.dat, .dll) sao detectados e passam intactos.
+#
+# Excecoes onde a quebra de linha importa de verdade:
+*.sln  text eol=crlf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+*.sh   text eol=lf
+*.sql  text eol=lf
+*.yml  text eol=lf
+*.go   text eol=lf
