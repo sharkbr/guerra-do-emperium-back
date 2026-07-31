@@ -151,6 +151,25 @@ Instalação: copiar a saída para `cliente\data\`, que vence o GRF pelo
 `DataFolderFirst`. **Apagar o arquivo reverte**; o original nunca saiu do GRF,
 então não há backup a manter.
 
+## `catalogo_mapa.py` — a tabela de modelos traduzida, para conferência humana
+
+```
+python catalogo_mapa.py <mapa.rsw> <saida.md>
+```
+
+Lista os modelos distintos do mapa com **pasta e nome traduzidos do coreano**, a
+quantidade, a faixa de altura, o que a receita do `destroi_mapa.py` faz com cada
+um, e uma coluna **"o que é de verdade" que nasce vazia de propósito** — é onde
+entra a correção de quem consegue ver o jogo.
+
+Existe por causa de um erro concreto: `나무잡초꽃\나무기둥01.rsm` foi lido como
+"pilar de madeira" (`기둥` é pilar) e usado como destroço de construção. Só que a
+pasta `나무잡초꽃` é "árvore / erva / flor" — a pasta de **vegetação** — e o
+modelo é tronco de árvore, enorme. Deitado a 90° virou tora atravessada na rua.
+
+**A regra: a pasta manda mais que o nome do arquivo.** Por isso o catálogo mostra
+sempre as duas, lado a lado, e a tradução literal aparece rotulada como literal.
+
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 
 ```

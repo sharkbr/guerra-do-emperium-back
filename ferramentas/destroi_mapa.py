@@ -91,7 +91,11 @@ DESTROCOS = [
     u'내부소품\\드럼통1.rsm', u'내부소품\\드럼통2.rsm',
     u'내부소품\\나무상자01.rsm', u'내부소품\\나무상자02.rsm',
     u'내부소품\\양동이1.rsm', u'내부소품\\술통01.rsm',
-    u'나무잡초꽃\\나무기둥01.rsm',
+    # NAO por 나무잡초꽃\나무기둥01.rsm aqui. Traduzido ao pe da letra da
+    # "pilar de madeira", mas a pasta 나무잡초꽃 e "arvore/erva/flor" -- e a
+    # pasta de vegetacao, e o modelo e TRONCO DE ARVORE, enorme. Deitado a 90
+    # graus virou tora gigante espalhada pela cidade. Confirmado in-game em
+    # 2026-07-31. A pasta manda mais que o nome do arquivo.
 ]
 DESTROCOS_POR_CONSTRUCAO = 3
 DESTROCO_RAIO = 22.0

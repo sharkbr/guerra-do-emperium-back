@@ -274,6 +274,41 @@ reverte** — o original nunca saiu do GRF, então não há backup a manter. O
 Versionamos o **script**, não a saída: a receita é a fonte da verdade e o mapa é
 artefato gerado, pelo mesmo critério do `map_cache.dat` no `PENDENCIAS.md`.
 
+### Primeira rodada in-game — 2026-07-31, ~00:56
+
+**O mapa abre e a temática funciona.** O chão encardido e a luz cinza leem como
+pretendido, e o caixote de madeira lê certo como destroço.
+
+**Um erro, e vale mais que o acerto:** as "construções destruídas" eram
+**troncos de árvore gigantes** deitados pela cidade.
+
+A causa é de classificação, não de código. Eu li
+`나무잡초꽃\나무기둥01.rsm` como "pilar de madeira" — `기둥` é pilar/coluna — e
+usei como destroço de construção. Mas a pasta `나무잡초꽃` significa
+literalmente **"árvore, erva, flor"**: é a pasta de vegetação. O modelo é tronco
+de árvore, e é enorme. Deitado a 90° virou tora atravessada na rua.
+
+**A regra que sai disso: a pasta manda mais que o nome do arquivo.** A
+informação para acertar estava à vista o tempo todo — eu classifiquei pela folha
+e ignorei a raiz. Corrigido em `destroi_mapa.py`, com o motivo escrito no lugar
+onde a linha estava, para ninguém repor.
+
+### Como conferir modelo antes de usar — o fluxo
+
+O problema de fundo é que os modelos têm nome em coreano e eu não consigo ver o
+jogo. São três mecanismos, e eles se complementam:
+
+| Como | Custo | Serve para |
+|---|---|---|
+| **Screenshot** | zero | Eu leio imagem direto. É o laço mais curto e foi o que pegou o tronco de árvore. Bom para diagnosticar, ruim para varrer muitos modelos |
+| **Catálogo traduzido** | pronto — `CATALOGO-IZLUDE.md` | Os 90 modelos com pasta e nome traduzidos, a classificação atual da receita, e uma coluna vazia para correção humana. É o artefato de conferência **antes** de usar |
+| **Mapa-catálogo in-game** | a fazer | Plantar uma instância de cada modelo, numerada, em coordenada conhecida. Uma volta a pé e um print devolvem o índice visual inteiro. É o único que resolve de verdade, e vale para todas as cidades |
+
+Um quarto caminho, mais caro e não iniciado: **renderizar os `.rsm` eu mesmo**
+para gerar miniaturas e olhar sem intermediário. Exige o DES (os `.rsm` estão
+atrás dele), um parser de `.rsm` e um rasterizador. É o único que me tornaria
+autossuficiente.
+
 ### O limite honesto desta amostra
 
 **Nenhuma casa está de fato quebrada.** Não existe modelo de casa destruída
