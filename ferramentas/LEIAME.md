@@ -321,6 +321,144 @@ python -c "print open('x.lub','rb').read(4) == '\x1bLua'"
 Isso também significa que comparar o tamanho de um arquivo do GRF com o do
 ROenglishRE **não diz nada**: um é bytecode e o outro é texto.
 
+## `valida_visual.py` — quais chapéus este cliente consegue desenhar
+
+```
+python valida_visual.py               # resumo
+python valida_visual.py --id 420047   # um item, com os 6 recursos
+python valida_visual.py --listar      # os que quebram
+python valida_visual.py --ok          # os que funcionam
+```
+
+Nasceu do crash do item **420047** (Costume Honorable Knight Cloak): equipar
+abria uma caixa de erro modal
+
+```
+Spr :: Cannot find File : sprite\<item>\c_h_knight_cloak.spr
+```
+
+O ponto que faz o script existir é que **as três tabelas concordavam que o item
+existia** — `item_db_equip.yml` do rAthena, `itemInfo.lua` do ROenglishRE e o
+próprio `accessoryid.lub` do GRF de 2021 (`ACCESSORY_C_H_Knight_Cloak = 2059`).
+Quem discordava era o GRF, que não tem **nenhum** dos seis arquivos. Olhar
+tabela não detecta isso; só testar arquivo detecta.
+
+Para cada item de cabeça com `View` no `item_db`, confere os seis caminhos que o
+cliente abre — `.spr`/`.act` de chão, ícone de inventário, ícone grande e sprite
+de cabeça masculina e feminina —, no GRF **e** no `data\` solto (o
+`DataFolderFirst` faz o disco vencer, mas para existir basta um dos dois).
+
+Medido em 2026-07-31, dos 5301 itens de cabeça com `View`:
+
+| | |
+|---|---|
+| desenháveis | 2709 |
+| **quebram o cliente** | **1457** |
+| sem entrada no `itemInfo.lua` | 1135 |
+
+Falta de ícone só deixa feio; falta de `.spr`/`.act` é a caixa modal. O script
+separa os dois.
+
+## `instala_visual.py` — põe a arte de um chapéu no lugar certo
+
+```
+python instala_visual.py --id 420047                     # só mostra os destinos
+python instala_visual.py --id 420047 --grf <outra.grf>   # puxa da outra GRF
+python instala_visual.py --id 420047 --de C:\extraido    # ou de pasta extraída
+python instala_visual.py --todos --grf <outra.grf>       # conta o que daria
+python instala_visual.py --todos --grf <outra.grf> --aplicar
+```
+
+O par do `valida_visual.py`: aquele diz o que falta, este põe no lugar.
+
+**A fonte é a GRF do bRO**, em
+`C:\Program Files (x86)\Gravity Interactive, Inc\Ragnarok Brazil\data.grf`. É
+mais nova que a nossa de 2021-11-03 — 205117 entradas — e tem a arte que falta.
+
+Aplicado em 2026-07-31: **5855 arquivos, 130 MB**, e o resultado medido pelo
+`valida_visual.py`:
+
+| | antes | depois |
+|---|---|---|
+| desenháveis | 2709 | **3618** |
+| quebram o cliente | 1457 | **548** |
+
+**909 chapéus curados**, e a cura já estava no disco desta máquina.
+
+O que sobrou dos 548, e por quê:
+
+| | |
+|---|---|
+| `View` fora do `accessoryid.lub` do cliente | 374 |
+| a GRF do bRO não tem a arte | 101 |
+| a GRF do bRO tem parte da arte | 73 |
+
+Os 374 **não têm cura por arte**: o cliente de 2021 não conhece aquele View, então
+não sabe que slot desenhar. Resolver exigiria mexer no `accessoryid.lub`, que é
+outro problema.
+
+**Não precisa de GRF Editor nem de repack**, por dois motivos: as entradas de
+sprite lá estão com `flags=1` (sem DES), então o `grf.py` lê direto; e o
+`DataFolderFirst` faz o disco vencer o GRF, então os arquivos vão soltos para
+`cliente\data\` — reversível apagando, versionável, e o servidor não fica
+sabendo de nada.
+
+**Em lote é tudo-ou-nada por item.** Instalar só parte é pior que não instalar:
+`.spr` sem o `.act` do par quebra o cliente igual, e ainda esconde o problema do
+`valida_visual`. Por isso os 73 parciais são pulados em vez de meio-instalados.
+
+**Duas armadilhas de contagem no modo `--todos`**, ambas encontradas rodando de
+verdade e ambas subnotificando ou inventando resultado:
+
+1. **Itens diferentes compartilham arquivo** — vários chapéus com o mesmo `View`
+   usam a mesma sprite de cabeça. Depois que o primeiro do lote a instala, os
+   seguintes não têm mais nada a instalar. Contar isso como fracasso fez a
+   primeira passada relatar 752 resolvidos quando o `valida_visual` media 909.
+2. **`View` fora do `accessoryid.lub`** — esses itens só têm os 4 arquivos de
+   item, sem os 4 de cabeça. Se o contador não os separa, "nada falta" vira
+   "resolvido" e o lote relata sucesso sem tocar em arquivo nenhum. Foi assim
+   que uma passada disse 164 resolvidos e o `valida_visual` continuou acusando
+   os mesmos 548.
+
+A lição prática: **o `valida_visual.py` é a medida, o `instala_visual.py` é a
+ação.** Quando os dois discordam, quem está errado é o contador do instalador.
+
+O que o script resolve é a parte que se perde na mão: **os destinos têm pasta em
+coreano** (`아이템`, `악세사리`, `남`, `여`, `유저인터페이스`), e o arquivo de
+cabeça começa com o caractere de gênero — `남_C_H_Knight_Cloak.spr`. Já está
+registrado que caminho com trecho coreano não sobrevive ao `argv` do console
+aqui, então:
+
+- as pastas de destino são criadas pelo script, em unicode;
+- vindo de GRF (`--grf`), a busca é **tradução de encoding**: o caminho de
+  destino já é o mesmo caminho de lá dentro, só que a tabela do GRF é CP949 e o
+  sistema de arquivos é unicode;
+- vindo de pasta (`--de`), o casamento é pelo **sufixo ASCII**
+  (`_c_h_knight_cloak.spr`), que sobrevive a qualquer codificação de nome. O
+  `--de` varre recursivamente, então pode apontar para uma extração inteira;
+- o que é impresso troca o coreano por `<item>`, `<M>`, `<F>` — o console desta
+  máquina não imprime coreano, e ninguém precisa do literal.
+
+**A armadilha que custou uma rodada de diagnóstico errado:** em Python 2 no
+Windows, `os.path.exists` com caminho em **bytes** usa a codepage ANSI (aqui
+cp1252), não CP949. Os bytes coreanos viram lixo e a resposta é "não existe"
+para arquivo que está no disco. O `valida_visual.py` nasceu com esse bug e
+declarou os oito arquivos ausentes **depois** de eles terem sido instalados com
+sucesso. Caminho que vai para o sistema de arquivos tem que ser decodificado
+para unicode antes; só a consulta à tabela do GRF é que fica em CP949.
+
+Os oito de um chapéu (`--id 420047`):
+
+```
+data\sprite\<item>\c_h_knight_cloak.spr           .act
+data\texture\<ui>\item\c_h_knight_cloak.bmp
+data\texture\<ui>\collection\c_h_knight_cloak.bmp
+data\sprite\<acessorio>\<M>\<M>_C_H_Knight_Cloak.spr   .act
+data\sprite\<acessorio>\<F>\<F>_C_H_Knight_Cloak.spr   .act
+```
+
+Conferir depois com `valida_visual.py --id <n>`.
+
 **Armadilha ao ler tabela grande de bytecode:** no Lua 5.1 o operando `RK` só
 endereça constante até o índice 255. Passando disso o compilador emite `LOADK`
 num registrador e o `SETTABLE` passa a referenciar `R<n>` em vez da constante.
