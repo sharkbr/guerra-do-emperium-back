@@ -309,7 +309,7 @@ jogo. São três mecanismos, e eles se complementam:
 |---|---|---|
 | **Screenshot** | zero | Eu leio imagem direto. É o laço mais curto e foi o que pegou o tronco de árvore. Bom para diagnosticar, ruim para varrer muitos modelos |
 | **Catálogo traduzido** | pronto — `CATALOGO-IZLUDE.md` | Os 90 modelos com pasta e nome traduzidos, a classificação atual da receita, e uma coluna vazia para correção humana. É o artefato de conferência **antes** de usar |
-| **Mapa-catálogo in-game** | **pronto** — `@warp x_prt` | Um exemplar de cada modelo, de pé, com placa numerada ao lado. Uma volta a pé resolve o mapa inteiro. Ver a seção própria abaixo |
+| **Mapa-catálogo in-game** | **pronto** — `@warp prt_fild08 122 146` | Um exemplar de cada modelo, de pé, com placa numerada ao lado. Uma volta a pé resolve o mapa inteiro. Ver a seção própria abaixo |
 
 Um quarto caminho, mais caro e não iniciado: **renderizar os `.rsm` eu mesmo**
 para gerar miniaturas e olhar sem intermediário. Exige o DES (os `.rsm` estão
@@ -318,39 +318,51 @@ autossuficiente.
 
 ## O mapa-catálogo — 2026-07-31
 
-`@warp x_prt`. Os 90 modelos de Izlude, um exemplar de cada, de pé, em grade, com
-uma **placa numerada** ao lado. O número da placa é o número do
-`CATALOGO-INGAME.md`, que também traz o `@warp x,y` para cair ao lado de um
-modelo específico.
+**`@warp prt_fild08 122 146`** põe você ao lado do modelo nº 1. Os 90 modelos de
+Izlude, um exemplar de cada, de pé, em grade, com uma **placa numerada** ao lado.
+O número da placa é o número do `CATALOGO-INGAME.md`, que também traz o
+`@warp x,y` de cada um.
 
-### Por que `x_prt`
+### Por que `prt_fild08`
 
-A escolha foi medida, não chutada. Os critérios, em ordem de eliminação:
+A primeira versão foi para o `x_prt`, e **ficou confusa** — dito depois de olhar
+in-game. Duas causas, e as duas foram corrigidas:
 
-| Critério | Por quê |
-|---|---|
-| `.rsw` **sem DES** | senão não dá para ler o mapa base. Elimina 640 dos 910 |
-| Está no `db/map_index.txt` | senão o `@warp` não funciona |
-| **Sem spawn de monstro** | catálogo com mob batendo em você não se usa. Elimina os campos, inclusive o `prt_fild08`, que era o maior |
-| Área andável grande | 140×140 células, 59% andável |
-| **Altura constante** | `x_prt` é plano em 0,0 do começo ao fim, então nada fica enterrado nem flutuando |
+1. O `x_prt` é mapa de cidade: parede, beco e chão irregular no meio do
+   catálogo.
+2. A grade **espalhava os modelos pelo mapa inteiro** pulando célula bloqueada,
+   o que deixava as fileiras irregulares.
 
-O `bl_grass` era o maior candidato (400×400) mas o terreno é irregular; o
-`new_zone01` é plano mas tem só 22% andável.
+`prt_fild08` é campo aberto de 400×400 células, `.rsw` sem DES e no
+`map_index`. Tem spawn declarado em `npc/re/mobs/academy.txt` — 110 Poring, 100
+Lunatic, 100 Fabre, 30 Little Poring — mas **todos passivos**: nada ataca, eles
+só aparecem no cenário. O respawn é de 5 s, então `@killmonster` não segura.
+
+Se um dia o cenário limpo importar mais que o espaço, o `x_prt` continua na
+mesa: não tem spawn nenhum. É trocar `MAPA_BASE` no topo do
+`catalogo_ingame.py`. O `bl_grass` é grande mas o terreno é irregular; o
+`new_zone01` é plano e tem só 22% andável.
 
 ### Como foi construído
 
 1. **Todos os objetos originais do mapa base são apagados** e substituídos pelo
-   catálogo. Por isso o entulho do `x_prt` não atrapalha — o que estiver lá é
+   catálogo. Por isso o entulho do mapa base não atrapalha — o que estiver lá é
    nosso.
-2. A luz é forçada para neutra e clara (difusa 1,0 / ambiente 0,62). Catálogo é
+2. **Grade compacta e retangular**, 10 colunas × 11 fileiras com passo de 12
+   células (60 unidades), ancorada no ponto do mapa que deixa mais pontos em
+   chão livre — 105 de 110, e usamos 90. A folga é de propósito: com a grade
+   justa de 10×9, três pontos caíam em chão bloqueado e três modelos ficavam de
+   fora.
+3. **Ordem por pasta**, não por frequência. Assim cada fileira tem um tema —
+   vegetação junto de vegetação, construção junto de construção — e a volta a pé
+   faz sentido. Era por frequência na primeira versão, o que misturava árvore
+   com loja e balde.
+4. A luz é forçada para neutra e clara (difusa 1,0 / ambiente 0,62). Catálogo é
    para identificar modelo, não para ambientar.
-3. Cada modelo é **clonado do exemplar que Izlude usa**, o que preserva a escala
+5. Cada modelo é **clonado do exemplar que Izlude usa**, o que preserva a escala
    com que ele aparece de verdade. Tamanho errado foi metade do problema do
    tronco de árvore — de pé e em escala real, aquele modelo se denunciaria na
    hora.
-4. Só se posiciona em célula andável, com a vizinhança livre, e com chão para a
-   placa. Deram 107 vagas para 90 modelos.
 
 ### A conversão de coordenadas foi medida
 
@@ -381,7 +393,7 @@ O `.gat` tem o **dobro** da resolução do `.gnd` em cada eixo — uma célula d
 
 | Peça | Onde | Reverter |
 |---|---|---|
-| Mapa | `cliente\data\x_prt.rsw` | apagar o arquivo |
+| Mapa | `cliente\data\prt_fild08.rsw` | apagar o arquivo |
 | Placas | `rathena\npc\guerra\catalogo_visual.txt` | comentar a linha no `scripts_guerra.conf` |
 | Legenda | `CATALOGO-INGAME.md` | — |
 

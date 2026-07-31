@@ -202,9 +202,11 @@ Detalhes que importam:
 
 - **apaga a lista de objetos do mapa base inteira** antes de plantar o catálogo,
   então o entulho do mapa base não atrapalha;
+- **grade compacta e retangular**, ancorada no ponto do mapa que deixa mais
+  pontos em chão livre, com folga de propósito para nenhum modelo ficar de fora;
+- **ordem por pasta**, para cada fileira ter um tema e a caminhada fazer sentido;
 - clona o exemplar que o mapa de origem usa, **preservando a escala real** — de
   pé e em tamanho verdadeiro, o tronco de árvore teria se denunciado na hora;
-- só posiciona em célula andável, com vizinhança livre e chão para a placa;
 - luz forçada para neutra e clara: catálogo é para identificar, não ambientar;
 - as placas saem **sem acento**, pela mesma razão dos outros NPCs nossos (ver
   `PENDENCIAS.md`, "Acentuação no diálogo"), com uma rede de segurança que troca
@@ -214,8 +216,11 @@ Detalhes que importam:
 medida, não suposta** — é o tipo de erro que não acusa, só põe o modelo no lugar
 errado. Ver `../CUSTOMIZACAO-VISUAL.md`, seção do mapa-catálogo.
 
-Mapa base: `x_prt`, escolhido por eliminação — sem DES, no `map_index`, sem
-spawn de monstro, 59% andável e **altura constante 0**.
+Mapa base: `prt_fild08`, campo aberto de 400×400, sem DES e no `map_index`. Tem
+spawn, mas só de bicho passivo (Poring, Lunatic, Fabre), então nada ataca. A
+primeira versão usou `x_prt` e ficou confusa: mapa de cidade, com parede e beco
+no meio do catálogo. `x_prt` continua como alternativa — é o único candidato
+**sem spawn nenhum** — trocando `MAPA_BASE` no topo do arquivo.
 
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 

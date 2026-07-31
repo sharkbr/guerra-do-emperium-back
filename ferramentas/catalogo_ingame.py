@@ -42,12 +42,24 @@ from rsw import Rsw, Modelo, texto
 from catalogo_mapa import PASTAS, NOMES
 
 
-MAPA_BASE = 'x_prt'      # 140x140 celulas, 59% andavel, altura constante 0,
-                         # no map_index e sem nenhum spawn de monstro
+# prt_fild08: 400x400 celulas, campo aberto, .rsw sem DES, no map_index.
+# Tem spawn declarado em npc/re/mobs/academy.txt (110 Poring, 100 Lunatic,
+# 100 Fabre, 30 Little Poring) -- todos passivos, entao nada ataca, mas eles
+# aparecem no cenario. Trocar por x_prt aqui se um dia incomodar: x_prt nao tem
+# spawn nenhum, so e mais apertado e cheio de parede.
+MAPA_BASE = 'prt_fild08'
 MAPA_ORIGEM = 'izlude'   # de onde sai a lista de modelos a catalogar
 
-PASSO = 9          # celulas entre um modelo e o seguinte (45 unidades)
-MARGEM = 8         # celulas de folga na borda do mapa
+# Grade compacta e retangular. A primeira versao espalhava os modelos por todo
+# o mapa pulando celula bloqueada, o que deixava as fileiras irregulares e a
+# caminhada confusa. Agora e um retangulo fechado, ancorado no melhor lugar do
+# mapa, e a ordem e por PASTA -- assim vegetacao fica junto de vegetacao e
+# construcao junto de construcao, e a volta a pe faz sentido.
+COLUNAS = 10
+LINHAS = 11        # folga de proposito: com 9x10 exato, 3 pontos caiam em chao
+                   # bloqueado e 3 modelos ficavam de fora do catalogo
+PASSO = 12         # celulas entre um modelo e o seguinte (60 unidades)
+MARGEM = 10        # celulas de folga na borda do mapa
 FOLGA = 1          # a celula e a vizinhanca precisam ser andaveis
 PLACA_A_FRENTE = 3   # celulas ao sul do modelo, para a placa nao ficar dentro dele
 
@@ -87,23 +99,49 @@ def sem_acento(u):
     return u''.join(c if ord(c) < 128 else u'_' for c in u)
 
 
+def livre(g, cx, cy):
+    """Da para plantar um modelo aqui e chegar perto dele a pe?"""
+    for y in range(cy - FOLGA, cy + FOLGA + 1):
+        for x in range(cx - FOLGA, cx + FOLGA + 1):
+            if not g.andavel(x, y):
+                return False
+    return g.andavel(cx, cy - PLACA_A_FRENTE)   # a placa tambem precisa de chao
+
+
+def melhor_ancora(g):
+    """Onde encaixar a grade inteira, maximizando as vagas aproveitaveis.
+
+    Varre o mapa procurando o canto que deixa o maior numero de pontos da
+    grade em chao livre. Sai na hora se achar um encaixe perfeito.
+    """
+    alvo = COLUNAS * LINHAS
+    melhor = (-1, MARGEM, MARGEM)
+    lim_x = g.largura - (COLUNAS - 1) * PASSO - MARGEM
+    lim_y = g.altura - (LINHAS - 1) * PASSO - MARGEM
+    for ay in range(MARGEM, max(MARGEM + 1, lim_y), 4):
+        for ax in range(MARGEM, max(MARGEM + 1, lim_x), 4):
+            n = 0
+            for r in range(LINHAS):
+                for c in range(COLUNAS):
+                    if livre(g, ax + c * PASSO, ay + r * PASSO):
+                        n += 1
+            if n > melhor[0]:
+                melhor = (n, ax, ay)
+                if n == alvo:
+                    return melhor
+    return melhor
+
+
 def vagas(g):
-    """Celulas em grade onde da para plantar um modelo e chegar perto."""
+    """Os pontos da grade, em ordem de leitura, que dao para usar."""
+    n, ax, ay = melhor_ancora(g)
+    print 'grade %dx%d passo %d ancorada em (%d,%d): %d de %d pontos livres' % (
+        COLUNAS, LINHAS, PASSO, ax, ay, n, COLUNAS * LINHAS)
     saida = []
-    for cy in range(MARGEM, g.altura - MARGEM, PASSO):
-        for cx in range(MARGEM, g.largura - MARGEM, PASSO):
-            ok = True
-            for y in range(cy - FOLGA, cy + FOLGA + 1):
-                for x in range(cx - FOLGA, cx + FOLGA + 1):
-                    if not g.andavel(x, y):
-                        ok = False
-                        break
-                if not ok:
-                    break
-            # a placa tambem precisa de chao
-            if ok and not g.andavel(cx, cy - PLACA_A_FRENTE):
-                ok = False
-            if ok:
+    for r in range(LINHAS):
+        for c in range(COLUNAS):
+            cx, cy = ax + c * PASSO, ay + r * PASSO
+            if livre(g, cx, cy):
                 saida.append((cx, cy))
     return saida
 
@@ -134,11 +172,19 @@ def main():
         print 'rsw de origem nao passou: %s' % msg
         return 2
 
-    # Um exemplar de cada modelo, na ordem em que o mapa de origem mais os usa.
+    # Um exemplar de cada modelo, agrupado POR PASTA. A ordem por frequencia
+    # (que era a primeira versao) misturava arvore com loja e balde, e a
+    # caminhada nao fazia sentido. Por pasta, cada fileira tem um tema.
     porrsm = {}
     for m in origem.modelos:
         porrsm.setdefault(m.rsm, []).append(m)
-    ordem = sorted(porrsm, key=lambda n: -len(porrsm[n]))
+
+    def chave(n):
+        u = n.decode('cp949')
+        pasta, stem, _ = rotulo(u)
+        return (PASTAS.get(pasta, pasta).lower(), stem.lower())
+
+    ordem = sorted(porrsm, key=chave)
 
     livres = vagas(g)
     print 'mapa base %s: %d vagas para %d modelos' % (MAPA_BASE, len(livres),
