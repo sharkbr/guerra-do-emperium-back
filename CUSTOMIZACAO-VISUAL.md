@@ -602,6 +602,98 @@ raciocínio, não por observação. É esperado que precisem de ajuste.
 
 ---
 
+## Arte de item de visual — o processo, fechado em 2026-07-31
+
+**Funciona e está validado in-game** com o item 420047 (Costume Honorable Knight
+Cloak). Esta seção é o roteiro para quando faltar arte de qualquer chapéu — o
+caso que vai aparecer em série no dia em que os visuais entrarem numa loja.
+
+### O sintoma e a leitura correta dele
+
+Duas caixas de erro modais, e elas querem dizer coisas diferentes:
+
+| Mensagem | O que é |
+|---|---|
+| `Spr :: Cannot find File : sprite\<item>\x.spr` | o arquivo não existe em lugar nenhum |
+| `Resource File Loading fail` | **o arquivo existe e o cliente não chegou nele** — quase sempre nome de pasta errado no disco |
+
+O segundo é o traiçoeiro. Custou uma rodada inteira: o `.bmp` estava lá, íntegro,
+byte a byte idêntico a um que o cliente lê sem reclamar.
+
+### Por que o servidor não acusa nada
+
+As três tabelas concordam que o item existe e **nenhuma delas é a autoridade**:
+
+- `rathena/db/re/item_db_equip.yml` — o item, com `View`;
+- `SystemEN\LuaFiles514\itemInfo.lua` do ROenglishRE — o `identifiedResourceName`;
+- `accessoryid.lub` do nosso GRF — o `View` mapeado para nome de sprite.
+
+Quem discorda é o GRF, que não tem os arquivos. **Olhar tabela não detecta;
+só testar arquivo detecta.** É por isso que existe o `valida_visual.py`.
+
+### A fonte da arte já está nesta máquina
+
+`C:\Program Files (x86)\Gravity Interactive, Inc\Ragnarok Brazil\data.grf` —
+a instalação do bRO, 205117 entradas, mais nova que a nossa de 2021-11-03. As
+entradas de sprite estão sem DES, então o `grf.py` lê direto e **o GRF Editor
+não precisa entrar**. O `event.grf` da mesma pasta não é 0x200 e nosso leitor
+não abre; são 5,6 MB de conteúdo de evento, improvável que tenha sprite.
+
+### O ciclo
+
+```
+python valida_visual.py --id <n>                    # o que falta, dos 8 recursos
+python instala_visual.py --id <n> --grf "<grf do bro>"
+python valida_visual.py --id <n>                    # confere
+```
+
+E em lote, `--todos [--aplicar]`. Nada entra no GRF: os arquivos vão soltos para
+`cliente\data\`, onde o `DataFolderFirst` os faz vencer. **Apagar reverte.**
+
+### A armadilha que vai repetir: o nome da pasta no disco
+
+O cliente é um app coreano que chama as APIs **ANSI** do Windows. Ele monta o
+caminho em bytes CP949 e entrega para `CreateFileA`, que os interpreta na
+codepage ANSI do sistema — cp1252 aqui. **O nome que ele procura no disco é o
+mojibake**, `À¯ÀúÀÎÅÍÆäÀÌ½º`, não `유저인터페이스`. Dentro do GRF isso não
+aparece, porque a tabela guarda os bytes crus; só no disco, que é onde o
+`DataFolderFirst` nos põe.
+
+Gravar com o nome coreano "correto" cria uma segunda pasta, invisível para o
+cliente, ao lado da que funciona. Aconteceu com 5855 arquivos. A prova estava no
+disco o tempo todo: **a pasta que o ROenglishRE criou e que funciona tem o nome
+mojibake** — bastava olhar como as pastas que já funcionavam estavam nomeadas.
+
+As ferramentas já tratam isso (`valida_visual.caminho_disco`). O registro aqui é
+para qualquer coisa nova que escreva em `cliente\data\`.
+
+### O estado, e o que a loja precisa saber
+
+Dos 5301 itens de cabeça com `View` no `item_db`:
+
+| | | serve para loja? |
+|---|---|---|
+| desenháveis | **3618** | **sim** |
+| `View` fora do `accessoryid.lub` | 374 | não — sem cura por arte |
+| a GRF do bRO não tem a arte | 101 | não hoje |
+| a GRF do bRO tem só parte | 73 | não hoje |
+| sem entrada no `itemInfo.lua` | 1135 | não conferido |
+
+**O `--ok` do `valida_visual.py` é a lista de onde montar a loja.** Pôr item de
+fora dela é entregar caixa de erro modal ao jogador.
+
+Os **374 não têm cura por arte**: o cliente de 2021 não conhece aquele `View`,
+então não sabe que slot desenhar. Resolver exigiria editar o `accessoryid.lub`,
+que é outro problema e ainda não foi tentado.
+
+Os **1135 sem `itemInfo`** são um balde separado e **não medido in-game** — sem
+`identifiedResourceName` o cliente não tem nem nome de recurso para procurar.
+Destes, 785 têm `View` que o cliente conhece e 350 não. Se um dia a loja quiser
+alcançá-los, o caminho provável é acrescentar as entradas ao `itemInfo.lua`, que
+é texto puro e editável. **Não tentado.**
+
+---
+
 ## Ordem de trabalho proposta
 
 Revisada em 2026-07-31, depois da amostra. Os passos 1, 3 e 5 da lista original
