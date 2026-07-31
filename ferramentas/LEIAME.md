@@ -375,7 +375,7 @@ O par do `valida_visual.py`: aquele diz o que falta, este põe no lugar.
 `C:\Program Files (x86)\Gravity Interactive, Inc\Ragnarok Brazil\data.grf`. É
 mais nova que a nossa de 2021-11-03 — 205117 entradas — e tem a arte que falta.
 
-Aplicado em 2026-07-31: **5855 arquivos, 130 MB**, e o resultado medido pelo
+Aplicado em 2026-07-31: **5247 arquivos**, e o resultado medido pelo
 `valida_visual.py`:
 
 | | antes | depois |
@@ -439,13 +439,36 @@ aqui, então:
 - o que é impresso troca o coreano por `<item>`, `<M>`, `<F>` — o console desta
   máquina não imprime coreano, e ninguém precisa do literal.
 
-**A armadilha que custou uma rodada de diagnóstico errado:** em Python 2 no
-Windows, `os.path.exists` com caminho em **bytes** usa a codepage ANSI (aqui
-cp1252), não CP949. Os bytes coreanos viram lixo e a resposta é "não existe"
-para arquivo que está no disco. O `valida_visual.py` nasceu com esse bug e
-declarou os oito arquivos ausentes **depois** de eles terem sido instalados com
-sucesso. Caminho que vai para o sistema de arquivos tem que ser decodificado
-para unicode antes; só a consulta à tabela do GRF é que fica em CP949.
+### A armadilha grande: **a pasta no disco NÃO tem o nome coreano**
+
+Custou 5855 arquivos instalados em pastas que o cliente nunca abre, e o sintoma
+não ajudava — `Resource File Loading fail` num arquivo que estava lá, íntegro e
+byte a byte idêntico a um que o cliente lê sem reclamar.
+
+O cliente é um app coreano que chama as APIs **ANSI** do Windows. Ele monta o
+caminho em bytes CP949 e entrega para `CreateFileA`, que interpreta esses bytes
+na **codepage ANSI do sistema** — cp1252 aqui, não CP949. O nome que ele procura
+no disco é o mojibake:
+
+```
+o que se espera:  data\texture\유저인터페이스\item\...
+o que o cliente procura: data\texture\À¯ÀúÀÎÅÍÆäÀÌ½º\item\...
+```
+
+Dentro do GRF isso não aparece: a tabela guarda os bytes crus e eles casam. **Só
+no disco a diferença existe** — e é justamente onde o `DataFolderFirst` nos põe.
+
+**A prova está na própria instalação:** a pasta que o ROenglishRE criou e que o
+cliente lê todo dia chama-se `À¯ÀúÀÎÅÍÆäÀÌ½º`. Gravar em `유저인터페이스` cria
+uma **segunda** pasta, de aparência correta, invisível para o cliente. Dava para
+ver as duas lado a lado em `data\texture\` antes da correção.
+
+A conversão mora num lugar só, `valida_visual.caminho_disco`, e a expressão
+exata dela é `decode('mbcs')` — a codepage ANSI do sistema, que é o que
+`CreateFileA` vai usar. Corolário: `os.path.exists` do Python 2 com caminho em
+**bytes** faz essa mesma conversão sozinho, e por isso um teste de existência
+escrito com bytes CP949 responde certo por acidente, enquanto um escrito com o
+unicode coreano "correto" responde errado.
 
 Os oito de um chapéu (`--id 420047`):
 
