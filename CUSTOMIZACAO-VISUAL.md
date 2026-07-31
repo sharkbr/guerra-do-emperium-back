@@ -456,6 +456,57 @@ uso escala natural do modelo, como no catálogo.
 
 ---
 
+## Izlude, primeira rodada da abordagem nova — 2026-07-31
+
+Aplicado com `ferramentas/edita_mapa.py`. Luz, água, chão e `.gat` **originais**;
+só a geometria mudou.
+
+```
+66 de 66 arvores  ->  ossada 02 x26, ossada 04 x25, espinheiro x15
+14 de 46 muros    ->  parede de casa abandonada (China), 30%
+```
+
+### A medição que evitou um estrago
+
+Árvore em RO costuma ser **composta** — tronco e copa como modelos separados. Se
+fosse o caso aqui, trocar o tronco deixaria copa flutuando a 78 unidades de
+altura pela cidade inteira. Medido antes de aplicar:
+
+| Peça | Instâncias | Sobre um tronco? |
+|---|---|---|
+| `나뭇잎01` (folhagem, y −78..−39) | 22 | **nenhuma** — é canópia independente |
+| `나무받침` (base de árvore, y 0) | 20 | **todas as 20**, a menos de 6 unidades |
+
+Então a folhagem fica onde está, corretamente. As 20 bases **foram deixadas de
+propósito**: remover não foi pedido, e base sob a ossada lê como o toco onde a
+árvore estava. Reversível numa linha se ficar estranho.
+
+### As poças — 7, nos pontos mais baixos
+
+Não existe modelo de poça no GRF, e o plano de água do `.rsw` é global (um nível
+para o mapa inteiro, 45 em Izlude), então não serve para poça local. A saída foi
+**pintar o chão** pela cor de superfície do `.gnd`: escurecer e esfriar. Zero
+arquivo novo, zero memória.
+
+Escolhidas por altura entre os tiles **andáveis e acima do nível da água** — sem
+esse filtro as "poças" cairiam no mar de Izlude. Alturas 36,5 a 39,0, contra
+água em 45: é o chão mais baixo da cidade.
+
+**63 de 20358 superfícies mudaram — 0,31% do chão.** Cada poça é 3×3 tiles com
+centro escuro e borda suave, para não virar um quadrado.
+
+Detalhe que é o inverso do `destroi_mapa.py`: lá o azul **cai** mais que o
+vermelho, porque poeira desloca para o terra. Aqui o azul é o que se **preserva**
+(escala R 0,42 / G 0,52 / B 0,68 no centro), porque água esfria a cor.
+
+**Armadilha registrada:** o eixo Y de RO aponta para baixo, então "mais baixo" é
+o **maior** valor de altura. Inverter isso poria as poças nos telhados.
+
+Isso reintroduz um `izlude.gnd` nosso — o chão deixa de ser estritamente
+original, mas a mudança é local e some apagando o arquivo.
+
+---
+
 ## O inventário do GRF — 2026-07-31
 
 O primeiro mapa-catálogo tinha **só os 90 modelos que Izlude já usa**. Servia

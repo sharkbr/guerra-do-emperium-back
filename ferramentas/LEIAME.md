@@ -266,6 +266,60 @@ primeira versão usou `x_prt` e ficou confusa: mapa de cidade, com parede e beco
 no meio do catálogo. `x_prt` continua como alternativa — é o único candidato
 **sem spawn nenhum** — trocando `MAPA_BASE` no topo do arquivo.
 
+## `edita_mapa.py` — troca e acrescenta modelo num mapa
+
+```
+python edita_mapa.py <pasta-entrada> <pasta-saida> <data.grf> [mapa]
+```
+
+Substitui o `destroi_mapa.py` na frente de Izlude. A diferença de abordagem é o
+ponto: aquele **simulava** destruição inclinando e afundando casa inteira; este
+**troca** o modelo pelo de ruína que a Gravity já modelou. Depois que o
+inventário mostrou 228 modelos de ruína no GRF, simular deixou de fazer sentido.
+
+Receita declarativa no topo do arquivo, semente fixa. Duas operações:
+`substituir` (com fração e sorteio entre vários destinos) e `acrescentar` (por
+coordenada de jogo, com a altura lida do `.gat`).
+
+Duas decisões de comportamento que vale conhecer antes de escrever receita:
+
+- **rotação preservada sempre.** Para muro é essencial — um segmento girado 90°
+  é outra coisa. Para objeto espalhado, só dá variedade.
+- **escala resetada para 1.** A escala do original foi escolhida para *aquele*
+  modelo; herdar 1,5 de uma árvore daria uma ossada gigante.
+
+Antes de gravar, **todo `filename` é conferido contra a tabela do GRF**. Caminho
+errado não dá erro em parser nenhum: só aparece no cliente, um diálogo por
+modelo, e trava quem tiver personagem salvo no mapa.
+
+Não toca luz, água, chão nem `.gat` — nada aqui atravessa a fronteira do
+servidor.
+
+## `pocas.py` — poças de água pelos pontos mais baixos do terreno
+
+```
+python pocas.py <pasta-entrada> <pasta-saida> [mapa]
+```
+
+**Não existe modelo de poça no GRF** (procurado `웅덩이`, `연못`, `수면`,
+`개울`: zero). E o plano de água do `.rsw` é global — um nível único para o mapa
+inteiro — então não serve para poça local.
+
+A saída é pintar o chão pela cor de superfície do `.gnd`: escurecer e **esfriar**
+um punhado de tiles. Zero arquivo novo, zero memória. É o inverso do
+`destroi_mapa.py`, que derruba o azul para sujar de poeira; aqui o azul é o que
+se preserva. A alternativa seria uma das 320 texturas de `data\texture\워터\`,
+mas são quadros de animação — um quadro estático sobre paralelepípedo vira
+mancha azul chapada.
+
+**A armadilha: o eixo Y de RO aponta para baixo, então "mais baixo" é o MAIOR
+valor de altura.** Inverter isso poria as poças nos telhados. E fica de fora
+tudo abaixo do nível da água, senão as poças cairiam no mar de Izlude — que já é
+água e nem é andável.
+
+Exige que as 4 células de `.gat` do tile sejam andáveis: poça em cima de parede
+não faz sentido, e a borda do andável costuma ser degrau.
+
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 
 ```

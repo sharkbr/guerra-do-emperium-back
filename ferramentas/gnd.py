@@ -82,6 +82,25 @@ class Gnd(object):
     def set_cor(s, bgra):
         s[36:40] = bytearray(bgra)
 
+    # -- acesso aos cubos (um por tile) -----------------------------------
+
+    def superficie_topo(self, tx, ty):
+        """Indice da superficie de CIMA do tile, ou -1 se o tile nao tem topo.
+
+        O bloco de cubos tem, por tile, 4 floats de altura e 3 int32 com os
+        indices das superficies de cima, da frente e da direita. So a de cima
+        importa para pintar chao.
+        """
+        if not (0 <= tx < self.largura and 0 <= ty < self.altura):
+            return -1
+        o = (ty * self.largura + tx) * self.TAM_CUBO
+        return struct.unpack_from('<i', self.cubos, o + 16)[0]
+
+    def altura_tile(self, tx, ty):
+        """Media das 4 alturas do tile. Eixo Y para baixo: maior = mais baixo."""
+        o = (ty * self.largura + tx) * self.TAM_CUBO
+        return sum(struct.unpack_from('<4f', self.cubos, o)) / 4.0
+
     def to_bytes(self):
         p = ['GRGN', chr(self.maior), chr(self.menor),
              struct.pack('<ii', self.largura, self.altura),
