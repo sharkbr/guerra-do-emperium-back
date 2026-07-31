@@ -54,6 +54,31 @@ def q(*partes):
     return BS.join(partes)
 
 
+def caminho_disco(caminho):
+    u"""Caminho CP949 do GRF -> o nome que o arquivo REALMENTE tem no disco.
+
+    Esta funcao e o assunto inteiro do bug de 2026-07-31, entao vale escrever
+    por extenso. O cliente e um app coreano que chama as APIs **ANSI** do
+    Windows: ele monta o caminho em bytes CP949 e entrega para `CreateFileA`,
+    que interpreta esses bytes na **codepage ANSI do sistema** - cp1252 nesta
+    maquina, nao CP949. Resultado: o nome que o cliente procura no disco nao e
+    `유저인터페이스`, e o mojibake `À¯ÀúÀÎÅÍÆäÀÌ½º`.
+
+    Dentro do GRF isso nao aparece, porque la a tabela guarda os bytes crus e
+    eles casam. So no disco a diferenca existe.
+
+    A prova esta na propria instalacao: a pasta que o ROenglishRE criou e que o
+    cliente le sem reclamar chama-se `À¯ÀúÀÎÅÍÆäÀÌ½º`. Gravar em
+    `유저인터페이스` cria uma segunda pasta, de aparencia correta, que o cliente
+    nunca abre - foi exatamente o que aconteceu com 5855 arquivos, e o sintoma
+    foi `Resource File Loading fail` num arquivo que estava la.
+
+    `decode('mbcs')` e a expressao exata disso: usa a codepage ANSI do sistema,
+    que e o que `CreateFileA` vai usar.
+    """
+    return os.path.join(CLIENTE.decode('mbcs'), caminho.decode('mbcs'))
+
+
 def rotulo(caminho):
     """Troca o trecho coreano por um marcador legivel no terminal."""
     return (caminho.replace(ITEM, '<item>').replace(ACESS, '<acessorio>')
@@ -172,18 +197,15 @@ class Cliente(object):
     def existe(self, caminho):
         if caminho.lower() in self.grf.entries:
             return True
-        # O caminho vem em CP949 porque e assim que ele existe na tabela do
-        # GRF. Para o sistema de arquivos ele precisa virar unicode: em
-        # Python 2 no Windows, `os.path.exists` com caminho em bytes usa a
-        # codepage ANSI (aqui cp1252), nao CP949 - os bytes coreanos viram
-        # lixo e o teste responde "nao existe" para arquivo que esta la.
-        # Falha calada, do tipo que produz diagnostico errado com confianca.
-        solto = os.path.join(CLIENTE.decode('mbcs'),
-                             caminho.decode('cp949', 'replace'))
-        return os.path.exists(solto)
+        return os.path.exists(caminho_disco(caminho))
 
-    def recursos(self, res, view):
-        """Os arquivos que o cliente abre para um chapeu, e se cada um existe."""
+    def caminhos(self, res, view):
+        """Os arquivos que o cliente abre para um chapeu, em CP949.
+
+        Fonte unica da verdade: o `instala_visual.py` usa esta mesma lista para
+        saber onde gravar. Caminho em CP949 porque e assim que ele existe na
+        tabela do GRF; quem for tocar no disco converte com `caminho_disco`.
+        """
         fora = [
             ('sprite de chao (.spr)', q('data', 'sprite', ITEM, res + '.spr')),
             ('sprite de chao (.act)', q('data', 'sprite', ITEM, res + '.act')),
@@ -195,17 +217,23 @@ class Cliente(object):
             fora.append(('view %d no accessoryid' % view, None))
         else:
             for g, rot in ((HOMEM, 'masculina'), (MULHER, 'feminina')):
-                fora.append(('cabeca ' + rot,
-                             q('data', 'sprite', ACESS, g, g + suf + '.spr')))
+                for ext in ('.spr', '.act'):
+                    fora.append(('cabeca %s (%s)' % (rot, ext[1:]),
+                                 q('data', 'sprite', ACESS, g, g + suf + ext)))
+        return fora
+
+    def recursos(self, res, view):
+        """Os arquivos que o cliente abre para um chapeu, e se cada um existe."""
         return [(nome, cam, cam is not None and self.existe(cam))
-                for nome, cam in fora]
+                for nome, cam in self.caminhos(res, view)]
 
 
 # ---------------------------------------------------------------- relatorio
 
 # O que derruba o cliente com caixa de erro modal, em vez de so ficar feio.
 FATAIS = ('sprite de chao (.spr)', 'sprite de chao (.act)',
-          'cabeca masculina', 'cabeca feminina')
+          'cabeca masculina (spr)', 'cabeca masculina (act)',
+          'cabeca feminina (spr)', 'cabeca feminina (act)')
 
 
 def main():
