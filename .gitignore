@@ -58,6 +58,10 @@ BGM/
 .env
 .env.*
 
+# --- Python das ferramentas/ (rodam em Python 2.7) ---
+*.pyc
+__pycache__/
+
 # --- Sistema operacional e editores ---
 .DS_Store
 .AppleDouble

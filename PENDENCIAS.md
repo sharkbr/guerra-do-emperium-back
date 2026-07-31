@@ -5,8 +5,9 @@ cliente está **em inglês de ponta a ponta**. A seção 0 conta como o cliente 
 destravado e serve de referência quando ele voltar a quebrar; o resto são coisas
 deliberadamente deixadas para depois.
 
-**Próximo passo: alterar código** — ver a seção com esse nome. A frente de
-tradução está concluída e vive logo abaixo dela, como referência.
+**A frente de alterar código começou em 2026-07-30, ~22:00**, com o primeiro NPC
+nosso e a convenção de customização definida — ver "CONVENÇÃO DE CUSTOMIZAÇÃO".
+A frente de tradução está concluída e vive logo abaixo dela, como referência.
 
 > Este arquivo é versionado, então **nunca colar senha real aqui.** As senhas
 > reais vivem em `rathena/conf/import/`, que está fora do git.
@@ -53,7 +54,7 @@ então vale reler antes de mexer no cliente de novo.
 | Entrada do WARP | `Ragexe_unpacked.exe` (12,3 MB), do NEMO, desempacotado |
 | Backup do oficial | `Ragexe.exe.original` (7,3 MB) — blindado, inútil para patch |
 | Dados | `data.grf` 3,0 GB, oficial da Gravity, SHA256 conferido |
-| `data\` | ROenglishRE + nosso `clientinfo.xml`; 4 `.lub` removidos (ver histórico) |
+| `data\` | ROenglishRE + nosso `clientinfo.xml`; 6 `.lub` removidos e 2 **recortados** (ver histórico) |
 | `SystemEN\` | pasta **irmã** de `System\`, 12 arquivos (25 MB) com `LuaFiles514\` + `mapinfo_C.lub` |
 | `System\` | `itemInfo_true` e `mapInfo_*` **substituídos pelas versões em inglês**; 2 `_Sakray` criados |
 | `navigation\` | + `Addons\Navigation Legacy` (18 arquivos, 5,3 MB) |
@@ -277,10 +278,81 @@ constante ausente ou dirigem carregamento. Tabelas passivas de strings passam:
 
 ### Se o cliente voltar a dar erro de Lua
 
-O remédio é quase sempre o mesmo: conferir o `-- Last updated:` do `.lub` e, se
-for muito posterior a 2021-11, mover para o backup. Candidatos que ainda podem
-quebrar: `skillinfoz\*`, `hateffectinfo`, `datainfo\titletable`,
-`dressroom\jobdresslist`.
+Conferir o `-- Last updated:` do `.lub`. Se for muito posterior a 2021-11, ele é
+suspeito. **Mas mover para o backup é o remédio bruto — ver a rodada da janela de
+habilidades abaixo, que estabeleceu um melhor.** Candidatos que ainda podem
+quebrar: `hateffectinfo`, `datainfo\titletable`, `dressroom\jobdresslist`.
+
+### Rodada de 2026-07-30, ~22:44 — a janela de habilidades derrubava o cliente
+
+**RESOLVIDO e confirmado in-game às ~23:05:** a janela abre e os nomes das
+habilidades aparecem em inglês.
+
+`ALT + S` fechava o jogo com `0xC0000005` (violação de acesso) dentro do
+`GuerraDoEmperium.exe`, sem diálogo de Lua. A causa estava nos 4 arquivos de
+`data\luafiles514\lua files\skillinfoz\`, todos do ROenglishRE, de **2026-03-22**
+(o `skilltreeview` é de 2025-11-16).
+
+**A descoberta que muda a receita: recortar em vez de remover.**
+
+Esses arquivos são tabelas indexadas por constante:
+
+```lua
+SKILL_INFO_LIST = {
+    [SKID.NV_BASIC] = { SkillName = "Basic Skill", ... },
+}
+```
+
+Comparando a tabela `SKID` do nosso cliente (do GRF) com a do ROenglishRE:
+
+| | entradas | id máximo |
+|---|---|---|
+| 2021 (nosso cliente, GRF) | 1788 | 12999 |
+| 2026 (ROenglishRE) | 1928 | 12999 |
+
+São só **140 habilidades a mais**, todas de 4ª classe (`ABC_*`, `AG_*`, `AT_*`),
+e **nenhuma se perde**. Ou seja: 92% do arquivo servia perfeitamente, e a receita
+antiga jogava tudo fora. O que quebra é que `SKID.ABC_ABYSS_FLAME` não existe no
+nosso cliente, então `[nil] = {...}` é erro em Lua, o arquivo inteiro aborta, a
+tabela nunca é criada, e a janela recebe nil — o que estoura em C++.
+
+Há também **3 constantes com o mesmo nome e id diferente** entre as duas versões
+(`ABC_CHAIN_REACTION_SHOT_ATK`, `ABC_FROM_THE_ABYSS_ATK`, `NPC_LAST`). Só por
+isso já não vale usar o `skillid.lub` de 2026.
+
+**Como ficou resolvido:**
+
+| Arquivo | Estado | Por quê |
+|---|---|---|
+| `skillid.lub` | no backup, permanente | é só `nome = número`, **não tem texto para traduzir** |
+| `skilltreeview.lub` | no backup, permanente | é só a grade `classe → habilidade`, **idem** |
+| `skillinfolist.lub` | **recortado**, 1559 de 1694 entradas | nomes das habilidades |
+| `skilldescript.lub` | **recortado**, 1434 de 1546 entradas | descrições |
+
+O recorte é feito por `ferramentas/filtra_lub_por_skid.py`. Originais intactos em
+`_backup_luafiles_roenglish\skillinfoz\`.
+
+**Regra que vale para os próximos:** antes de mover um `.lub` para o backup,
+perguntar se ele tem texto traduzível. Metade dos arquivos que quebram é tabela
+de estrutura ou de constante — perder esses não custa nada, e o GRF os fornece.
+Nos que têm texto, recortar por constante conhecida preserva quase tudo.
+
+**Validar sempre o recorte:** além das entradas de primeiro nível, essas tabelas
+têm referências aninhadas a `SKID` (os pré-requisitos em `_NeedSkillList`). Uma
+única referência órfã traz o crash de volta pelo mesmo caminho.
+
+**Duas correções ao que estava escrito aqui:**
+
+1. **Os `.lub` do ROenglishRE não são bytecode — são Lua em texto puro** com
+   extensão `.lub`. O cliente lê os dois. Só os do GRF são bytecode. Logo, dá
+   para ler e editar os do ROenglishRE direto, e **comparar tamanho entre GRF e
+   ROenglishRE não significa nada** (bytecode contra texto). Eu comecei esta
+   investigação por esse caminho e ele não levava a lugar nenhum.
+2. **Ler tabela grande de bytecode tem uma armadilha** que produz número
+   plausível e errado — ver `ferramentas/LEIAME.md`, seção do `luadis.py`. A
+   primeira medição aqui deu "127 habilidades, id máximo 127", o que parecia
+   confirmar a hipótese de teto estourado. Era artefato do parser: o real é 1788
+   e 12999, e a hipótese estava errada.
 
 Outras pistas guardadas, se um dia forem úteis:
 
@@ -300,6 +372,13 @@ Outras pistas guardadas, se um dia forem úteis:
 O cliente abre limpo. O `RecommendedQuestInfoLoad` foi o último e caiu na rodada
 das ~19:30.
 
+**"Abre limpo" não quer dizer "está tudo certo".** O crash da janela de
+habilidades não dava diálogo nenhum: o `.lub` abortava calado no boot, a tabela
+global nunca era criada, e o estrago só aparecia ao abrir a janela — como
+violação de acesso em C++, sem nada de Lua na tela. Crash duro ao abrir uma
+janela específica é sintoma da mesma família de erro de versão, e a ausência de
+diálogo não inocenta os luafiles.
+
 ### Armadilhas de ferramenta deste ambiente
 
 Estas produziram diagnósticos falsos e custaram retrabalho:
@@ -313,13 +392,23 @@ Estas produziram diagnósticos falsos e custaram retrabalho:
   `Get-ChildItem "dir\*.ext"`.
 - **`source` do mysql.exe** quebra com barras invertidas (`\U` = comando
   desconhecido). Usar barras normais no caminho.
-- **`.lub` é bytecode**, não texto: `Select-String` não acha strings dentro deles
-  de forma confiável. Buscar em binário.
+- **`.lub` do GRF é bytecode**, não texto: `Select-String` não acha strings
+  dentro deles de forma confiável. Buscar em binário. **Mas os `.lub` do
+  ROenglishRE são Lua em texto puro** — esses dá para ler e editar direto.
+  Conferir o header (`\x1bLua`) antes de decidir. Corolário: **comparar tamanho
+  de um arquivo do GRF com o do ROenglishRE não significa nada**, é bytecode
+  contra texto.
+- **Ler tabela grande de bytecode Lua 5.1:** o operando `RK` só endereça
+  constante até o índice 255; depois disso o compilador emite `LOADK` num
+  registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só
+  `SETTABLE ... ; B="NOME" C=<valor>` captura as ~127 primeiras entradas e
+  devolve um número plausível e errado.
 
 ### Ferramentas instaladas nesta sessão
 
 - Visual Studio 2022 Community 17.14.37 (workload C++)
-- Python 2.7.18 em `C:\Python27` — só para o `get4.py` do NEMO
+- Python 2.7.18 em `C:\Python27` — para o `get4.py` do NEMO e para o
+  `ferramentas/` deste repo
 - WARP 1.5.3 em `C:\Users\User\Downloads\WARP-rock_win32`
 - ROenglishRE clonado em `C:\Users\User\Downloads\ROenglishRE`
 - Instalador kRO em `C:\Users\User\Downloads\RAG_SETUP_211105.exe` (3,19 GB,
@@ -327,22 +416,76 @@ Estas produziram diagnósticos falsos e custaram retrabalho:
 
 ---
 
-## PRÓXIMO PASSO — alterar código
+## CONVENÇÃO DE CUSTOMIZAÇÃO — decidida em 2026-07-30
 
-Aberto em 2026-07-30, ~21:30, com a tradução concluída. A partir daqui o trabalho
-deixa de ser "destravar o cliente de outra pessoa" e passa a ser **construir o
-nosso servidor**: mexer em `rathena/src/`, em scripts de NPC, em `db/`.
+A pergunta estava em aberto desde 2026-07-30 ~21:30: o `rathena/` foi
+**vendorizado sem histórico do upstream** (ver item 8), então customização nossa
+misturada às pastas do rAthena fica **indistinguível de código de terceiros** num
+`git diff`, e trazer correção do upstream vira arqueologia.
 
-Nada foi levantado ainda sobre essa frente. O que já se sabe e é relevante:
+**A regra, em uma frase: tudo que é nosso mora em pasta própria, e tocamos
+arquivo do rAthena só para apontar para ela.**
 
-- O `rathena/` foi **vendorizado sem histórico do upstream** (ver item 8). Toda
-  customização nossa hoje é indistinguível de código do rAthena num `git diff`.
-  **Decidir a convenção antes de escrever a primeira linha**, não depois.
-- Já existe `rathena/src/custom/defines_pre.hpp` em uso, com o `PACKETVER`. O
-  rAthena tem uma pasta `src/custom/` pensada exatamente para isso — é o caminho
-  natural para não sujar o código de terceiros.
-- Recompilar exige Visual Studio 2022 Community 17.14.37, já instalado.
-- Mudança em `conf/` **não** precisa de recompilação; mudança em `src/` precisa.
+| Camada | Onde fica o nosso | Marca deixada em arquivo do rAthena |
+|---|---|---|
+| Scripts de NPC | `rathena/npc/guerra/` | **uma** linha `import:` no fim de `npc/scripts_custom.conf` |
+| Código C++ | `rathena/src/custom/` | nenhuma — a pasta já é o ponto de extensão oficial |
+| Configuração | `rathena/conf/import/` | nenhuma — idem, e está fora do git |
+
+Como funciona a camada de script: o `map.cpp` lê `npc/re/scripts_main.conf`, que
+importa `npc/scripts_custom.conf`, que agora importa
+`npc/guerra/scripts_guerra.conf` — o **índice dos nossos NPCs**. `import:` é
+recursivo e vale em qualquer conf de NPC (`src/map/map.cpp:4249`), então a cadeia
+tem profundidade livre.
+
+Ligar ou desligar um NPC nosso = comentar uma linha no `scripts_guerra.conf`.
+
+Consequências práticas:
+
+- `git diff` restrito a `npc/guerra/`, `src/custom/` e `conf/import/` mostra
+  **exatamente** o que é nosso.
+- Fora dessas pastas, qualquer diff em `rathena/` é alteração em código de
+  terceiros e merece comentário explicando o porquê. Hoje existe **uma**: o
+  `import:` no `scripts_custom.conf`.
+- Mudança em `conf/` e em script de NPC **não** precisa de recompilação —
+  `@reloadscript` in-game basta. Mudança em `src/` precisa (Visual Studio 2022
+  Community 17.14.37, já instalado).
+
+### Acentuação no diálogo — não testada
+
+Os NPCs nossos estão escritos **sem acento**, de propósito. O rAthena grava os
+próprios arquivos em Latin-1 (o `conf/msg_conf/map_msg_por.conf` tem `ç` como
+byte `0xE7`), mas o nosso `clientinfo.xml` usa `langtype 0` (Coreia) e **nunca
+testamos** como esse cliente desenha byte acentuado — pode sair caractere coreano
+no lugar. Enquanto não houver teste, texto sem acento é o custo baixo.
+
+Para testar: pôr um acento num `mes` e olhar in-game. Se sair certo, gravar os
+arquivos em Latin-1 (não UTF-8 — aí cada acento vira dois bytes e sai lixo
+garantido).
+
+### NPCs nossos hoje
+
+| NPC | Onde | O quê | Testado |
+|---|---|---|---|
+| Mestre de Classe | `prontera 160,191` | troca de classe por nível, até a 3ª classe | sim, ~22:40 |
+
+O **Mestre de Classe** (`npc/guerra/mestre_de_classe.txt`) lê a classe em bits
+com `eaclass()`/`roclass()` em vez de ter um `if` por classe, então as 6 linhas
+clássicas mais Taekwon, Ninja e Justiceiro saem do mesmo código. Exigências no
+`OnInit:`, no fim do arquivo — mudar é trocar um `setarray` e dar
+`@reloadscript`, sem recompilar.
+
+**Duas exclusões deliberadas, e o motivo importa:**
+
+1. **4ª classe.** Nosso cliente é de 2021-11-03 e a 4ª classe só chegou ao kRO em
+   2022-11 — os sprites não existem neste executável. O `npc/custom/jobmaster.txt`
+   do próprio rAthena tem `.FourthClass = true` por padrão e ofereceria classe
+   que o cliente não sabe desenhar. Foi a razão principal de escrever o nosso em
+   vez de só ligar o dele.
+2. **Classes Bebê**, que exigem adoção — não existe no servidor ainda.
+
+Se um dia precisar dos dois, ligar o `jobmaster.txt` é o caminho; não reescrever
+o nosso.
 
 ---
 
@@ -382,7 +525,7 @@ diálogos.
 | Strings cravadas no exe | `WARP\Inputs\Translations_EN.yml` | `TranslateClient`, já aplicado antes |
 | Itens | `System\itemInfo_true.lub` | trocado pelo stub do ROenglishRE |
 | Letreiro e nome de mapa | `System\mapInfo_*.lub` | trocado pela versão em inglês |
-| Habilidades | `data\...\skillinfoz\*.lub` | já estava em inglês |
+| Habilidades | `data\...\skillinfoz\*.lub` | recortados em 2026-07-30 ~22:55 — ver a rodada da janela de habilidades |
 | Texturas | `data\texture\유저인터페이스\` | já ativas via `DataFolderFirst` |
 | Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | PT-BR de fábrica, via `@langtype por` |
 
@@ -400,10 +543,14 @@ Nenhum começou. Em ordem de retorno por esforço:
 2. **`rathena\conf\msg_conf\map_msg_por.conf`** — já pronto, só ativar.
 3. **`data\msgstringtable.txt`** — 4022 linhas, a UI inteira. Volume grande.
 4. **`SystemEN\itemInfo_C.lua`** — mesma ideia do mapinfo_C, para itens.
-| Habilidades | `data\...\skillinfoz\skilldescript.lub` | **inglês e ativo** | nada |
-| Itens | `System\itemInfo_true.lub` | **corrigido ~20:00** | testar |
-| Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | **PT-BR de fábrica** | `@langtype por` |
-| Texturas com texto desenhado | `data\texture\유저인터페이스\` | **inglês e JÁ ATIVO** — 502 arquivos | nada |
+5. **`data\...\skillinfoz\skilldescript.lub`** — as descrições de habilidade. É o
+   maior volume de texto corrido do cliente (1,0 MB). Fica por último, mas note
+   que agora ele é um **arquivo nosso, recortado** — traduzir aqui significa
+   editar a saída do `filtra_lub_por_skid.py`, então o recorte precisa ser
+   refeito antes da tradução, nunca depois.
+
+O estado de cada camada de texto está na tabela "Onde vive cada texto do jogo —
+mapa final", acima.
 
 ### A camada de textura já está de pé — não confundir com as outras
 
@@ -723,15 +870,20 @@ mais caro.
 | Pasta do cliente | `C:\GuerraDoEmperium\cliente` (fora do git) |
 | Executável do cliente | `GuerraDoEmperium.exe` |
 | Conta de teste | `teste` / `teste123`, `group_id 99`, `account_id 2000000` |
-| Personagem da v1 | `Abernus`, Novice Lv.1 |
+| Personagem da v1 | `Abernus` — hoje Swordman, Base 99 |
 | Comandos `@` | `rathena/doc/atcommands.txt`; in-game `@commands` e `@help` |
+| **NPCs nossos** | `rathena/npc/guerra/`, indexados em `scripts_guerra.conf` |
+| Aplicar mudança de script | `@reloadscript` in-game — não precisa recompilar |
+| Erro de script de NPC | só na janela do `map-server`; não há arquivo de log |
+| Nomes e descrições de habilidade | `cliente\data\...\skillinfoz\skill{infolist,descript}.lub` — **recortados** |
 | Textos da UI do cliente | `cliente\data\msgstringtable.txt` (4022 linhas) |
 | Textos de quest | `cliente\data\questid2display.txt` |
 | Nomes e descrições de item | `cliente\SystemEN\LuaFiles514\itemInfo.lua` (22 MB) |
 | Config do itemInfo | `cliente\System\itemInfo_true.lub` (stub do ROenglishRE) |
 | Mensagens do servidor em PT-BR | `rathena/conf/msg_conf/map_msg_por.conf`; in-game `@langtype por` |
 | Inspecionar GRF e `.lub` | `ferramentas/` (ver `ferramentas/LEIAME.md`) |
+| Recortar `.lub` novo demais | `ferramentas/filtra_lub_por_skid.py` |
 | Config de vídeo do cliente | `Setup.exe` **como admin** (grava em HKLM) |
-| `.lub` removidos do cliente | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |
+| `.lub` removidos e originais | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |
 | Subir os servidores | `login-server.exe`, `char-server.exe`, `map-server.exe` em `rathena/` |
 | Parar os servidores | `Stop-Process -Name login-server,char-server,map-server -Force` |

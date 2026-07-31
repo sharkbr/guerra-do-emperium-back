@@ -1,0 +1,255 @@
+//===== Guerra do Emperium ===================================
+//= Mestre de Classe
+//===== Onde =================================================
+//= prontera 160,191 (praca da fonte, ao lado do Ash-Vacuum Warper)
+//===== Descricao ============================================
+//= Troca a classe do personagem conforme o nivel dele.
+//= Cobre a arvore classica inteira ate a 3a classe:
+//=
+//=   Novico --(classe 10)--> 1a classe --(classe 40)--> 2a classe
+//=          --(base 99 / classe 50)--> 3a classe
+//=                                --> Renascer -> classes Altas -> 3a
+//=
+//= Tambem cobre Super Novico, Taekwon (Justiceiro / Ligado a Alma),
+//= Ninja (Kagerou/Oboro) e Justiceiro Armado (Rebellion).
+//===== Fora do escopo, de proposito =========================
+//= 1) 4a classe. Nosso cliente e o kRO 2021-11-03 e a 4a classe so
+//=    chegou no kRO em 2022-11 - os sprites e os pacotes nao existem
+//=    neste executavel. Habilitar aqui daria personagem invisivel.
+//= 2) Classes Bebe. Exigem casamento/adocao, que nao existe no
+//=    servidor ainda.
+//= Se um dia precisar dos dois, `npc/custom/jobmaster.txt` (do proprio
+//= rAthena) faz tudo isso - e o caminho, nao reescrever aqui.
+//===== Notas ================================================
+//= Os textos estao SEM ACENTO de proposito. O cliente roda em
+//= langtype 0 (Coreia) e ainda nao testamos como ele desenha byte
+//= acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//= Os nomes de classe vem do proprio servidor (comando `jobname`),
+//= entao aparecem em ingles ate traduzirmos conf/msg_conf.
+//============================================================
+
+prontera,160,191,4	script	Mestre de Classe	123,{
+
+// Encerra a conversa dizendo exatamente quanto falta.
+function	Falta	{
+	mes "Ainda nao e a sua hora.";
+	mes " ";
+	mes "Exigencia: ^BB0000" + getarg(0) + "^000000 de base, ^00AA00" + getarg(1) + "^000000 de classe.";
+	mes "Voce tem:  ^BB0000" + BaseLevel + "^000000 de base, ^00AA00" + JobLevel + "^000000 de classe.";
+	close;
+}
+
+// Montaria, carrinho e falcao pertencem a classe atual. Trocar de
+// classe com eles ativos deixa o personagem em estado invalido.
+function	ExigeDesmontar	{
+	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
+		mes "Antes de tudo, dispense " +
+			(checkfalcon() ? "o falcao " : "") +
+			(checkcart() ? "o carrinho " : "") +
+			(checkriding() ? "o Peco " : "") +
+			(ismounting() ? "a montaria " : "") +
+			"que voce carrega.";
+		close;
+	}
+	return;
+}
+
+// Pontos de habilidade nao distribuidos sao PERDIDOS na troca.
+function	ExigeGastarPontos	{
+	if (.SkillPointCheck && SkillPoint) {
+		mes "Voce tem ^BB0000" + SkillPoint + "^000000 ponto(s) de habilidade sem gastar.";
+		mes " ";
+		mes "Distribua tudo antes de vir falar comigo. ^BB0000O que sobrar e perdido na troca.^000000";
+		close;
+	}
+	return;
+}
+
+	mes .npc$;
+	mes "Eu decido ^0055FFo que^000000 voce vira.";
+	mes "Quem decide ^0055FFquando^000000 e o seu nivel.";
+
+	ExigeDesmontar();
+	ExigeGastarPontos();
+
+	// eaclass() devolve a classe em bits (ver doc/ea_job_system.txt):
+	// os 8 bits baixos sao a 1a classe, e flags marcam 2-1/2-2, 3a,
+	// Alta e Bebe. E por isso que o mesmo codigo serve pras 6 linhas.
+	.@eac = eaclass();
+	.@base1 = .@eac & EAJ_BASEMASK;    // qual 1a classe (Espadachim, Mago...)
+	.@base2 = .@eac & EAJ_UPPERMASK;   // qual 2a classe
+
+	// Guarda a exigencia do caminho bloqueado, pra dar um recado util
+	// no fim caso nenhuma opcao seja liberada. [0] = base, [1] = classe.
+	setarray @gde_falta[0], 0, 0;
+
+	// ---- Renascer: 2a classe comum -> Novico Alto ----
+	// roclass() volta -1 quando a classe destino nao existe, o que
+	// descarta sozinho quem nao tem versao Alta (ex.: Super Novico).
+	if (.Renascimento && (.@eac & EAJL_2) && !(.@eac & (EAJL_UPPER|EAJL_THIRD)) && roclass(.@eac|EAJL_UPPER) > 0) {
+		if (BaseLevel >= .Req_Renascer[0] && JobLevel >= .Req_Renascer[1])
+			setarray .@opt[getarraysize(.@opt)], Job_Novice_High;
+		else
+			setarray @gde_falta[0], .Req_Renascer[0], .Req_Renascer[1];
+	}
+
+	// ---- 3a classe ----
+	// Super Novico fica de fora: o "Expandido" dele usa a mesma flag
+	// EAJL_THIRD, mas com outra exigencia. Ele e tratado mais abaixo.
+	if (.TerceiraClasse && (.@eac & EAJL_2) && !(.@eac & EAJL_THIRD) && .@base2 != EAJ_SUPER_NOVICE && roclass(.@eac|EAJL_THIRD) > 0) {
+		if (BaseLevel >= .Req_Terceira[0] && JobLevel >= .Req_Terceira[1])
+			setarray .@opt[getarraysize(.@opt)], roclass(.@eac|EAJL_THIRD);
+		else if (!@gde_falta[0])
+			setarray @gde_falta[0], .Req_Terceira[0], .Req_Terceira[1];
+	}
+
+	// ---- Super Novico -> Super Novico Expandido ----
+	if (.Expandidas && .@base2 == EAJ_SUPER_NOVICE && !(.@eac & EAJL_THIRD)) {
+		if (BaseLevel >= .Req_ExpSNovico[0] && JobLevel >= .Req_ExpSNovico[1])
+			setarray .@opt[getarraysize(.@opt)], roclass(.@eac|EAJL_THIRD);
+		else if (!@gde_falta[0])
+			setarray @gde_falta[0], .Req_ExpSNovico[0], .Req_ExpSNovico[1];
+	}
+
+	// ---- Ninja -> Kagerou/Oboro, Justiceiro -> Rebellion ----
+	// Essas duas classes nao tem 2a classe classica; o servidor trata
+	// a evolucao delas como se fosse 2-1.
+	if (.Expandidas && (.@eac == EAJ_NINJA || .@eac == EAJ_GUNSLINGER)) {
+		if (BaseLevel >= .Req_ExpNinjaGun[0] && JobLevel >= .Req_ExpNinjaGun[1])
+			setarray .@opt[getarraysize(.@opt)], roclass(.@eac|EAJL_2_1);
+		else if (!@gde_falta[0])
+			setarray @gde_falta[0], .Req_ExpNinjaGun[0], .Req_ExpNinjaGun[1];
+	}
+
+	if (.@base1 == EAJ_NOVICE && .@base2 != EAJ_SUPER_NOVICE) {
+		// ---- Novico e Novico Alto ----
+		if (BaseLevel < .Req_Primeira[0] || JobLevel < .Req_Primeira[1]) {
+			if (!@gde_falta[0])
+				setarray @gde_falta[0], .Req_Primeira[0], .Req_Primeira[1];
+		}
+		else {
+		switch (Class) {
+			case Job_Novice:
+				setarray .@opt[getarraysize(.@opt)],
+					Job_Swordman, Job_Mage, Job_Archer,
+					Job_Acolyte, Job_Merchant, Job_Thief,
+					Job_Super_Novice, Job_Taekwon,
+					Job_Gunslinger, Job_Ninja;
+				break;
+			case Job_Novice_High:
+				// Renascer linear: quem era Cavaleiro volta a linha do
+				// Espadachim. E o comportamento oficial do jogo.
+				if (.RenascerLinear && lastJob)
+					setarray .@opt[getarraysize(.@opt)],
+						roclass((eaclass(lastJob) & EAJ_BASEMASK) | EAJL_UPPER);
+				else
+					setarray .@opt[getarraysize(.@opt)],
+						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
+						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High;
+				break;
+			// Job_Baby cai aqui e nao recebe opcao nenhuma - ver o
+			// cabecalho do arquivo.
+		}
+		}
+	}
+	else if (.@eac <= EAJ_TAEKWON || (.@eac & (~EAJL_UPPER)) <= EAJ_TAEKWON) {
+		// ---- 1a classe (comum ou Alta) -> 2a classe ----
+		// Cada linha tem dois destinos: 2-1 e 2-2. Taekwon vira
+		// Justiceiro (2-1) ou Ligado a Alma (2-2) pela mesma conta.
+		.@c1 = roclass(.@eac | EAJL_2_1);
+		.@c2 = roclass(.@eac | EAJL_2_2);
+		if (BaseLevel >= .Req_Segunda[0] && JobLevel >= .Req_Segunda[1]) {
+			if (.@c1 > 0) setarray .@opt[getarraysize(.@opt)], .@c1;
+			if (.@c2 > 0) setarray .@opt[getarraysize(.@opt)], .@c2;
+		}
+		else if (!@gde_falta[0])
+			setarray @gde_falta[0], .Req_Segunda[0], .Req_Segunda[1];
+	}
+
+	.@n = getarraysize(.@opt);
+	if (!.@n) {
+		next;
+		mes .npc$;
+		if (@gde_falta[0])
+			Falta(@gde_falta[0], @gde_falta[1]);
+		mes "Nao tenho mais nada a lhe oferecer.";
+		mes "Voce chegou ao fim do seu caminho.";
+		close;
+	}
+
+	next;
+	mes .npc$;
+	mes "Escolha o que voce quer ser:";
+	.@menu$ = "";
+	for (.@i = 0; .@i < .@n; .@i++)
+		.@menu$ = .@menu$ + " ~ " + ((.@opt[.@i] == Job_Novice_High) ? "^0055FFRenascer^000000" : jobname(.@opt[.@i])) + ":";
+	.@menu$ = .@menu$ + " ~ ^777777Deixa pra la^000000";
+
+	.@escolha = select(.@menu$) - 1;
+	if (.@escolha < 0 || .@escolha >= .@n)
+		close;
+	.@classe = .@opt[.@escolha];
+
+	// Super Novico tem exigencia propria de nivel de BASE, e ela so
+	// pode ser cobrada depois da escolha - as outras opcoes do mesmo
+	// menu (as 6 primeiras classes) exigem apenas classe 10.
+	if (.@classe == Job_Super_Novice && BaseLevel < .SuperNovicoBase) {
+		next;
+		mes .npc$;
+		mes "Super Novico exige nivel de base ^BB0000" + .SuperNovicoBase + "^000000.";
+		mes "Voce tem ^BB0000" + BaseLevel + "^000000.";
+		close;
+	}
+
+	next;
+	mes .npc$;
+	if (.@classe == Job_Novice_High) {
+		mes "Renascer nao e promocao. E recomeco.";
+		mes " ";
+		mes "^BB0000Voce volta ao nivel 1, de base e de classe.^000000";
+		mes "Em troca, sobe de novo com mais forca e chega mais longe.";
+	} else
+		mes "Confirma virar ^0055FF" + jobname(.@classe) + "^000000?";
+
+	if (select(" ~ Confirmar: ~ ^777777Deixa pra la^000000") != 1)
+		close;
+
+	if (.@classe == Job_Novice_High)
+		lastJob = Class;    // guardado pro Renascer linear
+
+	jobchange .@classe;
+
+	if (.@classe == Job_Novice_High)
+		resetlvl(1);
+	if (.Platina)
+		callfunc "F_GetPlatinumSkills";
+
+	specialeffect2 EF_ANGEL2;
+	specialeffect2 EF_ELECTRIC;
+
+	next;
+	mes .npc$;
+	mes "Feito. Agora voce e ^0055FF" + jobname(Class) + "^000000.";
+	close;
+
+OnInit:
+	.npc$ = "[Mestre de Classe]";
+
+	// ---- o que esta ligado ----
+	.Renascimento = true;      // 2a classe pode renascer em Novico Alto
+	.TerceiraClasse = true;    // 2a classe pode virar 3a classe
+	.Expandidas = true;        // Super Novico Expandido, Kagerou/Oboro, Rebellion
+	.RenascerLinear = true;    // depois de renascer, so a linha original
+	.SkillPointCheck = true;   // obriga a gastar os pontos antes de trocar
+	.Platina = true;           // da as habilidades Platina da nova classe
+
+	// ---- exigencias: nivel de BASE, nivel de CLASSE ----
+	setarray .Req_Primeira[0],      1, 10;   // Novico -> 1a classe
+	setarray .Req_Segunda[0],       1, 40;   // 1a -> 2a classe
+	setarray .Req_Renascer[0],     99, 50;   // 2a classe -> Novico Alto
+	setarray .Req_Terceira[0],     99, 50;   // 2a -> 3a classe
+	setarray .Req_ExpNinjaGun[0],  99, 70;   // Ninja/Justiceiro -> expandida
+	setarray .Req_ExpSNovico[0],   99, 99;   // Super Novico -> Expandido
+	.SuperNovicoBase = 45;                   // base minima pra virar Super Novico
+	end;
+}
