@@ -1,0 +1,67 @@
+//===== Guerra do Emperium ===================================
+//= Sprite da Teletransportadora
+//===== Onde =================================================
+//= Em lugar nenhum. E um NPC flutuante, sem corpo e sem mapa:
+//= so existe para rodar uma vez no OnInit.
+//===== Descricao ============================================
+//= Troca o sprite das 45 duplicatas do Warper (npc/custom/
+//= warper.txt) de 811 (4_F_KAFRA1, a moca de uniforme da Kafra)
+//= para 10007 (JT_PORTAL, o portal).
+//===== Por que de fora, e nao editando o warper.txt =========
+//= O sprite esta escrito 45 vezes, uma por duplicata, no fim do
+//= warper.txt - que e arquivo do rAthena, nao nosso. Editar as
+//= 45 linhas la sujaria o vendor e faria toda atualizacao futura
+//= daquele arquivo bater de frente com a nossa mudanca.
+//= setnpcdisplay faz o mesmo de fora e deixa o warper.txt byte a
+//= byte igual ao upstream.
+//=
+//= ARMADILHA AO DEPURAR: quem abrir o warper.txt vai ler 811 e
+//= nao vai bater com o portal que aparece no jogo. A troca e
+//= aqui. Se um dia quiser a Kafra de volta, basta comentar a
+//= linha deste arquivo no scripts_guerra.conf - o warper.txt
+//= sozinho ja nasce Kafra.
+//===== Notas ================================================
+//= 10007 = JT_PORTAL, de src/map/npc.hpp:944, contado a partir
+//= do NPC_RANGE3_START = 10000 da linha 937. Esta dentro da
+//= faixa que o npcdb_checkid aceita (npc.hpp:1595) e tem
+//= viewdata montada em npc.cpp:6332.
+//=
+//= A lista de nomes saiu do proprio warper.txt. Ela detecta nome
+//= que SUMIU (avisa no console), mas nao detecta nome que o
+//= rAthena tenha ACRESCENTADO numa atualizacao: cidade nova
+//= nasceria Kafra e ficaria fora da lista, calada. Ao atualizar o
+//= rAthena, reconferir contra o fim do warper.txt.
+//============================================================
+
+-	script	SpriteTeletransportadora	-1,{
+	end;
+
+OnInit:
+	// Ordem igual a do fim do warper.txt: primeiro o bloco comum,
+	// depois o bloco Renewal.
+	setarray .@nome$[0],
+		"Warper#tre",   "Warper#alb",   "Warper#alde",  "Warper#ama",
+		"Warper#ayo",   "Warper#com",   "Warper#einbe", "Warper#einbr",
+		"Warper#orc",   "Warper#gef",   "Warper#glh",   "Warper#gon",
+		"Warper#hug",   "Warper#izd",   "Warper#izl",   "Warper#jaw",
+		"Warper#lhz",   "Warper#lou",   "Warper#man",   "Warper#mid",
+		"Warper#mjo",   "Warper#moc",   "Warper#mor",   "Warper#mos",
+		"Warper#nam",   "Warper#nif",   "Warper#arc",   "Warper#pay",
+		"Warper#prt",   "Warper#cul",   "Warper#rac",   "Warper#spl",
+		"Warper#thor",  "Warper#umb",   "Warper#ve",    "Warper#xmas",
+		"Warper#yuno",
+		// Renewal:
+		"Warper#bra",   "Warper#dew",   "Warper#dic",   "Warper#ecl",
+		"Warper#las",   "Warper#mal",   "Warper#ma",    "Warper#mora";
+
+	.@sumiram = 0;
+	for (.@i = 0; .@i < getarraysize(.@nome$); .@i++) {
+		// setnpcdisplay devolve 1 quando o NPC nao existe.
+		if (setnpcdisplay(.@nome$[.@i], 10007))
+			.@sumiram++;
+	}
+
+	if (.@sumiram)
+		debugmes "SpriteTeletransportadora: "+.@sumiram+" de "+getarraysize(.@nome$)+" duplicatas do Warper nao foram encontradas. A lista deste arquivo saiu de sincronia com o fim de npc/custom/warper.txt.";
+	end;
+}
