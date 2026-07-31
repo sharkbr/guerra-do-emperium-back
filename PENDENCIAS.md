@@ -1,8 +1,12 @@
 # Pendências — Guerra do Emperium
 
-Registrado em 2026-07-29/30. **A v1 está de pé:** dá para logar e jogar. A seção
-0 conta como o cliente foi destravado e serve de referência quando ele voltar a
-quebrar; o resto são coisas deliberadamente deixadas para depois.
+Registrado em 2026-07-29/30. **A v1 está de pé:** dá para logar e jogar, e o
+cliente está **em inglês de ponta a ponta**. A seção 0 conta como o cliente foi
+destravado e serve de referência quando ele voltar a quebrar; o resto são coisas
+deliberadamente deixadas para depois.
+
+**Próximo passo: alterar código** — ver a seção com esse nome. A frente de
+tradução está concluída e vive logo abaixo dela, como referência.
 
 > Este arquivo é versionado, então **nunca colar senha real aqui.** As senhas
 > reais vivem em `rathena/conf/import/`, que está fora do git.
@@ -19,6 +23,7 @@ cliente → login-server → autenticação → char-server → map-server → m
 ```
 
 A interface aparece **em inglês** — a tradução do ROenglishRE está funcionando.
+(Naquele momento, só parcialmente; foi concluída às ~21:20 do mesmo dia.)
 
 ### O pincode
 
@@ -49,10 +54,12 @@ então vale reler antes de mexer no cliente de novo.
 | Backup do oficial | `Ragexe.exe.original` (7,3 MB) — blindado, inútil para patch |
 | Dados | `data.grf` 3,0 GB, oficial da Gravity, SHA256 conferido |
 | `data\` | ROenglishRE + nosso `clientinfo.xml`; 4 `.lub` removidos (ver histórico) |
-| `SystemEN\` | pasta **irmã** de `System\`, 12 arquivos (25 MB) com `LuaFiles514\` |
+| `SystemEN\` | pasta **irmã** de `System\`, 12 arquivos (25 MB) com `LuaFiles514\` + `mapinfo_C.lub` |
+| `System\` | `itemInfo_true` e `mapInfo_*` **substituídos pelas versões em inglês**; 2 `_Sakray` criados |
 | `navigation\` | + `Addons\Navigation Legacy` (18 arquivos, 5,3 MB) |
 | `DATA.INI` | `0=data.grf` (não usar o do ROenglishRE: ele pede `server.grf`) |
-| Patches aplicados | 33, registrados em `WARP-rock_win32/LastSession.yml` |
+| Patches aplicados | 34 — as 33 originais + `MsgStrings`, em `WARP-rock_win32/LastSession.yml` |
+| Backup do exe pré-`MsgStrings` | `cliente\GuerraDoEmperium.exe.BACKUP-20260730-2105` |
 | `PACKETVER` | 20211103, em `rathena/src/custom/defines_pre.hpp` |
 | Vídeo | configurado via `Setup.exe` como admin, adaptador NVIDIA |
 | Backup dos `.lub` removidos | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |
@@ -203,12 +210,57 @@ bad argument #1 to 'pairs' (table expected, got nil)
 **Não bloqueia** — é a lista de "quests recomendadas", recurso de UI secundário.
 Decidido seguir e validar a cadeia cliente↔servidor primeiro.
 
-O que já foi descartado: os três `System\RecommendedQuestInfoList*.lub`
-**contêm** as strings `RecommendedQuestInfoList` e `QuestInfo1`, então o arquivo
-está lá e não está vazio. A hipótese que sobra é que o `QuestInfo_f.lua:57` (que
-vem do GRF) itere uma tabela **aninhada** que a nossa versão do arquivo não
-preenche — ou que o `_sak` que criamos por cópia do `_True` não seja o par certo
-para este exe. Investigar só se incomodar.
+**RESOLVIDO** na rodada de 2026-07-30 ~19:30 — ver abaixo. A hipótese de "tabela
+aninhada" registrada aqui estava **errada**: o global inteiro é que estava nil,
+porque o exe procura um nome de arquivo que não existia.
+
+### Rodada de 2026-07-30, ~19:30 — `_sak` vs `_Sakray`: o último diálogo caiu
+
+O `RecommendedQuestInfoLoad` sumiu. **A causa não era conteúdo, era nome de
+arquivo.**
+
+Como foi diagnosticado (o método vale mais que o resultado):
+
+1. Extraído `data\luafiles514\lua files\datainfo\questinfo_f.lub` do `data.grf` e
+   **desassemblado** (é bytecode Lua 5.1, header `1b 4c 75 61 51`). A linha 57 é
+   o laço **externo** — `for _, v in pairs(RecommendedQuestInfoList)`. Ou seja, o
+   global inteiro estava nil, não uma tabela aninhada.
+2. Desassemblados `System\RecommendedQuestInfoList.lub` e `_sak.lub`: os dois
+   fazem `SETGLOBAL "RecommendedQuestInfoList"` corretamente. Logo o problema não
+   era o conteúdo — era o arquivo nunca ser carregado.
+3. Extraídas as strings do `GuerraDoEmperium.exe` filtrando por `^system[\\/]`.
+   O exe pede literalmente **`system\RecommendedQuestInfoList_Sakray`** e
+   **`system\OngoingQuestInfoList_Sakray`**.
+
+**A generalização do item 2 da "cadeia já resolvida" estava incompleta.** Não é
+que o exe queira `_sak` para tudo: cada arquivo tem o seu sufixo, e só o exe diz
+qual. A lista completa do que este exe procura em `System\`:
+
+| Arquivo pedido pelo exe | Sufixo |
+|---|---|
+| `iteminfo_Sak.lub`, `itemInfo_true.lub` | `_Sak` / `_true` |
+| `mapInfo_sak.lub` | `_sak` |
+| `monster_size_effect_sak_new.lub` | `_sak_new` |
+| `PetEvolutionCln_sak.lub` | `_sak` |
+| `PrivateAirplane_Sakray.lub` | **`_Sakray`** |
+| `OngoingQuestInfoList_Sakray` | **`_Sakray`** |
+| `RecommendedQuestInfoList_Sakray` | **`_Sakray`** |
+| `Achievement_list.lub`, `CheckAttendance.lub`, `tipbox.lub`, `Towninfo.lub` | sem sufixo |
+| `LuaFiles514\OptionInfo` | sem sufixo |
+
+Criados por cópia das versões `_True` (mesmo pareamento que já funcionava no
+`PrivateAirplane`):
+
+- `System\RecommendedQuestInfoList_Sakray.lub`
+- `System\OngoingQuestInfoList_Sakray.lub`
+
+**Bônus:** o `OngoingQuestInfoList_True.lub` define o global `QuestInfoList`, que
+é consumido por `GetOngoingQuestInfoByID`, `GetCoolTimeQuest`,
+`GetOngoingDescription` e `GetOngoingRewardInfo`. Estava nil também — a janela de
+quests ia estourar ao ser aberta, mais tarde e sem diálogo no boot.
+
+**Receita, se aparecer outro `.lub` que "existe mas não carrega":** extrair as
+strings do exe e conferir o nome exato. Nunca assumir o sufixo por analogia.
 
 ### Estado dos 23 `.lub` do ROenglishRE ainda ativos
 
@@ -243,11 +295,10 @@ Outras pistas guardadas, se um dia forem úteis:
   **completo** (`git fetch --unshallow` — hoje é clone raso, 1 só commit) e fazer
   checkout de um commit de ~novembro/2021. Caro em download.
 
-### Pendência conhecida, não bloqueia
+### Nenhum diálogo de erro pendente
 
-O diálogo `RecommendedQuestInfoLoad` aparece a cada abertura do cliente. É a
-lista de "quests recomendadas", puramente cosmético. O que já foi descartado
-está na rodada das ~13:22.
+O cliente abre limpo. O `RecommendedQuestInfoLoad` foi o último e caiu na rodada
+das ~19:30.
 
 ### Armadilhas de ferramenta deste ambiente
 
@@ -276,9 +327,241 @@ Estas produziram diagnósticos falsos e custaram retrabalho:
 
 ---
 
-## PRÓXIMO PASSO — comandos `@`
+## PRÓXIMO PASSO — alterar código
 
-Ponto de partida da próxima sessão. No teste da v1 apareceram no chat:
+Aberto em 2026-07-30, ~21:30, com a tradução concluída. A partir daqui o trabalho
+deixa de ser "destravar o cliente de outra pessoa" e passa a ser **construir o
+nosso servidor**: mexer em `rathena/src/`, em scripts de NPC, em `db/`.
+
+Nada foi levantado ainda sobre essa frente. O que já se sabe e é relevante:
+
+- O `rathena/` foi **vendorizado sem histórico do upstream** (ver item 8). Toda
+  customização nossa hoje é indistinguível de código do rAthena num `git diff`.
+  **Decidir a convenção antes de escrever a primeira linha**, não depois.
+- Já existe `rathena/src/custom/defines_pre.hpp` em uso, com o `PACKETVER`. O
+  rAthena tem uma pasta `src/custom/` pensada exatamente para isso — é o caminho
+  natural para não sujar o código de terceiros.
+- Recompilar exige Visual Studio 2022 Community 17.14.37, já instalado.
+- Mudança em `conf/` **não** precisa de recompilação; mudança em `src/` precisa.
+
+---
+
+## CONCLUÍDO — tradução do cliente (2026-07-30)
+
+**Estado final: o cliente está em inglês, de ponta a ponta.** Tela de login,
+seleção de personagem, janelas do jogo, itens, habilidades, quests, letreiro de
+mapa. O único coreano que resta é a arte da tela de classificação etária, que é
+imagem, não texto.
+
+A decisão foi **ligar o inglês primeiro** e traduzir para PT-BR depois, arquivo
+por arquivo, em cima dessa base. A fase PT-BR não começou.
+
+### A descoberta que destravou tudo
+
+O `msgstringtable.txt` **não existe dentro do `data.grf`.** A tabela inteira (4022
+entradas) está **compilada dentro do exe**, em coreano. Confere linha a linha com
+o arquivo em inglês do ROenglishRE que já estava em `data\msgstringtable.txt`:
+
+| # | No exe | Em `data\msgstringtable.txt` |
+|---|---|---|
+| 0 | `동의 하십니까?` | `Do you agree?` |
+| 1 | `서버 연결 실패` | `Failed to Connect to Server.` |
+| 2 | `서버와 연결이 끊어졌습니다.` | `Disconnected from Server.` |
+| 4 | `서버 종료됨` | `Server Closed.` |
+
+O cliente nunca abria esse arquivo porque faltava o patch **`MsgStrings`**. Esse
+patch sozinho resolveu a tela de login inteira, os títulos de janela e os
+diálogos.
+
+### Onde vive cada texto do jogo — mapa final
+
+| Camada | Arquivo | Como ficou resolvido |
+|---|---|---|
+| UI e mensagens de sistema | `data\msgstringtable.txt` | patch `MsgStrings` no WARP |
+| Quests | `data\questid2display.txt` | já lido por padrão em `langtype 0` |
+| Strings cravadas no exe | `WARP\Inputs\Translations_EN.yml` | `TranslateClient`, já aplicado antes |
+| Itens | `System\itemInfo_true.lub` | trocado pelo stub do ROenglishRE |
+| Letreiro e nome de mapa | `System\mapInfo_*.lub` | trocado pela versão em inglês |
+| Habilidades | `data\...\skillinfoz\*.lub` | já estava em inglês |
+| Texturas | `data\texture\유저인터페이스\` | já ativas via `DataFolderFirst` |
+| Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | PT-BR de fábrica, via `@langtype por` |
+
+**A regra que se repetiu quatro vezes:** quando um texto continua em coreano, o
+arquivo traduzido quase sempre **já está no disco** — o que falta é o cliente ser
+apontado para ele. Antes de traduzir qualquer coisa, confirmar que o cliente
+realmente lê o arquivo.
+
+### Pontos de partida para a fase PT-BR
+
+Nenhum começou. Em ordem de retorno por esforço:
+
+1. **`SystemEN\mapinfo_C.lub`** — mescla `mapTbl_C` por cima do inglês. As cidades
+   que importam são ~15 e o efeito é imediato ao entrar no mapa.
+2. **`rathena\conf\msg_conf\map_msg_por.conf`** — já pronto, só ativar.
+3. **`data\msgstringtable.txt`** — 4022 linhas, a UI inteira. Volume grande.
+4. **`SystemEN\itemInfo_C.lua`** — mesma ideia do mapinfo_C, para itens.
+| Habilidades | `data\...\skillinfoz\skilldescript.lub` | **inglês e ativo** | nada |
+| Itens | `System\itemInfo_true.lub` | **corrigido ~20:00** | testar |
+| Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | **PT-BR de fábrica** | `@langtype por` |
+| Texturas com texto desenhado | `data\texture\유저인터페이스\` | **inglês e JÁ ATIVO** — 502 arquivos | nada |
+
+### A camada de textura já está de pé — não confundir com as outras
+
+Texturas **não passam por patch**. Com o `DataFolderFirst` aplicado, o `data\` do
+disco vence o GRF direto, então os 502 arquivos que o ROenglishRE instalou em
+`data\texture\유저인터페이스\` já estão valendo. É por isso que no diálogo do
+`RecommendedQuestInfoLoad` os botões apareciam como `OK` e `cancel` em inglês no
+meio de texto coreano: os botões eram BMP do disco, o texto vinha do exe.
+
+Então as camadas têm **três** estados, não dois:
+
+| Estado | Camadas |
+|---|---|
+| Já ativo, nada a fazer | texturas, habilidades |
+| No disco, esperando patch do WARP | msgstringtable, quests, strings do exe |
+| Não traduzido | nomes de mapa/monstro do servidor, conteúdo nosso |
+
+**A msgstringtable em inglês tem 0 linhas com coreano remanescente** (4023 de
+4023). Logo, o patch `MsgStrings` limpa de uma vez *todo* texto que venha dessa
+tabela — não é preciso caçar entrada por entrada. A tela de login inteira está
+lá: `[3250] Integrated Account`, `[3411] Save ID`, `[3412] Password`,
+`[3413] ID`, `[3414] Sign Up`.
+
+**Lacuna nas texturas do login:** o ROenglishRE entregou só o conjunto antigo
+(`btn_back`, `btn_intro`, `btn_request`…). O conjunto novo que este cliente usa
+(`bt_join_*`, `bt_start_*`, `bt_otp_*`, `bt_close_*`) não está no disco e cai para
+o GRF. Não custa tradução nenhuma — o `bt_join_normal.bmp` é um retângulo vazio de
+84×21 e o texto é desenhado por cima pelo cliente. É onde mexer para dar
+identidade visual própria ao login.
+
+**Armadilha de medição, registrada porque custou tempo:** `IndexOf` sobre uma
+string decodificada de cp949 devolve índice de **caractere**, não byte — offsets
+derivados dele ficam deslocados e apontam para lixo. E não adianta tentar derivar
+o índice da msgstringtable andando pelas strings do binário: o linker reordena os
+literais (no índice 100 o exe tem `파티설정`, enquanto a linha 100 da tabela é
+`Information`). O único método confiável é procurar o texto **em inglês** no
+`msgstringtable.txt`.
+
+### WARP — RESOLVIDO em 2026-07-30 ~21:15
+
+Backup do exe que funcionava: `GuerraDoEmperium.exe.BACKUP-20260730-2105`.
+
+1. **`MsgStrings`** ("Always read msgstringtable.txt") — **APLICADO**. Foi o que
+   destravou tudo: tela de login, títulos de janela, diálogos.
+2. **`QuestDisplay`** — **não existe para o nosso caso, e não precisa.** A
+   descrição do patch é "load questid2display.txt on all Langtypes (*instead of
+   only 0*)" e o nosso `clientinfo.xml` usa `langtype 0`. O cliente já lê o
+   arquivo por padrão. Não procurar de novo.
+3. **`TranslateClient`** — **já estava aplicado desde a sessão anterior.** Eu tinha
+   lido `$translationFile: data: ''` no `LastSession.yml` como "input vazio" e
+   concluído errado: `data` vazio é só como o WARP serializa input do tipo
+   arquivo. Medição que provou: **122 das 148** traduções do `Translations_EN.yml`
+   já estavam gravadas no exe. A prova irrefutável é a string `Item Cmpare`
+   presente no binário — um erro de digitação do arquivo do WARP, que não teria
+   como existir num exe da Gravity.
+
+Risco de desalinhamento da msgstringtable (arquivo de 2026 sobre exe de 2021):
+**baixo**. A tabela é indexada por posição, mas a Gravity **acrescenta** entradas
+no fim em vez de inserir no meio, e linhas sobrando nunca são referenciadas. Se
+mesmo assim embaralhar, o WARP tem a extensão **"Extract msgstringtable"**, que
+extrai a tabela do *nosso* exe com a contagem exata e aceita o
+`Inputs\MsgStrMap_EN.yml` (641 KB) como tradução — alinhamento garantido por
+construção.
+
+### Feito em ~20:00, sem WARP
+
+- **itemInfo em inglês.** O `CustomItemInfoLub` apontava para
+  `System\itemInfo_true.lub`, que era o arquivo **coreano do instalador da
+  Gravity** (6,6 MB, 62 mil sinais de coreano). Substituído pelo stub do
+  ROenglishRE (`SystemEN\itemInfo.lua`, 3,7 KB), que faz `require` do
+  `itemInfo_f` e `dofile` dos 22 MB de `SystemEN\LuaFiles514\itemInfo.lua`.
+  Original salvo em `_backup_luafiles_roenglish\System_itemInfo_true.lub.KOREANO`.
+  Ajustado `DisplayServer = 0` para não anexar `(kRO)` ao nome de cada item.
+
+### Feito em ~21:20 — o letreiro do nome do mapa
+
+Depois do `MsgStrings`, o único coreano que sobrou foi o letreiro que aparece ao
+entrar no mapa (`룬-미드가츠 왕국 수도` / `프론테라`) e o campo MAP na seleção de
+personagem. Vem do `System\mapInfo_*.lub`, que era o arquivo coreano do instalador
+(8210 sinais de coreano nos dois, `_sak` e `_true`).
+
+Desassemblado: define o global `mapTbl` e uma `main()` que percorre a tabela
+chamando `AddMapDisplayName`, `AddMapSignName` e `AddMapBackgroundBmp`. Formato
+por mapa:
+
+```lua
+["prontera.rsw"] = {
+    displayName = "...",              -- o que o /where mostra
+    notifyEnter = true,
+    signName = { subTitle = "...", mainTitle = "..." },   -- o letreiro
+    backgroundBmp = "field"           -- dungeon, field2, field, noname, siege, village
+}
+```
+
+**Onde estava a versão em inglês:** `ROenglishRE\Translation\Compatibility\`.
+Essas pastas com data no nome **não são espelhos completos do cliente** — são
+recortes por recurso. A `2021-10-28` (a mais próxima do nosso cliente) só tem
+Enchant e ItemReform. O único `mapInfo` em inglês está em **`2019-06-05`**, mas o
+conteúdo dele é atual (`Last updated: 20260322`) — é o *formato* que é de 2019.
+
+Instalado por cima de `mapInfo_sak.lub` e `mapInfo_true.lub`; originais em
+`_backup_luafiles_roenglish\System_mapInfo_*.KOREANO`.
+
+**Gancho para o PT-BR:** copiado também `SystemEN\mapinfo_C.lub`, um template
+vazio que mescla `mapTbl_C` por cima do `mapTbl` via `F_ROTP` (de
+`SystemEN\LuaFiles514\rotp_f.lua`, confirmado que a função existe). Dá para
+traduzir mapa a mapa **sem tocar** no arquivo grande em inglês — é o melhor ponto
+de partida para a fase PT-BR, porque as cidades importantes são poucas.
+
+### A tela de classificação etária (12세 이용가) — parcialmente decifrada
+
+São três peças independentes:
+
+| Peça | Origem | Confirmado? |
+|---|---|---|
+| Os 2 selos no canto superior direito | `data\texture\유저인터페이스\t_GameGrade.tga`, 207×118 — bate com o tamanho no screenshot | sim |
+| O diálogo `동의 하십니까?` | msgstringtable **#0** → cai junto com o patch `MsgStrings` | sim |
+| O painel ciano com o texto da lei | não identificado | **não** |
+
+**Busca encerrada — não vale mais tempo.** É uma tela cosmética de um clique de
+OK, e o diálogo em cima dela já virou inglês com o `MsgStrings`. O que **já foi
+eliminado**, para ninguém refazer:
+
+- os 14 `loading*.jpg` do GRF, nas duas pastas — nenhum tem o painel ciano;
+- **todos** os `.jpg` do GRF, sem exceção;
+- os arquivos na raiz de `data\texture\`;
+- imagens embutidas no exe — os 4 candidatos eram bytes coincidentes, nenhum abre;
+- patch do WARP que pule a tela — não existe.
+
+Hipótese testada e **descartada**: plantar uma imagem em
+`data\texture\유저인터페이스\loading07.jpg` (o único DES-criptografado e fora da
+lista do `clientinfo.xml`) não mudou nada. A sonda foi removida.
+
+Se um dia incomodar, sobra um experimento de uma palavra: trocar
+`<servicetype>korea</servicetype>` por `america` no `clientinfo.xml`. Pode
+desligar o fluxo coreano inteiro — mas o patch `CallKoreaClientInfo` está
+aplicado e força o modo Korea, então a chance é baixa. Reversível numa palavra.
+
+Se alguém quiser retomar: o caminho que sobrou é decifrar as entradas com flag
+DES do GRF, que o `ferramentas/grf.py` não lê.
+
+### Ferramentas escritas nesta sessão
+
+Versionadas em **`ferramentas/`**, com uso documentado no `ferramentas/LEIAME.md`:
+
+- **`grf.py`** — extrator de GRF 0x200 em Python 2.7. **Não lê entradas com flag
+  DES** (`flags & 6`), que existem às centenas no GRF da Gravity.
+- **`luadis.py`** — desassembla bytecode Lua 5.1 mostrando o número de linha do
+  fonte. Foi o que resolveu o `QuestInfo_f.lua:57`.
+
+Cuidado com o argv: caminhos com trecho coreano **não sobrevivem** ao console do
+PowerShell até o Python. Fazer o match por substring ASCII dentro do script.
+
+---
+
+## Referência — comandos `@`
+
+Levantado em 2026-07-30. No teste da v1 apareceram no chat:
 
 ```
 @ml is Unknown Command.
@@ -442,6 +725,12 @@ mais caro.
 | Conta de teste | `teste` / `teste123`, `group_id 99`, `account_id 2000000` |
 | Personagem da v1 | `Abernus`, Novice Lv.1 |
 | Comandos `@` | `rathena/doc/atcommands.txt`; in-game `@commands` e `@help` |
+| Textos da UI do cliente | `cliente\data\msgstringtable.txt` (4022 linhas) |
+| Textos de quest | `cliente\data\questid2display.txt` |
+| Nomes e descrições de item | `cliente\SystemEN\LuaFiles514\itemInfo.lua` (22 MB) |
+| Config do itemInfo | `cliente\System\itemInfo_true.lub` (stub do ROenglishRE) |
+| Mensagens do servidor em PT-BR | `rathena/conf/msg_conf/map_msg_por.conf`; in-game `@langtype por` |
+| Inspecionar GRF e `.lub` | `ferramentas/` (ver `ferramentas/LEIAME.md`) |
 | Config de vídeo do cliente | `Setup.exe` **como admin** (grava em HKLM) |
 | `.lub` removidos do cliente | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |
 | Subir os servidores | `login-server.exe`, `char-server.exe`, `map-server.exe` em `rathena/` |
