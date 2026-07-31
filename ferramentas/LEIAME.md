@@ -4,6 +4,39 @@ Escritas em 2026-07-30 para diagnosticar o erro `RecommendedQuestInfoLoad`.
 Rodam em **Python 2.7** (`C:\Python27\python.exe`), que já está instalado nesta
 máquina por causa do `get4.py` do NEMO.
 
+## `traduz_setup.py` — põe o `Setup.exe` em português
+
+```
+python traduz_setup.py <Setup.exe>              # aplica (faz backup antes)
+python traduz_setup.py <Setup.exe> --verificar  # só relata, não grava
+```
+
+O `Setup.exe` da Gravity já traz os diálogos compilados em **sete idiomas**. O
+idioma não vem do locale nem de arquivo de configuração — o exe não importa uma
+única API de idioma; o ID do recurso está cravado no código, e no build coreano
+é o do par coreano (105/106).
+
+Este script não reescreve texto: faz o `IMAGE_RESOURCE_DATA_ENTRY` do ID coreano
+apontar para os bytes do par português (112/139), 8 bytes por diálogo. Os
+diálogos coreanos continuam no arquivo.
+
+Os três botões do rodapé não estão nos diálogos — são literais **CP949 em
+`.rdata`**. Como o texto novo não cabia no slot original, as strings vão para o
+padding zerado do fim de `.text` e os três `push imm32` passam a apontar para lá.
+
+**É idempotente** e valida tudo antes de gravar um byte: aborta se o literal
+coreano não aparecer exatamente uma vez, se a referência não for `push imm32`, se
+o padding de `.text` não estiver zerado ou se o cave for pequeno. Recalcula o
+checksum do PE (o algoritmo foi conferido reproduzindo o checksum do exe
+original, byte a byte).
+
+**Para trocar o idioma**, editar `PARES` no topo do arquivo — `103`/`104` é o
+par inglês. Ver a tabela completa de IDs no `PENDENCIAS.md`.
+
+**O arquivo fica travado enquanto o Setup estiver aberto.** O Windows deixa
+renomear um exe em uso, então o caminho é patchar uma cópia e trocar por
+`mv`.
+
 ## `grf.py` — extrator de GRF 0x200
 
 ```

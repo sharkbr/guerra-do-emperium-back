@@ -528,11 +528,58 @@ diálogos.
 | Habilidades | `data\...\skillinfoz\*.lub` | recortados em 2026-07-30 ~22:55 — ver a rodada da janela de habilidades |
 | Texturas | `data\texture\유저인터페이스\` | já ativas via `DataFolderFirst` |
 | Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | PT-BR de fábrica, via `@langtype por` |
+| Janela do `Setup.exe` | recursos `RT_DIALOG` dentro do próprio exe | `ferramentas\traduz_setup.py` — ver abaixo |
 
-**A regra que se repetiu quatro vezes:** quando um texto continua em coreano, o
-arquivo traduzido quase sempre **já está no disco** — o que falta é o cliente ser
-apontado para ele. Antes de traduzir qualquer coisa, confirmar que o cliente
-realmente lê o arquivo.
+**A regra que se repetiu cinco vezes:** quando um texto continua em coreano, a
+versão traduzida quase sempre **já está no disco** — e no caso do `Setup.exe`,
+dentro do próprio binário. O que falta é o cliente ser apontado para ela. Antes
+de traduzir qualquer coisa, confirmar de onde o cliente realmente lê o texto.
+
+### O `Setup.exe` — traduzido em 2026-07-30 ~23:55
+
+A janela do `Setup.exe` continuava em coreano. **Não foi preciso editar texto
+nenhum:** o exe da Gravity já traz os diálogos compilados em sete idiomas.
+
+| par de IDs | idioma | | par de IDs | idioma |
+|---|---|---|---|---|
+| 103 / 104 | inglês | | 110 / 111 | chinês tradicional |
+| 105 / 106 | **coreano — era o que estava em uso** | | 112 / 139 | **português — em uso agora** |
+| 107 / 108 | chinês simplificado | | 140 / 141 | russo |
+| | | | 142 / 143 | japonês |
+
+O idioma **não** é escolhido por locale nem por arquivo de configuração — o exe
+não importa uma única API de idioma. O ID do recurso está cravado no código, e no
+build coreano é o do par coreano. Por isso o patch não mexe no código do
+diálogo: faz o `IMAGE_RESOURCE_DATA_ENTRY` do ID 105 apontar para os bytes do
+112, e o do 106 para os do 139 — **8 bytes por diálogo**. Os diálogos coreanos
+continuam no arquivo, intactos.
+
+Os três botões do rodapé são um caso à parte: não estão nos diálogos, são
+literais **CP949 em `.rdata`**, escritos com `SetWindowTextA`. Eram eles que
+apareciam como `È®ÀÎ` / `Ãë¼Ò` — mojibake de CP949 lido na codepage 1252, e não
+hangul de verdade. Como `Cancelar` e `Restaurar` não cabiam no slot original de 8
+bytes, as strings novas foram para o **padding zerado do fim da seção `.text`**
+(492 bytes livres em RVA `0x20E14`, dentro da última página mapeada da seção) e
+os três `push imm32` que as referenciavam passaram a apontar para lá.
+
+O patch inteiro são **37 bytes**: 2 data entries, 3 operandos `push`, as strings
+novas e o checksum do PE recalculado. Backup em
+`cliente\Setup.exe.BACKUP-20260730-234917`.
+
+Verificado com `LoadLibraryEx` + `FindResource`: o loader do Windows devolve para
+o ID 106 o template com `Config. Gráfica` / `Dimensão da Tela`.
+
+**Se um dia quiser o inglês em vez do português**, é trocar os pares em
+`PARES`, no topo do `traduz_setup.py`, de `112`/`139` para `103`/`104`.
+
+**A aba `Option` não tem tradução em nenhum idioma** exceto coreano: os rótulos
+são os nomes crus dos comandos (`notrade`, `skillfail`, `fog`). Os IDs 103 e 112
+são idênticos nesse ponto. Traduzir essa aba exigiria reconstruir o template, o
+que não cabe no espaço atual do recurso — ficou de fora de propósito.
+
+**Os títulos das abas continuam `System` e `Option`.** Estão embutidos no
+template português; trocar por `Sistema` exigiria realocar o recurso, porque só
+substituição de mesmo comprimento é segura dentro de um `DLGTEMPLATEEX`.
 
 ### Pontos de partida para a fase PT-BR
 
