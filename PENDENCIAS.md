@@ -9,6 +9,10 @@ deliberadamente deixadas para depois.
 nosso e a convenção de customização definida — ver "CONVENÇÃO DE CUSTOMIZAÇÃO".
 A frente de tradução está concluída e vive logo abaixo dela, como referência.
 
+**A frente visual — a temática de cidade destruída — foi aberta em 2026-07-31**,
+por enquanto só como análise de viabilidade. Vive em arquivo próprio:
+**`CUSTOMIZACAO-VISUAL.md`**. Nada foi alterado no cliente ainda.
+
 > Este arquivo é versionado, então **nunca colar senha real aqui.** As senhas
 > reais vivem em `rathena/conf/import/`, que está fora do git.
 
@@ -929,6 +933,8 @@ mais caro.
 | Config do itemInfo | `cliente\System\itemInfo_true.lub` (stub do ROenglishRE) |
 | Mensagens do servidor em PT-BR | `rathena/conf/msg_conf/map_msg_por.conf`; in-game `@langtype por` |
 | Inspecionar GRF e `.lub` | `ferramentas/` (ver `ferramentas/LEIAME.md`) |
+| Temática visual / cidade destruída | `CUSTOMIZACAO-VISUAL.md` |
+| Mapas, modelos e texturas do cliente | `cliente\data\*.rsw`, `.gnd`, `.gat`; `data\model\`, `data\texture\` |
 | Recortar `.lub` novo demais | `ferramentas/filtra_lub_por_skid.py` |
 | Config de vídeo do cliente | `Setup.exe` **como admin** (grava em HKLM) |
 | `.lub` removidos e originais | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |

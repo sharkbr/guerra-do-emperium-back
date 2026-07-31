@@ -1,0 +1,245 @@
+// --------------------------------------------------------------
+// -            Guerra do Emperium - mapa-catalogo             -
+// --------------------------------------------------------------
+//
+// GERADO por ferramentas/catalogo_ingame.py. Nao editar a mao:
+// rodar o script de novo e a forma de atualizar.
+//
+// Uma placa por modelo do mapa-catalogo, com o numero que casa com
+// o CATALOGO-IZLUDE-INGAME.md. Serve para conferir o que cada
+// modelo E de verdade, dado que o nome em coreano engana.
+//
+// Ferramenta de trabalho, nao conteudo de jogo: manter desligado
+// no scripts_guerra.conf quando nao estiver em uso.
+//
+// @warp prt_fild08 <x> <y> vai direto a um modelo -- as coordenadas estao
+// no markdown.
+
+prt_fild08,70,119,4	script	01 osso	4_BOARD3,{ end; }
+prt_fild08,130,119,4	script	02 tumulo ? _ entrada	4_BOARD3,{ end; }
+prt_fild08,142,119,4	script	03 tumulo ? ponte 01	4_BOARD3,{ end; }
+prt_fild08,154,119,4	script	04 tumulo ? ponte 02	4_BOARD3,{ end; }
+prt_fild08,166,119,4	script	05 tumulo 01	4_BOARD3,{ end; }
+prt_fild08,178,119,4	script	06 tumulo 02	4_BOARD3,{ end; }
+prt_fild08,70,131,4	script	07 tumulo 03	4_BOARD3,{ end; }
+prt_fild08,82,131,4	script	08 osso ? 04	4_BOARD3,{ end; }
+prt_fild08,130,131,4	script	09 payon - casa abandon	4_BOARD3,{ end; }
+prt_fild08,142,131,4	script	10 payon - casa abandon	4_BOARD3,{ end; }
+prt_fild08,154,131,4	script	11 casa abandonada	4_BOARD3,{ end; }
+prt_fild08,166,131,4	script	12 casa abandonada 01	4_BOARD3,{ end; }
+prt_fild08,178,131,4	script	13 casa abandonada 02	4_BOARD3,{ end; }
+prt_fild08,190,131,4	script	14 casa abandonada 3	4_BOARD3,{ end; }
+prt_fild08,202,131,4	script	15 casa abandonada pare	4_BOARD3,{ end; }
+prt_fild08,70,143,4	script	16 cranio ? _	4_BOARD3,{ end; }
+prt_fild08,82,143,4	script	17 cranio ? _	4_BOARD3,{ end; }
+prt_fild08,94,143,4	script	18 cranio ? _	4_BOARD3,{ end; }
+prt_fild08,130,143,4	script	19 cranio ? _	4_BOARD3,{ end; }
+prt_fild08,142,143,4	script	20 tumulo 01	4_BOARD3,{ end; }
+prt_fild08,154,143,4	script	21 cranio ?	4_BOARD3,{ end; }
+prt_fild08,166,143,4	script	22 vila entrada	4_BOARD3,{ end; }
+prt_fild08,178,143,4	script	23 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,190,143,4	script	24 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,70,155,4	script	25 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,82,155,4	script	26 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,94,155,4	script	27 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,106,155,4	script	28 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,118,155,4	script	29 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,130,155,4	script	30 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,142,155,4	script	31 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,166,155,4	script	32 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,178,155,4	script	33 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,190,155,4	script	34 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,202,155,4	script	35 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,70,167,4	script	36 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,82,167,4	script	37 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,94,167,4	script	38 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,106,167,4	script	39 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,118,167,4	script	40 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,130,167,4	script	41 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,142,167,4	script	42 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,154,167,4	script	43 china - casa abandon	4_BOARD3,{ end; }
+prt_fild08,166,167,4	script	44 adm fragmento 01	4_BOARD3,{ end; }
+prt_fild08,190,167,4	script	45 adm fragmento 02	4_BOARD3,{ end; }
+prt_fild08,202,167,4	script	46 quebrada pedra ? 01	4_BOARD3,{ end; }
+prt_fild08,70,179,4	script	47 quebrada pedra ? 02	4_BOARD3,{ end; }
+prt_fild08,82,179,4	script	48 quebrada pedra ? 03	4_BOARD3,{ end; }
+prt_fild08,94,179,4	script	49 quebrada pedra ? 04	4_BOARD3,{ end; }
+prt_fild08,106,179,4	script	50 quebrada pedra ? 05	4_BOARD3,{ end; }
+prt_fild08,118,179,4	script	51 quebrada pedra ? 06	4_BOARD3,{ end; }
+prt_fild08,142,179,4	script	52 quebrada ? 01	4_BOARD3,{ end; }
+prt_fild08,154,179,4	script	53 quebrada ? 02	4_BOARD3,{ end; }
+prt_fild08,166,179,4	script	54 quebrada ? 03	4_BOARD3,{ end; }
+prt_fild08,178,179,4	script	55 quebrada ? 04	4_BOARD3,{ end; }
+prt_fild08,190,179,4	script	56 quebrada ? 05	4_BOARD3,{ end; }
+prt_fild08,202,179,4	script	57 quebrada ? 06	4_BOARD3,{ end; }
+prt_fild08,70,191,4	script	58 quebrada ? 07	4_BOARD3,{ end; }
+prt_fild08,82,191,4	script	59 quebrada ? 08	4_BOARD3,{ end; }
+prt_fild08,94,191,4	script	60 tumulo 01	4_BOARD3,{ end; }
+prt_fild08,106,191,4	script	61 vila entrada	4_BOARD3,{ end; }
+prt_fild08,118,191,4	script	62 corda monte	4_BOARD3,{ end; }
+prt_fild08,130,191,4	script	63 fabrica minerio mont	4_BOARD3,{ end; }
+prt_fild08,142,191,4	script	64 adm cadeira 01	4_BOARD3,{ end; }
+prt_fild08,154,191,4	script	65 adm cadeira 02	4_BOARD3,{ end; }
+prt_fild08,166,191,4	script	66 porta ? _ cranio 1	4_BOARD3,{ end; }
+prt_fild08,178,191,4	script	67 porta ? _ cranio 2	4_BOARD3,{ end; }
+prt_fild08,202,191,4	script	68 porta ? _ cranio 3	4_BOARD3,{ end; }
+prt_fild08,70,203,4	script	69 subterraneo prisao _	4_BOARD3,{ end; }
+prt_fild08,82,203,4	script	70 subterraneo prisao _	4_BOARD3,{ end; }
+prt_fild08,94,203,4	script	71 subterraneo prisao _	4_BOARD3,{ end; }
+prt_fild08,106,203,4	script	72 subterraneo prisao _	4_BOARD3,{ end; }
+prt_fild08,118,203,4	script	73 subterraneo prisao _	4_BOARD3,{ end; }
+prt_fild08,130,203,4	script	74 tumulo ? _	4_BOARD3,{ end; }
+prt_fild08,142,203,4	script	75 tumulo ? _01	4_BOARD3,{ end; }
+prt_fild08,154,203,4	script	76 tumulo ? _02	4_BOARD3,{ end; }
+prt_fild08,166,203,4	script	77 tumulo ? _03	4_BOARD3,{ end; }
+prt_fild08,178,203,4	script	78 tumulo ? _04	4_BOARD3,{ end; }
+prt_fild08,190,203,4	script	79 tumulo ? _ madeira 0	4_BOARD3,{ end; }
+prt_fild08,202,203,4	script	80 tumulo ? _ madeira 0	4_BOARD3,{ end; }
+prt_fild08,70,215,4	script	81 tumulo ? _01	4_BOARD3,{ end; }
+prt_fild08,82,215,4	script	82 tumulo ? _	4_BOARD3,{ end; }
+prt_fild08,94,215,4	script	83 tumulo ? _01	4_BOARD3,{ end; }
+prt_fild08,106,215,4	script	84 tumulo ? _02	4_BOARD3,{ end; }
+prt_fild08,118,215,4	script	85 glast _ quebrado cad	4_BOARD3,{ end; }
+prt_fild08,130,215,4	script	86 glast _ quebrado mes	4_BOARD3,{ end; }
+prt_fild08,142,215,4	script	87 glast _ catedral que	4_BOARD3,{ end; }
+prt_fild08,154,215,4	script	88 glast _ catedral que	4_BOARD3,{ end; }
+prt_fild08,166,215,4	script	89 glast _ catedral que	4_BOARD3,{ end; }
+prt_fild08,178,215,4	script	90 glast ? _ cranio 1	4_BOARD3,{ end; }
+prt_fild08,190,215,4	script	91 glast _ casa abandon	4_BOARD3,{ end; }
+prt_fild08,202,215,4	script	92 quebrada parede 1	4_BOARD3,{ end; }
+prt_fild08,70,227,4	script	93 quebrada parede 2	4_BOARD3,{ end; }
+prt_fild08,82,227,4	script	94 quebrada parede 3	4_BOARD3,{ end; }
+prt_fild08,94,227,4	script	95 ______1	4_BOARD3,{ end; }
+prt_fild08,106,227,4	script	96 ______2	4_BOARD3,{ end; }
+prt_fild08,118,227,4	script	97 ______2_1	4_BOARD3,{ end; }
+prt_fild08,130,227,4	script	98 ______3	4_BOARD3,{ end; }
+prt_fild08,142,227,4	script	99 _ entrada	4_BOARD3,{ end; }
+prt_fild08,154,227,4	script	100 _ entrada 2	4_BOARD3,{ end; }
+prt_fild08,166,227,4	script	101 _ guarda-corpo	4_BOARD3,{ end; }
+prt_fild08,178,227,4	script	102 _ guarda-corpo pila	4_BOARD3,{ end; }
+prt_fild08,190,227,4	script	103 _ parede	4_BOARD3,{ end; }
+prt_fild08,202,227,4	script	104 _ porta	4_BOARD3,{ end; }
+prt_fild08,70,239,4	script	105 _____	4_BOARD3,{ end; }
+prt_fild08,82,239,4	script	106 _______	4_BOARD3,{ end; }
+prt_fild08,94,239,4	script	107 caverna vila cadeir	4_BOARD3,{ end; }
+prt_fild08,118,239,4	script	108 caverna vila entrad	4_BOARD3,{ end; }
+prt_fild08,130,239,4	script	109 caverna vila entrad	4_BOARD3,{ end; }
+prt_fild08,142,239,4	script	110 caverna vila entrad	4_BOARD3,{ end; }
+prt_fild08,154,239,4	script	111 caverna vila entrad	4_BOARD3,{ end; }
+prt_fild08,166,239,4	script	112 caverna vila entrad	4_BOARD3,{ end; }
+prt_fild08,178,239,4	script	113 quebrada parede 1	4_BOARD3,{ end; }
+prt_fild08,190,239,4	script	114 quebrada parede 2	4_BOARD3,{ end; }
+prt_fild08,202,239,4	script	115 animal osso	4_BOARD3,{ end; }
+prt_fild08,70,251,4	script	116 animal osso 01	4_BOARD3,{ end; }
+prt_fild08,82,251,4	script	117 animal osso 02	4_BOARD3,{ end; }
+prt_fild08,94,251,4	script	118 animal osso 03	4_BOARD3,{ end; }
+prt_fild08,106,251,4	script	119 animal osso 04	4_BOARD3,{ end; }
+prt_fild08,130,251,4	script	120 morroc casa abandon	4_BOARD3,{ end; }
+prt_fild08,142,251,4	script	121 casa ruina 01a	4_BOARD3,{ end; }
+prt_fild08,154,251,4	script	122 casa ruina 01b	4_BOARD3,{ end; }
+prt_fild08,166,251,4	script	123 casa ruina 01c	4_BOARD3,{ end; }
+prt_fild08,178,251,4	script	124 casa ruina 01d	4_BOARD3,{ end; }
+prt_fild08,190,251,4	script	125 casa ruina 02b	4_BOARD3,{ end; }
+prt_fild08,202,251,4	script	126 casa ruina 03	4_BOARD3,{ end; }
+prt_fild08,70,263,4	script	127 casa ruina 04	4_BOARD3,{ end; }
+prt_fild08,82,263,4	script	128 casa ruina 05	4_BOARD3,{ end; }
+prt_fild08,94,263,4	script	129 casa ruina 06	4_BOARD3,{ end; }
+prt_fild08,106,263,4	script	130 casa ruina 07	4_BOARD3,{ end; }
+prt_fild08,118,263,4	script	131 casa ruina 08	4_BOARD3,{ end; }
+prt_fild08,130,263,4	script	132 casa ruina 09	4_BOARD3,{ end; }
+prt_fild08,142,263,4	script	133 casa ruina 10	4_BOARD3,{ end; }
+prt_fild08,154,263,4	script	134 casa ruina 11	4_BOARD3,{ end; }
+prt_fild08,166,263,4	script	135 casa ruina 12	4_BOARD3,{ end; }
+prt_fild08,178,263,4	script	136 casa ruina 13	4_BOARD3,{ end; }
+prt_fild08,190,263,4	script	137 casa ruina 14a	4_BOARD3,{ end; }
+prt_fild08,202,263,4	script	138 casa ruina 14b	4_BOARD3,{ end; }
+prt_fild08,70,275,4	script	139 casa ruina 14c	4_BOARD3,{ end; }
+prt_fild08,82,275,4	script	140 casa ruina 14d	4_BOARD3,{ end; }
+prt_fild08,94,275,4	script	141 casa ruina 14e	4_BOARD3,{ end; }
+prt_fild08,106,275,4	script	142 castelo ruina 101	4_BOARD3,{ end; }
+prt_fild08,118,275,4	script	143 castelo ruina 102	4_BOARD3,{ end; }
+prt_fild08,130,275,4	script	144 castelo ruina 103	4_BOARD3,{ end; }
+prt_fild08,142,275,4	script	145 castelo ruina 104	4_BOARD3,{ end; }
+prt_fild08,154,275,4	script	146 castelo ruina 105	4_BOARD3,{ end; }
+prt_fild08,166,275,4	script	147 castelo ruina 106	4_BOARD3,{ end; }
+prt_fild08,178,275,4	script	148 castelo ruina 107	4_BOARD3,{ end; }
+prt_fild08,70,287,4	script	149 castelo ruina 108	4_BOARD3,{ end; }
+prt_fild08,82,287,4	script	150 castelo ruina 109	4_BOARD3,{ end; }
+prt_fild08,94,287,4	script	151 castelo ruina 110	4_BOARD3,{ end; }
+prt_fild08,106,287,4	script	152 castelo ruina 110b	4_BOARD3,{ end; }
+prt_fild08,118,287,4	script	153 castelo ruina 110c	4_BOARD3,{ end; }
+prt_fild08,130,287,4	script	154 castelo ruina 201	4_BOARD3,{ end; }
+prt_fild08,166,287,4	script	155 castelo ruina 202	4_BOARD3,{ end; }
+prt_fild08,178,287,4	script	156 castelo ruina 203	4_BOARD3,{ end; }
+prt_fild08,70,299,4	script	157 castelo ruina 204	4_BOARD3,{ end; }
+prt_fild08,82,299,4	script	158 castelo ruina 205	4_BOARD3,{ end; }
+prt_fild08,94,299,4	script	159 castelo ruina 206	4_BOARD3,{ end; }
+prt_fild08,106,299,4	script	160 castelo ruina 207	4_BOARD3,{ end; }
+prt_fild08,118,299,4	script	161 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,130,299,4	script	162 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,142,299,4	script	163 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,154,299,4	script	164 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,166,299,4	script	165 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,178,299,4	script	166 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,202,299,4	script	167 castelo ruina pilar	4_BOARD3,{ end; }
+prt_fild08,82,311,4	script	168 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,94,311,4	script	169 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,118,311,4	script	170 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,130,311,4	script	171 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,142,311,4	script	172 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,154,311,4	script	173 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,166,311,4	script	174 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,178,311,4	script	175 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,190,311,4	script	176 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,202,311,4	script	177 castelo ruina ponte	4_BOARD3,{ end; }
+prt_fild08,82,323,4	script	178 castelo ruina pedra	4_BOARD3,{ end; }
+prt_fild08,94,323,4	script	179 castelo ruina pedra	4_BOARD3,{ end; }
+prt_fild08,106,323,4	script	180 ruina 01	4_BOARD3,{ end; }
+prt_fild08,118,323,4	script	181 ruina 02	4_BOARD3,{ end; }
+prt_fild08,130,323,4	script	182 ruina 03	4_BOARD3,{ end; }
+prt_fild08,142,323,4	script	183 ruina 04a	4_BOARD3,{ end; }
+prt_fild08,154,323,4	script	184 ruina 04b	4_BOARD3,{ end; }
+prt_fild08,166,323,4	script	185 ruina 05	4_BOARD3,{ end; }
+prt_fild08,178,323,4	script	186 ruina 06a	4_BOARD3,{ end; }
+prt_fild08,190,323,4	script	187 ruina 06b	4_BOARD3,{ end; }
+prt_fild08,202,323,4	script	188 ruina 06c	4_BOARD3,{ end; }
+prt_fild08,70,335,4	script	189 ruina ? 01	4_BOARD3,{ end; }
+prt_fild08,82,335,4	script	190 ruina ? 02	4_BOARD3,{ end; }
+prt_fild08,94,335,4	script	191 vila entrada	4_BOARD3,{ end; }
+prt_fild08,106,335,4	script	192 vila entrada porta 	4_BOARD3,{ end; }
+prt_fild08,118,335,4	script	193 vila entrada porta 	4_BOARD3,{ end; }
+prt_fild08,130,335,4	script	194 monte	4_BOARD3,{ end; }
+prt_fild08,142,335,4	script	195 umbala - osso ?	4_BOARD3,{ end; }
+prt_fild08,154,335,4	script	196 juno _ velho ?	4_BOARD3,{ end; }
+prt_fild08,166,335,4	script	197 01 tumulo ? 01	4_BOARD3,{ end; }
+prt_fild08,178,335,4	script	198 01 tumulo ? 02	4_BOARD3,{ end; }
+prt_fild08,190,335,4	script	199 01 cranio 01	4_BOARD3,{ end; }
+prt_fild08,202,335,4	script	200 01 cranio 02	4_BOARD3,{ end; }
+prt_fild08,70,347,4	script	201 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,94,347,4	script	202 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,106,347,4	script	203 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,118,347,4	script	204 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,130,347,4	script	205 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,142,347,4	script	206 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,154,347,4	script	207 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,166,347,4	script	208 01 cranio ?	4_BOARD3,{ end; }
+prt_fild08,178,347,4	script	209 02 cranio 01	4_BOARD3,{ end; }
+prt_fild08,190,347,4	script	210 campo de batalha 2a	4_BOARD3,{ end; }
+prt_fild08,202,347,4	script	211 campo de batalha 2a	4_BOARD3,{ end; }
+prt_fild08,70,359,4	script	212 campo de batalha 2a	4_BOARD3,{ end; }
+prt_fild08,82,359,4	script	213 campo de batalha 2a	4_BOARD3,{ end; }
+prt_fild08,94,359,4	script	214 campo de batalha 2b	4_BOARD3,{ end; }
+prt_fild08,106,359,4	script	215 campo de batalha 2b	4_BOARD3,{ end; }
+prt_fild08,118,359,4	script	216 campo de batalha 2b	4_BOARD3,{ end; }
+prt_fild08,130,359,4	script	217 tumulo ?	4_BOARD3,{ end; }
+prt_fild08,142,359,4	script	218 velho ?	4_BOARD3,{ end; }
+prt_fild08,154,359,4	script	219 pedra tumulo	4_BOARD3,{ end; }
+prt_fild08,166,359,4	script	220 tumulo	4_BOARD3,{ end; }
+prt_fild08,178,359,4	script	221 tumulo ?	4_BOARD3,{ end; }
+prt_fild08,190,359,4	script	222 osso ? casa	4_BOARD3,{ end; }
+prt_fild08,202,359,4	script	223 casa abandonada ?	4_BOARD3,{ end; }
+prt_fild08,70,371,4	script	224 casa abandonada ent	4_BOARD3,{ end; }
+prt_fild08,82,371,4	script	225 ____1	4_BOARD3,{ end; }
+prt_fild08,94,371,4	script	226 ____2	4_BOARD3,{ end; }
+prt_fild08,106,371,4	script	227 _____	4_BOARD3,{ end; }
+prt_fild08,130,371,4	script	228 _____2	4_BOARD3,{ end; }
