@@ -127,8 +127,84 @@ NOMES = {
 }
 
 
+# Morfemas coreanos que se repetem em nome de modelo. Servem para traduzir por
+# COMPOSICAO o que nao esta no dicionario de nomes inteiros -- e o que torna
+# possivel rotular os 7034 modelos do GRF sem enumerar um por um.
+#
+# Ressalva: morfema de uma silaba (성 castelo, 벽 parede, 문 porta) pode casar
+# dentro de outra palavra. O casamento e sempre pelo mais longo primeiro, o que
+# reduz o problema mas nao elimina. E rotulo de catalogo, nao verdade -- serve
+# para saber para onde olhar.
+MORFEMAS = {
+    u'폐허': u'ruina', u'폐가': u'casa abandonada', u'민가': u'casa',
+    u'깨진': u'quebrada', u'부서진': u'quebrado', u'부러진': u'partido',
+    u'무너진': u'desmoronado', u'쓰러진': u'caido', u'낡은': u'velho',
+    u'잔해': u'destroco', u'파편': u'fragmento', u'더미': u'monte',
+    u'동물': u'animal', u'해골': u'cranio', u'무덤': u'tumulo',
+    u'울타리': u'cerca', u'항아리': u'jarro', u'천막': u'toldo',
+    u'모로코': u'morroc', u'사막': u'deserto', u'모래': u'areia',
+    u'기둥': u'pilar', u'계단': u'escada', u'지붕': u'telhado',
+    u'기와': u'telha', u'바닥': u'chao', u'창문': u'janela',
+    u'상자': u'caixa', u'나무': u'madeira', u'바위': u'rocha',
+    u'동상': u'estatua', u'분수': u'fonte', u'우물': u'poco',
+    u'간판': u'placa', u'의자': u'cadeira', u'책상': u'mesa',
+    u'침대': u'cama', u'다리': u'ponte', u'텐트': u'tenda',
+    u'가옥': u'casa', u'조각': u'pedaco', u'그릇': u'vasilha',
+    u'뼈': u'osso', u'묘': u'tumulo', u'성': u'castelo', u'벽': u'parede',
+    u'문': u'porta', u'돌': u'pedra', u'집': u'casa', u'탑': u'torre',
+    u'통': u'tonel', u'창': u'janela', u'헌': u'velho',
+    # segunda leva, tirada dos '?' que sobraram na primeira rodada do
+    # catalogo de ruina -- o proprio catalogo diz o que falta no dicionario
+    u'마을': u'vila', u'입구': u'entrada', u'성당': u'catedral',
+    u'탁자': u'mesa', u'운영청': u'adm', u'공장': u'fabrica',
+    u'광석': u'minerio', u'밧줄': u'corda', u'기계': u'maquina',
+    u'난간': u'guarda-corpo', u'지하': u'subterraneo', u'감옥': u'prisao',
+    u'하수': u'esgoto', u'전장': u'campo de batalha', u'동굴': u'caverna',
+    u'침몰': u'afundado', u'수레': u'carroca', u'사다리': u'escada de mao',
+    u'횃불': u'tocha', u'철창': u'grade', u'가마': u'forno',
+    # nomes de lugar, que aparecem como prefixo
+    u'글래스트': u'glast', u'프론테라': u'prontera', u'페이욘': u'payon',
+    u'게펜': u'geffen', u'알베르타': u'alberta', u'유노': u'juno',
+    u'움발라': u'umbala', u'어비스': u'abismo', u'중국': u'china',
+    u'니플헤임': u'niflheim', u'라헬': u'rachel',
+}
+_ORDEM_MORFEMAS = sorted(MORFEMAS, key=len, reverse=True)
+
+
+def traduz_partes(stem):
+    """Traduz um nome coreano por composicao de morfemas conhecidos.
+
+    Devolve string vazia se nao reconheceu nada -- assim quem chama sabe que
+    nao vale mostrar.
+    """
+    fichas = []
+    ascii_buf = []
+    reconheceu = False
+    i = 0
+    while i < len(stem):
+        for k in _ORDEM_MORFEMAS:
+            if stem.startswith(k, i):
+                if ascii_buf:
+                    fichas.append(u''.join(ascii_buf))
+                    ascii_buf = []
+                fichas.append(MORFEMAS[k])
+                reconheceu = True
+                i += len(k)
+                break
+        else:
+            c = stem[i]
+            if ord(c) < 128:
+                ascii_buf.append(c)
+            elif fichas and fichas[-1] != u'?':
+                fichas.append(u'?')
+            i += 1
+    if ascii_buf:
+        fichas.append(u''.join(ascii_buf))
+    return u' '.join(f for f in fichas if f) if reconheceu else u''
+
+
 def parte(u, tabela):
-    return tabela.get(u, u'')
+    return tabela.get(u) or traduz_partes(u)
 
 
 def classificacao():

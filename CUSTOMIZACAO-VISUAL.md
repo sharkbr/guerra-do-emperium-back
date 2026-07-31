@@ -400,6 +400,83 @@ O `.gat` tem o **dobro** da resolução do `.gnd` em cada eixo — uma célula d
 As placas são **ferramenta de trabalho, não conteúdo de jogo**. Manter
 desligadas no `scripts_guerra.conf` quando não estiverem em uso.
 
+## O inventário do GRF — 2026-07-31
+
+O primeiro mapa-catálogo tinha **só os 90 modelos que Izlude já usa**. Servia
+para conferir minha classificação, mas não mostra peça nova — dito depois de
+olhar: *"vi muito pouco componente lá, são os elementos que Izlude mesmo tem"*.
+Estava certo, e a limitação era do desenho do catálogo, não do acervo.
+
+### O acervo real
+
+| | |
+|---|---|
+| Modelos `.rsm` no GRF | **7034** |
+| Pastas de modelo | 91 |
+| O que o primeiro catálogo mostrava | 90 — **1,3%** |
+
+As pastas maiores: `ilusion` (507), `rockridge` (420), `verus` (394),
+`prontera_re` (276), `내부소품` (adereço de interior, 236), `모로코` (Morroc,
+146), `글래스트` (Glast Heim, 116).
+
+### As ruínas existem, e são de Morroc
+
+Busca por termo de destruição no nome: **228 modelos em 25 pastas**, e
+`model\모로코` sozinho tem **78**:
+
+| Modelo | Quantos | O que é |
+|---|---|---|
+| `민가폐허01a` … `14e` | 24 | **ruínas de casa popular** |
+| `성폐허101/102/103` | 3 | ruínas de castelo |
+| `깨진벽1/2` | 2 | **parede quebrada** |
+| `모로코폐가` | 1 | casa abandonada |
+| `동물뼈*` | 5 | ossada |
+
+Isso confirma a hipótese que estava aberta desde a análise inicial, mas **não
+pelo caminho que se supunha**: o mapa `morocc` deste GRF usa `민가01a/01b/01c`,
+que são as casas **inteiras**. Ou seja, é a Morroc pré-destruição, e os modelos
+de ruína estão no GRF sem nenhum mapa que os use. Melhor assim — estão livres.
+
+### Correção: o DES nunca bloqueou isto
+
+Estava escrito aqui que inventariar modelo de ruína "provavelmente exige
+terminar o DES, porque `.rsm` está atrás dele". **Errado, e por dois motivos
+independentes:**
+
+1. A **tabela** do GRF é zlib, não DES. O `grf.py` já lê nome, tamanho e flag de
+   todos os 7034 modelos. O DES protege o *conteúdo* das entradas, não o índice.
+2. Para pôr um modelo num mapa basta o **nome**: o `.rsw` referencia por
+   caminho, e quem abre o `.rsm` é o cliente. Nunca precisei ler a geometria.
+
+O DES só passa a importar se um dia formos **editar** um modelo. Para compor com
+o que existe, é irrelevante. É a segunda vez que o DES é declarado bloqueio sem
+ter sido medido.
+
+### O catálogo de ruína
+
+`@warp prt_fild08 106 206` cai no bloco de Morroc (nº 72 em diante). Os 228
+modelos de ruína, agrupados por pasta, com as mesmas placas numeradas.
+
+O `catalogo_ingame.py` agora aceita **duas fontes**, e a diferença é o ponto:
+
+| Fonte | Dá o quê | Escala |
+|---|---|---|
+| Um **mapa** | o que aquele mapa já usa | real, clonada do exemplar |
+| O **GRF** | o acervo inteiro, inclusive o que nenhum mapa nosso usa | 1, não há referência |
+
+### Traduzir por morfema, não por nome inteiro
+
+Rotular 228 modelos exigiria enumerar 228 traduções — e 7034 seria impossível.
+A saída foi traduzir por **composição de morfema**: `민가폐허01a` vira
+"casa ruina 01a" a partir de `민가` (casa) + `폐허` (ruína) + o sufixo. Com ~80
+morfemas, 218 dos 228 saem legíveis.
+
+O próprio catálogo diz o que falta no dicionário: onde o morfema é desconhecido
+sai `?`, e foi lendo os `?` da primeira rodada que veio a segunda leva de
+termos. **Ressalva:** morfema de uma sílaba (`성` castelo, `벽` parede, `문`
+porta) pode casar dentro de outra palavra. O casamento é sempre pelo mais longo
+primeiro, o que reduz mas não elimina. É rótulo de catálogo, não verdade.
+
 ### O limite honesto desta amostra
 
 **Nenhuma casa está de fato quebrada.** Não existe modelo de casa destruída
@@ -424,13 +501,16 @@ saíram: o DES não bloqueava, e clima e modelos já foram feitos juntos.
    receita foram escolhidos no escuro, e não faz sentido propagar para outras
    cidades uma calibragem que ninguém viu. Ajustar é editar constante no topo do
    `destroi_mapa.py` e rodar de novo.
-2. **Inventariar o GRF** atrás de modelo de ruína — parede quebrada, viga,
-   entulho, casa danificada. É o que transforma "casa inclinada" em "casa
-   destruída" de verdade, por troca do `filename` da instância. Provavelmente
-   exige terminar o DES, porque `.rsm` está atrás dele.
-3. **Estender a receita às outras cidades.** Cada uma precisa da sua lista de
+2. ~~**Inventariar o GRF** atrás de modelo de ruína.~~ **Feito em 2026-07-31**:
+   7034 modelos, 228 com cara de ruína, 78 deles em Morroc — incluindo 24
+   variantes de casa em ruínas. Não precisou do DES. Ver a seção do inventário.
+3. **Olhar o catálogo de ruína e escolher as substitutas.** É o que transforma
+   "casa inclinada" em "casa destruída" de verdade: trocar o `filename` da
+   instância no `.rsw` por uma `민가폐허*`. Continua sendo edição de string, e o
+   cliente carrega o resto.
+4. **Estender a receita às outras cidades.** Cada uma precisa da sua lista de
    construções e adereços; o resto do script é genérico. Prontera fica fora.
-4. **Textura de chão**, se a cor de superfície não bastar. É o passo mais caro e
+5. **Textura de chão**, se a cor de superfície não bastar. É o passo mais caro e
    o único que custa memória — só entrar nele se o passo 1 mostrar que precisa.
 
 ---

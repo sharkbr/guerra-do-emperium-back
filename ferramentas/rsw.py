@@ -76,6 +76,33 @@ class Modelo(object):
         """O nome do .rsm, em minusculas e sem o padding de zeros."""
         return self.arquivo.split('\x00')[0].lower().replace('/', '\\')
 
+    @classmethod
+    def novo(cls, arquivo, nome='', pos=(0.0, 0.0, 0.0)):
+        """Cria um modelo do zero, para plantar .rsm que o mapa ainda nao usa.
+
+        Serve para o mapa-catalogo mostrar peca vinda do GRF, e nao so o que o
+        mapa de origem ja carregava.
+
+        Os defaults saem do que os modelos de Izlude usam: anim tipo 2,
+        velocidade 1.0, bloco 0, escala 1. O campo de **no** (nodename) fica
+        vazio -- os modelos existentes trazem ali nome de no do 3ds Max
+        ('Box01', 'Box03'), que parece ser referencia de animacao e nao
+        requisito de desenho. **Nao verificado**: se um modelo plantado nao
+        aparecer no jogo, este e o primeiro lugar a olhar.
+        """
+        def campo(v, n):
+            v = v[:n]
+            return v + '\x00' * (n - len(v))
+
+        bruto = (campo(nome, 40)
+                 + struct.pack('<ifi', 2, 1.0, 0)
+                 + campo(arquivo, 80)
+                 + campo('', 80)
+                 + struct.pack('<3f', *pos)
+                 + struct.pack('<3f', 0.0, 0.0, 0.0)
+                 + struct.pack('<3f', 1.0, 1.0, 1.0))
+        return cls(bruto, 0)
+
 
 class Bruto(object):
     """Luz, som ou efeito. Nao mexemos neles -- guardamos os bytes crus.

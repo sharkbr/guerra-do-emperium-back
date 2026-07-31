@@ -39,7 +39,7 @@ import sys
 
 from gat import Gat
 from rsw import Rsw, Modelo, texto
-from catalogo_mapa import PASTAS, NOMES
+from catalogo_mapa import PASTAS, NOMES, traduz_partes
 
 
 # prt_fild08: 400x400 celulas, campo aberto, .rsw sem DES, no map_index.
@@ -55,9 +55,9 @@ MAPA_ORIGEM = 'izlude'   # de onde sai a lista de modelos a catalogar
 # caminhada confusa. Agora e um retangulo fechado, ancorado no melhor lugar do
 # mapa, e a ordem e por PASTA -- assim vegetacao fica junto de vegetacao e
 # construcao junto de construcao, e a volta a pe faz sentido.
-COLUNAS = 10
-LINHAS = 11        # folga de proposito: com 9x10 exato, 3 pontos caiam em chao
-                   # bloqueado e 3 modelos ficavam de fora do catalogo
+COLUNAS = 12
+FOLGA_FILEIRAS = 3   # fileiras a mais do que o minimo, porque alguns pontos da
+                     # grade caem em chao bloqueado e o modelo ficaria de fora
 PASSO = 12         # celulas entre um modelo e o seguinte (60 unidades)
 MARGEM = 10        # celulas de folga na borda do mapa
 FOLGA = 1          # a celula e a vizinhanca precisam ser andaveis
@@ -68,6 +68,7 @@ LUZ_DIFUSA = [1.0, 1.0, 1.0]
 LUZ_AMBIENTE = [0.62, 0.62, 0.62]
 LUZ_SOMBRA = 0.20
 
+BARRA = chr(92)    # barra invertida, isolada porque escapar via console dói
 SPRITE_PLACA = '4_BOARD3'
 LIMITE_NOME_NPC = 23   # NAME_LENGTH do rAthena e 24 com o terminador
 
@@ -79,7 +80,9 @@ def rotulo(u):
     else:
         pasta, arq = u'', u
     stem = arq[:-4] if arq.lower().endswith(u'.rsm') else arq
-    return pasta, stem, NOMES.get(stem, u'')
+    # o dicionario de nomes inteiros manda; o que ele nao tem, traduz por
+    # composicao de morfema -- e o que permite rotular o GRF inteiro
+    return pasta, stem, (NOMES.get(stem) or traduz_partes(stem))
 
 
 def sem_acento(u):
@@ -108,20 +111,20 @@ def livre(g, cx, cy):
     return g.andavel(cx, cy - PLACA_A_FRENTE)   # a placa tambem precisa de chao
 
 
-def melhor_ancora(g):
+def melhor_ancora(g, linhas):
     """Onde encaixar a grade inteira, maximizando as vagas aproveitaveis.
 
     Varre o mapa procurando o canto que deixa o maior numero de pontos da
     grade em chao livre. Sai na hora se achar um encaixe perfeito.
     """
-    alvo = COLUNAS * LINHAS
+    alvo = COLUNAS * linhas
     melhor = (-1, MARGEM, MARGEM)
     lim_x = g.largura - (COLUNAS - 1) * PASSO - MARGEM
-    lim_y = g.altura - (LINHAS - 1) * PASSO - MARGEM
+    lim_y = g.altura - (linhas - 1) * PASSO - MARGEM
     for ay in range(MARGEM, max(MARGEM + 1, lim_y), 4):
         for ax in range(MARGEM, max(MARGEM + 1, lim_x), 4):
             n = 0
-            for r in range(LINHAS):
+            for r in range(linhas):
                 for c in range(COLUNAS):
                     if livre(g, ax + c * PASSO, ay + r * PASSO):
                         n += 1
@@ -132,13 +135,14 @@ def melhor_ancora(g):
     return melhor
 
 
-def vagas(g):
+def vagas(g, quantos):
     """Os pontos da grade, em ordem de leitura, que dao para usar."""
-    n, ax, ay = melhor_ancora(g)
+    linhas = (quantos + COLUNAS - 1) // COLUNAS + FOLGA_FILEIRAS
+    n, ax, ay = melhor_ancora(g, linhas)
     print 'grade %dx%d passo %d ancorada em (%d,%d): %d de %d pontos livres' % (
-        COLUNAS, LINHAS, PASSO, ax, ay, n, COLUNAS * LINHAS)
+        COLUNAS, linhas, PASSO, ax, ay, n, COLUNAS * linhas)
     saida = []
-    for r in range(LINHAS):
+    for r in range(linhas):
         for c in range(COLUNAS):
             cx, cy = ax + c * PASSO, ay + r * PASSO
             if livre(g, cx, cy):
@@ -156,6 +160,7 @@ def main():
         print __doc__
         return 1
     ent, sai = sys.argv[1], sys.argv[2]
+    ent_grf = sys.argv[3] if len(sys.argv) > 3 else None
     if not os.path.isdir(sai):
         os.makedirs(sai)
 
@@ -166,19 +171,36 @@ def main():
         return 2
     g = Gat(open(os.path.join(ent, MAPA_BASE + '.gat'), 'rb').read())
 
-    origem = Rsw(open(os.path.join(ent, MAPA_ORIGEM + '.rsw'), 'rb').read())
-    ok, msg = origem.verificar()
-    if not ok:
-        print 'rsw de origem nao passou: %s' % msg
-        return 2
+    # Duas fontes possiveis, e a diferenca importa:
+    #
+    #  - um MAPA: da os modelos que aquele mapa ja usa, com a escala real com
+    #    que ele os usa. Serve para conferir classificacao. Foi a primeira
+    #    versao -- e por isso o catalogo so tinha os 90 de Izlude, ou seja,
+    #    nada de novo para usar.
+    #  - o GRF: da o acervo inteiro, 7034 modelos, incluindo os que nenhum mapa
+    #    nosso usa. E onde estao as ruinas. Sem escala de referencia, entao vao
+    #    com escala 1.
+    fonte_grf = ent_grf is not None
+    if fonte_grf:
+        from grf import Grf
+        from inventario_rsm import busca, RUINA
+        achados = busca(Grf(ent_grf), RUINA)
+        porrsm = dict((n.lower().replace('/', BARRA), None) for n in achados)
+        rotulo_fonte = u'o acervo de ruína do GRF'
+    else:
+        origem = Rsw(open(os.path.join(ent, MAPA_ORIGEM + '.rsw'), 'rb').read())
+        ok, msg = origem.verificar()
+        if not ok:
+            print 'rsw de origem nao passou: %s' % msg
+            return 2
+        porrsm = {}
+        for m in origem.modelos:
+            porrsm.setdefault(m.rsm, []).append(m)
+        rotulo_fonte = u'**%s**' % MAPA_ORIGEM
 
-    # Um exemplar de cada modelo, agrupado POR PASTA. A ordem por frequencia
-    # (que era a primeira versao) misturava arvore com loja e balde, e a
-    # caminhada nao fazia sentido. Por pasta, cada fileira tem um tema.
-    porrsm = {}
-    for m in origem.modelos:
-        porrsm.setdefault(m.rsm, []).append(m)
-
+    # Agrupado POR PASTA. A ordem por frequencia (que era a primeira versao)
+    # misturava arvore com loja e balde, e a caminhada nao fazia sentido. Por
+    # pasta, cada fileira tem um tema.
     def chave(n):
         u = n.decode('cp949')
         pasta, stem, _ = rotulo(u)
@@ -186,7 +208,7 @@ def main():
 
     ordem = sorted(porrsm, key=chave)
 
-    livres = vagas(g)
+    livres = vagas(g, len(ordem))
     print 'mapa base %s: %d vagas para %d modelos' % (MAPA_BASE, len(livres),
                                                       len(ordem))
     if len(livres) < len(ordem):
@@ -206,10 +228,14 @@ def main():
         cx, cy = livres[i - 1]
         wx, wz = mundo(g, cx, cy)
 
-        # Clonar o exemplar preserva a escala com que o mapa de origem o usa --
-        # o que importa, porque tamanho errado foi metade do problema do tronco.
-        exemplar = porrsm[nome][0]
-        m = Modelo(exemplar.to_bytes(), 0)
+        # Vindo de mapa, clonar o exemplar preserva a escala com que ele e
+        # usado de verdade -- o que importa, porque tamanho errado foi metade
+        # do problema do tronco. Vindo do GRF nao ha exemplar: escala 1.
+        exemplar = porrsm[nome]
+        if exemplar:
+            m = Modelo(exemplar[0].to_bytes(), 0)
+        else:
+            m = Modelo.novo(nome)
         m.pos = [wx, g.altura_media(cx, cy), wz]
         m.rot = [0.0, 0.0, 0.0]
         m.nome = ('catalogo_%03d' % i).ljust(40, '\x00')
@@ -262,7 +288,7 @@ def main():
     md = [u'# Mapa-catálogo de modelos — `%s`' % MAPA_BASE,
           u'',
           u'Gerado por `ferramentas/catalogo_ingame.py`. Um exemplar de cada '
-          u'modelo de **%s**, de pé, com uma placa numerada ao lado.' % MAPA_ORIGEM,
+          u'modelo de %s, de pé, com uma placa numerada ao lado.' % rotulo_fonte,
           u'',
           u'**Como usar:** `@warp %s` e ande pela grade, ou `@warp %s <x> <y>` '
           u'para cair ao lado de um modelo específico. O número da placa é o '

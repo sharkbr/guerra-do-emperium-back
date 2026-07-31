@@ -170,6 +170,18 @@ modelo é tronco de árvore, enorme. Deitado a 90° virou tora atravessada na ru
 **A regra: a pasta manda mais que o nome do arquivo.** Por isso o catálogo mostra
 sempre as duas, lado a lado, e a tradução literal aparece rotulada como literal.
 
+Também mora aqui o tradutor por **morfema** (`traduz_partes`), usado por este
+script e pelo `catalogo_ingame.py`. Enumerar tradução nome a nome não escala:
+são 7034 modelos no GRF. Compondo morfema, `민가폐허01a` vira "casa ruina 01a"
+a partir de `민가` (casa) + `폐허` (ruína) + o sufixo, e ~80 morfemas cobrem 218
+dos 228 modelos de ruína.
+
+Onde o morfema é desconhecido sai `?` — então **o próprio catálogo diz o que
+falta no dicionário**. Foi lendo os `?` da primeira rodada que veio a segunda
+leva de termos. Ressalva: morfema de uma sílaba (`성` castelo, `벽` parede) pode
+casar dentro de outra palavra; o casamento é pelo mais longo primeiro, o que
+reduz mas não elimina.
+
 ## `gat.py` — leitor de colisão e altura andável
 
 ```
@@ -185,14 +197,46 @@ O `.gat` tem o **dobro** da resolução do `.gnd` em cada eixo. Confirmado pelo
 tamanho: Izlude é `.gnd` 134×150 e `.gat` 268×300, e
 `268 × 300 × 20 + 14 = 1608014`, que é o tamanho exato do arquivo.
 
+## `inventario_rsm.py` — o que existe de modelo 3D no GRF
+
+```
+python inventario_rsm.py <data.grf> pastas [saida.md]
+python inventario_rsm.py <data.grf> ruina  [saida.md]
+python inventario_rsm.py <data.grf> busca <termo-em-portugues> [saida.md]
+```
+
+**7034 modelos `.rsm` em 91 pastas.** O `ruina` filtra por termo de destruição no
+nome e devolve 228 em 25 pastas, sendo **78 só em `model\모로코`** — incluindo 24
+variantes de casa em ruínas (`민가폐허01a`…`14e`), paredes quebradas e ruínas de
+castelo.
+
+**O DES não bloqueia isto**, e o motivo vale guardar: a *tabela* do GRF é zlib e
+o `grf.py` já a lê inteira, com nome e flag de todo arquivo — o DES protege o
+conteúdo das entradas, não o índice. E para plantar um modelo num mapa basta o
+**nome**: o `.rsw` referencia por caminho e quem abre o `.rsm` é o cliente.
+Só se precisaria do DES para **editar** geometria.
+
+A busca é por nome de arquivo, então **erra nos dois sentidos** — pega o que só
+tem a palavra no nome, e perde ruína batizada de outro jeito. Serve para reduzir
+o acervo a algo que caiba num catálogo, não para decidir.
+
 ## `catalogo_ingame.py` — monta o mapa-catálogo
 
 ```
-python catalogo_ingame.py <pasta-de-entrada> <pasta-de-saida>
+python catalogo_ingame.py <pasta-de-entrada> <pasta-de-saida>              # de um mapa
+python catalogo_ingame.py <pasta-de-entrada> <pasta-de-saida> <data.grf>   # do acervo de ruina
 ```
 
 Gera três coisas de uma vez: o `.rsw` do mapa-catálogo, o script de NPC com as
 placas numeradas, e o markdown com as coordenadas de `@warp`.
+
+**Duas fontes, e a diferença é o ponto:** de um **mapa** saem os modelos que
+aquele mapa já usa, com a escala real — bom para conferir classificação, mas não
+mostra peça nova. Do **GRF** sai o acervo inteiro, inclusive o que nenhum mapa
+nosso usa, que é onde estão as ruínas; sem exemplar, vão com escala 1.
+
+A primeira versão só tinha a fonte "mapa", e por isso o catálogo mostrava apenas
+os 90 modelos de Izlude — 1,3% do acervo.
 
 Põe **um exemplar de cada modelo, de pé, em grade, com placa numerada ao lado**.
 Uma volta a pé resolve o mapa inteiro — que é a diferença para o screenshot (um
