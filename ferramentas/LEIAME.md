@@ -85,6 +85,72 @@ python -c "import re;t=open('saida.lub','rb').read();print len(set(re.findall(r'
 
 e comparar com o conjunto conhecido do cliente.
 
+## `rsw.py` e `gnd.py` — leitor/escritor dos arquivos de mapa
+
+```
+python rsw.py <mapa.rsw>     # relatorio + verificacao
+python gnd.py <mapa.gnd>     # idem
+```
+
+Os dois são biblioteca e ferramenta de linha de comando ao mesmo tempo. Rodados
+direto, imprimem o que o arquivo contém e **verificam a si mesmos**.
+
+O `.rsw` é o "mundo": luz, água, e a lista de objetos posicionados. Não guarda
+geometria — os modelos são referências por nome para `.rsm` dentro do GRF. Por
+isso dá para tombar, afundar, clonar e remover prédio mexendo só nele, sem
+extrair `.rsm` nenhum (o que importa, porque `.rsm` no GRF oficial está atrás da
+flag DES que o `grf.py` ainda não lê; os arquivos de mapa **não** estão).
+
+O `.gnd` é a malha do chão. O que interessa: **cada superfície tem cor BGRA
+própria**, multiplicada pela textura na hora de desenhar. Escurecer e amarelar
+essas cores suja o chão sem trocar textura alguma — nenhum arquivo novo, nenhum
+byte a mais de memória de vídeo.
+
+**O critério de correção é round-trip byte a byte:** ler e reescrever um arquivo
+não modificado tem que devolver os bytes originais, e o parser tem que consumir
+até o último byte. `verificar()` roda as duas e é chamada antes de qualquer
+gravação. Sem isso não há como saber se o layout está certo — e layout errado
+não dá erro, dá arquivo corrompido.
+
+Duas coisas que confundiram e estão resolvidas no código:
+
+- os **65520 bytes no fim do `.rsw`** não são sobra: são a QuadTree, 1365 nós de
+  48 bytes (árvore de 5 níveis). Derivada do `.gnd`, não da posição dos modelos,
+  então mexer em modelo não a invalida;
+- os 4 inteiros que a documentação chama de "limites do chão" vêm todos com o
+  mesmo valor grande. O alinhamento está certo (a lista de objetos depois deles
+  parseia inteira e a quadtree fecha no byte exato), então o campo é isso mesmo
+  — só não sabemos o que significa. Preservado sem interpretar.
+
+Versões conferidas: `.rsw` 2.1 e `.gnd` 1.7, que é o que o kRO 2021-11-03 usa.
+Fora dessas, os dois **abortam de propósito** em vez de arriscar corromper.
+
+## `destroi_mapa.py` — aplica a temática de destruição num mapa
+
+```
+python destroi_mapa.py <pasta-entrada> <pasta-saida> [mapa]
+```
+
+Lê `<mapa>.rsw` e `<mapa>.gnd` da entrada e grava as versões destruídas na
+saída. A receita inteira é constante no topo do arquivo — calibrar é editar
+número e rodar de novo. Semente fixa: mesma entrada dá sempre o mesmo mapa.
+
+A ficção dita o que ele faz: meteoro no mar, e foi a **onda** que destruiu. Onda
+tomba, afunda e varre — não abre cratera nem arremessa escombro. Ver
+`../CUSTOMIZACAO-VISUAL.md`.
+
+**Recusa rodar em Prontera**, que na ficção é o centro da sobrevivência e já foi
+restaurada.
+
+Duas restrições de projeto, e como estão atendidas: o chão suja por **cor de
+superfície** em vez de textura nova, e os destroços são **clones de modelos que
+o mapa já carrega** em vez de `.rsm` novo. Como se varre mais adereço do que se
+cria destroço, a contagem de objetos do mapa **cai** — em Izlude, 679 → 669.
+
+Instalação: copiar a saída para `cliente\data\`, que vence o GRF pelo
+`DataFolderFirst`. **Apagar o arquivo reverte**; o original nunca saiu do GRF,
+então não há backup a manter.
+
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 
 ```
