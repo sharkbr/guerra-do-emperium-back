@@ -73,6 +73,25 @@ SPRITE_PLACA = '4_BOARD3'
 LIMITE_NOME_NPC = 23   # NAME_LENGTH do rAthena e 24 com o terminador
 
 
+PREFIXO_MODELO = 'data' + BARRA + 'model' + BARRA
+
+
+def sem_prefixo(nome):
+    """Caminho da tabela do GRF -> caminho como o .rsw quer.
+
+    O campo `filename` do .rsw e **relativo a data\\model\\**: os modelos de
+    Izlude gravam `프론테라\\검사길드.rsm`, nao o caminho completo. O cliente
+    prefixa `model\\` sozinho na hora de abrir.
+
+    Custou um erro real: a primeira versao do catalogo de ruina gravou o
+    caminho completo vindo da tabela do GRF, e o cliente tentou abrir
+    `model\\data\\model\\...rsm` e falhou com "Resource File Loading fail" na
+    tela de carregamento -- travando quem tivesse personagem salvo no mapa.
+    """
+    n = nome.lower().replace('/', BARRA)
+    return n[len(PREFIXO_MODELO):] if n.startswith(PREFIXO_MODELO) else n
+
+
 def rotulo(u):
     """Nome curto e legivel para a placa e para a tabela."""
     if u'\\' in u:
@@ -185,7 +204,7 @@ def main():
         from grf import Grf
         from inventario_rsm import busca, RUINA
         achados = busca(Grf(ent_grf), RUINA)
-        porrsm = dict((n.lower().replace('/', BARRA), None) for n in achados)
+        porrsm = dict((sem_prefixo(n), None) for n in achados)
         rotulo_fonte = u'o acervo de ruína do GRF'
     else:
         origem = Rsw(open(os.path.join(ent, MAPA_ORIGEM + '.rsw'), 'rb').read())
@@ -250,6 +269,22 @@ def main():
             u'| %d | `%s` | %s | %s | %d,%d |'
             % (i, stem, (PASTAS.get(pasta, pasta) if pasta else u'—'),
                trad or u'?', cx, cy))
+
+    # Cada filename gravado tem que resolver no GRF como data\model\<filename>.
+    # Sem esta conferencia, caminho errado so aparece como "Resource File
+    # Loading fail" na tela de carregamento do cliente -- e, se o personagem
+    # estiver salvo no mapa, trava a entrada no jogo.
+    if ent_grf:
+        from grf import Grf
+        tabela = Grf(ent_grf).entries
+        faltando = [m.rsm for m in base.modelos
+                    if (PREFIXO_MODELO + m.rsm) not in tabela]
+        if faltando:
+            print ('ABORTADO: %d modelos nao resolvem no GRF. Primeiro: %r'
+                   % (len(faltando), faltando[0]))
+            return 2
+        print '%d modelos conferidos contra o GRF: todos resolvem' % len(
+            base.modelos)
 
     saida_rsw = os.path.join(sai, MAPA_BASE + '.rsw')
     open(saida_rsw, 'wb').write(base.to_bytes())
