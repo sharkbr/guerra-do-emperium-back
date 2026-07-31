@@ -1,0 +1,107 @@
+// --------------------------------------------------------------
+// -            Guerra do Emperium - mapa-catalogo             -
+// --------------------------------------------------------------
+//
+// GERADO por ferramentas/catalogo_ingame.py. Nao editar a mao:
+// rodar o script de novo e a forma de atualizar.
+//
+// Uma placa por modelo do mapa-catalogo, com o numero que casa com
+// o CATALOGO-IZLUDE-INGAME.md. Serve para conferir o que cada
+// modelo E de verdade, dado que o nome em coreano engana.
+//
+// Ferramenta de trabalho, nao conteudo de jogo: manter desligado
+// no scripts_guerra.conf quando nao estiver em uso.
+//
+// @warp x_prt <x> <y> vai direto a um modelo -- as coordenadas estao
+// no markdown.
+
+x_prt,17,14,4	script	01 bloco de chao	4_BOARD3,{ end; }
+x_prt,26,14,4	script	02 parede da torre do r	4_BOARD3,{ end; }
+x_prt,35,14,4	script	03 banco	4_BOARD3,{ end; }
+x_prt,62,14,4	script	04 arbusto	4_BOARD3,{ end; }
+x_prt,71,14,4	script	05 arvore	4_BOARD3,{ end; }
+x_prt,80,14,4	script	06 poste com estandarte	4_BOARD3,{ end; }
+x_prt,107,14,4	script	07 arvore	4_BOARD3,{ end; }
+x_prt,116,14,4	script	08 estandarte	4_BOARD3,{ end; }
+x_prt,125,14,4	script	09 folhagem	4_BOARD3,{ end; }
+x_prt,17,23,4	script	10 base de arvore	4_BOARD3,{ end; }
+x_prt,26,23,4	script	11 vaso de planta	4_BOARD3,{ end; }
+x_prt,35,23,4	script	12 arbusto	4_BOARD3,{ end; }
+x_prt,62,23,4	script	13 poste de luz	4_BOARD3,{ end; }
+x_prt,71,23,4	script	14 pilar do portao dos 	4_BOARD3,{ end; }
+x_prt,107,23,4	script	15 pilar de guarda-corp	4_BOARD3,{ end; }
+x_prt,116,23,4	script	16 arvore	4_BOARD3,{ end; }
+x_prt,125,23,4	script	17 arbusto	4_BOARD3,{ end; }
+x_prt,35,32,4	script	18 pilar (evento de 3a 	4_BOARD3,{ end; }
+x_prt,53,32,4	script	19 caixote de madeira	4_BOARD3,{ end; }
+x_prt,62,32,4	script	20 vaso de planta	4_BOARD3,{ end; }
+x_prt,71,32,4	script	21 tambor de metal	4_BOARD3,{ end; }
+x_prt,98,32,4	script	22 ponte de Izlude	4_BOARD3,{ end; }
+x_prt,107,32,4	script	23 ponte	4_BOARD3,{ end; }
+x_prt,116,32,4	script	24 caixa de correio	4_BOARD3,{ end; }
+x_prt,125,32,4	script	25 tubo de esgoto	4_BOARD3,{ end; }
+x_prt,17,41,4	script	26 tambor de metal	4_BOARD3,{ end; }
+x_prt,53,41,4	script	27 barril de bebida	4_BOARD3,{ end; }
+x_prt,62,41,4	script	28 balde	4_BOARD3,{ end; }
+x_prt,71,41,4	script	29 pedestal de estatua	4_BOARD3,{ end; }
+x_prt,107,41,4	script	30 bronze do quartel do	4_BOARD3,{ end; }
+x_prt,116,41,4	script	31 suporte de madeira	4_BOARD3,{ end; }
+x_prt,125,41,4	script	32 bule	4_BOARD3,{ end; }
+x_prt,17,50,4	script	33 luminaria interna	4_BOARD3,{ end; }
+x_prt,26,50,4	script	34 TRONCO DE ARVORE	4_BOARD3,{ end; }
+x_prt,53,50,4	script	35 ponte de madeira	4_BOARD3,{ end; }
+x_prt,62,50,4	script	36 quitanda	4_BOARD3,{ end; }
+x_prt,71,50,4	script	37 trepadeira	4_BOARD3,{ end; }
+x_prt,80,50,4	script	38 quadro de avisos	4_BOARD3,{ end; }
+x_prt,89,50,4	script	39 loja	4_BOARD3,{ end; }
+x_prt,107,50,4	script	40 placa	4_BOARD3,{ end; }
+x_prt,116,50,4	script	41 suporte de madeira	4_BOARD3,{ end; }
+x_prt,125,50,4	script	42 suporte de madeira	4_BOARD3,{ end; }
+x_prt,44,59,4	script	43 banca	4_BOARD3,{ end; }
+x_prt,53,59,4	script	44 banco comprido	4_BOARD3,{ end; }
+x_prt,80,59,4	script	45 tora de madeira	4_BOARD3,{ end; }
+x_prt,89,59,4	script	46 flor	4_BOARD3,{ end; }
+x_prt,17,68,4	script	47 loja	4_BOARD3,{ end; }
+x_prt,26,68,4	script	48 flor	4_BOARD3,{ end; }
+x_prt,35,68,4	script	49 suporte de armas	4_BOARD3,{ end; }
+x_prt,44,68,4	script	50 TRONCO DE ARVORE	4_BOARD3,{ end; }
+x_prt,53,68,4	script	51 flor	4_BOARD3,{ end; }
+x_prt,89,68,4	script	52 entrada de caverna	4_BOARD3,{ end; }
+x_prt,98,68,4	script	53 copo de vidro	4_BOARD3,{ end; }
+x_prt,107,68,4	script	54 braseiro	4_BOARD3,{ end; }
+x_prt,116,68,4	script	55 cadeira	4_BOARD3,{ end; }
+x_prt,125,68,4	script	56 pao de Natal	4_BOARD3,{ end; }
+x_prt,44,77,4	script	57 banca	4_BOARD3,{ end; }
+x_prt,53,77,4	script	58 caixa de frutas de b	4_BOARD3,{ end; }
+x_prt,80,77,4	script	59 quadro de avisos	4_BOARD3,{ end; }
+x_prt,89,77,4	script	60 arena de quiz	4_BOARD3,{ end; }
+x_prt,98,77,4	script	61 braseiro	4_BOARD3,{ end; }
+x_prt,17,86,4	script	62 peixe	4_BOARD3,{ end; }
+x_prt,26,86,4	script	63 placa	4_BOARD3,{ end; }
+x_prt,53,86,4	script	64 guilda dos espadachi	4_BOARD3,{ end; }
+x_prt,62,86,4	script	65 martelo	4_BOARD3,{ end; }
+x_prt,71,86,4	script	66 veleiro	4_BOARD3,{ end; }
+x_prt,80,86,4	script	67 caixa de frutas de b	4_BOARD3,{ end; }
+x_prt,116,86,4	script	68 banco	4_BOARD3,{ end; }
+x_prt,125,86,4	script	69 loja de armas	4_BOARD3,{ end; }
+x_prt,17,95,4	script	70 quadro de avisos	4_BOARD3,{ end; }
+x_prt,26,95,4	script	71 machado	4_BOARD3,{ end; }
+x_prt,62,95,4	script	72 peixe	4_BOARD3,{ end; }
+x_prt,71,95,4	script	73 cerca do portao dos 	4_BOARD3,{ end; }
+x_prt,80,95,4	script	74 loja	4_BOARD3,{ end; }
+x_prt,116,95,4	script	75 suporte de armas	4_BOARD3,{ end; }
+x_prt,125,95,4	script	76 pao de Natal	4_BOARD3,{ end; }
+x_prt,17,104,4	script	77 fundicao	4_BOARD3,{ end; }
+x_prt,26,104,4	script	78 braseiro	4_BOARD3,{ end; }
+x_prt,35,104,4	script	79 Academia	4_BOARD3,{ end; }
+x_prt,44,104,4	script	80 peixe	4_BOARD3,{ end; }
+x_prt,62,104,4	script	81 fonte	4_BOARD3,{ end; }
+x_prt,71,104,4	script	82 caixa de paes de ban	4_BOARD3,{ end; }
+x_prt,89,104,4	script	83 loja	4_BOARD3,{ end; }
+x_prt,107,104,4	script	84 oficina de encantame	4_BOARD3,{ end; }
+x_prt,116,104,4	script	85 arena de Prontera	4_BOARD3,{ end; }
+x_prt,125,104,4	script	86 paes	4_BOARD3,{ end; }
+x_prt,17,113,4	script	87 caixote de madeira	4_BOARD3,{ end; }
+x_prt,35,113,4	script	88 flor	4_BOARD3,{ end; }
+x_prt,53,113,4	script	89 paes	4_BOARD3,{ end; }
+x_prt,62,113,4	script	90 aeronave	4_BOARD3,{ end; }

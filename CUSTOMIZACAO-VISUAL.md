@@ -165,7 +165,14 @@ Preferir substituir enquanto der.
 A análise de 2026-07-31 dizia que o DES bloqueava tudo. **Estava errado**, e a
 correção é o que destravou a amostra no mesmo dia.
 
-Medido no GRF: os arquivos de mapa estão **sem DES**.
+**Segunda correção, de 2026-07-31 ~01:05:** a frase abaixo dizia "os arquivos de
+mapa estão sem DES", e isso é largo demais. Contado no GRF: dos 910 `.rsw`,
+**640 estão com DES e 270 sem**. Izlude caiu no lado bom por sorte, não por
+regra — `prt_are01`, `quiz_01`, `job_hunte`, `poring_w01` e `sec_pri` estão
+todos com `flags=3`. Escolher mapa base para trabalhar hoje significa **escolher
+dentro dos 270**, e foi o que levou ao `x_prt` do mapa-catálogo.
+
+Medido no GRF, para Izlude especificamente:
 
 ```
 data\izlude.rsw   228430 bytes  flags=1
@@ -302,12 +309,84 @@ jogo. São três mecanismos, e eles se complementam:
 |---|---|---|
 | **Screenshot** | zero | Eu leio imagem direto. É o laço mais curto e foi o que pegou o tronco de árvore. Bom para diagnosticar, ruim para varrer muitos modelos |
 | **Catálogo traduzido** | pronto — `CATALOGO-IZLUDE.md` | Os 90 modelos com pasta e nome traduzidos, a classificação atual da receita, e uma coluna vazia para correção humana. É o artefato de conferência **antes** de usar |
-| **Mapa-catálogo in-game** | a fazer | Plantar uma instância de cada modelo, numerada, em coordenada conhecida. Uma volta a pé e um print devolvem o índice visual inteiro. É o único que resolve de verdade, e vale para todas as cidades |
+| **Mapa-catálogo in-game** | **pronto** — `@warp x_prt` | Um exemplar de cada modelo, de pé, com placa numerada ao lado. Uma volta a pé resolve o mapa inteiro. Ver a seção própria abaixo |
 
 Um quarto caminho, mais caro e não iniciado: **renderizar os `.rsm` eu mesmo**
 para gerar miniaturas e olhar sem intermediário. Exige o DES (os `.rsm` estão
 atrás dele), um parser de `.rsm` e um rasterizador. É o único que me tornaria
 autossuficiente.
+
+## O mapa-catálogo — 2026-07-31
+
+`@warp x_prt`. Os 90 modelos de Izlude, um exemplar de cada, de pé, em grade, com
+uma **placa numerada** ao lado. O número da placa é o número do
+`CATALOGO-INGAME.md`, que também traz o `@warp x,y` para cair ao lado de um
+modelo específico.
+
+### Por que `x_prt`
+
+A escolha foi medida, não chutada. Os critérios, em ordem de eliminação:
+
+| Critério | Por quê |
+|---|---|
+| `.rsw` **sem DES** | senão não dá para ler o mapa base. Elimina 640 dos 910 |
+| Está no `db/map_index.txt` | senão o `@warp` não funciona |
+| **Sem spawn de monstro** | catálogo com mob batendo em você não se usa. Elimina os campos, inclusive o `prt_fild08`, que era o maior |
+| Área andável grande | 140×140 células, 59% andável |
+| **Altura constante** | `x_prt` é plano em 0,0 do começo ao fim, então nada fica enterrado nem flutuando |
+
+O `bl_grass` era o maior candidato (400×400) mas o terreno é irregular; o
+`new_zone01` é plano mas tem só 22% andável.
+
+### Como foi construído
+
+1. **Todos os objetos originais do mapa base são apagados** e substituídos pelo
+   catálogo. Por isso o entulho do `x_prt` não atrapalha — o que estiver lá é
+   nosso.
+2. A luz é forçada para neutra e clara (difusa 1,0 / ambiente 0,62). Catálogo é
+   para identificar modelo, não para ambientar.
+3. Cada modelo é **clonado do exemplar que Izlude usa**, o que preserva a escala
+   com que ele aparece de verdade. Tamanho errado foi metade do problema do
+   tronco de árvore — de pé e em escala real, aquele modelo se denunciaria na
+   hora.
+4. Só se posiciona em célula andável, com a vizinhança livre, e com chão para a
+   placa. Deram 107 vagas para 90 modelos.
+
+### A conversão de coordenadas foi medida
+
+Esta é a parte que erra silencioso: se a conversão estiver errada, os modelos
+aparecem no lugar errado ou enterrados, e nada acusa. Então foi **medida**, com
+os 552 modelos de Izlude como amostra — a correlação entre a altura do terreno
+sob cada modelo e o `y` do próprio modelo só aparece com o sinal certo de `z`:
+
+| candidato | correlação |
+|---|---|
+| **`z` positivo, altura mesmo sinal** | **+0,389** |
+| `z` positivo, altura invertida | −0,389 |
+| `z` negativo | ±0,051 — ou seja, ruído |
+
+O sinal errado de `z` destrói a correlação, o que torna o resultado decisivo:
+
+```
+mundo_x = (celula_x - largura_gat/2) * 5 + 2,5
+mundo_z = (celula_y - altura_gat/2)  * 5 + 2,5
+mundo_y = altura do .gat na celula (mesmo sinal)
+```
+
+O `.gat` tem o **dobro** da resolução do `.gnd` em cada eixo — uma célula de
+`.gat` é um quarto de tile de `.gnd`. Confirmado pelo tamanho do arquivo:
+`268 × 300 × 20 + 14 = 1608014`, exatamente o `izlude.gat`.
+
+### Onde está cada peça
+
+| Peça | Onde | Reverter |
+|---|---|---|
+| Mapa | `cliente\data\x_prt.rsw` | apagar o arquivo |
+| Placas | `rathena\npc\guerra\catalogo_visual.txt` | comentar a linha no `scripts_guerra.conf` |
+| Legenda | `CATALOGO-INGAME.md` | — |
+
+As placas são **ferramenta de trabalho, não conteúdo de jogo**. Manter
+desligadas no `scripts_guerra.conf` quando não estiverem em uso.
 
 ### O limite honesto desta amostra
 

@@ -170,6 +170,53 @@ modelo é tronco de árvore, enorme. Deitado a 90° virou tora atravessada na ru
 **A regra: a pasta manda mais que o nome do arquivo.** Por isso o catálogo mostra
 sempre as duas, lado a lado, e a tradução literal aparece rotulada como literal.
 
+## `gat.py` — leitor de colisão e altura andável
+
+```
+python gat.py <mapa.gat>
+```
+
+**Só lê, nunca escreve.** O `.gat` é a única camada de mapa que o *servidor*
+também consome — é dele que o `map_cache.dat` é gerado — então escrever nele
+puxaria regeração de cache. A frente visual usa apenas para saber onde dá para
+pisar e em que altura o chão está.
+
+O `.gat` tem o **dobro** da resolução do `.gnd` em cada eixo. Confirmado pelo
+tamanho: Izlude é `.gnd` 134×150 e `.gat` 268×300, e
+`268 × 300 × 20 + 14 = 1608014`, que é o tamanho exato do arquivo.
+
+## `catalogo_ingame.py` — monta o mapa-catálogo
+
+```
+python catalogo_ingame.py <pasta-de-entrada> <pasta-de-saida>
+```
+
+Gera três coisas de uma vez: o `.rsw` do mapa-catálogo, o script de NPC com as
+placas numeradas, e o markdown com as coordenadas de `@warp`.
+
+Põe **um exemplar de cada modelo, de pé, em grade, com placa numerada ao lado**.
+Uma volta a pé resolve o mapa inteiro — que é a diferença para o screenshot (um
+caso por vez) e para o catálogo em markdown (depende de adivinhar pelo nome).
+
+Detalhes que importam:
+
+- **apaga a lista de objetos do mapa base inteira** antes de plantar o catálogo,
+  então o entulho do mapa base não atrapalha;
+- clona o exemplar que o mapa de origem usa, **preservando a escala real** — de
+  pé e em tamanho verdadeiro, o tronco de árvore teria se denunciado na hora;
+- só posiciona em célula andável, com vizinhança livre e chão para a placa;
+- luz forçada para neutra e clara: catálogo é para identificar, não ambientar;
+- as placas saem **sem acento**, pela mesma razão dos outros NPCs nossos (ver
+  `PENDENCIAS.md`, "Acentuação no diálogo"), com uma rede de segurança que troca
+  por `_` qualquer caractere não-ASCII que a tabela não previu.
+
+**A conversão entre coordenada do jogo e coordenada de mundo do `.rsw` foi
+medida, não suposta** — é o tipo de erro que não acusa, só põe o modelo no lugar
+errado. Ver `../CUSTOMIZACAO-VISUAL.md`, seção do mapa-catálogo.
+
+Mapa base: `x_prt`, escolhido por eliminação — sem DES, no `map_index`, sem
+spawn de monstro, 59% andável e **altura constante 0**.
+
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 
 ```
