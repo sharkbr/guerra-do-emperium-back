@@ -481,29 +481,32 @@ Então a folhagem fica onde está, corretamente. As 20 bases **foram deixadas de
 propósito**: remover não foi pedido, e base sob a ossada lê como o toco onde a
 árvore estava. Reversível numa linha se ficar estranho.
 
-### As poças — 7, nos pontos mais baixos
+### As poças — TENTADO E ABANDONADO. Não refazer.
 
-Não existe modelo de poça no GRF, e o plano de água do `.rsw` é global (um nível
-para o mapa inteiro, 45 em Izlude), então não serve para poça local. A saída foi
-**pintar o chão** pela cor de superfície do `.gnd`: escurecer e esfriar. Zero
-arquivo novo, zero memória.
+**O `izlude.gnd` foi removido; o chão de Izlude está original de novo.**
 
-Escolhidas por altura entre os tiles **andáveis e acima do nível da água** — sem
-esse filtro as "poças" cairiam no mar de Izlude. Alturas 36,5 a 39,0, contra
-água em 45: é o chão mais baixo da cidade.
+O que se fez: como não existe modelo de poça no GRF (procurado `웅덩이`, `연못`,
+`수면`, `개울` — zero) e o plano de água do `.rsw` é global (um nível para o mapa
+inteiro, 45 em Izlude), a saída foi pintar o chão pela cor de superfície do
+`.gnd`. Sete poças nos tiles mais baixos, andáveis e acima do nível da água.
 
-**63 de 20358 superfícies mudaram — 0,31% do chão.** Cada poça é 3×3 tiles com
-centro escuro e borda suave, para não virar um quadrado.
+**Por que não serviu, e é o ponto que interessa:** *"todas essas localizações já
+tinham água embaixo"*. Izlude é cidade portuária construída sobre a água — o
+chão andável mais baixo é justamente o que está sobre o mar ou colado nele.
+Pintar poça ali não acrescenta nada, porque já se vê água.
 
-Detalhe que é o inverso do `destroi_mapa.py`: lá o azul **cai** mais que o
-vermelho, porque poeira desloca para o terra. Aqui o azul é o que se **preserva**
-(escala R 0,42 / G 0,52 / B 0,68 no centro), porque água esfria a cor.
+O erro foi de premissa, não de execução. "Água empoça no ponto mais baixo" vale
+para terreno fechado; num porto, o ponto mais baixo **é** o mar. A heurística
+estava certa e o mapa é que não era o caso de uso.
 
-**Armadilha registrada:** o eixo Y de RO aponta para baixo, então "mais baixo" é
-o **maior** valor de altura. Inverter isso poria as poças nos telhados.
+Se um dia se quiser poça em Izlude, o caminho é **escolher os pontos a olho** —
+praça, rua interna, pátio longe da orla — e não por altura. Em cidade de terra
+firme a heurística por altura provavelmente funciona; aqui não.
 
-Isso reintroduz um `izlude.gnd` nosso — o chão deixa de ser estritamente
-original, mas a mudança é local e some apagando o arquivo.
+A ferramenta `pocas.py` foi removida junto. Está no histórico do git
+(commit `57f3b86`) se algum dia servir a outra cidade. O que ficou de útil foram
+os acessores `superficie_topo()` e `altura_tile()` no `gnd.py` — antes o bloco
+de cubos era blob opaco e não dava para achar a superfície de um tile.
 
 ---
 

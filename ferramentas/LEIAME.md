@@ -295,31 +295,6 @@ modelo, e trava quem tiver personagem salvo no mapa.
 Não toca luz, água, chão nem `.gat` — nada aqui atravessa a fronteira do
 servidor.
 
-## `pocas.py` — poças de água pelos pontos mais baixos do terreno
-
-```
-python pocas.py <pasta-entrada> <pasta-saida> [mapa]
-```
-
-**Não existe modelo de poça no GRF** (procurado `웅덩이`, `연못`, `수면`,
-`개울`: zero). E o plano de água do `.rsw` é global — um nível único para o mapa
-inteiro — então não serve para poça local.
-
-A saída é pintar o chão pela cor de superfície do `.gnd`: escurecer e **esfriar**
-um punhado de tiles. Zero arquivo novo, zero memória. É o inverso do
-`destroi_mapa.py`, que derruba o azul para sujar de poeira; aqui o azul é o que
-se preserva. A alternativa seria uma das 320 texturas de `data\texture\워터\`,
-mas são quadros de animação — um quadro estático sobre paralelepípedo vira
-mancha azul chapada.
-
-**A armadilha: o eixo Y de RO aponta para baixo, então "mais baixo" é o MAIOR
-valor de altura.** Inverter isso poria as poças nos telhados. E fica de fora
-tudo abaixo do nível da água, senão as poças cairiam no mar de Izlude — que já é
-água e nem é andável.
-
-Exige que as 4 células de `.gat` do tile sejam andáveis: poça em cima de parede
-não faz sentido, e a borda do andável costuma ser degrau.
-
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 
 ```
