@@ -400,6 +400,62 @@ O `.gat` tem o **dobro** da resolução do `.gnd` em cada eixo — uma célula d
 As placas são **ferramenta de trabalho, não conteúdo de jogo**. Manter
 desligadas no `scripts_guerra.conf` quando não estiverem em uso.
 
+## MUDANÇA DE DIREÇÃO — 2026-07-31, depois de ver o catálogo de ruína
+
+**Izlude foi revertida ao original.** Os overrides `izlude.rsw` e `izlude.gnd`
+foram apagados do `cliente\data\`; o GRF voltou a servir o mapa. Nada do que a
+amostra fez continua valendo.
+
+A decisão, depois de olhar as ruínas in-game: **o acervo é bom demais para
+continuar simulando destruição.** Em vez de tombar e afundar casa inteira, trocar
+a casa pela ruína correspondente.
+
+### O que muda na ficção
+
+O meteoro **já passou** — faz tempo. O céu limpou. Então:
+
+| Camada | Antes (amostra) | Agora |
+|---|---|---|
+| **Luz** | cinza de poeira, difusa 0,62 | **original**, sem alteração |
+| **Chão** | encardido por cor de superfície | **original**, sem alteração |
+| **Construções** | tombadas e afundadas | **substituídas** por modelo de ruína |
+| **Adereço** | 70% varridos | manter; **acrescentar** entulho de ruína |
+
+A destruição passa a viver **só na geometria**, não na atmosfera. É mais barato,
+mais reversível e mais convincente: casa de verdade quebrada em céu limpo lê como
+"a catástrofe foi há anos", que é exatamente a ficção.
+
+### O que isso faz com o `destroi_mapa.py`
+
+Fica **obsoleto para Izlude**, mas não foi apagado: as camadas de encardir chão e
+varrer adereço podem servir a outra cidade, e o custo de manter é zero. O que não
+serve mais é a de tombar e afundar construção — foi substituída por algo melhor.
+
+### O protocolo para aplicar as trocas
+
+Duas operações, e cada uma precisa de uma informação diferente:
+
+**Substituir** — a casa X de Izlude vira a ruína Y:
+
+> "trocar o **47** de Izlude pelo **73** do catálogo"
+
+O número de Izlude sai do `CATALOGO-IZLUDE.md` (90 modelos); o da ruína, do
+`CATALOGO-INGAME.md` (228 modelos, os mesmos que estão in-game em
+`prt_fild08`). Por padrão vale para **todas as instâncias** daquele modelo.
+
+**Acrescentar** — pôr a ruína Y num lugar de Izlude:
+
+> "pôr o **15** do catálogo em izlude **128,150**"
+
+A coordenada sai de `@where <nome do personagem>` no lugar onde quiser. Eu
+converto para coordenada de mundo — a conversão já está medida e é a mesma que
+posicionou o mapa-catálogo.
+
+**O que não precisa:** rotação, escala ou altura. Eu tiro a altura do `.gat` e
+uso escala natural do modelo, como no catálogo.
+
+---
+
 ## O inventário do GRF — 2026-07-31
 
 O primeiro mapa-catálogo tinha **só os 90 modelos que Izlude já usa**. Servia
