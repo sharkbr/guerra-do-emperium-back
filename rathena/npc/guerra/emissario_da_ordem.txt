@@ -53,9 +53,21 @@
 //=
 //= O savepoint importa: sem ele o jogador que morrer renasce no
 //= start_point, de volta ao navio.
+//=
+//= O RETRATO (cutin) e o 3rd_rune_knight, do data.grf - ver
+//= CATALOGO-CUTINS.md. Ele NAO some sozinho quando o dialogo fecha:
+//= fica na tela do jogador ate outro NPC troca-lo. Por isso TODA
+//= saida deste script limpa com `cutin "",255`, e por isso o guarda
+//= de peso usa `close2` em vez de `close` - depois de `close` nao
+//= roda mais nada e a limpeza nunca aconteceria.
+//= Quem acrescentar caminho de saida aqui tem de limpar tambem.
 //============================================================
 
 iz_int,18,32,4	script	Emissario da Ordem#iz_int	405,{
+
+	// O retrato acompanha a conversa inteira, entao e ligado antes de
+	// qualquer `mes` - e antes do desvio, para valer nos dois caminhos.
+	cutin .Retrato$, 2;
 
 	// Com a Maca no inventario, a entrega ja aconteceu numa conversa
 	// anterior que nao chegou ao fim. Repete a ultima fala e embarca.
@@ -80,7 +92,11 @@ iz_int,18,32,4	script	Emissario da Ordem#iz_int	405,{
 		mes "Voce nao tem como carregar a ^BB0000Maca da Inocencia^000000 agora.";
 		mes " ";
 		mes "Alivie o peso e fale comigo de novo - eu nao te embarco sem ela.";
-		close;
+		// close2 e nao close: depois de `close` nao roda mais nada, e o
+		// retrato ficaria grudado na tela do jogador.
+		close2;
+		cutin "", 255;
+		end;
 	}
 
 	next;
@@ -93,6 +109,7 @@ L_Embarque:
 	mes "Izlude como sempre, prepara para os novatos, mas o centro de tudo agora e prontera, de la voce parte pra qualquer jornada!";
 
 	close2;
+	cutin "", 255;
 	savepoint .Cidade$, 128, 142, 1, 1;
 	warp .Cidade$, 196, 209;
 	end;
@@ -102,6 +119,12 @@ OnInit:
 
 	// Maca da Inocencia (db/guerra/item_db.yml).
 	.Maca = 30999;
+
+	// O retrato exibido durante a conversa, no canto inferior direito.
+	// Arquivo 3rd_rune_knight.bmp, em data\texture\<UI coreana>\illust\
+	// do data.grf - ver CATALOGO-CUTINS.md. A extensao e omitida de
+	// proposito: o cliente a acrescenta.
+	.Retrato$ = "3rd_rune_knight";
 
 	// A copia principal de Izlude, de proposito - ver o cabecalho.
 	.Cidade$ = "izlude";

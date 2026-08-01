@@ -264,6 +264,31 @@ A busca é por nome de arquivo, então **erra nos dois sentidos** — pega o que
 tem a palavra no nome, e perde ruína batizada de outro jeito. Serve para reduzir
 o acervo a algo que caiba num catálogo, não para decidir.
 
+## `catalogo_cutins.py` — os retratos de NPC que o diálogo pode exibir
+
+```
+python catalogo_cutins.py <data.grf> [saida.md]
+```
+
+Um *cutin* é a ilustração ao lado do diálogo, ligada com uma linha de script:
+`cutin "kafra_01",2;`. Saída em `CATALOGO-CUTINS.md`, na raiz: **1294** nomes
+ASCII em 134 prefixos, mais 59 de nome coreano que ficam de fora (o nome teria
+de ser escrito em CP949 dentro do script).
+
+**A pasta certa é a de nome coreano:** `data\texture\유저인터페이스\illust\`.
+Existe também `data\texture\userinterface\illust` no GRF, com 106 arquivos de
+nome ASCII, e ela **não é lida** para cutin — a única string ASCII de illust
+dentro do executável é `UserInterface\illust\PET_NOIMAGE.bmp`, um caso isolado.
+Conferido nos bytes crus do `GuerraDoEmperium.exe`, e batendo com o
+`doc/script_commands.txt` do rAthena.
+
+**Aqui o DES atrapalha**, ao contrário do `inventario_rsm.py`: para plantar um
+modelo num mapa basta o nome, mas para *escolher* um retrato é preciso vê-lo.
+742 dos arquivos da pasta estão cifrados, e a cifra bate justamente nos retratos
+clássicos (`job_*`, `aca_*`, `nov_*`, `moc_*`, quase todo `kafra_*`) — extrair só
+os livres dá amostra enviesada. Para pré-visualizar, um extrator com DES (GRF
+Editor) ou o próprio jogo.
+
 ## `catalogo_ingame.py` — monta o mapa-catálogo
 
 ```

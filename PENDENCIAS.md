@@ -487,6 +487,12 @@ não óbvias sobre ele:
 - Ele **não guarda estado em variável**. Quem responde "onde eu parei" é o
   inventário: sem a Maçã a conversa recomeça do zero, com a Maçã ela pula para a
   última fala e embarca. Isso também é o que impede uma segunda Maçã.
+- Ele exibe um **retrato** (`cutin "3rd_rune_knight",2`), o primeiro do
+  servidor. O cutin **não some sozinho** quando o diálogo fecha — fica na tela
+  do jogador até outro NPC trocá-lo. Por isso toda saída do script limpa com
+  `cutin "",255`, e por isso o guarda de peso usa `close2` em vez de `close`:
+  depois de `close` não roda mais nada e a limpeza nunca aconteceria. Ver
+  `CATALOGO-CUTINS.md` para o acervo e a pasta certa dentro do GRF.
 
 O destino é a `izlude` principal, de propósito — é o `.rsw` dela que a frente
 visual altera. Mandar para uma variante entregaria a cidade intacta, e a fala do
