@@ -434,7 +434,16 @@ arquivo do rAthena só para apontar para ela.**
 |---|---|---|
 | Scripts de NPC | `rathena/npc/guerra/` | **uma** linha `import:` no fim de `npc/scripts_custom.conf` |
 | Código C++ | `rathena/src/custom/` | nenhuma — a pasta já é o ponto de extensão oficial |
-| Configuração | `rathena/conf/import/` | nenhuma — idem, e está fora do git |
+| Configuração de **regra de jogo** | `rathena/conf/guerra/` | **uma** linha `import:` em `conf/battle_athena.conf` |
+| Configuração de **máquina** (senha, IP, nome do servidor) | `rathena/conf/import/` | nenhuma — a pasta já é o ponto de extensão oficial, e está fora do git |
+
+A separação entre as duas últimas linhas foi decidida em 2026-08-01, ao subir a
+experiência para 10x. `conf/import/` é ignorado de propósito — é lá que moram as
+senhas —, então **regra de jogo versionada não cabe ali**: um clone limpo herdaria
+o rAthena vanilla. Regra de jogo passa a viver em `conf/guerra/`, importada pelo
+`conf/battle_athena.conf`, que é versionado. Como esse `import:` vem **antes** do
+`import: conf/import/battle_conf.txt`, o `conf/import` continua tendo a última
+palavra e pode sobrescrever qualquer coisa nossa numa máquina específica.
 
 Como funciona a camada de script: o `map.cpp` lê `npc/re/scripts_main.conf`, que
 importa `npc/scripts_custom.conf`, que agora importa
@@ -446,11 +455,11 @@ Ligar ou desligar um NPC nosso = comentar uma linha no `scripts_guerra.conf`.
 
 Consequências práticas:
 
-- `git diff` restrito a `npc/guerra/`, `src/custom/` e `conf/import/` mostra
-  **exatamente** o que é nosso.
+- `git diff` restrito a `npc/guerra/`, `src/custom/`, `conf/guerra/` e
+  `conf/import/` mostra **exatamente** o que é nosso.
 - Fora dessas pastas, qualquer diff em `rathena/` é alteração em código de
-  terceiros e merece comentário explicando o porquê. Hoje existe **uma**: o
-  `import:` no `scripts_custom.conf`.
+  terceiros e merece comentário explicando o porquê. Hoje existem **duas**: o
+  `import:` no `scripts_custom.conf` e o `import:` no `battle_athena.conf`.
 - Mudança em `conf/` e em script de NPC **não** precisa de recompilação —
   `@reloadscript` in-game basta. Mudança em `src/` precisa (Visual Studio 2022
   Community 17.14.37, já instalado).

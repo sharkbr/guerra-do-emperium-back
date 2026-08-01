@@ -1,0 +1,17 @@
+//--------------------------------------------------------------
+// Guerra do Emperium - configuracao de batalha nossa.
+//
+// Este arquivo e VERSIONADO e vale para qualquer clone do repo.
+// Ele e importado por conf/battle_athena.conf, logo antes de
+// conf/import/battle_conf.txt - ou seja, o conf/import continua
+// podendo sobrescrever qualquer coisa daqui, por maquina.
+//
+// Regra: aqui so entra ajuste de REGRA DE JOGO. Nada de senha,
+// IP ou nome de servidor - isso e conf/import/, que fica fora do git.
+//
+// Valores em porcentagem: 100 = 1x, 1000 = 10x.
+//--------------------------------------------------------------
+
+// Experiencia de base e de classe: 10x o padrao do rAthena.
+base_exp_rate: 1000
+job_exp_rate: 1000
