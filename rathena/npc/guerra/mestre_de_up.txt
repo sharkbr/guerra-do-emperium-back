@@ -4,8 +4,16 @@
 //= prontera 160,187 (praca da fonte, ao lado do Mestre de Classe)
 //===== Descricao ============================================
 //= Concede 50 niveis de base e 50 de classe de uma vez, apos duas
-//= confirmacoes do jogador.
+//= confirmacoes do jogador, consumindo uma Maca da Inocencia.
 //===== Notas ================================================
+//= A conversa tem TRES momentos, e a Maca so e cobrada no terceiro:
+//=  1) a oferta;
+//=  2) o preco (a fala que menciona a Maca) e a confirmacao;
+//=  3) a cobranca - e aqui, e so aqui, que o `countitem` roda.
+//= Nao ha guarda na entrada de proposito: quem nao tem a Maca ainda
+//= atravessa a conversa inteira e descobre no fim o que lhe falta. A
+//= recusa e o desfecho da cena, nao a porta de entrada.
+//=
 //= O visual e o 10006 (JT_ACADEMY_MASTER, sprite `academy_master`),
 //= conferido no npcidentity.lub, no jobname.lub e no data.grf DESTE
 //= cliente - o .spr e o .act estao la. Nao confundir com o caso do
@@ -16,17 +24,20 @@
 //= langtype 0 (Coreia) e ainda nao testamos como ele desenha byte
 //= acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
 //=
-//= A "Maca da Inocencia" AINDA e so texto: nao existe item com esse
-//= nome nem no item_db do rAthena nem no itemInfo.lua do cliente, e
-//= por isso o NPC nao olha o inventario. Ja esta combinado criar o
-//= item e fazer esta acao consumi-lo - quando for a hora, e
-//= db/import/item_db.yml (servidor) + itemInfo.lua (cliente), e
-//= aqui entram um `countitem` antes da 1a fala e um `delitem` junto
-//= da concessao.
+//= A "Maca da Inocencia" e o item 30999 (Maca_Da_Inocencia), definido
+//= em db/guerra/item_db.yml - arquivo nosso, encadeado pelo `Footer:
+//= Imports:` de db/re/item_db.yml. NAO fica em db/import/item_db.yml:
+//= o .gitignore do proprio rAthena ignora /db/import (linha 67), e um
+//= item definido la sumiria num clone limpo.
+//=
+//= O item ainda nao tem arte propria no cliente: o item_db usa
+//= `AliasName: Apple`, que faz o servidor mandar ao cliente o ID da
+//= Maca comum (512), entao ele aparece com o desenho e o nome dela.
+//= Isso e temporario - quando a entrada [30999] entrar no itemInfo.lua
+//= do cliente, o AliasName sai. Ver "arte de visual: o processo".
 //=
 //= NAO tem trava de uso unico, de proposito: pode ser usado quantas
-//= vezes o jogador quiser. O limite vai ser ter a Maca, nao um
-//= contador.
+//= vezes o jogador quiser. O limite e ter a Maca, nao um contador.
 //=
 //= Por que atribuir BaseLevel/JobLevel e nao dar experiencia: o
 //= pc_setparam (src/map/pc.cpp, SP_BASELEVEL e SP_JOBLEVEL) ja faz
@@ -62,6 +73,31 @@ prontera,160,187,4	script	Mestre de UP	10006,{
 	if (select(" ~ Sim, tenho certeza: ~ ^777777Nao, deixa pra la^000000") != 1)
 		close;
 
+	// Terceiro momento: so aqui a falta da Maca aparece. O jogador
+	// atravessa a conversa inteira e e no fim que descobre o que
+	// falta - a recusa e o desfecho da cena, nao a porta de entrada.
+	next;
+	mes .npc$;
+	mes "Entao me entregue sua ^BB0000Maca da Inocencia^000000.";
+	mes " ";
+	mes "...";
+
+	if (countitem(.Maca) < 1) {
+		mes " ";
+		mes "Voce nao tem nenhuma, viajante.";
+		mes "Sem ela nao ha ilusao que se sustente - eu abriria a porta para um treinamento que voce nunca viveria.";
+		mes " ";
+		mes "Consiga uma e volte. Eu estarei aqui.";
+		close;
+	}
+
+	// A ordem importa: se o delitem falhar, o jogador NAO pode ter
+	// ganho os niveis.
+	delitem .Maca,1;
+
+	mes " ";
+	mes "Feche os olhos. Quando abri-los, o treinamento ja tera acontecido.";
+
 	BaseLevel += .Niveis;
 	JobLevel += .Niveis;
 
@@ -74,5 +110,8 @@ OnInit:
 
 	// Quantos niveis sao concedidos, de base e de classe.
 	.Niveis = 50;
+
+	// Maca da Inocencia (db/guerra/item_db.yml). Consumida a cada uso.
+	.Maca = 30999;
 	end;
 }

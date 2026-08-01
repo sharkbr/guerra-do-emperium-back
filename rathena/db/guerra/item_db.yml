@@ -1,0 +1,52 @@
+###########################################################################
+# Guerra do Emperium - Itens proprios
+###########################################################################
+#
+# Este arquivo e NOSSO. Ele e encadeado a partir do `Footer: Imports:` de
+# db/re/item_db.yml, que so ganhou uma linha apontando para ca.
+#
+# Por que aqui e nao em db/import/item_db.yml: o .gitignore do proprio
+# rAthena ignora /db/import (rathena/.gitignore, linha 67). Um item
+# definido la ficaria fora do git e sumiria num clone limpo.
+#
+# Faixa de IDs reservada para nos: 30000-30999 (medida livre em
+# 2026-07-31, tanto no item_db do servidor quanto no itemInfo.lua do
+# cliente). Vamos preenchendo de tras para frente.
+#
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 30999
+    AegisName: Maca_Da_Inocencia
+    Name: Maca da Inocencia
+    # Etc, e nao Usable, de proposito: a Maca nao e usada pelo jogador.
+    # Quem a consome e o Mestre de UP (npc/guerra/mestre_de_up.txt).
+    # Como Usable, o cliente ofereceria um botao de usar que nao faria
+    # nada.
+    Type: Etc
+    Weight: 10
+    # A Maca nao sai do personagem que a recebeu: sem chao, sem armazem,
+    # sem troca, sem RoDEX, sem leilao. Ela so tem um destino, que e o
+    # Mestre de UP.
+    # Cuidado ao mexer: `Override` (padrao 100) e o group_id que ignora
+    # tudo isto. A conta de teste e group 99, entao ela SENTE as travas -
+    # se um dia um GM de 100+ testar, nao vai sentir.
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+    # TEMPORARIO - sai na Fase 2, quando a arte propria entrar no cliente.
+    # AliasName grava um view_id (src/map/itemdb.cpp, ~linha 608): o
+    # servidor manda ao cliente o ID da Maca comum (512) no lugar do real,
+    # entao o item aparece com o nome, o icone e a descricao da Maca comum
+    # sem precisar tocar em arquivo nenhum do cliente. Quando o itemInfo.lua
+    # tiver a entrada [30999], esta linha some.
+    AliasName: Apple
