@@ -1,0 +1,116 @@
+//===== Guerra do Emperium ===================================
+//= Emissario da Ordem
+//===== Onde =================================================
+//= iz_int 18,32 - o navio da introducao, onde o personagem
+//= recem-criado nasce (start_point de conf/char_athena.conf e
+//= 18,26, seis celulas ao sul daqui).
+//===== Descricao ============================================
+//= Recebe o jogador no navio, entrega a Maca da Inocencia e o
+//= leva direto para Izlude, pulando a ilha (int_land) e todo o
+//= tutorial da Academia.
+//===== Notas ================================================
+//= Existem CINCO copias do navio - iz_int, iz_int01, iz_int02,
+//= iz_int03 e iz_int04 - e o servidor sorteia uma no start_point.
+//= Nao sao mapas diferentes: e o mesmo navio replicado para
+//= espalhar os novatos. Por isso este NPC tem de existir nas
+//= cinco, via duplicate() no fim do arquivo. Nao confundir com
+//= izlude/izlude_a..d, que sao as copias da CIDADE.
+//=
+//= O visual e o 405 (JT_4_M_YOUNGKNIGHT, sprite `4_M_YOUNGKNIGHT`),
+//= conferido no npcidentity.lub (405.0), no jobname.lub e no
+//= data.grf DESTE cliente - o .spr e o .act estao la.
+//=
+//= Os textos estao SEM ACENTO de proposito - ver o cabecalho do
+//= mestre_de_up.txt e PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= A "Maca da Inocencia" e o item 30999, definido em
+//= db/guerra/item_db.yml. Quem a consome e o Mestre de UP
+//= (npc/guerra/mestre_de_up.txt), la em prontera.
+//=
+//= RETOMADA APOS ABANDONO (timeout, desconexao, fechar a janela):
+//= o estado da conversa NAO e guardado em variavel - quem responde
+//= "onde eu estava" e o proprio inventario.
+//=  - SEM a Maca: nada aconteceu ainda, a conversa recomeca do zero.
+//=  - COM a Maca: a entrega ja foi feita, entao pula para a ultima
+//=    fala e segue o fluxo normal (o embarque em Izlude).
+//= Isso tambem impede uma segunda Maca: quem ja tem uma nunca
+//= volta a passar pelo getitem.
+//=
+//= Por que o guarda de peso antes do getitem: se a Maca nao coubesse
+//= e o warp acontecesse mesmo assim, o jogador chegaria em Izlude sem
+//= ela e sem caminho de volta - o navio so e alcancavel na criacao do
+//= personagem. Com o guarda ele fica a bordo, sem Maca, e a proxima
+//= conversa recomeca do zero. Na pratica nao deve disparar (um novato
+//= carrega faca, camisa e pocao), mas a falha silenciosa seria
+//= irreversivel e o guarda custa quatro linhas.
+//=
+//= O destino e `izlude`, a copia principal, e nao izlude_a..d: e o
+//= .rsw dela que a frente visual altera (ver CUSTOMIZACAO-VISUAL.md).
+//= Mandar para uma variante entregaria a cidade intacta, contradizendo
+//= a fala sobre os muros destruidos. As coordenadas 196,209 (chegada)
+//= e 128,142 (ponto de retorno) sao as mesmas que o rAthena usa no
+//= #intro_to_izlude, em npc/re/warps/cities/izlude.txt.
+//=
+//= O savepoint importa: sem ele o jogador que morrer renasce no
+//= start_point, de volta ao navio.
+//============================================================
+
+iz_int,18,32,4	script	Emissario da Ordem#iz_int	405,{
+
+	// Com a Maca no inventario, a entrega ja aconteceu numa conversa
+	// anterior que nao chegou ao fim. Repete a ultima fala e embarca.
+	if (countitem(.Maca) > 0)
+		goto L_Embarque;
+
+	mes .npc$;
+	mes "Depois que meteoro caiu corremos pra ca pra saber o que tinha acontecido e o cenario foi devastador!";
+	mes " ";
+	mes "Mas o show nao pode parar.";
+
+	next;
+	mes .npc$;
+	mes "Aqui em ^0055FFValhalla caida^000000 voce vai receber uma ^BB0000Maca da Inocencia^000000, e quanto mais tempo voce resistir sem usar atalhos maior sera sua retribuicao no final da jornada!";
+	mes " ";
+	mes "- Evoluir seguindo sua jornada ou;";
+	mes "- Evoluir de forma rapida";
+
+	if (!checkweight(.Maca, 1)) {
+		next;
+		mes .npc$;
+		mes "Voce nao tem como carregar a ^BB0000Maca da Inocencia^000000 agora.";
+		mes " ";
+		mes "Alivie o peso e fale comigo de novo - eu nao te embarco sem ela.";
+		close;
+	}
+
+	next;
+	getitem .Maca, 1;
+
+L_Embarque:
+	mes .npc$;
+	mes "O barco chegou em Izlude! Os muros de la estao um pouco destruidos, nao repare!";
+	mes " ";
+	mes "Izlude como sempre, prepara para os novatos, mas o centro de tudo agora e prontera, de la voce parte pra qualquer jornada!";
+
+	close2;
+	savepoint .Cidade$, 128, 142, 1, 1;
+	warp .Cidade$, 196, 209;
+	end;
+
+OnInit:
+	.npc$ = "[Emissario da Ordem]";
+
+	// Maca da Inocencia (db/guerra/item_db.yml).
+	.Maca = 30999;
+
+	// A copia principal de Izlude, de proposito - ver o cabecalho.
+	.Cidade$ = "izlude";
+	end;
+}
+
+// As outras quatro copias do navio. O nome exibido e o mesmo nas
+// cinco; o que vem depois do '#' o cliente nao desenha.
+iz_int01,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int01	405
+iz_int02,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int02	405
+iz_int03,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int03	405
+iz_int04,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int04	405

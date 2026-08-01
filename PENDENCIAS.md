@@ -472,6 +472,24 @@ garantido).
 | NPC | Onde | O quê | Testado |
 |---|---|---|---|
 | Mestre de Classe | `prontera 162,191` | troca de classe por nível, até a 3ª classe | sim, ~22:40 |
+| Mestre de UP | `prontera 160,187` | +50 de base e de classe, consumindo a Maçã da Inocência | — |
+| Emissário da Ordem | `iz_int 18,32` (e nas 5 cópias do navio) | recebe o novato, entrega a Maçã da Inocência e o leva direto a Izlude | sim, 2026-08-01 |
+
+O **Emissário da Ordem** (`npc/guerra/emissario_da_ordem.txt`) pula a ilha
+(`int_land`) e a Academia: ele é o atalho da introdução até Izlude. Duas coisas
+não óbvias sobre ele:
+
+- Ele precisa existir nas **cinco** cópias do navio (`iz_int` e `iz_int01..04`),
+  porque o `start_point` do `conf/char_athena.conf` sorteia uma delas. São o
+  mesmo navio replicado, não mapas diferentes — não confundir com
+  `izlude`/`izlude_a..d`, que são as cópias da *cidade*.
+- Ele **não guarda estado em variável**. Quem responde "onde eu parei" é o
+  inventário: sem a Maçã a conversa recomeça do zero, com a Maçã ela pula para a
+  última fala e embarca. Isso também é o que impede uma segunda Maçã.
+
+O destino é a `izlude` principal, de propósito — é o `.rsw` dela que a frente
+visual altera. Mandar para uma variante entregaria a cidade intacta, e a fala do
+NPC menciona os muros destruídos.
 
 O **Mestre de Classe** (`npc/guerra/mestre_de_classe.txt`) lê a classe em bits
 com `eaclass()`/`roclass()` em vez de ter um `if` por classe, então as 6 linhas
