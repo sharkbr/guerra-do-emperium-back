@@ -437,6 +437,15 @@ arquivo do rAthena só para apontar para ela.**
 | Configuração de **regra de jogo** | `rathena/conf/guerra/` | **uma** linha `import:` em `conf/battle_athena.conf` |
 | Configuração de **máquina** (senha, IP, nome do servidor) | `rathena/conf/import/` | nenhuma — a pasta já é o ponto de extensão oficial, e está fora do git |
 
+Taxas em vigor, todas em `conf/guerra/battle_guerra.txt`: experiência 10x (base e
+classe) e drop 50x. O drop 50x cobre as cinco categorias (comuns, curativos,
+consumíveis, equipamentos e cartas) nas três variantes de cada uma — monstro
+normal, chefe e MVP —, mais prêmio direto de MVP e drop concedido por
+equipamento. **Baú de castelo (`item_rate_treasure`) ficou em 1x de propósito:**
+é recompensa de Guerra do Emperium, economia desenhada da guerra, e não drop de
+monstro. Carta a 50x sai de 0,01%–0,02% oficiais para 0,5%–1%, ou seja uma a
+cada 100–200 mortes; se um dia pesar no equilíbrio, é a primeira a revisar.
+
 A separação entre as duas últimas linhas foi decidida em 2026-08-01, ao subir a
 experiência para 10x. `conf/import/` é ignorado de propósito — é lá que moram as
 senhas —, então **regra de jogo versionada não cabe ali**: um clone limpo herdaria
@@ -460,9 +469,21 @@ Consequências práticas:
 - Fora dessas pastas, qualquer diff em `rathena/` é alteração em código de
   terceiros e merece comentário explicando o porquê. Hoje existem **duas**: o
   `import:` no `scripts_custom.conf` e o `import:` no `battle_athena.conf`.
-- Mudança em `conf/` e em script de NPC **não** precisa de recompilação —
-  `@reloadscript` in-game basta. Mudança em `src/` precisa (Visual Studio 2022
-  Community 17.14.37, já instalado).
+- Mudança em `conf/` e em script de NPC **não** precisa de recompilação. Mudança
+  em `src/` precisa (Visual Studio 2022 Community 17.14.37, já instalado).
+- Mas **cada `conf/` tem o seu recarregador**, e errar o comando faz a mudança
+  parecer que não pegou: script de NPC é `@reloadscript`; `battle_athena.conf` e
+  o que ele importa (inclusive `conf/guerra/`) é `@reloadbattleconf`. Na dúvida,
+  reiniciar o map-server resolve os dois — login e char podem ficar de pé, o map
+  reconecta sozinho.
+- Taxa de EXP e taxa de drop **não** se comportam igual. EXP é lida a cada morte,
+  então vale assim que a config entra. Drop é aplicada quando o banco de monstros
+  é carregado e fica gravada em cada entrada (`src/map/mob.cpp:6890` e `6905`) —
+  exige recarregar o mob db. O `@reloadbattleconf` chama `mob_reload()` sozinho
+  quando percebe que uma taxa de item mudou (`src/map/atcommand.cpp:4437-4474`).
+- Para conferir taxa sem depender de impressão, `@rates` in-game imprime o que o
+  servidor tem **carregado na memória** (`src/map/atcommand.cpp:8843`). Medir
+  matando monstro engana: a penalidade por diferença de nível distorce o ganho.
 
 ### Acentuação no diálogo — não testada
 

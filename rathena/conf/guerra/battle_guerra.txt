@@ -15,3 +15,53 @@
 // Experiencia de base e de classe: 10x o padrao do rAthena.
 base_exp_rate: 1000
 job_exp_rate: 1000
+
+//--------------------------------------------------------------
+// Drop: 50x o padrao do rAthena.
+//
+// Cada categoria tem tres taxas - monstro normal, chefe (boss) e
+// MVP - e todas as tres sobem junto. Se so a primeira subisse, o
+// drop de MVP continuaria 1x e pareceria que a mudanca nao pegou.
+//
+// Os tetos (item_drop_*_max) ficam nos 10000 = 100% do rAthena.
+// A 50x, item que ja era comum bate no teto e passa a cair sempre;
+// isso e o teto agindo, nao erro de configuracao.
+//--------------------------------------------------------------
+
+// Comuns (aba ETC, fora carta).
+item_rate_common: 5000
+item_rate_common_boss: 5000
+item_rate_common_mvp: 5000
+
+// Curativos (recuperam HP ou SP).
+item_rate_heal: 5000
+item_rate_heal_boss: 5000
+item_rate_heal_mvp: 5000
+
+// Consumiveis que nao curam.
+item_rate_use: 5000
+item_rate_use_boss: 5000
+item_rate_use_mvp: 5000
+
+// Equipamentos.
+item_rate_equip: 5000
+item_rate_equip_boss: 5000
+item_rate_equip_mvp: 5000
+
+// Cartas. Base oficial e 0.01% a 0.02%, entao 50x da 0.5% a 1%.
+item_rate_card: 5000
+item_rate_card_boss: 5000
+item_rate_card_mvp: 5000
+
+// Premio que o MVP recebe direto no inventario.
+item_rate_mvp: 5000
+
+// Drop concedido por equipamento (bonus de item), e os itens de
+// dentro dos grupos desses drops (Descoberta de Minerio e afins).
+item_rate_adddrop: 5000
+item_group_rate: 5000
+
+// NAO mexemos em item_rate_treasure (bau de castelo). Ele fica 1x
+// de proposito: e recompensa de Guerra do Emperium, economia
+// desenhada da guerra, e nao drop de monstro. Se um dia quisermos
+// 50x la tambem, basta acrescentar item_rate_treasure: 5000 aqui.
