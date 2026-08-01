@@ -440,11 +440,13 @@ arquivo do rAthena só para apontar para ela.**
 Taxas em vigor, todas em `conf/guerra/battle_guerra.txt`: experiência 10x (base e
 classe) e drop 50x. O drop 50x cobre as cinco categorias (comuns, curativos,
 consumíveis, equipamentos e cartas) nas três variantes de cada uma — monstro
-normal, chefe e MVP —, mais prêmio direto de MVP e drop concedido por
-equipamento. **Baú de castelo (`item_rate_treasure`) ficou em 1x de propósito:**
-é recompensa de Guerra do Emperium, economia desenhada da guerra, e não drop de
-monstro. Carta a 50x sai de 0,01%–0,02% oficiais para 0,5%–1%, ou seja uma a
-cada 100–200 mortes; se um dia pesar no equilíbrio, é a primeira a revisar.
+normal, chefe e MVP —, mais prêmio direto de MVP, drop concedido por equipamento
+e baú de castelo. **A taxa é uma só, sem exceção.** O baú (`item_rate_treasure`)
+entrou no 50x por decisão de 2026-08-01; ele é o único que **sobrepõe** os outros
+modificadores em vez de multiplicar junto, e é recompensa de Guerra do Emperium —
+mexer nele mexe na economia da guerra, não no farm de monstro. Carta a 50x sai de
+0,01%–0,02% oficiais para 0,5%–1%, ou seja uma a cada 100–200 mortes; se um dia
+pesar no equilíbrio, carta e baú são os primeiros a revisar.
 
 A separação entre as duas últimas linhas foi decidida em 2026-08-01, ao subir a
 experiência para 10x. `conf/import/` é ignorado de propósito — é lá que moram as

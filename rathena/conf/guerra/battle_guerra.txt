@@ -61,7 +61,10 @@ item_rate_mvp: 5000
 item_rate_adddrop: 5000
 item_group_rate: 5000
 
-// NAO mexemos em item_rate_treasure (bau de castelo). Ele fica 1x
-// de proposito: e recompensa de Guerra do Emperium, economia
-// desenhada da guerra, e nao drop de monstro. Se um dia quisermos
-// 50x la tambem, basta acrescentar item_rate_treasure: 5000 aqui.
+// Bau de castelo. Decisao de 2026-08-01: entra no 50x junto com o
+// resto, para a taxa ser uma so e nao ter excecao para explicar.
+// Atencao ao comportamento dele: o item_rate_treasure SOBREPOE os
+// outros modificadores em vez de multiplicar junto, e o bau e
+// recompensa de Guerra do Emperium - mexer aqui mexe direto na
+// economia da guerra, nao no farm de monstro.
+item_rate_treasure: 5000
