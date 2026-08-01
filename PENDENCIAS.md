@@ -474,6 +474,7 @@ garantido).
 | Mestre de Classe | `prontera 162,191` | troca de classe por nível, até a 3ª classe | sim, ~22:40 |
 | Mestre de UP | `prontera 160,187` | +50 de base e de classe, consumindo a Maçã da Inocência | — |
 | Emissário da Ordem | `iz_int 18,32` (e nas 5 cópias do navio) | recebe o novato, entrega a Maçã da Inocência e o leva direto a Izlude | sim, 2026-08-01 |
+| Portais do Navio | flutuante, sem mapa | fecha os portais de `iz_int` para o Emissário ser a única saída | não |
 
 O **Emissário da Ordem** (`npc/guerra/emissario_da_ordem.txt`) pula a ilha
 (`int_land`) e a Academia: ele é o atalho da introdução até Izlude. Duas coisas
@@ -490,6 +491,29 @@ não óbvias sobre ele:
 O destino é a `izlude` principal, de propósito — é o `.rsw` dela que a frente
 visual altera. Mandar para uma variante entregaria a cidade intacta, e a fala do
 NPC menciona os muros destruídos.
+
+O **Portais do Navio** (`npc/guerra/portais_do_navio.txt`) é o que faz do
+Emissário a *única* saída. O navio são dois blocos andáveis sem caminho a pé
+entre eles — cabine (onde o novato nasce, com o Emissário) e convés —, então
+fechar o portal de `27,30` já isola o convés inteiro e, com ele, a saída do mapa
+em `56,15`.
+
+**Armadilha ao depurar:** quem abrir `npc/re/warps/cities/izlude.txt` vai ler os
+três portais de pé e não vai bater com o navio do jogo. O fechamento é feito de
+fora, com `disablenpc`, para deixar os arquivos do rAthena byte a byte iguais ao
+upstream — mesma decisão do `sprite_teletransportadora.txt`.
+
+Duas escolhas dentro dele que merecem registro:
+
+- O `#room_in` (`47,30`, convés → cabine) fica **aberto de propósito**. Ele não é
+  saída do mapa: leva de volta ao Emissário. Ninguém deveria chegar ao convés,
+  mas quem chegar (warp de GM, mudança futura) volta por ele. Fechar os três
+  deixaria mais "limpo" e criaria uma armadilha.
+- O `#intro_start` (o NPC de dicas do rAthena) foi fechado junto, porque passou a
+  mentir: ele chama `navigateto` para `52,30`, no convés, e anuncia "you can
+  leave through the bluish warp gate". O custo são as duas dicas que continuavam
+  válidas (clicar no chão para andar, arrastar para girar a câmera). Se um dia
+  quisermos só essas duas, o caminho é um NPC nosso, não reabrir aquele.
 
 O **Mestre de Classe** (`npc/guerra/mestre_de_classe.txt`) lê a classe em bits
 com `eaclass()`/`roclass()` em vez de ter um `if` por classe, então as 6 linhas

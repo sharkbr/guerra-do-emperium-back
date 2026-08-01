@@ -1,0 +1,109 @@
+//===== Guerra do Emperium ===================================
+//= Portais do Navio
+//===== Onde =================================================
+//= Em lugar nenhum. E um NPC flutuante, sem corpo e sem mapa:
+//= so existe para rodar uma vez no OnInit.
+//===== Descricao ============================================
+//= Fecha os portais do navio da introducao (iz_int e as quatro
+//= copias). Depois disto so ha UM jeito de sair do mapa: falar
+//= com o Emissario da Ordem (npc/guerra/emissario_da_ordem.txt).
+//===== A planta do navio ====================================
+//= O navio sao DOIS blocos andaveis, sem caminho de pe entre
+//= eles - so se passa de um para o outro por portal:
+//=
+//=  32 ##........E.......####################......W.......
+//=  30 #######.......B....a..################.b...An.......
+//=  26 ##.####...S.......####################..............
+//=  15 ######################################..##..X...##..
+//=      \_____ cabine (x 10-31) _____/        \__ conves __/
+//=
+//=  S 18,26  onde o personagem nasce (start_point)
+//=  E 18,32  o Emissario da Ordem
+//=  a 27,30  warp #room_out  -> 51,30 (A), o conves
+//=  b 47,30  warp #room_in   -> 22,30 (B), a cabine
+//=  X 56,15  #ship_out -> int_land: a SAIDA DO MAPA
+//=  W 56,32  Wounded Swordsman, do tutorial do rAthena
+//=  n 52,30  para onde o navigateto do tutorial aponta
+//===== O que e fechado, e por que ===========================
+//= 1) `#room_out` (a). E ele que sela tudo: sem o portal da
+//=    cabine o conves fica inalcancavel a pe, e com ele o X.
+//= 2) `#ship_out` (X), a saida do mapa. Ja esta inalcancavel
+//=    pelo item 1, mas fecha-lo e a afirmacao direta da regra -
+//=    e cobre quem chegar ao conves por outro caminho.
+//= 3) `#intro_start`, o NPC de dicas do rAthena. Nao e portal,
+//=    mas passou a MENTIR: ele chama navigateto para 52,30, no
+//=    conves, e anuncia "You can leave through the bluish warp
+//=    gate" apontando emotion para o #room_out. Com o portal
+//=    fora, a seta de navegacao aponta para parede.
+//=    O custo de fecha-lo sao as duas dicas que continuavam
+//=    validas - clicar no chao para andar e arrastar com o botao
+//=    direito para girar a camera. Se um dia quisermos so essas
+//=    duas, o caminho e um NPC nosso, nao reabrir este.
+//=
+//= `#room_in` (b) fica ABERTO de proposito. Ele nao e saida do
+//= mapa: leva do conves de volta para a cabine, ou seja, de volta
+//= para o Emissario. Ninguem deveria conseguir chegar ao conves,
+//= mas se chegar (warp de GM, mudanca futura), com o b aberto ele
+//= volta e continua o fluxo; sem o b, ficaria preso. Fechar os
+//= tres portais deixaria o navio mais "limpo" e criaria uma
+//= armadilha - a escolha aqui e nao criar a armadilha.
+//===== Por que de fora, e nao editando os arquivos ==========
+//= Os portais moram em npc/re/warps/cities/izlude.txt e o NPC de
+//= dicas em npc/re/jobs/novice/academy.txt - arquivos do rAthena,
+//= nao nossos. Comentar linha la sujaria o vendor e faria toda
+//= atualizacao futura bater de frente com a nossa mudanca.
+//= disablenpc faz o mesmo de fora e deixa os dois byte a byte
+//= iguais ao upstream. Mesma decisao do sprite_teletransportadora.txt.
+//=
+//= ARMADILHA AO DEPURAR: quem abrir o izlude.txt vai ler os tres
+//= portais de pe e nao vai bater com o navio do jogo. O fechamento
+//= e aqui. Comentar a linha deste arquivo no scripts_guerra.conf
+//= devolve o navio original.
+//===== Notas ================================================
+//= disablenpc nao so esconde: NPC com `is_invisible` e pulado no
+//= laco de toque (src/map/npc.cpp:2104) e nao dispara evento
+//= (npc.cpp:5120). Vale para os dois tipos aqui - `warp`
+//= (#room_out) e `script WARPNPC` (#ship_out).
+//=
+//= O guarda de getnpcid nao e decoracao: disablenpc em nome que
+//= nao existe devolve SCRIPT_CMD_FAILURE e ABORTA o OnInit, o que
+//= deixaria os portais seguintes abertos, calado. Com o guarda, um
+//= nome que saiu de sincronia vira aviso no console e o resto roda.
+//=
+//= Os Wounded Swordsman (W) e o resto do tutorial da Academia
+//= ficam de pe no conves, agora inalcancaveis. Nao foram tocados:
+//= NPC orfao em area que ninguem visita nao custa nada, e o dia
+//= que quisermos o conves de volta eles ja estao la.
+//============================================================
+
+-	script	PortaisDoNavio	-1,{
+	end;
+
+OnInit:
+	setarray .@portal$[0],
+		// O portal da cabine (27,30). E ele que sela o navio.
+		"#room_out",            "#room_out01",          "#room_out02",
+		"#room_out03",          "#room_out04",
+		// A saida do mapa (56,15), rumo a int_land.
+		"#ship_out",            "#ship_out01",          "#ship_out02",
+		"#ship_out03",          "#ship_out04",
+		// O NPC de dicas: aponta a navegacao para o conves.
+		"iz_int#intro_start",   "iz_int01#intro_start", "iz_int02#intro_start",
+		"iz_int03#intro_start", "iz_int04#intro_start";
+
+	.@sumiram = 0;
+	for (.@i = 0; .@i < getarraysize(.@portal$); .@i++) {
+		// getnpcid devolve 0 quando o NPC nao existe. Sem este
+		// teste, um nome fora de sincronia abortaria o OnInit e
+		// deixaria os portais seguintes abertos.
+		if (!getnpcid(0, .@portal$[.@i])) {
+			.@sumiram++;
+			continue;
+		}
+		disablenpc .@portal$[.@i];
+	}
+
+	if (.@sumiram)
+		debugmes "PortaisDoNavio: "+.@sumiram+" de "+getarraysize(.@portal$)+" alvos nao foram encontrados. A lista deste arquivo saiu de sincronia com npc/re/warps/cities/izlude.txt ou npc/re/jobs/novice/academy.txt - PODE HAVER PORTAL ABERTO NO NAVIO.";
+	end;
+}
