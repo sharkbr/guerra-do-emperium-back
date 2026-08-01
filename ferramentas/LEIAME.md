@@ -37,6 +37,50 @@ par inglês. Ver a tabela completa de IDs no `PENDENCIAS.md`.
 renomear um exe em uso, então o caminho é patchar uma cópia e trocar por
 `mv`.
 
+## `instala_item.py` — põe a entrada de um item nosso no `itemInfo.lua`
+
+```
+python instala_item.py              # aplica (faz backup antes)
+python instala_item.py --verificar  # só relata, não grava
+python instala_item.py <itemInfo.lua> [--verificar]
+```
+
+O `itemInfo.lua` é a tabela que dá **nome, descrição e arte** a cada item do lado
+do cliente. Item novo no `item_db` do servidor sem entrada aqui aparece sem nome.
+Ele **não é alcançado por `@reloaditemdb`** — é lido uma vez, na inicialização,
+então toda mudança exige fechar e reabrir o cliente.
+
+**Por que é script e não edição à mão**, que é a razão de o arquivo existir: o
+`itemInfo.lua` tem 22 MB, está em ANSI, e os `resourceName` são **bytes CP949
+coreanos**. Editor ou ferramenta que assuma UTF-8 reescreve esses bytes e corrompe
+as ~26 mil entradas de uma vez, **sem dar erro** — o estrago só aparece no jogo, e
+depois de salvo não dá para saber o que era. Aqui é tudo `rb`/`wb`, byte a byte,
+sem decodificar nada.
+
+Isso também resolve o `cliente\` estar fora do git: o **gerador** fica versionado,
+a saída não. Rodar o script reconstrói a alteração num cliente novo.
+
+**A receita é a tabela `ITENS` no topo do arquivo** — acrescentar item é editar a
+tabela, não o código. O campo `arte_de` é o pulo do gato: em vez de criar ícone,
+imagem de *collection* e sprite de chão, ele **copia o `resourceName` de outro
+item, em tempo de execução**. `resourceName` é só um nome de recurso, e nada impede
+dois IDs apontarem para o mesmo desenho. A Maçã da Inocência (30999) usa a arte da
+Maçã comum (512). Quando um item nosso merecer arte exclusiva, aí entra o
+`instala_visual.py`.
+
+**É idempotente**: entrada idêntica não faz nada, entrada diferente é substituída
+em bloco, e rodar duas vezes nunca duplica. O `--verificar` relata sem gravar um
+byte, e o backup vai para `itemInfo.lua.BACKUP-AAAAMMDD-HHMM`.
+
+Uma premissa que foi **medida, não suposta**: o arquivo está ordenado por ID, mas
+com **10 inversões locais** (`15877 → 15858` e parecidas). Nenhuma joga um ID
+grande para o começo, que é o único caso que enganaria a busca do ponto de
+inserção. E mesmo se enganasse, o efeito seria estético — `tbl` é um construtor de
+tabela Lua com chave explícita, então a posição não muda nada para o jogo.
+
+Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
+arquivo **byte a byte idêntico ao backup**.
+
 ## `grf.py` — extrator de GRF 0x200
 
 ```

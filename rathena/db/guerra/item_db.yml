@@ -43,10 +43,9 @@ Body:
       NoMail: true
       NoAuction: true
       NoCart: true
-    # TEMPORARIO - sai na Fase 2, quando a arte propria entrar no cliente.
-    # AliasName grava um view_id (src/map/itemdb.cpp, ~linha 608): o
-    # servidor manda ao cliente o ID da Maca comum (512) no lugar do real,
-    # entao o item aparece com o nome, o icone e a descricao da Maca comum
-    # sem precisar tocar em arquivo nenhum do cliente. Quando o itemInfo.lua
-    # tiver a entrada [30999], esta linha some.
-    AliasName: Apple
+    # Sem AliasName: o cliente agora conhece o 30999 de verdade. A entrada
+    # [30999] do itemInfo.lua e posta pelo ferramentas/instala_item.py -
+    # rodar de novo depois de trocar o cliente ou de mexer no texto.
+    # O item nao tem arte propria: o `resourceName` da entrada e copiado
+    # byte a byte do da Maca comum, entao o desenho e o mesmo sem custar
+    # arquivo nenhum. Ate aqui o nome e a descricao ja sao os nossos.

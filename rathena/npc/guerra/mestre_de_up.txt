@@ -30,11 +30,12 @@
 //= o .gitignore do proprio rAthena ignora /db/import (linha 67), e um
 //= item definido la sumiria num clone limpo.
 //=
-//= O item ainda nao tem arte propria no cliente: o item_db usa
-//= `AliasName: Apple`, que faz o servidor mandar ao cliente o ID da
-//= Maca comum (512), entao ele aparece com o desenho e o nome dela.
-//= Isso e temporario - quando a entrada [30999] entrar no itemInfo.lua
-//= do cliente, o AliasName sai. Ver "arte de visual: o processo".
+//= Do lado do cliente, a entrada [30999] do itemInfo.lua e posta pelo
+//= ferramentas/instala_item.py - e la que moram o nome exibido e a
+//= descricao. O cliente le esse arquivo so na inicializacao, entao
+//= mexer nele exige fechar e reabrir; @reloaditemdb nao alcanca.
+//= O item nao tem arte propria: o `resourceName` da entrada e copiado
+//= byte a byte do da Maca comum, entao o desenho e o mesmo.
 //=
 //= NAO tem trava de uso unico, de proposito: pode ser usado quantas
 //= vezes o jogador quiser. O limite e ter a Maca, nao um contador.
