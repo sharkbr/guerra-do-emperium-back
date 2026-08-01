@@ -1,0 +1,78 @@
+//===== Guerra do Emperium ===================================
+//= Mestre de UP
+//===== Onde =================================================
+//= prontera 160,187 (praca da fonte, ao lado do Mestre de Classe)
+//===== Descricao ============================================
+//= Concede 50 niveis de base e 50 de classe de uma vez, apos duas
+//= confirmacoes do jogador.
+//===== Notas ================================================
+//= O visual e o 10006 (JT_ACADEMY_MASTER, sprite `academy_master`),
+//= conferido no npcidentity.lub, no jobname.lub e no data.grf DESTE
+//= cliente - o .spr e o .act estao la. Nao confundir com o caso do
+//= Mestre de Classe: la o 10605 caiu porque a faixa 10xxx deste
+//= cliente para em 10508; o 10006 esta bem dentro dela.
+//=
+//= Os textos estao SEM ACENTO de proposito. O cliente roda em
+//= langtype 0 (Coreia) e ainda nao testamos como ele desenha byte
+//= acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= A "Maca da Inocencia" AINDA e so texto: nao existe item com esse
+//= nome nem no item_db do rAthena nem no itemInfo.lua do cliente, e
+//= por isso o NPC nao olha o inventario. Ja esta combinado criar o
+//= item e fazer esta acao consumi-lo - quando for a hora, e
+//= db/import/item_db.yml (servidor) + itemInfo.lua (cliente), e
+//= aqui entram um `countitem` antes da 1a fala e um `delitem` junto
+//= da concessao.
+//=
+//= NAO tem trava de uso unico, de proposito: pode ser usado quantas
+//= vezes o jogador quiser. O limite vai ser ter a Maca, nao um
+//= contador.
+//=
+//= Por que atribuir BaseLevel/JobLevel e nao dar experiencia: o
+//= pc_setparam (src/map/pc.cpp, SP_BASELEVEL e SP_JOBLEVEL) ja faz
+//= o servico completo - trava no nivel maximo da classe, entrega os
+//= pontos de atributo e de traco de cada nivel ganho, entrega os
+//= pontos de habilidade, recalcula o personagem e avisa o grupo.
+//=
+//= Dois efeitos colaterais herdados desse mesmo codigo:
+//=  1) a experiencia acumulada rumo ao proximo nivel e ZERADA (o
+//=     setparam faz base_exp = 0 / job_exp = 0). Quem estava a 1%
+//=     do nivel perde esse 1%. Irrelevante perto de +50.
+//=  2) quem ja esta no teto da classe nao ganha nada, e o NPC nao
+//=     reclama - a trava e silenciosa.
+//============================================================
+
+prontera,160,187,4	script	Mestre de UP	10006,{
+
+	mes .npc$;
+	mes "Ola viajante!";
+	mes "Voce deve ter vindo falar comigo porque quer obter level mais rapido certo?";
+
+	if (select(" ~ Sim, quero: ~ ^777777Nao, deixa pra la^000000") != 1)
+		close;
+
+	next;
+	mes .npc$;
+	mes "Meu metodo de UP consiste em uma ^0055FFilusao atemporal^000000 onde voce realiza todo o treinamento de uma vez so.";
+	mes " ";
+	mes "Mas ele consome sua ^BB0000Maca da Inocencia^000000 de uma vez por todas.";
+	mes " ";
+	mes "Tem certeza que deseja continuar?";
+
+	if (select(" ~ Sim, tenho certeza: ~ ^777777Nao, deixa pra la^000000") != 1)
+		close;
+
+	BaseLevel += .Niveis;
+	JobLevel += .Niveis;
+
+	specialeffect2 EF_ANGEL2;
+	specialeffect2 EF_ELECTRIC;
+	close;
+
+OnInit:
+	.npc$ = "[Mestre de UP]";
+
+	// Quantos niveis sao concedidos, de base e de classe.
+	.Niveis = 50;
+	end;
+}
