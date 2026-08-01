@@ -471,7 +471,7 @@ garantido).
 
 | NPC | Onde | O quê | Testado |
 |---|---|---|---|
-| Mestre de Classe | `prontera 160,191` | troca de classe por nível, até a 3ª classe | sim, ~22:40 |
+| Mestre de Classe | `prontera 162,191` | troca de classe por nível, até a 3ª classe | sim, ~22:40 |
 
 O **Mestre de Classe** (`npc/guerra/mestre_de_classe.txt`) lê a classe em bits
 com `eaclass()`/`roclass()` em vez de ter um `if` por classe, então as 6 linhas

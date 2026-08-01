@@ -1,7 +1,7 @@
 //===== Guerra do Emperium ===================================
 //= Mestre de Classe
 //===== Onde =================================================
-//= prontera 160,191 (praca da fonte, ao lado do Ash-Vacuum Warper)
+//= prontera 162,191 (praca da fonte, ao lado do Ash-Vacuum Warper)
 //===== Descricao ============================================
 //= Troca a classe do personagem conforme o nivel dele.
 //= Cobre a arvore classica inteira ate a 3a classe:
@@ -26,9 +26,14 @@
 //= acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
 //= Os nomes de classe vem do proprio servidor (comando `jobname`),
 //= entao aparecem em ingles ate traduzirmos conf/msg_conf.
+//=
+//= O visual e o 811 (JT_4_F_VALKYRIE, sprite `4_F_VALKYRIE`), conferido
+//= no npcidentity.lub e no data.grf DESTE cliente. O 10605 foi cogitado
+//= antes, mas o npcidentity do kRO 2021-11-03 para na faixa dos 10508 -
+//= usa-lo daria NPC invisivel, como a 4a classe (ver acima).
 //============================================================
 
-prontera,160,191,4	script	Mestre de Classe	123,{
+prontera,162,191,4	script	Mestre de Classe	811,{
 
 // Encerra a conversa dizendo exatamente quanto falta.
 function	Falta	{
