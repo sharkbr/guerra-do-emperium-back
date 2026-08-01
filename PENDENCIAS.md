@@ -472,9 +472,13 @@ garantido).
 | NPC | Onde | O quê | Testado |
 |---|---|---|---|
 | Mestre de Classe | `prontera 162,191` | troca de classe por nível, até a 3ª classe | sim, ~22:40 |
-| Mestre de UP | `prontera 160,187` | +50 de base e de classe, consumindo a Maçã da Inocência | — |
+| Mestre de UP | `prontera 160,187` | +50 de base e de classe, consumindo a Maçã da Inocência | sim, 2026-07-31 |
 | Emissário da Ordem | `iz_int 18,32` (e nas 5 cópias do navio) | recebe o novato, entrega a Maçã da Inocência e o leva direto a Izlude | sim, 2026-08-01 |
-| Portais do Navio | flutuante, sem mapa | fecha os portais de `iz_int` para o Emissário ser a única saída | não |
+| Portais do Navio | flutuante, sem mapa | fecha os portais de `iz_int` para o Emissário ser a única saída | sim, 2026-08-01 |
+
+**Os quatro estão testados in-game e nada ficou pendente neles** (confirmado em
+2026-08-01). O que este arquivo ainda lista abaixo são coisas deliberadamente
+deixadas para depois, não dívida dos NPCs acima.
 
 O **Emissário da Ordem** (`npc/guerra/emissario_da_ordem.txt`) pula a ilha
 (`int_land`) e a Academia: ele é o atalho da introdução até Izlude. Duas coisas
