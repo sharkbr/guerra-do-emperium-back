@@ -24,8 +24,10 @@
 //= mestre_de_up.txt e PENDENCIAS.md, secao "Acentuacao no dialogo".
 //=
 //= A "Maca da Inocencia" e o item 30999, definido em
-//= db/guerra/item_db.yml. Quem a consome e o Mestre de UP
-//= (npc/guerra/mestre_de_up.txt), la em prontera.
+//= db/guerra/item_db.yml. Quem a consome sao a Cavaleira Apressada
+//= (npc/guerra/cavaleira_apressada.txt), ali mesmo em Izlude, e o
+//= Mestre de UP (npc/guerra/mestre_de_up.txt), la em prontera. So a
+//= Cavaleira a EXIGE; o Mestre atende sem ela tambem.
 //=
 //= RETOMADA APOS ABANDONO (timeout, desconexao, fechar a janela):
 //= o estado da conversa NAO e guardado em variavel - quem responde

@@ -1,0 +1,151 @@
+//===== Guerra do Emperium ===================================
+//= Cavaleira Apressada
+//===== Onde =================================================
+//= izlude 185,213 - a poucos passos do ponto onde o Emissario
+//= da Ordem desembarca o novato (196,209).
+//===== Descricao ============================================
+//= Consome a Maca da Inocencia e, em troca, poe o personagem
+//= em nivel 10 de base e 10 de classe e o manda para Prontera.
+//===== Notas ================================================
+//= E o atalho curto, irmao do Mestre de UP (npc/guerra/mestre_de_up.txt).
+//= ATENCAO a assimetria entre os dois, que e recente e proposital:
+//= la a Maca virou preco cobrado mas NAO condicao (quem chega sem ela
+//= recebe os 50 niveis do mesmo jeito); AQUI ela continua EXIGIDA, e
+//= sem ela nao ha troca. Ou seja, gastar a Maca aqui nao fecha mais a
+//= porta de la. Quem for uniformizar isso um dia mexe nos dois
+//= arquivos - o `countitem` daqui e o do terceiro momento de la.
+//=
+//= So na copia principal `izlude`, e nao em izlude_a..d: e para la
+//= que o Emissario manda todo mundo, e e o .rsw dela que a frente
+//= visual altera (ver CUSTOMIZACAO-VISUAL.md).
+//=
+//= O visual e o 469 (JT_4_M_KNIGHT_GOLD, sprite `4_M_KNIGHT_GOLD`),
+//= conferido no npcidentity.lub (469.0), no jobname.lub e no data.grf
+//= DESTE cliente - `4_m_knight_gold.spr` e `.act` estao la.
+//= ATENCAO: apesar do nome do NPC, esse sprite e MASCULINO (o `4_M_`).
+//= Nao foi engano de digitacao nem falta de conferencia: o id veio
+//= pedido assim. A cavaleira de armadura feminina deste cliente e a
+//= 728 (JT_4_F_JOB_KNIGHT, sprite `4_F_JOB_KNIGHT`) - trocar o 469
+//= por 728 nas duas pontas da linha do `script` resolve, se um dia
+//= o desenho passar a incomodar.
+//=
+//= A celula 185,213 e andavel (tipo 0, conferida no izlude.gat do
+//= data.grf) e nao colide com NPC do rAthena - o mais perto e o
+//= Odgnalam, em 182,218.
+//=
+//= Os textos estao SEM ACENTO de proposito - ver o cabecalho do
+//= mestre_de_up.txt e PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= A Maca da Inocencia e o item 30999 (db/guerra/item_db.yml), entregue
+//= pelo Emissario da Ordem ainda no navio da introducao.
+//=
+//= Por que ATRIBUIR o nivel (`BaseLevel = 10`) e nao somar: a promessa
+//= e "level 10/10", um estado final, nao um ganho. Quem chega de nivel
+//= 1 sobe 9; quem ja passou de 10 nao teria para onde ir.
+//=
+//= E dai a GUARDA de nivel abaixo, que recusa quem ja passou do 10.
+//= O pc_setparam (src/map/pc.cpp, SP_BASELEVEL e SP_JOBLEVEL) aceita
+//= valor MENOR que o atual e simplesmente grava - mas so entrega ponto
+//= de atributo e de habilidade na subida, nunca os retira na descida.
+//= Sem a guarda, um personagem de nivel 40 que ainda tivesse a Maca
+//= viraria um nivel 10 com pontos de nivel 40, e sem volta. A guarda
+//= custa quatro linhas; o estrago nao teria conserto.
+//= Ela olha os DOIS niveis com `||`: base 15 / classe 5 tambem entra
+//= aqui, porque acertar a classe derrubaria a base.
+//=
+//= Logo depois vem a segunda recusa, a de quem ja esta EXATAMENTE em
+//= 10/10 - caso real, porque 10 e o teto de classe do Aprendiz. Sem
+//= ela a troca aconteceria sem mudar nada e a Maca sumiria a toa.
+//= Note que ela e `&&` onde a de cima e `||`: quem esta em base 5 /
+//= classe 10 ainda tem 5 niveis de base a ganhar e passa direto.
+//=
+//= A guarda mora no terceiro momento, junto da cobranca, e nao na
+//= entrada - mesma escolha do Mestre de UP: a recusa e o desfecho da
+//= cena, nao a porta. Ela vem ANTES do `delitem`, entao ninguem perde
+//= a Maca para ouvir um nao.
+//=
+//= Efeito colateral herdado do pc_setparam, este aceito: a experiencia
+//= rumo ao proximo nivel e ZERADA (base_exp = 0 / job_exp = 0). Quem
+//= estava a 1% do nivel 5 perde esse 1%. Irrelevante perto do salto.
+//=
+//= O savepoint NAO e mexido de proposito: quem morrer depois disso
+//= renasce em Izlude, onde o Emissario o gravou. Se um dia Prontera
+//= tiver de virar o ponto de retorno, e um `savepoint` aqui - mas essa
+//= decisao e do jogo, nao deste NPC.
+//============================================================
+
+izlude,185,213,4	script	Cavaleira Apressada	469,{
+
+	mes .npc$;
+	mes "Ola viajante!";
+	mes "Se me deixar colocar a mao na sua ^BB0000maca^000000 te deixo do jeito que voce precisa e na posicao que voce precisa, level ^0055FF10/10^000000, do jeito que voce merece!";
+
+	if (select(" ~ Pode pegar: ~ ^777777Nao, deixa pra la^000000") != 1)
+		close;
+
+	// Terceiro momento: e so aqui que a Maca e cobrada e que a guarda
+	// de nivel aparece. Ver o cabecalho.
+	next;
+	mes .npc$;
+	mes "Otimo! Me da essa ^BB0000maca^000000 aqui e nao pisca.";
+	mes " ";
+	mes "...";
+
+	if (BaseLevel > .Nivel || JobLevel > .Nivel) {
+		mes " ";
+		mes "...ah. Voce ja passou disso ha tempo, viajante.";
+		mes "Se eu te puser em ^0055FF10/10^000000 agora eu te empurro pra tras, nao pra frente.";
+		mes " ";
+		mes "Guarda essa maca. Ela vale mais nas maos de quem esta comecando.";
+		close;
+	}
+
+	// Ja esta exatamente no alvo: a troca nao mudaria nada e a Maca
+	// iria embora a toa. So chega aqui quem nao passou de 10 nos dois.
+	if (BaseLevel == .Nivel && JobLevel == .Nivel) {
+		mes " ";
+		mes "...opa. Olha so, voce ja esta em ^0055FF10/10^000000 - chegou sozinho.";
+		mes " ";
+		mes "Nao vou cobrar uma maca pra te deixar do jeito que voce ja esta. Se quiser carona pra Prontera, e ali pelo portao norte.";
+		close;
+	}
+
+	if (countitem(.Maca) < 1) {
+		mes " ";
+		mes "...cade ela? Voce nao tem maca nenhuma, viajante.";
+		mes " ";
+		mes "Sem ela eu nao faco nada. Arruma uma e me chama - eu nao saio daqui.";
+		close;
+	}
+
+	// A ordem importa: se o delitem falhar, o jogador NAO pode ter
+	// ganho os niveis nem a viagem.
+	delitem .Maca, 1;
+
+	mes " ";
+	mes "Pronto! Agora vai - Prontera te espera, e eu ja perdi tempo demais.";
+
+	BaseLevel = .Nivel;
+	JobLevel = .Nivel;
+
+	specialeffect2 EF_ANGEL2;
+	close2;
+	warp .Cidade$, .Cidade_x, .Cidade_y;
+	end;
+
+OnInit:
+	.npc$ = "[Cavaleira Apressada]";
+
+	// O nivel final, de base e de classe. E um ALVO, nao um ganho.
+	.Nivel = 10;
+
+	// Maca da Inocencia (db/guerra/item_db.yml). Consumida a cada uso.
+	.Maca = 30999;
+
+	// O destino. 156,191 e o centro de Prontera - as mesmas coordenadas
+	// que o proprio rAthena usa no @go 0 (src/map/atcommand.cpp).
+	.Cidade$ = "prontera";
+	.Cidade_x = 156;
+	.Cidade_y = 191;
+	end;
+}

@@ -4,15 +4,26 @@
 //= prontera 160,187 (praca da fonte, ao lado do Mestre de Classe)
 //===== Descricao ============================================
 //= Concede 50 niveis de base e 50 de classe de uma vez, apos duas
-//= confirmacoes do jogador, consumindo uma Maca da Inocencia.
+//= confirmacoes do jogador. Come a Maca da Inocencia de quem tiver
+//= uma, mas nao a exige.
 //===== Notas ================================================
-//= A conversa tem TRES momentos, e a Maca so e cobrada no terceiro:
+//= A conversa tem TRES momentos, e a Maca so e tocada no terceiro:
 //=  1) a oferta;
 //=  2) o preco (a fala que menciona a Maca) e a confirmacao;
 //=  3) a cobranca - e aqui, e so aqui, que o `countitem` roda.
-//= Nao ha guarda na entrada de proposito: quem nao tem a Maca ainda
-//= atravessa a conversa inteira e descobre no fim o que lhe falta. A
-//= recusa e o desfecho da cena, nao a porta de entrada.
+//=
+//= A Maca e PRECO COBRADO, NAO CONDICAO: quem a tem, perde; quem nao
+//= a tem, recebe os niveis do mesmo jeito. Nenhum caminho do terceiro
+//= momento recusa o jogador. Foi decidido assim de proposito, em
+//= 2026-08-01 - antes disso a falta da Maca era recusa.
+//=
+//= CONSEQUENCIA a encarar de olho aberto: com isso o NPC deixa de ter
+//= QUALQUER limite. Antes o inventario era o freio - uma Maca, um uso.
+//= Agora nada impede reconversar: sao +50/+50 por conversa, e duas
+//= conversas levam do nivel 1 ao 101. Na pratica ele virou "nivel
+//= maximo a pedido, repetivel". Se um dia isso tiver de ser contido, o
+//= lugar e aqui, e o instrumento e uma variavel de personagem
+//= (`up_usos`) ou um cooldown - nao a Maca, que nao freia mais nada.
 //=
 //= O visual e o 10006 (JT_ACADEMY_MASTER, sprite `academy_master`),
 //= conferido no npcidentity.lub, no jobname.lub e no data.grf DESTE
@@ -38,7 +49,8 @@
 //= byte a byte do da Maca comum, entao o desenho e o mesmo.
 //=
 //= NAO tem trava de uso unico, de proposito: pode ser usado quantas
-//= vezes o jogador quiser. O limite e ter a Maca, nao um contador.
+//= vezes o jogador quiser - e, desde que a Maca deixou de ser
+//= condicao, sem nada que o limite. Ver a CONSEQUENCIA la em cima.
 //=
 //= Por que atribuir BaseLevel/JobLevel e nao dar experiencia: o
 //= pc_setparam (src/map/pc.cpp, SP_BASELEVEL e SP_JOBLEVEL) ja faz
@@ -67,34 +79,32 @@ prontera,160,187,4	script	Mestre de UP	10006,{
 	mes .npc$;
 	mes "Meu metodo de UP consiste em uma ^0055FFilusao atemporal^000000 onde voce realiza todo o treinamento de uma vez so.";
 	mes " ";
-	mes "Mas ele consome sua ^BB0000Maca da Inocencia^000000 de uma vez por todas.";
+	// "se voce tiver uma": a fala nao pode prometer uma exigencia que o
+	// terceiro momento nao cumpre mais, ou quem chega sem a Maca recusa
+	// aqui uma oferta que ele teria recebido.
+	mes "Mas ele consome sua ^BB0000Maca da Inocencia^000000 de uma vez por todas - se voce tiver uma.";
 	mes " ";
 	mes "Tem certeza que deseja continuar?";
 
 	if (select(" ~ Sim, tenho certeza: ~ ^777777Nao, deixa pra la^000000") != 1)
 		close;
 
-	// Terceiro momento: so aqui a falta da Maca aparece. O jogador
-	// atravessa a conversa inteira e e no fim que descobre o que
-	// falta - a recusa e o desfecho da cena, nao a porta de entrada.
+	// Terceiro momento: a cobranca. A Maca e levada quando existe, mas
+	// nao e condicao - ver o cabecalho. Nenhum caminho daqui recusa.
 	next;
 	mes .npc$;
 	mes "Entao me entregue sua ^BB0000Maca da Inocencia^000000.";
 	mes " ";
 	mes "...";
 
-	if (countitem(.Maca) < 1) {
+	if (countitem(.Maca) > 0) {
+		delitem .Maca,1;
 		mes " ";
-		mes "Voce nao tem nenhuma, viajante.";
-		mes "Sem ela nao ha ilusao que se sustente - eu abriria a porta para um treinamento que voce nunca viveria.";
+		mes "Voce a trouxe. Ela vai junto - e assim tem de ser.";
+	} else {
 		mes " ";
-		mes "Consiga uma e volte. Eu estarei aqui.";
-		close;
+		mes "Voce nao tem nenhuma, viajante. Nao faz mal: a ilusao se abre com ou sem ela.";
 	}
-
-	// A ordem importa: se o delitem falhar, o jogador NAO pode ter
-	// ganho os niveis.
-	delitem .Maca,1;
 
 	mes " ";
 	mes "Feche os olhos. Quando abri-los, o treinamento ja tera acontecido.";
