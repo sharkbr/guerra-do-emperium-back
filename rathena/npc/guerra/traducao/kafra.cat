@@ -1,0 +1,1721 @@
+# Catalogo de traducao PT-BR - grupo "kafra"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/kafras/functions_kafras.txt  (250 textos)
+#: npc/kafras/functions_kafras.txt#8 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#9 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/functions_kafras.txt#10 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/functions_kafras.txt#11 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/functions_kafras.txt#12 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/functions_kafras.txt#13 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/functions_kafras.txt#14 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#15 (mes)
+- "^666666W-weeeelc-c-come"
++ "^666666B-beeeem-v-vindo"
+#: npc/kafras/functions_kafras.txt#16 (mes)
+- "to th-the K-kaaafrrrra"
++ "à C-cooorpooor-r-raçãããooo"
+#: npc/kafras/functions_kafras.txt#17 (mes)
+- "C-coorpoor-r-ratioooonn...^000000"
++ "K-kaaafrrrraaa...^000000"
+#: npc/kafras/functions_kafras.txt#18 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#19 (mes)
+- "Welcome. ^ff0000"
++ "Bem-vindo, ^ff0000"
+#: npc/kafras/functions_kafras.txt#20 (mes)
+- "^000000 Member."
++ "^000000."
+#: npc/kafras/functions_kafras.txt#21 (mes)
+- "The Kafra Coporation will stay with you wherever you go."
++ "A Corporação Kafra acompanha você aonde quer que vá."
+#: npc/kafras/functions_kafras.txt#22 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#23 (mes)
+- "So, have you come from a faraway land to study our culture, or are you just sightseeing?"
++ "Então, veio de uma terra distante para estudar nossa cultura, ou está só passeando?"
+#: npc/kafras/functions_kafras.txt#24 (mes)
+- "In either case, why not stay awhile?"
++ "De todo modo, por que não fica um pouco?"
+#: npc/kafras/functions_kafras.txt#25 (mes)
+- "The air is eternally heavy with the"
++ "O ar está sempre carregado com o"
+#: npc/kafras/functions_kafras.txt#26 (mes)
+- "scent of pleasant wildflowers."
++ "perfume das flores silvestres."
+#: npc/kafras/functions_kafras.txt#27 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#28 (mes)
+- "With our many Kafra"
++ "Com tantos postos de"
+#: npc/kafras/functions_kafras.txt#29 (mes)
+- "service locations, you're never"
++ "atendimento Kafra, você nunca"
+#: npc/kafras/functions_kafras.txt#30 (mes)
+- "far from home."
++ "está longe de casa."
+#: npc/kafras/functions_kafras.txt#31 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#32 (setarray)
+- "Use Guild Storage"
++ "Usar o Armazém do Clã"
+#: npc/kafras/functions_kafras.txt#33 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#34 (setarray)
+- "Use Teleport Service"
++ "Usar o Teletransporte"
+#: npc/kafras/functions_kafras.txt#35 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#36 (setarray)
+- "Save"
++ "Salvar ponto de retorno"
+#: npc/kafras/functions_kafras.txt#37 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#38 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#39 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#40 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#41 (setarray)
+- "Save"
++ "Salvar ponto de retorno"
+#: npc/kafras/functions_kafras.txt#42 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#43 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#44 (setarray)
+- "Check Other Information"
++ "Ver outras informações"
+#: npc/kafras/functions_kafras.txt#45 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#46 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#47 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#48 (setarray)
+- "Check Other Information"
++ "Ver outras informações"
+#: npc/kafras/functions_kafras.txt#49 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#50 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#51 (setarray)
+- "Check Other Information"
++ "Ver outras informações"
+#: npc/kafras/functions_kafras.txt#52 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#53 (setarray)
+- "Save"
++ "Salvar ponto de retorno"
+#: npc/kafras/functions_kafras.txt#54 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#55 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#56 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#57 (setarray)
+- "Save"
++ "Salvar ponto de retorno"
+#: npc/kafras/functions_kafras.txt#58 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#59 (setarray)
+- "Check Other Information"
++ "Ver outras informações"
+#: npc/kafras/functions_kafras.txt#60 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#61 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#62 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#63 (setarray)
+- "Use Teleport Service"
++ "Usar o Teletransporte"
+#: npc/kafras/functions_kafras.txt#64 (setarray)
+- "Check Other Information"
++ "Ver outras informações"
+#: npc/kafras/functions_kafras.txt#65 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#66 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#67 (setarray)
+- "Save"
++ "Salvar ponto de retorno"
+#: npc/kafras/functions_kafras.txt#68 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#69 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#70 (setarray)
+- "Save"
++ "Salvar ponto de retorno"
+#: npc/kafras/functions_kafras.txt#71 (setarray)
+- "Use Storage"
++ "Usar o Armazém"
+#: npc/kafras/functions_kafras.txt#72 (setarray)
+- "Use Teleport Service"
++ "Usar o Teletransporte"
+#: npc/kafras/functions_kafras.txt#73 (setarray)
+- "Rent a Pushcart"
++ "Alugar um Carrinho"
+#: npc/kafras/functions_kafras.txt#74 (setarray)
+- "Check Other Information"
++ "Ver outras informações"
+#: npc/kafras/functions_kafras.txt#75 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#76 (menu)
+- ":"
++ ":"
+#: npc/kafras/functions_kafras.txt#84 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#85 (mes)
+- "Because of the ^FF0000Limited"
++ "Por causa do ^FF0000Acordo de"
+#: npc/kafras/functions_kafras.txt#86 (mes)
+- "Transport Agreement^000000, the"
++ "Transporte Limitado^000000, a"
+#: npc/kafras/functions_kafras.txt#87 (mes)
+- "Kafra Corporation cannot"
++ "Corporação Kafra não pode"
+#: npc/kafras/functions_kafras.txt#88 (mes)
+- "provide Teleport Services"
++ "oferecer o Teletransporte"
+#: npc/kafras/functions_kafras.txt#89 (mes)
+- "in the Schwarzwald Republic."
++ "na República de Schwarzwald."
+#: npc/kafras/functions_kafras.txt#90 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#91 (mes)
+- "We ask that you please"
++ "Pedimos a sua"
+#: npc/kafras/functions_kafras.txt#92 (mes)
+- "use the Airship Service"
++ "usar o Serviço de Aeronave"
+#: npc/kafras/functions_kafras.txt#93 (mes)
+- "instead. Thank you for your"
++ "no lugar. Obrigada pela sua"
+#: npc/kafras/functions_kafras.txt#94 (mes)
+- "understanding and cooperation."
++ "compreensão e cooperação."
+#: npc/kafras/functions_kafras.txt#103 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#104 (mes)
+- "I'm sorry but another guild member is using the guild storage"
++ "Sinto muito, mas outro membro do clã está usando o Armazém do Clã"
+#: npc/kafras/functions_kafras.txt#105 (mes)
+- "right now.  Please wait until that person is finished."
++ "agora. Aguarde até essa pessoa terminar."
+#: npc/kafras/functions_kafras.txt#108 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#109 (mes)
+- "^666666S-s-ssoooorry,"
++ "^666666D-d-desssscuuulpe,"
+#: npc/kafras/functions_kafras.txt#110 (mes)
+- "y-you're a-a-aaaa"
++ "v-você é u-u-uuum"
+#: npc/kafras/functions_kafras.txt#111 (mes)
+- "Nooviiice... N-neeeds"
++ "Nooovaaato... P-preciiisa"
+#: npc/kafras/functions_kafras.txt#112 (mes)
+- "B-basic sssskill l-level 6...^000000"
++ "H-habilidade b-bááásica n-nível 6...^000000"
+#: npc/kafras/functions_kafras.txt#113 (mes)
+- "I'm sorry, but you"
++ "Sinto muito, mas você"
+#: npc/kafras/functions_kafras.txt#114 (mes)
+- "need the Novice's"
++ "precisa da habilidade"
+#: npc/kafras/functions_kafras.txt#115 (mes)
+- "Basic Skill Level 6 to"
++ "Habilidades Básicas nível 6 para"
+#: npc/kafras/functions_kafras.txt#116 (mes)
+- "use the Storage Service."
++ "usar o Serviço de Armazém."
+#: npc/kafras/functions_kafras.txt#118 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#119 (mes)
+- "^666666Zeeeeeny..."
++ "^666666Zeeeenyyy..."
+#: npc/kafras/functions_kafras.txt#120 (mes)
+- "M-more z-zeny...!"
++ "M-mais z-zeny...!"
+#: npc/kafras/functions_kafras.txt#121 (mes)
+- "N-neeed 150... zeny..."
++ "P-precisa de 150... zeny..."
+#: npc/kafras/functions_kafras.txt#122 (mes)
+- "Ergh! T-taking bl-blood~!^000000"
++ "Argh! T-tirando ss-sangue~!^000000"
+#: npc/kafras/functions_kafras.txt#123 (mes)
+- "I'm sorry, but you don't"
++ "Sinto muito, mas você não"
+#: npc/kafras/functions_kafras.txt#124 (mes)
+- "have enough zeny to use"
++ "zeny suficiente para usar"
+#: npc/kafras/functions_kafras.txt#125 (mes)
+- "the Storage Service. Our"
++ "o Serviço de Armazém. Nossa"
+#: npc/kafras/functions_kafras.txt#126 (mes)
+- "Storage access fee is "
++ "A taxa do Armazém é de "
+#: npc/kafras/functions_kafras.txt#127 (mes)
+- " zeny."
++ " zeny."
+#: npc/kafras/functions_kafras.txt#129 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#130 (mes)
+- "^666666Thank you.. for... using...^000000"
++ "^666666Obrigada.. por... usar...^000000"
+#: npc/kafras/functions_kafras.txt#131 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#132 (mes)
+- "Here, let me open"
++ "Pronto, vou abrir"
+#: npc/kafras/functions_kafras.txt#133 (mes)
+- "your Storage for you."
++ "o seu Armazém."
+#: npc/kafras/functions_kafras.txt#134 (mes)
+- "Thank you for using"
++ "Obrigada por usar"
+#: npc/kafras/functions_kafras.txt#135 (mes)
+- "the Kafra Service."
++ "o Serviço Kafra."
+#: npc/kafras/functions_kafras.txt#138 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#139 (mes)
+- "Please choose"
++ "Escolha"
+#: npc/kafras/functions_kafras.txt#140 (mes)
+- "your destination."
++ "seu destino."
+#: npc/kafras/functions_kafras.txt#141 (select)
+- ":"
++ ":"
+#: npc/kafras/functions_kafras.txt#144 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#145 (mes)
+- "I'm sorry, but you don't have"
++ "Sinto muito, mas você não tem"
+#: npc/kafras/functions_kafras.txt#146 (mes)
+- "enough zeny for the Teleport"
++ "zeny suficiente para o"
+#: npc/kafras/functions_kafras.txt#147 (mes)
+- "Service. The fee to teleport"
++ "Serviço. A taxa para se teletransportar"
+#: npc/kafras/functions_kafras.txt#148 (mes)
+- "to "
++ "para "
+#: npc/kafras/functions_kafras.txt#149 (mes)
+- " is "
++ " é "
+#: npc/kafras/functions_kafras.txt#150 (mes)
+- " zeny."
++ " zeny."
+#: npc/kafras/functions_kafras.txt#179 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#180 (mes)
+- "I'm sorry, but the"
++ "Sinto muito, mas o"
+#: npc/kafras/functions_kafras.txt#181 (mes)
+- "Pushcart rental service"
++ "O serviço de Carrinho"
+#: npc/kafras/functions_kafras.txt#182 (mes)
+- "is only available to Merchant classes."
++ "só está disponível para as classes Mercador."
+#: npc/kafras/functions_kafras.txt#183 (mes)
+- "is only available to Merchants,"
++ "só está disponível para Mercadores,"
+#: npc/kafras/functions_kafras.txt#184 (mes)
+- "Blacksmiths, Master Smiths,"
++ "Ferreiros, Mestres-Ferreiros,"
+#: npc/kafras/functions_kafras.txt#185 (mes)
+- "Alchemists and Biochemists."
++ "Alquimistas e Bioquímicos."
+#: npc/kafras/functions_kafras.txt#186 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#187 (mes)
+- "You already have"
++ "Você já tem"
+#: npc/kafras/functions_kafras.txt#188 (mes)
+- "a Pushcart equipped."
++ "um Carrinho equipado."
+#: npc/kafras/functions_kafras.txt#189 (mes)
+- "Unfortunately, we can't"
++ "Infelizmente, não podemos"
+#: npc/kafras/functions_kafras.txt#190 (mes)
+- "rent more than one to"
++ "alugar mais de um por"
+#: npc/kafras/functions_kafras.txt#191 (mes)
+- "each customer at a time."
++ "cliente de cada vez."
+#: npc/kafras/functions_kafras.txt#193 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#194 (mes)
+- "You can only rent a cart after learning the \"Push Cart\" skill."
++ "Você só pode alugar um Carrinho depois de aprender \"Carrinho\"."
+#: npc/kafras/functions_kafras.txt#196 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#197 (mes)
+- "The Pushcart rental"
++ "O aluguel de Carrinho"
+#: npc/kafras/functions_kafras.txt#198 (mes)
+- "fee is "
++ "a taxa é de "
+#: npc/kafras/functions_kafras.txt#199 (mes)
+- " zeny. Would"
++ " zeny. Você"
+#: npc/kafras/functions_kafras.txt#200 (mes)
+- "you like to rent a Pushcart?"
++ "gostaria de alugar um Carrinho?"
+#: npc/kafras/functions_kafras.txt#201 (select)
+- "Rent a Pushcart.:Cancel"
++ "Alugar um Carrinho.:Cancelar"
+#: npc/kafras/functions_kafras.txt#202 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#203 (mes)
+- "I'm sorry, but you"
++ "Sinto muito, mas você"
+#: npc/kafras/functions_kafras.txt#204 (mes)
+- "don't have enough"
++ "não tem"
+#: npc/kafras/functions_kafras.txt#205 (mes)
+- "zeny to pay the Pushcart"
++ "zeny para pagar o aluguel do"
+#: npc/kafras/functions_kafras.txt#206 (mes)
+- "rental fee of "
++ "taxa de aluguel de "
+#: npc/kafras/functions_kafras.txt#207 (mes)
+- " zeny."
++ " zeny."
+#: npc/kafras/functions_kafras.txt#208 (setarray)
+- "Check Special Reserve Points."
++ "Ver Pontos de Reserva Especial."
+#: npc/kafras/functions_kafras.txt#211 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#212 (setarray)
+- "Check Special Reserve Points."
++ "Ver Pontos de Reserva Especial."
+#: npc/kafras/functions_kafras.txt#214 (setarray)
+- "Kafra Employee Locations"
++ "Onde encontrar Funcionárias Kafra"
+#: npc/kafras/functions_kafras.txt#215 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#216 (setarray)
+- "Check Special Reserve Points."
++ "Ver Pontos de Reserva Especial."
+#: npc/kafras/functions_kafras.txt#217 (setarray)
+- "Storage Password Service"
++ "Senha do Armazém"
+#: npc/kafras/functions_kafras.txt#218 (setarray)
+- "Kafra Employee Locations"
++ "Onde encontrar Funcionárias Kafra"
+#: npc/kafras/functions_kafras.txt#219 (setarray)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#220 (menu)
+- ":"
++ ":"
+#: npc/kafras/functions_kafras.txt#221 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#222 (mes)
+- "Let's see..."
++ "Vejamos..."
+#: npc/kafras/functions_kafras.txt#224 (mes)
+- "..."
++ "..."
+#: npc/kafras/functions_kafras.txt#225 (mes)
+- "Ah, you have a total of"
++ "Ah, você tem um total de"
+#: npc/kafras/functions_kafras.txt#227 (mes)
+- " Special Reserve Points."
++ " Pontos de Reserva Especial."
+#: npc/kafras/functions_kafras.txt#228 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#229 (mes)
+- "You can exchange your"
++ "Você pode trocar seus"
+#: npc/kafras/functions_kafras.txt#230 (mes)
+- "Special Reserve Points for"
++ "Pontos de Reserva Especial por"
+#: npc/kafras/functions_kafras.txt#231 (mes)
+- "rewards at the Kafra Main Office in Al De Baran. Please use our"
++ "recompensas na Sede da Kafra em Al De Baran. Use nossos"
+#: npc/kafras/functions_kafras.txt#232 (mes)
+- "convenient services to see the benefits of our rewards program."
++ "serviços para aproveitar os benefícios do nosso programa de recompensas."
+#: npc/kafras/functions_kafras.txt#236 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/functions_kafras.txt#237 (mes)
+- "Your Respawn Point"
++ "Seu ponto de retorno"
+#: npc/kafras/functions_kafras.txt#238 (mes)
+- "has been saved here"
++ "foi salvo aqui"
+#: npc/kafras/functions_kafras.txt#240 (mes)
+- "."
++ "."
+#: npc/kafras/functions_kafras.txt#241 (mes)
+- "Thank you for using"
++ "Obrigada por usar"
+#: npc/kafras/functions_kafras.txt#242 (mes)
+- "the Kafra Services."
++ "os Serviços Kafra."
+#: npc/kafras/functions_kafras.txt#243 (mes)
+- "We, here at Kafra Corporation,"
++ "Nós, da Corporação Kafra,"
+#: npc/kafras/functions_kafras.txt#244 (mes)
+- "are always endeavoring to provide you with the best services. We hope that we meet your adventuring needs and standards of excellence."
++ "se esforçam sempre para lhe oferecer o melhor serviço. Esperamos atender às suas necessidades de aventura e ao seu padrão de exigência."
+#: npc/kafras/functions_kafras.txt#245 (mes)
+- "^666666Kaffffra n-never"
++ "^666666A Kaffffra n-nunca"
+#: npc/kafras/functions_kafras.txt#246 (mes)
+- "diiiiiiiiiiiiiies. On..."
++ "mooooorrrrrre. Aoooo..."
+#: npc/kafras/functions_kafras.txt#247 (mes)
+- "On y-yooour siiiiide~^000000"
++ ""
+#: npc/kafras/functions_kafras.txt#248 (mes)
+- "Saved."
++ "Salvo."
+#: npc/kafras/functions_kafras.txt#249 (mes)
+- "Thank you for your patronage."
++ "Obrigada pela preferência."
+#: npc/kafras/functions_kafras.txt#250 (mes)
+- "Enter your storage password:"
++ "Digite a senha do armazém:"
+#: npc/kafras/functions_kafras.txt#251 (dispbottom)
+- "Wrong storage password."
++ "Senha do armazém incorreta."
+#: npc/kafras/functions_kafras.txt#253 (mes)
+- " proudly presents you a new service:"
++ " apresenta com orgulho um novo serviço:"
+#: npc/kafras/functions_kafras.txt#254 (mes)
+- "Additional storage protection with a password."
++ "Proteção adicional do armazém com senha."
+#: npc/kafras/functions_kafras.txt#255 (select)
+- "Set new password -> 5000z"
++ "Definir nova senha -> 5000z"
+#: npc/kafras/functions_kafras.txt#256 (select)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#257 (mes)
+- "Your storage is protected with a password. What would you do now?"
++ "Seu armazém está protegido por senha. O que deseja fazer?"
+#: npc/kafras/functions_kafras.txt#258 (select)
+- "Change old password -> 5000z"
++ "Trocar a senha -> 5000z"
+#: npc/kafras/functions_kafras.txt#259 (select)
+- "Remove storage password -> 1000z"
++ "Remover a senha -> 1000z"
+#: npc/kafras/functions_kafras.txt#260 (select)
+- "Cancel"
++ "Cancelar"
+#: npc/kafras/functions_kafras.txt#261 (mes)
+- "At first, please enter your ^0000FFold password^000000."
++ "Primeiro, digite a sua ^0000FFsenha antiga^000000."
+#: npc/kafras/functions_kafras.txt#263 (mes)
+- "Wrong password. You can't set a new password."
++ "Senha errada. Não é possível definir uma nova senha."
+#: npc/kafras/functions_kafras.txt#264 (mes)
+- "Please, enter your password before its removal."
++ "Digite a sua senha antes de removê-la."
+#: npc/kafras/functions_kafras.txt#266 (mes)
+- "The password hasn't been removed."
++ "A senha não foi removida."
+#: npc/kafras/functions_kafras.txt#267 (mes)
+- "You don't have enough zeny."
++ "Você não tem zeny suficiente."
+#: npc/kafras/functions_kafras.txt#268 (mes)
+- "You've successfully cleared your storage password."
++ "A senha do seu armazém foi removida."
+#: npc/kafras/functions_kafras.txt#269 (mes)
+- "Thank you for using "
++ "Obrigada por usar "
+#: npc/kafras/functions_kafras.txt#270 (mes)
+- "."
++ "."
+#: npc/kafras/functions_kafras.txt#271 (mes)
+- "Wrong password. We won't return your 1000z."
++ "Senha errada. Os 1000z não serão devolvidos."
+#: npc/kafras/functions_kafras.txt#272 (mes)
+- "Please, next time enter correct password."
++ "Da próxima vez, digite a senha correta."
+#: npc/kafras/functions_kafras.txt#273 (mes)
+- "Now enter your ^FF0000new password^000000 to protect your storage from thieves."
++ "Agora digite a sua ^FF0000nova senha^000000 para proteger o armazém de ladrões."
+#: npc/kafras/functions_kafras.txt#275 (mes)
+- "The password hasn't been changed."
++ "A senha não foi alterada."
+#: npc/kafras/functions_kafras.txt#276 (mes)
+- "You don't have enough zeny."
++ "Você não tem zeny suficiente."
+#: npc/kafras/functions_kafras.txt#277 (mes)
+- "You've protected your storage with a secret password."
++ "Você protegeu o seu armazém com uma senha secreta."
+#: npc/kafras/functions_kafras.txt#278 (mes)
+- "Thank you for using "
++ "Obrigada por usar "
+#: npc/kafras/functions_kafras.txt#279 (mes)
+- "."
++ "."
+#: npc/kafras/functions_kafras.txt#280 (mes)
+- "Enter a number 1000~10000000:"
++ "Digite um número de 1000 a 10000000:"
+#: npc/kafras/functions_kafras.txt#282 (mes)
+- "You can't use such big password."
++ "Essa senha é grande demais."
+#: npc/kafras/functions_kafras.txt#283 (mes)
+- "You shouldn't use such short password."
++ "Essa senha é curta demais."
+#: npc/kafras/functions_kafras.txt#285 (setarray)
+- "Izlude"
++ ""
+#: npc/kafras/functions_kafras.txt#286 (setarray)
+- "Geffen"
++ ""
+#: npc/kafras/functions_kafras.txt#287 (setarray)
+- "Payon"
++ ""
+#: npc/kafras/functions_kafras.txt#288 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#289 (setarray)
+- "Orc Dungeon"
++ ""
+#: npc/kafras/functions_kafras.txt#290 (setarray)
+- "Alberta"
++ ""
+#: npc/kafras/functions_kafras.txt#292 (setarray)
+- "Payon"
++ ""
+#: npc/kafras/functions_kafras.txt#293 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#294 (setarray)
+- "Prontera"
++ ""
+#: npc/kafras/functions_kafras.txt#296 (setarray)
+- "Geffen"
++ ""
+#: npc/kafras/functions_kafras.txt#297 (setarray)
+- "Juno"
++ ""
+#: npc/kafras/functions_kafras.txt#298 (setarray)
+- "Izlude"
++ ""
+#: npc/kafras/functions_kafras.txt#299 (setarray)
+- "Mjolnir Dead Pit"
++ ""
+#: npc/kafras/functions_kafras.txt#301 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#302 (setarray)
+- "Comodo Pharos Beacon"
++ ""
+#: npc/kafras/functions_kafras.txt#303 (setarray)
+- "Umbala"
++ ""
+#: npc/kafras/functions_kafras.txt#305 (setarray)
+- "Comodo"
++ ""
+#: npc/kafras/functions_kafras.txt#306 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#308 (setarray)
+- "Prontera"
++ ""
+#: npc/kafras/functions_kafras.txt#309 (setarray)
+- "Al De Baran"
++ ""
+#: npc/kafras/functions_kafras.txt#310 (setarray)
+- "Orc Dungeon"
++ ""
+#: npc/kafras/functions_kafras.txt#311 (setarray)
+- "Mjolnir Dead Pit"
++ ""
+#: npc/kafras/functions_kafras.txt#313 (setarray)
+- "Geffen"
++ ""
+#: npc/kafras/functions_kafras.txt#314 (setarray)
+- "Payon"
++ ""
+#: npc/kafras/functions_kafras.txt#315 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#316 (setarray)
+- "Al De Baran"
++ ""
+#: npc/kafras/functions_kafras.txt#318 (setarray)
+- "Prontera"
++ ""
+#: npc/kafras/functions_kafras.txt#319 (setarray)
+- "Payon"
++ ""
+#: npc/kafras/functions_kafras.txt#320 (setarray)
+- "Alberta"
++ ""
+#: npc/kafras/functions_kafras.txt#321 (setarray)
+- "Comodo"
++ ""
+#: npc/kafras/functions_kafras.txt#322 (setarray)
+- "Comodo Pharos Beacon"
++ ""
+#: npc/kafras/functions_kafras.txt#324 (setarray)
+- "Comodo"
++ ""
+#: npc/kafras/functions_kafras.txt#326 (setarray)
+- "Prontera"
++ ""
+#: npc/kafras/functions_kafras.txt#327 (setarray)
+- "Alberta"
++ ""
+#: npc/kafras/functions_kafras.txt#328 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#330 (setarray)
+- "Al De Baran"
++ ""
+#: npc/kafras/functions_kafras.txt#332 (setarray)
+- "Izlude"
++ ""
+#: npc/kafras/functions_kafras.txt#333 (setarray)
+- "Geffen"
++ ""
+#: npc/kafras/functions_kafras.txt#334 (setarray)
+- "Payon"
++ ""
+#: npc/kafras/functions_kafras.txt#335 (setarray)
+- "Morocc"
++ ""
+#: npc/kafras/functions_kafras.txt#336 (setarray)
+- "Alberta"
++ ""
+
+### npc/kafras/kafras.txt  (319 textos)
+#: npc/kafras/kafras.txt#2 (cutin)
+- "kafra_05"
++ ""
+#: npc/kafras/kafras.txt#3 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#4 (mes)
+- "Hm...?"
++ "Hum...?"
+#: npc/kafras/kafras.txt#5 (mes)
+- "Oh, welcome to"
++ "Ah, bem-vindo à"
+#: npc/kafras/kafras.txt#6 (mes)
+- "the Kafra Corporation"
++ "a Corporação Kafra"
+#: npc/kafras/kafras.txt#7 (mes)
+- "Headquarters. Did you"
++ "Sede. Você"
+#: npc/kafras/kafras.txt#8 (mes)
+- "need something?"
++ "precisa de algo?"
+#: npc/kafras/kafras.txt#9 (select)
+- "Save:Use Storage:Rent a Pushcart:Cancel"
++ "Salvar ponto de retorno:Usar o Armazém:Alugar um Carrinho:Cancelar"
+#: npc/kafras/kafras.txt#10 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#11 (mes)
+- "Your Respawn Point has"
++ "Seu ponto de retorno foi"
+#: npc/kafras/kafras.txt#12 (mes)
+- "been saved here, inside"
++ "salvo aqui, em"
+#: npc/kafras/kafras.txt#13 (mes)
+- "of the Kafra Corporation"
++ "da Corporação Kafra"
+#: npc/kafras/kafras.txt#14 (mes)
+- "Headquarters. Thank you."
++ "Sede. Obrigada."
+#: npc/kafras/kafras.txt#16 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#17 (mes)
+- "Please make use of"
++ "Faça bom uso de"
+#: npc/kafras/kafras.txt#18 (mes)
+- "the Kafra Services that are"
++ "os Serviços Kafra que estão"
+#: npc/kafras/kafras.txt#19 (mes)
+- "available throughout all of"
++ "disponíveis em toda a"
+#: npc/kafras/kafras.txt#20 (mes)
+- "Midgard. Thank you for"
++ "Midgard. Obrigada por"
+#: npc/kafras/kafras.txt#21 (mes)
+- "visiting the Kafra Headquarters."
++ "visitar a Sede da Kafra."
+#: npc/kafras/kafras.txt#22 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#23 (mes)
+- "Excuse me, but it"
++ "Com licença, mas"
+#: npc/kafras/kafras.txt#24 (mes)
+- "seems that you don't"
++ "parece que você não"
+#: npc/kafras/kafras.txt#25 (mes)
+- "have the 20 zeny to pay"
++ "tem os 20 zeny para pagar"
+#: npc/kafras/kafras.txt#26 (mes)
+- "the Storage access fee..."
++ "a taxa de acesso ao Armazém..."
+#: npc/kafras/kafras.txt#27 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#28 (mes)
+- "Although this facility is"
++ "Embora este posto seja"
+#: npc/kafras/kafras.txt#29 (mes)
+- "exclusively intended for"
++ "destinado exclusivamente a"
+#: npc/kafras/kafras.txt#30 (mes)
+- "the training of Kafra Employee"
++ "o treinamento da Funcionária Kafra"
+#: npc/kafras/kafras.txt#31 (mes)
+- "and administrative functions,"
++ "e funções administrativas,"
+#: npc/kafras/kafras.txt#32 (mes)
+- "I'll access your Storage for you."
++ "Vou acessar o seu Armazém."
+#: npc/kafras/kafras.txt#33 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#34 (mes)
+- "In the future, please"
++ "Da próxima vez, por favor"
+#: npc/kafras/kafras.txt#35 (mes)
+- "ask the Kafra Employee on"
++ "procure a Funcionária Kafra de"
+#: npc/kafras/kafras.txt#36 (mes)
+- "duty if you wish to use"
++ "plantão se quiser usar"
+#: npc/kafras/kafras.txt#37 (mes)
+- "any of the Kafra Services."
++ "nenhum dos Serviços Kafra."
+#: npc/kafras/kafras.txt#38 (mes)
+- "Thank you for your patronage."
++ "Obrigada pela preferência."
+#: npc/kafras/kafras.txt#40 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#41 (mes)
+- "My apologies, but I'm"
++ "Desculpe, mas eu"
+#: npc/kafras/kafras.txt#42 (mes)
+- "not on duty. I'd assist you"
++ "não estou de plantão. Eu ajudaria"
+#: npc/kafras/kafras.txt#43 (mes)
+- "if I could, but actually don't"
++ "se pudesse, mas na verdade não"
+#: npc/kafras/kafras.txt#44 (mes)
+- "have any available Pushcarts."
++ "nenhum Carrinho disponível."
+#: npc/kafras/kafras.txt#45 (mes)
+- "Why don't you ask another Kafra"
++ "Que tal procurar outra Funcionária"
+#: npc/kafras/kafras.txt#46 (mes)
+- "Employee for assistance?"
++ "Kafra para ajudar?"
+#: npc/kafras/kafras.txt#47 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#48 (mes)
+- "Kafra Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#49 (mes)
+- "stationed all over the"
++ "espalhadas por todo o"
+#: npc/kafras/kafras.txt#50 (mes)
+- "Midgard continent,"
++ "continente de Midgard,"
+#: npc/kafras/kafras.txt#51 (mes)
+- "and you should be able to find"
++ "e você não terá dificuldade"
+#: npc/kafras/kafras.txt#52 (mes)
+- "plenty outside in Al De Baran."
++ "muitas lá fora, em Al De Baran."
+#: npc/kafras/kafras.txt#53 (mes)
+- "[Kafra Leilah]"
++ "[Kafra Leilah]"
+#: npc/kafras/kafras.txt#54 (mes)
+- "^666666*Whew...*^000000"
++ "^666666*Ufa...*^000000"
+#: npc/kafras/kafras.txt#55 (mes)
+- "Great, because I'm"
++ "Ótimo, porque eu estou"
+#: npc/kafras/kafras.txt#56 (mes)
+- "actually on my break"
++ "na verdade em meu intervalo"
+#: npc/kafras/kafras.txt#57 (mes)
+- "right now. Choosing"
++ "agora. Escolher"
+#: npc/kafras/kafras.txt#58 (mes)
+- "''Cancel'' was a good"
++ "''Cancelar'' foi uma boa"
+#: npc/kafras/kafras.txt#59 (mes)
+- "move on your part."
++ "de sua parte."
+#: npc/kafras/kafras.txt#61 (cutin)
+- "kafra_05"
++ ""
+#: npc/kafras/kafras.txt#63 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#64 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#65 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#66 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#67 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#72 (cutin)
+- "kafra_03"
++ ""
+#: npc/kafras/kafras.txt#74 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#75 (mes)
+- "Welcome~!"
++ "Bem-vindo~!"
+#: npc/kafras/kafras.txt#76 (mes)
+- "The Kafra Services"
++ "Os Serviços Kafra"
+#: npc/kafras/kafras.txt#77 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#78 (mes)
+- "So how can I help you?"
++ "Então, em que posso ajudar?"
+#: npc/kafras/kafras.txt#83 (cutin)
+- "kafra_04"
++ ""
+#: npc/kafras/kafras.txt#85 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#86 (mes)
+- "Welcome!"
++ "Bem-vindo!"
+#: npc/kafras/kafras.txt#87 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#88 (mes)
+- "will always support the"
++ "sempre apoiará os"
+#: npc/kafras/kafras.txt#89 (mes)
+- "adventurers of Rune-Midgarts"
++ "aventureiros de Rune-Midgard"
+#: npc/kafras/kafras.txt#90 (mes)
+- "with its excellent service. So"
++ "com seu excelente serviço. Então"
+#: npc/kafras/kafras.txt#91 (mes)
+- "what can I do for you today?"
++ "o que posso fazer por você hoje?"
+#: npc/kafras/kafras.txt#96 (cutin)
+- "kafra_05"
++ ""
+#: npc/kafras/kafras.txt#98 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#99 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#100 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#101 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#102 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#107 (cutin)
+- "kafra_04"
++ ""
+#: npc/kafras/kafras.txt#109 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#110 (mes)
+- "Welcome!"
++ "Bem-vindo!"
+#: npc/kafras/kafras.txt#111 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#112 (mes)
+- "will always support the"
++ "sempre apoiará os"
+#: npc/kafras/kafras.txt#113 (mes)
+- "adventurers of Rune-Midgarts"
++ "aventureiros de Rune-Midgard"
+#: npc/kafras/kafras.txt#114 (mes)
+- "with its excellent service. So"
++ "com seu excelente serviço. Então"
+#: npc/kafras/kafras.txt#115 (mes)
+- "what can I do for you today?"
++ "o que posso fazer por você hoje?"
+#: npc/kafras/kafras.txt#120 (cutin)
+- "kafra_05"
++ ""
+#: npc/kafras/kafras.txt#122 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#123 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#124 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#125 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#126 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#131 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#133 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#134 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#135 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#136 (mes)
+- "The Kafra services are"
++ "Os serviços Kafra estão"
+#: npc/kafras/kafras.txt#137 (mes)
+- "always on your side."
++ "sempre ao seu lado."
+#: npc/kafras/kafras.txt#138 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#143 (cutin)
+- "kafra_03"
++ ""
+#: npc/kafras/kafras.txt#145 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#146 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#147 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#148 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/kafras.txt#149 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#150 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#155 (cutin)
+- "kafra_06"
++ ""
+#: npc/kafras/kafras.txt#157 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#158 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#159 (mes)
+- "Kafra Corporation~"
++ "Corporação Kafra~"
+#: npc/kafras/kafras.txt#160 (mes)
+- "The Kafra Services are"
++ "Os Serviços Kafra estão"
+#: npc/kafras/kafras.txt#161 (mes)
+- "always here to support"
++ "sempre aqui para apoiar"
+#: npc/kafras/kafras.txt#162 (mes)
+- "you. So how can I be"
++ "você. Então, em que posso"
+#: npc/kafras/kafras.txt#163 (mes)
+- "of service today?"
++ "ser útil hoje?"
+#: npc/kafras/kafras.txt#168 (cutin)
+- "kafra_03"
++ ""
+#: npc/kafras/kafras.txt#170 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#171 (mes)
+- "Welcome~!"
++ "Bem-vindo~!"
+#: npc/kafras/kafras.txt#172 (mes)
+- "The Kafra Services"
++ "Os Serviços Kafra"
+#: npc/kafras/kafras.txt#173 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#174 (mes)
+- "So how can I help you?"
++ "Então, em que posso ajudar?"
+#: npc/kafras/kafras.txt#179 (cutin)
+- "kafra_05"
++ ""
+#: npc/kafras/kafras.txt#181 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#182 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#183 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#184 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#185 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#190 (cutin)
+- "kafra_04"
++ ""
+#: npc/kafras/kafras.txt#192 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#193 (mes)
+- "Welcome!"
++ "Bem-vindo!"
+#: npc/kafras/kafras.txt#194 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#195 (mes)
+- "will always support the"
++ "sempre apoiará os"
+#: npc/kafras/kafras.txt#196 (mes)
+- "adventurers of Rune-Midgarts"
++ "aventureiros de Rune-Midgard"
+#: npc/kafras/kafras.txt#197 (mes)
+- "with its excellent service. So"
++ "com seu excelente serviço. Então"
+#: npc/kafras/kafras.txt#198 (mes)
+- "what can I do for you today?"
++ "o que posso fazer por você hoje?"
+#: npc/kafras/kafras.txt#203 (cutin)
+- "kafra_01"
++ ""
+#: npc/kafras/kafras.txt#205 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#206 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#207 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#208 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/kafras.txt#209 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#210 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#215 (cutin)
+- "kafra_08"
++ ""
+#: npc/kafras/kafras.txt#217 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#218 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#219 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#220 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#221 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#226 (cutin)
+- "kafra_08"
++ ""
+#: npc/kafras/kafras.txt#228 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#229 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#230 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#231 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#232 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#237 (cutin)
+- "kafra_09"
++ ""
+#: npc/kafras/kafras.txt#239 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#240 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#241 (mes)
+- "is always working to provide"
++ "trabalha sempre para oferecer"
+#: npc/kafras/kafras.txt#242 (mes)
+- "you with convenient services."
++ "serviços convenientes a você."
+#: npc/kafras/kafras.txt#243 (mes)
+- "How may I be of assistance?"
++ "Em que posso ser útil?"
+#: npc/kafras/kafras.txt#248 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#250 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#251 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#252 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#253 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#254 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#255 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#260 (cutin)
+- "kafra_06"
++ ""
+#: npc/kafras/kafras.txt#262 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#263 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#264 (mes)
+- "Kafra Corporation~"
++ "Corporação Kafra~"
+#: npc/kafras/kafras.txt#265 (mes)
+- "The Kafra Services are"
++ "Os Serviços Kafra estão"
+#: npc/kafras/kafras.txt#266 (mes)
+- "always here to support"
++ "sempre aqui para apoiar"
+#: npc/kafras/kafras.txt#267 (mes)
+- "you. So how can I be"
++ "você. Então, em que posso"
+#: npc/kafras/kafras.txt#268 (mes)
+- "of service today?"
++ "ser útil hoje?"
+#: npc/kafras/kafras.txt#273 (cutin)
+- "kafra_07"
++ ""
+#: npc/kafras/kafras.txt#275 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#276 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#277 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#278 (mes)
+- "You know that our"
++ "Você sabe que o nosso"
+#: npc/kafras/kafras.txt#279 (mes)
+- "service is always"
++ "serviço está sempre"
+#: npc/kafras/kafras.txt#280 (mes)
+- "on your side~"
++ "ao seu lado~"
+#: npc/kafras/kafras.txt#285 (cutin)
+- "kafra_07"
++ ""
+#: npc/kafras/kafras.txt#287 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#288 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#289 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#290 (mes)
+- "You know that our"
++ "Você sabe que o nosso"
+#: npc/kafras/kafras.txt#291 (mes)
+- "service is always"
++ "serviço está sempre"
+#: npc/kafras/kafras.txt#292 (mes)
+- "on your side~"
++ "ao seu lado~"
+#: npc/kafras/kafras.txt#297 (cutin)
+- "kafra_01"
++ ""
+#: npc/kafras/kafras.txt#299 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#300 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#301 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#302 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/kafras.txt#303 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#304 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#309 (cutin)
+- "kafra_04"
++ ""
+#: npc/kafras/kafras.txt#314 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#315 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#316 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#317 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#318 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#319 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#320 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#325 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#326 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#327 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#328 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#329 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#330 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#331 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#336 (cutin)
+- "kafra_08"
++ ""
+#: npc/kafras/kafras.txt#337 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#338 (mes)
+- "Welcome~!"
++ "Bem-vindo~!"
+#: npc/kafras/kafras.txt#339 (mes)
+- "The Kafra Services"
++ "Os Serviços Kafra"
+#: npc/kafras/kafras.txt#340 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#341 (mes)
+- "So how can I help you?"
++ "Então, em que posso ajudar?"
+#: npc/kafras/kafras.txt#346 (cutin)
+- "kafra_08"
++ ""
+#: npc/kafras/kafras.txt#347 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#348 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#349 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#350 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#351 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#352 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#357 (cutin)
+- "kafra_09"
++ ""
+#: npc/kafras/kafras.txt#358 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#359 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#360 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#361 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/kafras.txt#362 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#363 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#368 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#369 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#370 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#371 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#372 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#373 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#374 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#379 (cutin)
+- "kafra_08"
++ ""
+#: npc/kafras/kafras.txt#380 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#381 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#382 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#383 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/kafras.txt#384 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#385 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#390 (cutin)
+- "kafra_09"
++ ""
+#: npc/kafras/kafras.txt#391 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#392 (mes)
+- "Welcome~!"
++ "Bem-vindo~!"
+#: npc/kafras/kafras.txt#393 (mes)
+- "The Kafra Services"
++ "Os Serviços Kafra"
+#: npc/kafras/kafras.txt#394 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#395 (mes)
+- "So how can I help you?"
++ "Então, em que posso ajudar?"
+#: npc/kafras/kafras.txt#400 (cutin)
+- "kafra_09"
++ ""
+#: npc/kafras/kafras.txt#401 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#402 (mes)
+- "Welcome~!"
++ "Bem-vindo~!"
+#: npc/kafras/kafras.txt#403 (mes)
+- "The Kafra Services"
++ "Os Serviços Kafra"
+#: npc/kafras/kafras.txt#404 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#405 (mes)
+- "So how can I help you?"
++ "Então, em que posso ajudar?"
+#: npc/kafras/kafras.txt#410 (cutin)
+- "kafra_01"
++ ""
+#: npc/kafras/kafras.txt#411 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#412 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#413 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#414 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#415 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#416 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#421 (cutin)
+- "kafra_07"
++ ""
+#: npc/kafras/kafras.txt#423 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#424 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#425 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#426 (mes)
+- "You know that our"
++ "Você sabe que o nosso"
+#: npc/kafras/kafras.txt#427 (mes)
+- "service is always"
++ "serviço está sempre"
+#: npc/kafras/kafras.txt#428 (mes)
+- "on your side~"
++ "ao seu lado~"
+#: npc/kafras/kafras.txt#437 (cutin)
+- "kafra_03"
++ ""
+#: npc/kafras/kafras.txt#439 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#440 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#441 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#442 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#443 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#444 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#449 (cutin)
+- "kafra_04"
++ ""
+#: npc/kafras/kafras.txt#450 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#451 (mes)
+- "Welcome!"
++ "Bem-vindo!"
+#: npc/kafras/kafras.txt#452 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#453 (mes)
+- "will always support the"
++ "sempre apoiará os"
+#: npc/kafras/kafras.txt#454 (mes)
+- "adventurers of Rune-Midgarts"
++ "aventureiros de Rune-Midgard"
+#: npc/kafras/kafras.txt#455 (mes)
+- "with its excellent service. So"
++ "com seu excelente serviço. Então"
+#: npc/kafras/kafras.txt#456 (mes)
+- "what can I do for you today?"
++ "o que posso fazer por você hoje?"
+#: npc/kafras/kafras.txt#461 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#462 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#463 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#464 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#465 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#466 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#467 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#472 (cutin)
+- "kafra_04"
++ ""
+#: npc/kafras/kafras.txt#473 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#474 (mes)
+- "Welcome!"
++ "Bem-vindo!"
+#: npc/kafras/kafras.txt#475 (mes)
+- "The Kafra Corporation"
++ "A Corporação Kafra"
+#: npc/kafras/kafras.txt#476 (mes)
+- "will always support the"
++ "sempre apoiará os"
+#: npc/kafras/kafras.txt#477 (mes)
+- "adventurers of Rune-Midgarts"
++ "aventureiros de Rune-Midgard"
+#: npc/kafras/kafras.txt#478 (mes)
+- "with its excellent service. So"
++ "com seu excelente serviço. Então"
+#: npc/kafras/kafras.txt#479 (mes)
+- "what can I do for you today?"
++ "o que posso fazer por você hoje?"
+#: npc/kafras/kafras.txt#484 (cutin)
+- "kafra_02"
++ ""
+#: npc/kafras/kafras.txt#485 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#486 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#487 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#488 (mes)
+- "Kafra's Employees are"
++ "As Funcionárias Kafra estão"
+#: npc/kafras/kafras.txt#489 (mes)
+- "always ready to serve you."
++ "sempre prontos para atendê-lo."
+#: npc/kafras/kafras.txt#490 (mes)
+- "How can I help you today?"
++ "Como posso ajudar hoje?"
+#: npc/kafras/kafras.txt#495 (cutin)
+- "kafra_01"
++ ""
+#: npc/kafras/kafras.txt#496 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/kafras/kafras.txt#497 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/kafras/kafras.txt#498 (mes)
+- "Kafra Corporation."
++ "Corporação Kafra."
+#: npc/kafras/kafras.txt#499 (mes)
+- "The Kafra services"
++ "Os serviços Kafra"
+#: npc/kafras/kafras.txt#500 (mes)
+- "are always on your side."
++ "estão sempre ao seu lado."
+#: npc/kafras/kafras.txt#501 (mes)
+- "How may I assist you?"
++ "Em que posso ajudar?"
+#: npc/kafras/kafras.txt#506 (cutin)
+- "kafra_01"
++ ""

@@ -1,0 +1,4582 @@
+# Catalogo de traducao PT-BR - grupo "classe1"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/jobs/1-1/acolyte.txt  (154 textos)
+#: npc/re/jobs/1-1/acolyte.txt#1 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#2 (mes)
+- "Ah, I sense you have endured"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#3 (mes)
+- "a past life experience. You must have learned many things before entering Valhalla."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#5 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#6 (mes)
+- "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#7 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#8 (mes)
+- "In the meantime,"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#9 (mes)
+- "I will wait until"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#10 (mes)
+- "you are ready."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#11 (mes)
+- "May God be"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#12 (mes)
+- "with you."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#13 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#14 (mes)
+- "Well, I welcome you"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#15 (mes)
+- "back from Valhalla and"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#16 (mes)
+- "wish you luck on your"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#17 (mes)
+- "new life's journey."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#20 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#21 (mes)
+- "Now, venture forth and seek those who need your help. May God light your path."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#22 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#23 (mes)
+- "Now, venture forth to seek people who need your help. May God enlighten your way."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#24 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#25 (mes)
+- "I sense that you have endured a past life experience. You must have learned many things before entering Valhalla."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#26 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#27 (mes)
+- "However, I can tell that you are not suited to be an Acolyte. Please remember who you were in your past life and find your path."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#28 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#29 (mes)
+- "What is it that you seek?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#30 (select)
+- "Change your job to acolyte.:Ask the requirements to be an acolyte.:Quit it."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#31 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#32 (mes)
+- "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#33 (mes)
+- "I'm sorry but it seems you already have your own job, aren't you?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#34 (mes)
+- "Do you truly wish to become a servant of God?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#35 (mes)
+- "Let's see whether you are ready for it or not... Hmm..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#37 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#38 (mes)
+- "Oh my?! You haven't accomplished the basic practice yet?! You have a long way to go! Come again after increasing your job level!"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#39 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#40 (mes)
+- "Hmm... your job level is enough..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#41 (mes)
+- "Good. Now I will give you the qualification to become an Acolyte."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#42 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#43 (mes)
+- "Always remember to be thankful to God, who takes care of us all the time. In chaos and times of difficulty, face your hardships with unwavering faith."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#45 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#46 (mes)
+- "Lastly, I want to sincerely congratulate you on persevering through your trial of penance."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#47 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#48 (mes)
+- "Do you wish to become an Acolyte?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#49 (mes)
+- "Then, you must fulfill the following requirements thinking those are the practices given by God."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#50 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#51 (mes)
+- "First, you have to reach at least Novice Job Level 9 and learn all of the Basic Skills."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#52 (mes)
+- "This is the most basic thing to do, so you need to regard it as the way of training yourself."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#53 (mes)
+- "[Father Mareusis]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#54 (mes)
+- "When you think you fulfilled this requirement, then come back to me again. Then you will have a holy job in which you can spread God's will."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#55 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#56 (mes)
+- "Please take care. They should know that you've met me by the time you arrive at the Prontera Sanctuary."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#57 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#58 (mes)
+- "I've sent a carrier pigeon with a message. I hope it will arrive there safely..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#59 (mes)
+- "Oh...? You must be the one who aspires to become an Acolyte. I've already received news from the Sanctuary that you might be coming."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#60 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#61 (mes)
+- "Now, your name was "
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#62 (mes)
+- ", right? Excellent, thank you for visiting me."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#63 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#64 (mes)
+- "I believe you've been told much about Acolytes from Friar Mareusis. Plus, there's plenty of helpful people in the Prontera Sanctuary."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#65 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#66 (mes)
+- "I guess there's really no need for me to teach you much. Besides, I'm sure your someone from your generation may have trouble listening to an old man like me. Hahaha~"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#67 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#68 (mes)
+- "Still, lessons may come from the places you'd least expect. God loves to teach his children in strange ways. You'll see."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#69 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#70 (mes)
+- "Well, I'll send the message telling them that you've come to visit me. So, you may now return to the Prontera Sanctuary."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#71 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#72 (mes)
+- "Farewell."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#74 (mes)
+- "Oh..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#75 (mes)
+- "Are you one of the"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#76 (mes)
+- "Acolyte applicants...?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#77 (mes)
+- "Let's see..."
++ "Vejamos..."
+#: npc/re/jobs/1-1/acolyte.txt#78 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#79 (mes)
+- "Your name is "
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#80 (mes)
+- "?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#81 (mes)
+- "I don't think your name"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#82 (mes)
+- "is on my list. Hmmm..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#83 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#84 (mes)
+- "Why don't you go back to the Prontera Sanctuary and check again?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#85 (mes)
+- "Huh? What brings you here? This is a very dangerous place for a Novice like yourself!"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#87 (mes)
+- "Greetings."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#88 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#89 (mes)
+- "Welcome to the Deep. Feel free to sit and contemplate God's message with me. This place is beautiful, even if danger accompanies its sense of serenity..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#90 (mes)
+- "Oh ho..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#91 (mes)
+- "Have you come into the Deep here for training? Or are you just a Wanderer?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#92 (mes)
+- "[Father Rubalkabara]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#93 (mes)
+- "Whoever you are, please take care of yourself. The monsters in here are shockingly strong, contrary to their cute appearance."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#94 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#95 (mes)
+- "I will send a carrier pigeon to the Prontera Sanctuary. When you return, the Priest there should already have received my message."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#96 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#97 (mes)
+- "I will pray to God, and hope that you become an Acolyte soon."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#98 (mes)
+- "Ah, you must be one of the Acolyte applicants. I sincerely welcome you."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#99 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#100 (mes)
+- "What is your name? "
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#101 (mes)
+- "? Let's see... Ah, you're on my list."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#102 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#103 (mes)
+- "I will send a message to the Sanctuary confirming that you, "
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#104 (mes)
+- " visited me and completed your penance."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#105 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#106 (mes)
+- "Please return to the Prontera Sanctuary and speak to the Priest in charge."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#108 (mes)
+- "Ah...!"
++ "Ah...!"
+#: npc/re/jobs/1-1/acolyte.txt#109 (mes)
+- "You must be one"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#110 (mes)
+- "of the Acolyte applicants."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#111 (mes)
+- "I sincerely welcome you."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#112 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#113 (mes)
+- "Now, what is your name?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#115 (mes)
+- "? Let's see..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#116 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#117 (mes)
+- "Hmm..."
++ "Hmm..."
+#: npc/re/jobs/1-1/acolyte.txt#118 (mes)
+- "It seems your name"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#119 (mes)
+- "is not on my list..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#120 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#121 (mes)
+- "Perhaps you should return to the Prontera Sanctuary and check the destination for your penance trial once again."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#122 (mes)
+- "..."
++ "..."
+#: npc/re/jobs/1-1/acolyte.txt#124 (mes)
+- "Hello there~"
++ "Olá~"
+#: npc/re/jobs/1-1/acolyte.txt#125 (mes)
+- "[Mother Mathilda]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#126 (mes)
+- "How is your practice coming along? I certainly hope you're enjoying living in the grace of God."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#127 (mes)
+- "May God"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#128 (mes)
+- "be with you..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#129 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#130 (mes)
+- "What?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#131 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#132 (mes)
+- "Have you any more business with me?! You don't! Go back to the Sanctuary now!"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#133 (mes)
+- "Hey."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#134 (mes)
+- "Whatever you are,"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#135 (mes)
+- "you look like an"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#136 (mes)
+- "Acolyte applicant."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#137 (mes)
+- "Right?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#138 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#139 (mes)
+- "Not bad, not bad. You withstood the penance trial pretty well."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#140 (mes)
+- "So what's your name?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#141 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#143 (mes)
+- ", huh?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#144 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#145 (mes)
+- "Okay. I'll send a message to the Sanctuary that you, "
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#146 (mes)
+- ", came to visit me."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#147 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#148 (mes)
+- "Now go back to the Santuary and finish becoming an Acolyte, kid."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#150 (mes)
+- "Hey."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#151 (mes)
+- "You look like an Acolyte Applicant. Am I right?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#152 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#153 (mes)
+- "Not bad at all, you've made it all the way here from Prontera. So what's your name, kid?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#154 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#156 (mes)
+- ", huh? Why isn't your name on my list?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#157 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#158 (mes)
+- "You probably made a mistake. Go back to the Santuary, and check with the Bishop."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#159 (mes)
+- "You..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#160 (mes)
+- "Novice."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#161 (mes)
+- "There something"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#162 (mes)
+- "you wanna tell me?"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#164 (mes)
+- "Hey..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#165 (mes)
+- "[Father Yosuke]"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#166 (mes)
+- "If you like, come sit here with me and meditate the great truths. God's majesty is truly inspiring..."
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#167 (mes)
+- "Do you have anything to say? Because unfortunately for you,"
++ ""
+#: npc/re/jobs/1-1/acolyte.txt#168 (mes)
+- "I don't any replies."
++ ""
+
+### npc/re/jobs/1-1/archer.txt  (65 textos)
+#: npc/re/jobs/1-1/archer.txt#1 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#2 (mes)
+- "Hey, I know you."
++ ""
+#: npc/re/jobs/1-1/archer.txt#3 (mes)
+- "You took this test"
++ ""
+#: npc/re/jobs/1-1/archer.txt#4 (mes)
+- "before, didn't you?"
++ ""
+#: npc/re/jobs/1-1/archer.txt#5 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#6 (mes)
+- "Ah, you must have been"
++ ""
+#: npc/re/jobs/1-1/archer.txt#7 (mes)
+- "to Valhalla and been reborn."
++ ""
+#: npc/re/jobs/1-1/archer.txt#8 (mes)
+- "Wow, that's so impressive!"
++ ""
+#: npc/re/jobs/1-1/archer.txt#10 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#11 (mes)
+- "Err..."
++ "Ahn..."
+#: npc/re/jobs/1-1/archer.txt#12 (mes)
+- "You'd better learn all the Basic Skills first before you can become an Archer."
++ ""
+#: npc/re/jobs/1-1/archer.txt#13 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#14 (mes)
+- "Alright, see you later."
++ ""
+#: npc/re/jobs/1-1/archer.txt#15 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#16 (mes)
+- "Well then. I don't"
++ ""
+#: npc/re/jobs/1-1/archer.txt#17 (mes)
+- "need to say anything else."
++ ""
+#: npc/re/jobs/1-1/archer.txt#18 (mes)
+- "I know you'll make a great Archer..."
++ ""
+#: npc/re/jobs/1-1/archer.txt#22 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#23 (mes)
+- "Although there's no special"
++ ""
+#: npc/re/jobs/1-1/archer.txt#24 (mes)
+- "reward for you this time, I hope you understand. Take care of yourself."
++ ""
+#: npc/re/jobs/1-1/archer.txt#25 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#26 (mes)
+- "Oh...?"
++ ""
+#: npc/re/jobs/1-1/archer.txt#27 (mes)
+- "Hey, what are"
++ ""
+#: npc/re/jobs/1-1/archer.txt#28 (mes)
+- "you doing here...?"
++ ""
+#: npc/re/jobs/1-1/archer.txt#29 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#30 (mes)
+- "I can tell that you're not cut out to be an Archer. It sort of feels like you're meant to do"
++ ""
+#: npc/re/jobs/1-1/archer.txt#31 (mes)
+- "something else..."
++ ""
+#: npc/re/jobs/1-1/archer.txt#32 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#33 (mes)
+- "Nice to meet you. How may I help you?"
++ ""
+#: npc/re/jobs/1-1/archer.txt#34 (select)
+- "I want to be an Archer.:I need the requirements, please.:Nothing, thanks."
++ ""
+#: npc/re/jobs/1-1/archer.txt#35 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#36 (mes)
+- "Haha, you are kidding me..."
++ ""
+#: npc/re/jobs/1-1/archer.txt#37 (mes)
+- "I feel sorry but only Novices can change their job."
++ ""
+#: npc/re/jobs/1-1/archer.txt#38 (mes)
+- "You already have your own decent job, don't you?"
++ ""
+#: npc/re/jobs/1-1/archer.txt#39 (mes)
+- "You are... "
++ ""
+#: npc/re/jobs/1-1/archer.txt#40 (mes)
+- ", right?"
++ ""
+#: npc/re/jobs/1-1/archer.txt#42 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#43 (mes)
+- "Well, you're not at the right skill level."
++ ""
+#: npc/re/jobs/1-1/archer.txt#44 (mes)
+- "Your job level must be at least ^4A4AFF10^000000 and your Basic Skill level should reach ^4A4AFFlevel 9"
++ ""
+#: npc/re/jobs/1-1/archer.txt#45 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#46 (mes)
+- "Because an Archer needs extremely high concentration, so we do not accept those who have little patience."
++ ""
+#: npc/re/jobs/1-1/archer.txt#47 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#48 (mes)
+- "Your Basic Skill is now enough.."
++ ""
+#: npc/re/jobs/1-1/archer.txt#49 (mes)
+- "....Hm~~ so you are now ready to be an Archer. I will take the step right away."
++ ""
+#: npc/re/jobs/1-1/archer.txt#50 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#51 (mes)
+- "Congratulations! You are now an Archer! Also, we hope that you actively participate in many programs for the revival of the Archer Guild."
++ ""
+#: npc/re/jobs/1-1/archer.txt#52 (mes)
+- "Ah, items have arrived from the Production Department. Here, take these! These are all yours!"
++ ""
+#: npc/re/jobs/1-1/archer.txt#54 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#55 (mes)
+- "Having a bow and arrows, now you became a real Archer."
++ ""
+#: npc/re/jobs/1-1/archer.txt#56 (mes)
+- "If you open the arrow container, there are arrows in it and then you can equip them."
++ ""
+#: npc/re/jobs/1-1/archer.txt#57 (mes)
+- "Well, I expect to hear better news from you. It's time to say goodbye."
++ ""
+#: npc/re/jobs/1-1/archer.txt#58 (mes)
+- "Bye."
++ ""
+#: npc/re/jobs/1-1/archer.txt#59 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#60 (mes)
+- "An Archer has skills using a bow and has various talents."
++ ""
+#: npc/re/jobs/1-1/archer.txt#61 (mes)
+- "The greatest ability of an Archer is attacking enemies from a long distance."
++ ""
+#: npc/re/jobs/1-1/archer.txt#62 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#63 (mes)
+- "Although an Archer has weaker HP, he or she can shoot enemies at a long range,"
++ ""
+#: npc/re/jobs/1-1/archer.txt#64 (mes)
+- "so an Archer is safer in a real battle."
++ ""
+#: npc/re/jobs/1-1/archer.txt#65 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#66 (mes)
+- "Although an Archer in Ragnarok has lower HP, he or she has high accuracy and attack rate so that the archer can kill monsters before they get close to an Archer."
++ ""
+#: npc/re/jobs/1-1/archer.txt#67 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#68 (mes)
+- "^8C2121An Archer can change jobs to a Hunter.^000000"
++ ""
+#: npc/re/jobs/1-1/archer.txt#69 (mes)
+- "^8C2121Other than Hunter, if you are a man, you can change your job to Bard and if you are a woman, you can change your job to Dancer.^000000"
++ ""
+#: npc/re/jobs/1-1/archer.txt#70 (mes)
+- "[Archer Guildsman]"
++ ""
+#: npc/re/jobs/1-1/archer.txt#71 (mes)
+- "If you have any questions, feel free to come and ask me."
++ ""
+
+### npc/re/jobs/1-1/mage.txt  (61 textos)
+#: npc/re/jobs/1-1/mage.txt#1 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#2 (mes)
+- "Whoa, long time no see! But weren't you supposed to be dead?"
++ ""
+#: npc/re/jobs/1-1/mage.txt#3 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#4 (mes)
+- "Ah, you must have been reborn. Well, I'm glad to have you back."
++ ""
+#: npc/re/jobs/1-1/mage.txt#6 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#7 (mes)
+- "I'm sorry, but I don't think you're ready to learn magic yet. Why don't you go finish learning the Basic Skills first?"
++ ""
+#: npc/re/jobs/1-1/mage.txt#8 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#9 (mes)
+- "Take your time. The more you learn, the more ready you'll be to learn magic again."
++ ""
+#: npc/re/jobs/1-1/mage.txt#10 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#11 (mes)
+- "Well, since you have passed the Mage test once, I will not question your qualification. You want to have your magic skills back immediately, don't you?"
++ ""
+#: npc/re/jobs/1-1/mage.txt#14 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#15 (mes)
+- "Wow, for some reason, you look way better than you did before. Anyway, I believe you will do a better job being a Mage as well."
++ ""
+#: npc/re/jobs/1-1/mage.txt#16 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#17 (mes)
+- "Is there anything more I can help you with? If not, why don't you go test your skills? The world is waiting for you~!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#18 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#19 (mes)
+- "What, are you interested in the Mage guild? I didn't want to tell you this, but you don't belong here."
++ ""
+#: npc/re/jobs/1-1/mage.txt#20 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#21 (mes)
+- "I am not sure why you're still standing in front of me, but I can tell that you're not meant to be a Mage."
++ ""
+#: npc/re/jobs/1-1/mage.txt#22 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#23 (mes)
+- "Hey, haven't you realized? You're already a Mage, silly!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#24 (mes)
+- "One of these days you'll realize the power inside of you when you can make Fire with your mind!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#25 (mes)
+- "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job."
++ ""
+#: npc/re/jobs/1-1/mage.txt#26 (mes)
+- "Hey?"
++ ""
+#: npc/re/jobs/1-1/mage.txt#27 (select)
+- "I want to be a Mage:What are the requirements to be a Mage?:Nothing, thanks."
++ ""
+#: npc/re/jobs/1-1/mage.txt#28 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#29 (mes)
+- "Wanna be a Mage? Eh..."
++ ""
+#: npc/re/jobs/1-1/mage.txt#30 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#31 (mes)
+- "Hey, look at you! You're kinda cute~! Not my type though..."
++ ""
+#: npc/re/jobs/1-1/mage.txt#32 (mes)
+- "Oooh, you're such a hot babe~!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#33 (mes)
+- "I like girls like you~"
++ ""
+#: npc/re/jobs/1-1/mage.txt#34 (mes)
+- "Right, you said that you wanna be a Mage?"
++ ""
+#: npc/re/jobs/1-1/mage.txt#35 (select)
+- "I want to be a Mage.:Nothing, thanks."
++ ""
+#: npc/re/jobs/1-1/mage.txt#36 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#37 (mes)
+- "Whaaaaat~?! Right after you tell me that you wanna become a Mage, you change your mind?! Be a bit more decisive!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#38 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#40 (mes)
+- "Oh, man your Basic Skill Level doesn't reach enough to be a Mage."
++ ""
+#: npc/re/jobs/1-1/mage.txt#41 (mes)
+- "Go back and level up your Basic Skill."
++ ""
+#: npc/re/jobs/1-1/mage.txt#42 (mes)
+- "Alright.. sign the application form.... Wow~ you have good handwriting! Ahh, okay. That's enough."
++ ""
+#: npc/re/jobs/1-1/mage.txt#43 (mes)
+- "You are... "
++ ""
+#: npc/re/jobs/1-1/mage.txt#44 (mes)
+- "."
++ "."
+#: npc/re/jobs/1-1/mage.txt#45 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#46 (mes)
+- "Hmm I can see that you've tried hard in your own way. Though it seems to be a little clumsy, but well I think it's okay!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#47 (mes)
+- "Good! Always sticking to the basics is the best! I will transform you right away."
++ ""
+#: npc/re/jobs/1-1/mage.txt#48 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#49 (mes)
+- "Hahh..! You are now a Mage, one of our colleagues!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#50 (mes)
+- "We welcome you to the Mage Guild, our new friend!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#51 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#52 (mes)
+- "'Welcome to the Mage Guild~'"
++ ""
+#: npc/re/jobs/1-1/mage.txt#53 (mes)
+- "Congratulations on becoming a member of the Mage Guild! Go for it!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#55 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#56 (mes)
+- "Wanna be a Mage, eh?"
++ ""
+#: npc/re/jobs/1-1/mage.txt#57 (mes)
+- "I'd be happy to explain the requirements for a pretty girl like you!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#58 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#59 (mes)
+- "First of all, you have to reach Novice Job Level 10 and learn all of the Basic Skills."
++ ""
+#: npc/re/jobs/1-1/mage.txt#60 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#61 (mes)
+- "In the past, there was a complicated potion making test. Because of that, we'd lost an aplicant slowly."
++ ""
+#: npc/re/jobs/1-1/mage.txt#62 (mes)
+- "So, we decided to accept all aplicants who meet the basic requirements."
++ ""
+#: npc/re/jobs/1-1/mage.txt#63 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#64 (mes)
+- "Don't hesitate. Just be a magician!"
++ ""
+#: npc/re/jobs/1-1/mage.txt#65 (mes)
+- "[Mage Guildsman]"
++ ""
+#: npc/re/jobs/1-1/mage.txt#66 (mes)
+- "Nothing...?"
++ ""
+
+### npc/re/jobs/1-1/merchant.txt  (60 textos)
+#: npc/re/jobs/1-1/merchant.txt#1 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#2 (mes)
+- "Long time no see!"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#3 (mes)
+- "Hey, you didn't quit"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#4 (mes)
+- "your business, did you?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#5 (mes)
+- "What happened?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#6 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#7 (mes)
+- "Whoa..."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#8 (mes)
+- "You've actually been to Valhalla?! Wow, you've come a long way..."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#10 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#11 (mes)
+- "Hmmm..."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#12 (mes)
+- "It seems that you're not ready to become a Merchant again. Go finish learning the Basic Novice Skills first."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#13 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#14 (mes)
+- "Don't worry, we'll always have a Merchant position open for you. Just come back when you're ready, okay?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#15 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#16 (mes)
+- "I guess it's destiny that we meet like this once more. Alright. Once again, let me change you into a Merchant!"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#21 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#22 (mes)
+- "Ah~ How nostalgic. Just like old times! Alright, do your best!"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#23 (mes)
+- "[Chief Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#24 (mes)
+- "^333333*Sigh*^000000"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#25 (mes)
+- "I'm so bored..."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#26 (mes)
+- "When will I hear from my lovely Blossom?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#27 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#28 (mes)
+- "Hey, why are you here?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#29 (select)
+- "I want to be a merchant.:I want to know more about merchants.:Ask him the requirements to be a merchant.:Nothing."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#30 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#31 (mes)
+- ".....? Sorry? What are you saying?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#32 (mes)
+- "You are already a merchant. Oh my.."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#33 (mes)
+- "Huh?! ...Do I need to laugh right now?!"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#34 (mes)
+- "Ahh? Are you trying to have both ways?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#35 (mes)
+- "How about just giving yourself over to your original job?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#36 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#37 (mes)
+- "We have business ethics you know."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#38 (mes)
+- "Want to be a merchant? Hmm..."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#40 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#41 (mes)
+- "But if you want to be a merchant, your basic skill level must reach Level 9 or you must spend all of your skill points."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#42 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#43 (mes)
+- "Don't you think we need to learn some basic skills although we just deal with money?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#44 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#45 (mes)
+- "Good, I think you're fully ready for it seeing that your basic skill level is fulfilled."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#46 (mes)
+- "Now I allow you to be a merchant."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#47 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#48 (mes)
+- "Congratulations on becoming a merchant!"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#49 (mes)
+- "Congratulations again for being a member of the merchant guild and one of our colleagues. I expect your active participation from now on!"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#51 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#52 (mes)
+- "Absolutely, we need young people who have passion to achieve our great goal for securing 20% of the worldwide currency volume. You get it? Huh?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#53 (mes)
+- "Well, I'm just saying... it means let's make lots of money in the end. You guys know that~"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#54 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#55 (mes)
+- "Merchant? To put it simply, the person who sells good and makes money is a merchant."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#56 (mes)
+- "Not good at fighting and doesn't have special attack/recovery skills... but a merchant can buy things at a low price and then sell them and make money."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#57 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#58 (mes)
+- "Well, a merchant has an ultimate skill called Mammonite which strikes an enemy with his/her money... We can equip everything except Bows, Rods, and Two-Handed Swords. But we can always sell and buy those."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#59 (mes)
+- "Yes... we merchants always have money on our minds, got it?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#60 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#61 (mes)
+- "To become a merchant, although just selling and receiving money is our job, you must reach at least basic skill level 9."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#62 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#63 (mes)
+- "Well, we used to receive a start-up fee before. Wasn't it hard to make that money?"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#64 (mes)
+- "There were too many people who couldn't gather that money and kept crying."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#65 (mes)
+- "[Guildsman Mahnsoo]"
++ ""
+#: npc/re/jobs/1-1/merchant.txt#66 (mes)
+- "So recently, we decided to allow any Novice who wants to be a merchant become one."
++ ""
+#: npc/re/jobs/1-1/merchant.txt#67 (mes)
+- "Because to be alive or not later is all up to one's ability."
++ ""
+
+### npc/re/jobs/1-1/swordman.txt  (62 textos)
+#: npc/re/jobs/1-1/swordman.txt#1 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#2 (mes)
+- "It..."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#3 (mes)
+- "Can't be..."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#4 (mes)
+- "You've been reborn, haven't you?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#5 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#6 (mes)
+- "I see you're retreading the path of the Swordman! Once you've gotten used to brandishing a sword, you can never go back!!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#8 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#9 (mes)
+- "Hmm? Ah, you must first master the Basic Skills before you are ready to become a Swordman."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#10 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#11 (mes)
+- "Come back to me when you have finished learning the Basic Novice Skills."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#12 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#13 (mes)
+- "Excellent! Let me promote you to a Swordman right away!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#18 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#19 (mes)
+- "Hmm... You look like a well-experienced Swordman. Still, I'm sure that you must train to improve your skills and gain strength!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#20 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#21 (mes)
+- "Hm...?"
++ "Hum...?"
+#: npc/re/jobs/1-1/swordman.txt#22 (mes)
+- "You're a reborn"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#23 (mes)
+- "warrior, aren't you?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#24 (mes)
+- "[Swordman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#25 (mes)
+- "Hmmm..."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#26 (mes)
+- "It seems that being"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#27 (mes)
+- "a Swordman is not part"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#28 (mes)
+- "of your destiny. I'm sorry,"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#29 (mes)
+- "but it seems there is nothing"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#30 (mes)
+- "I can do for you."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#31 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#32 (mes)
+- "This is the Swordman Guild."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#33 (mes)
+- "Why are you here?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#34 (select)
+- "Tell me about being a Swordman.:I want to be a Swordman.:Nothing."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#35 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#36 (mes)
+- "So you wish to know more about the mighty Swordman? Okay!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#37 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#38 (mes)
+- "The most distinctive feature of the Swordman is that the Swordman can show us his/her real abilities in close combat."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#39 (mes)
+- "There are three reasons!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#40 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#41 (mes)
+- "First, Swordman has higher HP than other jobs."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#42 (mes)
+- "Second, except for Bows and Rods, Swordman can use all other weapons so they can fight at their optimal ability."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#43 (mes)
+- "And third, most of the skills of the Swordman give powerful physical attacks."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#44 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#45 (mes)
+- "Though I gave you a simple explanation, I believe you understand the core meaning of what it is to be a Swordman."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#46 (mes)
+- "In my opinion, Swordman is the best job ever!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#47 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#48 (mes)
+- "You are already an excellent Swordman, aren't you?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#49 (mes)
+- "Just devote yourself to be a great Swordman."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#50 (mes)
+- "You already have one of the other jobs, don't you?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#51 (mes)
+- "You've gone too far with that joke."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#53 (mes)
+- "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4A4AFFJob Level 10^000000."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#54 (mes)
+- "and ^4A4AFFBasic Skill Level 9^000000."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#55 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#56 (mes)
+- "Want to be a Swordman without having the minimum requirement?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#57 (mes)
+- "Do you think being a Swordman is that easy?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#58 (mes)
+- "Hmm, both your Job Level and Basic Skill Level check out."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#59 (mes)
+- "Good. Do you want to be a Swordman right away?"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#60 (select)
+- "Yes, I do.:I'll consider it again."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#61 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#62 (mes)
+- "Yeah. Prudent decision is needed for choosing a job."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#63 (mes)
+- "But I feel sorry... that you consider it again after overcoming all the hardships...."
++ ""
+#: npc/re/jobs/1-1/swordman.txt#64 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#65 (mes)
+- "Congratulations! From now on, you are going to live a Swordman's life!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#66 (mes)
+- "Let's do it right now!"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#67 (mes)
+- "[Swordman Guildsman]"
++ ""
+#: npc/re/jobs/1-1/swordman.txt#68 (mes)
+- "Congratulations again for being a Swordman and I hope that you participate in many activities for the revival of our guild."
++ ""
+
+### npc/re/jobs/1-1/thief.txt  (106 textos)
+#: npc/re/jobs/1-1/thief.txt#1 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#2 (mes)
+- "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#4 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#5 (mes)
+- "What, do you want to be a Thief? I'm sorry, but you look like you need more training."
++ ""
+#: npc/re/jobs/1-1/thief.txt#6 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#7 (mes)
+- "Take your time and learn all the Basic Skills, will you? Well then, see you later~!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#8 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#9 (mes)
+- "Well, I got this feeling like you've been through a lifetime of fighting, so I'm promoting you to a Thief right this minute. I better give you tough guys what you want..."
++ ""
+#: npc/re/jobs/1-1/thief.txt#15 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#16 (mes)
+- "Since you've become a Thief, live as a Thief. Now, go for it! Next~"
++ ""
+#: npc/re/jobs/1-1/thief.txt#17 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#18 (mes)
+- "Hey, dude."
++ ""
+#: npc/re/jobs/1-1/thief.txt#19 (mes)
+- "Hey, baby~"
++ ""
+#: npc/re/jobs/1-1/thief.txt#20 (mes)
+- "[Thief Guide]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#21 (mes)
+- "Hey, dude."
++ ""
+#: npc/re/jobs/1-1/thief.txt#22 (mes)
+- "Hey, baby."
++ ""
+#: npc/re/jobs/1-1/thief.txt#23 (mes)
+- "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#24 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#25 (mes)
+- "Ehh... Seems like a beloved "
++ ""
+#: npc/re/jobs/1-1/thief.txt#26 (mes)
+- "son"
++ ""
+#: npc/re/jobs/1-1/thief.txt#27 (mes)
+- "daughter"
++ ""
+#: npc/re/jobs/1-1/thief.txt#28 (mes)
+- " of a rich family, but why are you here in this dirty place?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#29 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#30 (mes)
+- "Well, I'm not in charge of making you a Thief. I just accept applications, get it?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#31 (mes)
+- "If you want to become a Thief, ask the sharp-eyed guy next to me."
++ ""
+#: npc/re/jobs/1-1/thief.txt#32 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#33 (mes)
+- "Hey~ if you have any trouble, get it out to me anytime, huh?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#34 (mes)
+- "What the heck...?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#35 (mes)
+- "Huh... you are a "
++ ""
+#: npc/re/jobs/1-1/thief.txt#36 (mes)
+- ", blockhead!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#37 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#38 (mes)
+- "Hey, brother."
++ ""
+#: npc/re/jobs/1-1/thief.txt#39 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#40 (mes)
+- "Hey, lady."
++ ""
+#: npc/re/jobs/1-1/thief.txt#41 (mes)
+- "Why are you here? Go back to your place~ go back~~"
++ ""
+#: npc/re/jobs/1-1/thief.txt#42 (mes)
+- "Ehh... Seems like a beloved "
++ ""
+#: npc/re/jobs/1-1/thief.txt#43 (mes)
+- "son"
++ ""
+#: npc/re/jobs/1-1/thief.txt#44 (mes)
+- "daughter"
++ ""
+#: npc/re/jobs/1-1/thief.txt#45 (mes)
+- " of a rich family, but why are you here in this dirty place?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#46 (select)
+- "I want to be a Thief.:Nothing."
++ ""
+#: npc/re/jobs/1-1/thief.txt#47 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#48 (mes)
+- "You know you cannot be a thief without an application..."
++ ""
+#: npc/re/jobs/1-1/thief.txt#49 (mes)
+- "What's on your mind...?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#50 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#51 (mes)
+- "Well, are you that proud of it?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#52 (mes)
+- "You're telling me so proudly that you want to be a Thief! Why don't you go to all the villages and advertise yourself for being a thief?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#53 (mes)
+- "'Ha ha ha! Go put up a banner that says 'I will be a proud thief who steals other people's stuff.'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#54 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#55 (mes)
+- "Do you want to be a thief so badly?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#56 (select)
+- "Yes.:No.:How about you?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#57 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#58 (mes)
+- "Oh, do you...? Huh.. well... I do live and learn to see strange people like you."
++ ""
+#: npc/re/jobs/1-1/thief.txt#59 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#60 (mes)
+- "Then why are you here? Do you think you can become a thief so easily?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#61 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#62 (mes)
+- "Eh..? me? me?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#63 (mes)
+- "Well... I just fit well to being a thief... characteristically... I don't mind this silly matter."
++ ""
+#: npc/re/jobs/1-1/thief.txt#64 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#65 (mes)
+- "Anyway, in the outside world, never say that you want to be a Thief!!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#66 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#67 (mes)
+- "So, do you want to apply for being a Thief?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#68 (select)
+- "Yes, I do.:No."
++ ""
+#: npc/re/jobs/1-1/thief.txt#69 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#70 (mes)
+- "Well... do what you want to do~ Go your way~"
++ ""
+#: npc/re/jobs/1-1/thief.txt#71 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#72 (mes)
+- "Alright, tell me your name. Huh? What?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#74 (mes)
+- ". So "
++ ""
+#: npc/re/jobs/1-1/thief.txt#75 (mes)
+- ", right...?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#77 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#78 (mes)
+- "I can see your strong will to become a Thief......"
++ ""
+#: npc/re/jobs/1-1/thief.txt#79 (mes)
+- "But only with your will, you cannot make it in a real fight, can you?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#80 (mes)
+- "So go and reach at least Basic Skill Level 9."
++ ""
+#: npc/re/jobs/1-1/thief.txt#81 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#82 (mes)
+- "Hmm.... I found your interesting criminal records from the data of the detective agency. Well you seem to have what it takes to be a good thief."
++ ""
+#: npc/re/jobs/1-1/thief.txt#84 (mes)
+- ". I now declare that you have passed the job interview!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#85 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#86 (mes)
+- "Well, I'm not in charge of making you a Thief. I just accept applications, get it?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#87 (mes)
+- "If you want to become a Thief, ask the guy next to me."
++ ""
+#: npc/re/jobs/1-1/thief.txt#88 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#89 (mes)
+- "Alright. You must have passed the job interview, huh?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#90 (mes)
+- "Good. I'll accept you."
++ ""
+#: npc/re/jobs/1-1/thief.txt#91 (mes)
+- "Let's begin the job-changing ceremony of our guild!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#92 (mes)
+- "[Commander of Thief Guild]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#93 (mes)
+- "'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#94 (mes)
+- ".'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#95 (mes)
+- "'For those who are ready, the moonlight shall open the way. Now you are fully ready, I now officially allow you to become a member of the Thief Guild.'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#97 (mes)
+- "[Commander of Thief Guild]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#98 (mes)
+- "'Congratulations on becoming a Thief.'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#99 (mes)
+- "'From now on, keep the rules of our guild and be an honorable member.'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#100 (mes)
+- "'If you bring us any disgrace by breaking our rules, you better watch your back.'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#101 (mes)
+- "'Anyway, I expect you to be a great thief.'"
++ ""
+#: npc/re/jobs/1-1/thief.txt#102 (mes)
+- "[Brad]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#103 (mes)
+- "Heee~Yaaaa~! Congratulations! My friend."
++ ""
+#: npc/re/jobs/1-1/thief.txt#104 (mes)
+- "My name is 'Brad'. I'm in charge of human resources here."
++ ""
+#: npc/re/jobs/1-1/thief.txt#105 (mes)
+- "I'm not sure for now but you'll have more chances to see me later on."
++ ""
+#: npc/re/jobs/1-1/thief.txt#106 (mes)
+- "[Brad]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#107 (mes)
+- "Okay, I've done what I can do to you, so go on your way. I'm quite a busy man."
++ ""
+#: npc/re/jobs/1-1/thief.txt#108 (mes)
+- "See you again."
++ ""
+#: npc/re/jobs/1-1/thief.txt#109 (mes)
+- "[Brad]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#110 (mes)
+- "I don't have any special events now. So go on your way and come back later."
++ ""
+#: npc/re/jobs/1-1/thief.txt#111 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#112 (mes)
+- "Hey~ Hey~ You're not a novice or a thief!"
++ ""
+#: npc/re/jobs/1-1/thief.txt#113 (mes)
+- "What are you doing here? You're not welcome to make this place your home~ Hweeeee~ Get outta here~"
++ ""
+#: npc/re/jobs/1-1/thief.txt#114 (mes)
+- "[Thief Guildsman]"
++ ""
+#: npc/re/jobs/1-1/thief.txt#115 (mes)
+- "Ho? Why is a novice like you visiting here?"
++ ""
+#: npc/re/jobs/1-1/thief.txt#116 (mes)
+- "If you are here to be a Thief, ask the nasty-tempered lady right next to me."
++ ""
+
+### npc/jobs/1-1e/gunslinger.txt  (275 textos)
+#: npc/jobs/1-1e/gunslinger.txt#2 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#3 (mes)
+- "Well, aren't you an"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#4 (mes)
+- "adorable little child~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#5 (mes)
+- "Where's your mommy?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#6 (mes)
+- "This place is dangerous, so"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#7 (mes)
+- "please go home soon, okay?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#9 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#10 (mes)
+- "Interested in becoming"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#11 (mes)
+- "a Gunslinger, eh? You've"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#12 (mes)
+- "got potential, but you're"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#13 (mes)
+- "not yet experienced enough."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#14 (mes)
+- "Just train yourself a bit more,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#15 (mes)
+- "and then come back, you hear?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#16 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#17 (mes)
+- "I'm Miller, a full time"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#18 (mes)
+- "Gunslinger drillmaster, and"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#19 (mes)
+- "full time guardian for Lady"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#20 (mes)
+- "Selena. Now, what do you"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#21 (mes)
+- "need? If it's not important, then I can't make the time for you."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#22 (select)
+- "Nothing.:I want to become a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#23 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#24 (mes)
+- "Don't waste my time."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#25 (mes)
+- "If you do want to become"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#26 (mes)
+- "a Gunslinger, then come"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#27 (mes)
+- "back and talk to me."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#28 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#29 (mes)
+- "Hm. You're pretty young, but"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#30 (mes)
+- "your eyes tell me that you're"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#31 (mes)
+- "pretty ambitious. You'll need to pass our interview and educational"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#32 (mes)
+- "course to become a Gunslinger. Do you want to apply for the job?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#33 (select)
+- "Give me some time to think.:Sure!"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#34 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#35 (mes)
+- "Understandable."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#36 (mes)
+- "If you do decide that"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#37 (mes)
+- "you want to become"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#38 (mes)
+- "a Gunslinger, then let"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#39 (mes)
+- "me know right away."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#40 (mes)
+- "I'll get you started."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#41 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#42 (mes)
+- "Great, great. Alright then,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#43 (mes)
+- "let's get you started. Take"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#44 (mes)
+- "this letter to Mr. Wise Bull"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#45 (mes)
+- "Horn in Payon. He's a shaman"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#46 (mes)
+- "that will judge whether or not"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#47 (mes)
+- "you qualify to be a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#48 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#49 (mes)
+- "Take that letter of"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#50 (mes)
+- "introduction I've written"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#51 (mes)
+- "for you to Mr. Wise Bull"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#52 (mes)
+- "Horn in Payon. He'll test"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#53 (mes)
+- "you to see if you're really"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#54 (mes)
+- "Gunslinger material."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#55 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#56 (mes)
+- "Hmm... Wise Bull Horn"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#57 (mes)
+- "asked you to collect the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#58 (mes)
+- "items you need to make the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#59 (mes)
+- "voucher? Hm. I guess that's"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#60 (mes)
+- "part of his qualification test."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#61 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#62 (mes)
+- "Wise Bull Horn asked"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#63 (mes)
+- "you to bring him some"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#64 (mes)
+- "Milk? He must really like"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#65 (mes)
+- "you if he's already asking"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#66 (mes)
+- "for favors. Good luck, friend."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#67 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#68 (mes)
+- "I expect to hear good"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#69 (mes)
+- "news from you soon. You"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#70 (mes)
+- "know, I have no doubt that"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#71 (mes)
+- "you'll become a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#72 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#73 (mes)
+- "Hey, you have leftover"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#74 (mes)
+- "Skill Points. You better"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#75 (mes)
+- "use them all up before you"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#76 (mes)
+- "come and talk to me again."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#77 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#78 (mes)
+- "Oh, you've brought a"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#79 (mes)
+- "voucher from Wise Bull Horn?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#80 (mes)
+- "It's been a while since he's"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#81 (mes)
+- "given one to anybody, so"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#82 (mes)
+- "I'm really proud of you!"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#83 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#84 (mes)
+- "If Wise Bull Horn approves,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#85 (mes)
+- "then I have no reason to"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#86 (mes)
+- "reject you. Alright then, I'll"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#87 (mes)
+- "promote you to a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#88 (mes)
+- "But first, let me explain"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#89 (mes)
+- "our job in more detail."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#90 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#91 (mes)
+- "As a Gunslinger, you must"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#92 (mes)
+- "keep your gun with you at"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#93 (mes)
+- "all times. The Gunslinger"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#94 (mes)
+- "Guild keeps track of every Gun"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#95 (mes)
+- "and Bullet, so you can only get"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#96 (mes)
+- "them from our guild members."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#97 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#98 (mes)
+- "Don't worry, Gunslinger"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#99 (mes)
+- "Guildsmen can be found almost"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#100 (mes)
+- "anywhere these days. Anyway,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#101 (mes)
+- "it has to be this way by order of our guild leader, Lady Selena."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#102 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#103 (mes)
+- "You might get the chance to"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#104 (mes)
+- "meet her one of these days."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#105 (mes)
+- "Anyway, just now that we have"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#106 (mes)
+- "to regulate Gun and Bullet sales to keep them away from evil"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#107 (mes)
+- "or irresponsible folk."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#108 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#109 (mes)
+- "In any case, it's always"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#110 (mes)
+- "a pleasure for me to talk"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#111 (mes)
+- "to another Gunslinger, so"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#112 (mes)
+- "let's keep in touch. May the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#113 (mes)
+- "power of the earth protect"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#114 (mes)
+- "you in all of your adventures~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#116 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#117 (mes)
+- "Oh! Long time, no see,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#118 (mes)
+- "friend. How have you been?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#119 (mes)
+- "I hope you've been keeping"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#120 (mes)
+- "you Gun well maintained."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#121 (mes)
+- "Take care of it, and it'll take"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#122 (mes)
+- "care of you. Remember it."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#123 (mes)
+- "[Master Miller]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#124 (mes)
+- "If you don't have"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#125 (mes)
+- "any business with me,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#126 (mes)
+- "then please go on your way."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#127 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#128 (mes)
+- "Hello, young wolf."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#129 (mes)
+- "What business has"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#130 (mes)
+- "brought you before me?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#131 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#132 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#133 (mes)
+- "Mr. Miller sent me to"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#134 (mes)
+- "deliver this letter to you."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#135 (mes)
+- "Actually, I'm interested in"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#136 (mes)
+- "becoming a Gunslinger..."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#137 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#138 (mes)
+- "Miller, you said?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#139 (mes)
+- "Hm, the Black Fox doesn't"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#140 (mes)
+- "give introductions for anyone"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#141 (mes)
+- "he doesn't believe will make"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#142 (mes)
+- "a good Gunslinger. Yes, I think"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#143 (mes)
+- "I know why he sent you to me."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#144 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#145 (mes)
+- "I can see it in your eyes:"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#146 (mes)
+- "you've got a warm heart and a"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#147 (mes)
+- "strong sense of responsibility."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#148 (mes)
+- "All you need is the blessing"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#149 (mes)
+- "of the Earth to protect you"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#150 (mes)
+- "as a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#151 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#152 (mes)
+- "I can make a voucher that"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#153 (mes)
+- "will demonstrate your desire"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#154 (mes)
+- "to become a warrior of the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#155 (mes)
+- "earth for you to present to"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#156 (mes)
+- "Gunslinger drillmasters."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#157 (mes)
+- "I shall need these items..."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#158 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#159 (mes)
+- "^3355FF1 Trunk^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#160 (mes)
+- "^3355FF3 Fluffs^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#161 (mes)
+- "^3355FF3 Zargons^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#162 (mes)
+- "^3355FF10 Shells^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#163 (mes)
+- "^3355FF3 Green Herbs^000000, and"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#164 (mes)
+- "^3355FF3 Rainbow Shells^000000."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#165 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#166 (mes)
+- "After I complete the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#167 (mes)
+- "voucher, you may bring"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#168 (mes)
+- "it to Black Fox, and he"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#169 (mes)
+- "will help you achieve"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#170 (mes)
+- "your goal of becoming"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#171 (mes)
+- "a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#172 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#173 (mes)
+- "I can make a voucher that"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#174 (mes)
+- "will demonstrate your desire"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#175 (mes)
+- "to become a warrior of the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#176 (mes)
+- "earth for you to present to"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#177 (mes)
+- "Gunslinger drillmasters."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#178 (mes)
+- "I shall need these items..."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#179 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#180 (mes)
+- "^3355FF1 Trunk^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#181 (mes)
+- "^3355FF3 Fluffs^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#182 (mes)
+- "^3355FF3 Zargons^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#183 (mes)
+- "^3355FF10 Shells^000000,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#184 (mes)
+- "^3355FF3 Green Herbs^000000, and"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#185 (mes)
+- "^3355FF3 Rainbow Shells^000000."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#186 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#187 (mes)
+- "After I complete the"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#188 (mes)
+- "voucher, you may bring"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#189 (mes)
+- "it to Black Fox, and he"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#190 (mes)
+- "will help you achieve"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#191 (mes)
+- "your goal of becoming"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#192 (mes)
+- "a Gunslinger."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#193 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#194 (mes)
+- "Ah, you've returned"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#195 (mes)
+- "with everything I need."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#196 (mes)
+- "Please give me some time"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#197 (mes)
+- "to make the voucher. If you"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#198 (mes)
+- "come back in a little while,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#199 (mes)
+- "I should be finished with it."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#200 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#201 (mes)
+- "Oh, you've arrived just"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#202 (mes)
+- "in time. It's been a while"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#203 (mes)
+- "since I've made one of these vouchers, so I might be a little"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#204 (mes)
+- "rusty. Still, this really takes me back to the days of my youth."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#205 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#206 (mes)
+- "I've been serving in this"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#207 (mes)
+- "position of choosing worthy"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#208 (mes)
+- "recipients of Gunslinger"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#209 (mes)
+- "vouchers for a few decades"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#210 (mes)
+- "now. But before that, I was a"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#211 (mes)
+- "young adventurer just like you."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#212 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#213 (mes)
+- "It feels like it was only"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#214 (mes)
+- "yesterday when I held my own"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#215 (mes)
+- "little voucher as a Gunslinger,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#216 (mes)
+- "a warrior of the earth. That's"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#217 (mes)
+- "when I met Selena's father..."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#218 (mes)
+- "How can time pass so quickly?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#219 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#220 (mes)
+- "Ah... I really appreciate"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#221 (mes)
+- "Selena and Black Fox for all"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#222 (mes)
+- "of their help in recruiting"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#223 (mes)
+- "young Gunslingers. I'm very"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#224 (mes)
+- "old now, and can't do everything by myself. *Sigh...* Such is life."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#225 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#226 (mes)
+- "Before you leave, may"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#227 (mes)
+- "I ask you for a small favor?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#228 (mes)
+- "I'm thirsty, and would like"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#229 (mes)
+- "a cold glass of Milk. Would"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#230 (mes)
+- "you please bring me some?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#231 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#232 (mes)
+- "I'm an old man that will"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#233 (mes)
+- "soon be reunited with mother"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#234 (mes)
+- "earth. Would you do this old"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#235 (mes)
+- "Gunslinger a favor a bring me"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#236 (mes)
+- "a cold glass of Milk, please?"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#237 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#238 (mes)
+- "Oh, thank you for your!"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#239 (mes)
+- "generosity--I see that"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#240 (mes)
+- "you've brought me some"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#241 (mes)
+- "Milk. Ahhhh, delicious~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#242 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#243 (mes)
+- "I admire the patience,"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#244 (mes)
+- "gentleness, and kindness"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#245 (mes)
+- "that you've proven by bringing"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#246 (mes)
+- "this to me. Yes, those are traits we all want Gunslingers to have."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#247 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#248 (mes)
+- "Now, please take this voucher"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#249 (mes)
+- "to Miller, the Black Fox, with"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#250 (mes)
+- "my wholehearted approval."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#251 (mes)
+- "I hope that you will use your"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#252 (mes)
+- "gun to uphold justice as a"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#253 (mes)
+- "noble warrior of the earth."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#254 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#255 (mes)
+- "Eeh~Yeah~Eeh~Hooom"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#256 (mes)
+- "Eeh~Yeah~Eeh~Hooom"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#257 (mes)
+- "Maaaaarrraaa Neeey~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#258 (mes)
+- "Yippee Yippee Yai Yocaiyay~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#259 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#260 (mes)
+- "Please take this voucher"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#261 (mes)
+- "to Miller, the Black Fox, with"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#262 (mes)
+- "my wholehearted approval."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#263 (mes)
+- "I hope that you will use your"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#264 (mes)
+- "gun to uphold justice as a"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#265 (mes)
+- "noble warrior of the earth."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#266 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#267 (mes)
+- "Eeh~Yeah~Eeh~Hooom"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#268 (mes)
+- "Eeh~Yeah~Eeh~Hooom"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#269 (mes)
+- "Maaaaarrraaa Neeey~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#270 (mes)
+- "Yippee Yippee Yai Yocaiyay~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#271 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#272 (mes)
+- "AAh, long time no see."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#273 (mes)
+- "I hope that you become"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#274 (mes)
+- "a smart beast, and use"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#275 (mes)
+- "your powers as a Gunslinger to protect what is good and just."
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#276 (mes)
+- "[Wise Bull Horn]"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#277 (mes)
+- "Zzzzzz~"
++ ""
+#: npc/jobs/1-1e/gunslinger.txt#278 (mes)
+- "^333333*Phew*^000000"
++ ""
+
+### npc/jobs/1-1e/ninja.txt  (423 textos)
+#: npc/jobs/1-1e/ninja.txt#1 (mes)
+- "[Akagi]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#2 (mes)
+- "Hmmm..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#3 (mes)
+- "You must have come,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#4 (mes)
+- "sensing that someone"
++ ""
+#: npc/jobs/1-1e/ninja.txt#5 (mes)
+- "is waiting for you here."
++ ""
+#: npc/jobs/1-1e/ninja.txt#6 (mes)
+- "Tell me, do you seek"
++ ""
+#: npc/jobs/1-1e/ninja.txt#7 (mes)
+- "the path of patience?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#8 (select)
+- "No:Yes"
++ ""
+#: npc/jobs/1-1e/ninja.txt#9 (mes)
+- "[Akagi]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#10 (mes)
+- "I see."
++ ""
+#: npc/jobs/1-1e/ninja.txt#11 (mes)
+- "To each his own,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#12 (mes)
+- "I suppose. Take"
++ ""
+#: npc/jobs/1-1e/ninja.txt#13 (mes)
+- "care of yourself."
++ ""
+#: npc/jobs/1-1e/ninja.txt#14 (mes)
+- "[Akagi]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#15 (mes)
+- "Very well."
++ ""
+#: npc/jobs/1-1e/ninja.txt#16 (mes)
+- "Then, let me"
++ ""
+#: npc/jobs/1-1e/ninja.txt#17 (mes)
+- "set you on that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#18 (mes)
+- "path right away..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#22 (mes)
+- "[Akagi]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#23 (mes)
+- "Hm? I cannot be"
++ ""
+#: npc/jobs/1-1e/ninja.txt#24 (mes)
+- "of any service to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#25 (mes)
+- "you until you grow"
++ ""
+#: npc/jobs/1-1e/ninja.txt#26 (mes)
+- "a little stronger..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#27 (mes)
+- "[Akagi]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#28 (mes)
+- "Hmm..."
++ "Hmm..."
+#: npc/jobs/1-1e/ninja.txt#29 (mes)
+- "You and I..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#30 (mes)
+- "We are fairly equal in"
++ ""
+#: npc/jobs/1-1e/ninja.txt#31 (mes)
+- "terms of combat ability."
++ ""
+#: npc/jobs/1-1e/ninja.txt#32 (mes)
+- "Perhaps we can spar"
++ ""
+#: npc/jobs/1-1e/ninja.txt#33 (mes)
+- "together sometime."
++ ""
+#: npc/jobs/1-1e/ninja.txt#34 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#35 (mes)
+- "I... I've never"
++ ""
+#: npc/jobs/1-1e/ninja.txt#36 (mes)
+- "seen a baby as"
++ ""
+#: npc/jobs/1-1e/ninja.txt#37 (mes)
+- "powerful as you!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#38 (mes)
+- "G-get away, you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#39 (mes)
+- "freak of nature!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#40 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#41 (mes)
+- "Hm? Have you come to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#42 (mes)
+- "learn how to be a Ninja?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#43 (mes)
+- "You're not quite experienced"
++ ""
+#: npc/jobs/1-1e/ninja.txt#44 (mes)
+- "enough yet, so come back"
++ ""
+#: npc/jobs/1-1e/ninja.txt#45 (mes)
+- "after you're more familiar"
++ ""
+#: npc/jobs/1-1e/ninja.txt#46 (mes)
+- "with fighting monsters."
++ ""
+#: npc/jobs/1-1e/ninja.txt#47 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#48 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#49 (mes)
+- "Excuse me."
++ ""
+#: npc/jobs/1-1e/ninja.txt#50 (mes)
+- "H-hello?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#51 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#52 (mes)
+- "..............................."
++ ""
+#: npc/jobs/1-1e/ninja.txt#53 (mes)
+- "How did you do that?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#54 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#55 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#56 (mes)
+- "Do what? I didn't"
++ ""
+#: npc/jobs/1-1e/ninja.txt#57 (mes)
+- "do anything, I don't think..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#58 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#59 (mes)
+- "H-How are you able to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#60 (mes)
+- "see me? I'm supposed to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#61 (mes)
+- "be invisible to the naked eye."
++ ""
+#: npc/jobs/1-1e/ninja.txt#62 (mes)
+- "Ah, now I get it. Wildcat Joe"
++ ""
+#: npc/jobs/1-1e/ninja.txt#63 (mes)
+- "must have sent you to kill me! I won't fall for your tricks! Die!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#64 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#65 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#66 (mes)
+- "W-wait! I-I don't even"
++ ""
+#: npc/jobs/1-1e/ninja.txt#67 (mes)
+- "know who Wildcat Joe is!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#68 (mes)
+- "Calm down, there's no"
++ ""
+#: npc/jobs/1-1e/ninja.txt#69 (mes)
+- "need to get violent!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#70 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#71 (mes)
+- "What...?"
++ "O quê...?"
+#: npc/jobs/1-1e/ninja.txt#72 (mes)
+- "How did you dodge"
++ ""
+#: npc/jobs/1-1e/ninja.txt#73 (mes)
+- "all of my attacks?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#74 (mes)
+- "You've got some talent,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#75 (mes)
+- "I'll give you that."
++ ""
+#: npc/jobs/1-1e/ninja.txt#76 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#77 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#78 (mes)
+- "..............................."
++ ""
+#: npc/jobs/1-1e/ninja.txt#79 (mes)
+- "I came here hoping"
++ ""
+#: npc/jobs/1-1e/ninja.txt#80 (mes)
+- "to change my job"
++ ""
+#: npc/jobs/1-1e/ninja.txt#81 (mes)
+- "to a Ninja."
++ ""
+#: npc/jobs/1-1e/ninja.txt#82 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#83 (mes)
+- "...Oh. Is that all?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#84 (mes)
+- "Hmm, you've got great"
++ ""
+#: npc/jobs/1-1e/ninja.txt#85 (mes)
+- "potential, but I can't help"
++ ""
+#: npc/jobs/1-1e/ninja.txt#86 (mes)
+- "you now. I've got too many"
++ ""
+#: npc/jobs/1-1e/ninja.txt#87 (mes)
+- "enemies, and I can't let my"
++ ""
+#: npc/jobs/1-1e/ninja.txt#88 (mes)
+- "guard down for even a second."
++ ""
+#: npc/jobs/1-1e/ninja.txt#89 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#90 (mes)
+- "That Wildcat Joe is"
++ ""
+#: npc/jobs/1-1e/ninja.txt#91 (mes)
+- "completely ruthless...!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#92 (mes)
+- "He could strike at any time!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#93 (mes)
+- "He'll do anything to achieve"
++ ""
+#: npc/jobs/1-1e/ninja.txt#94 (mes)
+- "victory over his enemies!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#95 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#96 (mes)
+- "Wait, wait, I just"
++ ""
+#: npc/jobs/1-1e/ninja.txt#97 (mes)
+- "thought of something."
++ ""
+#: npc/jobs/1-1e/ninja.txt#98 (mes)
+- "Maybe you can help me out."
++ ""
+#: npc/jobs/1-1e/ninja.txt#99 (mes)
+- "Do what I ask, and I'll teach"
++ ""
+#: npc/jobs/1-1e/ninja.txt#100 (mes)
+- "you a few of my skills if you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#101 (mes)
+- "really want to be a Ninja."
++ ""
+#: npc/jobs/1-1e/ninja.txt#102 (select)
+- "Sure.:No, thanks."
++ ""
+#: npc/jobs/1-1e/ninja.txt#103 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#104 (mes)
+- "Hm? Well, alright."
++ ""
+#: npc/jobs/1-1e/ninja.txt#105 (mes)
+- "Still, I don't see"
++ ""
+#: npc/jobs/1-1e/ninja.txt#106 (mes)
+- "why we can't help"
++ ""
+#: npc/jobs/1-1e/ninja.txt#107 (mes)
+- "each other in this"
++ ""
+#: npc/jobs/1-1e/ninja.txt#108 (mes)
+- "little predicament..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#109 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#110 (mes)
+- "Great! Now, I wanted to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#111 (mes)
+- "ask Wildcat Joe if he'd"
++ ""
+#: npc/jobs/1-1e/ninja.txt#112 (mes)
+- "agree to a temporary truce."
++ ""
+#: npc/jobs/1-1e/ninja.txt#113 (mes)
+- "I'm aware that both of us"
++ ""
+#: npc/jobs/1-1e/ninja.txt#114 (mes)
+- "are out of weapons, so we"
++ ""
+#: npc/jobs/1-1e/ninja.txt#115 (mes)
+- "should get well equipped first."
++ ""
+#: npc/jobs/1-1e/ninja.txt#116 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#117 (mes)
+- "Please take this letter,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#118 (mes)
+- "and deliver it to Wildcat"
++ ""
+#: npc/jobs/1-1e/ninja.txt#119 (mes)
+- "Joe in Einbroch. He's a master"
++ ""
+#: npc/jobs/1-1e/ninja.txt#120 (mes)
+- "of disguise, so keep a careful"
++ ""
+#: npc/jobs/1-1e/ninja.txt#121 (mes)
+- "eye out for him. Ah, and look"
++ ""
+#: npc/jobs/1-1e/ninja.txt#122 (mes)
+- "for him in a high place."
++ ""
+#: npc/jobs/1-1e/ninja.txt#123 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#124 (mes)
+- "Yeah, Wildcat Joe"
++ ""
+#: npc/jobs/1-1e/ninja.txt#125 (mes)
+- "always did have a thing"
++ ""
+#: npc/jobs/1-1e/ninja.txt#126 (mes)
+- "for hiding in high places."
++ ""
+#: npc/jobs/1-1e/ninja.txt#127 (mes)
+- "Anyway, after you give him"
++ ""
+#: npc/jobs/1-1e/ninja.txt#128 (mes)
+- "the letter, come back and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#129 (mes)
+- "let me know his answer."
++ ""
+#: npc/jobs/1-1e/ninja.txt#130 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#131 (mes)
+- "Even if this task"
++ ""
+#: npc/jobs/1-1e/ninja.txt#132 (mes)
+- "isn't that urgent,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#133 (mes)
+- "please hurry over to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#134 (mes)
+- "Einbroch and deliver"
++ ""
+#: npc/jobs/1-1e/ninja.txt#135 (mes)
+- "my letter to Wildcat Joe."
++ ""
+#: npc/jobs/1-1e/ninja.txt#136 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#137 (mes)
+- "Did you deliver that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#138 (mes)
+- "letter to Wildcat Joe?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#139 (mes)
+- "I still need to know his"
++ ""
+#: npc/jobs/1-1e/ninja.txt#140 (mes)
+- "response to my proposal"
++ ""
+#: npc/jobs/1-1e/ninja.txt#141 (mes)
+- "for a truce. Anyway, see"
++ ""
+#: npc/jobs/1-1e/ninja.txt#142 (mes)
+- "if you can needle him for it."
++ ""
+#: npc/jobs/1-1e/ninja.txt#143 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#144 (mes)
+- "Ah, you've returned."
++ ""
+#: npc/jobs/1-1e/ninja.txt#145 (mes)
+- "So did Wildcat Joe send"
++ ""
+#: npc/jobs/1-1e/ninja.txt#146 (mes)
+- "you back here with his"
++ ""
+#: npc/jobs/1-1e/ninja.txt#147 (mes)
+- "response? Great, great,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#148 (mes)
+- "please let me read it."
++ ""
+#: npc/jobs/1-1e/ninja.txt#149 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#150 (mes)
+- "What...?! How could he"
++ ""
+#: npc/jobs/1-1e/ninja.txt#151 (mes)
+- "reject my proposal for"
++ ""
+#: npc/jobs/1-1e/ninja.txt#152 (mes)
+- "a truce?! This can only"
++ ""
+#: npc/jobs/1-1e/ninja.txt#153 (mes)
+- "mean that he's made another"
++ ""
+#: npc/jobs/1-1e/ninja.txt#154 (mes)
+- "Kunai. Nuts! I have to catch"
++ ""
+#: npc/jobs/1-1e/ninja.txt#155 (mes)
+- "up to him, or I'm a goner!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#156 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#157 (mes)
+- "Listen, you've got to help"
++ ""
+#: npc/jobs/1-1e/ninja.txt#158 (mes)
+- "me out again! I need you to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#159 (mes)
+- "gather some materials so that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#160 (mes)
+- "I can craft my own Kunai to fight Wildcat Joe. Then, I'll go ahead"
++ ""
+#: npc/jobs/1-1e/ninja.txt#161 (mes)
+- "and change your job to a Ninja."
++ ""
+#: npc/jobs/1-1e/ninja.txt#162 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#163 (mes)
+- "All you need"
++ ""
+#: npc/jobs/1-1e/ninja.txt#164 (mes)
+- "to bring me is"
++ ""
+#: npc/jobs/1-1e/ninja.txt#165 (mes)
+- "^3355FF5 Cyfars^000000 and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#166 (mes)
+- "^3355FF1 Phracon^000000."
++ ""
+#: npc/jobs/1-1e/ninja.txt#167 (mes)
+- "Please get those"
++ ""
+#: npc/jobs/1-1e/ninja.txt#168 (mes)
+- "as quickly as you can!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#169 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#170 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#171 (mes)
+- "Huh? That's funny,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#172 (mes)
+- "Wildcat Joe actually"
++ ""
+#: npc/jobs/1-1e/ninja.txt#173 (mes)
+- "asked me to gather"
++ ""
+#: npc/jobs/1-1e/ninja.txt#174 (mes)
+- "those same materials."
++ ""
+#: npc/jobs/1-1e/ninja.txt#175 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#176 (mes)
+- "Curses! Then that means..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#177 (mes)
+- "You actually helped Joe"
++ ""
+#: npc/jobs/1-1e/ninja.txt#178 (mes)
+- "in crafting his Kunai! No!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#179 (mes)
+- "I should have thought about"
++ ""
+#: npc/jobs/1-1e/ninja.txt#180 (mes)
+- "that earlier! Well, it's too"
++ ""
+#: npc/jobs/1-1e/ninja.txt#181 (mes)
+- "late now. Just h-hurry it up!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#182 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#183 (mes)
+- "Hurry and bring"
++ ""
+#: npc/jobs/1-1e/ninja.txt#184 (mes)
+- "^3355FF5 Cyfars^000000 and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#185 (mes)
+- "^3355FF1 Phracon^000000 to me,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#186 (mes)
+- "so that I can craft"
++ ""
+#: npc/jobs/1-1e/ninja.txt#187 (mes)
+- "my own Kunai to use"
++ ""
+#: npc/jobs/1-1e/ninja.txt#188 (mes)
+- "against Wildcat Joe!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#189 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#190 (mes)
+- "Whoa, whoa..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#191 (mes)
+- "You still have some"
++ ""
+#: npc/jobs/1-1e/ninja.txt#192 (mes)
+- "leftover Skill Points."
++ ""
+#: npc/jobs/1-1e/ninja.txt#193 (mes)
+- "You'd better spend all"
++ ""
+#: npc/jobs/1-1e/ninja.txt#194 (mes)
+- "of them before you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#195 (mes)
+- "change jobs, right?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#196 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#197 (mes)
+- "Ah, you're back with"
++ ""
+#: npc/jobs/1-1e/ninja.txt#198 (mes)
+- "everything that I need."
++ ""
+#: npc/jobs/1-1e/ninja.txt#199 (mes)
+- "You've come earlier than"
++ ""
+#: npc/jobs/1-1e/ninja.txt#200 (mes)
+- "I expected, eh? Great,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#201 (mes)
+- "as promised, I'll turn"
++ ""
+#: npc/jobs/1-1e/ninja.txt#202 (mes)
+- "you into a Ninja."
++ ""
+#: npc/jobs/1-1e/ninja.txt#203 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#204 (mes)
+- "Let me formally introduce"
++ ""
+#: npc/jobs/1-1e/ninja.txt#205 (mes)
+- "myself. I am High Ninja Kuuga Gai"
++ ""
+#: npc/jobs/1-1e/ninja.txt#206 (mes)
+- "in the Touga Ninja Corps, and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#207 (mes)
+- "I'm in charge of the search"
++ ""
+#: npc/jobs/1-1e/ninja.txt#208 (mes)
+- "party to find Sir Kazma."
++ ""
+#: npc/jobs/1-1e/ninja.txt#209 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#210 (mes)
+- "Sir Kazma is the chief"
++ ""
+#: npc/jobs/1-1e/ninja.txt#211 (mes)
+- "of my village, but he's"
++ ""
+#: npc/jobs/1-1e/ninja.txt#212 (mes)
+- "run away. This has resulted"
++ ""
+#: npc/jobs/1-1e/ninja.txt#213 (mes)
+- "in an internal conflict within"
++ ""
+#: npc/jobs/1-1e/ninja.txt#214 (mes)
+- "the Ninja Corps. Things are"
++ ""
+#: npc/jobs/1-1e/ninja.txt#215 (mes)
+- "pretty unstable right now..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#216 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#217 (mes)
+- "I initially didn't want to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#218 (mes)
+- "accept you as a Ninja because"
++ ""
+#: npc/jobs/1-1e/ninja.txt#219 (mes)
+- "of this complicated situation."
++ ""
+#: npc/jobs/1-1e/ninja.txt#220 (mes)
+- "However, you've proven that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#221 (mes)
+- "you're truly worthy of joining"
++ ""
+#: npc/jobs/1-1e/ninja.txt#222 (mes)
+- "the Ninja ranks."
++ ""
+#: npc/jobs/1-1e/ninja.txt#223 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#224 (mes)
+- "According to his letter, even"
++ ""
+#: npc/jobs/1-1e/ninja.txt#225 (mes)
+- "Joe thinks highly of you. Just"
++ ""
+#: npc/jobs/1-1e/ninja.txt#226 (mes)
+- "remember that, as a Ninja, your"
++ ""
+#: npc/jobs/1-1e/ninja.txt#227 (mes)
+- "mission is your highest priority. But don't let mission objectives"
++ ""
+#: npc/jobs/1-1e/ninja.txt#228 (mes)
+- "supersede your conscience."
++ ""
+#: npc/jobs/1-1e/ninja.txt#229 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#230 (mes)
+- "''Secrecy above all else.''"
++ ""
+#: npc/jobs/1-1e/ninja.txt#231 (mes)
+- "To keep our secrets in the"
++ ""
+#: npc/jobs/1-1e/ninja.txt#232 (mes)
+- "shadows, you can only buy"
++ ""
+#: npc/jobs/1-1e/ninja.txt#233 (mes)
+- "or sell Ninja weapons with"
++ ""
+#: npc/jobs/1-1e/ninja.txt#234 (mes)
+- "authorized dealers. Please"
++ ""
+#: npc/jobs/1-1e/ninja.txt#235 (mes)
+- "keep that in mind."
++ ""
+#: npc/jobs/1-1e/ninja.txt#236 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#237 (mes)
+- "As of today, you are"
++ ""
+#: npc/jobs/1-1e/ninja.txt#238 (mes)
+- "now a proud member of the"
++ ""
+#: npc/jobs/1-1e/ninja.txt#239 (mes)
+- "Touga Ninja Corps. Be as"
++ ""
+#: npc/jobs/1-1e/ninja.txt#240 (mes)
+- "agile as the wind, and as"
++ ""
+#: npc/jobs/1-1e/ninja.txt#241 (mes)
+- "quiet as the falling shadows."
++ ""
+#: npc/jobs/1-1e/ninja.txt#243 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#244 (mes)
+- "How have you been?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#245 (mes)
+- "Train hard: you want"
++ ""
+#: npc/jobs/1-1e/ninja.txt#246 (mes)
+- "to be able to vanish"
++ ""
+#: npc/jobs/1-1e/ninja.txt#247 (mes)
+- "without a trace. If you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#248 (mes)
+- "can do that, you'll get"
++ ""
+#: npc/jobs/1-1e/ninja.txt#249 (mes)
+- "the respect of any Ninja~"
++ ""
+#: npc/jobs/1-1e/ninja.txt#250 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#251 (mes)
+- "How have you been?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#252 (mes)
+- "Train hard: you want"
++ ""
+#: npc/jobs/1-1e/ninja.txt#253 (mes)
+- "to be able to vanish"
++ ""
+#: npc/jobs/1-1e/ninja.txt#254 (mes)
+- "without a trace. If you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#255 (mes)
+- "can do that, you'll get"
++ ""
+#: npc/jobs/1-1e/ninja.txt#256 (mes)
+- "the respect of any Ninja~"
++ ""
+#: npc/jobs/1-1e/ninja.txt#257 (mes)
+- "[Kuuga Gai]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#258 (mes)
+- "What...?"
++ "O quê...?"
+#: npc/jobs/1-1e/ninja.txt#259 (mes)
+- "How were you able"
++ ""
+#: npc/jobs/1-1e/ninja.txt#260 (mes)
+- "to find me hidden"
++ ""
+#: npc/jobs/1-1e/ninja.txt#261 (mes)
+- "in the shadows?!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#262 (mes)
+- "You must be more than"
++ ""
+#: npc/jobs/1-1e/ninja.txt#263 (mes)
+- "a common adventurer, eh?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#264 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#265 (mes)
+- "I've traveled to many"
++ ""
+#: npc/jobs/1-1e/ninja.txt#266 (mes)
+- "countries, but I've never"
++ ""
+#: npc/jobs/1-1e/ninja.txt#267 (mes)
+- "been on a building as high"
++ ""
+#: npc/jobs/1-1e/ninja.txt#268 (mes)
+- "as Einbroch Tower. All the"
++ ""
+#: npc/jobs/1-1e/ninja.txt#269 (mes)
+- "buildings in my hometown"
++ ""
+#: npc/jobs/1-1e/ninja.txt#270 (mes)
+- "are tiny in comparison..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#271 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#272 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#273 (mes)
+- "Oh, are you from"
++ ""
+#: npc/jobs/1-1e/ninja.txt#274 (mes)
+- "Amatsu? I'm looking"
++ ""
+#: npc/jobs/1-1e/ninja.txt#275 (mes)
+- "for someone named"
++ ""
+#: npc/jobs/1-1e/ninja.txt#276 (mes)
+- "Wildcat Joe from there."
++ ""
+#: npc/jobs/1-1e/ninja.txt#277 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#278 (mes)
+- "...No. No, I'm actually"
++ ""
+#: npc/jobs/1-1e/ninja.txt#279 (mes)
+- "from Izlude, and I'm only"
++ ""
+#: npc/jobs/1-1e/ninja.txt#280 (mes)
+- "here in Einbroch for some"
++ ""
+#: npc/jobs/1-1e/ninja.txt#281 (mes)
+- "minerals. Tell me, why are"
++ ""
+#: npc/jobs/1-1e/ninja.txt#282 (mes)
+- "you looking for this Wildcat Joe?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#283 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#284 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#285 (mes)
+- "Well, I need to deliver"
++ ""
+#: npc/jobs/1-1e/ninja.txt#286 (mes)
+- "this letter to him and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#287 (mes)
+- "get his response so that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#288 (mes)
+- "I can become a Ninja."
++ ""
+#: npc/jobs/1-1e/ninja.txt#289 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#290 (mes)
+- "Really? Now that I think"
++ ""
+#: npc/jobs/1-1e/ninja.txt#291 (mes)
+- "about it, I do think that I've"
++ ""
+#: npc/jobs/1-1e/ninja.txt#292 (mes)
+- "run once or twice into him"
++ ""
+#: npc/jobs/1-1e/ninja.txt#293 (mes)
+- "in this town. Though, he prefers to be called ''Red Leopard Joe,''"
++ ""
+#: npc/jobs/1-1e/ninja.txt#294 (mes)
+- "instead of ''Wildcat Joe.''"
++ ""
+#: npc/jobs/1-1e/ninja.txt#295 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#296 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#297 (mes)
+- "I really want to help you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#298 (mes)
+- "find him, but first I need"
++ ""
+#: npc/jobs/1-1e/ninja.txt#299 (mes)
+- "to find the minerals that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#300 (mes)
+- "I'm looking for. If you don't"
++ ""
+#: npc/jobs/1-1e/ninja.txt#301 (mes)
+- "mind, would you help me?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#302 (mes)
+- "Then I can help you find Joe."
++ ""
+#: npc/jobs/1-1e/ninja.txt#303 (select)
+- "Don't worry, I'll find him alone.:Sure, I'll help you."
++ ""
+#: npc/jobs/1-1e/ninja.txt#304 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#305 (mes)
+- "You sure about that...?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#306 (mes)
+- "Red Leopard Joe is a true"
++ ""
+#: npc/jobs/1-1e/ninja.txt#307 (mes)
+- "master of disguise. You'll"
++ ""
+#: npc/jobs/1-1e/ninja.txt#308 (mes)
+- "need all the help you can"
++ ""
+#: npc/jobs/1-1e/ninja.txt#309 (mes)
+- "get to find him..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#310 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#311 (mes)
+- "Great, I'm glad to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#312 (mes)
+- "hear that. Please"
++ ""
+#: npc/jobs/1-1e/ninja.txt#313 (mes)
+- "help me find"
++ ""
+#: npc/jobs/1-1e/ninja.txt#314 (mes)
+- "^3355FF5 Cyfars^000000 and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#315 (mes)
+- "^3355FF1 Phracon^000000."
++ ""
+#: npc/jobs/1-1e/ninja.txt#316 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#317 (mes)
+- "Please bring"
++ ""
+#: npc/jobs/1-1e/ninja.txt#318 (mes)
+- "^3355FF5 Cyfars^000000 and"
++ ""
+#: npc/jobs/1-1e/ninja.txt#319 (mes)
+- "^3355FF1 Phracon^000000 to me as"
++ ""
+#: npc/jobs/1-1e/ninja.txt#320 (mes)
+- "soon as you can. Then,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#321 (mes)
+- "I can help you find"
++ ""
+#: npc/jobs/1-1e/ninja.txt#322 (mes)
+- "Red Leopard Joe."
++ ""
+#: npc/jobs/1-1e/ninja.txt#323 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#324 (mes)
+- "Good, good. You've"
++ ""
+#: npc/jobs/1-1e/ninja.txt#325 (mes)
+- "brought the minerals..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#326 (mes)
+- "Now, it's my turn to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#327 (mes)
+- "help you now. Here,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#328 (mes)
+- "let me see that letter."
++ ""
+#: npc/jobs/1-1e/ninja.txt#329 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#330 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#331 (mes)
+- "?????!!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#332 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#333 (mes)
+- "Why? Didn't you bring Kuuga Gai's letter for me?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#334 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#335 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#336 (mes)
+- "Are you..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#337 (mes)
+- "Are you Wildcat Joe?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#338 (mes)
+- "[Suspicious Man]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#339 (mes)
+- "...Yes, but I prefer to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#340 (mes)
+- "be called Red Leopard Joe."
++ ""
+#: npc/jobs/1-1e/ninja.txt#341 (mes)
+- "Kuuga Gai sent you to me, right?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#342 (mes)
+- "He's the only one who calls"
++ ""
+#: npc/jobs/1-1e/ninja.txt#343 (mes)
+- "me that. So you want to be"
++ ""
+#: npc/jobs/1-1e/ninja.txt#344 (mes)
+- "a Ninja, eh? Hmm, alright."
++ ""
+#: npc/jobs/1-1e/ninja.txt#345 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#346 (mes)
+- "If you want to be a Ninja,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#347 (mes)
+- "you should always be careful"
++ ""
+#: npc/jobs/1-1e/ninja.txt#348 (mes)
+- "of what you see and what you trust. Don't forget that if your"
++ ""
+#: npc/jobs/1-1e/ninja.txt#349 (mes)
+- "secrets are ever discovered, then you're finished as a Ninja."
++ ""
+#: npc/jobs/1-1e/ninja.txt#350 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#351 (mes)
+- "Remember to move"
++ ""
+#: npc/jobs/1-1e/ninja.txt#352 (mes)
+- "quickly, and to always"
++ ""
+#: npc/jobs/1-1e/ninja.txt#353 (mes)
+- "vanish without a trace."
++ ""
+#: npc/jobs/1-1e/ninja.txt#354 (mes)
+- "To remain hidden in the"
++ ""
+#: npc/jobs/1-1e/ninja.txt#355 (mes)
+- "shadows is really our"
++ ""
+#: npc/jobs/1-1e/ninja.txt#356 (mes)
+- "ultimate power."
++ ""
+#: npc/jobs/1-1e/ninja.txt#357 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#358 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#359 (mes)
+- "I see..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#360 (mes)
+- "..........."
++ ""
+#: npc/jobs/1-1e/ninja.txt#361 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#362 (mes)
+- "For now, let me read"
++ ""
+#: npc/jobs/1-1e/ninja.txt#363 (mes)
+- "this letter. Let's see..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#364 (mes)
+- "Hm. I thought that Kuuga Gai"
++ ""
+#: npc/jobs/1-1e/ninja.txt#365 (mes)
+- "would want to challenge me"
++ ""
+#: npc/jobs/1-1e/ninja.txt#366 (mes)
+- "again, but he actually wants"
++ ""
+#: npc/jobs/1-1e/ninja.txt#367 (mes)
+- "a temporary truce? Hah!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#368 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#369 (mes)
+- "Thanks to your help,"
++ ""
+#: npc/jobs/1-1e/ninja.txt#370 (mes)
+- "I now have the minerals"
++ ""
+#: npc/jobs/1-1e/ninja.txt#371 (mes)
+- "I need to construct a Kunai!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#372 (mes)
+- "Hahaha! I won't agree to a truce when I have the advantage!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#373 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#374 (mes)
+- "Anyway, let me write my"
++ ""
+#: npc/jobs/1-1e/ninja.txt#375 (mes)
+- "response to him. I'll also"
++ ""
+#: npc/jobs/1-1e/ninja.txt#376 (mes)
+- "give you my recommendation..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#377 (mes)
+- "I think you'll make a very fine"
++ ""
+#: npc/jobs/1-1e/ninja.txt#378 (mes)
+- "Ninja, even if I did trick you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#379 (mes)
+- "just earlier. Heh heh heh!"
++ ""
+#: npc/jobs/1-1e/ninja.txt#380 (mes)
+- "["
++ ""
+#: npc/jobs/1-1e/ninja.txt#381 (mes)
+- "]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#382 (mes)
+- "......"
++ ""
+#: npc/jobs/1-1e/ninja.txt#383 (mes)
+- "........."
++ ""
+#: npc/jobs/1-1e/ninja.txt#384 (mes)
+- "............"
++ ""
+#: npc/jobs/1-1e/ninja.txt#385 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#386 (mes)
+- "Here you go."
++ ""
+#: npc/jobs/1-1e/ninja.txt#387 (mes)
+- "Please bring this"
++ ""
+#: npc/jobs/1-1e/ninja.txt#388 (mes)
+- "letter to Kuuga Gai."
++ ""
+#: npc/jobs/1-1e/ninja.txt#389 (mes)
+- "It'll take a while to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#390 (mes)
+- "return to Amatsu, so let"
++ ""
+#: npc/jobs/1-1e/ninja.txt#391 (mes)
+- "me send you there directly..."
++ ""
+#: npc/jobs/1-1e/ninja.txt#393 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#394 (mes)
+- "Eh? I'm not sure what"
++ ""
+#: npc/jobs/1-1e/ninja.txt#395 (mes)
+- "happened, but it seems"
++ ""
+#: npc/jobs/1-1e/ninja.txt#396 (mes)
+- "that you haven't delivered"
++ ""
+#: npc/jobs/1-1e/ninja.txt#397 (mes)
+- "my response to Kuuga Gai yet."
++ ""
+#: npc/jobs/1-1e/ninja.txt#398 (mes)
+- "Shall I directly send you"
++ ""
+#: npc/jobs/1-1e/ninja.txt#399 (mes)
+- "to Amatsu right now?"
++ ""
+#: npc/jobs/1-1e/ninja.txt#400 (select)
+- "No, thanks.:Yes, please."
++ ""
+#: npc/jobs/1-1e/ninja.txt#401 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#402 (mes)
+- "Alright. Well, I was"
++ ""
+#: npc/jobs/1-1e/ninja.txt#403 (mes)
+- "just trying to save"
++ ""
+#: npc/jobs/1-1e/ninja.txt#404 (mes)
+- "you some time."
++ ""
+#: npc/jobs/1-1e/ninja.txt#405 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#406 (mes)
+- "Okay, then."
++ ""
+#: npc/jobs/1-1e/ninja.txt#407 (mes)
+- "Goodbye for now."
++ ""
+#: npc/jobs/1-1e/ninja.txt#409 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#410 (mes)
+- "Kuuga Gai asked you to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#411 (mes)
+- "gather some materials"
++ ""
+#: npc/jobs/1-1e/ninja.txt#412 (mes)
+- "too? Oh well, I suppose"
++ ""
+#: npc/jobs/1-1e/ninja.txt#413 (mes)
+- "that I can't blame him."
++ ""
+#: npc/jobs/1-1e/ninja.txt#414 (mes)
+- "Besides, I should be able"
++ ""
+#: npc/jobs/1-1e/ninja.txt#415 (mes)
+- "to beat him in a fair fight~"
++ ""
+#: npc/jobs/1-1e/ninja.txt#416 (mes)
+- "[Red Leopard Joe]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#417 (mes)
+- "Oh, you're a Ninja~"
++ ""
+#: npc/jobs/1-1e/ninja.txt#418 (mes)
+- "I hope you continue to"
++ ""
+#: npc/jobs/1-1e/ninja.txt#419 (mes)
+- "train yourself and master"
++ ""
+#: npc/jobs/1-1e/ninja.txt#420 (mes)
+- "all the Ninja skills that"
++ ""
+#: npc/jobs/1-1e/ninja.txt#421 (mes)
+- "you can. Always remember"
++ ""
+#: npc/jobs/1-1e/ninja.txt#422 (mes)
+- "to blend into the shadows."
++ ""
+#: npc/jobs/1-1e/ninja.txt#423 (mes)
+- "[Tourist]"
++ ""
+#: npc/jobs/1-1e/ninja.txt#424 (mes)
+- "I've traveled to many"
++ ""
+#: npc/jobs/1-1e/ninja.txt#425 (mes)
+- "countries, but I've never"
++ ""
+#: npc/jobs/1-1e/ninja.txt#426 (mes)
+- "been on a building as high"
++ ""
+#: npc/jobs/1-1e/ninja.txt#427 (mes)
+- "as Einbroch Tower. All the"
++ ""
+#: npc/jobs/1-1e/ninja.txt#428 (mes)
+- "buildings in my hometown"
++ ""
+#: npc/jobs/1-1e/ninja.txt#429 (mes)
+- "are tiny in comparison..."
++ ""
+
+### npc/jobs/1-1e/taekwon.txt  (312 textos)
+#: npc/jobs/1-1e/taekwon.txt#1 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#2 (mes)
+- "Hello, child."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#3 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#4 (mes)
+- "How is your training"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#5 (mes)
+- "coming along? As your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#6 (mes)
+- "techniques become more"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#7 (mes)
+- "refined or spectacular,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#8 (mes)
+- "never forget that you can"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#9 (mes)
+- "always rely on the basics."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#10 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#11 (mes)
+- "This land. Our once"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#12 (mes)
+- "beautiful world has been"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#13 (mes)
+- "stained by evil: there are"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#14 (mes)
+- "too many men corrupted by"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#15 (mes)
+- "darkness, too many monsters"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#16 (mes)
+- "threatening the innocent..."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#17 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#18 (mes)
+- "The havoc that reigns in this"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#19 (mes)
+- "world is too much for normal"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#20 (mes)
+- "humans, which cannot stand"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#21 (mes)
+- "up for themselves against such"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#22 (mes)
+- "overwhelming odds. Still, one"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#23 (mes)
+- "must aspire to fight the odds."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#24 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#25 (mes)
+- "And so, I've dedicated"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#26 (mes)
+- "myself to becoming stronger."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#27 (mes)
+- "I have been training to achieve"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#28 (mes)
+- "enlightenment, developing an art to hone the mind and body that"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#29 (mes)
+- "I wish to share with the world."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#30 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#31 (mes)
+- "I may not be able to change"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#32 (mes)
+- "the world on my own, but I'll"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#33 (mes)
+- "never stop training myself"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#34 (mes)
+- "spiritually and physically."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#35 (mes)
+- "I know that the answer"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#36 (mes)
+- "will come in time..."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#37 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#38 (mes)
+- "Noble adventurer:"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#39 (mes)
+- "if you know anyone who"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#40 (mes)
+- "has not chosen his path"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#41 (mes)
+- "in life, please recommend"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#42 (mes)
+- "him to me. If interested,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#43 (mes)
+- "I may teach him my art..."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#44 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#45 (mes)
+- "If you have not decided on"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#46 (mes)
+- "the path you wish to take in"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#47 (mes)
+- "life, I'd like you to consider"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#48 (mes)
+- "becoming a practitioner of my"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#49 (mes)
+- "art. It won't be easy, but it will lead you to great strength..."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#50 (select)
+- "Okay, I will join you."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#51 (select)
+- "No, thank you."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#53 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#54 (mes)
+- "How unfortunate!"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#55 (mes)
+- "You're not yet ready to"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#56 (mes)
+- "begin training under my"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#57 (mes)
+- "tutelage with your current"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#58 (mes)
+- "Job Level. Please return when you reach Job Level 9 or higher."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#59 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#60 (mes)
+- "Very well... I accept you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#61 (mes)
+- "as my student. In beginning"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#62 (mes)
+- "training, your physical body"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#63 (mes)
+- "must first be conditioned in"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#64 (mes)
+- "order to perform the skills"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#65 (mes)
+- "that you will be learning."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#66 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#67 (mes)
+- "Hm. I see that you have"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#68 (mes)
+- "undergone sufficient physical"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#69 (mes)
+- "training as a Novice. Very good. Then let us prepare for your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#70 (mes)
+- "spiritual training. Take a deep"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#71 (mes)
+- "breath, speak to me when ready."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#72 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#73 (mes)
+- "The mind is not necessarily"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#74 (mes)
+- "bound to the limits of the body, but you will never fulfill your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#75 (mes)
+- "true potential without integrating mind and body. Go, gain ^FF00001 more"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#76 (mes)
+- "Base Level^000000, and then return."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#77 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#78 (mes)
+- "I understand this is not an"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#79 (mes)
+- "easy task for Novices, but you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#80 (mes)
+- "must ready yourself for the"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#81 (mes)
+- "hardship for this job. I shall"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#82 (mes)
+- "expect you to be stronger"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#83 (mes)
+- "the next time we meet."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#84 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#85 (mes)
+- "I understand. One's life can"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#86 (mes)
+- "take many paths, but you can"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#87 (mes)
+- "only choose to travel on one"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#88 (mes)
+- "at a time. I hope that you work"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#89 (mes)
+- "towards enlightenment in your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#90 (mes)
+- "very own way, adventurer."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#91 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#92 (mes)
+- "Good. I sense that you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#93 (mes)
+- "are more in tune with your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#94 (mes)
+- "inner strength. That is the"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#95 (mes)
+- "natural result of leveling up."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#96 (mes)
+- "We're ready to proceed with"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#97 (mes)
+- "the next portion of training."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#98 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#99 (mes)
+- "You must gain ^FF00001 more"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#100 (mes)
+- "Base Level^000000 to prove that"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#101 (mes)
+- "you can endure the hardship"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#102 (mes)
+- "that entails this job. Never"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#103 (mes)
+- "neglect your training."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#104 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#105 (mes)
+- "For your spiritual training,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#106 (mes)
+- "I will ask you a series of"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#107 (mes)
+- "questions to test your spirit."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#108 (mes)
+- "Relax. Answer as honestly"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#109 (mes)
+- "as you can. Your will and"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#110 (mes)
+- "convictions will be tested."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#111 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#112 (mes)
+- "As a practitioner of my"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#113 (mes)
+- "art, the ability to quickly"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#114 (mes)
+- "make the best decision will"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#115 (mes)
+- "be necessary in battle. Now,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#116 (mes)
+- "we will begin the questioning."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#117 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#118 (mes)
+- "When you encounter"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#119 (mes)
+- "great difficulty, how do"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#120 (mes)
+- "you generally respond?"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#121 (select)
+- "I face it head on.:Avoid it somehow.:Regroup and analyze the problem."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#122 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#123 (mes)
+- "Yes, that is the answer"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#124 (mes)
+- "I wanted. Even if you cannot"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#125 (mes)
+- "handle a problem at first, we"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#126 (mes)
+- "can only benefit from such"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#127 (mes)
+- "strong determination. Don't"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#128 (mes)
+- "let any obstacle stop you."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#129 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#130 (mes)
+- "Even if you fail, you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#131 (mes)
+- "can only learn from the"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#132 (mes)
+- "experience when you give"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#133 (mes)
+- "your all. Half-hearted"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#134 (mes)
+- "attempts rarely yield"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#135 (mes)
+- "fruitful results."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#136 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#137 (mes)
+- "Seeing as you already"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#138 (mes)
+- "understand the importance"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#139 (mes)
+- "of one's will, we'll proceed"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#140 (mes)
+- "to the next question."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#141 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#142 (mes)
+- "Fool! How do you expect"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#143 (mes)
+- "to mature if you run away"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#144 (mes)
+- "from challenges? Fear can"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#145 (mes)
+- "be a healthy reaction that"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#146 (mes)
+- "can save your life, but true"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#147 (mes)
+- "cowardice is despicable."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#148 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#149 (mes)
+- "It disappoints me to"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#150 (mes)
+- "hear you say that. Never"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#151 (mes)
+- "say such a thing to me again."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#152 (mes)
+- "Hm. Contemplate the meanings"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#153 (mes)
+- "of courage and cowardice, and"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#154 (mes)
+- "then speak to me once again."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#155 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#156 (mes)
+- "Regroup? It is good to do that"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#157 (mes)
+- "after you have been defeated."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#158 (mes)
+- "But it is best to face problems"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#159 (mes)
+- "once you encounter them."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#160 (mes)
+- "You will not always have"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#161 (mes)
+- "the luxury of regrouping."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#162 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#163 (mes)
+- "Problems can be predicted"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#164 (mes)
+- "and analyzed, but I think"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#165 (mes)
+- "immediate retreat is unwise."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#166 (mes)
+- "Contemplate on your fears,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#167 (mes)
+- "as well as what you define as"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#168 (mes)
+- "failure. Then, return to me."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#169 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#170 (mes)
+- "On your travels, you will"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#171 (mes)
+- "encounter many people with"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#172 (mes)
+- "differing backgrounds and"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#173 (mes)
+- "viewpoints. Inevitably, you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#174 (mes)
+- "will encounter someone whose"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#175 (mes)
+- "way of life you cannot fathom."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#176 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#177 (mes)
+- "Likewise, this person will"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#178 (mes)
+- "not understand your way of"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#179 (mes)
+- "life. When your two viewpoints"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#180 (mes)
+- "clash, causing heated conflict,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#181 (mes)
+- "how would you respond?"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#182 (select)
+- "Insist that I'm right, regardless:Disregard conflicting viewpoint:Accept differences and learn from them"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#183 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#184 (mes)
+- "It's important to have your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#185 (mes)
+- "own opinion. However, you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#186 (mes)
+- "must recognize that you may"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#187 (mes)
+- "be wrong, and an opposing"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#188 (mes)
+- "view may have some merit."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#189 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#190 (mes)
+- "There is no one right"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#191 (mes)
+- "answer and the light of"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#192 (mes)
+- "truth can take many shades."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#193 (mes)
+- "Such is the way of nature."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#194 (mes)
+- "To force ideas on others is"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#195 (mes)
+- "an oppressive practice."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#196 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#197 (mes)
+- "Do not limit yourself"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#198 (mes)
+- "to a single view, and do"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#199 (mes)
+- "not stifle your growth by"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#200 (mes)
+- "adhering to a single truth."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#201 (mes)
+- "Contemplate on this, and"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#202 (mes)
+- "then speak with me again."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#203 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#204 (mes)
+- "It is important to get"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#205 (mes)
+- "along with others, but"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#206 (mes)
+- "you will bring no value"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#207 (mes)
+- "to this world without your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#208 (mes)
+- "own unique contributions,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#209 (mes)
+- "thoughts and opinions."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#210 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#211 (mes)
+- "A conflict of ideals, when"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#212 (mes)
+- "conducted with respect for"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#213 (mes)
+- "yourself and others, is a"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#214 (mes)
+- "great opportunity to broaden"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#215 (mes)
+- "your understanding of the"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#216 (mes)
+- "world as it is to others."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#217 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#218 (mes)
+- "Reflect on this idea of"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#219 (mes)
+- "establishing harmony with"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#220 (mes)
+- "the self, and harmony with"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#221 (mes)
+- "others. Then, return to me."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#222 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#223 (mes)
+- "Good. You must see"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#224 (mes)
+- "differences for what they"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#225 (mes)
+- "truly are. You must also"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#226 (mes)
+- "take criticism to your own"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#227 (mes)
+- "views with grace and "
++ ""
+#: npc/jobs/1-1e/taekwon.txt#228 (mes)
+- "sincere consideration."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#229 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#230 (mes)
+- "It is impossible to know"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#231 (mes)
+- "everything in this world."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#232 (mes)
+- "It is impossible to understand"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#233 (mes)
+- "every view. But that does not"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#234 (mes)
+- "mean that views you do not"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#235 (mes)
+- "understand are meritless."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#236 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#237 (mes)
+- "The one with whom you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#238 (mes)
+- "disagree may have the"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#239 (mes)
+- "answer you do not know."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#240 (mes)
+- "In your time of weakness,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#241 (mes)
+- "this person may be your"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#242 (mes)
+- "greatest help. Remember that."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#243 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#244 (mes)
+- "I am satisfied by the"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#245 (mes)
+- "answers you have given"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#246 (mes)
+- "me. Please reflect on what"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#247 (mes)
+- "we have discussed for a little"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#248 (mes)
+- "while. When your mind is calm,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#249 (mes)
+- "come and speak to me."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#250 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#251 (mes)
+- "Are you feeling calm"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#252 (mes)
+- "and at peace? I will ask"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#253 (mes)
+- "you a very important question."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#254 (mes)
+- "Give me your honest answer."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#255 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#256 (mes)
+- "^FF0000Are you ready to dedicate"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#257 (mes)
+- "yourself to the special art"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#258 (mes)
+- "I will teach you, and uphold"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#259 (mes)
+- "the dignity of its philosophy?"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#260 (select)
+- "Yes."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#261 (select)
+- "No."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#262 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#263 (mes)
+- "Very well. You are no"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#264 (mes)
+- "longer just a student."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#265 (mes)
+- "You are now entrusted with"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#266 (mes)
+- "the powers and responsibilities"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#267 (mes)
+- "of a disciple of ^FF0000Taekwon Do^000000."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#268 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#269 (mes)
+- "''Taekwon'' has the meaning"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#270 (mes)
+- "of ''punching and kicking,''"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#271 (mes)
+- "and ''Do'' has the meaning"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#272 (mes)
+- "of ''art.'' This martial art is"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#273 (mes)
+- "focused on skills using"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#274 (mes)
+- "the fists and the feet."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#275 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#276 (mes)
+- "Please use this discipline"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#277 (mes)
+- "to hone your body and mind"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#278 (mes)
+- "and learn the skills that are"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#279 (mes)
+- "best suited to you. Never"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#280 (mes)
+- "shirk your training, or bring"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#281 (mes)
+- "shame to Taekwon Do."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#284 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#285 (mes)
+- "You are still young, so"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#286 (mes)
+- "I assume you'll want a job"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#287 (mes)
+- "title. Mm. In that case, you"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#288 (mes)
+- "are now a ^FF0000Taekwon Girl^000000."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#289 (mes)
+- "are now a ^FF0000Taekwon Boy^000000."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#290 (mes)
+- "Yes, that sounds good. "
++ ""
+#: npc/jobs/1-1e/taekwon.txt#291 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#292 (mes)
+- "Please, take this training"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#293 (mes)
+- "uniform and guard set: make"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#294 (mes)
+- "good use of these gifts. As"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#295 (mes)
+- "you travel and train, enlighten"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#296 (mes)
+- "others about our art and learn what you can from them in return."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#297 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#298 (mes)
+- "It is now time for you to"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#299 (mes)
+- "embark on your own journey"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#300 (mes)
+- "to find new challenges to"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#301 (mes)
+- "develop your strength."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#302 (mes)
+- "Carry yourself with pride"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#303 (mes)
+- "as a Taekwon Do practitioner..."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#304 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#305 (mes)
+- "Very well. I wish you luck."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#306 (mes)
+- "I hope to see you again"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#307 (mes)
+- "sometime, "
++ ""
+#: npc/jobs/1-1e/taekwon.txt#308 (mes)
+- "."
++ "."
+#: npc/jobs/1-1e/taekwon.txt#309 (mes)
+- "[Phoenix]"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#310 (mes)
+- "Hm, perhaps you are not"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#311 (mes)
+- "quite ready to progress from"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#312 (mes)
+- "your status as a student to"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#313 (mes)
+- "a full fledged disciple."
++ ""
+#: npc/jobs/1-1e/taekwon.txt#314 (mes)
+- "When you feel prepared,"
++ ""
+#: npc/jobs/1-1e/taekwon.txt#315 (mes)
+- "come and speak to me."
++ ""

@@ -1,0 +1,678 @@
+# Catalogo de traducao PT-BR - grupo "pvp"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/other/pvp.txt  (222 textos)
+#: npc/other/pvp.txt#1 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#2 (mes)
+- "Hello and welcome!"
++ ""
+#: npc/other/pvp.txt#3 (mes)
+- "I am in charge of"
++ ""
+#: npc/other/pvp.txt#4 (mes)
+- "explaining the PVP Modes."
++ ""
+#: npc/other/pvp.txt#5 (mes)
+- "I am the PVP Narrator!"
++ ""
+#: npc/other/pvp.txt#6 (select)
+- "What is PVP?:What are the PVP Modes?:What are the rules for PVP?:Save Position.:End Dialog."
++ ""
+#: npc/other/pvp.txt#7 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#8 (mes)
+- "In short, PVP means"
++ ""
+#: npc/other/pvp.txt#9 (mes)
+- "' Player VS Player Mode '"
++ ""
+#: npc/other/pvp.txt#10 (mes)
+- "It's a unique place for people"
++ ""
+#: npc/other/pvp.txt#11 (mes)
+- "to duel with each other."
++ ""
+#: npc/other/pvp.txt#12 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#13 (mes)
+- "Just tell the"
++ ""
+#: npc/other/pvp.txt#14 (mes)
+- "^3355FFGate Keeper^000000"
++ ""
+#: npc/other/pvp.txt#15 (mes)
+- "that you want to try. He will"
++ ""
+#: npc/other/pvp.txt#16 (mes)
+- "let you enter the PVP square."
++ ""
+#: npc/other/pvp.txt#17 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#18 (mes)
+- "But, you need to be at"
++ ""
+#: npc/other/pvp.txt#19 (mes)
+- "least level 31. And you"
++ ""
+#: npc/other/pvp.txt#20 (mes)
+- "must pay 500 zeny entrance fee in order"
++ ""
+#: npc/other/pvp.txt#21 (mes)
+- "to enter a PVP fight square."
++ ""
+#: npc/other/pvp.txt#22 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#23 (mes)
+- "When you are qualified, you"
++ ""
+#: npc/other/pvp.txt#24 (mes)
+- "can choose one of the two modes."
++ ""
+#: npc/other/pvp.txt#25 (mes)
+- "Yoyo Mode or Nightmare Mode."
++ ""
+#: npc/other/pvp.txt#26 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#27 (mes)
+- "Yoyo Mode is risk free."
++ ""
+#: npc/other/pvp.txt#28 (mes)
+- "You can experience PVP"
++ ""
+#: npc/other/pvp.txt#29 (mes)
+- "without any restriction or"
++ ""
+#: npc/other/pvp.txt#30 (mes)
+- "punishment. It is recommended"
++ ""
+#: npc/other/pvp.txt#31 (mes)
+- "that you practice your skills"
++ ""
+#: npc/other/pvp.txt#32 (mes)
+- "here before you move on."
++ ""
+#: npc/other/pvp.txt#33 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#34 (mes)
+- "Nightmare Mode is very"
++ ""
+#: npc/other/pvp.txt#35 (mes)
+- "dangerous! Please be cautious,"
++ ""
+#: npc/other/pvp.txt#36 (mes)
+- "you will lose some of your"
++ ""
+#: npc/other/pvp.txt#37 (mes)
+- "EXP when you are defeated. And"
++ ""
+#: npc/other/pvp.txt#38 (mes)
+- "there is a small chance that"
++ ""
+#: npc/other/pvp.txt#39 (mes)
+- "you will drop some equipment."
++ ""
+#: npc/other/pvp.txt#40 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#41 (mes)
+- "However, if you win, the"
++ ""
+#: npc/other/pvp.txt#42 (mes)
+- "rewards can be great!"
++ ""
+#: npc/other/pvp.txt#43 (mes)
+- "To avoid misunderstanding,"
++ ""
+#: npc/other/pvp.txt#44 (mes)
+- "you should think twice"
++ ""
+#: npc/other/pvp.txt#45 (mes)
+- "before you go there..."
++ ""
+#: npc/other/pvp.txt#46 (mes)
+- "Good Luck!"
++ ""
+#: npc/other/pvp.txt#47 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#48 (mes)
+- "Each of the fight squares"
++ ""
+#: npc/other/pvp.txt#49 (mes)
+- "have a row of Narrators and"
++ ""
+#: npc/other/pvp.txt#50 (mes)
+- "choose them based on your"
++ ""
+#: npc/other/pvp.txt#51 (mes)
+- "qualifications."
++ ""
+#: npc/other/pvp.txt#52 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#53 (mes)
+- "Each Narrator will ask"
++ ""
+#: npc/other/pvp.txt#54 (mes)
+- "which of the five PVP maps"
++ ""
+#: npc/other/pvp.txt#55 (mes)
+- "you wish to go to."
++ ""
+#: npc/other/pvp.txt#56 (mes)
+- "Choose, and go in!"
++ ""
+#: npc/other/pvp.txt#57 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#58 (mes)
+- "Each map has a limitation on"
++ ""
+#: npc/other/pvp.txt#59 (mes)
+- "the number of people who can"
++ ""
+#: npc/other/pvp.txt#60 (mes)
+- "participate. So you will see"
++ ""
+#: npc/other/pvp.txt#61 (mes)
+- "figures in the corner showing"
++ ""
+#: npc/other/pvp.txt#62 (mes)
+- "'Attendee/Total'."
++ ""
+#: npc/other/pvp.txt#63 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#64 (mes)
+- "Also, there is a hidden EXP"
++ ""
+#: npc/other/pvp.txt#65 (mes)
+- "value in PVP mode. This EXP"
++ ""
+#: npc/other/pvp.txt#66 (mes)
+- "score will only apply inside"
++ ""
+#: npc/other/pvp.txt#67 (mes)
+- "of the PVP zone, so do not"
++ ""
+#: npc/other/pvp.txt#68 (mes)
+- "worry."
++ ""
+#: npc/other/pvp.txt#69 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#70 (mes)
+- "Every player's EXP at the"
++ ""
+#: npc/other/pvp.txt#71 (mes)
+- "beginning is usually 5 points."
++ ""
+#: npc/other/pvp.txt#72 (mes)
+- "If you win, it will"
++ ""
+#: npc/other/pvp.txt#73 (mes)
+- "increase by 1 point"
++ ""
+#: npc/other/pvp.txt#74 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#75 (mes)
+- "In the same way, when you"
++ ""
+#: npc/other/pvp.txt#76 (mes)
+- "lose... Your EXP will"
++ ""
+#: npc/other/pvp.txt#77 (mes)
+- "drop by 5 points."
++ ""
+#: npc/other/pvp.txt#78 (mes)
+- "So be careful!"
++ ""
+#: npc/other/pvp.txt#79 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#80 (mes)
+- "When you are defeated"
++ ""
+#: npc/other/pvp.txt#81 (mes)
+- "And your EXP is equal"
++ ""
+#: npc/other/pvp.txt#82 (mes)
+- "to or less than 0,"
++ ""
+#: npc/other/pvp.txt#83 (mes)
+- "You will be removed from PVP"
++ ""
+#: npc/other/pvp.txt#84 (mes)
+- "and your duel is finished!"
++ ""
+#: npc/other/pvp.txt#85 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#86 (mes)
+- "However, if your EXP is more"
++ ""
+#: npc/other/pvp.txt#87 (mes)
+- "than 0. You can still get help"
++ ""
+#: npc/other/pvp.txt#88 (mes)
+- "through other players healing..."
++ ""
+#: npc/other/pvp.txt#89 (mes)
+- "Do you get it?"
++ ""
+#: npc/other/pvp.txt#90 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#91 (mes)
+- "The fighting commands inside of"
++ ""
+#: npc/other/pvp.txt#92 (mes)
+- "PVP are the same as the normal."
++ ""
+#: npc/other/pvp.txt#93 (mes)
+- "All the basic controls are the"
++ ""
+#: npc/other/pvp.txt#94 (mes)
+- "same."
++ ""
+#: npc/other/pvp.txt#95 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#96 (mes)
+- "However, there is one thing..."
++ ""
+#: npc/other/pvp.txt#97 (mes)
+- "Within the PVP fight square"
++ ""
+#: npc/other/pvp.txt#98 (mes)
+- "and PVP fighting zones,"
++ ""
+#: npc/other/pvp.txt#99 (mes)
+- "you cannot save your position."
++ ""
+#: npc/other/pvp.txt#100 (mes)
+- "Remember well... These rules"
++ ""
+#: npc/other/pvp.txt#101 (mes)
+- "can help to ensure your victory."
++ ""
+#: npc/other/pvp.txt#102 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#103 (mes)
+- "Position successfully saved..."
++ ""
+#: npc/other/pvp.txt#104 (mes)
+- "Thank you very much!"
++ ""
+#: npc/other/pvp.txt#105 (mes)
+- "We will see you again soon."
++ ""
+#: npc/other/pvp.txt#116 (mes)
+- "[PVP Narrator]"
++ ""
+#: npc/other/pvp.txt#117 (mes)
+- "With war raging between monsters"
++ ""
+#: npc/other/pvp.txt#118 (mes)
+- "and humans, this competition"
++ ""
+#: npc/other/pvp.txt#119 (mes)
+- "among people - PVP -"
++ ""
+#: npc/other/pvp.txt#120 (mes)
+- "encourages us all to get"
++ ""
+#: npc/other/pvp.txt#121 (mes)
+- "stronger. Come again,"
++ ""
+#: npc/other/pvp.txt#122 (mes)
+- "we welcome your challenge!"
++ ""
+#: npc/other/pvp.txt#123 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#124 (mes)
+- "Glad to be of service."
++ ""
+#: npc/other/pvp.txt#125 (mes)
+- "I will open the PVP fight"
++ ""
+#: npc/other/pvp.txt#126 (mes)
+- "square for you! If you have"
++ ""
+#: npc/other/pvp.txt#127 (mes)
+- "any questions about the PVP"
++ ""
+#: npc/other/pvp.txt#128 (mes)
+- "modes or rules, Please ask"
++ ""
+#: npc/other/pvp.txt#129 (mes)
+- "the Narrator..."
++ ""
+#: npc/other/pvp.txt#130 (select)
+- "^FF5533' PvP Nightmare Mode'^000000:^3355FF' PvP Yoyo Mode'^000000:^3355FF' PvP Event Mode'^000000:Quit"
++ ""
+#: npc/other/pvp.txt#131 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#132 (mes)
+- "I am sorry, but currently the Nightmare mode service is not available."
++ ""
+#: npc/other/pvp.txt#133 (mes)
+- "Please use the Yoyo Mode instead. We apologize for the inconvenience."
++ ""
+#: npc/other/pvp.txt#134 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#135 (mes)
+- "The admission fee is 500 Zeny."
++ ""
+#: npc/other/pvp.txt#136 (mes)
+- "Do you want to move"
++ ""
+#: npc/other/pvp.txt#137 (mes)
+- "to the Yoyo Mode"
++ ""
+#: npc/other/pvp.txt#138 (mes)
+- "fight square?"
++ ""
+#: npc/other/pvp.txt#139 (select)
+- "Move:Cancel"
++ ""
+#: npc/other/pvp.txt#141 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#142 (mes)
+- "Excuse me, but"
++ ""
+#: npc/other/pvp.txt#143 (mes)
+- "did you not come prepared?"
++ ""
+#: npc/other/pvp.txt#144 (mes)
+- "Double check that you have the"
++ ""
+#: npc/other/pvp.txt#145 (mes)
+- "500 Zeny entrance fee, and"
++ ""
+#: npc/other/pvp.txt#146 (mes)
+- "that you are at least level 31!"
++ ""
+#: npc/other/pvp.txt#147 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#148 (mes)
+- "With war raging between monsters"
++ ""
+#: npc/other/pvp.txt#149 (mes)
+- "and humans, this competition"
++ ""
+#: npc/other/pvp.txt#150 (mes)
+- "among people - PVP -"
++ ""
+#: npc/other/pvp.txt#151 (mes)
+- "encourages us all to get"
++ ""
+#: npc/other/pvp.txt#152 (mes)
+- "stronger. Come again,"
++ ""
+#: npc/other/pvp.txt#153 (mes)
+- "we welcome your challenge!"
++ ""
+#: npc/other/pvp.txt#154 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#155 (mes)
+- "Welcome!"
++ "Bem-vindo!"
+#: npc/other/pvp.txt#156 (mes)
+- "Please double check"
++ ""
+#: npc/other/pvp.txt#157 (mes)
+- "that you have the admission or viewing ticket."
++ ""
+#: npc/other/pvp.txt#158 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#159 (mes)
+- "Eh? You don't have it? Then I"
++ ""
+#: npc/other/pvp.txt#160 (mes)
+- "am sorry, this fight square is"
++ ""
+#: npc/other/pvp.txt#161 (mes)
+- "only for people who have"
++ ""
+#: npc/other/pvp.txt#162 (mes)
+- "admission or viewing tickets."
++ ""
+#: npc/other/pvp.txt#163 (mes)
+- "You cannot come in without it."
++ ""
+#: npc/other/pvp.txt#164 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#165 (mes)
+- "Yes, thank you for participating. Have fun!"
++ ""
+#: npc/other/pvp.txt#167 (mes)
+- "[Gate Keeper]"
++ ""
+#: npc/other/pvp.txt#168 (mes)
+- "With war raging between monsters"
++ ""
+#: npc/other/pvp.txt#169 (mes)
+- "and humans, This competition"
++ ""
+#: npc/other/pvp.txt#170 (mes)
+- "among people - PVP -"
++ ""
+#: npc/other/pvp.txt#171 (mes)
+- "encourages us all to get"
++ ""
+#: npc/other/pvp.txt#172 (mes)
+- "stronger. Come again,"
++ ""
+#: npc/other/pvp.txt#173 (mes)
+- "we welcome your challenge!"
++ ""
+#: npc/other/pvp.txt#175 (mes)
+- "[PVP Fight Square Reception Staff]"
++ ""
+#: npc/other/pvp.txt#176 (mes)
+- "Sorry, but you base level has to be between LV "
++ ""
+#: npc/other/pvp.txt#177 (mes)
+- " and LV "
++ ""
+#: npc/other/pvp.txt#178 (mes)
+- "."
++ "."
+#: npc/other/pvp.txt#181 (setarray)
+- "-1"
++ ""
+#: npc/other/pvp.txt#182 (setarray)
+- "-2"
++ ""
+#: npc/other/pvp.txt#183 (setarray)
+- "-3"
++ ""
+#: npc/other/pvp.txt#184 (setarray)
+- "-4"
++ ""
+#: npc/other/pvp.txt#185 (setarray)
+- "-5"
++ ""
+#: npc/other/pvp.txt#186 (setarray)
+- "Prontera"
++ ""
+#: npc/other/pvp.txt#187 (setarray)
+- "Izlude"
++ ""
+#: npc/other/pvp.txt#188 (setarray)
+- "Payon"
++ ""
+#: npc/other/pvp.txt#189 (setarray)
+- "Alberta"
++ ""
+#: npc/other/pvp.txt#190 (setarray)
+- "Morocc"
++ ""
+#: npc/other/pvp.txt#191 (setarray)
+- "pvp_n_8-1"
++ ""
+#: npc/other/pvp.txt#192 (setarray)
+- "pvp_n_8-2"
++ ""
+#: npc/other/pvp.txt#193 (setarray)
+- "pvp_n_8-3"
++ ""
+#: npc/other/pvp.txt#194 (setarray)
+- "pvp_n_8-4"
++ ""
+#: npc/other/pvp.txt#195 (setarray)
+- "pvp_n_8-5"
++ ""
+#: npc/other/pvp.txt#196 (setarray)
+- "Sandwich"
++ ""
+#: npc/other/pvp.txt#197 (setarray)
+- "Lock on"
++ ""
+#: npc/other/pvp.txt#198 (setarray)
+- "Four Room"
++ ""
+#: npc/other/pvp.txt#199 (setarray)
+- "Under cross"
++ ""
+#: npc/other/pvp.txt#200 (setarray)
+- "Compass Room"
++ ""
+#: npc/other/pvp.txt#201 (menu)
+- " ["
++ ""
+#: npc/other/pvp.txt#202 (menu)
+- " / "
++ ""
+#: npc/other/pvp.txt#203 (menu)
+- "]:"
++ ""
+#: npc/other/pvp.txt#204 (menu)
+- "Cancel."
++ ""
+#: npc/other/pvp.txt#205 (mes)
+- "[PVP Fight Square Reception Staff]"
++ ""
+#: npc/other/pvp.txt#206 (mes)
+- "This map is currently full."
++ ""
+#: npc/other/pvp.txt#207 (mes)
+- "[PVP Combat Square Register Staff]"
++ ""
+#: npc/other/pvp.txt#208 (mes)
+- "Eh? How did you get in here?"
++ ""
+#: npc/other/pvp.txt#209 (mes)
+- "This is the entrance for players only."
++ ""
+#: npc/other/pvp.txt#210 (mes)
+- "For details about viewers please proceed to the Register Staff on your right."
++ ""
+#: npc/other/pvp.txt#211 (select)
+- "Combat Square one:Cancel"
++ ""
+#: npc/other/pvp.txt#212 (mes)
+- "[PVP Combat Square Register Staff]"
++ ""
+#: npc/other/pvp.txt#213 (mes)
+- "'"
++ ""
+#: npc/other/pvp.txt#214 (mes)
+- "'"
++ ""
+#: npc/other/pvp.txt#215 (mes)
+- "Are you ready?!"
++ ""
+#: npc/other/pvp.txt#216 (select)
+- "Yes!:No!"
++ ""
+#: npc/other/pvp.txt#217 (mes)
+- "[PVP Combat Square Register Staff]"
++ ""
+#: npc/other/pvp.txt#218 (mes)
+- "OK! I will send you inside"
++ ""
+#: npc/other/pvp.txt#219 (mes)
+- "Good luck!"
++ ""
+#: npc/other/pvp.txt#221 (mes)
+- "[PVP Combat Square Register Staff]"
++ ""
+#: npc/other/pvp.txt#222 (mes)
+- "Come back anytime you are ready."
++ ""
+#: npc/other/pvp.txt#224 (mes)
+- "[PVP Compete Square Register Staff]"
++ ""
+#: npc/other/pvp.txt#225 (mes)
+- "This is the entrance for viewers."
++ ""
+#: npc/other/pvp.txt#226 (mes)
+- "For details about players entrance please proceed to the Register Staff on your left."
++ ""
+#: npc/other/pvp.txt#227 (select)
+- "Compete Square one:Cancel"
++ ""
+#: npc/other/pvp.txt#228 (mes)
+- "[PVP Combat Square Register Staff]"
++ ""
+#: npc/other/pvp.txt#229 (mes)
+- "You got it, thanks for participating. Have fun!"
++ ""
+#: npc/other/pvp.txt#235 (mes)
+- "[Combat Square Staff]"
++ ""
+#: npc/other/pvp.txt#236 (mes)
+- "May I help you?"
++ ""
+#: npc/other/pvp.txt#237 (select)
+- "To the center viewer seat.:Leave Combat Square."
++ ""
+#: npc/other/pvp.txt#240 (mes)
+- "[Combat Square Staff]"
++ ""
+#: npc/other/pvp.txt#241 (mes)
+- "May I help you?"
++ ""
+#: npc/other/pvp.txt#242 (select)
+- "To the side viewer seat.:Leave Combat Square."
++ ""
+#: npc/other/pvp.txt#248 (mes)
+- "[Combat Square Staff]"
++ ""
+#: npc/other/pvp.txt#249 (mes)
+- "Did you have fun in Combat Square?"
++ ""
+#: npc/other/pvp.txt#250 (mes)
+- "May I ask where you want to go?"
++ ""
+#: npc/other/pvp.txt#251 (select)
+- "Prontera.:Morocc.:Geffen.:Payon.:Alberta.:Cancel."
++ ""

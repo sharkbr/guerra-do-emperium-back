@@ -1,0 +1,2794 @@
+# Catalogo de traducao PT-BR - grupo "servico"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/merchants/refine.txt  (505 textos)
+#: npc/merchants/refine.txt#1 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#2 (mes)
+- "Welcome to Christopher's Workshop. Ye can get all yer stuff for forging here. What business"
++ "Bem-vindo à Oficina do Christopher. Aqui tu acha tudo pra forjar. Que negócio"
+#: npc/merchants/refine.txt#3 (mes)
+- "brings ye to me?"
++ "te traz até mim?"
+#: npc/merchants/refine.txt#4 (select)
+- "Purchase Anvil:Purchase Forging Item:Purchase Metal:Purify Rough Ores:Cancel"
++ "Comprar Bigorna:Comprar material de forja:Comprar metal:Purificar minérios brutos:Cancelar"
+#: npc/merchants/refine.txt#5 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#6 (mes)
+- "A better Anvil gives ye a greeeater chance to make better weapons, ye know? But they'll cost ye more zeny. Just get it off yer chest and buy what fits your purposes best, laddy."
++ "Uma bigorna melhor te dá uma chaaaance bem maior de forjar arma boa, sabia? Mas custa mais zeny. Desembucha e leva a que servir pro teu propósito, rapaz."
+#: npc/merchants/refine.txt#7 (select)
+- "Anvil - 30,000 zeny:Oridecon Anvil - 120,000 zeny:Golden Anvil - 300,000 zeny:Better Anvil than the others.:Cancel."
++ "Bigorna - 30.000 zeny:Bigorna de Oridecon - 120.000 zeny:Bigorna Dourada - 300.000 zeny:Uma bigorna melhor que essas.:Cancelar."
+#: npc/merchants/refine.txt#8 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#9 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#10 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#11 (mes)
+- "This is the cheapest one, but efficient enough to forge most items. Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need."
++ "Essa é a mais barata, mas dá conta da maioria dos itens. Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#12 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#13 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#14 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#15 (mes)
+- "Aye, friend ye have an eye for the anvil. This must be the proper anvil for a Blacksmith, eh? Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need."
++ "Ahá, amigo, tu tem olho pra bigorna. Essa sim é bigorna de Ferreiro de verdade, hein? Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#16 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#17 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#18 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#19 (mes)
+- "This one is the best among all me stuffs in me workshop! With this, ye can rule the Blacksmith world! Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need."
++ "Essa é a melhor de tudo que tenho aqui! Com ela tu domina o mundo dos Ferreiros! Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#20 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#21 (mes)
+- "Well, sorry. But I don't have anythin' harder' than the Golden Anvil."
++ "Pois é, sinto muito. Não tenho nada mais duro que a Bigorna Dourada."
+#: npc/merchants/refine.txt#22 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#23 (mes)
+- "Me thinks 'Ringgel,' the Legendary Anvil Maker would have one. But, I don't think ye can find him, though he be somewhere in this world."
++ "Acho que o 'Ringgel', o lendário fabricante de bigornas, teria uma. Mas duvido que tu ache ele, mesmo estando em algum canto deste mundo."
+#: npc/merchants/refine.txt#24 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#25 (mes)
+- "Okay, feel free to come anytime, whenever ye need. Fare ye well."
++ "Certo, aparece quando precisar. Vai com Deus."
+#: npc/merchants/refine.txt#26 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#27 (mes)
+- "A respectable blacksmith uses fine tools. Ye can become one o'those with me Stuff. Choose anything ye want."
++ "Ferreiro respeitável usa ferramenta boa. Com o meu material tu vira um desses. Escolhe o que quiser."
+#: npc/merchants/refine.txt#28 (select)
+- "Mini-Furnace - 150 zeny:Iron Hammer - 1000 zeny:Golden Hammer - 3000 zeny:Oridecon Hammer - 5000 zeny:Cancel."
++ "Mini Fornalha - 150 zeny:Martelo de Ferro - 1000 zeny:Martelo Dourado - 3000 zeny:Martelo de Oridecon - 5000 zeny:Cancelar."
+#: npc/merchants/refine.txt#29 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#30 (mes)
+- "It's a much needed tool fer refining metal! So, How many do ye wish to buy? If ye want to quit, just type the number '0.'"
++ "Ferramenta indispensável pra refinar metal! Então, quantas tu quer? Se quiser desistir, digita '0'."
+#: npc/merchants/refine.txt#31 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#32 (mes)
+- "Aye, the deal is canceled. Fare ye well."
++ "Ahá, negócio cancelado. Vai com Deus."
+#: npc/merchants/refine.txt#33 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#34 (mes)
+- "Ye can buy 500, er less."
++ "Tu pode comprar 500, ou menos."
+#: npc/merchants/refine.txt#35 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#36 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#37 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#38 (mes)
+- "Ye look like you don't got enough room in yer inventory. Put some stuff into your Kafra Storage, why don't ye?"
++ "Parece que não tem espaço no teu inventário. Guarda umas coisas no Armazém Kafra, que tal?"
+#: npc/merchants/refine.txt#39 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#40 (mes)
+- "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need."
++ "Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#41 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#42 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#43 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#44 (mes)
+- "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need."
++ "Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#45 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#46 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#47 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#48 (mes)
+- "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need."
++ "Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#49 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#50 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#51 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#52 (mes)
+- "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need."
++ "Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#53 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#54 (mes)
+- "Feel free to come anytime, whenever ye need. Fare ye well."
++ "Aparece quando precisar. Vai com Deus."
+#: npc/merchants/refine.txt#55 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#56 (mes)
+- "I prepare every Metal, and only the high quality ones o'course. Now then, which one do ye need?"
++ "Tenho todo tipo de metal, e só os de boa qualidade, claro. Então, qual tu precisa?"
+#: npc/merchants/refine.txt#57 (select)
+- "Phracon - 200z.:Emveretarcon - 1000z.:Cancel."
++ "Phracon - 200z.:Emveretarcon - 1000z.:Cancelar."
+#: npc/merchants/refine.txt#58 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#59 (mes)
+- "So, How many do ye wish to buy? If ye dont want anything, just type the number as '0.'"
++ "Então, quantos tu quer? Se não quiser nada, digita '0'."
+#: npc/merchants/refine.txt#60 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#61 (mes)
+- "Deal has"
++ "O negócio foi"
+#: npc/merchants/refine.txt#62 (mes)
+- "been canceled."
++ "cancelado."
+#: npc/merchants/refine.txt#63 (mes)
+- "Fare ye well."
++ "Vai com Deus."
+#: npc/merchants/refine.txt#64 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#65 (mes)
+- "Ye can buy 500, er less."
++ "Tu pode comprar 500, ou menos."
+#: npc/merchants/refine.txt#66 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#67 (mes)
+- "Ye don't have enough money. Ye know I can't sell this at a lower price... You know how the wifey nags about Zeny."
++ "Tu não tem dinheiro que chegue. Sabe que não posso baixar o preço... conhece a mulher e a lenga-lenga dela sobre Zeny."
+#: npc/merchants/refine.txt#68 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#69 (mes)
+- "Ye look like you don't have the room to carry anythin' new. Why don't ye put some things into Kafra Storage n' come back."
++ "Parece que tu não tem espaço pra carregar nada novo. Guarda umas coisas no Armazém Kafra e volta."
+#: npc/merchants/refine.txt#70 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#71 (mes)
+- "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need."
++ "Obrigado por comprar na minha oficina. Aparece quando precisar."
+#: npc/merchants/refine.txt#72 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#73 (mes)
+- "So, how many do ye wish to buy? If ye dont want anything at all, just type the number as '0.'"
++ "Então, quantos tu quer? Se não quiser nada mesmo, digita '0'."
+#: npc/merchants/refine.txt#74 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#75 (mes)
+- "Deal has"
++ "O negócio foi"
+#: npc/merchants/refine.txt#76 (mes)
+- "been canceled."
++ "cancelado."
+#: npc/merchants/refine.txt#77 (mes)
+- "Fare ye well."
++ "Vai com Deus."
+#: npc/merchants/refine.txt#78 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#79 (mes)
+- "Ye can buy 500, er less."
++ "Tu pode comprar 500, ou menos."
+#: npc/merchants/refine.txt#80 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#81 (mes)
+- "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye."
++ "Não dá pra te entregar isso com o zeny que tu tem. Não vou perder meu dinheiro por tua causa."
+#: npc/merchants/refine.txt#82 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#83 (mes)
+- "Me friend... Seems to me ye don't have Inventory space. Why doncha put some things into Kafra Storage first?"
++ "Meu amigo... me parece que não tem espaço no inventário. Que tal guardar umas coisas no Armazém Kafra antes?"
+#: npc/merchants/refine.txt#84 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#85 (mes)
+- "Thank ye fer shopping at me workshop. Feel free to come anytime, whenever ye need, whenever ye want."
++ "Obrigado por comprar na minha oficina. Aparece quando precisar, quando quiser."
+#: npc/merchants/refine.txt#86 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#87 (mes)
+- "Feel free to come anytime, whenever ye need. Fare ye well."
++ "Aparece quando precisar. Vai com Deus."
+#: npc/merchants/refine.txt#88 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#89 (mes)
+- "I can purify yer Oridecon and Elunium. I make a refined Ore out of 5 o'each rough ones. Well... Which one do ye want to make?"
++ "Posso purificar teu Oridecon e teu Elunium. Faço um minério refinado com 5 dos brutos. E então... qual tu quer fazer?"
+#: npc/merchants/refine.txt#90 (select)
+- "Make Oridecon:Make Elunium:Cancel."
++ "Fazer Oridecon:Fazer Elunium:Cancelar."
+#: npc/merchants/refine.txt#91 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#92 (mes)
+- "I told ye, I need 5 o'the rough Oridecons fer one Oridecon."
++ "Já falei: preciso de 5 Oridecons brutos pra um Oridecon."
+#: npc/merchants/refine.txt#93 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#94 (mes)
+- "Here's an Oridecon fer ye. Ye will be always welcome here, I'll be waitin' for ye."
++ "Aqui está teu Oridecon. Tu é sempre bem-vindo aqui, vou estar te esperando."
+#: npc/merchants/refine.txt#95 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#96 (mes)
+- "I told ye, I need 5 rough Eluniums fer one Elunium."
++ "Já falei: preciso de 5 Eluniums brutos pra um Elunium."
+#: npc/merchants/refine.txt#97 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#98 (mes)
+- "Arrr, here's yer Elunium. Yer business is always welcome here, so feel free to come again."
++ "Arrr, aqui está teu Elunium. Teu negócio é sempre bem-vindo, então aparece de novo."
+#: npc/merchants/refine.txt#99 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#100 (mes)
+- "Feel free to come anytime, whenever ye need. Fare ye well."
++ "Aparece quando precisar. Vai com Deus."
+#: npc/merchants/refine.txt#101 (mes)
+- "[Christopher Guillenrow]"
++ "[Christopher Guillenrow]"
+#: npc/merchants/refine.txt#102 (mes)
+- "Feel free to come anytime, whenever ye need and whenever ye want. Fare ye well."
++ "Aparece quando precisar e quando quiser. Vai com Deus."
+#: npc/merchants/refine.txt#103 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/merchants/refine.txt#104 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/merchants/refine.txt#105 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/merchants/refine.txt#106 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/merchants/refine.txt#107 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/merchants/refine.txt#108 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#109 (mes)
+- "Welcome, my friend."
++ "Bem-vindo, meu amigo."
+#: npc/merchants/refine.txt#110 (mes)
+- "In my shop, you will find everything that you need in forging."
++ "Na minha loja você encontra tudo o que precisa para forjar."
+#: npc/merchants/refine.txt#111 (mes)
+- "Tell me what you need."
++ "Diga o que precisa."
+#: npc/merchants/refine.txt#112 (select)
+- "Purchase Anvil.:Purchase Forging Items.:Purchase Metal.:Process Ores.:Quit."
++ "Comprar Bigorna.:Comprar material de forja.:Comprar metal.:Processar minérios.:Sair."
+#: npc/merchants/refine.txt#113 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#114 (mes)
+- "Anvil is the most necessary item for Blacksmiths."
++ "A Bigorna é o item mais necessário para um Ferreiro."
+#: npc/merchants/refine.txt#115 (mes)
+- "Since you will use an Anvil more than once, you'd better buy a nice one."
++ "Como você vai usá-la muitas vezes, é melhor comprar uma boa."
+#: npc/merchants/refine.txt#116 (select)
+- "Anvil - 30,000z.:Oridecon Anvil - 120,000z.:Golden Anvil - 300,000z.:I need a better anvil.:Cancel."
++ "Bigorna - 30.000z.:Bigorna de Oridecon - 120.000z.:Bigorna Dourada - 300.000z.:Preciso de uma melhor.:Cancelar."
+#: npc/merchants/refine.txt#117 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#118 (mes)
+- "With that much of money, you cannot even buy a toy anvil!"
++ "Com esse dinheiro você não compra nem uma bigorna de brinquedo!"
+#: npc/merchants/refine.txt#119 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#120 (mes)
+- "It is the cheapest anvil which has the most basic ability."
++ "É a bigorna mais barata, com a capacidade mais básica."
+#: npc/merchants/refine.txt#121 (mes)
+- "Thank you for using my shop. If you need anything, just let me know."
++ "Obrigado por usar minha loja. Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#122 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#123 (mes)
+- "With that much of money, you cannot even buy a toy anvil!"
++ "Com esse dinheiro você não compra nem uma bigorna de brinquedo!"
+#: npc/merchants/refine.txt#124 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#125 (mes)
+- "Ah, you have an eye for anvil. A Blacksmith needs an anvil at least as good as this."
++ "Ah, você tem olho para bigornas. Um Ferreiro precisa de uma pelo menos tão boa quanto esta."
+#: npc/merchants/refine.txt#126 (mes)
+- "Thank you for using my shop. If you need anything, just let me know."
++ "Obrigado por usar minha loja. Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#127 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#128 (mes)
+- "With that much of money, you cannot even buy a toy anvil!"
++ "Com esse dinheiro você não compra nem uma bigorna de brinquedo!"
+#: npc/merchants/refine.txt#129 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#130 (mes)
+- "I can tell your ambition to become a good Blacksmith just by looking at you to choose this Golden Anvil!"
++ "Dá para ver sua ambição de ser um bom Ferreiro só de você escolher a Bigorna Dourada!"
+#: npc/merchants/refine.txt#131 (mes)
+- "This anvil will surely aid you in creating the best weapons."
++ "Esta bigorna vai certamente ajudar você a criar as melhores armas."
+#: npc/merchants/refine.txt#132 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#133 (mes)
+- "I am sorry, but I do not sell better anvils than Golden Anvil."
++ "Sinto muito, mas não vendo bigorna melhor que a Dourada."
+#: npc/merchants/refine.txt#134 (mes)
+- "Unless you find the legendary anvil of 'Linggell', I don't think that you could find better one than Golden Anvil in any other places."
++ "A menos que ache a bigorna lendária do 'Linggell', duvido que encontre coisa melhor que a Dourada em qualquer lugar."
+#: npc/merchants/refine.txt#135 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#136 (mes)
+- "If you need anything, just let me know."
++ "Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#137 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#138 (mes)
+- "You need various materials to process ores and to forge weapons."
++ "Você precisa de vários materiais para processar minérios e forjar armas."
+#: npc/merchants/refine.txt#139 (mes)
+- "I have everything that you need. Take a look."
++ "Tenho tudo o que você precisa. Dê uma olhada."
+#: npc/merchants/refine.txt#140 (select)
+- "Mini Furnace - 150z.:Iron Hammer - 1,000z.:Golden Hammer - 3,000z.:Oridecon Hammer - 5,000z.:Cancel."
++ "Mini Fornalha - 150z.:Martelo de Ferro - 1.000z.:Martelo Dourado - 3.000z.:Martelo de Oridecon - 5.000z.:Cancelar."
+#: npc/merchants/refine.txt#141 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#142 (mes)
+- "You definitely need this furnace to process ores!"
++ "Você precisa desta fornalha para processar minérios!"
+#: npc/merchants/refine.txt#143 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#144 (mes)
+- "If you need anything, just let me know."
++ "Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#145 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#146 (mes)
+- "So, how many do you need? If you want to cancel the trade, enter '0'."
++ "Então, quantas você precisa? Para cancelar a compra, digite '0'."
+#: npc/merchants/refine.txt#147 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#148 (mes)
+- "You have canceled the trade. If you need anything, just let me know."
++ "Você cancelou a compra. Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#149 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#150 (mes)
+- "You can only buy 500 or less at a time."
++ "Você só pode comprar 500 ou menos de cada vez."
+#: npc/merchants/refine.txt#151 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#152 (mes)
+- "You don't have enough money. Sorry, I cannot sell them at a loss."
++ "Você não tem dinheiro suficiente. Desculpe, não posso vender no prejuízo."
+#: npc/merchants/refine.txt#153 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#154 (mes)
+- "Hey, you look pale. Why don't you go lighten your weight first."
++ "Ei, você está pálido. Que tal aliviar o peso primeiro."
+#: npc/merchants/refine.txt#155 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#156 (mes)
+- "Thank you for using my shop. If you need anything, just let me know."
++ "Obrigado por usar minha loja. Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#157 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#158 (mes)
+- "I have high quality metal."
++ "Tenho metal de boa qualidade."
+#: npc/merchants/refine.txt#159 (mes)
+- "So, which metal would you like to buy?"
++ "Então, qual metal você quer comprar?"
+#: npc/merchants/refine.txt#160 (select)
+- "Phracon - 200z.:Emveretarcon - 1,000z.:Quit."
++ "Phracon - 200z.:Emveretarcon - 1.000z.:Sair."
+#: npc/merchants/refine.txt#161 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#162 (mes)
+- "If you need anything, just let me know."
++ "Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#163 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#164 (mes)
+- "So, how many of them do you need? If you want to cancel the trade, enter '0'."
++ "Então, quantos você precisa? Para cancelar a compra, digite '0'."
+#: npc/merchants/refine.txt#165 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#166 (mes)
+- "The trade has been canceled. If you need anything, just let me know."
++ "A compra foi cancelada. Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#167 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#168 (mes)
+- "You can buy 500 or less at a time."
++ "Você pode comprar 500 ou menos de cada vez."
+#: npc/merchants/refine.txt#169 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#170 (mes)
+- "You don't have enough money. Sorry, I cannot sell them at a loss."
++ "Você não tem dinheiro suficiente. Desculpe, não posso vender no prejuízo."
+#: npc/merchants/refine.txt#171 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#172 (mes)
+- "Hey, you look pale. Why don't you go lighten your weight first?"
++ "Ei, você está pálido. Que tal aliviar o peso primeiro?"
+#: npc/merchants/refine.txt#173 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#174 (mes)
+- "Thank you for using my shop. If you need anything, just let me know."
++ "Obrigado por usar minha loja. Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#175 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#176 (mes)
+- "I can process Oridecon and Elunium for you."
++ "Posso processar Oridecon e Elunium para você."
+#: npc/merchants/refine.txt#177 (mes)
+- "You need 5 ores to process them into one Oridecon or Elunium."
++ "São necessários 5 minérios para gerar um Oridecon ou um Elunium."
+#: npc/merchants/refine.txt#178 (mes)
+- "So, which one do you want to process?"
++ "Então, qual você quer processar?"
+#: npc/merchants/refine.txt#179 (select)
+- "Oridecon:Elunium:Quit."
++ "Oridecon:Elunium:Sair."
+#: npc/merchants/refine.txt#180 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#181 (mes)
+- "You need 5 ores to process them into one pure Oridecon."
++ "São necessários 5 minérios para gerar um Oridecon puro."
+#: npc/merchants/refine.txt#182 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#183 (mes)
+- "There you go. Thank you for using my service."
++ "Aqui está. Obrigado por usar meu serviço."
+#: npc/merchants/refine.txt#184 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#185 (mes)
+- "You need 5 ores to process them into one pure Elunium."
++ "São necessários 5 minérios para gerar um Elunium puro."
+#: npc/merchants/refine.txt#186 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#187 (mes)
+- "There you go. Thank you for using my service."
++ "Aqui está. Obrigado por usar meu serviço."
+#: npc/merchants/refine.txt#188 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#189 (mes)
+- "If you need anything, just let me know."
++ "Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#190 (mes)
+- "[Paul Spanner]"
++ "[Paul Spanner]"
+#: npc/merchants/refine.txt#191 (mes)
+- "If you need anything, just let me know."
++ "Se precisar de algo, é só falar."
+#: npc/merchants/refine.txt#193 (mes)
+- "[Hollgrehenn]"
++ "[Hollgrehenn]"
+#: npc/merchants/refine.txt#194 (mes)
+- "I'm a blacksmith who can refine weapons and equipment."
++ "Sou um ferreiro que refina armas e equipamentos."
+#: npc/merchants/refine.txt#195 (mes)
+- "Do you have any items that you'd like to refine?"
++ "Tem algum item que gostaria de refinar?"
+#: npc/merchants/refine.txt#199 (mes)
+- "[Aragham]"
++ "[Aragham]"
+#: npc/merchants/refine.txt#200 (mes)
+- "De~ sert~ Blacksmith~"
++ "Fer~ rei~ ro do De~ ser~ to~"
+#: npc/merchants/refine.txt#201 (mes)
+- "Aragham Ssaleh~ who can refine anything Ssaleh~"
++ "Aragham Ssaleh~ que refina qualquer coisa Ssaleh~"
+#: npc/merchants/refine.txt#202 (mes)
+- "Let me see what you'd like to refine~"
++ "Deixa eu ver o que quer refinar~"
+#: npc/merchants/refine.txt#206 (mes)
+- "[Antonio]"
++ "[Antonio]"
+#: npc/merchants/refine.txt#207 (mes)
+- "Stop nagging and get me the equipment you want to refine."
++ "Para de encher e me passa o equipamento que quer refinar."
+#: npc/merchants/refine.txt#211 (mes)
+- "[Fredrik Hermanthorn]"
++ "[Fredrik Hermanthorn]"
+#: npc/merchants/refine.txt#212 (mes)
+- "I am a blacksmith who can refine your weapon or equipment."
++ "Sou um ferreiro que refina sua arma ou equipamento."
+#: npc/merchants/refine.txt#213 (mes)
+- "Do you have anything that you'd like to refine?"
++ "Tem alguma coisa que gostaria de refinar?"
+#: npc/merchants/refine.txt#217 (mes)
+- "[Lambert]"
++ "[Lambert]"
+#: npc/merchants/refine.txt#218 (mes)
+- "Wel...come... This is... the best... smithy... in Juno."
++ "Bem...-vindo... Esta é... a melhor... forja... de Juno."
+#: npc/merchants/refine.txt#222 (mes)
+- "[Manthasman Pruhag]"
++ "[Manthasman Pruhag]"
+#: npc/merchants/refine.txt#223 (mes)
+- "Hahaha, you already knew it. So you'd like to refine something?"
++ "Hahaha, você já sabia. Então quer refinar alguma coisa?"
+#: npc/merchants/refine.txt#224 (mes)
+- "Let's try something risky today!"
++ "Vamos arriscar alguma coisa hoje!"
+#: npc/merchants/refine.txt#228 (mes)
+- "[Fulerr]"
++ "[Fulerr]"
+#: npc/merchants/refine.txt#229 (mes)
+- "Hehe... You wanna refine?"
++ "Hehe... Quer refinar?"
+#: npc/merchants/refine.txt#230 (mes)
+- "Hehe.. Consider it done.."
++ "Hehe.. Considere feito.."
+#: npc/merchants/refine.txt#231 (mes)
+- "Hehe...."
++ "Hehe...."
+#: npc/merchants/refine.txt#234 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#235 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#236 (mes)
+- "I'm the Armsmith."
++ "Sou o Armeiro."
+#: npc/merchants/refine.txt#237 (mes)
+- "I can refine all kinds of weapons, armor and equipment, so let me"
++ "Refino todo tipo de arma, armadura e equipamento, então me"
+#: npc/merchants/refine.txt#238 (mes)
+- "know what you want me to refine."
++ "diga o que quer refinar."
+#: npc/merchants/refine.txt#239 (menu)
+- "-["
++ ""
+#: npc/merchants/refine.txt#240 (menu)
+- "]"
++ ""
+#: npc/merchants/refine.txt#241 (menu)
+- ":"
++ ":"
+#: npc/merchants/refine.txt#242 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#243 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#244 (mes)
+- "I don't think I can refine any items you have..."
++ "Acho que não consigo refinar nenhum item que você tem..."
+#: npc/merchants/refine.txt#245 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#246 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#247 (mes)
+- "You're not wearing"
++ "Você não está usando"
+#: npc/merchants/refine.txt#248 (mes)
+- "anything there that"
++ "nada aí que"
+#: npc/merchants/refine.txt#249 (mes)
+- "I can refine."
++ "eu possa refinar."
+#: npc/merchants/refine.txt#250 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#251 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#252 (mes)
+- "I don't think I can"
++ "Acho que não consigo"
+#: npc/merchants/refine.txt#253 (mes)
+- "refine this item at all..."
++ "refinar este item de jeito nenhum..."
+#: npc/merchants/refine.txt#254 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#255 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#256 (mes)
+- "I can't refine this"
++ "Não dá para refinar mais"
+#: npc/merchants/refine.txt#257 (mes)
+- "any more. This is as"
++ "este item. Ele já está no"
+#: npc/merchants/refine.txt#258 (mes)
+- "refined as it gets!"
++ "máximo de refino!"
+#: npc/merchants/refine.txt#259 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#260 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#261 (mes)
+- "To refine this I need"
++ "Para refinar isto eu preciso de"
+#: npc/merchants/refine.txt#262 (mes)
+- "one ^003366"
++ "um ^003366"
+#: npc/merchants/refine.txt#263 (mes)
+- "^000000 and"
++ "^000000 e de"
+#: npc/merchants/refine.txt#264 (mes)
+- "a service fee of "
++ "uma taxa de serviço de "
+#: npc/merchants/refine.txt#265 (mes)
+- " Zeny."
++ " Zeny."
+#: npc/merchants/refine.txt#266 (mes)
+- "Do you really wish to continue?"
++ "Quer mesmo continuar?"
+#: npc/merchants/refine.txt#267 (select)
+- "Yes:No"
++ "Sim:Não"
+#: npc/merchants/refine.txt#268 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#269 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#270 (mes)
+- "Yeah..."
++ "É..."
+#: npc/merchants/refine.txt#271 (mes)
+- "There's no need to"
++ "Não há pressa"
+#: npc/merchants/refine.txt#272 (mes)
+- "rush. Take your time."
++ "nenhuma. Pense com calma."
+#: npc/merchants/refine.txt#273 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#274 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#275 (mes)
+- "Oh no! If I continue to"
++ "Ah, não! Se eu continuar"
+#: npc/merchants/refine.txt#276 (mes)
+- "refine this, there's a risk it could"
++ "refinando, há risco de o item"
+#: npc/merchants/refine.txt#277 (mes)
+- "be destroyed! That means that ^FF0000this equipment^000000, and ^FF0000any cards^000000 or special properties added to this armor, ^FF0000will be gone^000000."
++ "ser destruído! Ou seja, ^FF0000este equipamento^000000, e ^FF0000todas as cartas^000000 ou propriedades especiais nele, ^FF0000serão perdidos^000000."
+#: npc/merchants/refine.txt#278 (mes)
+- "be destroyed, and you'd ^FF0000lose the weapon^000000, any ^FF0000cards in the weapon^000000,"
++ "ser destruído, e você ^FF0000perderia a arma^000000, ^FF0000as cartas nela^000000,"
+#: npc/merchants/refine.txt#279 (mes)
+- "or any added special properties."
++ "e as propriedades especiais."
+#: npc/merchants/refine.txt#280 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#281 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#282 (mes)
+- "I can't make it any clearer."
++ "Não dá para ser mais claro."
+#: npc/merchants/refine.txt#283 (mes)
+- "Once a weapon is destroyed,"
++ "Uma vez destruída, a arma"
+#: npc/merchants/refine.txt#284 (mes)
+- "there's no getting it back."
++ "não volta de jeito nenhum."
+#: npc/merchants/refine.txt#285 (mes)
+- "You really have a chance to"
++ "Existe risco real de você"
+#: npc/merchants/refine.txt#286 (mes)
+- "^FF0000lose this weapon^000000 forever."
++ "^FF0000perder esta arma^000000 para sempre."
+#: npc/merchants/refine.txt#287 (mes)
+- "Do you still want to refine?"
++ "Ainda quer refinar?"
+#: npc/merchants/refine.txt#288 (select)
+- "Yes:No"
++ "Sim:Não"
+#: npc/merchants/refine.txt#289 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#290 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#291 (mes)
+- "I completely agree..."
++ "Concordo plenamente..."
+#: npc/merchants/refine.txt#292 (mes)
+- "I might be a great refiner, but sometimes even I make mistakes."
++ "Posso ser um grande refinador, mas até eu erro às vezes."
+#: npc/merchants/refine.txt#293 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#294 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#295 (mes)
+- "You don't seem to have"
++ "Parece que você não tem"
+#: npc/merchants/refine.txt#296 (mes)
+- "enough Zeny or "
++ "Zeny suficiente nem "
+#: npc/merchants/refine.txt#297 (mes)
+- "..."
++ "..."
+#: npc/merchants/refine.txt#298 (mes)
+- "Go get some more. I'll be"
++ "Vá buscar mais. Eu fico"
+#: npc/merchants/refine.txt#299 (mes)
+- "here all day if you need me."
++ "aqui o dia todo se precisar."
+#: npc/merchants/refine.txt#303 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#304 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#305 (mes)
+- "Wait a second..."
++ "Espera um segundo..."
+#: npc/merchants/refine.txt#306 (mes)
+- "Do you think I'm stupid?!"
++ "Acha que eu sou burro?!"
+#: npc/merchants/refine.txt#307 (mes)
+- "You switched the item while I wasn't looking! Get out of here!"
++ "Você trocou o item enquanto eu não olhava! Fora daqui!"
+#: npc/merchants/refine.txt#308 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#309 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#310 (mes)
+- "OH! MY GOD!"
++ "AI, MEU DEUS!"
+#: npc/merchants/refine.txt#311 (mes)
+- "Damn it! Not again!"
++ "Droga! De novo não!"
+#: npc/merchants/refine.txt#312 (mes)
+- "I'm terribly sorry, but you know practice does make perfect."
++ "Sinto muitíssimo, mas é praticando que se aprende."
+#: npc/merchants/refine.txt#313 (mes)
+- "Um, right? Heh heh..."
++ "Né? Ré ré..."
+#: npc/merchants/refine.txt#314 (mes)
+- "Nooooooo!"
++ "Nãããããooo!"
+#: npc/merchants/refine.txt#315 (mes)
+- "It broke!"
++ "Quebrou!"
+#: npc/merchants/refine.txt#316 (mes)
+- "I-I'm sorry!"
++ "D-desculpa!"
+#: npc/merchants/refine.txt#317 (mes)
+- "Crap!"
++ "Droga!"
+#: npc/merchants/refine.txt#318 (mes)
+- "It couldn't take"
++ "Não aguentou"
+#: npc/merchants/refine.txt#319 (mes)
+- "much more tempering!"
++ "mais têmpera!"
+#: npc/merchants/refine.txt#320 (mes)
+- "Sorry about this..."
++ "Desculpa por isso..."
+#: npc/merchants/refine.txt#321 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#322 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#323 (mes)
+- "Perfect!"
++ "Perfeito!"
+#: npc/merchants/refine.txt#324 (mes)
+- "Heh heh!"
++ "Ré ré!"
+#: npc/merchants/refine.txt#325 (mes)
+- "Once again,"
++ "Mais uma vez,"
+#: npc/merchants/refine.txt#326 (mes)
+- "flawless work"
++ "trabalho impecável"
+#: npc/merchants/refine.txt#327 (mes)
+- "from the master~"
++ "do mestre~"
+#: npc/merchants/refine.txt#328 (mes)
+- "Success...!"
++ "Sucesso...!"
+#: npc/merchants/refine.txt#329 (mes)
+- "Yet again, my amazing"
++ "De novo, meu talento"
+#: npc/merchants/refine.txt#330 (mes)
+- "talent truly dazzles"
++ "espantoso brilha"
+#: npc/merchants/refine.txt#331 (mes)
+- "and shines today."
++ "e deslumbra hoje."
+#: npc/merchants/refine.txt#332 (mes)
+- "Heh heh!"
++ "Ré ré!"
+#: npc/merchants/refine.txt#333 (mes)
+- "I'm all done."
++ "Terminei."
+#: npc/merchants/refine.txt#334 (mes)
+- "No doubt, my work is"
++ "Sem dúvida, meu trabalho"
+#: npc/merchants/refine.txt#335 (mes)
+- "to your satisfaction."
++ "ficou a seu contento."
+#: npc/merchants/refine.txt#336 (mes)
+- "Sheer, utter perfection~"
++ "Pura e simples perfeição~"
+#: npc/merchants/refine.txt#337 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#338 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#339 (mes)
+- "I can refine this to the safe limit or a desired number of times. It's your choice."
++ "Posso refinar até o limite seguro ou o número de vezes que quiser. Você escolhe."
+#: npc/merchants/refine.txt#340 (select)
+- "To the safe limit, please."
++ "Até o limite seguro, por favor."
+#: npc/merchants/refine.txt#341 (select)
+- "I'll decide how many times."
++ "Eu decido quantas vezes."
+#: npc/merchants/refine.txt#342 (select)
+- "I've changed my mind..."
++ "Mudei de ideia..."
+#: npc/merchants/refine.txt#343 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#344 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#345 (mes)
+- "How many times would you like me to refine your item?"
++ "Quantas vezes quer que eu refine seu item?"
+#: npc/merchants/refine.txt#346 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#347 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#348 (mes)
+- "I can't refine this item that many times."
++ "Não consigo refinar este item tantas vezes."
+#: npc/merchants/refine.txt#349 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#350 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#351 (mes)
+- "This will try to refine the equipment "
++ "Isto vai tentar refinar o equipamento "
+#: npc/merchants/refine.txt#352 (mes)
+- " times past the safe limit. Your equipment may be destroyed... is that ok?"
++ " vezes acima do limite seguro. Seu equipamento pode ser destruído... tudo bem?"
+#: npc/merchants/refine.txt#353 (select)
+- "Yes..."
++ "Sim..."
+#: npc/merchants/refine.txt#354 (select)
+- "No..."
++ "Não..."
+#: npc/merchants/refine.txt#355 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#356 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#357 (mes)
+- "You said so... So be it."
++ "Você é quem sabe... Que seja."
+#: npc/merchants/refine.txt#358 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#359 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#360 (mes)
+- "You said so... So be it."
++ "Você é quem sabe... Que seja."
+#: npc/merchants/refine.txt#361 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#362 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#363 (mes)
+- "That will cost you "
++ "Isso vai custar "
+#: npc/merchants/refine.txt#365 (mes)
+- " and "
++ " e "
+#: npc/merchants/refine.txt#366 (mes)
+- " Zeny. Is that ok?"
++ " Zeny. Tudo bem?"
+#: npc/merchants/refine.txt#367 (select)
+- "Yes"
++ "Sim"
+#: npc/merchants/refine.txt#368 (select)
+- "No..."
++ "Não..."
+#: npc/merchants/refine.txt#369 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#370 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#371 (mes)
+- "You said so... So be it."
++ "Você é quem sabe... Que seja."
+#: npc/merchants/refine.txt#372 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#373 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#374 (mes)
+- "Is that all you got? Unfortunately I can't work for you at a lower price. Try putting yourself in my shoes."
++ "É só isso que tem? Infelizmente não trabalho por menos. Tente se colocar no meu lugar."
+#: npc/merchants/refine.txt#375 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#376 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#377 (mes)
+- "Look here... you don't have any items on..."
++ "Olha aqui... você não está com item nenhum..."
+#: npc/merchants/refine.txt#381 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#382 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#383 (mes)
+- "Clang... No, but did you imagine I could be so stupid?!"
++ "Clang... Não, você achou mesmo que eu seria tão burro assim?!"
+#: npc/merchants/refine.txt#384 (mes)
+- "You changed it..."
++ "Você trocou..."
+#: npc/merchants/refine.txt#385 (mes)
+- "Get out before I stun you with my Hammer!!"
++ "Suma antes que eu te atordoe com o Martelo!!"
+#: npc/merchants/refine.txt#386 (mes)
+- "Clang, clang!!!"
++ "Clang, clang!!!"
+#: npc/merchants/refine.txt#387 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#388 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#389 (mes)
+- "WAHHHH!!! I'm so sorry... I warned you this could happen..."
++ "AAAAAH!!! Sinto muito... eu avisei que podia acontecer..."
+#: npc/merchants/refine.txt#390 (mes)
+- "Here's the unused Zeny and materials back..."
++ "Aqui estão o Zeny e os materiais que sobraram..."
+#: npc/merchants/refine.txt#391 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#392 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#393 (mes)
+- "All finished... Come again soon."
++ "Terminado... Volte logo."
+#: npc/merchants/refine.txt#408 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/merchants/refine.txt#409 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/merchants/refine.txt#410 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/merchants/refine.txt#411 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/merchants/refine.txt#412 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/merchants/refine.txt#413 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#414 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#415 (mes)
+- "I sell 2 kinds of Metal"
++ "Vendo 2 tipos de metal"
+#: npc/merchants/refine.txt#416 (mes)
+- "for tempering weaponry."
++ "para temperar armas."
+#: npc/merchants/refine.txt#417 (mes)
+- "I have ^007777Phracon^000000 for Level 1"
++ "Tenho ^007777Phracon^000000 para armas"
+#: npc/merchants/refine.txt#418 (mes)
+- "Weapons, and ^007777Emveretarcon^000000"
++ "de nível 1, e ^007777Emveretarcon^000000"
+#: npc/merchants/refine.txt#419 (mes)
+- "for Level 2 Weapons."
++ "para armas de nível 2."
+#: npc/merchants/refine.txt#420 (select)
+- "Phracon - 200 Zeny:Emveretarcon - 1000 Zeny:Ask about other Metals"
++ "Phracon - 200 Zeny:Emveretarcon - 1000 Zeny:Perguntar sobre outros metais"
+#: npc/merchants/refine.txt#421 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#422 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#423 (mes)
+- "Other metals?"
++ "Outros metais?"
+#: npc/merchants/refine.txt#424 (mes)
+- "Well, you'll need special metals to upgrade higher level weapons, or any kind of armor. But you know, Oridecon and Elunium is really"
++ "Bom, você vai precisar de metais especiais para refinar armas de nível mais alto, ou qualquer armadura. Mas Oridecon e Elunium são bem"
+#: npc/merchants/refine.txt#425 (mes)
+- "hard to just find..."
++ "difíceis de achar por aí..."
+#: npc/merchants/refine.txt#426 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#427 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#428 (mes)
+- "So how many do you wish to buy?"
++ "Então, quantos quer comprar?"
+#: npc/merchants/refine.txt#429 (mes)
+- "If you don't want any, please enter the number, '0.'"
++ "Se não quiser nenhum, digite o número '0'."
+#: npc/merchants/refine.txt#430 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#431 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#432 (mes)
+- "The deal has"
++ "O negócio foi"
+#: npc/merchants/refine.txt#433 (mes)
+- "been cancelled."
++ "cancelado."
+#: npc/merchants/refine.txt#434 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#435 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#436 (mes)
+- "Alright, you can"
++ "Certo, você pode"
+#: npc/merchants/refine.txt#437 (mes)
+- "puchase up to 500."
++ "comprar até 500."
+#: npc/merchants/refine.txt#438 (mes)
+- "No more than that,"
++ "Nem um a mais,"
+#: npc/merchants/refine.txt#439 (mes)
+- "got it? Good."
++ "entendido? Ótimo."
+#: npc/merchants/refine.txt#440 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#441 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#442 (mes)
+- "Err..."
++ "Ahn..."
+#: npc/merchants/refine.txt#443 (mes)
+- "You don't have"
++ "Você não tem"
+#: npc/merchants/refine.txt#444 (mes)
+- "enough Zeny to buy"
++ "Zeny suficiente para comprar"
+#: npc/merchants/refine.txt#446 (mes)
+- " of them."
++ " deles."
+#: npc/merchants/refine.txt#447 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#448 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#449 (mes)
+- "Hmm..."
++ "Hmm..."
+#: npc/merchants/refine.txt#450 (mes)
+- "I can't give you anything if you don't have enough room in your inventory. Why don't you put your extra things in Kafra Storage and try again?"
++ "Não posso te dar nada se não há espaço no seu inventário. Que tal guardar o excedente no Armazém Kafra e tentar de novo?"
+#: npc/merchants/refine.txt#451 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#452 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#453 (mes)
+- "Here you are!"
++ "Aqui está!"
+#: npc/merchants/refine.txt#454 (mes)
+- "Thank you for"
++ "Obrigado pela"
+#: npc/merchants/refine.txt#455 (mes)
+- "your patronage."
++ "preferência."
+#: npc/merchants/refine.txt#470 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/merchants/refine.txt#471 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/merchants/refine.txt#472 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/merchants/refine.txt#473 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/merchants/refine.txt#474 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/merchants/refine.txt#475 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#476 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#477 (mes)
+- "I can purify your"
++ "Posso purificar seus"
+#: npc/merchants/refine.txt#478 (mes)
+- "Rough Oridecons or"
++ "Oridecons Brutos ou"
+#: npc/merchants/refine.txt#479 (mes)
+- "Rough Eluniums. I'll need"
++ "Eluniums Brutos. Preciso de"
+#: npc/merchants/refine.txt#480 (mes)
+- "5 Rough Stones to make"
++ "5 pedras brutas para fazer"
+#: npc/merchants/refine.txt#481 (mes)
+- "1 pure one for you."
++ "1 pura para você."
+#: npc/merchants/refine.txt#482 (select)
+- "Make Oridecon:Make Elunium:Ask about Enchanted Stones"
++ "Fazer Oridecon:Fazer Elunium:Perguntar sobre Pedras Encantadas"
+#: npc/merchants/refine.txt#483 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#484 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#485 (mes)
+- "Here's your Oridecon."
++ "Aqui está seu Oridecon."
+#: npc/merchants/refine.txt#486 (mes)
+- "You're welcome to come"
++ "Você é bem-vindo para"
+#: npc/merchants/refine.txt#487 (mes)
+- "back whenever you want."
++ "voltar quando quiser."
+#: npc/merchants/refine.txt#488 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#489 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#490 (mes)
+- "You're kidding me, right?"
++ "Está brincando comigo, né?"
+#: npc/merchants/refine.txt#491 (mes)
+- "I just told you that I need 5 Rough Oridecons to make a pure Oridecon."
++ "Acabei de dizer que preciso de 5 Oridecons Brutos para fazer um puro."
+#: npc/merchants/refine.txt#492 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#493 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#494 (mes)
+- "Here's your Elunium."
++ "Aqui está seu Elunium."
+#: npc/merchants/refine.txt#495 (mes)
+- "You're welcome to come"
++ "Você é bem-vindo para"
+#: npc/merchants/refine.txt#496 (mes)
+- "back whenever you want."
++ "voltar quando quiser."
+#: npc/merchants/refine.txt#497 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#498 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#499 (mes)
+- "You're kidding me, right?"
++ "Está brincando comigo, né?"
+#: npc/merchants/refine.txt#500 (mes)
+- "I just told you that I need 5 Rough Eluniums to make a pure Elunium."
++ "Acabei de dizer que preciso de 5 Eluniums Brutos para fazer um puro."
+#: npc/merchants/refine.txt#501 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#502 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#503 (mes)
+- "Enchanted Stones...?"
++ "Pedras Encantadas...?"
+#: npc/merchants/refine.txt#504 (mes)
+- "I've been a stonesmith for 20 years, so I've heard a lot about them. Supposedly, there are"
++ "Sou lapidador há 20 anos, então já ouvi muito sobre elas. Dizem que existem"
+#: npc/merchants/refine.txt#505 (mes)
+- "four different kinds."
++ "quatro tipos diferentes."
+#: npc/merchants/refine.txt#506 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#507 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#508 (mes)
+- "Each Enchanted Stone possesses one of the following elemental properties: Earth, Wind, Water and Fire."
++ "Cada Pedra Encantada tem uma destas propriedades elementais: Terra, Vento, Água e Fogo."
+#: npc/merchants/refine.txt#509 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#510 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#511 (mes)
+- "If someone combines a Enchanted Stone with a weapon while smithing, that weapon will possess the same property as the Stone."
++ "Quem combina uma Pedra Encantada com uma arma ao forjar faz a arma ganhar a mesma propriedade da pedra."
+#: npc/merchants/refine.txt#512 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#513 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#514 (mes)
+- "Needless to say, you need to have some smithing skill to produce this kind of elemental weapon."
++ "Nem preciso dizer que é preciso ter alguma habilidade de forja para produzir uma arma elemental dessas."
+#: npc/merchants/refine.txt#543 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#544 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#545 (mes)
+- "Hey there!"
++ "Olá!"
+#: npc/merchants/refine.txt#546 (mes)
+- "Do you want me"
++ "Quer que eu"
+#: npc/merchants/refine.txt#547 (mes)
+- "to repair any items?"
++ "conserte algum item?"
+#: npc/merchants/refine.txt#548 (mes)
+- "You can count on me"
++ "Pode contar comigo"
+#: npc/merchants/refine.txt#549 (mes)
+- "for item repairs!"
++ "para consertar itens!"
+#: npc/merchants/refine.txt#550 (select)
+- "Actually, I do have some items...:None at the moment."
++ "Na verdade, tenho alguns itens...:Nenhum no momento."
+#: npc/merchants/refine.txt#551 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#552 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#553 (mes)
+- "Oh wow, this is incredible!"
++ "Nossa, isso é incrível!"
+#: npc/merchants/refine.txt#554 (mes)
+- "You must take very good care of your things. None of your items are damaged!"
++ "Você deve cuidar muito bem das suas coisas. Nenhum item está danificado!"
+#: npc/merchants/refine.txt#555 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#556 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#557 (mes)
+- "If everyone is like you, I'm going to be unemployed!! Haha~!"
++ "Se todo mundo fosse assim, eu ficaria desempregado!! Haha~!"
+#: npc/merchants/refine.txt#558 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#559 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#560 (mes)
+- "Hmm..."
++ "Hmm..."
+#: npc/merchants/refine.txt#561 (mes)
+- "Let's see..."
++ "Vejamos..."
+#: npc/merchants/refine.txt#562 (mes)
+- "Out of all your items,"
++ "Dos seus itens,"
+#: npc/merchants/refine.txt#564 (mes)
+- " are damaged."
++ " estão danificados."
+#: npc/merchants/refine.txt#565 (mes)
+- "Would you like to repair?"
++ "Quer consertar?"
+#: npc/merchants/refine.txt#566 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#567 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#568 (mes)
+- "Each repair costs "
++ "Cada conserto custa "
+#: npc/merchants/refine.txt#569 (mes)
+- " Zeny. So to repair all your damaged items would cost "
++ " Zeny. Consertar todos os itens danificados custaria "
+#: npc/merchants/refine.txt#570 (mes)
+- " Zeny! Would you like to repair the items?"
++ " Zeny! Quer consertar os itens?"
+#: npc/merchants/refine.txt#571 (select)
+- "Yes:No"
++ "Sim:Não"
+#: npc/merchants/refine.txt#572 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#573 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#574 (mes)
+- "Whoa whoa..."
++ "Calma, calma..."
+#: npc/merchants/refine.txt#575 (mes)
+- "Check your wallet before you receive the repair bill! I can't repair anything because you don't have enough Zeny."
++ "Confira a carteira antes de pedir a conta! Não posso consertar nada porque você não tem Zeny suficiente."
+#: npc/merchants/refine.txt#576 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#577 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#578 (mes)
+- "Okay! All done. Now, try to be a little more careful. Items have lives too you know."
++ "Pronto! Terminado. Agora tente ter mais cuidado. Item também tem vida, sabia."
+#: npc/merchants/refine.txt#579 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#580 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#581 (mes)
+- "Mmm? Something's wrong. Wait... Equip the items you need to repair and then come back to me."
++ "Mmm? Algo está errado. Espere... equipe os itens que precisa consertar e volte aqui."
+#: npc/merchants/refine.txt#582 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#583 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#584 (mes)
+- "Well, it's no skin off my nose, but it's not good to leave items damaged. You should get them repaired as soon as possible!"
++ "Bom, não é problema meu, mas não é bom deixar item danificado. Conserte assim que puder!"
+#: npc/merchants/refine.txt#585 (mes)
+- "["
++ ""
+#: npc/merchants/refine.txt#586 (mes)
+- "]"
++ ""
+#: npc/merchants/refine.txt#587 (mes)
+- "Hohoho..."
++ "Hohoho..."
+#: npc/merchants/refine.txt#588 (mes)
+- "You don't have"
++ "Você não tem"
+#: npc/merchants/refine.txt#589 (mes)
+- "any business with me"
++ "negócio comigo"
+#: npc/merchants/refine.txt#590 (mes)
+- "if you don't have any"
++ "se não tiver nenhum"
+#: npc/merchants/refine.txt#591 (mes)
+- "items to repair."
++ "item para consertar."
+
+### npc/re/merchants/refine.txt  (313 textos)
+#: npc/re/merchants/refine.txt#4 (mes)
+- "[Vestri]"
++ "[Vestri]"
+#: npc/re/merchants/refine.txt#5 (mes)
+- "I'm the most skillful blacksmith!"
++ "Sou o ferreiro mais habilidoso!"
+#: npc/re/merchants/refine.txt#8 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#9 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#10 (mes)
+- "I am the best Armsmith ever!"
++ "Sou o melhor Armeiro que já existiu!"
+#: npc/re/merchants/refine.txt#11 (mes)
+- "I don't refine normal, boring items."
++ "Não refino item comum e sem graça."
+#: npc/re/merchants/refine.txt#12 (mes)
+- "I only refine items that are Level 10 or higher."
++ "Só refino itens de nível 10 ou mais."
+#: npc/re/merchants/refine.txt#13 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#14 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#15 (mes)
+- "Anyway, you may use my services if your item is Level 10 or higher."
++ "Enfim, pode usar meus serviços se seu item for nível 10 ou mais."
+#: npc/re/merchants/refine.txt#16 (mes)
+- "What do you want me to refine?"
++ "O que quer que eu refine?"
+#: npc/re/merchants/refine.txt#17 (menu)
+- "-["
++ ""
+#: npc/re/merchants/refine.txt#18 (menu)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#19 (menu)
+- ":"
++ ":"
+#: npc/re/merchants/refine.txt#20 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#21 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#22 (mes)
+- "I don't think I can refine any items you have..."
++ "Acho que não consigo refinar nenhum item que você tem..."
+#: npc/re/merchants/refine.txt#23 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#24 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#25 (mes)
+- "You're not wearing"
++ "Você não está usando"
+#: npc/re/merchants/refine.txt#26 (mes)
+- "anything there that"
++ "nada aí que"
+#: npc/re/merchants/refine.txt#27 (mes)
+- "I can refine."
++ "eu possa refinar."
+#: npc/re/merchants/refine.txt#28 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#29 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#30 (mes)
+- "I don't think I can"
++ "Acho que não consigo"
+#: npc/re/merchants/refine.txt#31 (mes)
+- "refine this item at all..."
++ "refinar este item de jeito nenhum..."
+#: npc/re/merchants/refine.txt#32 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#33 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#34 (mes)
+- "I said I don't work with items that are lower than Level 10."
++ "Eu disse que não trabalho com item abaixo do nível 10."
+#: npc/re/merchants/refine.txt#35 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#36 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#37 (mes)
+- "I can't refine this"
++ "Não dá para refinar mais"
+#: npc/re/merchants/refine.txt#38 (mes)
+- "any more. This is as"
++ "este item. Ele já está no"
+#: npc/re/merchants/refine.txt#39 (mes)
+- "refined as it gets!"
++ "máximo de refino!"
+#: npc/re/merchants/refine.txt#44 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#45 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#46 (mes)
+- "Hmm "
++ "Hmm "
+#: npc/re/merchants/refine.txt#48 (mes)
+- ", is that ok?"
++ ", tudo bem?"
+#: npc/re/merchants/refine.txt#49 (mes)
+- "If you want to refine this "
++ "Se quer refinar este "
+#: npc/re/merchants/refine.txt#50 (mes)
+- ","
++ ""
+#: npc/re/merchants/refine.txt#51 (mes)
+- "I will need 1 ^003366"
++ "Vou precisar de 1 ^003366"
+#: npc/re/merchants/refine.txt#52 (mes)
+- "^000000 and "
++ "^000000 e "
+#: npc/re/merchants/refine.txt#53 (mes)
+- "F_InsertComma"
++ ""
+#: npc/re/merchants/refine.txt#54 (mes)
+- " zeny."
++ " zeny."
+#: npc/re/merchants/refine.txt#55 (mes)
+- "Are you sure you want to continue?"
++ "Tem certeza de que quer continuar?"
+#: npc/re/merchants/refine.txt#56 (select)
+- "Yes:No"
++ "Sim:Não"
+#: npc/re/merchants/refine.txt#57 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#58 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#59 (mes)
+- "Hm... if you mind... never mind..."
++ "Hm... se está em dúvida... deixa pra lá..."
+#: npc/re/merchants/refine.txt#60 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#61 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#62 (mes)
+- "This "
++ "Este "
+#: npc/re/merchants/refine.txt#63 (mes)
+- " already has been refined several times."
++ " já foi refinado várias vezes."
+#: npc/re/merchants/refine.txt#64 (mes)
+- "It could be destroyed if I try again."
++ "Pode ser destruído se eu tentar de novo."
+#: npc/re/merchants/refine.txt#65 (mes)
+- "It won't break for sure, but there is has a small chance."
++ "Não vai quebrar com certeza, mas há uma pequena chance."
+#: npc/re/merchants/refine.txt#66 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#67 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#68 (mes)
+- "You could be ^FF0000lowering the upgrade level^000000 of the "
++ "Você pode ^FF0000baixar o nível de refino^000000 do "
+#: npc/re/merchants/refine.txt#69 (mes)
+- ","
++ ""
+#: npc/re/merchants/refine.txt#70 (mes)
+- "or if it breaks, you will lose ^FF0000any cards^000000 or special properties added to it."
++ "ou, se quebrar, vai perder ^FF0000as cartas^000000 e as propriedades especiais nele."
+#: npc/re/merchants/refine.txt#71 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#72 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#73 (mes)
+- "Do you still want me to refine it?"
++ "Ainda quer que eu refine?"
+#: npc/re/merchants/refine.txt#74 (mes)
+- "I think I have given you enough warning."
++ "Acho que já avisei o suficiente."
+#: npc/re/merchants/refine.txt#75 (select)
+- "Yes.:No."
++ "Sim.:Não."
+#: npc/re/merchants/refine.txt#76 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#77 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#78 (mes)
+- "Well, no challenge is one way to go..."
++ "Bom, não arriscar também é um caminho..."
+#: npc/re/merchants/refine.txt#79 (mes)
+- "No risk... that could be wise."
++ "Sem risco... pode ser sensato."
+#: npc/re/merchants/refine.txt#80 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#81 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#82 (mes)
+- "Hm. You don't seem to have enough money or "
++ "Hm. Parece que não tem dinheiro suficiente nem "
+#: npc/re/merchants/refine.txt#83 (mes)
+- "."
++ "."
+#: npc/re/merchants/refine.txt#84 (mes)
+- "Please come back when you have them."
++ "Volte quando tiver."
+#: npc/re/merchants/refine.txt#88 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#89 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#90 (mes)
+- "Wait a second..."
++ "Espera um segundo..."
+#: npc/re/merchants/refine.txt#91 (mes)
+- "Do you think I'm stupid?!"
++ "Acha que eu sou burro?!"
+#: npc/re/merchants/refine.txt#92 (mes)
+- "You switched the item while I wasn't looking! Get out of here!"
++ "Você trocou o item enquanto eu não olhava! Fora daqui!"
+#: npc/re/merchants/refine.txt#93 (mes)
+- "Clang! Clang! Clang! Clang!"
++ "Clang! Clang! Clang! Clang!"
+#: npc/re/merchants/refine.txt#94 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#95 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#96 (mes)
+- "Good! Succes!!!"
++ "Boa! Sucesso!!!"
+#: npc/re/merchants/refine.txt#97 (mes)
+- "I am the best Armsmith."
++ "Sou o melhor Armeiro."
+#: npc/re/merchants/refine.txt#98 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#99 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#100 (mes)
+- "Clang! Clang! Clang! Clang!"
++ "Clang! Clang! Clang! Clang!"
+#: npc/re/merchants/refine.txt#101 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#102 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#103 (mes)
+- "Ahhh!!!"
++ "Aaaah!!!"
+#: npc/re/merchants/refine.txt#104 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#105 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#106 (mes)
+- "Oh my god!"
++ "Meu Deus!"
+#: npc/re/merchants/refine.txt#107 (mes)
+- "The upgrade level has dropped..."
++ "O nível de refino caiu..."
+#: npc/re/merchants/refine.txt#108 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#109 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#110 (mes)
+- "Clang! Clang! Clang!"
++ "Clang! Clang! Clang!"
+#: npc/re/merchants/refine.txt#111 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#112 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#113 (mes)
+- "Hmmm!"
++ "Hmmm!"
+#: npc/re/merchants/refine.txt#114 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#115 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#116 (mes)
+- "Oh my! I've failed to refine stuff..."
++ "Nossa! Falhei no refino..."
+#: npc/re/merchants/refine.txt#117 (mes)
+- "I didn't mean it!"
++ "Não foi por querer!"
+#: npc/re/merchants/refine.txt#118 (mes)
+- "I could have made a mistake even though I am the best Armsmith ever."
++ "Até o melhor Armeiro de todos os tempos pode errar."
+#: npc/re/merchants/refine.txt#119 (mes)
+- "It just wasn't meant to be."
++ "Não era para ser."
+#: npc/re/merchants/refine.txt#120 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#121 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#122 (mes)
+- "I will do a better job next time! Don't worry!"
++ "Da próxima vez faço melhor! Não se preocupe!"
+#: npc/re/merchants/refine.txt#123 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#124 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#125 (mes)
+- "I can refine this to the safe limit or a desired number of times. It's your choice."
++ "Posso refinar até o limite seguro ou o número de vezes que quiser. Você escolhe."
+#: npc/re/merchants/refine.txt#126 (select)
+- "To the safe limit, please."
++ "Até o limite seguro, por favor."
+#: npc/re/merchants/refine.txt#127 (select)
+- "I'll decide how many times."
++ "Eu decido quantas vezes."
+#: npc/re/merchants/refine.txt#128 (select)
+- "I've changed my mind..."
++ "Mudei de ideia..."
+#: npc/re/merchants/refine.txt#129 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#130 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#131 (mes)
+- "How many times would you like me to refine your item?"
++ "Quantas vezes quer que eu refine seu item?"
+#: npc/re/merchants/refine.txt#132 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#133 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#134 (mes)
+- "I can't refine this item that many times."
++ "Não consigo refinar este item tantas vezes."
+#: npc/re/merchants/refine.txt#135 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#136 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#137 (mes)
+- "This will try to refine the equipment "
++ "Isto vai tentar refinar o equipamento "
+#: npc/re/merchants/refine.txt#138 (mes)
+- " times past the safe limit. Your equipment may be destroyed... is that ok?"
++ " vezes acima do limite seguro. Seu equipamento pode ser destruído... tudo bem?"
+#: npc/re/merchants/refine.txt#139 (select)
+- "Yes..."
++ "Sim..."
+#: npc/re/merchants/refine.txt#140 (select)
+- "No..."
++ "Não..."
+#: npc/re/merchants/refine.txt#141 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#142 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#143 (mes)
+- "You said so... So be it."
++ "Você é quem sabe... Que seja."
+#: npc/re/merchants/refine.txt#144 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#145 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#146 (mes)
+- "You said so... So be it."
++ "Você é quem sabe... Que seja."
+#: npc/re/merchants/refine.txt#147 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#148 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#149 (mes)
+- "That will cost you "
++ "Isso vai custar "
+#: npc/re/merchants/refine.txt#151 (mes)
+- " and "
++ " e "
+#: npc/re/merchants/refine.txt#152 (mes)
+- " Zeny. Is that ok?"
++ " Zeny. Tudo bem?"
+#: npc/re/merchants/refine.txt#153 (select)
+- "Yes:No..."
++ "Sim:Não..."
+#: npc/re/merchants/refine.txt#154 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#155 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#156 (mes)
+- "You said so... So be it."
++ "Você é quem sabe... Que seja."
+#: npc/re/merchants/refine.txt#157 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#158 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#159 (mes)
+- "Hm. You don't seem to have enough money or "
++ "Hm. Parece que não tem dinheiro suficiente nem "
+#: npc/re/merchants/refine.txt#160 (mes)
+- "."
++ "."
+#: npc/re/merchants/refine.txt#161 (mes)
+- "Please come back when you have them."
++ "Volte quando tiver."
+#: npc/re/merchants/refine.txt#162 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#163 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#164 (mes)
+- "Look here... you don't have any items on..."
++ "Olha aqui... você não está com item nenhum..."
+#: npc/re/merchants/refine.txt#168 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#169 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#170 (mes)
+- "Clang... No, but did you imagine I could be so stupid?!"
++ "Clang... Não, você achou mesmo que eu seria tão burro assim?!"
+#: npc/re/merchants/refine.txt#171 (mes)
+- "You changed it..."
++ "Você trocou..."
+#: npc/re/merchants/refine.txt#172 (mes)
+- "Get out before I stun you with my Hammer!!"
++ "Suma antes que eu te atordoe com o Martelo!!"
+#: npc/re/merchants/refine.txt#173 (mes)
+- "Clang! Clang! Clang! Clang!"
++ "Clang! Clang! Clang! Clang!"
+#: npc/re/merchants/refine.txt#174 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#175 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#176 (mes)
+- "Clang! Clang! Clang! Clang!"
++ "Clang! Clang! Clang! Clang!"
+#: npc/re/merchants/refine.txt#177 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#178 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#179 (mes)
+- "Ahhh!!!"
++ "Aaaah!!!"
+#: npc/re/merchants/refine.txt#180 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#181 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#182 (mes)
+- "Oh my god!"
++ "Meu Deus!"
+#: npc/re/merchants/refine.txt#183 (mes)
+- "The upgrade level has dropped..."
++ "O nível de refino caiu..."
+#: npc/re/merchants/refine.txt#184 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#185 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#186 (mes)
+- "Clang! Clang! Clang!"
++ "Clang! Clang! Clang!"
+#: npc/re/merchants/refine.txt#187 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#188 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#189 (mes)
+- "Hmmm!"
++ "Hmmm!"
+#: npc/re/merchants/refine.txt#190 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#191 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#192 (mes)
+- "Oh my! I've failed to refine stuff..."
++ "Nossa! Falhei no refino..."
+#: npc/re/merchants/refine.txt#193 (mes)
+- "I didn't mean it!"
++ "Não foi por querer!"
+#: npc/re/merchants/refine.txt#194 (mes)
+- "I could have made a mistake even though I am the best Armsmith ever."
++ "Até o melhor Armeiro de todos os tempos pode errar."
+#: npc/re/merchants/refine.txt#195 (mes)
+- "It just wasn't meant to be."
++ "Não era para ser."
+#: npc/re/merchants/refine.txt#196 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#197 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#198 (mes)
+- "I will do a better job next time! Don't worry!"
++ "Da próxima vez faço melhor! Não se preocupe!"
+#: npc/re/merchants/refine.txt#199 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#200 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#201 (mes)
+- "Good! Succes!!!"
++ "Boa! Sucesso!!!"
+#: npc/re/merchants/refine.txt#202 (mes)
+- "I am the best Blacksmith."
++ "Sou o melhor Ferreiro."
+#: npc/re/merchants/refine.txt#203 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/re/merchants/refine.txt#204 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/re/merchants/refine.txt#205 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/re/merchants/refine.txt#206 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/re/merchants/refine.txt#207 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/re/merchants/refine.txt#208 (mes)
+- "[Austri]"
++ "[Austri]"
+#: npc/re/merchants/refine.txt#209 (mes)
+- "If you bring me 3"
++ "Se me trouxer 3"
+#: npc/re/merchants/refine.txt#210 (mes)
+- "Oridecon or Elunium"
++ "Oridecons ou Eluniums"
+#: npc/re/merchants/refine.txt#211 (mes)
+- "I can exchange them for"
++ "eu troco por"
+#: npc/re/merchants/refine.txt#212 (mes)
+- "Bradium or Carnium."
++ "Bradium ou Carnium."
+#: npc/re/merchants/refine.txt#213 (mes)
+- "Just give me 50,000z."
++ "É só me dar 50.000z."
+#: npc/re/merchants/refine.txt#214 (select)
+- "Oridecon to Bradium.:Elunium to Carnium.:Purified Bradium to Carnium.:No thanks."
++ "Oridecon para Bradium.:Elunium para Carnium.:Bradium Purificado para Carnium.:Não, obrigado."
+#: npc/re/merchants/refine.txt#215 (mes)
+- "[Austri]"
++ "[Austri]"
+#: npc/re/merchants/refine.txt#216 (mes)
+- "Hmm..."
++ "Hmm..."
+#: npc/re/merchants/refine.txt#217 (mes)
+- "[Austri]"
++ "[Austri]"
+#: npc/re/merchants/refine.txt#218 (mes)
+- "Refining with Refined Bradium"
++ "Refino com Bradium Refinado"
+#: npc/re/merchants/refine.txt#219 (mes)
+- "can be a little expensive."
++ "pode ser um pouco cara."
+#: npc/re/merchants/refine.txt#220 (mes)
+- "I can exchange it for some Carnium."
++ "Posso trocar por Carnium."
+#: npc/re/merchants/refine.txt#221 (mes)
+- "Ok! Here's your "
++ "Pronto! Aqui está seu "
+#: npc/re/merchants/refine.txt#222 (mes)
+- "."
++ "."
+#: npc/re/merchants/refine.txt#223 (mes)
+- "Take it and use it well."
++ "Pegue e use bem."
+#: npc/re/merchants/refine.txt#224 (mes)
+- "[Austri]"
++ "[Austri]"
+#: npc/re/merchants/refine.txt#225 (mes)
+- "You better not be trying"
++ "É bom você não estar tentando"
+#: npc/re/merchants/refine.txt#226 (mes)
+- "to cheat me because you"
++ "me enganar só porque"
+#: npc/re/merchants/refine.txt#227 (mes)
+- "don't have enough money"
++ "não tem dinheiro suficiente"
+#: npc/re/merchants/refine.txt#228 (mes)
+- "or "
++ "ou "
+#: npc/re/merchants/refine.txt#229 (mes)
+- "."
++ "."
+#: npc/re/merchants/refine.txt#230 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#231 (mes)
+- "My cool dad Holink said I have the world's greatest refine hammer!!"
++ "Meu pai maneiro, o Holink, disse que eu tenho o melhor martelo de refino do mundo!!"
+#: npc/re/merchants/refine.txt#232 (mes)
+- "Meow Meow~"
++ "Miau Miau~"
+#: npc/re/merchants/refine.txt#233 (mes)
+- "Who do you think I am?"
++ "Quem você pensa que eu sou?"
+#: npc/re/merchants/refine.txt#234 (mes)
+- "Yes!!! You!! You want to refine?"
++ "Isso!!! Você!! Quer refinar?"
+#: npc/re/merchants/refine.txt#235 (menu)
+- "-[Empty]"
++ "-[Vazio]"
+#: npc/re/merchants/refine.txt#236 (menu)
+- ":"
++ ":"
+#: npc/re/merchants/refine.txt#237 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#238 (mes)
+- "Dad said. There's no cure for stupidity..."
++ "O papai dizia: não há cura para a burrice..."
+#: npc/re/merchants/refine.txt#239 (mes)
+- "There's nothing to see here!!"
++ "Não há nada para ver aqui!!"
+#: npc/re/merchants/refine.txt#240 (mes)
+- "What an arrogant left hand this is!"
++ "Que mão esquerda arrogante!"
+#: npc/re/merchants/refine.txt#241 (mes)
+- "What an arrogant right hand this is!"
++ "Que mão direita arrogante!"
+#: npc/re/merchants/refine.txt#242 (mes)
+- "Get that dirty thing off my face!!"
++ "Tira essa coisa suja da minha cara!!"
+#: npc/re/merchants/refine.txt#243 (mes)
+- "Kyaong~! Do not provoke me."
++ "Kyaong~! Não me provoque."
+#: npc/re/merchants/refine.txt#244 (mes)
+- "Where is the accessory?"
++ "Cadê o acessório?"
+#: npc/re/merchants/refine.txt#245 (mes)
+- "Are you talking about the other head part?"
++ "Está falando da outra parte da cabeça?"
+#: npc/re/merchants/refine.txt#246 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#247 (mes)
+- "This can't be refined!!"
++ "Isto não dá para refinar!!"
+#: npc/re/merchants/refine.txt#248 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#249 (mes)
+- "Perfect refining. Did I do this for you?"
++ "Refino perfeito. Fui eu que fiz isso pra você?"
+#: npc/re/merchants/refine.txt#250 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#252 (mes)
+- "Hmm, an armor refine? Someone like you?"
++ "Hmm, refinar armadura? Logo você?"
+#: npc/re/merchants/refine.txt#254 (mes)
+- "A level 1 weapon?"
++ "Uma arma de nível 1?"
+#: npc/re/merchants/refine.txt#255 (mes)
+- "Urr... Annoying... Okay, let's try..."
++ "Rrr... Chato... Está bem, vamos tentar..."
+#: npc/re/merchants/refine.txt#257 (mes)
+- "A level 2 weapon?"
++ "Uma arma de nível 2?"
+#: npc/re/merchants/refine.txt#259 (mes)
+- "Woot!! A level 3 weapon? Impressive~"
++ "Uau!! Uma arma de nível 3? Impressionante~"
+#: npc/re/merchants/refine.txt#261 (mes)
+- "Wow!... A level 4 weapon~!!"
++ "Uau!... Uma arma de nível 4~!!"
+#: npc/re/merchants/refine.txt#262 (mes)
+- "You need ^ff9999"
++ "Você precisa de ^ff9999"
+#: npc/re/merchants/refine.txt#263 (mes)
+- "^000000 and ^ff9999"
++ "^000000 e ^ff9999"
+#: npc/re/merchants/refine.txt#264 (mes)
+- "^000000 Zeny. Do you have them?"
++ "^000000 Zeny. Você tem?"
+#: npc/re/merchants/refine.txt#265 (select)
+- "Yes, I do!!:Forget about it!!"
++ "Sim, quero!!:Deixa pra lá!!"
+#: npc/re/merchants/refine.txt#266 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#267 (mes)
+- "I knew it!!"
++ "Eu sabia!!"
+#: npc/re/merchants/refine.txt#268 (mes)
+- "I knew you were not worth trying my magical refining hammer for."
++ "Eu sabia que você não valia meu martelo mágico de refino."
+#: npc/re/merchants/refine.txt#269 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#270 (mes)
+- "Wow!!"
++ "Uau!!"
+#: npc/re/merchants/refine.txt#271 (mes)
+- "This "
++ "Este "
+#: npc/re/merchants/refine.txt#272 (mes)
+- " has been refined quite a bit, huh?"
++ " já foi bem refinado, hein?"
+#: npc/re/merchants/refine.txt#273 (mes)
+- "You do know that this might break, right?"
++ "Você sabe que isso pode quebrar, né?"
+#: npc/re/merchants/refine.txt#274 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#275 (mes)
+- "If you break the "
++ "Se você quebrar o "
+#: npc/re/merchants/refine.txt#276 (mes)
+- ", you can never use it again."
++ ", nunca mais poderá usá-lo."
+#: npc/re/merchants/refine.txt#277 (mes)
+- "Cards and enchant effects..."
++ "Cartas e encantamentos..."
+#: npc/re/merchants/refine.txt#278 (mes)
+- "the ^ff0000whole thing will disappear^000000."
++ "^ff0000tudo vai desaparecer^000000."
+#: npc/re/merchants/refine.txt#279 (mes)
+- "You still up for this~?"
++ "Ainda topa~?"
+#: npc/re/merchants/refine.txt#280 (select)
+- "Yes, I am!!:Forget about it!!"
++ "Sim, quero!!:Deixa pra lá!!"
+#: npc/re/merchants/refine.txt#281 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#282 (mes)
+- "I knew it!!"
++ "Eu sabia!!"
+#: npc/re/merchants/refine.txt#283 (mes)
+- "You can't even take this big step. Don't think about refining..."
++ "Você nem consegue dar esse passo. Nem pense em refinar..."
+#: npc/re/merchants/refine.txt#284 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#285 (mes)
+- "Hey you!! Didn't I tell you"
++ "Ei, você!! Eu não te disse"
+#: npc/re/merchants/refine.txt#286 (mes)
+- "that you need ^ff9999"
++ "que você precisa de ^ff9999"
+#: npc/re/merchants/refine.txt#287 (mes)
+- "^000000 and ^ff9999"
++ "^000000 e ^ff9999"
+#: npc/re/merchants/refine.txt#288 (mes)
+- "^000000 Zeny??!!"
++ "^000000 Zeny??!!"
+#: npc/re/merchants/refine.txt#292 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#293 (mes)
+- "Wait a second..."
++ "Espera um segundo..."
+#: npc/re/merchants/refine.txt#294 (mes)
+- "Do you think I'm stupid?!"
++ "Acha que eu sou burro?!"
+#: npc/re/merchants/refine.txt#295 (mes)
+- "You switched the item while I wasn't looking! Get out of here!"
++ "Você trocou o item enquanto eu não olhava! Fora daqui!"
+#: npc/re/merchants/refine.txt#296 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#297 (mes)
+- "Cry Hammer!! Cry!!!"
++ "Chora, Martelo!! Chora!!!"
+#: npc/re/merchants/refine.txt#298 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#299 (mes)
+- "Huh?! I failed?!"
++ "Hã?! Eu falhei?!"
+#: npc/re/merchants/refine.txt#300 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#301 (mes)
+- "Arrgg~ It's all~ Broken...? What a pity~"
++ "Aaargh~ Quebrou~ tudo...? Que pena~"
+#: npc/re/merchants/refine.txt#302 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#303 (mes)
+- "Hey...!! Get me another one."
++ "Ei...!! Me traz outro."
+#: npc/re/merchants/refine.txt#304 (mes)
+- "This is not possible."
++ "Isto não é possível."
+#: npc/re/merchants/refine.txt#305 (mes)
+- "How can my hammer fail from refining?"
++ "Como é que meu martelo falha num refino?"
+#: npc/re/merchants/refine.txt#306 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#307 (mes)
+- "Cry Hammer!! Cry!!!"
++ "Chora, Martelo!! Chora!!!"
+#: npc/re/merchants/refine.txt#308 (mes)
+- "[Clink]"
++ "[Clim]"
+#: npc/re/merchants/refine.txt#309 (mes)
+- "Ok!! Perfect!!"
++ "Pronto!! Perfeito!!"
+#: npc/re/merchants/refine.txt#310 (mes)
+- "There's nothing I can't refine"
++ "Não existe nada que eu não refine"
+#: npc/re/merchants/refine.txt#311 (mes)
+- "with this special hammer."
++ "com este martelo especial."
+#: npc/re/merchants/refine.txt#312 (mes)
+- "You can praise me!!"
++ "Pode me elogiar!!"
+#: npc/re/merchants/refine.txt#313 (mes)
+- "What a day!!"
++ "Que dia!!"
+#: npc/re/merchants/refine.txt#352 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#353 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#354 (mes)
+- "We sell and exchange various ores used in smelting."
++ "Vendemos e trocamos vários minérios usados na fundição."
+#: npc/re/merchants/refine.txt#355 (select)
+- "View basic smelting ores"
++ "Ver minérios básicos de fundição"
+#: npc/re/merchants/refine.txt#356 (select)
+- "View advanced smelting ores"
++ "Ver minérios avançados de fundição"
+#: npc/re/merchants/refine.txt#357 (select)
+- "View Ether smelting ores"
++ "Ver minérios de Éter"
+#: npc/re/merchants/refine.txt#358 (select)
+- "Cancel"
++ "Cancelar"
+#: npc/re/merchants/refine.txt#359 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#360 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#361 (mes)
+- "Phracon and Emveretarcon are available for use in smelting low-level weapons."
++ "Phracon e Emveretarcon servem para fundir armas de nível baixo."
+#: npc/re/merchants/refine.txt#363 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#364 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#365 (mes)
+- "We are purifying Elunium Stone or Oridecon Stone, or exchanging them with Bradium or Carnium."
++ "Purificamos Pedra de Elunium e Pedra de Oridecon, ou trocamos por Bradium e Carnium."
+#: npc/re/merchants/refine.txt#367 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#368 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#369 (mes)
+- "We add Etel Dust to existing smelting ores and replace them with Ether-bearing smelting ores."
++ "Acrescentamos Pó de Etel aos minérios comuns e os transformamos em minérios de Éter."
+#: npc/re/merchants/refine.txt#371 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#372 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#373 (mes)
+- "If you lack the materials used for smelting, come anytime."
++ "Se lhe faltar material de fundição, apareça a qualquer hora."
+#: npc/re/merchants/refine.txt#375 (mes)
+- "["
++ ""
+#: npc/re/merchants/refine.txt#376 (mes)
+- "]"
++ ""
+#: npc/re/merchants/refine.txt#377 (mes)
+- "Do you have "
++ "Você tem "
+#: npc/re/merchants/refine.txt#378 (mes)
+- " or "
++ " ou "
+#: npc/re/merchants/refine.txt#379 (mes)
+- "?"
++ ""
+#: npc/re/merchants/refine.txt#380 (mes)
+- "We will exchange them for refined products for use as smelting goods."
++ "Trocamos por produtos refinados para uso na fundição."
+
+### npc/merchants/inn.txt  (108 textos)
+#: npc/merchants/inn.txt#48 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#49 (mes)
+- "Welcome to"
++ "Bem-vindo ao"
+#: npc/merchants/inn.txt#50 (mes)
+- "the Royal Dragon,"
++ "o Dragão Real,"
+#: npc/merchants/inn.txt#51 (mes)
+- "where you can find the"
++ "onde você encontra as"
+#: npc/merchants/inn.txt#52 (mes)
+- "finest accomodations"
++ "as melhores acomodações"
+#: npc/merchants/inn.txt#53 (mes)
+- "and the best service."
++ "e o melhor serviço."
+#: npc/merchants/inn.txt#54 (select)
+- "Save Point:Rest - 5,000 zeny:Cancel"
++ "Salvar ponto de retorno:Descansar - 5.000 zeny:Cancelar"
+#: npc/merchants/inn.txt#56 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#57 (mes)
+- "Thank you, your"
++ "Obrigado, seu"
+#: npc/merchants/inn.txt#58 (mes)
+- "Respawn Point has"
++ "O ponto de retorno foi"
+#: npc/merchants/inn.txt#59 (mes)
+- "been saved here in"
++ "salvo aqui em"
+#: npc/merchants/inn.txt#60 (mes)
+- "the Royal Dragon."
++ "o Dragão Real."
+#: npc/merchants/inn.txt#61 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#62 (mes)
+- "I'm sorry, but"
++ "Sinto muito, mas"
+#: npc/merchants/inn.txt#63 (mes)
+- "you need 5,000 zeny"
++ "você precisa de 5.000 zeny"
+#: npc/merchants/inn.txt#64 (mes)
+- "in order to check in."
++ "para se hospedar."
+#: npc/merchants/inn.txt#65 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#66 (mes)
+- "Thank you~"
++ "Obrigado~"
+#: npc/merchants/inn.txt#67 (mes)
+- "I hope you enjoy"
++ "Espero que aproveite"
+#: npc/merchants/inn.txt#68 (mes)
+- "your stay in the"
++ "sua estadia no"
+#: npc/merchants/inn.txt#69 (mes)
+- "Royal Dragon."
++ "Dragão Real."
+#: npc/merchants/inn.txt#72 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#73 (mes)
+- "Thank you and"
++ "Obrigado e"
+#: npc/merchants/inn.txt#74 (mes)
+- "have a nice day."
++ "tenha um bom dia."
+#: npc/merchants/inn.txt#80 (mes)
+- "[Inn Master]"
++ "[Estalajadeiro]"
+#: npc/merchants/inn.txt#81 (mes)
+- "Good day~"
++ "Bom dia~"
+#: npc/merchants/inn.txt#82 (mes)
+- "Welcome to the"
++ "Bem-vindo à"
+#: npc/merchants/inn.txt#83 (mes)
+- "most comfortable"
++ "mais confortável"
+#: npc/merchants/inn.txt#84 (mes)
+- "inn here in Veins~"
++ "estalagem aqui em Veins~"
+#: npc/merchants/inn.txt#85 (select)
+- "Save:Take a Rest -> 5000 zeny:Quit"
++ "Salvar:Descansar -> 5000 zeny:Sair"
+#: npc/merchants/inn.txt#86 (mes)
+- "[Inn Master]"
++ "[Estalajadeiro]"
+#: npc/merchants/inn.txt#87 (mes)
+- "Your Respawn Point"
++ "Seu ponto de retorno"
+#: npc/merchants/inn.txt#88 (mes)
+- "has been saved in Veins."
++ "foi salvo em Veins."
+#: npc/merchants/inn.txt#89 (mes)
+- "Enjoy your stay in town~"
++ "Aproveite sua estadia na cidade~"
+#: npc/merchants/inn.txt#91 (mes)
+- "[Inn Master]"
++ "[Estalajadeiro]"
+#: npc/merchants/inn.txt#92 (mes)
+- "I'm sorry, but I don't"
++ "Sinto muito, mas eu não"
+#: npc/merchants/inn.txt#93 (mes)
+- "think you have enough"
++ "acho que você tem"
+#: npc/merchants/inn.txt#94 (mes)
+- "money to check in. The"
++ "dinheiro para se hospedar. A"
+#: npc/merchants/inn.txt#95 (mes)
+- "service charge is 5,000 zeny."
++ "a diária custa 5.000 zeny."
+#: npc/merchants/inn.txt#96 (mes)
+- "Enjoy your stay~"
++ "Aproveite sua estadia~"
+#: npc/merchants/inn.txt#98 (mes)
+- "[Inn Master]"
++ "[Estalajadeiro]"
+#: npc/merchants/inn.txt#99 (mes)
+- "Please come again."
++ "Volte sempre."
+#: npc/merchants/inn.txt#100 (mes)
+- "[Hotel Keeper]"
++ "[Recepcionista]"
+#: npc/merchants/inn.txt#101 (mes)
+- "Welcome to the beautiful Brasilis Hotel."
++ "Bem-vindo ao belíssimo Hotel Brasilis."
+#: npc/merchants/inn.txt#102 (select)
+- "Save:Rest -5000 zeny:Cancel"
++ "Salvar:Descansar - 5000 zeny:Cancelar"
+#: npc/merchants/inn.txt#103 (mes)
+- "[Hotel Keeper]"
++ "[Recepcionista]"
+#: npc/merchants/inn.txt#104 (mes)
+- "Do you want to save here at the Brasilis Hotel?"
++ "Quer salvar seu ponto de retorno aqui no Hotel Brasilis?"
+#: npc/merchants/inn.txt#105 (select)
+- "No thank you.:Absolutely."
++ "Não, obrigado.:Com certeza."
+#: npc/merchants/inn.txt#106 (mes)
+- "[Hotel Keeper]"
++ "[Recepcionista]"
+#: npc/merchants/inn.txt#107 (mes)
+- "Ok then, enjoy your stay."
++ "Certo, então aproveite sua estadia."
+#: npc/merchants/inn.txt#108 (mes)
+- "[Hotel Keeper]"
++ "[Recepcionista]"
+#: npc/merchants/inn.txt#109 (mes)
+- "Your respawn has been saved here at the hotel. I hope that you enjoy your stay here in Brasilis."
++ "Seu ponto de retorno foi salvo aqui no hotel. Espero que aproveite sua estadia em Brasilis."
+#: npc/merchants/inn.txt#111 (mes)
+- "[Hotel Keeper]"
++ "[Recepcionista]"
+#: npc/merchants/inn.txt#112 (mes)
+- "I will show you a great room."
++ "Vou lhe mostrar um ótimo quarto."
+#: npc/merchants/inn.txt#114 (mes)
+- "[Hotel Keeper]"
++ "[Recepcionista]"
+#: npc/merchants/inn.txt#115 (mes)
+- "I'm sorry, but the service charge is 5,000 zeny per night."
++ "Sinto muito, mas a diária custa 5.000 zeny."
+#: npc/merchants/inn.txt#116 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#117 (mes)
+- "Good day, welcome to the"
++ "Bom dia, bem-vindo ao"
+#: npc/merchants/inn.txt#118 (mes)
+- "Einbroch Hotel. The staff is"
++ "Hotel Einbroch. A equipe está"
+#: npc/merchants/inn.txt#119 (mes)
+- "always striving to accommodate"
++ "sempre se esforçando para receber"
+#: npc/merchants/inn.txt#120 (mes)
+- "our guests with the highest"
++ "nossos hóspedes com o mais alto"
+#: npc/merchants/inn.txt#121 (mes)
+- "standards in cleanliness,"
++ "padrão de limpeza,"
+#: npc/merchants/inn.txt#122 (mes)
+- "service and convenience~"
++ "serviço e conforto~"
+#: npc/merchants/inn.txt#123 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#124 (mes)
+- "Are you looking"
++ "Você está procurando"
+#: npc/merchants/inn.txt#125 (mes)
+- "for Mr. Defru Ark?"
++ "para o Sr. Defru Ark?"
+#: npc/merchants/inn.txt#126 (mes)
+- "Oh right, he did mention"
++ "Ah, sim, ele mencionou"
+#: npc/merchants/inn.txt#127 (mes)
+- "waiting for some package"
++ "esperando um pacote"
+#: npc/merchants/inn.txt#128 (mes)
+- "from the Airport. Now let"
++ "do aeroporto. Deixe-me"
+#: npc/merchants/inn.txt#129 (mes)
+- "me pull up that information..."
++ "buscar essa informação..."
+#: npc/merchants/inn.txt#130 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#131 (mes)
+- "Ah, here we are."
++ "Ah, aqui está."
+#: npc/merchants/inn.txt#132 (mes)
+- "Mr. Defru Ark is"
++ "O Sr. Defru Ark está"
+#: npc/merchants/inn.txt#133 (mes)
+- "staying in Room 201."
++ "hospedado no quarto 201."
+#: npc/merchants/inn.txt#134 (select)
+- "Save:Take Rest - 5,000 zeny:Cancel"
++ "Salvar:Descansar - 5.000 zeny:Cancelar"
+#: npc/merchants/inn.txt#135 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#136 (mes)
+- "Your Respawn Point"
++ "Seu ponto de retorno"
+#: npc/merchants/inn.txt#137 (mes)
+- "has been saved here"
++ "foi salvo aqui"
+#: npc/merchants/inn.txt#138 (mes)
+- "in the Einbroch Hotel."
++ "no Hotel Einbroch."
+#: npc/merchants/inn.txt#139 (mes)
+- "Thank you, and please"
++ "Obrigado, e por favor"
+#: npc/merchants/inn.txt#140 (mes)
+- "come again."
++ "volte sempre."
+#: npc/merchants/inn.txt#142 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#143 (mes)
+- "Thank you."
++ "Obrigado."
+#: npc/merchants/inn.txt#144 (mes)
+- "Please enjoy"
++ "Aproveite"
+#: npc/merchants/inn.txt#145 (mes)
+- "your rest~"
++ "seu descanso~"
+#: npc/merchants/inn.txt#147 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#148 (mes)
+- "I'm sorry, but the"
++ "Sinto muito, mas o"
+#: npc/merchants/inn.txt#149 (mes)
+- "accommodation fee is"
++ "a taxa de hospedagem é"
+#: npc/merchants/inn.txt#150 (mes)
+- "5,000 zeny. Next time,"
++ "5.000 zeny. Da próxima vez,"
+#: npc/merchants/inn.txt#151 (mes)
+- "please make sure that you"
++ "certifique-se de que você"
+#: npc/merchants/inn.txt#152 (mes)
+- "bring enough zeny, okay?"
++ "traga zeny suficiente, combinado?"
+#: npc/merchants/inn.txt#153 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#154 (mes)
+- "Thank you and"
++ "Obrigado e"
+#: npc/merchants/inn.txt#155 (mes)
+- "please come again~"
++ "volte sempre~"
+#: npc/merchants/inn.txt#156 (mes)
+- "[Hotel Employee]"
++ "[Funcionário do Hotel]"
+#: npc/merchants/inn.txt#157 (mes)
+- "Have a good day."
++ "Tenha um bom dia."
+#: npc/merchants/inn.txt#158 (mes)
+- "Welcome to"
++ "Bem-vindo ao"
+#: npc/merchants/inn.txt#159 (mes)
+- "."
++ "."
+#: npc/merchants/inn.txt#160 (mes)
+- "How may I help you?"
++ "Em que posso ajudar?"
+#: npc/merchants/inn.txt#161 (select)
+- "Save:Take a Rest -> 5000 zeny:Cancel"
++ "Salvar:Descansar -> 5000 zeny:Cancelar"
+#: npc/merchants/inn.txt#162 (mes)
+- "Your respawn point"
++ "Seu ponto de retorno"
+#: npc/merchants/inn.txt#163 (mes)
+- "has been saved."
++ "foi salvo."
+#: npc/merchants/inn.txt#164 (mes)
+- "Thank you,"
++ "Obrigado,"
+#: npc/merchants/inn.txt#165 (mes)
+- "please come again."
++ "volte sempre."
+#: npc/merchants/inn.txt#166 (mes)
+- "I'm sorry, but the service charge is 5,000 zeny. Please make sure that you have enough money to check in next time, okay?"
++ "Sinto muito, mas a diária custa 5.000 zeny. Da próxima vez traga dinheiro suficiente para se hospedar, combinado?"
+#: npc/merchants/inn.txt#167 (mes)
+- "Thank you."
++ "Obrigado."
+#: npc/merchants/inn.txt#168 (mes)
+- "I hope you"
++ "Espero que você"
+#: npc/merchants/inn.txt#169 (mes)
+- "enjoy your rest~"
++ "bom descanso~"

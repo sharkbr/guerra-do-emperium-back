@@ -72,8 +72,8 @@ izlude_c,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude_c	8W_SOLDIER
 izlude_d,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude_d	8W_SOLDIER
 
 -	script	::Guard_izlude	-1,{
-	mes "[Izlude Guard]";
-	mes "Welcome to Izlude.";
+	mes "[Guarda de Izlude]";
+	mes "Bem-vindo a Izlude.";
 	close;
 }
 prt_fild08,350,219,4	duplicate(Guard_izlude)	Guard#izlude	8W_SOLDIER
@@ -85,13 +85,13 @@ prt_fild08d,350,219,4	duplicate(Guard_izlude)	Guard#izlude_d	8W_SOLDIER
 // Channel Warper :: channel
 //============================================================
 function	script	F_IzludeChannel	{
-	mes "[Channel Warp Official]";
-	mes "Izlude is a verly lively place is it not?";
-	mes "I am here to help make Izlude feel more smooth!";
-	mes "I can send you to another copy of Izlude.";
-	mes "Do you want to go to another copy?";
+	mes "[Oficial de Canal]";
+	mes "Izlude é um lugar bem movimentado, não é?";
+	mes "Estou aqui para deixar Izlude mais tranquila!";
+	mes "Posso enviar você para outra cópia de Izlude.";
+	mes "Quer ir para outra cópia?";
 	next;
-	set .@i, select(getarg(0)+":Never mind");
+	set .@i, select(getarg(0)+":Deixa pra lá");
 	if (.@i < 6) {
 		setarray .@maps$[1],"izlude","izlude_a","izlude_b","izlude_c","izlude_d";
 		savepoint .@maps$[.@i],128,98,1,1;
@@ -112,59 +112,59 @@ izlude,143,205,7	script	Talkative Kid#iz	4_F_KID2,{
 	end;
 
 OnTimer64000:
-	npctalk "Talkative Kid : I used all my Novice Red Potions. What should I do?";
+	npctalk "Criança Falante : Usei todas as minhas Poções Vermelhas de Aprendiz. E agora?";
 	end;
 
 OnTimer72000:
-	npctalk "Talkative Kid : Where is the shop?";
+	npctalk "Criança Falante : Onde fica a loja?";
 	end;
 
 OnTimer136000:
-	npctalk "Talkative Kid : Idiot! You do not know about the 'shortcut window'?";
+	npctalk "Criança Falante : Bobo! Você não sabe o que é a 'barra de atalhos'?";
 	end;
 
 OnTimer144000:
-	npctalk "Talkative Kid : The items in your inventory can be dragged and put in the shortcut window.";
+	npctalk "Criança Falante : Dá para arrastar os itens do inventário para a barra de atalhos.";
 	end;
 
 OnTimer212000:
-	npctalk "Talkative Kid : I got so many beginner's items in the Academy!";
+	npctalk "Criança Falante : Ganhei um monte de itens de iniciante na Academia!";
 	end;
 
 OnTimer276000:
-	npctalk "Talkative Kid : They even gave me weapons and a shield!";
+	npctalk "Criança Falante : Me deram até armas e um escudo!";
 	end;
 
 OnTimer284000:
-	npctalk "Talkative Kid : Just press  <Ctrl+~key> to open the map you have.";
+	npctalk "Criança Falante : Aperte <Ctrl+~> para abrir o mapa.";
 	end;
 
 OnTimer344000:
-	npctalk "Talkative Kid : Then do you want to go Criatura Academy with me? I'm learning how to battle from Instructor Subino!";
+	npctalk "Criança Falante : Então quer ir comigo à Academia Criatura? Estou aprendendo a lutar com o Instrutor Subino!";
 	end;
 
 OnTimer348000:
-	npctalk "Talkative Kid : The Academy is in North side of Izlude. Let's go~!";
+	npctalk "Criança Falante : A Academia fica ao norte de Izlude. Vamos~!";
 	end;
 
 OnTimer416000:
-	npctalk "Talkative Kid : It's a system to guide you to a destination.";
+	npctalk "Criança Falante : É um sistema que guia você até um destino.";
 	end;
 
 OnTimer424000:
-	npctalk "Talkative Kid : In the basic menu, please click the [Navigation] button.";
+	npctalk "Criança Falante : No menu básico, clique no botão [Navegação].";
 	end;
 
 OnTimer492000:
-	npctalk "Talkative Kid : Whee, Ain't gonna use your brain? Please type /where in the chat window now!";
+	npctalk "Criança Falante : Ué, não vai usar a cabeça? Digita /where na janela de conversa!";
 	end;
 
 OnTimer552000:
-	npctalk "Talkative Kid : In this case, you can push the <Enter> key.";
+	npctalk "Criança Falante : Nesse caso, aperte a tecla <Enter>.";
 	end;
 
 OnTimer560000:
-	npctalk "Talkative Kid : We are just repeating the same dialog. HaHaha.";
+	npctalk "Criança Falante : A gente está repetindo a mesma conversa. Hahaha.";
 	end;
 
 OnTimer565000:
@@ -182,67 +182,67 @@ izlude,146,205,7	script	Talkative Adventurer#iz	4_M_KID1,{
 	end;
 
 OnTimer69000:
-	npctalk "Talkative Adventurer : You can buy potion from Merchants.";
+	npctalk "Aventureiro Falante : Dá para comprar poção com os Mercadores.";
 	end;
 
 OnTimer77000:
-	npctalk "Talkative Adventurer : It's the Potion image in the mini map.";
+	npctalk "Aventureiro Falante : É o desenho de Poção no minimapa.";
 	end;
 
 OnTimer131000:
-	npctalk "Talkative Adventurer : Is there any way to use items easily?";
+	npctalk "Aventureiro Falante : Existe algum jeito fácil de usar itens?";
 	end;
 
 OnTimer141000:
-	npctalk "Talkative Adventurer : Shortcut window? The slots at the top of the screen? How can I use it?";
+	npctalk "Aventureiro Falante : Barra de atalhos? Aqueles espaços no topo da tela? Como se usa?";
 	end;
 
 OnTimer149000:
-	npctalk "Talkative Adventurer : For inventory, do you mean 'item' menu? Oh, it is!";
+	npctalk "Aventureiro Falante : Inventário é o menu de 'itens'? Ah, é mesmo!";
 	end;
 
 OnTimer217000:
-	npctalk "Talkative Adventurer : I have a bunch of potions?";
+	npctalk "Aventureiro Falante : Eu tenho um monte de poções?";
 	end;
 
 OnTimer281000:
-	npctalk "Talkative Adventurer : What?! I should go to the Academy now!";
+	npctalk "Aventureiro Falante : O quê?! Preciso ir à Academia agora!";
 	end;
 
 OnTimer279000:
-	npctalk "Talkative Adventurer : Where is Izlude? In the center?";
+	npctalk "Aventureiro Falante : Onde fica Izlude? No centro?";
 	end;
 
 OnTimer339000:
-	npctalk "Talkative Adventurer : I do not know what to do.";
+	npctalk "Aventureiro Falante : Não sei o que fazer.";
 	end;
 
 OnTimer349000:
-	npctalk "Talkative Adventurer : Oh yea? I want to know so many things~ I will go with you!";
+	npctalk "Aventureiro Falante : É mesmo? Quero saber tanta coisa~ Eu vou com você!";
 	end;
 
 OnTimer411000:
-	npctalk "Talkative Adventurer : Navigation, What is that?";
+	npctalk "Aventureiro Falante : Navegação, o que é isso?";
 	end;
 
 OnTimer421000:
-	npctalk "Talkative Adventurer : Oh-! Should I search for a Kafra Employee?";
+	npctalk "Aventureiro Falante : Ah-! Devo procurar uma Funcionária Kafra?";
 	end;
 
 OnTimer487000:
-	npctalk "Talkative Adventurer : What is the town name?";
+	npctalk "Aventureiro Falante : Qual é o nome da cidade?";
 	end;
 
 OnTimer497000:
-	npctalk "Talkative Adventurer : I cannot see the part where I can write something in the chat window?";
+	npctalk "Aventureiro Falante : Não estou vendo onde se escreve na janela de conversa.";
 	end;
 
 OnTimer557000:
-	npctalk "Talkative Adventurer : Oh you smarty...";
+	npctalk "Aventureiro Falante : Ah, seu esperto...";
 	end;
 
 OnTimer555000:
-	npctalk "Talkative Adventurer : A while ago, one Novice talked to me like hey 'Talkative Adventurer'?. HaHaha.";
+	npctalk "Aventureiro Falante : Faz um tempo, um Aprendiz me chamou de 'Aventureiro Falante'. Hahaha.";
 	end;
 
 OnTimer565000:
@@ -260,11 +260,11 @@ prt_fild08,338,217,7	script	Resting Adventurer#iz	4_F_SITDOWN,{
 	end;
 
 OnTimer60000:
-	npctalk "Resting Adventurer : You know what? If you are sitting, HP and SP recovery is faster.";
+	npctalk "Aventureiro Descansando : Sabia? Sentado, a recuperação de HP e SP é mais rápida.";
 	end;
 
 OnTimer65000:
-	npctalk "Resting Adventurer : Sitting is possible if your basic job skill level is more than 3. Shortcut is pressing the <INSERT> key.";
+	npctalk "Aventureiro Descansando : Dá para sentar se sua habilidade básica for nível 3 ou mais. O atalho é a tecla <INSERT>.";
 OnInit:
 	initnpctimer;
 	end;

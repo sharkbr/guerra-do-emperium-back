@@ -1,0 +1,2182 @@
+# Catalogo de traducao PT-BR - grupo "cidades"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/cities/prontera.txt  (404 textos)
+#: npc/cities/prontera.txt#2 (mes)
+- "[Prontera Guard]"
++ "[Guarda de Prontera]"
+#: npc/cities/prontera.txt#3 (mes)
+- "Welcome to Prontera."
++ "Bem-vindo a Prontera."
+#: npc/cities/prontera.txt#4 (mes)
+- "[Shuger]"
++ "[Shuger]"
+#: npc/cities/prontera.txt#5 (mes)
+- "Outside the safety of the city, there is a pink beast known as ^000077Poring^000000."
++ "Fora da segurança da cidade existe uma criatura rosa conhecida como ^000077Poring^000000."
+#: npc/cities/prontera.txt#6 (mes)
+- "[Shuger]"
++ "[Shuger]"
+#: npc/cities/prontera.txt#7 (mes)
+- "Though it's cute in appearance and does not actively harm people, Poring is known to absorb items that are on the ground into its own body."
++ "Apesar de fofo e de não atacar ninguém, o Poring é conhecido por absorver no próprio corpo os itens que estão no chão."
+#: npc/cities/prontera.txt#8 (mes)
+- "[Shuger]"
++ "[Shuger]"
+#: npc/cities/prontera.txt#9 (mes)
+- "So if there's something on the ground that you want to pick up, be careful lest it be consumed by a Poring. Then again... Porings are pretty weak..."
++ "Então, se houver algo no chão que você queira pegar, cuidado para um Poring não engolir antes. Por outro lado... Porings são bem fraquinhos..."
+#: npc/cities/prontera.txt#10 (mes)
+- "[Shuger]"
++ "[Shuger]"
+#: npc/cities/prontera.txt#11 (mes)
+- "The green colored ^000077Poporing^000000 is tougher than Poring. Newbies generally make the mistake of attacking it without being aware of its power... So be careful!"
++ "O ^000077Poporing^000000 verde é mais duro que o Poring. Novatos costumam atacá-lo sem saber da força dele... Cuidado!"
+#: npc/cities/prontera.txt#12 (mes)
+- "[Tono]"
++ "[Tono]"
+#: npc/cities/prontera.txt#13 (mes)
+- "Did you know?"
++ "Você sabia?"
+#: npc/cities/prontera.txt#14 (mes)
+- "[Tono]"
++ "[Tono]"
+#: npc/cities/prontera.txt#15 (mes)
+- "The larva of Creamy is Fabre. So, those green little wormy things are actually the babies of those pinkish, purply butterfly things you see around."
++ "A larva da Creamy é o Fabre. Ou seja, aquelas minhoquinhas verdes são os filhotes daquelas borboletas rosa-arroxeadas que você vê por aí."
+#: npc/cities/prontera.txt#16 (mes)
+- "[Tono]"
++ "[Tono]"
+#: npc/cities/prontera.txt#17 (mes)
+- "But before Fabres can become Creamys, they go into a pupa stage. When that happens, they turn into these dark purple cocoons we call Pupa. Simple, huh?"
++ "Mas antes de virar Creamy, o Fabre passa por um estágio de casulo. Aí ele vira aqueles casulos roxo-escuros que chamamos de Pupa. Simples, né?"
+#: npc/cities/prontera.txt#18 (mes)
+- "[Tono]"
++ "[Tono]"
+#: npc/cities/prontera.txt#19 (mes)
+- "There's another monster that goes through a really big change... Pickys."
++ "Tem outro monstro que passa por uma mudança e tanto... os Pickys."
+#: npc/cities/prontera.txt#20 (mes)
+- "[Tono]"
++ "[Tono]"
+#: npc/cities/prontera.txt#21 (mes)
+- "Pickys are so cute when they're young, but when they grow up, they turn into those big, gawky looking Peco Pecos. Talk about awkward puberty."
++ "Pickys são uma gracinha quando pequenos, mas ao crescer viram aqueles Peco Pecos grandalhões e desengonçados. Que puberdade difícil."
+#: npc/cities/prontera.txt#22 (mes)
+- "[Merideth]"
++ "[Merideth]"
+#: npc/cities/prontera.txt#23 (mes)
+- "The weather was nice on my day off so my family and I went for a picnic. We chose to go to a slightly secluded area where I saw something really interesting..."
++ "O tempo estava bom na minha folga, então fui fazer um piquenique com a família. Escolhemos um lugar afastado e vi algo bem interessante..."
+#: npc/cities/prontera.txt#24 (mes)
+- "[Merideth]"
++ "[Merideth]"
+#: npc/cities/prontera.txt#25 (mes)
+- "It was a large group of Giant Hornets! What was even weirder was that they were all controlled by this one Queen Bee, following her every command."
++ "Era um bando enorme de Vespas Gigantes! E o mais estranho: todas obedeciam a uma única Abelha Rainha, cumprindo cada ordem dela."
+#: npc/cities/prontera.txt#26 (mes)
+- "[Merideth]"
++ "[Merideth]"
+#: npc/cities/prontera.txt#27 (mes)
+- "They might just be bugs, but I think they've got the right idea. Men really ought to take commands from us women... We do things right!"
++ "Podem ser só insetos, mas acho que estão certos. Os homens é que deviam obedecer a nós, mulheres... a gente faz as coisas direito!"
+#: npc/cities/prontera.txt#28 (mes)
+- "[YuPi]"
++ "[YuPi]"
+#: npc/cities/prontera.txt#29 (mes)
+- "Although many monsters may look the same, be careful! There are variations among monsters that have the same basic form."
++ "Muitos monstros parecem iguais, mas cuidado! Há variações entre monstros de mesma forma básica."
+#: npc/cities/prontera.txt#30 (mes)
+- "[YuPi]"
++ "[YuPi]"
+#: npc/cities/prontera.txt#31 (mes)
+- "One monster, that looks just like a peaceful and weak one that you've already encountered, may actually be wild and ferocious!"
++ "Um monstro idêntico a outro pacato e fraco que você já enfrentou pode ser selvagem e feroz!"
+#: npc/cities/prontera.txt#32 (mes)
+- "[YuPi]"
++ "[YuPi]"
+#: npc/cities/prontera.txt#33 (mes)
+- "You can tell these kinds of monsters apart by their body color. Wilder and more powerful monsters have more dangerous looking colors."
++ "Dá para diferenciar pela cor do corpo. Os mais selvagens e poderosos têm cores de aparência mais perigosa."
+#: npc/cities/prontera.txt#34 (mes)
+- "[YuNa]"
++ "[YuNa]"
+#: npc/cities/prontera.txt#35 (mes)
+- "Behold..."
++ "Contemplem..."
+#: npc/cities/prontera.txt#36 (mes)
+- "Mighty Odin!"
++ "O poderoso Odin!"
+#: npc/cities/prontera.txt#37 (mes)
+- "God of wisdom!"
++ "Deus da sabedoria!"
+#: npc/cities/prontera.txt#38 (mes)
+- "God of war!"
++ "Deus da guerra!"
+#: npc/cities/prontera.txt#39 (mes)
+- "[YuNa]"
++ "[YuNa]"
+#: npc/cities/prontera.txt#40 (mes)
+- "Here, in Rune-Midgarts, we serve Odin, the fearsome god who sacrificed one of his eyes in order to acquire wisdom."
++ "Aqui, em Rune-Midgard, servimos a Odin, o temível deus que sacrificou um dos olhos para obter sabedoria."
+#: npc/cities/prontera.txt#41 (mes)
+- "[YuNa]"
++ "[YuNa]"
+#: npc/cities/prontera.txt#42 (mes)
+- "The statue you see behind of me is a sculpture of mighty Odin. But, it's a shame because it's such a bad likeness."
++ "A estátua atrás de mim é uma escultura do poderoso Odin. Mas é uma pena, porque não se parece nada com ele."
+#: npc/cities/prontera.txt#43 (mes)
+- "[YuNa]"
++ "[YuNa]"
+#: npc/cities/prontera.txt#44 (mes)
+- "I mean, this statue is totally different from our image of Odin. I guess the sculptor took too many artistic liberties."
++ "Quer dizer, é completamente diferente da imagem que temos de Odin. Acho que o escultor tomou liberdades demais."
+#: npc/cities/prontera.txt#45 (mes)
+- "[YuNa]"
++ "[YuNa]"
+#: npc/cities/prontera.txt#46 (mes)
+- "I bet the first time you saw this statue, you thought, '^3355FFOh, what a nice muscle man on a horse^000000.'"
++ "Aposto que na primeira vez que você viu a estátua pensou: '^3355FFQue musculoso simpático a cavalo^000000.'"
+#: npc/cities/prontera.txt#47 (mes)
+- "[YuNA]"
++ "[YuNA]"
+#: npc/cities/prontera.txt#48 (mes)
+- "But this statue is obviously not muscular enough, not godly enough to fairly represent a god! Maybe if he had a halo?"
++ "Mas a estátua claramente não é musculosa nem divina o bastante para representar um deus! Talvez com um halo?"
+#: npc/cities/prontera.txt#49 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#50 (mes)
+- "Whew!"
++ "Ufa!"
+#: npc/cities/prontera.txt#51 (mes)
+- "Man oh man..."
++ "Rapaz, rapaz..."
+#: npc/cities/prontera.txt#52 (mes)
+- "I'm gonna be such"
++ "Eu vou ser um"
+#: npc/cities/prontera.txt#53 (mes)
+- "an awesome Knight!"
++ "Cavaleiro incrível!"
+#: npc/cities/prontera.txt#54 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#55 (mes)
+- "I know, I know..."
++ "Eu sei, eu sei..."
+#: npc/cities/prontera.txt#56 (mes)
+- "First, I gotta be a Swordie. But if I keep practicing, I can become an awesome Swordie. And then after that..."
++ "Primeiro tenho que ser Espadachim. Mas se eu treinar bastante, viro um Espadachim incrível. E depois disso..."
+#: npc/cities/prontera.txt#57 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#58 (mes)
+- "I'll be the most"
++ "Eu serei o Cavaleiro"
+#: npc/cities/prontera.txt#59 (mes)
+- "awesomest Knight around!"
++ "mais incrível de todos!"
+#: npc/cities/prontera.txt#60 (mes)
+- "It's... It's my most precious dream."
++ "É... é o meu sonho mais precioso."
+#: npc/cities/prontera.txt#61 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#62 (mes)
+- "MAGNUM BREAK!"
++ "MAGNUM BREAK!"
+#: npc/cities/prontera.txt#63 (select)
+- "I wanna be strong too!:Um... Do you best."
++ "Eu também quero ser forte!:Ahn... boa sorte."
+#: npc/cities/prontera.txt#64 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#65 (mes)
+- "Wow...!"
++ "Uau...!"
+#: npc/cities/prontera.txt#66 (mes)
+- "That's so awesome!"
++ "Isso é demais!"
+#: npc/cities/prontera.txt#67 (mes)
+- "We both share the"
++ "Nós dois temos"
+#: npc/cities/prontera.txt#68 (mes)
+- "same dream!"
++ "o mesmo sonho!"
+#: npc/cities/prontera.txt#69 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#70 (mes)
+- "Hey, if you wanna become a Swordie, you gotta go to Izlude. There, you can go ahead and take the Swordman job test. The first time, I, um, failed miserably. But I won't fail again!"
++ "Ei, se quer ser Espadachim, tem que ir a Izlude. Lá dá para fazer o teste de mudança de classe. Da primeira vez eu, ahn, fracassei feio. Mas não falho de novo!"
+#: npc/cities/prontera.txt#71 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#72 (mes)
+- "Training! Training! Gotta keep training! You need to be strong too! Once we both get stronger, we'll meet again!"
++ "Treino! Treino! Tenho que treinar! Você também precisa ficar forte! Quando os dois estiverem fortes, a gente se encontra de novo!"
+#: npc/cities/prontera.txt#73 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#74 (mes)
+- "Heh heh! I will for sure! 'Strife, the courageous Knight.' It sounds cool, doesn't it?"
++ "Rê rê! Com certeza! 'Strife, o Cavaleiro corajoso.' Soa bem, não soa?"
+#: npc/cities/prontera.txt#75 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#76 (mes)
+- "Fight...!"
++ "Luta...!"
+#: npc/cities/prontera.txt#77 (mes)
+- "Fight Fight FIGHT!"
++ "Luta Luta LUTA!"
+#: npc/cities/prontera.txt#78 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#79 (mes)
+- "Hey...!"
++ "Ei...!"
+#: npc/cities/prontera.txt#80 (mes)
+- "You look different now. *Gasp* You've gotten... ^993333stronger^000000. Wow, that's so coooool!"
++ "Você está diferente. *Suspiro* Você ficou... ^993333mais forte^000000. Nossa, que legaaaal!"
+#: npc/cities/prontera.txt#81 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#82 (mes)
+- "I'm so jealous!"
++ "Que inveja!"
+#: npc/cities/prontera.txt#83 (mes)
+- "I guess that means"
++ "Acho que isso quer dizer"
+#: npc/cities/prontera.txt#84 (mes)
+- "that now, I gotta"
++ "que agora eu tenho"
+#: npc/cities/prontera.txt#85 (mes)
+- "train even harder!"
++ "que treinar ainda mais!"
+#: npc/cities/prontera.txt#86 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#87 (mes)
+- "This is, well, for you to help you get even stronger. I guess I want to thank you for being such a good example."
++ "Isto é, bem, para você ficar ainda mais forte. Acho que é meu jeito de agradecer pelo bom exemplo."
+#: npc/cities/prontera.txt#88 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#89 (mes)
+- "Fight! Fight!"
++ "Luta! Luta!"
+#: npc/cities/prontera.txt#90 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#91 (mes)
+- "Whew!"
++ "Ufa!"
+#: npc/cities/prontera.txt#92 (mes)
+- "Man oh man..."
++ "Rapaz, rapaz..."
+#: npc/cities/prontera.txt#93 (mes)
+- "I'm gonna be such"
++ "Eu vou ser um"
+#: npc/cities/prontera.txt#94 (mes)
+- "an awesome Knight!"
++ "Cavaleiro incrível!"
+#: npc/cities/prontera.txt#95 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#96 (mes)
+- "I know, I know..."
++ "Eu sei, eu sei..."
+#: npc/cities/prontera.txt#97 (mes)
+- "First, I gotta be a Swordie. But if I keep practicing, I can become an awesome Swordie. And then after that..."
++ "Primeiro tenho que ser Espadachim. Mas se eu treinar bastante, viro um Espadachim incrível. E depois disso..."
+#: npc/cities/prontera.txt#98 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#99 (mes)
+- "I'll be the most"
++ "Eu serei o Cavaleiro"
+#: npc/cities/prontera.txt#100 (mes)
+- "awesomest Knight around!"
++ "mais incrível de todos!"
+#: npc/cities/prontera.txt#101 (mes)
+- "It's... It's my most precious dream."
++ "É... é o meu sonho mais precioso."
+#: npc/cities/prontera.txt#102 (select)
+- "Do your best.:Quit it, kid."
++ "Boa sorte.:Larga mão, garoto."
+#: npc/cities/prontera.txt#103 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#104 (mes)
+- "Yes, yes of course! Someday, I'll even be as strong as you! When that day comes, I hope that we can train together!"
++ "Sim, claro! Um dia vou ser forte como você! Quando esse dia chegar, espero que a gente treine junto!"
+#: npc/cities/prontera.txt#105 (mes)
+- "[Strife]"
++ "[Strife]"
+#: npc/cities/prontera.txt#106 (mes)
+- "Wha--?"
++ "Qu--?"
+#: npc/cities/prontera.txt#107 (mes)
+- "Fine! But I'm gonna keep on training, and we'll see who gets the last laugh!"
++ "Tudo bem! Mas vou continuar treinando, e a gente vê quem ri por último!"
+#: npc/cities/prontera.txt#108 (mes)
+- "[Towngirl Dairenne]"
++ "[Dairenne, a Moça da Cidade]"
+#: npc/cities/prontera.txt#109 (mes)
+- "Ahh..."
++ "Ahh..."
+#: npc/cities/prontera.txt#110 (mes)
+- "The streets are too crowded these days. *Cough Cough* Look at all this dust, not everything about living in the capital city is good. Anyway, may I help you?"
++ "As ruas andam cheias demais. *Cof cof* Olha essa poeira, nem tudo em morar na capital é bom. Enfim, posso ajudar?"
+#: npc/cities/prontera.txt#111 (select)
+- "Talk:Cancel"
++ "Conversar:Cancelar"
+#: npc/cities/prontera.txt#112 (mes)
+- "[Towngirl Dairenne]"
++ "[Dairenne, a Moça da Cidade]"
+#: npc/cities/prontera.txt#113 (mes)
+- "I wonder if you are interested in parties or dresses. Hehehe. These days, the hot topic is definitely the colorful, extravagant, magnificent dresses you can wear."
++ "Será que você se interessa por festas e vestidos? Hehehe. Hoje em dia o assunto do momento são os vestidos coloridos, extravagantes, magníficos."
+#: npc/cities/prontera.txt#114 (mes)
+- "[Towngirl Dairenne]"
++ "[Dairenne, a Moça da Cidade]"
+#: npc/cities/prontera.txt#115 (mes)
+- "To get such dazzling colors, I heard you have to use a dye that you can only get in Morocc. But I also heard that the price is beyond imagination."
++ "Para conseguir cores tão deslumbrantes, ouvi dizer que só com uma tintura que se acha em Morroc. Mas dizem que o preço é inimaginável."
+#: npc/cities/prontera.txt#116 (mes)
+- "[Towngirl Dairenne]"
++ "[Dairenne, a Moça da Cidade]"
+#: npc/cities/prontera.txt#117 (mes)
+- "Aahhhh~ I wish I could wear such a dress. Even if it's just once..."
++ "Aahhhh~ Queria tanto usar um vestido desses. Nem que fosse uma vez só..."
+#: npc/cities/prontera.txt#118 (mes)
+- "[Towngirl Dairenne]"
++ "[Dairenne, a Moça da Cidade]"
+#: npc/cities/prontera.txt#119 (mes)
+- "Eh~? Why talk to me in the first place? What a strange person."
++ "Ãh~? Por que falar comigo, afinal? Que pessoa estranha."
+#: npc/cities/prontera.txt#120 (mes)
+- "[Curator Guiss]"
++ "[Curador Guiss]"
+#: npc/cities/prontera.txt#121 (mes)
+- "Here, in the Western branch of the Prontera Library, "
++ "Aqui, na ala oeste da Biblioteca de Prontera, "
+#: npc/cities/prontera.txt#122 (mes)
+- "we keep records of monsters found in various dungeons scattered around the Rune-Midgarts Kingdom."
++ "guardamos registros dos monstros encontrados nas masmorras espalhadas pelo Reino de Rune-Midgard."
+#: npc/cities/prontera.txt#123 (mes)
+- "[Curator Guiss]"
++ "[Curador Guiss]"
+#: npc/cities/prontera.txt#124 (mes)
+- "You'll find that these Monster Encyclopedias are of great convenience,"
++ "Estas Enciclopédias de Monstros são bastante convenientes,"
+#: npc/cities/prontera.txt#125 (mes)
+- "as creatures are organized by the dungeon in which they reside."
++ "pois as criaturas estão organizadas pela masmorra onde vivem."
+#: npc/cities/prontera.txt#126 (mes)
+- "[Curator Guiss]"
++ "[Curador Guiss]"
+#: npc/cities/prontera.txt#127 (mes)
+- "I must say, this is a most useful reference for you adventurers. When dealing with beasts, it's good to be informed and understand what you're up against."
++ "É uma referência muito útil para vocês, aventureiros. Ao lidar com feras, é bom estar informado e saber o que se tem pela frente."
+#: npc/cities/prontera.txt#128 (mes)
+- "If you would like to peruse monster records organized by their properties, please visit the Eastern branch of our library."
++ "Se quiser consultar os registros organizados por propriedade elemental, visite a ala leste da biblioteca."
+#: npc/cities/prontera.txt#129 (mes)
+- "[Library Girl Ellen]"
++ "[Bibliotecária Ellen]"
+#: npc/cities/prontera.txt#130 (mes)
+- "Here in the Eastern branch of the Prontera Library, we provide Monster Encyclopedias in which creatures are organized by their properties. We also have books on Merchant and Blacksmith skills."
++ "Aqui, na ala leste da Biblioteca de Prontera, temos Enciclopédias de Monstros organizadas por propriedade. Também temos livros sobre habilidades de Mercador e Ferreiro."
+#: npc/cities/prontera.txt#131 (mes)
+- "Ooh~! The other branch of our library also has many interesting things to read! So if you get a chance, you just might want to visit."
++ "Ooh~! A outra ala da biblioteca também tem muita coisa interessante para ler! Se tiver oportunidade, vale a visita."
+#: npc/cities/prontera.txt#132 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#133 (mes)
+- "The Prontera Culvert sewers have been left unattended for a long time. Now that place is infested with ^000077Thief Bugs^000000!"
++ "O Esgoto de Prontera está abandonado há muito tempo. Agora aquilo está infestado de ^000077Bichos-Papões^000000!"
+#: npc/cities/prontera.txt#134 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#135 (mes)
+- "These Thief Bugs seem to quickly grab items dropped on the ground, and then run away with them... They're even more annoying than cockroaches!!"
++ "Esses Bichos-Papões agarram rapidinho os itens caídos no chão e fogem com eles... São mais irritantes que barata!!"
+#: npc/cities/prontera.txt#136 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#137 (mes)
+- "I dunno if you'll believe me, but I saw the weirdest thing down in the ^000077Culvert Sewers^000000..."
++ "Não sei se vai acreditar, mas eu vi a coisa mais estranha lá no ^000077Esgoto^000000..."
+#: npc/cities/prontera.txt#138 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#139 (mes)
+- "I've been training in the 3rd level for so long that there isn't anything that I don't know about in that area. But when I finally went to the 4th level..."
++ "Treinei tanto tempo no 3º andar que não há nada ali que eu não conheça. Mas quando finalmente desci ao 4º..."
+#: npc/cities/prontera.txt#140 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#141 (mes)
+- "There, I saw a shimmering light. I was completely captivated and went to approach it. It must have been some sort of beautiful fairy..."
++ "Lá eu vi uma luz cintilante. Fiquei hipnotizado e fui me aproximando. Devia ser alguma fada linda..."
+#: npc/cities/prontera.txt#142 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#143 (mes)
+- "But when I got"
++ "Mas quando cheguei"
+#: npc/cities/prontera.txt#144 (mes)
+- "close enough,"
++ "perto o bastante,"
+#: npc/cities/prontera.txt#145 (mes)
+- "I saw it was"
++ "vi que era"
+#: npc/cities/prontera.txt#146 (mes)
+- "a ^000077Thief Bug^000000!"
++ "um ^000077Bicho-Papão^000000!"
+#: npc/cities/prontera.txt#147 (mes)
+- "[Old Man]"
++ "[Velho]"
+#: npc/cities/prontera.txt#148 (mes)
+- "I've never seen a Thief Bug shining with light before! Man, just when you think you've seen it all..."
++ "Nunca tinha visto um Bicho-Papão brilhando! Rapaz, quando você acha que já viu de tudo..."
+#: npc/cities/prontera.txt#149 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#150 (mes)
+- "Sigh...as more and more people coming into Prontera,"
++ "Ai... com cada vez mais gente chegando a Prontera,"
+#: npc/cities/prontera.txt#151 (mes)
+- "better and better my business has become nowadays. But..."
++ "meu negócio vai cada vez melhor. Mas..."
+#: npc/cities/prontera.txt#152 (mes)
+- "Well, I am having a hard time to keep a good stock of food ingredients."
++ "Bem, está difícil manter um bom estoque de ingredientes."
+#: npc/cities/prontera.txt#153 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#154 (mes)
+- "As you see, the numbers of the monsters outside of town has been greatly increased and they have caused trouble to my suppliers to deliver the goods at a right time."
++ "Como vê, o número de monstros fora da cidade cresceu muito, e isso atrapalha meus fornecedores a entregar no prazo."
+#: npc/cities/prontera.txt#155 (mes)
+- "I cannot make my ultra nice menus with common ingredients because they are super special!"
++ "Não dá para fazer meus pratos ultra especiais com ingredientes comuns!"
+#: npc/cities/prontera.txt#156 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#157 (mes)
+- "So I have been contacting super heavy champion hunters for fresh and special ingredients."
++ "Por isso venho procurando caçadores campeões para trazer ingredientes frescos e especiais."
+#: npc/cities/prontera.txt#158 (mes)
+- "But the demand has exceeded the supply in these days."
++ "Mas a procura passou a oferta ultimamente."
+#: npc/cities/prontera.txt#159 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#160 (mes)
+- "I can't keep my business busy without my special menu 'Crunch Crunch Sour' and 'Savory Yum Yum'...*Sigh*"
++ "Não consigo manter o movimento sem meus pratos 'Croc Croc Azedo' e 'Saboroso Nham Nham'...*Ai*"
+#: npc/cities/prontera.txt#161 (select)
+- "'Crunch Crunch Sour'?:'Savory Yum Yum'?:Cancel."
++ "'Croc Croc Azedo'?:'Saboroso Nham Nham'?:Cancelar."
+#: npc/cities/prontera.txt#162 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#163 (mes)
+- "The basic ingredients of my Crunch Crunch Sour are the ants roaming inside the Ant Hell in the desert."
++ "O ingrediente básico do Croc Croc Azedo são as formigas do Formigueiro, no deserto."
+#: npc/cities/prontera.txt#164 (mes)
+- "Rumor has it that the numbers of the ants have been greatly increased and they have become more violent, so that no one wants to get in the place."
++ "Dizem que as formigas se multiplicaram e ficaram mais violentas, e agora ninguém quer entrar lá."
+#: npc/cities/prontera.txt#165 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#166 (mes)
+- "*Sigh*...I am afraid that my business days are numbered now."
++ "*Ai*... temo que os dias do meu negócio estejam contados."
+#: npc/cities/prontera.txt#167 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#168 (mes)
+- "Savory Yum Yum's basic ingredients are the grasshoppers romping in a place over the west forest. Yeah, it is the best selling menu ever."
++ "O ingrediente básico do Saboroso Nham Nham são os gafanhotos da floresta a oeste. É o prato que mais vende."
+#: npc/cities/prontera.txt#169 (mes)
+- "Rumor has it that they have become very violent and Bees have built their habitat in the place, so that no one wants to get in there."
++ "Dizem que ficaram muito violentos e que abelhas fizeram ninho por lá, então ninguém quer ir."
+#: npc/cities/prontera.txt#170 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#171 (mes)
+- "*Sigh*...I am afraid that my business days are numbered now."
++ "*Ai*... temo que os dias do meu negócio estejam contados."
+#: npc/cities/prontera.txt#172 (mes)
+- "[Bartender]"
++ "[Barman]"
+#: npc/cities/prontera.txt#173 (mes)
+- "Take care of yourself~."
++ "Cuide-se~."
+#: npc/cities/prontera.txt#174 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#175 (mes)
+- "Hey, come on over and let's drink! I have lots of interesting stories to tell!"
++ "Ei, chega mais e vamos beber! Tenho muitas histórias interessantes!"
+#: npc/cities/prontera.txt#176 (mes)
+- "I know lots of things about Prontera. I have seen many fine views and I also have explored some monster lairs around this city."
++ "Sei muita coisa sobre Prontera. Já vi paisagens lindas e explorei covis de monstros perto da cidade."
+#: npc/cities/prontera.txt#177 (select)
+- "How could you enter monster lairs?:Cancel"
++ "Como você entrou em covis de monstros?:Cancelar"
+#: npc/cities/prontera.txt#178 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#179 (mes)
+- "I may appear to be a drunken man but I am more than meets the eye."
++ "Posso parecer um bêbado, mas sou mais do que aparento."
+#: npc/cities/prontera.txt#180 (mes)
+- "Well, I happened to enter the places for carrying weapons for hunters or for delivering stuffs and whatsoever."
++ "Bom, eu entrava nesses lugares carregando armas para caçadores ou entregando coisas."
+#: npc/cities/prontera.txt#181 (mes)
+- "You might think of me as a mere delivery guy,"
++ "Você pode me achar um mero entregador,"
+#: npc/cities/prontera.txt#182 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#183 (mes)
+- "But I am very proud of my job. You know how tough the world has become?"
++ "mas tenho muito orgulho do meu trabalho. Sabe como o mundo ficou difícil?"
+#: npc/cities/prontera.txt#184 (mes)
+- "No matter how hard a work is, I am not afraid of doing that."
++ "Por mais duro que seja o trabalho, não tenho medo de fazer."
+#: npc/cities/prontera.txt#185 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#186 (mes)
+- "Anyways, that is how I have explored some strange places like monster lairs..."
++ "Enfim, foi assim que explorei uns lugares estranhos, como covis de monstros..."
+#: npc/cities/prontera.txt#187 (mes)
+- "That is also a reason why I keep my job."
++ "É também por isso que continuo no emprego."
+#: npc/cities/prontera.txt#188 (mes)
+- "Ah, I just recall being inside the maze and the spooky forest!"
++ "Ah, acabei de lembrar do labirinto e da floresta assombrada!"
+#: npc/cities/prontera.txt#189 (select)
+- "The Maze?:The Spooky Forest?:Cancel"
++ "O labirinto?:A floresta assombrada?:Cancelar"
+#: npc/cities/prontera.txt#190 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#191 (mes)
+- "Yes. Few days ago, I have entered a mysterious maze following a group of hunters at the north of Prontera."
++ "Sim. Dias atrás entrei num labirinto misterioso ao norte de Prontera, seguindo um grupo de caçadores."
+#: npc/cities/prontera.txt#192 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#193 (mes)
+- "They said that they could get lots and lots of rare items from the maze even if the maze was filled with awfully strong monsters."
++ "Diziam que dava para tirar de lá muitos itens raros, mesmo o labirinto estando cheio de monstros fortíssimos."
+#: npc/cities/prontera.txt#194 (mes)
+- "So we went there but as soon as we entered, we were just stuck inside the maze, you know."
++ "Fomos até lá, mas assim que entramos ficamos presos dentro do labirinto."
+#: npc/cities/prontera.txt#195 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#196 (mes)
+- "We were just circling around and then we decided to leave the place. That was one hell of the maze."
++ "Ficamos andando em círculos e resolvemos sair. Aquilo era um labirinto dos infernos."
+#: npc/cities/prontera.txt#197 (mes)
+- "But I made up my mind that I would successfully explore the maze one day."
++ "Mas decidi que um dia vou explorar aquele labirinto até o fim."
+#: npc/cities/prontera.txt#198 (select)
+- "How can I get there?:Cancel"
++ "Como chego lá?:Cancelar"
+#: npc/cities/prontera.txt#199 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#200 (mes)
+- "Err? Haven't you still toured the outside of Prontera?"
++ "Ãh? Você ainda não deu uma volta fora de Prontera?"
+#: npc/cities/prontera.txt#201 (mes)
+- "The maze can be found inside a forest at the north of Prontera. Go check the north west side of the forest."
++ "O labirinto fica dentro de uma floresta ao norte de Prontera. Procure no lado noroeste da floresta."
+#: npc/cities/prontera.txt#202 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#203 (mes)
+- "Yeap, be careful when you adventure alone~"
++ "É isso, tome cuidado ao se aventurar sozinho~"
+#: npc/cities/prontera.txt#204 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#205 (mes)
+- "When you go outside of Prontera heading to north east, you will arrive at the peaceful ruins. I have been there a while ago, to deliver something to a priest."
++ "Saindo de Prontera para nordeste você chega às ruínas tranquilas. Estive lá faz um tempo, entregando algo a um sacerdote."
+#: npc/cities/prontera.txt#206 (mes)
+- "I had to pass a forest on the way to the ruins, and the forest was filled with monkeys and raccoons."
++ "Tive que atravessar uma floresta no caminho, e ela estava cheia de macacos e guaxinins."
+#: npc/cities/prontera.txt#207 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#208 (mes)
+- "Be forewarned that the forest is not a place to go on a picnic. If you drop something on the ground, the monkeys come out from nowhere and take away all of your possessions."
++ "Fica o aviso: a floresta não é lugar de piquenique. Se você deixar algo cair, os macacos aparecem do nada e levam tudo."
+#: npc/cities/prontera.txt#209 (select)
+- "How can I get there?:Cancel"
++ "Como chego lá?:Cancelar"
+#: npc/cities/prontera.txt#210 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#211 (mes)
+- "There is no road directly leads to the ruins. But if you go north and keep heading to east, you will get there."
++ "Não há estrada direta para as ruínas. Mas indo ao norte e seguindo para leste você chega."
+#: npc/cities/prontera.txt#212 (mes)
+- "Oh, be careful on your way to the ruins because there are some weird plant things that assault passersby for no reason."
++ "Ah, cuidado no caminho: há umas plantas esquisitas que atacam quem passa sem motivo nenhum."
+#: npc/cities/prontera.txt#213 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#214 (mes)
+- "Yeap, be careful when you adventure alone~"
++ "É isso, tome cuidado ao se aventurar sozinho~"
+#: npc/cities/prontera.txt#215 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#216 (mes)
+- "Yeap, be careful when you adventure alone~"
++ "É isso, tome cuidado ao se aventurar sozinho~"
+#: npc/cities/prontera.txt#217 (mes)
+- "[Shevild]"
++ "[Shevild]"
+#: npc/cities/prontera.txt#218 (mes)
+- "Come back any time~"
++ "Volte quando quiser~"
+#: npc/cities/prontera.txt#219 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#220 (mes)
+- "What...?"
++ "O quê...?"
+#: npc/cities/prontera.txt#221 (mes)
+- "Sick and tired of killing monsters on fields and in dungeons already? Come on..."
++ "Já cansou de matar monstro em campo e masmorra? Qual é..."
+#: npc/cities/prontera.txt#222 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#223 (mes)
+- "Hahaha, it seems you're pretty confident of your strength, huh? Hmm... Why don't you go join a guild? I mean, all the tough guys are going it."
++ "Hahaha, parece que você confia na própria força, hein? Hmm... Por que não entra num clã? Os brutamontes todos estão fazendo isso."
+#: npc/cities/prontera.txt#224 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#225 (mes)
+- "Personally though, I don't know any guilds, so you'll have to ask around. Make some contacts, connections, you know, networking."
++ "Pessoalmente eu não conheço clã nenhum, então vai ter que perguntar por aí. Faça contatos, conexões, sabe como é."
+#: npc/cities/prontera.txt#226 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#227 (mes)
+- "I don't even know if you don't like taking orders, but if that's the case, why don't you make your own guild?"
++ "Não sei se você não gosta de receber ordens, mas se for o caso, por que não cria o seu próprio clã?"
+#: npc/cities/prontera.txt#228 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#229 (mes)
+- "One time I walked all the way to Al de Baran, instead of taking a warp. It was pretty dangerous with all those monsters!"
++ "Uma vez fui a pé até Al De Baran, em vez de usar portal. Foi bem perigoso com todos aqueles monstros!"
+#: npc/cities/prontera.txt#230 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#231 (mes)
+- "I almost died! Some of those monsters just kept following me and trying to kill me, even though I did nothing to them! It was pretty crazy."
++ "Quase morri! Alguns monstros ficavam me seguindo e tentando me matar, mesmo eu não tendo feito nada! Foi uma loucura."
+#: npc/cities/prontera.txt#232 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#233 (mes)
+- "Well, still, I feel that taking the scenic route was worth it. There were some pretty magnificent sights on the way."
++ "Mesmo assim, valeu a pena ir pelo caminho panorâmico. Havia paisagens magníficas no percurso."
+#: npc/cities/prontera.txt#234 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#235 (mes)
+- "Even the city of Al de Baran is a splendid vision to the eyes, with its elegant architecture and romantic canal."
++ "A própria cidade de Al De Baran é um espetáculo, com a arquitetura elegante e o canal romântico."
+#: npc/cities/prontera.txt#236 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#237 (mes)
+- "The headquarters of Kafra Corporation is also located in Al de Baran. You should really stop by and check it out for yourself."
++ "A sede da Corporação Kafra também fica em Al De Baran. Vale muito a pena dar uma passada e ver."
+#: npc/cities/prontera.txt#238 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#239 (mes)
+- "The kingdom of"
++ "O reino de"
+#: npc/cities/prontera.txt#240 (mes)
+- "Rune-Midgarts is ruled"
++ "Rune-Midgard é governado"
+#: npc/cities/prontera.txt#241 (mes)
+- "by kind and benevolent"
++ "pelo gentil e benevolente"
+#: npc/cities/prontera.txt#242 (mes)
+- "King Tristram III."
++ "Rei Tristram III."
+#: npc/cities/prontera.txt#243 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#244 (mes)
+- "We really owe the prosperity of Rune-Midgarts to him. He was able to convince the people to welcome outsiders into Prontera, as well as establish trade to foreign lands, like Amatsu and Kunlun."
++ "Devemos a ele a prosperidade de Rune-Midgard. Ele convenceu o povo a receber forasteiros em Prontera e estabeleceu comércio com terras distantes, como Amatsu e Kunlun."
+#: npc/cities/prontera.txt#245 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#246 (mes)
+- "But sometimes..."
++ "Mas às vezes..."
+#: npc/cities/prontera.txt#247 (mes)
+- "It can be hard to believe he's such a brilliant and capable leader."
++ "é difícil acreditar que ele seja um líder tão brilhante e capaz."
+#: npc/cities/prontera.txt#248 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#249 (mes)
+- "After all, the only time I see him is when he's conducting weddings. Even if a wedding isn't going on, he's still kind of loitering around the Prontera church!"
++ "Afinal, só o vejo quando está celebrando casamento. E mesmo sem casamento ele fica rondando a igreja de Prontera!"
+#: npc/cities/prontera.txt#250 (mes)
+- "[TenSue]"
++ "[TenSue]"
+#: npc/cities/prontera.txt#251 (mes)
+- "But..."
++ "Mas..."
+#: npc/cities/prontera.txt#252 (mes)
+- "I guess you can get away with a lot of things when you happen to be lord and ruler of an entire nation."
++ "Acho que dá para relevar muita coisa quando se é senhor e governante de uma nação inteira."
+#: npc/cities/prontera.txt#253 (mes)
+- "[Marvin]"
++ "[Marvin]"
+#: npc/cities/prontera.txt#254 (mes)
+- "Whether it's schmoozing with a member of the opposite sex, or battling monsters, I gotta say, it's all about ^333399skills^000000."
++ "Seja para conquistar alguém do sexo oposto ou para enfrentar monstros, tudo se resume a ^333399habilidades^000000."
+#: npc/cities/prontera.txt#255 (mes)
+- "[Marvin]"
++ "[Marvin]"
+#: npc/cities/prontera.txt#256 (mes)
+- "I can't help you much when it comes to the subject of talking to attractive women such as myself, but I can tell you a little more about skills that help in battle."
++ "Não posso ajudar muito no assunto de conversar com mulheres atraentes como eu, mas posso falar das habilidades que ajudam em batalha."
+#: npc/cities/prontera.txt#257 (mes)
+- "I don't really have any advice for skills when it comes to talking to a cute guy, but I can let you in on what I know about skills that help in battle."
++ "Não tenho conselho de habilidade para conversar com rapazes bonitos, mas posso contar o que sei das que ajudam em batalha."
+#: npc/cities/prontera.txt#258 (mes)
+- "[Marvin]"
++ "[Marvin]"
+#: npc/cities/prontera.txt#259 (mes)
+- "For most skills, the maximum level is level 10. It's easy to stress yourself out, since it takes so many points to completely master a skill. What skills should you choose?!"
++ "A maioria das habilidades vai até o nível 10. Dá aflição, porque são muitos pontos para dominar uma só. Quais escolher?!"
+#: npc/cities/prontera.txt#260 (mes)
+- "[Marvin]"
++ "[Marvin]"
+#: npc/cities/prontera.txt#261 (mes)
+- "After all, if you spend too many skill points on one skill, you might not be able to learn another. That's right, there's a limit to the number of total skill points you can earn."
++ "Afinal, se gastar pontos demais numa habilidade, pode não conseguir aprender outra. Isso mesmo: há um limite de pontos que se pode ganhar."
+#: npc/cities/prontera.txt#262 (mes)
+- "[Marvin]"
++ "[Marvin]"
+#: npc/cities/prontera.txt#263 (mes)
+- "But you know what? Not every skill is mastered at level 10. You can master some skills at only level 5. And even better, some skills are already mastered at level 1 or 2."
++ "Mas sabe de uma coisa? Nem toda habilidade se domina no nível 10. Algumas se dominam no 5. E melhor ainda: algumas já vêm dominadas no nível 1 ou 2."
+#: npc/cities/prontera.txt#264 (mes)
+- "[Marvin]"
++ "[Marvin]"
+#: npc/cities/prontera.txt#265 (mes)
+- "So relax and plan ahead, so you can master all the skills that you really want to master the most. Also, don't just put skill points into anything. Remember to use your skill points wisely."
++ "Então relaxe e planeje, para dominar as habilidades que realmente importam. E não distribua pontos a esmo: use com sabedoria."
+#: npc/cities/prontera.txt#266 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#267 (mes)
+- "11..."
++ "11..."
+#: npc/cities/prontera.txt#268 (mes)
+- "12..."
++ "12..."
+#: npc/cities/prontera.txt#269 (mes)
+- "Mmm, good. I think I'll be able to finish before tonight's party."
++ "Mmm, ótimo. Acho que termino antes da festa de hoje à noite."
+#: npc/cities/prontera.txt#270 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#271 (mes)
+- "Oh! I didn't realize I had a guest. How may I help you?"
++ "Oh! Não vi que tinha visita. Em que posso ajudar?"
+#: npc/cities/prontera.txt#272 (select)
+- "Talk:Dye Clothing:Cancel"
++ "Conversar:Tingir roupa:Cancelar"
+#: npc/cities/prontera.txt#273 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#274 (mes)
+- "Life may have gotten a little better, but receiving all these orders? *Whew!* Young ladies these days must be very well off, so my services may no longer be a luxury."
++ "A vida até melhorou um pouco, mas tantos pedidos assim? *Ufa!* As moças de hoje devem estar bem de vida, então meu serviço já não é luxo."
+#: npc/cities/prontera.txt#275 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#276 (mes)
+- "Well, people like them probably further the pursuit of beauty and fashion. But, of course, that's only my opinion."
++ "Bom, gente assim deve impulsionar a busca por beleza e moda. Mas isso é só a minha opinião."
+#: npc/cities/prontera.txt#277 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#278 (mes)
+- "I believe for us humans, clothes are one of the few ways to show our personality, style, and beauty."
++ "Acredito que, para nós humanos, a roupa é uma das poucas formas de mostrar personalidade, estilo e beleza."
+#: npc/cities/prontera.txt#279 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#280 (mes)
+- "Considering this, I personally think my job is very helpful and rather fancy. This in itself makes it all worthwhile. Coarse fabric and rough leather burst with energy and life when colored..."
++ "Por isso considero meu ofício útil e até refinado. Só isso já vale a pena. Tecido grosseiro e couro bruto ganham energia e vida quando ganham cor..."
+#: npc/cities/prontera.txt#281 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#282 (mes)
+- "It is a very hard and tedious process, but the happiness and delight you feel when your clothes are done makes up for all the hard work."
++ "É um processo duro e tedioso, mas a alegria de ver a roupa pronta compensa todo o esforço."
+#: npc/cities/prontera.txt#283 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#284 (mes)
+- "Ah...!"
++ "Ah...!"
+#: npc/cities/prontera.txt#285 (mes)
+- "You came to dye"
++ "Você veio tingir"
+#: npc/cities/prontera.txt#286 (mes)
+- "your clothes as well."
++ "sua roupa também."
+#: npc/cities/prontera.txt#287 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#288 (mes)
+- "But... I'm so sorry."
++ "Mas... sinto muito."
+#: npc/cities/prontera.txt#289 (mes)
+- "I don't have enough time to dye your clothes right now. I have so many orders that are still waiting to be done."
++ "Não tenho tempo para tingir sua roupa agora. Tenho pedidos demais na fila."
+#: npc/cities/prontera.txt#290 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#291 (mes)
+- "I'm sorry for the inconvenience, but could you come back again next time?"
++ "Desculpe o transtorno, mas você poderia voltar outra hora?"
+#: npc/cities/prontera.txt#292 (mes)
+- "[Tailor Ginedin Rephere]"
++ "[Alfaiate Ginedin Rephere]"
+#: npc/cities/prontera.txt#293 (mes)
+- "Feel free to take your time and relax here. I apologize that I have nothing to serve you, though."
++ "Fique à vontade e descanse aqui. Desculpe não ter nada para lhe oferecer."
+#: npc/cities/prontera.txt#294 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#295 (mes)
+- "Hello there~"
++ "Olá~"
+#: npc/cities/prontera.txt#296 (mes)
+- "Are you interested in learning more about helping and supporting other people?"
++ "Tem interesse em aprender mais sobre ajudar e apoiar os outros?"
+#: npc/cities/prontera.txt#297 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#298 (mes)
+- "The Acolytes and Priests trained in this church can heal people, cure them of certain conditions, and even awaken the battle potential of other adventurers."
++ "Os Noviços e Sacerdotes formados nesta igreja curam pessoas, tratam certas condições e até despertam o potencial de combate de outros aventureiros."
+#: npc/cities/prontera.txt#299 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#300 (mes)
+- "Go and ahead and ask if you have any questions about skills for Acolytes and Priests."
++ "Pergunte à vontade se tiver dúvidas sobre habilidades de Noviço e Sacerdote."
+#: npc/cities/prontera.txt#301 (select)
+- "About Heal:About Cure:About Increase AGI:About Angelus:About Blessing:About Warp Portal:End Conversation"
++ "Sobre Curar:Sobre Medicar:Sobre Aumentar Agilidade:Sobre Angelus:Sobre Bênção:Sobre Portal:Encerrar conversa"
+#: npc/cities/prontera.txt#302 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#303 (mes)
+- "You can recover your own HP with the ^6666CCHeal^000000 skill. Healing is one of the most important ways you can help your friends in battle."
++ "Você recupera o próprio HP com ^6666CCCurar^000000. Curar é uma das formas mais importantes de ajudar os amigos em batalha."
+#: npc/cities/prontera.txt#304 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#305 (mes)
+- "Even though our powers are usually used to heal others, you can actually use the ^6666CCHeal^000000 skill to hurt Undead monsters."
++ "Embora nosso poder normalmente sirva para curar, dá para usar ^6666CCCurar^000000 para ferir monstros Mortos-Vivos."
+#: npc/cities/prontera.txt#306 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#307 (mes)
+- "Just remember to hold down the ^6666CCShift^000000 key when you use Cure or Heal on Undead monsters. Just be sure to hurt the monsters though, and don't use it to help monsters."
++ "Lembre-se de segurar ^6666CCShift^000000 ao usar Medicar ou Curar em Mortos-Vivos. E use para ferir o monstro, nunca para ajudá-lo."
+#: npc/cities/prontera.txt#308 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#309 (mes)
+- "Later, if you've learned ^6666CCHeal^000000 as an Acolyte, you can learn ^6666CCSanctuary^000000 if you become a Priest."
++ "Mais adiante, tendo aprendido ^6666CCCurar^000000 como Noviço, você poderá aprender ^6666CCSantuário^000000 ao virar Sacerdote."
+#: npc/cities/prontera.txt#310 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#311 (mes)
+- "Priests use ^6666CCSantuary^000000 to create an area which will restore the HP of you and your friends if you rest within the Sanctuary's area."
++ "Sacerdotes usam ^6666CCSantuário^000000 para criar uma área que restaura o HP de você e dos amigos que ficarem dentro dela."
+#: npc/cities/prontera.txt#312 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#313 (mes)
+- "Once you reach ^6666CCLevel 2 Heal^000000 as an Acolyte, you can learn ^6666CCCure^000000, which can be used to treat abnormal statuses."
++ "Ao chegar em ^6666CCCurar nível 2^000000 como Noviço, você pode aprender ^6666CCMedicar^000000, que trata condições anormais."
+#: npc/cities/prontera.txt#314 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#315 (mes)
+- "This skill can be such a life saver, since almost every abnormal status can be cured with the Cure skill. Just remember that you need ^6666CCLevel 2 Heal^000000 before you can learn Cure."
++ "Essa habilidade salva vidas, já que quase toda condição anormal se resolve com Medicar. Lembre que é preciso ^6666CCCurar nível 2^000000 antes."
+#: npc/cities/prontera.txt#316 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#317 (mes)
+- "Now, the ^6666CCIncrease AGI^000000 skill can be used on you or your friends. For a while your AGI stat is increased, making you attack faster and dodge monster attacks more easily."
++ "Já ^6666CCAumentar Agilidade^000000 serve para você ou para os amigos. Por um tempo a AGI sobe, aumentando a velocidade de ataque e a esquiva."
+#: npc/cities/prontera.txt#318 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#319 (mes)
+- "If you're an Acolyte that wants to learn ^6666CCIncrease AGI^000000, you need to learn ^6666CCLevel 3 Heal^000000 first."
++ "Se você é Noviço e quer aprender ^6666CCAumentar Agilidade^000000, precisa de ^6666CCCurar nível 3^000000 antes."
+#: npc/cities/prontera.txt#320 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#321 (mes)
+- "You can use ^6666CCAngelus^000000 to increase your Defense, as well as the Defense of other party members. Remember though, you can only use ^6666CCAngelus^000000 on other people if they are in your party."
++ "Use ^6666CCAngelus^000000 para aumentar sua Defesa e a dos membros do grupo. Lembre: só funciona nos outros se estiverem no seu grupo."
+#: npc/cities/prontera.txt#322 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#323 (mes)
+- "Before you can learn Angelus, you will need to have ^6666CCLevel 3 Divine Protection^000000."
++ "Para aprender Angelus é preciso ter ^6666CCProteção Divina nível 3^000000."
+#: npc/cities/prontera.txt#324 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#325 (mes)
+- "Also, if you keep learning Angelus, you'll eventually be able to learn ^6666CCKyrie Eleison^000000. That skill helps you evade initial attacks automatically."
++ "E, continuando com Angelus, você acaba podendo aprender ^6666CCKyrie Eleison^000000, que bloqueia ataques automaticamente."
+#: npc/cities/prontera.txt#326 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#327 (mes)
+- "^6666CCBlessing^000000 temporarily increases STR, DEX and INT. This skill will give you and your friends a great advantage in battle!"
++ "^6666CCBênção^000000 aumenta temporariamente FOR, DES e INT. Dá uma grande vantagem em batalha para você e seus amigos!"
+#: npc/cities/prontera.txt#328 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#329 (mes)
+- "Before you can learn Blessing, you must first learn ^6666CCLevel 5 Divine Protection^000000."
++ "Para aprender Bênção é preciso ter ^6666CCProteção Divina nível 5^000000."
+#: npc/cities/prontera.txt#330 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#331 (mes)
+- "^6666CCWarp Portal^000000 is a pretty complex skill, and you need to know some other skills before you can learn it."
++ "^6666CCPortal^000000 é uma habilidade complexa, e exige outras habilidades antes."
+#: npc/cities/prontera.txt#332 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#333 (mes)
+- "First, you need to learn ^6666CCRuwach^000000 which lets you see invisible monsters. After Ruwach, you will need to learn the ^6666CCTeleport^000000 skill."
++ "Primeiro é preciso ^6666CCRevelação^000000, que revela monstros invisíveis. Depois dela, ^6666CCTeleporte^000000."
+#: npc/cities/prontera.txt#334 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#335 (mes)
+- "Once you learn ^6666CCWarp Portal^000000, the level of the Warp Portal skill will determine how many warp destinations, or Warp Points, you can memorize."
++ "Aprendido o ^6666CCPortal^000000, o nível dele determina quantos destinos você pode memorizar."
+#: npc/cities/prontera.txt#336 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#337 (mes)
+- "If you master the Warp Portal skill, you can have a maximum of 4 different Warp Points. But at least one Warp Point is designated as the Save Point that you've made with a Kafra Employee."
++ "Dominando o Portal, você pode ter até 4 destinos. Mas um deles é sempre o ponto de retorno que você salvou com uma Funcionária Kafra."
+#: npc/cities/prontera.txt#338 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#339 (mes)
+- "Well, it's a bit of hassle, but if you want to make a certain place one of your Warp Points, you need to be physically there first. Then, type in ^6666CC/memo^000000 into the command prompt."
++ "Dá um certo trabalho: para memorizar um lugar, é preciso estar fisicamente nele e digitar ^6666CC/memo^000000."
+#: npc/cities/prontera.txt#340 (mes)
+- "[Garnet]"
++ "[Garnet]"
+#: npc/cities/prontera.txt#341 (mes)
+- "Just so you know, you can't save a Warp Point inside of a dungeon. Oh, and don't forget, each time you make a Warp Portal, you must use 1 ^6666CCBlue Gemstone^000000 as a Catalyst."
++ "Só para constar: não dá para memorizar dentro de masmorra. E não esqueça: cada Portal consome 1 ^6666CCGema Azul^000000 como catalisador."
+#: npc/cities/prontera.txt#342 (mes)
+- "["
++ ""
+#: npc/cities/prontera.txt#343 (mes)
+- "]"
++ ""
+#: npc/cities/prontera.txt#344 (mes)
+- "Alright, I've"
++ "Certo, já"
+#: npc/cities/prontera.txt#345 (mes)
+- "heard enough."
++ "ouvi o bastante."
+#: npc/cities/prontera.txt#346 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#347 (mes)
+- "We Priests and Acolytes are not only limited to easing the suffering of our fellow man..."
++ "Nós, Sacerdotes e Noviços, não nos limitamos a aliviar o sofrimento do próximo..."
+#: npc/cities/prontera.txt#348 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#349 (mes)
+- "We also mete swift and merciless punishment to the forces of evil. Well, purifying any poor souls that may have been turned into the Undead is also another duty."
++ "Também aplicamos punição rápida e implacável às forças do mal. E purificar as pobres almas transformadas em Mortos-Vivos é outro dever nosso."
+#: npc/cities/prontera.txt#350 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#351 (mes)
+- "Did you have any questions about Acolyte and Priest skills?"
++ "Tem alguma dúvida sobre habilidades de Noviço e Sacerdote?"
+#: npc/cities/prontera.txt#352 (select)
+- "About Divine Protection:About Demon Bane:About Decrease AGI:About Signum Crusis :About Pneuma:About Ruwach:About Teleport:End conversation."
++ "Sobre Proteção Divina:Sobre Flagelo do Mal:Sobre Diminuir Agilidade:Sobre Signum Crusis:Sobre Escudo Sagrado:Sobre Revelação:Sobre Teleporte:Encerrar conversa."
+#: npc/cities/prontera.txt#353 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#354 (mes)
+- "If you want to permanently improve your Defense against the Undead, learn ^6666CCDivine Protection^000000."
++ "Para aumentar permanentemente sua Defesa contra Mortos-Vivos, aprenda ^6666CCProteção Divina^000000."
+#: npc/cities/prontera.txt#355 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#356 (mes)
+- "Learning Divine Protection to certain levels will also allow you to learn other skills, like ^6666CCAngelus^000000 and ^6666CCBlessing^000000, which Garnet can explain."
++ "Subir Proteção Divina também libera outras habilidades, como ^6666CCAngelus^000000 e ^6666CCBênção^000000, que a Garnet explica."
+#: npc/cities/prontera.txt#357 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#358 (mes)
+- "When you learn ^6666CCLevel 3 Divine Protection^000000, you will then be able to learn the ^6666CCDemon Bane^000000 skill."
++ "Com ^6666CCProteção Divina nível 3^000000 você poderá aprender ^6666CCFlagelo do Mal^000000."
+#: npc/cities/prontera.txt#359 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#360 (mes)
+- "With ^6666CCDemon Bane^000000, the damage of your attacks against the Undead will be increased. Permanently."
++ "Com ^6666CCFlagelo do Mal^000000, o dano dos seus ataques contra Mortos-Vivos aumenta. Permanentemente."
+#: npc/cities/prontera.txt#361 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#362 (mes)
+- "^6666CCDemon Bane^000000 increases the damage you will inflict upon the Undead. Permanently."
++ "^6666CCFlagelo do Mal^000000 aumenta o dano que você causa em Mortos-Vivos. Permanentemente."
+#: npc/cities/prontera.txt#363 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#364 (mes)
+- "First, you'll need to learn ^6666CCLevel 3 Divine Protection^000000 to be able to learn Demon Bane, so keep that in mind."
++ "Primeiro é preciso ^6666CCProteção Divina nível 3^000000 para aprender Flagelo do Mal. Tenha isso em mente."
+#: npc/cities/prontera.txt#365 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#366 (mes)
+- "When you learn ^6666CCLevel 3 Demon Bane^000000, you will be able to learn ^6666CCSignum Crusis^000000, which lowers the Defense of Undead monsters, as well as monsters with the Dark property."
++ "Com ^6666CCFlagelo do Mal nível 3^000000 você poderá aprender ^6666CCSignum Crusis^000000, que reduz a Defesa de Mortos-Vivos e de monstros de propriedade Sombria."
+#: npc/cities/prontera.txt#367 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#368 (mes)
+- "Using ^6666CCDecrease AGI^000000 on monsters will slow their movement, attack speed, and the rate at which they can evade your own attacks. That way, you can maim them properly."
++ "Usar ^6666CCDiminuir Agilidade^000000 nos monstros reduz o movimento, a velocidade de ataque e a esquiva deles. Assim dá para castigá-los direito."
+#: npc/cities/prontera.txt#369 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#370 (mes)
+- "Remember, you must first learn ^6666CCLevel 2 Increase AGI^000000 if you want to be able to learn the Decrease AGI skill."
++ "Lembre-se: é preciso ^6666CCAumentar Agilidade nível 2^000000 antes de aprender Diminuir Agilidade."
+#: npc/cities/prontera.txt#371 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#372 (mes)
+- "The ^6666CCSignum Crusis^000000 skill lowers the Defense of monsters with the Undead or Dark properties. It has a wide range and can be quite powerful."
++ "^6666CCSignum Crusis^000000 reduz a Defesa de monstros Mortos-Vivos ou Sombrios. Tem alcance largo e pode ser bem poderosa."
+#: npc/cities/prontera.txt#373 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#374 (mes)
+- "However, it's a very difficult skill to use, and it has a relatively low success rate. But, do not despair if this skill is not successful all the time."
++ "Porém é difícil de usar e tem taxa de sucesso baixa. Não se desespere se nem sempre funcionar."
+#: npc/cities/prontera.txt#375 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#376 (mes)
+- "When it does work, it will give you a great battle advantage. Remember, you will ^6666CCLevel 3 Demon Bane^000000 to acquire this skill."
++ "Quando funciona, dá uma enorme vantagem. Lembre-se: exige ^6666CCFlagelo do Mal nível 3^000000."
+#: npc/cities/prontera.txt#377 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#378 (mes)
+- "The ^6666CCPneuma^000000 allows you to generate a barrier that will block all long-range attacks in a certain range, creating a zone that will protect you from monsters that attack from a distance."
++ "^6666CCEscudo Sagrado^000000 cria uma barreira que bloqueia ataques à distância numa área, protegendo você de monstros que atacam de longe."
+#: npc/cities/prontera.txt#379 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#380 (mes)
+- "In order to become ready to learn Pneuma, you must first completely master the ^6666CCWarp Portal^000000 skill."
++ "Para aprender Escudo Sagrado é preciso dominar completamente o ^6666CCPortal^000000."
+#: npc/cities/prontera.txt#381 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#382 (mes)
+- "Nothing can escape the eyes of the Holy! ^6666CCRuwach^000000 allows you to see monsters, as well as other adventurers, that are hidden or invisible."
++ "Nada escapa aos olhos do Sagrado! ^6666CCRevelação^000000 permite ver monstros e aventureiros escondidos ou invisíveis."
+#: npc/cities/prontera.txt#383 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#384 (mes)
+- "Once you learn Ruwach, you will be able to learn the ^6666CCTeleport^000000 skill."
++ "Aprendida a Revelação, você poderá aprender ^6666CCTeleporte^000000."
+#: npc/cities/prontera.txt#385 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#386 (mes)
+- "First, you must learn the ^6666CCRuwach^000000 skill in order to learn how to Teleport."
++ "Primeiro é preciso aprender ^6666CCRevelação^000000 para depois aprender o Teleporte."
+#: npc/cities/prontera.txt#387 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#388 (mes)
+- "The ^6666CCTeleport^000000 skill teleports you to a random location in the field or city which you are currently in. Teleport will prove useful for quick escapes, but where you may end up is... unpredictable."
++ "^6666CCTeleporte^000000 leva você a um ponto aleatório do campo ou cidade em que está. É útil para fugir rápido, mas onde você vai parar é... imprevisível."
+#: npc/cities/prontera.txt#389 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#390 (mes)
+- "Once the Teleport skill is mastered, you can Teleport to the latest Save Point that you have made with a Kafra Employee. I do not know why it is that way, but the Lord works in mysterious ways."
++ "Dominado o Teleporte, você pode ir ao último ponto de retorno salvo com uma Funcionária Kafra. Não sei por que é assim, mas os desígnios do Senhor são insondáveis."
+#: npc/cities/prontera.txt#391 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#392 (mes)
+- "When Teleport is mastered, you can also learn the ^6666CCWarp Portal^000000 skill. Ask Garnet if you wish to know more about Warp Portal."
++ "Dominado o Teleporte, você também pode aprender ^6666CCPortal^000000. Pergunte à Garnet se quiser saber mais."
+#: npc/cities/prontera.txt#393 (mes)
+- "[Henson]"
++ "[Henson]"
+#: npc/cities/prontera.txt#394 (mes)
+- "If you wish to understand more about an Acolyte or Priest skill, you are welcome to visit me at any time."
++ "Se quiser entender melhor alguma habilidade de Noviço ou Sacerdote, apareça quando quiser."
+#: npc/cities/prontera.txt#395 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/prontera.txt#396 (mes)
+- "H-hey!"
++ "E-ei!"
+#: npc/cities/prontera.txt#397 (mes)
+- "What are"
++ "O que você"
+#: npc/cities/prontera.txt#398 (mes)
+- "you doing here?!"
++ "está fazendo aqui?!"
+#: npc/cities/prontera.txt#399 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/prontera.txt#400 (mes)
+- "Don't you know there's a Demon living in this forest?! I can't guarantee your safety"
++ "Não sabe que mora um Demônio nesta floresta?! Não posso garantir sua segurança"
+#: npc/cities/prontera.txt#401 (mes)
+- "if you go in!"
++ "se você entrar!"
+#: npc/cities/prontera.txt#402 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/prontera.txt#403 (mes)
+- "*Sigh...* The last guy that entered this place haven't come back at all. He didn't listen to me and went in to gather Herbs or something dumb like that..."
++ "*Ai...* O último que entrou aqui nunca mais voltou. Não me deu ouvidos e foi colher Ervas ou alguma bobagem assim..."
+#: npc/cities/prontera.txt#404 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/prontera.txt#405 (mes)
+- "Whaaaat a stupid guy. Why would anyone want to throw his life away just to collect some silly Herbs?"
++ "Que suuuujeito burro. Quem joga a vida fora só para colher umas Ervas bobas?"
+
+### npc/cities/izlude.txt  (273 textos)
+#: npc/cities/izlude.txt#1 (mes)
+- "[Sailor]"
++ "[Marinheiro]"
+#: npc/cities/izlude.txt#2 (mes)
+- "Hey everybody!"
++ "Ei, pessoal!"
+#: npc/cities/izlude.txt#3 (mes)
+- "Attention, attention!"
++ "Atenção, atenção!"
+#: npc/cities/izlude.txt#4 (mes)
+- "Come and ride the wind"
++ "Venha velejar ao vento"
+#: npc/cities/izlude.txt#5 (mes)
+- "on a fascinating Ship!"
++ "num navio fascinante!"
+#: npc/cities/izlude.txt#6 (mes)
+- "Hurry, hurry!"
++ "Rápido, rápido!"
+#: npc/cities/izlude.txt#7 (select)
+- "Byalan Island -> 150 Zeny.:Alberta Marina  -> 500 Zeny.:Cancel."
++ "Ilha Byalan -> 150 Zeny.:Marina de Alberta -> 500 Zeny.:Cancelar."
+#: npc/cities/izlude.txt#8 (mes)
+- "[Sailor]"
++ "[Marinheiro]"
+#: npc/cities/izlude.txt#9 (mes)
+- "150 Zeny!"
++ "150 Zeny!"
+#: npc/cities/izlude.txt#10 (mes)
+- "Only 150 Zeny to ride!"
++ "Só 150 Zeny para embarcar!"
+#: npc/cities/izlude.txt#12 (mes)
+- "[Sailor]"
++ "[Marinheiro]"
+#: npc/cities/izlude.txt#13 (mes)
+- "500 Zeny!"
++ "500 Zeny!"
+#: npc/cities/izlude.txt#14 (mes)
+- "Only 500 Zeny to ride!"
++ "Só 500 Zeny para embarcar!"
+#: npc/cities/izlude.txt#16 (mes)
+- "[Bonne]"
++ "[Bonne]"
+#: npc/cities/izlude.txt#17 (mes)
+- "Greetings!"
++ "Saudações!"
+#: npc/cities/izlude.txt#18 (mes)
+- "Izlude welcomes you."
++ "Izlude lhe dá as boas-vindas."
+#: npc/cities/izlude.txt#19 (mes)
+- "[Bonne]"
++ "[Bonne]"
+#: npc/cities/izlude.txt#20 (mes)
+- "Izlude is the satellite city of Prontera, capital of the Rune-Midgarts kingdom."
++ "Izlude é a cidade-satélite de Prontera, capital do reino de Rune-Midgard."
+#: npc/cities/izlude.txt#21 (mes)
+- "[Bonne]"
++ "[Bonne]"
+#: npc/cities/izlude.txt#22 (mes)
+- "Izlude is key to our kingdom because of the Swordsman Association located here, as well as the fact that Izlude is in charge of protecting the Rune-Midgarts coastline."
++ "Izlude é essencial para o reino por causa da Associação dos Espadachins e por ser responsável por proteger o litoral de Rune-Midgard."
+#: npc/cities/izlude.txt#23 (mes)
+- "[Bonne]"
++ "[Bonne]"
+#: npc/cities/izlude.txt#24 (mes)
+- "I know, this bridge might look weak and fragile, but it is actually state of the art, built with the most sophisticated technology."
++ "Eu sei, esta ponte parece frágil, mas na verdade é de ponta, construída com a tecnologia mais sofisticada."
+#: npc/cities/izlude.txt#25 (mes)
+- "[Bonne]"
++ "[Bonne]"
+#: npc/cities/izlude.txt#26 (mes)
+- "No matter how strong storms may be, or how many people may stand on it, this bridge will NEEEEVER collapse."
++ "Por mais forte que seja a tempestade, ou por mais gente que fique em cima, esta ponte NUUUUNCA vai cair."
+#: npc/cities/izlude.txt#27 (mes)
+- "[Bonne]"
++ "[Bonne]"
+#: npc/cities/izlude.txt#28 (mes)
+- "Please enjoy"
++ "Aproveite"
+#: npc/cities/izlude.txt#29 (mes)
+- "your visit"
++ "sua visita"
+#: npc/cities/izlude.txt#30 (mes)
+- "here in Izlude."
++ "aqui em Izlude."
+#: npc/cities/izlude.txt#31 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#32 (mes)
+- "Some people may think Izlude is just a satellite city of Prontera, and not really that important..."
++ "Tem gente que acha Izlude só uma cidade-satélite de Prontera, sem grande importância..."
+#: npc/cities/izlude.txt#33 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#34 (mes)
+- "But Izlude is a beautiful town right next to the ocean, as well as beautiful Byalan Island."
++ "Mas Izlude é uma cidade linda à beira-mar, e ainda tem a bela Ilha Byalan."
+#: npc/cities/izlude.txt#35 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#36 (mes)
+- "You'll have to board on a ship at the port to get to Byalan Island. There are dangerous dungeons on that island, so don't go snooping around just anywhere."
++ "Você precisa embarcar no porto para chegar à Ilha Byalan. Há masmorras perigosas lá, então não saia bisbilhotando por aí."
+#: npc/cities/izlude.txt#37 (mes)
+- "Though it is very beautiful, Byalan Island has a mysterious dungeon that extends deep under the sea."
++ "Apesar de belíssima, a Ilha Byalan guarda uma masmorra misteriosa que desce até o fundo do mar."
+#: npc/cities/izlude.txt#38 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#39 (mes)
+- "People who've actually been there have said that if you go deep enough, the dungeon actually descends underwater."
++ "Quem já esteve lá diz que, descendo fundo o bastante, a masmorra continua debaixo d'água."
+#: npc/cities/izlude.txt#40 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#41 (mes)
+- "Surprisingly, once you're underwater, you can breathe just like a fish. Maybe some kind of supernatural force is in effect."
++ "Por incrível que pareça, debaixo d'água você respira como um peixe. Deve haver alguma força sobrenatural ali."
+#: npc/cities/izlude.txt#42 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#43 (mes)
+- "Ah..."
++ "Ah..."
+#: npc/cities/izlude.txt#44 (mes)
+- "The people who've seen the underwater view say it is so fantastic that they've kept dreaming of it ever since."
++ "Quem viu a paisagem submarina diz que é tão fantástica que passou a sonhar com ela desde então."
+#: npc/cities/izlude.txt#45 (mes)
+- "[Charfri]"
++ "[Charfri]"
+#: npc/cities/izlude.txt#46 (mes)
+- "But unfortunately, the monsters are too strong for ordinary people to merely go sightseeing there. Still, just once, I'd like to go down there..."
++ "Infelizmente os monstros são fortes demais para gente comum ir só passear. Ainda assim, eu queria descer lá pelo menos uma vez..."
+#: npc/cities/izlude.txt#47 (mes)
+- "[Cuskoal]"
++ "[Cuskoal]"
+#: npc/cities/izlude.txt#48 (mes)
+- "The Arena here is THE place for capable young people from all over the Rune-Midgarts Kingdom to challenge themselves and test their skills."
++ "A Arena daqui é O lugar onde os jovens capazes de todo o Reino de Rune-Midgard se desafiam e testam suas habilidades."
+#: npc/cities/izlude.txt#49 (mes)
+- "[Cuskoal]"
++ "[Cuskoal]"
+#: npc/cities/izlude.txt#50 (mes)
+- "You can battle with monsters of differing levels. So, the number of stages you survive will be a testament to your battle prowess."
++ "Você enfrenta monstros de níveis variados. O número de estágios que sobreviver é a medida da sua capacidade de combate."
+#: npc/cities/izlude.txt#51 (mes)
+- "[Cuskoal]"
++ "[Cuskoal]"
+#: npc/cities/izlude.txt#52 (mes)
+- "So, whaddya say?"
++ "E aí, o que me diz?"
+#: npc/cities/izlude.txt#53 (mes)
+- "The pubs in Prontera are always full of people from local areas and from out-of-town. It can get pretty busy."
++ "As tavernas de Prontera vivem cheias de gente da cidade e de fora. Fica bem movimentado."
+#: npc/cities/izlude.txt#54 (mes)
+- "[Cuskoal]"
++ "[Cuskoal]"
+#: npc/cities/izlude.txt#55 (mes)
+- "It's a pretty good place to stop by for general information and to listen to rumors."
++ "É um bom lugar para colher informação geral e ouvir boatos."
+#: npc/cities/izlude.txt#56 (mes)
+- "[Cuskoal]"
++ "[Cuskoal]"
+#: npc/cities/izlude.txt#57 (mes)
+- "So if you listen carefully, you just might get lucky and learn some very useful information for yourself."
++ "Então, se prestar atenção, pode ter sorte e aprender alguma coisa bem útil."
+#: npc/cities/izlude.txt#58 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#59 (mes)
+- "Mt. Mjornir, located north of Prontera, is a tough"
++ "O Monte Mjolnir, ao norte de Prontera, é uma escalada"
+#: npc/cities/izlude.txt#60 (mes)
+- "and steep climb."
++ "e a subida é íngreme."
+#: npc/cities/izlude.txt#61 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#62 (mes)
+- "Aside from the dangers of the mountain itself, insanely vicious insects live there too. I mean, they'll just attack you for no reason."
++ "Além dos perigos da própria montanha, vivem ali insetos absurdamente violentos. Eles atacam sem motivo nenhum."
+#: npc/cities/izlude.txt#63 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#64 (mes)
+- "If you ever want to visit somewhere past Mt. Mjolnir, then you prepare yourself for the challenge.  Or you could walk around it."
++ "Se quiser ir a algum lugar além do Monte Mjolnir, prepare-se para o desafio. Ou dê a volta por fora."
+#: npc/cities/izlude.txt#65 (mes)
+- "Some monsters in the world have the unique ability to sense mystical energy, and can detect Magic spells before they are cast."
++ "Alguns monstros têm a capacidade de sentir energia mística e detectam magias antes de serem conjuradas."
+#: npc/cities/izlude.txt#66 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#67 (mes)
+- "Golem of the desert is one of them. Don't underestimate it due to its sluggishness..."
++ "O Golem do deserto é um deles. Não o subestime por ser lento..."
+#: npc/cities/izlude.txt#68 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#69 (mes)
+- "If you try to cast magic near it, it will notice and saunter over to smash you. So you better watch out for Golem."
++ "Se você tentar conjurar magia perto dele, ele percebe e vem devagar te esmagar. Então cuidado com o Golem."
+#: npc/cities/izlude.txt#70 (mes)
+- "There's a very delightful place where you can find every"
++ "Existe um lugar delicioso onde se encontra todo"
+#: npc/cities/izlude.txt#71 (mes)
+- "type of Poring."
++ "tipo de Poring."
+#: npc/cities/izlude.txt#72 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#73 (mes)
+- "It's somewhere near the bridge connecting the forest and the desert, on the way to the city of Payon which is Southeast from here."
++ "Fica perto da ponte que liga a floresta ao deserto, no caminho para Payon, a sudeste daqui."
+#: npc/cities/izlude.txt#74 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#75 (mes)
+- "There are not only pink Porings but also Drops, which can be found at the desert, and the green Poporing."
++ "Não existem só os Porings rosa: há também os Drops, do deserto, e o Poporing verde."
+#: npc/cities/izlude.txt#76 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#77 (mes)
+- "But be careful, before you realize it, you may come face to face with Ghostring, a deadly Poring that floats around in the air like a ghost."
++ "Mas cuidado: sem perceber você pode dar de cara com o Ghostring, um Poring mortal que flutua no ar como um fantasma."
+#: npc/cities/izlude.txt#78 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#79 (mes)
+- "Well, of course, they are all very cute, but Ghostring is an EXCEPTION. It is very very dangerous."
++ "Claro que todos são fofinhos, mas o Ghostring é EXCEÇÃO. Ele é muito, muito perigoso."
+#: npc/cities/izlude.txt#80 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#81 (mes)
+- "If you are lucky enough, you might even bump into Angeling, the Poring with Angel wings."
++ "Com sorte, você pode até esbarrar no Angeling, o Poring com asas de anjo."
+#: npc/cities/izlude.txt#82 (select)
+- "Ghostring?:Angeling?:End Conversation."
++ "Ghostring?:Angeling?:Encerrar conversa."
+#: npc/cities/izlude.txt#83 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#84 (mes)
+- "Ghostring is a grayish Poring that floats around in the air like a ghost. Just like other ghosts, physical attacks can't do any damage to it."
++ "O Ghostring é um Poring acinzentado que flutua no ar como um fantasma. Como todo fantasma, ataque físico não causa dano nele."
+#: npc/cities/izlude.txt#85 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#86 (mes)
+- "Those whose main attack methods are physical like Swordman and Archer might have to run for their lives when facing Ghostrings."
++ "Quem ataca fisicamente, como Espadachim e Arqueiro, talvez tenha que correr por sua vida ao encontrar um Ghostring."
+#: npc/cities/izlude.txt#87 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#88 (mes)
+- "But don't leave just yet~! There is great news for people with those jobs. Making a weapon of some elemental property is the key."
++ "Mas não vá embora ainda~! Há uma boa notícia para essas classes. A chave é conseguir uma arma com propriedade elemental."
+#: npc/cities/izlude.txt#89 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#90 (mes)
+- "This way, even a Swordman or an Archer can inflict damage, the way Magic does, on Ghostrings."
++ "Assim, até um Espadachim ou um Arqueiro consegue causar dano em Ghostrings, como a Magia faz."
+#: npc/cities/izlude.txt#91 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#92 (mes)
+- "Angelings are immune to Magic attacks. If people who can only attack with Magic face an Angeling, then it's time for"
++ "Angelings são imunes a Magia. Quem só ataca com Magia e encontra um Angeling, é hora de"
+#: npc/cities/izlude.txt#93 (mes)
+- "them to run."
++ "correr."
+#: npc/cities/izlude.txt#94 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#95 (mes)
+- "If you've got an extra knife or sword, you could give it a shot. But it will be very difficult alone, don't you think?"
++ "Se tiver uma faca ou espada sobrando, pode tentar. Mas sozinho vai ser bem difícil, não acha?"
+#: npc/cities/izlude.txt#96 (mes)
+- "[Dega]"
++ "[Dega]"
+#: npc/cities/izlude.txt#97 (mes)
+- "Good Luck~"
++ "Boa sorte~"
+#: npc/cities/izlude.txt#98 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#99 (mes)
+- "I was thinking, even though the people of Izlude live so close to the ocean..."
++ "Eu estava pensando: mesmo o povo de Izlude vivendo tão perto do mar..."
+#: npc/cities/izlude.txt#100 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#101 (mes)
+- "There are other cultures that have completely developed by living off of the sea. Of course, I'm talking about Amatsu."
++ "Existem culturas que se desenvolveram inteiramente vivendo do mar. Falo de Amatsu, claro."
+#: npc/cities/izlude.txt#102 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#103 (mes)
+- "I hear the cuisine there is really good! Although the idea of eating raw fish is new to me, I would love to go there, and try it just once!"
++ "Dizem que a comida de lá é ótima! A ideia de comer peixe cru é nova para mim, mas eu adoraria ir lá provar pelo menos uma vez!"
+#: npc/cities/izlude.txt#104 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#105 (mes)
+- "Don't you think Binoculars"
++ "Você não acha que binóculos"
+#: npc/cities/izlude.txt#106 (mes)
+- "are really COOL?! You can"
++ "são MUITO legais?! Dá para"
+#: npc/cities/izlude.txt#107 (mes)
+- "see all sorts of places...!"
++ "ver todo tipo de lugar...!"
+#: npc/cities/izlude.txt#108 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#109 (mes)
+- "Here in Izlude, we are responsible for maintaining peace not only on land but also at sea. That's why this city has a huge telescope."
++ "Aqui em Izlude somos responsáveis pela paz não só em terra, mas também no mar. Por isso a cidade tem um telescópio enorme."
+#: npc/cities/izlude.txt#110 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#111 (mes)
+- "This telescope constantly watches over the sea, so that we can prevent any serious trouble from happening. You know..."
++ "Este telescópio vigia o mar o tempo todo, para evitarmos qualquer problema sério. Você sabe..."
+#: npc/cities/izlude.txt#112 (mes)
+- "[Kylick]"
++ "[Kylick]"
+#: npc/cities/izlude.txt#113 (mes)
+- "An ounce of"
++ "É melhor"
+#: npc/cities/izlude.txt#114 (mes)
+- "prevention is worth"
++ "prevenir"
+#: npc/cities/izlude.txt#115 (mes)
+- "a pound of cure"
++ "do que remediar"
+#: npc/cities/izlude.txt#116 (mes)
+- "after all, right?"
++ "no fim das contas, né?"
+#: npc/cities/izlude.txt#117 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#118 (mes)
+- "The only skill that's needed for a Swordman is ^FF2400Bash^000000! Bash, Bash and ONLY ^FF2400Bash^000000! No need to waste time and effort for smaller skills! Everything else is for cowards and wusses!"
++ "A única habilidade que um Espadachim precisa é ^FF2400Golpe Fulminante^000000! Golpe, Golpe e SÓ ^FF2400Golpe Fulminante^000000! Não perca tempo com habilidade menor! O resto é para covarde e banana!"
+#: npc/cities/izlude.txt#119 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#120 (mes)
+- "What are you talking about!? The ideal Swordman resolutely stands alone, surrounded by countless enemies and smashing them all with one awesome attack."
++ "Do que você está falando!? O Espadachim ideal enfrenta sozinho incontáveis inimigos e esmaga todos com um golpe formidável."
+#: npc/cities/izlude.txt#121 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#122 (mes)
+- "^EE0000MAGNUM BREAK!^000000"
++ "^EE0000IMPACTO EXPLOSIVO!^000000"
+#: npc/cities/izlude.txt#123 (mes)
+- "That's right, Magnum Break"
++ "Isso mesmo, Impacto Explosivo"
+#: npc/cities/izlude.txt#124 (mes)
+- "is the skill that does"
++ "é a habilidade que resolve"
+#: npc/cities/izlude.txt#125 (mes)
+- "the job right~!!"
++ "de verdade~!!"
+#: npc/cities/izlude.txt#126 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#127 (mes)
+- "Well... Sometimes the explosive damage might accidentally hit some wandering monsters, and those guys end up coming after you, but that's a risk a Swordman should be willing to take!!"
++ "Bom... às vezes a explosão acerta sem querer monstros que estavam passando, e eles vêm atrás de você, mas é um risco que todo Espadachim deve aceitar!!"
+#: npc/cities/izlude.txt#128 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#129 (mes)
+- "That's exactly why you're dumb, you idiot! And what's this about the 'the ideal Swordman?' I still remember the last time you used Magnum Break..."
++ "É exatamente por isso que você é burro, idiota! E que história é essa de 'Espadachim ideal'? Ainda lembro da última vez que você usou o Impacto Explosivo..."
+#: npc/cities/izlude.txt#130 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#131 (mes)
+- "You ended up running away from all those monsters you hit with that stupid skill! Weakling! All those Porings around you got hit and they all tried to kill you. "
++ "Você acabou fugindo de todos os monstros que acertou com aquela habilidade idiota! Fracote! Todos os Porings em volta foram atingidos e tentaram te matar. "
+#: npc/cities/izlude.txt#132 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#133 (mes)
+- "Hmpf. As I recall, you were running away too, apparently too busy to use your precious Bash. In any case, Magnum Break is THE skill for a Swordman~!!"
++ "Hunf. Pelo que lembro, você também estava fugindo, ocupado demais para usar seu precioso Golpe Fulminante. De todo modo, Impacto Explosivo é A habilidade de um Espadachim~!!"
+#: npc/cities/izlude.txt#134 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#135 (mes)
+- "Something simplistic like Bash"
++ "Uma coisa simplória como o Golpe Fulminante"
+#: npc/cities/izlude.txt#136 (mes)
+- "is just one of the little steps towards Magnum Break."
++ "é só um degrauzinho até o Impacto Explosivo."
+#: npc/cities/izlude.txt#137 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#138 (mes)
+- "Oh man~"
++ "Rapaz~"
+#: npc/cities/izlude.txt#139 (mes)
+- "Hey, I know you just"
++ "Ei, eu sei que você acabou de"
+#: npc/cities/izlude.txt#140 (mes)
+- "heard everything."
++ "ouvi tudo."
+#: npc/cities/izlude.txt#141 (mes)
+- "So what do you think?"
++ "Então, o que você acha?"
+#: npc/cities/izlude.txt#142 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#143 (mes)
+- "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?"
++ "Qual você acha melhor? O golpe de dano crítico, ^FF2400Golpe Fulminante^000000, ou o de dano em área, ^EE0000Impacto Explosivo^000000?"
+#: npc/cities/izlude.txt#144 (select)
+- "Bash:Magnum Break"
++ "Golpe Fulminante:Impacto Explosivo"
+#: npc/cities/izlude.txt#145 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#146 (mes)
+- "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Undoubtedly, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this BONEHEAD over here~ Hahaha!"
++ "Hahahaha!!! Eu sabia que você ia concordar!! Você É gente boa!! Sem dúvida, só ^FF2400Golpe Fulminante^000000 serve a um Espadachim. Explica isso pra essa CABEÇA-DE-VENTO aqui~ Hahaha!"
+#: npc/cities/izlude.txt#147 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#148 (mes)
+- "Hmm, let me give you a bit of advice. After you achieve level 5 'Bash', the amount of SP consumed by the skill increases greatly, so watch out for your SP."
++ "Hmm, um conselho: depois do nível 5 de 'Golpe Fulminante', o consumo de SP sobe muito, então fique de olho no seu SP."
+#: npc/cities/izlude.txt#149 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#150 (mes)
+- "Hahahaha!! See!? Someone who pursues a different job agrees with me~! You really are a great guy! Hahaha!! Undoubtedly, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this NIMROD over here~ Hahaha!"
++ "Hahahaha!! Viu!? Alguém de outra classe concorda comigo~! Você é gente boa mesmo! Hahaha!! Sem dúvida, só ^FF2400Golpe Fulminante^000000 serve a um Espadachim. Explica isso pra esse PATETA aqui~ Hahaha!"
+#: npc/cities/izlude.txt#151 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#152 (mes)
+- "Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know the stuff~ HaHaHa!"
++ "Isso aí!! ^EE0000Impacto Explosivo^000000 é O MELHOR!! Agora sim~!! Você manja~ HaHaHa!"
+#: npc/cities/izlude.txt#153 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#154 (mes)
+- "You wanna know some useful information? Okay, okay lemme tell ya! Magnum Break has Fire Property."
++ "Quer uma informação útil? Certo, eu conto! O Impacto Explosivo tem propriedade Fogo."
+#: npc/cities/izlude.txt#155 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#156 (mes)
+- "So it won't be too effective against monsters with the Water property, but this is THE skill to use against Undead and Earth property monsters!"
++ "Então não é lá muito eficaz contra monstros de Água, mas é A habilidade contra Mortos-Vivos e monstros de Terra!"
+#: npc/cities/izlude.txt#157 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#158 (mes)
+- "And most importantly, look around before you use it. Otherwise you'll be in BIG trouble~ "
++ "E o mais importante: olhe em volta antes de usar. Senão a encrenca é GRANDE~ "
+#: npc/cities/izlude.txt#159 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#160 (mes)
+- "Right?! ^EE0000Magnum Break^000000 is THE BEST!!! You know what you're talking about, eh? I don't know why this jerkface is being sooooo stubborn."
++ "Né?! ^EE0000Impacto Explosivo^000000 é O MELHOR!!! Você entende do assunto, hein? Não sei por que esse mala é taaaão teimoso."
+#: npc/cities/izlude.txt#161 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#162 (mes)
+- "The only skill that's needed for a Swordman is ^FF2400Bash^000000! Bash, Bash and ONLY ^FF2400Bash^000000! No need to waste time and effort on smaller skills~~ Everything else is for cowards and wusses!"
++ "A única habilidade que um Espadachim precisa é ^FF2400Golpe Fulminante^000000! Golpe, Golpe e SÓ ^FF2400Golpe Fulminante^000000! Não perca tempo com habilidade menor~~ O resto é para covarde e banana!"
+#: npc/cities/izlude.txt#163 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#164 (mes)
+- "What are you talking about!? The ideal Swordman resolutely stands alone, surrounded by countless foes, smashing them all with one awesome attack..."
++ "Do que você está falando!? O Espadachim ideal enfrenta sozinho incontáveis inimigos e esmaga todos com um golpe formidável..."
+#: npc/cities/izlude.txt#165 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#166 (mes)
+- "^EE0000MAGNUM BREAK!^000000"
++ "^EE0000IMPACTO EXPLOSIVO!^000000"
+#: npc/cities/izlude.txt#167 (mes)
+- "That's right, Magnum Break"
++ "Isso mesmo, Impacto Explosivo"
+#: npc/cities/izlude.txt#168 (mes)
+- "is the perfect"
++ "é a habilidade perfeita"
+#: npc/cities/izlude.txt#169 (mes)
+- "Swordman skill."
++ "para um Espadachim."
+#: npc/cities/izlude.txt#170 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#171 (mes)
+- "Well..."
++ "Bom..."
+#: npc/cities/izlude.txt#172 (mes)
+- "Sometimes the explosion accidentally hits some monsters that are just wandering around."
++ "Às vezes a explosão acerta sem querer monstros que estavam só passando."
+#: npc/cities/izlude.txt#173 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#174 (mes)
+- "Then they all end up coming after you, but that's a risk a true Swordman should be willing to take."
++ "Aí todos vêm atrás de você, mas é um risco que um verdadeiro Espadachim deve aceitar."
+#: npc/cities/izlude.txt#175 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#176 (mes)
+- "That's exactly why you're dumb, you idiot! And what was that about the 'ideal Swordman?' You remember the last time you used Magnum Break?!"
++ "É exatamente por isso que você é burro, idiota! E que história é essa de 'Espadachim ideal'? Lembra da última vez que usou o Impacto Explosivo?!"
+#: npc/cities/izlude.txt#177 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#178 (mes)
+- "You had to run away from all those Porings hit by that stupid skill! You weakling! All those Porings that you hit tried to kill you! "
++ "Você teve que fugir de todos os Porings atingidos por aquela habilidade idiota! Fracote! Todos os que você acertou tentaram te matar! "
+#: npc/cities/izlude.txt#179 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#180 (mes)
+- "Oh shut up. And those were Poporings. As I recall, you were running away too, apparently too busy to use your precious Bash."
++ "Ah, cala a boca. E eram Poporings. Pelo que lembro, você também estava fugindo, ocupado demais para usar seu precioso Golpe Fulminante."
+#: npc/cities/izlude.txt#181 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#182 (mes)
+- "In any case, Magnum Break is THE skill for a Swordman~!! Something simplistic like Bash is just one of those little steps towards Magnum Break."
++ "De todo modo, Impacto Explosivo é A habilidade de um Espadachim~!! Uma coisa simplória como o Golpe Fulminante é só um degrauzinho até ele."
+#: npc/cities/izlude.txt#183 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#184 (mes)
+- "Oh man~"
++ "Rapaz~"
+#: npc/cities/izlude.txt#185 (mes)
+- "Hey, I know you"
++ "Ei, eu te conheço"
+#: npc/cities/izlude.txt#186 (mes)
+- "heard everything."
++ "ouvi tudo."
+#: npc/cities/izlude.txt#187 (mes)
+- "So what do you think?"
++ "Então, o que você acha?"
+#: npc/cities/izlude.txt#188 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#189 (mes)
+- "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?"
++ "Qual você acha melhor? O golpe de dano crítico, ^FF2400Golpe Fulminante^000000, ou o de dano em área, ^EE0000Impacto Explosivo^000000?"
+#: npc/cities/izlude.txt#190 (select)
+- "Bash:Magnum Break"
++ "Golpe Fulminante:Impacto Explosivo"
+#: npc/cities/izlude.txt#191 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#192 (mes)
+- "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to FUNBOY over here!! Hahaha."
++ "Hahahaha!!! Eu sabia que você ia concordar!! Você É gente boa!! Sem dúvida, só ^FF2400Golpe Fulminante^000000 serve a um Espadachim. Explica isso pro ENGRAÇADINHO aqui!! Hahaha."
+#: npc/cities/izlude.txt#193 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#194 (mes)
+- "Hmm, let me give you a bit of advice. After you achieve level 5 Bash, the amount of SP consumed by the skill increases greatly, so watch out for your SP."
++ "Hmm, um conselho: depois do nível 5 de Golpe Fulminante, o consumo de SP sobe muito, então fique de olho no seu SP."
+#: npc/cities/izlude.txt#195 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#196 (mes)
+- "Hahahaha!!"
++ "Hahahaha!!"
+#: npc/cities/izlude.txt#197 (mes)
+- "See!? Someone who pursues a different job agrees with me~! You really are a great guy! Hahaha!!"
++ "Viu!? Alguém de outra classe concorda comigo~! Você é gente boa mesmo! Hahaha!!"
+#: npc/cities/izlude.txt#198 (mes)
+- "[Red]"
++ "[Red]"
+#: npc/cities/izlude.txt#199 (mes)
+- "Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this MORON over here!! Hahaha~"
++ "Sem dúvida, só ^FF2400Golpe Fulminante^000000 serve a um Espadachim. Explica isso pra esse IMBECIL aqui!! Hahaha~"
+#: npc/cities/izlude.txt#200 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#201 (mes)
+- " Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know your stuff, kid. HaHaHa~!"
++ " Isso aí!! ^EE0000Impacto Explosivo^000000 é O MELHOR!! Agora sim~!! Você manja, garoto. HaHaHa~!"
+#: npc/cities/izlude.txt#202 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#203 (mes)
+- "You wanna know some useful information? Okay, okay lemme tell ya! The explosion from 'Magnum Break' has the Fire Property."
++ "Quer uma informação útil? Certo, eu conto! A explosão do 'Impacto Explosivo' tem propriedade Fogo."
+#: npc/cities/izlude.txt#204 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#205 (mes)
+- "So it won't be very effective against Water property monsters, but this is THE skill to use against Undead and Earth property monsters.!"
++ "Então não é muito eficaz contra monstros de Água, mas é A habilidade contra Mortos-Vivos e monstros de Terra!"
+#: npc/cities/izlude.txt#206 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#207 (mes)
+- "And most importantly, look around before you use it. Otherwise you'll be in BIG trouble~ "
++ "E o mais importante: olhe em volta antes de usar. Senão a encrenca é GRANDE~ "
+#: npc/cities/izlude.txt#208 (mes)
+- "[Cebalis]"
++ "[Cebalis]"
+#: npc/cities/izlude.txt#209 (mes)
+- "I'm right, aren't I?! ^EE0000Magnum Break^000000 is THE BEST!!! You know what you're talking about, eh? I don't know why this LARDFACE is sooooo stubborn."
++ "Eu tenho razão, não tenho?! ^EE0000Impacto Explosivo^000000 é O MELHOR!!! Você entende do assunto, hein? Não sei por que esse BANHA é taaaão teimoso."
+#: npc/cities/izlude.txt#210 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#211 (mes)
+- "HeHeHeHe..HaHaHaHa "
++ "Hehehehe..Hahahaha "
+#: npc/cities/izlude.txt#212 (mes)
+- "Huh? Why am I so happy?"
++ "Hã? Por que estou tão feliz?"
+#: npc/cities/izlude.txt#213 (mes)
+- "You wanna know?"
++ "Quer saber?"
+#: npc/cities/izlude.txt#214 (select)
+- "Sure, why?:Not really, I don't care."
++ "Claro, por quê?:Nem tanto, tanto faz."
+#: npc/cities/izlude.txt#215 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#216 (mes)
+- "Ah~~ There's not much for us to do these days. You see, Merchants buy items dropped by monsters. But you knew that, right? "
++ "Ah~~ Não temos muito o que fazer hoje em dia. Sabe, os Mercadores compram os itens que os monstros deixam cair. Mas isso você já sabia, né? "
+#: npc/cities/izlude.txt#217 (select)
+- "Of course:Eh? Really?"
++ "Claro:Ãh? Sério?"
+#: npc/cities/izlude.txt#218 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#219 (mes)
+- "HaHa~ In fact, that was actually part of our job. But there were more and more hunters who came to us in order to get paid and it became too much to handle."
++ "Haha~ Na verdade isso já foi parte do nosso trabalho. Mas vinha cada vez mais caçador querendo receber, e virou coisa demais."
+#: npc/cities/izlude.txt#220 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#221 (mes)
+- "We had to work overtime every day. Ah, it was a nightmare...! Anyway, the government eventually made a wise decision in creating the Registration System."
++ "Fazíamos hora extra todo dia. Ah, era um pesadelo...! Enfim, o governo acabou tomando uma decisão sábia ao criar o Sistema de Registro."
+#: npc/cities/izlude.txt#222 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#223 (mes)
+- "The Office of Prize Compensation only pays those who have the Registration. Of course, you'd have to be a merchant and stay in the same place all day long."
++ "A Central de Compensação só paga quem tem o Registro. Claro que para isso você teria que ser mercador e ficar o dia todo no mesmo lugar."
+#: npc/cities/izlude.txt#224 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#225 (mes)
+- "The Office gives away the registration to any merchant who fulfills those requirements. So nowadays, the hunters sell their goods to the registered merchants."
++ "A Central concede o registro a qualquer mercador que cumpra esses requisitos. Por isso hoje os caçadores vendem aos mercadores registrados."
+#: npc/cities/izlude.txt#226 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#227 (mes)
+- "So nowadays, the hunters sell their goods to the registered merchants.  Not too many people come to us for that anymore."
++ "Por isso hoje os caçadores vendem aos mercadores registrados. Já não vem muita gente até nós para isso."
+#: npc/cities/izlude.txt#228 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#229 (mes)
+- "I mean we are still busy, but that's nothing compared to how it was before. People who have felt suffering know how to appreciate even the slightest comfort."
++ "Ainda temos movimento, mas não é nada perto de antes. Quem já sofreu sabe dar valor até ao menor conforto."
+#: npc/cities/izlude.txt#230 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#231 (mes)
+- "What?! What do you mean you didn't know?! Well, you know you can get items by killing monsters. If you bring and sell those to a merchant, you can make some money. "
++ "O quê?! Como assim não sabia?! Bom, você consegue itens matando monstros. Vendendo esses itens a um mercador, dá para ganhar dinheiro. "
+#: npc/cities/izlude.txt#232 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#233 (mes)
+- "HaHa, in fact, that used to be part of our job. But there were more and more hunters who come in order to get paid, so it became too much to handle."
++ "Haha, na verdade isso já foi parte do nosso trabalho. Mas vinha cada vez mais caçador querendo receber, e virou coisa demais."
+#: npc/cities/izlude.txt#234 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#235 (mes)
+- "We had to work overtime every day. Ah, it was a nightmare...! Anyway, the government eventually made a wise decision in creating the Registration System."
++ "Fazíamos hora extra todo dia. Ah, era um pesadelo...! Enfim, o governo acabou tomando uma decisão sábia ao criar o Sistema de Registro."
+#: npc/cities/izlude.txt#236 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#237 (mes)
+- "The Office of Prize Compensation only pays those who have the Registration. Of course, you'd have to be a merchant and stay in the same place all day long."
++ "A Central de Compensação só paga quem tem o Registro. Claro que para isso você teria que ser mercador e ficar o dia todo no mesmo lugar."
+#: npc/cities/izlude.txt#238 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#239 (mes)
+- "The Office gives away the registration to any merchant who fulfills those requirements. So nowadays, the hunters sell their goods to the registered merchants."
++ "A Central concede o registro a qualquer mercador que cumpra esses requisitos. Por isso hoje os caçadores vendem aos mercadores registrados."
+#: npc/cities/izlude.txt#240 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#241 (mes)
+- "So nowadays, the hunters sell their goods to the registered merchants.  Not too many people come to us for that anymore."
++ "Por isso hoje os caçadores vendem aos mercadores registrados. Já não vem muita gente até nós para isso."
+#: npc/cities/izlude.txt#242 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#243 (mes)
+- "I mean we are still busy, but that's nothing compared to how it was before. People who have felt suffering know how to appreciate even the slightest comfort."
++ "Ainda temos movimento, mas não é nada perto de antes. Quem já sofreu sabe dar valor até ao menor conforto."
+#: npc/cities/izlude.txt#244 (mes)
+- "[Soldier]"
++ "[Soldado]"
+#: npc/cities/izlude.txt#245 (mes)
+- "Okay Good Bye~~"
++ "Certo, até mais~~"
+#: npc/cities/izlude.txt#246 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#247 (mes)
+- "Don't you think Strong VIT and training in a unique breathing method which enables quick HP recovery are the greatest advantages for a Swordman?"
++ "Não acha que VIT alta e um treino de respiração que acelera a recuperação de HP são as maiores vantagens de um Espadachim?"
+#: npc/cities/izlude.txt#248 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#249 (mes)
+- "If you train your skills very hard, you can even see your HP recovering. The amount"
++ "Treinando muito, dá até para ver o HP se recuperando. O quanto"
+#: npc/cities/izlude.txt#250 (mes)
+- "recovered depends"
++ "se recupera depende"
+#: npc/cities/izlude.txt#251 (mes)
+- "vitality, or VIT."
++ "da vitalidade, a VIT."
+#: npc/cities/izlude.txt#252 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#253 (mes)
+- "So if you invest more of your stats in VIT, you'll recover more HP overall when resting."
++ "Então, quanto mais atributos você põe em VIT, mais HP recupera ao descansar."
+#: npc/cities/izlude.txt#254 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#255 (mes)
+- "But of course, it'd be good to have high Attack, wouldn't it? You can either acquire a good weapon or bring up your STR to support you Attack."
++ "E claro, é bom ter Ataque alto, não é? Você pode conseguir uma arma boa ou subir a FOR para reforçar o Ataque."
+#: npc/cities/izlude.txt#256 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#257 (mes)
+- "You know you'll need some strength anyway to swing good weapons easily, anyway."
++ "De todo modo, você vai precisar de força para brandir armas boas com facilidade."
+#: npc/cities/izlude.txt#258 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#259 (mes)
+- "Another important thing is how accurate you can hit your opponents. DEX is the key here. If you train DEX, then the gap between the MIN and MAX damage will also decrease."
++ "Outra coisa importante é a precisão dos seus golpes. A chave é a DES. Treinando DES, a diferença entre o dano mínimo e o máximo também diminui."
+#: npc/cities/izlude.txt#260 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#261 (mes)
+- "Hm..."
++ "Hm..."
+#: npc/cities/izlude.txt#262 (mes)
+- "Are you bored by all this talk? Or do you want me to go on?"
++ "Já enjoou dessa conversa? Ou quer que eu continue?"
+#: npc/cities/izlude.txt#263 (select)
+- "Tell me more please.:End conversation."
++ "Conte mais, por favor.:Encerrar conversa."
+#: npc/cities/izlude.txt#264 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#265 (mes)
+- "Hmm..."
++ "Hmm..."
+#: npc/cities/izlude.txt#266 (mes)
+- "In that case, I'll explain about the other attributes to you briefly. In order to attack and evade quickly, you've gotta pay attention to AGI. "
++ "Nesse caso, explico rapidamente os outros atributos. Para atacar e esquivar rápido, você tem que cuidar da AGI. "
+#: npc/cities/izlude.txt#267 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#268 (mes)
+- "In case you want to make more critical hits, it's a good idea to invest in LUK. INT also increases Max SP, which is needed to use various skills... But it's really up to you."
++ "Se quiser causar mais críticos, vale investir em SOR. A INT também aumenta o SP máximo, necessário para várias habilidades... mas a escolha é sua."
+#: npc/cities/izlude.txt#269 (mes)
+- "[Aaron]"
++ "[Aaron]"
+#: npc/cities/izlude.txt#270 (mes)
+- "Okay then,"
++ "Certo, então"
+#: npc/cities/izlude.txt#271 (mes)
+- "train hard~~"
++ "treine forte~~"
+#: npc/cities/izlude.txt#272 (mes)
+- "[Sailor]"
++ "[Marinheiro]"
+#: npc/cities/izlude.txt#273 (mes)
+- "Wanna"
++ "Quer"
+#: npc/cities/izlude.txt#274 (mes)
+- "head back?"
++ "voltar?"
+#: npc/cities/izlude.txt#275 (select)
+- "Yeah, I'm tired to death.:Nope, I love this place!"
++ "Sim, estou morto de cansaço.:Não, adoro este lugar!"
+
+### npc/re/cities/izlude.txt  (45 textos)
+#: npc/re/cities/izlude.txt#1 (mes)
+- "[Izlude Guard]"
++ "[Guarda de Izlude]"
+#: npc/re/cities/izlude.txt#2 (mes)
+- "Welcome to Izlude."
++ "Bem-vindo a Izlude."
+#: npc/re/cities/izlude.txt#3 (mes)
+- "[Channel Warp Official]"
++ "[Oficial de Canal]"
+#: npc/re/cities/izlude.txt#4 (mes)
+- "Izlude is a verly lively place is it not?"
++ "Izlude é um lugar bem movimentado, não é?"
+#: npc/re/cities/izlude.txt#5 (mes)
+- "I am here to help make Izlude feel more smooth!"
++ "Estou aqui para deixar Izlude mais tranquila!"
+#: npc/re/cities/izlude.txt#6 (mes)
+- "I can send you to another copy of Izlude."
++ "Posso enviar você para outra cópia de Izlude."
+#: npc/re/cities/izlude.txt#7 (mes)
+- "Do you want to go to another copy?"
++ "Quer ir para outra cópia?"
+#: npc/re/cities/izlude.txt#8 (select)
+- ":Never mind"
++ ":Deixa pra lá"
+#: npc/re/cities/izlude.txt#9 (setarray)
+- "izlude"
++ ""
+#: npc/re/cities/izlude.txt#10 (setarray)
+- "izlude_a"
++ ""
+#: npc/re/cities/izlude.txt#11 (setarray)
+- "izlude_b"
++ ""
+#: npc/re/cities/izlude.txt#12 (setarray)
+- "izlude_c"
++ ""
+#: npc/re/cities/izlude.txt#13 (setarray)
+- "izlude_d"
++ ""
+#: npc/re/cities/izlude.txt#24 (npctalk)
+- "Talkative Kid : I used all my Novice Red Potions. What should I do?"
++ "Criança Falante : Usei todas as minhas Poções Vermelhas de Aprendiz. E agora?"
+#: npc/re/cities/izlude.txt#25 (npctalk)
+- "Talkative Kid : Where is the shop?"
++ "Criança Falante : Onde fica a loja?"
+#: npc/re/cities/izlude.txt#26 (npctalk)
+- "Talkative Kid : Idiot! You do not know about the 'shortcut window'?"
++ "Criança Falante : Bobo! Você não sabe o que é a 'barra de atalhos'?"
+#: npc/re/cities/izlude.txt#27 (npctalk)
+- "Talkative Kid : The items in your inventory can be dragged and put in the shortcut window."
++ "Criança Falante : Dá para arrastar os itens do inventário para a barra de atalhos."
+#: npc/re/cities/izlude.txt#28 (npctalk)
+- "Talkative Kid : I got so many beginner's items in the Academy!"
++ "Criança Falante : Ganhei um monte de itens de iniciante na Academia!"
+#: npc/re/cities/izlude.txt#29 (npctalk)
+- "Talkative Kid : They even gave me weapons and a shield!"
++ "Criança Falante : Me deram até armas e um escudo!"
+#: npc/re/cities/izlude.txt#30 (npctalk)
+- "Talkative Kid : Just press  <Ctrl+~key> to open the map you have."
++ "Criança Falante : Aperte <Ctrl+~> para abrir o mapa."
+#: npc/re/cities/izlude.txt#31 (npctalk)
+- "Talkative Kid : Then do you want to go Criatura Academy with me? I'm learning how to battle from Instructor Subino!"
++ "Criança Falante : Então quer ir comigo à Academia Criatura? Estou aprendendo a lutar com o Instrutor Subino!"
+#: npc/re/cities/izlude.txt#32 (npctalk)
+- "Talkative Kid : The Academy is in North side of Izlude. Let's go~!"
++ "Criança Falante : A Academia fica ao norte de Izlude. Vamos~!"
+#: npc/re/cities/izlude.txt#33 (npctalk)
+- "Talkative Kid : It's a system to guide you to a destination."
++ "Criança Falante : É um sistema que guia você até um destino."
+#: npc/re/cities/izlude.txt#34 (npctalk)
+- "Talkative Kid : In the basic menu, please click the [Navigation] button."
++ "Criança Falante : No menu básico, clique no botão [Navegação]."
+#: npc/re/cities/izlude.txt#35 (npctalk)
+- "Talkative Kid : Whee, Ain't gonna use your brain? Please type /where in the chat window now!"
++ "Criança Falante : Ué, não vai usar a cabeça? Digita /where na janela de conversa!"
+#: npc/re/cities/izlude.txt#36 (npctalk)
+- "Talkative Kid : In this case, you can push the <Enter> key."
++ "Criança Falante : Nesse caso, aperte a tecla <Enter>."
+#: npc/re/cities/izlude.txt#37 (npctalk)
+- "Talkative Kid : We are just repeating the same dialog. HaHaha."
++ "Criança Falante : A gente está repetindo a mesma conversa. Hahaha."
+#: npc/re/cities/izlude.txt#38 (npctalk)
+- "Talkative Adventurer : You can buy potion from Merchants."
++ "Aventureiro Falante : Dá para comprar poção com os Mercadores."
+#: npc/re/cities/izlude.txt#39 (npctalk)
+- "Talkative Adventurer : It's the Potion image in the mini map."
++ "Aventureiro Falante : É o desenho de Poção no minimapa."
+#: npc/re/cities/izlude.txt#40 (npctalk)
+- "Talkative Adventurer : Is there any way to use items easily?"
++ "Aventureiro Falante : Existe algum jeito fácil de usar itens?"
+#: npc/re/cities/izlude.txt#41 (npctalk)
+- "Talkative Adventurer : Shortcut window? The slots at the top of the screen? How can I use it?"
++ "Aventureiro Falante : Barra de atalhos? Aqueles espaços no topo da tela? Como se usa?"
+#: npc/re/cities/izlude.txt#42 (npctalk)
+- "Talkative Adventurer : For inventory, do you mean 'item' menu? Oh, it is!"
++ "Aventureiro Falante : Inventário é o menu de 'itens'? Ah, é mesmo!"
+#: npc/re/cities/izlude.txt#43 (npctalk)
+- "Talkative Adventurer : I have a bunch of potions?"
++ "Aventureiro Falante : Eu tenho um monte de poções?"
+#: npc/re/cities/izlude.txt#44 (npctalk)
+- "Talkative Adventurer : What?! I should go to the Academy now!"
++ "Aventureiro Falante : O quê?! Preciso ir à Academia agora!"
+#: npc/re/cities/izlude.txt#45 (npctalk)
+- "Talkative Adventurer : Where is Izlude? In the center?"
++ "Aventureiro Falante : Onde fica Izlude? No centro?"
+#: npc/re/cities/izlude.txt#46 (npctalk)
+- "Talkative Adventurer : I do not know what to do."
++ "Aventureiro Falante : Não sei o que fazer."
+#: npc/re/cities/izlude.txt#47 (npctalk)
+- "Talkative Adventurer : Oh yea? I want to know so many things~ I will go with you!"
++ "Aventureiro Falante : É mesmo? Quero saber tanta coisa~ Eu vou com você!"
+#: npc/re/cities/izlude.txt#48 (npctalk)
+- "Talkative Adventurer : Navigation, What is that?"
++ "Aventureiro Falante : Navegação, o que é isso?"
+#: npc/re/cities/izlude.txt#49 (npctalk)
+- "Talkative Adventurer : Oh-! Should I search for a Kafra Employee?"
++ "Aventureiro Falante : Ah-! Devo procurar uma Funcionária Kafra?"
+#: npc/re/cities/izlude.txt#50 (npctalk)
+- "Talkative Adventurer : What is the town name?"
++ "Aventureiro Falante : Qual é o nome da cidade?"
+#: npc/re/cities/izlude.txt#51 (npctalk)
+- "Talkative Adventurer : I cannot see the part where I can write something in the chat window?"
++ "Aventureiro Falante : Não estou vendo onde se escreve na janela de conversa."
+#: npc/re/cities/izlude.txt#52 (npctalk)
+- "Talkative Adventurer : Oh you smarty..."
++ "Aventureiro Falante : Ah, seu esperto..."
+#: npc/re/cities/izlude.txt#53 (npctalk)
+- "Talkative Adventurer : A while ago, one Novice talked to me like hey 'Talkative Adventurer'?. HaHaha."
++ "Aventureiro Falante : Faz um tempo, um Aprendiz me chamou de 'Aventureiro Falante'. Hahaha."
+#: npc/re/cities/izlude.txt#54 (npctalk)
+- "Resting Adventurer : You know what? If you are sitting, HP and SP recovery is faster."
++ "Aventureiro Descansando : Sabia? Sentado, a recuperação de HP e SP é mais rápida."
+#: npc/re/cities/izlude.txt#55 (npctalk)
+- "Resting Adventurer : Sitting is possible if your basic job skill level is more than 3. Shortcut is pressing the <INSERT> key."
++ "Aventureiro Descansando : Dá para sentar se sua habilidade básica for nível 3 ou mais. O atalho é a tecla <INSERT>."

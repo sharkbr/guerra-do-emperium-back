@@ -1,0 +1,3199 @@
+# Catalogo de traducao PT-BR - grupo "campal"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/battleground/bg_common.txt  (233 textos)
+#: npc/battleground/bg_common.txt#2 (cutin)
+- "bat_crua1"
++ ""
+#: npc/battleground/bg_common.txt#3 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#4 (mes)
+- "Wise adventurer, why don't you lend us your power for victory?"
++ ""
+#: npc/battleground/bg_common.txt#5 (select)
+- "What's the reason for the Battle?:Tell me about General Guillaume"
++ ""
+#: npc/battleground/bg_common.txt#6 (cutin)
+- "bat_crua2"
++ ""
+#: npc/battleground/bg_common.txt#7 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#8 (mes)
+- "Maroll's great king, Marcel Marollo VII, is very sick lately."
++ ""
+#: npc/battleground/bg_common.txt#9 (mes)
+- "His Majesty has declared that he will be leaving the future of Maroll to me or the 3rd prince, General Guillaume."
++ ""
+#: npc/battleground/bg_common.txt#10 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#11 (mes)
+- "General Guillaume may have an advantage in this battle as he is the great general of Maroll, but that doesn't automatically mean he'll win."
++ ""
+#: npc/battleground/bg_common.txt#12 (mes)
+- "I want to win this battle so that I can bring prosperity to the people of Maroll. They've suffered enough from war..."
++ ""
+#: npc/battleground/bg_common.txt#13 (select)
+- "Yes, I want to join you.:End Conversation"
++ ""
+#: npc/battleground/bg_common.txt#14 (cutin)
+- "bat_crua1"
++ ""
+#: npc/battleground/bg_common.txt#15 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#16 (mes)
+- "Thank you so much. I feel like I can win with the help of adventurers like you."
++ ""
+#: npc/battleground/bg_common.txt#17 (mes)
+- "Now, please go downstairs and join your comrades in sharpening their skills to fight the enemy!"
++ ""
+#: npc/battleground/bg_common.txt#18 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#19 (mes)
+- "For Maroll!"
++ ""
+#: npc/battleground/bg_common.txt#20 (cutin)
+- "bat_crua2"
++ ""
+#: npc/battleground/bg_common.txt#21 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#22 (mes)
+- "The 3rd Prince Guillaume is the great general of Maroll."
++ ""
+#: npc/battleground/bg_common.txt#23 (mes)
+- "It's a waste of time to explain to you how great a leader or warlord he is, since he commands the great military power of Maroll."
++ ""
+#: npc/battleground/bg_common.txt#24 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#25 (mes)
+- "Unfortunately, there's something he and his followers are unaware of:"
++ ""
+#: npc/battleground/bg_common.txt#26 (mes)
+- "Do the people of Maroll really want them to spend so much money on military power?"
++ ""
+#: npc/battleground/bg_common.txt#27 (mes)
+- "We have suffered enough from wars."
++ ""
+#: npc/battleground/bg_common.txt#28 (mes)
+- "I believe weapons aren't the best way to bring prosperity to a nation."
++ ""
+#: npc/battleground/bg_common.txt#29 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#30 (mes)
+- "I do not wish to shed blood, but I have no choice but to fight for the possibility of peace and for the sake of my people."
++ ""
+#: npc/battleground/bg_common.txt#31 (select)
+- "Yes, I want to join you.:End Conversation"
++ ""
+#: npc/battleground/bg_common.txt#32 (cutin)
+- "bat_crua1"
++ ""
+#: npc/battleground/bg_common.txt#33 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#34 (mes)
+- "Thank you so much. I feel like I can win with the help of adventurers like you."
++ ""
+#: npc/battleground/bg_common.txt#35 (mes)
+- "Now, please go downstairs and join your comrades in sharpening their skills to fight the enemy!"
++ ""
+#: npc/battleground/bg_common.txt#36 (mes)
+- "[Prince Croix]"
++ ""
+#: npc/battleground/bg_common.txt#37 (mes)
+- "For Maroll!"
++ ""
+#: npc/battleground/bg_common.txt#38 (cutin)
+- "bat_crua1"
++ ""
+#: npc/battleground/bg_common.txt#39 (cutin)
+- "bat_crua2"
++ ""
+#: npc/battleground/bg_common.txt#40 (cutin)
+- "bat_kiyom2"
++ ""
+#: npc/battleground/bg_common.txt#41 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#42 (mes)
+- "Hot-blooded adventurer, we need your ability to win this battle."
++ ""
+#: npc/battleground/bg_common.txt#43 (select)
+- "What's the reason for the Battle?:Tell me about Prince Croix"
++ ""
+#: npc/battleground/bg_common.txt#44 (cutin)
+- "bat_kiyom1"
++ ""
+#: npc/battleground/bg_common.txt#45 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#46 (mes)
+- "Our great king, Marcel Marollo VII, is very sick lately."
++ ""
+#: npc/battleground/bg_common.txt#47 (mes)
+- "His Majesty has declared that he has chosen either me or Prince Croix as the next king amongst his 9 sons."
++ ""
+#: npc/battleground/bg_common.txt#48 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#49 (mes)
+- "Two kings can't share a nation! Only the one victorious from His Majesty's appointed battle will be enthroned."
++ ""
+#: npc/battleground/bg_common.txt#50 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#51 (mes)
+- "This is, however, not just a battle between us. This battle will determine the future of this country."
++ ""
+#: npc/battleground/bg_common.txt#52 (mes)
+- "I pledge on my honor to prove that I'm the one who can protect this Maroll from outside threats."
++ ""
+#: npc/battleground/bg_common.txt#53 (select)
+- "Yes, I want to join you.:End Conversation"
++ ""
+#: npc/battleground/bg_common.txt#54 (cutin)
+- "bat_kiyom2"
++ ""
+#: npc/battleground/bg_common.txt#55 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#56 (mes)
+- "Welcome to my army, comrade."
++ ""
+#: npc/battleground/bg_common.txt#57 (mes)
+- "Your eyes tell me that you're a soldier that I can trust."
++ ""
+#: npc/battleground/bg_common.txt#58 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#59 (mes)
+- "Now, go upstairs and apply for battle with your comrades."
++ ""
+#: npc/battleground/bg_common.txt#60 (mes)
+- "I'm sure they'll welcome you whole-heartedly!"
++ ""
+#: npc/battleground/bg_common.txt#61 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#62 (mes)
+- "I'll be the one who will capture the flag!"
++ ""
+#: npc/battleground/bg_common.txt#63 (cutin)
+- "bat_kiyom1"
++ ""
+#: npc/battleground/bg_common.txt#64 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#65 (mes)
+- "The 5th Prince Croix is currently titled as the Prime Minister of Maroll."
++ ""
+#: npc/battleground/bg_common.txt#66 (mes)
+- "He thinks all national matters of a nation can be discussed and determined on a desk,"
++ ""
+#: npc/battleground/bg_common.txt#67 (mes)
+- "and believes in peaceful co-existence with other countries."
++ ""
+#: npc/battleground/bg_common.txt#68 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#69 (mes)
+- "He's too ignorant to admit that so-called peace is built on countless lives that are sacrificed in wars while normal citizens and upper classes can live, oblivious to the horrors that allow them to live that way."
++ ""
+#: npc/battleground/bg_common.txt#70 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#71 (mes)
+- "He's too naive to understand the reality...."
++ ""
+#: npc/battleground/bg_common.txt#72 (mes)
+- "I can't leave Maroll to someone like him who lives in a dream!"
++ ""
+#: npc/battleground/bg_common.txt#73 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#74 (mes)
+- "His unrealistic beliefs will drown this country in poverty and make the people weak. If he becomes the king, Maroll will never rest from the onslaughts of other countries."
++ ""
+#: npc/battleground/bg_common.txt#75 (mes)
+- "I want to teach him what makes this small country so powerful and prosperous. It's military power!"
++ ""
+#: npc/battleground/bg_common.txt#76 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/bg_common.txt#77 (cutin)
+- "bat_kiyom2"
++ ""
+#: npc/battleground/bg_common.txt#78 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#79 (mes)
+- "Welcome to my army, comrade."
++ ""
+#: npc/battleground/bg_common.txt#80 (mes)
+- "Your eyes tell me that you're a soldier that I can trust."
++ ""
+#: npc/battleground/bg_common.txt#81 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#82 (mes)
+- "Now, go upstairs and apply for battle from your comrades."
++ ""
+#: npc/battleground/bg_common.txt#83 (mes)
+- "I'm sure they'll welcome you whole-heartedly!"
++ ""
+#: npc/battleground/bg_common.txt#84 (mes)
+- "[General Guillaume]"
++ ""
+#: npc/battleground/bg_common.txt#85 (mes)
+- "I'll be the one who will capture the flag!"
++ ""
+#: npc/battleground/bg_common.txt#86 (cutin)
+- "bat_kiyom1"
++ ""
+#: npc/battleground/bg_common.txt#87 (cutin)
+- "bat_kiyom2"
++ ""
+#: npc/battleground/bg_common.txt#88 (mes)
+- "[Teleporter]"
++ ""
+#: npc/battleground/bg_common.txt#89 (mes)
+- "Do you wish to leave the battlefield? Use my services to return to town."
++ ""
+#: npc/battleground/bg_common.txt#90 (select)
+- "Leave:Don't Leave"
++ ""
+#: npc/battleground/bg_common.txt#91 (mes)
+- "[Teleporter]"
++ ""
+#: npc/battleground/bg_common.txt#92 (setarray)
+- "Prontera."
++ ""
+#: npc/battleground/bg_common.txt#93 (setarray)
+- "prontera"
++ ""
+#: npc/battleground/bg_common.txt#94 (setarray)
+- "Morocc Ruins."
++ ""
+#: npc/battleground/bg_common.txt#95 (setarray)
+- "moc_ruins"
++ ""
+#: npc/battleground/bg_common.txt#96 (setarray)
+- "Al De Baran."
++ ""
+#: npc/battleground/bg_common.txt#97 (setarray)
+- "aldebaran"
++ ""
+#: npc/battleground/bg_common.txt#98 (setarray)
+- "Geffen."
++ ""
+#: npc/battleground/bg_common.txt#99 (setarray)
+- "geffen"
++ ""
+#: npc/battleground/bg_common.txt#100 (setarray)
+- "Payon."
++ ""
+#: npc/battleground/bg_common.txt#101 (setarray)
+- "payon"
++ ""
+#: npc/battleground/bg_common.txt#102 (setarray)
+- "Lighthalzen."
++ ""
+#: npc/battleground/bg_common.txt#103 (setarray)
+- "lighthalzen"
++ ""
+#: npc/battleground/bg_common.txt#104 (setarray)
+- "Rachel."
++ ""
+#: npc/battleground/bg_common.txt#105 (setarray)
+- "rachel"
++ ""
+#: npc/battleground/bg_common.txt#106 (setarray)
+- "Morocc."
++ ""
+#: npc/battleground/bg_common.txt#107 (setarray)
+- "morocc"
++ ""
+#: npc/battleground/bg_common.txt#108 (mes)
+- "You will be sent back to "
++ ""
+#: npc/battleground/bg_common.txt#109 (mes)
+- "."
++ "."
+#: npc/battleground/bg_common.txt#110 (mes)
+- "[Teleporter]"
++ ""
+#: npc/battleground/bg_common.txt#111 (mes)
+- "I'll be here whenever you're in need of my services."
++ ""
+#: npc/battleground/bg_common.txt#112 (mes)
+- "[Maroll Battle Recruiter]"
++ ""
+#: npc/battleground/bg_common.txt#113 (mes)
+- "Good day, adventurer."
++ ""
+#: npc/battleground/bg_common.txt#114 (mes)
+- "I'm a knight from a far country called Maroll Kingdom."
++ ""
+#: npc/battleground/bg_common.txt#115 (mes)
+- "[Maroll Battle Recruiter]"
++ ""
+#: npc/battleground/bg_common.txt#116 (mes)
+- "The two princes of the kingdom are now battling for the throne of Maroll, and are in need of experienced soldiers like you."
++ ""
+#: npc/battleground/bg_common.txt#117 (mes)
+- "How would you like to lend your power to one of the princes in the Maroll Kingdom?"
++ ""
+#: npc/battleground/bg_common.txt#118 (select)
+- "Join:Don't Join"
++ ""
+#: npc/battleground/bg_common.txt#119 (mes)
+- "[Maroll Battle Recruiter]"
++ ""
+#: npc/battleground/bg_common.txt#120 (mes)
+- "May the war god bless you."
++ ""
+#: npc/battleground/bg_common.txt#130 (mes)
+- "[Maroll Battle Recruiter]"
++ ""
+#: npc/battleground/bg_common.txt#131 (mes)
+- "I'll always be stationed here for more soldiers. Feel free to come back whenever you're interested."
++ ""
+#: npc/battleground/bg_common.txt#132 (cutin)
+- "kafra_09"
++ ""
+#: npc/battleground/bg_common.txt#137 (mes)
+- "The command has been cancelled."
++ ""
+#: npc/battleground/bg_common.txt#138 (mes)
+- "May I help you?"
++ ""
+#: npc/battleground/bg_common.txt#139 (select)
+- "Close Battlefield:Open Battlefield:Reset a01:Reset b01:Reset a02:Reset b02"
++ ""
+#: npc/battleground/bg_common.txt#160 (mes)
+- "Complete"
++ ""
+#: npc/battleground/bg_common.txt#161 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/bg_common.txt#162 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/bg_common.txt#163 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/bg_common.txt#164 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/bg_common.txt#165 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/bg_common.txt#166 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#167 (mes)
+- "Do you have the battlefield badges?"
++ ""
+#: npc/battleground/bg_common.txt#168 (mes)
+- "I can exchange Bravery Badges and Valor Badges for reward items."
++ ""
+#: npc/battleground/bg_common.txt#169 (select)
+- "Exchange Badges:Check the Catalog"
++ ""
+#: npc/battleground/bg_common.txt#170 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#171 (mes)
+- "Which type of items would you like to exchange?"
++ ""
+#: npc/battleground/bg_common.txt#172 (mes)
+- "To check more information about the reward items, please use our ^3131FFCatalog^000000."
++ ""
+#: npc/battleground/bg_common.txt#173 (select)
+- "Weapon:Armor:Accessory:Consumable"
++ ""
+#: npc/battleground/bg_common.txt#174 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#175 (mes)
+- "You chose ^3131FFWeapon^000000."
++ ""
+#: npc/battleground/bg_common.txt#176 (mes)
+- "The following weapons are available for exchange with the battlefield badges."
++ ""
+#: npc/battleground/bg_common.txt#177 (mes)
+- "Please note that items for ^3131FFBravery Badges are indicated as (BB)^000000, and ^3131FFValor Badges as (VB)^000000."
++ ""
+#: npc/battleground/bg_common.txt#178 (select)
+- "Dagger/OneSword/TwoSword/TwoSpear:Staff/Mace/TwoAxe/Shuriken:Bow/Katar/Music/Whip:Book/Knuckle:Revolver/Rifle/Gatling/Shotgun/Launcher"
++ ""
+#: npc/battleground/bg_common.txt#179 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#180 (mes)
+- "The following items are available in the ^3131FFDagger, One-Handed Sword, Two-Handed Sword, and Two-Handed Spear^000000 category."
++ ""
+#: npc/battleground/bg_common.txt#181 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#182 (mes)
+- "The following items are available in the ^3131FFStaff / Mace / Two-Handed Axe / Huuma Shuriken^000000 category."
++ ""
+#: npc/battleground/bg_common.txt#183 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#184 (mes)
+- "The following weapons are available in the ^3131FFBow / Katar / Musical Instrument / Whip^000000 category."
++ ""
+#: npc/battleground/bg_common.txt#185 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#186 (mes)
+- "The following weapons are available in the ^3131FFBook / Knuckle^000000 category."
++ ""
+#: npc/battleground/bg_common.txt#187 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#188 (mes)
+- "The following weapons are available in the ^3131FFRevolver / Rifle / Gatling Gun / Shotgun / Grenade Launcher^000000 category."
++ ""
+#: npc/battleground/bg_common.txt#190 (menu)
+- "(BB)"
++ ""
+#: npc/battleground/bg_common.txt#191 (menu)
+- "(VB)"
++ ""
+#: npc/battleground/bg_common.txt#192 (menu)
+- ":"
++ ":"
+#: npc/battleground/bg_common.txt#195 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#196 (mes)
+- "You chose ^3131FF"
++ ""
+#: npc/battleground/bg_common.txt#197 (mes)
+- "^000000."
++ ""
+#: npc/battleground/bg_common.txt#198 (mes)
+- "You can exchange for this item with ^FF0000100 "
++ ""
+#: npc/battleground/bg_common.txt#199 (mes)
+- "^000000."
++ ""
+#: npc/battleground/bg_common.txt#200 (mes)
+- "Would you like to exchange?"
++ ""
+#: npc/battleground/bg_common.txt#201 (select)
+- "Do not exchange:Exchange"
++ ""
+#: npc/battleground/bg_common.txt#202 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#203 (mes)
+- "Would you like to spend ^FF0000100 "
++ ""
+#: npc/battleground/bg_common.txt#204 (mes)
+- "^000000 and receive a ^3131FF"
++ ""
+#: npc/battleground/bg_common.txt#205 (mes)
+- "^000000?"
++ ""
+#: npc/battleground/bg_common.txt#206 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#207 (mes)
+- "Remember, Battleground Reward Items are ^FF0000Character Bound^000000. Are you sure you want this item?"
++ ""
+#: npc/battleground/bg_common.txt#208 (select)
+- "Yes:No"
++ "Sim:Não"
+#: npc/battleground/bg_common.txt#209 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#210 (mes)
+- "Thank you for exchanging."
++ ""
+#: npc/battleground/bg_common.txt#211 (mes)
+- "I'm sorry, but you don't have enough badges to exchange."
++ ""
+#: npc/battleground/bg_common.txt#212 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#213 (mes)
+- "Do you need more time to check the items?"
++ ""
+#: npc/battleground/bg_common.txt#214 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#215 (mes)
+- "You chose ^3131FFArmor^000000."
++ ""
+#: npc/battleground/bg_common.txt#216 (mes)
+- "The following armors are available for exchange with the battlefield badges."
++ ""
+#: npc/battleground/bg_common.txt#217 (select)
+- "Garments / Shoes:Armor"
++ ""
+#: npc/battleground/bg_common.txt#218 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#219 (mes)
+- "You chose ^3131FFAccessory^000000."
++ ""
+#: npc/battleground/bg_common.txt#220 (mes)
+- "You can exchange the Medal of Honors with your Badges according to the job classes, as follows:"
++ ""
+#: npc/battleground/bg_common.txt#222 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#223 (mes)
+- "You chose ^3131FFConsumable^000000."
++ ""
+#: npc/battleground/bg_common.txt#224 (mes)
+- "The following consumable items are available for exchange with the battlefield badges:"
++ ""
+#: npc/battleground/bg_common.txt#225 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#226 (mes)
+- "We have many items, so please take a look and purchase deliberately."
++ ""
+#: npc/battleground/bg_common.txt#229 (menu)
+- ":"
++ ":"
+#: npc/battleground/bg_common.txt#230 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#231 (mes)
+- "You chose ^3131FF"
++ ""
+#: npc/battleground/bg_common.txt#232 (mes)
+- "^000000."
++ ""
+#: npc/battleground/bg_common.txt#233 (mes)
+- "This item is for Swordman and Taekwon Master Class only."
++ ""
+#: npc/battleground/bg_common.txt#234 (mes)
+- "This item is for Thief Class only."
++ ""
+#: npc/battleground/bg_common.txt#235 (mes)
+- "This item is for Acolyte Class only."
++ ""
+#: npc/battleground/bg_common.txt#236 (mes)
+- "This item is for Magician Class only."
++ ""
+#: npc/battleground/bg_common.txt#237 (mes)
+- "This item is for Archer Class only."
++ ""
+#: npc/battleground/bg_common.txt#238 (mes)
+- "This item is for Merchant Class only."
++ ""
+#: npc/battleground/bg_common.txt#239 (mes)
+- "This item is for Gunslinger only."
++ ""
+#: npc/battleground/bg_common.txt#240 (mes)
+- "You can exchange for this item with ^FF0000"
++ ""
+#: npc/battleground/bg_common.txt#242 (mes)
+- " or "
++ " ou "
+#: npc/battleground/bg_common.txt#244 (mes)
+- "^000000."
++ ""
+#: npc/battleground/bg_common.txt#245 (mes)
+- "Would you like to exchange?"
++ ""
+#: npc/battleground/bg_common.txt#246 (select)
+- "Do not exchange:Exchange"
++ ""
+#: npc/battleground/bg_common.txt#247 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#248 (mes)
+- "Do you need more time to check the items?"
++ ""
+#: npc/battleground/bg_common.txt#249 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#250 (mes)
+- "Which Badge do you want to exchange?"
++ ""
+#: npc/battleground/bg_common.txt#251 (mes)
+- "You need ^3131FF"
++ ""
+#: npc/battleground/bg_common.txt#252 (mes)
+- " Badges^000000 to exchange."
++ ""
+#: npc/battleground/bg_common.txt#253 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#254 (mes)
+- "Remember, Battleground Reward Items are ^FF0000Character Bound^000000. Are you sure you want this item?"
++ ""
+#: npc/battleground/bg_common.txt#255 (select)
+- "Bravery Badge:Valor Badge:Cancel"
++ ""
+#: npc/battleground/bg_common.txt#256 (mes)
+- "[Erundek]"
++ ""
+#: npc/battleground/bg_common.txt#257 (mes)
+- "You cancelled the exchange."
++ ""
+#: npc/battleground/bg_common.txt#258 (mes)
+- "Thank you for exchanging."
++ ""
+#: npc/battleground/bg_common.txt#259 (mes)
+- "You do not have enough "
++ ""
+#: npc/battleground/bg_common.txt#260 (mes)
+- "s."
++ ""
+#: npc/battleground/bg_common.txt#264 (mes)
+- "[Axl Rose]"
++ ""
+#: npc/battleground/bg_common.txt#265 (mes)
+- "Blessed Guillaume!"
++ ""
+#: npc/battleground/bg_common.txt#267 (mes)
+- "[Swandery]"
++ ""
+#: npc/battleground/bg_common.txt#268 (mes)
+- "Blessed Croix!"
++ ""
+#: npc/battleground/bg_common.txt#269 (mes)
+- "Let's enjoy our glorious victory!"
++ ""
+#: npc/battleground/bg_common.txt#270 (mes)
+- ", it's a sign reflecting victory."
++ ""
+#: npc/battleground/bg_common.txt#272 (mes)
+- "[Axl Rose]"
++ ""
+#: npc/battleground/bg_common.txt#273 (mes)
+- "You lost, but you're dedicated to this battle."
++ ""
+#: npc/battleground/bg_common.txt#274 (mes)
+- "This is a reward for your great dedication by Guillaume Marollo!"
++ ""
+#: npc/battleground/bg_common.txt#275 (mes)
+- "Just take this defeat as a lesson, and next time you will definitely win."
++ ""
+#: npc/battleground/bg_common.txt#277 (mes)
+- "[Swandery]"
++ ""
+#: npc/battleground/bg_common.txt#278 (mes)
+- "Oh, "
++ ""
+#: npc/battleground/bg_common.txt#279 (mes)
+- " Don't be sad."
++ ""
+#: npc/battleground/bg_common.txt#280 (mes)
+- "Even though we didn't win, we did our best."
++ ""
+#: npc/battleground/bg_common.txt#281 (mes)
+- "This is a Royal gift from Croix, and please don't forget this battle. We will win the next one."
++ ""
+
+### npc/battleground/flavius/flavius01.txt  (17 textos)
+#: npc/battleground/flavius/flavius01.txt#145 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/flavius/flavius01.txt#146 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/flavius/flavius01.txt#147 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/flavius/flavius01.txt#148 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/flavius/flavius01.txt#160 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/flavius/flavius01.txt#161 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/flavius/flavius01.txt#162 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/flavius/flavius01.txt#163 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/flavius/flavius01.txt#233 (mes)
+- "[Axl Rose]"
++ ""
+#: npc/battleground/flavius/flavius01.txt#234 (mes)
+- "Why are you here, Croix mercenary? I am definitely sure of victory against foolish Croix such as you. Ha!"
++ ""
+#: npc/battleground/flavius/flavius01.txt#247 (mes)
+- "[Swandery]"
++ ""
+#: npc/battleground/flavius/flavius01.txt#248 (mes)
+- "Why do you come here as a Guillaume? You will be sent to where you should be!"
++ ""
+#: npc/battleground/flavius/flavius01.txt#253 (mes)
+- "Cancelled."
++ ""
+#: npc/battleground/flavius/flavius01.txt#254 (mes)
+- "May I help you?"
++ ""
+#: npc/battleground/flavius/flavius01.txt#255 (select)
+- "Release all.:Cancel."
++ ""
+#: npc/battleground/flavius/flavius01.txt#256 (mes)
+- "Bye."
++ ""
+#: npc/battleground/flavius/flavius01.txt#259 (mes)
+- "Cancelled."
++ ""
+
+### npc/battleground/flavius/flavius02.txt  (17 textos)
+#: npc/battleground/flavius/flavius02.txt#145 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/flavius/flavius02.txt#146 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/flavius/flavius02.txt#147 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/flavius/flavius02.txt#148 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/flavius/flavius02.txt#160 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/flavius/flavius02.txt#161 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/flavius/flavius02.txt#162 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/flavius/flavius02.txt#163 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/flavius/flavius02.txt#233 (mes)
+- "[Axl Rose]"
++ ""
+#: npc/battleground/flavius/flavius02.txt#234 (mes)
+- "Why are you here, Croix mercenary? I am definitely sure of victory against foolish Croix such as you. Ha!"
++ ""
+#: npc/battleground/flavius/flavius02.txt#247 (mes)
+- "[Swandery]"
++ ""
+#: npc/battleground/flavius/flavius02.txt#248 (mes)
+- "Why do you come here as a Guillaume? You will be sent to where you should be!"
++ ""
+#: npc/battleground/flavius/flavius02.txt#253 (mes)
+- "Cancelled."
++ ""
+#: npc/battleground/flavius/flavius02.txt#254 (mes)
+- "May I help you?"
++ ""
+#: npc/battleground/flavius/flavius02.txt#255 (select)
+- "Release all.:Cancel."
++ ""
+#: npc/battleground/flavius/flavius02.txt#256 (mes)
+- "Bye."
++ ""
+#: npc/battleground/flavius/flavius02.txt#259 (mes)
+- "Cancelled."
++ ""
+
+### npc/battleground/flavius/flavius_enter.txt  (138 textos)
+#: npc/battleground/flavius/flavius_enter.txt#2 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/flavius/flavius_enter.txt#3 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/flavius/flavius_enter.txt#4 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/flavius/flavius_enter.txt#5 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/flavius/flavius_enter.txt#6 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/flavius/flavius_enter.txt#7 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#8 (mes)
+- "Let's show the power of the Guillaume Army to those stinky Croixs!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#9 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#10 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#11 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#12 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#13 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#14 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#15 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#16 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#18 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#19 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Croixs already."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#20 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#21 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#22 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#23 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#24 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#25 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#26 (mes)
+- "Go show the Croixs what fear truly means!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#27 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#29 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#30 (mes)
+- "Today, we shall be victorious!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#32 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/flavius/flavius_enter.txt#33 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/flavius/flavius_enter.txt#34 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/flavius/flavius_enter.txt#35 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/flavius/flavius_enter.txt#36 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/flavius/flavius_enter.txt#37 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#38 (mes)
+- "Let's show the Guillaumes the power of the Croix Army!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#39 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#40 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#41 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#42 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#43 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#44 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#45 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#46 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#48 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#49 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Guillaume already."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#50 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#51 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#52 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#53 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#54 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#55 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#56 (mes)
+- "Go show the Guillaumes what fear truly means!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#57 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#59 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#60 (mes)
+- "Today, we shall be victorious!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#61 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#62 (mes)
+- "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#63 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#64 (mes)
+- "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#65 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#66 (mes)
+- "But they can be removed by destroying the Guardians that protect the enemy army base."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#67 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#68 (mes)
+- "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#69 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#71 (mes)
+- "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#72 (mes)
+- "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#73 (mes)
+- "You may check the duration by pressing the Alt+U keys."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#74 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#76 (mes)
+- "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#77 (mes)
+- "Are you ready for battle? Then apply with the recruiter next to me!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#78 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#79 (mes)
+- "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#80 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#81 (mes)
+- "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#82 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#83 (mes)
+- "But they can be removed by destroying the Guardians that protect the enemy army base."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#84 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#85 (mes)
+- "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#86 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#88 (mes)
+- "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#89 (mes)
+- "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#90 (mes)
+- "You may check the duration by pressing the Alt+U keys."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#91 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#93 (mes)
+- "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#94 (mes)
+- "Are you ready for battle? Then apply with the recruiter next to me!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#96 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/flavius/flavius_enter.txt#97 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/flavius/flavius_enter.txt#98 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/flavius/flavius_enter.txt#99 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/flavius/flavius_enter.txt#100 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/flavius/flavius_enter.txt#101 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#102 (mes)
+- "Let's show the power of the Guillaume Army to those stinky Croixs!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#103 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#104 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#105 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#106 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#107 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#108 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#109 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#110 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#112 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#113 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Croixs already."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#114 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#115 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#116 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#117 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#118 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#119 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#120 (mes)
+- "Go show the Croixs what fear truly means!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#121 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#123 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#124 (mes)
+- "Today, we shall be victorious!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#126 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/flavius/flavius_enter.txt#127 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/flavius/flavius_enter.txt#128 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/flavius/flavius_enter.txt#129 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/flavius/flavius_enter.txt#130 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/flavius/flavius_enter.txt#131 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#132 (mes)
+- "Let's show the power of the Croix Army to those stinky Guillaumes!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#133 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#134 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#135 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#136 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#137 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#138 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#139 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#140 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#142 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#143 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Guillaume already."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#144 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#145 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#146 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#147 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#148 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#149 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#150 (mes)
+- "Go show the Guillaumes what fear truly means!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#151 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#153 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/flavius/flavius_enter.txt#154 (mes)
+- "Today, we shall be victorious!"
++ ""
+
+### npc/battleground/kvm/kvm01.txt  (7 textos)
+#: npc/battleground/kvm/kvm01.txt#195 (mes)
+- "[KVM Officer]"
++ ""
+#: npc/battleground/kvm/kvm01.txt#196 (mes)
+- "Good Game."
++ ""
+#: npc/battleground/kvm/kvm01.txt#197 (mes)
+- "May the glory of KVM be with you."
++ ""
+#: npc/battleground/kvm/kvm01.txt#198 (mes)
+- "You aquire the winning points: 5"
++ ""
+#: npc/battleground/kvm/kvm01.txt#199 (mes)
+- "I am so sorry."
++ ""
+#: npc/battleground/kvm/kvm01.txt#200 (mes)
+- "I wish you better luck next time."
++ ""
+#: npc/battleground/kvm/kvm01.txt#201 (mes)
+- "You aquire the losing points: 1"
++ ""
+
+### npc/battleground/kvm/kvm02.txt  (7 textos)
+#: npc/battleground/kvm/kvm02.txt#195 (mes)
+- "[KVM Officer]"
++ ""
+#: npc/battleground/kvm/kvm02.txt#196 (mes)
+- "Good Game."
++ ""
+#: npc/battleground/kvm/kvm02.txt#197 (mes)
+- "May the glory of KVM be with you."
++ ""
+#: npc/battleground/kvm/kvm02.txt#198 (mes)
+- "You aquire the winning points: 1"
++ ""
+#: npc/battleground/kvm/kvm02.txt#199 (mes)
+- "I am so sorry."
++ ""
+#: npc/battleground/kvm/kvm02.txt#200 (mes)
+- "I wish you better luck next time."
++ ""
+#: npc/battleground/kvm/kvm02.txt#201 (mes)
+- "You aquire the losing points: 0"
++ ""
+
+### npc/battleground/kvm/kvm03.txt  (7 textos)
+#: npc/battleground/kvm/kvm03.txt#195 (mes)
+- "[KVM Officer]"
++ ""
+#: npc/battleground/kvm/kvm03.txt#196 (mes)
+- "Good Game."
++ ""
+#: npc/battleground/kvm/kvm03.txt#197 (mes)
+- "May the glory of KVM be with you."
++ ""
+#: npc/battleground/kvm/kvm03.txt#198 (mes)
+- "You aquire the winning points: 2"
++ ""
+#: npc/battleground/kvm/kvm03.txt#199 (mes)
+- "I am so sorry."
++ ""
+#: npc/battleground/kvm/kvm03.txt#200 (mes)
+- "I wish you better luck next time."
++ ""
+#: npc/battleground/kvm/kvm03.txt#201 (mes)
+- "You aquire the losing points: 1"
++ ""
+
+### npc/battleground/kvm/kvm_enter.txt  (108 textos)
+#: npc/battleground/kvm/kvm_enter.txt#2 (mes)
+- "[Croix Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#3 (mes)
+- "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#4 (mes)
+- "[Guillaume Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#5 (mes)
+- "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#6 (mes)
+- "[Guillaume Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#7 (mes)
+- "Let them know the real might of Guillaume!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#8 (select)
+- "I will fight with you.:End Conversation."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#9 (mes)
+- "[Guillaume Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#10 (mes)
+- "Show them how strong we are."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#11 (mes)
+- "Today, everyone will hear the shout of triumph from Guillaume!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#15 (mes)
+- "[Guillaume Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#16 (mes)
+- "We will win!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#17 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#18 (mes)
+- "Hello."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#19 (mes)
+- "What do you want to know?"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#20 (select)
+- "Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#21 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#23 (mes)
+- "If you are ready for battle, click the ^0000FFbattle button from the interface^000000 to apply for KVM battle!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#24 (mes)
+- "Applications are not available yet."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#25 (mes)
+- "To apply, you need to go to a KVM Mercenary Officer."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#26 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#27 (mes)
+- "KVM is the abbreviation of Kreiger Von Midgard."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#28 (mes)
+- "Adventurer, are you aware that the way to the new world has been opened?"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#29 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#30 (mes)
+- "We, the Guillaume Administration, have several plans to advance to the new world."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#31 (mes)
+- "And KVM is one of them."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#32 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#33 (mes)
+- "It means that we, one of many countries in the Midgard continent,"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#34 (mes)
+- "have decided to employ many adventurers for the immediate advance to the new world."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#35 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#36 (mes)
+- "Therefore, to select the best adventurers, we are holding the KVM."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#37 (mes)
+- "We exspect responses from many adventurers."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#38 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#39 (mes)
+- "And we will give them rewards for their participation!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#40 (mes)
+- "As for the rewards, please contact a KVM Logistic Officer."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#41 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#43 (mes)
+- "Basically, KVM is a 3 on 3 battle."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#44 (mes)
+- "Apply by clicking on the ^0000FFbattle button from the interface^000000, as a group or individually."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#45 (mes)
+- "Basically, KVM is a 5 on 5 battle."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#46 (mes)
+- "First, you apply with a KVM receptionist, in a group or individually."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#47 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#49 (mes)
+- "Group applications are for when you intend to enter the KVM with your party or guild members,"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#50 (mes)
+- "Group applications are for when you intend to enter the KVM with your party members,"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#51 (mes)
+- "and a personal application is for when you intend to enter the KVM individually."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#52 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#54 (mes)
+- "Please be noted, once you cancel you ^0000FFcannot apply again for 1 minute^000000."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#55 (mes)
+- "Please apply with a KVM officer, and he will contact you later when you are in Prontera."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#56 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#57 (mes)
+- "Then you enter and follow the instructions in the battlefield."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#58 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#59 (mes)
+- "However, please be advised that unless you are in the KVM office, he cannot contact you."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#60 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#61 (mes)
+- "Your Kreiger Points are:"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#63 (mes)
+- "."
++ "."
+#: npc/battleground/kvm/kvm_enter.txt#65 (mes)
+- "[Croix Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#66 (mes)
+- "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#67 (mes)
+- "[Croix Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#68 (mes)
+- "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#69 (mes)
+- "[Croix Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#70 (mes)
+- "Let them know the real might of Croix!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#71 (select)
+- "I will fight with you.:End Conversation."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#72 (mes)
+- "[Croix Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#73 (mes)
+- "Show them how strong we are."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#74 (mes)
+- "Today, everyone will hear the shout of triumph from Croix!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#78 (mes)
+- "[Croix Mercenary Officer]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#79 (mes)
+- "We will win!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#80 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#81 (mes)
+- "Hello."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#82 (mes)
+- "What do you want to know?"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#83 (select)
+- "Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#84 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#86 (mes)
+- "If you are ready for battle, click the ^0000FFbattle button from the interface^000000 to apply for KVM battle!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#87 (mes)
+- "Applications are not available yet."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#88 (mes)
+- "To apply, you need to go to a KVM Mercenary Officer."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#89 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#90 (mes)
+- "KVM is the abbreviation of Kreiger Von Midgard."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#91 (mes)
+- "Adventurer, are you aware that the way to the new world has been opened?"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#92 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#93 (mes)
+- "We, the Croix Administration, have several plans to advance to the new world."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#94 (mes)
+- "And KVM is one of them."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#95 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#96 (mes)
+- "It means that we, one of many countries in the Midgard continent,"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#97 (mes)
+- "have decided to employ many adventurers for the immediate advance to the new world."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#98 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#99 (mes)
+- "Therefore, to select the best adventurers, we are holding the KVM."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#100 (mes)
+- "We exspect responses from many adventurers."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#101 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#102 (mes)
+- "And we will give them rewards for their participation!"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#103 (mes)
+- "As for the rewards, please contact a KVM Logistic Officer."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#104 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#106 (mes)
+- "Basically, KVM is a 3 on 3 battle."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#107 (mes)
+- "Apply by clicking on the ^0000FFbattle button from the interface^000000, as a group or individually."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#108 (mes)
+- "Basically, KVM is a 5 on 5 battle."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#109 (mes)
+- "First, you apply with a KVM receptionist, in a group or individually."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#110 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#112 (mes)
+- "Group applications are for when you intend to enter the KVM with your party or guild members,"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#113 (mes)
+- "Group applications are for when you intend to enter the KVM with your party members,"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#114 (mes)
+- "and a personal application is for when you intend to enter the KVM individually."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#115 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#117 (mes)
+- "Please be noted, once you cancel you ^0000FFcannot apply again for 1 minute^000000."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#118 (mes)
+- "Please apply with a KVM officer, and he will contact you later when you are in Prontera."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#119 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#120 (mes)
+- "Then you enter and follow the instructions in the battlefield."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#121 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#122 (mes)
+- "However, please be advised that unless you are in the KVM office, he cannot contact you."
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#123 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#124 (mes)
+- "Your Kreiger Points are:"
++ ""
+#: npc/battleground/kvm/kvm_enter.txt#126 (mes)
+- "."
++ "."
+
+### npc/battleground/kvm/kvm_item_pay.txt  (181 textos)
+#: npc/battleground/kvm/kvm_item_pay.txt#1 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#2 (mes)
+- "Are those "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#3 (mes)
+- "s I see?"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#4 (mes)
+- "We no longer accept that currency,"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#5 (mes)
+- "but I can exchange those for you,"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#6 (mes)
+- "So you have "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#8 (mes)
+- "s?"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#9 (mes)
+- "Alright, all set, you now have ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#10 (mes)
+- "^000000 KVM Points."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#11 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/kvm/kvm_item_pay.txt#12 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/kvm/kvm_item_pay.txt#13 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/kvm/kvm_item_pay.txt#14 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/kvm/kvm_item_pay.txt#15 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/kvm/kvm_item_pay.txt#16 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#17 (mes)
+- "Hello?"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#18 (mes)
+- "I am in charge of distributing"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#19 (mes)
+- "reward items for KVM points. Any"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#20 (mes)
+- "wrong selection of items will not"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#21 (mes)
+- "be reversed. Please be carefull."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#22 (mes)
+- "Select the next step please."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#23 (select)
+- "Read the KVM Catalogue.:Purchase KVM Items.:Confirm KVM Points.:Explanation of KVM Rewards.:Explanation of KVM Points."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#24 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#25 (mes)
+- "Here is the catalogue of KVM items."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#26 (mes)
+- "Each weapon requires 2,000 points"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#27 (mes)
+- "and each armor from 10 to 1,200"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#28 (mes)
+- "points. So, be carefull when"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#29 (mes)
+- "selecting a reward."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#30 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#31 (mes)
+- "Wich items do you want to see? As"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#32 (mes)
+- "for the detailed specification of"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#33 (mes)
+- "the items, please refer to the"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#34 (mes)
+- "^3131FFCatalogue^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#35 (select)
+- "Weapon:Armor/Accessory:Mass-Production Armor/Accessory:Popularized Armor/Accessory"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#36 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#37 (mes)
+- "You have selected the Weapon Category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#38 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#39 (select)
+- "Dagger/Sword/Spear:Staff/Mace/Axe/Shuriken:Bow/Katar/Instrument/Whip:Book/Knuckle:Revolver/Rifle/Gun/Grenade Launcher"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#40 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#41 (mes)
+- "You have selected the Dagger/Sword/Spear category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#42 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#43 (select)
+- "Dagger:One-handed Sword:Two-handed Sword:One-handed Spear:Two-handed Spear"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#44 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#45 (mes)
+- "You have selected the 'One-handed Sword' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#46 (mes)
+- "There are 3 One-handed Swords: Glorious Flamberge, Glorious Rapier and Glorious Holy Avenger."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#47 (mes)
+- "If you want their details, please refer to the KVM Catalogue."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#48 (mes)
+- "Please select one of them."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#49 (select)
+- "Glorious Flamberge:Glorious Rapier:Glorious Holy Avenger"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#50 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#51 (mes)
+- "You have selected the 'Staff/Mace/Axe/Shuriken' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#52 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#53 (select)
+- "Staff:Mace:One-handed Axe:Two-handed Axe:Shuriken"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#54 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#55 (mes)
+- "You have selected the 'Staff' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#56 (mes)
+- "There are 3 Staffs: a Two-handed Weapon Glorious Destruction Staff, a One-handed Glorious Arc Wand and a Glorious Healing Staff."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#57 (mes)
+- "If you want their details, please refer to the KVM Catalogue."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#58 (mes)
+- "Please select one of them."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#59 (select)
+- "Glorious Destruction Staff:Glorious Arc Wand:Glorious Healing Staff"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#60 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#61 (mes)
+- "You have selected the Bow/Katar/Instrument/Whip category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#62 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#63 (select)
+- "Bow:Katar:Instrument:Whip"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#64 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#65 (mes)
+- "You have selected the 'Katar' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#66 (mes)
+- "There are 2 Katars: Glorious Bloody Roar and Glorious Jamadhar."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#67 (mes)
+- "If you want their details, please refer to the KVM Catalogue."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#68 (mes)
+- "Please select one of them."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#69 (select)
+- "Glorious Bloody Roar:Glorious Jamadhar"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#70 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#71 (mes)
+- "You have selected the Book/Knuckle category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#72 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#73 (select)
+- "Book:Knuckle"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#74 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#75 (mes)
+- "You have selected 'Book'."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#76 (mes)
+- "There are 2 Books: Glorious Tablet and Glorious Apocalypse."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#77 (mes)
+- "If you want their details, please refer to the KVM Catalogue."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#78 (mes)
+- "Please select one of them."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#79 (select)
+- "Glorious Tablet:Glorious Apocalypse"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#80 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#81 (mes)
+- "You have selected the 'Knuckle' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#82 (mes)
+- "There are 2 Knuckles: Glorious Claw and Glorious Fist."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#83 (mes)
+- "If you want their details, please refer to the KVM Catalogue."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#84 (mes)
+- "Please select one of them."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#85 (select)
+- "Glorious Claw:Glorious Fist"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#86 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#87 (mes)
+- "You have selected the 'Revolver/Rifle/Gun/Grenade Launcher' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#88 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#89 (select)
+- "Revolver:Rifle:Gatling Gun:Shotgun:Grenade Launcher"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#90 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#91 (mes)
+- "You have selected the 'Armor/Accessory' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#92 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#93 (select)
+- "Armor:Cloak:Shoes:Accessory"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#94 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#95 (mes)
+- "You have selected the 'Mass-Production Armor/Accessory' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#96 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#97 (select)
+- "Mass-Production Armor:Mass-Production Shoes:Mass-Production Accessory"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#98 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#99 (mes)
+- "You have selected the 'Popularized Armor/Accessory' category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#100 (mes)
+- "Please select a sub-category."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#101 (select)
+- "Popularized Armor:Popularized Shoes:Popularized Accessory"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#102 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#104 (mes)
+- ", your current points are ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#105 (mes)
+- "^000000 KVM Points."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#106 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#107 (mes)
+- "There are 3 categories in KVM Rewards: Weapon/Armor.Accessory."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#108 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#109 (mes)
+- "Weapon rewards require 2,000 KVM points for each."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#110 (mes)
+- "There are 3 types of Armor rewards and they require 840/630/580 KVM points fo each."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#111 (mes)
+- "Accessory rewards require 1,200 KVM points for each."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#112 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#113 (mes)
+- "Kreiger Weapons are LV 4 Weapons, they can be upgraded and will have special effects: Slaughter, Destruction and Blessing."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#114 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#115 (mes)
+- "When you can wear all 3 armors, you can have a special set of options."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#116 (mes)
+- "Also, when Kreiger Accessory rewards are worn with medalsm it will bring you special set rewards."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#117 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#118 (mes)
+- "Finally, there are Mass-Production Armor and Accessory rewards."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#119 (mes)
+- "Players whose Lvl is higher than 60 can equip Mass-Production Armors and there is a Lvl limit for Popularized Armor as well."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#120 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#121 (mes)
+- "KVM Points are rewarded when you win, lose or draw in Kreiger Von Midgard (KVM)."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#122 (mes)
+- "You can have special Rewards by using these points."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#123 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#124 (mes)
+- "You have selected ^ff0000"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#125 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#126 (mes)
+- "There is only one "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#127 (mes)
+- "F_GetWeaponType"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#128 (mes)
+- ": "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#129 (mes)
+- "."
++ "."
+#: npc/battleground/kvm/kvm_item_pay.txt#130 (mes)
+- "You have selected '"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#131 (mes)
+- "F_GetArmorType"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#132 (mes)
+- "'."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#133 (mes)
+- "The armor for one whose Lvl is more than 80 is: ^ff0000"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#134 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#135 (mes)
+- "You have selected 'Mass-Production "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#136 (mes)
+- "F_GetArmorType"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#137 (mes)
+- "'."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#138 (mes)
+- "There is only one Mass-Production "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#139 (mes)
+- "F_GetArmorType"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#140 (mes)
+- ": ^ff0000"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#141 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#142 (mes)
+- "You have selected 'Popularized "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#143 (mes)
+- "F_GetArmorType"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#144 (mes)
+- "'."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#145 (mes)
+- "There is only one Popularized "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#146 (mes)
+- "F_GetArmorType"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#147 (mes)
+- ": ^ff0000"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#148 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#149 (mes)
+- "It requires ^0000ff2,000^000000 KVM Points, and "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#150 (mes)
+- ", your points are: ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#151 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#152 (mes)
+- "It requires ^0000ff1,200^000000 KVM Points, and "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#153 (mes)
+- ", your points are: ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#154 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#155 (mes)
+- "It requires ^0000ff"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#156 (mes)
+- "^000000 KVM Points, and "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#157 (mes)
+- ", your points are: ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#158 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#159 (mes)
+- "Are you sure you want this item?"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#160 (select)
+- "No, I won't purchase it.:Yes, I will purchase it."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#161 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#162 (mes)
+- "You have selected 'I won't purchase it'."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#163 (mes)
+- "When purchasing an item, please be careful there are no refunds."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#164 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#165 (mes)
+- "You have purchased a "
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#166 (mes)
+- "."
++ "."
+#: npc/battleground/kvm/kvm_item_pay.txt#167 (mes)
+- "Your KVM Points are reduced by ^0000ff"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#168 (mes)
+- "^000000 points, your KVM Points are now ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#169 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#170 (mes)
+- "Your KVM Points are reduced by ^0000ff1,200^000000 points, your KVM Points are now ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#171 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#172 (mes)
+- "Your KVM Points are reduced by ^0000ff"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#173 (mes)
+- "^000000 points, your KVM Points are now ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#174 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#175 (mes)
+- "[Logistics]"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#176 (mes)
+- "You need ^0000ff2,000^000000 KVM Points to purchase this item."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#177 (mes)
+- "You need ^0000ff1,200^000000 KVM Points to purchase this item."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#178 (mes)
+- "You need ^0000ff"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#179 (mes)
+- "^000000 KVM Points to purchase this item."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#180 (mes)
+- "However, your KVM Points are now ^580080"
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#181 (mes)
+- "^000000."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#182 (mes)
+- "Which are not enough to buy it."
++ ""
+#: npc/battleground/kvm/kvm_item_pay.txt#183 (mes)
+- "When you get enough points, please come back again."
++ ""
+
+### npc/battleground/tierra/tierra01.txt  (99 textos)
+#: npc/battleground/tierra/tierra01.txt#165 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#166 (mes)
+- "We are in urgency! The Barricade has been destroyed!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#167 (mes)
+- "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000"
++ ""
+#: npc/battleground/tierra/tierra01.txt#168 (mes)
+- "We have it all except for the 50 Stones!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#169 (select)
+- "Repair.:Leave it."
++ ""
+#: npc/battleground/tierra/tierra01.txt#170 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#171 (mes)
+- "You brought enough stones! Let's go and repair."
++ ""
+#: npc/battleground/tierra/tierra01.txt#172 (mes)
+- ".."
++ ""
+#: npc/battleground/tierra/tierra01.txt#173 (mes)
+- "...."
++ ""
+#: npc/battleground/tierra/tierra01.txt#174 (mes)
+- "......"
++ ""
+#: npc/battleground/tierra/tierra01.txt#175 (mes)
+- "........"
++ ""
+#: npc/battleground/tierra/tierra01.txt#176 (mes)
+- ".........."
++ ""
+#: npc/battleground/tierra/tierra01.txt#177 (mes)
+- "............"
++ ""
+#: npc/battleground/tierra/tierra01.txt#178 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#179 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#180 (mes)
+- "Combine Stones and Gold in the proper percentage."
++ ""
+#: npc/battleground/tierra/tierra01.txt#181 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#182 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade."
++ ""
+#: npc/battleground/tierra/tierra01.txt#183 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#184 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger."
++ ""
+#: npc/battleground/tierra/tierra01.txt#185 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#186 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments."
++ ""
+#: npc/battleground/tierra/tierra01.txt#187 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#188 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#189 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#190 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#191 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#192 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#193 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#194 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#195 (mes)
+- "Wow! It's done."
++ ""
+#: npc/battleground/tierra/tierra01.txt#196 (mes)
+- "We are relieved."
++ ""
+#: npc/battleground/tierra/tierra01.txt#201 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#202 (mes)
+- "You don't have enough Stones!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#203 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#204 (mes)
+- "^3131FFWe need 50 Stones.^000000"
++ ""
+#: npc/battleground/tierra/tierra01.txt#205 (mes)
+- "We are busy, so please hurry."
++ ""
+#: npc/battleground/tierra/tierra01.txt#206 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#207 (mes)
+- "There are enemies coming! Let's evacuate from here!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#208 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#209 (mes)
+- "There the enemy is coming!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#211 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#212 (mes)
+- "We are in urgency! The Barricade has been destroyed!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#213 (mes)
+- "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000"
++ ""
+#: npc/battleground/tierra/tierra01.txt#214 (mes)
+- "We have it all except for the 50 Stones!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#215 (select)
+- "Repair.:Leave it."
++ ""
+#: npc/battleground/tierra/tierra01.txt#216 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#217 (mes)
+- "You brought enough stones! Let's go and repair."
++ ""
+#: npc/battleground/tierra/tierra01.txt#218 (mes)
+- ".."
++ ""
+#: npc/battleground/tierra/tierra01.txt#219 (mes)
+- "...."
++ ""
+#: npc/battleground/tierra/tierra01.txt#220 (mes)
+- "......"
++ ""
+#: npc/battleground/tierra/tierra01.txt#221 (mes)
+- "........"
++ ""
+#: npc/battleground/tierra/tierra01.txt#222 (mes)
+- ".........."
++ ""
+#: npc/battleground/tierra/tierra01.txt#223 (mes)
+- "............"
++ ""
+#: npc/battleground/tierra/tierra01.txt#224 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#225 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#226 (mes)
+- "Combine Stones and Gold in the proper percentage."
++ ""
+#: npc/battleground/tierra/tierra01.txt#227 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#228 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade."
++ ""
+#: npc/battleground/tierra/tierra01.txt#229 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#230 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger."
++ ""
+#: npc/battleground/tierra/tierra01.txt#231 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#232 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments."
++ ""
+#: npc/battleground/tierra/tierra01.txt#233 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#234 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#235 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#236 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#237 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#238 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#239 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra01.txt#240 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#241 (mes)
+- "Wow! It's done."
++ ""
+#: npc/battleground/tierra/tierra01.txt#242 (mes)
+- "We are relieved."
++ ""
+#: npc/battleground/tierra/tierra01.txt#247 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#248 (mes)
+- "You don't have enough Stones!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#249 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#250 (mes)
+- "^3131FFWe need 50 Stone.^000000"
++ ""
+#: npc/battleground/tierra/tierra01.txt#251 (mes)
+- "We are busy, so please hurry."
++ ""
+#: npc/battleground/tierra/tierra01.txt#252 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#253 (mes)
+- "There are enemies coming! Let's evacuate from here!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#254 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#255 (mes)
+- "There, the enemy is coming!"
++ ""
+#: npc/battleground/tierra/tierra01.txt#257 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#258 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/tierra/tierra01.txt#259 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/tierra/tierra01.txt#260 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/tierra/tierra01.txt#272 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#273 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/tierra/tierra01.txt#274 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/tierra/tierra01.txt#275 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/tierra/tierra01.txt#287 (mes)
+- "[Valley Ghost]"
++ ""
+#: npc/battleground/tierra/tierra01.txt#288 (mes)
+- "Boo...Boo..."
++ ""
+#: npc/battleground/tierra/tierra01.txt#355 (mes)
+- "Loading..."
++ ""
+#: npc/battleground/tierra/tierra01.txt#356 (mes)
+- "Loading..."
++ ""
+#: npc/battleground/tierra/tierra01.txt#358 (mes)
+- "Cancelled."
++ ""
+#: npc/battleground/tierra/tierra01.txt#359 (mes)
+- "May I help you?"
++ ""
+#: npc/battleground/tierra/tierra01.txt#360 (select)
+- "Release all.:Cancel."
++ ""
+#: npc/battleground/tierra/tierra01.txt#361 (mes)
+- "Bye."
++ ""
+#: npc/battleground/tierra/tierra01.txt#364 (mes)
+- "Cancelled."
++ ""
+
+### npc/battleground/tierra/tierra02.txt  (99 textos)
+#: npc/battleground/tierra/tierra02.txt#167 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#168 (mes)
+- "We are in urgency! The Barricade has been destroyed!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#169 (mes)
+- "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000"
++ ""
+#: npc/battleground/tierra/tierra02.txt#170 (mes)
+- "We have it all except for the 50 Stones!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#171 (select)
+- "Repair.:Leave it."
++ ""
+#: npc/battleground/tierra/tierra02.txt#172 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#173 (mes)
+- "You brought enough stones! Let's go and repair."
++ ""
+#: npc/battleground/tierra/tierra02.txt#174 (mes)
+- ".."
++ ""
+#: npc/battleground/tierra/tierra02.txt#175 (mes)
+- "...."
++ ""
+#: npc/battleground/tierra/tierra02.txt#176 (mes)
+- "......"
++ ""
+#: npc/battleground/tierra/tierra02.txt#177 (mes)
+- "........"
++ ""
+#: npc/battleground/tierra/tierra02.txt#178 (mes)
+- ".........."
++ ""
+#: npc/battleground/tierra/tierra02.txt#179 (mes)
+- "............"
++ ""
+#: npc/battleground/tierra/tierra02.txt#180 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#181 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#182 (mes)
+- "Combine Stones and Gold in the proper percentage."
++ ""
+#: npc/battleground/tierra/tierra02.txt#183 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#184 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade."
++ ""
+#: npc/battleground/tierra/tierra02.txt#185 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#186 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger."
++ ""
+#: npc/battleground/tierra/tierra02.txt#187 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#188 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments."
++ ""
+#: npc/battleground/tierra/tierra02.txt#189 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#190 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#191 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#192 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#193 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#194 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#195 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#196 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#197 (mes)
+- "Wow! It's done."
++ ""
+#: npc/battleground/tierra/tierra02.txt#198 (mes)
+- "We are relieved."
++ ""
+#: npc/battleground/tierra/tierra02.txt#203 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#204 (mes)
+- "You don't have enough Stones!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#205 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#206 (mes)
+- "^3131FFWe need 50 Stones.^000000"
++ ""
+#: npc/battleground/tierra/tierra02.txt#207 (mes)
+- "We are busy, so please hurry."
++ ""
+#: npc/battleground/tierra/tierra02.txt#208 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#209 (mes)
+- "There are enemies coming! Let's evacuate from here!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#210 (mes)
+- "[Guillaume Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#211 (mes)
+- "There the enemy is coming!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#213 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#214 (mes)
+- "We are in urgency! The Barricade has been destroyed!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#215 (mes)
+- "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000"
++ ""
+#: npc/battleground/tierra/tierra02.txt#216 (mes)
+- "We have it all except for the 50 Stones!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#217 (select)
+- "Repair.:Leave it."
++ ""
+#: npc/battleground/tierra/tierra02.txt#218 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#219 (mes)
+- "You brought enough stones! Let's go and repair."
++ ""
+#: npc/battleground/tierra/tierra02.txt#220 (mes)
+- ".."
++ ""
+#: npc/battleground/tierra/tierra02.txt#221 (mes)
+- "...."
++ ""
+#: npc/battleground/tierra/tierra02.txt#222 (mes)
+- "......"
++ ""
+#: npc/battleground/tierra/tierra02.txt#223 (mes)
+- "........"
++ ""
+#: npc/battleground/tierra/tierra02.txt#224 (mes)
+- ".........."
++ ""
+#: npc/battleground/tierra/tierra02.txt#225 (mes)
+- "............"
++ ""
+#: npc/battleground/tierra/tierra02.txt#226 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#227 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#228 (mes)
+- "Combine Stones and Gold in the proper percentage."
++ ""
+#: npc/battleground/tierra/tierra02.txt#229 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#230 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade."
++ ""
+#: npc/battleground/tierra/tierra02.txt#231 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#232 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger."
++ ""
+#: npc/battleground/tierra/tierra02.txt#233 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#234 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments."
++ ""
+#: npc/battleground/tierra/tierra02.txt#235 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#236 (mes)
+- "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#237 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#238 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#239 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#240 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#241 (mes)
+- ".............."
++ ""
+#: npc/battleground/tierra/tierra02.txt#242 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#243 (mes)
+- "Wow! It's done."
++ ""
+#: npc/battleground/tierra/tierra02.txt#244 (mes)
+- "We are relieved."
++ ""
+#: npc/battleground/tierra/tierra02.txt#249 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#250 (mes)
+- "You don't have enough Stones!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#251 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#252 (mes)
+- "^3131FFWe need 50 Stone.^000000"
++ ""
+#: npc/battleground/tierra/tierra02.txt#253 (mes)
+- "We are busy, so please hurry."
++ ""
+#: npc/battleground/tierra/tierra02.txt#254 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#255 (mes)
+- "There are enemies coming! Let's evacuate from here!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#256 (mes)
+- "[Croix Blacksmith]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#257 (mes)
+- "There, the enemy is coming!"
++ ""
+#: npc/battleground/tierra/tierra02.txt#259 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#260 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/tierra/tierra02.txt#261 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/tierra/tierra02.txt#262 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/tierra/tierra02.txt#274 (mes)
+- "[Battle Therapist]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#275 (mes)
+- "Just close your eyes,"
++ ""
+#: npc/battleground/tierra/tierra02.txt#276 (mes)
+- "and take a deep breath."
++ ""
+#: npc/battleground/tierra/tierra02.txt#277 (mes)
+- "You can be free from pain."
++ ""
+#: npc/battleground/tierra/tierra02.txt#289 (mes)
+- "[Valley Ghost]"
++ ""
+#: npc/battleground/tierra/tierra02.txt#290 (mes)
+- "Boo...Boo..."
++ ""
+#: npc/battleground/tierra/tierra02.txt#357 (mes)
+- "Loading..."
++ ""
+#: npc/battleground/tierra/tierra02.txt#358 (mes)
+- "Loading..."
++ ""
+#: npc/battleground/tierra/tierra02.txt#360 (mes)
+- "Cancelled."
++ ""
+#: npc/battleground/tierra/tierra02.txt#361 (mes)
+- "May I help you?"
++ ""
+#: npc/battleground/tierra/tierra02.txt#362 (select)
+- "Release all.:Cancel."
++ ""
+#: npc/battleground/tierra/tierra02.txt#363 (mes)
+- "Bye."
++ ""
+#: npc/battleground/tierra/tierra02.txt#366 (mes)
+- "Cancelled."
++ ""
+
+### npc/battleground/tierra/tierra_enter.txt  (142 textos)
+#: npc/battleground/tierra/tierra_enter.txt#2 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/tierra/tierra_enter.txt#3 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/tierra/tierra_enter.txt#4 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/tierra/tierra_enter.txt#5 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/tierra/tierra_enter.txt#6 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/tierra/tierra_enter.txt#7 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#8 (mes)
+- "Let's show the power of the Guillaume Army to those stinky Croixs!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#9 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#10 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#11 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#12 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#13 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#14 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#15 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#16 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#18 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#19 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Croixs already."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#20 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#21 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#22 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#23 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#24 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#25 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#26 (mes)
+- "Go show the Croixs what fear truly means!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#27 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#29 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#30 (mes)
+- "Today, we shall be victorious!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#32 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/tierra/tierra_enter.txt#33 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/tierra/tierra_enter.txt#34 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/tierra/tierra_enter.txt#35 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/tierra/tierra_enter.txt#36 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/tierra/tierra_enter.txt#37 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#38 (mes)
+- "Let's show the power of the Guillaume Army to those stinky Croixs!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#39 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#40 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#41 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#42 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#43 (mes)
+- "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#44 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#45 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#46 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#48 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#49 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Croixs already."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#50 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#51 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#52 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#53 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#54 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#55 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#56 (mes)
+- "Go show the Croixs what fear truly means!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#57 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#59 (mes)
+- "[Guillaume Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#60 (mes)
+- "Today, we shall be victorious!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#61 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#62 (mes)
+- "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#63 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#64 (mes)
+- "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#65 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#66 (mes)
+- "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#67 (mes)
+- "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#68 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#69 (mes)
+- "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#70 (mes)
+- "Think and move as quickly as you can. The victory of your army relies on your contribution."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#71 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#73 (mes)
+- "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#74 (mes)
+- "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#75 (mes)
+- "You may check the duration by pressing the Alt+U keys."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#76 (mes)
+- "[Guillaume Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#78 (mes)
+- "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#79 (mes)
+- "Are you ready to battle? Then apply with the recruiter next to me!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#80 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#81 (mes)
+- "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#82 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#83 (mes)
+- "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#84 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#85 (mes)
+- "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#86 (mes)
+- "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#87 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#88 (mes)
+- "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#89 (mes)
+- "Think and move as quickly as you can. The victory of your army relies on your contribution."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#90 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#92 (mes)
+- "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#93 (mes)
+- "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#94 (mes)
+- "You may check the duration by pressing the Alt+U keys."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#95 (mes)
+- "[Croix Knight]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#97 (mes)
+- "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#98 (mes)
+- "Are you ready to battle? Then apply with the recruiter next to me!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#100 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/tierra/tierra_enter.txt#101 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/tierra/tierra_enter.txt#102 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/tierra/tierra_enter.txt#103 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/tierra/tierra_enter.txt#104 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/tierra/tierra_enter.txt#105 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#106 (mes)
+- "Let's show the power of the Croix Army to those stinky Guillaumes!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#107 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#108 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#109 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#110 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#111 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#112 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#113 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#114 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#116 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#117 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Guillaume already."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#118 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#119 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#120 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#121 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#122 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#123 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#124 (mes)
+- "Go show the Guillaumes what fear truly means!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#125 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#127 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#128 (mes)
+- "Today, we shall be victorious!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#130 (mes)
+- "- Wait a minute !! -"
++ "- Espera aí!! -"
+#: npc/battleground/tierra/tierra_enter.txt#131 (mes)
+- "- Currently you're carrying -"
++ "- Você está carregando -"
+#: npc/battleground/tierra/tierra_enter.txt#132 (mes)
+- "- too many items with you. -"
++ "- itens demais. -"
+#: npc/battleground/tierra/tierra_enter.txt#133 (mes)
+- "- Please try again -"
++ "- Tente de novo -"
+#: npc/battleground/tierra/tierra_enter.txt#134 (mes)
+- "- after you lose some weight. -"
++ "- depois de aliviar o peso. -"
+#: npc/battleground/tierra/tierra_enter.txt#135 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#136 (mes)
+- "Let's show the power of the Croix Army to those stinky Guillaumes!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#137 (select)
+- "I want to join your army!:End Conversation"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#138 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#139 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#140 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#141 (mes)
+- "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#142 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#143 (mes)
+- "You seem to have just returned from the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#144 (mes)
+- "It's too early for you to go back. Go rest, and leave the enemies to us!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#146 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#147 (mes)
+- "I've received a report informing me that an elite corps has been dispatched to the battlefield fighting the Guillaume already."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#148 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#149 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#150 (mes)
+- "An elite corps is already standing by to be dispatched to the battlefield."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#151 (mes)
+- "Why don't you go wait for a while? I suggest you sharpen your weapons and prepare your supplies until then."
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#152 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#153 (mes)
+- "You definitely seem to be ready for battle!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#154 (mes)
+- "Go show the Guillaumes what fear truly means!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#155 (mes)
+- "Today, our cry of victory shall echo all over the battlefield!"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#157 (mes)
+- "[Croix Army Officer]"
++ ""
+#: npc/battleground/tierra/tierra_enter.txt#158 (mes)
+- "Today, we shall be victorious!"
++ ""

@@ -1,0 +1,978 @@
+# Catalogo de traducao PT-BR - grupo "novico"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/jobs/novice/supernovice.txt  (322 textos)
+#: npc/jobs/novice/supernovice.txt#2 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#3 (mes)
+- "I trust that you are enjoying"
++ ""
+#: npc/jobs/novice/supernovice.txt#4 (mes)
+- "life as a Super Novice? Ah,"
++ ""
+#: npc/jobs/novice/supernovice.txt#5 (mes)
+- "good good...just as I expected."
++ ""
+#: npc/jobs/novice/supernovice.txt#6 (mes)
+- "Verily, the light of mediocrity is shining brightly within you..."
++ ""
+#: npc/jobs/novice/supernovice.txt#7 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#8 (mes)
+- "I encourage you to live"
++ ""
+#: npc/jobs/novice/supernovice.txt#9 (mes)
+- "life as Mister Kimu-Shaun did..."
++ ""
+#: npc/jobs/novice/supernovice.txt#10 (mes)
+- "Become a Jack of All Trades..."
++ ""
+#: npc/jobs/novice/supernovice.txt#11 (mes)
+- "...and a master of none."
++ ""
+#: npc/jobs/novice/supernovice.txt#12 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#13 (mes)
+- "Ah, you've brought the"
++ ""
+#: npc/jobs/novice/supernovice.txt#14 (mes)
+- "items I've requested!"
++ ""
+#: npc/jobs/novice/supernovice.txt#15 (mes)
+- "You've proven yourself"
++ ""
+#: npc/jobs/novice/supernovice.txt#16 (mes)
+- "worthy of joining our"
++ ""
+#: npc/jobs/novice/supernovice.txt#17 (mes)
+- "Super Novice Society."
++ ""
+#: npc/jobs/novice/supernovice.txt#18 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#19 (mes)
+- "Then, as promised, I will"
++ ""
+#: npc/jobs/novice/supernovice.txt#20 (mes)
+- "change your job into a"
++ ""
+#: npc/jobs/novice/supernovice.txt#21 (mes)
+- "^3355FFSuper Novi--^000000Huh?"
++ ""
+#: npc/jobs/novice/supernovice.txt#22 (mes)
+- "What's that behind you?"
++ ""
+#: npc/jobs/novice/supernovice.txt#23 (select)
+- "Huh?:What is that?"
++ ""
+#: npc/jobs/novice/supernovice.txt#24 (mes)
+- "^3355FFYou look behind you, but..."
++ ""
+#: npc/jobs/novice/supernovice.txt#25 (mes)
+- "There's nothing's there."
++ ""
+#: npc/jobs/novice/supernovice.txt#26 (mes)
+- "Something fishy is going on here!^000000"
++ ""
+#: npc/jobs/novice/supernovice.txt#28 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#29 (mes)
+- "Bwaha! I got you!"
++ ""
+#: npc/jobs/novice/supernovice.txt#30 (mes)
+- "So...how do you like my joke?"
++ ""
+#: npc/jobs/novice/supernovice.txt#31 (mes)
+- "Oh well, let's forget that..."
++ ""
+#: npc/jobs/novice/supernovice.txt#32 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#33 (mes)
+- "As well as any possible"
++ ""
+#: npc/jobs/novice/supernovice.txt#34 (mes)
+- "reason a grown man such as"
++ ""
+#: npc/jobs/novice/supernovice.txt#35 (mes)
+- "myself would carry around"
++ ""
+#: npc/jobs/novice/supernovice.txt#36 (mes)
+- "a pair of Panties."
++ ""
+#: npc/jobs/novice/supernovice.txt#37 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#38 (mes)
+- "The important thing is..."
++ ""
+#: npc/jobs/novice/supernovice.txt#39 (mes)
+- "you have joined the esteemed"
++ ""
+#: npc/jobs/novice/supernovice.txt#40 (mes)
+- "ranks of the great Super Novices."
++ ""
+#: npc/jobs/novice/supernovice.txt#41 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#42 (mes)
+- "Consider these Panties a gift..."
++ ""
+#: npc/jobs/novice/supernovice.txt#43 (mes)
+- "This very garment is rumored"
++ ""
+#: npc/jobs/novice/supernovice.txt#44 (mes)
+- "to be worn by Mister Kimu-Shaun,"
++ ""
+#: npc/jobs/novice/supernovice.txt#45 (mes)
+- "our legendary club founder, in"
++ ""
+#: npc/jobs/novice/supernovice.txt#46 (mes)
+- "his early days in striving for"
++ ""
+#: npc/jobs/novice/supernovice.txt#47 (mes)
+- "exemplary mediocrity."
++ ""
+#: npc/jobs/novice/supernovice.txt#48 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#49 (mes)
+- "Go out, and enjoy your new life"
++ ""
+#: npc/jobs/novice/supernovice.txt#50 (mes)
+- "as a Super Novice! Venture"
++ ""
+#: npc/jobs/novice/supernovice.txt#51 (mes)
+- "forth and help the common"
++ ""
+#: npc/jobs/novice/supernovice.txt#52 (mes)
+- "man, while being one at at"
++ ""
+#: npc/jobs/novice/supernovice.txt#53 (mes)
+- "the same time!"
++ ""
+#: npc/jobs/novice/supernovice.txt#54 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#55 (mes)
+- "Huh? Did you forget what I"
++ ""
+#: npc/jobs/novice/supernovice.txt#56 (mes)
+- "wanted from you? Okay,"
++ ""
+#: npc/jobs/novice/supernovice.txt#57 (mes)
+- "I will let you know once"
++ ""
+#: npc/jobs/novice/supernovice.txt#58 (mes)
+- "again. Please remember"
++ ""
+#: npc/jobs/novice/supernovice.txt#59 (mes)
+- "this time..."
++ ""
+#: npc/jobs/novice/supernovice.txt#60 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#61 (mes)
+- "I asked you to bring me"
++ ""
+#: npc/jobs/novice/supernovice.txt#62 (mes)
+- "^FF000030 Sticky Mucus^000000 and"
++ ""
+#: npc/jobs/novice/supernovice.txt#63 (mes)
+- "^FF000030 Resin^000000."
++ ""
+#: npc/jobs/novice/supernovice.txt#64 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#65 (mes)
+- "...Hmm?"
++ ""
+#: npc/jobs/novice/supernovice.txt#66 (mes)
+- "Stop."
++ ""
+#: npc/jobs/novice/supernovice.txt#67 (mes)
+- "Let me look at you."
++ ""
+#: npc/jobs/novice/supernovice.txt#68 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#69 (mes)
+- "....."
++ ""
+#: npc/jobs/novice/supernovice.txt#70 (mes)
+- "......."
++ ""
+#: npc/jobs/novice/supernovice.txt#71 (mes)
+- "........."
++ ""
+#: npc/jobs/novice/supernovice.txt#72 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#73 (mes)
+- "I see that the light"
++ ""
+#: npc/jobs/novice/supernovice.txt#74 (mes)
+- "of mediocrity shines"
++ ""
+#: npc/jobs/novice/supernovice.txt#75 (mes)
+- "brightly within you..."
++ ""
+#: npc/jobs/novice/supernovice.txt#76 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#77 (mes)
+- "Why don't you join us,"
++ ""
+#: npc/jobs/novice/supernovice.txt#78 (mes)
+- "young Novice? Join"
++ ""
+#: npc/jobs/novice/supernovice.txt#79 (mes)
+- "us and learn the subtle"
++ ""
+#: npc/jobs/novice/supernovice.txt#80 (mes)
+- "greatness of being"
++ ""
+#: npc/jobs/novice/supernovice.txt#81 (mes)
+- "mediocre..."
++ ""
+#: npc/jobs/novice/supernovice.txt#82 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#83 (mes)
+- "Accept my offer..."
++ ""
+#: npc/jobs/novice/supernovice.txt#84 (mes)
+- "Cast off your those"
++ ""
+#: npc/jobs/novice/supernovice.txt#85 (mes)
+- "brown, dusty garments"
++ ""
+#: npc/jobs/novice/supernovice.txt#86 (mes)
+- "and bloom into..."
++ ""
+#: npc/jobs/novice/supernovice.txt#87 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#88 (mes)
+- "...a ^CE6300Super Novice^000000."
++ ""
+#: npc/jobs/novice/supernovice.txt#89 (select)
+- "Accept his offer.:Reject his offer.:Listen more carefully."
++ ""
+#: npc/jobs/novice/supernovice.txt#91 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#92 (mes)
+- "Hmm...But do you truly"
++ ""
+#: npc/jobs/novice/supernovice.txt#93 (mes)
+- "appreciate the value of"
++ ""
+#: npc/jobs/novice/supernovice.txt#94 (mes)
+- "finding strength in"
++ ""
+#: npc/jobs/novice/supernovice.txt#95 (mes)
+- "weakness? You must"
++ ""
+#: npc/jobs/novice/supernovice.txt#96 (mes)
+- "prove to me that you"
++ ""
+#: npc/jobs/novice/supernovice.txt#97 (mes)
+- "are a true underachiever."
++ ""
+#: npc/jobs/novice/supernovice.txt#98 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#99 (mes)
+- "Live life as a Novice..."
++ ""
+#: npc/jobs/novice/supernovice.txt#100 (mes)
+- "And return when you"
++ ""
+#: npc/jobs/novice/supernovice.txt#101 (mes)
+- "have mastered the"
++ ""
+#: npc/jobs/novice/supernovice.txt#102 (mes)
+- "Basic Skills..."
++ ""
+#: npc/jobs/novice/supernovice.txt#103 (mes)
+- "Grow in mediocrity and"
++ ""
+#: npc/jobs/novice/supernovice.txt#104 (mes)
+- "Become a Level 10 Novice..."
++ ""
+#: npc/jobs/novice/supernovice.txt#105 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#106 (mes)
+- "Hmm...But do you truly"
++ ""
+#: npc/jobs/novice/supernovice.txt#107 (mes)
+- "value the relaxed lifestyle"
++ ""
+#: npc/jobs/novice/supernovice.txt#108 (mes)
+- "of the banal adventurer?"
++ ""
+#: npc/jobs/novice/supernovice.txt#109 (mes)
+- "Prove to me that you do not"
++ ""
+#: npc/jobs/novice/supernovice.txt#110 (mes)
+- "lust for power..."
++ ""
+#: npc/jobs/novice/supernovice.txt#111 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#112 (mes)
+- "Live life mundanely..."
++ ""
+#: npc/jobs/novice/supernovice.txt#113 (mes)
+- "Become a Level 45 Novice..."
++ ""
+#: npc/jobs/novice/supernovice.txt#114 (mes)
+- "It will be then that you can join us..."
++ ""
+#: npc/jobs/novice/supernovice.txt#115 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#116 (mes)
+- "I can see in your eyes"
++ ""
+#: npc/jobs/novice/supernovice.txt#117 (mes)
+- "the determination to"
++ ""
+#: npc/jobs/novice/supernovice.txt#118 (mes)
+- "live life simply..."
++ ""
+#: npc/jobs/novice/supernovice.txt#119 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#120 (mes)
+- "Only the truly wise can"
++ ""
+#: npc/jobs/novice/supernovice.txt#121 (mes)
+- "see that being ordinary"
++ ""
+#: npc/jobs/novice/supernovice.txt#122 (mes)
+- "and banal is the best"
++ ""
+#: npc/jobs/novice/supernovice.txt#123 (mes)
+- "way to live life."
++ ""
+#: npc/jobs/novice/supernovice.txt#124 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#125 (mes)
+- "However, we do not welcome"
++ ""
+#: npc/jobs/novice/supernovice.txt#126 (mes)
+- "just anyone into our society."
++ ""
+#: npc/jobs/novice/supernovice.txt#127 (mes)
+- "You must first pass our"
++ ""
+#: npc/jobs/novice/supernovice.txt#128 (mes)
+- "qualification test."
++ ""
+#: npc/jobs/novice/supernovice.txt#129 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#130 (mes)
+- "For this test, you must"
++ ""
+#: npc/jobs/novice/supernovice.txt#131 (mes)
+- "bring me some items which"
++ ""
+#: npc/jobs/novice/supernovice.txt#132 (mes)
+- "are dropped from normal,"
++ ""
+#: npc/jobs/novice/supernovice.txt#133 (mes)
+- "unexceptional monsters."
++ ""
+#: npc/jobs/novice/supernovice.txt#134 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#135 (mes)
+- "Hmmmm..."
++ ""
+#: npc/jobs/novice/supernovice.txt#136 (mes)
+- "^FF000030 Sticky Mucus^000000"
++ ""
+#: npc/jobs/novice/supernovice.txt#137 (mes)
+- "and ^FF000030 Resin"
++ ""
+#: npc/jobs/novice/supernovice.txt#138 (mes)
+- "^000000will be suitable to test your"
++ ""
+#: npc/jobs/novice/supernovice.txt#139 (mes)
+- "ability to fight meager enemies."
++ ""
+#: npc/jobs/novice/supernovice.txt#140 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#141 (mes)
+- "Also, the number 30"
++ ""
+#: npc/jobs/novice/supernovice.txt#142 (mes)
+- "is significant. It's not"
++ ""
+#: npc/jobs/novice/supernovice.txt#143 (mes)
+- "anything special...just"
++ ""
+#: npc/jobs/novice/supernovice.txt#144 (mes)
+- "an ordinary number."
++ ""
+#: npc/jobs/novice/supernovice.txt#145 (mes)
+- "Hahahahaha~"
++ ""
+#: npc/jobs/novice/supernovice.txt#146 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#147 (mes)
+- "Good luck, my friend."
++ ""
+#: npc/jobs/novice/supernovice.txt#148 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#149 (mes)
+- "Well, well...I suppose the"
++ ""
+#: npc/jobs/novice/supernovice.txt#150 (mes)
+- "value of the simple life"
++ ""
+#: npc/jobs/novice/supernovice.txt#151 (mes)
+- "is difficult for you to"
++ ""
+#: npc/jobs/novice/supernovice.txt#152 (mes)
+- "to grasp. It's...okay..."
++ ""
+#: npc/jobs/novice/supernovice.txt#153 (mes)
+- "Your life is your own."
++ ""
+#: npc/jobs/novice/supernovice.txt#154 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#155 (mes)
+- "But, if you ever see the"
++ ""
+#: npc/jobs/novice/supernovice.txt#156 (mes)
+- "light of banality, you"
++ ""
+#: npc/jobs/novice/supernovice.txt#157 (mes)
+- "are welcome to visit me"
++ ""
+#: npc/jobs/novice/supernovice.txt#158 (mes)
+- "anytime..."
++ ""
+#: npc/jobs/novice/supernovice.txt#159 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#160 (mes)
+- "As our Novice club"
++ ""
+#: npc/jobs/novice/supernovice.txt#161 (mes)
+- "grows more popular and"
++ ""
+#: npc/jobs/novice/supernovice.txt#162 (mes)
+- "we gain more followers,"
++ ""
+#: npc/jobs/novice/supernovice.txt#163 (mes)
+- "we may consider using"
++ ""
+#: npc/jobs/novice/supernovice.txt#164 (mes)
+- "a more difficult test..."
++ ""
+#: npc/jobs/novice/supernovice.txt#165 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#166 (mes)
+- "Our Novice Society was founded"
++ ""
+#: npc/jobs/novice/supernovice.txt#167 (mes)
+- "by the legendary Mister"
++ ""
+#: npc/jobs/novice/supernovice.txt#168 (mes)
+- "Kimu-Shaun...perhaps the"
++ ""
+#: npc/jobs/novice/supernovice.txt#169 (mes)
+- "greatest man in our generation."
++ ""
+#: npc/jobs/novice/supernovice.txt#170 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#171 (mes)
+- "He realized that there"
++ ""
+#: npc/jobs/novice/supernovice.txt#172 (mes)
+- "was much suffering in the"
++ ""
+#: npc/jobs/novice/supernovice.txt#173 (mes)
+- "world, especially among"
++ ""
+#: npc/jobs/novice/supernovice.txt#174 (mes)
+- "the common people of"
++ ""
+#: npc/jobs/novice/supernovice.txt#175 (mes)
+- "Midgard..."
++ ""
+#: npc/jobs/novice/supernovice.txt#176 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#177 (mes)
+- "He learned many skills from"
++ ""
+#: npc/jobs/novice/supernovice.txt#178 (mes)
+- "all the different people he"
++ ""
+#: npc/jobs/novice/supernovice.txt#179 (mes)
+- "met...but since he didn't"
++ ""
+#: npc/jobs/novice/supernovice.txt#180 (mes)
+- "stay in one place for long,"
++ ""
+#: npc/jobs/novice/supernovice.txt#181 (mes)
+- "he became a jack of all"
++ ""
+#: npc/jobs/novice/supernovice.txt#182 (mes)
+- "trades...and a master of none."
++ ""
+#: npc/jobs/novice/supernovice.txt#183 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#184 (mes)
+- "In sharing the pain of"
++ ""
+#: npc/jobs/novice/supernovice.txt#185 (mes)
+- "the common man, he became"
++ ""
+#: npc/jobs/novice/supernovice.txt#186 (mes)
+- "became one himself..."
++ ""
+#: npc/jobs/novice/supernovice.txt#187 (mes)
+- "the greatest ordinary"
++ ""
+#: npc/jobs/novice/supernovice.txt#188 (mes)
+- "man ever."
++ ""
+#: npc/jobs/novice/supernovice.txt#189 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#190 (mes)
+- "The members of our society"
++ ""
+#: npc/jobs/novice/supernovice.txt#191 (mes)
+- "try to live as Mister"
++ ""
+#: npc/jobs/novice/supernovice.txt#192 (mes)
+- "Kimu-Shaun did, according to"
++ ""
+#: npc/jobs/novice/supernovice.txt#193 (mes)
+- "the principles he laid before us..."
++ ""
+#: npc/jobs/novice/supernovice.txt#194 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#195 (mes)
+- "How do you like living"
++ ""
+#: npc/jobs/novice/supernovice.txt#196 (mes)
+- "life simply as a Super"
++ ""
+#: npc/jobs/novice/supernovice.txt#197 (mes)
+- "Novice? I'm sure that"
++ ""
+#: npc/jobs/novice/supernovice.txt#198 (mes)
+- "you're enjoying it~"
++ ""
+#: npc/jobs/novice/supernovice.txt#199 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#200 (mes)
+- "Please grow as a Super"
++ ""
+#: npc/jobs/novice/supernovice.txt#201 (mes)
+- "Novice by helping the"
++ ""
+#: npc/jobs/novice/supernovice.txt#202 (mes)
+- "common man while being"
++ ""
+#: npc/jobs/novice/supernovice.txt#203 (mes)
+- "one at the same time..."
++ ""
+#: npc/jobs/novice/supernovice.txt#204 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#205 (mes)
+- "I encourage you to"
++ ""
+#: npc/jobs/novice/supernovice.txt#206 (mes)
+- "grow in your Super"
++ ""
+#: npc/jobs/novice/supernovice.txt#207 (mes)
+- "Noviceness, and lead"
++ ""
+#: npc/jobs/novice/supernovice.txt#208 (mes)
+- "an example in living"
++ ""
+#: npc/jobs/novice/supernovice.txt#209 (mes)
+- "an exceptionally"
++ ""
+#: npc/jobs/novice/supernovice.txt#210 (mes)
+- "mundane life."
++ ""
+#: npc/jobs/novice/supernovice.txt#211 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#212 (mes)
+- "Hello, I am Tzerero,"
++ ""
+#: npc/jobs/novice/supernovice.txt#213 (mes)
+- "the unofficial executive"
++ ""
+#: npc/jobs/novice/supernovice.txt#214 (mes)
+- "director of the Great"
++ ""
+#: npc/jobs/novice/supernovice.txt#215 (mes)
+- "Novice Society."
++ ""
+#: npc/jobs/novice/supernovice.txt#216 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#217 (mes)
+- "Hmmm...you seem to be well"
++ ""
+#: npc/jobs/novice/supernovice.txt#218 (mes)
+- "above the average person."
++ ""
+#: npc/jobs/novice/supernovice.txt#219 (mes)
+- "Yes, you're definitely more"
++ ""
+#: npc/jobs/novice/supernovice.txt#220 (mes)
+- "'extraordinary' than you are"
++ ""
+#: npc/jobs/novice/supernovice.txt#221 (mes)
+- "'ordinary...'"
++ ""
+#: npc/jobs/novice/supernovice.txt#222 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#223 (mes)
+- "*Sigh* I suppose you"
++ ""
+#: npc/jobs/novice/supernovice.txt#224 (mes)
+- "could never understand"
++ ""
+#: npc/jobs/novice/supernovice.txt#225 (mes)
+- "our way of life, the"
++ ""
+#: npc/jobs/novice/supernovice.txt#226 (mes)
+- "subtle greatness in"
++ ""
+#: npc/jobs/novice/supernovice.txt#227 (mes)
+- "being ordinary. But"
++ ""
+#: npc/jobs/novice/supernovice.txt#228 (mes)
+- "that's alright."
++ ""
+#: npc/jobs/novice/supernovice.txt#229 (mes)
+- "[Tzerero]"
++ ""
+#: npc/jobs/novice/supernovice.txt#230 (mes)
+- "Well...there are thousands"
++ ""
+#: npc/jobs/novice/supernovice.txt#231 (mes)
+- "of different people in this"
++ ""
+#: npc/jobs/novice/supernovice.txt#232 (mes)
+- "world, so I just try to accept"
++ ""
+#: npc/jobs/novice/supernovice.txt#233 (mes)
+- "all of our differences."
++ ""
+#: npc/jobs/novice/supernovice.txt#234 (mes)
+- "I hope you will too."
++ ""
+#: npc/jobs/novice/supernovice.txt#235 (mes)
+- "[Esseray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#236 (mes)
+- "You! Stronger than before."
++ ""
+#: npc/jobs/novice/supernovice.txt#237 (mes)
+- "I knew you could pass the test~"
++ ""
+#: npc/jobs/novice/supernovice.txt#239 (mes)
+- "[Esseray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#240 (mes)
+- "Hm? Hey, you're a member"
++ ""
+#: npc/jobs/novice/supernovice.txt#241 (mes)
+- "of our great Novice Society,"
++ ""
+#: npc/jobs/novice/supernovice.txt#242 (mes)
+- "aren't you? Isn't this the"
++ ""
+#: npc/jobs/novice/supernovice.txt#243 (mes)
+- "best club ever?!"
++ ""
+#: npc/jobs/novice/supernovice.txt#244 (mes)
+- "[Essaray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#245 (mes)
+- "Living life mundanely,"
++ ""
+#: npc/jobs/novice/supernovice.txt#246 (mes)
+- "according to the principles"
++ ""
+#: npc/jobs/novice/supernovice.txt#247 (mes)
+- "of Mister Kimu-Shaun..."
++ ""
+#: npc/jobs/novice/supernovice.txt#248 (mes)
+- "It's great to be ordinary!"
++ ""
+#: npc/jobs/novice/supernovice.txt#249 (mes)
+- "[Esseray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#250 (mes)
+- "Let's try to lead our lives"
++ ""
+#: npc/jobs/novice/supernovice.txt#251 (mes)
+- "as normally as we can!"
++ ""
+#: npc/jobs/novice/supernovice.txt#252 (mes)
+- "For your reference, I am"
++ ""
+#: npc/jobs/novice/supernovice.txt#253 (mes)
+- "the number one member,"
++ ""
+#: npc/jobs/novice/supernovice.txt#254 (mes)
+- "under Mister Tzerero of"
++ ""
+#: npc/jobs/novice/supernovice.txt#255 (mes)
+- "course!"
++ ""
+#: npc/jobs/novice/supernovice.txt#256 (mes)
+- "[Esseray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#257 (mes)
+- "Hah~ you don't know anything"
++ ""
+#: npc/jobs/novice/supernovice.txt#258 (mes)
+- "about being a normal person yet!"
++ ""
+#: npc/jobs/novice/supernovice.txt#259 (mes)
+- "Why don't you join our Novice"
++ ""
+#: npc/jobs/novice/supernovice.txt#260 (mes)
+- "Society? This club is the best in the world~"
++ ""
+#: npc/jobs/novice/supernovice.txt#261 (mes)
+- "[Esseray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#262 (mes)
+- "Yup, Super Novices"
++ ""
+#: npc/jobs/novice/supernovice.txt#263 (mes)
+- "are the best characters!"
++ ""
+#: npc/jobs/novice/supernovice.txt#264 (mes)
+- "Hahahahahahahaha!"
++ ""
+#: npc/jobs/novice/supernovice.txt#265 (mes)
+- "[Esseray]"
++ ""
+#: npc/jobs/novice/supernovice.txt#266 (mes)
+- "Bah~! You're better than"
++ ""
+#: npc/jobs/novice/supernovice.txt#267 (mes)
+- "average...Hell, you may"
++ ""
+#: npc/jobs/novice/supernovice.txt#268 (mes)
+- "even be 'special.'"
++ ""
+#: npc/jobs/novice/supernovice.txt#269 (mes)
+- "What a shame! Well..."
++ ""
+#: npc/jobs/novice/supernovice.txt#270 (mes)
+- "I hope you still live"
++ ""
+#: npc/jobs/novice/supernovice.txt#271 (mes)
+- "your life positively."
++ ""
+#: npc/jobs/novice/supernovice.txt#272 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#273 (mes)
+- "Hello, Mister Super Novice~"
++ ""
+#: npc/jobs/novice/supernovice.txt#274 (mes)
+- "Hello, Super Novice, Ma'am."
++ ""
+#: npc/jobs/novice/supernovice.txt#275 (mes)
+- "You must have been really"
++ ""
+#: npc/jobs/novice/supernovice.txt#276 (mes)
+- "dissapointed that the other"
++ ""
+#: npc/jobs/novice/supernovice.txt#277 (mes)
+- "Kafra Employees wouldn't let"
++ ""
+#: npc/jobs/novice/supernovice.txt#278 (mes)
+- "you rent a cart from them."
++ ""
+#: npc/jobs/novice/supernovice.txt#279 (mes)
+- "But don't you worry now..."
++ ""
+#: npc/jobs/novice/supernovice.txt#280 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#281 (mes)
+- "I'm here to support you guys"
++ ""
+#: npc/jobs/novice/supernovice.txt#282 (mes)
+- "by providing carts..."
++ ""
+#: npc/jobs/novice/supernovice.txt#283 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#284 (mes)
+- "^3355FF*whispers*^000000"
++ ""
+#: npc/jobs/novice/supernovice.txt#285 (mes)
+- "^555555I am not supposed to do this"
++ ""
+#: npc/jobs/novice/supernovice.txt#286 (mes)
+- "because it's against our"
++ ""
+#: npc/jobs/novice/supernovice.txt#287 (mes)
+- "company policy. But I felt"
++ ""
+#: npc/jobs/novice/supernovice.txt#288 (mes)
+- "really sorry for Super Novices"
++ ""
+#: npc/jobs/novice/supernovice.txt#289 (mes)
+- "...so here I am.^000000"
++ ""
+#: npc/jobs/novice/supernovice.txt#290 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#291 (mes)
+- "Anyway, would you like to rent a cart? The service fee is 1,900 zeny."
++ ""
+#: npc/jobs/novice/supernovice.txt#292 (select)
+- "Rent a Cart.:Cancel."
++ ""
+#: npc/jobs/novice/supernovice.txt#293 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#294 (mes)
+- "Oh, here's the thing..."
++ ""
+#: npc/jobs/novice/supernovice.txt#295 (mes)
+- "Have you learned the 'Push Cart'"
++ ""
+#: npc/jobs/novice/supernovice.txt#296 (mes)
+- "skill? I can just rent you a"
++ ""
+#: npc/jobs/novice/supernovice.txt#297 (mes)
+- "cart, but if you haven't"
++ ""
+#: npc/jobs/novice/supernovice.txt#298 (mes)
+- "learned to push it, you'll"
++ ""
+#: npc/jobs/novice/supernovice.txt#299 (mes)
+- "just be wasting your zeny."
++ ""
+#: npc/jobs/novice/supernovice.txt#300 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#301 (mes)
+- "So make sure that you have"
++ ""
+#: npc/jobs/novice/supernovice.txt#302 (mes)
+- "the 'Push Cart' skill already."
++ ""
+#: npc/jobs/novice/supernovice.txt#303 (select)
+- "Rent a Cart.:Cancel."
++ ""
+#: npc/jobs/novice/supernovice.txt#304 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#305 (mes)
+- "Oh, you've already equipped a cart."
++ ""
+#: npc/jobs/novice/supernovice.txt#307 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#308 (mes)
+- "Thank you for using my service."
++ ""
+#: npc/jobs/novice/supernovice.txt#309 (mes)
+- "Although what I am doing might"
++ ""
+#: npc/jobs/novice/supernovice.txt#310 (mes)
+- "not be legitimate to other"
++ ""
+#: npc/jobs/novice/supernovice.txt#311 (mes)
+- "Kafra Employees, I strongly"
++ ""
+#: npc/jobs/novice/supernovice.txt#312 (mes)
+- "believe I am doing what's right for the customers."
++ ""
+#: npc/jobs/novice/supernovice.txt#313 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#314 (mes)
+- "I am sorry, but you do not have enough zeny with you. The service fee is 1,900 zeny."
++ ""
+#: npc/jobs/novice/supernovice.txt#315 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#316 (mes)
+- "Please come again."
++ "Volte sempre."
+#: npc/jobs/novice/supernovice.txt#317 (mes)
+- "Thank you for using my services."
++ ""
+#: npc/jobs/novice/supernovice.txt#318 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#319 (mes)
+- "Please come again."
++ "Volte sempre."
+#: npc/jobs/novice/supernovice.txt#320 (mes)
+- "Thank you for using my services."
++ ""
+#: npc/jobs/novice/supernovice.txt#321 (mes)
+- "[Kafra Employee]"
++ "[Funcionária Kafra]"
+#: npc/jobs/novice/supernovice.txt#322 (mes)
+- "Good da--Oops...!"
++ ""
+#: npc/jobs/novice/supernovice.txt#323 (mes)
+- "I don't think I can provide you"
++ ""
+#: npc/jobs/novice/supernovice.txt#324 (mes)
+- "with the services you want..."
++ ""
+#: npc/jobs/novice/supernovice.txt#325 (mes)
+- "Please go talk to another"
++ ""
+#: npc/jobs/novice/supernovice.txt#326 (mes)
+- "Kafra employee. I apologize"
++ ""
+#: npc/jobs/novice/supernovice.txt#327 (mes)
+- "for such inconvenience..."
++ ""
