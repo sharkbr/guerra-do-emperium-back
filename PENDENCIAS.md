@@ -1,8 +1,9 @@
 # Pendências — Guerra do Emperium
 
-Registrado em 2026-07-29/30. **A v1 está de pé:** dá para logar e jogar, e o
-cliente está **em inglês de ponta a ponta**. A seção 0 conta como o cliente foi
-destravado e serve de referência quando ele voltar a quebrar; o resto são coisas
+Registrado em 2026-07-29/30. **A v1 está de pé:** dá para logar e jogar. O
+cliente foi destravado em inglês e, em **2026-08-03, passou para português** —
+ver "CONCLUÍDO — tradução PT-BR". A seção 0 conta como ele foi destravado e
+serve de referência quando voltar a quebrar; o resto são coisas
 deliberadamente deixadas para depois.
 
 **A frente de alterar código começou em 2026-07-30, ~22:00**, com o primeiro NPC
@@ -329,7 +330,7 @@ isso já não vale usar o `skillid.lub` de 2026.
 | Arquivo | Estado | Por quê |
 |---|---|---|
 | `skillid.lub` | no backup, permanente | é só `nome = número`, **não tem texto para traduzir** |
-| `skilltreeview.lub` | no backup, permanente | é só a grade `classe → habilidade`, **idem** |
+| `skilltreeview.lub` | no backup, permanente | é a grade `classe → habilidade` — mas **tem texto sim**, ver a correção abaixo |
 | `skillinfolist.lub` | **recortado**, 1559 de 1694 entradas | nomes das habilidades |
 | `skilldescript.lub` | **recortado**, 1434 de 1546 entradas | descrições |
 
@@ -340,6 +341,30 @@ O recorte é feito por `ferramentas/filtra_lub_por_skid.py`. Originais intactos 
 perguntar se ele tem texto traduzível. Metade dos arquivos que quebram é tabela
 de estrutura ou de constante — perder esses não custa nada, e o GRF os fornece.
 Nos que têm texto, recortar por constante conhecida preserva quase tudo.
+
+**CORRIGIDO em 2026-08-03 — o `skilltreeview.lub` TINHA texto.** A linha da
+tabela acima dizia que ele era "só a grade `classe → habilidade`". Ele tem
+**nove strings**, e são os **títulos das abas** da janela de habilidades —
+`노비스·1차직업`, `2차·전승직업`, `3차직업`, `4차직업`, `NV·EX1`, `상위EX1`,
+`상위EX2`, `도람족·소환사`, `혼령사`. Como o arquivo foi para o backup, o GRF
+voltou a servi-lo, e as abas ficaram em coreano no meio de um jogo em
+português — foi o que apareceu no teste.
+
+A regra continua valendo; o que falhou foi a aplicação dela. **"É tabela de
+estrutura" não é resposta: tem de olhar o pool de constantes.** Nove strings em
+1198 constantes passam despercebidas numa olhada rápida.
+
+Resolvido pelo `traduz_ptbr.py abas`, e por um caminho novo que vale registrar:
+a fonte **não é o bRO**, é o **nosso próprio GRF**. A versão do bRO é de um
+cliente mais novo e cairia na mesma armadilha de SKID inexistente que motivou a
+remoção; a do nosso GRF é a que casa com este exe. Só as nove strings são
+trocadas, direto no bytecode — o chunk Lua 5.1 não tem offset absoluto nenhum,
+então trocar uma constante por outra de tamanho diferente é seguro (ver
+`ptbr.troca_constante`). O resultado é reaberto pelo leitor antes de gravar.
+
+Os títulos saem em **ASCII de propósito** (`Aprendiz-1a`, `2a-Transcend.`,
+`Doram-Invocador`, `Espiritualista`): nenhum precisa de acento no vocabulário
+do bRO, então eles funcionam mesmo antes do patch de charset.
 
 **Validar sempre o recorte:** além das entradas de primeiro nível, essas tabelas
 têm referências aninhadas a `SKID` (os pré-requisitos em `_NeedSkillList`). Uma
@@ -487,17 +512,89 @@ Consequências práticas:
   servidor tem **carregado na memória** (`src/map/atcommand.cpp:8843`). Medir
   matando monstro engana: a penalidade por diferença de nível distorce o ganho.
 
-### Acentuação no diálogo — não testada
+### Acentuação — RESOLVIDA em 2026-08-04, com um byte
 
-Os NPCs nossos estão escritos **sem acento**, de propósito. O rAthena grava os
-próprios arquivos em Latin-1 (o `conf/msg_conf/map_msg_por.conf` tem `ç` como
-byte `0xE7`), mas o nosso `clientinfo.xml` usa `langtype 0` (Coreia) e **nunca
-testamos** como esse cliente desenha byte acentuado — pode sair caractere coreano
-no lugar. Enquanto não houver teste, texto sem acento é o custo baixo.
+**Confirmado no jogo.** Todo o texto é cp1252 — cliente, NPCs, `mob_db` e
+`item_db` nossos. **Nunca UTF-8**: ali cada acento vira dois bytes e sai lixo
+garantido.
 
-Para testar: pôr um acento num `mes` e olhar in-game. Se sair certo, gravar os
-arquivos em Latin-1 (não UTF-8 — aí cada acento vira dois bytes e sai lixo
-garantido).
+O sintoma era específico e vale saber reconhecer: **o acento não sumia, ele
+comia a letra seguinte.** `Carvão` → `Carv?`, `Indestrutível` → `Indestrut?el`,
+`Lâmina` → `L?ina`. Byte-líder CP949: `0xE3` é lido como início de sílaba
+coreana, engole o próximo byte, e o par vira um hanja ou um `?`.
+
+**A correção:** um dword de dados no exe, feito por
+`ferramentas/ajusta_charset_fonte.py`. O cliente tem a tabela de charset por
+idioma em `.data` (VA `0x00F392D0`), lida num único lugar dentro do
+`DrawDC::SetFont`:
+
+```asm
+85 ff                  test edi, edi
+75 0a                  jnz  +10
+a1 d0 92 f3 00         mov  eax, [tabela]          ; índice 0
+83 fa 14               cmp  edx, 14h
+7d 07                  jge  +7
+8b 04 95 d0 92 f3 00   mov  eax, [edx*4 + tabela]  ; índice = langtype
+```
+
+A entrada 0 era `0x81` (HANGUL) e passou a `0x00` (ANSI). Um byte. O custo é o
+cliente não desenhar mais coreano, o que aqui não custa nada.
+
+#### As três tentativas erradas, e por que cada uma parecia certa
+
+Isto é o que a seção realmente ensina — o acerto foi barato, o caminho não.
+
+1. **`AlwaysAscii`.** Escrevi aqui que ele "troca o charset da fonte de coreano
+   para ANSI" e que já estava aplicado. **Falso.** Lendo o `.qjs`, ele anula um
+   `jnz` dentro de `CSession::IsOnlyEnglish` — é sobre chat, não encosta em
+   fonte. Deduzir função de patch pelo nome custou a primeira rodada.
+2. **`CustomFontCharset` = ANSI.** Esse aplicou de verdade: 17 bytes,
+   desviando o `call [CreateFontA]` para um cave que força charset 0. E não
+   mudou nada, porque o cliente também usa `CreateFontIndirectA` e quem
+   alimenta os dois é uma variável, não o argumento daquela chamada.
+3. **`FixFontsCharset`.** Era o patch certo em conceito — e **não existe para
+   este exe**. O `.qjs` dele só tem `case` para `Exe.Version` 6, 9, 10 e 11
+   (VC6 a VC2012); o nosso é VC140 (`MSVCP140.dll`, `VCRUNTIME140.dll`). Cai
+   no `throw Error("Function not found")` e o WARP **descarta calado**: o
+   binário sai byte a byte igual, só com data de modificação nova.
+
+**A armadilha de diagnóstico que se repetiu duas vezes:** "apliquei e não
+mudou" era, nas duas, "não aplicou". Uma vez porque o cliente estava aberto e
+o Windows não deixa sobrescrever exe em uso; outra porque o patch não suporta
+esta versão. **Conferir o SHA do exe depois de cada rodada de WARP** custa
+segundos e teria economizado duas noites — data de modificação nova não prova
+nada.
+
+E a pista boa veio do patch que não podia ser aplicado: foi lendo o
+`FixFontsCharset.qjs` que apareceu a forma da tabela (`mov eax, [reg*4 +
+g_fontCharSet]`, `cmp reg, 14h`), o que permitiu achá-la no nosso binário por
+assinatura de conteúdo.
+
+#### O `servicetype brazil` — ficou, mas não era a correção
+
+No meio do caminho o `data/clientinfo.xml` e o `data/sclientinfo.xml` passaram
+de `<servicetype>korea</servicetype>` para `brazil`, seguindo o `clientinfo.xml`
+que veio de dentro do GRF do bRO (o deles **não tem `<langtype>` nenhum**).
+Isso exigiu criar `data/luafiles514/lua files/service_brazil/` com
+`ExternalSettings_br.lub` e `_br_s.lub` — cópias dos **nossos** `_kr`, não dos
+do bRO, que apontam para servidor e URL deles.
+
+Não foi o que resolveu: a tabela é indexada pelo **langtype**, e o nosso
+continua 0. Foi mantido porque está de pé e é o que o bRO faz. Se um dia
+atrapalhar, os backups `clientinfo.xml.KOREA` e `sclientinfo.xml.KOREA` estão
+ao lado.
+
+#### A saída de emergência continua existindo
+
+Se algum dia o acento tiver de sair, é bandeira e não retrabalho:
+
+```
+python ferramentas/traduz_ptbr.py tudo --sem-acento
+python ferramentas/ajusta_charset_fonte.py --reverter
+```
+
+e desfazer o commit dos `npc/guerra/*.txt`. As bandeiras `--sem-acento` do
+`traduz_ptbr.py` e do `completa_iteminfo.py` têm de andar juntas.
 
 ### NPCs nossos hoje
 
@@ -507,10 +604,11 @@ garantido).
 | Mestre de UP | `prontera 160,187` | +50 de base e de classe, consumindo a Maçã da Inocência | sim, 2026-07-31 |
 | Emissário da Ordem | `iz_int 18,32` (e nas 5 cópias do navio) | recebe o novato, entrega a Maçã da Inocência e o leva direto a Izlude | sim, 2026-08-01 |
 | Portais do Navio | flutuante, sem mapa | fecha os portais de `iz_int` para o Emissário ser a única saída | sim, 2026-08-01 |
+| Mercado Contemporâneo | `prontera`, 9 lojas em grade 3×3 | equipamento por slot, tudo a 1 zeny | **não** |
 
-**Os quatro estão testados in-game e nada ficou pendente neles** (confirmado em
-2026-08-01). O que este arquivo ainda lista abaixo são coisas deliberadamente
-deixadas para depois, não dívida dos NPCs acima.
+**Os quatro primeiros estão testados in-game e nada ficou pendente neles**
+(confirmado em 2026-08-01). O Mercado Contemporâneo é de 2026-08-01 e **ainda
+não foi visto no jogo** — ver a seção própria dele, logo abaixo.
 
 O **Emissário da Ordem** (`npc/guerra/emissario_da_ordem.txt`) pula a ilha
 (`int_land`) e a Academia: ele é o atalho da introdução até Izlude. Duas coisas
@@ -575,17 +673,404 @@ clássicas mais Taekwon, Ninja e Justiceiro saem do mesmo código. Exigências n
 Se um dia precisar dos dois, ligar o `jobmaster.txt` é o caminho; não reescrever
 o nosso.
 
+### Mercado Contemporâneo — aberto em 2026-08-01, NÃO testado in-game
+
+Nove lojas de equipamento na rua principal de Prontera, uma por slot, em grade
+3×3: colunas `x=151/155/159`, fileiras `y=173/167/161`. Tudo a **1 zeny**. O
+arquivo é `npc/guerra/mercado_contemporaneo.txt` e o cabeçalho dele tem o mapa
+da grade, a lista item a item e o porquê de cada ausência.
+
+**O que falta fazer, em ordem:**
+
+1. `@reloaditemdb` e **depois** `@reloadscript`. Nessa ordem: a loja valida cada
+   ID na hora de carregar, então o `item_db` precisa estar em pé antes.
+2. **Fechar e reabrir o cliente.** As 25 entradas novas do `itemInfo.lua` só
+   entram na inicialização. Sem isso os itens novos aparecem sem nome, e a
+   conclusão errada é achar que o script falhou.
+3. Ir a Prontera e comprar um de cada. Chapéu é o que merece atenção — é o
+   único slot que pode dar caixa modal.
+
+Os servidores **não foram reiniciados** de propósito (pedido de 2026-08-01), e
+o cliente também não foi reaberto. Nada disso foi visto no jogo ainda.
+
+#### O aviso na subida não é erro
+
+Ao carregar, o rAthena vai imprimir uma linha por item:
+
+```
+npc_parse_shop: Item X discounted buying price (1->0) is less than
+overcharged selling price (...)
+```
+
+É o próprio servidor apontando um exploit real (`src/map/npc.cpp:4153`): quem
+compra a 1 zeny pode **revender em qualquer NPC** pelo `Sell` do `item_db` e
+ficar com a diferença. O pior caso da lista é a **Boina Alada (5170)**, que tem
+`Buy: 30000` e revende por 15000 — 14999 de lucro por compra, em laço infinito.
+O resto tem `Buy: 20`, que dá 9 de lucro e não move nada.
+
+O remédio, se um dia incomodar, **não é mexer no preço da loja** — revender não
+passa por ela. É `Sell: 0` na entrada do item, ou tirar a Boina da lista.
+
+#### ACORDO: quando o bRO tem, a gente traz de lá — 2026-08-02
+
+Combinado explicitamente com o dono do projeto em 2026-08-02, e registrado aqui
+a pedido dele para ser entendimento das duas partes.
+
+**O bRO é a nossa fonte de referência.** A intenção original era partir do
+servidor do bRO; não foi possível porque o back-end que conseguimos é mais
+antigo, e a recomendação foi seguir com ele mesmo. A consequência prática é
+esta: sempre que faltar alguma coisa aqui — item, arte, nome em português,
+descrição, slot de visual —, **o primeiro lugar a olhar é a instalação do
+Ragnarok Brazil desta máquina**, e o padrão é trazer de lá em vez de inventar.
+
+```
+C:\Program Files (x86)\Gravity Interactive, Inc\Ragnarok Brazil\
+    data.grf                      205117 entradas (arte, sprites, tabelas)
+    System\iteminfo_new.lub        18845 itens: id -> nome e descricao PT
+```
+
+Se der para trazer o lote inteiro, traz-se o lote inteiro; se não der, traz-se
+sob demanda, conforme o pedido. As duas formas já aconteceram — o
+`instala_visual.py --todos` foi lote (1980 arquivos), e o 400287 foi sob
+demanda.
+
+**A distinção que causou confusão, e que vale ter clara:** "trazer do bRO" não
+é uma coisa só, são três camadas independentes, e resolver uma não resolve as
+outras. Ver a tabela em `ferramentas/LEIAME.md`, seção do
+`estende_accessoryid.py`:
+
+| falta | ferramenta |
+|---|---|
+| nome e descrição do item | `completa_iteminfo.py` |
+| os arquivos de arte | `instala_visual.py` |
+| a entrada de tabela do slot de visual | `estende_accessoryid.py` |
+| o item no servidor | entrada em `rathena/db/guerra/item_db.yml` |
+
+Foi por isso que, depois do lote de 2026-08-01 ter copiado 1980 arquivos, ainda
+sobravam 377 itens quebrados: o lote cobria a segunda linha, e o que faltava
+neles era a terceira.
+
+#### A ponte que resolveu a lista: o itemInfo do bRO
+
+A lista de itens veio em português do bRO, que não é o idioma de tabela nossa
+nenhuma. A ponte foi o `iteminfo_new.lub` da instalação do Ragnarok Brazil desta
+máquina — **18845 itens com `id → nome em português`**, lidos por
+`ferramentas/completa_iteminfo.py` (é bytecode Lua 5.1, não texto).
+
+Isso vale muito além deste mercado: **qualquer pedido futuro que venha com nome
+de item em português se resolve por aí**, sem depender de site de database nem
+de adivinhação. Foi assim que se confirmou que os quatro IDs passados na lista
+estavam certos (`450338` Algazarra, `450257` Mediadora Platinada, `450222`
+Epitáfio, `450120` Armadura Resistente) e que "Boina Alaeda" era **Boina Alada**
+(5170) e "Cuativo YSF" era **Curativo YSF01**.
+
+Da conferência saíram três classes de problema, e vale registrar a proporção
+porque ela deve se repetir no próximo pedido:
+
+| | itens | como ficou |
+|---|---|---|
+| Perfeitos (servidor + cliente) | 47 | na loja |
+| Sem entrada no `itemInfo.lua` | 25 | **resolvido** pelo `completa_iteminfo.py` |
+| Não existem no nosso rAthena | 18 | **placeholder** em `db/guerra/item_db.yml` |
+| Não localizados em tabela nenhuma | 4 | fora, listados no cabeçalho do script |
+
+#### Os 18 placeholders — preenchidos no mesmo dia
+
+O `rathena/` vendorizado é mais antigo que o bRO, e 18 itens da lista
+simplesmente não existiam aqui — 13 deles são a linha **Brutal** (o vendor só
+tinha o Machado 1328 e a Lança 32014, da família `Blut_`).
+
+De manhã foram criados como casca vazia, com `# TODO bonus` em todas e a decisão
+explícita de **não inventar efeito**. À tarde descobriu-se que **não era preciso
+inventar**: a descrição completa de cada item, com os números e cada bônus por
+extenso, estava no `iteminfo_new.lub` do bRO. Ela só não vinha porque a primeira
+versão do `completa_iteminfo.py` pulava a descrição de propósito, achando que
+desmontar a tabela aninhada do bytecode não pagaria o esforço. Pagou no mesmo
+dia — ver `ferramentas/LEIAME.md`.
+
+De onde veio cada coisa:
+
+| número | fonte |
+|---|---|
+| ATQ, DEF, peso, nível | as linhas `Tipo:/ATQ:/Peso:` da descrição do bRO |
+| os bônus | as linhas de efeito da mesma descrição |
+| `Range`, `Jobs`, `Locations` | um item vizinho do mesmo `SubType` no rAthena |
+| a forma do `Script` | o **Blut_Axe (1328)**, que o vendor já tinha |
+
+A última linha é o que deu confiança ao resto: **duas das quinze armas Brutais já
+estavam implementadas no rAthena**, com o script escrito por eles. As treze que
+faltavam seguem o mesmo molde com os números que a descrição manda. Não é
+tradução livre — é fechar a lacuna de uma família meio implementada.
+
+Os quatro nomes de habilidade que apareciam em português (`Execução`,
+`Expurgar`, `Calibre Letal`, `Lançar Míssil`) foram resolvidos pela mesma
+técnica dos nomes de item, uma camada acima: o `skillinfolist.lub` da GRF do bRO
+mapeia `SKID` → nome em português. Deu `RL_HAMMER_OF_GOD`, `RL_R_TRIP`,
+`RL_SLUGSHOT` e `RL_D_TAIL`, todos conferidos no `skill_db.yml`.
+
+#### O que ainda tem `# TODO`, e por quê
+
+Sobraram **quatro** efeitos e **oito** conjuntos. Cada `# TODO` cita a linha em
+português que ficou de fora, para não ser preciso reabrir a descrição.
+
+| item | o que falta | por quê |
+|---|---|---|
+| 28247 Espingarda | "Mantém [Espalhar Dano] ativo" | não há `bonus` que mantenha habilidade ligada, **e** "Espalhar Dano" não existe na tabela de habilidades do bRO |
+| 510155 Ceuci | +11: remover Hipotermia/Cristalização ao apanhar de magia | `bonus3 bAutoSpellWhenHit` **conjura**, não **remove** status |
+| 400687 Garra | +11: 10% de infligir Medo ao apanhar | idem |
+| 15371, 28572, 400687, 510155 | os conjuntos | exigem a outra peça, que em geral nem está no servidor |
+
+Os três primeiros exigiriam código em `src/custom/`, o que significa recompilar.
+
+**Uma exceção vale a pena:** o conjunto do Broche da Celine (28572) com a **Luva
+dos Espíritos Malignos (2980)** é viável hoje — as duas estão no mesmo mercado,
+no Acessorista. O Laço da Celine (18849), que forma outro conjunto com ele,
+também já está na loja, no Chapeleiro.
+
+Uma decisão que merece registro: o **Lança-Granadas (28248)** é a única das treze
+**sem** `bUnbreakableWeapon`, e não é esquecimento — a descrição do bRO não traz
+a linha "Indestrutível em batalha" que as outras doze trazem. Também é a de maior
+ATQ da família (210), o que sugere troca deliberada. Mantido como está lá.
+
+E o **Katar (28033)** não tem bônus de crítico apesar de a descrição dizer
+"Duplica a chance de causar um ataque crítico": no rAthena dobrar o crítico é
+propriedade do *tipo* Katar, aplicada em `src/map/battle.cpp`. Pôr um
+`bonus bCritical` aqui dobraria de novo.
+
+**Armadilha para o dia da atualização do rAthena:** esses IDs estão *fora* da
+nossa faixa 30000-30999, e o `Footer: Imports:` faz o nosso arquivo ser lido
+**depois** do `db/re/item_db.yml`. Se o rAthena um dia trouxer esses itens de
+verdade, as nossas entradas vazias **venceriam a versão boa, caladas**. Conferir
+essa seção antes de qualquer outra coisa ao atualizar o vendor.
+
+Exceção: o **Ceuci (510155)** é exclusivo do bRO — folclore brasileiro, nunca
+existiu no kRO. O placeholder dele é permanente, não provisório.
+
+#### CORRIGIDO em 2026-08-01 — "chapéu é o único slot perigoso" era falso
+
+O parágrafo que estava aqui dizia que só cabeça podia dar caixa modal, e que os
+outros oito slots no máximo ficariam sem nome. **Isso foi desmentido in-game na
+mesma tarde**, e o erro vale mais registrado do que apagado, porque a conclusão
+errada vinha de confiar na ferramenta em vez de no jogo.
+
+Abrir a loja do Acessorista entregou:
+
+```
+Resource File Loading fail
+texture\<ui>\item\ringofjupiter.bmp
+```
+
+O Anel de Júpiter (32258) é **acessório**. Não tem sprite de cabeça nenhuma. O
+que faltava era o **ícone de inventário**, e ícone todo item tem.
+
+Por que o `valida_visual.py` não pegou: ele só olhava *item de cabeça com
+`View`* — 5301 dos 13001 itens. Os outros 7700 nunca eram conferidos, e o
+silêncio dele foi lido como aprovação. As três tabelas concordavam que o item
+existia; quem discordava era o GRF; e desta vez o validador também não olhava.
+
+**A regra corrigida: todo item tem 4 arquivos de arte (sprite de chão `.spr` e
+`.act`, ícone de inventário, ícone grande). Chapéu tem mais 4.** Faltar o ícone
+de inventário é modal, não é só feio.
+
+O `valida_visual.py` e o `instala_visual.py` foram generalizados para cobrir
+qualquer item, e passaram a ler também o `db/guerra/item_db.yml` — sem isso os
+nossos placeholders eram invisíveis para eles. Detalhes em
+`ferramentas/LEIAME.md`.
+
+#### O processo, para a próxima loja
+
+Esta é a sequência completa, e a ordem importa em dois pontos:
+
+```
+1. python completa_iteminfo.py --verificar     # nome e recurso do bRO
+2. python completa_iteminfo.py                 # grava
+3. python valida_visual.py  --id <lista>       # o que falta de arte
+4. python estende_accessoryid.py --id <lista> --grf "<grf do bRO>"
+5. python instala_visual.py --id <lista> --grf "<grf do bRO>"
+6. python valida_visual.py  --id <lista>       # tem que dar 0
+7. fechar e reabrir o cliente
+```
+
+- **1-2 antes de 3-5:** o validador lê o `identifiedResourceName` do
+  `itemInfo.lua`. Sem entrada ele nem sabe qual arquivo procurar, e responde
+  "não está no itemInfo.lua" — que parece "não tem arte" e não é.
+- **4 antes de 5**, e essa também não é intuitiva: o `instala_visual.py` só
+  sabe procurar as 4 sprites de cabeça depois que o `accessoryid` lhe diz o
+  sufixo do arquivo. Na ordem errada ele instala os 4 ícones, relata
+  "faltando 0" e o chapéu continua invisível. O passo 4 só é necessário quando
+  o passo 3 acusar `view N no accessoryid`; nos outros casos ele não faz nada.
+- **6 antes de 7:** conferir no disco custa segundos; descobrir no jogo custa
+  reabrir o cliente.
+
+Aplicado aos 77 itens do mercado em 2026-08-01: **43 estavam sem nenhum dos 4
+arquivos**, 272 arquivos foram copiados da GRF do bRO, e a reconferência deu
+**0 com falta**. A cura estava toda no disco desta máquina, como sempre.
+
+#### O cliente inteiro foi curado no que dava — 2026-08-01
+
+O mercado eram 77 itens de 13001, então o lote completo rodou logo em seguida:
+
+```
+python instala_visual.py --todos --grf "<grf do bRO>" --aplicar
+```
+
+| | antes | depois |
+|---|---|---|
+| desenháveis | 8502 | **8948** |
+| **quebram o cliente** | **1902** | **1456** |
+
+**446 itens curados**, e no total do dia **1980 arquivos / 22,1 MB** foram
+escritos em `cliente\data\` (505 `.spr`, 505 `.act`, 970 `.bmp`), contando a
+rodada do mercado e esta.
+
+Detalhe que confirma que o lote de 2026-07-31 já tinha feito o serviço na camada
+de cabeça: os números do `--cabeca` **não se mexeram** (3620 desenháveis, 552
+quebram). Os 446 curados agora são **todos item que não é chapéu** — exatamente
+o que o recorte antigo nunca olhou.
+
+Nada disso toca o GRF. O `DataFolderFirst` faz o disco vencer, então tudo vai
+solto para `cliente\data\` e apagar reverte. O servidor não fica sabendo.
+
+#### Os 1456 que sobraram, e por quê
+
+| | | |
+|---|---|---|
+| a GRF do bRO não tem a arte | 977 | conteúdo que nem o bRO recebeu |
+| `View` fora do `accessoryid.lub` | 377 | **sem cura por arte** |
+| parciais, pulados pelo tudo-ou-nada | 102 | a GRF do bRO tem só parte |
+
+Os **377** são a categoria que não se resolve copiando arquivo: o cliente de
+2021 não conhece aquele `View`, então não é falta de arquivo, é ele não saber
+que slot desenhar. Resolver exigiria mexer no `accessoryid.lub` — **e foi
+exatamente o que se fez em 2026-08-02**, ver a seção do Capacete de
+Intensificação, mais abaixo. Enquanto isso não existia, era o motivo de os
+quatro chapéus listados acima estarem fora da loja.
+
+Os **102 parciais** são pulados de propósito: `.spr` sem o `.act` do par quebra
+o cliente igual, e ainda esconde o problema do `valida_visual.py`. Tudo-ou-nada
+por item.
+
+Quatro chapéus pedidos ficaram de fora por isso — `400287`, `410124`, `410142`,
+`410139`. Nos quatro o `View` **nem existe no `accessoryid.lub` deste cliente**,
+que é o caso que o `instala_visual.py` não cura: não é falta de arquivo, é o
+cliente não saber que aquele slot de visual existe.
+
+**O `400287` saiu dessa lista em 2026-08-02** e está no Chapeleiro. Os outros
+três continuam fora, mas agora por não terem sido pedidos — o caminho para eles
+é uma linha de comando, não um problema em aberto.
+
+Uma quinta observação, essa nova: o placeholder `400687` (Garra Diabólica) foi
+criado **de propósito sem `View`**. Sem arte no GRF, dar `View` a ele seria
+trocar "invisível na cabeça" por "caixa de erro". Item sem `View` equipa, ocupa
+o slot e não desenha nada — que é o comportamento certo para um placeholder.
+
+E ficou registrada uma inversão de ordem que não é intuitiva: **o
+`completa_iteminfo.py` roda antes do `valida_visual.py`**, porque o validador lê
+o `identifiedResourceName` do `itemInfo.lua` e sem entrada ele nem consegue
+avaliar. Antes de completar, sete chapéus respondiam "não está no itemInfo";
+depois, três passaram a validar limpo e quatro se revelaram sem arte de verdade.
+
+#### Capacete de Intensificação (400287) — 2026-08-02, NÃO testado in-game
+
+Pedido: pôr o item no Chapeleiro. Ele era um dos **quatro chapéus sem cura** de
+2026-08-01, e destravá-lo exigiu abrir uma frente nova — a terceira camada de
+"trazer do bRO", que até então não existia. Ver o ACORDO, mais acima.
+
+**O que já estava pronto e o que faltava:**
+
+| camada | estado em 2026-08-02 |
+|---|---|
+| nome e descrição no `itemInfo.lua` | **já estava**, posta em 2026-08-01 |
+| os 4 arquivos de item (sprite de chão + ícones) | faltavam — vieram da GRF do bRO |
+| o slot de visual `View 2260` | **faltava, e não havia ferramenta** |
+| as 4 sprites de cabeça | faltavam — só localizáveis depois do slot |
+| os bônus no servidor | **conflitavam** — ver abaixo |
+
+O `View 2260` foi resolvido pelo `ferramentas/estende_accessoryid.py`, escrito
+para isto. Ele grava um override de `accessoryid.lub` e `accname.lub` em
+`cliente\data\` com as 2192 entradas do nosso GRF **mais** a nova, validado por
+round-trip antes de gravar. Detalhes e as travas em `ferramentas/LEIAME.md`.
+
+Medido no cliente inteiro: **8948 → 8949 desenháveis, 1456 → 1455 quebram.**
++1/−1 e nenhum outro número se mexeu — estender a tabela não tocou nos 2192
+slots que já funcionavam.
+
+**O conflito no servidor, que é o achado que vale guardar.** O rAthena
+vendorizado *tem* o ID 400287, mas com outro item: o kRO chama de "Legacy of
+Wise One" e dá bônus **elementais** com degraus de refino +7/+9. O bRO
+rebalanceou e rebatizou: "Capacete de Intensificação", bônus de **raça**,
+pós-conjuração −20%, degraus +10/+12. Mesmo ID, dois itens diferentes.
+
+Como o `itemInfo.lua` do cliente já mostra a descrição do bRO, manter os bônus
+do kRO faria a descrição **mentir** para o jogador — ele leria "−20% de
+pós-conjuração" e receberia resistência elemental. Entre trocar a descrição do
+cliente e trocar o efeito do servidor, trocar o servidor é o lado barato e o
+lado certo.
+
+Isso criou a **terceira categoria** de `db/guerra/item_db.yml`, documentada lá
+na seção `OVERRIDES`:
+
+| categoria | o que é |
+|---|---|
+| 30000-30999 | itens NOSSOS, inventados |
+| placeholders | itens reais que o nosso rAthena não tem — preenchem lacuna |
+| **overrides** | itens que o rAthena TEM, e cuja versão dele substituímos |
+
+A diferença importa no dia da atualização do vendor: placeholder um dia some,
+quando o rAthena trouxer o item de verdade; **override não some nunca**, porque
+existe justamente porque discordamos da versão deles.
+
+**E ID repetido é MESCLADO, não substituído** — conferido em
+`src/map/itemdb.cpp:ItemDatabase::parseBodyNode`, que faz `find(nameid)` e, se
+o item já existe, reaproveita a entrada e só sobrescreve os campos escritos.
+Duas consequências, as duas contra-intuitivas:
+
+- campo **omitido** no override **mantém o valor do `db/re/`** — não volta ao
+  padrão do rAthena. Então o override só precisa listar aquilo em que
+  discordamos, mas precisa listar *tudo* em que discordamos, porque o que
+  sobrar do item deles fica;
+- `Locations` é OR (`item->equip |= constant`), não atribuição: não dá para
+  tirar um slot omitindo-o, só passando `false` explícito.
+
+O risco novo que isso cria para o dia da atualização: se a versão do rAthena
+ganhar um **campo novo**, ele vaza para dentro do nosso item pela mesclagem,
+calado.
+
+**O que falta fazer, em ordem:**
+
+1. `@reloaditemdb` e **depois** `@reloadscript` — a loja valida cada ID ao
+   carregar, então o `item_db` precisa estar de pé antes.
+2. **Fechar e reabrir o cliente.** O `accessoryid.lub` novo só é lido na
+   inicialização, como todo `.lub`. Sem isso o chapéu continua invisível na
+   cabeça e a conclusão errada é achar que o override não funcionou.
+3. Comprar no Chapeleiro, equipar, e olhar a cabeça do personagem.
+
+Os servidores **não foram reiniciados** e o cliente **não foi reaberto** —
+nada disto foi visto no jogo ainda.
+
+#### Sprite de NPC: a conferência pegou mais uma
+
+Os nove sprites foram checados no `npcidentity.lub` **deste** cliente antes de
+usar, e `4_M_JOB_KNIGHT` caiu — não existe aqui, embora o rAthena o conheça. O
+Escudeiro usa `4_M_UNCLEKNIGHT` por isso. Mesma família do 10605 do Mestre de
+Classe: **a tabela do rAthena conhece nomes que este cliente de 2021 não
+desenha**, e a única autoridade é o `npcidentity.lub`.
+
 ---
 
-## CONCLUÍDO — tradução do cliente (2026-07-30)
+## CONCLUÍDO — tradução do cliente para o inglês (2026-07-30)
 
-**Estado final: o cliente está em inglês, de ponta a ponta.** Tela de login,
-seleção de personagem, janelas do jogo, itens, habilidades, quests, letreiro de
-mapa. O único coreano que resta é a arte da tela de classificação etária, que é
-imagem, não texto.
+**Esta seção é histórica.** Ela conta como o cliente saiu do coreano; o
+português veio depois, em 2026-08-03, **por cima destes mesmos arquivos** — ver
+"CONCLUÍDO — tradução PT-BR". O inglês continua sendo a camada de reserva:
+onde o bRO não tem texto, é ele que aparece.
 
-A decisão foi **ligar o inglês primeiro** e traduzir para PT-BR depois, arquivo
-por arquivo, em cima dessa base. A fase PT-BR não começou.
+Estado ao fim daquele dia: tela de login, seleção de personagem, janelas do
+jogo, itens, habilidades, quests e letreiro de mapa em inglês. O único coreano
+que restava é a arte da tela de classificação etária, que é imagem, não texto.
+
+A decisão foi **ligar o inglês primeiro** e traduzir para PT-BR depois, em cima
+dessa base — e foi exatamente o que aconteceu.
 
 ### A descoberta que destravou tudo
 
@@ -606,17 +1091,27 @@ diálogos.
 
 ### Onde vive cada texto do jogo — mapa final
 
-| Camada | Arquivo | Como ficou resolvido |
-|---|---|---|
-| UI e mensagens de sistema | `data\msgstringtable.txt` | patch `MsgStrings` no WARP |
-| Quests | `data\questid2display.txt` | já lido por padrão em `langtype 0` |
-| Strings cravadas no exe | `WARP\Inputs\Translations_EN.yml` | `TranslateClient`, já aplicado antes |
-| Itens | `System\itemInfo_true.lub` | trocado pelo stub do ROenglishRE |
-| Letreiro e nome de mapa | `System\mapInfo_*.lub` | trocado pela versão em inglês |
-| Habilidades | `data\...\skillinfoz\*.lub` | recortados em 2026-07-30 ~22:55 — ver a rodada da janela de habilidades |
-| Texturas | `data\texture\유저인터페이스\` | já ativas via `DataFolderFirst` |
-| Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | PT-BR de fábrica, via `@langtype por` |
-| Janela do `Setup.exe` | recursos `RT_DIALOG` dentro do próprio exe | `ferramentas\traduz_setup.py` — ver abaixo |
+Atualizada em 2026-08-03 com a coluna do português.
+
+| Camada | Arquivo | Inglês (2026-07-30) | PT-BR (2026-08-03) |
+|---|---|---|---|
+| UI e mensagens de sistema | `data\msgstringtable.txt` | patch `MsgStrings` no WARP | `traduz_ptbr.py msgtable` |
+| Rótulo de janela e de botão | `data\...\msgstring_kr.lub` | ROenglishRE | `traduz_ptbr.py msgstrid` |
+| Quests | `data\questid2display.txt` | já lido por padrão em `langtype 0` | `traduz_ptbr.py quests` |
+| Strings cravadas no exe | `WARP\Inputs\Translations_EN.yml` | `TranslateClient`, já aplicado antes | **continua em inglês** |
+| Itens | `SystemEN\LuaFiles514\itemInfo.lua` | stub do ROenglishRE em `System\itemInfo_true.lub` | `traduz_ptbr.py itens` |
+| Letreiro e nome de mapa | `System\mapInfo_*.lub`, `data\mapnametable.txt` | trocado pela versão em inglês | `traduz_ptbr.py mapinfo mapas` |
+| Habilidades | `data\...\skillinfoz\*.lub` | recortados em 2026-07-30 ~22:55 | `traduz_ptbr.py skills` |
+| Conquistas | `System\achievement_list.lub` | **nunca saiu do coreano** | `traduz_ptbr.py conquistas` |
+| Prefixo de carta | `data\cardprefixnametable.txt` | ROenglishRE | `traduz_ptbr.py cartas` |
+| Texturas | `data\texture\유저인터페이스\` | já ativas via `DataFolderFirst` | **continua em inglês** |
+| Mensagens do servidor | `rathena\conf\msg_conf\map_msg_por.conf` | inglês, o padrão | `conf/guerra/map_msg_guerra.conf` |
+| Nome de monstro | `rathena\db\re\mob_db.yml` (`JapaneseName`) | inglês, o padrão | `traduz_ptbr.py monstros` |
+| Janela do `Setup.exe` | recursos `RT_DIALOG` dentro do próprio exe | `ferramentas\traduz_setup.py` — ver abaixo | já estava em português |
+
+As duas linhas "continua em inglês" são as que não têm fonte no bRO: as strings
+compiladas dentro do exe precisariam de um `Translations_PT.yml` escrito à mão
+para o patch `TranslateClient`, e as texturas são imagem.
 
 **A regra que se repetiu cinco vezes:** quando um texto continua em coreano, a
 versão traduzida quase sempre **já está no disco** — e no caso do `Setup.exe`,
@@ -669,23 +1164,180 @@ que não cabe no espaço atual do recurso — ficou de fora de propósito.
 template português; trocar por `Sistema` exigiria realocar o recurso, porque só
 substituição de mesmo comprimento é segura dentro de um `DLGTEMPLATEEX`.
 
-### Pontos de partida para a fase PT-BR
+### Pontos de partida para a fase PT-BR — todos consumidos em 2026-08-03
 
-Nenhum começou. Em ordem de retorno por esforço:
+A lista que vivia aqui (mapinfo_C, map_msg_por, msgstringtable, itemInfo_C,
+skilldescript) foi feita inteira, e por um caminho diferente do que ela
+sugeria: em vez de arquivo `_C` de sobreposição, **merge por chave sobre o
+arquivo do ROenglishRE**. Ver a seção seguinte.
 
-1. **`SystemEN\mapinfo_C.lub`** — mescla `mapTbl_C` por cima do inglês. As cidades
-   que importam são ~15 e o efeito é imediato ao entrar no mapa.
-2. **`rathena\conf\msg_conf\map_msg_por.conf`** — já pronto, só ativar.
-3. **`data\msgstringtable.txt`** — 4022 linhas, a UI inteira. Volume grande.
-4. **`SystemEN\itemInfo_C.lua`** — mesma ideia do mapinfo_C, para itens.
-5. **`data\...\skillinfoz\skilldescript.lub`** — as descrições de habilidade. É o
-   maior volume de texto corrido do cliente (1,0 MB). Fica por último, mas note
-   que agora ele é um **arquivo nosso, recortado** — traduzir aqui significa
-   editar a saída do `filtra_lub_por_skid.py`, então o recorte precisa ser
-   refeito antes da tradução, nunca depois.
+---
 
-O estado de cada camada de texto está na tabela "Onde vive cada texto do jogo —
-mapa final", acima.
+## CONCLUÍDO — tradução PT-BR (2026-08-03)
+
+**O jogo está em português.** Item, habilidade, quest, conquista, mapa, monstro,
+rótulo de janela, mensagem do servidor e os NPCs nossos. Uma ferramenta faz o
+lado do cliente inteiro:
+
+```
+python ferramentas/traduz_ptbr.py tudo --verificar    # relata, não grava
+python ferramentas/traduz_ptbr.py tudo               # aplica
+```
+
+Nada foi traduzido por nós: **tudo veio da instalação do Ragnarok Brazil desta
+máquina**, cumprindo o ACORDO de 2026-08-02. A única exceção são 36 rótulos de
+barra de atalho que o cliente do bRO não tem, resolvidos por analogia.
+
+### O que ficou traduzido, e quanto
+
+| parte | o que aparece | fonte no bRO | rendimento |
+|---|---|---|---|
+| `itens` | nome e descrição de item | `System\iteminfo_new.lub` | 16838 nomes, 11499 descrições |
+| `skills` | nome e descrição de habilidade | `skillinfolist.lua` / `skilldescript.lua` do GRF | 1060 nomes, 872 descrições |
+| `quests` | título e texto do diário | `data\questid2display.txt` | 3135 de 8369 |
+| `msgstrid` | rótulo de janela e de botão | `msgstring_br.lub` | 425 + 36 por analogia |
+| `msgtable` | mensagem de sistema e de erro | `data\msgstringtable.txt` | 2941 de 4023 |
+| `conquistas` | o modal de conquista | `System\achievement_list.lub` | 349 de 361 |
+| `mapas` | nome do mapa no minimapa | `System\mapInfo.lub` | 952 de 958 |
+| `mapinfo` | o letreiro ao entrar no mapa | `System\mapInfo.lub` | 1982 campos |
+| `cartas` | o prefixo que a carta põe no nome | `data\cardprefixnametable.txt` | 935 |
+| `monstros` | o nome que flutua sobre o monstro | `navi_mob_br.lub` do GRF | 1061 de 2675 |
+
+### A decisão que atravessa tudo: mesclar, nunca trocar o arquivo
+
+O reflexo é copiar o arquivo do bRO por cima do nosso. **Estaria errado em quase
+todos**, e o motivo é contraintuitivo: o **ROenglishRE é mais NOVO que o bRO**.
+Ele acompanha o kRO de 2026; o cliente do bRO é anterior e não conhece conteúdo
+que nós já temos. Trocar arquivo por arquivo traduziria o que existe nos dois e
+**apagaria o resto** — 5234 quests ficariam em branco em vez de em inglês.
+
+Então o destino é sempre o arquivo que o cliente já usa, e o bRO só preenche o
+texto, por chave. O que o bRO não tem continua em inglês.
+
+A exceção é `conquistas`, e ela se justifica sozinha: o `achievement_list.lub`
+daqui é o **coreano do instalador de 2021** — não havia inglês a preservar. É
+também o único que é código, não tabela de texto, e não daria para costurar.
+
+### O `msgstringtable.txt` é o único arquivo sem chave
+
+Todos os outros têm chave — ID de item, `SKID.X`, ID de quest, nome de `.rsw`,
+`MSI_*`. O `msgstringtable.txt` não: **o cliente pede a linha pelo número**, e o
+número é o que o exe de 2021 espera. As duas tabelas divergem (4023 linhas
+contra 4216) e não é só no fim — medido, a diferença aparece no meio.
+
+Trocar o arquivo entregaria a mensagem errada em todo lugar. A solução foi
+alinhar por âncora: linhas cuja **assinatura sobrevive à tradução** (`%s`, `%d`,
+`^RRGGBB`, número, sigla em maiúscula, comando com barra) são casadas em ordem
+entre os dois arquivos; entre duas âncoras consecutivas, se a distância for a
+mesma dos dois lados, a corrida inteira entra.
+
+Dá 651 âncoras e **73,1% das linhas**. O resto fica em inglês de propósito —
+**linha não mapeada é melhor que linha trocada**. Conferido à mão numa amostra
+de 16 pares: todos casaram semanticamente.
+
+### O lado do servidor
+
+Duas camadas que nenhuma ferramenta de cliente alcança:
+
+- **Mensagem do map-server** (resposta de `@comando`, aviso de peso, recusa de
+  negociação). O rAthena já distribui a tradução: `map_msg_por.conf`, 1276 das
+  1278 mensagens. O caminho **não** foi o `@langtype`: ele vem desligado em
+  tempo de compilação (`LANG_ENABLE` é `0x000` em `src/common/msg_conf.hpp`) e,
+  mesmo ligado, o padrão de cada personagem continua sendo o inglês. Em vez
+  disso, `conf/guerra/map_msg_guerra.conf` importa o arquivo português por cima
+  da tabela padrão — o leitor de mensagens é recursivo e sobrescreve por número.
+  **Bônus:** `jobname()` lê a mensagem 550+, então os nomes de classe do Mestre
+  de Classe passaram a sair em português sem tocar no script.
+- **Nome de monstro.** Não vem de tabela do cliente: o servidor manda a string
+  pronta, do campo `JapaneseName` do `mob_db` (`src/map/mob.cpp`, o `memcpy` em
+  `mob_spawn_dataset`). O `Name` fica em inglês de propósito — é por ele que
+  `@monster` e os scripts do rAthena procuram o bicho.
+
+A ponte para o ID do monstro foi o **`navi_mob_br.lub`** do GRF do bRO: a tabela
+que a navegação usa para dizer "o monstro X está no mapa Y" carrega o
+**AegisName ao lado do nome em português**. O ID não aparece nela — foi o par
+`AegisName` que resolveu 1061 dos 2675.
+
+### Três linhas novas em arquivo do rAthena
+
+A convenção manda ter conta delas. Agora são **cinco** no total:
+
+| arquivo do rAthena | o quê |
+|---|---|
+| `npc/scripts_custom.conf` | `import:` dos nossos NPCs (de 2026-07-30) |
+| `conf/battle_athena.conf` | `import:` de `conf/guerra/` (de 2026-08-01) |
+| `conf/msg_conf/map_msg.conf` | `import:` de `conf/guerra/map_msg_guerra.conf` |
+| `db/re/item_db.yml` | `Path:` de `db/guerra/item_db.yml` (de 2026-07-31) |
+| `db/re/mob_db.yml` | **um `Footer:` inteiro**, que não existia |
+
+A última merece nota: o `mob_db.yml` do rAthena **não trazia `Footer:` nenhum**,
+e sem ele não existe caminho para acrescentar nada ao banco de monstros — nem
+`db/import/mob_db.yml`, que é o lugar que todo mundo assume. O bloco teve de ser
+criado.
+
+### O que NÃO foi traduzido, e por quê
+
+- **Diálogo dos NPCs do rAthena** — milhares de arquivos em `npc/`, e o bRO não
+  é fonte para eles: o que temos do bRO é o **cliente**, não o servidor. Não há
+  de onde importar. Os NPCs nossos (`npc/guerra/`) estão em português.
+- **5234 quests, 1082 mensagens de sistema, 1614 monstros** — o bRO não tem.
+  Continuam em inglês, que é o comportamento certo.
+- **12 conquistas** (128038-128043, 128050-128052, 129021, 130005, 200032) —
+  passam de coreano para vazio. Ver a seção do `traduz_ptbr.py` no
+  `ferramentas/LEIAME.md`.
+- **`char_msg.conf` e `login_msg.conf`** — não têm tradução PT no rAthena, e o
+  que aparece na tela do jogador vem do map. Ficaram de fora.
+
+### A primeira reabertura quebrou — a aspa escapada
+
+Na primeira vez que o cliente foi reaberto, às ~20:50, ele subiu com **seis
+diálogos de erro**. Não era o GRF, apesar da aparência: era um bug meu, e a
+lição de diagnóstico vale mais que a correção.
+
+Quatro valores do `msgstring_kr_s.lub` têm **aspa escapada** dentro da string:
+
+```lua
+MSI_PARTY_BOOKING_MAKE = "/organize \"Party Name\": Creates a party.",
+```
+
+O regex do valor era `[^"\r\n]*` e parava na aspa escapada. A substituição
+trocou meia string e deixou o resto da linha solto, o arquivo perdeu a sintaxe,
+`MsgStrID` virou nil — e aí **tudo que consome MsgStrID estourou em separado**:
+`hotkey.lua:135`, `party_booking_function.lua:3`, `OptionInfo\CmdInfo:49`.
+
+**Cinco dos seis diálogos não citavam o arquivo culpado.** Só o primeiro dizia
+a verdade: `[string "buf"]:433: '}' expected near 'Party'`. É o mesmo padrão da
+rodada de 2026-07-30, quando ~12 funções `queryNavi_*` estouraram por um único
+`Navi_Map` nil: **volume de diálogo não indica volume de problema.** Ler o
+primeiro erro, não o mais repetido.
+
+Atingiu `msgstring_kr_s`, `msgstring_kr`, `skilldescript` e `itemInfo.lua`;
+`skillinfolist` e `mapInfo` não têm escape nenhum e passaram limpos. Todos
+foram restaurados do backup e refeitos.
+
+O que ficou de proteção, além do regex corrigido: **`confere_linhas()` recusa a
+gravação** se alguma linha de campo de texto deixar de casar com
+`campo = "valor",`. Existe porque a linha estragada é **lexicamente válida** —
+um verificador de balanceamento de aspas e chaves foi escrito, testado contra o
+arquivo quebrado e **passou**. Detalhes no `ferramentas/LEIAME.md`.
+
+### Confirmado no jogo — 2026-08-04
+
+O cliente abre em português, **com acento**, depois do
+`ferramentas/ajusta_charset_fonte.py`. Item, habilidade, quest, conquista,
+mapa, UI e as abas do modal de habilidade, todos conferidos na tela.
+
+Para conferir de novo depois de mexer:
+
+1. Fechar e reabrir o cliente — ele lê esses arquivos **só na inicialização**.
+2. Reiniciar o map-server, ou `@reloadmobdb` + `@reloadscript` (nome de
+   monstro, NPCs nossos, mensagens do servidor).
+
+### As abas do modal de habilidade
+
+Resolvidas na mesma rodada, e por um caminho diferente do resto: a fonte foi o
+**nosso próprio GRF**, não o bRO. Ver a correção do `skilltreeview.lub` na
+seção da janela de habilidades, mais acima.
 
 ### A camada de textura já está de pé — não confundir com as outras
 
