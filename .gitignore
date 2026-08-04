@@ -70,3 +70,12 @@ desktop.ini
 .vscode/
 .idea/
 .vs/
+
+# --- Traducao de NPC: o .INGLES e copia do upstream, nao original ---
+#
+# O ferramentas/traduz_npcs.py guarda um <arquivo>.INGLES ao lado de cada
+# script que traduz, para poder reaplicar o catalogo do zero. Ele NAO vai
+# para o git: o proprio historico ja tem a versao em ingles de cada arquivo,
+# e versionar a copia dobraria a arvore npc/ inteira sem acrescentar nada.
+# Quem manda e o catalogo em rathena/npc/guerra/traducao/, esse sim versionado.
+*.INGLES

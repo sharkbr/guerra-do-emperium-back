@@ -91,25 +91,32 @@ class OrigemGrf(object):
 
 
 def alvos_do_item(cli, info, itens, iid):
-    u"""Os oito caminhos do item, ou [] se ele nao for um chapeu conhecido."""
+    u"""Os caminhos do item: quatro se nao for chapeu, oito se for.
+
+    Ver `valida_visual.le_item_db` para o porque de `view_cabeca` e nao `view`.
+    """
     res = info.get(iid)
     item = itens.get(iid)
     if not res or not item:
         return []
-    return [(rot, cam) for rot, cam in cli.caminhos(res.lower(), item['view'])
+    return [(rot, cam)
+            for rot, cam in cli.caminhos(res.lower(), item['view_cabeca'])
             if cam is not None]
 
 
 def instala(iid, cli, info, itens, idx, fonte_grf, silencioso=False):
     u"""Poe no lugar os arquivos de um item. Devolve (copiados, faltando)."""
     item = itens[iid]
+    view = item['view_cabeca']
     if not silencioso:
-        print '%d  %s  (View %d, recurso "%s")' % (
-            iid, item['nome'], item['view'], info[iid])
-        if cli.acc.get(item['view']) is None:
+        print '%d  %s  (%s, recurso "%s")' % (
+            iid, item['nome'],
+            ('View %d' % view) if view is not None else 'nao e chapeu',
+            info[iid])
+        if view is not None and cli.acc.get(view) is None:
             print ('  view %d nao existe no accessoryid.lub deste cliente - a '
                    'arte sozinha nao resolve, o cliente nem sabe desenhar esse '
-                   'slot' % item['view'])
+                   'slot' % view)
         print
 
     copiados = faltando = 0
@@ -184,21 +191,33 @@ def main():
     if '--todos' in args:
         return lote(args, cli, info, itens, idx, fonte_grf)
 
-    iid = int(args[args.index('--id') + 1])
-    if iid not in info:
-        print '%d nao esta no itemInfo.lua' % iid
-        return 1
-    if iid not in itens:
-        print '%d nao tem entrada de cabeca com View no item_db' % iid
-        return 1
-    copiados, faltando = instala(iid, cli, info, itens, idx, fonte_grf)
-    print
+    # Aceita lista: `--id 32258,490337,...`. Um item so continua funcionando.
+    ids = [int(x) for x in args[args.index('--id') + 1].split(',')]
+    total_c = total_f = 0
+    for iid in ids:
+        if iid not in info:
+            print '%d nao esta no itemInfo.lua' % iid
+            continue
+        if iid not in itens:
+            print '%d nao esta no item_db_equip.yml' % iid
+            continue
+        copiados, faltando = instala(iid, cli, info, itens, idx, fonte_grf,
+                                     silencioso=len(ids) > 1)
+        total_c += copiados
+        total_f += faltando
+        if len(ids) > 1:
+            print '%-8d %-34s +%d copiados, %d faltando' % (
+                iid, itens[iid]['nome'][:34], copiados, faltando)
+        else:
+            print
     if not origem and not caminho_grf:
         print ('nenhuma copia feita - rode de novo com --grf <arquivo.grf> ou '
                '--de <pasta>.')
     else:
-        print 'instalados %d, faltando %d' % (copiados, faltando)
-    print 'para conferir:  python valida_visual.py --id %d' % iid
+        print
+        print 'instalados %d, faltando %d' % (total_c, total_f)
+    print 'para conferir:  python valida_visual.py --id %s' % (
+        ','.join(str(i) for i in ids))
     return 0
 
 
@@ -214,7 +233,8 @@ def lote(args, cli, info, itens, idx, fonte_grf):
         res = info.get(iid)
         if not res:
             continue
-        faltas = [n for n, _, tem in cli.recursos(res.lower(), it['view'])
+        faltas = [n for n, _, tem in cli.recursos(res.lower(),
+                                                  it['view_cabeca'])
                   if not tem]
         if [n for n in faltas if n in vv.FATAIS or n.startswith('view ')]:
             alvos.append(iid)
@@ -228,7 +248,12 @@ def lote(args, cli, info, itens, idx, fonte_grf):
         # os 4 de cabeca, entao nada falta e nada e instalado. Foi assim que
         # uma passada relatou 164 resolvidos sem mexer em arquivo nenhum,
         # enquanto o valida_visual continuava acusando os mesmos 548.
-        if cli.acc.get(itens[iid]['view']) is None:
+        #
+        # So vale para CHAPEU. Item que nao e chapeu tem `view_cabeca` None e
+        # nao tem camada de cabeca nenhuma para faltar - passar por este teste
+        # o descartaria como incuravel sendo que ele so precisa dos 4 icones.
+        view = itens[iid]['view_cabeca']
+        if view is not None and cli.acc.get(view) is None:
             sem_view += 1
             continue
         tem, nao = simula(iid, cli, info, itens, idx, fonte_grf)

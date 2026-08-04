@@ -40,9 +40,10 @@ ITEMINFO = os.path.join(r'C:\GuerraDoEmperium\cliente',
 #
 #   id        o mesmo ID do db/guerra/item_db.yml. Os dois lados TEM que bater:
 #             o servidor manda o numero, o cliente procura por ele aqui.
-#   nome      o que aparece no inventario. SEM ACENTO - o cliente roda em
-#             langtype 0 (Coreia) e ainda nao testamos como ele desenha byte
-#             acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+#   nome      o que aparece no inventario. Literal `u'...'`, COM acento: o
+#             texto e gravado em cp1252, a mesma codificacao em que o bRO
+#             entrega os dele e a que o cliente desenha por causa do patch
+#             AlwaysAscii. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
 #   descricao uma linha da caixa de descricao por elemento. "____..." e a regua
 #             separadora que o proprio arquivo usa, e `^RRGGBB` troca a cor.
 #   arte_de   ID de outro item de quem copiamos o `resourceName`, BYTE A BYTE.
@@ -56,18 +57,18 @@ ITEMINFO = os.path.join(r'C:\GuerraDoEmperium\cliente',
 ITENS = [
     {
         'id': 30999,
-        'nome': 'Maca da Inocencia',
+        'nome': u'Maçã da Inocência',
         'arte_de': 512,                     # a Maca comum
         'descricao': [
-            'Ao adentrar em Valhalla caida o viajante recebe uma maca',
-            'que simboliza a inocencia na renovacao.',
-            'Optar por atalhos pode fazer com que a maca desapareca.',
-            '_______________________',
-            'Pode ser concedida ao Deus da Guerra no level maximo em',
-            'troca de melhorias.',
-            '_______________________',
-            '^0000CCType:^000000 Etc',
-            '^0000CCWeight:^000000 1',
+            u'Ao adentrar em Valhalla caída o viajante recebe uma maçã',
+            u'que simboliza a inocência na renovação.',
+            u'Optar por atalhos pode fazer com que a maçã desapareça.',
+            u'_______________________',
+            u'Pode ser concedida ao Deus da Guerra no level máximo em',
+            u'troca de melhorias.',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Etc',
+            u'^0000CCPeso:^000000 1',
         ],
     },
 ]
@@ -141,26 +142,31 @@ def onde_entra(dados, iid):
 def monta(item, arte):
     u"""O bloco de texto da entrada, no formato exato do arquivo: CRLF, tabs,
     e o mesmo conjunto de campos que as entradas vizinhas usam."""
-    # Rede de seguranca contra o acento que escapa: um byte alto aqui nao daria
-    # erro nenhum, so um nome torto no inventario e a duvida de sempre sobre
-    # encoding num arquivo de 22 MB.
-    for texto in [item['nome']] + list(item['descricao']):
+    # O texto da receita e unicode; o arquivo e ANSI. A conversao e para
+    # cp1252, que e a codepage ANSI desta maquina e a mesma em que o bRO
+    # entrega os textos dele. Caractere que nao couber ali e recusado com
+    # erro claro: um byte errado num arquivo de 22 MB nao da erro nenhum, so
+    # um nome torto no inventario e a duvida de sempre sobre encoding.
+    def texto_de(bruto):
         try:
-            texto.encode('ascii')
-        except UnicodeDecodeError:
-            raise Erro('o item %d tem byte nao-ASCII em %r; textos de jogo '
-                       'vao sem acento' % (item['id'], texto))
+            return bruto.encode('cp1252')
+        except UnicodeEncodeError:
+            raise Erro('o item %d tem caractere fora da cp1252 em %r'
+                       % (item['id'], bruto))
+
+    nome = texto_de(item['nome'])
+    descricao = [texto_de(l) for l in item['descricao']]
 
     linhas = ['\r\n\t[%d] = {' % item['id']]
     a = linhas.append
-    a('\t\tunidentifiedDisplayName = "%s",' % item['nome'])
+    a('\t\tunidentifiedDisplayName = "%s",' % nome)
     a('\t\tunidentifiedResourceName = "%s",' % arte)
     a('\t\tunidentifiedDescriptionName = { "" },')
-    a('\t\tidentifiedDisplayName = "%s",' % item['nome'])
+    a('\t\tidentifiedDisplayName = "%s",' % nome)
     a('\t\tidentifiedResourceName = "%s",' % arte)
     a('\t\tidentifiedDescriptionName = {')
-    for i, linha in enumerate(item['descricao']):
-        virgula = '' if i == len(item['descricao']) - 1 else ','
+    for i, linha in enumerate(descricao):
+        virgula = '' if i == len(descricao) - 1 else ','
         a('\t\t\t"%s"%s' % (linha, virgula))
     a('\t\t},')
     a('\t\tslotCount = 0,')
@@ -184,22 +190,25 @@ def aplica(caminho, verificar):
 
     mudou = False
     for item in ITENS:
+        # O nome vive em unicode na receita; para o console desta maquina ele
+        # vai em cp1252, como vai para o arquivo.
+        nome = item['nome'].encode('cp1252', 'replace')
         novo = monta(item, recurso(dados, item['arte_de']))
         lim = bloco(dados, item['id'])
         if lim is None:
             pos, ant, seg = onde_entra(dados, item['id'])
             dados = dados[:pos] + novo + dados[pos:]
             print '  [novo   ] %d %s  (+%d bytes, entre %s e %s)' % (
-                item['id'], item['nome'], len(novo), ant, seg)
+                item['id'], nome, len(novo), ant, seg)
             mudou = True
         elif dados[lim[0]:lim[1]] == novo:
             print '  [ja tem ] %d %s  identica, nada a fazer' % (
-                item['id'], item['nome'])
+                item['id'], nome)
         else:
             velho = lim[1] - lim[0]
             dados = dados[:lim[0]] + novo + dados[lim[1]:]
             print '  [troca  ] %d %s  (%d -> %d bytes)' % (
-                item['id'], item['nome'], velho, len(novo))
+                item['id'], nome, velho, len(novo))
             mudou = True
 
     print

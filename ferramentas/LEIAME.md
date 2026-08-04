@@ -81,6 +81,405 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
+## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
+
+```
+python completa_iteminfo.py              # aplica (faz backup antes)
+python completa_iteminfo.py --verificar  # só relata, não grava
+python completa_iteminfo.py --listar     # mostra o que o bRO tem
+python completa_iteminfo.py --id 450222  # um item só (ou lista, com vírgula)
+python completa_iteminfo.py --descricoes # reescreve a descrição das NOSSAS
+python completa_iteminfo.py --id 450222 --descricoes --sem-acento   # ASCII puro
+```
+
+**Desde 2026-08-03 ele grava COM acento, em cp1252** — o `--com-acento`, que era
+a sonda, virou o padrão e deu lugar ao `--sem-acento`. Ver a seção do
+`traduz_ptbr.py`, logo abaixo, para o porquê. As duas bandeiras `--sem-acento`
+(aqui e lá) têm de andar juntas: metade do `itemInfo.lua` com acento e metade
+sem é o pior dos dois.
+
+Vizinho de prateleira do `instala_item.py`, com a divisão clara: **aquele
+*inventa* a entrada de um item nosso a partir de uma receita escrita à mão; este
+*copia* a entrada de um item que já existe no bRO.**
+
+O problema que ele resolve apareceu ao montar o Mercado Contemporâneo
+(`npc/guerra/mercado_contemporaneo.txt`): 25 dos itens pedidos não tinham
+entrada nenhuma no `itemInfo.lua`. O arquivo vem do ROenglishRE, que traduz o
+que o kRO/iRO tem — item que exista no `item_db` do servidor mas não ali aparece
+**sem nome e sem ícone**.
+
+E a cura já estava nesta máquina, no mesmo padrão que se repetiu a sessão
+inteira. A instalação do Ragnarok Brazil traz
+
+```
+C:\Program Files (x86)\Gravity Interactive, Inc\Ragnarok Brazil\System\iteminfo_new.lub
+```
+
+com **18845 itens em português**, bem mais nova que a nossa. É a mesma
+instalação que já era fonte de arte do `instala_visual.py`.
+
+**Esse arquivo é bytecode Lua 5.1** (header `\x1bLuaQ`), não texto — por isso o
+script carrega um mini-desassemblador, primo do `luadis.py`, e cai na mesma
+armadilha do operando `RK` que aquele documenta: um parser que só leia a forma
+"constante" para nas ~127 primeiras entradas e devolve um número plausível e
+errado. O destino, o `itemInfo.lua` do ROenglishRE, é texto puro. Não confundir
+os dois.
+
+**Duas conversões de codificação, e errar qualquer uma corrompe:**
+
+| campo | do bRO | para o nosso | por quê |
+|---|---|---|---|
+| nome exibido | UTF-8 | ASCII sem acento | texto de jogo aqui vai sem acento |
+| `resourceName` | UTF-8 | **CP949** | é nome de arquivo dentro do GRF |
+
+O `resourceName` é o que mais engana: `Fafnir_Helm` atravessa igual e dá a
+impressão de que não há conversão nenhuma, mas a maioria dos itens antigos tem
+nome coreano, e gravar o UTF-8 cru faria o cliente procurar um arquivo que não
+existe. Item cujo recurso não couber em CP949 é **pulado com aviso**, nunca
+gravado pela metade.
+
+### A descrição também vem — e foi a maior surpresa
+
+A primeira versão deste script **não** trazia a descrição, com a justificativa de
+que desmontar as tabelas aninhadas do bytecode não pagaria o esforço. Estava
+errado por uma ordem de grandeza. A descrição do bRO traz, por extenso:
+
+```
+Armadura usada por guerreiros primitivos que gritavam Requiescat in Pace...
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffDano fisico e magico contra todos os tamanhos +40%.^000000
+Refino +5 ou mais:
+^0000ffAumenta a velocidade de movimento.^000000
+Tipo: ^777777Armadura^000000
+DEF: ^777777150^000000 DEFM: ^77777715^000000
+Peso: ^777777100^000000
+Nivel necessario: ^77777790^000000
+```
+
+Ou seja: **cada bônus e cada número do item**, que é exatamente o que faltava
+para preencher os 18 placeholders de `db/guerra/item_db.yml`. O esforço de
+desmontar a tabela aninhada se pagou no mesmo dia.
+
+O truque do bytecode: `identifiedDescriptionName = { "a", "b" }` compila para
+NEWTABLE, LOADK em registradores consecutivos e **SETLIST no fim** — quando o
+campo é atribuído, a lista ainda está vazia. Por isso o leitor guarda a
+*referência* da lista viva e lê o conteúdo depois, em vez de copiar na hora.
+
+O texto entra **em português, como está** — não é traduzido nem reescrito. A
+última linha de cada descrição é a marca `Entrada importada da tabela do bRO`,
+que também é o que autoriza o `--descricoes` a reescrever um bloco: sem ela, o
+bloco veio do ROenglishRE e não se toca.
+
+### `--com-acento` é uma sonda, não uma opção de estilo
+
+Por padrão o acento é removido, e a razão é **encoding, não idioma**: o
+`itemInfo.lua` é ANSI e os `resourceName` dele são bytes CP949. Em CP949 o
+intervalo `0x80-0xFF` é byte-líder de hangul, então um `á` gravado ali não vira
+só um caractere torto — ele engole o byte seguinte.
+
+`--com-acento` grava em cp1252, a codepage ANSI desta máquina. Existe para ser a
+experiência de uma linha que responde **se este cliente desenha byte acentuado**
+— pergunta que trava a fase PT-BR inteira (ver `PENDENCIAS.md`, "Acentuação no
+diálogo"). Rodar num item só, olhar no jogo, decidir.
+
+**A ordem em relação ao `valida_visual.py` importa, e não é a intuitiva.** O
+validador lê o `identifiedResourceName` do `itemInfo.lua`; sem entrada ele nem
+consegue avaliar o item, e responde `<id> nao esta no itemInfo.lua`. Então é
+**este script primeiro, o validador depois** — e aí sim, se faltar arte, o
+`instala_visual.py`.
+
+Aplicado em 2026-08-01: 25 entradas, +11404 bytes, todas inseridas na posição
+numérica certa. O efeito medido nos 7 chapéus que estavam cegos: **3 passaram a
+validar limpo** (400006, 19445, 420110) e 4 se revelaram sem arte de verdade —
+`View` que nem existe no `accessoryid.lub` deste cliente, o caso que o
+`instala_visual.py` não cura. Ou seja, o script não só resolveu nome: **trocou
+"não sei" por diagnóstico** em todos os sete.
+
+Idempotente: item que já tenha entrada não é tocado — nem para conferir se é
+igual, porque a entrada existente pode ser a do ROenglishRE, em inglês, e
+trocá-la por uma nossa sem descrição seria piorar.
+
+## `traduz_ptbr.py` — põe o jogo em português, trazendo o texto do bRO
+
+```
+python traduz_ptbr.py tudo --verificar     # relata, não grava um byte
+python traduz_ptbr.py tudo                 # aplica
+python traduz_ptbr.py itens skills         # só essas partes
+python traduz_ptbr.py tudo --sem-acento    # a saída de emergência
+```
+
+Dez partes, dez fontes diferentes dentro da instalação do Ragnarok Brazil.
+Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
+2026-08-02 (`PENDENCIAS.md`).
+
+| parte | o que aparece traduzido | fonte no bRO |
+|---|---|---|
+| `msgstrid` | rótulo de janela e de botão | `msgstring_br.lub` (bytecode) |
+| `msgtable` | mensagem de sistema e de erro | `data\msgstringtable.txt` |
+| `itens` | nome e descrição de item | `System\iteminfo_new.lub` |
+| `skills` | nome e descrição de habilidade | `skillinfolist.lua`, `skilldescript.lua` |
+| `quests` | título e texto do diário | `data\questid2display.txt` |
+| `conquistas` | o modal de conquista | `System\achievement_list.lub` |
+| `mapas` | nome do mapa no minimapa | `System\mapInfo.lub` |
+| `mapinfo` | o letreiro ao entrar no mapa | `System\mapInfo.lub` |
+| `cartas` | o prefixo que a carta põe no nome | `data\cardprefixnametable.txt` |
+| `monstros` | o nome que flutua sobre o monstro | `navi_mob_br.lub` |
+
+Toda parte é **idempotente** e faz backup antes de gravar.
+
+### A regra que governa o arquivo inteiro: mesclar, nunca trocar
+
+O destino é sempre o arquivo que o cliente **já usa** — o do ROenglishRE —, e o
+bRO só preenche o texto, por chave. O reflexo de copiar o arquivo do bRO por
+cima estaria errado, e o motivo é contraintuitivo: **o ROenglishRE é mais novo
+que o bRO.** Trocar arquivo por arquivo apagaria o conteúdo que o bRO nunca
+recebeu — 5234 quests ficariam em branco em vez de em inglês.
+
+A única troca de arquivo é `conquistas`, e ela se justifica: o
+`achievement_list.lub` daqui é o coreano do instalador de 2021, então não há
+inglês a preservar, e ele é **código, não tabela de texto** (cada conquista
+carrega a função que monta o progresso). O do bRO tem 349 das nossas 361; as 12
+que faltam passam de coreano para vazio.
+
+### O `msgstringtable.txt` é o único sem chave, e por isso o único com risco
+
+Todos os outros arquivos têm chave — ID de item, `SKID.X`, ID de quest, nome de
+`.rsw`, `MSI_*`. Este não: **o cliente pede a linha pelo número.** As duas
+tabelas divergem (4023 contra 4216) e não é só no fim.
+
+O alinhamento é por **âncora**: linhas cuja assinatura sobrevive à tradução
+(`%s`, `^RRGGBB`, número, sigla em maiúscula, comando com barra) são casadas em
+ordem; entre duas âncoras, se a distância bater dos dois lados, a corrida
+inteira entra. Dá 651 âncoras e **73,1% das linhas**. O resto fica em inglês de
+propósito — **linha não mapeada é melhor que linha trocada**.
+
+Duas travas fecham os buracos que sobravam: corrida maior que 120 linhas é
+recusada, e linha vazia só casa com linha vazia.
+
+**É também a única parte que não pode ler o próprio destino.** O alinhamento é
+por conteúdo, e a primeira rodada muda o conteúdo — a segunda alinharia
+português contra português e sairia diferente da primeira. Por isso o inglês do
+ROenglishRE é congelado em `data\msgstringtable.txt.INGLES` na primeira
+gravação, e é sempre dele que se parte. **Apagar esse arquivo com o destino já
+traduzido é o único jeito de estragar esta parte** — se acontecer, recuperar de
+um `.BACKUP-*` ou do clone do ROenglishRE, onde ele é byte a byte idêntico.
+
+### Encoding: dois no mesmo arquivo, de propósito
+
+O bRO entrega **UTF-8** no `iteminfo_new.lub` e **cp1252** no GRF. O destino é
+sempre cp1252, que é a codepage ANSI desta máquina; `decodifica()` detecta a
+origem tentando UTF-8 primeiro — a ordem não é simétrica e inverter aceitaria o
+UTF-8 cru, produzindo "AÃ§Ã£o" calado.
+
+**No `itemInfo.lua` convivem cp1252 e CP949.** O texto de tela é cp1252; o
+`identifiedResourceName` continua em **CP949 coreano**, porque é nome de arquivo
+dentro do GRF. Reescrevê-lo com o valor do bRO faria o cliente procurar arquivo
+que não existe e o item perderia o ícone.
+
+Para o cliente **desenhar** esses bytes é preciso o `ajusta_charset_fonte.py`
+(logo abaixo). Sem ele o `0xE7` vira byte-líder de sílaba coreana em vez de
+`ç`, e o acento come a letra seguinte.
+
+`--sem-acento` reverte a fase inteira sem tocar em código — mas aí o
+`ajusta_charset_fonte.py --reverter` tem de andar junto.
+
+## `ajusta_charset_fonte.py` — faz o cliente desenhar Latin-1
+
+```
+python ajusta_charset_fonte.py --verificar   # só relata
+python ajusta_charset_fonte.py               # aplica (faz backup)
+python ajusta_charset_fonte.py --reverter    # volta ao HANGUL
+python ajusta_charset_fonte.py <outro.exe>   # alvo alternativo
+```
+
+**Um byte.** O cliente tem a tabela de charset por idioma em `.data`
+(VA `0x00F392D0`), lida num único lugar dentro do `DrawDC::SetFont`:
+
+```asm
+85 ff                  test edi, edi
+75 0a                  jnz  +10
+a1 d0 92 f3 00         mov  eax, [tabela]          ; índice 0
+83 fa 14               cmp  edx, 14h
+7d 07                  jge  +7
+8b 04 95 d0 92 f3 00   mov  eax, [edx*4 + tabela]  ; índice = langtype
+```
+
+A entrada 0 era `0x81` (HANGUL) e passa a `0x00` (ANSI). Pega os dois ramos do
+`if` e independe de quem alimenta o `EDX`, que é o que torna a correção
+robusta: não foi preciso descobrir qual variável é o langtype.
+
+A tabela é achada por **assinatura de conteúdo** (`SHIFTJIS, GB2312, BIG5,
+THAI` nas entradas 2 a 5), não por endereço fixo — e ancorada na entrada 2, não
+na 0. A primeira versão ancorava na 0, que é justamente a que o script troca:
+aplicava certo e o `--verificar` seguinte respondia "não achei a tabela".
+
+### Por que não é um patch do WARP
+
+Três tentativas antes desta, todas registradas no `PENDENCIAS.md`:
+
+| patch | o que aconteceu |
+|---|---|
+| `AlwaysAscii` | não tem nada a ver — anula um `jnz` em `CSession::IsOnlyEnglish`, que é chat |
+| `CustomFontCharset` = ANSI | aplicou (17 bytes) e não mudou nada: o cliente também usa `CreateFontIndirectA` |
+| `FixFontsCharset` | é o certo em conceito e **não existe para este exe**: só tem `case` para `Exe.Version` 6/9/10/11, e o nosso é VC140 |
+
+O terceiro é o que mais engana: o WARP **descarta o patch calado** e regrava o
+binário idêntico, só com data nova. **Conferir o SHA do exe depois de cada
+rodada de WARP** — data de modificação não prova nada.
+
+E o exe fica travado enquanto o cliente roda. Nesse caso o script morre com
+`Permission denied`; renomear também não funciona (o cliente segura o próprio
+exe, ao contrário do `Setup.exe`). Fechar o cliente é o único caminho.
+
+### A aspa escapada — o erro que derrubou o cliente em 2026-08-03
+
+Custou uma reabertura do cliente e seis diálogos de erro, então fica registrado
+inteiro. O `msgstring_kr_s.lub` tem quatro valores com **aspa escapada**:
+
+```lua
+MSI_PARTY_BOOKING_MAKE = "/organize \"Party Name\": Creates a party.",
+```
+
+O regex do valor era `[^"\r\n]*`, que para na aspa **escapada**. A substituição
+trocou meio valor e deixou o resto da linha solto:
+
+```lua
+MSI_PARTY_BOOKING_MAKE = "/organize 'nome do grupo': Cria um novo Grupo."Party Name\": Creates a party.",
+```
+
+O arquivo perdeu a sintaxe, `MsgStrID` virou nil, e o cliente abriu numa
+cascata de diálogos — `hotkey.lua:135`, `party_booking_function.lua:3`,
+`OptionInfo\CmdInfo:49` — **nenhum deles citando o arquivo culpado**. Só o
+primeiro diálogo dizia a verdade: `[string "buf"]:433: '}' expected near
+'Party'`. Ler o primeiro erro, não o mais frequente.
+
+Duas correções, e a segunda é a que importa:
+
+1. Todo regex de valor passou a usar `VALOR = (?:[^"\\\r\n]|\\.)*`, e o
+   `aspas()` desfaz `\"` antes de trocar as aspas, para não sobrar barra solta.
+2. **`confere_linhas()` recusa a gravação** se qualquer linha que atribui um
+   campo de texto deixar de casar com a forma `campo = "valor",`.
+
+A trava #2 existe porque a linha estragada é **lexicamente válida** — as aspas
+fecham, as chaves batem. Um verificador de balanceamento foi escrito, testado
+contra o arquivo quebrado e **passou**. O que pega é exigir a forma da linha
+inteira. Há teste de controle: a trava recusa o arquivo quebrado e aceita tanto
+o inglês original (com escape) quanto o português correto.
+
+`confere_blocos()` complementa, comparando a lista de chaves de primeiro nível
+antes e depois — pega o caso em que uma entrada engole a seguinte.
+
+### Duas armadilhas de regex que custariam caro
+
+- `unidentifiedDisplayName` **contém** `identifiedDisplayName`. Sem o
+  `(?<![A-Za-z])`, o nome do item identificado ia parar no campo do
+  não-identificado e o outro ficava em inglês. Vale igual para a descrição.
+- Do `skillinfolist` **só o `SkillName` é trocado**. O resto do bloco é
+  estrutura, e a nossa é a que combina com o cliente de 2021: os arquivos daqui
+  já foram recortados por SKID para não citar habilidade de 4ª classe, que
+  derruba a janela de habilidades inteira. Importar o bloco inteiro desfaria o
+  recorte. Do `skilldescript`, aí sim, o bloco todo — ali tudo é texto.
+
+### `ptbr.py` — a base que ele usa
+
+Não faz nada sozinho. Guarda os caminhos das fontes, a conversão de codificação
+e duas peças reaproveitáveis:
+
+- **`tabelas(dados)`** — bytecode Lua 5.1 → as tabelas montadas, não só as
+  strings soltas. Interpreta `NEWTABLE`/`SETTABLE`/`SETLIST`/`GETGLOBAL` e
+  guarda valor de tempo de execução como `Sym`, que é o que torna legível um
+  `[SKID.NV_BASIC] = {...}`: no bytecode aquela chave não é constante nenhuma, é
+  `GETGLOBAL SKID` seguido de `GETTABLE "NV_BASIC"`.
+- **`blocos_lua(texto)`** — quebra `TABELA = { [chave] = {...} }` em blocos, por
+  contagem de chaves fora de string. Aceita as três formas de chave
+  (`[SKID.X]`, `[123]`, `["prontera.rsw"]`) e salta para o próximo caractere que
+  importa em vez de percorrer byte a byte — no `itemInfo.lua`, que tem 22 MB, a
+  diferença é 2,4 s contra minutos.
+
+## `traduz_npcs.py` — traduz o diálogo dos NPCs do rAthena, por catálogo
+
+```
+python traduz_npcs.py --extrair kafra        # gera/atualiza o catálogo
+python traduz_npcs.py --preencher            # aplica o glossário nos catálogos
+python traduz_npcs.py --preencher --forcar   # e SOBRESCREVE o que divergir
+python traduz_npcs.py --aplicar kafra        # escreve nos arquivos do rAthena
+python traduz_npcs.py --estado               # quanto já foi traduzido
+```
+
+O `--forcar` existe porque corrigir o glossário não bastava: `--preencher`
+sozinho só enche o que está vazio, então uma tradução já gravada continuava
+errada. Apareceu ao descobrir que cinco nomes de habilidade que eu tinha
+traduzido de cabeça não batiam com os do bRO que já estão no cliente — `Cure`
+é **Medicar**, não "Cura"; `Demon Bane` é **Flagelo do Mal**; `Pneuma` é
+**Escudo Sagrado**; `Increase/Decrease AGI` são **Aumentar/Diminuir
+Agilidade**. Sem o `--forcar`, o NPC continuaria falando um nome que a janela
+de habilidades não usa.
+
+**A regra que isso estabelece: nome de habilidade, item, mapa e classe sai da
+tabela do bRO que já está no cliente, não da cabeça.** Conferir antes de
+escrever — `skillinfolist.lub` para habilidade, `mapnametable.txt` para mapa,
+`map_msg_por.conf` (550+) para classe.
+
+São **19.260 falas** em centenas de arquivos. Editar arquivo a arquivo não
+termina, não dá para revisar e não sobrevive a uma atualização do vendor.
+
+### Fonte separada de resultado
+
+Há um conflito com a CONVENÇÃO DE CUSTOMIZAÇÃO: diálogo traduzido não tem como
+morar em pasta própria, porque o servidor lê o script de onde ele está. A saída
+foi separar as duas coisas:
+
+- a **tradução** vive em `rathena/npc/guerra/traducao/*.cat` — nosso,
+  versionado, revisável linha a linha;
+- o arquivo do rAthena é o **resultado** de aplicar o catálogo, e tem um
+  `.INGLES` ao lado.
+
+No dia de atualizar o vendor: restaurar do upstream, reaplicar, e o que não
+casar mais **aparece no relatório** em vez de sumir calado — é para isso que o
+registro guarda o original:
+
+```
+#: npc/kafras/functions_kafras.txt#12 (mes)
+- "Welcome to the"        <- trava: se o upstream mudar, recusa
++ "Bem-vindo à"           <- vazio quer dizer "deixa em inglês"
+```
+
+### A unidade de trabalho é o texto, não a ocorrência
+
+**43% das 19.260 falas são repetição** (`Cancel`, `[Kafra Employee]`, o nome do
+NPC uma vez por fala). São 10.903 distintas. Por isso existe o
+`glossario.cat`: traduz uma vez, o `--preencher` espalha por todos os
+catálogos. 203 entradas preencheram 718 espaços.
+
+### As duas travas, e a segunda nasceu de a primeira estar errada
+
+**`tokens_intocaveis`** é a parte que impede o pior erro possível. O caso real
+que a ensinou, no `functions_kafras.txt`:
+
+```
+setarray @wrpD$[0], "Izlude", "Geffen", "Orc Dungeon", ...
+else if (@wrpD$[.@j] == "Orc Dungeon") warp "gef_fild10", 52, 326;
+```
+
+A mesma string é o rótulo do menu **e** a chave da comparação. Traduzir só o
+`setarray` (que é contexto de exibição) sem traduzir o `if` (que não é) faz o
+teletransporte **parar em silêncio**: menu bonito em português, destino que
+nunca chega.
+
+A primeira correção foi recusar todo texto usado fora de exibição — e derrubou
+o menu inteiro da Kafra, que sofre do mesmo padrão. A regra certa distingue:
+
+| | |
+|---|---|
+| **token interno** — nasce e morre no arquivo | traduz **todas** as ocorrências |
+| **nome externo** — `warp "prontera"`, `getitem "Red_Potion"`, label `::On…` | nunca se toca |
+
+**`confere`** completa: recusa a gravação se o arquivo mudar de número de
+linhas, de número de literais, ou ficar com aspas ímpares numa linha que antes
+estava par. Script do rAthena é sensível a aspas — uma a mais faz o parser
+engolir o resto do arquivo, e o erro sai na subida do servidor citando uma
+linha que não tem nada a ver.
+
 ## `grf.py` — extrator de GRF 0x200
 
 ```
@@ -390,13 +789,15 @@ python -c "print open('x.lub','rb').read(4) == '\x1bLua'"
 Isso também significa que comparar o tamanho de um arquivo do GRF com o do
 ROenglishRE **não diz nada**: um é bytecode e o outro é texto.
 
-## `valida_visual.py` — quais chapéus este cliente consegue desenhar
+## `valida_visual.py` — quais itens este cliente consegue desenhar
 
 ```
-python valida_visual.py               # resumo
-python valida_visual.py --id 420047   # um item, com os 6 recursos
-python valida_visual.py --listar      # os que quebram
-python valida_visual.py --ok          # os que funcionam
+python valida_visual.py                     # resumo, TODOS os itens
+python valida_visual.py --cabeca            # só chapéu com View (recorte antigo)
+python valida_visual.py --id 420047         # um item, recurso por recurso
+python valida_visual.py --id 32258,490337   # vários
+python valida_visual.py --listar            # os que quebram
+python valida_visual.py --ok                # os que funcionam
 ```
 
 Nasceu do crash do item **420047** (Costume Honorable Knight Cloak): equipar
@@ -412,33 +813,77 @@ próprio `accessoryid.lub` do GRF de 2021 (`ACCESSORY_C_H_Knight_Cloak = 2059`).
 Quem discordava era o GRF, que não tem **nenhum** dos seis arquivos. Olhar
 tabela não detecta isso; só testar arquivo detecta.
 
-Para cada item de cabeça com `View` no `item_db`, confere os seis caminhos que o
-cliente abre — `.spr`/`.act` de chão, ícone de inventário, ícone grande e sprite
-de cabeça masculina e feminina —, no GRF **e** no `data\` solto (o
-`DataFolderFirst` faz o disco vencer, mas para existir basta um dos dois).
+Para cada item, confere no GRF **e** no `data\` solto (o `DataFolderFirst` faz o
+disco vencer, mas para existir basta um dos dois):
 
-Medido em 2026-07-31, dos 5301 itens de cabeça com `View`:
+| camada | vale para | arquivos |
+|---|---|---|
+| sprite de chão | **todo item** | `.spr` + `.act` em `sprite\<item>\` |
+| ícones | **todo item** | `texture\<ui>\item\` e `\collection\` |
+| sprite de cabeça | só chapéu com `View` | `.spr` + `.act` masculino e feminino |
 
-| | |
-|---|---|
-| desenháveis | 2709 |
-| **quebram o cliente** | **1457** |
-| sem entrada no `itemInfo.lua` | 1135 |
+### O recorte estava errado, e isso foi corrigido em 2026-08-01
 
-Falta de ícone só deixa feio; falta de `.spr`/`.act` é a caixa modal. O script
-separa os dois.
+Até essa data o script só olhava **item de cabeça com `View`** — 5301 dos 13001
+itens. Os outros 7700 nunca eram conferidos, e a conclusão silenciosa era que
+não podiam quebrar.
+
+Quem desmentiu foi o Mercado Contemporâneo. O **Anel de Júpiter (32258)** é
+acessório, não passava nem perto do filtro, e abrir a loja do Acessorista
+entregava caixa modal:
+
+```
+Resource File Loading fail
+texture\<ui>\item\ringofjupiter.bmp
+```
+
+**Ícone que falta é modal, não só feio** — e ícone todo item tem. Nove dos onze
+acessórios do mercado estavam nesse estado, e o validador dizia que estava tudo
+bem porque nem olhava. Por isso `icone do inventario` entrou na lista `FATAIS`.
+
+Consequência para leitura de números antigos: **medição de antes de 2026-08-01
+não é comparável com medição de depois**, porque o critério mudou nos dois eixos
+(mais itens considerados, e ícone passou a contar como quebra). O `--cabeca`
+existe para reproduzir o recorte antigo quando for preciso comparar.
+
+Duas outras cegueiras caíram junto:
+
+- **Só lia o `item_db_equip.yml` do rAthena.** Item NOSSO, de
+  `db/guerra/item_db.yml`, era invisível — os cinco placeholders do mercado
+  foram pulados com "não está no item_db_equip.yml" numa passada que resolveu
+  todos os outros, e o motivo não era arte faltando, era o arquivo não ser
+  lido. Agora lê os dois, na mesma ordem em que o servidor os encadeia.
+- **Arma tem `View` também**, e significa outra coisa (a classe de sprite da
+  arma, não um id de `accessoryid`). Por isso o campo usado na camada de cabeça
+  é `view_cabeca`, que só é preenchido quando o item ocupa slot de cabeça.
+
+### Medições
+
+| | 2026-07-31 (só chapéu) | 2026-08-01 (só chapéu) | 2026-08-01 (todos) |
+|---|---|---|---|
+| considerados | 5301 | 5301 | **13001** |
+| desenháveis | 3618 | 3620 | 8502 |
+| **quebram** | **548** | **552** | **1902** |
+| sem `itemInfo.lua` | 1135 | 1129 | 2597 |
+
+O salto de 548 para 1902 não é regressão: é o que já estava quebrado e ninguém
+media. As diferenças pequenas na coluna do meio vêm das 25 entradas postas pelo
+`completa_iteminfo.py` e do ícone ter virado critério de quebra.
 
 ## `instala_visual.py` — põe a arte de um chapéu no lugar certo
 
 ```
 python instala_visual.py --id 420047                     # só mostra os destinos
 python instala_visual.py --id 420047 --grf <outra.grf>   # puxa da outra GRF
+python instala_visual.py --id 32258,490337 --grf <...>   # vários de uma vez
 python instala_visual.py --id 420047 --de C:\extraido    # ou de pasta extraída
 python instala_visual.py --todos --grf <outra.grf>       # conta o que daria
 python instala_visual.py --todos --grf <outra.grf> --aplicar
 ```
 
-O par do `valida_visual.py`: aquele diz o que falta, este põe no lugar.
+O par do `valida_visual.py`: aquele diz o que falta, este põe no lugar. Herda
+dele o alcance, então desde 2026-08-01 também cobre **item que não é chapéu** —
+ver a seção acima sobre o recorte que estava errado.
 
 **A fonte é a GRF do bRO**, em
 `C:\Program Files (x86)\Gravity Interactive, Inc\Ragnarok Brazil\data.grf`. É
@@ -488,6 +933,55 @@ verdade e ambas subnotificando ou inventando resultado:
    "resolvido" e o lote relata sucesso sem tocar em arquivo nenhum. Foi assim
    que uma passada disse 164 resolvidos e o `valida_visual` continuou acusando
    os mesmos 548.
+
+   **Cuidado ao mexer nessa regra:** ela vale *só para chapéu*. Item que não é
+   chapéu tem `view_cabeca` nulo e não tem camada de cabeça nenhuma para
+   faltar — passá-lo por esse teste o descartaria como incurável quando ele só
+   precisa dos 4 ícones.
+
+### Rodada de 2026-08-01 — os 77 itens do Mercado Contemporâneo
+
+Primeira aplicação com o alcance novo, e o resultado mede o tamanho da cegueira
+anterior: **43 dos 77 itens do mercado estavam sem NENHUM dos 4 arquivos**, e
+nenhum deles aparecia no validador antigo porque quase todos são acessório,
+armadura, escudo, capa, sapato ou arma.
+
+```
+python valida_visual.py  --id <os 77>                       # 43 com falta
+python instala_visual.py --id <os 77> --grf "<grf do bRO>"  # 272 arquivos
+python valida_visual.py  --id <os 77>                       # 0 com falta
+```
+
+272 arquivos copiados, **0 faltando** — a GRF do bRO tinha tudo. Detalhe do
+percurso que vale registrar: a primeira passada pulou 5 itens com "não está no
+item_db_equip.yml", e eram justamente os placeholders NOSSOS. Foi o que motivou
+o `valida_visual.py` a ler também o `db/guerra/item_db.yml`.
+
+### Rodada de 2026-08-01 — `--todos --aplicar` no cliente inteiro
+
+Logo depois, o lote completo. Dos 1902 itens quebrados:
+
+| | | |
+|---|---|---|
+| **resolvidos** | **446** | a GRF do bRO tinha tudo |
+| parciais, pulados pelo tudo-ou-nada | 102 | tinha só parte |
+| a GRF do bRO não tem | 977 | |
+| `View` fora do `accessoryid.lub` | 377 | sem cura por arte |
+
+Medido pelo `valida_visual.py`, sobre os 13001 itens:
+
+| | antes | depois |
+|---|---|---|
+| desenháveis | 8502 | **8948** |
+| quebram o cliente | 1902 | **1456** |
+
+**1980 arquivos, 22,1 MB** escritos em `cliente\data\` no dia (505 `.spr`,
+505 `.act`, 970 `.bmp`), contando as duas rodadas — a do mercado e esta.
+
+Detalhe que confirma que o lote de 2026-07-31 tinha feito o serviço na camada
+de cabeça: os números do `--cabeca` **não se mexeram** (3620 desenháveis, 552
+quebram). Os 446 curados agora são todos item que não é chapéu — exatamente o
+que o recorte antigo nunca olhou.
 
 A lição prática: **o `valida_visual.py` é a medida, o `instala_visual.py` é a
 ação.** Quando os dois discordam, quem está errado é o contador do instalador.
@@ -558,3 +1052,130 @@ Quem lê só as linhas `SETTABLE ... ; B="NOME" C=<valor>` captura apenas as ~12
 primeiras entradas e conclui, errado, que a tabela é minúscula. É preciso
 acompanhar os `LOADK` e resolver os registradores — ver
 `filtra_lub_por_skid.py:skids_do_cliente`.
+
+## `estende_accessoryid.py` — ensina ao cliente um slot de visual que ele não conhece
+
+```
+python estende_accessoryid.py                          # o que já foi acrescentado
+python estende_accessoryid.py --id 400287 --grf <bro>  # pelo item
+python estende_accessoryid.py --view 2260 --grf <bro>  # pelo View
+python estende_accessoryid.py --id 400287 --grf <bro> --verificar
+python estende_accessoryid.py --reverter               # apaga o override
+```
+
+Escrito em 2026-08-02 para pôr o **Capacete de Intensificação (400287)** no
+Chapeleiro. Ele fecha o buraco que os outros dois deixavam em aberto, e a
+diferença entre os três é o que importa entender:
+
+| ferramenta | traz o quê |
+|---|---|
+| `completa_iteminfo.py` | **nome e descrição** do item, para o `itemInfo.lua` |
+| `instala_visual.py` | os **arquivos** de arte (`.spr`, `.act`, `.bmp`) |
+| `estende_accessoryid.py` | a **entrada de tabela** que diz que o slot existe |
+
+Os **377 itens** que o lote de 2026-08-01 marcou como "sem cura por arte" eram
+exatamente este caso. O relatório da época dizia "`View` fora do
+`accessoryid.lub`" e concluía, corretamente para as ferramentas de então, que
+copiar arquivo não resolveria — **mas a conclusão virou "não tem solução", e
+essa parte estava errada.** Não faltava arquivo: faltava a linha
+`ACCESSORY_Legacy_of_Wise_One_J = 2260` numa tabela que ninguém editava porque
+ela é bytecode dentro do GRF.
+
+Nosso GRF de 2021-11-03 conhece **2192 slots** (View máximo 2203); o do bRO
+conhece **2654** (máximo 2668). Este script copia de lá para cá as entradas que
+pedirmos, uma a uma.
+
+### Grava em texto, e não encosta no GRF
+
+A saída são dois arquivos Lua **em texto puro** em
+`cliente\data\luafiles514\lua files\datainfo\`:
+
+```
+accessoryid.lub   ACCESSORY_IDs = { ACCESSORY_X = 2260, ... }
+accname.lub       AccNameTable  = { [ACCESSORY_IDs.ACCESSORY_X] = "_X", ... }
+```
+
+O cliente lê `.lub` em texto e em bytecode indiferentemente — os arquivos do
+ROenglishRE que ele consome todo dia são texto —, e o `DataFolderFirst` faz o
+disco vencer o GRF. **Apagar os dois arquivos reverte** (ou `--reverter`), e o
+GRF nunca é aberto para escrita.
+
+Como toda mudança de `.lub`, **só entra na inicialização do cliente**.
+
+### A base é sempre o nosso GRF — o override é derivado, nunca acumulado
+
+Esta é a regra que mantém a coisa segura, porque o raio de alcance é grande:
+essas duas tabelas valem para os **5301 chapéus** do cliente, não só para o que
+se está acrescentando.
+
+A cada rodada a base é **relida do GRF** e as entradas nossas são reaplicadas
+por cima. As já acrescentadas são recuperadas do próprio override, como
+**diferença contra o GRF** — então rodar duas vezes não duplica, não perde
+nada, e as 2192 originais não têm como derivar de rodada em rodada.
+
+Toda entrada nova passa por duas travas, que são as duas formas de estrago que
+a rodada do `skillid.lub` (2026-07-30) ensinou:
+
+- **constante que já existe aqui com id diferente** → aborta;
+- **View que já existe aqui com constante diferente** → aborta, porque
+  sobrescrever trocaria a arte de um chapéu que hoje funciona.
+
+E antes de gravar um byte, o texto gerado é **relido e comparado entrada a
+entrada** com o que deveria conter. Mesmo critério de round-trip do `rsw.py`:
+layout errado não dá erro, dá arquivo corrompido — e aqui o arquivo corrompido
+levaria junto o cliente inteiro.
+
+### O round-trip pegou os dois erros da primeira rodada
+
+Vale registrar porque nenhum dos dois daria erro visível:
+
+1. **Cabeçalho `unicode` promovendo o corpo inteiro.** Os sufixos de acessório
+   são bytes CP949 escapados em `\ddd`; com o cabeçalho como `u"""..."""` a
+   concatenação virava `unicode` e o `chr(176)` da releitura estourava. A
+   correção é o cabeçalho ser `str`. Sem o round-trip isso teria virado arquivo
+   gravado meio certo.
+2. **`ACCESORY_RED_NAVY_HAT` e `ACCESORY_BERET`** — a tabela da própria Gravity
+   tem duas constantes escritas com **um S só**. O leitor de texto prendia o
+   nome a `ACCESSORY_\w+` e perdia as duas caladas; o round-trip acusou "2191
+   lidas contra 2193 gravadas". O padrão agora aceita qualquer identificador.
+
+### A ordem completa, para um item que precisa de tudo
+
+```
+1. python completa_iteminfo.py --id <n>                    # nome e descricao
+2. python estende_accessoryid.py --id <n> --grf "<bro>"    # o slot de visual
+3. python instala_visual.py     --id <n> --grf "<bro>"     # os arquivos
+4. python valida_visual.py      --id <n>                   # tem que dar 0
+5. fechar e reabrir o cliente
+```
+
+**O passo 2 vem antes do 3, e não é intuitivo.** O `instala_visual.py` só sabe
+procurar as 4 sprites de cabeça depois que o `accessoryid` lhe diz o sufixo do
+arquivo (`_Legacy_of_Wise_One_J`). Rodando na ordem errada ele instala os 4
+ícones, relata "faltando 0" e o chapéu continua invisível.
+
+Por isso o `valida_visual.py` passou a ler as duas tabelas **do disco antes do
+GRF** (`le_tabelas_acessorio`), que é a ordem que o cliente usa. Sem essa
+mudança as duas ferramentas continuariam respondendo pelo GRF de 2021 e
+jurariam que o View não existe — com o chapéu desenhado na tela.
+
+### Rodada de 2026-08-02 — o 400287
+
+```
+base (nosso GRF): 2192 constantes, 2187 nomes, View maximo 2203
+  [novo] View 2260 -> ACCESSORY_Legacy_of_Wise_One_J  sufixo '_Legacy_of_Wise_One_J'
+round-trip OK: 2193 constantes, 2188 nomes
+```
+
+Depois dele o `instala_visual.py` achou as 4 sprites de cabeça na GRF do bRO e
+o `valida_visual.py --id 400287` deu **0 faltando**, com os 8 recursos.
+
+Medido no cliente inteiro, o efeito é exatamente o esperado e nada mais:
+
+| | antes | depois |
+|---|---|---|
+| desenháveis | 8948 | **8949** |
+| quebram o cliente | 1456 | **1455** |
+
+**+1/−1 e nenhum outro número se mexeu** — que é a prova de que estender a
+tabela não mexeu nos 2192 slots que já funcionavam.
