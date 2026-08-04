@@ -1493,6 +1493,68 @@ PowerShell até o Python. Fazer o match por substring ASCII dentro do script.
 
 ---
 
+## EM ANDAMENTO — diálogo dos NPCs do rAthena
+
+**Onde parou em 2026-08-04.** Esta é a única frente da tradução que não está
+fechada, e é a maior: **19.260 falas**, das quais 10.903 distintas.
+
+| grupo | feito | | o que é |
+|---|---|---|---|
+| `cidades` | 715/722 | 99% | Prontera e Izlude |
+| `pvp` | 202/222 | 91% | `npc/other/pvp.txt` |
+| `campal` | 904/1055 | 86% | KVM, Flavius, Tierra |
+| `kafra` | 486/569 | 85% | uma função serve todas as cidades |
+| `servico` | 714/926 | 77% | forja, refinador, estalagem |
+| `guerra` | 968/1437 | 67% | 20 feudos + WoE:SE |
+| `novico` | 14/322 | 4% | **não começou** |
+| `classe1` | 13/1518 | 1% | **não começou** |
+| `classe2` | 235/12489 | 2% | **não começou** |
+
+Os três de baixo são as quests de mudança de classe — 88% do volume que resta,
+e o que o dono do projeto pediu explicitamente por nostalgia. O pouco que
+aparece traduzido neles **vazou do glossário** (`Cancelar`, `Sim`, `Não`), não
+foi trabalho dirigido.
+
+**Eles NÃO estão aplicados nos arquivos**, e isso é deliberado: um
+`--aplicar tudo` chegou a tocar 17 arquivos a ~2% e foi revertido. Arquivo quase
+todo em inglês com uma frase solta em português no meio é pior que arquivo em
+inglês. Aplicar só quando o grupo estiver inteiro.
+
+### Como retomar
+
+```
+python ferramentas/traduz_npcs.py --estado          # onde está cada grupo
+python ferramentas/traduz_npcs.py --extrair classe2 # se o vendor mudou
+# traduzir: acrescentar pares em npc/guerra/traducao/glossario.cat
+python ferramentas/traduz_npcs.py --preencher --forcar
+python ferramentas/traduz_npcs.py --aplicar classe2
+```
+
+O `LEIAME.md` tem o detalhe das travas e do formato. Duas regras que não estão
+óbvias no código:
+
+1. **Nome de habilidade, item, mapa e classe sai da tabela do bRO que já está
+   no cliente**, não da cabeça — `skillinfolist.lub`, `mapnametable.txt`,
+   `map_msg_por.conf` (550+). Cinco nomes tiveram de ser corrigidos por eu ter
+   traduzido de memória.
+2. **Traduzir por texto distinto, não por ocorrência.** 43% é repetição.
+
+### O que também ficou pendente
+
+- **Nomes de NPC.** Foram pedidos junto com as falas e não foram feitos. É a
+  parte com risco real: no rAthena o nome exibido faz parte do identificador
+  único, e `duplicate()`, `enablenpc` e `donpcevent` de outros arquivos
+  referenciam por ele. Renomear exige construir a tabela nome-antigo →
+  nome-novo e reescrever toda referência do `npc/` — errar faz NPC sumir do
+  mapa, e o erro só aparece no jogo. Os nomes em português existem no
+  `navi_npc_br.lub` do GRF do bRO, por mapa e coordenada.
+- **`guerra` parado em 67%** não é por falta de tempo: os 469 que faltam são
+  fragmentos de frase quebrada em várias linhas de `mes` do WoE:SE, que
+  dependem do vizinho para ficar natural. Fechar exige olhar bloco a bloco, não
+  string a string.
+
+---
+
 ## Referência — comandos `@`
 
 Levantado em 2026-07-30. No teste da v1 apareceram no chat:
