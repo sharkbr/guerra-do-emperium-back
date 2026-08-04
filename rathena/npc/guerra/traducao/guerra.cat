@@ -110,10 +110,10 @@
 + "^000000."
 #: npc/guild/agit_main.txt#200 (mes)
 - "The Kafra Corporation will stay with you wherever you go."
-+ ""
++ "A Corporação Kafra acompanha você aonde quer que vá."
 #: npc/guild/agit_main.txt#201 (select)
 - "Use Storage:Use Teleport Service:Rent a Pushcart:Cancel"
-+ ""
++ "Usar o Armazém:Usar o Teletransporte:Alugar um Carrinho:Cancelar"
 #: npc/guild/agit_main.txt#203 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -155,7 +155,7 @@
 + "seu destino."
 #: npc/guild/agit_main.txt#218 (select)
 - " -> 200z:Cancel"
-+ ""
++ " -> 200z:Cancelar"
 #: npc/guild/agit_main.txt#219 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -173,7 +173,7 @@
 + "para "
 #: npc/guild/agit_main.txt#224 (mes)
 - " is 200 zeny."
-+ ""
++ " é de 200 zeny."
 #: npc/guild/agit_main.txt#227 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -191,10 +191,10 @@
 + "Ferreiros, Mestres-Ferreiros,"
 #: npc/guild/agit_main.txt#232 (mes)
 - "Alchemists, Biochemists,"
-+ ""
++ "Alquimistas, Bioquímicos,"
 #: npc/guild/agit_main.txt#233 (mes)
 - "Mechanics and Geneticists."
-+ ""
++ "Mecânicos e Geneticistas."
 #: npc/guild/agit_main.txt#235 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -221,7 +221,7 @@
 + "O aluguel de Carrinho"
 #: npc/guild/agit_main.txt#244 (mes)
 - "fee is 800 zeny. Would"
-+ ""
++ "taxa é de 800 zeny. Você"
 #: npc/guild/agit_main.txt#245 (mes)
 - "you like to rent a Pushcart?"
 + "gostaria de alugar um Carrinho?"
@@ -242,7 +242,7 @@
 + "zeny para pagar o aluguel do"
 #: npc/guild/agit_main.txt#251 (mes)
 - "rental fee of 800 zeny."
-+ ""
++ "taxa de aluguel de 800 zeny."
 #: npc/guild/agit_main.txt#255 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -257,10 +257,10 @@
 + "[Funcionária Kafra]"
 #: npc/guild/agit_main.txt#260 (mes)
 - "I am instructed to only offer my services to the ^ff0000"
-+ ""
++ "Recebi ordens de atender apenas o clã ^ff0000"
 #: npc/guild/agit_main.txt#261 (mes)
 - "^000000 Guild. Please try another Kafra Employee around here. Sorry for the inconvenience."
-+ ""
++ "^000000. Procure outra Funcionária Kafra por aqui. Desculpe o transtorno."
 #: npc/guild/agit_main.txt#283 (mes)
 - "["
 + ""
@@ -269,10 +269,10 @@
 + ""
 #: npc/guild/agit_main.txt#285 (mes)
 - "I have been waiting for a master to fulfill my destiny."
-+ ""
++ "Tenho esperado por um mestre para cumprir meu destino."
 #: npc/guild/agit_main.txt#286 (mes)
 - "Brave soul... fate will guide you towards your future..."
-+ ""
++ "Alma corajosa... o destino há de guiá-lo ao seu futuro..."
 #: npc/guild/agit_main.txt#287 (mes)
 - "["
 + ""
@@ -281,10 +281,10 @@
 + ""
 #: npc/guild/agit_main.txt#289 (mes)
 - "No matter how much you pester me, I'll still follow my master ^ff0000"
-+ ""
++ "Por mais que você insista, continuarei servindo ao meu mestre ^ff0000"
 #: npc/guild/agit_main.txt#290 (mes)
 - "^000000. Where are the Guardians?! Send these ruffians away right now!"
-+ ""
++ "^000000. Cadê os Guardiões?! Expulsem estes arruaceiros agora mesmo!"
 #: npc/guild/agit_main.txt#291 (mes)
 - "["
 + ""
@@ -293,19 +293,19 @@
 + ""
 #: npc/guild/agit_main.txt#293 (mes)
 - "Welcome. My honorable master, ^ff0000"
-+ ""
++ "Bem-vindo, meu honrado mestre, ^ff0000"
 #: npc/guild/agit_main.txt#294 (mes)
 - "^000000..."
-+ ""
++ "^000000..."
 #: npc/guild/agit_main.txt#295 (mes)
 - "Your humble servent, "
-+ ""
++ "Seu humilde servo, "
 #: npc/guild/agit_main.txt#296 (mes)
 - ", is here to serve you."
-+ ""
++ ", está aqui para servi-lo."
 #: npc/guild/agit_main.txt#297 (select)
 - "Castle briefing:Invest in commercial growth:Invest in Castle Defenses:Summon Guardian:Hire / Fire a Kafra Employee:Go into Master's room"
-+ ""
++ "Relatório do feudo:Investir em crescimento comercial:Investir na defesa do feudo:Invocar Guardião:Contratar / dispensar Funcionária Kafra:Ir à sala do mestre"
 #: npc/guild/agit_main.txt#298 (mes)
 - "["
 + ""
@@ -314,34 +314,34 @@
 + ""
 #: npc/guild/agit_main.txt#300 (mes)
 - "I will report the Castle briefing, Master."
-+ ""
++ "Farei o relatório do feudo, mestre."
 #: npc/guild/agit_main.txt#302 (mes)
 - "^0000ffNow, the commercial growth level is "
-+ ""
++ "^0000ffO nível de crescimento comercial é "
 #: npc/guild/agit_main.txt#303 (mes)
 - "."
 + "."
 #: npc/guild/agit_main.txt#304 (mes)
 - " You invested "
-+ ""
++ " Você investiu "
 #: npc/guild/agit_main.txt#305 (mes)
 - " times in past 1 day."
-+ ""
++ " vezes no último dia."
 #: npc/guild/agit_main.txt#306 (mes)
 - " Now, the Castle Defense level is "
-+ ""
++ " O nível de defesa do feudo é "
 #: npc/guild/agit_main.txt#307 (mes)
 - ".^000000"
-+ ""
++ ".^000000"
 #: npc/guild/agit_main.txt#308 (mes)
 - " ^0000ff- You invested "
-+ ""
++ " ^0000ff- Você investiu "
 #: npc/guild/agit_main.txt#309 (mes)
 - " times in past 1 day.^000000"
-+ ""
++ " vezes no último dia.^000000"
 #: npc/guild/agit_main.txt#311 (mes)
 - "That's all I have to report, Master."
-+ ""
++ "É tudo o que tenho a relatar, mestre."
 #: npc/guild/agit_main.txt#312 (mes)
 - "["
 + ""
@@ -350,31 +350,31 @@
 + ""
 #: npc/guild/agit_main.txt#314 (mes)
 - "If you invest in commercial growth, the quantity of goods made by the guild will increase. Therfore, if you consider our future, investments will be a necessity."
-+ ""
++ "Investindo em crescimento comercial, a quantidade de bens produzidos pelo clã aumenta. Portanto, pensando no nosso futuro, o investimento é necessário."
 #: npc/guild/agit_main.txt#316 (mes)
 - "Initially, you are able to invest just once but if you pay more money, you will be able to invest twice."
-+ ""
++ "De início você pode investir uma vez por dia, mas pagando mais poderá investir duas."
 #: npc/guild/agit_main.txt#318 (mes)
 - "^ff0000The commercial growth level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great economist like you, Master.^000000"
-+ ""
++ "^ff0000O crescimento comercial do nosso feudo está no máximo, 100%. Não são necessários mais investimentos. Era o que eu esperava de um grande economista como o senhor, mestre.^000000"
 #: npc/guild/agit_main.txt#320 (mes)
 - "^ff0000You have already invested twice today. You cannot invest any more.^000000 I expect riches of the guild to grow at a high rate."
-+ ""
++ "^ff0000Você já investiu duas vezes hoje. Não é possível investir mais.^000000 Espero que a riqueza do clã cresça depressa."
 #: npc/guild/agit_main.txt#322 (mes)
 - "The current investment amount required is ^ff0000"
-+ ""
++ "O valor necessário para investir agora é de ^ff0000"
 #: npc/guild/agit_main.txt#323 (mes)
 - "^000000 zeny. Will you invest?"
-+ ""
++ "^000000 zeny. Deseja investir?"
 #: npc/guild/agit_main.txt#325 (mes)
 - "You've invested once today... if you wish to invest once more, ^ff0000"
-+ ""
++ "Você já investiu uma vez hoje... para investir mais uma, serão ^ff0000"
 #: npc/guild/agit_main.txt#326 (mes)
 - "^000000 more zeny will be needed."
-+ ""
++ "^000000 zeny a mais."
 #: npc/guild/agit_main.txt#327 (select)
 - "Invest in commercial growth:Cancel"
-+ ""
++ "Investir em crescimento comercial:Cancelar"
 #: npc/guild/agit_main.txt#328 (mes)
 - "["
 + ""
@@ -383,7 +383,7 @@
 + ""
 #: npc/guild/agit_main.txt#330 (mes)
 - "I'm sorry but there is not enough zeny to invest. You will have to try again when you have the funds, Master."
-+ ""
++ "Sinto muito, não há zeny suficiente para investir. Terá de tentar de novo quando houver fundos, mestre."
 #: npc/guild/agit_main.txt#331 (mes)
 - "[ "
 + ""
@@ -392,7 +392,7 @@
 + ""
 #: npc/guild/agit_main.txt#333 (mes)
 - "We finished the investment safely. I expect that our growth level will be increased by tomorrow."
-+ ""
++ "O investimento foi concluído em segurança. Espero que nosso nível de crescimento suba até amanhã."
 #: npc/guild/agit_main.txt#334 (mes)
 - "["
 + ""
@@ -401,7 +401,7 @@
 + ""
 #: npc/guild/agit_main.txt#336 (mes)
 - "I'll do as you bid, my master... There is no hurry. We will do our best."
-+ ""
++ "Farei como ordena, meu mestre... Não há pressa. Daremos o nosso melhor."
 #: npc/guild/agit_main.txt#337 (mes)
 - "["
 + ""
@@ -410,31 +410,31 @@
 + ""
 #: npc/guild/agit_main.txt#339 (mes)
 - "If you raise Castle Defenses, the durability of Guardians and the Emperium will increase. Therefore, if you consider our coming battles, some investment in this area will be required."
-+ ""
++ "Aumentando a defesa do feudo, a resistência dos Guardiões e do Emperium cresce. Portanto, pensando nas batalhas por vir, algum investimento aqui será necessário."
 #: npc/guild/agit_main.txt#341 (mes)
 - "Originally you can invest just once but if you pay more money, you can invest twice."
-+ ""
++ "Normalmente você pode investir uma vez, mas pagando mais poderá investir duas."
 #: npc/guild/agit_main.txt#343 (mes)
 - "^ff0000But the Castle Defense level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great strategist like you, Master.^000000"
-+ ""
++ "^ff0000Mas a defesa do nosso feudo já está no máximo, 100%. Não são necessários mais investimentos. Era o que eu esperava de um grande estrategista como o senhor, mestre.^000000"
 #: npc/guild/agit_main.txt#345 (mes)
 - "^ff0000You have already invested twice today. You cannot invest any more.^000000 I expect the Defenses of the guild to grow at a high rate."
-+ ""
++ "^ff0000Você já investiu duas vezes hoje. Não é possível investir mais.^000000 Espero que a defesa do clã cresça depressa."
 #: npc/guild/agit_main.txt#347 (mes)
 - "The current investment amount required is ^ff0000"
-+ ""
++ "O valor necessário para investir agora é de ^ff0000"
 #: npc/guild/agit_main.txt#348 (mes)
 - "^000000 zeny. Will you invest?"
-+ ""
++ "^000000 zeny. Deseja investir?"
 #: npc/guild/agit_main.txt#350 (mes)
 - "You've invested once today... if you wish to invest once more, ^ff0000"
-+ ""
++ "Você já investiu uma vez hoje... para investir mais uma, serão ^ff0000"
 #: npc/guild/agit_main.txt#351 (mes)
 - "^000000 more zeny will be needed."
-+ ""
++ "^000000 zeny a mais."
 #: npc/guild/agit_main.txt#352 (select)
 - "Invest in Castle Defenses.:Cancel"
-+ ""
++ "Investir na defesa do feudo.:Cancelar"
 #: npc/guild/agit_main.txt#353 (mes)
 - "["
 + ""
@@ -443,7 +443,7 @@
 + ""
 #: npc/guild/agit_main.txt#355 (mes)
 - "I'm sorry but there is not enough zeny to invest. You will have to try again when you have the funds, Master."
-+ ""
++ "Sinto muito, não há zeny suficiente para investir. Terá de tentar de novo quando houver fundos, mestre."
 #: npc/guild/agit_main.txt#356 (mes)
 - "[ "
 + ""
@@ -452,7 +452,7 @@
 + ""
 #: npc/guild/agit_main.txt#358 (mes)
 - "We finished the investment safely. I expect that our Castle Defense level will be increased by tomorrow."
-+ ""
++ "O investimento foi concluído em segurança. Espero que a defesa do feudo suba até amanhã."
 #: npc/guild/agit_main.txt#359 (mes)
 - "["
 + ""
@@ -461,7 +461,7 @@
 + ""
 #: npc/guild/agit_main.txt#361 (mes)
 - "I'll do as you bid, my master... There is no hurry. We will do our best."
-+ ""
++ "Farei como ordena, meu mestre... Não há pressa. Daremos o nosso melhor."
 #: npc/guild/agit_main.txt#362 (mes)
 - "["
 + ""
@@ -470,13 +470,13 @@
 + ""
 #: npc/guild/agit_main.txt#364 (mes)
 - "Will you summon a Guardian? It'll be a protector to defend us loyally."
-+ ""
++ "Deseja invocar um Guardião? Ele nos defenderá com lealdade."
 #: npc/guild/agit_main.txt#365 (mes)
 - "Please select a guardian to defend us."
-+ ""
++ "Escolha um guardião para nos defender."
 #: npc/guild/agit_main.txt#369 (setarray)
 - " - Implemented ("
-+ ""
++ " - Ativo ("
 #: npc/guild/agit_main.txt#370 (setarray)
 - "/"
 + ""
@@ -485,7 +485,7 @@
 + ""
 #: npc/guild/agit_main.txt#372 (setarray)
 - " - Not Implemented"
-+ ""
++ " - Inativo"
 #: npc/guild/agit_main.txt#373 (menu)
 - ":"
 + ":"
@@ -515,10 +515,10 @@
 + ""
 #: npc/guild/agit_main.txt#382 (mes)
 - "Will you summon the chosen guardian? 10,000 zeny are required to summon a Guardian."
-+ ""
++ "Deseja invocar o guardião escolhido? São necessários 10.000 zeny."
 #: npc/guild/agit_main.txt#383 (select)
 - "Summon:Cancel"
-+ ""
++ "Invocar:Cancelar"
 #: npc/guild/agit_main.txt#384 (mes)
 - "["
 + ""
@@ -527,7 +527,7 @@
 + ""
 #: npc/guild/agit_main.txt#386 (mes)
 - "Master, we have not the resources to Summon the Guardian. If you want to accumulate them, you have to learn the Guild skill. We failed to summon the Guardian."
-+ ""
++ "Mestre, não temos recursos para invocar o Guardião. Para acumulá-los é preciso aprender a habilidade de clã. A invocação falhou."
 #: npc/guild/agit_main.txt#387 (mes)
 - "["
 + ""
@@ -536,7 +536,7 @@
 + ""
 #: npc/guild/agit_main.txt#389 (mes)
 - "Master, you already have summoned that Guardian. We cannot summon another."
-+ ""
++ "Mestre, esse Guardião já foi invocado. Não podemos invocar outro."
 #: npc/guild/agit_main.txt#390 (mes)
 - "["
 + ""
@@ -545,7 +545,7 @@
 + ""
 #: npc/guild/agit_main.txt#392 (mes)
 - "Well... I'm sorry but we don't have funds to summon the Guardian. We failed to summon the Guardian."
-+ ""
++ "Bem... sinto muito, não temos fundos para invocar o Guardião. A invocação falhou."
 #: npc/guild/agit_main.txt#395 (mes)
 - "["
 + ""
@@ -554,7 +554,7 @@
 + ""
 #: npc/guild/agit_main.txt#397 (mes)
 - "We completed the summoning of the Guardian. Our defenses are now increased with it in place."
-+ ""
++ "A invocação do Guardião foi concluída. Nossa defesa está reforçada com ele em posição."
 #: npc/guild/agit_main.txt#398 (mes)
 - "["
 + ""
@@ -563,7 +563,7 @@
 + ""
 #: npc/guild/agit_main.txt#400 (mes)
 - "I did as you ordered. But please remember if you the have money to spare, it'll be better to set it up."
-+ ""
++ "Fiz como ordenou. Mas lembre-se: havendo dinheiro sobrando, é melhor posicioná-lo."
 #: npc/guild/agit_main.txt#401 (mes)
 - "["
 + ""
@@ -572,34 +572,34 @@
 + ""
 #: npc/guild/agit_main.txt#403 (mes)
 - "We are currently hiring a Kafra Employee... Do you want to fire the Kafra Employee?"
-+ ""
++ "Temos uma Funcionária Kafra contratada... Deseja dispensá-la?"
 #: npc/guild/agit_main.txt#404 (select)
 - "Fire:Cancel"
-+ ""
++ "Dispensar:Cancelar"
 #: npc/guild/agit_main.txt#405 (cutin)
 - "kafra_01"
 + ""
 #: npc/guild/agit_main.txt#406 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild/agit_main.txt#407 (mes)
 - "I worked so hard... How can you do that, Master?... Please... Please reconsider... Check it again, Master... Please..."
-+ ""
++ "Eu trabalhei tanto... Como pode fazer isso, mestre?... Por favor... reconsidere... Pense de novo, mestre... Por favor..."
 #: npc/guild/agit_main.txt#408 (select)
 - "Fire:Cancel"
-+ ""
++ "Dispensar:Cancelar"
 #: npc/guild/agit_main.txt#409 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild/agit_main.txt#410 (mes)
 - "Oh, my goodness! This is nonsense!"
-+ ""
++ "Ai, meu Deus! Isso é um absurdo!"
 #: npc/guild/agit_main.txt#412 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild/agit_main.txt#413 (mes)
 - "I'll work hard for you... Thank you!"
-+ ""
++ "Vou trabalhar muito para o senhor... Obrigada!"
 #: npc/guild/agit_main.txt#414 (mes)
 - "["
 + ""
@@ -608,7 +608,7 @@
 + ""
 #: npc/guild/agit_main.txt#416 (mes)
 - "She worked hard in my opinion. It was a good decision to keep her."
-+ ""
++ "Na minha opinião ela trabalhava bem. Foi uma boa decisão mantê-la."
 #: npc/guild/agit_main.txt#418 (mes)
 - "["
 + ""
@@ -617,10 +617,10 @@
 + ""
 #: npc/guild/agit_main.txt#420 (mes)
 - "...."
-+ ""
++ "...."
 #: npc/guild/agit_main.txt#421 (mes)
 - "I have discharged the Kafra Employee... But... are you unsatisfied with something?"
-+ ""
++ "Dispensei a Funcionária Kafra... Mas... há algo que o desagrade?"
 #: npc/guild/agit_main.txt#422 (mes)
 - "["
 + ""
@@ -629,13 +629,13 @@
 + ""
 #: npc/guild/agit_main.txt#424 (mes)
 - "Will you contact the kafra Main Office and Hire a Employee for our Castle?"
-+ ""
++ "Deseja contatar a Sede da Kafra e contratar uma funcionária para o nosso feudo?"
 #: npc/guild/agit_main.txt#425 (mes)
 - "^ff0000 10,000 zeny is required for their services. "
-+ ""
++ "^ff0000 O serviço custa 10.000 zeny. "
 #: npc/guild/agit_main.txt#426 (select)
 - "Hire.:Cancel"
-+ ""
++ "Contratar.:Cancelar"
 #: npc/guild/agit_main.txt#427 (mes)
 - "["
 + ""
@@ -644,7 +644,7 @@
 + ""
 #: npc/guild/agit_main.txt#429 (mes)
 - "Master, we can't hire a Kafra Employee because we don't have a contract with the Kafra Main Office. If you want to obtain a contract with the Kafra Main Office, you will need to learn the Guild skill first."
-+ ""
++ "Mestre, não podemos contratar uma Funcionária Kafra porque não temos contrato com a Sede da Kafra. Para obtê-lo é preciso aprender a habilidade de clã antes."
 #: npc/guild/agit_main.txt#430 (mes)
 - "["
 + ""
@@ -653,7 +653,7 @@
 + ""
 #: npc/guild/agit_main.txt#432 (mes)
 - "Well... I'm sorry but we don't have enough funds to hire a Kafra Employee."
-+ ""
++ "Bem... sinto muito, não temos fundos suficientes para contratar uma Funcionária Kafra."
 #: npc/guild/agit_main.txt#434 (mes)
 - "["
 + ""
@@ -662,19 +662,19 @@
 + ""
 #: npc/guild/agit_main.txt#436 (mes)
 - "We obtained a contract with the kafra Main Office, and hired a Kafra Employee."
-+ ""
++ "Obtivemos contrato com a Sede da Kafra e contratamos uma funcionária."
 #: npc/guild/agit_main.txt#437 (cutin)
 - "kafra_01"
 + ""
 #: npc/guild/agit_main.txt#438 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild/agit_main.txt#439 (mes)
 - "How do you do? I was dispatched from the Main Office."
-+ ""
++ "Como vai? Fui enviada pela Sede."
 #: npc/guild/agit_main.txt#440 (mes)
 - "I'll do my best to not tarnish the reputation of the Guild."
-+ ""
++ "Farei o possível para não manchar a reputação do clã."
 #: npc/guild/agit_main.txt#442 (mes)
 - "["
 + ""
@@ -683,10 +683,10 @@
 + ""
 #: npc/guild/agit_main.txt#444 (mes)
 - "The Contract terms of the hired Kafra Employee are for 1 month and after this term, you will need to pay an additional fee."
-+ ""
++ "O contrato da Funcionária Kafra vale por 1 mês; após esse prazo será preciso pagar uma taxa adicional."
 #: npc/guild/agit_main.txt#445 (mes)
 - "It will be useful for our members."
-+ ""
++ "Será útil para os nossos membros."
 #: npc/guild/agit_main.txt#446 (mes)
 - "["
 + ""
@@ -695,7 +695,7 @@
 + ""
 #: npc/guild/agit_main.txt#448 (mes)
 - "I did as you ordered, but some of our members will be unhappy. It will be better to hire a Kafra Employee quickly."
-+ ""
++ "Fiz como ordenou, mas alguns membros ficarão descontentes. É melhor contratar uma Funcionária Kafra logo."
 #: npc/guild/agit_main.txt#449 (mes)
 - "["
 + ""
@@ -704,13 +704,13 @@
 + ""
 #: npc/guild/agit_main.txt#451 (mes)
 - "Do you want to visit the room where our valuables are stored?"
-+ ""
++ "Deseja visitar a sala onde nossos bens estão guardados?"
 #: npc/guild/agit_main.txt#452 (mes)
 - "That room is restricted to you... you are the only one with access to it."
-+ ""
++ "Aquela sala é restrita... o senhor é o único com acesso a ela."
 #: npc/guild/agit_main.txt#453 (select)
 - "Go into Master's room.:Cancel"
-+ ""
++ "Ir à sala do mestre.:Cancelar"
 #: npc/guild/agit_main.txt#454 (mes)
 - "["
 + ""
@@ -719,10 +719,10 @@
 + ""
 #: npc/guild/agit_main.txt#456 (mes)
 - "I'll show you the secret path. Follow me...please."
-+ ""
++ "Vou lhe mostrar a passagem secreta. Siga-me... por favor."
 #: npc/guild/agit_main.txt#457 (mes)
 - "When you want to return here, please press the secret switch."
-+ ""
++ "Quando quiser voltar, acione a alavanca secreta."
 #: npc/guild/agit_main.txt#458 (mes)
 - "["
 + ""
@@ -731,1834 +731,1834 @@
 + ""
 #: npc/guild/agit_main.txt#460 (mes)
 - "Goods are produced once a day... if you don't remove them in time, they will not be produced anymore."
-+ ""
++ "Os bens são produzidos uma vez por dia... se não forem retirados a tempo, a produção cessa."
 #: npc/guild/agit_main.txt#461 (mes)
 - "Therefore, it will be better if you check up on them from time to time."
-+ ""
++ "Por isso é melhor conferir de tempos em tempos."
 #: npc/guild/agit_main.txt#462 (mes)
 - "[Ringing Voice]"
-+ ""
++ "[Voz Ressoante]"
 #: npc/guild/agit_main.txt#463 (mes)
 - "'Those who overcome an ordeal shows a great deal of bravery... and will find their way to another ordeal.'"
-+ ""
++ "'Quem vence uma provação demonstra grande bravura... e encontrará o caminho para a próxima.'"
 #: npc/guild/agit_main.txt#492 (mes)
 - "[Ringing Voice]"
-+ ""
++ "[Voz Ressoante]"
 #: npc/guild/agit_main.txt#493 (mes)
 - "'Only the truly brave can take the test.'"
-+ ""
++ "'Somente os verdadeiramente bravos podem enfrentar a prova.'"
 #: npc/guild/agit_main.txt#495 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/agit_main.txt#496 (select)
 - "Pull.:Don't pull."
-+ ""
++ "Puxar.:Não puxar."
 #: npc/guild/agit_main.txt#498 (mes)
 - "Nothing happened."
-+ ""
++ "Nada aconteceu."
 
 ### npc/guild/aldeg_cas01.txt  (26 textos)
 #: npc/guild/aldeg_cas01.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas01.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas01.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/aldeg_cas01.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/aldeg_cas01.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/aldeg_cas01.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/aldeg_cas01.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/aldeg_cas01.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/aldeg_cas01.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/aldeg_cas01.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/aldeg_cas01.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/aldeg_cas01.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/aldeg_cas01.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/aldeg_cas01.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas01.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas01.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/aldeg_cas01.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/aldeg_cas01.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/aldeg_cas01.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/aldeg_cas01.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/aldeg_cas01.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/aldeg_cas01.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/aldeg_cas01.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/aldeg_cas01.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/aldeg_cas01.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/aldeg_cas01.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/aldeg_cas02.txt  (26 textos)
 #: npc/guild/aldeg_cas02.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas02.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas02.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/aldeg_cas02.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/aldeg_cas02.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/aldeg_cas02.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/aldeg_cas02.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/aldeg_cas02.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/aldeg_cas02.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/aldeg_cas02.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/aldeg_cas02.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/aldeg_cas02.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/aldeg_cas02.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/aldeg_cas02.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas02.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas02.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/aldeg_cas02.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/aldeg_cas02.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/aldeg_cas02.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/aldeg_cas02.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/aldeg_cas02.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/aldeg_cas02.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/aldeg_cas02.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/aldeg_cas02.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/aldeg_cas02.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/aldeg_cas02.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/aldeg_cas03.txt  (26 textos)
 #: npc/guild/aldeg_cas03.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas03.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas03.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/aldeg_cas03.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/aldeg_cas03.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/aldeg_cas03.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/aldeg_cas03.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/aldeg_cas03.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/aldeg_cas03.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/aldeg_cas03.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/aldeg_cas03.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/aldeg_cas03.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/aldeg_cas03.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/aldeg_cas03.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas03.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas03.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/aldeg_cas03.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/aldeg_cas03.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/aldeg_cas03.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/aldeg_cas03.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/aldeg_cas03.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/aldeg_cas03.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/aldeg_cas03.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/aldeg_cas03.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/aldeg_cas03.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/aldeg_cas03.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/aldeg_cas04.txt  (26 textos)
 #: npc/guild/aldeg_cas04.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas04.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas04.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/aldeg_cas04.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/aldeg_cas04.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/aldeg_cas04.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/aldeg_cas04.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/aldeg_cas04.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/aldeg_cas04.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/aldeg_cas04.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/aldeg_cas04.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/aldeg_cas04.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/aldeg_cas04.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/aldeg_cas04.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas04.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas04.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/aldeg_cas04.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/aldeg_cas04.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/aldeg_cas04.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/aldeg_cas04.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/aldeg_cas04.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/aldeg_cas04.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/aldeg_cas04.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/aldeg_cas04.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/aldeg_cas04.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/aldeg_cas04.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/aldeg_cas05.txt  (26 textos)
 #: npc/guild/aldeg_cas05.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas05.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas05.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/aldeg_cas05.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/aldeg_cas05.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/aldeg_cas05.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/aldeg_cas05.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/aldeg_cas05.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/aldeg_cas05.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/aldeg_cas05.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/aldeg_cas05.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/aldeg_cas05.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/aldeg_cas05.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/aldeg_cas05.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/aldeg_cas05.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/aldeg_cas05.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/aldeg_cas05.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/aldeg_cas05.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/aldeg_cas05.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/aldeg_cas05.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/aldeg_cas05.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/aldeg_cas05.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/aldeg_cas05.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/aldeg_cas05.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/aldeg_cas05.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/aldeg_cas05.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/gefg_cas01.txt  (26 textos)
 #: npc/guild/gefg_cas01.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas01.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas01.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/gefg_cas01.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/gefg_cas01.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/gefg_cas01.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/gefg_cas01.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/gefg_cas01.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/gefg_cas01.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/gefg_cas01.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/gefg_cas01.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/gefg_cas01.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/gefg_cas01.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/gefg_cas01.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas01.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas01.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/gefg_cas01.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/gefg_cas01.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/gefg_cas01.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/gefg_cas01.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/gefg_cas01.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/gefg_cas01.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/gefg_cas01.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/gefg_cas01.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/gefg_cas01.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/gefg_cas01.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/gefg_cas02.txt  (26 textos)
 #: npc/guild/gefg_cas02.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas02.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas02.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/gefg_cas02.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/gefg_cas02.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/gefg_cas02.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/gefg_cas02.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/gefg_cas02.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/gefg_cas02.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/gefg_cas02.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/gefg_cas02.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/gefg_cas02.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/gefg_cas02.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/gefg_cas02.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas02.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas02.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/gefg_cas02.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/gefg_cas02.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/gefg_cas02.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/gefg_cas02.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/gefg_cas02.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/gefg_cas02.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/gefg_cas02.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/gefg_cas02.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/gefg_cas02.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/gefg_cas02.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/gefg_cas03.txt  (26 textos)
 #: npc/guild/gefg_cas03.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas03.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas03.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/gefg_cas03.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/gefg_cas03.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/gefg_cas03.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/gefg_cas03.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/gefg_cas03.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/gefg_cas03.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/gefg_cas03.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/gefg_cas03.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/gefg_cas03.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/gefg_cas03.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/gefg_cas03.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas03.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas03.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/gefg_cas03.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/gefg_cas03.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/gefg_cas03.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/gefg_cas03.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/gefg_cas03.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/gefg_cas03.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/gefg_cas03.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/gefg_cas03.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/gefg_cas03.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/gefg_cas03.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/gefg_cas04.txt  (26 textos)
 #: npc/guild/gefg_cas04.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas04.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas04.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/gefg_cas04.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/gefg_cas04.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/gefg_cas04.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/gefg_cas04.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/gefg_cas04.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/gefg_cas04.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/gefg_cas04.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/gefg_cas04.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/gefg_cas04.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/gefg_cas04.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/gefg_cas04.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas04.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas04.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/gefg_cas04.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/gefg_cas04.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/gefg_cas04.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/gefg_cas04.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/gefg_cas04.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/gefg_cas04.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/gefg_cas04.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/gefg_cas04.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/gefg_cas04.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/gefg_cas04.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/gefg_cas05.txt  (26 textos)
 #: npc/guild/gefg_cas05.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas05.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas05.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/gefg_cas05.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/gefg_cas05.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/gefg_cas05.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/gefg_cas05.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/gefg_cas05.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/gefg_cas05.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/gefg_cas05.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/gefg_cas05.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/gefg_cas05.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/gefg_cas05.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/gefg_cas05.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/gefg_cas05.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/gefg_cas05.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/gefg_cas05.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/gefg_cas05.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/gefg_cas05.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/gefg_cas05.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/gefg_cas05.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/gefg_cas05.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/gefg_cas05.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/gefg_cas05.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/gefg_cas05.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/gefg_cas05.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/payg_cas01.txt  (26 textos)
 #: npc/guild/payg_cas01.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas01.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas01.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/payg_cas01.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/payg_cas01.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/payg_cas01.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/payg_cas01.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/payg_cas01.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/payg_cas01.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/payg_cas01.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/payg_cas01.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/payg_cas01.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/payg_cas01.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/payg_cas01.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas01.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas01.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/payg_cas01.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/payg_cas01.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/payg_cas01.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/payg_cas01.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/payg_cas01.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/payg_cas01.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/payg_cas01.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/payg_cas01.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/payg_cas01.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/payg_cas01.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/payg_cas02.txt  (26 textos)
 #: npc/guild/payg_cas02.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas02.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas02.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/payg_cas02.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/payg_cas02.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/payg_cas02.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/payg_cas02.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/payg_cas02.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/payg_cas02.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/payg_cas02.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/payg_cas02.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/payg_cas02.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/payg_cas02.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/payg_cas02.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas02.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas02.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/payg_cas02.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/payg_cas02.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/payg_cas02.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/payg_cas02.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/payg_cas02.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/payg_cas02.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/payg_cas02.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/payg_cas02.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/payg_cas02.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/payg_cas02.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/payg_cas03.txt  (26 textos)
 #: npc/guild/payg_cas03.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas03.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas03.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/payg_cas03.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/payg_cas03.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/payg_cas03.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/payg_cas03.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/payg_cas03.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/payg_cas03.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/payg_cas03.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/payg_cas03.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/payg_cas03.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/payg_cas03.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/payg_cas03.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas03.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas03.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/payg_cas03.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/payg_cas03.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/payg_cas03.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/payg_cas03.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/payg_cas03.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/payg_cas03.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/payg_cas03.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/payg_cas03.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/payg_cas03.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/payg_cas03.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/payg_cas04.txt  (26 textos)
 #: npc/guild/payg_cas04.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas04.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas04.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/payg_cas04.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/payg_cas04.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/payg_cas04.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/payg_cas04.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/payg_cas04.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/payg_cas04.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/payg_cas04.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/payg_cas04.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/payg_cas04.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/payg_cas04.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/payg_cas04.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas04.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas04.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/payg_cas04.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/payg_cas04.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/payg_cas04.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/payg_cas04.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/payg_cas04.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/payg_cas04.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/payg_cas04.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/payg_cas04.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/payg_cas04.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/payg_cas04.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/payg_cas05.txt  (26 textos)
 #: npc/guild/payg_cas05.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas05.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas05.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/payg_cas05.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/payg_cas05.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/payg_cas05.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/payg_cas05.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/payg_cas05.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/payg_cas05.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/payg_cas05.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/payg_cas05.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/payg_cas05.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/payg_cas05.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/payg_cas05.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/payg_cas05.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/payg_cas05.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/payg_cas05.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/payg_cas05.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/payg_cas05.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/payg_cas05.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/payg_cas05.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/payg_cas05.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/payg_cas05.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/payg_cas05.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/payg_cas05.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/payg_cas05.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/prtg_cas01.txt  (26 textos)
 #: npc/guild/prtg_cas01.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas01.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas01.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/prtg_cas01.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/prtg_cas01.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/prtg_cas01.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/prtg_cas01.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/prtg_cas01.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/prtg_cas01.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/prtg_cas01.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/prtg_cas01.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/prtg_cas01.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/prtg_cas01.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/prtg_cas01.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas01.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas01.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/prtg_cas01.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/prtg_cas01.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/prtg_cas01.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/prtg_cas01.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/prtg_cas01.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/prtg_cas01.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/prtg_cas01.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/prtg_cas01.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/prtg_cas01.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/prtg_cas01.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/prtg_cas02.txt  (26 textos)
 #: npc/guild/prtg_cas02.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas02.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas02.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/prtg_cas02.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/prtg_cas02.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/prtg_cas02.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/prtg_cas02.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/prtg_cas02.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/prtg_cas02.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/prtg_cas02.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/prtg_cas02.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/prtg_cas02.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/prtg_cas02.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/prtg_cas02.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas02.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas02.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/prtg_cas02.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/prtg_cas02.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/prtg_cas02.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/prtg_cas02.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/prtg_cas02.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/prtg_cas02.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/prtg_cas02.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/prtg_cas02.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/prtg_cas02.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/prtg_cas02.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/prtg_cas03.txt  (26 textos)
 #: npc/guild/prtg_cas03.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas03.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas03.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/prtg_cas03.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/prtg_cas03.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/prtg_cas03.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/prtg_cas03.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/prtg_cas03.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/prtg_cas03.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/prtg_cas03.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/prtg_cas03.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/prtg_cas03.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/prtg_cas03.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/prtg_cas03.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas03.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas03.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/prtg_cas03.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/prtg_cas03.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/prtg_cas03.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/prtg_cas03.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/prtg_cas03.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/prtg_cas03.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/prtg_cas03.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/prtg_cas03.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/prtg_cas03.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/prtg_cas03.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/prtg_cas04.txt  (26 textos)
 #: npc/guild/prtg_cas04.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas04.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas04.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/prtg_cas04.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/prtg_cas04.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/prtg_cas04.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/prtg_cas04.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/prtg_cas04.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/prtg_cas04.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/prtg_cas04.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/prtg_cas04.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/prtg_cas04.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/prtg_cas04.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/prtg_cas04.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas04.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas04.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/prtg_cas04.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/prtg_cas04.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/prtg_cas04.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/prtg_cas04.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/prtg_cas04.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/prtg_cas04.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/prtg_cas04.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/prtg_cas04.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/prtg_cas04.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/prtg_cas04.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild/prtg_cas05.txt  (26 textos)
 #: npc/guild/prtg_cas05.txt#2 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas05.txt#4 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas05.txt#5 (mes)
 - "We declare that"
-+ ""
++ "declaramos que"
 #: npc/guild/prtg_cas05.txt#6 (mes)
 - "there is no formal master of this castle."
-+ ""
++ "este feudo não possui mestre formal."
 #: npc/guild/prtg_cas05.txt#8 (mes)
 - "2. To the one who can "
-+ ""
++ "2. Àquele que for capaz de "
 #: npc/guild/prtg_cas05.txt#9 (mes)
 - "overcome all trials"
-+ ""
++ "vencer todas as provações"
 #: npc/guild/prtg_cas05.txt#10 (mes)
 - "and destroy the Emperium,"
-+ ""
++ "e destruir o Emperium,"
 #: npc/guild/prtg_cas05.txt#11 (mes)
 - "the king will endow the one with"
-+ ""
++ "o rei concederá"
 #: npc/guild/prtg_cas05.txt#12 (mes)
 - "ownership of this castle."
-+ ""
++ "a posse deste feudo."
 #: npc/guild/prtg_cas05.txt#13 (mes)
 - "[ Echoing Voice ]"
-+ ""
++ "[ Voz que Ecoa ]"
 #: npc/guild/prtg_cas05.txt#14 (mes)
 - "Brave ones..."
-+ ""
++ "Bravos..."
 #: npc/guild/prtg_cas05.txt#15 (mes)
 - "Do you wish to return to your honorable place?"
-+ ""
++ "Desejam retornar ao seu honrado lugar?"
 #: npc/guild/prtg_cas05.txt#16 (select)
 - "Return to the guild castle.:Quit."
-+ ""
++ "Voltar ao feudo do clã.:Sair."
 #: npc/guild/prtg_cas05.txt#19 (mes)
 - "[ Edict of the Divine Rune-Midgarts Kingdom ]"
-+ ""
++ "[ Édito do Divino Reino de Rune-Midgard ]"
 #: npc/guild/prtg_cas05.txt#21 (mes)
 - "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, "
-+ ""
++ "1. Conforme a ordenação do Divino Reino de Rune-Midgard, "
 #: npc/guild/prtg_cas05.txt#22 (mes)
 - "we approve that this place is in"
-+ ""
++ "reconhecemos que este lugar está"
 #: npc/guild/prtg_cas05.txt#23 (mes)
 - "the private prossession of ^ff0000"
-+ ""
++ "em posse exclusiva do clã ^ff0000"
 #: npc/guild/prtg_cas05.txt#24 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild/prtg_cas05.txt#26 (mes)
 - "2. The guild Master of ^ff0000"
-+ ""
++ "2. O líder do clã ^ff0000"
 #: npc/guild/prtg_cas05.txt#27 (mes)
 - "^000000 Guild is"
-+ ""
++ "^000000 é"
 #: npc/guild/prtg_cas05.txt#28 (mes)
 - "^ff0000"
 + ""
 #: npc/guild/prtg_cas05.txt#29 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild/prtg_cas05.txt#30 (mes)
 - "If there is anyone who objects to this,"
-+ ""
++ "Se houver quem se oponha a isto,"
 #: npc/guild/prtg_cas05.txt#31 (mes)
 - "prove your strength and honor with a steel blade in your hand."
-+ ""
++ "prove sua força e honra com uma lâmina de aço em punho."
 #: npc/guild/prtg_cas05.txt#35 (mes)
 - "There's a small lever. Will you pull it?"
-+ ""
++ "Há uma pequena alavanca. Deseja puxá-la?"
 #: npc/guild/prtg_cas05.txt#36 (select)
 - "Pull.:Do not."
-+ ""
++ "Puxar.:Não."
 
 ### npc/guild2/agit_main_se.txt  (669 textos)
 #: npc/guild2/agit_main_se.txt#99 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#100 (mes)
 - "I await for the master"
-+ ""
++ "Aguardo o mestre"
 #: npc/guild2/agit_main_se.txt#101 (mes)
 - "whom destiny will choose"
-+ ""
++ "que o destino escolherá"
 #: npc/guild2/agit_main_se.txt#102 (mes)
 - "for me. Do you think you"
-+ ""
++ "para mim. Você acredita ter"
 #: npc/guild2/agit_main_se.txt#103 (mes)
 - "have to courage and strength"
-+ ""
++ "a coragem e a força"
 #: npc/guild2/agit_main_se.txt#104 (mes)
 - "to conquer this stronghold?"
-+ ""
++ "para conquistar este feudo?"
 #: npc/guild2/agit_main_se.txt#105 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#106 (mes)
 - "Hmpf. Your threats don't"
-+ ""
++ "Hunf. Suas ameaças não"
 #: npc/guild2/agit_main_se.txt#107 (mes)
 - "scare me! Guardians, drive"
-+ ""
++ "me assustam! Guardiões, expulsem"
 #: npc/guild2/agit_main_se.txt#108 (mes)
 - "this infidel away from here!"
-+ ""
++ "este infiel daqui!"
 #: npc/guild2/agit_main_se.txt#109 (mes)
 - "I will always be loyal to the"
-+ ""
++ "Serei sempre leal ao"
 #: npc/guild2/agit_main_se.txt#110 (mes)
 - "master of this stronghold,"
-+ ""
++ "mestre deste feudo,"
 #: npc/guild2/agit_main_se.txt#111 (mes)
 - "the one and only ^FF0000"
-+ ""
++ "o único e verdadeiro ^FF0000"
 #: npc/guild2/agit_main_se.txt#112 (mes)
 - "^000000."
 + ""
 #: npc/guild2/agit_main_se.txt#113 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#114 (mes)
 - "Ah, Master ^FF0000"
-+ ""
++ "Ah, mestre ^FF0000"
 #: npc/guild2/agit_main_se.txt#115 (mes)
 - "^000000..."
-+ ""
++ "^000000..."
 #: npc/guild2/agit_main_se.txt#116 (mes)
 - "How shall I serve you today?"
-+ ""
++ "Como posso servi-lo hoje?"
 #: npc/guild2/agit_main_se.txt#117 (mes)
 - "Was there an aspect of this"
-+ ""
++ "Havia algum aspecto da"
 #: npc/guild2/agit_main_se.txt#118 (mes)
 - "stronghold's maintenance"
-+ ""
++ "administração do feudo"
 #: npc/guild2/agit_main_se.txt#119 (mes)
 - "you wanted to discuss?"
-+ ""
++ "que gostaria de tratar?"
 #: npc/guild2/agit_main_se.txt#120 (select)
 - "Stronghold Briefing:Invest in Commercial Growth:Invest in Defense growth:Hire/Fire Storage Staff:Go to Master's room"
-+ ""
++ "Relatório do feudo:Investir em crescimento comercial:Investir em defesa:Contratar/dispensar a Funcionária do Armazém:Ir à sala do mestre"
 #: npc/guild2/agit_main_se.txt#121 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#122 (mes)
 - "The Commercial Growth"
-+ ""
++ "O nível de crescimento"
 #: npc/guild2/agit_main_se.txt#123 (mes)
 - "Level of the stronghold is ^0000ff"
-+ ""
++ "comercial do feudo é ^0000ff"
 #: npc/guild2/agit_main_se.txt#124 (mes)
 - "."
 + "."
 #: npc/guild2/agit_main_se.txt#125 (mes)
 - "Last time, you invested in"
-+ ""
++ "Da última vez, você investiu em"
 #: npc/guild2/agit_main_se.txt#126 (mes)
 - "Commercial Growth "
-+ ""
++ "crescimento comercial "
 #: npc/guild2/agit_main_se.txt#127 (mes)
 - "."
 + "."
 #: npc/guild2/agit_main_se.txt#128 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#129 (mes)
 - "Our stronghold's"
-+ ""
++ "O nível de defesa"
 #: npc/guild2/agit_main_se.txt#130 (mes)
 - "safeguard level is "
-+ ""
++ "do nosso feudo é "
 #: npc/guild2/agit_main_se.txt#131 (mes)
 - "."
 + "."
 #: npc/guild2/agit_main_se.txt#132 (mes)
 - "Last time, you invested"
-+ ""
++ "Da última vez, você investiu"
 #: npc/guild2/agit_main_se.txt#133 (mes)
 - "in defense "
-+ ""
++ "em defesa "
 #: npc/guild2/agit_main_se.txt#134 (mes)
 - " times."
-+ ""
++ " vezes."
 #: npc/guild2/agit_main_se.txt#136 (mes)
 - "That is all, master."
-+ ""
++ "É tudo, mestre."
 #: npc/guild2/agit_main_se.txt#137 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#138 (mes)
 - "Raising the stronghold's"
-+ ""
++ "Aumentar o crescimento"
 #: npc/guild2/agit_main_se.txt#139 (mes)
 - "commercial growth will"
-+ ""
++ "comercial do feudo"
 #: npc/guild2/agit_main_se.txt#140 (mes)
 - "increase the quantity of"
-+ ""
++ "aumenta a quantidade de"
 #: npc/guild2/agit_main_se.txt#141 (mes)
 - "goods produced for the guild."
-+ ""
++ "bens produzidos para o clã."
 #: npc/guild2/agit_main_se.txt#142 (mes)
 - "Investing in commercial growth"
-+ ""
++ "Investir em crescimento comercial"
 #: npc/guild2/agit_main_se.txt#143 (mes)
 - "will help the guild's future."
-+ ""
++ "ajuda o futuro do clã."
 #: npc/guild2/agit_main_se.txt#144 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#145 (mes)
 - "You can make one investment"
-+ ""
++ "Você pode fazer um investimento"
 #: npc/guild2/agit_main_se.txt#146 (mes)
 - "each day, but if you can make"
-+ ""
++ "por dia, mas pode fazer dois"
 #: npc/guild2/agit_main_se.txt#147 (mes)
 - "two investments if you pay"
-+ ""
++ "se pagar mais Zeny: isso"
 #: npc/guild2/agit_main_se.txt#148 (mes)
 - "more Zeny: this will speed"
-+ ""
++ "acelera o desenvolvimento"
 #: npc/guild2/agit_main_se.txt#149 (mes)
 - "up commercial development,"
-+ ""
++ "comercial,"
 #: npc/guild2/agit_main_se.txt#150 (mes)
 - "but can be quite expensive."
-+ ""
++ "mas pode sair caro."
 #: npc/guild2/agit_main_se.txt#151 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#152 (mes)
 - "However, our stronghold's"
-+ ""
++ "Porém, o crescimento"
 #: npc/guild2/agit_main_se.txt#153 (mes)
 - "commerical growth level is"
-+ ""
++ "comercial do nosso feudo"
 #: npc/guild2/agit_main_se.txt#154 (mes)
 - "at 100%. It's not possible to"
-+ ""
++ "está em 100%. Não é possível"
 #: npc/guild2/agit_main_se.txt#155 (mes)
 - "develop commercial growth"
-+ ""
++ "desenvolver o crescimento"
 #: npc/guild2/agit_main_se.txt#156 (mes)
 - "any further than that."
-+ ""
++ "comercial além disso."
 #: npc/guild2/agit_main_se.txt#157 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#158 (mes)
 - "You've already made two"
-+ ""
++ "Você já fez dois"
 #: npc/guild2/agit_main_se.txt#159 (mes)
 - "investments today, so you'll"
-+ ""
++ "investimentos hoje, então terá"
 #: npc/guild2/agit_main_se.txt#160 (mes)
 - "have to wait until tomorrow"
-+ ""
++ "de esperar até amanhã"
 #: npc/guild2/agit_main_se.txt#161 (mes)
 - "to make another investment."
-+ ""
++ "para investir de novo."
 #: npc/guild2/agit_main_se.txt#162 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#163 (mes)
 - "You must pay ^FF0000"
-+ ""
++ "É preciso pagar ^FF0000"
 #: npc/guild2/agit_main_se.txt#164 (mes)
 - "^000000 Zeny"
-+ ""
++ "^000000 Zeny"
 #: npc/guild2/agit_main_se.txt#165 (mes)
 - "to make an investment"
-+ ""
++ "para fazer um investimento"
 #: npc/guild2/agit_main_se.txt#166 (mes)
 - "Will you invest in this"
-+ ""
++ "Deseja investir neste"
 #: npc/guild2/agit_main_se.txt#167 (mes)
 - "stronghold's commerical"
 + ""
@@ -2567,13 +2567,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#169 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#170 (mes)
 - "You must pay ^FF0000"
-+ ""
++ "É preciso pagar ^FF0000"
 #: npc/guild2/agit_main_se.txt#171 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#172 (mes)
 - "more Zeny to make a second"
 + ""
@@ -2585,28 +2585,28 @@
 + ""
 #: npc/guild2/agit_main_se.txt#175 (select)
 - "Invest in Commercial Growth:Cancel"
-+ ""
++ "Investir em crescimento comercial:Cancelar"
 #: npc/guild2/agit_main_se.txt#176 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#177 (mes)
 - "You've already made two"
-+ ""
++ "Você já fez dois"
 #: npc/guild2/agit_main_se.txt#178 (mes)
 - "investments today, so you'll"
-+ ""
++ "investimentos hoje, então terá"
 #: npc/guild2/agit_main_se.txt#179 (mes)
 - "have to wait until tomorrow"
-+ ""
++ "de esperar até amanhã"
 #: npc/guild2/agit_main_se.txt#180 (mes)
 - "to make another investment."
-+ ""
++ "para investir de novo."
 #: npc/guild2/agit_main_se.txt#181 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#182 (mes)
 - "I'm sorry, Master, but"
-+ ""
++ "Sinto muito, mestre, mas"
 #: npc/guild2/agit_main_se.txt#183 (mes)
 - "you do not have enough"
 + ""
@@ -2618,10 +2618,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#186 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#187 (mes)
 - "A wise use of the guild's"
-+ ""
++ "O uso sábio dos recursos do clã"
 #: npc/guild2/agit_main_se.txt#188 (mes)
 - "funds, Master. We can expect"
 + ""
@@ -2633,16 +2633,16 @@
 + ""
 #: npc/guild2/agit_main_se.txt#191 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#192 (mes)
 - "As you command, Master."
-+ ""
++ "Como ordenar, mestre."
 #: npc/guild2/agit_main_se.txt#193 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#194 (mes)
 - "Investing in our stronghold's"
-+ ""
++ "Investir na defesa do nosso feudo"
 #: npc/guild2/agit_main_se.txt#195 (mes)
 - "defense will enhance the"
 + ""
@@ -2660,10 +2660,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#200 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#201 (mes)
 - "You can invest in defense"
-+ ""
++ "Você pode investir em defesa"
 #: npc/guild2/agit_main_se.txt#202 (mes)
 - "once per day, but if you pay"
 + ""
@@ -2675,10 +2675,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#205 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#206 (mes)
 - "The Defense Level of this"
-+ ""
++ "O nível de defesa deste"
 #: npc/guild2/agit_main_se.txt#207 (mes)
 - "stronghold is 100%, and"
 + ""
@@ -2687,7 +2687,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#209 (mes)
 - "Master, you've already"
-+ ""
++ "Mestre, você já"
 #: npc/guild2/agit_main_se.txt#210 (mes)
 - "invested in Defense twice"
 + ""
@@ -2702,10 +2702,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#214 (mes)
 - "We need ^FF0000"
-+ ""
++ "Precisamos de ^FF0000"
 #: npc/guild2/agit_main_se.txt#215 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#216 (mes)
 - "Zeny to invest in our"
 + ""
@@ -2714,13 +2714,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#218 (mes)
 - "Will you invest now?"
-+ ""
++ "Deseja investir agora?"
 #: npc/guild2/agit_main_se.txt#219 (mes)
 - "We need ^FF0000"
-+ ""
++ "Precisamos de ^FF0000"
 #: npc/guild2/agit_main_se.txt#220 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#221 (mes)
 - "Zeny to invest in our"
 + ""
@@ -2732,16 +2732,16 @@
 + ""
 #: npc/guild2/agit_main_se.txt#224 (mes)
 - "Will you invest now?"
-+ ""
++ "Deseja investir agora?"
 #: npc/guild2/agit_main_se.txt#225 (select)
 - "Invest in Defense:Cancel"
-+ ""
++ "Investir em defesa:Cancelar"
 #: npc/guild2/agit_main_se.txt#226 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#227 (mes)
 - "Master, you've already"
-+ ""
++ "Mestre, você já"
 #: npc/guild2/agit_main_se.txt#228 (mes)
 - "invested in Defense twice"
 + ""
@@ -2756,10 +2756,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#232 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#233 (mes)
 - "I'm sorry, Master, but"
-+ ""
++ "Sinto muito, mestre, mas"
 #: npc/guild2/agit_main_se.txt#234 (mes)
 - "you do not have enough"
 + ""
@@ -2771,10 +2771,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#237 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#238 (mes)
 - "A wise use of the guild's"
-+ ""
++ "O uso sábio dos recursos do clã"
 #: npc/guild2/agit_main_se.txt#239 (mes)
 - "funds, Master. Increasing"
 + ""
@@ -2789,16 +2789,16 @@
 + ""
 #: npc/guild2/agit_main_se.txt#243 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#244 (mes)
 - "As you command, Master."
-+ ""
++ "Como ordenar, mestre."
 #: npc/guild2/agit_main_se.txt#245 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#246 (mes)
 - "Do you wish to dismiss"
-+ ""
++ "Deseja dispensar"
 #: npc/guild2/agit_main_se.txt#247 (mes)
 - "the Kafra Employee that"
 + ""
@@ -2807,25 +2807,25 @@
 + ""
 #: npc/guild2/agit_main_se.txt#249 (select)
 - "Dismiss:Cancel"
-+ ""
++ "Dispensar:Cancelar"
 #: npc/guild2/agit_main_se.txt#250 (cutin)
 - "kafra_01"
 + ""
 #: npc/guild2/agit_main_se.txt#251 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild2/agit_main_se.txt#252 (mes)
 - "Master, please reconsider!"
-+ ""
++ "Mestre, por favor reconsidere!"
 #: npc/guild2/agit_main_se.txt#253 (mes)
 - "I've been working very hard"
-+ ""
++ "Tenho trabalhado muito"
 #: npc/guild2/agit_main_se.txt#254 (mes)
 - "for the success of the guild!"
 + ""
 #: npc/guild2/agit_main_se.txt#255 (mes)
 - "I'll try harder to serve the"
-+ ""
++ "Vou me esforçar mais para servir o"
 #: npc/guild2/agit_main_se.txt#256 (mes)
 - "guild members of this"
 + ""
@@ -2834,13 +2834,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#258 (select)
 - "Dismiss:Cancel"
-+ ""
++ "Dispensar:Cancelar"
 #: npc/guild2/agit_main_se.txt#259 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild2/agit_main_se.txt#260 (mes)
 - "Why?! What have I done"
-+ ""
++ "Por quê?! O que foi que eu fiz"
 #: npc/guild2/agit_main_se.txt#261 (mes)
 - "to deserve this? Waaah~!"
 + ""
@@ -2849,13 +2849,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#263 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild2/agit_main_se.txt#264 (mes)
 - "Thank you, Master!"
-+ ""
++ "Obrigada, mestre!"
 #: npc/guild2/agit_main_se.txt#265 (mes)
 - "I'll obey your every"
-+ ""
++ "Obedecerei a cada"
 #: npc/guild2/agit_main_se.txt#266 (mes)
 - "command as best I can!"
 + ""
@@ -2864,10 +2864,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#268 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#269 (mes)
 - "She works very hard,"
-+ ""
++ "Ela trabalha muito,"
 #: npc/guild2/agit_main_se.txt#270 (mes)
 - "in my opinion. It was in"
 + ""
@@ -2879,28 +2879,28 @@
 + ""
 #: npc/guild2/agit_main_se.txt#274 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#275 (mes)
 - "That Kafra Employee"
-+ ""
++ "Aquela Funcionária Kafra"
 #: npc/guild2/agit_main_se.txt#276 (mes)
 - "has been dismissed."
 + ""
 #: npc/guild2/agit_main_se.txt#277 (mes)
 - "Were really dissatisfied"
-+ ""
++ "Ficaram mesmo insatisfeitos"
 #: npc/guild2/agit_main_se.txt#278 (mes)
 - "by the quality of her service?"
 + ""
 #: npc/guild2/agit_main_se.txt#279 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#280 (mes)
 - "Will you hire a"
-+ ""
++ "Deseja contratar uma"
 #: npc/guild2/agit_main_se.txt#281 (mes)
 - "Kafra Employee to serve"
-+ ""
++ "Funcionária Kafra para servir"
 #: npc/guild2/agit_main_se.txt#282 (mes)
 - "our stronghold? You must"
 + ""
@@ -2909,16 +2909,16 @@
 + ""
 #: npc/guild2/agit_main_se.txt#284 (select)
 - "Hire:Cancel"
-+ ""
++ "Contratar:Cancelar"
 #: npc/guild2/agit_main_se.txt#285 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#286 (mes)
 - "Master, we cannot hire a"
-+ ""
++ "Mestre, não podemos contratar uma"
 #: npc/guild2/agit_main_se.txt#287 (mes)
 - "Kafra Employee because"
-+ ""
++ "Funcionária Kafra porque"
 #: npc/guild2/agit_main_se.txt#288 (mes)
 - "you have not yet attained"
 + ""
@@ -2930,13 +2930,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#291 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#292 (mes)
 - "Master, we cannot hire a"
-+ ""
++ "Mestre, não podemos contratar uma"
 #: npc/guild2/agit_main_se.txt#293 (mes)
 - "Kafra Employee because"
-+ ""
++ "Funcionária Kafra porque"
 #: npc/guild2/agit_main_se.txt#294 (mes)
 - "we do not have enough"
 + ""
@@ -2945,19 +2945,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#297 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#298 (mes)
 - "Very well. We have formed"
-+ ""
++ "Muito bem. Firmamos"
 #: npc/guild2/agit_main_se.txt#299 (mes)
 - "a contract with the Kafra"
 + ""
 #: npc/guild2/agit_main_se.txt#300 (mes)
 - "Head Office, and hired a"
-+ ""
++ "Sede, e contratamos uma"
 #: npc/guild2/agit_main_se.txt#301 (mes)
 - "Kafra Employee for our"
-+ ""
++ "Funcionária Kafra para o nosso"
 #: npc/guild2/agit_main_se.txt#302 (mes)
 - "stronghold. Here she is~"
 + ""
@@ -2966,22 +2966,22 @@
 + ""
 #: npc/guild2/agit_main_se.txt#304 (mes)
 - "[ Hired Kafra Employee ]"
-+ ""
++ "[ Funcionária Kafra contratada ]"
 #: npc/guild2/agit_main_se.txt#305 (mes)
 - "How do you do? I've"
-+ ""
++ "Como vai? Eu"
 #: npc/guild2/agit_main_se.txt#306 (mes)
 - "been dispatched by the"
 + ""
 #: npc/guild2/agit_main_se.txt#307 (mes)
 - "Kafra Head Office to"
-+ ""
++ "Sede da Kafra para"
 #: npc/guild2/agit_main_se.txt#308 (mes)
 - "serve your guild's needs."
 + ""
 #: npc/guild2/agit_main_se.txt#309 (mes)
 - "I'll do my best to follow"
-+ ""
++ "Farei o possível para seguir"
 #: npc/guild2/agit_main_se.txt#310 (mes)
 - "your every command, Master."
 + ""
@@ -2990,10 +2990,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#312 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#313 (mes)
 - "Our contract will expire"
-+ ""
++ "Nosso contrato expira"
 #: npc/guild2/agit_main_se.txt#314 (mes)
 - "after one month, so we must"
 + ""
@@ -3008,13 +3008,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#318 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#319 (mes)
 - "As you command, Master."
-+ ""
++ "Como ordenar, mestre."
 #: npc/guild2/agit_main_se.txt#320 (mes)
 - "However, I suggest hiring"
-+ ""
++ "Porém, sugiro contratar"
 #: npc/guild2/agit_main_se.txt#321 (mes)
 - "a Kafra Employee as soon"
 + ""
@@ -3029,25 +3029,25 @@
 + ""
 #: npc/guild2/agit_main_se.txt#325 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#326 (mes)
 - "Do you wish to enter the"
-+ ""
++ "Deseja entrar na"
 #: npc/guild2/agit_main_se.txt#327 (mes)
 - "Guild Treasure Room?"
-+ ""
++ "Sala do Tesouro do clã?"
 #: npc/guild2/agit_main_se.txt#328 (mes)
 - "Only you, the Guild Master,"
-+ ""
++ "Somente você, o líder do clã,"
 #: npc/guild2/agit_main_se.txt#329 (mes)
 - "are permitted to enter."
 + ""
 #: npc/guild2/agit_main_se.txt#330 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#331 (mes)
 - "Please remember to open"
-+ ""
++ "Lembre-se de abrir"
 #: npc/guild2/agit_main_se.txt#332 (mes)
 - "the Treasure Boxes at the"
 + ""
@@ -3062,13 +3062,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#336 (select)
 - "Go to Treasure Room:Cancel"
-+ ""
++ "Ir à Sala do Tesouro:Cancelar"
 #: npc/guild2/agit_main_se.txt#337 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#338 (mes)
 - "Allow me to guide you"
-+ ""
++ "Permita-me guiá-lo"
 #: npc/guild2/agit_main_se.txt#339 (mes)
 - "on the secret path to"
 + ""
@@ -3077,46 +3077,46 @@
 + ""
 #: npc/guild2/agit_main_se.txt#341 (mes)
 - "Press the secret switch"
-+ ""
++ "Acione a alavanca secreta"
 #: npc/guild2/agit_main_se.txt#342 (mes)
 - "when you wish to return here."
 + ""
 #: npc/guild2/agit_main_se.txt#348 (mes)
 - "[ Steward ]"
-+ ""
++ "[ Mordomo ]"
 #: npc/guild2/agit_main_se.txt#349 (mes)
 - "Items in the Treasure Room"
-+ ""
++ "Os itens da Sala do Tesouro"
 #: npc/guild2/agit_main_se.txt#350 (mes)
 - "are produced once each day."
 + ""
 #: npc/guild2/agit_main_se.txt#351 (mes)
 - "Therefore, you must obtain"
-+ ""
++ "Portanto, você deve obter"
 #: npc/guild2/agit_main_se.txt#352 (mes)
 - "the treasure items everyday."
 + ""
 #: npc/guild2/agit_main_se.txt#353 (mes)
 - "For the sake of the guild,"
-+ ""
++ "Pelo bem do clã,"
 #: npc/guild2/agit_main_se.txt#354 (mes)
 - "prioritize treasure harvesting!"
 + ""
 #: npc/guild2/agit_main_se.txt#377 (mes)
 - "Great job. Now, all you"
-+ ""
++ "Bom trabalho. Agora, tudo que"
 #: npc/guild2/agit_main_se.txt#378 (mes)
 - "need to do is destroy this"
 + ""
 #: npc/guild2/agit_main_se.txt#379 (mes)
 - "Emperium to gain ownership"
-+ ""
++ "Emperium para obter a posse"
 #: npc/guild2/agit_main_se.txt#380 (mes)
 - "over this stronghold."
 + ""
 #: npc/guild2/agit_main_se.txt#381 (mes)
 - "As guardian of this"
-+ ""
++ "Como guardião deste"
 #: npc/guild2/agit_main_se.txt#382 (mes)
 - "stronghold, I answer only"
 + ""
@@ -3128,10 +3128,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#385 (mes)
 - "I am "
-+ ""
++ "Eu sou "
 #: npc/guild2/agit_main_se.txt#386 (mes)
 - ", guardian of"
-+ ""
++ ", guardião de"
 #: npc/guild2/agit_main_se.txt#387 (mes)
 - "this stronghold. For now,"
 + ""
@@ -3140,19 +3140,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#389 (select)
 - "Converse:Cancel"
-+ ""
++ "Conversar:Cancelar"
 #: npc/guild2/agit_main_se.txt#390 (mes)
 - "Do you have any questions"
-+ ""
++ "Tem alguma dúvida"
 #: npc/guild2/agit_main_se.txt#391 (mes)
 - "about this stronghold?"
 + ""
 #: npc/guild2/agit_main_se.txt#392 (select)
 - "Guardian Stones:Fortress Gates:Link Flags:Battle Strategy:Cancel"
-+ ""
++ "Pedras Guardiãs:Portões da Fortaleza:Bandeiras de Ligação:Estratégia de batalha:Cancelar"
 #: npc/guild2/agit_main_se.txt#393 (mes)
 - "There is one Emperium"
-+ ""
++ "Há um Emperium"
 #: npc/guild2/agit_main_se.txt#394 (mes)
 - "and two Guardian Stones in"
 + ""
@@ -3170,7 +3170,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#399 (mes)
 - "The stones are located in"
-+ ""
++ "As pedras ficam em"
 #: npc/guild2/agit_main_se.txt#400 (mes)
 - "^4D4DFFGate Houses^000000 which must be"
 + ""
@@ -3182,19 +3182,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#403 (mes)
 - "Guardian Stones can ^4D4DFFrecall"
-+ ""
++ "As Pedras Guardiãs podem ^4D4DFFinvocar"
 #: npc/guild2/agit_main_se.txt#404 (mes)
 - "your Guardians^000000 for protection."
 + ""
 #: npc/guild2/agit_main_se.txt#405 (mes)
 - "Fortresses with higher levels"
-+ ""
++ "Feudos de nível mais alto"
 #: npc/guild2/agit_main_se.txt#406 (mes)
 - "of defense can summon more"
 + ""
 #: npc/guild2/agit_main_se.txt#407 (mes)
 - "Guardians: this is why it is"
-+ ""
++ "Guardiões: é por isso que é"
 #: npc/guild2/agit_main_se.txt#408 (mes)
 - "so important for guilds to"
 + ""
@@ -3203,7 +3203,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#410 (mes)
 - "Guardian Stones that have"
-+ ""
++ "Pedras Guardiãs que foram"
 #: npc/guild2/agit_main_se.txt#411 (mes)
 - "been destroyed can be revived"
 + ""
@@ -3221,19 +3221,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#416 (mes)
 - "These gates are located in three different parts of the fortress."
-+ ""
++ "Estes portões ficam em três partes diferentes da fortaleza."
 #: npc/guild2/agit_main_se.txt#417 (mes)
 - "Barricades are protected by"
-+ ""
++ "As Barricadas são protegidas por"
 #: npc/guild2/agit_main_se.txt#418 (mes)
 - "Guardian Stones, and are"
-+ ""
++ "Pedras Guardiãs, e são"
 #: npc/guild2/agit_main_se.txt#419 (mes)
 - "restored when the Guardian"
 + ""
 #: npc/guild2/agit_main_se.txt#420 (mes)
 - "Stones are retrieved. However,"
-+ ""
++ "Pedras são recuperadas. Porém,"
 #: npc/guild2/agit_main_se.txt#421 (mes)
 - "it is not as easy to restore"
 + ""
@@ -3242,7 +3242,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#423 (mes)
 - "Fortress Gates can only be"
-+ ""
++ "Os Portões da Fortaleza só podem ser"
 #: npc/guild2/agit_main_se.txt#424 (mes)
 - "restored when the ^4D4DFFguild"
 + ""
@@ -3260,10 +3260,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#429 (mes)
 - "Strongholds have many"
-+ ""
++ "Os feudos têm muitas"
 #: npc/guild2/agit_main_se.txt#430 (mes)
 - "Link Flags that allow you"
-+ ""
++ "Bandeiras de Ligação que permitem"
 #: npc/guild2/agit_main_se.txt#431 (mes)
 - "to access vital areas within"
 + ""
@@ -3272,31 +3272,31 @@
 + ""
 #: npc/guild2/agit_main_se.txt#433 (mes)
 - "Barricades. Usually, ^4D4DFFFlag 1"
-+ ""
++ "Barricadas. Normalmente, ^4D4DFFa Bandeira 1"
 #: npc/guild2/agit_main_se.txt#434 (mes)
 - "links to the Gate House^000000."
 + ""
 #: npc/guild2/agit_main_se.txt#435 (mes)
 - "Many flags link directly to"
-+ ""
++ "Muitas bandeiras levam direto a"
 #: npc/guild2/agit_main_se.txt#436 (mes)
 - "the flag near the Emperium."
 + ""
 #: npc/guild2/agit_main_se.txt#437 (mes)
 - "The final numbered flag is"
-+ ""
++ "A bandeira de número final é"
 #: npc/guild2/agit_main_se.txt#438 (mes)
 - "linked to the Convenience"
 + ""
 #: npc/guild2/agit_main_se.txt#439 (mes)
 - "Facility of the stronghold's"
-+ ""
++ "instalação do feudo"
 #: npc/guild2/agit_main_se.txt#440 (mes)
 - "owner. Keep this in mind."
 + ""
 #: npc/guild2/agit_main_se.txt#441 (mes)
 - "Strategy? It would be better"
-+ ""
++ "Estratégia? Seria melhor"
 #: npc/guild2/agit_main_se.txt#442 (mes)
 - "to develop your battle plan to"
 + ""
@@ -3308,10 +3308,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#445 (mes)
 - "Use the Gate Houses and Barricades, and rebuild as quickly as you can!"
-+ ""
++ "Use as Guaritas e as Barricadas, e reconstrua o mais rápido que puder!"
 #: npc/guild2/agit_main_se.txt#446 (mes)
 - "You have no questions"
-+ ""
++ "Você não tem dúvidas"
 #: npc/guild2/agit_main_se.txt#447 (mes)
 - "to ask of me? Well, I'm"
 + ""
@@ -3320,7 +3320,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#449 (mes)
 - "I'm always here, so"
-+ ""
++ "Estou sempre aqui, então"
 #: npc/guild2/agit_main_se.txt#450 (mes)
 - "feel free to request my"
 + ""
@@ -3332,22 +3332,22 @@
 + ""
 #: npc/guild2/agit_main_se.txt#453 (mes)
 - "Greetings, "
-+ ""
++ "Saudações, "
 #: npc/guild2/agit_main_se.txt#454 (mes)
 - "."
 + "."
 #: npc/guild2/agit_main_se.txt#455 (mes)
 - "What are your orders?"
-+ ""
++ "Quais são suas ordens?"
 #: npc/guild2/agit_main_se.txt#456 (select)
 - "Increase Stronghold Defense:Situational Briefing:Cancel"
-+ ""
++ "Aumentar a defesa do feudo:Relatório da situação:Cancelar"
 #: npc/guild2/agit_main_se.txt#459 (mes)
 - "I'm sorry, but the Guardian"
-+ ""
++ "Sinto muito, mas o Guardião"
 #: npc/guild2/agit_main_se.txt#460 (mes)
 - "Stones aren't powerful enough"
-+ ""
++ "as Pedras não são fortes o bastante"
 #: npc/guild2/agit_main_se.txt#461 (mes)
 - "to summon Guardians yet. We"
 + ""
@@ -3362,19 +3362,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#465 (mes)
 - "I shall endeavor to summon"
-+ ""
++ "Farei o possível para invocar"
 #: npc/guild2/agit_main_se.txt#466 (mes)
 - "a Guardian through a Guardian"
 + ""
 #: npc/guild2/agit_main_se.txt#467 (mes)
 - "Stone. However, keep in mind"
-+ ""
++ "Pedra. Porém, tenha em mente"
 #: npc/guild2/agit_main_se.txt#468 (mes)
 - "that this will not work if the"
 + ""
 #: npc/guild2/agit_main_se.txt#469 (mes)
 - "Guardian Stone is destroyed."
-+ ""
++ "Pedra Guardiã destruída."
 #: npc/guild2/agit_main_se.txt#480 (mes)
 - "You've already commanded"
 + ""
@@ -3386,7 +3386,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#483 (mes)
 - "Our defense status is..."
-+ ""
++ "Nossa situação de defesa é..."
 #: npc/guild2/agit_main_se.txt#484 (setarray)
 - "^4D4DFFOperational"
 + ""
@@ -3398,7 +3398,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#487 (mes)
 - "1st Guardian Stone: "
-+ ""
++ "1ª Pedra Guardiã: "
 #: npc/guild2/agit_main_se.txt#488 (mes)
 - "$agit_"
 + ""
@@ -3407,10 +3407,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#490 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#491 (mes)
 - "2nd Guardian Stone: "
-+ ""
++ "2ª Pedra Guardiã: "
 #: npc/guild2/agit_main_se.txt#492 (mes)
 - "$agit_"
 + ""
@@ -3419,10 +3419,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#494 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#495 (mes)
 - "1st Fortress Gate: "
-+ ""
++ "1º Portão da Fortaleza: "
 #: npc/guild2/agit_main_se.txt#496 (mes)
 - "$agit_"
 + ""
@@ -3431,10 +3431,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#498 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#499 (mes)
 - "2nd Fortress Gate: "
-+ ""
++ "2º Portão da Fortaleza: "
 #: npc/guild2/agit_main_se.txt#500 (mes)
 - "$agit_"
 + ""
@@ -3443,10 +3443,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#502 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#503 (mes)
 - "3rd Fortress Gate: "
-+ ""
++ "3º Portão da Fortaleza: "
 #: npc/guild2/agit_main_se.txt#504 (mes)
 - "$agit_"
 + ""
@@ -3455,19 +3455,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#506 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/guild2/agit_main_se.txt#507 (mes)
 - "I'll be standing by,"
-+ ""
++ "Fico à disposição,"
 #: npc/guild2/agit_main_se.txt#508 (mes)
 - "awaiting your orders."
 + ""
 #: npc/guild2/agit_main_se.txt#509 (mes)
 - "Who are you? Scoundrel!"
-+ ""
++ "Quem é você? Canalha!"
 #: npc/guild2/agit_main_se.txt#510 (mes)
 - "Leave this stronghold now!"
-+ ""
++ "Deixe este feudo agora!"
 #: npc/guild2/agit_main_se.txt#513 (cutin)
 - "kafra_01"
 + ""
@@ -3476,7 +3476,7 @@
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#515 (mes)
 - "Welcome, proud member"
-+ ""
++ "Bem-vindo, orgulhoso membro"
 #: npc/guild2/agit_main_se.txt#516 (mes)
 - "of the ^FF0000"
 + ""
@@ -3485,37 +3485,37 @@
 + ""
 #: npc/guild2/agit_main_se.txt#518 (mes)
 - "The Kafra Corporation is ready"
-+ ""
++ "A Corporação Kafra está pronta"
 #: npc/guild2/agit_main_se.txt#519 (mes)
 - "to assist you wherever you go!"
 + ""
 #: npc/guild2/agit_main_se.txt#520 (select)
 - "Use Storage:Use Warp Service:Rent Pushcart:Cancel"
-+ ""
++ "Usar o Armazém:Usar o Portal:Alugar Carrinho:Cancelar"
 #: npc/guild2/agit_main_se.txt#522 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#523 (mes)
 - "I'm so sorry, but you must"
-+ ""
++ "Sinto muito, mas você precisa"
 #: npc/guild2/agit_main_se.txt#524 (mes)
 - "have at least Novice Skill"
 + ""
 #: npc/guild2/agit_main_se.txt#525 (mes)
 - "Lv.6 to use the Storage."
-+ ""
++ "nível 6 para usar o Armazém."
 #: npc/guild2/agit_main_se.txt#526 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#527 (mes)
 - "Please tell me your"
-+ ""
++ "Diga-me suas"
 #: npc/guild2/agit_main_se.txt#528 (mes)
 - "Warp destination."
-+ ""
++ "destino do portal."
 #: npc/guild2/agit_main_se.txt#529 (select)
 - "Rachel -> 200 z:Cancel"
-+ ""
++ "Rachel -> 200 z:Cancelar"
 #: npc/guild2/agit_main_se.txt#530 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -3542,7 +3542,7 @@
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#539 (mes)
 - "I'm sorry, but the Pushcart"
-+ ""
++ "Sinto muito, mas o Carrinho"
 #: npc/guild2/agit_main_se.txt#540 (mes)
 - "rental service can only be"
 + ""
@@ -3557,7 +3557,7 @@
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#544 (mes)
 - "Hm? You've already"
-+ ""
++ "Hm? Você já"
 #: npc/guild2/agit_main_se.txt#545 (mes)
 - "rented a Pushcart."
 + ""
@@ -3566,7 +3566,7 @@
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#547 (mes)
 - "The Pushcart rental fee"
-+ ""
++ "A taxa de aluguel do Carrinho"
 #: npc/guild2/agit_main_se.txt#548 (mes)
 - "is 800 Zeny. Would you"
 + ""
@@ -3575,7 +3575,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#550 (select)
 - "Rent Pushcart:Cancel"
-+ ""
++ "Alugar Carrinho:Cancelar"
 #: npc/guild2/agit_main_se.txt#551 (mes)
 - "[Kafra Employee]"
 + "[Funcionária Kafra]"
@@ -3596,10 +3596,10 @@
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#557 (mes)
 - "Thank you for using the"
-+ ""
++ "Obrigada por usar o"
 #: npc/guild2/agit_main_se.txt#558 (mes)
 - "Kafra Service. Wherever"
-+ ""
++ "Serviço Kafra. Onde quer que"
 #: npc/guild2/agit_main_se.txt#559 (mes)
 - "you go, Kafra will be"
 + ""
@@ -3617,7 +3617,7 @@
 + "[Funcionária Kafra]"
 #: npc/guild2/agit_main_se.txt#564 (mes)
 - "I'm sorry, but I've been"
-+ ""
++ "Sinto muito, mas eu fui"
 #: npc/guild2/agit_main_se.txt#565 (mes)
 - "exclusively contracted"
 + ""
@@ -3629,13 +3629,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#568 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild2/agit_main_se.txt#569 (mes)
 - "You'll have to ask another"
 + ""
 #: npc/guild2/agit_main_se.txt#570 (mes)
 - "Kafra Employee to help you..."
-+ ""
++ "Funcionária Kafra para ajudá-lo..."
 #: npc/guild2/agit_main_se.txt#571 (cutin)
 - "kafra_01"
 + ""
@@ -3650,31 +3650,31 @@
 + ""
 #: npc/guild2/agit_main_se.txt#576 (mes)
 - "Guardian Stone.^000000"
-+ ""
++ "Pedra Guardiã.^000000"
 #: npc/guild2/agit_main_se.txt#577 (mes)
 - "1 Oridecon"
-+ ""
++ "1 Oridecon"
 #: npc/guild2/agit_main_se.txt#578 (mes)
 - "1 Elunium"
-+ ""
++ "1 Elunium"
 #: npc/guild2/agit_main_se.txt#579 (mes)
 - "30 Stones"
-+ ""
++ "30 Pedras"
 #: npc/guild2/agit_main_se.txt#580 (mes)
 - "5 Blue Gemstones"
-+ ""
++ "5 Gemas Azuis"
 #: npc/guild2/agit_main_se.txt#581 (mes)
 - "5 Yellow Gemstones"
-+ ""
++ "5 Gemas Amarelas"
 #: npc/guild2/agit_main_se.txt#582 (mes)
 - "5 Red Gemstones"
-+ ""
++ "5 Gemas Vermelhas"
 #: npc/guild2/agit_main_se.txt#583 (mes)
 - "^3355FFDo you want to continue?^000000"
 + ""
 #: npc/guild2/agit_main_se.txt#584 (select)
 - "No:Continue"
-+ ""
++ "Não:Continuar"
 #: npc/guild2/agit_main_se.txt#585 (mes)
 - "^3355FFWork canceled.^000000"
 + ""
@@ -3683,7 +3683,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#587 (mes)
 - "Oridecon, in that order, in the"
-+ ""
++ "Oridecon, nessa ordem, na"
 #: npc/guild2/agit_main_se.txt#588 (mes)
 - "center. Then you must arrange"
 + ""
@@ -3695,28 +3695,28 @@
 + ""
 #: npc/guild2/agit_main_se.txt#591 (setarray)
 - "Elunium"
-+ ""
++ "Elunium"
 #: npc/guild2/agit_main_se.txt#592 (setarray)
 - "Oridecon"
-+ ""
++ "Oridecon"
 #: npc/guild2/agit_main_se.txt#593 (setarray)
 - "Stones"
-+ ""
++ "Pedras"
 #: npc/guild2/agit_main_se.txt#594 (select)
 - "Elunium:Oridecon:Stone"
-+ ""
++ "Elunium:Oridecon:Pedra"
 #: npc/guild2/agit_main_se.txt#595 (mes)
 - "^3355FF"
 + ""
 #: npc/guild2/agit_main_se.txt#596 (mes)
 - " has been"
-+ ""
++ " foi"
 #: npc/guild2/agit_main_se.txt#597 (mes)
 - "placed in the center.^000000"
 + ""
 #: npc/guild2/agit_main_se.txt#598 (select)
 - "Elunium:Oridecon:Stone"
-+ ""
++ "Elunium:Oridecon:Pedra"
 #: npc/guild2/agit_main_se.txt#599 (mes)
 - "^3355FFYou have lined the"
 + ""
@@ -3728,10 +3728,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#602 (mes)
 - ".^000000"
-+ ""
++ ".^000000"
 #: npc/guild2/agit_main_se.txt#603 (select)
 - "Elunium:Oridecon:Stone"
-+ ""
++ "Elunium:Oridecon:Pedra"
 #: npc/guild2/agit_main_se.txt#604 (mes)
 - "^3355FFYou covered the"
 + ""
@@ -3743,7 +3743,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#607 (mes)
 - ".^000000"
-+ ""
++ ".^000000"
 #: npc/guild2/agit_main_se.txt#608 (mes)
 - "^3355FFNow you need to arrange"
 + ""
@@ -3761,13 +3761,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#613 (setarray)
 - "Red"
-+ ""
++ "Vermelha"
 #: npc/guild2/agit_main_se.txt#614 (setarray)
 - "Yellow"
-+ ""
++ "Amarela"
 #: npc/guild2/agit_main_se.txt#615 (setarray)
 - "Blue"
-+ ""
++ "Azul"
 #: npc/guild2/agit_main_se.txt#616 (mes)
 - "^3355FFThe Gemstones must"
 + ""
@@ -3782,19 +3782,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#620 (select)
 - "Red Gemstone:Yellow Gemstone:Blue Gemstone"
-+ ""
++ "Gema Vermelha:Gema Amarela:Gema Azul"
 #: npc/guild2/agit_main_se.txt#621 (mes)
 - "^3355FFYou placed the "
 + ""
 #: npc/guild2/agit_main_se.txt#622 (mes)
 - " Gemstone.^000000"
-+ ""
++ ".^000000"
 #: npc/guild2/agit_main_se.txt#623 (mes)
 - "^3355FFHowever, the Guardian Stone"
 + ""
 #: npc/guild2/agit_main_se.txt#624 (mes)
 - "Repair System failed because"
-+ ""
++ "O sistema de reparo falhou porque"
 #: npc/guild2/agit_main_se.txt#625 (mes)
 - "of a magic power conflict.^000000"
 + ""
@@ -3803,7 +3803,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#629 (mes)
 - "Repair System has"
-+ ""
++ "O sistema de reparo"
 #: npc/guild2/agit_main_se.txt#630 (mes)
 - "already completed.^000000"
 + ""
@@ -3815,10 +3815,10 @@
 + ""
 #: npc/guild2/agit_main_se.txt#633 (mes)
 - "Stone because the"
-+ ""
++ "Pedra porque a"
 #: npc/guild2/agit_main_se.txt#634 (mes)
 - "Emperium is not present.^000000"
-+ ""
++ "O Emperium não está presente.^000000"
 #: npc/guild2/agit_main_se.txt#635 (mes)
 - "^3355FFThe Gemstones have been"
 + ""
@@ -3827,13 +3827,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#637 (mes)
 - "Stone is successfully repaired.^000000"
-+ ""
++ "Pedra foi reparada com sucesso.^000000"
 #: npc/guild2/agit_main_se.txt#656 (mes)
 - "^3355FFAfter all of that work..."
 + ""
 #: npc/guild2/agit_main_se.txt#657 (mes)
 - "It looks like you failed"
-+ ""
++ "Parece que você falhou"
 #: npc/guild2/agit_main_se.txt#658 (mes)
 - "to fix the Guardian Stone,"
 + ""
@@ -3854,7 +3854,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#667 (mes)
 - "Gates can be repaired,"
-+ ""
++ "Os portões podem ser reparados,"
 #: npc/guild2/agit_main_se.txt#668 (mes)
 - "but you will need to gather"
 + ""
@@ -3875,7 +3875,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#674 (select)
 - "Continue"
-+ ""
++ "Continuar"
 #: npc/guild2/agit_main_se.txt#675 (mes)
 - "^3355FFYou will need Trunks to"
 + ""
@@ -3884,13 +3884,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#677 (mes)
 - "Oridecon to enhance the"
-+ ""
++ "Oridecon para reforçar a"
 #: npc/guild2/agit_main_se.txt#678 (mes)
 - "gate's endurance, and"
 + ""
 #: npc/guild2/agit_main_se.txt#679 (mes)
 - "Emveretarcon to basically"
-+ ""
++ "Emveretarcon para basicamente"
 #: npc/guild2/agit_main_se.txt#680 (mes)
 - "hold everything together.^000000"
 + ""
@@ -3908,7 +3908,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#685 (select)
 - "Trunk:Steel:Emveretarcon:Oridecon"
-+ ""
++ "Tronco:Aço:Emveretarcon:Oridecon"
 #: npc/guild2/agit_main_se.txt#686 (mes)
 - "^3355FFThe frame has been"
 + ""
@@ -3962,7 +3962,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#703 (select)
 - "Trunk:Steel:Emveretarcon:Oridecon"
-+ ""
++ "Tronco:Aço:Emveretarcon:Oridecon"
 #: npc/guild2/agit_main_se.txt#704 (mes)
 - "^3355FFYou tried using wood"
 + ""
@@ -4016,7 +4016,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#721 (select)
 - "Trunk:Steel:Emveretarcon:Oridecon"
-+ ""
++ "Tronco:Aço:Emveretarcon:Oridecon"
 #: npc/guild2/agit_main_se.txt#722 (mes)
 - "^3355FFYou tried using wood to fix"
 + ""
@@ -4073,7 +4073,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#740 (select)
 - "Trunk:Steel:Emveretarcon:Oridecon"
-+ ""
++ "Tronco:Aço:Emveretarcon:Oridecon"
 #: npc/guild2/agit_main_se.txt#741 (mes)
 - "^3355FFYou tried using wood to fix"
 + ""
@@ -4133,7 +4133,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#760 (mes)
 - "Gate can't be reconstructed:"
-+ ""
++ "O portão não pode ser reconstruído:"
 #: npc/guild2/agit_main_se.txt#761 (mes)
 - "the Emperium is no longer here.^000000"
 + ""
@@ -4151,7 +4151,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#781 (mes)
 - "Fortress Gate has failed."
-+ ""
++ "O Portão da Fortaleza falhou."
 #: npc/guild2/agit_main_se.txt#782 (mes)
 - "You lost some of your"
 + ""
@@ -4169,67 +4169,67 @@
 + ""
 #: npc/guild2/agit_main_se.txt#808 (setarray)
 - "1st"
-+ ""
++ "1º"
 #: npc/guild2/agit_main_se.txt#809 (setarray)
 - "2nd"
-+ ""
++ "2º"
 #: npc/guild2/agit_main_se.txt#810 (setarray)
 - "3rd"
-+ ""
++ "3º"
 #: npc/guild2/agit_main_se.txt#811 (setarray)
 - "4th"
-+ ""
++ "4º"
 #: npc/guild2/agit_main_se.txt#812 (setarray)
 - "5th"
-+ ""
++ "5º"
 #: npc/guild2/agit_main_se.txt#817 (setarray)
 - "1st"
-+ ""
++ "1º"
 #: npc/guild2/agit_main_se.txt#818 (setarray)
 - "2nd"
-+ ""
++ "2º"
 #: npc/guild2/agit_main_se.txt#819 (setarray)
 - "3rd"
-+ ""
++ "3º"
 #: npc/guild2/agit_main_se.txt#820 (setarray)
 - "4th"
-+ ""
++ "4º"
 #: npc/guild2/agit_main_se.txt#821 (setarray)
 - "5th"
-+ ""
++ "5º"
 #: npc/guild2/agit_main_se.txt#922 (setarray)
 - "1st"
-+ ""
++ "1º"
 #: npc/guild2/agit_main_se.txt#923 (setarray)
 - "2nd"
-+ ""
++ "2º"
 #: npc/guild2/agit_main_se.txt#924 (setarray)
 - "3rd"
-+ ""
++ "3º"
 #: npc/guild2/agit_main_se.txt#932 (mes)
 - "^3355FFThis is the Stronghold"
 + ""
 #: npc/guild2/agit_main_se.txt#933 (mes)
 - "Teleport Service. Would"
-+ ""
++ "Teletransporte. Você"
 #: npc/guild2/agit_main_se.txt#934 (mes)
 - "you like to teleport to the"
 + ""
 #: npc/guild2/agit_main_se.txt#935 (mes)
 - "Convenience Facility for"
-+ ""
++ "Sala de Serviços para"
 #: npc/guild2/agit_main_se.txt#936 (mes)
 - "guild members?^000000"
 + ""
 #: npc/guild2/agit_main_se.txt#937 (select)
 - "Go to Convenience Facility:Cancel"
-+ ""
++ "Ir à Sala de Serviços:Cancelar"
 #: npc/guild2/agit_main_se.txt#939 (mes)
 - "^3355FFThis is the Stronghold"
 + ""
 #: npc/guild2/agit_main_se.txt#940 (mes)
 - "Teleport Service. Would"
-+ ""
++ "Teletransporte. Você"
 #: npc/guild2/agit_main_se.txt#941 (mes)
 - "you like to teleport to"
 + ""
@@ -4238,13 +4238,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#943 (select)
 - "Teleport:Cancel"
-+ ""
++ "Teletransportar:Cancelar"
 #: npc/guild2/agit_main_se.txt#944 (mes)
 - "^3355FFThis is the Stronghold"
 + ""
 #: npc/guild2/agit_main_se.txt#945 (mes)
 - "Teleport Service. Please"
-+ ""
++ "Teletransporte. Por favor"
 #: npc/guild2/agit_main_se.txt#946 (mes)
 - "choose a destination"
 + ""
@@ -4262,13 +4262,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#954 (mes)
 - " Royal Edict ]"
-+ ""
++ " Édito Real ]"
 #: npc/guild2/agit_main_se.txt#955 (mes)
 - "The Holy Kingdom of"
-+ ""
++ "O Sagrado Reino de"
 #: npc/guild2/agit_main_se.txt#956 (mes)
 - " declares that"
-+ ""
++ " declara que"
 #: npc/guild2/agit_main_se.txt#957 (mes)
 - "one has yet to claim lordship"
 + ""
@@ -4286,7 +4286,7 @@
 + ""
 #: npc/guild2/agit_main_se.txt#962 (mes)
 - "Courageous one,"
-+ ""
++ "Bravo,"
 #: npc/guild2/agit_main_se.txt#963 (mes)
 - "do you wish to return"
 + ""
@@ -4295,19 +4295,19 @@
 + ""
 #: npc/guild2/agit_main_se.txt#965 (select)
 - "Return to the Stronghold:Cancel"
-+ ""
++ "Voltar ao feudo:Cancelar"
 #: npc/guild2/agit_main_se.txt#971 (mes)
 - "[ "
 + ""
 #: npc/guild2/agit_main_se.txt#972 (mes)
 - " Royal Edict ]"
-+ ""
++ " Édito Real ]"
 #: npc/guild2/agit_main_se.txt#973 (mes)
 - "The Holy Kingdom of"
-+ ""
++ "O Sagrado Reino de"
 #: npc/guild2/agit_main_se.txt#974 (mes)
 - " decrees that"
-+ ""
++ " decreta que"
 #: npc/guild2/agit_main_se.txt#975 (mes)
 - "this stronghold is owned"
 + ""
@@ -4316,13 +4316,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#977 (mes)
 - "^000000 Guild."
-+ ""
++ "^000000."
 #: npc/guild2/agit_main_se.txt#978 (mes)
 - "[ "
 + ""
 #: npc/guild2/agit_main_se.txt#979 (mes)
 - " Royal Edict ]"
-+ ""
++ " Édito Real ]"
 #: npc/guild2/agit_main_se.txt#980 (mes)
 - "^FF0000"
 + ""
@@ -4331,13 +4331,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#982 (mes)
 - "Guild Master of ^FF0000"
-+ ""
++ "Líder do clã ^FF0000"
 #: npc/guild2/agit_main_se.txt#983 (mes)
 - "^000000."
 + ""
 #: npc/guild2/agit_main_se.txt#984 (mes)
 - "Any that object must claim this"
-+ ""
++ "Quem se opuser deve reivindicar este"
 #: npc/guild2/agit_main_se.txt#985 (mes)
 - "stronghold through strength of"
 + ""
@@ -4355,13 +4355,13 @@
 + ""
 #: npc/guild2/agit_main_se.txt#991 (select)
 - "Pull Lever:Cancel"
-+ ""
++ "Puxar a alavanca:Cancelar"
 #: npc/guild2/agit_main_se.txt#997 (mes)
 - "- It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower. -"
-+ ""
++ "- É um girassol espantosamente grande, do tamanho de uma pessoa! ... Você sente algo misterioso emanando da flor. -"
 #: npc/guild2/agit_main_se.txt#998 (select)
 - "Hold the stem.:Do nothing."
-+ ""
++ "Segurar o caule.:Não fazer nada."
 #: npc/guild2/agit_main_se.txt#1002 (mes)
 - "It's too scary to touch unknown things."
-+ ""
++ "É assustador demais tocar em coisas desconhecidas."

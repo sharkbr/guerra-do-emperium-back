@@ -12,496 +12,496 @@
 ### npc/other/pvp.txt  (222 textos)
 #: npc/other/pvp.txt#1 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#2 (mes)
 - "Hello and welcome!"
-+ ""
++ "Olá e bem-vindo!"
 #: npc/other/pvp.txt#3 (mes)
 - "I am in charge of"
-+ ""
++ "Sou responsável por"
 #: npc/other/pvp.txt#4 (mes)
 - "explaining the PVP Modes."
-+ ""
++ "explicando os modos de PvP."
 #: npc/other/pvp.txt#5 (mes)
 - "I am the PVP Narrator!"
-+ ""
++ "Eu sou o Narrador do PvP!"
 #: npc/other/pvp.txt#6 (select)
 - "What is PVP?:What are the PVP Modes?:What are the rules for PVP?:Save Position.:End Dialog."
-+ ""
++ "O que é PvP?:Quais são os modos de PvP?:Quais são as regras do PvP?:Salvar posição.:Encerrar conversa."
 #: npc/other/pvp.txt#7 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#8 (mes)
 - "In short, PVP means"
-+ ""
++ "Em resumo, PvP significa"
 #: npc/other/pvp.txt#9 (mes)
 - "' Player VS Player Mode '"
-+ ""
++ "' Modo Jogador contra Jogador '"
 #: npc/other/pvp.txt#10 (mes)
 - "It's a unique place for people"
-+ ""
++ "É um lugar único para quem"
 #: npc/other/pvp.txt#11 (mes)
 - "to duel with each other."
-+ ""
++ "para duelar entre si."
 #: npc/other/pvp.txt#12 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#13 (mes)
 - "Just tell the"
-+ ""
++ "Basta dizer ao"
 #: npc/other/pvp.txt#14 (mes)
 - "^3355FFGate Keeper^000000"
-+ ""
++ "^3355FFPorteiro^000000"
 #: npc/other/pvp.txt#15 (mes)
 - "that you want to try. He will"
-+ ""
++ "que quer tentar. Ele vai"
 #: npc/other/pvp.txt#16 (mes)
 - "let you enter the PVP square."
-+ ""
++ "deixá-lo entrar na praça de PvP."
 #: npc/other/pvp.txt#17 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#18 (mes)
 - "But, you need to be at"
-+ ""
++ "Mas você precisa estar entre"
 #: npc/other/pvp.txt#19 (mes)
 - "least level 31. And you"
-+ ""
++ "pelo menos nível 31. E você"
 #: npc/other/pvp.txt#20 (mes)
 - "must pay 500 zeny entrance fee in order"
-+ ""
++ "precisa pagar 500 zeny de entrada para"
 #: npc/other/pvp.txt#21 (mes)
 - "to enter a PVP fight square."
-+ ""
++ "para entrar numa praça de luta PvP."
 #: npc/other/pvp.txt#22 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#23 (mes)
 - "When you are qualified, you"
-+ ""
++ "Quando estiver qualificado, você"
 #: npc/other/pvp.txt#24 (mes)
 - "can choose one of the two modes."
-+ ""
++ "pode escolher um dos dois modos."
 #: npc/other/pvp.txt#25 (mes)
 - "Yoyo Mode or Nightmare Mode."
-+ ""
++ "Modo Yoyo ou Modo Pesadelo."
 #: npc/other/pvp.txt#26 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#27 (mes)
 - "Yoyo Mode is risk free."
-+ ""
++ "O Modo Yoyo não tem risco."
 #: npc/other/pvp.txt#28 (mes)
 - "You can experience PVP"
-+ ""
++ "Você pode experimentar o PvP"
 #: npc/other/pvp.txt#29 (mes)
 - "without any restriction or"
-+ ""
++ "sem restrição nem"
 #: npc/other/pvp.txt#30 (mes)
 - "punishment. It is recommended"
-+ ""
++ "punição. Recomenda-se"
 #: npc/other/pvp.txt#31 (mes)
 - "that you practice your skills"
-+ ""
++ "que você treine suas habilidades"
 #: npc/other/pvp.txt#32 (mes)
 - "here before you move on."
-+ ""
++ "aqui antes de seguir adiante."
 #: npc/other/pvp.txt#33 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#34 (mes)
 - "Nightmare Mode is very"
-+ ""
++ "O Modo Pesadelo é muito"
 #: npc/other/pvp.txt#35 (mes)
 - "dangerous! Please be cautious,"
-+ ""
++ "perigoso! Tenha cautela,"
 #: npc/other/pvp.txt#36 (mes)
 - "you will lose some of your"
-+ ""
++ "você perde parte da sua"
 #: npc/other/pvp.txt#37 (mes)
 - "EXP when you are defeated. And"
-+ ""
++ "EXP quando você é derrotado. E"
 #: npc/other/pvp.txt#38 (mes)
 - "there is a small chance that"
-+ ""
++ "há uma pequena chance de que"
 #: npc/other/pvp.txt#39 (mes)
 - "you will drop some equipment."
-+ ""
++ "você derruba parte do equipamento."
 #: npc/other/pvp.txt#40 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#41 (mes)
 - "However, if you win, the"
-+ ""
++ "Porém, se você vencer, a"
 #: npc/other/pvp.txt#42 (mes)
 - "rewards can be great!"
-+ ""
++ "recompensas podem ser grandes!"
 #: npc/other/pvp.txt#43 (mes)
 - "To avoid misunderstanding,"
-+ ""
++ "Para evitar mal-entendidos,"
 #: npc/other/pvp.txt#44 (mes)
 - "you should think twice"
-+ ""
++ "você deveria pensar duas vezes"
 #: npc/other/pvp.txt#45 (mes)
 - "before you go there..."
-+ ""
++ "antes de ir para lá..."
 #: npc/other/pvp.txt#46 (mes)
 - "Good Luck!"
-+ ""
++ "Boa sorte!"
 #: npc/other/pvp.txt#47 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#48 (mes)
 - "Each of the fight squares"
-+ ""
++ "Cada uma das praças de combate"
 #: npc/other/pvp.txt#49 (mes)
 - "have a row of Narrators and"
-+ ""
++ "tem uma fileira de Narradores e"
 #: npc/other/pvp.txt#50 (mes)
 - "choose them based on your"
-+ ""
++ "escolha conforme suas"
 #: npc/other/pvp.txt#51 (mes)
 - "qualifications."
-+ ""
++ "qualificações."
 #: npc/other/pvp.txt#52 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#53 (mes)
 - "Each Narrator will ask"
-+ ""
++ "Cada Narrador vai pedir"
 #: npc/other/pvp.txt#54 (mes)
 - "which of the five PVP maps"
-+ ""
++ "qual dos cinco mapas de PvP"
 #: npc/other/pvp.txt#55 (mes)
 - "you wish to go to."
-+ ""
++ "você quer visitar."
 #: npc/other/pvp.txt#56 (mes)
 - "Choose, and go in!"
-+ ""
++ "Escolha e entre!"
 #: npc/other/pvp.txt#57 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#58 (mes)
 - "Each map has a limitation on"
-+ ""
++ "Cada mapa tem limite de"
 #: npc/other/pvp.txt#59 (mes)
 - "the number of people who can"
-+ ""
++ "a quantidade de pessoas que pode"
 #: npc/other/pvp.txt#60 (mes)
 - "participate. So you will see"
-+ ""
++ "participar. Você vai ver"
 #: npc/other/pvp.txt#61 (mes)
 - "figures in the corner showing"
-+ ""
++ "números no canto mostrando"
 #: npc/other/pvp.txt#62 (mes)
 - "'Attendee/Total'."
-+ ""
++ "'Presentes/Total'."
 #: npc/other/pvp.txt#63 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#64 (mes)
 - "Also, there is a hidden EXP"
-+ ""
++ "Além disso, há uma EXP oculta"
 #: npc/other/pvp.txt#65 (mes)
 - "value in PVP mode. This EXP"
-+ ""
++ "valor no modo PvP. Essa EXP"
 #: npc/other/pvp.txt#66 (mes)
 - "score will only apply inside"
-+ ""
++ "só vale dentro"
 #: npc/other/pvp.txt#67 (mes)
 - "of the PVP zone, so do not"
-+ ""
++ "da zona de PvP, então não"
 #: npc/other/pvp.txt#68 (mes)
 - "worry."
-+ ""
++ "se preocupe."
 #: npc/other/pvp.txt#69 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#70 (mes)
 - "Every player's EXP at the"
-+ ""
++ "A EXP de cada jogador no"
 #: npc/other/pvp.txt#71 (mes)
 - "beginning is usually 5 points."
-+ ""
++ "início costuma ser 5 pontos."
 #: npc/other/pvp.txt#72 (mes)
 - "If you win, it will"
-+ ""
++ "Se vencer, ela vai"
 #: npc/other/pvp.txt#73 (mes)
 - "increase by 1 point"
-+ ""
++ "aumentar 1 ponto"
 #: npc/other/pvp.txt#74 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#75 (mes)
 - "In the same way, when you"
-+ ""
++ "Da mesma forma, quando você"
 #: npc/other/pvp.txt#76 (mes)
 - "lose... Your EXP will"
-+ ""
++ "perder... Sua EXP vai"
 #: npc/other/pvp.txt#77 (mes)
 - "drop by 5 points."
-+ ""
++ "cair 5 pontos."
 #: npc/other/pvp.txt#78 (mes)
 - "So be careful!"
-+ ""
++ "Então tenha cuidado!"
 #: npc/other/pvp.txt#79 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#80 (mes)
 - "When you are defeated"
-+ ""
++ "Quando você é derrotado"
 #: npc/other/pvp.txt#81 (mes)
 - "And your EXP is equal"
-+ ""
++ "E sua EXP é igual"
 #: npc/other/pvp.txt#82 (mes)
 - "to or less than 0,"
-+ ""
++ "ou menor que 0,"
 #: npc/other/pvp.txt#83 (mes)
 - "You will be removed from PVP"
-+ ""
++ "Você será removido do PvP"
 #: npc/other/pvp.txt#84 (mes)
 - "and your duel is finished!"
-+ ""
++ "e seu duelo termina!"
 #: npc/other/pvp.txt#85 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#86 (mes)
 - "However, if your EXP is more"
-+ ""
++ "Porém, se sua EXP for maior"
 #: npc/other/pvp.txt#87 (mes)
 - "than 0. You can still get help"
-+ ""
++ "que 0. Você ainda pode receber ajuda"
 #: npc/other/pvp.txt#88 (mes)
 - "through other players healing..."
-+ ""
++ "da cura de outros jogadores..."
 #: npc/other/pvp.txt#89 (mes)
 - "Do you get it?"
-+ ""
++ "Entendeu?"
 #: npc/other/pvp.txt#90 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#91 (mes)
 - "The fighting commands inside of"
-+ ""
++ "Os comandos de combate dentro do"
 #: npc/other/pvp.txt#92 (mes)
 - "PVP are the same as the normal."
-+ ""
++ "PvP são os mesmos de sempre."
 #: npc/other/pvp.txt#93 (mes)
 - "All the basic controls are the"
-+ ""
++ "Todos os controles básicos são os"
 #: npc/other/pvp.txt#94 (mes)
 - "same."
-+ ""
++ "mesmos."
 #: npc/other/pvp.txt#95 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#96 (mes)
 - "However, there is one thing..."
-+ ""
++ "Porém, há uma coisa..."
 #: npc/other/pvp.txt#97 (mes)
 - "Within the PVP fight square"
-+ ""
++ "Dentro da praça de luta PvP"
 #: npc/other/pvp.txt#98 (mes)
 - "and PVP fighting zones,"
-+ ""
++ "e as zonas de luta PvP,"
 #: npc/other/pvp.txt#99 (mes)
 - "you cannot save your position."
-+ ""
++ "você não pode salvar sua posição."
 #: npc/other/pvp.txt#100 (mes)
 - "Remember well... These rules"
-+ ""
++ "Grave bem... Estas regras"
 #: npc/other/pvp.txt#101 (mes)
 - "can help to ensure your victory."
-+ ""
++ "pode ajudar a garantir sua vitória."
 #: npc/other/pvp.txt#102 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#103 (mes)
 - "Position successfully saved..."
-+ ""
++ "Posição salva com sucesso..."
 #: npc/other/pvp.txt#104 (mes)
 - "Thank you very much!"
-+ ""
++ "Muito obrigado!"
 #: npc/other/pvp.txt#105 (mes)
 - "We will see you again soon."
-+ ""
++ "Até breve."
 #: npc/other/pvp.txt#116 (mes)
 - "[PVP Narrator]"
-+ ""
++ "[Narrador do PvP]"
 #: npc/other/pvp.txt#117 (mes)
 - "With war raging between monsters"
-+ ""
++ "Com a guerra entre monstros"
 #: npc/other/pvp.txt#118 (mes)
 - "and humans, this competition"
-+ ""
++ "e humanos, esta competição"
 #: npc/other/pvp.txt#119 (mes)
 - "among people - PVP -"
-+ ""
++ "entre pessoas - PvP -"
 #: npc/other/pvp.txt#120 (mes)
 - "encourages us all to get"
-+ ""
++ "incentiva todos nós a ficar"
 #: npc/other/pvp.txt#121 (mes)
 - "stronger. Come again,"
-+ ""
++ "mais fortes. Volte sempre,"
 #: npc/other/pvp.txt#122 (mes)
 - "we welcome your challenge!"
-+ ""
++ "seu desafio é bem-vindo!"
 #: npc/other/pvp.txt#123 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#124 (mes)
 - "Glad to be of service."
-+ ""
++ "Foi um prazer servir."
 #: npc/other/pvp.txt#125 (mes)
 - "I will open the PVP fight"
-+ ""
++ "Vou abrir o combate PvP"
 #: npc/other/pvp.txt#126 (mes)
 - "square for you! If you have"
-+ ""
++ "praça para você! Se tiver"
 #: npc/other/pvp.txt#127 (mes)
 - "any questions about the PVP"
-+ ""
++ "alguma dúvida sobre os"
 #: npc/other/pvp.txt#128 (mes)
 - "modes or rules, Please ask"
-+ ""
++ "modos ou regras do PvP, pergunte ao"
 #: npc/other/pvp.txt#129 (mes)
 - "the Narrator..."
-+ ""
++ "Narrador..."
 #: npc/other/pvp.txt#130 (select)
 - "^FF5533' PvP Nightmare Mode'^000000:^3355FF' PvP Yoyo Mode'^000000:^3355FF' PvP Event Mode'^000000:Quit"
-+ ""
++ "^FF5533' Modo Pesadelo'^000000:^3355FF' Modo Yoyo'^000000:^3355FF' Modo Evento'^000000:Sair"
 #: npc/other/pvp.txt#131 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#132 (mes)
 - "I am sorry, but currently the Nightmare mode service is not available."
-+ ""
++ "Sinto muito, mas o Modo Pesadelo não está disponível no momento."
 #: npc/other/pvp.txt#133 (mes)
 - "Please use the Yoyo Mode instead. We apologize for the inconvenience."
-+ ""
++ "Use o Modo Yoyo no lugar. Desculpe o transtorno."
 #: npc/other/pvp.txt#134 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#135 (mes)
 - "The admission fee is 500 Zeny."
-+ ""
++ "A taxa de entrada é de 500 Zeny."
 #: npc/other/pvp.txt#136 (mes)
 - "Do you want to move"
-+ ""
++ "Deseja se deslocar"
 #: npc/other/pvp.txt#137 (mes)
 - "to the Yoyo Mode"
-+ ""
++ "para o Modo Yoyo"
 #: npc/other/pvp.txt#138 (mes)
 - "fight square?"
-+ ""
++ "praça de luta?"
 #: npc/other/pvp.txt#139 (select)
 - "Move:Cancel"
-+ ""
++ "Deslocar:Cancelar"
 #: npc/other/pvp.txt#141 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#142 (mes)
 - "Excuse me, but"
-+ ""
++ "Com licença, mas"
 #: npc/other/pvp.txt#143 (mes)
 - "did you not come prepared?"
-+ ""
++ "não veio preparado?"
 #: npc/other/pvp.txt#144 (mes)
 - "Double check that you have the"
-+ ""
++ "Confira se você tem a"
 #: npc/other/pvp.txt#145 (mes)
 - "500 Zeny entrance fee, and"
-+ ""
++ "taxa de entrada de 500 Zeny, e"
 #: npc/other/pvp.txt#146 (mes)
 - "that you are at least level 31!"
-+ ""
++ "que você tem pelo menos nível 31!"
 #: npc/other/pvp.txt#147 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#148 (mes)
 - "With war raging between monsters"
-+ ""
++ "Com a guerra entre monstros"
 #: npc/other/pvp.txt#149 (mes)
 - "and humans, this competition"
-+ ""
++ "e humanos, esta competição"
 #: npc/other/pvp.txt#150 (mes)
 - "among people - PVP -"
-+ ""
++ "entre pessoas - PvP -"
 #: npc/other/pvp.txt#151 (mes)
 - "encourages us all to get"
-+ ""
++ "incentiva todos nós a ficar"
 #: npc/other/pvp.txt#152 (mes)
 - "stronger. Come again,"
-+ ""
++ "mais fortes. Volte sempre,"
 #: npc/other/pvp.txt#153 (mes)
 - "we welcome your challenge!"
-+ ""
++ "seu desafio é bem-vindo!"
 #: npc/other/pvp.txt#154 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#155 (mes)
 - "Welcome!"
 + "Bem-vindo!"
 #: npc/other/pvp.txt#156 (mes)
 - "Please double check"
-+ ""
++ "Confira bem"
 #: npc/other/pvp.txt#157 (mes)
 - "that you have the admission or viewing ticket."
-+ ""
++ "que você tem o ingresso de entrada ou de espectador."
 #: npc/other/pvp.txt#158 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#159 (mes)
 - "Eh? You don't have it? Then I"
-+ ""
++ "Ãh? Você não tem? Então eu"
 #: npc/other/pvp.txt#160 (mes)
 - "am sorry, this fight square is"
-+ ""
++ "sinto muito, esta praça de luta está"
 #: npc/other/pvp.txt#161 (mes)
 - "only for people who have"
-+ ""
++ "apenas para quem tem"
 #: npc/other/pvp.txt#162 (mes)
 - "admission or viewing tickets."
-+ ""
++ "ingresso de entrada ou de espectador."
 #: npc/other/pvp.txt#163 (mes)
 - "You cannot come in without it."
-+ ""
++ "Você não pode entrar sem ele."
 #: npc/other/pvp.txt#164 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#165 (mes)
 - "Yes, thank you for participating. Have fun!"
-+ ""
++ "Sim, obrigado por participar. Divirta-se!"
 #: npc/other/pvp.txt#167 (mes)
 - "[Gate Keeper]"
-+ ""
++ "[Porteiro]"
 #: npc/other/pvp.txt#168 (mes)
 - "With war raging between monsters"
-+ ""
++ "Com a guerra entre monstros"
 #: npc/other/pvp.txt#169 (mes)
 - "and humans, This competition"
-+ ""
++ "e humanos, esta competição"
 #: npc/other/pvp.txt#170 (mes)
 - "among people - PVP -"
-+ ""
++ "entre pessoas - PvP -"
 #: npc/other/pvp.txt#171 (mes)
 - "encourages us all to get"
-+ ""
++ "incentiva todos nós a ficar"
 #: npc/other/pvp.txt#172 (mes)
 - "stronger. Come again,"
-+ ""
++ "mais fortes. Volte sempre,"
 #: npc/other/pvp.txt#173 (mes)
 - "we welcome your challenge!"
-+ ""
++ "seu desafio é bem-vindo!"
 #: npc/other/pvp.txt#175 (mes)
 - "[PVP Fight Square Reception Staff]"
-+ ""
++ "[Recepção da Praça de Luta PvP]"
 #: npc/other/pvp.txt#176 (mes)
 - "Sorry, but you base level has to be between LV "
-+ ""
++ "Desculpe, mas seu nível de base tem de estar entre "
 #: npc/other/pvp.txt#177 (mes)
 - " and LV "
-+ ""
++ " e "
 #: npc/other/pvp.txt#178 (mes)
 - "."
 + "."
@@ -552,19 +552,19 @@
 + ""
 #: npc/other/pvp.txt#196 (setarray)
 - "Sandwich"
-+ ""
++ "Sanduíche"
 #: npc/other/pvp.txt#197 (setarray)
 - "Lock on"
-+ ""
++ "Travar alvo"
 #: npc/other/pvp.txt#198 (setarray)
 - "Four Room"
-+ ""
++ "Sala Quádrupla"
 #: npc/other/pvp.txt#199 (setarray)
 - "Under cross"
-+ ""
++ "Sob a cruz"
 #: npc/other/pvp.txt#200 (setarray)
 - "Compass Room"
-+ ""
++ "Sala da Bússola"
 #: npc/other/pvp.txt#201 (menu)
 - " ["
 + ""
@@ -576,31 +576,31 @@
 + ""
 #: npc/other/pvp.txt#204 (menu)
 - "Cancel."
-+ ""
++ "Cancelar."
 #: npc/other/pvp.txt#205 (mes)
 - "[PVP Fight Square Reception Staff]"
-+ ""
++ "[Recepção da Praça de Luta PvP]"
 #: npc/other/pvp.txt#206 (mes)
 - "This map is currently full."
-+ ""
++ "Este mapa está lotado."
 #: npc/other/pvp.txt#207 (mes)
 - "[PVP Combat Square Register Staff]"
-+ ""
++ "[Inscrição da Praça de Combate PvP]"
 #: npc/other/pvp.txt#208 (mes)
 - "Eh? How did you get in here?"
-+ ""
++ "Ãh? Como você entrou aqui?"
 #: npc/other/pvp.txt#209 (mes)
 - "This is the entrance for players only."
-+ ""
++ "Esta é a entrada exclusiva para jogadores."
 #: npc/other/pvp.txt#210 (mes)
 - "For details about viewers please proceed to the Register Staff on your right."
-+ ""
++ "Para detalhes sobre espectadores, procure o atendente à sua direita."
 #: npc/other/pvp.txt#211 (select)
 - "Combat Square one:Cancel"
-+ ""
++ "Praça de Combate um:Cancelar"
 #: npc/other/pvp.txt#212 (mes)
 - "[PVP Combat Square Register Staff]"
-+ ""
++ "[Inscrição da Praça de Combate PvP]"
 #: npc/other/pvp.txt#213 (mes)
 - "'"
 + ""
@@ -609,70 +609,70 @@
 + ""
 #: npc/other/pvp.txt#215 (mes)
 - "Are you ready?!"
-+ ""
++ "Está pronto?!"
 #: npc/other/pvp.txt#216 (select)
 - "Yes!:No!"
-+ ""
++ "Sim!:Não!"
 #: npc/other/pvp.txt#217 (mes)
 - "[PVP Combat Square Register Staff]"
-+ ""
++ "[Inscrição da Praça de Combate PvP]"
 #: npc/other/pvp.txt#218 (mes)
 - "OK! I will send you inside"
-+ ""
++ "Certo! Vou enviá-lo para dentro"
 #: npc/other/pvp.txt#219 (mes)
 - "Good luck!"
-+ ""
++ "Boa sorte!"
 #: npc/other/pvp.txt#221 (mes)
 - "[PVP Combat Square Register Staff]"
-+ ""
++ "[Inscrição da Praça de Combate PvP]"
 #: npc/other/pvp.txt#222 (mes)
 - "Come back anytime you are ready."
-+ ""
++ "Volte quando estiver pronto."
 #: npc/other/pvp.txt#224 (mes)
 - "[PVP Compete Square Register Staff]"
-+ ""
++ "[Inscrição da Praça de Disputa PvP]"
 #: npc/other/pvp.txt#225 (mes)
 - "This is the entrance for viewers."
-+ ""
++ "Esta é a entrada para espectadores."
 #: npc/other/pvp.txt#226 (mes)
 - "For details about players entrance please proceed to the Register Staff on your left."
-+ ""
++ "Para detalhes sobre a entrada de jogadores, procure o atendente à sua esquerda."
 #: npc/other/pvp.txt#227 (select)
 - "Compete Square one:Cancel"
-+ ""
++ "Praça de Disputa um:Cancelar"
 #: npc/other/pvp.txt#228 (mes)
 - "[PVP Combat Square Register Staff]"
-+ ""
++ "[Inscrição da Praça de Combate PvP]"
 #: npc/other/pvp.txt#229 (mes)
 - "You got it, thanks for participating. Have fun!"
-+ ""
++ "É isso, obrigado por participar. Divirta-se!"
 #: npc/other/pvp.txt#235 (mes)
 - "[Combat Square Staff]"
-+ ""
++ "[Atendente da Praça de Combate]"
 #: npc/other/pvp.txt#236 (mes)
 - "May I help you?"
-+ ""
++ "Posso ajudar?"
 #: npc/other/pvp.txt#237 (select)
 - "To the center viewer seat.:Leave Combat Square."
-+ ""
++ "Para a arquibancada central.:Sair da Praça de Combate."
 #: npc/other/pvp.txt#240 (mes)
 - "[Combat Square Staff]"
-+ ""
++ "[Atendente da Praça de Combate]"
 #: npc/other/pvp.txt#241 (mes)
 - "May I help you?"
-+ ""
++ "Posso ajudar?"
 #: npc/other/pvp.txt#242 (select)
 - "To the side viewer seat.:Leave Combat Square."
-+ ""
++ "Para a arquibancada lateral.:Sair da Praça de Combate."
 #: npc/other/pvp.txt#248 (mes)
 - "[Combat Square Staff]"
-+ ""
++ "[Atendente da Praça de Combate]"
 #: npc/other/pvp.txt#249 (mes)
 - "Did you have fun in Combat Square?"
-+ ""
++ "Se divertiu na Praça de Combate?"
 #: npc/other/pvp.txt#250 (mes)
 - "May I ask where you want to go?"
-+ ""
++ "Posso saber para onde quer ir?"
 #: npc/other/pvp.txt#251 (select)
 - "Prontera.:Morocc.:Geffen.:Payon.:Alberta.:Cancel."
-+ ""
++ "Prontera.:Morroc.:Geffen.:Payon.:Alberta.:Cancelar."

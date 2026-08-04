@@ -325,16 +325,16 @@ OnMyMobDead:
 
 bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 	if (getcharid(4) == $@TierraBG2_id1) {
-		mes "[Guillaume Blacksmith]";
-		mes "We are in urgency! The Barricade has been destroyed!";
-		mes "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000";
-		mes "We have it all except for the 50 Stones!";
+		mes "[Ferreiro Guillaume]";
+		mes "É urgente! A Barricada foi destruída!";
+		mes "Podemos reparar a Barricada com ^3131FF50 Pedras, 3 Tendões de Urso, 500 Fragmentos de Metal, 30 Eluniums Brutos e 100 de Ouro.^000000";
+		mes "Temos tudo, menos as 50 Pedras!";
 		next;
-		switch(select("Repair.:Leave it.")) {
+		switch(select("Reparar.:Deixar assim.")) {
 		case 1:
 			if (countitem(7049) > 49) {
-				mes "[Guillaume Blacksmith]";
-				mes "You brought enough stones! Let's go and repair.";
+				mes "[Ferreiro Guillaume]";
+				mes "Você trouxe pedras suficientes! Vamos reparar.";
 				next;
 				mes "..";
 				next;
@@ -350,20 +350,20 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				next;
 				mes "..............";
 				next;
-				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage.";
+				mes "[Ferreiro Guillaume]";
+				mes "Combine Pedras e Ouro na proporção certa.";
 				next;
-				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade.";
+				mes "[Ferreiro Guillaume]";
+				mes "Combine Pedras e Ouro na proporção certa e molde a Barricada.";
 				next;
-				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger.";
+				mes "[Ferreiro Guillaume]";
+				mes "Combine Pedras e Ouro na proporção certa, molde a Barricada e acrescente Elunium Bruto para reforçá-la.";
 				next;
-				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments.";
+				mes "[Ferreiro Guillaume]";
+				mes "Combine Pedras e Ouro na proporção certa, molde a Barricada e acrescente Elunium Bruto para reforçá-la. Agora decore com Fragmentos de Metal.";
 				next;
-				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!";
+				mes "[Ferreiro Guillaume]";
+				mes "Combine Pedras e Ouro na proporção certa, molde a Barricada e acrescente Elunium Bruto para reforçá-la. Decore com Fragmentos de Metal e entrance as pedras com Tendão de Urso!";
 				next;
 				mes "..............";
 				mes "..............";
@@ -372,9 +372,9 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				mes "..............";
 				next;
 				specialeffect EF_REPAIRWEAPON;
-				mes "[Guillaume Blacksmith]";
-				mes "Wow! It's done.";
-				mes "We are relieved.";
+				mes "[Ferreiro Guillaume]";
+				mes "Uau! Está pronta.";
+				mes "Estamos aliviados.";
 				if (mobcount("bat_a02","barricade#bat_a02_a::OnMyMobDead") < 17) {
 					delitem 7049,50; //Stone
 					donpcevent "barricade#bat_a02_a::OnEnable";
@@ -384,23 +384,23 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				end;
 			}
 			else {
-				mes "[Guillaume Blacksmith]";
-				mes "You don't have enough Stones!";
+				mes "[Ferreiro Guillaume]";
+				mes "Você não tem Pedras suficientes!";
 				next;
-				mes "[Guillaume Blacksmith]";
-				mes "^3131FFWe need 50 Stones.^000000";
-				mes "We are busy, so please hurry.";
+				mes "[Ferreiro Guillaume]";
+				mes "^3131FFPrecisamos de 50 Pedras.^000000";
+				mes "Estamos ocupados, então se apresse.";
 				close;
 			}
 		case 2:
-			mes "[Guillaume Blacksmith]";
-			mes "There are enemies coming! Let's evacuate from here!";
+			mes "[Ferreiro Guillaume]";
+			mes "Inimigos chegando! Vamos evacuar daqui!";
 			close;
 		}
 	}
 	else {
-		mes "[Guillaume Blacksmith]";
-		mes "There the enemy is coming!";
+		mes "[Ferreiro Guillaume]";
+		mes "Lá vem o inimigo!";
 		close;
 	}
 
@@ -411,16 +411,16 @@ OnInit:
 
 bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 	if (getcharid(4) == $@TierraBG2_id2) {
-		mes "[Croix Blacksmith]";
-		mes "We are in urgency! The Barricade has been destroyed!";
-		mes "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000";
-		mes "We have it all except for the 50 Stones!";
+		mes "[Ferreiro Croix]";
+		mes "É urgente! A Barricada foi destruída!";
+		mes "Podemos reparar a Barricada com ^3131FF50 Pedras, 3 Tendões de Urso, 500 Fragmentos de Metal, 30 Eluniums Brutos e 100 de Ouro.^000000";
+		mes "Temos tudo, menos as 50 Pedras!";
 		next;
-		switch(select("Repair.:Leave it.")) {
+		switch(select("Reparar.:Deixar assim.")) {
 		case 1:
 			if (countitem(7049) > 49) {
-				mes "[Croix Blacksmith]";
-				mes "You brought enough stones! Let's go and repair.";
+				mes "[Ferreiro Croix]";
+				mes "Você trouxe pedras suficientes! Vamos reparar.";
 				next;
 				mes "..";
 				next;
@@ -436,20 +436,20 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				next;
 				mes "..............";
 				next;
-				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage.";
+				mes "[Ferreiro Croix]";
+				mes "Combine Pedras e Ouro na proporção certa.";
 				next;
-				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade.";
+				mes "[Ferreiro Croix]";
+				mes "Combine Pedras e Ouro na proporção certa e molde a Barricada.";
 				next;
-				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger.";
+				mes "[Ferreiro Croix]";
+				mes "Combine Pedras e Ouro na proporção certa, molde a Barricada e acrescente Elunium Bruto para reforçá-la.";
 				next;
-				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments.";
+				mes "[Ferreiro Croix]";
+				mes "Combine Pedras e Ouro na proporção certa, molde a Barricada e acrescente Elunium Bruto para reforçá-la. Agora decore com Fragmentos de Metal.";
 				next;
-				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!";
+				mes "[Ferreiro Croix]";
+				mes "Combine Pedras e Ouro na proporção certa, molde a Barricada e acrescente Elunium Bruto para reforçá-la. Decore com Fragmentos de Metal e entrance as pedras com Tendão de Urso!";
 				next;
 				mes "..............";
 				mes "..............";
@@ -458,9 +458,9 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				mes "..............";
 				next;
 				specialeffect EF_REPAIRWEAPON;
-				mes "[Croix Blacksmith]";
-				mes "Wow! It's done.";
-				mes "We are relieved.";
+				mes "[Ferreiro Croix]";
+				mes "Uau! Está pronta.";
+				mes "Estamos aliviados.";
 				if (mobcount("bat_a02","barricade#bat_a02_b::OnMyMobDead") < 17) {
 					delitem 7049,50; //Stone
 					donpcevent "barricade#bat_a02_b::OnEnable";
@@ -470,23 +470,23 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				end;
 			}
 			else {
-				mes "[Croix Blacksmith]";
-				mes "You don't have enough Stones!";
+				mes "[Ferreiro Croix]";
+				mes "Você não tem Pedras suficientes!";
 				next;
-				mes "[Croix Blacksmith]";
-				mes "^3131FFWe need 50 Stone.^000000";
-				mes "We are busy, so please hurry.";
+				mes "[Ferreiro Croix]";
+				mes "^3131FFPrecisamos de 50 Pedras.^000000";
+				mes "Estamos ocupados, então se apresse.";
 				close;
 			}
 		case 2:
-			mes "[Croix Blacksmith]";
-			mes "There are enemies coming! Let's evacuate from here!";
+			mes "[Ferreiro Croix]";
+			mes "Inimigos chegando! Vamos evacuar daqui!";
 			close;
 		}
 	}
 	else {
-		mes "[Croix Blacksmith]";
-		mes "There, the enemy is coming!";
+		mes "[Ferreiro Croix]";
+		mes "Lá vem o inimigo!";
 		close;
 	}
 
@@ -497,7 +497,7 @@ OnInit:
 
 bat_a02,53,377,3	script	Battle Therapist#a02_a	95,{
 	specialeffect2 EF_HEAL;
-	mes "[Battle Therapist]";
+	mes "[Terapeuta de Batalha]";
 	mes "Just close your eyes,";
 	mes "and take a deep breath.";
 	mes "You can be free from pain.";
@@ -551,7 +551,7 @@ OnTouch:
 
 bat_a02,45,19,3	script	Battle Therapist#a02_b	95,{
 	specialeffect2 EF_HEAL;
-	mes "[Battle Therapist]";
+	mes "[Terapeuta de Batalha]";
 	mes "Just close your eyes,";
 	mes "and take a deep breath.";
 	mes "You can be free from pain.";
@@ -605,7 +605,7 @@ OnTouch:
 
 bat_a02,60,216,3	script	Valley Ghost#bat_a02_n	950,{
 	specialeffect2 EF_HEAL;
-	mes "[Valley Ghost]";
+	mes "[Fantasma do Vale]";
 	mes "Boo...Boo...";
 	close;
 
@@ -805,12 +805,12 @@ OnTimer1830000:
 
 /*
 bat_a02,351,75,3	script	Croix Camp Soldier#bat_a02_guide	934,{
-	mes "Loading...";
+	mes "Carregando...";
 	close;
 }
 
 bat_a02,356,326,3	script	Guillaume Camp Soldier#bat_a02_guide	934,{
-	mes "Loading...";
+	mes "Carregando...";
 	close;
 }
 */
@@ -818,21 +818,21 @@ bat_a02,356,326,3	script	Guillaume Camp Soldier#bat_a02_guide	934,{
 bat_a02,1,1,3	script	Release all#a02	81,{
 	set .@i, callfunc("F_GM_NPC",1854,0);
 	if (.@i == -1) {
-		mes "Cancelled.";
+		mes "Cancelado.";
 		close;
 	} else if (.@i == 0) {
 		end;
 	} else {
-		mes "May I help you?";
+		mes "Posso ajudar?";
 		next;
-		switch(select("Release all.:Cancel.")) {
+		switch(select("Liberar tudo.:Cancelar.")) {
 		case 1:
-			mes "Bye.";
+			mes "Até mais.";
 			close2;
 			mapwarp "bat_a02","bat_room",154,150;
 			end;
 		case 2:
-			mes "Cancelled.";
+			mes "Cancelado.";
 			close;
 		}
 	}

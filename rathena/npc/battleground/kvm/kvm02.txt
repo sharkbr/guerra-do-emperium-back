@@ -372,18 +372,18 @@ OnCroixJoin:
 //============================================================
 bat_c02,51,130,5	script	KVM Officer#KVM02A	419,{
 	if( $@KvM02BG_Victory ) {
-		mes "[KVM Officer]";
+		mes "[Oficial do KVM]";
 		if( $@KvM02BG_Victory == Bat_Team ) {
-			mes "Good Game.";
-			mes "May the glory of KVM be with you.";
-			mes "You aquire the winning points: 1";
+			mes "Bom jogo.";
+			mes "Que a glória do KVM esteja com você.";
+			mes "Você recebeu pontos de vitória: 1";
 			close2;
 			set kvm_point,kvm_point + 1;
 		}
 		else {
-			mes "I am so sorry.";
-			mes "I wish you better luck next time.";
-			mes "You aquire the losing points: 0";
+			mes "Sinto muito.";
+			mes "Desejo mais sorte na próxima.";
+			mes "Você recebeu pontos de derrota: 0";
 			close2;
 		}
 		bg_leave;

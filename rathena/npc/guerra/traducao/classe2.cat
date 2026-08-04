@@ -1896,7 +1896,7 @@
 + ""
 #: npc/jobs/2-1/assassin.txt#667 (mes)
 - "Good luck!"
-+ ""
++ "Boa sorte!"
 #: npc/jobs/2-1/assassin.txt#668 (mes)
 - "[Barcardi]"
 + ""
@@ -8376,7 +8376,7 @@
 + ""
 #: npc/jobs/2-1/knight.txt#333 (mes)
 - "I am in charge of"
-+ ""
++ "Sou responsável por"
 #: npc/jobs/2-1/knight.txt#334 (mes)
 - "your first test."
 + ""
@@ -21901,73 +21901,73 @@
 + ""
 #: npc/jobs/2-2/crusader.txt#83 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#84 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#85 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#86 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#87 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#88 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#89 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#90 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#91 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#92 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#93 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#94 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#95 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#96 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#97 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#98 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#99 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#100 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#101 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#102 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#103 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#104 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#105 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#106 (mes)
 - "[Michael Halig]"
 + ""
@@ -22039,25 +22039,25 @@
 + ""
 #: npc/jobs/2-2/crusader.txt#129 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#130 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#131 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#132 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#133 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#134 (mes)
 - "10 ^3355FF"
 + ""
 #: npc/jobs/2-2/crusader.txt#135 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/crusader.txt#136 (mes)
 - "[Michael Halig]"
 + ""
@@ -32499,25 +32499,25 @@
 + ""
 #: npc/jobs/2-2/sage.txt#310 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/sage.txt#311 (mes)
 - " ^3355FF"
 + ""
 #: npc/jobs/2-2/sage.txt#312 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/sage.txt#313 (mes)
 - " ^3355FF"
 + ""
 #: npc/jobs/2-2/sage.txt#314 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/sage.txt#315 (mes)
 - " ^3355FF"
 + ""
 #: npc/jobs/2-2/sage.txt#316 (mes)
 - "^000000"
-+ ""
++ "^000000"
 #: npc/jobs/2-2/sage.txt#317 (mes)
 - "[Metheus Sylphe]"
 + ""
