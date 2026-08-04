@@ -716,7 +716,7 @@ Body:
     SubType: Dagger
     Attack: 170
     MagicAttack: 100
-    Weight: 60
+    Weight: 600
     Slots: 2
     Range: 1
     Jobs:
@@ -755,8 +755,13 @@ Body:
     #      src/custom/.
     # TODO conjunto [Jurupari]: resistencia adicional, HP/SP max, DEF/DEFM
     #      e autoconjuracao de Reflexao Magica conforme a soma dos refinos.
-    #      Nao implementado porque a outra peca do conjunto nao esta no
-    #      servidor - metade de um set daria bonus fantasma.
+    #      ATE 2026-08-03 a razao de nao implementar era "a outra peca do
+    #      conjunto nao esta no servidor". ELA ESTA: o Jurupari (510146)
+    #      entrou em 2026-08-04, aqui embaixo. O que segura agora e outra
+    #      coisa, e menor: as DUAS sao arma de mao direita, entao nao ha
+    #      como equipar as duas ao mesmo tempo e o conjunto nunca ficaria
+    #      ativo. Ou o bRO conta uma na mao esquerda, ou o gatilho e outro.
+    #      Conferir no jogo antes de codificar - nao chutar.
     Script: |
       .@r = getrefine();
       bonus bAllStats,.@r;
@@ -774,7 +779,7 @@ Body:
     Name: Sturdy Armor            # bRO: Armadura Resistente
     Type: Armor
     Defense: 100
-    Weight: 100
+    Weight: 1000
     Slots: 1
     Locations:
       Armor: true
@@ -804,7 +809,7 @@ Body:
     # Sao dois itens diferentes, e a lista pedia este.
     Type: Armor
     Defense: 0
-    Weight: 40
+    Weight: 400
     Slots: 1
     Locations:
       Armor: true
@@ -842,7 +847,7 @@ Body:
     Name: Devil Claw              # bRO: Garra Diabolica
     Type: Armor
     Defense: 0
-    Weight: 30
+    Weight: 300
     Slots: 1
     Locations:
       Head_Top: true
@@ -887,7 +892,7 @@ Body:
     # do mercado pedia o ID do bRO.
     Type: Armor
     Defense: 0
-    Weight: 50
+    Weight: 500
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -903,6 +908,178 @@ Body:
       bonus bMatkRate,5;
       bonus bVariableCastrate,-10;
       bonus bAspd,1;
+
+# -------------------------------------------------------------------------
+# SEGUNDA LEVA DE PLACEHOLDERS - 2026-08-04
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das de cima: itens REAIS do bRO que o nosso
+# vendor nao conhece, cada um no seu ID oficial, com os bonus lidos da
+# descricao do `iteminfo_new.lub` do bRO.
+#
+# Uma nota de PESO, que vale para toda entrada nova daqui para a frente:
+#
+#   O `Weight` do item_db e DECIMO DE UNIDADE. O cliente divide por 10 ao
+#   desenhar, entao "Peso: 65" na tela = `Weight: 650` aqui - a mesma regra
+#   que o override do 400287 anota logo abaixo, e que o 19443 do rAthena
+#   prova (`Weight: 300` -> "Peso: 30" na tela).
+#
+#   As cinco entradas de 2026-08-01 (510155, 450120, 15371, 400687, 28572)
+#   tinham copiado o numero da tela direto e pesavam um decimo do que
+#   deviam. CORRIGIDAS em 2026-08-04, a pedido do dono do projeto, no
+#   mesmo dia em que o erro foi encontrado.
+#
+#   Hoje o arquivo inteiro esta conferido contra o `iteminfo_new.lub` do
+#   bRO: os 8 itens que declaram `Weight` batem. As 13 armas Brutais nao
+#   declaram nenhum, e isso esta certo - elas pesam `0` no proprio bRO.
+#   Para reconferir depois de mexer, o teste e ler o "Peso:" da descricao
+#   de cada uma e comparar com `Weight / 10`.
+#
+# E uma licao que voltou da rodada de traducao, e vale para todo item:
+#
+#   NOME DE HABILIDADE NA DESCRICAO NAO SE TRADUZ DE MEMORIA. O
+#   "[Impacto Meteoro]" da Adaga dos Orcs NAO e a Chuva de Meteoros do
+#   Bruxo (WZ_METEOR) - e o `ASC_METEORASSAULT` do Algoz. Quem diz e o
+#   `skillinfolist.lub` do GRF do bRO, que traz o par
+#   ASC_METEORASSAULT -> "Impacto Meteoro" e WZ_METEOR -> "Chuva de
+#   Meteoros". Errar aqui poe a magia errada na arma, e ninguem percebe.
+
+  - Id: 510146
+    AegisName: Jurupari
+    # Como o Ceuci (510155), logo acima: item de folclore brasileiro,
+    # EXCLUSIVO do bRO. O kRO nao tem, entao o rAthena nunca vai traze-lo -
+    # esta entrada e permanente, nao provisoria.
+    #
+    # E a outra metade do conjunto do Ceuci: "Forjada pelos demonios, essa
+    # adaga leva o nome da personificacao do Mal", contra o Ceuci, "forjada
+    # pelas divindades... personificacao do Milagre".
+    Name: Jurupari
+    Type: Weapon
+    SubType: Dagger
+    Attack: 165
+    Weight: 650
+    Slots: 2
+    Range: 1
+    Jobs:
+      SuperNovice: true
+      Swordman: true
+      Knight: true
+      Crusader: true
+      Archer: true
+      Hunter: true
+      BardDancer: true
+      Thief: true
+      Assassin: true
+      Rogue: true
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+      Ninja: true
+      KagerouOboro: true
+      Mage: true
+      Wizard: true
+      Sage: true
+      SoulLinker: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    # TODO efeito nao implementado: "Refino +6 ou mais: ao realizar ataques
+    #      fisicos, 2% de chance de [Espalhar Dano] por 5 segundos."
+    #      [Espalhar Dano] e `bonus bSplashRange,1` - quem prova e o 13154
+    #      (Rolling Stone), cuja descricao no bRO diz "Mantem [Espalhar
+    #      Dano] ativo" e cujo script no rAthena e exatamente esse bonus.
+    #      O que falta e a versao TEMPORARIA: o rAthena nao tem status de
+    #      splash por tempo, so o bonus permanente. Exigiria src/custom/.
+    # TODO conjunto [Ceuci]: resistencia a Humano/Doram +30% adicional;
+    #      soma dos refinos >=18, HP/SP max +20% e resistencia a todas as
+    #      propriedades +10%; soma >=22, DEF +50, DEFM +15 e 15% de
+    #      autoconjurar Reflexao Magica nv.9 ao apanhar de magia.
+    #      **A trava que segurava este conjunto caiu hoje.** O TODO do
+    #      Ceuci dizia "nao implementado porque a outra peca nao esta no
+    #      servidor" - a outra peca e esta, e agora esta. So falta escrever:
+    #      as duas sao arma de mao direita, entao um conjunto de duas armas
+    #      nunca fica ativo com as duas equipadas ao mesmo tempo. Ou o bRO
+    #      conta uma na mao esquerda, ou o conjunto e outra coisa. Conferir
+    #      no jogo antes de codificar, e nao chutar.
+    Script: |
+      .@r = getrefine();
+      bonus bSPDrainValue,2;
+      bonus bBaseAtk,40*(.@r/3);
+      bonus bMatk,40*(.@r/3);
+      if (.@r>=6)
+         bonus2 bAddSize,Size_Medium,20;
+      if (.@r>=9)
+         bonus2 bAddSize,Size_Large,20;
+      if (.@r>=12)
+         bonus bNoSizeFix;
+
+  - Id: 510147
+    AegisName: Orc_Dagger_BR
+    Name: Orc Dagger              # bRO: Adaga dos Orcs
+    # "Encontrada na vila dos Orcs, essa arma e simbolo dos guerreiros que
+    # protegem a tribo." Nivel necessario 1, e por isso a unica arma do
+    # mercado que um recem-chegado equipa - o resto pede nivel 99 ou 100.
+    Type: Weapon
+    SubType: Dagger
+    Attack: 130
+    MagicAttack: 110
+    Weight: 650
+    Slots: 2
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+      Knight: true
+      Crusader: true
+      Archer: true
+      Hunter: true
+      BardDancer: true
+      Thief: true
+      Assassin: true
+      Rogue: true
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+      Ninja: true
+      KagerouOboro: true
+      Mage: true
+      Wizard: true
+      Sage: true
+      SoulLinker: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 1
+    Refineable: true
+    # TODO conjunto [Anel dos Orcs]: ATQ e ATQM +70.
+    #      O anel do bRO e o 28522, e o nosso rAthena TEM esse ID - mas
+    #      chamado `Ring_Of_Fallen` / "Ring of The Fallen", que nao e
+    #      traducao de "Anel dos Orcs". Ou o bRO rebatizou (como fez com o
+    #      400287), ou sao dois itens diferentes no mesmo ID. Enquanto
+    #      isso nao for conferido no jogo, `isequipped(28522)` aqui podia
+    #      dar o bonus pelo item errado - por isso ficou de fora.
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,40*(.@r/3);
+      bonus bMatk,40*(.@r/3);
+      if (.@r>=6) {
+         bonus2 bAddRace,RC_All,10;
+         bonus2 bMagicAddRace,RC_All,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_All,15;
+         bonus2 bMagicAddRace,RC_All,15;
+         bonus3 bAutoSpell,"ASC_METEORASSAULT",5,70;
+      }
 
 # =========================================================================
 # OVERRIDES - 2026-08-02

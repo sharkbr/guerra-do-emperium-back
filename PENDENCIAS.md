@@ -605,6 +605,9 @@ e desfazer o commit dos `npc/guerra/*.txt`. As bandeiras `--sem-acento` do
 | Emissário da Ordem | `iz_int 18,32` (e nas 5 cópias do navio) | recebe o novato, entrega a Maçã da Inocência e o leva direto a Izlude | sim, 2026-08-01 |
 | Portais do Navio | flutuante, sem mapa | fecha os portais de `iz_int` para o Emissário ser a única saída | sim, 2026-08-01 |
 | Mercado Contemporâneo | `prontera`, 9 lojas em grade 3×3 | equipamento por slot, tudo a 1 zeny | **não** |
+| Mesmerita | `prontera 144,173` | reseta habilidades, atributos ou os dois — de graça | **não** |
+| Funcionária Kafra da praça | `prontera 152,191` | a sexta Kafra de Prontera, a única na praça central | **não** |
+| Armazém do Clã | `prontera 149,191` | move e renomeia o `Guild Warehouse Manager` do rAthena | **não** |
 
 **Os quatro primeiros estão testados in-game e nada ficou pendente neles**
 (confirmado em 2026-08-01). O Mercado Contemporâneo é de 2026-08-01 e **ainda
@@ -673,6 +676,56 @@ clássicas mais Taekwon, Ninja e Justiceiro saem do mesmo código. Exigências n
 Se um dia precisar dos dois, ligar o `jobmaster.txt` é o caminho; não reescrever
 o nosso.
 
+### Três NPCs na praça de Prontera — 2026-08-04, NÃO testados in-game
+
+Pedidos junto com a segunda rodada do mercado. Os três estão em
+`npc/guerra/`, listados em `npc/guerra/scripts_guerra.conf`, e cada cabeçalho
+tem o detalhe.
+
+**Mesmerita** (`prontera 144,173`) reseta habilidades, atributos ou os dois,
+**de graça e sem limite**. O corpo veio da "Reset Girl" do próprio rAthena
+(`npc/custom/resetnpc.txt`, que continua desligada e intocada); saíram os
+quatro preços e o campo de limite de usos. Duas confirmações antes de
+executar, porque reset não tem volta.
+
+O nome foi pedido de memória do bRO — e **a NPC não existe no bRO de hoje**.
+Procurei no `navi_npc_br.lub` do GRF (a tabela de NPC por mapa e coordenada,
+em português, que é a fonte que este documento aponta para nome de NPC): não
+há "Mesmerita" nem "esmerit" como pedaço. Fica registrado para ninguém
+refazer a busca. Ela é nossa, com o nome que o dono do projeto lembra.
+
+**Funcionária Kafra da praça** (`prontera 152,191`) é a sexta de Prontera. As
+cinco do rAthena estão todas nas **bordas** (`152,326`, `151,29`, `29,207`,
+`282,200`, `146,89`) — a praça central, que é onde o jogador deste servidor
+passa o tempo, não tinha nenhuma.
+
+É **cópia e não `duplicate()`**, por um motivo só: o `duplicate` traria junto
+o `savepoint` da original, que é o portão norte (`157,327`). A NPC diria "seu
+ponto de retorno foi salvo aqui" e o jogador renasceria a 140 células dali.
+O que é cópia é só a saudação; armazém, carrinho, teleporte e mensagem de fim
+continuam saindo por `callfunc` para `npc/kafras/functions_kafras.txt`, então
+correção lá — inclusive tradução — alcança esta NPC também.
+
+**Armazém do Clã** (`prontera 149,191`) move e renomeia o
+`Guild Warehouse Manager`, que ficava em `150,191`. Feito **de fora**, como o
+`portais_do_navio.txt`: `disablenpc` na duplicata de Prontera do rAthena, mais
+uma duplicata nossa na coordenada e com o nome novos. O
+`npc/re/merchants/guild_warehouse.txt` fica byte a byte igual ao upstream e as
+outras ~30 cidades não são tocadas.
+
+Renomear NPC é a parte com risco real (ver "Nomes de NPC", na seção da
+tradução): o nome exibido faz parte da chave única, e `duplicate()`,
+`enablenpc` e `donpcevent` de outros arquivos referenciam por ele. Aqui foi
+seguro porque o alvo é uma **duplicata folha** — conferido que nada em `npc/`
+referencia `"Guild Warehouse Manager#prontera"`.
+
+**O diálogo dele continua em inglês**, de propósito: tradução passa pelo
+catálogo, não por texto escrito à mão dentro dos nossos arquivos. E o
+`guild_warehouse.txt` **não está em grupo nenhum** do catálogo hoje
+(conferido em `ferramentas/traduz_npcs.py`, `GRUPOS`). Para fechar:
+acrescentá-lo ao grupo `servico`, `--extrair servico`, traduzir os pares novos
+e `--aplicar servico`. É arquivo pequeno, ~90 linhas.
+
 ### Mercado Contemporâneo — aberto em 2026-08-01, NÃO testado in-game
 
 Nove lojas de equipamento na rua principal de Prontera, uma por slot, em grade
@@ -710,6 +763,92 @@ O resto tem `Buy: 20`, que dá 9 de lucro e não move nada.
 
 O remédio, se um dia incomodar, **não é mexer no preço da loja** — revender não
 passa por ela. É `Sell: 0` na entrada do item, ou tirar a Boina da lista.
+
+#### Segunda rodada — 2026-08-04: dez itens novos, e a arte acabou
+
+Dez itens pedidos pelo dono do projeto, distribuídos em quatro das nove lojas.
+O placar da rodada anterior (77 pedidos → 4 fora por falta de arte) **fechou**:
+
+| loja | entrou |
+|---|---|
+| Chapeleiro | `400213` Asas de Yggdrasil [1], `400597` Caubói de Kiwawa [1] |
+| Ocleiro | `19443` Tapa-Olho Cósmico, `410124` Orelhas em Chamas, `410142` Adorno Angelical [1], `410140` Tiara de Asmodeus [1] |
+| Senhor das Armas | `510146` Jurupari [2], `1132` Lâmina Turca, `510147` Adaga dos Orcs [2] |
+| Sapateiro | `470274` Botas de Guivra [1] |
+
+**Não sobrou item fora por falta de arte.** Os três chapéus que estavam de fora
+desde 2026-08-01 (`410124`, `410142`, `410140`) entraram pela receita que o
+`400287` tinha estreado em 2026-08-02, e agora está confirmada como receita e
+não como sorte — **duas ferramentas, nesta ordem, e nenhuma sozinha resolve**:
+
+```
+python ferramentas/estende_accessoryid.py --id <n> --grf "<data.grf do bRO>"
+python ferramentas/instala_visual.py      --id <n> --grf "<data.grf do bRO>"
+python ferramentas/valida_visual.py       --id <n>          # tem de dar 0 faltando
+```
+
+A primeira ensina ao cliente que o **slot de visual existe**; sem essa entrada
+de tabela não há arquivo que ele vá procurar, e é por isso que o
+`instala_visual.py` sozinho nunca curava esses três. Os dez terminaram com
+`valida_visual.py` dando **0 faltando** cada um.
+
+**O ID da Tiara de Asmodeus mudou.** Até 2026-08-02 o cabeçalho do mercado
+dizia `410139`; o que entrou foi o `410140`. São dois itens de verdade — a
+versão sem cova e a com cova (`Hairband_Of_Asmodeus` e
+`Hairband_Of_Asmodeus_`) — e o pedido era "[1]", que é a segunda.
+
+**Um item não existe, e a decisão foi do dono do projeto.** O "Chapéu de
+Kiwawa 401147" não está no `item_db` do rAthena, nem nos 18845 itens do bRO,
+nem no `itemInfo.lua` do cliente. Existe **um** item Kiwawa, o `400597`
+"Caubói de Kiwawa" [1], e ele entrou no lugar. É o quinto nome da lista de
+"não localizados" do cabeçalho do mercado.
+
+**Dois placeholders novos** em `db/guerra/item_db.yml` (`510146` Jurupari e
+`510147` Adaga dos Orcs), com os bônus lidos da descrição do bRO, como os 18 de
+2026-08-01. O Jurupari é o par do **Ceuci** — os dois são exclusivos do bRO,
+folclore brasileiro, e o `TODO` do Ceuci dizia "não implementado porque a outra
+peça não está no servidor". Agora está. Falta só entender **como** um conjunto
+de duas armas de mão direita fica ativo; está anotado no `item_db` e não foi
+chutado.
+
+**A lição de tradução voltou, e agora vale para item também.** O
+"[Impacto Meteoro]" da Adaga dos Orcs **não** é a Chuva de Meteoros do Bruxo
+(`WZ_METEOR`) — é o `ASC_METEORASSAULT` do Algoz. Quem diz é o
+`skillinfolist.lub` do GRF do bRO, que traz os dois pares. Traduzir nome de
+habilidade de memória põe a magia errada na arma e ninguém percebe. Mesma regra
+que já estava escrita para o diálogo, na seção da tradução de NPCs.
+
+##### CORRIGIDO: cinco placeholders de 2026-08-01 pesavam 1/10 do que deviam
+
+Achado e corrigido em 2026-08-04, no mesmo dia, a pedido do dono do projeto.
+
+O `Weight` do `item_db` é **décimo de unidade**: o cliente divide por 10 ao
+desenhar. O `19443` prova (`Weight: 300` no rAthena → "Peso: 30" na tela), e o
+override do `400287`, escrito em 2026-08-02, já anotava a regra por extenso —
+o que faltava era ela ter valido também para as cinco entradas da véspera, que
+copiaram o número da tela direto:
+
+| item | era | passou a ser |
+|---|---|---|
+| `510155` Ceuci | 60 | **600** |
+| `450120` Armadura Resistente | 100 | **1000** |
+| `15371` Roupa de Natal do Antonio | 40 | **400** |
+| `400687` Garra Diabólica | 30 | **300** |
+| `28572` Broche da Celine | 50 | **500** |
+
+Na prática esses cinco itens eram dez vezes mais leves do que a descrição que o
+próprio cliente mostrava. **Quem já tiver um deles vai sentir a diferença de
+peso** assim que o `@reloaditemdb` passar — é o efeito esperado, não regressão.
+
+A troca foi feita **bloco a bloco por `Id`**, e não por busca e substituição de
+texto: o `400287` também tem `Weight: 50` e o dele está certo (a descrição do
+bRO diz "Peso: 5"). Um `replace` solto teria estragado esse.
+
+Depois disso o arquivo inteiro foi conferido contra o `iteminfo_new.lub` do
+bRO: **os 8 itens que declaram `Weight` batem**. As 13 armas Brutais não
+declaram nenhum, e isso está certo — elas pesam `0` no próprio bRO, conferido
+na descrição. Os dois placeholders de 2026-08-04 já nasceram certos
+(`Weight: 650` para "Peso: 65").
 
 #### ACORDO: quando o bRO tem, a gente traz de lá — 2026-08-02
 

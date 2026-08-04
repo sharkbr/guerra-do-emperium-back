@@ -1,0 +1,73 @@
+//===== Guerra do Emperium ===================================
+//= Funcionaria Kafra da praca
+//===== Onde =================================================
+//= prontera 152,191 - praca central, no meio dos NPCs de
+//= servico (Mestre de Classe, Mestre de UP, Teletransportadora,
+//= Armazem do Cla). Celula conferida no prontera.gat: tipo 0.
+//===== Descricao ============================================
+//= Uma sexta Funcionaria Kafra em Prontera, no unico lugar da
+//= cidade onde nao havia uma.
+//=
+//= As cinco do rAthena estao nas BORDAS - 152,326 (portao
+//= norte), 151,29 (sul), 29,207 (oeste), 282,200 (leste) e
+//= 146,89 (sul do centro). A praca central, que e onde o
+//= jogador deste servidor de fato passa o tempo, ficava sem.
+//===== Por que copia, e nao duplicate() =====================
+//= `duplicate(kaf_prontera)` seria UMA linha e teria funcionado
+//= - mas o corpo duplicado traz junto o `savepoint` dele, que e
+//= "prontera",157,327: o portao NORTE.
+//=
+//= Quer dizer: o jogador falaria com uma Kafra no meio da praca,
+//= ela diria "seu ponto de retorno foi salvo aqui", e ele
+//= renasceria a 140 celulas dali. Nao quebra nada, mas mente.
+//= Por isso e copia, com o savepoint na propria praca.
+//=
+//= O QUE E COPIA E O QUE E CHAMADA: o dialogo proprio e so a
+//= saudacao. Armazem, carrinho, teleporte, mensagem de fim - tudo
+//= sai de `callfunc` para as funcoes de npc/kafras/functions_kafras.txt,
+//= exatamente como as cinco do rAthena. Entao correcao naquele
+//= arquivo (inclusive traducao) alcanca esta NPC tambem.
+//=
+//= O `F_KafSet` monta a lista de teleporte a partir de
+//= `strnpcinfo(4)`, que e o nome do mapa - como esta NPC esta em
+//= prontera, ela recebe a lista de prontera sozinha, sem
+//= configuracao.
+//===== Notas ================================================
+//= Os cinco numeros de `F_Kafra` sao os mesmos das outras
+//= Kafras de Prontera, copiados sem mudar:
+//=   5   nao imprime saudacao (a NPC ja imprimiu a dela)
+//=   0   menu completo
+//=   0   menu de informacoes ligado
+//=   40  preco do Armazem
+//=   800 preco do aluguel do Carrinho
+//=
+//= O `#praca` no nome e sufixo de identificador, nao aparece na
+//= tela: o cliente mostra so "Funcionaria Kafra". Ele existe
+//= porque nome de NPC e chave unica no rAthena, e quando a
+//= traducao de NOMES for feita (PENDENCIAS.md, "O que tambem
+//= ficou pendente") as cinco do rAthena viram "Funcionaria
+//= Kafra" tambem - sem o sufixo, colidiriam com esta.
+//=
+//= Sprite 112 (JT_4_F_KAFRA6) e cutin "kafra_06", os mesmos da
+//= kaf_prontera do portao norte. Conferido no npcidentity.lub.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1).
+//= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,152,191,3	script	Funcionária Kafra#praca	112,{
+	cutin "kafra_06",2;
+	callfunc "F_KafSet";
+	mes "[Funcionária Kafra]";
+	mes "Bem-vindo à";
+	mes "Corporação Kafra~";
+	mes "Aqui no meio da praça";
+	mes "você encontra tudo o que";
+	mes "precisa antes de sair.";
+	mes "Em que posso ser útil?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "prontera",152,189,1,1;
+	callfunc "F_KafEnd",0,1,"na praça central de Prontera";
+}

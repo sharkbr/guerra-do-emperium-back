@@ -1,0 +1,101 @@
+//===== Guerra do Emperium ===================================
+//= Armazem do Cla
+//===== Onde =================================================
+//= prontera 149,191. Antes ficava em 150,191 - uma celula a
+//= leste. Celula conferida no prontera.gat: tipo 0, andavel.
+//===== Descricao ============================================
+//= Move e renomeia o "Guild Warehouse Manager" de Prontera.
+//= Pedido em 2026-08-04: 150,191 -> 149,191, e o nome em
+//= portugues, "Armazem do Cla".
+//===== Como, e por que assim ================================
+//= A NPC original mora em npc/re/merchants/guild_warehouse.txt,
+//= que e arquivo do rAthena. Editar aquela linha faria toda
+//= atualizacao futura do vendor bater de frente com a nossa
+//= mudanca - a mesma armadilha que o portais_do_navio.txt e o
+//= sprite_teletransportadora.txt evitam.
+//=
+//= Entao sao dois movimentos, os dois DE FORA:
+//=   1) `disablenpc` na duplicata de Prontera do rAthena. As
+//=      outras ~30 duplicatas (Alberta, Geffen, Izlude...) nao
+//=      sao tocadas e continuam de pe.
+//=   2) uma duplicata NOSSA, na coordenada e com o nome novos.
+//=
+//= O `duplicate(GuildWarehouse)` funciona daqui porque o script
+//= de origem ja esta carregado quando este arquivo e lido:
+//= npc/re/scripts_athena.conf (linha 153) vem ANTES de
+//= npc/scripts_custom.conf, que e de onde npc/guerra/ e
+//= alcancado. Conferido em npc/re/scripts_main.conf.
+//=
+//= Como e duplicata e nao copia, TODO o comportamento continua
+//= sendo o do rAthena: taxa de 1000z, exigencia da habilidade de
+//= cla GD_GUILD_STORAGE, permissao GUILD_PERM_STORAGE, e o
+//= historico de uso. Nada disso foi reescrito aqui.
+//===== O nome ===============================================
+//= O `#prt_guerra` e sufixo de identificador e NAO aparece na
+//= tela - o cliente mostra so "Armazem do Cla" (com acento no
+//= arquivo). Ele existe porque nome de NPC e chave unica no
+//= rAthena, e a duplicata original continua existindo, so que
+//= desligada: ela ainda ocupa o identificador "prontera".
+//=
+//= ATENCAO ao renomear NPC em geral. O nome exibido faz parte da
+//= chave, e `duplicate()`, `enablenpc` e `donpcevent` de outros
+//= arquivos referenciam por ele - renomear as cegas faz NPC
+//= sumir do mapa, e o erro so aparece no jogo (PENDENCIAS.md,
+//= "O que tambem ficou pendente / Nomes de NPC"). Aqui foi
+//= seguro porque o alvo e uma DUPLICATA folha: nada no npc/
+//= referencia "Guild Warehouse Manager#prontera". Conferido.
+//===== O que NAO foi feito ==================================
+//= O DIALOGO continua em ingles. A NPC se apresenta como
+//= "[Warehouse Manager]" e fala "We are specialized in guild
+//= warehouses".
+//=
+//= Isso e de proposito, e nao e esquecimento: traducao de
+//= dialogo do rAthena passa pelo catalogo
+//= (npc/guerra/traducao/*.cat + ferramentas/traduz_npcs.py), e
+//= nao por texto escrito a mao dentro dos nossos arquivos. O
+//= motivo esta no cabecalho do traduz_npcs.py: texto a mao no
+//= arquivo errado nao sobrevive a uma atualizacao do vendor e
+//= nao da para revisar.
+//=
+//= E o `guild_warehouse.txt` HOJE NAO ESTA EM GRUPO NENHUM do
+//= catalogo - conferido em ferramentas/traduz_npcs.py, GRUPOS.
+//= Para fechar isso, o caminho e:
+//=
+//=   1) acrescentar 'npc/re/merchants/guild_warehouse.txt' ao
+//=      grupo 'servico' em ferramentas/traduz_npcs.py;
+//=   2) python ferramentas/traduz_npcs.py --extrair servico
+//=   3) traduzir os pares novos em npc/guerra/traducao/servico.cat
+//=   4) python ferramentas/traduz_npcs.py --aplicar servico
+//=
+//= E arquivo pequeno (~90 linhas). O grupo 'servico' esta em
+//= 77%, entao ja ha o que fechar la de qualquer forma.
+//===== Notas ================================================
+//= Sprite 896 (JT_4_M_HUBOY), o mesmo da duplicata original -
+//= trocar a coordenada e o nome nao devia trocar quem esta la.
+//=
+//= Comentar a linha deste arquivo no scripts_guerra.conf devolve
+//= a NPC do rAthena, em 150,191 e com o nome em ingles.
+//=
+//= Gravado em Latin-1 (ISO-8859-1) por causa do acento do nome.
+//= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,149,191,3	duplicate(GuildWarehouse)	Armazém do Clã#prt_guerra	896
+
+-	script	ArmazemDoCla	-1,{
+	end;
+
+OnInit:
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste,
+	// um nome fora de sincronia com o guild_warehouse.txt do
+	// rAthena abortaria o OnInit calado - e sobrariam DUAS NPCs de
+	// armazem lado a lado, a nossa e a deles.
+	if (!getnpcid(0, "Guild Warehouse Manager#prontera")) {
+		debugmes "ArmazemDoCla: nao achei 'Guild Warehouse Manager#prontera'. O npc/re/merchants/guild_warehouse.txt saiu de sincronia com este arquivo - PODE HAVER DUAS NPCs DE ARMAZEM EM PRONTERA.";
+		end;
+	}
+	disablenpc "Guild Warehouse Manager#prontera";
+	end;
+}

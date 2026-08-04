@@ -1,0 +1,110 @@
+//===== Guerra do Emperium ===================================
+//= Mesmerita
+//===== Onde =================================================
+//= prontera 144,173 - rua principal, sete celulas a oeste do
+//= Chapeleiro do Mercado Contemporaneo (151,173). A celula foi
+//= conferida no prontera.gat DESTE cliente antes de plantar:
+//= tipo 0, andavel, e a rua inteira de x=139 a x=165 esta livre
+//= nessa altura.
+//===== Descricao ============================================
+//= Reseta habilidades, atributos ou os dois. De graca, sem
+//= limite de uso.
+//===== De onde veio o nome ==================================
+//= Pedido do dono do projeto em 2026-08-04: "no bRO tinha uma
+//= NPC chamada Mesmerita em prontera que basicamente resetava
+//= habilidades e atributos".
+//=
+//= PROCUREI E NAO ACHEI, e vale registrar para ninguem refazer
+//= a busca. O `navi_npc_br.lub` do GRF do bRO - que e a tabela
+//= de NPC por mapa e coordenada, em portugues, e a fonte que
+//= PENDENCIAS.md aponta para nome de NPC - NAO tem "Mesmerita",
+//= nem "esmerit" como pedaco. O bRO de hoje nao tem essa NPC.
+//=
+//= Entao ela e NOSSA, com o nome que o dono do projeto lembra.
+//= O corpo veio do npc/custom/resetnpc.txt do proprio rAthena
+//= (a "Reset Girl", que ja vinha no vendor desligada) - mesmo
+//= sprite, mesma sequencia de reset, mesmo `sc_end_class`.
+//===== Notas ================================================
+//= DE GRACA, decidido em 2026-08-04. A Reset Girl do rAthena
+//= cobra 5.000z/5.000z/9.000z e tem campo de limite de usos; os
+//= quatro numeros sairam. Se um dia isso tiver de voltar, o
+//= molde original esta em npc/custom/resetnpc.txt, intacto -
+//= aquele arquivo continua desligado e nao foi tocado.
+//=
+//= As DUAS confirmacoes existem porque reset nao tem volta:
+//= escolher o servico nao executa nada, so pergunta de novo.
+//= Mesma forma do Mestre de UP.
+//=
+//= `sc_end_class` ANTES do ResetSkill nao e enfeite. Habilidade
+//= que deixa status ligado (Aumentar HP, Concentracao, e as
+//= permanentes de classe) continuaria valendo depois de a
+//= habilidade sumir - o jogador ficaria com bonus de uma
+//= habilidade que nao tem mais. O rAthena poe essa linha na
+//= Reset Girl pelo mesmo motivo (resetnpc.txt, versao 1.5).
+//=
+//= O sprite e o 124 (JT_4_F_TELEPORTER), o mesmo da Reset Girl.
+//= Conferido no npcidentity.lub DESTE cliente - a armadilha do
+//= Mestre de Classe (10605, que este cliente de 2021 nao
+//= desenha) vale para todo sprite novo, entao nenhum entra sem
+//= essa conferencia.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do patch AlwaysAscii - ver PENDENCIAS.md,
+//= secao "Acentuacao no dialogo". Gravar em UTF-8 poe dois bytes
+//= por acento e sai lixo na tela.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,144,173,4	script	Mesmerita	124,{
+	mes "[Mesmerita]";
+	mes "Olá! Eu sou a Mesmerita.";
+	mes "Se você se arrependeu de como";
+	mes "distribuiu os seus pontos, eu";
+	mes "desfaço - e não cobro nada por isso.";
+	next;
+	switch (select("^FF3355Zerar as habilidades^000000:^FF3355Zerar os atributos^000000:^FF3355Zerar os dois^000000:Deixa pra lá")) {
+	case 1:
+		.@fazer = 1;
+		.@oque$ = "as suas habilidades";
+		break;
+	case 2:
+		.@fazer = 2;
+		.@oque$ = "os seus atributos";
+		break;
+	case 3:
+		.@fazer = 3;
+		.@oque$ = "as suas habilidades E os seus atributos";
+		break;
+	default:
+		mes "[Mesmerita]";
+		mes "Sem problema.";
+		mes "Estou aqui quando precisar.";
+		close;
+	}
+	mes "[Mesmerita]";
+	mes "Então vou zerar " + .@oque$ + ".";
+	mes "Os pontos voltam todos para a sua";
+	mes "mão, mas o que estava distribuído";
+	mes "^FF3355se perde na hora^000000 - não dá para";
+	mes "desfazer depois. Tem certeza?";
+	next;
+	if (select("Melhor não:Tenho certeza") == 1) {
+		mes "[Mesmerita]";
+		mes "Então deixa como está.";
+		mes "É sua a decisão.";
+		close;
+	}
+	if (.@fazer & 1) {
+		sc_end_class;
+		ResetSkill;
+	}
+	if (.@fazer & 2)
+		ResetStatus;
+	mes "[Mesmerita]";
+	mes "Pronto. Agora é só distribuir";
+	mes "de novo, com calma.";
+	mes "Volte sempre que precisar.";
+	close;
+}

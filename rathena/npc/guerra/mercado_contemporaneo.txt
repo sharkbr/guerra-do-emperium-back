@@ -92,21 +92,35 @@
 //= ------------------------------------------------------------
 //= O QUE FICOU DE FORA, E POR QUE
 //=
-//= Sem arte no nosso GRF (o `View` nem existe no accessoryid.lub
-//= deste cliente, entao instala_visual.py tambem nao cura):
-//=   410124  Orelhas em Chamas            (era do Ocleiro)
-//=   410142  Adorno Angelical             (era do Ocleiro)
-//=   410139  Tiara de Asmodeus            (era do Ocleiro)
-//= Conferir com `python valida_visual.py --id <n>`.
+//= NAO HA MAIS ITEM FORA POR FALTA DE ARTE. Em 2026-08-04 os
+//= tres ultimos entraram, e com eles fechou-se o assunto que
+//= tinha aberto em 2026-08-01:
+//=   410124  Orelhas em Chamas    View 2212   -> Ocleiro
+//=   410142  Adorno Angelical     View 2250   -> Ocleiro
+//=   410140  Tiara de Asmodeus    View 2249   -> Ocleiro
 //=
-//= O QUARTO VOLTOU. Em 2026-08-02 o 400287 (Capacete de
-//= Intensificacao) entrou no Chapeleiro. O que faltava nele nao
-//= era arquivo de arte - era a ENTRADA de tabela que diz ao
-//= cliente que o slot visual 2260 existe. O
-//= `ferramentas/estende_accessoryid.py` grava essa entrada em
-//= `cliente\data\`, e depois dela o instala_visual.py achou as 4
-//= sprites de cabeca na GRF do bRO. Os tres acima se resolvem
-//= pelo mesmo caminho quando forem pedidos.
+//= O caminho foi o mesmo que o 400287 tinha estreado em
+//= 2026-08-02, e agora esta confirmado como receita, nao sorte.
+//= Sao DUAS ferramentas, nesta ordem, e nenhuma sozinha resolve:
+//=
+//=   1) `ferramentas/estende_accessoryid.py --id <n> --grf <bRO>`
+//=      ensina ao cliente que o slot de visual EXISTE. Sem esta
+//=      entrada de tabela nao ha arquivo que ele va procurar -
+//=      e por isso o instala_visual.py sozinho nao curava.
+//=   2) `ferramentas/instala_visual.py --id <n> --grf <bRO>`
+//=      copia os 8 arquivos de arte da GRF do bRO.
+//=
+//= Os dois gravam em `cliente\data\`, que o DataFolderFirst faz
+//= vencer o GRF - o GRF nunca e aberto para escrita. Como o
+//= cliente le essas tabelas so na INICIALIZACAO, quem estiver
+//= com o cliente aberto de antes tem de fechar e reabrir.
+//= Conferir com `python valida_visual.py --id <n>`: 0 faltando.
+//=
+//= ATENCAO ao ID da Tiara de Asmodeus. Ate 2026-08-02 este
+//= cabecalho dizia 410139; o que entrou foi o 410140. Sao dois
+//= itens de verdade, a versao sem cova e a com cova
+//= (Hairband_Of_Asmodeus e Hairband_Of_Asmodeus_), e a lista
+//= pedia "[1]", que e a segunda.
 //=
 //= Nao localizados em tabela nenhuma - nem no rAthena, nem nos
 //= 18845 nomes do bRO. Podem ser nome de outro servidor ou de
@@ -115,6 +129,14 @@
 //=   "Tapa Olho do orc heroi"      (era do Ocleiro)
 //=   "Grevas de Fafnir"            (era do Sapateiro)
 //=   "Capa da Terra"               (era do Capeiro)
+//=   "Chapeu de Kiwawa" 401147     (era do Chapeleiro)
+//=
+//= Sobre o "Chapeu de Kiwawa": o ID 401147 nao existe em lugar
+//= nenhum - nem no item_db do rAthena, nem nos 18845 itens do
+//= bRO, nem no itemInfo.lua do cliente. So ha UM item Kiwawa
+//= que existe, o 400597 "Cauboi de Kiwawa" [1], chapeu de topo
+//= de Rockridge, e o dono do projeto mandou po-lo no lugar em
+//= 2026-08-04. Foi o que entrou no Chapeleiro.
 //=
 //= Sobre a "Capa da Terra": a familia existe, mas nao tem terra.
 //= Sao tres, e o terceiro e gelo - 20734 Capa do Vento, 20735
@@ -144,7 +166,14 @@
 
 // ----- Fileira de cima (y=173): cabeca -----------------------
 
-// Cabeca topo. Fora: so o "Chapeu do Atirador" (nao localizado).
+// Cabeca topo. Fora: o "Chapeu do Atirador" e o "Chapeu de
+// Kiwawa" 401147, os dois nao localizados - ver o cabecalho.
+//
+// DOIS ENTRARAM em 2026-08-04, e os dois ja tinham os 8 recursos
+// no nosso GRF, sem precisar de ferramenta nenhuma:
+//   400213  Asas de Yggdrasil [1]   (View 2198)
+//   400597  Cauboi de Kiwawa  [1]   (View 1569), no lugar do
+//                                   401147 pedido, que nao existe.
 // O 400687 e placeholder e de proposito NAO tem `View`: sem arte
 // no GRF, dar View a ele seria trocar "invisivel na cabeca" por
 // "caixa de erro".
@@ -154,12 +183,23 @@
 // vivem em db/guerra/item_db.yml, na secao OVERRIDES - a versao
 // do db/re/ e a do kRO, com outros efeitos, e nao bate com a
 // descricao que o cliente mostra.
-prontera,151,173,4	shop	Chapeleiro	1_M_MERCHANT,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1
+prontera,151,173,4	shop	Chapeleiro	1_M_MERCHANT,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1
 
-// Cabeca meio. A mais castigada: 3 dos 7 pedidos nao tem arte
-// (410124, 410142, 410139) e o "Tapa Olho do orc heroi" nao
-// existe em tabela nenhuma. Sobraram tres.
-prontera,155,173,4	shop	Ocleiro	4_F_01,19024:1,2204:1,19445:1
+// Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
+// dos 7 pedidos nao tinham arte e um nao existia em tabela
+// nenhuma, e a loja abriu com tres itens.
+//
+// FECHOU EM 2026-08-04 com sete. Os tres sem arte entraram pelo
+// par estende_accessoryid.py + instala_visual.py (a receita esta
+// no cabecalho), e o Tapa-Olho Cosmico veio inteiro do GRF:
+//   19443   Tapa-Olho Cosmico       (View 800, ja tinha arte)
+//   410124  Orelhas em Chamas       (View 2212, destravado)
+//   410142  Adorno Angelical  [1]   (View 2250, destravado)
+//   410140  Tiara de Asmodeus [1]   (View 2249, destravado)
+//
+// O unico que continua fora e o "Tapa Olho do orc heroi", que
+// nao existe em tabela nenhuma.
+prontera,155,173,4	shop	Ocleiro	4_F_01,19024:1,2204:1,19445:1,19443:1,410124:1,410142:1,410140:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 prontera,159,173,4	shop	Retoqueiro	1_F_MERCHANT_02,19381:1,420110:1,420236:1,420010:1
@@ -173,7 +213,17 @@ prontera,159,173,4	shop	Retoqueiro	1_F_MERCHANT_02,19381:1,420110:1,420236:1,420
 // fecha a familia.
 // O Ceuci (510155) e exclusivo do bRO e nunca vai vir do
 // rAthena - o placeholder dele e permanente.
-prontera,151,167,4	shop	Senhor das Armas	1_M_SMITH,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1
+//
+// TRES ENTRARAM em 2026-08-04, e sao de familias diferentes:
+//   510146  Jurupari       [2]  placeholder, e a OUTRA METADE do
+//                               conjunto do Ceuci - tambem
+//                               exclusivo do bRO, tambem
+//                               permanente. Arte ja no GRF.
+//   1132    Lamina Turca        do rAthena de sempre, inteiro.
+//   510147  Adaga dos Orcs [2]  placeholder; a arte veio da GRF
+//                               do bRO. E a unica arma da loja
+//                               que pede nivel 1 e nao 99/100.
+prontera,151,167,4	shop	Senhor das Armas	1_M_SMITH,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -198,7 +248,11 @@ prontera,151,161,4	shop	Capeiro	1_F_MERCHANT_01,480220:1,20735:1,20734:1,20745:1
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
 // nao tem calcado.
-prontera,155,161,4	shop	Sapateiro	4_M_02,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1
+//
+// O 470274 (Botas de Guivra [1]) entrou em 2026-08-04. Ja
+// estava no item_db do rAthena; o que faltava eram os 4
+// arquivos de arte, trazidos da GRF do bRO.
+prontera,155,161,4	shop	Sapateiro	4_M_02,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
