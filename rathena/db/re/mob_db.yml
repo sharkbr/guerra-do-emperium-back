@@ -120894,3 +120894,12 @@ Body:
 #    AegisName: HUNTING_GID_DEFAULT
 #  - Id: 32000
 #    AegisName: MONSTER_2ND_END
+
+# Guerra do Emperium: unicas linhas nossas neste arquivo do rAthena. Este
+# mob_db nao trazia Footer nenhum, entao o import teve de ser criado - sem
+# ele nao existe caminho para acrescentar nada ao banco de monstros, nem
+# mesmo db/import/mob_db.yml. Os nossos nomes em portugues ficam todos em
+# db/guerra/mob_db.yml.
+Footer:
+  Imports:
+    - Path: db/guerra/mob_db.yml

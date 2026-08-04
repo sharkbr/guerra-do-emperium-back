@@ -1,5 +1,5 @@
 //===== Guerra do Emperium ===================================
-//= Emissario da Ordem
+//= Emissário da Ordem
 //===== Onde =================================================
 //= iz_int 18,32 - o navio da introducao, onde o personagem
 //= recem-criado nasce (start_point de conf/char_athena.conf e
@@ -20,8 +20,11 @@
 //= conferido no npcidentity.lub (405.0), no jobname.lub e no
 //= data.grf DESTE cliente - o .spr e o .act estao la.
 //=
-//= Os textos estao SEM ACENTO de proposito - ver o cabecalho do
-//= mestre_de_up.txt e PENDENCIAS.md, secao "Acentuacao no dialogo".
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do patch AlwaysAscii - ver PENDENCIAS.md,
+//= secao "Acentuacao no dialogo". Gravar em UTF-8 poe dois bytes
+//= por acento e sai lixo na tela.
 //=
 //= A "Maca da Inocencia" e o item 30999, definido em
 //= db/guerra/item_db.yml. Quem a consome sao a Cavaleira Apressada
@@ -65,7 +68,7 @@
 //= Quem acrescentar caminho de saida aqui tem de limpar tambem.
 //============================================================
 
-iz_int,18,32,4	script	Emissario da Ordem#iz_int	405,{
+iz_int,18,32,4	script	Emissário da Ordem#iz_int	405,{
 
 	// O retrato acompanha a conversa inteira, entao e ligado antes de
 	// qualquer `mes` - e antes do desvio, para valer nos dois caminhos.
@@ -77,23 +80,23 @@ iz_int,18,32,4	script	Emissario da Ordem#iz_int	405,{
 		goto L_Embarque;
 
 	mes .npc$;
-	mes "Depois que meteoro caiu corremos pra ca pra saber o que tinha acontecido e o cenario foi devastador!";
+	mes "Depois que o meteoro caiu corremos pra cá pra saber o que tinha acontecido, e o cenário foi devastador!";
 	mes " ";
-	mes "Mas o show nao pode parar.";
+	mes "Mas o show não pode parar.";
 
 	next;
 	mes .npc$;
-	mes "Aqui em ^0055FFValhalla caida^000000 voce vai receber uma ^BB0000Maca da Inocencia^000000, e quanto mais tempo voce resistir sem usar atalhos maior sera sua retribuicao no final da jornada!";
+	mes "Aqui em ^0055FFValhalla caída^000000 você vai receber uma ^BB0000Maçã da Inocência^000000, e quanto mais tempo você resistir sem usar atalhos maior será sua retribuição no final da jornada!";
 	mes " ";
 	mes "- Evoluir seguindo sua jornada ou;";
-	mes "- Evoluir de forma rapida";
+	mes "- Evoluir de forma rápida";
 
 	if (!checkweight(.Maca, 1)) {
 		next;
 		mes .npc$;
-		mes "Voce nao tem como carregar a ^BB0000Maca da Inocencia^000000 agora.";
+		mes "Você não tem como carregar a ^BB0000Maçã da Inocência^000000 agora.";
 		mes " ";
-		mes "Alivie o peso e fale comigo de novo - eu nao te embarco sem ela.";
+		mes "Alivie o peso e fale comigo de novo - eu não te embarco sem ela.";
 		// close2 e nao close: depois de `close` nao roda mais nada, e o
 		// retrato ficaria grudado na tela do jogador.
 		close2;
@@ -106,9 +109,9 @@ iz_int,18,32,4	script	Emissario da Ordem#iz_int	405,{
 
 L_Embarque:
 	mes .npc$;
-	mes "O barco chegou em Izlude! Os muros de la estao um pouco destruidos, nao repare!";
+	mes "O barco chegou em Izlude! Os muros de lá estão um pouco destruídos, não repare!";
 	mes " ";
-	mes "Izlude como sempre, prepara para os novatos, mas o centro de tudo agora e prontera, de la voce parte pra qualquer jornada!";
+	mes "Izlude, como sempre, prepara os novatos, mas o centro de tudo agora é Prontera - de lá você parte pra qualquer jornada!";
 
 	close2;
 	cutin "", 255;
@@ -117,7 +120,7 @@ L_Embarque:
 	end;
 
 OnInit:
-	.npc$ = "[Emissario da Ordem]";
+	.npc$ = "[Emissário da Ordem]";
 
 	// Maca da Inocencia (db/guerra/item_db.yml).
 	.Maca = 30999;
@@ -135,7 +138,7 @@ OnInit:
 
 // As outras quatro copias do navio. O nome exibido e o mesmo nas
 // cinco; o que vem depois do '#' o cliente nao desenha.
-iz_int01,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int01	405
-iz_int02,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int02	405
-iz_int03,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int03	405
-iz_int04,18,32,4	duplicate(Emissario da Ordem#iz_int)	Emissario da Ordem#iz_int04	405
+iz_int01,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int01	405
+iz_int02,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int02	405
+iz_int03,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int03	405
+iz_int04,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int04	405

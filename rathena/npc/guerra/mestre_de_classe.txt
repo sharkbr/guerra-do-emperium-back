@@ -21,11 +21,15 @@
 //= Se um dia precisar dos dois, `npc/custom/jobmaster.txt` (do proprio
 //= rAthena) faz tudo isso - e o caminho, nao reescrever aqui.
 //===== Notas ================================================
-//= Os textos estao SEM ACENTO de proposito. O cliente roda em
-//= langtype 0 (Coreia) e ainda nao testamos como ele desenha byte
-//= acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do patch AlwaysAscii - ver PENDENCIAS.md,
+//= secao "Acentuacao no dialogo". Gravar em UTF-8 poe dois bytes
+//= por acento e sai lixo na tela.
 //= Os nomes de classe vem do proprio servidor (comando `jobname`),
-//= entao aparecem em ingles ate traduzirmos conf/msg_conf.
+//= que le a mensagem 550+ do map_msg. Como conf/guerra/
+//= map_msg_guerra.conf importa a traducao pt-BR, eles ja saem em
+//= portugues - "Espadachim", nao "Swordsman".
 //=
 //= O visual e o 811 (JT_4_F_VALKYRIE, sprite `4_F_VALKYRIE`), conferido
 //= no npcidentity.lub e no data.grf DESTE cliente. O 10605 foi cogitado
@@ -37,10 +41,10 @@ prontera,162,191,4	script	Mestre de Classe	811,{
 
 // Encerra a conversa dizendo exatamente quanto falta.
 function	Falta	{
-	mes "Ainda nao e a sua hora.";
+	mes "Ainda não é a sua hora.";
 	mes " ";
-	mes "Exigencia: ^BB0000" + getarg(0) + "^000000 de base, ^00AA00" + getarg(1) + "^000000 de classe.";
-	mes "Voce tem:  ^BB0000" + BaseLevel + "^000000 de base, ^00AA00" + JobLevel + "^000000 de classe.";
+	mes "Exigência: ^BB0000" + getarg(0) + "^000000 de base, ^00AA00" + getarg(1) + "^000000 de classe.";
+	mes "Você tem:  ^BB0000" + BaseLevel + "^000000 de base, ^00AA00" + JobLevel + "^000000 de classe.";
 	close;
 }
 
@@ -49,11 +53,11 @@ function	Falta	{
 function	ExigeDesmontar	{
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
 		mes "Antes de tudo, dispense " +
-			(checkfalcon() ? "o falcao " : "") +
+			(checkfalcon() ? "o falcão " : "") +
 			(checkcart() ? "o carrinho " : "") +
 			(checkriding() ? "o Peco " : "") +
 			(ismounting() ? "a montaria " : "") +
-			"que voce carrega.";
+			"que você carrega.";
 		close;
 	}
 	return;
@@ -62,17 +66,17 @@ function	ExigeDesmontar	{
 // Pontos de habilidade nao distribuidos sao PERDIDOS na troca.
 function	ExigeGastarPontos	{
 	if (.SkillPointCheck && SkillPoint) {
-		mes "Voce tem ^BB0000" + SkillPoint + "^000000 ponto(s) de habilidade sem gastar.";
+		mes "Você tem ^BB0000" + SkillPoint + "^000000 ponto(s) de habilidade sem gastar.";
 		mes " ";
-		mes "Distribua tudo antes de vir falar comigo. ^BB0000O que sobrar e perdido na troca.^000000";
+		mes "Distribua tudo antes de vir falar comigo. ^BB0000O que sobrar é perdido na troca.^000000";
 		close;
 	}
 	return;
 }
 
 	mes .npc$;
-	mes "Eu decido ^0055FFo que^000000 voce vira.";
-	mes "Quem decide ^0055FFquando^000000 e o seu nivel.";
+	mes "Eu decido ^0055FFo que^000000 você vira.";
+	mes "Quem decide ^0055FFquando^000000 é o seu nível.";
 
 	ExigeDesmontar();
 	ExigeGastarPontos();
@@ -177,18 +181,18 @@ function	ExigeGastarPontos	{
 		mes .npc$;
 		if (@gde_falta[0])
 			Falta(@gde_falta[0], @gde_falta[1]);
-		mes "Nao tenho mais nada a lhe oferecer.";
-		mes "Voce chegou ao fim do seu caminho.";
+		mes "Não tenho mais nada a lhe oferecer.";
+		mes "Você chegou ao fim do seu caminho.";
 		close;
 	}
 
 	next;
 	mes .npc$;
-	mes "Escolha o que voce quer ser:";
+	mes "Escolha o que você quer ser:";
 	.@menu$ = "";
 	for (.@i = 0; .@i < .@n; .@i++)
 		.@menu$ = .@menu$ + " ~ " + ((.@opt[.@i] == Job_Novice_High) ? "^0055FFRenascer^000000" : jobname(.@opt[.@i])) + ":";
-	.@menu$ = .@menu$ + " ~ ^777777Deixa pra la^000000";
+	.@menu$ = .@menu$ + " ~ ^777777Deixa pra lá^000000";
 
 	.@escolha = select(.@menu$) - 1;
 	if (.@escolha < 0 || .@escolha >= .@n)
@@ -201,22 +205,22 @@ function	ExigeGastarPontos	{
 	if (.@classe == Job_Super_Novice && BaseLevel < .SuperNovicoBase) {
 		next;
 		mes .npc$;
-		mes "Super Novico exige nivel de base ^BB0000" + .SuperNovicoBase + "^000000.";
-		mes "Voce tem ^BB0000" + BaseLevel + "^000000.";
+		mes "Super Noviço exige nível de base ^BB0000" + .SuperNovicoBase + "^000000.";
+		mes "Você tem ^BB0000" + BaseLevel + "^000000.";
 		close;
 	}
 
 	next;
 	mes .npc$;
 	if (.@classe == Job_Novice_High) {
-		mes "Renascer nao e promocao. E recomeco.";
+		mes "Renascer não é promoção. É recomeço.";
 		mes " ";
-		mes "^BB0000Voce volta ao nivel 1, de base e de classe.^000000";
-		mes "Em troca, sobe de novo com mais forca e chega mais longe.";
+		mes "^BB0000Você volta ao nível 1, de base e de classe.^000000";
+		mes "Em troca, sobe de novo com mais força e chega mais longe.";
 	} else
 		mes "Confirma virar ^0055FF" + jobname(.@classe) + "^000000?";
 
-	if (select(" ~ Confirmar: ~ ^777777Deixa pra la^000000") != 1)
+	if (select(" ~ Confirmar: ~ ^777777Deixa pra lá^000000") != 1)
 		close;
 
 	if (.@classe == Job_Novice_High)
@@ -234,7 +238,7 @@ function	ExigeGastarPontos	{
 
 	next;
 	mes .npc$;
-	mes "Feito. Agora voce e ^0055FF" + jobname(Class) + "^000000.";
+	mes "Feito. Agora você é ^0055FF" + jobname(Class) + "^000000.";
 	close;
 
 OnInit:

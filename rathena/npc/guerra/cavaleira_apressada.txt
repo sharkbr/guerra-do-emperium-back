@@ -33,8 +33,11 @@
 //= data.grf) e nao colide com NPC do rAthena - o mais perto e o
 //= Odgnalam, em 182,218.
 //=
-//= Os textos estao SEM ACENTO de proposito - ver o cabecalho do
-//= mestre_de_up.txt e PENDENCIAS.md, secao "Acentuacao no dialogo".
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do patch AlwaysAscii - ver PENDENCIAS.md,
+//= secao "Acentuacao no dialogo". Gravar em UTF-8 poe dois bytes
+//= por acento e sai lixo na tela.
 //=
 //= A Maca da Inocencia e o item 30999 (db/guerra/item_db.yml), entregue
 //= pelo Emissario da Ordem ainda no navio da introducao.
@@ -77,26 +80,26 @@
 izlude,185,213,4	script	Cavaleira Apressada	469,{
 
 	mes .npc$;
-	mes "Ola viajante!";
-	mes "Se me deixar colocar a mao na sua ^BB0000maca^000000 te deixo do jeito que voce precisa e na posicao que voce precisa, level ^0055FF10/10^000000, do jeito que voce merece!";
+	mes "Olá viajante!";
+	mes "Se me deixar colocar a mão na sua ^BB0000maçã^000000 te deixo do jeito que você precisa e na posição que você precisa, level ^0055FF10/10^000000, do jeito que você merece!";
 
-	if (select(" ~ Pode pegar: ~ ^777777Nao, deixa pra la^000000") != 1)
+	if (select(" ~ Pode pegar: ~ ^777777Não, deixa pra lá^000000") != 1)
 		close;
 
 	// Terceiro momento: e so aqui que a Maca e cobrada e que a guarda
 	// de nivel aparece. Ver o cabecalho.
 	next;
 	mes .npc$;
-	mes "Otimo! Me da essa ^BB0000maca^000000 aqui e nao pisca.";
+	mes "Ótimo! Me dá essa ^BB0000maçã^000000 aqui e não pisca.";
 	mes " ";
 	mes "...";
 
 	if (BaseLevel > .Nivel || JobLevel > .Nivel) {
 		mes " ";
-		mes "...ah. Voce ja passou disso ha tempo, viajante.";
-		mes "Se eu te puser em ^0055FF10/10^000000 agora eu te empurro pra tras, nao pra frente.";
+		mes "...ah. Você já passou disso há tempo, viajante.";
+		mes "Se eu te puser em ^0055FF10/10^000000 agora eu te empurro pra trás, não pra frente.";
 		mes " ";
-		mes "Guarda essa maca. Ela vale mais nas maos de quem esta comecando.";
+		mes "Guarda essa maçã. Ela vale mais nas mãos de quem está começando.";
 		close;
 	}
 
@@ -104,17 +107,17 @@ izlude,185,213,4	script	Cavaleira Apressada	469,{
 	// iria embora a toa. So chega aqui quem nao passou de 10 nos dois.
 	if (BaseLevel == .Nivel && JobLevel == .Nivel) {
 		mes " ";
-		mes "...opa. Olha so, voce ja esta em ^0055FF10/10^000000 - chegou sozinho.";
+		mes "...opa. Olha só, você já está em ^0055FF10/10^000000 - chegou sozinho.";
 		mes " ";
-		mes "Nao vou cobrar uma maca pra te deixar do jeito que voce ja esta. Se quiser carona pra Prontera, e ali pelo portao norte.";
+		mes "Não vou cobrar uma maçã pra te deixar do jeito que você já está. Se quiser carona pra Prontera, é ali pelo portão norte.";
 		close;
 	}
 
 	if (countitem(.Maca) < 1) {
 		mes " ";
-		mes "...cade ela? Voce nao tem maca nenhuma, viajante.";
+		mes "...cadê ela? Você não tem maçã nenhuma, viajante.";
 		mes " ";
-		mes "Sem ela eu nao faco nada. Arruma uma e me chama - eu nao saio daqui.";
+		mes "Sem ela eu não faço nada. Arruma uma e me chama - eu não saio daqui.";
 		close;
 	}
 
@@ -123,7 +126,7 @@ izlude,185,213,4	script	Cavaleira Apressada	469,{
 	delitem .Maca, 1;
 
 	mes " ";
-	mes "Pronto! Agora vai - Prontera te espera, e eu ja perdi tempo demais.";
+	mes "Pronto! Agora vai - Prontera te espera, e eu já perdi tempo demais.";
 
 	BaseLevel = .Nivel;
 	JobLevel = .Nivel;

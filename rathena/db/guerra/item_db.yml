@@ -22,7 +22,7 @@ Header:
 Body:
   - Id: 30999
     AegisName: Maca_Da_Inocencia
-    Name: Maca da Inocencia
+    Name: Maçã da Inocência
     # Etc, e nao Usable, de proposito: a Maca nao e usada pelo jogador.
     # Quem a consome e o Mestre de UP (npc/guerra/mestre_de_up.txt).
     # Como Usable, o cliente ofereceria um botao de usar que nao faria
@@ -49,3 +49,956 @@ Body:
     # O item nao tem arte propria: o `resourceName` da entrada e copiado
     # byte a byte do da Maca comum, entao o desenho e o mesmo sem custar
     # arquivo nenhum. Ate aqui o nome e a descricao ja sao os nossos.
+
+# =========================================================================
+# PLACEHOLDERS DO MERCADO CONTEMPORANEO - 2026-08-01
+# =========================================================================
+#
+# ATENCAO: daqui para baixo os IDs estao FORA da nossa faixa 30000-30999,
+# e isso e deliberado. Nao sao itens nossos: sao itens REAIS do kRO/bRO que
+# o nosso rAthena vendorizado ainda nao conhece. Cada um esta no seu ID
+# oficial, o mesmo que o bRO usa.
+#
+# Como isso foi descoberto: o mercado (npc/guerra/mercado_contemporaneo.txt)
+# foi montado a partir de uma lista de nomes em portugues. A tabela
+# id -> nome do bRO foi lida do `iteminfo_new.lub` da instalacao do
+# Ragnarok Brazil desta maquina (18845 itens) - ver ferramentas/LEIAME.md,
+# secao do `completa_iteminfo.py`. Cruzando essa tabela com o nosso
+# item_db_equip.yml, 18 itens da lista simplesmente nao existiam aqui.
+#
+# PREENCHIDAS EM 2026-08-01. Quando esta secao nasceu, de manha, as 18
+# entradas eram casca vazia - `# TODO bonus` em todas, e equipar nao fazia
+# nada. A decisao de nao inventar efeito continua valendo; o que mudou e
+# que **nao foi preciso inventar**: a descricao completa de cada item, com
+# os numeros e cada bonus por extenso, estava no `iteminfo_new.lub` do bRO.
+#
+# De onde veio cada coisa:
+#
+#  | numero              | fonte                                          |
+#  |---------------------|------------------------------------------------|
+#  | ATQ, DEF, peso...   | as linhas "Tipo:/ATQ:/Peso:" da descricao      |
+#  | os bonus            | as linhas de efeito da mesma descricao         |
+#  | Range, Jobs, slot   | um item vizinho do mesmo SubType no rAthena    |
+#  | forma do Script     | o Blut_Axe (1328), que o vendor JA tinha       |
+#
+# O ultimo item e o que deu confianca ao resto: **duas das quinze armas
+# Brutais ja existiam no rAthena** (Blut_Axe 1328 e Blut_Spear 32014), com
+# o script escrito por eles. As treze que faltavam seguem o mesmo molde,
+# com os numeros que a descricao do bRO manda. Nao e traducao livre: e
+# preencher a lacuna de uma familia que ja estava meio implementada.
+#
+# ONDE AINDA HA `# TODO`: efeito que o rAthena nao expressa com `bonus`,
+# e bonus de CONJUNTO. Conjunto exige a outra peca do set, que em geral
+# nem esta no servidor - implementar so a metade daria bonus fantasma.
+# Cada TODO cita a linha em portugues que ficou de fora, para nao ser
+# preciso reabrir a descricao para saber o que falta.
+#
+# O `AegisName` e o `Name` em ingles sao NOSSOS e provisorios. A linha
+# "Brutal" do bRO e a familia `Blut_` do rAthena (Blut_Axe 1328 e
+# Blut_Spear 32014 ja existiam no vendor), entao os treze que faltavam
+# seguem o mesmo prefixo. Se um dia o rAthena trouxer estes itens de
+# verdade, o `Footer: Imports:` faz o NOSSO arquivo ser lido DEPOIS do
+# db/re/item_db.yml - entao estas entradas venceriam a versao boa, calado.
+# **Ao atualizar o rathena/, conferir esta secao antes de qualquer coisa.**
+#
+# Peso 0 nas treze Brutais nao e descuido: e o que a descricao do bRO diz
+# ("Peso: 0"). A familia inteira e sem peso.
+
+  # ----- Linha Brutal (bRO "Brutal", familia Blut_ do rAthena) ----------
+  #
+  # O vendor so tinha 2 dos 15: Blut_Axe (1328) e Blut_Spear (32014). As
+  # treze abaixo completam a linha, no molde do 1328.
+  #
+  # A familia inteira compartilha um esqueleto, e so tres coisas variam
+  # de arma para arma: o dano base contra Humano/Doram, se tem ou nao a
+  # resistencia de 30%, e um efeito exclusivo em quatro delas.
+  #
+  #   .@r = getrefine();
+  #   bonus bUnbreakableWeapon;                    # todas menos a 28248
+  #   bonus2 bSubRace,RC_Player_(Human|Doram),30;  # so em algumas
+  #   bonus2 bAddRace,RC_Player_(Human|Doram),N;   # N varia: 25 a 95
+  #   bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+  #   +8: mais 35   |   +9: mais 20   |   +10: HP e SP max +15%
+  #
+  # Todas: peso 0, nivel de arma 4, nivel minimo 100, sem slot.
+  #
+  # O 28248 (Lanca-Granadas) e o unico SEM `bUnbreakableWeapon`, e nao e
+  # esquecimento meu: a descricao do bRO nao traz a linha "Indestrutivel
+  # em batalha" que todas as outras doze trazem. Mantido como esta la.
+
+  - Id: 13147
+    AegisName: Blut_Revolver
+    Name: Brute Revolver          # bRO: Pistola Brutal
+    Type: Weapon
+    SubType: Revolver
+    Attack: 70
+    Range: 7
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,50;
+      bonus2 bAddRace,RC_Player_Doram,50;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 13342
+    AegisName: Blut_Huuma
+    Name: Brute Huuma Shuriken    # bRO: Shuriken Huuma Brutal
+    Type: Weapon
+    SubType: Huuma
+    Attack: 150
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Ninja: true
+      KagerouOboro: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,95;
+      bonus2 bAddRace,RC_Player_Doram,95;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 16082
+    AegisName: Blut_Mace
+    Name: Brute Mace              # bRO: Maca Brutal
+    Type: Weapon
+    SubType: Mace
+    Attack: 120
+    Range: 1
+    # "Espadachins, Novicos, Mercadores e evolucoes". As evolucoes de 2a
+    # classe entram na lista uma a uma - no rAthena cada uma e uma chave
+    # propria; o `Classes` abaixo e que cobre 3a e 4a.
+    Jobs:
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+      Knight: true
+      Crusader: true
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bAddRace,RC_Player_Human,60;
+      bonus2 bAddRace,RC_Player_Doram,60;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 18171
+    AegisName: Blut_Bow
+    Name: Brute Bow               # bRO: Arco Brutal
+    Type: Weapon
+    SubType: Bow
+    Attack: 160
+    Range: 5
+    # "Arqueiros, Arruaceiros e evolucoes" - Arruaceiro e o Rogue, nao o
+    # Gatuno (Thief). Por isso Thief NAO entra: a descricao nomeia o
+    # Rogue diretamente, e ele ja e uma evolucao.
+    Jobs:
+      Archer: true
+      Hunter: true
+      BardDancer: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,50;
+      bonus2 bAddRace,RC_Player_Doram,50;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 26141
+    AegisName: Blut_Staff
+    Name: Brute Staff             # bRO: Cetro Brutal
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 60
+    MagicAttack: 180
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+      Mage: true
+      Wizard: true
+      Sage: true
+      SoulLinker: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    # A unica MAGICA da familia, e por isso a unica que foge do molde:
+    # bMagicAddRace no lugar de bAddRace, bIgnoreMdefRaceRate no lugar de
+    # bIgnoreDefRaceRate, e os degraus sao +20/+10 em vez de +35/+20.
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAddRace,RC_Player_Human,25;
+      bonus2 bMagicAddRace,RC_Player_Doram,25;
+      bonus2 bIgnoreMdefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bMagicAddRace,RC_Player_Human,20;
+         bonus2 bMagicAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAddRace,RC_Player_Human,10;
+         bonus2 bMagicAddRace,RC_Player_Doram,10;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 26206
+    AegisName: Blut_Whip
+    Name: Brute Whip              # bRO: Chicote Brutal
+    Type: Weapon
+    SubType: Whip
+    Attack: 150
+    MagicAttack: 120
+    Range: 2
+    # "Musas" e a Dancer. No rAthena Bardo e Musa dividem a mesma chave
+    # (`BardDancer`); quem separa na pratica e o tipo da arma, que so a
+    # Musa equipa.
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bAddRace,RC_Player_Human,80;
+      bonus2 bAddRace,RC_Player_Doram,80;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 28033
+    AegisName: Blut_Katar
+    Name: Brute Katar             # bRO: Katar Brutal
+    Type: Weapon
+    SubType: Katar
+    Attack: 150
+    Range: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    # A descricao do bRO diz "Duplica a chance de causar um ataque
+    # critico", e NAO ha bonus para isso aqui de proposito: no rAthena
+    # dobrar o critico e propriedade do tipo Katar, aplicada no
+    # src/map/battle.cpp. Por um `bonus bCritical` dobraria de novo.
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,60;
+      bonus2 bAddRace,RC_Player_Doram,60;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  # As quatro de Justiceiro (13147 ja acima, e as quatro a seguir) tem um
+  # efeito exclusivo cada, ligado a um atributo BASE e a uma habilidade.
+  # O nome da habilidade veio em portugues na descricao; a constante foi
+  # obtida do `skillinfolist.lub` da GRF do bRO, que mapeia SKID -> nome
+  # em portugues - mesma tecnica que resolveu os nomes de item:
+  #
+  #   Execucao      = RL_HAMMER_OF_GOD      Rifle,          INT
+  #   Expurgar      = RL_R_TRIP             Metralhadora,   AGI
+  #   Calibre Letal = RL_SLUGSHOT           Espingarda,     FOR
+  #   Lancar Missil = RL_D_TAIL             Lanca-Granadas, SOR (LUK)
+  #
+  # `readparam(bInt)/10` e `readparam(bInt)>=110` sao o idioma que o
+  # proprio item_db do rAthena usa para "a cada 10 de X base" e "X base
+  # 110 ou mais" - conferido em 53 itens dele.
+
+  - Id: 28245
+    AegisName: Blut_Rifle
+    Name: Brute Rifle             # bRO: Rifle Brutal
+    Type: Weapon
+    SubType: Rifle
+    Attack: 170
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,60;
+      bonus2 bAddRace,RC_Player_Doram,60;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7*(readparam(bInt)/10);
+      if (readparam(bInt)>=110)
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+
+  - Id: 28246
+    AegisName: Blut_Gatling
+    Name: Brute Gatling Gun       # bRO: Metralhadora Brutal
+    Type: Weapon
+    SubType: Gatling
+    Attack: 120
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,60;
+      bonus2 bAddRace,RC_Player_Doram,60;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+      bonus2 bSkillAtk,"RL_R_TRIP",7*(readparam(bAgi)/10);
+      if (readparam(bAgi)>=110)
+         bonus2 bSkillAtk,"RL_R_TRIP",30;
+
+  - Id: 28247
+    AegisName: Blut_Shotgun
+    Name: Brute Shotgun           # bRO: Espingarda Brutal
+    Type: Weapon
+    SubType: Shotgun
+    Attack: 180
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    # TODO efeito nao implementado: "Mantem [Espalhar Dano] ativo."
+    #      Nao ha `bonus` no rAthena que mantenha uma habilidade ligada,
+    #      e "Espalhar Dano" nao existe na tabela de habilidades do bRO
+    #      (o `GS_SPREADATTACK` de la chama-se "Disparo Espalhado"). Sem
+    #      saber que habilidade e, nem custom da para escrever.
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,80;
+      bonus2 bAddRace,RC_Player_Doram,80;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+      bonus2 bSkillAtk,"RL_SLUGSHOT",7*(readparam(bStr)/10);
+      if (readparam(bStr)>=110)
+         bonus2 bSkillAtk,"RL_SLUGSHOT",30;
+
+  - Id: 28248
+    AegisName: Blut_Grenade_Launcher
+    Name: Brute Grenade Launcher  # bRO: Lanca-Granadas Brutal
+    Type: Weapon
+    SubType: Grenade
+    Attack: 210
+    Range: 9
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    # SEM `bUnbreakableWeapon`, e nao e esquecimento: e a unica das treze
+    # cuja descricao no bRO nao traz "Indestrutivel em batalha". Tambem e
+    # a de maior ATQ da familia (210), o que sugere troca deliberada.
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_Player_Human,30;
+      bonus2 bSubRace,RC_Player_Doram,30;
+      bonus2 bAddRace,RC_Player_Human,50;
+      bonus2 bAddRace,RC_Player_Doram,50;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+      bonus2 bSkillAtk,"RL_D_TAIL",7*(readparam(bLuk)/10);
+      if (readparam(bLuk)>=110)
+         bonus2 bSkillAtk,"RL_D_TAIL",30;
+
+  - Id: 28746
+    AegisName: Blut_Gladius
+    Name: Brute Gladius           # bRO: Gladius Brutal
+    Type: Weapon
+    # Dagger, e nao Sword: a faixa 287xx inteira e Dagger no rAthena
+    # (28740 e 28744 sao os vizinhos). O nome "Gladius" engana.
+    SubType: Dagger
+    Attack: 120
+    Range: 1
+    Jobs:
+      Swordman: true
+      Knight: true
+      Crusader: true
+      Mage: true
+      Wizard: true
+      Sage: true
+      Archer: true
+      Hunter: true
+      BardDancer: true
+      Thief: true
+      Assassin: true
+      Rogue: true
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+      Ninja: true
+      KagerouOboro: true
+      SoulLinker: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bAddRace,RC_Player_Human,60;
+      bonus2 bAddRace,RC_Player_Doram,60;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  - Id: 32100
+    AegisName: Blut_Guitar
+    Name: Brute Guitar            # bRO: Guitarra Brutal
+    Type: Weapon
+    SubType: Musical
+    Attack: 150
+    MagicAttack: 120
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bAddRace,RC_Player_Human,80;
+      bonus2 bAddRace,RC_Player_Doram,80;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
+
+  # ----- Avulsos ------------------------------------------------------
+
+  - Id: 510155
+    AegisName: Ceuci
+    # Item EXCLUSIVO do bRO, de folclore brasileiro - nao existe no kRO,
+    # entao o rAthena nunca vai traze-lo. Esta entrada e permanente, nao
+    # provisoria como as de cima.
+    Name: Ceuci
+    Type: Weapon
+    SubType: Dagger
+    Attack: 170
+    MagicAttack: 100
+    Weight: 60
+    Slots: 2
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+      Knight: true
+      Crusader: true
+      Archer: true
+      Hunter: true
+      BardDancer: true
+      Thief: true
+      Assassin: true
+      Rogue: true
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+      Ninja: true
+      KagerouOboro: true
+      Mage: true
+      Wizard: true
+      Sage: true
+      SoulLinker: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 99
+    Refineable: true
+    # TODO efeito nao implementado: "Refino +11 ou mais: ao receber danos
+    #      magicos, 10% de chance de remover Hipotermia e Cristalizacao."
+    #      O rAthena tem `bonus3 bAutoSpellWhenHit`, que CONJURA algo, mas
+    #      nao um bonus que REMOVA status ao apanhar. Exigiria codigo em
+    #      src/custom/.
+    # TODO conjunto [Jurupari]: resistencia adicional, HP/SP max, DEF/DEFM
+    #      e autoconjuracao de Reflexao Magica conforme a soma dos refinos.
+    #      Nao implementado porque a outra peca do conjunto nao esta no
+    #      servidor - metade de um set daria bonus fantasma.
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,.@r;
+      bonus bDef,30*(.@r/2);
+      bonus bMdef,5*(.@r/2);
+      if (.@r>=9) {
+         bonus2 bSubRace,RC_Player_Human,10;
+         bonus2 bSubRace,RC_Player_Doram,10;
+      }
+      if (.@r>=13)
+         bonus bUnbreakableWeapon;
+
+  - Id: 450120
+    AegisName: Sturdy_Armor_Guerra
+    Name: Sturdy Armor            # bRO: Armadura Resistente
+    Type: Armor
+    Defense: 100
+    Weight: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    # `skill "CR_AUTOGUARD",5` e como o rAthena concede habilidade por
+    # equipamento (5 itens do item_db dele fazem exatamente isto). Some
+    # ao desequipar.
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_Undead,5+.@r;
+      bonus2 bSubEle,Ele_Dark,20+(3*.@r);
+      bonus bSPGainValue,5+(2*.@r);
+      bonus2 bSPGainRace,RC_Undead,5;
+      if (.@r>=8) {
+         skill "CR_AUTOGUARD",5;
+         bonus bUnbreakableArmor;
+      }
+      if (.@r>=10)
+         bonus bNoKnockback;
+
+  - Id: 15371
+    AegisName: Antonio_Christmas_Suit
+    Name: Antonio's Christmas Suit  # bRO: Roupa de Natal do Antonio
+    # Nao confundir com o 15249 (Antonio's Coat), que o vendor JA tem.
+    # Sao dois itens diferentes, e a lista pedia este.
+    Type: Armor
+    Defense: 0
+    Weight: 40
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    # "Resistencia as racas Humano e Humanoide" = RC_Player_Human mais
+    # RC_DemiHuman. Sao duas racas distintas no rAthena, e o bRO junta as
+    # duas na mesma frase.
+    # TODO conjunto [Carta Antonio]: anula o efeito da carta, DEF +250,
+    #      Teleporte nv.1, resistencia elemental, tolerancia a Congelamento
+    #      e imunidade a empurrao. Depende da carta 4243 estar equipada.
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-10;
+      if (.@r>=6) {
+         bonus bMdef,5;
+         bonus bFlee2,1;
+         bonus bUnbreakableArmor;
+      }
+      if (.@r>=7) {
+         bonus bMdef,10;
+         bonus bFlee2,1;
+         bonus2 bSubRace,RC_Player_Human,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+      }
+      if (.@r>=11) {
+         bonus bMdef,15;
+         bonus bFlee2,1;
+         bonus bCriticalDef,100;
+      }
+
+  - Id: 400687
+    AegisName: Devil_Claw_Guerra
+    Name: Devil Claw              # bRO: Garra Diabolica
+    Type: Armor
+    Defense: 0
+    Weight: 30
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    # SEM `View`, de proposito. `View` e o que manda o cliente desenhar o
+    # chapeu, e a arte deste nao existe no nosso GRF de 2021 - com View
+    # ele entregaria caixa modal de erro ao equipar (o caso do 420047,
+    # ver ferramentas/valida_visual.py). Sem View o item existe, equipa e
+    # nao aparece na cabeca. Para dar o visual: instala_visual.py primeiro,
+    # depois acrescentar o View aqui.
+    # TODO visual
+    # TODO efeito nao implementado: "Refino +11: ao receber danos fisicos
+    #      ou magicos, 10% de chance de infligir Medo."
+    # TODO os QUATRO conjuntos ([Vestimenta Arrogante], [Atraente],
+    #      [Exuberante] e [Consulente]). Nenhuma das armaduras esta no
+    #      servidor.
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5*.@r;
+      bonus2 bMagicAddClass,Class_All,5*.@r;
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bMatk,15*(.@r/2);
+      if (.@r>=7) {
+         bonus bDelayrate,-8;
+         bonus bVariableCastrate,-8;
+      }
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+         bonus bShortAtkRate,10;
+         bonus2 bMagicAtkEle,Ele_All,10;
+      }
+      if (.@r>=11)
+         bonus bFixedCast,-200;
+
+  - Id: 28572
+    AegisName: Celine_Brooch_BR
+    Name: Celine's Brooch (BR)    # bRO: Broche da Celine
+    # O vendor tem o 28513, tambem chamado "Celine's Brooch". Sao versoes
+    # regionais diferentes do mesmo conceito, com IDs diferentes; a lista
+    # do mercado pedia o ID do bRO.
+    Type: Armor
+    Defense: 0
+    Weight: 50
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    # TODO os TRES conjuntos. O de [Luva dos Espiritos Malignos] (2980) e
+    #      o unico viavel hoje: essa luva ESTA no servidor e no mesmo
+    #      mercado, no Acessorista. Os outros dois ([Presilha de Rosas] e
+    #      [Laco da Celine] 18849) darao para fazer quando valer a pena -
+    #      o Laco tambem ja esta na loja, no Chapeleiro.
+    Script: |
+      bonus bMaxHP,500;
+      bonus bMaxSP,250;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-10;
+      bonus bAspd,1;
+
+# =========================================================================
+# OVERRIDES - 2026-08-02
+# =========================================================================
+#
+# Terceira categoria deste arquivo, e a mais perigosa das tres. Vale ler a
+# diferenca antes de acrescentar entrada aqui:
+#
+#   30000-30999   itens NOSSOS, inventados. ID que ninguem mais usa.
+#   placeholders  itens REAIS que o nosso rAthena vendorizado nao tem.
+#                 A entrada preenche uma lacuna - nao ha versao dele
+#                 no db/re/ para atropelar.
+#   OVERRIDES     itens que o rAthena TEM, e cuja versao dele nos
+#                 substituimos de proposito. Aqui existem duas versoes
+#                 do mesmo ID, e a nossa vence.
+#
+# Por que a nossa vence: o `Footer: Imports:` do db/re/item_db.yml faz este
+# arquivo ser lido DEPOIS, e o db/re/item_db_equip.yml e importado ANTES
+# daqui, na mesma lista.
+#
+# ID repetido e MESCLADO, nao substituido - conferido em
+# src/map/itemdb.cpp, `ItemDatabase::parseBodyNode`. Ele faz
+# `find(nameid)` e, se o item ja existe, reaproveita a entrada e so
+# sobrescreve os campos que estao escritos aqui. Duas consequencias, e as
+# duas contra-intuitivas:
+#
+#   - campo OMITIDO aqui MANTEM o valor do db/re/. Nao volta ao padrao do
+#     rAthena. Entao o override so precisa listar aquilo em que discordamos
+#     - mas precisa listar TUDO em que discordamos, porque o que sobrar do
+#     item deles fica.
+#   - `Locations` e OR (`item->equip |= constant`), nao atribuicao. Nao da
+#     para tirar um slot omitindo-o; so passando `false` explicito.
+#
+# **Ao atualizar o rathena/, esta secao e a primeira a conferir**, junto com
+# a dos placeholders. Sao dois riscos diferentes:
+#
+#   - placeholder um dia some, quando o vendor trouxer o item de verdade -
+#     e ate la a nossa casca vazia atropela a versao boa, calada;
+#   - override nao some nunca (existe porque discordamos deles), mas se a
+#     versao do rAthena ganhar um campo NOVO, esse campo vaza para dentro
+#     do nosso item pela mesclagem, sem aviso.
+
+  - Id: 400287
+    # O bRO REBALANCEOU este item e o rebatizou. Nao e traducao: o kRO tem
+    # "Legacy of Wise One", com bonus ELEMENTAIS e degraus de refino +7/+9;
+    # o bRO tem "Capacete de Intensificacao", com bonus de RACA, pos-
+    # conjuracao e degraus +10/+12. Mesmo ID, dois itens diferentes.
+    #
+    # A versao do bRO e a que vale aqui, e o motivo nao e preferencia: o
+    # `itemInfo.lua` do cliente ja mostra a descricao do bRO (importada
+    # pelo ferramentas/completa_iteminfo.py em 2026-08-01, entrada [400287]).
+    # Manter os bonus do kRO no servidor faria a descricao MENTIR para o
+    # jogador - ele leria "-20% de pos-conjuracao" e receberia resistencia
+    # elemental. Entre trocar a descricao do cliente e trocar o efeito do
+    # servidor, trocar o servidor e o lado barato e o lado certo.
+    #
+    # `AegisName` preservado de proposito, igual ao do db/re/: e o mesmo ID
+    # e qualquer script que ja o referencie por nome continua valendo.
+    AegisName: Legacy_of_Wise_One_J
+    Name: Legacy of Wise One    # bRO: Capacete de Intensificacao
+    Type: Armor
+    # Peso 5 na descricao do bRO = 50 aqui (o cliente divide por 10). A
+    # versao do kRO no db/re/ pesa 500, ou seja 50 na tela - mais uma
+    # diferenca real entre os dois itens, nao erro de conversao.
+    Weight: 50
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    # `Classes: Todas` da descricao = ausencia de `Jobs:`, que no rAthena
+    # ja significa todas.
+    #
+    # View 2260 DESTRAVADO em 2026-08-02. Ate essa data este item estava
+    # fora do Mercado Contemporaneo justamente por causa dele: o 2260 nao
+    # existia no `accessoryid.lub` do nosso GRF de 2021, e sem a entrada de
+    # tabela o cliente nem sabe que esse slot de visual existe - o caso que
+    # o `instala_visual.py` sozinho nao cura. Quem resolveu foi o
+    # `ferramentas/estende_accessoryid.py`, que grava o override da tabela
+    # em `cliente\data\`. Ver ferramentas/LEIAME.md.
+    View: 2260
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bDelayrate,-20;
+      bonus2 bSubClass,Class_Normal,20;
+      bonus2 bSubClass,Class_Boss,20;
+      if (.@r>=10) {
+         bonus2 bSubRace,RC_Player_Human,13;
+         bonus2 bSubRace,RC_Player_Doram,13;
+         bonus2 bAddRace,RC_All,30;
+         bonus2 bMagicAddRace,RC_All,30;
+      }
+      if (.@r>=12) {
+         bonus bMaxHPrate,30;
+         bonus bMaxSPrate,30;
+      }

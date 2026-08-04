@@ -31,9 +31,11 @@
 //= Mestre de Classe: la o 10605 caiu porque a faixa 10xxx deste
 //= cliente para em 10508; o 10006 esta bem dentro dela.
 //=
-//= Os textos estao SEM ACENTO de proposito. O cliente roda em
-//= langtype 0 (Coreia) e ainda nao testamos como ele desenha byte
-//= acentuado. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do patch AlwaysAscii - ver PENDENCIAS.md,
+//= secao "Acentuacao no dialogo". Gravar em UTF-8 poe dois bytes
+//= por acento e sai lixo na tela.
 //=
 //= A "Maca da Inocencia" e o item 30999 (Maca_Da_Inocencia), definido
 //= em db/guerra/item_db.yml - arquivo nosso, encadeado pelo `Footer:
@@ -69,45 +71,45 @@
 prontera,160,187,4	script	Mestre de UP	10006,{
 
 	mes .npc$;
-	mes "Ola viajante!";
-	mes "Voce deve ter vindo falar comigo porque quer obter level mais rapido certo?";
+	mes "Olá viajante!";
+	mes "Você deve ter vindo falar comigo porque quer obter level mais rápido, certo?";
 
-	if (select(" ~ Sim, quero: ~ ^777777Nao, deixa pra la^000000") != 1)
+	if (select(" ~ Sim, quero: ~ ^777777Não, deixa pra lá^000000") != 1)
 		close;
 
 	next;
 	mes .npc$;
-	mes "Meu metodo de UP consiste em uma ^0055FFilusao atemporal^000000 onde voce realiza todo o treinamento de uma vez so.";
+	mes "Meu método de UP consiste em uma ^0055FFilusão atemporal^000000 onde você realiza todo o treinamento de uma vez só.";
 	mes " ";
 	// "se voce tiver uma": a fala nao pode prometer uma exigencia que o
 	// terceiro momento nao cumpre mais, ou quem chega sem a Maca recusa
 	// aqui uma oferta que ele teria recebido.
-	mes "Mas ele consome sua ^BB0000Maca da Inocencia^000000 de uma vez por todas - se voce tiver uma.";
+	mes "Mas ele consome sua ^BB0000Maçã da Inocência^000000 de uma vez por todas - se você tiver uma.";
 	mes " ";
 	mes "Tem certeza que deseja continuar?";
 
-	if (select(" ~ Sim, tenho certeza: ~ ^777777Nao, deixa pra la^000000") != 1)
+	if (select(" ~ Sim, tenho certeza: ~ ^777777Não, deixa pra lá^000000") != 1)
 		close;
 
 	// Terceiro momento: a cobranca. A Maca e levada quando existe, mas
 	// nao e condicao - ver o cabecalho. Nenhum caminho daqui recusa.
 	next;
 	mes .npc$;
-	mes "Entao me entregue sua ^BB0000Maca da Inocencia^000000.";
+	mes "Então me entregue sua ^BB0000Maçã da Inocência^000000.";
 	mes " ";
 	mes "...";
 
 	if (countitem(.Maca) > 0) {
 		delitem .Maca,1;
 		mes " ";
-		mes "Voce a trouxe. Ela vai junto - e assim tem de ser.";
+		mes "Você a trouxe. Ela vai junto - e assim tem de ser.";
 	} else {
 		mes " ";
-		mes "Voce nao tem nenhuma, viajante. Nao faz mal: a ilusao se abre com ou sem ela.";
+		mes "Você não tem nenhuma, viajante. Não faz mal: a ilusão se abre com ou sem ela.";
 	}
 
 	mes " ";
-	mes "Feche os olhos. Quando abri-los, o treinamento ja tera acontecido.";
+	mes "Feche os olhos. Quando abri-los, o treinamento já terá acontecido.";
 
 	BaseLevel += .Niveis;
 	JobLevel += .Niveis;

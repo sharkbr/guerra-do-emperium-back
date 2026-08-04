@@ -1,0 +1,208 @@
+//===== Guerra do Emperium ===================================
+//= Mercado Contemporaneo
+//===== Onde =================================================
+//= prontera, rua principal ao sul da fonte. Tres colunas por
+//= tres fileiras, 9 lojas:
+//=
+//=            x=151          x=155          x=159
+//=  y=173   Chapeleiro     Ocleiro        Retoqueiro
+//=  y=167   Sr das Armas   Lorde das Arm. Escudeiro
+//=  y=161   Capeiro        Sapateiro      Acessorista
+//=
+//= As nove celulas foram conferidas no prontera.gat (tipo 0,
+//= andavel) antes de plantar. A rua inteira de x=148 a x=162
+//= esta livre nessas alturas, entao ha espaco de sobra entre as
+//= colunas para o jogador circular.
+//===== Descricao ============================================
+//= Nove lojas de equipamento, uma por slot. Tudo a 1 zeny.
+//===== Notas ================================================
+//= PRECO: 1 zeny por item, decidido em 2026-08-01. E de
+//= proposito, mas tem uma consequencia que vale saber de olho
+//= aberto.
+//=
+//= O rAthena vai imprimir um aviso por item ao carregar:
+//=
+//=   npc_parse_shop: Item X discounted buying price (1->0) is
+//=   less than overcharged selling price (...)
+//=
+//= NAO e erro de sintaxe e nao impede a loja de subir. E o
+//= proprio servidor avisando de um exploit real (src/map/npc.cpp,
+//= linha 4153): quem compra aqui por 1 zeny pode revender em
+//= QUALQUER NPC pelo `Sell` do item_db e lucrar a diferenca.
+//=
+//= O pior caso desta lista e a Boina Alada (5170), que tem
+//= `Buy: 30000` no item_db e portanto revende por 15000 - ou
+//= seja, 14999 de lucro por compra, em laco infinito. O resto
+//= da lista tem `Buy: 20`, que da 9 de lucro e nao move nada.
+//=
+//= Se um dia isso incomodar, o remedio NAO e mexer no preco
+//= daqui: revender nao depende deste NPC. E por `Sell: 0` ou
+//= `Trade: NoSell` na entrada do item. Como esses itens sao do
+//= rAthena, isso significa ou sobrepor a entrada em
+//= db/guerra/item_db.yml, ou tirar a Boina da loja.
+//=
+//= ------------------------------------------------------------
+//= COMO A LISTA FOI RESOLVIDA
+//=
+//= A lista veio em portugues do bRO, que nao e o idioma de
+//= nenhuma tabela nossa. A ponte foi o `iteminfo_new.lub` da
+//= instalacao do Ragnarok Brazil desta maquina: 18845 itens com
+//= id -> nome em portugues. Ver ferramentas/completa_iteminfo.py,
+//= que le esse arquivo (e bytecode Lua 5.1, nao texto).
+//=
+//= Dai sairam tres classes de problema, e as tres estao
+//= resolvidas ou registradas:
+//=
+//= 1) ITEM QUE O NOSSO rAthena NAO TINHA (18 itens). O vendor e
+//=    mais antigo que o bRO. Criados em db/guerra/item_db.yml, e
+//=    **ja com os bonus** - vieram da descricao do proprio bRO,
+//=    que traz cada efeito e cada numero por extenso. Nasceram
+//=    como casca vazia de manha e foram preenchidos a tarde.
+//=    Marcados abaixo com `placeholder` por causa disso.
+//=    Sobraram 4 efeitos e 8 conjuntos com `# TODO` no item_db;
+//=    cada um cita a linha em portugues que ficou de fora.
+//=
+//= 2) ITEM SEM ENTRADA NO itemInfo.lua DO CLIENTE (25 itens).
+//=    Apareceria sem nome e sem icone. Resolvido copiando a
+//=    entrada do bRO com ferramentas/completa_iteminfo.py, ja
+//=    aplicado em 2026-08-01 - nome E descricao, em portugues,
+//=    como estao la. Como o cliente le esse arquivo so na
+//=    inicializacao, quem estiver com o cliente aberto de antes
+//=    precisa fechar e reabrir para ver.
+//=
+//= 3) ITEM SEM ARTE NO GRF DE 2021 (43 dos 77!). Este e o que
+//=    MACHUCA: entrega caixa modal `Resource File Loading fail`
+//=    ao aparecer na loja ou no inventario. RESOLVIDO em
+//=    2026-08-01 com instala_visual.py, 272 arquivos copiados
+//=    da GRF do bRO - a reconferencia deu 0 com falta.
+//=
+//=    NAO e so chapeu, e a licao mais cara desta rodada. Todo
+//=    item tem 4 arquivos de arte (sprite de chao .spr e .act,
+//=    icone de inventario, icone grande); chapeu tem mais 4.
+//=    Faltar o icone de inventario ja e modal. Quem descobriu
+//=    isso foi o Anel de Jupiter (32258), que e acessorio.
+//=
+//=    Sobraram 4 CHAPEUS que o instala_visual.py nao cura. Em
+//=    2026-08-02 descobriu-se que "sem cura possivel" estava
+//=    errado: neles nao falta ARQUIVO, falta a ENTRADA de tabela
+//=    que diz ao cliente que aquele slot de visual existe. O
+//=    ferramentas/estende_accessoryid.py resolve, e o 400287 ja
+//=    voltou por ele. Ver "O QUE FICOU DE FORA", logo abaixo.
+//=
+//= ------------------------------------------------------------
+//= O QUE FICOU DE FORA, E POR QUE
+//=
+//= Sem arte no nosso GRF (o `View` nem existe no accessoryid.lub
+//= deste cliente, entao instala_visual.py tambem nao cura):
+//=   410124  Orelhas em Chamas            (era do Ocleiro)
+//=   410142  Adorno Angelical             (era do Ocleiro)
+//=   410139  Tiara de Asmodeus            (era do Ocleiro)
+//= Conferir com `python valida_visual.py --id <n>`.
+//=
+//= O QUARTO VOLTOU. Em 2026-08-02 o 400287 (Capacete de
+//= Intensificacao) entrou no Chapeleiro. O que faltava nele nao
+//= era arquivo de arte - era a ENTRADA de tabela que diz ao
+//= cliente que o slot visual 2260 existe. O
+//= `ferramentas/estende_accessoryid.py` grava essa entrada em
+//= `cliente\data\`, e depois dela o instala_visual.py achou as 4
+//= sprites de cabeca na GRF do bRO. Os tres acima se resolvem
+//= pelo mesmo caminho quando forem pedidos.
+//=
+//= Nao localizados em tabela nenhuma - nem no rAthena, nem nos
+//= 18845 nomes do bRO. Podem ser nome de outro servidor ou de
+//= memoria:
+//=   "Chapeu do Atirador"          (era do Chapeleiro)
+//=   "Tapa Olho do orc heroi"      (era do Ocleiro)
+//=   "Grevas de Fafnir"            (era do Sapateiro)
+//=   "Capa da Terra"               (era do Capeiro)
+//=
+//= Sobre a "Capa da Terra": a familia existe, mas nao tem terra.
+//= Sao tres, e o terceiro e gelo - 20734 Capa do Vento, 20735
+//= Capa Flamejante e 20745 Capa Mistica. Pus a Mistica no lugar
+//= para o trio ficar completo.
+//=
+//= ------------------------------------------------------------
+//= SPRITES
+//=
+//= Todos conferidos no npcidentity.lub DESTE cliente antes de
+//= usar. `4_M_JOB_KNIGHT` foi a unica escolha que caiu na
+//= conferencia - nao existe aqui -, e por isso o Escudeiro usa
+//= o 4_M_UNCLEKNIGHT. Mesma armadilha do 10605 do Mestre de
+//= Classe: a tabela do rAthena conhece nomes que este cliente
+//= de 2021 nao desenha.
+//=
+//= ------------------------------------------------------------
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do patch AlwaysAscii - ver PENDENCIAS.md,
+//= secao "Acentuacao no dialogo". Gravar em UTF-8 poe dois bytes
+//= por acento e sai lixo na tela.
+//=
+//= Mudanca neste arquivo pega com @reloadscript, sem derrubar o
+//= servidor. Mudanca no item_db pede @reloaditemdb.
+//============================================================
+
+// ----- Fileira de cima (y=173): cabeca -----------------------
+
+// Cabeca topo. Fora: so o "Chapeu do Atirador" (nao localizado).
+// O 400687 e placeholder e de proposito NAO tem `View`: sem arte
+// no GRF, dar View a ele seria trocar "invisivel na cabeca" por
+// "caixa de erro".
+//
+// O 400287 entrou em 2026-08-02, com os 8 recursos conferidos
+// (`valida_visual.py --id 400287` da 0 faltando). Os bonus dele
+// vivem em db/guerra/item_db.yml, na secao OVERRIDES - a versao
+// do db/re/ e a do kRO, com outros efeitos, e nao bate com a
+// descricao que o cliente mostra.
+prontera,151,173,4	shop	Chapeleiro	1_M_MERCHANT,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1
+
+// Cabeca meio. A mais castigada: 3 dos 7 pedidos nao tem arte
+// (410124, 410142, 410139) e o "Tapa Olho do orc heroi" nao
+// existe em tabela nenhuma. Sobraram tres.
+prontera,155,173,4	shop	Ocleiro	4_F_01,19024:1,2204:1,19445:1
+
+// Cabeca baixo. Unica fileira que saiu inteira, os quatro.
+prontera,159,173,4	shop	Retoqueiro	1_F_MERCHANT_02,19381:1,420110:1,420236:1,420010:1
+
+// ----- Fileira do meio (y=167): armas, armaduras, escudos ----
+
+// "Armas brutais, todas": sao 15 na linha, e o nosso vendor so
+// tinha 2 - o Machado (1328, Blut_Axe) e a Lanca (32014,
+// Blut_Spear). Os outros 13 sao placeholder sem bonus. O
+// "Rifle bla bla" da lista virou o 28245, Rifle Brutal, que
+// fecha a familia.
+// O Ceuci (510155) e exclusivo do bRO e nunca vai vir do
+// rAthena - o placeholder dele e permanente.
+prontera,151,167,4	shop	Senhor das Armas	1_M_SMITH,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1
+
+// Armaduras. Os quatro IDs vieram prontos na lista e os quatro
+// conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
+// 450222 Epitafio e 450120 Armadura Resistente. So o 450120 nao
+// existia aqui - virou placeholder.
+// 15371 (Roupa de Natal do Antonio) tambem e placeholder. NAO
+// confundir com o 15249 (Antonio's Coat), que o vendor ja tem:
+// sao dois itens diferentes.
+prontera,155,167,4	shop	Lorde das Armaduras	4_M_JOB_BLACKSMITH,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1
+
+// Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
+// proximo e o 2185 (Refletor Magico / Magic Reflect), que e
+// escudo de verdade e nao so nome parecido.
+prontera,159,167,4	shop	Escudeiro	4_M_UNCLEKNIGHT,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1
+
+// ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
+
+// Capas. O 20745 (Capa Mistica) entrou no lugar da "Capa da
+// Terra" pedida, que nao existe - ver a nota la em cima.
+prontera,151,161,4	shop	Capeiro	1_F_MERCHANT_01,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1
+
+// Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
+// Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
+// nao tem calcado.
+prontera,155,161,4	shop	Sapateiro	4_M_02,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1
+
+// Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
+// chama de Bracelete de Ulle - nao confundir com o 5123,
+// Chapeu de Ulle. O Broche da Celine e o 28572 (versao bRO,
+// placeholder); o vendor tem um 28513 com o mesmo nome em
+// ingles, que e outro item.
+prontera,159,161,4	shop	Acessorista	4_F_02,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1
