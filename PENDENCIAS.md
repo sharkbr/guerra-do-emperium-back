@@ -1985,6 +1985,59 @@ O `LEIAME.md` tem o detalhe das travas e do formato. Duas regras que não estão
 
 ---
 
+## EM ABERTO — o manto cosmético (`Costume_Garment`)
+
+Aberto em 2026-08-05, ao varrer o acervo cosmético para o Mercado de Visuais.
+Os três slots de cabeça ficaram **zerados** — nenhum item curável restante —,
+e o manto ficou inteiro de fora, com 45 curáveis parados.
+
+O motivo é que manto tem **uma camada a mais** que chapéu, e não há ferramenta
+nossa para ela:
+
+| camada | chapéu | manto |
+|---|---|---|
+| nome e descrição | `itemInfo.lua` | igual |
+| slot de visual | `accessoryid.lub` + `accname.lub` | `spriterobeid.lub` + `spriterobename.lub` |
+| ferramenta que estende o slot | `estende_accessoryid.py` | **não existe** |
+| arquivos de arte | 4 de item + 4 de cabeça | 4 de item + sprite de manto **por classe** |
+
+A nossa `spriterobeid.lub` tem **120 entradas**. Manto cujo `View` esteja fora
+dela não desenha, e arte nenhuma resolve — é exatamente o caso que o
+`estende_accessoryid.py` cura do lado do chapéu.
+
+O `varre_cosmeticos.py` já classifica manto e **se recusa a chamar de curável**
+o que depende dessa ferramenta ausente. Isso é de propósito: chamar de "sem
+cura" o que só precisava de outra ferramenta foi o erro de 2026-08-01, e
+prometer cura que não há como cumprir é o erro simétrico.
+
+**O que falta, se um dia valer a pena:** um `estende_robeid.py` espelhado no
+`estende_accessoryid.py` (mesma base-relida-do-GRF, mesmo round-trip, mesmas
+duas travas), mais estender o `valida_visual.Cliente.caminhos` para conhecer a
+sprite de manto por classe. A segunda parte é a maior: manto não tem 4 arquivos
+como chapéu, tem um por classe de personagem.
+
+**Não confundir com as "capas" que já funcionam.** 420010 (Aura da Escuridão) e
+420047 (Capa de Cavaleiro) estão no Retoqueiro e desenham normalmente — elas são
+`Costume_Head_Low`, não `Costume_Garment`. O nome engana; quem manda é o
+`Locations:` do `item_db`.
+
+### O Mercado de Visuais não foi testado in-game
+
+O `npc/guerra/mercado_de_visuais.txt` foi escrito e registrado no
+`scripts_guerra.conf` em 2026-08-05, mas o servidor **não foi reiniciado** —
+então as três lojas ainda não subiram uma vez sequer. Conferido offline: as três
+células são andáveis no `prontera.gat`, os três sprites existem tanto no
+`npcidentity.lub` do cliente quanto no `npc.hpp` do rAthena, não há id repetido
+nas listas, não há colisão de nome de NPC, e o maior `w4` tem 1243 caracteres
+contra o teto de 2048 do parser (`npc.cpp`, `char w4[2048]`, que **trunca com
+aviso** em vez de recusar).
+
+Falta: `@reloadscript`, entrar em `prontera 155,155` e abrir as três lojas. É
+abrir a loja que dispara a caixa modal de arte faltando, não equipar — e os 374
+itens validaram 8 recursos cada, 2992 `[ok]` e nenhum `[FALTA]`.
+
+---
+
 ## O quarto servidor — `web-server.exe`
 
 Descoberto em 2026-08-04, depurando "escolho o emblema do clã e não acontece

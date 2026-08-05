@@ -172,6 +172,32 @@ def confere(txt_id, txt_nome, ids, nomes):
                          % (len(volta_nome), len(esperado_nome)))
 
 
+def sprites_de_cabeca(sufixo):
+    u"""Os 4 caminhos de sprite de cabeca que um sufixo implica."""
+    return [vv.q('data', 'sprite', vv.ACESS, g, g + sufixo + ext)
+            for g in (vv.HOMEM, vv.MULHER) for ext in ('.spr', '.act')]
+
+
+def sufixo_tem_arte(cli, fonte_grf, sufixo):
+    u"""As sprites desse sufixo existem em ALGUM dos dois lados?
+
+    Trava do ramo `[nome]`, e ela existe por um estrago medido em 2026-08-05.
+    Dos 5 Views com id e sem sufixo, o bRO tinha sufixo para os 5 - mas para
+    tres deles (880, 883, 1074) o ARQUIVO nao existe em GRF nenhum. Gravar o
+    sufixo desses tres trocou "invisivel calado" por `Cannot find File` modal
+    em 6 itens: antes o cliente nao tinha nome de arquivo para procurar, e
+    depois passou a ter um que nao existe.
+
+    E por isso que a trava vale SO para este ramo. View novo ja chega
+    quebrado com modal, entao acrescentar nao piora nada e o
+    `instala_visual.py` copia a arte logo depois. Aqui nao ha o que copiar.
+    """
+    for cam in sprites_de_cabeca(sufixo):
+        if not (cli.existe(cam) or cam.lower() in fonte_grf.entries):
+            return False
+    return True
+
+
 def views_pedidos(argv_id, argv_view):
     """Os View ids pedidos, seja por --view, seja pelo item de --id."""
     views = set(int(v) for v in argv_view.replace(',', ' ').split()) \
@@ -217,6 +243,12 @@ def main(argv):
         for const, view in ov_ids.items():
             if const not in base_ids:
                 extras[const] = (view, ov_nomes.get(const))
+            elif const in ov_nomes and const not in base_nomes:
+                # Entrada SO DE NOME: o View ja era do GRF, o que faltava era o
+                # sufixo. Sem este ramo ela nao seria reconhecida como nossa e
+                # a proxima rodada a apagaria calada - a base e relida do GRF
+                # toda vez, e o que nao for recuperado aqui nao volta.
+                extras[const] = (view, ov_nomes[const])
         print 'override no disco: %d constantes, %d nossas' % (
             len(ov_ids), len(extras))
     else:
@@ -230,10 +262,37 @@ def main(argv):
             return 2
         f_ids, f_nomes = tabelas_do_grf(fonte)
         por_view = dict((v, k) for k, v in f_ids.items())
+        # Uma vez so: `vv.Cliente()` reabre o GRF e reinterpreta as tabelas, e
+        # o ramo `[nome]` pode acontecer varias vezes no mesmo lote.
+        conferidor = [None]
         for view in novos:
             const = por_view.get(view)
             if const is None:
                 print '  [!] View %d nao existe nem na GRF de origem' % view
+            elif view in base_ids.values() and const not in base_nomes \
+                    and const in f_nomes and const not in extras:
+                # O par pode estar PELA METADE: id no accessoryid.lub e nenhum
+                # sufixo no accname.lub. O cliente sabe que o slot existe e nao
+                # sabe que arquivo abrir, entao o chapeu fica invisivel - sem
+                # caixa de erro, que e o que torna isto dificil de ver.
+                #
+                # Ate 2026-08-05 este caso caia no ramo "[ja tem]" abaixo e o
+                # item ficava sem cura possivel. Quem denunciou foi o 18742
+                # (Luar de Cristal, View 881): os 4 arquivos dele estao no nosso
+                # GRF, o View tambem, e mesmo assim o valida_visual acusava
+                # `view 881 no accessoryid` - porque o `Cliente.acc` so conta o
+                # View cujo par existe nas DUAS tabelas. Sao 5 assim.
+                if conferidor[0] is None:
+                    conferidor[0] = (vv.Cliente(), Grf(fonte))
+                if not sufixo_tem_arte(conferidor[0][0], conferidor[0][1],
+                                       f_nomes[const]):
+                    print ('  [!] View %d (%s) tem sufixo no bRO e nao tem '
+                           'sprite em GRF nenhum - gravar trocaria invisivel '
+                           'por caixa de erro' % (view, const))
+                    continue
+                extras[const] = (view, f_nomes[const])
+                print '  [nome  ] View %d -> %s  so o sufixo faltava %r' % (
+                    view, const, f_nomes[const])
             elif view in base_ids.values():
                 print '  [ja tem] View %d - o GRF deste cliente ja conhece' % view
             elif const in extras:

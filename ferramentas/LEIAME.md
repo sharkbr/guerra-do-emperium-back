@@ -1456,3 +1456,103 @@ Medido no cliente inteiro, o efeito é exatamente o esperado e nada mais:
 
 **+1/−1 e nenhum outro número se mexeu** — que é a prova de que estender a
 tabela não mexeu nos 2192 slots que já funcionavam.
+
+### O par meio-presente — 2026-08-05
+
+São **duas** tabelas, e até esta data o script tratava as duas como uma só. Se
+o `View` já estivesse no `accessoryid.lub` ele imprimia `[ja tem]` e ia embora —
+sem olhar se o `accname.lub` tinha o sufixo correspondente.
+
+**Cinco Views deste cliente estão exatamente assim: id sim, sufixo não.** O
+efeito no jogo é o pior tipo: o cliente sabe que o slot existe e não sabe que
+arquivo abrir, então o chapéu fica **invisível, sem caixa de erro nenhuma**.
+Quem denunciou foi o 18742 (Luar de Cristal, View 881) — os 4 arquivos dele
+estão no nosso GRF, o View também, e mesmo assim o `valida_visual.py` acusava
+`view 881 no accessoryid`. Está certo: o `Cliente.acc` só conta o View cujo par
+exista nas **duas** tabelas.
+
+O ramo novo é o `[nome]`, que acrescenta só o sufixo. E ele tem uma **trava que
+os outros ramos não têm**, escrita depois de o estrago acontecer:
+
+> Dos 5, o bRO tem sufixo para os 5 — mas para **três** (880, 883, 1074) o
+> arquivo de sprite não existe em GRF nenhum. Gravar o sufixo desses três
+> trocou "invisível calado" por `Cannot find File` **modal** em 6 itens. Antes o
+> cliente não tinha nome de arquivo para procurar; depois passou a ter um que
+> não existe.
+
+Por isso o ramo `[nome]` confere que as 4 sprites existem em algum dos dois
+GRFs **antes** de gravar, e recusa se não existirem. A trava vale **só para
+ele**: View novo já chega quebrado com modal, então acrescentar não piora nada e
+o `instala_visual.py` copia a arte logo em seguida. Aqui não há o que copiar.
+
+A recuperação do override também precisou mudar. Entrada só-de-nome tem a
+constante **dentro** da base do GRF, então o teste antigo (`const not in
+base_ids`) não a reconhecia como nossa — e como a base é relida do GRF a cada
+rodada, a rodada seguinte a apagaria calada. Agora `const in ov_nomes and const
+not in base_nomes` também conta.
+
+## `varre_cosmeticos.py` — o que dá para vestir, e o que daria depois da cura
+
+```
+python varre_cosmeticos.py                    # resumo por slot
+python varre_cosmeticos.py --listar curavel   # os que o bRO resolve
+python varre_cosmeticos.py --listar sem-cura  # os que não há como salvar
+python varre_cosmeticos.py --listar manto     # só os de Costume_Garment
+python varre_cosmeticos.py --ids curavel      # os ids, prontos para o --id
+```
+
+Escrito em 2026-08-05 para montar o **Mercado de Visuais**
+(`npc/guerra/mercado_de_visuais.txt`).
+
+**A pergunta dele é diferente da do `valida_visual.py`**, e é essa diferença que
+justifica a ferramenta existir. Aquele mede o estado de **agora**: o que o
+cliente desenha hoje. Este mede o estado **possível**: o que desenharia depois
+de rodar as três ferramentas de cura.
+
+A diferença importa porque as camadas se encadeiam e nenhuma sozinha enxerga o
+fim. Item sem entrada no `itemInfo.lua` nem tem `resourceName` para o validador
+consultar — ele responde `não está no itemInfo.lua`, que **parece um veredito e
+é só uma pergunta sem resposta**. Este script vai buscar o `resourceName` no
+bRO, o sufixo de cabeça no `accessoryid.lub` do bRO, e só então pergunta pelos
+arquivos, nos dois GRFs ao mesmo tempo.
+
+Por isso `curavel` é uma **promessa verificável**: os oito arquivos existem em
+algum dos dois lados. Quem cumpre é o `instala_visual.py`; quem confere se foi
+cumprida é o `valida_visual.py`.
+
+Estado em 2026-08-05, **depois** da cura dos três slots de cabeça:
+
+| slot | ok | curável | sem cura |
+|---|---|---|---|
+| Costume topo | 1265 | 0 | 296 |
+| Costume meio | 466 | 0 | 157 |
+| Costume baixo | 543 | 0 | 169 |
+| Costume manto | 107 | 45 | 193 |
+
+Os 622 "sem cura" de cabeça são itens **mais novos que a instalação do bRO**
+desta máquina: não há arte para eles em lugar nenhum ao nosso alcance.
+
+### Manto é contado e não é prometido
+
+`Costume_Garment` tem uma camada a mais, a `spriterobeid.lub`/`spriterobename.lub`
+— e não existe ferramenta nossa para ela. Os mantos são classificados e
+listáveis, mas **nunca saem como `curavel`**: prometer o que não há como
+cumprir é o erro simétrico ao de 2026-08-01, quando se chamou de "sem cura" o
+que só precisava de outra ferramenta. Ver `PENDENCIAS.md`, seção "EM ABERTO — o
+manto cosmético".
+
+### A guarda que a primeira rodada não tinha
+
+`view_cabeca` é `None` para item que não é chapéu, e `None not in acc` é sempre
+verdadeiro. Sem a guarda explícita, **todo manto e todo acessório caía em
+`curavel`** — a primeira rodada relatou 152 mantos curáveis e nenhum `ok`, que
+era o próprio erro se anunciando. Número redondo demais num lado e zero no
+outro é sintoma, não resultado.
+
+### O que ele acrescentou ao `valida_visual.py`
+
+O `le_item_db` passou a guardar o campo **`locais`** — o conjunto de
+`Locations:` do item — em vez de só o booleano `cabeca`. A lista de nomes
+aceitos é **fechada** (`LOCAIS`) de propósito: dentro do bloco de um item há
+outros mapas com a mesma forma (`Flags:`, `Trade:`), e sem lista fechada um
+`NoDrop: true` entraria como se fosse slot.

@@ -59,6 +59,16 @@ UI = u'\uc720\uc800\uc778\ud130\ud398\uc774\uc2a4'.encode('cp949')  # 유저인�
 LOCAIS_CABECA = ('Head_Top', 'Head_Mid', 'Head_Low',
                  'Costume_Head_Top', 'Costume_Head_Mid', 'Costume_Head_Low')
 
+# Locations que valem para o `locais` de cada item. Nao da para aceitar
+# qualquer `<palavra>: true` dentro do bloco: `Locations:` e seguido de outros
+# mapas (`Flags:`, `Trade:`) com a mesma forma, e sem uma lista fechada o
+# `NoDrop: true` de um item entraria como se fosse um slot.
+LOCAIS = LOCAIS_CABECA + (
+    'Armor', 'Right_Hand', 'Left_Hand', 'Both_Hand', 'Garment', 'Shoes',
+    'Right_Accessory', 'Left_Accessory', 'Both_Accessory', 'Costume_Garment',
+    'Costume_Floor', 'Ammo', 'Shadow_Armor', 'Shadow_Weapon', 'Shadow_Shield',
+    'Shadow_Shoes', 'Shadow_Right_Accessory', 'Shadow_Left_Accessory')
+
 
 def q(*partes):
     return BS.join(partes)
@@ -143,7 +153,7 @@ def le_item_db(caminhos):
                 fecha()
                 estado['atual'] = {'id': int(m.group(1)), 'aegis': '',
                                    'nome': '', 'view': None, 'cabeca': False,
-                                   'view_cabeca': None}
+                                   'view_cabeca': None, 'locais': set()}
                 locais = False
                 continue
             atual = estado['atual']
@@ -169,8 +179,10 @@ def le_item_db(caminhos):
                 locais = True
                 continue
             m = re.match(r'\s*(\w+):\s*true', linha)
-            if locais and m and m.group(1) in LOCAIS_CABECA:
-                atual['cabeca'] = True
+            if locais and m and m.group(1) in LOCAIS:
+                atual['locais'].add(m.group(1))
+                if m.group(1) in LOCAIS_CABECA:
+                    atual['cabeca'] = True
     fecha()
     return itens
 

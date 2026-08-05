@@ -77295,7 +77295,7 @@ Body:
       }
   - Id: 15825
     AegisName: C_Black_Musang_J
-    Name: Costume Black Musang Hat
+    Name: "Quepe Regional Preto"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -77827,7 +77827,7 @@ Body:
     View: 679
   - Id: 15838
     AegisName: C_VesperHeadGear_J
-    Name: Costume Vesper Headgear
+    Name: "Proteção de Vesper"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -77843,7 +77843,7 @@ Body:
     View: 1444
   - Id: 15840
     AegisName: C_Bio_Protector
-    Name: Costume Bike Protector
+    Name: "Óculos de Bioproteção"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -77851,7 +77851,7 @@ Body:
     View: 1366
   - Id: 15841
     AegisName: C_Hat_of_Goggle
-    Name: Costume Goggles Hat
+    Name: "Capacete com Visores"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -77859,7 +77859,7 @@ Body:
     View: 1721
   - Id: 15842
     AegisName: C_Disapear_Time_J
-    Name: Costume Magic Time
+    Name: "Cartola do Sumiço"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -77933,7 +77933,7 @@ Body:
       }
   - Id: 15846
     AegisName: C_Artist_Silk_Hat
-    Name: Costume Artist's Silk Hat
+    Name: "Selo do Artista de Verdade"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -77941,7 +77941,7 @@ Body:
     View: 2057
   - Id: 15847
     AegisName: C_EXE_Wing_Cap_TH
-    Name: Costume Unknown Feather Hat    # !todo check english name
+    Name: "Boné Alado"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78046,7 +78046,7 @@ Body:
       }
   - Id: 15851
     AegisName: C_Freyja_Crown_J
-    Name: Costume Freyja Crown
+    Name: "Coroa Realeza Gelada"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78062,7 +78062,7 @@ Body:
     View: 887
   - Id: 15854
     AegisName: C_Phigasia_Scarf_EXE
-    Name: Costume Phigasia Scarf
+    Name: "Cachecol Glorioso"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78173,7 +78173,7 @@ Body:
     View: 2087
   - Id: 15875
     AegisName: C_King_Of_Spirit_Circle
-    Name: Costume King of Spirit Circle
+    Name: "Diadema Élfico"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78377,7 +78377,7 @@ Body:
     Refineable: true
   - Id: 15888
     AegisName: C_Hand_Of_Devil
-    Name: Costume Dragon Claw Helm
+    Name: "Garra do Dragão Demoníaco"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78472,7 +78472,7 @@ Body:
       }
   - Id: 15893
     AegisName: C_Helm_Of_Sun_V
-    Name: Costume Hat of the Sun God (Upper)
+    Name: "Solarium"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78684,7 +78684,7 @@ Body:
       bonus2 bResEff,Eff_Confusion,10000;
   - Id: 15925
     AegisName: C_Splash_Hat
-    Name: Costume Syrup Water Balloon
+    Name: "Boneco de Pouring"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78881,7 +78881,7 @@ Body:
          bonus bBaseAtk,40;
   - Id: 15952
     AegisName: C_15th_Nov_Helmet
-    Name: Costume 15th Nov Helmet
+    Name: "Naga Tailandesa"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -78905,7 +78905,7 @@ Body:
     View: 2298
   - Id: 15954
     AegisName: C_Wichienmaat_Bangkaew
-    Name: Costume Wichienmaat & Bangkaew
+    Name: "Espaguete & Lasanha"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -108874,7 +108874,7 @@ Body:
     View: 1410
   - Id: 20385
     AegisName: C_Orc_Hero_Helm
-    Name: Costume Orc Hero Helmet
+    Name: "Elmo do Herói"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -117771,7 +117771,7 @@ Body:
          bonus bLongAtkRate,10;
   - Id: 21200
     AegisName: C_Tear_Drop
-    Name: Costume Teardrop
+    Name: "Lágrimas Masculinas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -153343,7 +153343,7 @@ Body:
     View: 698
   - Id: 31108
     AegisName: C_Free_Hug_BR
-    Name: Costume Free Hug    # !todo check english name
+    Name: "Balão de Fala (Abraços Grátis)"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -153352,7 +153352,7 @@ Body:
     View: 1542
   - Id: 31109
     AegisName: C_Guildsman_Recruit_BR
-    Name: Costume Guildsman Recruit    # !todo check english name
+    Name: "Balão de Fala (Recruto para Clã)"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -153361,7 +153361,7 @@ Body:
     View: 1543
   - Id: 31110
     AegisName: C_Party_Seeker_BR
-    Name: Costume Party Seeker    # !todo check english name
+    Name: "Balão de Fala (Procuro Grupo)"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -153370,7 +153370,7 @@ Body:
     View: 1544
   - Id: 31111
     AegisName: C_Party_Mem_Recruit_BR
-    Name: Costume Party Mem Recruit    # !todo check english name
+    Name: "Balão de Fala (Procuro Membros)"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -153379,7 +153379,7 @@ Body:
     View: 1545
   - Id: 31112
     AegisName: C_Begging_Board_BR
-    Name: Costume Begging Board    # !todo check english name
+    Name: "Balão de Fala (Hue Hue Br)"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -153827,7 +153827,7 @@ Body:
     View: 1486
   - Id: 31159
     AegisName: C_Jormungandr_Hat
-    Name: Costume Jormungandr Head
+    Name: "Chapéu de Jormungand"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -155173,7 +155173,7 @@ Body:
     View: 1051
   - Id: 31305
     AegisName: C_TW_1th_Balloon
-    Name: "Costume: Walking Poring"
+    Name: "Angeling de Estimação"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -155373,7 +155373,7 @@ Body:
     View: 484
   - Id: 31324
     AegisName: C_DJ_Kitty
-    Name: Costume Kitty DJ
+    Name: "Fones da DJ Kitty"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -155947,7 +155947,7 @@ Body:
     View: 1685
   - Id: 31386
     AegisName: C_SurviveOrb
-    Name: Costume Survivor's Orb
+    Name: "Orbes Místicos"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -156254,7 +156254,7 @@ Body:
     View: 824
   - Id: 31419
     AegisName: C_Angel_Of_Happiness
-    Name: Costume Angel of Happiness
+    Name: "Tiara Flap Flap"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -156641,7 +156641,7 @@ Body:
     ArmorLevel: 1
   - Id: 31462
     AegisName: C_Female_Poring_Earmuff
-    Name: Costume Cute Poring Earmuffs
+    Name: "Brincos de Poring Rosa"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -157000,7 +157000,7 @@ Body:
     View: 537
   - Id: 31500
     AegisName: C_Sparkler_Stick_TH
-    Name: Costume Sparkler Stick    # !todo check english name
+    Name: "Costume Sparkler Stick"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -157009,7 +157009,7 @@ Body:
     View: 1747
   - Id: 31501
     AegisName: C_Sparkler_Fountain_TH
-    Name: Costume Sparkler Fountain
+    Name: "Fonte de Faíscas"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157026,7 +157026,7 @@ Body:
     View: 1749
   - Id: 31503
     AegisName: C_TW_2th_Balloon
-    Name: Costume 2nd Return Balloons
+    Name: "Deviling de Estimação"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -157135,7 +157135,7 @@ Body:
     View: 1756
   - Id: 31515
     AegisName: C_Leopard_Cat
-    Name: "Costume: Bengal Cat"
+    Name: "Gatinho Curioso"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -157314,7 +157314,7 @@ Body:
     View: 1019
   - Id: 31535
     AegisName: C_Old_Pink_Poo_Hat
-    Name: "Costume: Pink Poo Poo Hat"
+    Name: "Chapéu de Titica"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157323,7 +157323,7 @@ Body:
     View: 1102
   - Id: 31536
     AegisName: C_Chibi_Beelzebub_Hat
-    Name: Costume Beelzebub's Crown
+    Name: "Belzebu de Estimação"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157357,7 +157357,7 @@ Body:
     View: 1717
   - Id: 31539
     AegisName: C_Bulgogi_TW
-    Name: Costume Roasted Pork Dumpling Hat
+    Name: "Chapéu de Tapioca"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157519,7 +157519,7 @@ Body:
     View: 268
   - Id: 31557
     AegisName: C_Hoplite_Helmet_Silver
-    Name: Costume Hoplite Helmet Silver    # !todo check english name
+    Name: "Gálea de Prata"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157530,7 +157530,7 @@ Body:
     View: 1781
   - Id: 31558
     AegisName: C_Hoplite_Helmet_Black
-    Name: "Costume: Hoplite Helmet Black"
+    Name: "Gálea de Bronze"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157771,7 +157771,7 @@ Body:
       sc_end SC_STRANGELIGHTS;
   - Id: 31584
     AegisName: C_Marin_Muffler
-    Name: "Costume: Marin's Muffler"
+    Name: "Cachecol de Marin"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -157796,7 +157796,7 @@ Body:
     View: 1797
   - Id: 31587
     AegisName: C_NationalDay_helmet_TW
-    Name: "Costume: Skoi Rider"
+    Name: "Super Capacete de Kunlun"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157853,7 +157853,7 @@ Body:
     View: 1801
   - Id: 31593
     AegisName: C_Yellow_Scarf
-    Name: Costume Yellow Scarf
+    Name: "Lenço do Deserto"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -157862,7 +157862,7 @@ Body:
     View: 1170
   - Id: 31594
     AegisName: C_Red_Pencil_Mouth
-    Name: Costume Red Pencil in Mouth
+    Name: "Lápis de Cor Vermelho"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -157871,7 +157871,7 @@ Body:
     View: 931
   - Id: 31595
     AegisName: C_Book_of_Soyga
-    Name: Costume Book of Soyga
+    Name: "Chapéu de Estudante"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157880,7 +157880,7 @@ Body:
     View: 423
   - Id: 31596
     AegisName: C_Spider_Temp_TW
-    Name: Costume Spider Seduction
+    Name: "Chapéu Biológico"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -157889,7 +157889,7 @@ Body:
     View: 1711
   - Id: 31597
     AegisName: C_GoldFish_Hat
-    Name: Costume Golden Fish Hat
+    Name: "Chapéu de Peixinho"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -158039,7 +158039,7 @@ Body:
     View: 1811
   - Id: 31613
     AegisName: C_Blue_Strong_Hair
-    Name: Costume Blue Hair of Strong
+    Name: "Peruca do Super Saiadim Deus"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -158518,7 +158518,7 @@ Body:
     View: 783
   - Id: 31665
     AegisName: C_GoldPoring_Hat_TW
-    Name: Costume Rich Rich Poring
+    Name: "Poring Equilibrista"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -158527,7 +158527,7 @@ Body:
     View: 887
   - Id: 31666
     AegisName: C_Crown_of_Unity
-    Name: Costume Luxury Crown
+    Name: "Coroa de Cinzas"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -158862,7 +158862,7 @@ Body:
     View: 1882
   - Id: 31702
     AegisName: C_Moon_Cat_Fighter
-    Name: Costume Full Moon Cat Hood
+    Name: "Capuz de Felino Branco"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -159050,7 +159050,7 @@ Body:
       hateffect(HAT_EF_RESONATETAEGO,false);
   - Id: 31722
     AegisName: C_Sedora_Hat
-    Name: Costume Sedora Hat    # !todo check english name
+    Name: "Gorrinho de Sedora"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -159932,7 +159932,7 @@ Body:
     View: 263
   - Id: 31821
     AegisName: C_Jeje_Cap
-    Name: Costume Jeje Cap
+    Name: "Boné Estileira"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -160473,7 +160473,7 @@ Body:
     ArmorLevel: 1
   - Id: 31882
     AegisName: C_Choco_Stick_In_Mouth
-    Name: Costume Choco Stick In Mouth
+    Name: "Espetinho de Chocolate"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -160538,7 +160538,7 @@ Body:
     View: 551
   - Id: 31890
     AegisName: C_Sagittarius_Diadem
-    Name: Costume Sagittarius Diadem
+    Name: "Adorno de Sagitário"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -160594,7 +160594,7 @@ Body:
     View: 621
   - Id: 31897
     AegisName: C_Pisces_Crown
-    Name: Costume Pisces Crown    # !todo check english name
+    Name: "Elmo Submarino"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -160906,7 +160906,7 @@ Body:
     ArmorLevel: 1
   - Id: 31935
     AegisName: C_Baby_Dragon_Hat
-    Name: Costume Baby Dragon Hat
+    Name: "Chapéu de Dragonete Verde"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -161022,7 +161022,7 @@ Body:
     View: 1779
   - Id: 31949
     AegisName: C_Diabolus_Wing
-    Name: Costume Diablos Wings
+    Name: "Asas de Diabolus"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -161030,7 +161030,7 @@ Body:
     View: 680
   - Id: 31950
     AegisName: C_Nut_Cracker_JP
-    Name: Costume Replica Nut Cracker
+    Name: "Cabeção de Esquilo"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -161046,7 +161046,7 @@ Body:
     View: 1980
   - Id: 31952
     AegisName: C_GatesofNetherWorld
-    Name: Costume Gates of Netherworld
+    Name: "Chapéu das Mil Dimensões"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -161054,7 +161054,7 @@ Body:
     View: 2016
   - Id: 31953
     AegisName: C_Cor_Core_Headset
-    Name: Costume Core Headset
+    Name: "Fone de Ouvido Brilhante"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -161062,7 +161062,7 @@ Body:
     View: 2017
   - Id: 31954
     AegisName: C_Vassalage_Necklace
-    Name: Costume Vassalage Necklace
+    Name: "Coleira do Vassalo"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -161086,7 +161086,7 @@ Body:
     View: 204
   - Id: 31957
     AegisName: C_Cons_Of_Poison
-    Name: Costume Cons of Poison
+    Name: "Aura Venenosa"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -164983,7 +164983,7 @@ Body:
       }
   - Id: 400080
     AegisName: C_Kriemhild_Crown_TW
-    Name: Costume Kriemhild Crown    # !todo check english name
+    Name: "Coroa do Renascimento"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -165344,7 +165344,7 @@ Body:
       hateffect HAT_EF_2020RTC_03,false;
   - Id: 400091
     AegisName: C_Gray_Helmet
-    Name: Costume Gray Helmet
+    Name: "Elmo Safira"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -165352,7 +165352,7 @@ Body:
     View: 941
   - Id: 400092
     AegisName: C_L_Magestic_Goat2
-    Name: Costume Luxurious Horns
+    Name: "Chifres Luxuosos"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -165360,7 +165360,7 @@ Body:
     View: 513
   - Id: 400093
     AegisName: C_18y_Hat_TW
-    Name: Costume Ragnarok 18th Anniversary Headwear
+    Name: "Chapéu de 18 Anos"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166233,7 +166233,7 @@ Body:
     View: 2076
   - Id: 400131
     AegisName: C_Diadem_Of_Bruenhild
-    Name: Costume Diadem of Brunhild
+    Name: "Diadema do Fogo Azul"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166249,7 +166249,7 @@ Body:
     View: 302
   - Id: 400133
     AegisName: C_Para_Team_Hat160
-    Name: Costume Aurora Parade Hat
+    Name: "Visual do Éden"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166317,7 +166317,7 @@ Body:
       }
   - Id: 400136
     AegisName: C_Ancient_Gold_Deco_TW
-    Name: Costume Ancient Gold Deco    # !todo check english name
+    Name: "Adorno dos Mil Ouros"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166478,7 +166478,7 @@ Body:
       }
   - Id: 400143
     AegisName: C_Asgard_Circlet_TW
-    Name: Costume Crimson Valkyrie Circlet
+    Name: "Asas de Asgard"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166881,7 +166881,7 @@ Body:
     View: 2125
   - Id: 400158
     AegisName: C_Demon_Crown
-    Name: Costume Demon Crown
+    Name: "Coroa do Mal"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166951,7 +166951,7 @@ Body:
     View: 821
   - Id: 400166
     AegisName: C_Egir_Helm
-    Name: Costume Aegir Helm    # !todo check english name
+    Name: "Capacete Aquático"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166959,7 +166959,7 @@ Body:
     View: 870
   - Id: 400167
     AegisName: C_Mosquito_Coil
-    Name: Costume Mosquito Coil    # !todo check english name
+    Name: "Chapéu Espanta Mosquitos"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -166967,7 +166967,7 @@ Body:
     View: 563
   - Id: 400168
     AegisName: C_Souvenirs_Of_Izlude
-    Name: Costume Souvenirs Of Izlude    # !todo check english name
+    Name: "Coroa de Izlude"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167023,7 +167023,7 @@ Body:
     View: 1079
   - Id: 400175
     AegisName: C_Campfire_Hat
-    Name: Costume Camp Fire Cap
+    Name: "Chapéu Fogueira"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167562,7 +167562,7 @@ Body:
       }
   - Id: 400195
     AegisName: C_Pizza_Hat_J
-    Name: Costume Pepperoni Pizza
+    Name: "Pizza Tamanho Família com Borda Recheada"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167792,7 +167792,7 @@ Body:
     View: 2153
   - Id: 400205
     AegisName: C_Bun_Twin_Tail_BU
-    Name: Costume Odango Twintails (Blue)
+    Name: "Aplique de Coque Celeste"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167800,7 +167800,7 @@ Body:
     View: 2190
   - Id: 400206
     AegisName: C_Bun_Twin_Tail_RD
-    Name: Costume Odango Twintails (Red)
+    Name: "Aplique de Coque Cereja"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167808,7 +167808,7 @@ Body:
     View: 2191
   - Id: 400207
     AegisName: C_Bun_Twin_Tail_YL
-    Name: Costume Odango Twintails (Yellow)
+    Name: "Aplique de Coque Loiro"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167816,7 +167816,7 @@ Body:
     View: 2192
   - Id: 400208
     AegisName: C_Bun_Twin_Tail_GN
-    Name: Costume Odango Twintails (Green)
+    Name: "Aplique de Coque Verde"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167824,7 +167824,7 @@ Body:
     View: 2193
   - Id: 400209
     AegisName: C_Bun_Twin_Tail_BL
-    Name: Costume Odango Twintails (Black)
+    Name: "Aplique de Coque Preto"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167832,7 +167832,7 @@ Body:
     View: 2194
   - Id: 400210
     AegisName: C_Bun_Twin_Tail_WH
-    Name: Costume Odango Twintails (White)
+    Name: "Aplique de Coque Platinado"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167840,7 +167840,7 @@ Body:
     View: 2195
   - Id: 400211
     AegisName: C_Bun_Twin_Tail_OM
-    Name: Costume Odango Twintails (Brown)
+    Name: "Aplique de Coque Marrom"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -167848,7 +167848,7 @@ Body:
     View: 2196
   - Id: 400212
     AegisName: C_Bun_Twin_Tail_PP
-    Name: Costume Odango Twintails (Purple)
+    Name: "Aplique de Coque Lilás"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -168059,7 +168059,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,7*(.@r/4);
   - Id: 400221
     AegisName: C_Jasper_Crest
-    Name: Costume Jasper Crest
+    Name: "Diadema de Jasper"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -168076,7 +168076,7 @@ Body:
     View: 308
   - Id: 400224
     AegisName: C_Navy_Beret
-    Name: Costume Navy Hat
+    Name: "Boina Militar"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169000,7 +169000,7 @@ Body:
     View: 2087
   - Id: 400258
     AegisName: C_Wanderer_Curl
-    Name: Costume Wanderer Curl
+    Name: "Peruca Ondulada de Jade"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -169233,7 +169233,7 @@ Body:
     View: 1003
   - Id: 400271
     AegisName: C_Shovel_Hat
-    Name: Costume Shovel Hat
+    Name: "Utensílios de Jardim"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169370,7 +169370,7 @@ Body:
       bonus bStr,1;
   - Id: 400277
     AegisName: C_Felock_Cap_
-    Name: Costume Felrock's Hat
+    Name: "Chapéu de Tarlock"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169481,7 +169481,7 @@ Body:
     View: 338
   - Id: 400290
     AegisName: C_Pink_Angel_Hairband
-    Name: Costume Pink Angel Hairband
+    Name: "Tiara Rosa de Anjo"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169642,7 +169642,7 @@ Body:
     View: 398
   - Id: 400313
     AegisName: C_Galaxy_Circlet
-    Name: Costume Galaxy Circlet
+    Name: "Tiara Galática"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169650,7 +169650,7 @@ Body:
     View: 725
   - Id: 400314
     AegisName: C_Northern_Cross
-    Name: Costume Northern Cross
+    Name: "Joia do Norte"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169682,7 +169682,7 @@ Body:
     View: 2146
   - Id: 400321
     AegisName: C_Academy_Freshman_Hat
-    Name: Costume Academy Freshman Hat
+    Name: "Gorro da Fada Vanda"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169706,7 +169706,7 @@ Body:
     View: 819
   - Id: 400327
     AegisName: C_RA_Hair_PK
-    Name: Costume Sleek Pink Half-Updo
+    Name: "Peruca Estilosa Rosa"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -169949,7 +169949,7 @@ Body:
     View: 2314
   - Id: 400357
     AegisName: C_Dragonhelm_Gold
-    Name: Costume Asia Masters 1st Dragon
+    Name: "Elmo do Dragão de Ouro"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -169957,7 +169957,7 @@ Body:
     View: 452
   - Id: 400358
     AegisName: C_Dragonhelm_Silver
-    Name: Costume Asia Masters 2nd Dragon
+    Name: "Elmo do Dragão de Prata"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -170065,7 +170065,7 @@ Body:
     View: 1000
   - Id: 400370
     AegisName: C_PU_EarWitchHat
-    Name: Costume Purple Big Ears Witch Hat
+    Name: "Chapéu de Bruxa com Orelhas"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171376,7 +171376,7 @@ Body:
     View: 1085
   - Id: 400398
     AegisName: C_Feather_Beret_WH
-    Name: Costume Feather White Beret
+    Name: "Boina Alada Branca"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171482,7 +171482,7 @@ Body:
          bonus bFixedCast,-500;
   - Id: 400402
     AegisName: C_1st_Evt_Hat_MSP
-    Name: Costume GGH 1st Anniversary Hat
+    Name: "Bolo de Angeling"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171514,7 +171514,7 @@ Body:
     View: 582
   - Id: 400405
     AegisName: C_Ribbon_Magic_Hat
-    Name: Costume Chocolate Hat
+    Name: "Cartola do Arcanista"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171849,7 +171849,7 @@ Body:
     View: 2020
   - Id: 400424
     AegisName: C_Owlviscount_Silk_Hat
-    Name: Costume Owl Viscount Silk Hat
+    Name: "Cartola do Visconde Coruja"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171857,7 +171857,7 @@ Body:
     View: 1323
   - Id: 400425
     AegisName: C_Falconer_Flute
-    Name: Costume Falconer Flute
+    Name: "Flauta de Falcão"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -171865,7 +171865,7 @@ Body:
     View: 1143
   - Id: 400426
     AegisName: C_Smoky_TransformHat
-    Name: Costume Smoky Transform Hat
+    Name: "Touca de Transformacento"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171889,7 +171889,7 @@ Body:
     View: 2364
   - Id: 400429
     AegisName: C_Mountain_Helmet
-    Name: Costume Mountain Helmet
+    Name: "Elmo de Montanhista"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171897,7 +171897,7 @@ Body:
     View: 2098
   - Id: 400430
     AegisName: C_Br_Beret
-    Name: Costume Twin Casquette
+    Name: "Boina Verde e Amarela"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -171977,7 +171977,7 @@ Body:
     View: 907
   - Id: 400435
     AegisName: C_Mad_Hatter_Hat
-    Name: Costume Mad Hatter's Hat
+    Name: "Chapéu do Chapeleiro"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -172044,7 +172044,7 @@ Body:
       bonus2 bSkillAtk,"ABC_DEFT_STAB",BaseLevel/10;
   - Id: 400439
     AegisName: C_Kiss_Of_Angel
-    Name: Costume Angel's Kiss
+    Name: "Beijo do Guardião"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -172236,7 +172236,7 @@ Body:
       }
   - Id: 400448
     AegisName: C_Juan_Hat_MSP
-    Name: Costume Juan Hat
+    Name: "Chapéu Juan"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -172401,7 +172401,7 @@ Body:
       }
   - Id: 400458
     AegisName: C_Ally_of_the_Demons
-    Name: Costume Ally of the Demons
+    Name: "Faixa da Preula Azul"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -172417,7 +172417,7 @@ Body:
     View: 792
   - Id: 400460
     AegisName: C_Burst_Flame
-    Name: Costume Burst Flame
+    Name: "Proeminência Solar"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -172878,7 +172878,7 @@ Body:
          bonus2 bSkillAtk,"RG_BACKSTAP",5*getrefine();
   - Id: 400480
     AegisName: C_Cat_Straw_Hat
-    Name: Costume Cat Straw Hat
+    Name: "Gatopéu de Palha"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -173135,7 +173135,7 @@ Body:
       }
   - Id: 400491
     AegisName: C_Faixa_Brasileira
-    Name: Costume Citrus Bandana (Middle)
+    Name: "Faixa Brasileira"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -173159,7 +173159,7 @@ Body:
     View: 2419
   - Id: 400497
     AegisName: C_A_Graduating_Cap
-    Name: Costume Academy 1st Completion Hat
+    Name: "Gorro da Fada Cosmos"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -173514,7 +173514,7 @@ Body:
     View: 598
   - Id: 400517
     AegisName: C_Fairy_Poison_Apple
-    Name: Costume Fairy Tale Poison Apple
+    Name: "Tiara de Maçã Envenenada"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -175162,7 +175162,7 @@ Body:
       }
   - Id: 400567
     AegisName: C_Awaking_Bloom
-    Name: Costume Awaking Bloom
+    Name: "Mitra do Alvorecer"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -175419,7 +175419,7 @@ Body:
     View: 2488
   - Id: 400588
     AegisName: C_Lucky_Purse
-    Name: Costume Lucky Purse
+    Name: "Chapéu de Sacoleiro"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -175472,7 +175472,7 @@ Body:
       bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",BaseLevel/10;
   - Id: 400594
     AegisName: C_Clockwise
-    Name: Costume Clockwise
+    Name: "Cartola do Aparecimento"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -175488,7 +175488,7 @@ Body:
     View: 610
   - Id: 400596
     AegisName: C_Petit_Choco_Hat
-    Name: Costume Petit Chocolate Hat
+    Name: "Trufa Derretida"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -176148,7 +176148,7 @@ Body:
     View: 2338
   - Id: 400635
     AegisName: C_Flower_S_Knit_Hat
-    Name: Costume Flower Summer Knit Hat
+    Name: "Chapéu de Malha"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -176596,7 +176596,7 @@ Body:
     View: 2401
   - Id: 400656
     AegisName: C_Khalitzburg_KN_Helm_W
-    Name: Costume Khalitzburg Knight White Helm
+    Name: "Elmo Branco da Khalitzburg"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -176937,7 +176937,7 @@ Body:
       NoAuction: true
   - Id: 400671
     AegisName: C_Broken_Egg
-    Name: Costume Fried Egg
+    Name: "Ovo Frito"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -177642,7 +177642,7 @@ Body:
     View: 507
   - Id: 400708
     AegisName: C_Wolf_Officer_Hat
-    Name: Costume Wolf Officer Hat
+    Name: "Quepe Branco do Serumaninho"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -181016,7 +181016,7 @@ Body:
          bonus bFixedCastrate,-70;
   - Id: 410011
     AegisName: C_Dark_Blindfold
-    Name: Costume Dark Blinkers
+    Name: "Venda Sombrosa"
     Type: Armor
     View: 187
     Locations:
@@ -181362,7 +181362,7 @@ Body:
     View: 2055
   - Id: 410030
     AegisName: C_Country_Tail_BU
-    Name: Costume Country Tail (Blue)    # !todo check english name
+    Name: "Trancinhas Azuis"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181370,7 +181370,7 @@ Body:
     View: 2039
   - Id: 410031
     AegisName: C_Country_Tail_RD
-    Name: Costume Country Tail (Red)    # !todo check english name
+    Name: "Trancinhas Vermelhas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181378,7 +181378,7 @@ Body:
     View: 2040
   - Id: 410032
     AegisName: C_Country_Tail_YL
-    Name: Costume Country Tail (Yellow)    # !todo check english name
+    Name: "Trancinhas Amarelas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181386,7 +181386,7 @@ Body:
     View: 2041
   - Id: 410033
     AegisName: C_Country_Tail_GN
-    Name: Costume Country Tail (Green)    # !todo check english name
+    Name: "Trancinhas Verdes"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181394,7 +181394,7 @@ Body:
     View: 2042
   - Id: 410034
     AegisName: C_Country_Tail_BL
-    Name: Costume Country Tail (Black)    # !todo check english name
+    Name: "Trancinhas Pretas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181402,7 +181402,7 @@ Body:
     View: 2043
   - Id: 410035
     AegisName: C_Country_Tail_WH
-    Name: Costume Country Tail (White)    # !todo check english name
+    Name: "Trancinhas Brancas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181410,7 +181410,7 @@ Body:
     View: 2044
   - Id: 410036
     AegisName: C_Country_Tail_OM
-    Name: Costume Country Tail (Brown)    # !todo check english name
+    Name: "Trancinhas Marrons"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181418,7 +181418,7 @@ Body:
     View: 2045
   - Id: 410037
     AegisName: C_Country_Tail_PP
-    Name: Costume Country Tail (Purple)    # !todo check english name
+    Name: "Trancinhas Roxas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181426,7 +181426,7 @@ Body:
     View: 2046
   - Id: 410038
     AegisName: C_Braid_Half_Up_BU
-    Name: Costume Braid Half Up (Blue)    # !todo check english name
+    Name: "Trançado Azulado"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181434,7 +181434,7 @@ Body:
     View: 2047
   - Id: 410039
     AegisName: C_Braid_Half_Up_RD
-    Name: Costume Braid Half Up (Red)    # !todo check english name
+    Name: "Trançado Avermelhado"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181442,7 +181442,7 @@ Body:
     View: 2048
   - Id: 410040
     AegisName: C_Braid_Half_Up_YL
-    Name: Costume Braid Half Up (Yellow)    # !todo check english name
+    Name: "Trançado Amarelado"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181450,7 +181450,7 @@ Body:
     View: 2049
   - Id: 410041
     AegisName: C_Braid_Half_Up_GN
-    Name: Costume Braid Half Up (Green)    # !todo check english name
+    Name: "Trançado Esverdejado"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181458,7 +181458,7 @@ Body:
     View: 2050
   - Id: 410042
     AegisName: C_Braid_Half_Up_BL
-    Name: Costume Braid Half Up (Black)    # !todo check english name
+    Name: "Trançado Escurecido"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181466,7 +181466,7 @@ Body:
     View: 2051
   - Id: 410043
     AegisName: C_Braid_Half_Up_WH
-    Name: Costume Braid Half Up (White)    # !todo check english name
+    Name: "Trançado Branquinho"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181474,7 +181474,7 @@ Body:
     View: 2052
   - Id: 410044
     AegisName: C_Braid_Half_Up_OM
-    Name: Costume Braid Half Up (Brown)    # !todo check english name
+    Name: "Trançado Bronzeado"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181482,7 +181482,7 @@ Body:
     View: 2053
   - Id: 410045
     AegisName: C_Braid_Half_Up_PP
-    Name: Costume Braid Half Up (Purple)    # !todo check english name
+    Name: "Trançado Roxinho"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181498,7 +181498,7 @@ Body:
     View: 2015
   - Id: 410047
     AegisName: C_Mask_of_Hero
-    Name: Costume Hero Mask
+    Name: "Máscara do Homem de Alumínio"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181546,7 +181546,7 @@ Body:
       hateffect HAT_EF_FALLING_SNOW,false;
   - Id: 410053
     AegisName: C_Exosrcist_Glass
-    Name: Costume Exorcist Glasses
+    Name: "Óculos de Sol Estiloso"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181629,7 +181629,7 @@ Body:
       }
   - Id: 410059
     AegisName: C_ZoMask_Green_TW
-    Name: Costume Ghoul Mask
+    Name: "Máscara de Carniçal"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181637,7 +181637,7 @@ Body:
     View: 2092
   - Id: 410060
     AegisName: C_Ghost_Bat_TW
-    Name: Costume Ghost Bat
+    Name: "Aura de Morceguinhos"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181808,7 +181808,7 @@ Body:
       bonus bAllStats,10;
   - Id: 410072
     AegisName: C_Demons_Familiar
-    Name: Costume Demons Familiar
+    Name: "Drones Vigilantes"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -181825,7 +181825,7 @@ Body:
     View: 335
   - Id: 410074
     AegisName: C_Gravekeeper_Blinker
-    Name: Costume Gravekeeper Blinker
+    Name: "Venda de Sicário"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182140,7 +182140,7 @@ Body:
          bonus bAspd,2;
   - Id: 410098
     AegisName: C_Nero_Mask
-    Name: Costume Nero Mask
+    Name: "Máscara de Nero"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182307,7 +182307,7 @@ Body:
       }
   - Id: 410111
     AegisName: C_Intake_BU
-    Name: Costume Intake(Blue)
+    Name: "Mecha Azul"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182315,7 +182315,7 @@ Body:
     View: 2182
   - Id: 410112
     AegisName: C_Intake_RD
-    Name: Costume Intake(Red)
+    Name: "Mecha Vermelha"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182323,7 +182323,7 @@ Body:
     View: 2183
   - Id: 410113
     AegisName: C_Intake_YL
-    Name: Costume Intake(Yellow)
+    Name: "Mecha Loira"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182331,7 +182331,7 @@ Body:
     View: 2184
   - Id: 410114
     AegisName: C_Intake_GN
-    Name: Costume Intake(Green)
+    Name: "Mecha Verde"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182339,7 +182339,7 @@ Body:
     View: 2185
   - Id: 410115
     AegisName: C_Intake_BL
-    Name: Costume Intake(Black)
+    Name: "Mecha Castanho Escuro"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182347,7 +182347,7 @@ Body:
     View: 2186
   - Id: 410116
     AegisName: C_Intake_WH
-    Name: Costume Intake(White)
+    Name: "Mecha Branca"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182355,7 +182355,7 @@ Body:
     View: 2187
   - Id: 410117
     AegisName: C_Intake_OM
-    Name: Costume Intake(Orange)
+    Name: "Mecha Castanho Claro"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182363,7 +182363,7 @@ Body:
     View: 2188
   - Id: 410118
     AegisName: C_Intake_PP
-    Name: Costume Intake(Purple)
+    Name: "Mecha Lilás"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182402,7 +182402,7 @@ Body:
       bonus2 bSubRace,RC_DemiHuman,5;
   - Id: 410121
     AegisName: C_Guardian_Helm
-    Name: Costume Guardian Helm
+    Name: "Meda Elmo"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182494,7 +182494,7 @@ Body:
       hateffect HAT_EF_C_SPOT_LIGHT,false;
   - Id: 410128
     AegisName: C_Supplement_P_Income
-    Name: Costume Powered Income
+    Name: "Microfone de Mecânico"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182951,7 +182951,7 @@ Body:
     View: 1270
   - Id: 410178
     AegisName: C_Princess_Headphone
-    Name: Costume Princess Headphones
+    Name: "Headset de Angeling"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -182959,7 +182959,7 @@ Body:
     View: 2275
   - Id: 410179
     AegisName: C_Queen_Headphone
-    Name: Costume Queen Melon Headphones
+    Name: "Headset de Deviling"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183090,7 +183090,7 @@ Body:
     View: 2178
   - Id: 410196
     AegisName: C_YinYang_Earring_Y
-    Name: Costume Yinyang Earrings (Yellow)
+    Name: "Lacinhos Orientais Amarelos"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183098,7 +183098,7 @@ Body:
     View: 2088
   - Id: 410198
     AegisName: C_2022Cosutama_Imp_JP
-    Name: Costume Deviruchi Party
+    Name: "Devirugangue"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183106,7 +183106,7 @@ Body:
     View: 2299
   - Id: 410199
     AegisName: C_Midnight_Candle
-    Name: Costume Midnight Candle
+    Name: "Vela da Meia-Noite"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183346,7 +183346,7 @@ Body:
     View: 2343
   - Id: 410224
     AegisName: C_Pope_Ribbon_R
-    Name: Costume Pope Ribbon (Red)    # !todo check english name
+    Name: "Lacinhos Vermelhos da Papisa"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183424,7 +183424,7 @@ Body:
     View: 1202
   - Id: 410234
     AegisName: C_Rebel_Pocket_Watch
-    Name: Costume Rebellion Pocket Watch
+    Name: "Relógio Insurgente"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183489,7 +183489,7 @@ Body:
     View: 2386
   - Id: 410240
     AegisName: C_Gods_Rabbit_Pet
-    Name: Costume White Rabbit
+    Name: "Coelho Chinês"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183505,7 +183505,7 @@ Body:
     View: 2370
   - Id: 410242
     AegisName: C_Wanderer_Grim_Reaper
-    Name: Costume Wanderer Grim Reaper
+    Name: "Ornamento da Valquíria"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183568,7 +183568,7 @@ Body:
       bonus bMatk,BaseLevel;
   - Id: 410248
     AegisName: C_Tuktuk
-    Name: Costume Tuk Tuk
+    Name: "Tuk Tuk"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -183904,7 +183904,7 @@ Body:
     View: 2436
   - Id: 410278
     AegisName: C_Blink_Eyes_Bloody
-    Name: Costume Twinkling Bloody Eye
+    Name: "Pupilas Avermelhadas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184095,7 +184095,7 @@ Body:
       hateffect HAT_EF_WINTERNIGHTBELLS,false;
   - Id: 410296
     AegisName: C_One_Sho_Bottle
-    Name: Costume One Liter Bottle
+    Name: "Tollynho"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184103,7 +184103,7 @@ Body:
     View: 2491
   - Id: 410297
     AegisName: C_Blink_Eyes_A_Dragon
-    Name: Costume Blinking A Dragon
+    Name: "Pupilas Draconianas"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184311,7 +184311,7 @@ Body:
       NoAuction: true
   - Id: 410311
     AegisName: C_GorgonCoronet
-    Name: Costume Gorgon Coronet
+    Name: "Diadema de Górgona"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184412,7 +184412,7 @@ Body:
     View: 2520
   - Id: 410317
     AegisName: C_Eye_Mask
-    Name: Costume Eyes Mask
+    Name: "Máscara para Dormir"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184526,7 +184526,7 @@ Body:
     View: 2536
   - Id: 410329
     AegisName: C_Dragon_Green_Aura
-    Name: Costume Green Aura Dragon
+    Name: "Tambores de Invocação da Terra"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184545,7 +184545,7 @@ Body:
       hateffect HAT_EF_C_DRAGON_GREEN_AURA,false;
   - Id: 410330
     AegisName: C_Dragon_Red_Aura
-    Name: Costume Red Aura Dragon
+    Name: "Tambores de Invocação do Fogo"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184557,7 +184557,7 @@ Body:
       hateffect HAT_EF_C_DRAGON_RED_AURA,false;
   - Id: 410331
     AegisName: C_Dragon_Yellow_Aura
-    Name: Costume Yellow Aura Dragon
+    Name: "Tambores de Invocação do Vento"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -184978,7 +184978,7 @@ Body:
     View: 2568
   - Id: 410357
     AegisName: C_Lightning_Savage
-    Name: Costume Lightning Savage
+    Name: "Bombaim de Ombro"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -185010,7 +185010,7 @@ Body:
     View: 336
   - Id: 410361
     AegisName: C_Injured_Eyepatch
-    Name: Costume Wounded Eye Patch
+    Name: "Curativo Ocular"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -185633,7 +185633,7 @@ Body:
       }
   - Id: 420014
     AegisName: C_Japanes_Hair
-    Name: Costume Japanese Hair
+    Name: "Peruca de Animação"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -185741,7 +185741,7 @@ Body:
     ArmorLevel: 1
   - Id: 420026
     AegisName: C_Ribbon_Piamat_J
-    Name: Costume Piamette Ribbon
+    Name: "Gravata Bombom"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -186128,7 +186128,7 @@ Body:
     View: 2128
   - Id: 420070
     AegisName: C_Cap_Of_Blindness_V
-    Name: Costume Blind Hood (Low)
+    Name: "Capuz Macabro"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -186237,7 +186237,7 @@ Body:
     View: 2164
   - Id: 420083
     AegisName: C_L_Ribbon_M_WH
-    Name: Costume Large Ribbon Muffler (White)
+    Name: "Cachecol com Laço Creme"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -186253,7 +186253,7 @@ Body:
     View: 2166
   - Id: 420085
     AegisName: C_Kururinpa_Hair_BD
-    Name: Costume Curly Hair (Blonde)
+    Name: "Peruca Kururinpa Platinada"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -186261,7 +186261,7 @@ Body:
     View: 2167
   - Id: 420086
     AegisName: C_Long_Wave_LBW
-    Name: Costume Long Wave (Light Brown)
+    Name: "Cacheado Marrom"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -186302,7 +186302,7 @@ Body:
       skill "SA_SPELLBREAKER",2;
   - Id: 420091
     AegisName: C_Silky_Long_BD
-    Name: Costume Silky Long(Blonde)
+    Name: "Peruca Sedosa Loira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -186713,7 +186713,7 @@ Body:
       bonus bLongAtkDef,5;
   - Id: 420132
     AegisName: C_Charm_Of_Great_Nature
-    Name: Costume Charm of Great Nature
+    Name: "Pequena Natureza Grandiosa"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187106,7 +187106,7 @@ Body:
     View: 459
   - Id: 420172
     AegisName: C_Braid_Ring
-    Name: Costume Braid Ring    # !todo check english name
+    Name: "Peruca Anil de Trancinhas"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187497,7 +187497,7 @@ Body:
       bonus bFixedCast,-100;
   - Id: 420218
     AegisName: C_Wanderer_Curl_WH
-    Name: Costume Wonderer Curl (white)
+    Name: "Peruca Ondulada de Platina"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187604,7 +187604,7 @@ Body:
       NoAuction: true
   - Id: 420232
     AegisName: C_Cheesy_Snack_In_Mouth
-    Name: Costume Cheese Stick
+    Name: "Espetinho de Queijo"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187612,7 +187612,7 @@ Body:
     View: 843
   - Id: 420233
     AegisName: C_TV_Hair_PK
-    Name: Costume Trouvere Side-Tail
+    Name: "Penteado Rosa da Diva"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187669,7 +187669,7 @@ Body:
       bonus2 bSubRace,RC_Angel,3;
   - Id: 420237
     AegisName: C_Tiger_Muffler_MSP
-    Name: Costume Tiger Muffler
+    Name: "Cachecol Tigroso"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187870,7 +187870,7 @@ Body:
       bonus bAspdRate,5;
   - Id: 420254
     AegisName: C_Bushy_Moustache
-    Name: Costume Wizard's Beard
+    Name: "Bigode Mágico"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187878,7 +187878,7 @@ Body:
     View: 1004
   - Id: 420255
     AegisName: C_GC_Hair_OM
-    Name: Costume Guillotine Cross Low Pony
+    Name: "Peruca Sicária Marrom"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -187996,7 +187996,7 @@ Body:
     View: 2451
   - Id: 420274
     AegisName: C_Rose_Wave_BDP
-    Name: Costume Rose wave (Blonde Pink)
+    Name: "Penteado Ondulado Loiro Rosado"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188004,7 +188004,7 @@ Body:
     View: 2452
   - Id: 420275
     AegisName: C_Rose_Wave_SV
-    Name: Costume Rose Wave (Silver)
+    Name: "Penteado Ondulado Prateado"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188020,7 +188020,7 @@ Body:
     View: 2454
   - Id: 420277
     AegisName: C_GCM_Hair_BG
-    Name: Costume Guillotine Cross Short (Light Green)
+    Name: "Corte Joãozinho Turquesa"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188028,7 +188028,7 @@ Body:
     View: 2455
   - Id: 420278
     AegisName: C_GCM_Hair_YL
-    Name: Costume Guillotine Cross Short (Yellow)
+    Name: "Corte Joãozinho Loiro"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188036,7 +188036,7 @@ Body:
     View: 2456
   - Id: 420279
     AegisName: C_GCM_Hair_CB
-    Name: Costume Guillotine Cross Short (Sakura)
+    Name: "Corte Joãozinho Rosa"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188044,7 +188044,7 @@ Body:
     View: 2457
   - Id: 420280
     AegisName: C_GCM_Hair_LB
-    Name: Costume Guillotine Cross Short (Light Blue)
+    Name: "Corte Joãozinho Azul"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188052,7 +188052,7 @@ Body:
     View: 2458
   - Id: 420281
     AegisName: C_GCM_Hair_LPP
-    Name: Costume Guillotine Cross Short (Light Purple)
+    Name: "Corte Joãozinho Roxo"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188060,7 +188060,7 @@ Body:
     View: 2459
   - Id: 420282
     AegisName: C_GCM_Hair_JBL
-    Name: Costume Guillotine Cross Short (Jet Black)
+    Name: "Corte Joãozinho Moreno"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188068,7 +188068,7 @@ Body:
     View: 2460
   - Id: 420283
     AegisName: C_GCM_Hair_WH
-    Name: Costume Guillotine Cross Short (White)
+    Name: "Corte Joãozinho Prata"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188076,7 +188076,7 @@ Body:
     View: 2461
   - Id: 420284
     AegisName: C_GCM_Hair_OM
-    Name: Costume Guillotine Cross Short (Red)
+    Name: "Corte Joãozinho Grisalho"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188084,7 +188084,7 @@ Body:
     View: 2462
   - Id: 420285
     AegisName: C_MN_Hair_BG
-    Name: Costume Mechanic Outside Hanebob (Light Green)
+    Name: "Peruca Turquesa da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188092,7 +188092,7 @@ Body:
     View: 2463
   - Id: 420286
     AegisName: C_MN_Hair_YL
-    Name: Costume Mechanic Outside Hanebob (Yellow)
+    Name: "Peruca Loira da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188100,7 +188100,7 @@ Body:
     View: 2464
   - Id: 420287
     AegisName: C_MN_Hair_CB
-    Name: Costume Mechanic Outside Hanebob (Sakura)
+    Name: "Peruca Rosa da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188108,7 +188108,7 @@ Body:
     View: 2465
   - Id: 420288
     AegisName: C_MN_Hair_LB
-    Name: Costume Mechanic Outside Hanebob (Light Blue)
+    Name: "Peruca Azul da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188116,7 +188116,7 @@ Body:
     View: 2466
   - Id: 420289
     AegisName: C_MN_Hair_LPP
-    Name: Costume Mechanic Outside Hanebob (Light Purple)
+    Name: "Peruca Violeta da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188124,7 +188124,7 @@ Body:
     View: 2467
   - Id: 420290
     AegisName: C_MN_Hair_JBL
-    Name: Costume Mechanic Outside Hanebob (Jet Black)
+    Name: "Peruca Morena da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188132,7 +188132,7 @@ Body:
     View: 2468
   - Id: 420291
     AegisName: C_MN_Hair_WH
-    Name: Costume Mechanic Outside Hanebob (White)
+    Name: "Peruca Branca da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188140,7 +188140,7 @@ Body:
     View: 2469
   - Id: 420292
     AegisName: C_MN_Hair_OM
-    Name: Costume Mechanic Outside Hanebob (Red)
+    Name: "Peruca Marrom da Engenheira"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188148,7 +188148,7 @@ Body:
     View: 2470
   - Id: 420293
     AegisName: C_RA_Hair_BG
-    Name: Costume Ranger Half-Up (Light Green)
+    Name: "Peruca Turquesa da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188156,7 +188156,7 @@ Body:
     View: 2471
   - Id: 420294
     AegisName: C_RA_Hair_YL
-    Name: Costume Ranger Half-Up (Yellow)
+    Name: "Peruca Loira da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188164,7 +188164,7 @@ Body:
     View: 2472
   - Id: 420295
     AegisName: C_RA_Hair_CB
-    Name: Costume Ranger Half-Up (Sakura)
+    Name: "Peruca Rosa da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188172,7 +188172,7 @@ Body:
     View: 2473
   - Id: 420296
     AegisName: C_RA_Hair_LB
-    Name: Costume Ranger Half-Up (Light Blue)
+    Name: "Peruca Azul da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188180,7 +188180,7 @@ Body:
     View: 2474
   - Id: 420297
     AegisName: C_RA_Hair_LPP
-    Name: Costume Ranger Half-Up (Light Purple)
+    Name: "Peruca Violeta da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188188,7 +188188,7 @@ Body:
     View: 2475
   - Id: 420298
     AegisName: C_RA_Hair_JBL
-    Name: Costume Ranger Half-Up (Jet Black)
+    Name: "Peruca Morena da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188196,7 +188196,7 @@ Body:
     View: 2476
   - Id: 420299
     AegisName: C_RA_Hair_WH
-    Name: Costume Ranger Half-Up (White)
+    Name: "Peruca Branca da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188204,7 +188204,7 @@ Body:
     View: 2477
   - Id: 420300
     AegisName: C_RA_Hair_OM
-    Name: Costume Ranger Half-Up (Red)
+    Name: "Peruca Marrom da Caçadora"
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -188256,7 +188256,7 @@ Body:
       hateffect HAT_EF_NIGHTSKYOFRUTIE,false;
   - Id: 420305
     AegisName: C_Octopus_Leg_In_Mouth
-    Name: Costume Mini Tentacle
+    Name: "Mini Tentáculo"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188382,7 +188382,7 @@ Body:
       bonus bFixedCast,-100;
   - Id: 420317
     AegisName: C_White_Rabbit_Hair
-    Name: Costume White Rabbit Hair
+    Name: "Peruca Trançada de Baunilha"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188398,7 +188398,7 @@ Body:
     View: 450
   - Id: 420320
     AegisName: C_Charm_Of_Rough_Wind
-    Name: Costume Charm of Rough Wind
+    Name: "Pequeno Vento Bruto"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188525,7 +188525,7 @@ Body:
     View: 2530
   - Id: 420337
     AegisName: C_Ancient_Rune
-    Name: Costume Ancient Runes
+    Name: "Magia Rúnica"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188641,7 +188641,7 @@ Body:
     View: 2549
   - Id: 420347
     AegisName: C_Undead_Seal_Rose
-    Name: Costume Jet Black Rose
+    Name: "Rosa Gótica"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188723,7 +188723,7 @@ Body:
       bonus2 bMagicAddSize,Size_All,BaseLevel/10;
   - Id: 420357
     AegisName: C_Baby_Seal
-    Name: Costume Baby Seal
+    Name: "Bebê Foca"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -188750,7 +188750,7 @@ Body:
     View: 2483
   - Id: 420360
     AegisName: C_Bell_Cat_Hair
-    Name: Costume Bell Cat Hair
+    Name: "Peruca do Sino Felino"
     Type: Armor
     Locations:
       Costume_Head_Low: true
@@ -189882,7 +189882,7 @@ Body:
     View: 2821
   - Id: 430001
     AegisName: C_Helm_Of_Ra
-    Name: Costume Hat of the Sun God
+    Name: "Elmo do Clã"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -190327,7 +190327,7 @@ Body:
     View: 1919
   - Id: 440001
     AegisName: C_Wunderkammer
-    Name: Costume Wunderkammer
+    Name: "Caixa Surpresa do Vário"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -190366,7 +190366,7 @@ Body:
       NoAuction: true
   - Id: 440004
     AegisName: C_Close_Helmet
-    Name: Costume Close Helmet    # !todo check english name
+    Name: "Elmo Antigo"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -190376,7 +190376,7 @@ Body:
     View: 203
   - Id: 440005
     AegisName: C_Diabolus_Helmet
-    Name: Costume Dark Bacilium    # !todo check english name
+    Name: "Coroa do Diabo"
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -190422,7 +190422,7 @@ Body:
       NoAuction: true
   - Id: 440008
     AegisName: C_Master
-    Name: Costume Master
+    Name: "Grande Mestre"
     Type: Armor
     Locations:
       Costume_Head_Top: true
