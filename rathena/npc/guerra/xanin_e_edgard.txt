@@ -1,7 +1,7 @@
 //===== Guerra do Emperium ===================================
 //= Xanin e Edgard
 //===== Onde =================================================
-//= prontera 172,201 (Xanin) e 170,200 (Edgard). As duas celulas
+//= prontera 172,199 (Xanin) e 170,199 (Edgard). As duas celulas
 //= foram conferidas no prontera.gat DESTE cliente: tipo 0,
 //= andaveis, altura 1.00, o quarteirao todo plano. O modelo mais
 //= proximo esta a seis celulas (um poste em 160,200).
@@ -22,6 +22,15 @@
 //= motivo para a excecao, que a Maquina nao tem.
 //=
 //= Por isso o arquivo mudou de nome - era tenda_da_praca.txt.
+//=
+//= Em 2026-08-04, depois de ver os dois em jogo, o dono do
+//= projeto desceu os dois: o Edgard uma celula (de 170,200) e o
+//= Xanin duas (de 172,201). Agora os tres da praca estao todos
+//= em y=199, em fila, e nao mais na diagonal. As celulas novas
+//= foram conferidas no mesmo prontera.gat, com ferramentas/gat.py:
+//= tipo 0 e altura 1.00 nas duas, e plano no raio de 1 celula.
+//=
+//= A fala do Xanin foi completada no mesmo dia - ver a nota dele.
 //=
 //= A tenda era MODELO 3D e nao NPC - vivia no prontera.rsw do
 //= cliente, nunca aqui. Foi removida apagando
@@ -53,12 +62,22 @@
 
 
 //===== Xanin ================================================
-//= Gato, sem funcao - so a fala, que veio do pedido ao pe da
-//= letra, frase cortada e tudo.
+//= Gato, sem funcao - so a fala. Ela nasceu cortada no meio
+//= ("Trouxe o Edgard pra tentar trazer") porque o pedido veio
+//= assim e foi seguido ao pe da letra; em 2026-08-04 o dono do
+//= projeto mandou o texto inteiro, que e o que esta aqui.
+//=
+//= Sao DUAS telas, separadas pelo `next`, como o pedido pediu.
 //============================================================
-prontera,172,201,4	script	Xanin	495,{
+prontera,172,199,4	script	Xanin	495,{
 	mes "[Xanin]";
 	mes "Trouxe o Edgard pra tentar trazer";
+	mes "mais alegria pra cá. Quando soubemos";
+	mes "do ocorrido viemos correndo!";
+	next;
+	mes "[Xanin]";
+	mes "Mas ele cismou com essa máquina, e";
+	mes "jura que vai colocar pra funcionar!";
 	close;
 }
 
@@ -97,8 +116,33 @@ prontera,172,201,4	script	Xanin	495,{
 //= com Esc no meio da previa FICA com a cor que estava vendo.
 //= Por isso existe o "Cancelar", que devolve a original, e por
 //= isso a cor de antes e guardada na primeira linha.
+//=
+//= A FOME - ele solta o emote de fome de 5 em 5 segundos,
+//= sozinho, sem ninguem clicar. E npctimer: o OnInit chama
+//= initnpctimer e o OnTimer5000 solta o emote e rearma o timer
+//= (stopnpctimer + initnpctimer). E o mesmo par, com o mesmo
+//= intervalo, do npc/events/easter_2010.txt do rAthena.
+//=
+//= O timer roda com a praca vazia; o emote so vai para quem
+//= estiver com ele na tela, entao nao custa nada parado.
+//=
+//= QUAL EMOTE - o pedido disse `/fome`, que e o nome bRO. O que
+//= vai no fio e o NUMERO, e o numero e ET_HUNGRY (37) do enum
+//= emotion_type em src/map/clif.hpp. Conferido, e nao chutado:
+//= o emotionlist.lub do cliente tem o enum na MESMA ordem -
+//= ...ET_STARE, ET_HUNGRY, ET_COOL... - lido do .lub do bRO,
+//= porque o do nosso data.grf esta com a flag DES.
+//=
+//= Nao da para digitar `/fome` NESTE cliente para comparar: os
+//= comandos de emote sao strings do executavel, e o nosso e
+//= kRO, com os comandos em coreano. A string `fome` nao existe
+//= em nenhum dos exes desta maquina - nem no Ragexe do bRO.
+//= Para conferir na mao, usar a janela de emoticons.
+//=
+//= Se sair o emote errado em jogo, e trocar UM numero no
+//= OnTimer5000, no fim do arquivo.
 //============================================================
-prontera,170,200,4	script	Edgard	509,{
+prontera,170,199,4	script	Edgard	509,{
 	.@antes = getlook(LOOK_CLOTHES_COLOR);
 	mes "[Edgard]";
 	mes "Eu tinjo roupa. Não cobro nada,";
@@ -142,5 +186,14 @@ OnInit:
 	// E variavel de NPC (`.`) e nao temporaria (`.@`): a `.@`
 	// morre com o fim do OnInit e o clique acharia zero.
 	.teto = 3;
+
+	// Arma a fome. Ver "A FOME" no cabecalho desta secao.
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	emotion ET_HUNGRY;
+	stopnpctimer;
+	initnpctimer;
 	end;
 }

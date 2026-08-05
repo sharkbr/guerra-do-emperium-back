@@ -4,13 +4,12 @@
 //= prontera 167,199. Celula conferida no prontera.gat DESTE
 //= cliente: tipo 0, andavel, altura 1.00.
 //=
-//= Ela fecha a diagonal com os outros dois da praca, a duas
-//= celulas da quina do quarteirao (de x=162 a x=165 e bloqueado
-//= entre y=198 e y=201):
+//= Ela abre a fila dos tres da praca, a duas celulas da quina do
+//= quarteirao (de x=162 a x=165 e bloqueado entre y=198 e y=201).
+//= Desde 2026-08-04 os tres estao na mesma linha - os dois outros
+//= desceram, ela ficou onde estava:
 //=
-//=     y=199   Maquina (167,199)
-//=     y=200        Edgard (170,200)
-//=     y=201             Xanin (172,201)
+//=     y=199   Maquina (167,199)   Edgard (170,199)   Xanin (172,199)
 //===== Descricao ============================================
 //= Sem funcao nenhuma, por pedido explicito: "por enquanto sem
 //= funcao". A fala e a do pedido, com o acento de "nao" posto -
@@ -22,7 +21,9 @@
 //= cita o outro pelo nome. A Maquina nao entra nessa.
 //=
 //= Ela ja esteve junto dos dois, quando os tres eram uma cena em
-//= volta de uma tenda em 168,199. A tenda foi tirada em
+//= volta de uma tenda em 168,199. Eles voltaram a ficar lado a
+//= lado quando desceram, mas cada um continua no seu arquivo -
+//= o que os junta e a fala, nao a coordenada. A tenda foi tirada em
 //= 2026-08-04, no mesmo dia em que entrou - ver o cabecalho do
 //= xanin_e_edgard.txt e ferramentas/planta_adereco.py.
 //===== Notas ================================================
@@ -33,13 +34,18 @@
 //= e o .act conferidos no nosso data.grf - a regra desde a
 //= armadilha do 10605 no Mestre de Classe.
 //=
+//= Facing 6 (leste). Com a camera padrao do cliente as
+//= direcoes caem na diagonal da tela: o 6 desenha a maquina
+//= virada para a direita. O 4 (sul), que ela tinha antes,
+//= aparecia virada para a esquerda.
+//=
 //= Gravado em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, secao
 //= "Acentuacao".
 //=
 //= Mudanca neste arquivo pega com @reloadscript.
 //============================================================
 
-prontera,167,199,4	script	Máquina	564,{
+prontera,167,199,6	script	Máquina	564,{
 	mes "A máquina não funciona.";
 	close;
 }
