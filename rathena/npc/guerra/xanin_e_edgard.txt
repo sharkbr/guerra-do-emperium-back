@@ -1,0 +1,146 @@
+//===== Guerra do Emperium ===================================
+//= Xanin e Edgard
+//===== Onde =================================================
+//= prontera 172,201 (Xanin) e 170,200 (Edgard). As duas celulas
+//= foram conferidas no prontera.gat DESTE cliente: tipo 0,
+//= andaveis, altura 1.00, o quarteirao todo plano. O modelo mais
+//= proximo esta a seis celulas (um poste em 160,200).
+//===== Descricao ============================================
+//= Um gato e o estilista que ele trouxe. Estao no MESMO arquivo
+//= porque a fala do Xanin cita o Edgard pelo nome - separar
+//= poria metade de uma piada num arquivo e metade no outro.
+//===== Historico ============================================
+//= Pedidos em 2026-08-04 junto com uma tenda (168,199) e uma
+//= Maquina (170,197), como uma cena so. **A tenda foi tirada no
+//= mesmo dia**, por decisao do dono do projeto - nao ficou boa
+//= na praca -, e a Maquina foi para 167,199.
+//=
+//= A Maquina continua ali ao lado, fechando a diagonal com os
+//= dois daqui, mas foi para maquina_quebrada.txt: o que juntava
+//= os tres era a CENA em volta da tenda, e ela acabou. Um NPC
+//= por arquivo e o padrao daqui; o que estes dois tem e o
+//= motivo para a excecao, que a Maquina nao tem.
+//=
+//= Por isso o arquivo mudou de nome - era tenda_da_praca.txt.
+//=
+//= A tenda era MODELO 3D e nao NPC - vivia no prontera.rsw do
+//= cliente, nunca aqui. Foi removida apagando
+//= `cliente\data\prontera.rsw`, o que devolve o mapa do GRF. A
+//= receita que a plantava continua em
+//= ferramentas/planta_adereco.py, comentada, com o porque.
+//===== Notas ================================================
+//= SPRITES - conferidos no npcidentity.lub DESTE cliente antes
+//= de entrar, e o .spr e o .act conferidos no nosso data.grf.
+//= E a regra desde o Mestre de Classe, onde o 10605 nao existia
+//= neste cliente e deixaria NPC invisivel:
+//=
+//=   495  4_M_MERCAT1   gato mercador
+//=   509  4_ELEPHANT    elefante
+//=
+//= O pedido dizia "4_ELEPHANT3 ID: 509". O ID esta certo; o NOME
+//= nao existe. Neste cliente 509 e `4_ELEPHANT`, e nao ha
+//= 4_ELEPHANT2 nem 4_ELEPHANT3 - nem no nosso data.grf nem no do
+//= bRO, procurados por .spr e por .act.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
+//= como os map_msg_*.conf do rAthena. O cliente desenha byte
+//= acentuado por causa do ajuste de charset da fonte - ver
+//= PENDENCIAS.md, secao "Acentuacao". Gravar em UTF-8 poe dois
+//= bytes por acento e sai lixo na tela.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+
+//===== Xanin ================================================
+//= Gato, sem funcao - so a fala, que veio do pedido ao pe da
+//= letra, frase cortada e tudo.
+//============================================================
+prontera,172,201,4	script	Xanin	495,{
+	mes "[Xanin]";
+	mes "Trouxe o Edgard pra tentar trazer";
+	close;
+}
+
+
+//===== Edgard - estilista de roupa ==========================
+//= Troca a COR DA ROUPA do personagem, de graca e sem limite.
+//=
+//= NAO precisou de trabalho de sprite nenhum, e o porque
+//= importa: cor de roupa em Ragnarok nao e sprite, e PALETTE.
+//= O sprite do personagem e indexado, e o cliente troca a
+//= tabela de cores por um arquivo `data\palette\<corpo>\*.pal`
+//= que ele JA TEM no data.grf. O servidor so manda o numero do
+//= indice, com `setlook LOOK_CLOTHES_COLOR`.
+//=
+//= QUANTAS CORES EXISTEM - medido no nosso data.grf, contando
+//= os 1809 .pal de corpo, por classe e genero:
+//=
+//=   classes base (Aprendiz, Espadachim, Mago, Arqueiro,
+//=   Novico, Mercador, Gatuno)          indices 0..4
+//=   2a e 3a classes                    indices 0..3
+//=   parte das classes novas            indices 0..7
+//=
+//= Por isso o teto aqui e 3, e nao o `max_cloth_color: 7` do
+//= conf/battle/client.conf: aquele numero e do SERVIDOR, e o
+//= servidor aceita qualquer indice e manda para um cliente que
+//= pode nao ter a palette. Indice sem palette NAO da erro - o
+//= cliente so desenha a cor padrao, e a conclusao errada e
+//= achar que o NPC falhou. Mesma armadilha do view id de NPC.
+//=
+//= Mudar o teto e trocar UM numero no OnInit, no fim do
+//= arquivo. Subir para 4 funciona nas classes base e nao
+//= funciona da 2a classe em diante.
+//=
+//= A PREVIA e o jeito de todo estilista de RO e tem um custo
+//= conhecido: `setlook` aplica na hora. Quem fechar a janela
+//= com Esc no meio da previa FICA com a cor que estava vendo.
+//= Por isso existe o "Cancelar", que devolve a original, e por
+//= isso a cor de antes e guardada na primeira linha.
+//============================================================
+prontera,170,200,4	script	Edgard	509,{
+	.@antes = getlook(LOOK_CLOTHES_COLOR);
+	mes "[Edgard]";
+	mes "Eu tinjo roupa. Não cobro nada,";
+	mes "e pode voltar quantas vezes quiser.";
+	mes "Escolha uma cor e vá vendo em você.";
+	next;
+
+	.@cor = .@antes;
+	while (1) {
+		setlook LOOK_CLOTHES_COLOR, .@cor;
+		mes "[Edgard]";
+		mes "Esta é a cor ^0055FF" + .@cor + "^000000, de 0 a " + .teto + ".";
+		mes "Ficou do seu gosto?";
+		switch (select("Próxima cor:Cor anterior:^006400Ficar com esta^000000:^FF3355Cancelar^000000")) {
+		case 1:
+			.@cor = (.@cor < .teto) ? .@cor + 1 : 0;
+			break;
+		case 2:
+			.@cor = (.@cor > 0) ? .@cor - 1 : .teto;
+			break;
+		case 3:
+			mes "[Edgard]";
+			mes "Ficou bom em você.";
+			mes "Volte quando enjoar.";
+			close;
+		case 4:
+			setlook LOOK_CLOTHES_COLOR, .@antes;
+			mes "[Edgard]";
+			mes "Sem problema, devolvi a de antes.";
+			mes "Estou aqui quando mudar de ideia.";
+			close;
+		}
+		next;
+	}
+
+OnInit:
+	// O maior indice de cor de roupa que TODA classe deste
+	// servidor tem palette para desenhar. Ver a nota do
+	// cabecalho antes de mexer: 4 so vale nas classes base.
+	//
+	// E variavel de NPC (`.`) e nao temporaria (`.@`): a `.@`
+	// morre com o fim do OnInit e o clique acharia zero.
+	.teto = 3;
+	end;
+}

@@ -608,6 +608,10 @@ e desfazer o commit dos `npc/guerra/*.txt`. As bandeiras `--sem-acento` do
 | Mesmerita | `prontera 144,173` | reseta habilidades, atributos ou os dois — de graça | **não** |
 | Funcionária Kafra da praça | `prontera 152,191` | a sexta Kafra de Prontera, a única na praça central | **não** |
 | Armazém do Clã | `prontera 149,191` | move e renomeia o `Guild Warehouse Manager` do rAthena | **não** |
+| Máquina | `prontera 167,199` | não funciona, e é só isso — uma fala | **não** |
+| Xanin | `prontera 172,201` | gato, uma fala | **não** |
+| Edgard | `prontera 170,200` | estilista: troca a cor da roupa, de graça e sem limite | **não** |
+| Mestre do Refino | `prontera 184,177` | refina com os Pergaminhos, sem chance de quebrar | **não** |
 
 **Os quatro primeiros estão testados in-game e nada ficou pendente neles**
 (confirmado em 2026-08-01). O Mercado Contemporâneo é de 2026-08-01 e **ainda
@@ -725,6 +729,227 @@ catálogo, não por texto escrito à mão dentro dos nossos arquivos. E o
 (conferido em `ferramentas/traduz_npcs.py`, `GRUPOS`). Para fechar:
 acrescentá-lo ao grupo `servico`, `--extrair servico`, traduzir os pares novos
 e `--aplicar servico`. É arquivo pequeno, ~90 linhas.
+
+### A cena da tenda e o Mestre do Refino — 2026-08-04, NÃO testados in-game
+
+Cinco coisas pedidas juntas: uma tenda, três NPCs em volta dela e o Mestre do
+Refino. **A tenda saiu no mesmo dia** — ver abaixo. Os quatro NPCs estão de pé;
+**nenhum foi visto no jogo.** O que foi provado é outra coisa — ver "Como foram
+conferidos", no fim desta seção.
+
+#### A TENDA FOI REMOVIDA, e a Máquina mudou de lugar
+
+Decisão do dono do projeto poucas horas depois de ela entrar: não ficou boa na
+praça. Como ela era **modelo 3D e não NPC**, remover foi apagar um arquivo —
+`C:\GuerraDoEmperium\cliente\data\prontera.rsw`. Sem o override, o
+`DataFolderFirst` deixa de ter o que servir e o GRF volta a entregar a Prontera
+original. Nada mais foi tocado no cliente.
+
+Junto, a **Máquina saiu de `170,197` para `167,199`**, onde fecha a diagonal
+com os outros dois, a duas células da quina do quarteirão.
+
+Isso desfez o agrupamento. Os três estavam num arquivo só porque eram **uma
+cena em volta da tenda**; sem a tenda, sobrou a razão que era só do Xanin e do
+Edgard — a fala de um cita o outro pelo nome. A Máquina passou a arquivo
+próprio, que é o **padrão** daqui de qualquer forma (`mesmerita.txt`,
+`kafra_da_praca.txt`, `mestre_de_classe.txt`...): juntar é que precisa de
+motivo. Então o `tenda_da_praca.txt` virou dois:
+
+| arquivo | quem | onde |
+|---|---|---|
+| `npc/guerra/xanin_e_edgard.txt` | Xanin, Edgard | `170,200` e `172,201` |
+| `npc/guerra/maquina_quebrada.txt` | Máquina | `167,199` |
+
+**A receita que plantava a tenda continua em `ferramentas/planta_adereco.py`,
+comentada**, com o porquê ao lado. Descomentar replanta — não é um TODO
+pendente, é registro. A ferramenta em si fica: ela é genérica, se provou, e o
+que ela ensinou sobre `.rsw` (altura relativa ao chão, escala espelhada,
+`nodename`) vale para o próximo adereço.
+
+**A seção abaixo descreve a tenda que existiu por algumas horas.** Ficou porque
+o caminho até ela é o que tem valor — se um dia outro adereço for pedido, é
+esta a receita.
+
+#### A tenda era modelo 3D, não NPC — e isso mudou o caminho
+
+O pedido dizia "adicionar uma tenda (sprite)". Não é sprite: em
+`moc_ruins 112,127` não há NPC nenhum, e o que está lá são **duas instâncias
+espelhadas** do modelo `라헬\상점천막02.rsm` ("tenda de loja", da pasta de
+Rachel), a 110,3 e a 114,6 — o ponto 112,127 cai no meio das duas. Vive no
+`.rsw`, que é arquivo de **cliente**.
+
+Três detalhes que um "planta o `.rsm` na coordenada" teria perdido, e que por
+isso viraram o projeto da ferramenta nova:
+
+- **a altura é relativa ao chão.** A tenda está a `y=-2,5` num chão de `-4,0`:
+  1,5 afundada de propósito. O que se copia é o afastamento, não o `y`
+  absoluto. Em Prontera, chão `+1,0`, ela foi para `+2,5`.
+- **uma das metades tem `escala.x = -0,8`** — é a outra espelhada. Copiar
+  `1,0` entregaria duas metades viradas para o mesmo lado.
+- **o `nodename` é `RC_sr005`.** O `Modelo.novo` do `rsw.py` deixa esse campo
+  vazio e o comentário dele avisa que isso é **não verificado**. Copiando, a
+  dúvida não se aplica.
+
+Daí a ferramenta nova, `ferramentas/planta_adereco.py`: a receita não descreve
+a peça, ela **aponta para onde a peça está** ("vai em `moc_ruins 112,127`, pega
+o que tiver esse `.rsm`, põe igual em `prontera 168,199`"). O `edita_mapa.py`
+não servia — ele é a frente de destruição, tem semente e sorteio, e **recusa
+rodar em Prontera** por decisão de ficção. Relaxar aquele guarda para caber um
+adereço seria estragar o motivo de ele existir.
+
+Duas armadilhas do caminho, as duas de ferramenta e não de conteúdo:
+
+1. **No nosso `data.grf` o `moc_ruins.rsw` está com flag DES**, que o `grf.py`
+   não lê (o de Prontera não está). O mapa de origem sai do **GRF do bRO**, onde
+   ele é `flags=1`. Mesmo tamanho de arquivo, 141758 bytes.
+2. **O `verificar()` do `rsw.py` compara contra os bytes de entrada**, então só
+   vale *antes* de mexer. Depois de mexer a prova possível é outra: reabrir a
+   saída, conferir a contagem de objetos e a quadtree fechando no byte exato. O
+   `planta_adereco.py` faz as duas.
+
+Instalado em `C:\GuerraDoEmperium\cliente\data\prontera.rsw` (1484 → 1486
+objetos). Conferido que **nenhum dos 1484 objetos preexistentes mudou um byte**
+e que a quadtree é idêntica. **Apagar o arquivo reverte** — o original nunca
+saiu do GRF.
+
+**O `.rsw` não tem colisão.** Quem manda em passagem é o `.gat`, que não foi
+tocado, então o jogador **atravessa a tenda**. Fechar a passagem seria mexer no
+`.gat`, que o servidor também lê, e é decisão de outra ordem.
+
+#### Os três NPCs
+
+| NPC | Onde | Sprite | O quê | arquivo |
+|---|---|---|---|---|
+| Xanin | `172,201` | 495 `4_M_MERCAT1` | uma fala, sem função | `xanin_e_edgard.txt` |
+| Edgard | `170,200` | 509 `4_ELEPHANT` | cor de roupa | `xanin_e_edgard.txt` |
+| Máquina | `167,199` | 564 `2_VENDING_MACHINE1` | uma fala, sem função | `maquina_quebrada.txt` |
+
+**`4_ELEPHANT3` não existe.** O pedido dizia "4_ELEPHANT3 ID: 509"; o ID está
+certo e o nome não. Neste cliente 509 é `4_ELEPHANT`, e não há `4_ELEPHANT2`
+nem `4_ELEPHANT3` — procurados por `.spr` e por `.act` no nosso `data.grf` e no
+do bRO. Nas duas instalações há **um** elefante.
+
+**O estilista não precisou de trabalho de sprite, e o porquê importa:** cor de
+roupa não é sprite, é **palette**. O sprite do personagem é indexado, e o
+cliente troca a tabela de cores por um `data\palette\몸\*.pal` que ele já tem;
+o servidor só manda o número, com `setlook LOOK_CLOTHES_COLOR`.
+
+Quantas cores existem de verdade, contando os 1809 `.pal` de corpo do nosso
+GRF por classe e gênero:
+
+| classes | índices |
+|---|---|
+| base (Aprendiz, Espadachim, Mago, Arqueiro, Noviço, Mercador, Gatuno) | 0..4 |
+| 2ª e 3ª classes | **0..3** |
+| parte das classes novas (4ª) | 0..7 |
+
+Por isso o teto do Edgard é **3**, e não o `max_cloth_color: 7` do
+`conf/battle/client.conf`. Aquele número é do **servidor**, e o servidor aceita
+qualquer índice e manda para um cliente que pode não ter a palette. **Índice sem
+palette não dá erro** — o cliente desenha a cor padrão, e a conclusão errada é
+achar que o NPC falhou. É a mesma armadilha do view id de NPC, uma camada
+adiante. Mudar o teto é trocar um número no `OnInit`.
+
+#### Mestre do Refino — a NPC já existia, em inglês e desligada
+
+`npc/re/merchants/ticket_refiner.txt`, o "Refine Master" do próprio rAthena.
+Três coisas batem com o bRO e fecham a identificação: mapa `prontera`,
+coordenada `184,177` e sprite `851`. O nome em português saiu do
+`navi_npc_br.lub` do GRF do bRO, que é a fonte que este documento manda usar
+para nome de NPC.
+
+Vinha **desligado** no rAthena (`npc/re/scripts_athena.conf:174`, comentada —
+"This NPC is currently disabled on official servers"). Foi ligado pelo nosso
+`scripts_guerra.conf`, e não descomentando aquela linha, como no `warper.txt`.
+O renomear é de fora, `disablenpc` + duplicata nossa, como no
+`armazem_do_cla.txt`. **A ordem das duas linhas no `scripts_guerra.conf`
+importa**: o `ticket_refiner.txt` tem de vir antes, senão o `duplicate` não acha
+o original e a NPC não nasce.
+
+Ele refina com os **Pergaminhos** (`Pergaminho de Arma +N` /
+`Pergaminho de Armadura +N`, nomes lidos do `iteminfo` do bRO), sem chance de
+quebrar, levando a peça direto ao nível do pergaminho. **Nenhum NPC nosso vende
+pergaminho** — hoje eles só entram por `@item`.
+
+Diferente do Armazém do Clã, **o diálogo deste foi traduzido**, pelo caminho que
+aquele deixou escrito: arquivo no grupo `servico`, `--extrair`, traduzir,
+`--aplicar`. 82 falas.
+
+#### Duas correções no `traduz_npcs.py`, e a primeira é um estrago evitado
+
+**1. `--extrair` num grupo já aplicado apagava o catálogo.** A extração lia o
+arquivo **vivo** do rAthena. Depois de um `--aplicar`, aquele arquivo está em
+português — então a linha `-`, que é a **trava** contra mudança do upstream,
+passava a guardar a *tradução*, e a linha `+` saía vazia. Um
+`--extrair servico` esvaziou **595 pares** de uma vez. O `git checkout` desfez.
+
+O que faz isso perigoso é não dar erro: ele imprime `595 mudaram no upstream`,
+que parece informação e é o relatório do estrago. A correção é uma linha — a
+fonte passa a ser o `.INGLES` quando ele existe, que é justamente o backup que
+o `--aplicar` deixa. Depois dela, o mesmo comando: `714 já traduzidos, 0
+mudaram no upstream`.
+
+**2. Contexto `atrib` — a palavra que ficava metade em inglês.** O
+`ticket_refiner.txt` guarda "Weapon"/"Armor" em `.@type$` e **interpola** em
+três frases de `mes`. O catálogo só extraía literal em contexto de exibição
+(`mes`, `select`, `setarray`...), e atribuição não era um. O resultado seria
+"Para refinar esta ^006400**Weapon**" — sem erro nenhum para denunciar.
+
+É exatamente o **token interno** que a doutrina de `tokens_intocaveis` já mandava
+traduzir: nasce e morre no arquivo, e o único destino dele é a tela. Ficou
+"Arma" e "Armadura", que é como os pergaminhos se chamam no bRO — e as duas são
+femininas, então "esta ..." e "sua reluzente ..." servem para os dois casos.
+
+O custo foi **medido antes de ligar**: +54 pares nos dez catálogos (campal 14,
+guerra 17, kafra 12, servico 11, o resto zero), todos nascendo **vazios**, e
+vazio quer dizer "deixa em inglês". Os índices não andam: eles contam *todos* os
+literais, e o comentário do `literais_todos` diz que isso é de propósito,
+justamente para a lista de contextos poder crescer. Era o ponto de extensão
+previsto.
+
+#### Como foram conferidos, já que não houve teste in-game
+
+Vale mais que o resultado, porque dá para repetir. Os servidores estavam no ar e
+**não foram tocados**: subir um segundo map-server que se registre no
+char-server faria o char derrubar o primeiro e cair quem estivesse jogando. A
+saída foi uma conf de checagem que importa a real e depois aponta o
+`char_port` para uma porta morta:
+
+```
+import: conf/map_athena.conf
+char_ip: 127.0.0.1
+char_port: 1
+map_port: 15121
+```
+
+```
+./map-server.exe --run-once --map-config <a conf acima>
+```
+
+O `--run-once` carrega tudo e sai. Resultado: **24244 NPCs, nenhum erro de
+parse**, e nenhum `debugmes` das travas de `OnInit` disparou — o que prova que
+o `disablenpc "Refine Master"` achou o alvo.
+
+Depois disso, uma **sonda temporária** (um NPC flutuante que só imprime
+`getnpcid` e `getmapxy` de cada nome no `OnInit`) confirmou nome **e
+coordenada**, e foi apagada em seguida. Depois da saída da tenda:
+
+```
+SONDA Máquina          id=110024239 em prontera 167,199
+SONDA Xanin            id=110024237 em prontera 172,201
+SONDA Edgard           id=110024238 em prontera 170,200
+SONDA Mestre do Refino id=110024241 em prontera 184,177
+```
+
+Isso prova que os NPCs **existem, o script compila e eles estão na célula
+certa**. Não prova sprite na tela nem que a cor de roupa muda de verdade. Para
+isso: `@reloadscript` e ir a Prontera.
+
+**Comparar o log de subida com o da rodada anterior** é a outra metade do
+método, e foi ela que pegou o quase-desastre do preço de venda (seção
+seguinte). A conferência é `[Error]`/`[Warning]` agrupados e `diff` contra o
+baseline; hoje o resultado é **idêntico ao baseline**, nenhum aviso novo e
+nenhum perdido.
 
 ### Mercado Contemporâneo — aberto em 2026-08-01, NÃO testado in-game
 

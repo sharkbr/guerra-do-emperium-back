@@ -1,0 +1,123 @@
+//===== Guerra do Emperium ===================================
+//= Mestre do Refino
+//===== Onde =================================================
+//= prontera 184,177. Celula conferida no prontera.gat DESTE
+//= cliente: tipo 0, andavel.
+//=
+//= A coordenada NAO foi escolhida por nos - e a do bRO, e e
+//= tambem a que o rAthena ja usa. As tres batem, e isso e a
+//= confirmacao de que e a mesma NPC. Ver "De onde veio".
+//===== Descricao ============================================
+//= Refina equipamento usando os PERGAMINHOS, sem chance de
+//= quebrar. O pergaminho diz o nivel: um "Pergaminho de Arma
+//= +7" leva a arma a +7 de uma vez, seja qual for o refino
+//= atual - desde que ele seja MENOR que o do pergaminho.
+//=
+//= Ha pergaminho de Arma e de Armadura, nos niveis +5, +6, +7,
+//= +8, +9, +11, +12 e de +13 a +19. Sem pergaminho nenhum na
+//= bolsa, ele diz que "nao trabalha mais" e nao abre o servico.
+//=
+//= NAO vende pergaminho, e nenhum NPC nosso vende ainda - hoje
+//= eles so entram por @item. Se um dia forem entrar na economia,
+//= o Mercado Contemporaneo e o lugar.
+//===== De onde veio =========================================
+//= Pedido em 2026-08-04: "Mestre do Refino, refina com os
+//= Pergaminhos, prontera 184,177, o bRO ja possui esse".
+//=
+//= E o "Refine Master" do proprio rAthena, em
+//= npc/re/merchants/ticket_refiner.txt. Tres coisas batem
+//= exatamente com o bRO, o que fecha a identificacao:
+//=
+//=   | | bRO (navi_npc_br.lub) | rAthena |
+//=   | mapa      | prontera | prontera |
+//=   | coordenada| 184,177  | 184,177  |
+//=   | sprite    | 851      | 851      |
+//=
+//= O nome "Mestre do Refino" e o do bRO, lido do
+//= `navi_npc_br.lub` do data.grf dele - a tabela de NPC por mapa
+//= e coordenada, em portugues, que e a fonte que PENDENCIAS.md
+//= aponta para nome de NPC. Nao foi inventado nem traduzido de
+//= cabeca.
+//===== Como, e por que assim ================================
+//= Sao TRES movimentos, e nenhum edita arquivo do rAthena a mao:
+//=
+//= 1) LIGAR o script. O ticket_refiner.txt vinha DESLIGADO no
+//=    rAthena (npc/re/scripts_athena.conf, linha 174, comentada
+//=    - "This NPC is currently disabled on official servers").
+//=    Ele e ligado por uma linha no nosso
+//=    npc/guerra/scripts_guerra.conf, e NAO descomentando a
+//=    linha de la - mesma decisao do warper.txt.
+//=
+//= 2) RENOMEAR, de fora: `disablenpc` no "Refine Master" do
+//=    rAthena mais uma duplicata nossa, na mesma coordenada e
+//=    com o nome em portugues. O arquivo do rAthena fica com a
+//=    posicao e o nome originais. Mesmo movimento do
+//=    armazem_do_cla.txt.
+//=
+//= 3) TRADUZIR, pelo catalogo. O ticket_refiner.txt entrou no
+//=    grupo `servico` de ferramentas/traduz_npcs.py e as 82
+//=    falas foram traduzidas em npc/guerra/traducao/servico.cat.
+//=    O arquivo do rAthena e o RESULTADO de `--aplicar`, e tem o
+//=    .INGLES ao lado. Diferente do Armazem do Cla, que ficou em
+//=    ingles justamente por nao estar em grupo nenhum.
+//=
+//= A ORDEM no scripts_guerra.conf importa: o ticket_refiner.txt
+//= tem de vir ANTES deste arquivo, senao o `duplicate` nao acha
+//= o "Refine Master" e a NPC simplesmente nao nasce.
+//===== O que a traducao ensinou =============================
+//= Duas frases interpolam a palavra Arma/Armadura, que o script
+//= guarda em `.@type$`. O catalogo NAO via essa palavra: ele so
+//= extraia literal em contexto de exibicao (`mes`, `select`...),
+//= e `.@type$ = "Weapon"` e atribuicao. O resultado teria sido
+//= "Para refinar esta ^006400Weapon" - meio em portugues, meio
+//= em ingles, e sem erro nenhum para denunciar.
+//=
+//= Foi criado o contexto `atrib` no traduz_npcs.py, que e o caso
+//= tipico do "token interno" que a doutrina de
+//= `tokens_intocaveis` ja mandava traduzir: nasce e morre no
+//= arquivo e o unico destino dele e a tela. Custo medido antes
+//= de ligar: +54 pares nos dez catalogos, todos nascendo vazios.
+//=
+//= As palavras sao "Arma" e "Armadura" porque e assim que os
+//= pergaminhos se chamam no iteminfo do bRO ("Pergaminho de Arma
+//= +7"). As duas sao femininas, entao "esta ..." e "sua
+//= reluzente ..." servem para os dois casos - foi por isso que
+//= as frases foram escritas no feminino.
+//===== Notas ================================================
+//= Sprite 851, o mesmo do rAthena e o mesmo do bRO. Conferido no
+//= npcidentity.lub DESTE cliente, como todo sprite novo desde a
+//= armadilha do 10605 no Mestre de Classe.
+//=
+//= Renomear NPC e a parte com risco real: o nome exibido faz
+//= parte da chave unica, e `duplicate()`, `enablenpc` e
+//= `donpcevent` de outros arquivos referenciam por ele. Aqui foi
+//= seguro porque NADA em npc/, src/ ou db/ referencia "Refine
+//= Master" fora do proprio ticket_refiner.txt. Conferido.
+//=
+//= Comentar as DUAS linhas no scripts_guerra.conf (esta e a do
+//= ticket_refiner.txt) tira a NPC do ar por inteiro.
+//=
+//= Gravado em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, secao
+//= "Acentuacao".
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,184,177,6	duplicate(Refine Master)	Mestre do Refino	851
+
+-	script	MestreDoRefino	-1,{
+	end;
+
+OnInit:
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste,
+	// um ticket_refiner.txt que saia de sincronia (renomeado pelo
+	// upstream, ou a linha do scripts_guerra.conf comentada por
+	// engano) abortaria o OnInit calado - e sobrariam DUAS NPCs de
+	// refino em cima uma da outra, a nossa e a deles.
+	if (!getnpcid(0, "Refine Master")) {
+		debugmes "MestreDoRefino: nao achei 'Refine Master'. O npc/re/merchants/ticket_refiner.txt nao foi carregado ou mudou de nome - PODE HAVER DUAS NPCs DE REFINO EM PRONTERA 184,177.";
+		end;
+	}
+	disablenpc "Refine Master";
+	end;
+}

@@ -85,12 +85,35 @@ RE_LITERAL = re.compile(r'"(%s)"' % VALOR)
 # a regra de "+ vazio = nao traduz" - o revisor ve e deixa em branco.
 RE_SETARRAY_TEXTO = re.compile(r'setarray\s+[.@$\w\[\]]*\$')
 
+# Atribuicao a variavel de texto: `.@type$ = "Weapon";`, `.@menu$ += "..."`.
+#
+# Entrou em 2026-08-04, com o Mestre do Refino. O ticket_refiner.txt guarda a
+# palavra "Weapon"/"Armor" numa variavel e depois a INTERPOLA em tres frases de
+# `mes`. Sem este contexto o catalogo nao via a palavra, e as tres frases saiam
+# meio em portugues e meio em ingles - "Se quiser refinar este ^006400Weapon".
+#
+# E exatamente o **token interno** que a doutrina de `tokens_intocaveis` manda
+# traduzir: nasce e morre no arquivo, e o unico destino dele e a tela. O que
+# continua protegido e o nome externo, porque o RE_TECNICO e testado depois e
+# ganha de qualquer contexto.
+#
+# Blast radius medido antes de ligar: +54 pares nos dez catalogos (campal 14,
+# guerra 17, kafra 12, servico 11, o resto zero). Nascem VAZIOS, e vazio quer
+# dizer "deixa em ingles" - nenhuma traducao existente se mexe. Os indices
+# tambem nao andam: eles contam TODOS os literais, justamente para a lista de
+# contextos poder crescer (ver `literais_todos`).
+RE_ATRIB = re.compile(r'\.?@?[A-Za-z_]\w*\$\s*(?:\+)?=')
+
 GRUPOS = {
     'kafra': ['npc/kafras/functions_kafras.txt',
               'npc/kafras/kafras.txt'],
     'servico': ['npc/merchants/refine.txt',
                 'npc/re/merchants/refine.txt',
-                'npc/merchants/inn.txt'],
+                'npc/merchants/inn.txt',
+                # Entrou em 2026-08-04, junto com o Mestre do Refino. Vinha
+                # desligado no rAthena (npc/re/scripts_athena.conf:174) e e
+                # ligado pelo nosso npc/guerra/scripts_guerra.conf.
+                'npc/re/merchants/ticket_refiner.txt'],
     'cidades': ['npc/cities/prontera.txt',
                 'npc/cities/izlude.txt',
                 'npc/re/cities/izlude.txt'],
@@ -146,6 +169,8 @@ def literais_todos(dados):
             contexto = m.group(1)
             if contexto == 'setarray' and not RE_SETARRAY_TEXTO.search(limpa):
                 contexto = None
+        elif RE_ATRIB.search(limpa):
+            contexto = 'atrib'
         for lit in RE_LITERAL.finditer(linha):
             n += 1
             saida.append((n, lit.group(1), contexto))
@@ -227,7 +252,19 @@ def extrair(grupo, arquivos):
         p = os.path.join(RATHENA, rel.replace('/', os.sep))
         if not os.path.exists(p):
             continue
-        fh = open(p, 'rb')
+        # A FONTE E SEMPRE O INGLES. Se o `--aplicar` ja passou por este
+        # arquivo, ele deixou um `.INGLES` ao lado e o arquivo vivo esta em
+        # portugues -- extrair dali gravaria a TRADUCAO na linha `-`, que e a
+        # trava, e a linha `+` sairia vazia. O catalogo perderia o original e
+        # ficaria sem como recusar mudanca do upstream depois.
+        #
+        # Aconteceu em 2026-08-04, ao acrescentar um arquivo novo a um grupo
+        # ja aplicado: um `--extrair servico` esvaziou 595 pares do
+        # servico.cat de uma vez. Um `git checkout` desfez, mas o proximo pode
+        # nao perceber -- o comando nao da erro, so imprime "595 mudaram no
+        # upstream", que parece informacao e nao estrago.
+        fonte = p + '.INGLES' if os.path.exists(p + '.INGLES') else p
+        fh = open(fonte, 'rb')
         dados = fh.read()
         fh.close()
         itens = literais(dados)

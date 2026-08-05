@@ -480,6 +480,115 @@ estava par. Script do rAthena é sensível a aspas — uma a mais faz o parser
 engolir o resto do arquivo, e o erro sai na subida do servidor citando uma
 linha que não tem nada a ver.
 
+### `--extrair` num grupo já aplicado apagava o catálogo — 2026-08-04
+
+A extração lia o arquivo **vivo** do rAthena. Depois de um `--aplicar`, aquele
+arquivo está em português — então a linha `-`, que é a trava contra mudança do
+upstream, passava a guardar a *tradução*, e a `+` saía vazia. Acrescentar um
+arquivo novo a um grupo já aplicado e rodar `--extrair servico` esvaziou **595
+pares** de uma vez.
+
+O que faz isso perigoso é não dar erro: o comando imprime `595 mudaram no
+upstream`, que parece informação e é o relatório do estrago. Um `git checkout`
+desfez, mas só porque alguém olhou.
+
+A correção é uma linha: a fonte passa a ser o `.INGLES` quando ele existe — que
+é justamente o backup que o `--aplicar` deixa ao lado. Depois dela, o mesmo
+comando devolve `714 já traduzidos, 0 mudaram no upstream`.
+
+**A regra que fica: a fonte da extração é sempre o inglês.** Se um dia o
+`.INGLES` for apagado, a extração daquele arquivo volta a mentir e não avisa.
+
+### O contexto `atrib` — a palavra que ficava metade em inglês
+
+Entrou em 2026-08-04, com o Mestre do Refino. O `ticket_refiner.txt` guarda a
+palavra `"Weapon"`/`"Armor"` numa variável e depois a **interpola** em três
+frases de `mes`:
+
+```
+.@type$ = "Weapon";
+mes "If you want to refine this ^006400"+.@type$+"^000000, ...";
+```
+
+O catálogo só extraía literal em contexto de exibição, e atribuição não era um.
+A frase sairia "Para refinar esta ^006400**Weapon**" — metade em português,
+metade em inglês, e sem erro nenhum para denunciar.
+
+É exatamente o **token interno** da tabela acima: nasce e morre no arquivo, e o
+único destino dele é a tela. O `RE_TECNICO` continua sendo testado depois e
+ganha de qualquer contexto, então nome externo segue protegido.
+
+**O custo foi medido antes de ligar** — e essa é a parte que vale copiar: +54
+pares nos dez catálogos (campal 14, guerra 17, kafra 12, servico 11, o resto
+zero), todos nascendo **vazios**, e vazio quer dizer "deixa em inglês". Nenhuma
+tradução existente se mexe. Os índices também não andam: eles contam *todos* os
+literais, e o comentário do `literais_todos` diz que isso é de propósito,
+justamente para a lista de contextos poder crescer. Era o ponto de extensão
+previsto.
+
+## `planta_adereco.py` — copia um adereço de um mapa para outro
+
+```
+python planta_adereco.py <nosso-data.grf> <pasta-saida> [mapa] [grf-origem]
+```
+
+Receita declarativa no topo do arquivo. Serve para pôr uma peça específica num
+lugar específico, em qualquer mapa.
+
+**Por que não é o `edita_mapa.py`.** Aquele é a frente de destruição: tem
+semente, fração, sorteio, e **recusa rodar em Prontera** por decisão de ficção.
+Relaxar aquele guarda para caber um adereço seria estragar o motivo de ele
+existir.
+
+**A peça não é desenhada, é copiada.** A receita não diz "planta o `.rsm` tal
+com rotação tal": diz *"vai em `moc_ruins 112,127`, pega o que estiver lá com
+este nome de `.rsm`, e põe igual em `prontera 168,199`"*. Foi a tenda do bazar
+de Morroc que ditou o projeto, porque três coisas dela um "planta o `.rsm`"
+teria perdido:
+
+- **a altura é relativa ao chão.** A tenda está a `y=-2,5` num chão de `-4,0`:
+  1,5 afundada de propósito. O que se copia é o **afastamento**, não o `y`
+  absoluto — chão `+1,0` em Prontera, tenda em `+2,5`.
+- **a escala negativa.** Ela são **duas metades**, e uma tem `escala.x = -0,8`
+  — é a outra espelhada. Copiar `1,0` daria duas metades viradas para o mesmo
+  lado. O grupo inteiro é reposicionado pelo **centro**, então o afastamento
+  entre as metades também sobrevive.
+- **o `nodename`** (`RC_sr005`). O `Modelo.novo` do `rsw.py` deixa esse campo
+  vazio e o próprio comentário dele avisa que isso é **não verificado**.
+  Copiando, a dúvida não se aplica.
+
+Duas armadilhas do caminho, as duas de ferramenta e não de conteúdo:
+
+1. **No nosso `data.grf` o `moc_ruins.rsw` está com flag DES**, que o `grf.py`
+   não lê — o de Prontera não está. Por isso o mapa de **origem** sai do GRF do
+   bRO, onde ele é `flags=1`. Mesmo tamanho, 141758 bytes. O parâmetro existe
+   para isso e tem esse default.
+2. **O `verificar()` do `rsw.py` compara contra os bytes de entrada**, então só
+   vale *antes* de mexer. Depois de mexer a prova é outra: reabrir a saída,
+   conferir a contagem de objetos e a quadtree fechando no byte exato. Este
+   script faz as duas, e aborta antes de gravar.
+
+Todo `.rsm` da receita é conferido contra a tabela do GRF **de destino** —
+caminho errado não dá erro em parser nenhum, só aparece no cliente, um diálogo
+por modelo, e trava quem tiver personagem salvo no mapa.
+
+Instalação: copiar a saída para `cliente\data\`, onde o `DataFolderFirst` a faz
+vencer o GRF. **Apagar reverte.** Não toca luz, água, chão nem `.gat` — e por
+não tocar o `.gat`, **o adereço não bloqueia passagem**: o jogador atravessa a
+tenda.
+
+### A receita de Prontera está vazia — a tenda foi tirada
+
+A tenda foi plantada em 2026-08-04 e **removida no mesmo dia**, por decisão do
+dono do projeto: não ficou boa na praça. Remover foi apagar
+`cliente\data\prontera.rsw` — sem o override, o GRF volta a servir o mapa
+original. Foi a prova prática de que o "apagar reverte" acima é verdade.
+
+A receita continua no arquivo, **comentada**, com a explicação ao lado.
+Descomentar replanta. Não é um TODO pendente, é registro — e a ferramenta fica
+porque é genérica e porque o que ela ensinou sobre `.rsw` vale para o próximo
+adereço.
+
 ## `grf.py` — extrator de GRF 0x200
 
 ```

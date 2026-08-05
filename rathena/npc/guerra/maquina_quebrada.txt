@@ -1,0 +1,45 @@
+//===== Guerra do Emperium ===================================
+//= A Maquina
+//===== Onde =================================================
+//= prontera 167,199. Celula conferida no prontera.gat DESTE
+//= cliente: tipo 0, andavel, altura 1.00.
+//=
+//= Ela fecha a diagonal com os outros dois da praca, a duas
+//= celulas da quina do quarteirao (de x=162 a x=165 e bloqueado
+//= entre y=198 e y=201):
+//=
+//=     y=199   Maquina (167,199)
+//=     y=200        Edgard (170,200)
+//=     y=201             Xanin (172,201)
+//===== Descricao ============================================
+//= Sem funcao nenhuma, por pedido explicito: "por enquanto sem
+//= funcao". A fala e a do pedido, com o acento de "nao" posto -
+//= o resto do servidor e acentuado e o cliente ja desenha.
+//===== Por que arquivo proprio ==============================
+//= Porque um NPC por arquivo e o PADRAO daqui (ver mesmerita,
+//= kafra_da_praca, mestre_de_classe...). Juntar e que precisa de
+//= motivo, e o motivo do xanin_e_edgard.txt e que a fala de um
+//= cita o outro pelo nome. A Maquina nao entra nessa.
+//=
+//= Ela ja esteve junto dos dois, quando os tres eram uma cena em
+//= volta de uma tenda em 168,199. A tenda foi tirada em
+//= 2026-08-04, no mesmo dia em que entrou - ver o cabecalho do
+//= xanin_e_edgard.txt e ferramentas/planta_adereco.py.
+//===== Notas ================================================
+//= Sprite 564 (2_VENDING_MACHINE1), o mesmo da "Contribution
+//= Certificate Vending Machine" de morocc 52,197
+//= (npc/re/quests/quests_15_1.txt), que e a maquina que o pedido
+//= apontou. Conferido no npcidentity.lub DESTE cliente, e o .spr
+//= e o .act conferidos no nosso data.grf - a regra desde a
+//= armadilha do 10605 no Mestre de Classe.
+//=
+//= Gravado em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, secao
+//= "Acentuacao".
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,167,199,4	script	Máquina	564,{
+	mes "A máquina não funciona.";
+	close;
+}

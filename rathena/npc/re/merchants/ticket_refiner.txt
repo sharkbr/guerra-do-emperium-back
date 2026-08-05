@@ -61,56 +61,56 @@ prontera,184,177,6	script	Refine Master	851,{
 	}
 
 	if (.@check == 0) {
-		mes "[Refine Master]";
-		mes "Hello!";
-		mes "What's up?";
-		mes "I'm a specialist";
-		mes "for refining items,";
-		mes "but I don't work anymore.";
+		mes "[Mestre do Refino]";
+		mes "Olá!";
+		mes "Tudo bem?";
+		mes "Eu sou especialista";
+		mes "em refinar equipamento,";
+		mes "mas não trabalho mais.";
 		next;
-		switch(select("I'll go on my way.:Hmm... this makes me curious.")) {
+		switch(select("Então vou seguir meu caminho.:Hmm... fiquei curioso.")) {
 		case 1:
-			mes "[Refine Master]";
-			mes "Take care, adventurer.";
+			mes "[Mestre do Refino]";
+			mes "Se cuide, aventureiro.";
 			close;
 		case 2:
-			mes "[Refine Master]";
-			mes "Actually, I sometimes provide refine services for adventurers with a ^006400Refine Ticket^000000...";
-			mes "Bye bye~!";
+			mes "[Mestre do Refino]";
+			mes "Na verdade, de vez em quando eu ainda refino para quem chega com um ^006400Pergaminho^000000...";
+			mes "Tchau, tchau~!";
 			close;
 		}
 	}
 	emotion ET_SURPRISE;
-	mes "[Refine Master]";
-	mes "Greetings!";
-	mes "I can refine an item up to the ^006400same level as your ticket^000000.";
-	mes "You don't have to worry! There's no chance of breaking your item.";
+	mes "[Mestre do Refino]";
+	mes "Saudações!";
+	mes "Eu refino a peça até o ^006400mesmo nível do seu pergaminho^000000.";
+	mes "E pode ficar tranquilo: não há chance nenhuma de quebrar.";
 	next;
-	if(select("I'll come back later.:Refine item with ticket.") == 1) {
-		mes "[Refine Master]";
-		mes "Okay.";
-		mes "You can come again later.";
+	if(select("Volto depois.:Refinar com o pergaminho.") == 1) {
+		mes "[Mestre do Refino]";
+		mes "Certo.";
+		mes "Volte quando quiser.";
 		close;
 	}
-	mes "[Refine Master]";
-	mes "Which equipment would you like to refine?";
+	mes "[Mestre do Refino]";
+	mes "Qual peça você quer refinar?";
 	next;
-	setarray .@position$[1],"Head upper","Armor","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head middle","Head lower";
+	setarray .@position$[1],"Cabeça (topo)","Armadura","Mão esquerda","Mão direita","Capa","Sapatos","Acessório 1","Acessório 2","Cabeça (meio)","Cabeça (baixo)";
 	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 	for ( .@i = 1; .@i <= 10; ++.@i )
-		.@menu$ += (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : .@position$[.@i] + "- [Empty]") + ":";
+		.@menu$ += (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : .@position$[.@i] + "- [Vazio]") + ":";
 
 	.@part = .@indices[ select(.@menu$) ];
 	if (!getequipisequiped(.@part)) {
-		mes "[Refine Master]";
-		mes "You have to equip the item you want to refine.";
+		mes "[Mestre do Refino]";
+		mes "Você precisa estar usando a peça que quer refinar.";
 		close;
 	}
 	if (!getequipisenableref(.@part)) {
 		emotion ET_OTL;
-		mes "[Refine Master]";
-		mes "Oh, I'm sorry.";
-		mes "This item is impossible to refine.";
+		mes "[Mestre do Refino]";
+		mes "Ah, sinto muito.";
+		mes "Esta peça não pode ser refinada.";
 		close;
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
@@ -124,7 +124,7 @@ prontera,184,177,6	script	Refine Master	851,{
 			case 3:
 			case 4:
 				copyarray .@tickets[0], .@cert_weapon[0], .@size_cert;
-				.@type$ = "Weapon";
+				.@type$ = "Arma";
 				break;
 			default:
 				// TODO:
@@ -134,7 +134,7 @@ prontera,184,177,6	script	Refine Master	851,{
 		switch( getequiparmorlv( .@part ) ){
 			case 1:
 				copyarray .@tickets[0], .@cert_armor[0], .@size_cert;
-				.@type$ = "Armor";
+				.@type$ = "Armadura";
 				break;
 			default:
 				// TODO:
@@ -153,13 +153,13 @@ prontera,184,177,6	script	Refine Master	851,{
 	}
 	if (.@check == 0) {
 		emotion ET_THINK;
-		mes "[Refine Master]";
-		mes "If you want to refine this ^006400"+.@type$+"^000000, please come along with ^006400"+.@type$+" Refine Ticket^000000.";
-		mes "See you later!";
+		mes "[Mestre do Refino]";
+		mes "Para refinar esta ^006400"+.@type$+"^000000, volte com um ^006400Pergaminho de "+.@type$+"^000000.";
+		mes "Até mais!";
 		close;
 	}
-	mes "[Refine Master]";
-	mes "Please choose which ^006400"+.@type$+" Refine Ticket^000000 you want to use.";
+	mes "[Mestre do Refino]";
+	mes "Escolha qual ^006400Pergaminho de "+.@type$+"^000000 você quer usar.";
 	next;
 	.@menu$ = "";
 	for ( .@i = 0; .@i < .@size_cert; ++.@i )
@@ -170,41 +170,41 @@ prontera,184,177,6	script	Refine Master	851,{
 
 	if (countitem(.@ticket_id) == 0) {
 		emotion ET_QUESTION;
-		mes "[Refine Master]";
-		mes getitemname(.@ticket_id)+" is not in your inventory. Did you put it in your storage?";
-		mes "Please check again.";
-		mes "See you later!";
+		mes "[Mestre do Refino]";
+		mes getitemname(.@ticket_id)+" não está na sua bolsa. Será que ficou no armazém?";
+		mes "Confira de novo, por favor.";
+		mes "Até mais!";
 		close;
 	}
 	if (getequiprefinerycnt(.@part) >= .@ticket_lv) {
 		emotion ET_PROFUSELY_SWEAT;
-		mes "[Refine Master]";
-		mes "^8B4513This item is already refined as much as your deed.^000000";
-		mes "Please come along with an item refined less than your ticket.";
+		mes "[Mestre do Refino]";
+		mes "^8B4513Esta peça já está refinada até onde o seu pergaminho alcança.^000000";
+		mes "Traga uma peça refinada abaixo do que o pergaminho dá.";
 		close;
 	}
-	mes "[Refine Master]";
-	mes "I'm going to refine ^006400"+getequipname(.@part)+"^8B4513 up to the +"+.@ticket_lv+" level^000000 with ^006400"+getitemname(.@ticket_id)+"^000000.";
-	mes "May I proceed?";
+	mes "[Mestre do Refino]";
+	mes "Vou refinar a ^006400"+getequipname(.@part)+"^8B4513 até o +"+.@ticket_lv+"^000000, usando o ^006400"+getitemname(.@ticket_id)+"^000000.";
+	mes "Posso seguir?";
 	next;
-	if(select("No.:Yes.") == 1) {
+	if(select("Não.:Sim.") == 1) {
 		emotion ET_THINK;
-		mes "[Refine Master]";
-		mes "Oh, you changed your mind.";
-		mes "Ok.";
-		mes "You can come back later.";
+		mes "[Mestre do Refino]";
+		mes "Ah, mudou de ideia.";
+		mes "Tudo bem.";
+		mes "Pode voltar depois.";
 		close;
 	}
-	mes "[Refine Master]";
-	mes "Great.";
-	mes "As you wish!";
-	mes "I have my own special way to refine...";
-	mes ".......ka boom!";
+	mes "[Mestre do Refino]";
+	mes "Ótimo.";
+	mes "Como quiser!";
+	mes "Eu tenho um jeito bem particular de refinar...";
+	mes ".......ka bum!";
 	specialeffect EF_SUI_EXPLOSION;
 	if (countitem(.@ticket_id) < 1) {
 		next;
-		mes "Error!";
-		mes "Please report this.";
+		mes "Erro!";
+		mes "Por favor, avise a administração.";
 		close;
 	}
 	delitem .@ticket_id,1;
@@ -212,21 +212,21 @@ prontera,184,177,6	script	Refine Master	851,{
 	// anti-hack
 	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
 		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
-		mes "[Refine Master]";
+		mes "[Mestre do Refino]";
 		emotion ET_FRET;
-		mes "Wait a second...";
-		mes "Do you think I'm stupid?!";
-		mes "You switched the item while I wasn't looking! Get out of here!";
+		mes "Espera um pouco...";
+		mes "Acha que eu sou bobo?!";
+		mes "Você trocou a peça enquanto eu não estava olhando! Sai daqui!";
 		close;
 	}
 	successrefitem .@part, .@ticket_lv - getequiprefinerycnt(.@part);
 	next;
 	emotion ET_DELIGHT;
-	mes "[Refine Master]";
-	mes "Alright, here it is~";
-	mes "Well, ^0000FF"+strcharinfo(0)+"^000000!";
-	mes "Congratulations on your shining "+.@type$+".";
-	mes "You look GREAT!";
-	mes "Farewell~!";
+	mes "[Mestre do Refino]";
+	mes "Pronto, aqui está~";
+	mes "Muito bem, ^0000FF"+strcharinfo(0)+"^000000!";
+	mes "Parabéns pela sua reluzente "+.@type$+".";
+	mes "Ficou ÓTIMO!";
+	mes "Até a próxima~!";
 	close;
 }

@@ -1526,7 +1526,7 @@
 - "items to repair."
 + "item para consertar."
 
-### npc/re/merchants/refine.txt  (313 textos)
+### npc/re/merchants/refine.txt  (322 textos)
 #: npc/re/merchants/refine.txt#4 (mes)
 - "[Vestri]"
 + "[Vestri]"
@@ -1629,6 +1629,18 @@
 #: npc/re/merchants/refine.txt#39 (mes)
 - "refined as it gets!"
 + "máximo de refino!"
+#: npc/re/merchants/refine.txt#40 (atrib)
+- "a"
++ ""
+#: npc/re/merchants/refine.txt#41 (atrib)
+- "weapon"
++ ""
+#: npc/re/merchants/refine.txt#42 (atrib)
+- "an"
++ ""
+#: npc/re/merchants/refine.txt#43 (atrib)
+- "armor"
++ ""
 #: npc/re/merchants/refine.txt#44 (mes)
 - "["
 + ""
@@ -2226,21 +2238,36 @@
 #: npc/re/merchants/refine.txt#250 (mes)
 - "[Clink]"
 + "[Clim]"
+#: npc/re/merchants/refine.txt#251 (atrib)
+- "armor"
++ ""
 #: npc/re/merchants/refine.txt#252 (mes)
 - "Hmm, an armor refine? Someone like you?"
 + "Hmm, refinar armadura? Logo você?"
+#: npc/re/merchants/refine.txt#253 (atrib)
+- "weapon"
++ ""
 #: npc/re/merchants/refine.txt#254 (mes)
 - "A level 1 weapon?"
 + "Uma arma de nível 1?"
 #: npc/re/merchants/refine.txt#255 (mes)
 - "Urr... Annoying... Okay, let's try..."
 + "Rrr... Chato... Está bem, vamos tentar..."
+#: npc/re/merchants/refine.txt#256 (atrib)
+- "weapon"
++ ""
 #: npc/re/merchants/refine.txt#257 (mes)
 - "A level 2 weapon?"
 + "Uma arma de nível 2?"
+#: npc/re/merchants/refine.txt#258 (atrib)
+- "weapon"
++ ""
 #: npc/re/merchants/refine.txt#259 (mes)
 - "Woot!! A level 3 weapon? Impressive~"
 + "Uau!! Uma arma de nível 3? Impressionante~"
+#: npc/re/merchants/refine.txt#260 (atrib)
+- "weapon"
++ ""
 #: npc/re/merchants/refine.txt#261 (mes)
 - "Wow!... A level 4 weapon~!!"
 + "Uau!... Uma arma de nível 4~!!"
@@ -2792,3 +2819,266 @@
 #: npc/merchants/inn.txt#169 (mes)
 - "enjoy your rest~"
 + "bom descanso~"
+
+### npc/re/merchants/ticket_refiner.txt  (87 textos)
+#: npc/re/merchants/ticket_refiner.txt#1 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#2 (mes)
+- "Hello!"
++ "Olá!"
+#: npc/re/merchants/ticket_refiner.txt#3 (mes)
+- "What's up?"
++ "Tudo bem?"
+#: npc/re/merchants/ticket_refiner.txt#4 (mes)
+- "I'm a specialist"
++ "Eu sou especialista"
+#: npc/re/merchants/ticket_refiner.txt#5 (mes)
+- "for refining items,"
++ "em refinar equipamento,"
+#: npc/re/merchants/ticket_refiner.txt#6 (mes)
+- "but I don't work anymore."
++ "mas não trabalho mais."
+#: npc/re/merchants/ticket_refiner.txt#7 (select)
+- "I'll go on my way.:Hmm... this makes me curious."
++ "Então vou seguir meu caminho.:Hmm... fiquei curioso."
+#: npc/re/merchants/ticket_refiner.txt#8 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#9 (mes)
+- "Take care, adventurer."
++ "Se cuide, aventureiro."
+#: npc/re/merchants/ticket_refiner.txt#10 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#11 (mes)
+- "Actually, I sometimes provide refine services for adventurers with a ^006400Refine Ticket^000000..."
++ "Na verdade, de vez em quando eu ainda refino para quem chega com um ^006400Pergaminho^000000..."
+#: npc/re/merchants/ticket_refiner.txt#12 (mes)
+- "Bye bye~!"
++ "Tchau, tchau~!"
+#: npc/re/merchants/ticket_refiner.txt#13 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#14 (mes)
+- "Greetings!"
++ "Saudações!"
+#: npc/re/merchants/ticket_refiner.txt#15 (mes)
+- "I can refine an item up to the ^006400same level as your ticket^000000."
++ "Eu refino a peça até o ^006400mesmo nível do seu pergaminho^000000."
+#: npc/re/merchants/ticket_refiner.txt#16 (mes)
+- "You don't have to worry! There's no chance of breaking your item."
++ "E pode ficar tranquilo: não há chance nenhuma de quebrar."
+#: npc/re/merchants/ticket_refiner.txt#17 (select)
+- "I'll come back later.:Refine item with ticket."
++ "Volto depois.:Refinar com o pergaminho."
+#: npc/re/merchants/ticket_refiner.txt#18 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#19 (mes)
+- "Okay."
++ "Certo."
+#: npc/re/merchants/ticket_refiner.txt#20 (mes)
+- "You can come again later."
++ "Volte quando quiser."
+#: npc/re/merchants/ticket_refiner.txt#21 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#22 (mes)
+- "Which equipment would you like to refine?"
++ "Qual peça você quer refinar?"
+#: npc/re/merchants/ticket_refiner.txt#23 (setarray)
+- "Head upper"
++ "Cabeça (topo)"
+#: npc/re/merchants/ticket_refiner.txt#24 (setarray)
+- "Armor"
++ "Armadura"
+#: npc/re/merchants/ticket_refiner.txt#25 (setarray)
+- "Left hand"
++ "Mão esquerda"
+#: npc/re/merchants/ticket_refiner.txt#26 (setarray)
+- "Right hand"
++ "Mão direita"
+#: npc/re/merchants/ticket_refiner.txt#27 (setarray)
+- "Robe"
++ "Capa"
+#: npc/re/merchants/ticket_refiner.txt#28 (setarray)
+- "Shoes"
++ "Sapatos"
+#: npc/re/merchants/ticket_refiner.txt#29 (setarray)
+- "Accessory 1"
++ "Acessório 1"
+#: npc/re/merchants/ticket_refiner.txt#30 (setarray)
+- "Accessory 2"
++ "Acessório 2"
+#: npc/re/merchants/ticket_refiner.txt#31 (setarray)
+- "Head middle"
++ "Cabeça (meio)"
+#: npc/re/merchants/ticket_refiner.txt#32 (setarray)
+- "Head lower"
++ "Cabeça (baixo)"
+#: npc/re/merchants/ticket_refiner.txt#33 (menu)
+- "- [Empty]"
++ "- [Vazio]"
+#: npc/re/merchants/ticket_refiner.txt#34 (menu)
+- ":"
++ ""
+#: npc/re/merchants/ticket_refiner.txt#35 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#36 (mes)
+- "You have to equip the item you want to refine."
++ "Você precisa estar usando a peça que quer refinar."
+#: npc/re/merchants/ticket_refiner.txt#37 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#38 (mes)
+- "Oh, I'm sorry."
++ "Ah, sinto muito."
+#: npc/re/merchants/ticket_refiner.txt#39 (mes)
+- "This item is impossible to refine."
++ "Esta peça não pode ser refinada."
+#: npc/re/merchants/ticket_refiner.txt#40 (atrib)
+- "Weapon"
++ "Arma"
+#: npc/re/merchants/ticket_refiner.txt#41 (atrib)
+- "Armor"
++ "Armadura"
+#: npc/re/merchants/ticket_refiner.txt#42 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#43 (mes)
+- "If you want to refine this ^006400"
++ "Para refinar esta ^006400"
+#: npc/re/merchants/ticket_refiner.txt#44 (mes)
+- "^000000, please come along with ^006400"
++ "^000000, volte com um ^006400Pergaminho de "
+#: npc/re/merchants/ticket_refiner.txt#45 (mes)
+- " Refine Ticket^000000."
++ "^000000."
+#: npc/re/merchants/ticket_refiner.txt#46 (mes)
+- "See you later!"
++ "Até mais!"
+#: npc/re/merchants/ticket_refiner.txt#47 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#48 (mes)
+- "Please choose which ^006400"
++ "Escolha qual ^006400Pergaminho de "
+#: npc/re/merchants/ticket_refiner.txt#49 (mes)
+- " Refine Ticket^000000 you want to use."
++ "^000000 você quer usar."
+#: npc/re/merchants/ticket_refiner.txt#51 (menu)
+- ":"
++ ""
+#: npc/re/merchants/ticket_refiner.txt#52 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#53 (mes)
+- " is not in your inventory. Did you put it in your storage?"
++ " não está na sua bolsa. Será que ficou no armazém?"
+#: npc/re/merchants/ticket_refiner.txt#54 (mes)
+- "Please check again."
++ "Confira de novo, por favor."
+#: npc/re/merchants/ticket_refiner.txt#55 (mes)
+- "See you later!"
++ "Até mais!"
+#: npc/re/merchants/ticket_refiner.txt#56 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#57 (mes)
+- "^8B4513This item is already refined as much as your deed.^000000"
++ "^8B4513Esta peça já está refinada até onde o seu pergaminho alcança.^000000"
+#: npc/re/merchants/ticket_refiner.txt#58 (mes)
+- "Please come along with an item refined less than your ticket."
++ "Traga uma peça refinada abaixo do que o pergaminho dá."
+#: npc/re/merchants/ticket_refiner.txt#59 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#60 (mes)
+- "I'm going to refine ^006400"
++ "Vou refinar a ^006400"
+#: npc/re/merchants/ticket_refiner.txt#61 (mes)
+- "^8B4513 up to the +"
++ "^8B4513 até o +"
+#: npc/re/merchants/ticket_refiner.txt#62 (mes)
+- " level^000000 with ^006400"
++ "^000000, usando o ^006400"
+#: npc/re/merchants/ticket_refiner.txt#63 (mes)
+- "^000000."
++ ""
+#: npc/re/merchants/ticket_refiner.txt#64 (mes)
+- "May I proceed?"
++ "Posso seguir?"
+#: npc/re/merchants/ticket_refiner.txt#65 (select)
+- "No.:Yes."
++ "Não.:Sim."
+#: npc/re/merchants/ticket_refiner.txt#66 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#67 (mes)
+- "Oh, you changed your mind."
++ "Ah, mudou de ideia."
+#: npc/re/merchants/ticket_refiner.txt#68 (mes)
+- "Ok."
++ "Tudo bem."
+#: npc/re/merchants/ticket_refiner.txt#69 (mes)
+- "You can come back later."
++ "Pode voltar depois."
+#: npc/re/merchants/ticket_refiner.txt#70 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#71 (mes)
+- "Great."
++ "Ótimo."
+#: npc/re/merchants/ticket_refiner.txt#72 (mes)
+- "As you wish!"
++ "Como quiser!"
+#: npc/re/merchants/ticket_refiner.txt#73 (mes)
+- "I have my own special way to refine..."
++ "Eu tenho um jeito bem particular de refinar..."
+#: npc/re/merchants/ticket_refiner.txt#74 (mes)
+- ".......ka boom!"
++ ".......ka bum!"
+#: npc/re/merchants/ticket_refiner.txt#75 (mes)
+- "Error!"
++ "Erro!"
+#: npc/re/merchants/ticket_refiner.txt#76 (mes)
+- "Please report this."
++ "Por favor, avise a administração."
+#: npc/re/merchants/ticket_refiner.txt#80 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#81 (mes)
+- "Wait a second..."
++ "Espera um pouco..."
+#: npc/re/merchants/ticket_refiner.txt#82 (mes)
+- "Do you think I'm stupid?!"
++ "Acha que eu sou bobo?!"
+#: npc/re/merchants/ticket_refiner.txt#83 (mes)
+- "You switched the item while I wasn't looking! Get out of here!"
++ "Você trocou a peça enquanto eu não estava olhando! Sai daqui!"
+#: npc/re/merchants/ticket_refiner.txt#84 (mes)
+- "[Refine Master]"
++ "[Mestre do Refino]"
+#: npc/re/merchants/ticket_refiner.txt#85 (mes)
+- "Alright, here it is~"
++ "Pronto, aqui está~"
+#: npc/re/merchants/ticket_refiner.txt#86 (mes)
+- "Well, ^0000FF"
++ "Muito bem, ^0000FF"
+#: npc/re/merchants/ticket_refiner.txt#87 (mes)
+- "^000000!"
++ ""
+#: npc/re/merchants/ticket_refiner.txt#88 (mes)
+- "Congratulations on your shining "
++ "Parabéns pela sua reluzente "
+#: npc/re/merchants/ticket_refiner.txt#89 (mes)
+- "."
++ ""
+#: npc/re/merchants/ticket_refiner.txt#90 (mes)
+- "You look GREAT!"
++ "Ficou ÓTIMO!"
+#: npc/re/merchants/ticket_refiner.txt#91 (mes)
+- "Farewell~!"
++ "Até a próxima~!"
