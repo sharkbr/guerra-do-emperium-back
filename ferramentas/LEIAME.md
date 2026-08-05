@@ -199,6 +199,122 @@ Idempotente: item que já tenha entrada não é tocado — nem para conferir se 
 igual, porque a entrada existente pode ser a do ROenglishRE, em inglês, e
 trocá-la por uma nossa sem descrição seria piorar.
 
+## `nomes_pt_item_db.py` — o `Name` do servidor igual ao nome que o cliente desenha
+
+```
+python nomes_pt_item_db.py --relatar    # só mede
+python nomes_pt_item_db.py              # grava, deixando .INGLES ao lado
+python nomes_pt_item_db.py --reverter
+```
+
+O problema só aparece **dentro de diálogo de NPC**, e por isso demorou a ser
+visto. O nome que o jogador lê na bolsa vem do `itemInfo.lua` do **cliente**,
+que já está em português. Mas `getitemname()` e `getequipname()`, que os
+scripts usam para montar a fala, leem o `Name` do `item_db` do **servidor**,
+que está em inglês.
+
+O Mestre do Refino dizia `+5 Weapon Refine Ticket` para o item que a bolsa do
+jogador chama de `Pergaminho de Arma +5`. Mesmo item, dois nomes — e o único
+que o jogador consegue procurar é o da bolsa.
+
+**A fonte é o `itemInfo.lua` do nosso cliente, não o `iteminfo_new.lub` do
+bRO.** Os dois quase sempre concordam (o nosso foi montado importando o dele),
+mas quando discordarem quem está certo é o do cliente, porque é ele que está na
+tela. Mesma regra do `npcidentity.lub` para view id e do `accessoryid.lub` para
+visual: **manda o arquivo que o cliente lê.**
+
+Por isso o objetivo não é "traduzir o item_db", é **sincronizar**. Onde o
+cliente está em português o servidor fica em português; onde o cliente ficou em
+inglês o servidor fica com o inglês *dele*. Consistência primeiro — o português
+vem junto porque o cliente já está em português. 16412 itens.
+
+### A primeira versão zerava o preço de venda de 7126 itens, em silêncio
+
+Ela gerava um `db/guerra/item_db_nomes.yml` com entradas de `Id` + `Name`,
+encadeado por import — que é o que a CONVENÇÃO DE CUSTOMIZAÇÃO pede, e que o
+rAthena aceita de bom grado: `AegisName` e `Name` só são exigidos quando o item
+é **novo** (`itemdb.cpp:57`). Parecia a solução limpa.
+
+A armadilha está em `itemdb.cpp:239`:
+
+```cpp
+hasPriceValue[item->nameid] = { has_buy, has_sell };
+```
+
+Essa linha roda a **cada** parse do mesmo `Id`, e guarda só se *aquele bloco*
+declarou `Buy`/`Sell`. Um bloco com `Id` + `Name` grava `{false, false}` por
+cima do `{true, false}` que o `db/re/` tinha registrado. Depois, no
+`loadingFinished` (`itemdb.cpp:1185`):
+
+```cpp
+if (!has_buy && has_sell)       value_buy  = value_sell * 2;
+else if (has_buy && !has_sell)  value_sell = value_buy / 2;
+```
+
+Nenhum dos dois roda, e a derivação se perde. A Poção Vermelha declara só
+`Buy: 10`; com o override o `value_sell` dela ia para **0** em vez de 5. Poção
+Branca, 600 → 0. Poção Azul, 2500 → 0. **Todo drop que valia dinheiro passava a
+não valer nada** — 7126 itens.
+
+E foi silencioso: dos 7126, **um** imprimiu aviso na subida, e por outro motivo
+(o `Gray_Shard`, que caiu na trava de exploit de zeny). Os outros 7125 não
+disseram nada. Foi esse aviso solitário — ausente no log da rodada anterior —
+que puxou o fio.
+
+**A lição, que vale para qualquer override parcial de YAML do rAthena:** um
+bloco parcial não é só "os campos que eu escrevi". Ele é um parse inteiro, e
+campo ausente pode significar "não declarado" para lógica que roda **depois**,
+no `loadingFinished`. Antes de sobrepor parcialmente, procurar o que o
+`loadingFinished` daquele db faz com a ausência.
+
+### Por isso ele reescreve o arquivo do rAthena
+
+Trocar o `Name` no lugar não tem esse problema, porque **não acrescenta parse
+nenhum**: o bloco continua sendo um só, com os mesmos campos de preço. Só a
+string muda.
+
+O conflito com a CONVENÇÃO é o mesmo que a frente de tradução já resolveu, e a
+saída é a mesma: **fonte separada de resultado**. A fonte é o `itemInfo.lua` do
+cliente mais esta ferramenta; o arquivo do rAthena é o resultado, com `.INGLES`
+ao lado. `--reverter` desfaz, e `git checkout` também.
+
+E, pela lição que custou 595 pares do `servico.cat`: **a leitura do nome antigo
+sai do `.INGLES` quando ele existe.** Sem isso, rodar duas vezes compararia
+contra o próprio resultado.
+
+### O que fica de fora, e por quê
+
+| motivo | quantos | o que acontece |
+|---|---|---|
+| nome ainda em **coreano** no cliente | 4587 | fica o inglês do rAthena, que é melhor que mojibake |
+| item que o `item_db` não tem | 4220 | não há linha para trocar |
+| nome já igual | 4094 | não vale gravação |
+| acima de 50 caracteres (`ITEM_NAME_LENGTH`) | 40 | o rAthena cortaria; todos estão em inglês no cliente também |
+| itens nossos (`db/guerra/item_db.yml`) | 1 | já nascem em português, com nome escolhido por nós |
+
+Os 4587 coreanos são **um buraco do cliente, não deste script**: o jogador vê
+coreano na bolsa deles também. `Claymore` (1190) é um exemplo — o bRO nunca os
+traduziu.
+
+### Travas
+
+Estrutural, na mesma linha da do `traduz_npcs.py`: recusa gravar se o arquivo
+mudar de número de linhas, de número de linhas `- Id:` ou de número de linhas
+`Name:`. Conferido depois de gravar que **toda** linha alterada nos três
+arquivos é uma linha `Name:` — nenhuma outra.
+
+O nome sai sempre **entre aspas**: nome de item tem `+`, `[`, `]`, `:` e às
+vezes espaço na ponta, e cada um muda o sentido de um escalar solto. O próprio
+db do rAthena já põe aspas em 631 nomes pelo mesmo motivo. Como isso faria toda
+linha "mudar de aspa" parecer diferente, a comparação de "já está igual" é
+feita nos **valores**, não nas linhas.
+
+Dois riscos que foram conferidos e não se confirmaram: nome duplicado não dá
+erro (o `nameToItemDataMap` só sobrescreve, `itemdb.cpp:104-131` — o que muda é
+que `@item <nome>` passa a achar pelo nome em português); e nenhum script do
+`npc/` compara `getitemname()` com texto — nos 623 usos, as únicas comparações
+são contra `"null"` e `""`, que é o que a função devolve para id inexistente.
+
 ## `traduz_ptbr.py` — põe o jogo em português, trazendo o texto do bRO
 
 ```

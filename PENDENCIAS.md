@@ -951,6 +951,70 @@ seguinte). A conferência é `[Error]`/`[Warning]` agrupados e `diff` contra o
 baseline; hoje o resultado é **idêntico ao baseline**, nenhum aviso novo e
 nenhum perdido.
 
+### Nome de item nos diálogos — 2026-08-04, e o quase-desastre no meio
+
+Achado testando o Mestre do Refino: **as falas dele nomeavam os itens em
+inglês**, mesmo com o diálogo todo traduzido. Não era a tradução faltando.
+
+O nome que o jogador lê na bolsa vem do `itemInfo.lua` do **cliente**, que já
+está em português desde a rodada de tradução. Mas `getitemname()` e
+`getequipname()`, que os scripts usam para montar a fala, leem o `Name` do
+`item_db` do **servidor**, que estava em inglês. Mesmo item, dois nomes — e o
+único que o jogador consegue procurar é o da bolsa.
+
+Resolvido por `ferramentas/nomes_pt_item_db.py`, que **sincroniza** os dois:
+16412 itens. A fonte é o `itemInfo.lua` do nosso cliente e **não** o
+`iteminfo_new.lub` do bRO — os dois quase sempre concordam, mas quando
+discordarem quem está certo é o do cliente, porque é ele que está na tela.
+Mesma regra do `npcidentity.lub` e do `accessoryid.lub`.
+
+Onde o cliente ficou em inglês, o servidor fica com o inglês dele: o objetivo é
+**consistência**, e o português vem junto porque o cliente já está em
+português.
+
+#### A primeira tentativa zerava o preço de venda de 7126 itens, calada
+
+Vale mais que o resultado. A primeira versão gerava um
+`db/guerra/item_db_nomes.yml` com entradas de `Id` + `Name`, encadeado por
+`import` — que é exatamente o que a CONVENÇÃO DE CUSTOMIZAÇÃO pede, e que o
+rAthena aceita: `AegisName` e `Name` só são exigidos quando o item é **novo**.
+
+Só que `itemdb.cpp:239` faz `hasPriceValue[id] = { has_buy, has_sell }` a
+**cada** parse do mesmo `Id`, guardando só se *aquele bloco* declarou preço. Um
+bloco de `Id` + `Name` grava `{false,false}` por cima do `{true,false}` do
+`db/re/`, e aí a derivação do `loadingFinished` (`value_sell = value_buy / 2`)
+não roda. A **Poção Vermelha** ia de `venda 5` para `venda 0`; a Branca, de 600
+para 0; a Azul, de 2500 para 0.
+
+**Dos 7126 itens afetados, um único imprimiu aviso na subida** — e por outro
+motivo. Foi esse aviso solitário, ausente no log da rodada anterior, que puxou
+o fio. Sem comparar os dois logs, isso teria entrado no servidor e só apareceria
+como "por que ninguém ganha dinheiro vendendo drop?".
+
+**A lição, e ela é geral:** um override parcial de YAML do rAthena não é "só os
+campos que eu escrevi". Ele é um parse inteiro, e **campo ausente pode
+significar "não declarado"** para lógica que roda depois, no `loadingFinished`.
+Antes de sobrepor parcialmente, olhar o que o `loadingFinished` daquele db faz
+com a ausência.
+
+A solução foi trocar o `Name` **no lugar**, com `.INGLES` ao lado — que não
+acrescenta parse nenhum, então nenhum campo muda de sentido. É a mesma saída
+que a frente de tradução já tinha achado para o mesmo conflito com a convenção:
+**fonte separada de resultado**. `--reverter` desfaz, e `git checkout` também.
+
+Conferido depois de gravar: **toda** linha alterada nos três `item_db_*.yml` é
+uma linha `Name:`, nenhuma outra, e a contagem de linhas não mudou. E o log de
+subida ficou **byte a byte igual ao anterior em avisos e erros** — nenhum novo,
+nenhum perdido.
+
+#### 4587 itens continuam em coreano, e isso é do cliente
+
+Os que o bRO nunca traduziu ficaram com o inglês do rAthena no servidor, porque
+o `itemInfo.lua` os tem em coreano — e **o jogador vê coreano na bolsa deles**.
+`Claymore` (1190) é um exemplo. É um buraco da tradução do cliente, anterior a
+tudo isto, e ainda em aberto. Traduzi-los seria escrever nome novo no
+`itemInfo.lua`, não no `item_db`.
+
 ### Mercado Contemporâneo — aberto em 2026-08-01, NÃO testado in-game
 
 Nove lojas de equipamento na rua principal de Prontera, uma por slot, em grade
