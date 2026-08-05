@@ -2021,7 +2021,7 @@ como chapéu, tem um por classe de personagem.
 `Costume_Head_Low`, não `Costume_Garment`. O nome engana; quem manda é o
 `Locations:` do `item_db`.
 
-### O Mercado de Visuais não foi testado in-game
+### Nem o Mercado de Visuais nem o de Cartas foram testados in-game
 
 O `npc/guerra/mercado_de_visuais.txt` foi escrito e registrado no
 `scripts_guerra.conf` em 2026-08-05, mas o servidor **não foi reiniciado** —
@@ -2035,6 +2035,22 @@ aviso** em vez de recusar).
 Falta: `@reloadscript`, entrar em `prontera 155,155` e abrir as três lojas. É
 abrir a loja que dispara a caixa modal de arte faltando, não equipar — e os 374
 itens validaram 8 recursos cada, 2992 `[ok]` e nenhum `[FALTA]`.
+
+O `mercado_de_cartas.txt` entrou logo depois, no mesmo estado: nove lojas em
+`prontera` y=149/143/137, 1410 cartas, também sem uma subida sequer. Conferido
+offline o mesmo conjunto — células andáveis, sprites nas duas tabelas, 1410 ids
+distintos, nenhum repetido entre lojas.
+
+**Nele há uma coisa a mais para olhar na primeira subida**, porque é a primeira
+vez que usamos o truque: a loja de arma carrega 255 cartas na própria linha e as
+outras **104 entram por `npcshopadditem` num `OnInit`**. Se o `OnInit` falhar, a
+loja abre com 255 e **não dá erro nenhum** — o sintoma é só a lista curta.
+Conferir contando: `Carta de Arma` tem de mostrar 359.
+
+O caminho existe porque o parser copia o quarto campo para um `char w4[2048]` e
+**trunca com aviso** em vez de recusar; a lista de arma dá 2804 caracteres. O
+corpo de um `script` não tem esse teto — o `npc_parse_script` procura o `,{` no
+buffer original, não no `w4`.
 
 ---
 

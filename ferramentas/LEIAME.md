@@ -1549,10 +1549,85 @@ verdadeiro. Sem a guarda explícita, **todo manto e todo acessório caía em
 era o próprio erro se anunciando. Número redondo demais num lado e zero no
 outro é sintoma, não resultado.
 
-### O que ele acrescentou ao `valida_visual.py`
+### O que ele acrescentou ao `valida_visual.py` (e o `varre_cartas.py` reusa)
 
 O `le_item_db` passou a guardar o campo **`locais`** — o conjunto de
 `Locations:` do item — em vez de só o booleano `cabeca`. A lista de nomes
 aceitos é **fechada** (`LOCAIS`) de propósito: dentro do bloco de um item há
 outros mapas com a mesma forma (`Flags:`, `Trade:`), e sem lista fechada um
 `NoDrop: true` entraria como se fosse slot.
+
+## `varre_cartas.py` — classifica as cartas e monta as nove lojas
+
+```
+python varre_cartas.py                    # resumo por loja
+python varre_cartas.py --listar curavel   # o que o bRO resolve
+python varre_cartas.py --listar mvp       # ou qualquer loja, pelo nome
+python varre_cartas.py --ids sem-cura
+python varre_cartas.py --gerar            # escreve o NPC e o catálogo
+```
+
+Irmã da `varre_cosmeticos.py`, escrita em 2026-08-05 para o **Mercado de
+Cartas**. Reaproveita dela a parte que decide se o cliente desenha o item — a
+pergunta de arte é a mesma. **O que ela tem de próprio é a classificação**, e é
+aí que estão as três armadilhas.
+
+### 1. `Type: Card` não quer dizer carta de monstro
+
+São **5593** entradas, e **4048 delas não têm `Locations:` nenhum**: são as
+**pedras de encanto**, que o mesmo tipo abriga. Delas, 1915 não têm arte em GRF
+nenhum — iriam sujar o relatório com "sem cura" que não é problema de arte, e
+sujar a loja com item que não encaixa em equipamento nenhum.
+
+**O filtro é ter slot, não ser do tipo.** Sobram 1545 cartas de verdade, das
+quais 1410 desenham.
+
+### 2. Para carta, `Locations:` significa outra coisa
+
+Não é onde a carta se equipa — é **em que equipamento ela pode ser encaixada**.
+`Right_Hand` é carta de arma, `Left_Hand` é carta de escudo. A mesma chave que
+num chapéu quer dizer "vai na cabeça" aqui quer dizer "encaixa em coisa de
+cabeça".
+
+### 3. MVP e chefe não existem no `item_db` — e há duas formas de marcar MVP
+
+Saem do `mob_db`, por quem dropa (e o `mob_db` referencia o drop pelo
+`AegisName`, nunca pelo id). O rAthena marca MVP de **duas** maneiras:
+
+| marca | quantas cartas |
+|---|---|
+| `MvpExp:` | 91 |
+| `Modes: Mvp: true` | mais 56 |
+
+Ler só a primeira perde metade — a segunda é que traz **Dark Lord, Fenrir, os
+chefes de Bio Lab e os de instância**. `Class: Boss` que não seja MVP é chefe
+menor: Ghostring, Angeling, Mysteltainn. Dá 147 e 82.
+
+**São exclusivos:** a Carta do Doppelganger saiu da loja de arma e ficou só na
+de MVP. A alternativa era a mesma carta em duas lojas, que para o jogador parece
+erro de catálogo.
+
+### A loja de arma não cabe numa linha
+
+O parser copia o quarto campo para um `char w4[2048]` e **trunca com aviso** em
+vez de recusar (`npc.cpp`, `npc_parsesrcfile`) — o tipo de limite que não dá
+erro, dá loja com metade dos itens. A lista de arma dá **2804** caracteres.
+
+O corpo de um `script`, esse não tem o limite: o `npc_parse_script` procura o
+`,{` no **buffer original**, não no `w4`. Então a loja carrega as 255 que cabem
+na própria linha e as outras 104 entram por `npcshopadditem` num `OnInit`, que
+roda depois de todos os NPCs terem carregado — quando a loja já existe.
+
+O corte é **por tamanho, não por nome**: se um dia outra loja passar do teto, o
+gerador faz o mesmo com ela sozinho.
+
+### Preço
+
+1 zeny, como os dois mercados de cima. Medido antes de escolher: a revenda
+máxima entre as 5593 é **10 zeny** — toda carta do rAthena tem `Buy: 20` e
+nenhuma declara `Sell`. São 9 de lucro por compra, a mesma ordem dos itens do
+Mercado Contemporâneo.
+
+Diferente do Mercado de Visuais, **este arquivo imprime o aviso**
+`npc_parse_shop: Item X discounted buying price`, um por carta. É esperado, e é
+o próprio servidor apontando esses 9 zeny.

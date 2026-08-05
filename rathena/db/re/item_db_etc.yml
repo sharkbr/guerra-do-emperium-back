@@ -40325,7 +40325,7 @@ Body:
       }
   - Id: 27210
     AegisName: SLD_Thanatos_Card
-    Name: Sealed Memory of Thanatos Card
+    Name: "Carta Memória de Thanatos Selada"
     Type: Card
     Weight: 10
     Locations:
@@ -42441,7 +42441,7 @@ Body:
       bonus bHPrecovRate,50;  /* note: 30% from the description */
   - Id: 27389
     AegisName: Wolf_Card_EV
-    Name: Wolfe Card
+    Name: "Carta Autógrafo de Wolf"
     Type: Card
     Buy: 20
     Weight: 10
@@ -42453,7 +42453,7 @@ Body:
       skill "RG_COMPULSION",5;
   - Id: 27390
     AegisName: S_Wolf_Card_E
-    Name: Wolfe Lugenburg Card
+    Name: "Carta Wolf"
     Type: Card
     Buy: 20
     Weight: 10
@@ -42479,7 +42479,7 @@ Body:
       /*Todo: When hit by a physical attack There is a chance that player will die - Refine will reduce the chance*/
   - Id: 27392
     AegisName: S_Poe_Card_E
-    Name: Poe Richard Card
+    Name: "Carta Poe"
     Type: Card
     Buy: 20
     Weight: 10
