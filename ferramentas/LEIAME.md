@@ -4,6 +4,58 @@ Escritas em 2026-07-30 para diagnosticar o erro `RecommendedQuestInfoLoad`.
 Rodam em **Python 2.7** (`C:\Python27\python.exe`), que já está instalado nesta
 máquina por causa do `get4.py` do NEMO.
 
+A maioria é de inspeção do cliente, mas nem todas — `nomes_pt_item_db.py` e
+`traduz_npcs.py` mexem no servidor, e o `servidor.py` abaixo só cuida dele.
+
+## `servidor.py` — sobe, para e confere os quatro servidores
+
+```
+python servidor.py status      # o que está no ar, e o que quebra se não estiver
+python servidor.py subir       # sobe o que faltar, na ordem certa
+python servidor.py parar       # derruba todos
+python servidor.py reiniciar   # parar + subir
+```
+
+**São quatro servidores, não três.** Além de `login`, `char` e `map`, o rAthena
+tem o `web-server.exe` na porta **8888**, e com `PACKETVER > 20200300` é ele
+quem recebe o emblema de clã, por HTTP. Em 2026-08-04 o emblema não subia
+justamente porque os `.bat` foram chamados um a um e esse ficou de fora — e a
+falha é **completamente calada**: sem caixa de erro, sem linha no chat, sem nada
+na janela do map-server.
+
+Por isso o `status` não lista só portas, ele diz **o que o jogador vê** quando
+cada peça está fora:
+
+```
+  SERVICO        PORTA  ESTADO   PID
+  ----------------------------------------------------
+  MariaDB        3306   no ar    9568
+  login-server   6900   no ar    15864
+  char-server    6121   no ar    15524
+  web-server     8888   FORA
+  map-server     5121   no ar    8032
+
+  O que voce vai ver no jogo:
+    web-server     -> emblema de cla nao sobe -- e a falha e CALADA
+```
+
+Sai com **código 1** se algo estiver fora, então dá para encadear em outro
+script. `subir` é **idempotente**: pula quem já está no ar, e serve tanto para
+subida do zero quanto para recuperar uma peça que caiu.
+
+A ordem de subida é respeitada (o `char` precisa do `login`, o `map` precisa do
+`char`) e cada porta é esperada antes de ir para a próxima — o `map-server` tem
+prazo de 120s porque carrega todos os `db/`. Se o banco não responder na 3306,
+nem tenta: nenhum servidor sobe sem ele.
+
+Cada servidor abre a **própria janela de console**, de propósito: erro de script
+de NPC só aparece na janela do `map-server`, não existe arquivo de log para ele.
+
+Detalhe de implementação: a checagem é uma **conexão TCP de verdade**, não
+leitura do `netstat`. O `netstat` desta máquina pode sair traduzido (`OUVINDO`
+em vez de `LISTENING`) e quebraria o parse; conexão não depende de idioma. O
+`netstat` é usado só para exibir o PID, e nunca para decidir.
+
 ## `traduz_setup.py` — põe o `Setup.exe` em português
 
 ```

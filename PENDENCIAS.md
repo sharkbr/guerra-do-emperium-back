@@ -100,6 +100,8 @@ Cada item abaixo custou tempo. Estão resolvidos:
    a data extraindo strings do bytecode. Arquivos que **referenciam conteúdo
    inexistente no GRF de 2021** quebram. Foi a causa única dos 8 erros de Lua de
    2026-07-30 (ver abaixo).
+7. **O rAthena tem um quarto servidor, o `web-server.exe`** — e ele não sobe
+   junto se você chamar os `.bat` um a um. Ver "O quarto servidor" abaixo.
 
 ### Rodada de 2026-07-30, ~12:35 — os 8 erros de Lua
 
@@ -1983,6 +1985,85 @@ O `LEIAME.md` tem o detalhe das travas e do formato. Duas regras que não estão
 
 ---
 
+## O quarto servidor — `web-server.exe`
+
+Descoberto em 2026-08-04, depurando "escolho o emblema do clã e não acontece
+nada". Não era o arquivo de imagem: era um servidor que nunca tinha subido.
+
+> **CONFIRMADO in-game em 2026-08-04:** subido o `web-server`, o emblema entrou
+> na primeira tentativa, com GIF. Nada mudou no arquivo de imagem nem na
+> configuração do cliente — era só o processo que faltava.
+
+**Rodávamos três servidores; o rAthena tem quatro.** O `web-server.exe` escuta
+HTTP na porta **8888** (`conf/web_athena.conf`) e atende `/emblem/upload`,
+`/emblem/download`, `/userconfig/*`, `/charconfig/*`, `/party/*`,
+`/MerchantStore/*`.
+
+Ele não é opcional em cliente moderno. Com `PACKETVER > 20200300`
+(`src/config/packets.hpp:92`) — o nosso é 20211103 — o emblema de clã **deixou
+de passar pelo map-server**. O cliente agora:
+
+1. faz `POST http://<AssistAddr>/emblem/upload` via libcurl (a `libcurl.dll` da
+   pasta do cliente é para isso);
+2. só depois avisa o map-server da nova versão, pelo pacote `0x0b46`.
+
+O `AssistAddr` sai de
+`cliente\data\luafiles514\lua files\service_brazil\ExternalSettings_br.lub`, que
+já apontava certo para `127.0.0.1:8888`. Quem escolhe a pasta `service_brazil`
+é o `<servicetype>` do `clientinfo.xml`.
+
+**O modo da falha é o pior possível: silêncio total.** Porta fechada, o `POST`
+morre, e o cliente não mostra caixa de erro, não escreve no chat e não registra
+nada na janela do map-server. O sintoma é o clique não fazer efeito — idêntico
+para GIF e para BMP, o que empurra o diagnóstico para o lado errado (formato,
+tamanho, transparência) e faz perder tempo convertendo imagem à toa.
+
+**O resto da cadeia já estava pronto** desde a instalação, e foi conferido:
+
+| Item | Onde | Estado |
+|---|---|---|
+| Tabelas `guild_emblems`, `user_configs`, `char_configs`, `merchant_configs` | schema `ragnarok` (de `sql-files/web.sql`) | existem |
+| `use_web_auth_token: yes` | `conf/login_athena.conf` | ligado; preenche `login.web_auth_token` |
+| `allow_gifs: yes` | `conf/web_athena.conf` | GIF liberado |
+| `emblem_woe_change: yes` | `conf/inter_athena.conf` | WoE não bloqueia a troca |
+| Credenciais do banco do web | `web_server_*` em `conf/import/inter_conf.txt` | preenchidas |
+
+### Como subir — e a pegadinha
+
+**Use `ferramentas/servidor.py`**, escrito em 2026-08-04 por causa deste bug:
+
+```
+python ferramentas/servidor.py status      # quem está no ar, e o que quebra se não estiver
+python ferramentas/servidor.py subir       # sobe o que faltar, na ordem certa
+```
+
+O `subir` é idempotente — pula quem já está de pé —, então serve tanto para
+subida do zero quanto para recuperar uma peça que caiu. Ver `ferramentas/LEIAME.md`.
+
+A pegadinha que ele elimina: o `runserver.bat` sobe os quatro (chama `startWeb`),
+mas **chamar os `.bat` individuais deixa o web de fora**. Foi o que aconteceu
+aqui — `logserv.bat`, `charserv.bat` e `mapserv.bat` um a um, e o `webserv.bat`
+nunca entrou na conta.
+
+E a lição mais geral, que vale além deste caso: **o que executa ganha do que
+está escrito.** Esta mesma "Referência rápida" listou *três* servidores por dias
+sem ninguém notar. Documento envelhece errado em silêncio; um comando que
+confere as portas não tem como mentir. Nota escrita fica para o "por quê", que
+não dá para executar.
+
+### Limites do emblema
+
+| Regra | Valor | Onde |
+|---|---|---|
+| Tamanho máximo do arquivo | 50 KB | `MAX_EMBLEM_SIZE`, `src/web/emblem_controller.cpp:19` |
+| Formatos aceitos pelo servidor | `BMP` e `GIF` | `emblem_controller.cpp:155` |
+| Formatos listados pelo cliente | `*.bmp` e `*.gif` | filtro do próprio exe — **PNG não aparece na lista** |
+| Pasta dos arquivos | `cliente\Emblem\` | o cliente também procura em `..\emblem\` e `..\..\emblem\` |
+
+Só o dono do clã troca o emblema (`sd->state.gmaster_flag`).
+
+---
+
 ## Referência — comandos `@`
 
 Levantado em 2026-07-30. No teste da v1 apareceram no chat:
@@ -2142,7 +2223,7 @@ mais caro.
 | Criação de conta | `rathena/conf/import/login_conf.txt` |
 | Schemas | `ragnarok` (jogo), `ragnarok_log` (logs) |
 | Usuário do banco | `ragnarok` — sem acesso fora desses dois schemas |
-| Portas | 6900 login, 6121 char, 5121 map |
+| Portas | 6900 login, 6121 char, 5121 map, **8888 web**, 3306 banco |
 | Versão de cliente alvo | kRO 2021-11-03 (`PACKETVER` padrão do rAthena) |
 | Pasta do cliente | `C:\GuerraDoEmperium\cliente` (fora do git) |
 | Executável do cliente | `GuerraDoEmperium.exe` |
@@ -2164,5 +2245,5 @@ mais caro.
 | Recortar `.lub` novo demais | `ferramentas/filtra_lub_por_skid.py` |
 | Config de vídeo do cliente | `Setup.exe` **como admin** (grava em HKLM) |
 | `.lub` removidos e originais | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |
-| Subir os servidores | `login-server.exe`, `char-server.exe`, `map-server.exe` em `rathena/` |
-| Parar os servidores | `Stop-Process -Name login-server,char-server,map-server -Force` |
+| **Subir / parar / conferir servidores** | `python ferramentas/servidor.py status\|subir\|parar\|reiniciar` — **são quatro**, não três |
+| Algo estranho no jogo? | `servidor.py status` primeiro — ele diz qual peça caiu e o que ela quebra |
