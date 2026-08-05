@@ -1,0 +1,221 @@
+//===== Guerra do Emperium ===================================
+//= Visual Sempre Visivel
+//===== Onde =================================================
+//= Em lugar nenhum. Nao ha NPC aqui: sao 132 linhas de
+//= mapflag, uma por mapa em que o rAthena esconderia traje.
+//===== Descricao ============================================
+//= Devolve a aparencia das pecas de TRAJE (a aba "Especial" do
+//= equipamento) nos castelos de guilda, nas arenas de PvP, no
+//= Turbo Track e nas masmorras de guilda - ou seja, em todo
+//= mapa onde o padrao do rAthena escondia.
+//=
+//= A regra deste servidor, fechada em 2026-08-04: TODO lugar de
+//= PvP mostra traje. E ali que o jogador quer ver a propria
+//= customizacao em acao, e customizacao que nao aparece na hora
+//= da briga nao serve para nada. As masmorras de guilda vieram
+//= junto porque se entra nelas PELO castelo - deixar de fora
+//= faria o traje sumir ao atravessar um portal.
+//=
+//= Na pratica isto desliga o `nocostume` inteiro: a lista
+//= abaixo e o npc/mapflag/nocostume.txt do rAthena, mapa a
+//= mapa, com `off` no fim. Se um dia o rAthena somar um mapa
+//= naquele arquivo, ele NAO entra aqui sozinho.
+//===== O que estava escondendo ==============================
+//= O mapflag `nocostume`. O efeito e do lado do SERVIDOR, nao
+//= do cliente:
+//=
+//= 1) pc_set_costume_view() (src/map/pc.cpp) zera a aparencia
+//=    das pecas de traje na troca de mapa;
+//= 2) o bit 8 de ZC_NOTIFY_MAPPROPERTY2 (src/map/clif.cpp,
+//=    DISABLE_COSTUMEITEM) manda o cliente nao desenhar traje;
+//= 3) clif_hat_effects() engole os efeitos de chapeu junto.
+//=
+//= Por isso nao adianta procurar sprite faltando no GRF: a arte
+//= esta la, o servidor e que nao pede para desenhar. Foi assim
+//= que isto apareceu - um traje sumido dentro do Kriemhild
+//= (prtg_cas01) parecia arte faltando, e nao era.
+//=
+//= O aviso que o cliente soltava ao entrar era a linha 1772 do
+//= msgstringtable.txt, "Costume equipments are not visible on
+//= this map." A nossa traducao PT-BR dessa linha esta ERRADA
+//= (diz "Nao e possivel ver este mapa" - o alinhamento por
+//= ancora do traduz_ptbr.py casou a linha errada). Com este
+//= arquivo ligado a mensagem nao aparece mais em lugar nenhum,
+//= entao a traducao segue errada e nao foi mexida aqui.
+//===== Por que de fora ======================================
+//= Mesma razao do portais_do_navio.txt e do armazem_do_cla.txt:
+//= o npc/mapflag/nocostume.txt fica byte a byte igual ao
+//= upstream. Funciona porque o npc/scripts_custom.conf - que
+//= alcanca esta pasta - e importado na linha 49 do
+//= scripts_main.conf, DEPOIS do scripts_mapflags.conf na linha
+//= 32. Quem carrega por ultimo ganha.
+//=
+//= O @reloadscript tambem serve: ele chama map_flags_init(),
+//= que zera todos os mapflags, e so entao recarrega os arquivos
+//= na mesma ordem. Mas quem ja estiver DENTRO de um desses
+//= mapas na hora do reload so recupera o traje ao sair e
+//= voltar - a aparencia e reposta na troca de mapa.
+//===== Se um dia incomodar ==================================
+//= Esconder traje e intencional no oficial: numa WoE ninguem se
+//= disfarca de outra classe atras de um traje. Trocamos isso
+//= pela customizacao aparecer, de propria vontade. O remedio, se
+//= a guerra ficar seria, e comentar a linha deste arquivo no
+//= scripts_guerra.conf - o padrao do rAthena volta inteiro, sem
+//= editar nada.
+//============================================================
+
+//============================================================
+// Masmorras de Guilda - 4 mapas
+//============================================================
+teg_dun01	mapflag	nocostume	off
+teg_dun02	mapflag	nocostume	off
+arug_dun01	mapflag	nocostume	off
+schg_dun01	mapflag	nocostume	off
+
+//============================================================
+// Castelos WoE:FE - os 20 classicos
+//============================================================
+aldeg_cas01	mapflag	nocostume	off
+aldeg_cas02	mapflag	nocostume	off
+aldeg_cas03	mapflag	nocostume	off
+aldeg_cas04	mapflag	nocostume	off
+aldeg_cas05	mapflag	nocostume	off
+gefg_cas01	mapflag	nocostume	off
+gefg_cas02	mapflag	nocostume	off
+gefg_cas03	mapflag	nocostume	off
+gefg_cas04	mapflag	nocostume	off
+gefg_cas05	mapflag	nocostume	off
+payg_cas01	mapflag	nocostume	off
+payg_cas02	mapflag	nocostume	off
+payg_cas03	mapflag	nocostume	off
+payg_cas04	mapflag	nocostume	off
+payg_cas05	mapflag	nocostume	off
+prtg_cas01	mapflag	nocostume	off
+prtg_cas02	mapflag	nocostume	off
+prtg_cas03	mapflag	nocostume	off
+prtg_cas04	mapflag	nocostume	off
+prtg_cas05	mapflag	nocostume	off
+
+//============================================================
+// Castelos WoE:SE - 10 mapas
+//============================================================
+schg_cas01	mapflag	nocostume	off
+schg_cas02	mapflag	nocostume	off
+schg_cas03	mapflag	nocostume	off
+schg_cas04	mapflag	nocostume	off
+schg_cas05	mapflag	nocostume	off
+arug_cas01	mapflag	nocostume	off
+arug_cas02	mapflag	nocostume	off
+arug_cas03	mapflag	nocostume	off
+arug_cas04	mapflag	nocostume	off
+arug_cas05	mapflag	nocostume	off
+
+//============================================================
+// Castelos WoE:TE - 10 mapas
+//============================================================
+te_prtcas01	mapflag	nocostume	off
+te_prtcas02	mapflag	nocostume	off
+te_prtcas03	mapflag	nocostume	off
+te_prtcas04	mapflag	nocostume	off
+te_prtcas05	mapflag	nocostume	off
+te_aldecas1	mapflag	nocostume	off
+te_aldecas2	mapflag	nocostume	off
+te_aldecas3	mapflag	nocostume	off
+te_aldecas4	mapflag	nocostume	off
+te_aldecas5	mapflag	nocostume	off
+
+//============================================================
+// Castelos de Novico - 4 mapas
+//============================================================
+nguild_alde	mapflag	nocostume	off
+nguild_gef	mapflag	nocostume	off
+nguild_pay	mapflag	nocostume	off
+nguild_prt	mapflag	nocostume	off
+
+//============================================================
+// Arenas de PvP e Turbo Track - 84 mapas
+//============================================================
+pvp_y_1-1	mapflag	nocostume	off
+pvp_y_1-2	mapflag	nocostume	off
+pvp_y_1-3	mapflag	nocostume	off
+pvp_y_1-4	mapflag	nocostume	off
+pvp_y_1-5	mapflag	nocostume	off
+pvp_y_2-1	mapflag	nocostume	off
+pvp_y_2-2	mapflag	nocostume	off
+pvp_y_2-3	mapflag	nocostume	off
+pvp_y_2-4	mapflag	nocostume	off
+pvp_y_2-5	mapflag	nocostume	off
+pvp_y_3-1	mapflag	nocostume	off
+pvp_y_3-2	mapflag	nocostume	off
+pvp_y_3-3	mapflag	nocostume	off
+pvp_y_3-4	mapflag	nocostume	off
+pvp_y_3-5	mapflag	nocostume	off
+pvp_y_4-1	mapflag	nocostume	off
+pvp_y_4-2	mapflag	nocostume	off
+pvp_y_4-3	mapflag	nocostume	off
+pvp_y_4-4	mapflag	nocostume	off
+pvp_y_4-5	mapflag	nocostume	off
+pvp_y_5-1	mapflag	nocostume	off
+pvp_y_5-2	mapflag	nocostume	off
+pvp_y_5-3	mapflag	nocostume	off
+pvp_y_5-4	mapflag	nocostume	off
+pvp_y_5-5	mapflag	nocostume	off
+pvp_y_6-1	mapflag	nocostume	off
+pvp_y_6-2	mapflag	nocostume	off
+pvp_y_6-3	mapflag	nocostume	off
+pvp_y_6-4	mapflag	nocostume	off
+pvp_y_6-5	mapflag	nocostume	off
+pvp_y_7-1	mapflag	nocostume	off
+pvp_y_7-2	mapflag	nocostume	off
+pvp_y_7-3	mapflag	nocostume	off
+pvp_y_7-4	mapflag	nocostume	off
+pvp_y_7-5	mapflag	nocostume	off
+pvp_y_8-1	mapflag	nocostume	off
+pvp_y_8-2	mapflag	nocostume	off
+pvp_y_8-3	mapflag	nocostume	off
+pvp_y_8-4	mapflag	nocostume	off
+pvp_y_8-5	mapflag	nocostume	off
+pvp_n_1-1	mapflag	nocostume	off
+pvp_n_1-2	mapflag	nocostume	off
+pvp_n_1-3	mapflag	nocostume	off
+pvp_n_1-4	mapflag	nocostume	off
+pvp_n_1-5	mapflag	nocostume	off
+pvp_n_2-1	mapflag	nocostume	off
+pvp_n_2-2	mapflag	nocostume	off
+pvp_n_2-3	mapflag	nocostume	off
+pvp_n_2-4	mapflag	nocostume	off
+pvp_n_2-5	mapflag	nocostume	off
+pvp_n_3-1	mapflag	nocostume	off
+pvp_n_3-2	mapflag	nocostume	off
+pvp_n_3-3	mapflag	nocostume	off
+pvp_n_3-4	mapflag	nocostume	off
+pvp_n_3-5	mapflag	nocostume	off
+pvp_n_4-1	mapflag	nocostume	off
+pvp_n_4-2	mapflag	nocostume	off
+pvp_n_4-3	mapflag	nocostume	off
+pvp_n_4-4	mapflag	nocostume	off
+pvp_n_4-5	mapflag	nocostume	off
+pvp_n_5-1	mapflag	nocostume	off
+pvp_n_5-2	mapflag	nocostume	off
+pvp_n_5-3	mapflag	nocostume	off
+pvp_n_5-4	mapflag	nocostume	off
+pvp_n_5-5	mapflag	nocostume	off
+pvp_n_6-1	mapflag	nocostume	off
+pvp_n_6-2	mapflag	nocostume	off
+pvp_n_6-3	mapflag	nocostume	off
+pvp_n_6-4	mapflag	nocostume	off
+pvp_n_6-5	mapflag	nocostume	off
+pvp_n_7-1	mapflag	nocostume	off
+pvp_n_7-2	mapflag	nocostume	off
+pvp_n_7-3	mapflag	nocostume	off
+pvp_n_7-4	mapflag	nocostume	off
+pvp_n_7-5	mapflag	nocostume	off
+pvp_n_8-1	mapflag	nocostume	off
+pvp_n_8-2	mapflag	nocostume	off
+pvp_n_8-3	mapflag	nocostume	off
+pvp_n_8-4	mapflag	nocostume	off
+pvp_n_8-5	mapflag	nocostume	off
+pvp_2vs2	mapflag	nocostume	off
+turbo_e_4	mapflag	nocostume	off
+turbo_e_8	mapflag	nocostume	off
+turbo_e_16	mapflag	nocostume	off
