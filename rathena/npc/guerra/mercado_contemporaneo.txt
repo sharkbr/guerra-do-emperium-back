@@ -162,6 +162,39 @@
 //=
 //= Mudanca neste arquivo pega com @reloadscript, sem derrubar o
 //= servidor. Mudanca no item_db pede @reloaditemdb.
+//=
+//= ------------------------------------------------------------
+//= A PLACA SOBRE A CABECA
+//=
+//= Cada loja mostra uma placa com o que vende - "Cabeca topo",
+//= "Armas", "Acessorios" -, e e por isso que as nove deixaram de
+//= ser `shop` puro.
+//=
+//= Quem desenha a placa e o `waitingroom`, a sala de conversa do
+//= rAthena: o cliente a desenha como uma barra de titulo SOBRE A
+//= CABECA do dono, que e o mais perto de uma placa de vendedor
+//= que este protocolo tem - NPC nao abre barraca, o pacote de
+//= barraca (ZC_STORE_ENTRY) so sai para personagem vendendo.
+//= Com limite 0 ninguem entra: clicar na barra nao faz nada.
+//= Ver doc/script_commands.txt, `*waitingroom`.
+//=
+//= O `waitingroom` so existe dentro de um `script`, e um `shop`
+//= nao tem corpo. Entao cada loja e DUAS linhas:
+//=
+//=   1) um `script` na coordenada, com o sprite e o nome, que
+//=      abre a loja por `callshop` e cria a placa no `OnInit`;
+//=   2) um `shop` FLUTUANTE (mapa `-`, view -1) com os itens,
+//=      chamado "<Nome>#loja".
+//=
+//= Para o jogador nada muda: clicar no NPC continua abrindo a
+//= mesma janela de comprar/vender. `callshop <loja>,0` e o
+//= mesmo caminho do clique num `shop` (npc_buysellsel), e o `0`
+//= nao e enfeite - `1` abriria so a compra e tiraria a venda.
+//=
+//= Mexer no texto de uma placa e mexer na linha do
+//= `waitingroom`; o teto e 60 caracteres. Para tirar as placas
+//= sem desmontar nada, apagar so essas linhas.
+//=
 //============================================================
 
 // ----- Fileira de cima (y=173): cabeca -----------------------
@@ -183,7 +216,15 @@
 // vivem em db/guerra/item_db.yml, na secao OVERRIDES - a versao
 // do db/re/ e a do kRO, com outros efeitos, e nao bate com a
 // descricao que o cliente mostra.
-prontera,151,173,4	shop	Chapeleiro	1_M_MERCHANT,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1
+prontera,151,173,4	script	Chapeleiro	1_M_MERCHANT,{
+	callshop "Chapeleiro#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Cabeça topo",0;
+	end;
+}
+-	shop	Chapeleiro#loja	-1,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -199,10 +240,26 @@ prontera,151,173,4	shop	Chapeleiro	1_M_MERCHANT,400006:1,18580:1,5170:1,2289:1,4
 //
 // O unico que continua fora e o "Tapa Olho do orc heroi", que
 // nao existe em tabela nenhuma.
-prontera,155,173,4	shop	Ocleiro	4_F_01,19024:1,2204:1,19445:1,19443:1,410124:1,410142:1,410140:1
+prontera,155,173,4	script	Ocleiro	4_F_01,{
+	callshop "Ocleiro#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Cabeça meio",0;
+	end;
+}
+-	shop	Ocleiro#loja	-1,19024:1,2204:1,19445:1,19443:1,410124:1,410142:1,410140:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
-prontera,159,173,4	shop	Retoqueiro	1_F_MERCHANT_02,19381:1,420110:1,420236:1,420010:1
+prontera,159,173,4	script	Retoqueiro	1_F_MERCHANT_02,{
+	callshop "Retoqueiro#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Cabeça baixo",0;
+	end;
+}
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,420010:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 
@@ -223,7 +280,15 @@ prontera,159,173,4	shop	Retoqueiro	1_F_MERCHANT_02,19381:1,420110:1,420236:1,420
 //   510147  Adaga dos Orcs [2]  placeholder; a arte veio da GRF
 //                               do bRO. E a unica arma da loja
 //                               que pede nivel 1 e nao 99/100.
-prontera,151,167,4	shop	Senhor das Armas	1_M_SMITH,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1
+prontera,151,167,4	script	Senhor das Armas	1_M_SMITH,{
+	callshop "Senhor das Armas#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Armas",0;
+	end;
+}
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -232,18 +297,42 @@ prontera,151,167,4	shop	Senhor das Armas	1_M_SMITH,1328:1,32014:1,13147:1,13342:
 // 15371 (Roupa de Natal do Antonio) tambem e placeholder. NAO
 // confundir com o 15249 (Antonio's Coat), que o vendor ja tem:
 // sao dois itens diferentes.
-prontera,155,167,4	shop	Lorde das Armaduras	4_M_JOB_BLACKSMITH,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1
+prontera,155,167,4	script	Lorde das Armaduras	4_M_JOB_BLACKSMITH,{
+	callshop "Lorde das Armaduras#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Armaduras",0;
+	end;
+}
+-	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1
 
 // Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
 // proximo e o 2185 (Refletor Magico / Magic Reflect), que e
 // escudo de verdade e nao so nome parecido.
-prontera,159,167,4	shop	Escudeiro	4_M_UNCLEKNIGHT,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1
+prontera,159,167,4	script	Escudeiro	4_M_UNCLEKNIGHT,{
+	callshop "Escudeiro#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Escudos",0;
+	end;
+}
+-	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
 // Capas. O 20745 (Capa Mistica) entrou no lugar da "Capa da
 // Terra" pedida, que nao existe - ver a nota la em cima.
-prontera,151,161,4	shop	Capeiro	1_F_MERCHANT_01,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1
+prontera,151,161,4	script	Capeiro	1_F_MERCHANT_01,{
+	callshop "Capeiro#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Capas",0;
+	end;
+}
+-	shop	Capeiro#loja	-1,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
@@ -252,11 +341,27 @@ prontera,151,161,4	shop	Capeiro	1_F_MERCHANT_01,480220:1,20735:1,20734:1,20745:1
 // O 470274 (Botas de Guivra [1]) entrou em 2026-08-04. Ja
 // estava no item_db do rAthena; o que faltava eram os 4
 // arquivos de arte, trazidos da GRF do bRO.
-prontera,155,161,4	shop	Sapateiro	4_M_02,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1
+prontera,155,161,4	script	Sapateiro	4_M_02,{
+	callshop "Sapateiro#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Sapatos",0;
+	end;
+}
+-	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
 // Chapeu de Ulle. O Broche da Celine e o 28572 (versao bRO,
 // placeholder); o vendor tem um 28513 com o mesmo nome em
 // ingles, que e outro item.
-prontera,159,161,4	shop	Acessorista	4_F_02,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1
+prontera,159,161,4	script	Acessorista	4_F_02,{
+	callshop "Acessorista#loja",0;
+	end;
+
+OnInit:
+	waitingroom "Acessórios",0;
+	end;
+}
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1

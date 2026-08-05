@@ -63,20 +63,26 @@ SLOTS = [(('Right_Hand', 'Both_Hand'), 'arma'),
          (('Shoes',), 'sapato'),
          (('Right_Accessory', 'Left_Accessory', 'Both_Accessory'), 'acessorio')]
 
-# Onde cada loja fica, com que nome e que sprite. Os sprites foram conferidos
-# nas DUAS tabelas antes de entrar - `npcidentity.lub` deste cliente e
-# `src/map/npc.hpp` do rAthena -, porque as duas discordam: o rAthena conhece
-# nome que este cliente de 2021 nao desenha, e o contrario tambem acontece.
+# Onde cada loja fica, com que nome, que sprite e o que diz a PLACA sobre a
+# cabeca. Os sprites foram conferidos nas DUAS tabelas antes de entrar -
+# `npcidentity.lub` deste cliente e `src/map/npc.hpp` do rAthena -, porque as
+# duas discordam: o rAthena conhece nome que este cliente de 2021 nao desenha,
+# e o contrario tambem acontece.
+#
+# A placa leva a CONTAGEM (ver `gera`), e nao so o rotulo: aqui o nome do NPC
+# ja diz o encaixe, entao repeti-lo sobre a cabeca nao informaria nada. Nas
+# lojas do mercado_contemporaneo.txt e o oposto - "Chapeleiro" nao diz que
+# vende cabeca topo -, e por isso la a placa e so o rotulo.
 LOJAS = [
-    ('arma',      151, 149, u'Carta de Arma',      '4_M_JOB_KNIGHT1'),
-    ('escudo',    155, 149, u'Carta de Escudo',    '4_F_JOB_KNIGHT'),
-    ('armadura',  159, 149, u'Carta de Armadura',  '4_M_KY_KNT'),
-    ('capacete',  151, 143, u'Carta de Capacete',  '4_M_SAGE_A'),
-    ('capa',      155, 143, u'Carta de Capa',      '4_F_ALCHE'),
-    ('sapato',    159, 143, u'Carta de Sapato',    '4_M_ORIENT02'),
-    ('acessorio', 151, 137, u'Carta de Acessorio', '4_F_JOB_HUNTER'),
-    ('mvp',       155, 137, u'Carta de MVP',       '4_M_DIEMAN'),
-    ('chefe',     159, 137, u'Carta de Chefe',     '4_M_ROGUE'),
+    ('arma',      151, 149, u'Carta de Arma',      '4_M_JOB_KNIGHT1', u'Cartas de arma'),
+    ('escudo',    155, 149, u'Carta de Escudo',    '4_F_JOB_KNIGHT',  u'Cartas de escudo'),
+    ('armadura',  159, 149, u'Carta de Armadura',  '4_M_KY_KNT',      u'Cartas de armadura'),
+    ('capacete',  151, 143, u'Carta de Capacete',  '4_M_SAGE_A',      u'Cartas de capacete'),
+    ('capa',      155, 143, u'Carta de Capa',      '4_F_ALCHE',       u'Cartas de capa'),
+    ('sapato',    159, 143, u'Carta de Sapato',    '4_M_ORIENT02',    u'Cartas de sapato'),
+    ('acessorio', 151, 137, u'Carta de Acessorio', '4_F_JOB_HUNTER',  u'Cartas de acessório'),
+    ('mvp',       155, 137, u'Carta de MVP',       '4_M_DIEMAN',      u'Cartas de MVP'),
+    ('chefe',     159, 137, u'Carta de Chefe',     '4_M_ROGUE',       u'Cartas de chefe'),
 ]
 
 # O parser do rAthena copia o quarto campo para um `char w4[2048]` e **trunca
@@ -86,6 +92,11 @@ LOJAS = [
 # w4 -, entao o excedente entra por `npcshopadditem` num OnInit.
 TETO_W4 = 1900          # folga proposital sobre os 2047 que o parser aceita
 POR_CHAMADA = 50        # cartas por npcshopadditem, para a linha ficar legivel
+
+# O `shop` de cada loja e FLUTUANTE (mapa `-`) e invisivel: quem aparece no
+# mapa e o `script` que o chama. Ver a secao "A PLACA SOBRE A CABECA" do
+# cabecalho gerado.
+VIEW_LOJA = '-1'
 
 
 # ------------------------------------------------------------------ leitura
@@ -300,6 +311,27 @@ CABECALHO = u"""\
 //= servidor apontando o lucro de 9 zeny acima.
 //=
 //= ------------------------------------------------------------
+//= A PLACA SOBRE A CABEÇA, e por que cada loja são DUAS linhas
+//=
+//= Cada vendedor mostra uma placa com o que vende e quantas
+//= cartas tem - "Cartas de arma (359)". Quem a desenha é o
+//= `waitingroom`, a sala de conversa do rAthena: o cliente a
+//= desenha como uma barra de título SOBRE A CABEÇA do dono, que
+//= é o mais perto de uma placa de vendedor que este protocolo
+//= tem - NPC não abre barraca. Com limite 0 ninguém entra:
+//= clicar na barra não faz nada.
+//=
+//= O `waitingroom` só existe dentro de um `script`, e um `shop`
+//= não tem corpo. Então cada loja é um `script` na coordenada,
+//= com o sprite e o nome, mais um `shop` FLUTUANTE (mapa `-`,
+//= view -1) chamado "<Nome>#loja" com as cartas. O clique no NPC
+//= chama `callshop <loja>,0`, que é o mesmo caminho do clique
+//= num `shop` - para o jogador nada muda.
+//=
+//= O porquê inteiro está no cabeçalho do
+//= mercado_contemporaneo.txt, seção "A PLACA SOBRE A CABECA".
+//=
+//= ------------------------------------------------------------
 //= A LOJA DE ARMA NÃO CABE NUMA LINHA, e por isso ela é diferente
 //=
 //= O parser copia o quarto campo para um `char w4[2048]` e
@@ -308,9 +340,9 @@ CABECALHO = u"""\
 //=
 //= O corpo de um `script`, esse não tem o limite: o
 //= `npc_parse_script` procura o `,{` no buffer original, não no
-//= w4. Então a loja carrega o que cabe na própria linha e o
-//= resto entra por `npcshopadditem` num `OnInit`, que roda
-//= depois de todos os NPCs terem carregado.
+//= w4. Então a linha do `shop` carrega o que cabe e o resto
+//= entra por `npcshopadditem` no `OnInit` da própria loja, que
+//= roda depois de todos os NPCs terem carregado.
 //=
 //= Se um dia outra loja passar do teto, o gerador faz o mesmo
 //= com ela sozinho - o corte é por tamanho, não por nome.
@@ -338,44 +370,47 @@ def gera(linhas):
             por_loja.setdefault(loja, []).append(c)
 
     corpo = []
-    extras = []
-    for chave, x, y, nome, sprite in LOJAS:
+    for chave, x, y, nome, sprite, placa in LOJAS:
         do_loja = sorted(por_loja.get(chave, []), key=lambda c: c['id'])
         lista = ['%d:1' % c['id'] for c in do_loja]
 
-        # Quantos cabem na propria linha, sem estourar o w4.
-        cabem, tamanho = 0, len(sprite)
+        # Quantos cabem na propria linha, sem estourar o w4. O que vai na
+        # frente do w4 e o view do `shop` flutuante, nao o sprite do vendedor -
+        # esse esta na linha do `script`, que nao tem teto.
+        cabem, tamanho = 0, len(VIEW_LOJA)
         for pedaco in lista:
             if tamanho + 1 + len(pedaco) > TETO_W4:
                 break
             tamanho += 1 + len(pedaco)
             cabem += 1
 
-        corpo.append(u'// ----- %s (%d,%d): %d cartas' % (nome, x, y, len(lista)))
-        if cabem < len(lista):
-            corpo.append(u'// Nao cabe na linha (%d chars com todas): as %d '
-                         u'primeiras vao aqui' % (
-                             len(sprite) + sum(1 + len(p) for p in lista), cabem))
-            corpo.append(u'// e as outras %d entram pelo OnInit do fim do '
-                         u'arquivo.' % (len(lista) - cabem))
-        corpo.append(u'prontera,%d,%d,4\tshop\t%s\t%s,%s'
-                     % (x, y, nome, sprite, ','.join(lista[:cabem])))
-        corpo.append(u'')
-
+        # O excedente entra no OnInit da propria loja. Roda depois de TODOS os
+        # NPCs carregarem, entao o `shop` la embaixo ja existe.
+        extras = []
         for i in range(cabem, len(lista), POR_CHAMADA):
             trecho = do_loja[i:i + POR_CHAMADA]
-            extras.append(u'\tnpcshopadditem "%s",%s;'
+            extras.append(u'\tnpcshopadditem "%s#loja",%s;'
                           % (nome, ','.join('%d,1' % c['id'] for c in trecho)))
 
-    if extras:
-        corpo.append(u'// ----- o excedente das lojas que nao coubem na linha')
-        corpo.append(u'// Roda depois de TODOS os NPCs carregarem, entao as')
-        corpo.append(u'// lojas acima ja existem quando o npcshopadditem chega.')
-        corpo.append(u'-\tscript\tCartasExcedente\t-1,{')
+        corpo.append(u'// ----- %s (%d,%d): %d cartas' % (nome, x, y, len(lista)))
+        if extras:
+            corpo.append(u'// Nao cabe na linha (%d chars com todas): as %d '
+                         u'primeiras vao na' % (
+                             len(VIEW_LOJA) + sum(1 + len(p) for p in lista),
+                             cabem))
+            corpo.append(u'// linha do `shop` e as outras %d entram por '
+                         u'npcshopadditem no OnInit.' % (len(lista) - cabem))
+        corpo.append(u'prontera,%d,%d,4\tscript\t%s\t%s,{' % (x, y, nome, sprite))
+        corpo.append(u'\tcallshop "%s#loja",0;' % nome)
+        corpo.append(u'\tend;')
+        corpo.append(u'')
         corpo.append(u'OnInit:')
+        corpo.append(u'\twaitingroom "%s (%d)",0;' % (placa, len(lista)))
         corpo.extend(extras)
         corpo.append(u'\tend;')
         corpo.append(u'}')
+        corpo.append(u'-\tshop\t%s#loja\t%s,%s'
+                     % (nome, VIEW_LOJA, ','.join(lista[:cabem])))
         corpo.append(u'')
 
     total = sum(len(v) for v in por_loja.values())
@@ -386,7 +421,7 @@ def gera(linhas):
         if vc.estado(fonte, c)[0] == 'sem-cura':
             sem_arte += 1
     arma = sorted(por_loja.get('arma', []), key=lambda c: c['id'])
-    w4_arma = len('4_M_JOB_KNIGHT1') + sum(len(',%d:1' % c['id']) for c in arma)
+    w4_arma = len(VIEW_LOJA) + sum(len(',%d:1' % c['id']) for c in arma)
 
     texto = (CABECALHO % {
         'total': total, 'tipo_card': len(cartas),
@@ -402,7 +437,7 @@ def gera(linhas):
            % total,
            u'Visuais, em Prontera. Gerado por `ferramentas/varre_cartas.py`;',
            u'a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.', u'']
-    for chave, x, y, nome, sprite in LOJAS:
+    for chave, x, y, nome, sprite, _placa in LOJAS:
         do_loja = sorted(por_loja.get(chave, []), key=lambda c: c['id'])
         cat.append(u'## %s (%d cartas)' % (nome, len(do_loja)))
         cat.append(u'')
@@ -440,7 +475,7 @@ def main():
         total, por_loja = gera(linhas)
         print 'gravado %s' % NPC
         print 'gravado %s' % CATALOGO
-        for chave, _x, _y, nome, _s in LOJAS:
+        for chave, _x, _y, nome, _s, _p in LOJAS:
             print '  %-20s %4d cartas' % (nome, len(por_loja.get(chave, [])))
         print '  %-20s %4d' % ('TOTAL', total)
         return 0
