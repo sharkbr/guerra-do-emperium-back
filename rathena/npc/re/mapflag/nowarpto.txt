@@ -406,9 +406,11 @@ e_hugel	mapflag	nowarpto
 // Training Ground outside Prontera
 //============================================================
 tra_fild	mapflag	nowarpto
-tra_fild01	mapflag	nowarpto
-tra_fild02	mapflag	nowarpto
-tra_fild03	mapflag	nowarpto
+// Guerra do Emperium: tra_fild01/02/03 saiu de conf/maps_athena.conf (nao
+// existe no GRF do cliente). Sem os mapas, estas linhas so gerariam aviso.
+//tra_fild01	mapflag	nowarpto
+//tra_fild02	mapflag	nowarpto
+//tra_fild03	mapflag	nowarpto
 
 //============================================================
 // Episode 18 - Direction of Prayer

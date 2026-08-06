@@ -380,9 +380,11 @@ job4_tro	mapflag	nobranch
 // Training Ground outside Prontera
 //============================================================
 tra_fild	mapflag	nobranch
-tra_fild01	mapflag	nobranch
-tra_fild02	mapflag	nobranch
-tra_fild03	mapflag	nobranch
+// Guerra do Emperium: tra_fild01/02/03 saiu de conf/maps_athena.conf (nao
+// existe no GRF do cliente). Sem os mapas, estas linhas so gerariam aviso.
+//tra_fild01	mapflag	nobranch
+//tra_fild02	mapflag	nobranch
+//tra_fild03	mapflag	nobranch
 
 //============================================================
 // Episode 18 - Direction of Prayer
