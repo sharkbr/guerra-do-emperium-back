@@ -288,6 +288,13 @@ OnInit:
 // Nada disso pega com @reloadscript sozinho: item novo pede
 // @reloaditemdb, e a entrada de cliente so e lida na inicializacao, ou
 // seja fechar e reabrir o cliente.
+//
+// OITAVO ITEM em 2026-08-05: a Diadema Arco-iris (18894, View 1019).
+// Foi pedida "no Chapeleiro" e veio parar aqui porque o item_db a da
+// como `Head_Mid`, e a descricao do bRO concorda ("Equipa em: Meio").
+// Nao custou nada: arte inteira nos GRFs e entrada no itemInfo.lua, 0
+// faltando no valida_visual.py. E nao tem `Buy` no item_db, entao nao
+// ha revenda e ela nao entra no aviso de `discounted buying price`.
 prontera,155,173,4	script	Ocleiro	4_F_01,{
 	callshop "Ocleiro#loja",0;
 	end;
@@ -296,7 +303,7 @@ OnInit:
 	waitingroom "Cabeça meio",0;
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 prontera,159,173,4	script	Retoqueiro	1_F_MERCHANT_02,{

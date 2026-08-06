@@ -7,7 +7,13 @@ quarteirão do Mercado Contemporâneo, em Prontera.
 Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 `rathena/npc/guerra/mercado_de_visuais.txt`.
 
-## Costumeiro — Costume topo (142 itens)
+**Dez itens estão marcados com ★ e não saem da ferramenta.** Foram
+pedidos a dedo em 2026-08-05 e já desenhavam antes desta rodada, ou
+seja, o `varre_cosmeticos.py` os classifica como `ok` e não os
+listaria. Regerar esta tabela pela ferramenta os perde — o porquê de
+cada um está no cabeçalho do arquivo da loja.
+
+## Costumeiro — Costume topo (145 itens)
 
 `prontera 151,155` — sprite `4_F_CAPEGIRL`
 
@@ -26,6 +32,9 @@ Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 | 15893 | Solarium |
 | 15925 | Boneco de Pouring |
 | 15952 | Naga Tailandesa |
+| 19602 | Chapéu Invisível ★ |
+| 19996 | Cavalo Rei ★ |
+| 20234 | Máscara de Bafomé ★ |
 | 20308 | Costume Koneko Hat |
 | 20309 | Costume Dip Schmidt Helm |
 | 20385 | Elmo do Herói |
@@ -156,7 +165,7 @@ Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 | 440005 | Coroa do Diabo |
 | 440012 | Máscara de Eggman |
 
-## Adereceiro — Costume meio (114 itens)
+## Adereceiro — Costume meio (115 itens)
 
 `prontera 155,155` — sprite `4_F_MASK`
 
@@ -165,6 +174,7 @@ Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 | 15840 | Óculos de Bioproteção |
 | 15953 | Carrinho do Zé |
 | 18742 | Luar de Cristal |
+| 19603 | Óculos Invisíveis ★ |
 | 21200 | Lágrimas Masculinas |
 | 31462 | Brincos de Poring Rosa |
 | 31515 | Gatinho Curioso |
@@ -277,13 +287,14 @@ Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 | 436010 | Cabeça de Tarantuling |
 | 480200 | Asas do Anjo Fiel |
 
-## Camareiro — Costume baixo (118 itens)
+## Camareiro — Costume baixo (124 itens)
 
 `prontera 159,155` — sprite `4_M_ORIENT01`
 
 | id | nome |
 |---|---|
 | 15954 | Espaguete & Lasanha |
+| 19604 | Máscara Invisível ★ |
 | 20310 | Costume Cute Parrot |
 | 31257 | Costume Poring Jars Of Clay |
 | 31305 | Angeling de Estimação |
@@ -307,7 +318,12 @@ Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 | 410320 | Piscadela de Freya |
 | 420014 | Peruca de Animação |
 | 420026 | Gravata Bombom |
+| 420044 | Gola Escolar de Marujo ★ |
+| 420046 | Manta Digníssima ★ |
+| 420047 | Capa de Cavaleiro ★ |
+| 420054 | Cachecol de Fumacento ★ |
 | 420070 | Capuz Macabro |
+| 420071 | Cachecol com Tiras ★ |
 | 420083 | Cachecol com Laço Creme |
 | 420085 | Peruca Kururinpa Platinada |
 | 420086 | Cacheado Marrom |

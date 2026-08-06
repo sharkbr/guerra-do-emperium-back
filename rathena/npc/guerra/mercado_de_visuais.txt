@@ -2,7 +2,7 @@
 //= Mercado de Visuais
 //===== Onde =================================================
 //= prontera, quarta fileira do quarteirão do Mercado
-//= Contemporâneo, uma coluna por slot de traje:
+//= Contemporâneo, uma coluna por slot de visual:
 //=
 //=            x=151          x=155          x=159
 //=  y=173   Chapeleiro     Ocleiro        Retoqueiro
@@ -15,7 +15,7 @@
 //= x=148..162 está livre de y=150 a y=160, então há espaço de
 //= sobra entre as colunas para o jogador circular.
 //===== Descrição ============================================
-//= Três lojas de TRAJE, uma por slot de cabeça. 374 itens,
+//= Três lojas de VISUAL, uma por slot de cabeça. 384 itens,
 //= tudo a 1 zeny.
 //===== Notas ================================================
 //= O QUE ESTÁ À VENDA, E POR QUE SÓ ISTO
@@ -24,7 +24,33 @@
 //= que passaram a desenhar em 2026-08-05. Não é o acervo
 //= inteiro, de propósito: dos 3241 itens cosméticos do item_db,
 //= 1900 de cabeça já funcionavam antes desta rodada e continuam
-//= acessíveis por @item. O que entrou aqui é o conteúdo NOVO.
+//= acessíveis por @item. O que entrou aqui é o conteúdo NOVO -
+//= mais dez escolhidos a dedo, logo abaixo.
+//=
+//= OS DEZ A DEDO, de 2026-08-05, quebram a regra do parágrafo
+//= acima e é de propósito: os dez já desenhavam ANTES desta
+//= rodada - o varre_cosmeticos.py põe todos no balde `ok` -,
+//= então nenhum deles é conteúdo novo. Vieram pedidos item por
+//= item pelo dono do projeto, e por isso NÃO saem de varredura
+//= nenhuma: quem regerar a lista pela ferramenta os perde.
+//=
+//=   topo    20234 Máscara de Bafomé
+//=           19996 Cavalo Rei
+//=           19602 Chapéu Invisível
+//=   meio    19603 Óculos Invisíveis
+//=   baixo   19604 Máscara Invisível
+//=           420044 Gola Escolar de Marujo
+//=           420046 Manta Digníssima
+//=           420047 Capa de Cavaleiro
+//=           420054 Cachecol de Fumacento
+//=           420071 Cachecol com Tiras
+//=
+//= O Bafomé e o Cavalo Rei ocupam os TRÊS slots de visual de
+//= cabeça cada um. Estão só no Costumeiro, uma vez cada: pô-los
+//= nas três lojas mostraria o mesmo item três vezes no mercado.
+//=
+//= Os dez passaram no `valida_visual.py` com 0 faltando antes de
+//= entrar, e nenhum precisou das ferramentas de cura.
 //=
 //= Quem decidiu a lista foi ferramentas/varre_cosmeticos.py,
 //= escrito para esta rodada. Ele responde uma pergunta que o
@@ -49,23 +75,36 @@
 //= 120 entradas -, mais as sprites de manto por classe. Falta
 //= escrever o equivalente do estende_accessoryid.py desse lado.
 //=
-//= As "capas" que já estão no Retoqueiro (420010 Aura da
-//= Escuridão, 420047 Capa de Cavaleiro) NÃO são manto: são
-//= Costume_Head_Low, e é por isso que elas funcionaram.
+//= As "capas" desta fileira NÃO são manto: são Costume_Head_Low,
+//= e é por isso que elas funcionaram. É o caso das cinco que
+//= entraram no Camareiro em 2026-08-05 - 420044 Gola Escolar de
+//= Marujo, 420046 Manta Digníssima, 420047 Capa de Cavaleiro,
+//= 420054 Cachecol de Fumacento, 420071 Cachecol com Tiras - e
+//= da 420010 Aura da Escuridão, que está no Retoqueiro desde a
+//= rodada do Mercado Contemporâneo.
 //=
 //= TRÊS ITENS FORAM TIRADOS da lista mesmo curados, porque não
 //= têm `View` no item_db: 31957, 420337 e 440008. Eles
 //= equipariam sem erro nenhum e sem aparecer nada - dud
 //= silencioso, que é pior para o jogador que item ausente.
 //=
+//= CUIDADO ao aplicar essa regra de olho fechado. Os três
+//= "Invisíveis" (19602 chapéu, 19603 óculos, 19604 máscara)
+//= também NÃO têm `View`, e entraram de propósito em
+//= 2026-08-05: neles o nada é o produto. pc_set_costume_view()
+//= (src/map/pc.cpp) copia o `look` da peça de visual por cima do
+//= slot sem checar zero, então `look` 0 APAGA o equipamento de
+//= cabeça que estiver embaixo. É o que o item oficial faz.
+//=
 //= ------------------------------------------------------------
 //= PREÇO: 1 zeny, como o Mercado Contemporâneo.
 //=
 //= Aqui a revenda NÃO é problema, e isso foi medido antes de
-//= escolher o preço: 373 dos 374 não têm `Buy` nem `Sell`
-//= no item_db, então revendem por 0 em qualquer NPC. A única
-//= exceção é o 18742 (Luar de Cristal), que tem `Buy: 20` e
-//= portanto revende por 10 - 9 de lucro por compra, que não
+//= escolher o preço: 382 dos 384 não têm `Buy` nem `Sell`
+//= no item_db, então revendem por 0 em qualquer NPC. As duas
+//= exceções são o 18742 (Luar de Cristal), com `Buy: 20`, e o
+//= 19996 (Cavalo Rei), com `Buy: 10`, que entrou em 2026-08-05.
+//= Revendem por 10 e por 5 - 9 e 4 de lucro por compra, que não
 //= move nada.
 //=
 //= Ou seja: ao contrário do Mercado Contemporâneo, este arquivo
@@ -117,7 +156,7 @@
 //= ------------------------------------------------------------
 //= A PLACA SOBRE A CABEÇA
 //=
-//= As três lojas mostram uma placa com o que vendem - "Traje:
+//= As três lojas mostram uma placa com o que vendem - "Visuais:
 //= cabeça topo" e as irmãs -, e é por isso que deixaram de ser
 //= `shop` puro: cada uma virou um `script` na coordenada mais um
 //= `shop` flutuante "<Nome>#loja" com os itens.
@@ -129,38 +168,38 @@
 //=
 //============================================================
 
-// ----- Costumeiro (x=151): Traje de cabeca topo -- chapeu, coroa, asa, chifre.
-// 142 itens.
+// ----- Costumeiro (x=151): Visual de cabeca topo -- chapeu, coroa, asa, chifre.
+// 145 itens.
 prontera,151,155,4	script	Costumeiro	4_F_CAPEGIRL,{
 	callshop "Costumeiro#loja",0;
 	end;
 
 OnInit:
-	waitingroom "Traje: cabeça topo",0;
+	waitingroom "Visuais: cabeça topo",0;
 	end;
 }
--	shop	Costumeiro#loja	-1,15825:1,15838:1,15841:1,15842:1,15846:1,15847:1,15851:1,15854:1,15875:1,15888:1,15893:1,15925:1,15952:1,20308:1,20309:1,20385:1,21400:1,31108:1,31109:1,31110:1,31111:1,31112:1,31156:1,31159:1,31324:1,31419:1,31501:1,31535:1,31536:1,31539:1,31557:1,31558:1,31587:1,31595:1,31596:1,31597:1,31613:1,31665:1,31666:1,31702:1,31722:1,31821:1,31890:1,31897:1,31935:1,31950:1,31952:1,400080:1,400091:1,400092:1,400093:1,400131:1,400133:1,400136:1,400143:1,400158:1,400166:1,400167:1,400168:1,400175:1,400195:1,400205:1,400206:1,400207:1,400208:1,400209:1,400210:1,400211:1,400212:1,400221:1,400224:1,400225:1,400232:1,400253:1,400271:1,400272:1,400277:1,400278:1,400290:1,400309:1,400310:1,400311:1,400313:1,400314:1,400321:1,400343:1,400351:1,400354:1,400355:1,400356:1,400357:1,400358:1,400370:1,400398:1,400402:1,400405:1,400406:1,400407:1,400424:1,400426:1,400428:1,400429:1,400430:1,400431:1,400432:1,400435:1,400436:1,400439:1,400448:1,400450:1,400458:1,400460:1,400462:1,400466:1,400480:1,400496:1,400497:1,400502:1,400517:1,400567:1,400585:1,400588:1,400594:1,400596:1,400604:1,400633:1,400634:1,400635:1,400656:1,400664:1,400671:1,400684:1,400692:1,400693:1,400703:1,400708:1,430001:1,430005:1,440001:1,440004:1,440005:1,440012:1
+-	shop	Costumeiro#loja	-1,15825:1,15838:1,15841:1,15842:1,15846:1,15847:1,15851:1,15854:1,15875:1,15888:1,15893:1,15925:1,15952:1,19602:1,19996:1,20234:1,20308:1,20309:1,20385:1,21400:1,31108:1,31109:1,31110:1,31111:1,31112:1,31156:1,31159:1,31324:1,31419:1,31501:1,31535:1,31536:1,31539:1,31557:1,31558:1,31587:1,31595:1,31596:1,31597:1,31613:1,31665:1,31666:1,31702:1,31722:1,31821:1,31890:1,31897:1,31935:1,31950:1,31952:1,400080:1,400091:1,400092:1,400093:1,400131:1,400133:1,400136:1,400143:1,400158:1,400166:1,400167:1,400168:1,400175:1,400195:1,400205:1,400206:1,400207:1,400208:1,400209:1,400210:1,400211:1,400212:1,400221:1,400224:1,400225:1,400232:1,400253:1,400271:1,400272:1,400277:1,400278:1,400290:1,400309:1,400310:1,400311:1,400313:1,400314:1,400321:1,400343:1,400351:1,400354:1,400355:1,400356:1,400357:1,400358:1,400370:1,400398:1,400402:1,400405:1,400406:1,400407:1,400424:1,400426:1,400428:1,400429:1,400430:1,400431:1,400432:1,400435:1,400436:1,400439:1,400448:1,400450:1,400458:1,400460:1,400462:1,400466:1,400480:1,400496:1,400497:1,400502:1,400517:1,400567:1,400585:1,400588:1,400594:1,400596:1,400604:1,400633:1,400634:1,400635:1,400656:1,400664:1,400671:1,400684:1,400692:1,400693:1,400703:1,400708:1,430001:1,430005:1,440001:1,440004:1,440005:1,440012:1
 
-// ----- Adereceiro (x=155): Traje de cabeca meio -- oculos, mascara, tapa-olho, adorno lateral.
-// 114 itens.
+// ----- Adereceiro (x=155): Visual de cabeca meio -- oculos, mascara, tapa-olho, adorno lateral.
+// 115 itens.
 prontera,155,155,4	script	Adereceiro	4_F_MASK,{
 	callshop "Adereceiro#loja",0;
 	end;
 
 OnInit:
-	waitingroom "Traje: cabeça meio",0;
+	waitingroom "Visuais: cabeça meio",0;
 	end;
 }
--	shop	Adereceiro#loja	-1,15840:1,15953:1,18742:1,21200:1,31462:1,31515:1,31949:1,31953:1,31954:1,400491:1,410011:1,410030:1,410031:1,410032:1,410033:1,410034:1,410035:1,410036:1,410037:1,410038:1,410039:1,410040:1,410041:1,410042:1,410043:1,410044:1,410045:1,410047:1,410053:1,410059:1,410060:1,410072:1,410074:1,410098:1,410111:1,410112:1,410113:1,410114:1,410115:1,410116:1,410117:1,410118:1,410121:1,410128:1,410131:1,410132:1,410133:1,410144:1,410156:1,410157:1,410160:1,410178:1,410179:1,410182:1,410196:1,410198:1,410199:1,410200:1,410201:1,410202:1,410212:1,410217:1,410218:1,410219:1,410220:1,410224:1,410226:1,410234:1,410236:1,410240:1,410242:1,410245:1,410248:1,410251:1,410252:1,410253:1,410261:1,410262:1,410263:1,410264:1,410277:1,410278:1,410286:1,410289:1,410290:1,410296:1,410297:1,410311:1,410316:1,410317:1,410326:1,410328:1,410329:1,410330:1,410331:1,410338:1,410351:1,410352:1,410353:1,410357:1,410359:1,410361:1,410364:1,420293:1,420294:1,420295:1,420296:1,420297:1,420298:1,420299:1,420300:1,436008:1,436010:1,480200:1
+-	shop	Adereceiro#loja	-1,15840:1,15953:1,18742:1,19603:1,21200:1,31462:1,31515:1,31949:1,31953:1,31954:1,400491:1,410011:1,410030:1,410031:1,410032:1,410033:1,410034:1,410035:1,410036:1,410037:1,410038:1,410039:1,410040:1,410041:1,410042:1,410043:1,410044:1,410045:1,410047:1,410053:1,410059:1,410060:1,410072:1,410074:1,410098:1,410111:1,410112:1,410113:1,410114:1,410115:1,410116:1,410117:1,410118:1,410121:1,410128:1,410131:1,410132:1,410133:1,410144:1,410156:1,410157:1,410160:1,410178:1,410179:1,410182:1,410196:1,410198:1,410199:1,410200:1,410201:1,410202:1,410212:1,410217:1,410218:1,410219:1,410220:1,410224:1,410226:1,410234:1,410236:1,410240:1,410242:1,410245:1,410248:1,410251:1,410252:1,410253:1,410261:1,410262:1,410263:1,410264:1,410277:1,410278:1,410286:1,410289:1,410290:1,410296:1,410297:1,410311:1,410316:1,410317:1,410326:1,410328:1,410329:1,410330:1,410331:1,410338:1,410351:1,410352:1,410353:1,410357:1,410359:1,410361:1,410364:1,420293:1,420294:1,420295:1,420296:1,420297:1,420298:1,420299:1,420300:1,436008:1,436010:1,480200:1
 
-// ----- Camareiro (x=159): Traje de cabeca baixo -- cachecol, aura, bicho de ombro, cauda.
-// 118 itens.
+// ----- Camareiro (x=159): Visual de cabeca baixo -- cachecol, aura, bicho de ombro, cauda.
+// 124 itens.
 prontera,159,155,4	script	Camareiro	4_M_ORIENT01,{
 	callshop "Camareiro#loja",0;
 	end;
 
 OnInit:
-	waitingroom "Traje: cabeça baixo",0;
+	waitingroom "Visuais: cabeça baixo",0;
 	end;
 }
--	shop	Camareiro#loja	-1,15954:1,20310:1,31257:1,31305:1,31386:1,31421:1,31422:1,31423:1,31424:1,31429:1,31500:1,31503:1,31584:1,31593:1,31594:1,31882:1,400258:1,400327:1,400425:1,400427:1,410265:1,410320:1,420014:1,420026:1,420070:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
+-	shop	Camareiro#loja	-1,15954:1,19604:1,20310:1,31257:1,31305:1,31386:1,31421:1,31422:1,31423:1,31424:1,31429:1,31500:1,31503:1,31584:1,31593:1,31594:1,31882:1,400258:1,400327:1,400425:1,400427:1,410265:1,410320:1,420014:1,420026:1,420044:1,420046:1,420047:1,420054:1,420070:1,420071:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
