@@ -77,6 +77,7 @@ import io
 import os
 import re
 import sys
+import unicodedata
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import valida_visual as vv
@@ -355,6 +356,37 @@ def na_loja(linhas):
             if est == 'ok' and nome == 'pt']
 
 
+def ordem_alfabetica(nomes):
+    u"""Devolve a chave de ordenacao das lojas: o NOME que o jogador le.
+
+    O cliente desenha a lista da loja **na ordem em que o servidor manda** -
+    nao ordena nada por conta. Entao a ordem da lista de itens no `shop` e
+    exatamente a ordem na tela, e e aqui que ela se decide.
+
+    Tres cuidados, e nenhum e detalhe:
+
+    1) Ordena pelo `identifiedDisplayName` do `itemInfo.lua` - o mesmo nome que
+       o filtro de PT usa. Ordenar pelo `Name` do `item_db` daria uma lista que
+       parece fora de ordem na tela, porque os dois divergem.
+
+    2) O nome vem em bytes cp1252 COM ACENTO (ver `texto-de-jogo-e-cp1252`), e
+       em cp1252 todo acentuado tem byte >= 0x80: ordenar os bytes crus jogaria
+       `Carta Lunático` depois de `Carta Zumbi`. Por isso decodifica e tira o
+       acento so para comparar - `Á` ordena junto de `A`, como o jogador espera.
+
+    3) Desempate pelo id, para a saida do gerador ser sempre a mesma. Ha cartas
+       de nome repetido, e sem desempate a ordem delas mudaria a cada varredura.
+    """
+    def chave(carta):
+        bruto = nomes.get(carta['id'], '')
+        texto = bruto.decode('cp1252', 'replace')
+        plano = unicodedata.normalize('NFD', texto)
+        plano = u''.join(c for c in plano
+                         if unicodedata.category(c) != 'Mn')
+        return (plano.upper(), carta['id'])
+    return chave
+
+
 def revenda(carta):
     u"""Por quanto o jogador revende. A derivacao e a do rAthena: so `Buy` ->
     `Sell` = Buy/2; so `Sell` -> vale ele mesmo; nenhum dos dois -> 0."""
@@ -476,17 +508,36 @@ CABECALHO = u"""\
 //= servidor apontando o lucro de 9 zeny acima.
 //=
 //= ------------------------------------------------------------
+//= A ORDEM DA LISTA É ALFABÉTICA, e ela se decide AQUI
+//=
+//= O cliente desenha a lista da loja na ordem em que o servidor
+//= manda - não ordena nada por conta. Então a ordem dos ids na
+//= linha do `shop` é a ordem na tela, e por isso o gerador
+//= ordena pelo NOME, não pelo id.
+//=
+//= O nome usado é o `identifiedDisplayName` do `itemInfo.lua` -
+//= o mesmo que decide quem entra na loja, e o mesmo que o
+//= jogador lê. E o acento sai da comparação: em cp1252 todo
+//= acentuado tem byte >= 0x80, então ordenar os bytes crus
+//= jogaria `Carta Lunático` depois de `Carta Zumbi`.
+//=
+//= ------------------------------------------------------------
 //= A PLACA SOBRE A CABEÇA, e por que cada loja são DUAS linhas
 //=
 //= Cada vendedor mostra uma placa com o que vende e quantas
 //= cartas tem - "Cartas de arma (359)". Quem a desenha é o
-//= `waitingroom`, a sala de conversa do rAthena: o cliente a
-//= desenha como uma barra de título SOBRE A CABEÇA do dono, que
-//= é o mais perto de uma placa de vendedor que este protocolo
-//= tem - NPC não abre barraca. Com limite 0 ninguém entra:
-//= clicar na barra não faz nada.
+//= `placadevenda`, comando NOSSO (src/custom/placa_de_venda.hpp):
+//= a placa amarela de quem abriu barraca, sobre a cabeça do NPC.
+//= Até 2026-08-06 era o `waitingroom`, que desenha a barra de
+//= sala de conversa - a troca foi pedida porque balão de conversa
+//= não diz "aqui se compra". Clicar na placa não faz nada, igual
+//= à barra de antes; o clique que vale é o do corpo do NPC.
 //=
-//= O `waitingroom` só existe dentro de um `script`, e um `shop`
+//= É comando COMPILADO: só existe em map-server recompilado com
+//= src/custom. Num binário antigo a linha dá comando desconhecido
+//= e a loja não sobe.
+//=
+//= O `placadevenda` só existe dentro de um `script`, e um `shop`
 //= não tem corpo. Então cada loja é um `script` na coordenada,
 //= com o sprite e o nome, mais um `shop` FLUTUANTE (mapa `-`,
 //= view -1) chamado "<Nome>#loja" com as cartas. O clique no NPC
@@ -539,9 +590,11 @@ def gera(linhas):
     for c, loja in na_loja(linhas):
         por_loja.setdefault(loja, []).append(c)
 
+    alfabetica = ordem_alfabetica(nomes)
+
     corpo = []
     for chave, x, y, nome, sprite, placa in LOJAS:
-        do_loja = sorted(por_loja.get(chave, []), key=lambda c: c['id'])
+        do_loja = sorted(por_loja.get(chave, []), key=alfabetica)
         lista = ['%d:1' % c['id'] for c in do_loja]
 
         # Quantos cabem na propria linha, sem estourar o w4. O que vai na
@@ -575,7 +628,7 @@ def gera(linhas):
         corpo.append(u'\tend;')
         corpo.append(u'')
         corpo.append(u'OnInit:')
-        corpo.append(u'\twaitingroom "%s (%d)",0;' % (placa, len(lista)))
+        corpo.append(u'\tplacadevenda "%s (%d)";' % (placa, len(lista)))
         corpo.extend(extras)
         corpo.append(u'\tend;')
         corpo.append(u'}')
@@ -590,7 +643,7 @@ def gera(linhas):
     for c in sem_slot:
         if vc.estado(fonte, c)[0] == 'sem-cura':
             sem_arte += 1
-    arma = sorted(por_loja.get('arma', []), key=lambda c: c['id'])
+    arma = sorted(por_loja.get('arma', []), key=alfabetica)
     w4_arma = len(VIEW_LOJA) + sum(len(',%d:1' % c['id']) for c in arma)
 
     conta_nome = lambda alvo: len([l for l in linhas if l[4] == alvo])
@@ -632,7 +685,7 @@ def gera(linhas):
            u'`item_db`. Os dois divergem em alguns casos, e quem está na tela',
            u'é este.', u'']
     for chave, x, y, nome, sprite, _placa in LOJAS:
-        do_loja = sorted(por_loja.get(chave, []), key=lambda c: c['id'])
+        do_loja = sorted(por_loja.get(chave, []), key=alfabetica)
         cat.append(u'## %s (%d cartas)' % (nome, len(do_loja)))
         cat.append(u'')
         cat.append(u'`prontera %d,%d` — sprite `%s`' % (x, y, sprite))

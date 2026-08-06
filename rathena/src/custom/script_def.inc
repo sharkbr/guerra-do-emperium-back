@@ -9,3 +9,6 @@
  **/
 
 //BUILDIN_DEF(example,""),
+
+// Guerra do Emperium
+BUILDIN_DEF(placadevenda,"s"),

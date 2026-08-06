@@ -170,15 +170,27 @@
 //= "Armas", "Acessorios" -, e e por isso que as nove deixaram de
 //= ser `shop` puro.
 //=
-//= Quem desenha a placa e o `waitingroom`, a sala de conversa do
-//= rAthena: o cliente a desenha como uma barra de titulo SOBRE A
-//= CABECA do dono, que e o mais perto de uma placa de vendedor
-//= que este protocolo tem - NPC nao abre barraca, o pacote de
-//= barraca (ZC_STORE_ENTRY) so sai para personagem vendendo.
-//= Com limite 0 ninguem entra: clicar na barra nao faz nada.
-//= Ver doc/script_commands.txt, `*waitingroom`.
+//= Quem desenha a placa e o `placadevenda`, comando NOSSO
+//= (src/custom/placa_de_venda.hpp): a placa amarela de quem abriu
+//= barraca, a mesma que aparece sobre um jogador vendendo.
 //=
-//= O `waitingroom` so existe dentro de um `script`, e um `shop`
+//= Ate 2026-08-06 quem desenhava era o `waitingroom`, a sala de
+//= conversa do rAthena - uma barra de titulo, nao uma placa de
+//= venda. A troca foi pedida porque o balao de conversa nao diz
+//= "aqui se compra"; o de venda diz.
+//=
+//= O rAthena nao tem comando para isso porque a placa de venda
+//= nasce de `vending_openvending`, que exige personagem com
+//= inventario. O PACOTE (ZC_STORE_ENTRY, 0x0131), esse so leva id
+//= do dono e texto - e o cliente procura esse id na lista de
+//= atores, onde NPC e jogador convivem. Dai a placa grudar.
+//=
+//= Clicar na PLACA nao abre nada, porque barraca de verdade nao
+//= ha. Nao e regressao: com `waitingroom` de limite 0, clicar na
+//= barra tambem nao fazia nada. O clique que vale e o do CORPO do
+//= NPC, e esse segue igual.
+//=
+//= O `placadevenda` so existe dentro de um `script`, e um `shop`
 //= nao tem corpo. Entao cada loja e DUAS linhas:
 //=
 //=   1) um `script` na coordenada, com o sprite e o nome, que
@@ -192,8 +204,13 @@
 //= nao e enfeite - `1` abriria so a compra e tiraria a venda.
 //=
 //= Mexer no texto de uma placa e mexer na linha do
-//= `waitingroom`; o teto e 60 caracteres. Para tirar as placas
-//= sem desmontar nada, apagar so essas linhas.
+//= `placadevenda`; o teto e 79 caracteres (MESSAGE_SIZE). Para
+//= tirar as placas sem desmontar nada, apagar so essas linhas.
+//=
+//= ATENCAO: `placadevenda` e comando compilado, nao script. Pega
+//= com @reloadscript, mas so depois de o map-server ter sido
+//= recompilado com src/custom/ - num binario antigo a linha da
+//= erro de comando desconhecido e a loja nao sobe.
 //=
 //============================================================
 
@@ -221,7 +238,7 @@ prontera,151,173,4	script	Chapeleiro	1_M_MERCHANT,{
 	end;
 
 OnInit:
-	waitingroom "Cabeça topo",0;
+	placadevenda "Cabeça topo";
 	end;
 }
 -	shop	Chapeleiro#loja	-1,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1
@@ -300,7 +317,7 @@ prontera,155,173,4	script	Ocleiro	4_F_01,{
 	end;
 
 OnInit:
-	waitingroom "Cabeça meio",0;
+	placadevenda "Cabeça meio";
 	end;
 }
 -	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1
@@ -311,7 +328,7 @@ prontera,159,173,4	script	Retoqueiro	1_F_MERCHANT_02,{
 	end;
 
 OnInit:
-	waitingroom "Cabeça baixo",0;
+	placadevenda "Cabeça baixo";
 	end;
 }
 -	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,420010:1
@@ -340,7 +357,7 @@ prontera,151,167,4	script	Senhor das Armas	1_M_SMITH,{
 	end;
 
 OnInit:
-	waitingroom "Armas",0;
+	placadevenda "Armas";
 	end;
 }
 -	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1
@@ -357,7 +374,7 @@ prontera,155,167,4	script	Lorde das Armaduras	4_M_JOB_BLACKSMITH,{
 	end;
 
 OnInit:
-	waitingroom "Armaduras",0;
+	placadevenda "Armaduras";
 	end;
 }
 -	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1
@@ -370,7 +387,7 @@ prontera,159,167,4	script	Escudeiro	4_M_UNCLEKNIGHT,{
 	end;
 
 OnInit:
-	waitingroom "Escudos",0;
+	placadevenda "Escudos";
 	end;
 }
 -	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1
@@ -384,7 +401,7 @@ prontera,151,161,4	script	Capeiro	1_F_MERCHANT_01,{
 	end;
 
 OnInit:
-	waitingroom "Capas",0;
+	placadevenda "Capas";
 	end;
 }
 -	shop	Capeiro#loja	-1,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1
@@ -401,7 +418,7 @@ prontera,155,161,4	script	Sapateiro	4_M_02,{
 	end;
 
 OnInit:
-	waitingroom "Sapatos",0;
+	placadevenda "Sapatos";
 	end;
 }
 -	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1
@@ -416,7 +433,7 @@ prontera,159,161,4	script	Acessorista	4_F_02,{
 	end;
 
 OnInit:
-	waitingroom "Acessórios",0;
+	placadevenda "Acessórios";
 	end;
 }
 -	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1

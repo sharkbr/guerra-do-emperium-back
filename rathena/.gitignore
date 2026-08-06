@@ -152,3 +152,31 @@ Thumbs.db
 
 # generated files
 generated
+
+# Guerra do Emperium: o upstream ignora /src/custom inteiro, e e justamente
+# onde o NOSSO codigo C++ mora (ver PENDENCIAS.md, CONVENCAO DE CUSTOMIZACAO).
+# Sem esta linha o arquivo nao aparece nem no On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../CATALOGO-CARTAS.md
+	modified:   ../PENDENCIAS.md
+	modified:   ../ferramentas/LEIAME.md
+	modified:   ../ferramentas/varre_cartas.py
+	modified:   npc/guerra/mercado_contemporaneo.txt
+	modified:   npc/guerra/mercado_de_cartas.txt
+	modified:   npc/guerra/mercado_de_visuais.txt
+	modified:   src/custom/script.inc
+	modified:   src/custom/script_def.inc
+	modified:   src/map/clif.cpp
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../ferramentas/ajusta_tamanho_fonte.py
+
+no changes added to commit (use "git add" and/or "git commit -a"): some calado no
+# proximo clone. Negar a PASTA, e nao os arquivos dentro dela - pasta excluida
+# o git nem abre, entao negacao de arquivo la dentro nao teria efeito.
+!/src/custom/

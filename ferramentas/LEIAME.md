@@ -532,6 +532,77 @@ Para o cliente **desenhar** esses bytes é preciso o `ajusta_charset_fonte.py`
 `--sem-acento` reverte a fase inteira sem tocar em código — mas aí o
 `ajusta_charset_fonte.py --reverter` tem de andar junto.
 
+## `ajusta_tamanho_fonte.py` — aumenta a fonte do jogo
+
+```
+python ajusta_tamanho_fonte.py --verificar   # só relata
+python ajusta_tamanho_fonte.py               # aplica +2 (faz backup)
+python ajusta_tamanho_fonte.py --aumento 4   # outro valor
+python ajusta_tamanho_fonte.py --reverter    # volta ao original
+```
+
+**Não existe opção de tamanho de fonte neste cliente** — nem no Setup.exe, nem
+no menu, nem no `OptionInfo.lua` (a lista inteira de chaves que ele grava está
+em `data/luafiles514/lua files/optioninfo/optioninfo.lub`, e não há nenhuma de
+fonte). O `/font` da lista de comandos é outra coisa: troca a fonte do **chat**
+por uma das `.eot` de `System/Font`.
+
+O que existe é a altura em pixels que o cliente pede ao Windows. A fonte
+principal é altura de caractere **13** (`push 0Dh` logo antes da chamada); com
+`+2` vai a 15, uns 15% maior. O default é 2 de propósito: a interface do RO tem
+caixas de tamanho fixo, e fonte grande demais transborda.
+
+### Por que não é o `CustomFontHgtOffset` do WARP
+
+Mesma armadilha do `FixFontsCharset`, por causa diferente — **aplica sem erro e
+não muda nada**. O FONTAIN do WARP desvia os call sites de `CreateFontA`, e
+neste exe:
+
+| função | importada | chamadas |
+|---|---|---|
+| `CreateFontA` | sim | **zero** |
+| `CreateFontIndirectA` | sim | 8 |
+
+Toda fonte nasce do `CreateFontIndirectA`, que recebe a altura dentro de um
+`LOGFONTA` em vez de argumento solto. O FONTAIN não tem o que desviar. **É a
+mesma causa do `CustomFontCharset` não ter mudado nada na fase do charset**, e
+agora está medida em vez de suposta.
+
+### O desvio
+
+Os 8 `call [CreateFontIndirectA]` (6 bytes) viram `call rel32` + `nop` para um
+stub de 25 bytes no fim da `.xdiff` — a seção que o próprio WARP criou para os
+caves dele, executável e gravável. O stub soma na altura e segue a chamada:
+
+```asm
+50              push eax
+8b 44 24 08     mov  eax, [esp+8]         ; o LOGFONTA* empilhado
+83 38 00        cmp  dword ptr [eax], 0   ; lfHeight, offset 0 da struct
+7d 05           jge  positivo
+83 28 02        sub  dword ptr [eax], 2   ; altura de CARACTERE: negativa
+eb 03           jmp  pronto
+83 00 02        add  dword ptr [eax], 2   ; altura de CÉLULA: positiva
+58              pop  eax
+ff 25 ...       jmp  dword ptr [CreateFontIndirectA]
+```
+
+O sinal do `lfHeight` não é detalhe: negativo é altura de caractere, positivo é
+altura de célula. Somar cego encolheria a fonte na metade dos casos.
+
+Modificar o `LOGFONTA` no lugar, sem cópia, é seguro **porque foi conferido**:
+nos 8 sites o chamador monta a struct na pilha (`lea eax,[ebp-XX]; push eax`) e
+escreve o `lfHeight` na instrução anterior. Não há struct global reaproveitada,
+então a soma não se acumula.
+
+Duas coisas que só não quebram por sorte medida: o exe **não tem ASLR**
+(`DllCharacteristics` sem DYNAMICBASE), então endereço absoluto no stub vale; e
+`call [IAT]` tem 6 bytes contra 5 do `call rel32`, então sobra exatamente um
+para o `nop`.
+
+O script reconhece o próprio trabalho pelo formato do stub — não guarda
+endereço em lugar nenhum. Por isso `--aumento` de novo só troca o número, e
+`--reverter` devolve o exe **byte a byte** igual ao original (conferido).
+
 ## `ajusta_charset_fonte.py` — faz o cliente desenhar Latin-1
 
 ```

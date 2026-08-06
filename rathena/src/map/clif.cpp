@@ -59,6 +59,9 @@
 #include "unit.hpp"
 #include "vending.hpp"
 
+// Guerra do Emperium: nosso codigo vive em src/custom; aqui so o ponteiro.
+#include <custom/placa_de_venda.hpp>
+
 using namespace rathena;
 
 static inline uint32 client_tick( t_tick tick ){
@@ -5096,6 +5099,11 @@ void clif_getareachar_unit( map_session_data* sd,block_list *bl ){
 					clif_dispchat( *cd );
 				}
 			}
+
+			// Guerra do Emperium: a placa de venda sobre a cabeca do NPC.
+			// Mesmo ponto e mesmo motivo do `waitingroom` acima - sem isto a
+			// placa so existiria para quem estivesse perto no OnInit.
+			placa_de_venda_mostra( *nd, *sd );
 
 			if( nd->size == SZ_BIG )
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);

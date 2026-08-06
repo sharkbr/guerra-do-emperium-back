@@ -496,8 +496,23 @@ Consequências práticas:
 - `git diff` restrito a `npc/guerra/`, `src/custom/`, `conf/guerra/` e
   `conf/import/` mostra **exatamente** o que é nosso.
 - Fora dessas pastas, qualquer diff em `rathena/` é alteração em código de
-  terceiros e merece comentário explicando o porquê. Hoje existem **duas**: o
-  `import:` no `scripts_custom.conf` e o `import:` no `battle_athena.conf`.
+  terceiros e merece comentário explicando o porquê. Hoje existem **quatro**: o
+  `import:` no `scripts_custom.conf`, o `import:` no `battle_athena.conf` e,
+  desde 2026-08-06, mais duas.
+- A primeira das duas novas: duas linhas em `src/map/clif.cpp` — um `#include`
+  e uma chamada a `placa_de_venda_mostra`, dentro do `case BL_NPC` do
+  `clif_getareachar_unit`. As duas estão comentadas no arquivo. Esse ponto é
+  onde o servidor conta ao cliente o que há sobre a cabeça de um NPC que
+  entrou na visão; não há gancho de extensão ali, e pôr a placa em qualquer
+  outro lugar significaria ela existir só para quem estava perto no `OnInit` —
+  ou seja, para ninguém.
+- A segunda: uma linha `!/src/custom/` no fim de `rathena/.gitignore`. **O
+  upstream ignora `/src/custom` inteiro**, que é exatamente a pasta que esta
+  convenção elegeu para o nosso C++. Sem essa linha, arquivo novo lá dentro não
+  aparece nem no `git status` — some calado no próximo clone. Os dois `.inc`
+  não denunciavam o problema porque já vinham rastreados do upstream, e
+  `.gitignore` não afeta arquivo rastreado. Descoberto ao criar o
+  `placa_de_venda.hpp`.
 - Mudança em `conf/` e em script de NPC **não** precisa de recompilação. Mudança
   em `src/` precisa (Visual Studio 2022 Community 17.14.37, já instalado).
 - Mas **cada `conf/` tem o seu recarregador**, e errar o comando faz a mudança
