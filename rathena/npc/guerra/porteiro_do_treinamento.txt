@@ -1,0 +1,138 @@
+//===== Guerra do Emperium ===================================
+//= Area de Treinamento
+//===== Onde =================================================
+//= prontera 154,187 - a esquina do quarteirao a oeste da praca
+//= central, onde ficava o Guia de Prontera. Mesma celula, mesmo
+//= sprite (105) e mesma imagem (cutin "prt_soldier") de antes.
+//===== Descricao ============================================
+//= Porteiro do campo de treino. Leva para as duas areas do
+//= tra_fild, as mesmas do Instrutor de Treino de 246,62:
+//=   parte de cima   - bonecos por TAMANHO (pequeno/medio/grande)
+//=   parte de baixo  - bonecos por ELEMENTO e por RACA
+//=
+//= Pedido em 2026-08-06: o NPC de 154,187 deixa de ser guia e
+//= passa a ser a porta do campo de treino, MANTENDO a imagem que
+//= ele ja mostrava.
+//=
+//= A volta nao esta aqui: quem faz e o proprio Instrutor de
+//= Treino dentro do tra_fild (111,79 e 112,171), que tem "Warp
+//= to Prontera" no menu. E o mapa tem `nosave SavePoint`, entao
+//= deslogar la tambem devolve o jogador ao ponto de retorno.
+//===== Como, e por que assim ================================
+//= O NPC que estava em 154,187 e o "Guide#01prontera", exname
+//= "GuideProntera", de npc/re/guides/guides_prontera.txt. Ele nao
+//= esta sozinho: e o ORIGINAL de que saem as outras QUATRO
+//= duplicatas de guia de Prontera - 282,208, 29,200, 160,29 e
+//= 159,326. Essas quatro continuam guiando normalmente; so esta
+//= saiu do ar.
+//=
+//= Por isso ele nao foi apagado nem editado la. Como no
+//= armazem_do_cla.txt, sao dois movimentos DE FORA:
+//=   1) `disablenpc` no original, daqui;
+//=   2) este NPC nosso, na mesma coordenada.
+//= O npc/re/guides/guides_prontera.txt fica byte a byte igual ao
+//= upstream.
+//=
+//= DESLIGAR O ORIGINAL NAO DESLIGA AS DUPLICATAS. Uma duplicata
+//= copia o estado do original UMA vez, na hora em que nasce
+//= (src/map/npc.cpp, npc_duplicate_sub: "copy the original npc
+//= state"), e as quatro nascem durante a leitura do arquivo
+//= delas - muito antes deste OnInit rodar, que so acontece
+//= quando npc/scripts_custom.conf e alcancado. Vale tambem no
+//= @reloadscript, que refaz a leitura na mesma ordem.
+//=
+//= E COPIA E NAO `duplicate()` porque nao ha o que reaproveitar:
+//= o corpo do guia e o menu de navegacao da cidade inteira, que
+//= e justamente o que se quer tirar daqui.
+//===== O nome ===============================================
+//= "Area de Treinamento" (com acento no arquivo), sem sufixo
+//= `#identificador`: nome de NPC e chave unica no rAthena, e
+//= nenhum outro NPC usa este. O original desligado continua
+//= ocupando "Guide#01prontera" / "GuideProntera", outro nome.
+//===== Notas ================================================
+//= As coordenadas de destino (112,167 e 111,74) sao as mesmas
+//= que o npc/re/warps/other/TrainingZone.txt usa - copiadas de
+//= la, nao escolhidas aqui.
+//=
+//= tra_fild e o campo de treino de ANTES da divisao do kRO. Os
+//= tra_fild01/02/03 mais novos nao existem no GRF deste cliente
+//= e derrubam ele; ver o comentario em npc/re/scripts_monsters.conf.
+//= Se um dia o cliente for atualizado e os tres entrarem, e aqui
+//= que o menu ganha as tres taxas.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1).
+//= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= ATENCAO ao editar: por causa do acento, ferramenta que assume
+//= UTF-8 troca cada letra acentuada por '?' sem avisar. Editar
+//= com script que grave em cp1252, como o resto de npc/guerra/.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,154,187,4	script	Área de Treinamento	105,{
+	cutin "prt_soldier",2;
+	mes "[Área de Treinamento]";
+	mes "A corte montou um campo de treino";
+	mes "para os aventureiros que querem";
+	mes "medir a própria força.";
+	next;
+	mes "[Área de Treinamento]";
+	mes "Ele tem duas partes. Na de cima os";
+	mes "bonecos mudam de ^8B4513tamanho^000000 -";
+	mes "pequeno, médio e grande.";
+	next;
+	mes "[Área de Treinamento]";
+	mes "Na de baixo eles mudam de";
+	mes "^8B4513elemento^000000 e de ^8B4513raça^000000, para você";
+	mes "ver quanto dano cada um leva.";
+	next;
+	mes "[Área de Treinamento]";
+	mes "Para onde quer ir?";
+	next;
+	switch (select("Parte de cima - por tamanho:Parte de baixo - por elemento e raça:Ficar em Prontera")) {
+	case 1:
+		mes "[Área de Treinamento]";
+		mes "Bom treino. Para voltar, fale com o";
+		mes "Instrutor que fica lá dentro.";
+		close2;
+		cutin "prt_soldier",255;
+		warp "tra_fild",112,167;
+		end;
+	case 2:
+		mes "[Área de Treinamento]";
+		mes "Bom treino. Para voltar, fale com o";
+		mes "Instrutor que fica lá dentro.";
+		close2;
+		cutin "prt_soldier",255;
+		warp "tra_fild",111,74;
+		end;
+	case 3:
+		mes "[Área de Treinamento]";
+		mes "Quando quiser treinar, é só chamar.";
+		close2;
+		cutin "prt_soldier",255;
+		end;
+	}
+	end;
+
+OnInit:
+	// E "GuideProntera" e nao "Guide#01prontera": a linha do rAthena
+	// e `Guide#01prontera::GuideProntera`, e o que vem depois do
+	// `::` e o EXNAME. E por exname que o rAthena indexa NPC
+	// (npcname_db, src/map/npc.cpp), entao e ele que getnpcid e
+	// disablenpc enxergam - "Guide#01prontera" e so o nome que
+	// aparece na tela. As quatro duplicatas tem exname proprio
+	// (Guide#02prontera e irmas) e nao sao alcancadas por esta linha.
+	//
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste,
+	// um nome fora de sincronia com o guides_prontera.txt do
+	// rAthena abortaria o OnInit calado - e sobrariam DOIS NPCs na
+	// mesma celula, o guia e este, um por cima do outro.
+	if (!getnpcid(0, "GuideProntera")) {
+		debugmes "AreaDeTreinamento: nao achei 'GuideProntera'. O npc/re/guides/guides_prontera.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 154,187.";
+		end;
+	}
+	disablenpc "GuideProntera";
+	end;
+}
