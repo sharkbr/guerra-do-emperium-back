@@ -99,6 +99,11 @@ ITENS = [
     410142,   # Adorno Angelical
     19445,    # Curativo YSF01
     420110,   # Cachecol Camuflado
+    # As duas COM COVA que entraram em 2026-08-05, quando a loja do
+    # Ocleiro trocou quatro itens pela versao de um encaixe. As outras
+    # duas da troca (19444 e 19446) ja tinham entrada e nao precisam vir.
+    410125,   # Orelhas em Chamas [1]
+    19455,    # Diadema do Paraiso [1]   (placeholder em db/guerra/item_db.yml)
     # --- Senhor das Armas
     500009,   # Lamina Sagrada
     510155,   # Ceuci                    (placeholder em db/guerra/item_db.yml)

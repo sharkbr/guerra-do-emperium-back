@@ -40,3 +40,7 @@ Footer:
   - Path: db/re/item_combos.yml
     Mode: Renewal
   - Path: db/import/item_combos.yml
+  # Guerra do Emperium: unica linha nossa neste arquivo do rAthena. Os
+  # conjuntos proprios ficam todos em db/guerra/item_combos.yml - nao em
+  # db/import/, que o .gitignore do rAthena ignora.
+  - Path: db/guerra/item_combos.yml

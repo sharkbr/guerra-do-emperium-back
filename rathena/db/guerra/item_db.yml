@@ -1081,6 +1081,51 @@ Body:
          bonus3 bAutoSpell,"ASC_METEORASSAULT",5,70;
       }
 
+  - Id: 19455
+    AegisName: Protect_Feathers_
+    # A Diadema do Paraiso COM COVA. Nao e item novo nem rebalanceado: e a
+    # mesma peca do 19024, que o vendor tem, com um encaixe. O bRO tem as
+    # duas (iteminfo_new.lub: [19024] slotCount 0, [19455] slotCount 1),
+    # com a MESMA descricao, o mesmo resourceName e o mesmo ClassNum 1232 -
+    # o nosso rAthena so trouxe a sem cova.
+    #
+    # Por isso os bonus abaixo sao copia do 19024 do db/re/item_db_equip.yml
+    # em vez de leitura da descricao do bRO: quando existe versao escrita
+    # pelo rAthena para a peca irma, ela e melhor fonte que o meu parse.
+    # Conferido linha a linha contra a descricao do bRO, que bate.
+    #
+    # View 1232 nao precisou de ferramenta nenhuma - o 19024 desenha com
+    # ele na loja do Ocleiro desde 2026-08-01, e visual nao depende do
+    # numero de covas.
+    #
+    # Os TRES conjuntos do 19024 (db/re/item_combos.yml) foram espelhados
+    # para ca em db/guerra/item_combos.yml. Sem isso a versao com cova
+    # seria PIOR que a sem cova para quem usa Boina Alada ou Traje
+    # Protetor, e a perda seria calada.
+    Name: "Diadema do Paraíso"
+    Type: Armor
+    Weight: 500
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    View: 1232
+    Script: |
+      bonus2 bSubRace,RC_Player_Doram,2;
+      bonus2 bSubRace,RC_Player_Human,2;
+      bonus bAspdRate,5;
+      .@vit = readparam(bVit);
+      if (.@vit >= 108) {
+         bonus2 bSubRace,RC_Player_Doram,3;
+         bonus2 bSubRace,RC_Player_Human,3;
+         bonus bAspdRate,5;
+         if (.@vit >= 120) {
+            bonus bMaxHPrate,3;
+            bonus bMdef,3;
+         }
+      }
+
 # =========================================================================
 # OVERRIDES - 2026-08-02
 # =========================================================================

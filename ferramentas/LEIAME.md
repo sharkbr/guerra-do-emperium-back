@@ -89,6 +89,87 @@ par inglês. Ver a tabela completa de IDs no `PENDENCIAS.md`.
 renomear um exe em uso, então o caminho é patchar uma cópia e trocar por
 `mv`.
 
+## `estado_item.py` — onde um item existe, e o que quebra se o ID for trocado
+
+```
+python estado_item.py --id 19455              # estado de um item
+python estado_item.py --id 19024,19455        # de vários
+python estado_item.py --loja Ocleiro          # de uma loja inteira
+python estado_item.py --troca 19024:19455     # ANALISA a troca (a trava)
+python estado_item.py --troca 19024:19455 --aplicar   # e executa o que dá
+python estado_item.py --id 19455 --descricao  # a descrição do bRO, por extenso
+```
+
+**É o ponto de entrada da família de itens.** As outras ferramentas desta
+seção cada uma cuida de uma tabela; esta responde, antes delas, *em quais
+tabelas o item está* e *o que falta fazer*.
+
+Nasceu em 2026-08-05, depois de uma troca de quatro itens na loja do Ocleiro
+em que a **edição foi o barato e a descoberta foi o caro**. As duas perguntas
+que custaram a tarde:
+
+1. **"este ID existe onde?"** — a resposta mora em quatro tabelas, e faltar em
+   cada uma quebra de um jeito diferente. Três das quatro falham **caladas**:
+
+   | tabela | quem lê | falta = o jogador vê |
+   |---|---|---|
+   | `db/re/item_db_*.yml` | servidor | `@item` falha, a loja não abre |
+   | `db/guerra/item_db.yml` | servidor | (o nosso, para o que o vendor não tem) |
+   | `itemInfo.lua` do cliente | cliente | item **sem nome e sem ícone** |
+   | os 8 arquivos de arte | cliente | caixa modal de erro ao equipar |
+
+2. **"trocar este ID por aquele derruba alguma coisa?"** — derrubava três
+   conjuntos, e conjunto que não fecha não dá erro.
+
+### A trava de conjunto é o único pedaço que impede um bug
+
+O resto do script descreve o mundo; `--troca` recusa.
+
+Conjunto no rAthena é casado por **AegisName**, não por família. A versão com
+cova de um chapéu é *outro item* — `Protect_Feathers_` não é
+`Protect_Feathers`. Trocar o ID de uma loja pela versão com cova derruba todo
+conjunto que citava a sem cova, e a perda é calada nos dois sentidos: sem erro
+na subida, e o jogador não vê bônus faltando, vê um número menor.
+
+O próprio rAthena tem receita para isso e, onde conhece as duas versões, a
+aplica: lista a com cova como **alternativa dentro do mesmo `- Combos:`**, duas
+listas `- Combo:` dividindo um `Script:` só. Foi assim que 19444, 19446 e
+410125 atravessaram a troca de 2026-08-05 sem ninguém fazer nada. Só a Diadema
+precisou de espelho à mão, porque o 19455 não existe no vendor — não há
+alternativa para o rAthena listar.
+
+**O casamento é feito no banco inteiro, não dentro da entrada**, e a leitura
+intuitiva é a errada: o jeito do rAthena é pôr na mesma entrada, mas de um
+arquivo de import não se acrescenta linha a uma entrada alheia — o nosso
+espelho é entrada separada em `db/guerra/item_combos.yml`. Procurar só dentro
+da entrada daria BLOQUEIO num conjunto perfeitamente coberto.
+
+Sai com **código 1** quando há bloqueio, então dá para encadear.
+
+### O que ele não faz
+
+`--aplicar` só chama o que já existe e já é idempotente: `completa_iteminfo.py`
+para a entrada de cliente e `nomes_pt_item_db.py` para o `Name` do servidor.
+**Ele não cria entrada de `item_db`** — preencher bônus é leitura de descrição,
+e isso é julgamento, não mecânica. Quando o item falta no servidor, a saída diz
+isso e para. Trocar o ID na linha da loja e espelhar conjunto também continuam
+sendo à mão, e a saída lembra disso.
+
+### O que ele mudou nas vizinhas
+
+Duas alterações em `valida_visual.le_item_db`, que virou o varredor de
+`item_db` compartilhado:
+
+- ganhou `slots`, `tipo` e `arquivo`, **aditivos** — quem já usava a função
+  (`instala_visual.py`, `estende_accessoryid.py`, `varre_cosmeticos.py`) lê as
+  chaves que sempre leu. `slots` nasce `0` e não `None` de propósito: o
+  `item_db` **omite** `Slots:` quando é zero, e ausência ali quer dizer "sem
+  cova", não "não sei";
+- `nome` passou a vir **sem as aspas** do escalar YAML. O db do rAthena põe
+  aspas em 631 nomes e deixa 28725 sem, então comparar o nome do servidor com o
+  do cliente acusava diferença em todo item que só muda de aspa. O
+  `varre_cartas.py` já fazia esse `strip` por conta própria.
+
 ## `instala_item.py` — põe a entrada de um item nosso no `itemInfo.lua`
 
 ```

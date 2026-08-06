@@ -240,6 +240,54 @@ OnInit:
 //
 // O unico que continua fora e o "Tapa Olho do orc heroi", que
 // nao existe em tabela nenhuma.
+//
+// QUATRO VIRARAM A VERSAO COM COVA em 2026-08-05, a pedido do dono do
+// projeto. Mesmas pecas, mesmo desenho, com um encaixe de carta:
+//   19024  -> 19455   Diadema do Paraiso  [1]   (View 1232)
+//   19443  -> 19444   Tapa-Olho Cosmico   [1]   (View 800)
+//   19445  -> 19446   Curativo YSF01      [1]   (View 772)
+//   410124 -> 410125  Orelhas em Chamas   [1]   (View 2212)
+//
+// O visual nao custou nada: as quatro versoes com cova tem o MESMO
+// `View` da sem cova, entao a arte que ja estava instalada serve, e o
+// `estende_accessoryid.py`/`instala_visual.py` nao precisaram rodar. As
+// quatro passam no `valida_visual.py` com 0 faltando.
+//
+// O que cada uma custou, que nao foi igual:
+//
+//   19444, 19446   nada. O rAthena ja tinha os dois, e o itemInfo.lua do
+//                  cliente tambem, os dois em portugues.
+//   410125         o rAthena tinha, mas o cliente NAO - e sem entrada no
+//                  itemInfo.lua o item aparece sem nome e sem icone na
+//                  propria vitrine. Veio do bRO pelo completa_iteminfo.py
+//                  (o ID esta na tabela ITENS de la). O `Name` do
+//                  servidor estava em ingles e foi sincronizado pelo
+//                  nomes_pt_item_db.py.
+//   19455          NAO EXISTIA NO NOSSO rATHENA. So a versao sem cova veio
+//                  no vendor. Entrou como placeholder em
+//                  db/guerra/item_db.yml, com os bonus copiados do 19024
+//                  deles, mais a entrada de cliente vinda do bRO.
+//
+// A ARMADILHA DESTA TROCA, que so o 19455 sofre: conjunto no rAthena e
+// casado por AegisName, entao trocar o ID DERRUBA o conjunto. Nos outros
+// tres isso nao acontece porque o proprio rAthena ja lista a versao com
+// cova como alternativa dentro do mesmo `- Combos:` (Star_Eyepatch_JP_,
+// Injured_Eyepatch_JP_ e Grisly_Soul_ estao la, ao lado das sem cova) -
+// e essa e a receita que o arquivo abaixo copia.
+//
+// Com o 19024 nao dava: ele esta em TRES conjuntos do
+// db/re/item_combos.yml e o 19455 nao existe para eles, entao nao ha
+// alternativa listada. Duas das pecas irmas sao vendidas neste mesmo
+// mercado - a Boina Alada (5170) no Chapeleiro e o Traje Protetor (19381)
+// no Retoqueiro -, ou seja a perda seria facil de encontrar e calada:
+// conjunto que nao fecha nao da erro, so nao acontece, e a versao com
+// cova - que existe para ser MELHOR - daria menos bonus que a sem cova.
+// Os tres foram espelhados para o 19455 em db/guerra/item_combos.yml,
+// arquivo que nasceu por causa disso.
+//
+// Nada disso pega com @reloadscript sozinho: item novo pede
+// @reloaditemdb, e a entrada de cliente so e lida na inicializacao, ou
+// seja fechar e reabrir o cliente.
 prontera,155,173,4	script	Ocleiro	4_F_01,{
 	callshop "Ocleiro#loja",0;
 	end;
@@ -248,7 +296,7 @@ OnInit:
 	waitingroom "Cabeça meio",0;
 	end;
 }
--	shop	Ocleiro#loja	-1,19024:1,2204:1,19445:1,19443:1,410124:1,410142:1,410140:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 prontera,159,173,4	script	Retoqueiro	1_F_MERCHANT_02,{

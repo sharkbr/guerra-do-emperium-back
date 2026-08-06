@@ -153,7 +153,19 @@ def le_item_db(caminhos):
                 fecha()
                 estado['atual'] = {'id': int(m.group(1)), 'aegis': '',
                                    'nome': '', 'view': None, 'cabeca': False,
-                                   'view_cabeca': None, 'locais': set()}
+                                   'view_cabeca': None, 'locais': set(),
+                                   # `slots` e `tipo` entraram em 2026-08-05,
+                                   # para o estado_item.py. Sao ADITIVOS: quem
+                                   # ja usava esta funcao (instala_visual.py,
+                                   # estende_accessoryid.py, varre_cosmeticos.py)
+                                   # le as chaves que sempre leu.
+                                   #
+                                   # `slots` default 0 e nao None de proposito:
+                                   # o item_db OMITE `Slots:` quando e zero, e
+                                   # ausencia ali quer dizer "sem cova", nao
+                                   # "nao sei".
+                                   'slots': 0, 'tipo': '',
+                                   'arquivo': caminho}
                 locais = False
                 continue
             atual = estado['atual']
@@ -169,11 +181,29 @@ def le_item_db(caminhos):
                 # nao usa, mas o nosso db/guerra/item_db.yml usa para anotar o
                 # nome do bRO ao lado do nome em ingles, e sem isto o nome
                 # exibido vira "Sturdy Armor # bRO: Armadura Resistente".
-                atual['nome'] = re.sub(r'\s+#.*$', '', m.group(1))
+                nome = re.sub(r'\s+#.*$', '', m.group(1))
+                # Tira as aspas do escalar YAML. O db do rAthena poe aspas em
+                # 631 nomes e deixa 28725 sem (nome de item tem `+`, `[`, `:`,
+                # e cada um muda o sentido de um escalar solto - ver
+                # nomes_pt_item_db.escalar). Quem chama quer o TEXTO, nao o
+                # escalar: sem isto uma comparacao com o nome do cliente acusa
+                # diferenca em todo item que so muda de aspa. O
+                # varre_cartas.py ja fazia o mesmo por conta propria.
+                if len(nome) >= 2 and nome[0] == '"' and nome[-1] == '"':
+                    nome = nome[1:-1].replace('\\"', '"').replace('\\\\', '\\')
+                atual['nome'] = nome
                 continue
             m = re.match(r'\s*View:\s*(\d+)', linha)
             if m:
                 atual['view'] = int(m.group(1))
+                continue
+            m = re.match(r'\s*Slots:\s*(\d+)', linha)
+            if m:
+                atual['slots'] = int(m.group(1))
+                continue
+            m = re.match(r'\s*Type:\s*(\w+)', linha)
+            if m:
+                atual['tipo'] = m.group(1)
                 continue
             if re.match(r'\s*Locations:', linha):
                 locais = True
