@@ -1,10 +1,24 @@
 # Catálogo de cartas — Mercado de Cartas
 
-As 1410 cartas à venda a 1 zeny no quarteirão ao sul do Mercado de
+As 964 cartas à venda a 1 zeny no quarteirão ao sul do Mercado de
 Visuais, em Prontera. Gerado por `ferramentas/varre_cartas.py`;
 a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 
-## Carta de Arma (359 cartas)
+**Só entra carta com nome em português.** Das 1545 que têm encaixe,
+581 ficaram de fora, e a soma fecha assim:
+
+| motivo | quantas |
+|---|---|
+| nunca saiu do inglês — o bRO não a implementou | 392 |
+| aparece em coreano — nem o bRO a traduziu | 54 |
+| sem entrada nenhuma no `itemInfo.lua` — sai sem nome | 135 |
+
+O nome abaixo é o que o cliente **desenha na loja** — sai do
+`identifiedDisplayName` do `itemInfo.lua`, não do `Name` do
+`item_db`. Os dois divergem em alguns casos, e quem está na tela
+é este.
+
+## Carta de Arma (227 cartas)
 
 `prontera 151,149` — sprite `4_M_JOB_KNIGHT1`
 
@@ -122,7 +136,6 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4483 | Carta Drácula Selada |
 | 4491 | Carta Atiradora de Elite Cecil Selada |
 | 4494 | Carta General Tartaruga Selada |
-| 4496 | Sealed Drake Card |
 | 4497 | Carta Cavaleiro da Tempestade Selada |
 | 4499 | Carta Samurai Encarnado Selada |
 | 4502 | Carta Mestre-ferreiro Howard Selada |
@@ -134,16 +147,8 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4521 | Carta Sedora |
 | 4522 | Carta Sropho |
 | 4531 | Carta Eruma Vermelho |
-| 4535 | Sealed Randgris Card |
-| 4536 | Sealed Atroce Card |
-| 4537 | Sealed Phreeoni Card |
-| 4540 | Sealed Lord of The Dead Card |
-| 4546 | Val'khiri Card |
-| 4550 | Upgrade Bow Guardian Card |
-| 4551 | Enhanced Necromancer Card |
 | 4584 | Carta Manananggal |
 | 4604 | Carta Origem da Escuridão |
-| 4607 | Carta Gerente de Bifröst |
 | 4608 | Carta Cavaleiro Branco |
 | 4626 | Carta Marca-Tempo |
 | 4627 | Carta Despertador |
@@ -174,32 +179,14 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4923 | Essência de Morroc SOR1 |
 | 4924 | Essência de Morroc SOR2 |
 | 4925 | Essência de Morroc SOR3 |
-| 27007 | Celine Kimi Card |
-| 27009 | Evil Eye of Amdarais Card |
 | 27013 | Carta Kick & Kick |
 | 27016 | Carta Robô Explorador Turbo |
 | 27028 | Carta Frilldora de Fogo |
-| 27031 | Labyrinth Baphomet Card |
-| 27032 | Labyrinth Dracula Card |
-| 27035 | S.J Ernest Wolf Card |
 | 27085 | Carta Munak Ressentida |
 | 27086 | Carta Arqueiro Cruel |
 | 27087 | Carta Veritas |
 | 27117 | Carta Agressor Ominoso |
 | 27122 | Carta Curupira |
-| 27129 | The Justice |
-| 27130 | The Star |
-| 27131 | The Temperance |
-| 27132 | The Chariot |
-| 27133 | The Death |
-| 27134 | The Hermit |
-| 27135 | The Emperor |
-| 27136 | The Moon |
-| 27137 | The Lovers |
-| 27138 | The Hierophant |
-| 27139 | The Devil |
-| 27140 | The Strength |
-| 27146 | CUTIE Card |
 | 27149 | Carta Caça-Coração |
 | 27169 | Carta Guarda de Payon |
 | 27172 | Carta Búfalo Estripador |
@@ -222,14 +209,12 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27220 | Carta General Daehyun Selada |
 | 27222 | Carta Pyuriel Furiosa Selada |
 | 27225 | Carta Vigia do Tempo Selada |
-| 27237 | Face Worm Queen Card (jRO) |
 | 27261 | Carta Procyon |
 | 27286 | Carta Ursinhos Coloridos |
 | 27289 | Carta Fragmento de Alma |
 | 27291 | Carta Trilobita Ancestral |
 | 27293 | Carta Megalith Ancestral |
 | 27297 | Carta Lutador Wootan |
-| 27301 | Labyrinth Doppelganger Card |
 | 27306 | Carta Bellare |
 | 27307 | Carta Bellare Mutante |
 | 27308 | Carta Sanare |
@@ -243,19 +228,8 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27359 | Carta Xamã do Gelo |
 | 27360 | Carta Xamã do Fogo |
 | 27361 | Carta Andarilho Poluto |
-| 27364 | The Fool Card |
-| 27365 | Wheel of Fortune Card |
-| 27366 | The Hanged Man Card |
-| 27367 | World Card |
-| 27384 | Mutated White Knight Card |
 | 27390 | Carta Wolf |
 | 27392 | Carta Poe |
-| 29230 | [ECO] Tiny Alma Card |
-| 31001 | Lola Card |
-| 31004 | Soheon Card |
-| 31005 | General Daehyon Card |
-| 31012 | LoVA Bahamut Card |
-| 31013 | LoVA Realization Bahamut Card |
 | 31018 | Carta Presente das Trevas |
 | 31021 | Carta Marionete Demoníaca |
 | 300001 | Carta Nuvem Nociva |
@@ -265,112 +239,20 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 300011 | Carta Frus Angelical |
 | 300017 | Carta Acidus Negro |
 | 300018 | Carta Acidus Prateado |
-| 300082 | Greater Research Assistant Bot Card |
-| 300086 | Greater Special Alnoldi Card |
-| 300088 | Greater Broken Gardener Beta Card |
-| 300094 | Greater Papila Ruba Card |
-| 300096 | Greater Papila Cae Card |
-| 300106 | Red Pitaya Card |
-| 300114 | Magic Poison Plaga Card |
-| 300124 | Blue Pitaya Card |
 | 300127 | Carta Autógrafo de Wolf |
 | 300128 | Carta Wolf |
 | 300129 | Carta Autógrafo de Poe |
 | 300130 | Carta Poe |
-| 300131 | Reversed Justice Card |
-| 300132 | Reversed The Star Card |
-| 300133 | Reversed Temperance Card |
-| 300134 | Reversed The Chariot Card |
-| 300135 | Reversed Death Card |
-| 300136 | Reversed The Lovers Card |
 | 300140 | Carta Sropho Abismal |
 | 300142 | Carta Deviace Abismal |
 | 300146 | Carta Sedora Abismal |
-| 300163 | Reversed The Emperor Card |
-| 300164 | Reversed Strength Card |
-| 300165 | Reversed The Devil Card |
-| 300166 | Reversed The Moon Card |
-| 300167 | Reversed The Moon Card |
-| 300168 | Reversed World Card |
-| 300171 | Grave Worm Card |
-| 300172 | Brain Sucker Card |
-| 300176 | Unidentified Creature Card |
-| 300189 | Arena Ju Card |
-| 300214 | Hot Molar Card |
-| 300219 | Ashring Card |
 | 300231 | Carta Guerreiro Andre |
 | 300232 | Carta Larva de Formiga |
 | 300237 | Carta Farmiliar Intrépido |
-| 300240 | Gan Ceann Card |
-| 300241 | Brutal Murderer Card |
-| 300263 | Rekenber Guard Card |
-| 300264 | Rekenber Senior Guard Card |
-| 300265 | Regenschirm Scientist Card |
-| 300276 | Regret of Thanatos Card |
-| 300279 | Book of Death Card |
-| 300282 | Reversed The Hermit Card |
-| 300283 | Reversed Fool's Card |
-| 300284 | Reversed The Hierophant Card |
-| 300285 | Reversed The Hanged Man Card |
-| 300286 | The High Priestess |
-| 300287 | Reversed High Priestess Card |
-| 300288 | The Tower Card |
-| 300289 | Reversed The Tower Card |
-| 300441 | Burning Night Card |
-| 300442 | Deadsera Card |
-| 300446 | Punch Bug Card |
-| 300455 | Copo Card |
-| 300460 | Jormungandr Guardian Card |
-| 300461 | Suspicious Irwin Soldier Card |
-| 300462 | Superior Rgan Shaman Card |
-| 300463 | Superior Rgan Healer Card |
-| 300466 | Jormungandr Sanctuary Cleaner Card |
-| 300482 | Low-Grade Rune Card |
-| 300486 | Elena Card |
-| 300487 | Rebellion Elena Volkova Card |
-| 300488 | Lookie Card |
-| 300489 | Rebellion Lookie Card |
-| 300490 | Est Card |
-| 300491 | Rebellion Est Loveroy Card |
-| 300492 | Gony Card |
-| 300493 | Rebellion Gony Card |
-| 300494 | Tes Card |
-| 300495 | Secret Wing Philopontes Card |
-| 300496 | Leizi Card |
-| 300497 | Secret Wing Leizi Card |
-| 300506 | Scalleg Card |
-| 300507 | Velelling Card |
-| 300519 | Yormi Card |
-| 300520 | Yormi Missionary Card |
-| 300532 | Captain of Ghost Ship Card |
 | 300550 | Carta Fei-Chai |
 | 300552 | Carta Tai-Zi |
-| 300585 | Tris Card |
-| 300586 | Tan Card |
-| 300587 | Wilhelm Lugenburg Card |
-| 300588 | Reinhardt Lugenburg Card |
-| 300589 | Ivan Wigner Card |
-| 300590 | Lalaila Nazar Wigner Card |
-| 300591 | Richard Richard Card |
-| 300592 | Laura Valdaris Card |
-| 300593 | Aurelie Petit Card |
-| 300594 | Ilse El Heine Card |
-| 300595 | Epesto Walther Megas Card |
-| 300596 | Maristella Walther Card |
-| 300597 | Yohan Card |
-| 300598 | Günter Card |
-| 300599 | Galaxia Nerius Card |
-| 300600 | Iana Card |
-| 300601 | Lee Card |
-| 300602 | Nadoyo Card |
-| 300610 | Guerrero Card |
-| 300634 | Leafeing Card |
-| 300659 | Toxit Card |
-| 300660 | Lunarina Card |
-| 300661 | Bloody Slasher Card |
-| 300662 | Shadist Card |
 
-## Carta de Escudo (72 cartas)
+## Carta de Escudo (62 cartas)
 
 `prontera 155,149` — sprite `4_F_JOB_KNIGHT`
 
@@ -422,10 +304,8 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4660 | Carta Basilisco Guarda |
 | 4661 | Carta Basilisco Guerreiro |
 | 27029 | Carta Golem de Fogo |
-| 27040 | Bijou Card |
 | 27158 | Carta Les |
 | 27178 | Carta Gaster |
-| 27191 | Gaster Card (jRO) |
 | 27212 | Carta Maya Selada |
 | 27264 | Carta Sombras das Trevas |
 | 27336 | Carta Sorrateiro Caótico |
@@ -434,22 +314,14 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27349 | Carta Explosão |
 | 27353 | Carta Brasa |
 | 27356 | Carta Gárgula Congelada |
-| 27385 | Mutated Khalitzburg Card |
 | 300143 | Carta Marse Abismal |
 | 300203 | Carta Muspellskoll Selada |
 | 300230 | Carta Andre Diligente |
 | 300233 | Carta Deniro Diligente |
 | 300234 | Carta Piere Diligente |
 | 300235 | Carta Ovo de Formiga |
-| 300274 | Anger of Thanatos Card |
-| 300275 | Horror of Thanatos Card |
-| 300277 | Resentment of Thanatos Card |
-| 300373 | Hallucigenia Baby Card |
-| 300379 | Modified Senior Rgan Card |
-| 300465 | Jormungandr Sanctuary Guardian Card |
-| 300633 | Yggring Card |
 
-## Carta de Armadura (147 cartas)
+## Carta de Armadura (117 cartas)
 
 `prontera 159,149` — sprite `4_M_KY_KNT`
 
@@ -526,15 +398,10 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4457 | Carta Naght Sieger |
 | 4481 | Carta Ktullanux Selada |
 | 4485 | Carta Pesar Noturno Selada |
-| 4493 | Sealed Tao Gunka Card |
 | 4500 | Carta Senhor dos Orcs Selada |
 | 4501 | Carta Sumo-Sacerdotisa Margareta Selada |
 | 4516 | Carta Comodo |
 | 4523 | Carta Dofle |
-| 4542 | Sealed Detardeurus Card |
-| 4543 | Sealed Hatii Card |
-| 4547 | Enhanced Byorgue Card |
-| 4553 | Sid Card |
 | 4585 | Carta Mangkukulam |
 | 4602 | Carta Amdarais Sombrio |
 | 4635 | Carta Amdarais Imortal |
@@ -542,7 +409,6 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4659 | Carta Omeleting |
 | 4664 | Carta Fabre Gramíneo |
 | 4666 | Carta Sapo de Rodda Doce |
-| 27008 | Evil Eye of Amdarais Card |
 | 27012 | Carta Transistor |
 | 27027 | Carta Arenoso de Fogo |
 | 27082 | Carta Raposa Raivosa |
@@ -553,9 +419,8 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27110 | Carta Gazeti de Cristal |
 | 27112 | Carta Titã de Cristal |
 | 27114 | Carta Solidificador Ominoso |
-| 27143 | Venomous Chimera Card |
 | 27157 | Carta Leshij |
-| 27213 | Carta Menestrel Alphoccio Selada |
+| 27213 | Carta Menestrel Alphoccio Selada  |
 | 27214 | Carta Professora Celia Selada |
 | 27215 | Carta Mestre Chen Selada |
 | 27216 | Carta Criador Flamel Selada |
@@ -564,46 +429,23 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27219 | Carta Cigana Trentini Selada |
 | 27288 | Carta Mineradores |
 | 27316 | Carta Caput |
-| 27329 | Curse Eater King Card |
 | 27334 | Carta Bafomé Caótico |
 | 27354 | Carta Raydric Poluto |
 | 27357 | Carta Sting Poluto |
-| 31006 | LoVA Hades Card |
-| 31007 | LoVA Realization Hades Card |
 | 31016 | Carta Árvore Maldita Decorada |
 | 300002 | Carta Nuvem Perigosa |
 | 300013 | Carta Valquíria Reginleif |
 | 300014 | Carta Valquíria Ingrid |
 | 300021 | Carta Detale Esqueleto |
 | 300148 | Carta Strouf Abismal |
-| 300170 | Rotten Wood Card |
 | 300195 | Carta Boitatá Selada |
 | 300209 | Carta Amon Ra do Pesadelo Selada |
-| 300212 | Rake Hand Card |
-| 300254 | Amitera Card |
-| 300266 | Unknown Swordsman Card |
 | 300307 | Carta Autógrafo de Meyer |
 | 300308 | Carta Meyer |
 | 300309 | Carta Autógrafo de Helmut |
 | 300310 | Carta Helmut |
-| 300361 | Ice Straw Card |
-| 300362 | Unfrost Flower Card |
-| 300376 | Two Eyes Dollocaris Card |
-| 300378 | Simulation Juncea Card |
-| 300381 | Heart Hunter AT Card |
-| 300445 | Gaia Pol Card |
-| 300472 | Ultimate Rasgandr Card |
-| 300523 | Yordos Executor Card |
-| 300524 | Yoscopus Guardian Card |
-| 300525 | Yoscopus Sorcerer Card |
-| 300529 | Yortus Conjurator Card |
-| 300533 | Encroached Tan Card |
-| 300635 | Charcoaring Card |
-| 300645 | Encroached Repair Robot Card |
-| 300646 | Encroached Dimik Card |
-| 300665 | Abyss Knight Commander Card |
 
-## Carta de Capacete (135 cartas)
+## Carta de Capacete (84 cartas)
 
 `prontera 151,143` — sprite `4_M_SAGE_A`
 
@@ -662,11 +504,7 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4517 | Carta Cendrawasih |
 | 4530 | Carta Siorava |
 | 4538 | Carta Lady Branca Selada |
-| 4541 | Sealed High Wizard Card |
-| 4544 | Sealed Dark Snake Lord Card |
 | 4545 | Carta Bebê Poring |
-| 4549 | Upd Maya Puple Card |
-| 4555 | Scrat Card |
 | 4582 | Carta Bungisngis |
 | 4583 | Carta Engkanto |
 | 4586 | Carta Tikbalang |
@@ -674,21 +512,15 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4598 | Carta Lichtern Anzus |
 | 4599 | Carta Lichtern Kenaz |
 | 4600 | Carta Lichtern Inguz |
-| 4623 | 11th Anniversary Card |
 | 4668 | Carta Esporo de Água Doce |
-| 22875 | Sealed Beelzebub Card |
-| 27002 | Wrapped Box Card |
 | 27015 | Carta Robô Reparador Turbo |
 | 27030 | Carta Besouro Rola Brasa |
 | 27088 | Carta Aventureiro |
-| 27102 | Carta Mattiliar |
+| 27102 | Carta Mattiliar  |
 | 27115 | Carta Batedor Ominoso |
 | 27123 | Carta Espírito do Vento |
 | 27124 | Carta Espírito da Terra |
-| 27128 | Abyssal Old King Groza Card |
 | 27159 | Carta Kikimora |
-| 27228 | Big Eggring Card (jRO) |
-| 27248 | Sarah's Phantom Card (jRO) |
 | 27309 | Carta Sanare Mutante |
 | 27310 | Carta Plaga |
 | 27328 | Carta Caídos |
@@ -699,53 +531,12 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27395 | Carta Autógrafo de Isaac |
 | 27396 | Carta Isaac |
 | 300015 | Carta Ferus Roxo |
-| 300138 | Half Blood Princess Meer Card |
 | 300147 | Carta Peixe Abismal |
 | 300150 | Carta Dramoh Abismal |
-| 300174 | Melted Poring Card |
-| 300192 | Sakrai Card |
-| 300193 | Tiara Card |
 | 300236 | Carta Giearth Intrépido |
 | 300238 | Carta Vitata Diligente |
-| 300244 | Disguiser Card |
-| 300245 | Blue Moon Loli Ruri Card |
-| 300246 | Grote Card |
-| 300247 | Pierrotzoist Card |
-| 300251 | Plagarion Card |
-| 300252 | Deadre Card |
-| 300253 | Venedi Card |
-| 300255 | Litus Card |
-| 300256 | Fillia Card |
-| 300257 | Vanilaqus Card |
-| 300258 | Lavaeter Card |
-| 300259 | Fulgor Card |
-| 300359 | Ice Gangu Card |
-| 300360 | Shining Seaweed Card |
-| 300363 | Limacina Card |
-| 300377 | Ultra Limacina Card |
-| 300456 | Icewind's Egg Card |
-| 300459 | Jormungandr Church Bishop Card |
-| 300528 | Yortus Bishop Card |
-| 300558 | Jackonette Card |
-| 300560 | Nightmare Piamette Card |
-| 300562 | Medjay Card |
-| 300563 | Ophois Card |
-| 300564 | Heka Card |
-| 300611 | Tatsi Card |
-| 300612 | Hanom Card |
-| 300614 | Diosa Card |
-| 300636 | Vulring Card |
-| 300639 | Volimpet Card |
-| 300642 | Polluted Silk Frog Card |
-| 300647 | Nyaise Card |
-| 300648 | Shadow Jailer Card |
-| 300656 | Uncanny Frus Card |
-| 300657 | Listener Card |
-| 300658 | Immortal Corps Officer Card |
-| 300663 | High Succubus Card |
-| 300664 | High Incubus Card |
 
-## Carta de Capa (125 cartas)
+## Carta de Capa (74 cartas)
 
 `prontera 155,143` — sprite `4_F_ALCHE`
 
@@ -782,9 +573,6 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4422 | Carta Roween |
 | 4432 | Carta Magmaring |
 | 4479 | Carta Falquíria |
-| 4548 | Enhanced Salamander Card |
-| 4554 | Diego Card |
-| 4558 | Woodie Card |
 | 4567 | Carta Alphoccio |
 | 4568 | Carta Celia |
 | 4569 | Carta Chen |
@@ -802,20 +590,6 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4637 | Carta Legião Imortal |
 | 4657 | Carta Múmia Anciã do Pesadelo |
 | 27017 | Carta Robô de Sucata |
-| 27055 | Sorcerer Celia(MVP) Card |
-| 27056 | Sura Chen(MVP) Card |
-| 27057 | Minstrel Alphoccio(MVP) Card |
-| 27058 | Guillotine Cross Eremes(MVP) Card |
-| 27059 | Archbishop Margaretha(MVP) Card |
-| 27060 | Ranger Shecil(MVP) Card |
-| 27061 | Mechanic Harword(MVP) Card |
-| 27062 | Warlock Kathryne(MVP) Card |
-| 27063 | Rune Knight Seyren(MVP) Card |
-| 27064 | Royal Guard Randel(MVP) Card |
-| 27065 | Genetic Flamel(MVP) Card |
-| 27066 | Shadow Chaser Gertie(MVP) Card |
-| 27067 | Wanderer Trentini(MVP) Card |
-| 27141 | Heart Hunter Evil Card |
 | 27167 | Carta Larva de Verme |
 | 27168 | Carta Lorde Irine |
 | 27176 | Carta Gabiru |
@@ -830,54 +604,20 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27315 | Carta Venenum Mutante |
 | 27342 | Carta Talo Caótico |
 | 27358 | Carta Foragido |
-| 27381 | Himelmez's Phantom Card |
-| 27382 | Prime Corruption Root Card |
-| 31003 | Merciless Gioia Card |
-| 31014 | LoVA Ragnarok Card |
-| 31015 | LoVA Realization Ragnarok Card |
 | 300004 | Carta Neo Mineral |
 | 300016 | Carta Mímico Precioso |
-| 300084 | Greater Dried Rafflesia Card |
-| 300098 | Greater Aries Card |
-| 300122 | Yellow Pitaya Card |
-| 300123 | Purple Pitaya Card |
-| 300137 | Princess Meer Card |
 | 300149 | Carta Fen Abismal |
 | 300201 | Carta Aranha Rainha Selada |
-| 300213 | Fire Spark Card |
-| 300260 | Napeo Card |
-| 300261 | Galensis Card |
-| 300269 | Eldest Card |
-| 300270 | Empathizer Card |
-| 300271 | Happiness Giver Card |
-| 300272 | Pray Giver Card |
-| 300273 | Smile Giver Card |
-| 300293 | Erzsebet Card |
-| 300372 | Cave Flower Card |
-| 300375 | One Eye Dollocaris Card |
-| 300382 | Aquila Card |
 | 300421 | Carta Autógrafo de Catherine |
 | 300422 | Carta Catherine Gaebolg |
 | 300423 | Carta Autógrafo de Friedrich |
 | 300424 | Carta Friedrich |
 | 300425 | Carta Autógrafo de Crux Findel |
 | 300426 | Carta Crux Findel |
-| 300473 | Snowstorm Angel Card |
-| 300474 | Sanctuary Cleaning Chief Card |
-| 300515 | Yoster Fixer Card |
-| 300517 | Yoster Negotiator Card |
-| 300521 | Yordos Investigator Card |
-| 300522 | Yordos Judge Card |
-| 300530 | Yortus Arbiter Card |
 | 300547 | Carta Luke |
 | 300551 | Carta A-Ji |
-| 300618 | Kung Fu Panda Card |
-| 300637 | Fireloop Card |
-| 300641 | Peeping Card |
-| 300643 | Polluted Silk Snail Card |
-| 300644 | Encroached Exploration Robot Card |
 
-## Carta de Sapato (152 cartas)
+## Carta de Sapato (78 cartas)
 
 `prontera 159,143` — sprite `4_M_ORIENT02`
 
@@ -929,10 +669,8 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4663 | Carta Lunático Folhado |
 | 4667 | Carta Filhote de Lobo Caçador |
 | 27014 | Carta Fumaça Verde |
-| 27092 | Charleston No.3 Card |
 | 27118 | Carta Congelador Ominoso |
 | 27121 | Carta Espírito da Água |
-| 27127 | Old King Groza Card |
 | 27160 | Carta Baba-Yaga |
 | 27166 | Carta Ovo de Verme com Rosto |
 | 27179 | Carta Coyote |
@@ -951,92 +689,20 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27287 | Carta Ursinho Brilhante |
 | 27335 | Carta Bafinho Caótico |
 | 27352 | Carta Pesadelo Sinistro |
-| 27383 | Amdarais's Phantom Card |
 | 29148 | Gema de Leão |
 | 29149 | Gema de Peixes |
 | 29150 | Gema de Capricórnio |
 | 29151 | Gema de Aquário |
 | 29152 | Gema de Escorpião |
 | 29153 | Gema de Touro |
-| 31000 | Rudo Card |
-| 31008 | LoVA Lulu Card |
-| 31009 | LoVA Realization Lulu Card |
-| 31010 | LoVA Kima Card |
-| 31011 | LoVA Realization Kima Card |
 | 31017 | Carta Cookie Aterrorizante |
 | 31022 | Carta Ursinho Abominável |
 | 300003 | Carta Porcellio Albino |
 | 300005 | Carta Garimpeiros |
 | 300012 | Carta Skogul Angelical |
-| 300081 | Research Assistant Bot Card |
-| 300083 | Dried Rafflesia Card |
-| 300085 | Special Alnoldi Card |
-| 300087 | Broken Gardener Beta Card |
-| 300089 | Verporta Card |
-| 300090 | Verporte Card |
-| 300091 | Papila Card |
-| 300092 | Greater Papila Card |
-| 300093 | Papila Ruba Card |
-| 300095 | Papila Cae Card |
-| 300097 | Aries Card |
-| 300121 | Boiling Marc Card |
 | 300144 | Carta Tritão Abismal |
-| 300177 | Arena Arhi Card |
-| 300178 | Arena Dio Anemos Card |
-| 300179 | Arena Shoplifter Card |
-| 300180 | Arena Gangster Card |
-| 300181 | Arena Bully Card |
-| 300182 | Arena Faymont Card |
-| 300183 | Arena Ordre Card |
-| 300184 | Arena Blut Hase Card |
-| 300185 | Arena Kuro Akuma Card |
-| 300186 | Arena Ifodes Card |
-| 300187 | Arena Odoric Card |
-| 300188 | Arena Licheniyes Card |
-| 300190 | Arena Fay Kanavian Card |
-| 300215 | Volkering Card |
-| 300221 | Bushring Card |
-| 300280 | Broken Memory of Thanatos Card |
-| 300292 | Extra Joker Card |
-| 300295 | General Orc Card |
-| 300296 | Sieglouse Card |
-| 300297 | Goblin King Card |
-| 300374 | Hallucigenia Card |
-| 300380 | Entangled Intermediate Rgan Card |
-| 300443 | Hardrock Titan Card |
-| 300444 | Deadween Card |
-| 300450 | Renire Card |
-| 300457 | Gray Icewind Card |
-| 300458 | Icewind Card |
-| 300505 | Seawind Card |
-| 300508 | Skipskipper Card |
-| 300509 | Letterster Card |
-| 300510 | Cliolima Card |
-| 300511 | Rockstriker Card |
-| 300512 | Ice Seahorse Card |
-| 300513 | Ice Horn Card |
-| 300514 | Yoster Cleaner Card |
-| 300516 | Yoster Collector Card |
-| 300518 | Yoster Cooker Card |
-| 300531 | Yortus Bailiff Card |
-| 300555 | Violen Card |
-| 300556 | Spiding Card |
-| 300557 | Garling Card |
-| 300559 | Liamette Card |
-| 300561 | Medjed Card |
-| 300603 | Dien Card |
-| 300604 | Ridsh Card |
-| 300605 | Cotness Card |
-| 300606 | Rebellion Dien Card |
-| 300607 | Rebellion Ridsh Card |
-| 300608 | Rebellion Cotness Card |
-| 300609 | Sirena Card |
-| 300638 | Firafflesia Card |
-| 300640 | Fire Flower Card |
-| 300655 | Uncanny Skogul Card |
-| 300667 | Glutto Card |
 
-## Carta de Acessorio (191 cartas)
+## Carta de Acessorio (106 cartas)
 
 `prontera 151,137` — sprite `4_F_JOB_HUNTER`
 
@@ -1071,7 +737,7 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4193 | Carta Lude |
 | 4196 | Carta Marin |
 | 4205 | Carta Mímico |
-| 4209 | Violy Card |
+| 4209 | Carta Violinista |
 | 4212 | Carta Bongun |
 | 4215 | Carta Labareda |
 | 4219 | Carta Verme Sábio |
@@ -1113,27 +779,12 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 4486 | Carta Belzebu Selada |
 | 4487 | Carta Ifrit Selada |
 | 4505 | Carta Scaraba |
-| 4552 | Manny Card |
 | 4587 | Carta Tiyanak |
 | 4639 | Carta Tappy |
 | 4640 | Carta Lobo de Gelo |
 | 27018 | Carta GC109 |
 | 27019 | Carta DR815 |
 | 27026 | Carta Condor de Fogo |
-| 27068 | Guillotine Cross Eremes Card (jRO) |
-| 27069 | Archbishop Margaretha Card (jRO) |
-| 27070 | Warlock Kathryne Card (jRO) |
-| 27071 | Ranger Shecil Card (jRO) |
-| 27072 | Mechanic Harword Card (jRO) |
-| 27073 | Rune Knight Seyren Card (jRO) |
-| 27074 | Royal Guard Randel Card (jRO) |
-| 27075 | Genetic Flamel Card (jRO) |
-| 27076 | Sorcerer Celia Card (jRO) |
-| 27077 | Sura Chen Card (jRO) |
-| 27078 | Shadow Chaser Gertie Card (jRO) |
-| 27079 | Wanderer Trentini Card (jRO) |
-| 27080 | Minstrel Alphoccio Card (jRO) |
-| 27089 | T W O Card |
 | 27107 | Carta Pere Dançante |
 | 27108 | Carta Pere Cantante |
 | 27111 | Carta Yeti de Cristal |
@@ -1146,7 +797,6 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27163 | Carta Verme com Rosto |
 | 27170 | Carta Búfalo Fuzileiro |
 | 27171 | Carta Búfalo Atirador |
-| 27247 | fff Jitterbug Card (jRO) |
 | 27304 | Carta E-EA2S |
 | 27312 | Carta Dolor |
 | 27317 | Carta Caput Mutante |
@@ -1157,84 +807,15 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27338 | Carta Louva-Caos |
 | 27340 | Carta Mantis Caótico |
 | 27343 | Carta Noviços do Caos |
-| 27386 | Cursed Raydric Card |
-| 27387 | Cursed Raydric Archer Card |
-| 27388 | Cursed Servant Card |
 | 27389 | Carta Autógrafo de Wolf |
-| 31002 | Elvira Card |
 | 31019 | Carta Lude Grotesco |
 | 31020 | Carta Poltergeist Sangrento |
 | 300006 | Carta Geodoliant |
 | 300019 | Carta Ferus Esqueleto |
 | 300020 | Carta Acidus Esqueleto |
-| 300076 | Broken Guard Beta Card |
-| 300077 | Broken Cleaning Robot Omega Card |
-| 300101 | Broken Cleaner Card |
-| 300102 | Bath Manager Card |
-| 300104 | Bookworm Card |
-| 300105 | Roaming Spellbook Card |
-| 300108 | Sewage Venenum Card |
-| 300109 | Sewage Cramp Card |
-| 300110 | Sewage Waterfall Card |
-| 300111 | Elite Bellare Card |
-| 300112 | Magic Poison Dolor Card |
-| 300113 | Unleashed Magic Card |
-| 300115 | Magic Poison Sanara Card |
-| 300116 | Powerful Magic Card |
-| 300117 | Sharp Magic Card |
-| 300118 | Boiling Phen Card |
-| 300119 | Boiling Swordfish Card |
-| 300120 | Boiling Piranha Card |
-| 300125 | Green Pitaya Card |
 | 300141 | Carta Obeaune Abismal |
-| 300173 | Mosquilo Card |
-| 300175 | Unknown Creature Card |
-| 300191 | Arena Dwigh Card |
-| 300211 | Ash Toad Card |
-| 300216 | Lava Toad Card |
-| 300218 | Ash Hopper Card |
-| 300220 | Gray Wolf Card |
-| 300222 | Fire Wind Kite Card |
-| 300223 | Ghost Wolf Card |
-| 300242 | Ghost Cube Card |
-| 300243 | Lude Gal Card |
-| 300249 | Giant Caput Card |
-| 300250 | Dolorian Card |
-| 300267 | Crown Baron Card |
-| 300268 | Crow Duke Card |
-| 300278 | Void Mimic Card |
-| 300294 | Jennifer Card |
-| 300364 | Calmaring Card |
-| 300365 | Primitive Rgan Card |
-| 300366 | Lowest Rgan Card |
-| 300367 | Lesser Rgan Card |
-| 300368 | Intermediate Rgan Card |
-| 300369 | Wasted Primitive Rgan Card |
-| 300370 | Wasted Intermediate Rgan Card |
-| 300371 | Cave Calmaring Card |
-| 300447 | Aferde Card |
-| 300448 | Dispol Card |
-| 300449 | Timbers Card |
-| 300464 | Jormungandr Church Shaman Card |
-| 300467 | Angel Slug Card |
-| 300468 | Snow Rabbit Slug Card |
-| 300469 | Melibe Slug Card |
-| 300470 | Bear Bug Card |
-| 300471 | Fallen Angel Slug Card |
-| 300526 | Yorker Worker Card |
-| 300527 | Yorker Religious Worker Card |
-| 300549 | Summer Vacation Pope Card |
-| 300565 | Guide of Dead Card |
-| 300613 | Peska Card |
-| 300649 | Tulip Card |
-| 300650 | Calendula Card |
-| 300651 | Scabiosa Card |
-| 300652 | Lobelia Card |
-| 300653 | Myosotis Card |
-| 300654 | Anemone Card |
-| 300666 | Bulgasari Card |
 
-## Carta de MVP (147 cartas)
+## Carta de MVP (135 cartas)
 
 `prontera 155,137` — sprite `4_M_DIEMAN`
 
@@ -1372,23 +953,11 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 31023 | Carta Celine Kimi |
 | 31026 | Carta Jack Wolf |
 | 300007 | Carta Joialiant |
-| 300078 | Sweetie Card |
-| 300079 | Red Pepper Card |
-| 300080 | Greater Red Pepper Card |
-| 300099 | Silva Papilia Card |
-| 300100 | Grand Papilia Card |
-| 300107 | Meow Card |
 | 300145 | Carta Bruxa do Mar |
 | 300151 | Carta Kraken Abismal |
-| 300217 | Burning Fang Card |
-| 300227 | Shulan Card |
-| 300228 | Distorted God Card |
 | 300239 | Carta Maya Silente |
-| 300248 | Death Witch Card |
-| 300262 | The One Card |
-| 300281 | R001-Bestia Card |
 
-## Carta de Chefe (82 cartas)
+## Carta de Chefe (81 cartas)
 
 `prontera 159,137` — sprite `4_M_ROGUE`
 
@@ -1475,4 +1044,3 @@ a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 | 27325 | Carta Skoll |
 | 31024 | Carta Cavaleiro Imortal |
 | 31025 | Carta Xamã Imortal |
-| 300103 | Azure Princess Card |

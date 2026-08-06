@@ -11,6 +11,42 @@ Irma da `varre_cosmeticos.py`, e reaproveita dela a parte que decide se o
 cliente desenha o item - a pergunta de arte e a mesma. O que muda e a
 CLASSIFICACAO, e e nela que mora tudo o que este arquivo tem de proprio.
 
+O FILTRO DE ARTE NAO SEGURA NADA AQUI, e isso mudou o projeto do script
+
+    Medido em 2026-08-05: **toda** carta do `itemInfo.lua` tem o mesmo
+    `identifiedResourceName` - `이름없는카드` ("carta sem nome"), a arte
+    generica de verso de carta. Nao e defeito da nossa tabela: o
+    `iteminfo_new.lub` do bRO tem o mesmo valor para todas.
+
+    Consequencia direta: `vc.estado` responde `ok` para as 1410, porque os
+    quatro arquivos que ele confere sao os mesmos quatro para todas. Arte nao
+    distingue carta boa de carta ruim - **o nome distingue**, e por isso este
+    script ganhou um segundo eixo.
+
+O SEGUNDO EIXO: o NOME QUE O JOGADOR LE NA LOJA
+
+    A lista da loja e desenhada com o `identifiedDisplayName` do
+    `itemInfo.lua` do NOSSO cliente - nao com o `Name` do `item_db`. Vale aqui
+    a mesma regra do `npcidentity.lub` e do `accessoryid.lub`: **manda o
+    arquivo que o cliente le.** Tres estados possiveis, e so o primeiro presta:
+
+      `pt`       963 - o bRO traduziu, e a fase PT-BR trouxe o nome
+      `ingles`   392 - o bRO nunca implementou; sobrou o do ROenglishRE
+      `coreano`   54 - existe no bRO, mas nem o bRO traduziu
+
+    Os dois criterios que separam ingles de portugues foram medidos um contra
+    o outro antes de escolher, e **concordam nas 1410 sem uma excecao**: das
+    392 cujo nome tem a palavra `Card`, nenhuma esta no `iteminfo_new.lub` do
+    bRO; e nenhuma das que estao no bRO deixa de ter nome em portugues. Como
+    concordam, o criterio gravado e a presenca no bRO - que e um fato sobre a
+    tabela, e nao um palpite sobre a forma da palavra.
+
+    O coreano tem de ser testado SEPARADAMENTE da presenca no bRO, porque as
+    54 estao no bRO. E o teste e por byte, com uma pegadinha: nome PT deste
+    cliente esta em cp1252 e **tem acento de proposito** (ver
+    `texto-de-jogo-e-cp1252`). "Byte alto = coreano" acusaria `Carta Lunático`.
+    O que vale e byte alto FORA do conjunto de acentos que a fase PT-BR grava.
+
 TRES ARMADILHAS DE CLASSIFICACAO, e nenhuma e obvia de fora
 
 1) `Type: Card` NAO quer dizer carta de monstro. Sao 5593 entradas, e **4048
@@ -45,6 +81,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import valida_visual as vv
 import varre_cosmeticos as vc
+import completa_iteminfo as ci
 
 _RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CARTAS_DB = [os.path.join(_RAIZ, 'rathena', 'db', 're', 'item_db_etc.yml'),
@@ -160,6 +197,73 @@ def le_cartas(caminhos):
     return fora
 
 
+# --------------------------------------------------- o nome que vai na tela
+
+# Os bytes altos que a fase PT-BR grava de proposito no `itemInfo.lua`, em
+# cp1252. Byte alto que NAO esteja aqui e byte-lider de hangul CP949, e o nome
+# saiu em coreano na tela do jogador.
+#
+# O `\xa0` (espaco nao separavel) nao e acento e mesmo assim entra: o bRO o usa
+# em pelo menos um nome de carta - `Carta\xa0Violinista` (4209). Sem ele, essa
+# carta seria acusada de coreana e sairia da loja por engano. Foi o unico falso
+# positivo que a medicao de 2026-08-05 encontrou, e vale como aviso: esta lista
+# e sobre BYTES do arquivo, nao sobre a ortografia do portugues.
+ACENTOS_PT = set(
+    u'áàâãéêíóôõúüçÁÀÂÃÉÊÍÓÔÕÚÜÇñÑºª°\xa0'.encode('cp1252'))
+
+# O `identifiedResourceName` que TODA carta do `itemInfo.lua` tem, em CP949:
+# 이름없는카드, "carta sem nome" - a arte generica de verso. Nao e usado para
+# decidir nada; esta aqui para que a afirmacao do cabecalho possa ser conferida
+# com uma linha, sem precisar reabrir a tabela:
+#
+#   python -c "import varre_cartas as v, valida_visual as vv; \
+#              i=vv.le_iteminfo(vv.ITEMINFO); \
+#              print set(i[c['id']] for c in v.le_cartas(v.CARTAS_DB) \
+#                        if c['id'] in i) == set([v.GENERICO])"
+GENERICO = '\xc0\xcc\xb8\xa7\xbe\xf8\xb4\xc2\xc4\xab\xb5\xe5'
+
+
+def le_nomes_da_tela(caminho):
+    u"""id -> `identifiedDisplayName` cru, do `itemInfo.lua` do NOSSO cliente.
+
+    Cru quer dizer bytes cp1252, sem decodificar: a pergunta que se faz deles e
+    justamente sobre os bytes (ver `em_coreano`).
+
+    O `re.match` ancora no comeco da linha, e e ele que evita a armadilha que o
+    LEIAME registra: `unidentifiedDisplayName` **contem**
+    `identifiedDisplayName`. Com `search` no lugar de `match`, todo item viria
+    com o nome do nao-identificado - que para carta e sempre "Carta".
+    """
+    res = {}
+    atual = None
+    for linha in open(caminho, 'rb'):
+        m = re.match(r'\s*\[(\d+)\]\s*=\s*\{', linha)
+        if m:
+            atual = int(m.group(1))
+            continue
+        m = re.match(r'\s*identifiedDisplayName\s*=\s*"(.*)"', linha)
+        if m and atual is not None and atual not in res:
+            res[atual] = m.group(1)
+    return res
+
+
+def em_coreano(bruto):
+    u"""O nome saiu em hangul na tela? Ver a nota de `ACENTOS_PT`."""
+    return any(ord(c) >= 0x80 and c not in ACENTOS_PT for c in bruto)
+
+
+def estado_do_nome(iid, nomes, bro_info):
+    u"""'pt', 'ingles', 'coreano' ou 'ausente' - o que o jogador le na loja."""
+    nome = nomes.get(iid)
+    if nome is None:
+        return 'ausente'
+    if em_coreano(nome):
+        return 'coreano'
+    if iid not in bro_info:
+        return 'ingles'
+    return 'pt'
+
+
 def chefes(aegis_de_carta):
     u"""(ids de MVP, ids de chefe menor), derivados de quem dropa.
 
@@ -216,14 +320,22 @@ def slot_de(carta):
 
 
 def varre():
-    u"""[(carta, loja, estado, motivo)] de toda carta COM slot.
+    u"""[(carta, loja, estado, motivo, nome)] de toda carta COM slot.
 
     `loja` ja e a loja final - MVP e chefe substituem o slot, nao acumulam.
     Carta sem slot (pedra de encanto) nao volta daqui: ver a nota (1).
+
+    Os dois ultimos campos sao os DOIS EIXOS: `estado` e sobre arte (o que o
+    cliente desenha) e `nome` e sobre texto (o que o jogador le). Sao
+    independentes, e hoje so o segundo separa alguma coisa - ver o cabecalho.
+
+    O `bro_info` sai do `vc.Fonte`, que ja o carrega para responder pela arte.
+    Ler o `iteminfo_new.lub` de novo aqui custaria alguns segundos por nada.
     """
     cartas = le_cartas(CARTAS_DB)
     mvp, chefe = chefes(dict((c['aegis'], c['id']) for c in cartas if c['aegis']))
     fonte = vc.Fonte()
+    nomes = le_nomes_da_tela(ci.ITEMINFO)
     fora = []
     for c in cartas:
         slot = slot_de(c)
@@ -232,8 +344,15 @@ def varre():
         loja = 'mvp' if c['id'] in mvp else \
                'chefe' if c['id'] in chefe else slot
         est, motivo = vc.estado(fonte, c)
-        fora.append((c, loja, est, motivo))
+        fora.append((c, loja, est, motivo,
+                     estado_do_nome(c['id'], nomes, fonte.bro_info)))
     return fora
+
+
+def na_loja(linhas):
+    u"""As que entram na loja: arte que o cliente desenha E nome em portugues."""
+    return [(c, loja) for c, loja, est, _m, nome in linhas
+            if est == 'ok' and nome == 'pt']
 
 
 def revenda(carta):
@@ -285,6 +404,52 @@ CABECALHO = u"""\
 //= `Right_Hand` é carta de arma; `Left_Hand` é carta de escudo.
 //=
 //= ------------------------------------------------------------
+//= SÓ ENTRA CARTA COM NOME EM PORTUGUÊS
+//=
+//= Das %(com_slot)d com encaixe, só %(nome_pt)d entram. O que decide é o
+//= nome que o cliente desenha na lista da loja:
+//=
+//=   em português  %(nome_pt)4d   entram
+//=   em inglês     %(nome_ingles)4d   fora: o bRO nunca as implementou
+//=   em coreano    %(nome_coreano)4d   fora: nem o bRO as traduziu
+//=   sem nome      %(nome_ausente)4d   fora: sem entrada no itemInfo.lua
+//=
+//= O nome sai do `identifiedDisplayName` do `itemInfo.lua` do
+//= NOSSO cliente, não do `Name` do `item_db` - vale aqui a mesma
+//= regra do `npcidentity.lub` e do `accessoryid.lub`: manda o
+//= arquivo que o cliente lê.
+//=
+//= Inglês e coreano se detectam por caminhos DIFERENTES, e um não
+//= serve para o outro. Inglês é ausência no `iteminfo_new.lub` do
+//= bRO. Coreano não pode ser isso, porque as %(nome_coreano)d coreanas ESTÃO
+//= no bRO - elas se detectam por byte, e aí mora a pegadinha: o
+//= nome PT deste cliente está em cp1252 e tem acento de propósito,
+//= então "byte alto = coreano" acusaria `Carta Lunático`. O que
+//= vale é byte alto FORA do conjunto de acentos da fase PT-BR.
+//=
+//= ------------------------------------------------------------
+//= O FILTRO DE ARTE NÃO SEGURA NADA AQUI
+//=
+//= Toda carta do `itemInfo.lua` tem o MESMO `resourceName`: a arte
+//= genérica de verso, cujo nome em coreano quer dizer "carta sem
+//= nome" (os bytes CP949 estão em GENERICO, no topo do gerador -
+//= aqui não cabem, este arquivo é gravado em cp1252). Não é
+//= defeito da nossa tabela: o `iteminfo_new.lub` do bRO traz o
+//= mesmo valor para todas. Então os quatro arquivos que o
+//= `varre_cosmeticos.estado` confere são os mesmos quatro para
+//= todas, e ele responde `ok` para as %(arte_ok)d que têm entrada no
+//= `itemInfo.lua` - as outras %(nome_ausente)d ele nem consegue avaliar, e é
+//= só isso que a coluna `sem-cura` do resumo mede.
+//=
+//= Daí a consequência que vale registrar: o
+//= `Resource File Loading fail` de `texture\\<ui>\\cardbmp\\...bmp`
+//= que aparece no chat ao abrir a arte de uma carta NÃO é sintoma
+//= de carta ruim. Esse arquivo não existe em GRF nenhum - nem no
+//= nosso, nem no do bRO -, então o erro sai para QUALQUER carta.
+//= Tirar as em inglês limpa a loja e não mexe nesse erro; é
+//= frente separada.
+//=
+//= ------------------------------------------------------------
 //= MVP E CHEFE NÃO EXISTEM NO item_db
 //=
 //= Saem do `mob_db`, por quem dropa. E o rAthena marca MVP de
@@ -332,20 +497,25 @@ CABECALHO = u"""\
 //= mercado_contemporaneo.txt, seção "A PLACA SOBRE A CABECA".
 //=
 //= ------------------------------------------------------------
-//= A LOJA DE ARMA NÃO CABE NUMA LINHA, e por isso ela é diferente
+//= O TETO DO `w4`, hoje adormecido - e por que fica no gerador
 //=
 //= O parser copia o quarto campo para um `char w4[2048]` e
 //= **trunca com aviso** se não couber (`npc.cpp`,
-//= `npc_parsesrcfile`). A lista de arma dá %(w4_arma)d caracteres.
+//= `npc_parsesrcfile`) - limite que não dá erro, dá loja com
+//= metade dos itens.
 //=
-//= O corpo de um `script`, esse não tem o limite: o
+//= Quando as lojas vendiam as 1410, a de arma dava 2804
+//= caracteres e estourava. **Depois do filtro de nome ela dá
+//= %(w4_arma)d, e nenhuma das nove passa do teto** - por isso não há
+//= nenhum `npcshopadditem` neste arquivo agora.
+//=
+//= A máquina fica: o corpo de um `script` não tem o limite (o
 //= `npc_parse_script` procura o `,{` no buffer original, não no
-//= w4. Então a linha do `shop` carrega o que cabe e o resto
-//= entra por `npcshopadditem` no `OnInit` da própria loja, que
-//= roda depois de todos os NPCs terem carregado.
-//=
-//= Se um dia outra loja passar do teto, o gerador faz o mesmo
-//= com ela sozinho - o corte é por tamanho, não por nome.
+//= w4), então a linha do `shop` carrega o que cabe e o resto
+//= entra por `npcshopadditem` no `OnInit`, que roda depois de
+//= todos os NPCs terem carregado. O corte é por TAMANHO, não por
+//= nome: se uma loja voltar a crescer, o gerador refaz isso
+//= sozinho, sem ninguém precisar lembrar.
 //=
 //= ------------------------------------------------------------
 //= A lista completa, com nome de cada carta, está em
@@ -364,10 +534,10 @@ CABECALHO = u"""\
 def gera(linhas):
     u"""Escreve o arquivo de NPC e o catalogo. Devolve (total, por loja)."""
     cartas = le_cartas(CARTAS_DB)
+    nomes = le_nomes_da_tela(ci.ITEMINFO)
     por_loja = {}
-    for c, loja, est, _m in linhas:
-        if est == 'ok':
-            por_loja.setdefault(loja, []).append(c)
+    for c, loja in na_loja(linhas):
+        por_loja.setdefault(loja, []).append(c)
 
     corpo = []
     for chave, x, y, nome, sprite, placa in LOJAS:
@@ -423,11 +593,17 @@ def gera(linhas):
     arma = sorted(por_loja.get('arma', []), key=lambda c: c['id'])
     w4_arma = len(VIEW_LOJA) + sum(len(',%d:1' % c['id']) for c in arma)
 
+    conta_nome = lambda alvo: len([l for l in linhas if l[4] == alvo])
+
     texto = (CABECALHO % {
         'total': total, 'tipo_card': len(cartas),
         'com_slot': len(cartas) - len(sem_slot), 'sem_slot': len(sem_slot),
         'sem_arte': sem_arte, 'w4_arma': w4_arma,
         'max_revenda': max(revenda(c) for c in cartas),
+        'nome_pt': conta_nome('pt'), 'nome_ingles': conta_nome('ingles'),
+        'nome_coreano': conta_nome('coreano'), 'nome_ausente': conta_nome('ausente'),
+        'fora': len(linhas) - total,
+        'arte_ok': len([l for l in linhas if l[2] == 'ok']),
     }) + u'\n' + u'\n'.join(corpo)
     with io.open(NPC, 'wb') as fp:
         fp.write(texto.replace(u'\n', u'\r\n').encode('cp1252'))
@@ -436,7 +612,25 @@ def gera(linhas):
            u'As %d cartas à venda a 1 zeny no quarteirão ao sul do Mercado de'
            % total,
            u'Visuais, em Prontera. Gerado por `ferramentas/varre_cartas.py`;',
-           u'a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.', u'']
+           u'a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.', u'',
+           u'**Só entra carta com nome em português.** Das %d que têm encaixe,'
+           % len(linhas),
+           u'%d ficaram de fora, e a soma fecha assim:'
+           % (len(linhas) - total),
+           u'',
+           u'| motivo | quantas |',
+           u'|---|---|',
+           u'| nunca saiu do inglês — o bRO não a implementou | %d |'
+           % conta_nome('ingles'),
+           u'| aparece em coreano — nem o bRO a traduziu | %d |'
+           % conta_nome('coreano'),
+           u'| sem entrada nenhuma no `itemInfo.lua` — sai sem nome | %d |'
+           % conta_nome('ausente'),
+           u'',
+           u'O nome abaixo é o que o cliente **desenha na loja** — sai do',
+           u'`identifiedDisplayName` do `itemInfo.lua`, não do `Name` do',
+           u'`item_db`. Os dois divergem em alguns casos, e quem está na tela',
+           u'é este.', u'']
     for chave, x, y, nome, sprite, _placa in LOJAS:
         do_loja = sorted(por_loja.get(chave, []), key=lambda c: c['id'])
         cat.append(u'## %s (%d cartas)' % (nome, len(do_loja)))
@@ -446,8 +640,9 @@ def gera(linhas):
         cat.append(u'| id | carta |')
         cat.append(u'|---|---|')
         for c in do_loja:
-            cat.append(u'| %d | %s |' % (c['id'],
-                                         c['nome'].decode('cp1252', 'replace')))
+            cat.append(u'| %d | %s |'
+                       % (c['id'],
+                          nomes[c['id']].decode('cp1252', 'replace')))
         cat.append(u'')
     with io.open(CATALOGO, 'w', encoding='utf-8', newline='\n') as fp:
         fp.write(u'\n'.join(cat))
@@ -460,15 +655,22 @@ def main():
 
     if '--ids' in args:
         alvo = args[args.index('--ids') + 1]
-        print ','.join(str(c['id']) for c, _l, e, _m in linhas if e == alvo)
+        print ','.join(str(c['id']) for c, _l, e, _m, n in linhas
+                       if alvo in (e, n))
         return 0
 
     if '--listar' in args:
         alvo = args[args.index('--listar') + 1]
-        for c, loja, est, motivo in linhas:
-            if est == alvo or loja == alvo:
-                print '%7d  %-10s %-9s %-38s %s' % (
-                    c['id'], loja, est, c['nome'][:38], motivo)
+        # A coluna de nome e a da TELA, nao a do `item_db`. Mostrar a do
+        # item_db aqui enganava: uma carta classificada `coreano` aparecia com
+        # nome ingles, que e o que o servidor guarda para ela - e o eixo sendo
+        # relatado e justamente o outro.
+        da_tela = le_nomes_da_tela(ci.ITEMINFO)
+        for c, loja, est, motivo, nome in linhas:
+            if alvo in (est, loja, nome):
+                print '%7d  %-10s %-9s %-8s %-38s %s' % (
+                    c['id'], loja, est, nome,
+                    da_tela.get(c['id'], '(sem entrada)')[:38], motivo)
         return 0
 
     if '--gerar' in args:
@@ -480,11 +682,15 @@ def main():
         print '  %-20s %4d' % ('TOTAL', total)
         return 0
 
+    # Os DOIS eixos, um em cada tabela. Separados de proposito: juntar arte e
+    # nome numa coluna so esconderia justamente o que a medicao de 2026-08-05
+    # descobriu - que o eixo da arte nao separa nada nas cartas.
     print 'cartas com slot de equipamento: %d' % len(linhas)
     print
+    print '  ARTE (o que o cliente desenha)'
     print '  %-10s %7s %8s %9s' % ('loja', 'ok', 'curavel', 'sem-cura')
     print '  ' + '-' * 38
-    for chave, _x, _y, _n, _s in LOJAS:
+    for chave, _x, _y, _n, _s, _p in LOJAS:
         da_loja = [l for l in linhas if l[1] == chave]
         conta = lambda e: len([l for l in da_loja if l[2] == e])
         print '  %-10s %7d %8d %9d' % (chave, conta('ok'), conta('curavel'),
@@ -493,6 +699,25 @@ def main():
     conta = lambda e: len([l for l in linhas if l[2] == e])
     print '  %-10s %7d %8d %9d' % ('total', conta('ok'), conta('curavel'),
                                    conta('sem-cura'))
+    print
+    print '  NOME (o que o jogador le na loja)'
+    print '  %-10s %7s %8s %9s %8s %8s' % ('loja', 'pt', 'ingles', 'coreano',
+                                           'ausente', 'na loja')
+    print '  ' + '-' * 56
+    entram = dict((chave, 0) for chave, _x, _y, _n, _s, _p in LOJAS)
+    for _c, loja in na_loja(linhas):
+        entram[loja] += 1
+    for chave, _x, _y, _n, _s, _p in LOJAS:
+        da_loja = [l for l in linhas if l[1] == chave]
+        conta = lambda e: len([l for l in da_loja if l[4] == e])
+        print '  %-10s %7d %8d %9d %8d %8d' % (
+            chave, conta('pt'), conta('ingles'), conta('coreano'),
+            conta('ausente'), entram[chave])
+    print '  ' + '-' * 56
+    conta = lambda e: len([l for l in linhas if l[4] == e])
+    print '  %-10s %7d %8d %9d %8d %8d' % (
+        'total', conta('pt'), conta('ingles'), conta('coreano'),
+        conta('ausente'), sum(entram.values()))
     return 0
 
 

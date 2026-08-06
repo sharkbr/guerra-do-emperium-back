@@ -1560,8 +1560,9 @@ outros mapas com a mesma forma (`Flags:`, `Trade:`), e sem lista fechada um
 ## `varre_cartas.py` — classifica as cartas e monta as nove lojas
 
 ```
-python varre_cartas.py                    # resumo por loja
+python varre_cartas.py                    # resumo: os DOIS eixos, arte e nome
 python varre_cartas.py --listar curavel   # o que o bRO resolve
+python varre_cartas.py --listar ingles    # ou coreano, pt, ausente
 python varre_cartas.py --listar mvp       # ou qualquer loja, pelo nome
 python varre_cartas.py --ids sem-cura
 python varre_cartas.py --gerar            # escreve o NPC e o catálogo
@@ -1572,6 +1573,59 @@ Cartas**. Reaproveita dela a parte que decide se o cliente desenha o item — a
 pergunta de arte é a mesma. **O que ela tem de próprio é a classificação**, e é
 aí que estão as três armadilhas.
 
+### O eixo que decide a loja é o NOME, não a arte — e isso foi medido
+
+A primeira versão filtrava só por arte e vendia **1410** cartas. Em jogo, a
+lista da loja saía com nome em coreano e em inglês no meio das traduzidas.
+
+A causa: **toda** carta do `itemInfo.lua` tem o mesmo `identifiedResourceName`
+— a arte genérica de verso de carta, cujo nome em coreano quer dizer "carta sem
+nome". Não é defeito da nossa tabela; o `iteminfo_new.lub` do bRO traz o mesmo
+valor para todas. Logo os quatro arquivos que o `varre_cosmeticos.estado`
+confere são **os mesmos quatro para todas**, e ele responde `ok` para as 1410
+que têm entrada. **Arte não separa nada aqui.** O que separa é o nome:
+
+| nome na lista da loja | quantas | entra? |
+|---|---|---|
+| português | 964 | sim |
+| inglês — o bRO nunca implementou | 392 | não |
+| coreano — nem o bRO traduziu | 54 | não |
+| sem entrada no `itemInfo.lua` | 135 | não |
+
+**A fonte do nome é o `itemInfo.lua` do cliente, não o `Name` do `item_db`.**
+Mesma regra do `npcidentity.lub` para view id: manda o arquivo que o cliente lê.
+Os dois divergem — 4209 é `Violy Card` no servidor e `Carta Violinista` na tela.
+
+#### Inglês e coreano se detectam por caminhos diferentes, e um não serve para o outro
+
+**Inglês** é ausência no `iteminfo_new.lub` do bRO. Os dois critérios possíveis
+foram medidos um contra o outro antes de escolher, e **concordam nas 1545 sem
+uma exceção**: das 392 cujo nome tem a palavra `Card`, nenhuma está no bRO; e
+nenhuma das que estão no bRO deixa de ter nome em português. Ficou o primeiro,
+que é fato sobre a tabela e não palpite sobre a forma da palavra.
+
+**Coreano não pode ser isso**, porque as 54 coreanas *estão* no bRO — o bRO
+simplesmente nunca as traduziu. Elas se detectam por byte, e aí mora a
+pegadinha: o nome PT deste cliente está em cp1252 e **tem acento de propósito**.
+`if byte >= 0x80: é coreano` acusaria `Carta Lunático` e tiraria da loja meia
+tradução. O teste certo é byte alto **fora** do conjunto de acentos da fase
+PT-BR — e esse conjunto precisa do `\xa0` (espaço não separável), que o bRO usa
+em `Carta\xa0Violinista`. Foi o único falso positivo da medição.
+
+#### O `Resource File Loading fail` das cartas não é sintoma de carta ruim
+
+Ao abrir a arte de uma carta o chat mostra
+`Resource File Loading fail` / `texture\<ui>\cardbmp\....bmp`. Como o
+`resourceName` é o mesmo para todas, esse arquivo é o mesmo para todas — e ele
+**não existe em GRF nenhum**, nem no nosso nem no do bRO. Ou seja, o erro sai
+para **qualquer** carta, inclusive as traduzidas.
+
+Limpar a loja não mexe nisso, e foi por pouco que não se concluiu o contrário:
+o sintoma apareceu junto das cartas em inglês, e a hipótese natural era que
+fosse delas. É frente separada — a pasta `cardbmp` dos dois GRFs guarda 985 e
+948 imagens de carta com nome *próprio*, que nenhuma entrada de `itemInfo`
+aponta.
+
 ### 1. `Type: Card` não quer dizer carta de monstro
 
 São **5593** entradas, e **4048 delas não têm `Locations:` nenhum**: são as
@@ -1580,7 +1634,8 @@ nenhum — iriam sujar o relatório com "sem cura" que não é problema de arte,
 sujar a loja com item que não encaixa em equipamento nenhum.
 
 **O filtro é ter slot, não ser do tipo.** Sobram 1545 cartas de verdade, das
-quais 1410 desenham.
+quais 1410 desenham — e dessas, 964 chegam à loja, pelo eixo do nome logo
+abaixo.
 
 ### 2. Para carta, `Locations:` significa outra coisa
 
@@ -1607,19 +1662,21 @@ menor: Ghostring, Angeling, Mysteltainn. Dá 147 e 82.
 de MVP. A alternativa era a mesma carta em duas lojas, que para o jogador parece
 erro de catálogo.
 
-### A loja de arma não cabe numa linha
+### O teto do `w4` — hoje adormecido, e por isso mesmo vale registrar
 
 O parser copia o quarto campo para um `char w4[2048]` e **trunca com aviso** em
 vez de recusar (`npc.cpp`, `npc_parsesrcfile`) — o tipo de limite que não dá
-erro, dá loja com metade dos itens. A lista de arma dá **2804** caracteres.
+erro, dá loja com metade dos itens.
 
-O corpo de um `script`, esse não tem o limite: o `npc_parse_script` procura o
-`,{` no **buffer original**, não no `w4`. Então a loja carrega as 255 que cabem
-na própria linha e as outras 104 entram por `npcshopadditem` num `OnInit`, que
-roda depois de todos os NPCs terem carregado — quando a loja já existe.
+Com as 1410 a lista de arma dava **2804** caracteres e estourava: 255 iam na
+linha e 104 entravam por `npcshopadditem` num `OnInit`. **Depois do filtro de
+nome ela dá 1682, e nenhuma das nove passa do teto** — o arquivo gerado hoje não
+tem um `npcshopadditem` sequer.
 
-O corte é **por tamanho, não por nome**: se um dia outra loja passar do teto, o
-gerador faz o mesmo com ela sozinho.
+A máquina fica no gerador. O corpo de um `script` não tem o limite (o
+`npc_parse_script` procura o `,{` no **buffer original**, não no `w4`), e o
+corte é **por tamanho, não por nome**: se uma loja voltar a crescer, o gerador
+refaz isso sozinho, sem ninguém precisar lembrar.
 
 ### Preço
 
