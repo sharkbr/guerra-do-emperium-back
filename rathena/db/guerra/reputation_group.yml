@@ -1,0 +1,29 @@
+# Guerra do Emperium - grupos de reputacao proprios
+#
+# ATENCAO: O MAP-SERVER NAO LE ESTE ARQUIVO.
+#
+# O `reputationgroup_db.load()` esta dentro de um `#ifdef MAP_GENERATOR`
+# (src/map/pc.cpp, do_init_pc) - so o gerador de arquivos de cliente carrega
+# grupo, o servidor de jogo nunca. Quem monta o combo do alto do modal e o
+# CLIENTE, por data\contentdata\repute\reputegroupdata.bson, gravado por
+# ferramentas/traduz_reputacao.py.
+#
+# Entao por que existe: para o dia em que alguem rodar o gerador, e para que
+# quem ler o `.Grupo = 4` do npc/guerra/honra_de_combate.txt ache de onde saiu
+# o 4. Editar isto sozinho nao muda nada em jogo.
+#
+# Alcancado por UMA linha `- Path:` no `Footer: Imports:` do
+# db/re/reputation_group.yml, como o db/guerra/reputation.yml ao lado.
+
+Header:
+  Type: REPUTATION_GROUP_DB
+  Version: 1
+
+Body:
+  # Id 4 porque o rAthena ja usa 1, 2 e 3
+  # (db/re/generator/reputation_group.yml).
+  - Id: 4
+    ScriptName: ArenaPrt
+    Name: Arena de Prontera
+    ReputeList:
+      - 5

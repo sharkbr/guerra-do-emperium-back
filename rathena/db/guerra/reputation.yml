@@ -1,0 +1,42 @@
+# Guerra do Emperium - reputacoes proprias
+#
+# Alcancado por UMA linha `- Path:` no `Footer: Imports:` do
+# db/re/reputation.yml - a unica marca que deixamos naquele arquivo do rAthena.
+# Mesmo arranjo do db/guerra/item_db.yml.
+#
+# NAO USAR db/import/reputation.yml para isto: o .gitignore do rAthena ignora
+# /db/import inteiro, entao a entrada sumiria num clone limpo - e o NPC, que
+# e versionado, continuaria anunciando morte sem nunca pontuar. Falha calada,
+# que e o pior tipo.
+#
+# PRECISA REINICIAR O MAP-SERVER para pegar. Nem @reloadscript nem @reloaddb
+# servem: o `reputation_db.load()` so roda no `do_init_pc` (src/map/pc.cpp),
+# na inicializacao. Com o Id ausente, o set_reputation_points falha com
+# "Unknown reputation type".
+
+Header:
+  Type: REPUTATION_DB
+  Version: 1
+
+Body:
+  # Honra de Combate - a pontuacao de PvP da Arena de Combate.
+  # O outro lado dela: npc/guerra/honra_de_combate.txt (as regras) e
+  # data\contentdata\repute\reputeinfodata.bson no cliente (o NOME que o
+  # jogador le, gravado por ferramentas/traduz_reputacao.py). Os tres
+  # precisam deste mesmo Id.
+  #
+  # O `#` do Variable e o que faz a pontuacao valer PARA A CONTA e nao para o
+  # personagem: pc_setreg2 (src/map/pc.cpp) despacha pelo prefixo, e `#` cai
+  # em pc_setaccountreg, que grava em acc_reg_num. Sem o `#` iria para
+  # char_reg_num e cada personagem teria a sua conta separada.
+  #
+  # Minimum: -10 e o mesmo piso que o NPC aplica, aqui como rede de seguranca
+  # - o set_reputation_points corta por este valor mesmo que o script erre.
+  #
+  # O `Name:` NAO e o que o jogador ve: e rotulo interno do rAthena e nunca
+  # chega ao cliente. O pacote ZC_REPUTE_INFO so carrega `type` e `points`.
+  - Id: 5
+    Name: Honra de Combate
+    Variable: "#RepPointsPvP"
+    Minimum: -10
+    Maximum: 3000

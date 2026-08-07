@@ -59,3 +59,7 @@ Footer:
   Imports:
   - Path: db/re/generator/reputation.yml
     Generator: true
+  # Guerra do Emperium: unica linha nossa neste arquivo do rAthena. As
+  # reputacoes proprias ficam em db/guerra/reputation.yml - nao em
+  # db/import/, que o .gitignore do rAthena ignora.
+  - Path: db/guerra/reputation.yml

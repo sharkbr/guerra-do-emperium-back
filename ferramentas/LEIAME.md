@@ -909,6 +909,71 @@ Descomentar replanta. Não é um TODO pendente, é registro — e a ferramenta f
 porque é genérica e porque o que ela ensinou sobre `.rsw` vale para o próximo
 adereço.
 
+## `traduz_reputacao.py` — põe em português o modal Reputation Status
+
+```
+python traduz_reputacao.py              # aplica
+python traduz_reputacao.py --verificar  # só relata, não grava
+python traduz_reputacao.py --reverter   # apaga o override
+```
+
+**O texto do modal não vem do servidor.** O `ZC_REPUTE_INFO` carrega só `type` e
+`points` — dois inteiros por linha. O `Name:` do `db/re/reputation.yml` é rótulo
+interno do rAthena e nunca sai da máquina. Quem nomeia as linhas é o cliente,
+por dois BSON dentro do `data.grf`:
+
+```
+data\contentdata\repute\reputeinfodata.bson    as reputações (chave = o `type`)
+data\contentdata\repute\reputegroupdata.bson   os grupos do combo
+```
+
+**Os nomes são ASCII de propósito.** O BSON guarda UTF-8, mas o cliente converte
+para **CP949** antes de desenhar. A prova está no próprio print: 오크 부락 chega
+na tela como `¿ÀÅ© ºÎ¶ô`, que são exatamente os bytes CP949 dessa palavra lidos
+com a fonte cp1252 do `AlwaysAscii`. A codepage ANSI desta máquina é 1252 — o 949
+é fixo do cliente. E CP949 não tem `á`, `ã`, `ç` nem `ó`: acento aqui não daria
+erro em lugar nenhum, daria nome sujo na tela. O `_so_ascii` aborta em vez de
+deixar passar.
+
+**Ele também alinha cliente e servidor.** O rAthena declara quatro reputações e
+três grupos; o GRF de 2021-11-03 só conhece três e dois — falta Isgard nos dois.
+Sem a entrada, o servidor manda `type=4` e o cliente não tem o que desenhar.
+Isgard entra como `VISIBLE_EXIST`, então só aparece depois que houver ponto.
+
+**E é por aqui que entra reputação NOSSA.** A quinta entrada, "Honra de Combate",
+é a pontuação de PvP da arena (`npc/guerra/honra_de_combate.txt`). São três peças
+que precisam do mesmo `Id: 5` — a tabela deste script, o
+`db/guerra/reputation.yml` e o NPC —, e mexer numa sem as outras quebra calado.
+
+Ela é `VISIBLE_TRUE` e não `VISIBLE_EXIST` porque a pontuação dela fica
+**negativa**: o print de 2026-08-06 provou que `VISIBLE_EXIST` some com o valor
+zerado, e o comentário coreano do arquivo diz que ele mostra "quando o valor é 0
+ou mais". Com o jogador em −3, a linha sumiria.
+
+Só o **servidor de jogo não lê grupo nenhum**: o `reputationgroup_db.load()` está
+dentro de um `#ifdef MAP_GENERATOR` (`src/map/pc.cpp`). O combo do alto do modal é
+inteiramente do cliente — ou seja, deste script.
+
+Grava em `cliente\data\contentdata\repute\` e vence o GRF pelo `DataFolderFirst`.
+A base é sempre relida do GRF, nunca do override — mesma regra do
+`estende_accessoryid.py`. Dois round-trips antes de gravar: o BSON do GRF tem que
+voltar idêntico pelo `bson.py`, e o gerado tem que reler igual. BSON tem tamanho
+embutido — campo mal medido não dá erro, dá arquivo que o cliente descarta calado.
+
+O cliente só lê isto na **inicialização**: fechar e reabrir.
+
+## `bson.py` — BSON mínimo, com escrita byte a byte fiel
+
+Só os quatro tipos que os `contentdata\*.bson` usam: `0x02` string UTF-8, `0x03`
+documento, `0x04` array, `0x10` int32. Qualquer outro **levanta exceção** em vez
+de ser pulado — tipo novo tem que parar a ferramenta, não virar dado perdido na
+regravação.
+
+Documento é uma **lista de pares** (`Doc`), não um dicionário: a ordem do arquivo
+é preservada, e é isso que permite o round-trip byte a byte que prova que o
+escritor está certo. Não há `bson` neste Python 2.7, e o pymongo traria tipos e
+ordenação que estes arquivos não têm.
+
 ## `grf.py` — extrator de GRF 0x200
 
 ```

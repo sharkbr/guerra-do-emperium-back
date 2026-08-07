@@ -42,14 +42,42 @@
 //= NEGATIVO em mapa apelidado. Quando o .rsw nao aparecer, ler o
 //= resnametable.txt ANTES de concluir que o mapa nao existe.
 //===== A volta ==============================================
-//= Nao ha NPC de volta la dentro, e o mapa e `noteleport` - Asa
-//= de Mosca e teleporte nao tiram ninguem de la. Quem entra sai
-//= DESLOGANDO: pvp_n_1-5 e `nosave SavePoint`, entao o login
-//= seguinte cai no ponto de retorno e nao na arena. Ninguem fica
+//= QUEM MORRE VOLTA PARA PRONTERA 155,183, a mesma celula em que
+//= o Warper desembarca (npc/custom/warper.txt, rotulo `T1`) -
+//= quatro celulas da porta da arena, que fica em 157,187.
+//=
+//= Isso e script nosso, no OnPCDieEvent abaixo, e NAO mapflag: o
+//= `nosave` nao alcanca morte. Quem devolve o morto e o
+//= `pc_respawn` (src/map/pc.cpp), que vai direto para o
+//= `save_point` do PERSONAGEM sem olhar mapflag nenhum. Existe um
+//= `pc_setpos_savepoint` que respeita o nosave, mas ele so e usado
+//= ao sair de guilda, de grupo e por comando de GM - nunca na
+//= morte. Foi conferido antes de escrever isto.
+//=
+//= Quem NAO morre continua saindo deslogando: o mapa e
+//= `noteleport`, Asa de Mosca nao funciona, e `nosave SavePoint`
+//= faz o login seguinte cair no ponto de retorno. Ninguem fica
 //= preso.
 //=
 //= Se um dia se quiser saida por NPC, ela e um SEGUNDO NPC dentro
 //= do mapa com `warp "prontera",156,187` - nao mexer aqui.
+//===== Por que pvp_nocalcrank ===============================
+//= O rAthena tem um contador de PvP proprio: ao entrar num mapa
+//= `pvp` o jogador recebe 5 pontos (src/map/map.cpp) e cada morte
+//= tira 5. Quando fica NEGATIVO - ou seja, ja na SEGUNDA morte -
+//= o servidor arma um timer de 1 segundo e manda o jogador para o
+//= `save_point` sozinho (src/map/pc.cpp, pc_dead).
+//=
+//= Esse timer corria contra o nosso: dois de um segundo cada,
+//= disputando para onde o morto vai, e a partir da segunda morte
+//= o jogador cairia no ponto de retorno em vez de Prontera. O
+//= `pvp_nocalcrank` desliga o bloco inteiro - contador, expulsao
+//= automatica e o rank embutido do cliente -, e o nosso passa a
+//= ser o unico a decidir.
+//=
+//= O rank embutido nao faz falta: o placar de verdade e o do
+//= npc/guerra/honra_de_combate.txt, que grava em banco e aparece
+//= na placa de prontera 163,187.
 //===== O drop na morte ======================================
 //= O rAthena entrega pvp_n_1-5 com `pvp_nightmaredrop
 //= random,equip,300` (npc/mapflag/nightmare.txt): 3% de chance -
@@ -119,6 +147,12 @@ prontera,157,187,4	script	Arena de Combate	966,{
 	end;
 
 OnInit:
+	.Mapa$ = "pvp_n_1-5";   // a arena
+	.Volta$ = "prontera";   // e para onde o morto volta
+	.VoltaX = 155;
+	.VoltaY = 183;
+	.Espera = 1000;         // ms entre a morte e o teleporte
+
 	// "Smile Assistance#prt" e nome E exname ao mesmo tempo: a linha
 	// do rAthena (npc/quests/mrsmile.txt) e
 	//   prontera,157,187,4  duplicate(SmileHelper)  Smile Assistance#prt  92
@@ -136,8 +170,43 @@ OnInit:
 	}
 	disablenpc "Smile Assistance#prt";
 	end;
+
+OnPCDieEvent:
+	// Dispara em TODA morte do servidor, inclusive por monstro em
+	// qualquer mapa - o teste de mapa e o que mantem isto barato
+	// fora da arena.
+	if (strcharinfo(3) != .Mapa$)
+		end;
+
+	// O `sleep2` deixa a tela mostrar a morte antes do teleporte.
+	// Sem ele o jogador e arrancado no mesmo quadro em que cai e nao
+	// entende o que aconteceu. Um segundo e o mesmo intervalo que o
+	// proprio rAthena usa no pc_respawn_timer.
+	.@cid = getcharid(0);
+	sleep2 .Espera;
+
+	// Deslogou durante a espera, ou clicou "Reiniciar" e ja saiu por
+	// conta propria. Nos dois casos nao ha o que teleportar, e fazer
+	// mesmo assim arrancaria o jogador de onde ele ja esta vivo.
+	if (!playerattached())
+		end;
+	if (strcharinfo(3) != .Mapa$)
+		end;
+
+	// `recovery` levanta E cura, que e o que o respawn normal faz (o
+	// pc_respawn chama pc_setrestartvalue). Levantar ANTES de
+	// teleportar, para o cliente nao receber um cadaver andando.
+	recovery 0, .@cid, 1;
+	warp .Volta$, .VoltaX, .VoltaY;
+	end;
 }
 
 // Desliga o drop de equipamento na morte. Explicado no cabecalho,
 // secao "O drop na morte". Tirar esta linha devolve os 3% do rAthena.
 pvp_n_1-5	mapflag	pvp_nightmaredrop	off
+
+// Desliga o contador de PvP embutido do rAthena. Explicado no
+// cabecalho, secao "Por que pvp_nocalcrank". Sem esta linha o
+// jogador e expulso para o ponto de retorno na segunda morte,
+// disputando com o OnPCDieEvent acima.
+pvp_n_1-5	mapflag	pvp_nocalcrank

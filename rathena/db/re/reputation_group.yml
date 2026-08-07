@@ -36,3 +36,7 @@ Footer:
   Imports:
     - Path: db/re/generator/reputation_group.yml
       Generator: true
+    # Guerra do Emperium: unica linha nossa neste arquivo do rAthena. Ver o
+    # cabecalho de db/guerra/reputation_group.yml - o map-server nao carrega
+    # grupo nenhum, este import so vale para o gerador.
+    - Path: db/guerra/reputation_group.yml

@@ -1,0 +1,224 @@
+//===== Guerra do Emperium ===================================
+//= Honra de Combate - a reputação de PvP da Arena de Combate
+//===== Onde =================================================
+//= prontera 163,187 - a placa do placar, três células a leste
+//= do Mestre de UP (160,187), na mesma fileira do porteiro do
+//= treinamento (154) e da porta da arena (157).
+//===== Descrição ============================================
+//= Matar na arena dá um ponto, morrer tira um. A conta aparece
+//= no modal de reputação do cliente (Honra de Combate) e o
+//= ranking sai nesta placa.
+//=
+//= Pedido em 2026-08-07.
+//===== Por que o ranking NÃO está no modal ==================
+//= Porque o modal não consegue, e não adianta insistir. O
+//= pacote ZC_REPUTE_INFO (src/map/clif.cpp) carrega só `type` e
+//= `points` - dois inteiros por linha, nenhum campo de texto. O
+//= nome de cada linha vem de um arquivo do CLIENTE
+//= (data\contentdata\repute\reputeinfodata.bson), igual para
+//= todo mundo e lido só na inicialização.
+//=
+//= Ou seja: o modal responde "quanto EU tenho em cada
+//= categoria". Um ranking é a matriz transposta - "quem tem
+//= quanto" -, e para o servidor mandar o nome "Fulano" não há
+//= por onde. Por isso a placa existe.
+//===== Onde a pontuação mora ================================
+//= EM DOIS LUGARES, de propósito, e a tabela é quem manda:
+//=
+//=   guerra_pvp_placar  (SQL)  - a verdade. Escrita no instante
+//=       da morte, então a placa nunca mostra número velho.
+//=   #RepPointsPvP      (conta) - a cópia que o modal lê.
+//=
+//= A duplicação não é descuido, é o preço de ter as duas
+//= coisas. A variável de conta só chega ao banco quando o
+//= rAthena salva o personagem - autosave de 300s ou logout -, e
+//= `chrif_save` NÃO é chamado ao trocar de mapa dentro do mesmo
+//= map-server: sair da arena andando ou de Asa de Borboleta não
+//= salva. Um placar lido de acc_reg_num mostraria até 5 minutos
+//= de atraso.
+//=
+//= O OnPCLoginEvent resincroniza a variável a partir da tabela.
+//= É isso que impede as duas de desencontrarem se o map-server
+//= cair entre um autosave e outro.
+//=
+//= O `#` do Variable (db/guerra/reputation.yml) é o que faz a
+//= pontuação valer PARA A CONTA: pc_setreg2 despacha pelo
+//= prefixo, e `#` cai em pc_setaccountreg.
+//===== Por que set_reputation_points e não `#RepPointsPvP = ` =
+//= Porque o buildin chama `clif_reputation_type` no fim
+//= (src/map/script.cpp), que empurra a linha para o cliente na
+//= hora. Atribuir a variável na mão atualizaria o banco e
+//= deixaria a tela velha até o jogador trocar de mapa - a lista
+//= completa só é enviada no clif_parse_LoadEndAck.
+//===== As regras ============================================
+//= 1) Só na arena (pvp_n_1-5). Fora dela o evento sai na
+//=    primeira linha.
+//= 2) Matador e morto precisam ser nível .Nivel. Fecha a porta
+//=    para personagem descartável criado só para dar pontos.
+//= 3) Não pontua contra quem já está no piso (.Piso). Sem isso
+//=    um jogador pode ser caçado até o fundo da escala.
+//= 4) Anti-conluio: o saldo de cada PAR DE CONTAS no dia fica
+//=    preso em ±.Limite. Revezamento honesto mantém o saldo
+//=    perto de zero e pontua o dia inteiro; fazenda de um lado
+//=    só trava no terceiro golpe. Ver guerra_arena_pvp.sql.
+//=
+//= O ANÚNCIO SAI SEMPRE, mesmo quando a morte não pontua. Foi
+//= pedido assim: o broadcast conta o que aconteceu, não o que
+//= valeu ponto.
+//===== Notas ================================================
+//= `killedrid` é ACCOUNT ID: para jogador, o id de bloco é o
+//= account_id (src/map/pc.cpp, `sd->id = account_id`).
+//=
+//= OnPCKillEvent só dispara em morte causada por JOGADOR
+//= (src/map/pc.cpp confere `src->type == BL_PC` e resolve
+//= pet/homúnculo/mercenário para o dono). Por isso não há teste
+//= de "morreu para monstro" aqui - o OnPCDieEvent precisaria
+//= dele, este não.
+//=
+//= O sprite 20269 (JT_GUILD_SKILL_FLAG) existe neste cliente:
+//= está no npcidentity.lub do GRF e a arte
+//= (guild_skill_flag.spr/.act) também. A faixa 20xxx vai até
+//= 21587 - o teto de 10508 da minha nota antiga é só da faixa
+//= 10xxx.
+//=
+//= As sub-rotinas usam `.@sp_` nos nomes porque `callsub`
+//= COMPARTILHA o escopo `.@` com quem chamou (ao contrário de
+//= `callfunc`). Sem o prefixo, a primeira chamada apagaria as
+//= variáveis que a segunda precisa.
+//=
+//= Os textos vão COM ACENTO, gravados em Latin-1 (ISO-8859-1).
+//= Ver PENDENCIAS.md, seção "Acentuação no diálogo".
+//=
+//= ATENÇÃO ao editar: por causa do acento, ferramenta que
+//= assume UTF-8 troca cada letra acentuada por '?' sem avisar.
+//= Editar com script que grave em cp1252, como o resto de
+//= npc/guerra/.
+//=
+//= Mudança neste arquivo pega com @reloadscript. A tabela
+//= precisa existir antes: ver sql-files/guerra_arena_pvp.sql.
+//============================================================
+
+prontera,163,187,4	script	Placar da Arena	20269,{
+	mes "[Placar da Arena]";
+	mes "Honra de Combate - a conta de quem briga na arena de Prontera.";
+	next;
+
+	.@n = query_sql("SELECT nome, pontos FROM guerra_pvp_placar WHERE pontos <> 0 ORDER BY pontos DESC, nome ASC LIMIT " + .Mostra, .@nome$, .@pontos);
+	if (!.@n) {
+		mes "[Placar da Arena]";
+		mes "A placa está limpa. Ninguém pontuou ainda.";
+		mes " ";
+		mes "A arena fica três células a oeste daqui.";
+		close;
+	}
+
+	mes "[Placar da Arena]";
+	for (.@i = 0; .@i < .@n; .@i++)
+		mes "^777777" + (.@i + 1) + ".^000000 " + .@nome$[.@i] + "  ^0000FF" + .@pontos[.@i] + "^000000";
+	next;
+
+	mes "[Placar da Arena]";
+	mes "A sua conta: ^0000FF" + #RepPointsPvP + "^000000 ponto(s).";
+	next;
+
+	if (select("Abrir o meu status de reputação:Sair") == 2) {
+		mes "[Placar da Arena]";
+		mes "A placa continua aqui.";
+		close;
+	}
+	close2;
+	reputationui .Grupo;
+	end;
+
+OnInit:
+	.Mapa$ = "pvp_n_1-5";   // a arena, e só ela
+	.Rep = 5;               // o Id: de db/guerra/reputation.yml
+	.Grupo = 4;             // o Id: de db/guerra/reputation_group.yml
+	.Nivel = 200;           // nível de base exigido dos DOIS lados
+	.Piso = -10;            // não pontua contra quem já está aqui
+	.Limite = 2;            // saldo máximo por par de contas, por dia
+	.Mostra = 20;           // linhas da placa
+	end;
+
+OnPCKillEvent:
+	if (strcharinfo(3) != .Mapa$)
+		end;
+
+	.@matador = getcharid(3);
+	.@morto = killedrid;
+	if (.@morto == 0 || .@morto == .@matador)
+		end;
+
+	.@cid_matador = getcharid(0);
+	.@nome_matador$ = strcharinfo(0);
+	.@nivel_matador = BaseLevel;
+
+	// Um pulo até o morto para ler o que só se lê estando anexado: nível,
+	// pontuação e nome. Se ele já saiu do ar entre a morte e este evento,
+	// não há o que pontuar nem o que anunciar.
+	if (!attachrid(.@morto))
+		end;
+	.@cid_morto = getcharid(0);
+	.@nome_morto$ = strcharinfo(0);
+	.@nivel_morto = BaseLevel;
+	.@pontos_morto = #RepPointsPvP;
+	attachrid(.@matador);
+
+	// Sai antes das travas: anúncio é relato, não prêmio.
+	announce .@nome_matador$ + " matou " + .@nome_morto$ + " na Arena de Combate de Prontera", bc_all;
+
+	if (.@nivel_matador < .Nivel || .@nivel_morto < .Nivel)
+		end;
+	if (.@pontos_morto <= .Piso)
+		end;
+
+	// O par sempre na mesma ordem (a menor conta primeiro), para o dia ter
+	// UMA linha por par e não duas. O sinal diz de que lado veio o golpe.
+	.@a = .@matador;
+	.@b = .@morto;
+	.@sinal = 1;
+	if (.@a > .@b) {
+		.@a = .@morto;
+		.@b = .@matador;
+		.@sinal = -1;
+	}
+
+	.@saldo = 0;
+	query_sql("SELECT saldo FROM guerra_pvp_confronto WHERE dia = CURDATE() AND conta_a = " + .@a + " AND conta_b = " + .@b, .@saldo);
+	.@novo = .@saldo + .@sinal;
+	if (.@novo > .Limite || .@novo < (0 - .Limite))
+		end;
+	query_sql("INSERT INTO guerra_pvp_confronto (dia, conta_a, conta_b, saldo) VALUES (CURDATE(), " + .@a + ", " + .@b + ", " + .@novo + ") ON DUPLICATE KEY UPDATE saldo = " + .@novo);
+
+	callsub S_Pontua, .@matador, .@cid_matador, .@nome_matador$, 1;
+	callsub S_Pontua, .@morto, .@cid_morto, .@nome_morto$, -1;
+	end;
+
+// (conta, char id, nome, quanto somar) -> grava na tabela e devolve o total
+// para o modal. A tabela é escrita PRIMEIRO e relida depois de propósito: é
+// ela que decide o número, e não a variável de conta que estava em memória.
+S_Pontua:
+	.@sp_conta = getarg(0);
+	.@sp_cid = getarg(1);
+	.@sp_nome$ = getarg(2);
+	.@sp_delta = getarg(3);
+
+	query_sql("INSERT INTO guerra_pvp_placar (account_id, nome, pontos, atualizado) VALUES (" + .@sp_conta + ", '" + escape_sql(.@sp_nome$) + "', " + .@sp_delta + ", NOW()) ON DUPLICATE KEY UPDATE pontos = pontos + " + .@sp_delta + ", nome = VALUES(nome), atualizado = NOW()");
+	if (query_sql("SELECT pontos FROM guerra_pvp_placar WHERE account_id = " + .@sp_conta, .@sp_pontos))
+		set_reputation_points .Rep, .@sp_pontos, .@sp_cid;
+	return;
+
+// Rede contra queda do map-server: se ele cair entre dois autosaves, a
+// variável de conta volta ao valor antigo e a tabela fica certa. Aqui a
+// tabela reimpõe o número.
+//
+// Quem nunca pontuou não paga pacote nenhum: sem linha na tabela e com a
+// variável zerada, o evento sai antes do set_reputation_points.
+OnPCLoginEvent:
+	.@pontos = 0;
+	.@achou = query_sql("SELECT pontos FROM guerra_pvp_placar WHERE account_id = " + getcharid(3), .@pontos);
+	if (!.@achou && #RepPointsPvP == 0)
+		end;
+	set_reputation_points .Rep, .@pontos, getcharid(0);
+	end;
+}
