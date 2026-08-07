@@ -1156,6 +1156,122 @@ declaram nenhum, e isso está certo — elas pesam `0` no próprio bRO, conferid
 na descrição. Os dois placeholders de 2026-08-04 já nasceram certos
 (`Weight: 650` para "Peso: 65").
 
+#### Terceira rodada — 2026-08-07: onze itens, e os doze NPCs viraram mercador
+
+A rodada mexeu nos **dois** mercados de uma vez — o Contemporâneo e o de
+Visuais — porque o pedido de sprite atravessava os dois arquivos.
+
+##### Os sprites: doze NPCs, um só ofício
+
+Pedido: **todas as lojas devem ser um mercador**, alternando homem e mulher se
+der. Antes, cada loja usava o sprite do ofício que ela evoca — ferreiro nas
+armas, cavaleiro nos escudos, moças avulsas no resto — e o efeito colateral era
+que **nenhuma parecia loja**: o Lorde das Armaduras tinha cara de NPC de forja,
+o Escudeiro de guarda de portão.
+
+Este cliente tem **cinco** sprites de mercador. Todos conferidos duas vezes —
+existem no `npcidentity.lub` **e** têm `.spr`/`.act` em `data\sprite\npc\` do
+nosso `data.grf`, que é a conferência que a seção "Sprite de NPC" logo abaixo
+manda fazer:
+
+| sprite | sexo | uso |
+|---|---|---|
+| `1_M_MERCHANT` | homem | Chapeleiro, Lorde das Armaduras, Acessorista |
+| `1_F_MERCHANT_01` | mulher | Ocleiro, Escudeiro, Costumeiro |
+| `1_F_MERCHANT_02` | mulher | Sr. das Armas, Sapateiro, Camareiro |
+| `4_M_HUMERCHANT` | homem | Retoqueiro, Capeiro, Adereceiro |
+| `4_EP18_MERCHANT` | — | **fora**, só por sobrar |
+
+A alternância homem/mulher segue a ordem de leitura do quarteirão e
+**atravessa os dois arquivos**: a quarta fileira (`mercado_de_visuais.txt`,
+y=155) continua de onde a terceira para, senão começaria repetindo o sexo da
+anterior. Os três clássicos são o mercador de sempre, com carrinho; o
+`4_M_HUMERCHANT` entrou para os homens não virarem seis cópias do mesmo boneco
+lado a lado.
+
+##### Os itens
+
+| loja | entrou | saiu |
+|---|---|---|
+| Chapeleiro | `18878` Chapéu da Guarda Real [1], `400396` Chifres Oníricos [1] | `18580` Coroa de Yggdrasil |
+| Ocleiro | `410067` Mini Óculos [1], `410026` Herança Real [1], `5985` Máscara da Nobreza | — |
+| Retoqueiro | `18985` Pena de Falcão | `420010` Aura da Escuridão |
+| Capeiro | `20952` Echarpe Escarlate [1], `480077` Capa de Magma [1] | — |
+| Sapateiro | `470112` Botas Decadentes [1] | — |
+| Acessorista | `28322` Luva do Falcoeiro [1], `28321` Garra do Falcoeiro [1] | — |
+| Costumeiro | `20244` Disfarce de Jirtas | — |
+| Adereceiro | `410320` Piscadela de Freya *(veio do Camareiro)* | — |
+| Camareiro | — | `20310`, `31257`, `31421`, `31422`, `31423`, `31424`, `31429`, e a Piscadela |
+
+**A rodada foi barata em arte** — a primeira desde 2026-08-01 em que quase nada
+faltou. Dos onze itens novos, **dez** já estavam inteiros nas quatro tabelas.
+Os que custaram alguma coisa:
+
+- `410067` e `410026` estavam no rAthena mas **não no cliente** — a mesma
+  armadilha do `410125` da rodada anterior: sem entrada no `itemInfo.lua` o
+  item aparece **sem nome e sem ícone na própria vitrine**. Vieram do bRO pelo
+  `completa_iteminfo.py`, e os IDs foram postos na tabela `ITENS` dele;
+- `480077` Capa de Magma faltava nas **duas** tabelas do cliente: sem entrada
+  no `itemInfo.lua` *e* sem nenhum dos 4 arquivos de arte, trazidos da GRF do
+  bRO pelo `instala_visual.py`. Capa não é chapéu — são 4 arquivos e não 8, e
+  não passa pelo `accessoryid.lub`, então o `estende_accessoryid.py` não entra
+  aqui;
+- os três tinham `Name` em inglês no servidor (`Professor's Mini Glasses`,
+  `Floating Artifacts`, `Magma Manteau`) e foram sincronizados pelo
+  `nomes_pt_item_db.py`. Como esse script lê sempre do `.INGLES`, rodá-lo de
+  novo mexeu em **exatamente 3 linhas** do `db/re/item_db_equip.yml`.
+
+Todos passaram no `valida_visual.py` com **0 faltando** antes de entrar na
+linha da loja.
+
+##### A Piscadela de Freya estava no slot errado — e essa foi a única correção de `item_db`
+
+Pedido: "mover a Piscadela de Freya **corretamente** para visuais meio". O
+"corretamente" era literal, e trocar a linha da loja seria metade do serviço.
+
+O nosso rAthena dá o `410320` como `Costume_Head_Low` — por isso ele estava no
+Camareiro. O bRO dá como **meio**, e quem diz é a descrição por extenso
+(`estado_item.py --id 410320 --descricao` → `Equipa em: ^777777Meio`). O bRO
+está certo: o item é um par de **lentes de contato** ("imitam as cores dos
+olhos da deusa Freya"), e o slot de baixo é o de cachecol e máscara. No slot
+errado ele disputava espaço com o cachecol do jogador em vez de com os óculos.
+
+A correção é um override em `db/guerra/item_db.yml`, e ele tem uma pegadinha
+que a própria seção OVERRIDES daquele arquivo já documentava: **`Locations` é
+OR (`item->equip |= constant`), não atribuição.** Só acrescentar
+`Costume_Head_Mid: true` deixaria o item ocupando os **dois** slots; tirar o
+antigo exige `Costume_Head_Low: false` explícito.
+
+O override não cai na armadilha do `hasPriceValue` que quase custou os 7126
+itens em 2026-08-04: o `410320` não declara `Buy` nem `Sell` no `db/re/`, então
+o bloco parcial regrava `{false, false}` por cima de `{false, false}`.
+
+##### Duas coisas do pedido não bateram com a realidade, e as duas foram resolvidas por leitura
+
+**"remover 41321" — esse ID não existe.** Não está no `item_db` do rAthena, nem
+no `itemInfo.lua` do cliente, nem nos 18845 itens do bRO (`estado_item.py --id
+41321`). O que existe é o **`31421`** (Costume Pink Angeling Bubble), que
+estava no Camareiro **entre o `31257` e o `31422`** — os dois vizinhos imediatos
+do pedido — e é balão como os outros quatro da mesma leva. Foi lido como
+digitação trocada, e o `31421` é que saiu.
+
+**A "Aura da Escuridão" foi pedida como remoção da loja de visuais, mas não
+estava lá.** Ela estava no **Retoqueiro**, a loja de `Head_Low` do Mercado
+Contemporâneo, desde 2026-08-01 — e era a única peça de *visual*
+(`Costume_Head_Low`) numa vitrine de equipamento. Ou seja: o slot errado é o
+que a pôs lá, e sair dali era a remoção certa de qualquer forma. Era o único
+lugar em que ela estava.
+
+##### O conjunto do Falcoeiro atravessa duas lojas
+
+A Pena de Falcão (`18985`, Retoqueiro), a Garra (`28321`) e a Luva (`28322`,
+Acessorista) formam três conjuntos entre si no `db/re/item_combos.yml` do
+próprio rAthena. **Nada nosso foi preciso** — é o primeiro conjunto deste
+mercado que o jogador fecha comprando em duas vitrines diferentes.
+
+Nenhum item da rodada tem `Buy` acima de 20, então o aviso de
+`discounted buying price` na subida não ganhou caso novo pior que a Boina Alada.
+
 #### ACORDO: quando o bRO tem, a gente traz de lá — 2026-08-02
 
 Combinado explicitamente com o dono do projeto em 2026-08-02, e registrado aqui
@@ -1497,9 +1613,14 @@ nada disto foi visto no jogo ainda.
 
 Os nove sprites foram checados no `npcidentity.lub` **deste** cliente antes de
 usar, e `4_M_JOB_KNIGHT` caiu — não existe aqui, embora o rAthena o conheça. O
-Escudeiro usa `4_M_UNCLEKNIGHT` por isso. Mesma família do 10605 do Mestre de
-Classe: **a tabela do rAthena conhece nomes que este cliente de 2021 não
-desenha**, e a única autoridade é o `npcidentity.lub`.
+Escudeiro ficou com `4_M_UNCLEKNIGHT` por isso. Mesma família do 10605 do
+Mestre de Classe: **a tabela do rAthena conhece nomes que este cliente de 2021
+não desenha**, e a única autoridade é o `npcidentity.lub`.
+
+> Os sprites desta rodada **não estão mais em uso**: em 2026-08-07 as doze
+> lojas dos dois mercados viraram mercador — ver "Terceira rodada — 2026-08-07",
+> acima. A conferência descrita aqui continua valendo como receita, e foi ela
+> que aprovou os quatro sprites novos.
 
 ---
 

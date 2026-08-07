@@ -147,11 +147,39 @@
 //= SPRITES
 //=
 //= Todos conferidos no npcidentity.lub DESTE cliente antes de
-//= usar. `4_M_JOB_KNIGHT` foi a unica escolha que caiu na
-//= conferencia - nao existe aqui -, e por isso o Escudeiro usa
-//= o 4_M_UNCLEKNIGHT. Mesma armadilha do 10605 do Mestre de
-//= Classe: a tabela do rAthena conhece nomes que este cliente
-//= de 2021 nao desenha.
+//= usar. Mesma armadilha do 10605 do Mestre de Classe: a tabela
+//= do rAthena conhece nomes que este cliente de 2021 nao
+//= desenha. Foi assim que o `4_M_JOB_KNIGHT` caiu, na rodada de
+//= 2026-08-01, e o Escudeiro ficou com o 4_M_UNCLEKNIGHT.
+//=
+//= AS NOVE VIRARAM MERCADOR em 2026-08-07, a pedido do dono do
+//= projeto. Antes cada loja usava o sprite do OFICIO que ela
+//= evoca - ferreiro nas armas, cavaleiro nos escudos, mocas
+//= avulsas no resto -, e o efeito colateral era que nenhuma
+//= parecia LOJA: o Lorde das Armaduras tinha cara de NPC de
+//= forja, e o Escudeiro de guarda de portao.
+//=
+//= Este cliente tem cinco sprites de mercador. Todos conferidos
+//= duas vezes - existem no npcidentity.lub E tem .spr/.act em
+//= data\sprite\npc\ do nosso data.grf:
+//=
+//=   1_M_MERCHANT      homem     usado
+//=   1_F_MERCHANT_01   mulher    usado
+//=   1_F_MERCHANT_02   mulher    usado
+//=   4_M_HUMERCHANT    homem     usado
+//=   4_EP18_MERCHANT   ?         fora, so por sobrar
+//=
+//= Os quatro se alternam homem/mulher na ordem de leitura do
+//= quarteirao - Chapeleiro homem, Ocleiro mulher, e assim por
+//= diante. A conta atravessa os dois arquivos: as tres lojas de
+//= visual (mercado_de_visuais.txt, y=155) continuam a mesma
+//= alternancia de onde estas param, senao a quarta fileira
+//= comecaria repetindo o sexo da terceira.
+//=
+//= Os tres classicos (1_*) sao o mercador de sempre, com o
+//= carrinho. O 4_M_HUMERCHANT e mais novo e destoa um pouco,
+//= mas entrou para os homens nao ficarem seis copias do mesmo
+//= boneco lado a lado.
 //=
 //= ------------------------------------------------------------
 //= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
@@ -219,6 +247,17 @@
 // Cabeca topo. Fora: o "Chapeu do Atirador" e o "Chapeu de
 // Kiwawa" 401147, os dois nao localizados - ver o cabecalho.
 //
+// RODADA DE 2026-08-07: saiu um, entraram dois, e a loja foi de
+// dez para onze.
+//   -  18580  Coroa de Yggdrasil        tirada a pedido
+//   + 400396  Chifres Oniricos    [1]   (View 2338)
+//   +  18878  Chapeu da Guarda Real [1] (View 991)
+// Os dois que entraram nao custaram nada: o rAthena ja tinha os
+// dois, o itemInfo.lua do cliente tambem e em portugues, e o
+// `valida_visual.py` deu 8 de 8 nos dois antes de entrarem. Nao
+// ha conjunto citando nenhum dos tres, entao tirar a Coroa nao
+// derrubou bonus de ninguem.
+//
 // DOIS ENTRARAM em 2026-08-04, e os dois ja tinham os 8 recursos
 // no nosso GRF, sem precisar de ferramenta nenhuma:
 //   400213  Asas de Yggdrasil [1]   (View 2198)
@@ -241,7 +280,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,18580:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1
+-	shop	Chapeleiro#loja	-1,400006:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -306,13 +345,29 @@ OnInit:
 // @reloaditemdb, e a entrada de cliente so e lida na inicializacao, ou
 // seja fechar e reabrir o cliente.
 //
+// TRES ENTRARAM em 2026-08-07 e a loja foi a onze. Os tres sao
+// Head_Mid de verdade no item_db - conferido, e nao pelo nome:
+// o 5985 nao tem cova, e foi pedido assim mesmo.
+//   410067  Mini Oculos       [1]  (View 2118)
+//   410026  Heranca Real      [1]  (View 1996)
+//     5985  Mascara da Nobreza     (View 1409)
+//
+// Os dois de 410xxx repetiram a licao do 410125 da rodada
+// anterior: o rAthena tinha os dois, o CLIENTE nao - sem entrada
+// no itemInfo.lua o item aparece sem nome e sem icone na propria
+// vitrine. Vieram do bRO pelo completa_iteminfo.py (os IDs estao
+// na tabela ITENS de la), e o `Name` do servidor, que estava em
+// ingles nos dois ("Professor's Mini Glasses" e "Floating
+// Artifacts"), foi sincronizado pelo nomes_pt_item_db.py. Arte
+// nao faltou em nenhum dos tres: 8 de 8 no valida_visual.py.
+//
 // OITAVO ITEM em 2026-08-05: a Diadema Arco-iris (18894, View 1019).
 // Foi pedida "no Chapeleiro" e veio parar aqui porque o item_db a da
 // como `Head_Mid`, e a descricao do bRO concorda ("Equipa em: Meio").
 // Nao custou nada: arte inteira nos GRFs e entrada no itemInfo.lua, 0
 // faltando no valida_visual.py. E nao tem `Buy` no item_db, entao nao
 // ha revenda e ela nao entra no aviso de `discounted buying price`.
-prontera,155,173,4	script	Ocleiro	4_F_01,{
+prontera,155,173,4	script	Ocleiro	1_F_MERCHANT_01,{
 	callshop "Ocleiro#loja",0;
 	end;
 
@@ -320,10 +375,27 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
-prontera,159,173,4	script	Retoqueiro	1_F_MERCHANT_02,{
+//
+// RODADA DE 2026-08-07: saiu um, entrou um, e continuam quatro.
+//   - 420010  Aura da Escuridao      tirada a pedido
+//   +  18985  Pena de Falcao         (View 1143)
+//
+// A Aura era a unica peca de VISUAL nesta loja - Costume_Head_Low,
+// nao Head_Low -, o que a punha na vitrine errada desde 2026-08-01:
+// ela nao concorre com as outras tres, ocupa outro slot. Saindo
+// daqui, a fileira ficou com Head_Low puro. Ela foi pedida como
+// remocao da loja de visuais; nao estava la, estava aqui, e aqui
+// era o unico lugar em que estava.
+//
+// A Pena de Falcao fecha um trio que a mesma rodada montou: ela,
+// a Garra (28321) e a Luva (28322) do Falcoeiro, essas duas no
+// Acessorista. O db/re/item_combos.yml do rAthena ja casa os tres
+// entre si - tres conjuntos citando a Pena -, entao o jogador que
+// comprar as pecas nas duas lojas fecha conjunto sem nada nosso.
+prontera,159,173,4	script	Retoqueiro	4_M_HUMERCHANT,{
 	callshop "Retoqueiro#loja",0;
 	end;
 
@@ -331,7 +403,7 @@ OnInit:
 	placadevenda "Cabeça baixo";
 	end;
 }
--	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,420010:1
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 
@@ -352,7 +424,7 @@ OnInit:
 //   510147  Adaga dos Orcs [2]  placeholder; a arte veio da GRF
 //                               do bRO. E a unica arma da loja
 //                               que pede nivel 1 e nao 99/100.
-prontera,151,167,4	script	Senhor das Armas	1_M_SMITH,{
+prontera,151,167,4	script	Senhor das Armas	1_F_MERCHANT_02,{
 	callshop "Senhor das Armas#loja",0;
 	end;
 
@@ -369,7 +441,7 @@ OnInit:
 // 15371 (Roupa de Natal do Antonio) tambem e placeholder. NAO
 // confundir com o 15249 (Antonio's Coat), que o vendor ja tem:
 // sao dois itens diferentes.
-prontera,155,167,4	script	Lorde das Armaduras	4_M_JOB_BLACKSMITH,{
+prontera,155,167,4	script	Lorde das Armaduras	1_M_MERCHANT,{
 	callshop "Lorde das Armaduras#loja",0;
 	end;
 
@@ -382,7 +454,7 @@ OnInit:
 // Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
 // proximo e o 2185 (Refletor Magico / Magic Reflect), que e
 // escudo de verdade e nao so nome parecido.
-prontera,159,167,4	script	Escudeiro	4_M_UNCLEKNIGHT,{
+prontera,159,167,4	script	Escudeiro	1_F_MERCHANT_01,{
 	callshop "Escudeiro#loja",0;
 	end;
 
@@ -396,7 +468,19 @@ OnInit:
 
 // Capas. O 20745 (Capa Mistica) entrou no lugar da "Capa da
 // Terra" pedida, que nao existe - ver a nota la em cima.
-prontera,151,161,4	script	Capeiro	1_F_MERCHANT_01,{
+//
+// DUAS ENTRARAM em 2026-08-07, e a loja foi de nove para onze:
+//   20952  Echarpe Escarlate [1]   inteira, do rAthena de sempre
+//  480077  Capa de Magma     [1]   custou as duas curas de sempre
+//
+// A Capa de Magma foi o unico item da rodada inteira que faltava
+// nas DUAS tabelas do cliente: sem entrada no itemInfo.lua (veio
+// do bRO pelo completa_iteminfo.py, e o `Name` do servidor era
+// "Magma Manteau", sincronizado depois) e sem NENHUM dos 4
+// arquivos de arte, trazidos da GRF do bRO pelo instala_visual.py.
+// Capa nao e chapeu: sao 4 arquivos e nao 8, e nao passa pelo
+// accessoryid.lub. Reconferida com valida_visual.py: 0 faltando.
+prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
 
@@ -404,7 +488,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1
+-	shop	Capeiro#loja	-1,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1,20952:1,480077:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
@@ -413,7 +497,11 @@ OnInit:
 // O 470274 (Botas de Guivra [1]) entrou em 2026-08-04. Ja
 // estava no item_db do rAthena; o que faltava eram os 4
 // arquivos de arte, trazidos da GRF do bRO.
-prontera,155,161,4	script	Sapateiro	4_M_02,{
+//
+// O 470112 (Botas Decadentes [1]) entrou em 2026-08-07 e nao
+// custou nada - rAthena, cliente e os 4 arquivos de arte ja
+// estavam todos no lugar.
+prontera,155,161,4	script	Sapateiro	1_F_MERCHANT_02,{
 	callshop "Sapateiro#loja",0;
 	end;
 
@@ -421,14 +509,21 @@ OnInit:
 	placadevenda "Sapatos";
 	end;
 }
--	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1
+-	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
 // Chapeu de Ulle. O Broche da Celine e o 28572 (versao bRO,
 // placeholder); o vendor tem um 28513 com o mesmo nome em
 // ingles, que e outro item.
-prontera,159,161,4	script	Acessorista	4_F_02,{
+//
+// A DUPLA DO FALCOEIRO entrou em 2026-08-07, e a loja foi a
+// treze: 28322 Luva do Falcoeiro [1] e 28321 Garra do Falcoeiro
+// [1], as duas Both_Accessory, as duas inteiras (rAthena,
+// cliente e 4 de 4 de arte). A terceira peca do conjunto, a Pena
+// de Falcao (18985), esta no Retoqueiro - e o unico conjunto
+// deste mercado que atravessa duas lojas.
+prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
 
@@ -436,4 +531,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1

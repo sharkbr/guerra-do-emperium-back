@@ -1272,3 +1272,40 @@ Body:
          bonus bMaxHPrate,30;
          bonus bMaxSPrate,30;
       }
+
+  - Id: 410320
+    # Piscadela de Freya. O nosso rAthena poe este visual em
+    # `Costume_Head_Low`; o bRO poe em MEIO - `estado_item.py --id 410320
+    # --descricao` traz a linha por extenso: "Equipa em: ^777777Meio".
+    #
+    # Quem esta certo e o bRO, e nao e so questao de gosto: o item e um par
+    # de lentes de contato ("imitam as cores dos olhos da deusa Freya"), e o
+    # slot de baixo e o de cachecol e mascara. No slot errado ele disputava
+    # espaco com o cachecol do jogador em vez de com os oculos.
+    #
+    # `Locations` e OR, nao atribuicao - ver a nota grande no topo desta
+    # secao. Tirar o slot antigo exige o `false` explicito; so acrescentar
+    # o novo deixaria o item ocupando os DOIS.
+    #
+    # Este e o unico campo em que discordamos, e o resto da entrada do
+    # db/re/ fica (View 2528, `Jobs` sem Doram, ArmorLevel 1). Sem `Buy` nem
+    # `Sell` la nem aqui, entao a armadilha do `hasPriceValue` nao pega -
+    # ver ferramentas/LEIAME.md, secao do nomes_pt_item_db.py.
+    #
+    # Na loja ele acompanhou a mudanca: saiu do Camareiro (visuais de cabeca
+    # baixo) e entrou no Adereceiro (visuais de cabeca meio).
+    #
+    # `AegisName` e `Name` sao REDUNDANTES aqui - a mesclagem manteria os dois
+    # do db/re/ se fossem omitidos, e `itemdb.cpp:57` so os exige quando o item
+    # e novo. Estao escritos por duas razoes. A primeira e a mesma do override
+    # do 400287, logo acima: quem le este bloco tem de saber de que item se
+    # trata sem abrir outro arquivo. A segunda foi medida - o
+    # `ferramentas/estado_item.py` relata o ultimo bloco que encontra, entao
+    # sem `Name` aqui ele dizia `NOME servidor "" != cliente "Piscadela de
+    # Freya"` e mandava rodar o nomes_pt_item_db.py. Alarme falso, mas do tipo
+    # que custa meia hora a quem for conferir este item da proxima vez.
+    AegisName: C_Blink_Eyes_D_Freyja
+    Name: "Piscadela de Freya"
+    Locations:
+      Costume_Head_Low: false
+      Costume_Head_Mid: true

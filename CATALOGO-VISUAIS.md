@@ -7,15 +7,30 @@ quarteirão do Mercado Contemporâneo, em Prontera.
 Gerado a partir de `ferramentas/varre_cosmeticos.py`. A loja em
 `rathena/npc/guerra/mercado_de_visuais.txt`.
 
-**Dez itens estão marcados com ★ e não saem da ferramenta.** Foram
-pedidos a dedo em 2026-08-05 e já desenhavam antes desta rodada, ou
-seja, o `varre_cosmeticos.py` os classifica como `ok` e não os
+**Onze itens estão marcados com ★ e não saem da ferramenta.** Foram
+pedidos a dedo — dez em 2026-08-05, o Disfarce de Jirtas em
+2026-08-07 — e já desenhavam antes da rodada que montou estas lojas,
+ou seja, o `varre_cosmeticos.py` os classifica como `ok` e não os
 listaria. Regerar esta tabela pela ferramenta os perde — o porquê de
 cada um está no cabeçalho do arquivo da loja.
 
-## Costumeiro — Costume topo (145 itens)
+**A rodada de 2026-08-07** mexeu nas três, e nenhuma das mudanças sai
+da ferramenta tampouco:
 
-`prontera 151,155` — sprite `4_F_CAPEGIRL`
+- os doze NPCs do quarteirão viraram **mercador**, alternando homem e
+  mulher — é por isso que os três `sprite` acima não são mais os de
+  2026-08-05;
+- entrou o **Disfarce de Jirtas** (20244) no Costumeiro;
+- a **Piscadela de Freya** (410320) saiu do Camareiro e foi para o
+  Adereceiro. Não foi só troca de vitrine: o item é `Costume_Head_Mid`
+  no bRO e o nosso rAthena o dava como `Costume_Head_Low`, e a
+  correção é um override em `db/guerra/item_db.yml`;
+- saíram sete do Camareiro, a pedido: 20310, 31257 e os cinco balões
+  (31421, 31422, 31423, 31424, 31429).
+
+## Costumeiro — Costume topo (146 itens)
+
+`prontera 151,155` — sprite `1_F_MERCHANT_01`
 
 | id | nome |
 |---|---|
@@ -35,6 +50,7 @@ cada um está no cabeçalho do arquivo da loja.
 | 19602 | Chapéu Invisível ★ |
 | 19996 | Cavalo Rei ★ |
 | 20234 | Máscara de Bafomé ★ |
+| 20244 | Disfarce de Jirtas ★ |
 | 20308 | Costume Koneko Hat |
 | 20309 | Costume Dip Schmidt Helm |
 | 20385 | Elmo do Herói |
@@ -165,9 +181,9 @@ cada um está no cabeçalho do arquivo da loja.
 | 440005 | Coroa do Diabo |
 | 440012 | Máscara de Eggman |
 
-## Adereceiro — Costume meio (115 itens)
+## Adereceiro — Costume meio (116 itens)
 
-`prontera 155,155` — sprite `4_F_MASK`
+`prontera 155,155` — sprite `4_M_HUMERCHANT`
 
 | id | nome |
 |---|---|
@@ -262,6 +278,7 @@ cada um está no cabeçalho do arquivo da loja.
 | 410311 | Diadema de Górgona |
 | 410316 | Quiosque do Ursinho |
 | 410317 | Máscara para Dormir |
+| 410320 | Piscadela de Freya |
 | 410326 | A-Ji Agitado |
 | 410328 | Padaria Móvel |
 | 410329 | Tambores de Invocação da Terra |
@@ -287,23 +304,16 @@ cada um está no cabeçalho do arquivo da loja.
 | 436010 | Cabeça de Tarantuling |
 | 480200 | Asas do Anjo Fiel |
 
-## Camareiro — Costume baixo (124 itens)
+## Camareiro — Costume baixo (116 itens)
 
-`prontera 159,155` — sprite `4_M_ORIENT01`
+`prontera 159,155` — sprite `1_F_MERCHANT_02`
 
 | id | nome |
 |---|---|
 | 15954 | Espaguete & Lasanha |
 | 19604 | Máscara Invisível ★ |
-| 20310 | Costume Cute Parrot |
-| 31257 | Costume Poring Jars Of Clay |
 | 31305 | Angeling de Estimação |
 | 31386 | Orbes Místicos |
-| 31421 | Costume Pink Angeling Bubble |
-| 31422 | Costume Angeling Balloon |
-| 31423 | Costume: Cute Bear Bear Balloon (Brown) |
-| 31424 | Costume Love Love Balloon |
-| 31429 | Costume Blue Poring Bubble |
 | 31500 | Costume Sparkler Stick |
 | 31503 | Deviling de Estimação |
 | 31584 | Cachecol de Marin |
@@ -315,7 +325,6 @@ cada um está no cabeçalho do arquivo da loja.
 | 400425 | Flauta de Falcão |
 | 400427 | Cabelos de Freya |
 | 410265 | [Visual] Anéis |
-| 410320 | Piscadela de Freya |
 | 420014 | Peruca de Animação |
 | 420026 | Gravata Bombom |
 | 420044 | Gola Escolar de Marujo ★ |

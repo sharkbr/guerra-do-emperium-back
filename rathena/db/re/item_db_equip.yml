@@ -181246,7 +181246,7 @@ Body:
       bonus bMatk,BaseLevel;
   - Id: 410026
     AegisName: Magic_Heir_J_
-    Name: Floating Artifacts
+    Name: "Herança Real"
     Type: Armor
     Buy: 20
     Weight: 200
@@ -181738,7 +181738,7 @@ Body:
          bonus bDelayrate,-15;
   - Id: 410067
     AegisName: Professor_MiniGlass_
-    Name: Professor's Mini Glasses
+    Name: "Mini Óculos"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -211690,7 +211690,7 @@ Body:
       }
   - Id: 480077
     AegisName: Magma_Manteau
-    Name: Magma Manteau
+    Name: "Capa de Magma"
     Type: Armor
     Weight: 300
     Defense: 25

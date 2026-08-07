@@ -104,6 +104,11 @@ ITENS = [
     # duas da troca (19444 e 19446) ja tinham entrada e nao precisam vir.
     410125,   # Orelhas em Chamas [1]
     19455,    # Diadema do Paraiso [1]   (placeholder em db/guerra/item_db.yml)
+    # As duas de cabeca meio que entraram no Ocleiro em 2026-08-07. O `Name`
+    # do servidor nas duas estava em ingles e foi sincronizado depois, pelo
+    # nomes_pt_item_db.py.
+    410067,   # Mini Oculos [1]          (servidor: Professor's Mini Glasses)
+    410026,   # Heranca Real [1]         (servidor: Floating Artifacts)
     # --- Senhor das Armas
     500009,   # Lamina Sagrada
     510155,   # Ceuci                    (placeholder em db/guerra/item_db.yml)
@@ -119,6 +124,7 @@ ITENS = [
     28962,    # Escudo Divino
     # --- Capeiro
     480220,   # Baleia de Pelucia
+    480077,   # Capa de Magma [1]        (entrou em 2026-08-07)
     # --- Sapateiro
     470180,   # Botas Tres Marias
     470206,   # Botas de Prana
