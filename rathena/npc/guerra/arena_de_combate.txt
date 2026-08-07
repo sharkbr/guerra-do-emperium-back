@@ -61,23 +61,58 @@
 //=
 //= Se um dia se quiser saida por NPC, ela e um SEGUNDO NPC dentro
 //= do mapa com `warp "prontera",156,187` - nao mexer aqui.
-//===== Por que pvp_nocalcrank ===============================
-//= O rAthena tem um contador de PvP proprio: ao entrar num mapa
-//= `pvp` o jogador recebe 5 pontos (src/map/map.cpp) e cada morte
-//= tira 5. Quando fica NEGATIVO - ou seja, ja na SEGUNDA morte -
-//= o servidor arma um timer de 1 segundo e manda o jogador para o
-//= `save_point` sozinho (src/map/pc.cpp, pc_dead).
+//===== O rank interno da arena ==============================
+//= O contador de PvP embutido do rAthena esta LIGADO aqui, e e
+//= ele quem desenha o "rank N/M" no canto da tela de quem esta
+//= dentro do mapa. As tres pecas:
 //=
-//= Esse timer corria contra o nosso: dois de um segundo cada,
-//= disputando para onde o morto vai, e a partir da segunda morte
-//= o jogador cairia no ponto de retorno em vez de Prontera. O
-//= `pvp_nocalcrank` desliga o bloco inteiro - contador, expulsao
-//= automatica e o rank embutido do cliente -, e o nosso passa a
-//= ser o unico a decidir.
+//=   - ao carregar um mapa `pvp` o jogador recebe 5 pontos
+//=     (src/map/clif.cpp, clif_parse_LoadEndAck);
+//=   - cada morte tira 5 do morto e soma 1 ao matador
+//=     (src/map/pc.cpp, pc_dead);
+//=   - um timer de 1 em 1 segundo (PVP_CALCRANK_INTERVAL,
+//=     pc_calc_pvprank_timer) reordena TODOS os que estao no
+//=     mapa e manda a posicao de cada um pelo clif_pvpset.
 //=
-//= O rank embutido nao faz falta: o placar de verdade e o do
+//= E rank DE VISITA, e nao historico: os 5 pontos sao
+//= reatribuidos toda vez que o mapa carrega, entao quem sai e
+//= volta comeca de novo. Na pratica ele ranqueia as mortes que
+//= voce causou NESTA ida a arena, que e o que se quer de um
+//= placar de dentro.
+//=
+//= O historico e outro e continua intacto: o
 //= npc/guerra/honra_de_combate.txt, que grava em banco e aparece
-//= na placa de prontera 163,187.
+//= na placa de prontera 163,187. Os dois nao se falam - o rank
+//= interno vive so na memoria da sessao.
+//===== Por que ele ja esteve desligado ======================
+//= Ele passou o commit 7e81b45 desligado por `pvp_nocalcrank`,
+//= por medo de um choque de timers. O medo era do bloco de
+//= EXPULSAO que vem junto: quando o pvp_point fica NEGATIVO, o
+//= pc_dead arma um timer de 1 segundo que manda o jogador para o
+//= `save_point`. E esse timer e armado ANTES do nosso - o
+//= OnPCDieEvent so dispara no fim do status_damage
+//= (src/map/status.cpp, "Always run NPC scripts for players
+//= last") -, entao num empate de 1000ms contra 1000ms quem vence
+//= e o do servidor, e o morto cairia no ponto de retorno.
+//=
+//= DUAS COISAS FAZEM O CHOQUE NAO ACONTECER, e e por isso que o
+//= rank pode voltar:
+//=
+//=   1) O pvp_point NAO CHEGA A NEGATIVO AQUI. Ele comeca em 5 e
+//=      a morte tira 5: a primeira morte para em ZERO, e o teste
+//=      do pc_dead e `< 0`. Negativar exigiria morrer DUAS VEZES
+//=      na mesma visita, e o OnPCDieEvent abaixo expulsa em TODA
+//=      morte - a segunda so vem depois de reentrar, e reentrar
+//=      devolve os 5 pontos.
+//=
+//=   2) Se ainda assim negativasse, `.Espera` e 800ms contra os
+//=      1000ms do servidor: nos chegamos primeiro. E quando o
+//=      timer do servidor enfim dispara, ele nao faz nada - o
+//=      pc_respawn comeca com `if (!pc_isdead(sd)) return;` e o
+//=      `recovery` do nosso script ja levantou o jogador.
+//=
+//= (1) e o motivo, (2) e a rede. Levar `.Espera` de volta para
+//= 1000 ou mais desfaz a rede: manter abaixo de 1000.
 //===== O drop na morte ======================================
 //= O rAthena entrega pvp_n_1-5 com `pvp_nightmaredrop
 //= random,equip,300` (npc/mapflag/nightmare.txt): 3% de chance -
@@ -151,7 +186,9 @@ OnInit:
 	.Volta$ = "prontera";   // e para onde o morto volta
 	.VoltaX = 155;
 	.VoltaY = 183;
-	.Espera = 1000;         // ms entre a morte e o teleporte
+	.Espera = 800;          // ms entre a morte e o teleporte. Abaixo dos
+	                        // 1000ms do rAthena de proposito: ver a secao
+	                        // "Por que ele ja esteve desligado".
 
 	// "Smile Assistance#prt" e nome E exname ao mesmo tempo: a linha
 	// do rAthena (npc/quests/mrsmile.txt) e
@@ -180,8 +217,8 @@ OnPCDieEvent:
 
 	// O `sleep2` deixa a tela mostrar a morte antes do teleporte.
 	// Sem ele o jogador e arrancado no mesmo quadro em que cai e nao
-	// entende o que aconteceu. Um segundo e o mesmo intervalo que o
-	// proprio rAthena usa no pc_respawn_timer.
+	// entende o que aconteceu. Fica logo abaixo do segundo que o
+	// pc_respawn_timer do rAthena usa, para vencer a corrida com ele.
 	.@cid = getcharid(0);
 	sleep2 .Espera;
 
@@ -204,9 +241,3 @@ OnPCDieEvent:
 // Desliga o drop de equipamento na morte. Explicado no cabecalho,
 // secao "O drop na morte". Tirar esta linha devolve os 3% do rAthena.
 pvp_n_1-5	mapflag	pvp_nightmaredrop	off
-
-// Desliga o contador de PvP embutido do rAthena. Explicado no
-// cabecalho, secao "Por que pvp_nocalcrank". Sem esta linha o
-// jogador e expulso para o ponto de retorno na segunda morte,
-// disputando com o OnPCDieEvent acima.
-pvp_n_1-5	mapflag	pvp_nocalcrank
