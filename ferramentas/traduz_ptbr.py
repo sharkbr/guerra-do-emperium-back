@@ -17,6 +17,8 @@ bRO e a fonte de referencia: nada aqui e traduzido por nos, tudo e importado.
     itens        nome e descricao de item          System\\iteminfo_new.lub
     skills       nome e descricao de habilidade    skillinfolist/skilldescript
     quests       titulo e texto do diario          data\\questid2display.txt
+    questinfo    a janela de missoes               OngoingQuestInfoList_True
+    questreco    a aba RECOMENDADAS               RecommendedQuestInfoList_True
     conquistas   o modal de conquista              System\\achievement_list.lub
     mapas        nome do mapa na minimapa          System\\mapInfo.lub
     mapinfo      o letreiro ao entrar no mapa      System\\mapInfo.lub
@@ -333,6 +335,311 @@ def parte_quests(verificar):
     print '    %d traduzidas, %d sem correspondente no bRO' % (
         trocadas, len(en) - trocadas)
     return grava(alvo, '\r\n\r\n'.join(saida) + '\r\n\r\n', verificar, 'quests')
+
+
+# ==================================================== a janela de missoes
+
+# **Nao e a mesma coisa que a parte `quests`, e a diferenca custou uma medicao.**
+# A quest 5153 esta em ingles no `questid2display.txt` ("Refining tutorial (1)")
+# e mesmo assim aparecia em coreano na janela: quem desenha o titulo e o texto e
+# o global `QuestInfoList`, do `System\OngoingQuestInfoList_Sakray.lub`, e ele
+# vence o `.txt`. O `questid2display.txt` e o fallback, nao a fonte.
+#
+# A estrutura vem do arquivo **coreano de 2021** e nao do ROenglishRE, e isso e
+# deliberado: metade dos campos e referencia (sprite de NPC, nome de mapa, BMP
+# de fundo, ID de item de recompensa), e a versao do ROenglishRE e de 2026. E a
+# mesma razao do `parte_abas` - sprite que este exe nao conhece derruba a
+# janela. So o texto e importado. Ver PENDENCIAS.md, `_sak` vs `_Sakray`: os
+# alvos sao o `_Sakray` (o que o exe le) e o `_True` (de onde a copia saiu).
+
+# A ordem em que os campos saem no arquivo gerado.
+CAMPOS_ONGOING = ['Title', 'Description', 'Summary', 'IconName',
+                  'CoolTimeQuest', 'NpcSpr', 'NpcNavi', 'NpcPosX', 'NpcPosY',
+                  'RewardEXP', 'RewardJEXP', 'RewardItemList']
+CAMPOS_RECO = ['Title', 'Summary', 'QuestInfo1', 'QuestInfo2', 'QuestInfo3',
+               'IconName', 'BgName', 'NpcSpr', 'NpcNavi', 'NpcPosX', 'NpcPosY']
+
+# O que e texto em cada um. O resto atravessa do arquivo coreano sem mudar.
+TEXTO_ONGOING = ('Title', 'Description', 'Summary')
+TEXTO_RECO = ('Title', 'Summary', 'QuestInfo1', 'QuestInfo2', 'QuestInfo3')
+
+# Os campos que sempre saem como string, para o `confere_linhas`. `RewardEXP` e
+# `RewardJEXP` ficam fora: uma quest do arquivo coreano guarda os dois como
+# numero, e a trava exigiria aspas.
+CAMPOS_ASPAS = ['Title', 'Summary', 'IconName', 'BgName', 'NpcSpr', 'NpcNavi']
+
+CABECALHO_QUEST = (
+    '-- Gerado por ferramentas/traduz_ptbr.py. Nao editar a mao.\r\n'
+    '-- Estrutura: o %s coreano do instalador da Gravity de\r\n'
+    '-- 2021-11-03, congelado no .COREANO ao lado. Texto: Ragnarok Brazil, e\r\n'
+    '-- ROenglishRE no que o bRO nao tem.\r\n'
+    '\r\n')
+
+
+def _uma_linha(texto):
+    u"""Uma string Lua nao pode conter quebra de linha crua, e o bRO contem.
+
+    Trinta e sete descricoes do bRO vem no formato `titulo\\n\\t\\tcorpo` - lixo
+    de formatacao que sobrou da fonte da Gravity. Foi o `luac -p` que apontou:
+    `unfinished string near '"Sociedade de Monstros'`. As travas por linha nao
+    pegam isso, porque a quebra de dentro da string faz o par de aspas cair em
+    duas linhas e as duas ficam com contagem impar mas o `split` por `\\r\\n` nao
+    as separa. Nos campos de lista a quebra virou item novo antes de chegar aqui
+    (ver `_traduz_valor`); esta funcao e a rede de seguranca do resto.
+    """
+    return re.sub(r'[\r\n]+\t*', ' ', texto)
+
+
+def _lua(valor, recuo):
+    u"""Um valor lido do bytecode -> texto Lua.
+
+    A virgula sobrando depois do ultimo campo e valida em Lua 5.1 (`{1,2,}`), e
+    emitir sempre evita um caso especial em cada nivel.
+    """
+    if isinstance(valor, str):
+        return '"%s"' % aspas(_uma_linha(valor))
+    if isinstance(valor, bool):
+        return 'true' if valor else 'false'
+    if isinstance(valor, (int, long, float)):
+        if float(valor) == int(valor):
+            return str(int(valor))
+        return repr(valor)
+    if isinstance(valor, dict):
+        if not valor:
+            return '{}'
+        seq = ptbr.lista(valor)
+        if seq:                    # Description, QuestInfoN, RewardItemList
+            dentro = recuo + '\t'
+            return ('{\r\n'
+                    + ',\r\n'.join(dentro + _lua(x, dentro) for x in seq)
+                    + '\r\n' + recuo + '}')
+        # Registro, do tipo `{ ItemID = 0, ItemNum = 1 }`.
+        return '{ %s }' % ', '.join(
+            '%s = %s' % (c, _lua(valor[c], recuo))
+            for c in sorted(valor) if isinstance(c, str))
+    raise Erro('nao sei escrever valor Lua de tipo %s' % type(valor).__name__)
+
+
+def _bloco_quest(qid, dados, campos):
+    linhas = ['\t[%d] = {' % qid]
+    for campo in campos:
+        if campo in dados:
+            linhas.append('\t\t%s = %s,' % (campo, _lua(dados[campo], '\t\t')))
+    linhas.append('\t},')
+    return '\r\n'.join(linhas)
+
+
+def _por_id(tabela, rotulo):
+    u"""A tabela lida do bytecode, com a chave float virando int."""
+    if not isinstance(tabela, dict):
+        raise Erro('%s nao definiu a tabela esperada' % rotulo)
+    return dict((int(c), v) for c, v in tabela.items()
+                if isinstance(c, float) and isinstance(v, dict))
+
+
+def _traduz_valor(valor):
+    u"""O texto da fonte, em cp1252 e pronto para entrar no literal Lua.
+
+    Campo de lista (`Description`, `QuestInfoN`) tem a quebra de linha crua
+    promovida a item novo, que e o que ela queria dizer: as 37 descricoes
+    `titulo\\n\\t\\tcorpo` do bRO passam a duas linhas na janela, como no bRO.
+    """
+    if not isinstance(valor, dict):
+        return pt(valor)
+    linhas = []
+    for texto in ptbr.lista(valor):
+        if not isinstance(texto, str):
+            continue
+        for pedaco in re.split(r'[\r\n]+\t*', pt(texto)):
+            linhas.append(pedaco)
+    return dict((float(i), t) for i, t in enumerate(linhas, 1))
+
+
+def _texto_en(nome, campos):
+    u"""Um `.lub` em texto puro do ROenglishRE -> {id: {campo: texto}}.
+
+    So os campos de texto sao lidos. O `blocos_lua` nao entra em `Description =
+    { ... }` porque lá dentro nao existe `[chave] =` - conferido, nenhuma string
+    destes dois arquivos tem chave `{}` dentro.
+    """
+    caminho = os.path.join(ptbr.CLIENTE, 'SystemEN', nome)
+    if not os.path.exists(caminho):
+        raise Erro('nao achei %s' % caminho)
+    dados = le(caminho)
+    saida = {}
+    for chave, ini, fim in ptbr.blocos_lua(dados):
+        if not chave.isdigit():
+            continue
+        bloco = dados[ini:fim]
+        entrada = {}
+        for campo in campos:
+            m = re.search(r'\b%s = "(%s)"' % (campo, VALOR), bloco)
+            if m:
+                entrada[campo] = m.group(1)
+                continue
+            m = re.search(r'\b%s = \{([^{}]*)\}' % campo, bloco)
+            if m:
+                itens = re.findall(r'"(%s)"' % VALOR, m.group(1))
+                if itens:
+                    entrada[campo] = dict((float(i), t)
+                                          for i, t in enumerate(itens, 1))
+        if entrada:
+            saida[int(chave)] = entrada
+    return saida
+
+
+def _congela(alvo, verificar):
+    u"""Guarda o bytecode coreano ao lado do alvo e devolve de onde ler.
+
+    Sem isto a parte nao seria idempotente: a primeira rodada troca o bytecode
+    por texto puro, e a segunda nao teria mais estrutura de onde partir. Mesma
+    ideia do `.INGLES` do `parte_msgtable`. Apagar o `.COREANO` com o destino ja
+    traduzido e o unico jeito de estragar esta parte - e o erro sai alto,
+    `nao e bytecode Lua 5.1`.
+    """
+    base = alvo + '.COREANO'
+    if os.path.exists(base):
+        return base
+    if verificar:
+        return alvo
+    shutil.copy2(alvo, base)
+    print '    coreano congelado em %s' % os.path.basename(base)
+    return base
+
+
+def _gera_quests(global_lua, rotulo, base, bro, en, campos, campos_texto,
+                 so_base):
+    u"""Monta o arquivo. Devolve (texto, ids na ordem, contagem por fonte)."""
+    ids = sorted(base) if so_base else sorted(set(base) | set(bro) | set(en))
+    conta = {'bro': 0, 'en': 0, 'coreano': 0}
+    blocos, saiu = [], []
+    for qid in ids:
+        dados = dict(base.get(qid) or {})
+        fonte, origem = bro.get(qid), 'bro'
+        if not fonte:
+            fonte, origem = en.get(qid), 'en'
+        if fonte:
+            for campo in campos_texto:
+                # Sai fora antes de entrar: se o bRO nao tem `Summary` para
+                # esta quest, o coreano nao pode ficar no lugar.
+                dados.pop(campo, None)
+                if campo in fonte:
+                    dados[campo] = _traduz_valor(fonte[campo])
+            conta[origem] += 1
+        else:
+            conta['coreano'] += 1
+        if not dados:
+            continue
+        blocos.append(_bloco_quest(qid, dados, campos))
+        saiu.append(str(qid))
+    texto = (CABECALHO_QUEST % rotulo
+             + '%s = {}\r\n%s = {\r\n' % (global_lua, global_lua)
+             + '\r\n'.join(blocos)
+             + '\r\n}\r\n')
+    return texto, saiu, conta
+
+
+# O compilador Lua 5.1 que vem no ROenglishRE. E a **unica** trava que prova a
+# sintaxe de verdade; as outras conferem forma de linha e balanceamento e
+# passaram batido pelo caso da quebra de linha dentro da string. Se o repositorio
+# do ROenglishRE nao estiver nesta maquina a conferencia e pulada com aviso - ela
+# nao e requisito para gerar, so para ter certeza.
+LUAC = r'C:\Users\User\Downloads\ROenglishRE\Tools\luac.exe'
+
+
+def _confere_luac(texto, rotulo):
+    if not os.path.exists(LUAC):
+        print '    (luac.exe nao encontrado, sintaxe nao conferida)'
+        return
+    import subprocess
+    import tempfile
+    fd, temporario = tempfile.mkstemp(suffix='.lua')
+    try:
+        os.write(fd, texto)
+        os.close(fd)
+        p = subprocess.Popen([LUAC, '-p', temporario],
+                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        saida = p.communicate()[0]
+        if p.returncode:
+            # O caminho do temporario no meio da mensagem so atrapalha.
+            saida = saida.replace(temporario, rotulo).strip()
+            raise Erro('%s nao compila, nada gravado: %s' % (rotulo, saida))
+        print '    luac -p: sintaxe conferida'
+    finally:
+        if os.path.exists(temporario):
+            os.remove(temporario)
+
+
+def _confere_quests(texto, ids, rotulo):
+    confere_linhas(texto, CAMPOS_ASPAS, rotulo)
+    # O `aspas()` nao deixa escapada nenhuma no arquivo gerado, entao toda
+    # linha tem numero par de aspas. E a trava que pega o estrago de
+    # 2026-08-03, que era lexicamente valido e so quebrava na sintaxe.
+    for i, linha in enumerate(texto.split('\r\n'), 1):
+        if linha.count('"') % 2:
+            raise Erro('%s linha %d ficou com aspas impares, nada gravado: %r'
+                       % (rotulo, i, linha[:110]))
+    saiu = [c for c, _, _ in ptbr.blocos_lua(texto)]
+    if saiu != ids:
+        raise Erro('%s: a estrutura mudou (%d entradas -> %d). Nada gravado.'
+                   % (rotulo, len(ids), len(saiu)))
+    _confere_luac(texto, rotulo)
+
+
+def _parte_quest_lub(nomes, global_lua, fonte_en, campos, campos_texto,
+                     so_base, rotulo, verificar):
+    u"""O corpo comum das duas partes. Os alvos recebem o mesmo conteudo."""
+    alvos = [os.path.join(ptbr.CLIENTE, 'System', n) for n in nomes
+             if os.path.exists(os.path.join(ptbr.CLIENTE, 'System', n))]
+    if not alvos:
+        raise Erro('nenhum de %s existe em System\\' % ', '.join(nomes))
+
+    en = _texto_en(fonte_en, campos_texto)
+    bro = _por_id(ptbr.tabelas_de(os.path.join(ptbr.BRO, 'System', nomes[0]))
+                  .get(global_lua), 'o %s do bRO' % nomes[0])
+    base = _por_id(ptbr.tabelas_de(_congela(alvos[0], verificar))
+                   .get(global_lua), 'o %s daqui' % nomes[0])
+    print '    %d entradas aqui, %d no bRO, %d no ROenglishRE' % (
+        len(base), len(bro), len(en))
+
+    texto, ids, conta = _gera_quests(global_lua, nomes[0], base, bro, en,
+                                     campos, campos_texto, so_base)
+    print '    %d em portugues (bRO), %d em ingles (ROenglishRE), %d sem' \
+          ' fonte' % (conta['bro'], conta['en'], conta['coreano'])
+    print '    %d entradas no arquivo gerado' % len(ids)
+    _confere_quests(texto, ids, rotulo)
+
+    mudou = 0
+    for alvo in alvos:
+        _congela(alvo, verificar)
+        print '    %s:' % os.path.basename(alvo)
+        mudou += grava(alvo, texto, verificar, rotulo)
+    return mudou
+
+
+def parte_questinfo(verificar):
+    u"""OngoingQuestInfoList_*.lub: o titulo e o texto da janela de missoes."""
+    return _parte_quest_lub(
+        ['OngoingQuestInfoList_True.lub', 'OngoingQuestInfoList_Sakray.lub'],
+        'QuestInfoList', 'OngoingQuests.lub',
+        CAMPOS_ONGOING, TEXTO_ONGOING, False, 'questinfo', verificar)
+
+
+def parte_questreco(verificar):
+    u"""RecommendedQuestInfoList_*.lub: a aba RECOMENDADAS.
+
+    Aqui, ao contrario do `questinfo`, **so as entradas do arquivo de 2021
+    saem**. As 12 a mais do ROenglishRE trariam `BgName` e `IconName` que este
+    GRF nao tem, e o fundo da pagina viria em branco. As chaves batem uma a uma
+    (a 77 e a `바르문트의 바이오스피어` aqui e a "Varmundt's Biosphere" la), e a
+    unica sem correspondente e a 11, `왕실 사냥 대회`, evento coreano que nem o
+    bRO nem o ROenglishRE receberam - essa fica em coreano.
+    """
+    return _parte_quest_lub(
+        ['RecommendedQuestInfoList_True.lub',
+         'RecommendedQuestInfoList_Sakray.lub'],
+        'RecommendedQuestInfoList', 'RecommendedQuests.lub',
+        CAMPOS_RECO, TEXTO_RECO, True, 'questreco', verificar)
 
 
 # ================================================================== cartas
@@ -902,6 +1209,8 @@ PARTES = [
     ('itens',      parte_itens,      'nome e descricao de item'),
     ('skills',     parte_skills,     'nome e descricao de habilidade'),
     ('quests',     parte_quests,     'titulo e texto do diario de quests'),
+    ('questinfo',  parte_questinfo,  'a janela de missoes'),
+    ('questreco',  parte_questreco,  'a aba RECOMENDADAS da janela de missoes'),
     ('conquistas', parte_conquistas, 'o modal de conquista'),
     ('mapas',      parte_mapas,      'nome do mapa no minimapa'),
     ('mapinfo',    parte_mapinfo,    'o letreiro ao entrar no mapa'),

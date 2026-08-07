@@ -1542,7 +1542,9 @@ Atualizada em 2026-08-03 com a coluna do português.
 |---|---|---|---|
 | UI e mensagens de sistema | `data\msgstringtable.txt` | patch `MsgStrings` no WARP | `traduz_ptbr.py msgtable` |
 | Rótulo de janela e de botão | `data\...\msgstring_kr.lub` | ROenglishRE | `traduz_ptbr.py msgstrid` |
-| Quests | `data\questid2display.txt` | já lido por padrão em `langtype 0` | `traduz_ptbr.py quests` |
+| Quests (fallback) | `data\questid2display.txt` | já lido por padrão em `langtype 0` | `traduz_ptbr.py quests` |
+| Janela de missões | `System\OngoingQuestInfoList_Sakray.lub` | **nunca saiu do coreano** | `traduz_ptbr.py questinfo` |
+| Aba RECOMENDADAS | `System\RecommendedQuestInfoList_Sakray.lub` | **nunca saiu do coreano** | `traduz_ptbr.py questreco` |
 | Strings cravadas no exe | `WARP\Inputs\Translations_EN.yml` | `TranslateClient`, já aplicado antes | **continua em inglês** |
 | Itens | `SystemEN\LuaFiles514\itemInfo.lua` | stub do ROenglishRE em `System\itemInfo_true.lub` | `traduz_ptbr.py itens` |
 | Letreiro e nome de mapa | `System\mapInfo_*.lub`, `data\mapnametable.txt` | trocado pela versão em inglês | `traduz_ptbr.py mapinfo mapas` |
@@ -1640,6 +1642,8 @@ barra de atalho que o cliente do bRO não tem, resolvidos por analogia.
 | `itens` | nome e descrição de item | `System\iteminfo_new.lub` | 16838 nomes, 11499 descrições |
 | `skills` | nome e descrição de habilidade | `skillinfolist.lua` / `skilldescript.lua` do GRF | 1060 nomes, 872 descrições |
 | `quests` | título e texto do diário | `data\questid2display.txt` | 3135 de 8369 |
+| `questinfo` | a janela de missões | `System\OngoingQuestInfoList_True.lub` | 6318 em PT + 5365 em EN, 0 em coreano |
+| `questreco` | a aba RECOMENDADAS | `System\RecommendedQuestInfoList_True.lub` | 1 em PT + 18 em EN, 1 em coreano |
 | `msgstrid` | rótulo de janela e de botão | `msgstring_br.lub` | 425 + 36 por analogia |
 | `msgtable` | mensagem de sistema e de erro | `data\msgstringtable.txt` | 2941 de 4023 |
 | `conquistas` | o modal de conquista | `System\achievement_list.lub` | 349 de 361 |
@@ -1935,6 +1939,62 @@ Versionadas em **`ferramentas/`**, com uso documentado no `ferramentas/LEIAME.md
 
 Cuidado com o argv: caminhos com trecho coreano **não sobrevivem** ao console do
 PowerShell até o Python. Fazer o match por substring ASCII dentro do script.
+
+### Rodada de 2026-08-07 — a janela de missões não lia o `questid2display.txt`
+
+O jogador reportou a janela de missões inteira em coreano, nas duas abas
+(`ScreenShot\screenGuerra do Emperium023.jpg` e `024.jpg`), com a tradução de
+quests marcada como concluída desde 2026-08-03.
+
+**A medição que fechou o caso.** A quest ativa da foto era a **5153**, e ela está
+em inglês no `data\questid2display.txt` (`5153#Refining tutorial (1)#`) —
+traduzida, no disco, e mesmo assim coreana na tela. Logo o `.txt` **não é a
+fonte**: quem desenha título e texto é o global `QuestInfoList`, do
+`System\OngoingQuestInfoList_Sakray.lub`, e ele vence o `.txt`, que é só o
+fallback de quando o ID não está na tabela. A aba RECOMENDADAS é o
+`RecommendedQuestInfoList_Sakray.lub`, pelo mesmo caminho.
+
+Esses dois arquivos são justamente **as cópias do `_True` criadas na rodada do
+`_sak` vs `_Sakray`** (bem acima) — bytecode coreano do instalador da Gravity de
+2021-11-03, que nunca teve versão traduzida instalada por cima. Igual ao que
+aconteceu com o `itemInfo_true.lub` e o `mapInfo_*.lub`.
+
+**Como foi resolvido:** partes `questinfo` e `questreco` no `traduz_ptbr.py`.
+
+A **estrutura vem do arquivo coreano de 2021**, e não do ROenglishRE — mesma
+razão do `parte_abas`. Metade dos campos não é texto e sim referência (`NpcSpr`,
+`NpcNavi`, `BgName`, `IconName`, `RewardItemList`), e a versão do ROenglishRE é
+de 2026: sprite que este exe não conhece derruba a janela. Só o texto é
+importado, do bRO e, no que o bRO não tem, do ROenglishRE.
+
+| | `questinfo` | `questreco` |
+|---|---|---|
+| entradas nossas | 7839 | 20 |
+| em português (bRO) | 6318 | 1 |
+| em inglês (ROenglishRE) | 5365 | 18 |
+| sobraram em coreano | **0** | 1 (a `11`, `왕실 사냥 대회`) |
+
+No `questinfo` a saída é a **união** dos três (11683 entradas): as que não estão
+no arquivo de 2021 entram só com os três campos de texto, sem nenhuma referência
+nova. No `questreco` só saem as 20 nossas — as 12 a mais do ROenglishRE trariam
+`BgName` que este GRF não tem e a página viria com o fundo em branco. As chaves
+batem uma a uma nos dois (a `77` é `바르문트의 바이오스피어` aqui e
+"Varmundt's Biosphere" lá).
+
+**Idempotência:** a primeira rodada troca bytecode por texto puro, então a
+segunda não teria mais estrutura de onde partir. O coreano é congelado em
+`<alvo>.COREANO` ao lado, e é sempre dele que se parte — mesma ideia do
+`.INGLES` do `parte_msgtable`.
+
+**A trava nova, e ela vale para todo `.lub` de texto que a gente gerar:**
+`ROenglishRE\Tools\luac.exe -p`. O compilador Lua 5.1 de verdade. As travas por
+linha do arquivo (`confere_linhas`, `confere_blocos`, contagem de aspas) deram
+tudo certo e o arquivo **não compilava**: 37 descrições do bRO vêm no formato
+`título\n\t\tcorpo`, e string Lua não aceita quebra de linha crua. A quebra faz o
+par de aspas cair em duas linhas, as duas ficam com contagem ímpar, e o `split`
+por `\r\n` não as separa — nenhuma trava de linha pega isso. Nos campos de lista
+a quebra passou a virar item novo (que é o que ela queria dizer, e é como o bRO
+mostra); no resto virou espaço.
 
 ---
 

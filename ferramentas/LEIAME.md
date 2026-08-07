@@ -457,7 +457,7 @@ python traduz_ptbr.py itens skills         # só essas partes
 python traduz_ptbr.py tudo --sem-acento    # a saída de emergência
 ```
 
-Dez partes, dez fontes diferentes dentro da instalação do Ragnarok Brazil.
+Doze partes, doze fontes diferentes dentro da instalação do Ragnarok Brazil.
 Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 2026-08-02 (`PENDENCIAS.md`).
 
@@ -467,7 +467,9 @@ Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 | `msgtable` | mensagem de sistema e de erro | `data\msgstringtable.txt` |
 | `itens` | nome e descrição de item | `System\iteminfo_new.lub` |
 | `skills` | nome e descrição de habilidade | `skillinfolist.lua`, `skilldescript.lua` |
-| `quests` | título e texto do diário | `data\questid2display.txt` |
+| `quests` | o **fallback** do texto de quest | `data\questid2display.txt` |
+| `questinfo` | a janela de missões | `System\OngoingQuestInfoList_True.lub` |
+| `questreco` | a aba RECOMENDADAS | `System\RecommendedQuestInfoList_True.lub` |
 | `conquistas` | o modal de conquista | `System\achievement_list.lub` |
 | `mapas` | nome do mapa no minimapa | `System\mapInfo.lub` |
 | `mapinfo` | o letreiro ao entrar no mapa | `System\mapInfo.lub` |
@@ -483,6 +485,28 @@ bRO só preenche o texto, por chave. O reflexo de copiar o arquivo do bRO por
 cima estaria errado, e o motivo é contraintuitivo: **o ROenglishRE é mais novo
 que o bRO.** Trocar arquivo por arquivo apagaria o conteúdo que o bRO nunca
 recebeu — 5234 quests ficariam em branco em vez de em inglês.
+
+### `questinfo` e `questreco` — e por que `quests` não bastava
+
+A parte `quests` traduz o `data\questid2display.txt`, e **não é ele que a janela
+de missões lê.** Quem desenha título, descrição e resumo é o global
+`QuestInfoList`, do `System\OngoingQuestInfoList_Sakray.lub`; o `.txt` só é
+consultado quando o ID não está na tabela. A prova, de 2026-08-07: a quest 5153
+estava em inglês no `.txt` e aparecia em coreano na tela.
+
+Nestas duas a **estrutura vem do arquivo coreano de 2021**, e não do
+ROenglishRE — mesma razão do `parte_abas`. Metade dos campos não é texto e sim
+referência (`NpcSpr`, `NpcNavi`, `BgName`, `IconName`, `RewardItemList`), e a
+versão do ROenglishRE é de 2026: sprite que este exe não conhece derruba a
+janela. Como a primeira rodada troca o bytecode por texto puro, o coreano é
+congelado em `<alvo>.COREANO` ao lado e é sempre dele que se parte.
+
+**A trava que importa é o `luac -p`** (`ROenglishRE\Tools\luac.exe`), o Lua 5.1
+de verdade. As travas por linha passaram todas e o arquivo não compilava: 37
+descrições do bRO vêm como `título\n\t\tcorpo`, e string Lua não aceita quebra
+de linha crua — a quebra deixa duas linhas com contagem ímpar de aspas, e o
+`split` por `\r\n` não as separa. Todo `.lub` de texto que gerarmos passa pelo
+`luac` antes de ser gravado.
 
 A única troca de arquivo é `conquistas`, e ela se justifica: o
 `achievement_list.lub` daqui é o coreano do instalador de 2021, então não há
