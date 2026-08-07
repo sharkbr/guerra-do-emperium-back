@@ -1,5 +1,9 @@
 # Ferramentas de inspeção do cliente
 
+> **Referência por ferramenta — consultar pela seção, não ler inteiro.**
+> Para o fluxo completo de uma tarefa (item novo, loja, tradução), ver
+> `RECEITAS.md` na raiz, que diz em que ORDEM chamar estas ferramentas e por quê.
+
 Escritas em 2026-07-30 para diagnosticar o erro `RecommendedQuestInfoLoad`.
 Rodam em **Python 2.7** (`C:\Python27\python.exe`), que já está instalado nesta
 máquina por causa do `get4.py` do NEMO.
