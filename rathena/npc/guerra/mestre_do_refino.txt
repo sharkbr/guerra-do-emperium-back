@@ -17,9 +17,10 @@
 //= +8, +9, +11, +12 e de +13 a +19. Sem pergaminho nenhum na
 //= bolsa, ele diz que "nao trabalha mais" e nao abre o servico.
 //=
-//= NAO vende pergaminho, e nenhum NPC nosso vende ainda - hoje
-//= eles so entram por @item. Se um dia forem entrar na economia,
-//= o Mercado Contemporaneo e o lugar.
+//= ELE nao vende pergaminho - quem vende e a Maquina, em
+//= prontera 167,199, desde 2026-08-07: o Pergaminho de Armadura
+//= +6 (6235) sai la em pacote de 5 por 5 Moedas Novas. Os outros
+//= niveis e os de Arma continuam so por @item.
 //===== De onde veio =========================================
 //= Pedido em 2026-08-04: "Mestre do Refino, refina com os
 //= Pergaminhos, prontera 184,177, o bRO ja possui esse".

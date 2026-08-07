@@ -625,7 +625,7 @@ e desfazer o commit dos `npc/guerra/*.txt`. As bandeiras `--sem-acento` do
 | Mesmerita | `prontera 144,173` | reseta habilidades, atributos ou os dois — de graça | **não** |
 | Funcionária Kafra da praça | `prontera 152,191` | a sexta Kafra de Prontera, a única na praça central | **não** |
 | Armazém do Clã | `prontera 149,191` | move e renomeia o `Guild Warehouse Manager` do rAthena | **não** |
-| Máquina | `prontera 167,199` | não funciona, e é só isso — uma fala | **não** |
+| Máquina | `prontera 167,199` | a loja da Moeda Nova: 17 itens em 3 grupos | **não** |
 | Xanin | `prontera 172,201` | gato, uma fala | **não** |
 | Edgard | `prontera 170,200` | estilista: troca a cor da roupa, de graça e sem limite | **não** |
 | Mestre do Refino | `prontera 184,177` | refina com os Pergaminhos, sem chance de quebrar | **não** |
@@ -775,7 +775,7 @@ motivo. Então o `tenda_da_praca.txt` virou dois:
 | arquivo | quem | onde |
 |---|---|---|
 | `npc/guerra/xanin_e_edgard.txt` | Xanin, Edgard | `170,200` e `172,201` |
-| `npc/guerra/maquina_quebrada.txt` | Máquina | `167,199` |
+| `npc/guerra/maquina.txt` | Máquina | `167,199` |
 
 **A receita que plantava a tenda continua em `ferramentas/planta_adereco.py`,
 comentada**, com o porquê ao lado. Descomentar replanta — não é um TODO
@@ -839,7 +839,7 @@ tocado, então o jogador **atravessa a tenda**. Fechar a passagem seria mexer no
 |---|---|---|---|---|
 | Xanin | `172,201` | 495 `4_M_MERCAT1` | uma fala, sem função | `xanin_e_edgard.txt` |
 | Edgard | `170,200` | 509 `4_ELEPHANT` | cor de roupa | `xanin_e_edgard.txt` |
-| Máquina | `167,199` | 564 `2_VENDING_MACHINE1` | uma fala, sem função | `maquina_quebrada.txt` |
+| Máquina | `167,199` | 564 `2_VENDING_MACHINE1` | loja da Moeda Nova, desde 2026-08-07 | `maquina.txt` |
 
 **`4_ELEPHANT3` não existe.** O pedido dizia "4_ELEPHANT3 ID: 509"; o ID está
 certo e o nome não. Neste cliente 509 é `4_ELEPHANT`, e não há `4_ELEPHANT2`
@@ -1623,6 +1623,105 @@ não desenha**, e a única autoridade é o `npcidentity.lub`.
 > que aprovou os quatro sprites novos.
 
 ---
+
+### A Máquina virou a loja da Moeda Nova — 2026-08-07, NÃO testada in-game
+
+A Máquina de `prontera 167,199` era uma fala só (*"a máquina não funciona"*).
+Agora ela vende **17 itens em três grupos**, cobrando **Moeda Nova (30998)** —
+e é o **primeiro NPC que cobra a moeda**. O arquivo passou de
+`maquina_quebrada.txt` para `maquina.txt`, porque o nome afirmava um fato que
+deixou de ser verdade. A lista, os preços e o raciocínio de cada linha estão no
+cabeçalho dele; aqui fica só o que atravessa o projeto.
+
+**A economia ainda não fecha, e isso é deliberado:** existe onde gastar a moeda
+e **não existe fonte**. Nenhum `npc/guerra/` entrega Moeda Nova, então hoje ela
+só entra por `@item`. As fontes pensadas — Logue e Ganhe, trocas por Flor
+Visionária / Moeda do Explorador / Caveira — continuam por fazer. Enquanto isso
+a loja está de pé sem nada por trás dela.
+
+#### O trabalho foi descobrir ONDE cada item é gasto
+
+A parte fácil foi resolver 16 IDs por nome em português, pelo `iteminfo_new.lub`
+do bRO — a ponte de sempre. A parte que valeu foi a coluna seguinte: **item
+comprado que ninguém consome é Moeda queimada.** Metade da lista são cupons, e
+cupom é exatamente o tipo de item que pode existir em quatro tabelas, ter nome,
+ícone e arte, e não servir para nada neste servidor.
+
+**Os cinco cupons de estilista quase foram dados como mortos.** Procurar `6707`,
+`25736`, `6959` ou `6046` em `npc/` **não devolve nada** — nenhum script do
+rAthena os cita. A conclusão fácil, e errada, seria que não têm consumidor.
+Quem os gasta é **C++**: `clif_parse_stylist_buy` (`src/map/clif.cpp`), lendo
+`db/re/stylist.yml`, servindo a **UI de estilista do cliente**. A UI se abre por
+`openstylist()`, e há um `Stylist#prontera` do próprio rAthena em
+`prt_in 243,168` — dentro de Prontera, então comprar e gastar ficam na mesma
+cidade.
+
+**A lição generaliza:** `grep` em `npc/` **não prova que um item é inútil**. Os
+sistemas de UI do cliente (estilista, refino, achievement, reputação) consomem
+item **direto no C++, por tabela em `db/`**, sem passar por script nenhum. Antes
+de concluir que um item não tem destino, procurar também pelo **AegisName** em
+`db/` e em `src/map/`.
+
+#### Duas armadilhas caladas ficaram registradas, não resolvidas
+
+As duas são do tipo que **consome o cupom e não muda nada na tela**, sem erro:
+
+1. **Cupom de Tintura.** Ele cobre os valores 2..7 de `Clothes_Color`, e este
+   cliente só tem palette de roupa **0..3** da 2ª classe em diante — a mesma
+   contagem que fixou o teto do Edgard em 3. Índice sem palette não dá erro: o
+   cliente desenha a cor padrão.
+2. **Cupom de Roupa.** Ele mexe em `Body2`, o corpo alternativo. **Não foi
+   verificado** se o GRF de 2021 tem os sprites `_body` que ele pede.
+
+O remédio, se um dia incomodar, não é mexer no NPC: é podar as opções em
+`db/re/stylist.yml` (que teria de virar override nosso) ou tirar o cupom da
+lista.
+
+#### O ID do pedido apontava para outra coisa
+
+O pedido dizia "Passe Anti-Gravitacional (imagino que já tenhamos Passe
+Antigravitacional 13710)". **O 13710 não é o Passe**: ele é uma *caixa* cujo
+`Script:` faz `getitem 7776,10`. Dez passes, apesar de o nome no jogo dizer
+"[1]". O passe de verdade é o **7776**, gasto no `Ripped Cabus#GymPass`
+(`payon 173,141`), +10 de peso por passe, teto de 10 usos.
+
+Decidido manter a caixa: 100 Moedas entregam os +100 de peso inteiros, ou seja
+10 Moedas por passe — a mesma faixa dos cupons ao lado. Vender o 7776 avulso
+pelas mesmas 100 sairia dez vezes mais caro.
+
+**Homônimo também apareceu, quatro vezes**, e aí o critério não é óbvio:
+`Elunium Perfeito` é 6241 **e** 6911; `Oridecon Perfeito` é 6240 e 6910;
+`Carnium Perfeito` é 6225 e 6906; `Bradium Perfeito` é 6226 e 6327. Os segundos
+são os `LI_*`, variantes de evento com o **mesmo nome exibido** e que **não
+aparecem no `db/re/refine.yml`** — comprar um deles daria um item de nome certo
+que a UI de refino recusa, calada. O critério virou: **vale o ID que o
+`refine.yml` cita.**
+
+#### Por que menu e não `itemshop`
+
+O rAthena tem o tipo `itemshop`, que é literalmente "loja que cobra em item":
+seria uma linha só, com a janela de compra de sempre e ícone. Não serve aqui
+por um motivo único: ele cobra **por unidade**, e **onze das dezessete linhas
+são pacote** — "Elunium Perfeito (5 unidades) x 1 Moeda" dá 0,2 Moeda por
+unidade, que não existe. O custo da escolha é não ter ícone e não ter "comprar
+3 de uma vez". Se um dia a lista perder os pacotes, o `itemshop` volta a ser o
+caminho certo.
+
+#### Como foi conferido, já que não houve teste in-game
+
+- Os 17 IDs passaram pelo `ferramentas/estado_item.py`: **todos existem nas
+  quatro tabelas** e a arte deu **4 de 4** em todos. Nada a instalar, nem no
+  cliente nem em `db/guerra/item_db.yml` — bem diferente do Mercado
+  Contemporâneo, onde 43 dos 77 não tinham arte.
+- O map-server foi reiniciado com o script novo: **nenhum erro de parse**, e o
+  `debugmes` da trava de `OnInit` **não disparou**, o que prova que os quatro
+  `setarray` têm o mesmo tamanho.
+- As quatro colunas foram relidas do arquivo por script e conferidas contra o
+  pedido, uma a uma: 17 linhas, ID, quantidade e preço batendo.
+
+Isso prova que **o script compila e a tabela está certa**. Não prova a
+navegação dos menus nem que a compra entrega o item. Para isso:
+`@reloadscript`, `@item 30998 200` e ir a Prontera.
 
 ## CONCLUÍDO — tradução do cliente para o inglês (2026-07-30)
 

@@ -1,0 +1,375 @@
+//===== Guerra do Emperium ===================================
+//= A Maquina
+//===== Onde =================================================
+//= prontera 167,199. Celula conferida no prontera.gat DESTE
+//= cliente: tipo 0, andavel, altura 1.00.
+//=
+//= Ela abre a fila dos tres da praca, a duas celulas da quina do
+//= quarteirao (de x=162 a x=165 e bloqueado entre y=198 e y=201):
+//=
+//=     y=199   Maquina (167,199)   Edgard (170,199)   Xanin (172,199)
+//===== Descricao ============================================
+//= A LOJA DA MOEDA NOVA - dezessete itens, em tres grupos.
+//=
+//= Ate 2026-08-07 este NPC era uma fala so ("a maquina nao
+//= funciona") e o arquivo se chamava maquina_quebrada.txt. Ele e
+//= o PRIMEIRO NPC que cobra a Moeda Nova (30998): ate aqui a
+//= moeda existia, tinha nome, descricao e icone, e nao tinha
+//= onde ser gasta. O comentario dela em db/guerra/item_db.yml
+//= dizia isso por extenso e agora esta desatualizado nesse ponto.
+//=
+//= A tabela de verdade e o `setarray` do OnInit, no fim do
+//= arquivo. O que segue e ela por extenso, com a coluna que
+//= custou o trabalho desta rodada: ONDE O ITEM E GASTO. Item
+//= comprado que ninguem consome e Moeda queimada, e como quase
+//= metade da lista sao cupons de sistema de cliente, cada linha
+//= foi conferida uma a uma.
+//===== A LISTA, e onde cada item e gasto ====================
+//= GRUPO 1 - Passes e cupons (1 unidade por compra)
+//=
+//= | id    | item                       | preco |
+//= | 13710 | Passe Antigravitacional[1] |   100 |
+//= | 7622  | Cupom de Corte de Cabelo   |    10 |
+//= | 6707  | Cupom de Penteado          |    10 |
+//= | 25736 | Cupom de Penteado 2        |    10 |
+//= | 6959  | Cupom de Roupa             |    10 |
+//= | 6046  | Cupom de Tintura           |    10 |
+//=
+//= O 13710 NAO E O PASSE - ele e uma CAIXA, e usa-la faz
+//= `getitem 7776,10`. Dez passes, apesar de o nome no jogo dizer
+//= "[1]". Quem o pedido apontou foi ele mesmo, e a decisao de
+//= 2026-08-07 foi manter a caixa: 100 Moedas entregam os +100 de
+//= peso inteiros, ou seja 10 Moedas por passe, que e a mesma
+//= faixa dos cupons ao lado. Vender o 7776 avulso pelas mesmas
+//= 100 daria +10 de peso e sairia dez vezes mais caro.
+//=
+//= O passe (7776) e gasto no `Ripped Cabus#GymPass`, payon
+//= 173,141 (npc/other/gympass.txt, ligado pelo
+//= npc/scripts_athena.conf:183). Um passe = +10 de peso, com
+//= teto de 10 usos guardados na variavel `gympassmemory`. Ele
+//= fala em ingles - nao esta em grupo nenhum do catalogo de
+//= traducao.
+//=
+//= OS CINCO CUPONS SAO GASTOS NA UI DE ESTILISTA DO CLIENTE, e
+//= isso demorou a aparecer porque NENHUM script de NPC os cita.
+//= Quem os consome e C++: `clif_parse_stylist_buy`
+//= (src/map/clif.cpp), lendo db/re/stylist.yml. Procurar "6707"
+//= em npc/ nao devolve nada, e a conclusao facil - e errada -
+//= seria que o cupom nao serve para nada aqui.
+//=
+//= O que cada um abre, contado no db/re/stylist.yml:
+//=
+//= | cupom                | Look          | opcoes |
+//= | Cupom de Corte (7622)| Hair          |      4 |
+//= | Cupom de Penteado    | Hair          |      2 |
+//= | Cupom de Penteado 2  | Hair          |      6 |
+//= | Cupom de Roupa       | Body2         |      2 |
+//= | Cupom de Tintura     | Clothes_Color |      8 |
+//=
+//= Um cupom por troca. A UI se abre por `openstylist()`, e quem
+//= chama e o `Stylist#prontera` do rAthena, em prt_in 243,168 -
+//= dentro de Prontera mesmo, o que faz a compra e o gasto
+//= ficarem na mesma cidade. Ha mais cinco duplicatas
+//= (npc/re/merchants/Extended_Stylist.txt) e o `Stylist#cash` do
+//= itemmall. Todos em ingles.
+//=
+//= DUAS RESSALVAS, as duas do tipo que nao da erro nenhum:
+//=
+//= 1) O Cupom de Tintura cobre os valores 2,3,4,5,6,7 de
+//=    Clothes_Color, e ESTE CLIENTE so tem palette de roupa
+//=    0..3 da 2a classe em diante (0..4 nas classes base) - e a
+//=    mesma contagem que fixou o teto do Edgard em 3, ver o
+//=    cabecalho do xanin_e_edgard.txt. Indice sem palette nao da
+//=    erro: o cliente desenha a cor padrao. Entao parte das oito
+//=    opcoes vai comer um cupom e nao mudar nada na tela.
+//= 2) O Cupom de Roupa mexe em Body2, o corpo alternativo. NAO
+//=    FOI VERIFICADO se o GRF de 2021 tem os sprites `_body`
+//=    que ele pede. Se nao tiver, o sintoma sera o mesmo do item
+//=    acima - cupom consumido, nada muda.
+//=
+//= Nas duas, o remedio nao e mexer aqui: e podar as opcoes em
+//= db/re/stylist.yml (que teria de virar um override nosso, ver
+//= a CONVENCAO DE CUSTOMIZACAO) ou tirar o cupom desta lista.
+//=
+//= ------------------------------------------------------------
+//= GRUPO 2 - Refino (5 unidades por compra)
+//=
+//= | id   | item                      | preco |
+//= | 6235 | Pergaminho de Armadura +6 |     5 |
+//= | 6241 | Elunium Perfeito          |     1 |
+//= | 6240 | Oridecon Perfeito         |     1 |
+//= | 7619 | Elunium Enriquecido       |     1 |
+//= | 7620 | Oridecon Enriquecido      |     1 |
+//= | 6635 | Bencao do Ferreiro        |     1 |
+//= | 6225 | Carnium Perfeito          |     2 |
+//= | 6226 | Bradium Perfeito          |     2 |
+//=
+//= O Pergaminho de Armadura +6 e o unico com destino em NPC
+//= NOSSO: o Mestre do Refino, prontera 184,177, que leva a peca
+//= a +6 de uma vez e sem chance de quebrar. O cabecalho dele
+//= dizia "NAO vende pergaminho, e nenhum NPC nosso vende ainda";
+//= a partir de agora vende, e a linha de la foi corrigida.
+//=
+//= Os outros sete sao minerio da UI de refino do cliente
+//= (`feature.refineui: on`, conf/battle/feature.conf:85), lidos
+//= de db/re/refine.yml. A divisao arma/armadura NAO e simetrica
+//= como o nome sugere, e vale saber antes de precificar:
+//=
+//=   armadura: Elunium, Elunium Enriquecido, Elunium Perfeito,
+//=             Carnium, Carnium Perfeito
+//=   arma:     Oridecon, Oridecon Enriquecido, Oridecon Perfeito,
+//=             Bradium, Bradium Perfeito
+//=
+//= Ou seja o par Carnium/Bradium repete a divisao do par
+//= Elunium/Oridecon, para os itens de nivel mais alto - Carnium
+//= nao e "elunium melhor", e o elunium DE OUTRA FAIXA.
+//=
+//= "Perfeito" e o HD do rAthena (HD_Elunium, HD_Carnium...): ao
+//= falhar, a peca perde um nivel de refino em vez de quebrar.
+//= "Enriquecido" aumenta a chance de acertar, mas quebra.
+//=
+//= A Bencao do Ferreiro nao e minerio: e o catalisador que a UI
+//= de refino exige para passar de +7, e a quantidade cresce
+//= rapido. Para armadura de nivel 1: +8 pede 1, +9 pede 2, e
+//= dai 4, 7, 11, 16, 22. Cinco por Moeda parece barato ao lado
+//= dos outros ate se somar quanto uma peca de +14 custa.
+//=
+//= ------------------------------------------------------------
+//= GRUPO 3 - Consumiveis
+//=
+//= | id    | item              | un | preco |
+//= | 12710 | Pocao de Guyak    | 30 |     3 |
+//= | 14522 | Cogumelo Grelhado | 50 |     2 |
+//= | 14523 | Bala Amarga       | 50 |     2 |
+//=
+//= Nao precisam de NPC nenhum: sao itens de usar. Os dois
+//= ultimos tem AegisName que nao ajuda a reconhece-los
+//= (`Big_Bun` e `Pill_`), entao o nome do item_db e a unica
+//= referencia confiavel - foi por nome em portugues que eles
+//= foram achados, no iteminfo_new.lub do bRO.
+//===== Como a lista foi resolvida ===========================
+//= O pedido veio com nome em portugues e um unico ID (o 13710,
+//= e aquele estava errado no sentido explicado acima). Os outros
+//= dezesseis sairam do `iteminfo_new.lub` da instalacao do
+//= Ragnarok Brazil desta maquina, que e a ponte que este projeto
+//= usa para nome em portugues - mesma fonte do Mercado
+//= Contemporaneo.
+//=
+//= A busca por nome devolveu HOMONIMO em quatro casos, e ai a
+//= escolha nao e obvia:
+//=
+//= | nome              | escolhido        | descartado          |
+//= | Elunium Perfeito  | 6241 HD_Elunium  | 6911 LI_HD_Elunium  |
+//= | Oridecon Perfeito | 6240 HD_Oridecon | 6910 LI_HD_Oridecon |
+//= | Carnium Perfeito  | 6225 HD_Carnium  | 6906 LI_HD_Carnium  |
+//= | Bradium Perfeito  | 6226 HD_Bradium  | 6327 LI_HD_Bradium  |
+//=
+//= Os `LI_` sao variantes de evento com o MESMO nome exibido, e
+//= sao os que NAO aparecem no db/re/refine.yml - comprar um
+//= deles daria um item de nome certo que a UI de refino recusa,
+//= sem erro nenhum para denunciar. O criterio foi esse: vale o
+//= id que o refine.yml cita.
+//=
+//= Os dezessete foram passados pelo ferramentas/estado_item.py.
+//= Todos existem nas quatro tabelas (item_db do servidor,
+//= itemInfo.lua do cliente, arte no GRF, iteminfo do bRO) e a
+//= arte deu 4 de 4 em todos - nada a instalar, nem no cliente
+//= nem em db/guerra/item_db.yml. Diferente do Mercado
+//= Contemporaneo, onde 43 dos 77 nao tinham arte.
+//===== Por que MENU e nao loja ==============================
+//= O rAthena tem o tipo `itemshop`, que e exatamente "loja que
+//= cobra em item em vez de zeny" - seria uma linha so, com a
+//= janela de compra de sempre, icone e tudo:
+//=
+//=   prontera,167,199,6	itemshop	Maquina	564,30998,7622:10,...
+//=
+//= Nao serve aqui por um motivo unico: o `itemshop` cobra POR
+//= UNIDADE, e onze das dezessete linhas do pedido sao PACOTE -
+//= "Elunium Perfeito (5 unidades) x 1 Moeda" da 0,2 Moeda por
+//= unidade, que nao existe. Onde o pacote divide certo (o
+//= Pergaminho, 5 por 5) daria para converter; nos outros nao.
+//= Misturar os dois - loja para uns, menu para outros - seria
+//= duas interfaces na mesma maquina.
+//=
+//= O custo dessa escolha e que nao ha icone e nao ha "comprar
+//= 3 de uma vez": cada compra e um pacote. Se um dia a lista
+//= perder os pacotes, o `itemshop` volta a ser o caminho certo.
+//=
+//= Ela tambem NAO tem placa sobre a cabeca, ao contrario das 21
+//= lojas dos tres mercados. A placa (src/custom/placa_de_venda)
+//= foi feita para diferenciar loja de loja numa grade onde todas
+//= tem o mesmo sprite; a Maquina e unica, tem sprite de maquina
+//= de venda e esta a duas celulas do Edgard. Se um dia fizer
+//= falta, o caminho esta no cabecalho do mercado_contemporaneo.
+//===== Notas ================================================
+//= Sprite 564 (2_VENDING_MACHINE1), o mesmo da "Contribution
+//= Certificate Vending Machine" de morocc 52,197
+//= (npc/re/quests/quests_15_1.txt), que e a maquina que o pedido
+//= original apontou. Conferido no npcidentity.lub DESTE cliente,
+//= e o .spr e o .act conferidos no nosso data.grf - a regra
+//= desde a armadilha do 10605 no Mestre de Classe.
+//=
+//= Facing 6 (leste). Com a camera padrao do cliente as direcoes
+//= caem na diagonal da tela: o 6 desenha a maquina virada para a
+//= direita. O 4 (sul), que ela tinha antes, aparecia virada para
+//= a esquerda.
+//=
+//= O NOME DE ITEM NO MENU sai de `getitemname()`, que le o
+//= `Name` do item_db do SERVIDOR - e aquele ja esta em portugues
+//= desde o ferramentas/nomes_pt_item_db.py. Foi de proposito, e
+//= nao para poupar digitacao: nome escrito a mao aqui sairia de
+//= sincronia com o que a bolsa do jogador mostra, que e o
+//= problema que aquele script existe para resolver. Se algum
+//= nome aparecer em ingles no menu, o conserto e la, nao aqui.
+//=
+//= Cinco itens da lista sao NoTrade/NoDrop no item_db (o 13710,
+//= o Pergaminho e tres cupons). Quem comprar fica com eles: nao
+//= ha revenda entre jogadores, e nao ha o exploit de comprar
+//= barato e revender que o Mercado Contemporaneo tem. A Moeda
+//= Nova tambem e NoTrade - a economia inteira desta maquina e
+//= por personagem.
+//=
+//= A compra exige espaco: `checkweight` cobre peso E numero de
+//= slots livres, e e checado ANTES do delitem. Sem ele, uma
+//= bolsa cheia comeria a Moeda e nao entregaria o item - o
+//= `getitem` faria o pacote cair no chao ou se perder.
+//=
+//= Gravado em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, secao
+//= "Acentuacao".
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,167,199,6	script	Máquina	564,{
+	mes "[Máquina]";
+	mes "A máquina acorda com um estalo.";
+	mes "Uma fenda estreita se abre no painel,";
+	mes "do tamanho exato de uma ^0000FFMoeda Nova^000000.";
+	next;
+
+	while (1) {
+		.@saldo = countitem(.moeda);
+		mes "[Máquina]";
+		if (.@saldo == 0) {
+			mes "Você não tem nenhuma ^0000FFMoeda Nova^000000.";
+			mes "A fenda continua aberta, esperando.";
+		} else {
+			mes "Você tem ^0000FF" + .@saldo + "^000000 " +
+			    ((.@saldo == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+			mes "O que a máquina pode entregar:";
+		}
+		next;
+
+		// O ultimo item do menu e sempre a saida, e por isso o
+		// numero dele e `getarraysize(.grupo$) + 1`.
+		.@escolha = select(implode(.grupo$, ":") + ":Ir embora");
+		if (.@escolha > getarraysize(.grupo$))
+			break;
+		.@g = .@escolha - 1;
+
+		// Monta o menu do grupo a partir da tabela do OnInit. O
+		// `.@idx` guarda o indice REAL de cada linha listada, senao
+		// a resposta do select nao teria como voltar para a tabela.
+		.@n = 0;
+		.@menu$ = "";
+		for (.@i = 0; .@i < getarraysize(.id); .@i++) {
+			if (.grupo[.@i] != .@g)
+				continue;
+			.@idx[.@n] = .@i;
+			.@n++;
+			.@menu$ = .@menu$ + getitemname(.id[.@i]) +
+			          ((.qtd[.@i] > 1) ? " (" + .qtd[.@i] + " un.)" : "") +
+			          " - " + .preco[.@i] +
+			          ((.preco[.@i] == 1) ? " Moeda" : " Moedas") + ":";
+		}
+
+		// Sem `mes`/`next` entre os dois menus de proposito: o jogador
+		// acabou de escolher o grupo, e uma tela so para repetir o nome
+		// dele seria um clique a mais sem informacao nova. `select`
+		// logo depois de `select` e legitimo - cada um e o seu proprio
+		// pacote.
+		.@e = select(.@menu$ + "Voltar");
+		if (.@e > .@n)
+			continue;
+
+		.@i = .@idx[.@e - 1];
+		.@id = .id[.@i];
+		.@qtd = .qtd[.@i];
+		.@preco = .preco[.@i];
+
+		if (countitem(.moeda) < .@preco) {
+			mes "[Máquina]";
+			mes "^FF3355Moedas insuficientes.^000000";
+			mes "Isso custa " + .@preco + ", e você tem " + countitem(.moeda) + ".";
+			next;
+			continue;
+		}
+
+		// Antes do delitem, sempre: peso e slot livre juntos. Ver o
+		// cabecalho, secao "Notas".
+		if (!checkweight(.@id, .@qtd)) {
+			mes "[Máquina]";
+			mes "^FF3355A gaveta não abre.^000000";
+			mes "Não há espaço na sua bolsa para";
+			mes .@qtd + "x " + getitemname(.@id) + ".";
+			next;
+			continue;
+		}
+
+		delitem .moeda, .@preco;
+		getitem .@id, .@qtd;
+
+		mes "[Máquina]";
+		mes "A gaveta abre com " + .@qtd + "x ^0000FF" +
+		    getitemname(.@id) + "^000000.";
+		next;
+	}
+
+	mes "[Máquina]";
+	mes "O painel se apaga.";
+	close;
+
+OnInit:
+	.moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
+
+	setarray .grupo$[0], "Passes e cupons", "Refino", "Consumíveis";
+
+	// Uma coluna por item, nas quatro linhas. A coluna `.grupo` e o
+	// indice em `.grupo$` - e assim, e nao por faixa de indice, para
+	// que acrescentar item seja acrescentar uma coluna, sem recontar
+	// fronteira nenhuma.
+	//
+	//                     |------------ passes e cupons -----------|
+	setarray .id[0],        13710,  7622,  6707, 25736,  6959,  6046,
+	//                     |----------------------- refino ------------------------|
+	                         6235,  6241,  6240,  7619,  7620,  6635,  6225,  6226,
+	//                     |----- consumiveis ----|
+	                        12710, 14522, 14523;
+
+	setarray .qtd[0],           1,     1,     1,     1,     1,     1,
+	                            5,     5,     5,     5,     5,     5,     5,     5,
+	                           30,    50,    50;
+
+	setarray .preco[0],       100,    10,    10,    10,    10,    10,
+	                            5,     1,     1,     1,     1,     1,     2,     2,
+	                            3,     2,     2;
+
+	setarray .grupo[0],         0,     0,     0,     0,     0,     0,
+	                            1,     1,     1,     1,     1,     1,     1,     1,
+	                            2,     2,     2;
+
+	// A trava que impede a lista de sair de sincronia: quatro arrays
+	// mantidos a mao, e uma coluna esquecida em qualquer um deles
+	// entregaria preco zero, quantidade zero ou grupo errado - tudo
+	// calado. Aqui vira uma linha no log e a maquina nao abre.
+	.@n = getarraysize(.id);
+	if (getarraysize(.qtd) != .@n || getarraysize(.preco) != .@n ||
+	    getarraysize(.grupo) != .@n) {
+		debugmes "Maquina: as tabelas do OnInit tem tamanhos diferentes (id=" +
+		         .@n + " qtd=" + getarraysize(.qtd) + " preco=" +
+		         getarraysize(.preco) + " grupo=" + getarraysize(.grupo) +
+		         "). A maquina foi DESLIGADA.";
+		disablenpc "Máquina";
+	}
+	end;
+}

@@ -57,10 +57,15 @@ Body:
     # `Name` so aparece em log, @iteminfo e mensagem de GM.
     Name: Moeda Nova
     # A MOEDA DO REINO. E a moeda-corrente da Ordem, feita para ser o
-    # preco dos servicos novos. Ate agora NENHUM npc/guerra/ a cobra nem
-    # a entrega: o item existe, as fontes (Logue e Ganhe, trocas por Flor
-    # Visionaria / Moeda do Explorador / Caveira) e os servicos ainda
-    # nao. Etc, como toda moeda do rAthena (Moeda Manuk 6080, Moeda
+    # preco dos servicos novos. Desde 2026-08-07 ela tem ONDE SER GASTA:
+    # a Maquina (npc/guerra/maquina.txt, prontera 167,199) cobra a moeda
+    # em dezessete itens. O que ainda NAO existe e a FONTE - nenhum
+    # npc/guerra/ entrega Moeda Nova, entao hoje ela so entra por @item.
+    # As fontes pensadas (Logue e Ganhe, trocas por Flor Visionaria /
+    # Moeda do Explorador / Caveira) continuam por fazer, e enquanto isso
+    # a loja da Maquina esta de pe sem economia por tras.
+    #
+    # Etc, como toda moeda do rAthena (Moeda Manuk 6080, Moeda
     # Esplendor 6081): moeda nao se "usa", se gasta em NPC.
     Type: Etc
     # Peso 0, igual as moedas do rAthena. Moeda que pesa vira imposto
