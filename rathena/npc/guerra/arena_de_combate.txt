@@ -1,0 +1,143 @@
+//===== Guerra do Emperium ===================================
+//= Arena de Combate
+//===== Onde =================================================
+//= prontera 157,187 - tres celulas a leste da porta do campo de
+//= treino (154,187), na mesma fileira. Ali ficava a "Smile
+//= Assistance".
+//===== Descricao ============================================
+//= A porta da arena de PvP. Faz uma pergunta so e, se a resposta
+//= for sim, leva para pvp_n_1-5.
+//=
+//= Pedido em 2026-08-06.
+//===== Como, e por que assim ================================
+//= O NPC que estava em 157,187 e "Smile Assistance#prt", uma das
+//= SEIS duplicatas de "SmileHelper" (npc/quests/mrsmile.txt). As
+//= outras cinco - Alberta, Al De Baran, Geffen, Ruinas de Morroc
+//= e Payon - continuam de pe.
+//=
+//= Como no porteiro_do_treinamento e no armazem_do_cla, sao dois
+//= movimentos DE FORA:
+//=   1) `disablenpc` na duplicata, daqui;
+//=   2) este NPC nosso, na mesma coordenada.
+//= O npc/quests/mrsmile.txt fica byte a byte igual ao upstream.
+//=
+//= Aqui e mais simples que no guia de Prontera: aquele era o
+//= ORIGINAL de que saiam quatro duplicatas, e desliga-lo exigia
+//= explicar por que as quatro sobreviviam. "Smile Assistance#prt"
+//= e ELA PROPRIA uma duplicata - desliga-la nao alcanca ninguem.
+//===== O mapa ===============================================
+//= pvp_n_1-5 e a "Sala Bussola". Ja vem pronta: o
+//= npc/mapflag/pvp.txt liga o `pvp` nela, entao o combate abre
+//= sozinho ao entrar - este NPC nao mexe em mapflag nenhum.
+//=
+//= ATENCAO, e e por isso que este paragrafo existe: procurar
+//= `pvp_n_1-5.rsw` dentro do data.grf NAO ACHA NADA, e isso NAO
+//= quer dizer que o mapa falte. Os pvp_n_* sao APELIDOS. O
+//= data\resnametable.txt do GRF manda:
+//=     pvp_n_1-5.rsw#job_knight.rsw#
+//= e o cliente desenha a arte do job_knight. Conferido em jogo
+//= antes deste arquivo existir.
+//=
+//= Ou seja: a receita de "confira o .rsw no GRF" da FALSO
+//= NEGATIVO em mapa apelidado. Quando o .rsw nao aparecer, ler o
+//= resnametable.txt ANTES de concluir que o mapa nao existe.
+//===== A volta ==============================================
+//= Nao ha NPC de volta la dentro, e o mapa e `noteleport` - Asa
+//= de Mosca e teleporte nao tiram ninguem de la. Quem entra sai
+//= DESLOGANDO: pvp_n_1-5 e `nosave SavePoint`, entao o login
+//= seguinte cai no ponto de retorno e nao na arena. Ninguem fica
+//= preso.
+//=
+//= Se um dia se quiser saida por NPC, ela e um SEGUNDO NPC dentro
+//= do mapa com `warp "prontera",156,187` - nao mexer aqui.
+//===== O drop na morte ======================================
+//= O rAthena entrega pvp_n_1-5 com `pvp_nightmaredrop
+//= random,equip,300` (npc/mapflag/nightmare.txt): 3% de chance -
+//= 300 em 10000, ver o `rnd()%10000 < per` em src/map/pc.cpp - de
+//= o morto DESEQUIPAR UMA PECA E LARGA-LA NO CHAO. E o padrao das
+//= arenas pvp_n_*, e nao e o que queremos: aqui se briga, nao se
+//= perde patrimonio.
+//=
+//= A linha `pvp_nightmaredrop off` no fim deste arquivo desliga.
+//= O arquivo do rAthena nao foi tocado - mesmo movimento DE FORA
+//= do resto daqui, e o mesmo que o visual_sempre_visivel.txt faz
+//= com o nocostume.
+//=
+//= FUNCIONA POR ORDEM DE CARGA, e so por isso: o
+//= npc/re/scripts_main.conf le o npc/scripts_mapflags.conf na
+//= linha 32 e so chega no npc/scripts_custom.conf - por onde este
+//= arquivo entra - na 49. Quem liga fala primeiro, nos falamos
+//= depois, e o ultimo a falar vence. Se um dia esta ordem mudar,
+//= o drop volta calado.
+//=
+//= `off` derruba a flag inteira, nao so uma entrada da lista: o
+//= laco do pc.cpp que sorteia a peca esta todo dentro de um
+//= `if (mapdata->getMapFlag(MF_PVP_NIGHTMAREDROP))`.
+//=
+//= AS OUTRAS 39 ARENAS pvp_n_* CONTINUAM DERRUBANDO. Esta linha e
+//= de um mapa so, o desta porta. Se um dia outra arena abrir, ela
+//= precisa da linha dela.
+//===== Notas ================================================
+//= NAO SE PERDE EQUIPAMENTO AQUI, e isso e ajuste nosso: ver a
+//= secao "O drop na morte" abaixo e a linha de mapflag no fim do
+//= arquivo.
+//=
+//= O traje APARECE la dentro: o visual_sempre_visivel.txt ja
+//= desfaz o `nocostume` das 84 arenas, e esta e uma delas.
+//=
+//= `warp` com 0,0 e posicao sorteada entre as celulas andaveis -
+//= e o que o proprio warper de PvP do rAthena faz
+//= (npc/other/pvp.txt, funcao F_PVP_FSRS).
+//=
+//= Sprite 966, o 4_M_RUSKNIGHT - o cavaleiro de Moscovia, que no
+//= rAthena so aparece guardando a entrada do mosk_dun02.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1).
+//= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= ATENCAO ao editar: por causa do acento, ferramenta que assume
+//= UTF-8 troca cada letra acentuada por '?' sem avisar. Editar
+//= com script que grave em cp1252, como o resto de npc/guerra/.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,157,187,4	script	Arena de Combate	966,{
+	mes "[Arena de Combate]";
+	mes "Deseja entrar na gloriosa e";
+	mes "eterna arena de combate?";
+	next;
+	if (select("Sim:Não") == 2) {
+		mes "[Arena de Combate]";
+		mes "A arena fica aqui, esperando.";
+		close;
+	}
+	mes "[Arena de Combate]";
+	mes "Boa sorte!";
+	close2;
+	warp "pvp_n_1-5",0,0;
+	end;
+
+OnInit:
+	// "Smile Assistance#prt" e nome E exname ao mesmo tempo: a linha
+	// do rAthena (npc/quests/mrsmile.txt) e
+	//   prontera,157,187,4  duplicate(SmileHelper)  Smile Assistance#prt  92
+	// e duplicata sem `::` fica indexada pelo proprio nome. E por
+	// exname que o rAthena indexa NPC (npcname_db, src/map/npc.cpp),
+	// entao e ele que getnpcid e disablenpc enxergam.
+	//
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste, um
+	// nome fora de sincronia com o mrsmile.txt do rAthena abortaria o
+	// OnInit calado - e sobrariam DOIS NPCs na mesma celula, a Smile
+	// Assistance e este, um por cima do outro.
+	if (!getnpcid(0, "Smile Assistance#prt")) {
+		debugmes "ArenaDeCombate: nao achei 'Smile Assistance#prt'. O npc/quests/mrsmile.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 157,187.";
+		end;
+	}
+	disablenpc "Smile Assistance#prt";
+	end;
+}
+
+// Desliga o drop de equipamento na morte. Explicado no cabecalho,
+// secao "O drop na morte". Tirar esta linha devolve os 3% do rAthena.
+pvp_n_1-5	mapflag	pvp_nightmaredrop	off
