@@ -22,7 +22,7 @@ Header:
 Body:
   - Id: 30999
     AegisName: Maca_Da_Inocencia
-    Name: Maçã da Inocência
+    Name: Maï¿½ï¿½ da Inocï¿½ncia
     # Etc, e nao Usable, de proposito: a Maca nao e usada pelo jogador.
     # Quem a consome e o Mestre de UP (npc/guerra/mestre_de_up.txt).
     # Como Usable, o cliente ofereceria um botao de usar que nao faria
@@ -57,13 +57,19 @@ Body:
     # `Name` so aparece em log, @iteminfo e mensagem de GM.
     Name: Moeda Nova
     # A MOEDA DO REINO. E a moeda-corrente da Ordem, feita para ser o
-    # preco dos servicos novos. Desde 2026-08-07 ela tem ONDE SER GASTA:
-    # a Maquina (npc/guerra/maquina.txt, prontera 167,199) cobra a moeda
-    # em dezessete itens. O que ainda NAO existe e a FONTE - nenhum
-    # npc/guerra/ entrega Moeda Nova, entao hoje ela so entra por @item.
-    # As fontes pensadas (Logue e Ganhe, trocas por Flor Visionaria /
-    # Moeda do Explorador / Caveira) continuam por fazer, e enquanto isso
-    # a loja da Maquina esta de pe sem economia por tras.
+    # preco dos servicos novos. Desde 2026-08-07 o circuito FECHA:
+    #
+    #   ONDE GASTAR  a Maquina (npc/guerra/maquina.txt, prontera 167,199)
+    #                cobra a moeda em dezessete itens.
+    #   DE ONDE VEM  o Logue e Ganhe (db/guerra/attendance.yml) entrega
+    #                10 por dia e 50 no vigesimo - 240 por CONTA por mes.
+    #
+    # As outras fontes pensadas (trocas por Flor Visionaria / Moeda do
+    # Explorador / Caveira) continuam por fazer.
+    #
+    # O premio do Logue e Ganhe chega por RoDEX, e o `NoMail` abaixo NAO
+    # atrapalha: o itemdb_canmail so e checado quando um JOGADOR anexa
+    # item (src/map/mail.cpp), e o correio do sistema e gerado direto.
     #
     # Etc, como toda moeda do rAthena (Moeda Manuk 6080, Moeda
     # Esplendor 6081): moeda nao se "usa", se gasta em NPC.
@@ -1155,7 +1161,7 @@ Body:
     # para ca em db/guerra/item_combos.yml. Sem isso a versao com cova
     # seria PIOR que a sem cova para quem usa Boina Alada ou Traje
     # Protetor, e a perda seria calada.
-    Name: "Diadema do Paraíso"
+    Name: "Diadema do Paraï¿½so"
     Type: Armor
     Weight: 500
     Slots: 1

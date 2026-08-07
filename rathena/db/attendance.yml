@@ -39,4 +39,9 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/attendance.yml
     Mode: Renewal
+  # Guerra do Emperium: os ciclos do Logue e Ganhe. Sem Mode - vale nos dois.
+  # Gerado por ferramentas/monta_logue_e_ganhe.py, junto com a metade que mora
+  # no cliente (System/CheckAttendance.lub). Nao ha colisao com o de cima: o
+  # db/re/attendance.yml do rAthena tem o Body inteiro comentado.
+  - Path: db/guerra/attendance.yml
   - Path: db/import/attendance.yml

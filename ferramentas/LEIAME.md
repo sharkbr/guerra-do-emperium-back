@@ -9,7 +9,8 @@ Rodam em **Python 2.7** (`C:\Python27\python.exe`), que já está instalado nest
 máquina por causa do `get4.py` do NEMO.
 
 A maioria é de inspeção do cliente, mas nem todas — `nomes_pt_item_db.py` e
-`traduz_npcs.py` mexem no servidor, e o `servidor.py` abaixo só cuida dele.
+`traduz_npcs.py` mexem no servidor, o `servidor.py` abaixo só cuida dele, e o
+`monta_logue_e_ganhe.py` escreve nos dois lados de uma vez.
 
 ## `servidor.py` — sobe, para e confere os quatro servidores
 
@@ -59,6 +60,50 @@ Detalhe de implementação: a checagem é uma **conexão TCP de verdade**, não
 leitura do `netstat`. O `netstat` desta máquina pode sair traduzido (`OUVINDO`
 em vez de `LISTENING`) e quebraria o parse; conexão não depende de idioma. O
 `netstat` é usado só para exibir o PID, e nunca para decidir.
+
+## `monta_logue_e_ganhe.py` — gera as duas metades do Logue e Ganhe
+
+```
+python monta_logue_e_ganhe.py              # grava os dois lados
+python monta_logue_e_ganhe.py --verificar  # só relata, não grava
+```
+
+É a única ferramenta que escreve no **servidor e no cliente na mesma passada**,
+e existe por um motivo específico: a tabela de prêmios do Logue e Ganhe mora nos
+dois lugares, em formatos diferentes.
+
+| lado | arquivo | papel |
+|---|---|---|
+| servidor | `rathena/db/guerra/attendance.yml` | **entrega** o prêmio, por RoDEX |
+| cliente | `cliente\System\CheckAttendance.lub` | **desenha** os 20 quadrados |
+
+O servidor não manda a lista para o cliente. O `ZC_UI_OPEN` leva **um número
+só** — o contador do jogador —, e quem escolhe o ícone de cada quadrado é o
+`.lub`. Divergir as duas tabelas **não dá erro em lugar nenhum**: a janela
+promete um item e o correio entrega outro, e quem descobre é o jogador. Por isso
+a receita (item, prêmio por dia, primeiro e último ciclo) fica no topo do script
+e os dois arquivos são **saída** — editar qualquer um deles à mão é perder o
+trabalho na próxima passada.
+
+O que o script sabe e um editor de texto não saberia:
+
+- **Vinte dias é teto do cliente.** Ele recusa `PREMIOS` de outro tamanho.
+- **Um ciclo por mês civil**, com o último dia certo de cada mês (a regra
+  bissexta está no código, sem `calendar`, para a saída não depender do locale).
+  Mês civil não é enfeite: o contador (`#AttendanceCounter`) só zera quando
+  começa um período novo.
+- **A janela de datas do `.lub` é uma só** e cobre todos os ciclos — o cliente
+  não tem como descrever mês a mês; quem separa é o servidor.
+- `Config.EvendOnOff` fica sem valor **de propósito**. O erro de digitação é da
+  Gravity, está no bytecode do kRO 2021-11-03 e no arquivo do ROenglishRE;
+  "corrigir" para `EventOnOff` passaria a mandar um valor onde hoje vai `nil`.
+- Faz **backup datado** do `.lub` (é o único dos dois que não está no git) e, no
+  fim, prova que ele compila com o `Tools\luac.exe -p` do ROenglishRE.
+
+Idempotente: se um arquivo já está igual, não toca nem faz backup.
+
+Depois de rodar: `@reloadattendancedb` **e fechar e reabrir o cliente** — o
+`.lub` só é lido na inicialização. Ver `RECEITAS.md` §10.
 
 ## `traduz_setup.py` — põe o `Setup.exe` em português
 

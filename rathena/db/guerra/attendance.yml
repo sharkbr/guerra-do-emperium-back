@@ -1,0 +1,1120 @@
+# Logue e Ganhe - a fonte diaria de Moeda Nova.
+#
+# GERADO por ferramentas/monta_logue_e_ganhe.py. Nao editar a mao:
+# a mesma tabela de premios tambem sai no CheckAttendance.lub do
+# cliente, e as duas metades precisam bater byte a byte no premio.
+#
+# VINTE DIAS E O TETO, e o teto e do CLIENTE, nao nosso. Tres provas:
+# o CheckAttendance.lub do kRO 2021-11-03 tem 20 entradas; o do
+# ROenglishRE tambem; e o proprio rAthena so abre a janela no login
+# quando `pc_attendance_counter(sd) < 200` (src/map/pc.cpp), que e
+# `contador < 20`. Pedir um dia 21 aqui nao daria erro - o quadrado
+# simplesmente nao existe na janela.
+#
+# UM CICLO POR MES CIVIL. O contador (`#AttendanceCounter`) so zera
+# quando comeca um periodo NOVO, entao periodo unico e longo daria
+# 20 dias por conta na vida inteira. Mes a mes, a conta que loga
+# todo dia fecha os 20 e recomeca no dia 1 do mes seguinte.
+#
+# O contador e de CONTA (`#` = variavel de conta), nao de
+# personagem - trocar de personagem nao rende de novo.
+#
+# ESPERADO no boot: o map-server avisa
+#   Node "End" date <n> has already passed, skipping.
+# uma vez por mes ja vencido. Nao e defeito - e o rAthena pulando
+# ciclo velho. Quando o ULTIMO ciclo daqui vencer, o sistema morre
+# calado: sem janela, sem erro. Rodar a ferramenta de novo com
+# ULTIMO adiantado antes disso.
+
+Header:
+  Type: ATTENDANCE_DB
+  Version: 1
+
+Body:
+  - Start: 20260801
+    End: 20260831
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20260901
+    End: 20260930
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20261001
+    End: 20261031
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20261101
+    End: 20261130
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20261201
+    End: 20261231
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270101
+    End: 20270131
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270201
+    End: 20270228
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270301
+    End: 20270331
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270401
+    End: 20270430
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270501
+    End: 20270531
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270601
+    End: 20270630
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270701
+    End: 20270731
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270801
+    End: 20270831
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20270901
+    End: 20270930
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20271001
+    End: 20271031
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20271101
+    End: 20271130
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50
+
+  - Start: 20271201
+    End: 20271231
+    Rewards:
+      - Day: 1
+        ItemId: 30998
+        Amount: 10
+      - Day: 2
+        ItemId: 30998
+        Amount: 10
+      - Day: 3
+        ItemId: 30998
+        Amount: 10
+      - Day: 4
+        ItemId: 30998
+        Amount: 10
+      - Day: 5
+        ItemId: 30998
+        Amount: 10
+      - Day: 6
+        ItemId: 30998
+        Amount: 10
+      - Day: 7
+        ItemId: 30998
+        Amount: 10
+      - Day: 8
+        ItemId: 30998
+        Amount: 10
+      - Day: 9
+        ItemId: 30998
+        Amount: 10
+      - Day: 10
+        ItemId: 30998
+        Amount: 10
+      - Day: 11
+        ItemId: 30998
+        Amount: 10
+      - Day: 12
+        ItemId: 30998
+        Amount: 10
+      - Day: 13
+        ItemId: 30998
+        Amount: 10
+      - Day: 14
+        ItemId: 30998
+        Amount: 10
+      - Day: 15
+        ItemId: 30998
+        Amount: 10
+      - Day: 16
+        ItemId: 30998
+        Amount: 10
+      - Day: 17
+        ItemId: 30998
+        Amount: 10
+      - Day: 18
+        ItemId: 30998
+        Amount: 10
+      - Day: 19
+        ItemId: 30998
+        Amount: 10
+      - Day: 20
+        ItemId: 30998
+        Amount: 50

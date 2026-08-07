@@ -1618,11 +1618,11 @@ e é o **primeiro NPC que cobra a moeda**. O arquivo passou de
 deixou de ser verdade. A lista, os preços e o raciocínio de cada linha estão no
 cabeçalho dele; aqui fica só o que atravessa o projeto.
 
-**A economia ainda não fecha, e isso é deliberado:** existe onde gastar a moeda
-e **não existe fonte**. Nenhum `npc/guerra/` entrega Moeda Nova, então hoje ela
-só entra por `@item`. As fontes pensadas — Logue e Ganhe, trocas por Flor
-Visionária / Moeda do Explorador / Caveira — continuam por fazer. Enquanto isso
-a loja está de pé sem nada por trás dela.
+**Quando esta seção foi escrita, de manhã, a economia não fechava:** existia
+onde gastar a moeda e **não existia fonte**. Isso durou até a tarde do mesmo
+dia — ver "O Logue e Ganhe virou a fonte da Moeda Nova", logo abaixo. As outras
+fontes pensadas (trocas por Flor Visionária / Moeda do Explorador / Caveira)
+continuam por fazer.
 
 #### O trabalho foi descobrir ONDE cada item é gasto
 
@@ -1707,6 +1707,107 @@ caminho certo.
 Isso prova que **o script compila e a tabela está certa**. Não prova a
 navegação dos menus nem que a compra entrega o item. Para isso:
 `@reloadscript`, `@item 30998 200` e ir a Prontera.
+
+---
+
+### O Logue e Ganhe virou a fonte da Moeda Nova — 2026-08-07, NÃO testado in-game
+
+De manhã a Máquina passou a cobrar Moeda Nova sem que houvesse de onde tirá-la.
+À tarde o **Logue e Ganhe** (`attendance`, no vocabulário do rAthena) fechou o
+circuito: **10 Moedas por dia nos dias 1 a 19, e 50 no dia 20** — **240 por
+conta por ciclo**, e um ciclo por mês civil.
+
+Não há NPC. O sistema é do próprio cliente: uma janela de 20 quadrados que abre
+sozinha no login e entrega o prêmio por **RoDEX**.
+
+#### O achado que decidiu a forma do arquivo: são DOIS arquivos, não um
+
+A lista de prêmios existe **duas vezes**, em lugares diferentes, e o servidor
+**não** manda a dele para o cliente:
+
+| quem | arquivo | o que faz |
+|---|---|---|
+| servidor | `rathena/db/guerra/attendance.yml` | **entrega** o prêmio |
+| cliente | `cliente\System\CheckAttendance.lub` | **desenha** os 20 ícones |
+
+O pacote `ZC_UI_OPEN` leva **um número só** — o contador do jogador. Quem pinta
+cada quadrado é o `.lub`. Divergir as duas tabelas **não dá erro em lugar
+nenhum**: a janela promete um item e o correio entrega outro, e o jogador é o
+primeiro a descobrir.
+
+Por isso a tabela virou **saída de gerador**, não texto escrito à mão:
+`ferramentas/monta_logue_e_ganhe.py` tem a receita uma vez e grava os dois
+lados. Rodar de novo é idempotente, e o `.lub` gerado é conferido com o
+`Tools\luac.exe -p` do ROenglishRE antes de o script sair.
+
+#### Vinte dias é o teto, e o teto é do cliente
+
+Perguntado se dava para passar de 20, a resposta é **não** — e são três provas
+independentes, nenhuma delas "o rAthena documenta assim":
+
+1. O `CheckAttendance.lub` do nosso cliente (kRO 2021-11-03) é bytecode Lua, e a
+   última constante numérica da tabela `Reward` é `20.0`.
+2. O do ROenglishRE, que é texto puro, também para no dia 20.
+3. O próprio rAthena só abre a janela no login quando
+   `pc_attendance_counter(sd) < 200` (`src/map/pc.cpp:14796`) — e esse contador
+   é `10 * dias + hoje`, ou seja **`dias < 20`**.
+
+Pedir um dia 21 no YAML não daria erro: o quadrado simplesmente não existe.
+
+#### Por que um ciclo por mês, e não um período longo
+
+O contador só zera **quando começa um período novo** — `pc_attendance_counter`
+compara a data da última retirada com o `Start` do período corrente. Um período
+único e longo daria 20 dias por conta **na vida inteira**: bônus de boas-vindas,
+não renda. Foram gerados **17 ciclos**, de agosto de 2026 a dezembro de 2027,
+um por mês civil.
+
+**O contador é de CONTA**, não de personagem — as variáveis são
+`#AttendanceDate` e `#AttendanceCounter`, e o `#` é o prefixo de conta no
+rAthena. Trocar de personagem não rende de novo. Isso casa com o `NoTrade` da
+moeda: sem ele, a renda passaria a ser por *conta criada*.
+
+**Quando o último ciclo vencer, o sistema morre calado** — sem janela, sem erro.
+Rodar o gerador de novo com `ULTIMO` adiantado antes de dezembro de 2027.
+
+#### O `NoMail` da Moeda Nova assustou à toa
+
+O prêmio chega por correio, e a Moeda Nova tem `NoMail: true`. Parecia
+contradição fatal. Não é: o `itemdb_canmail` é checado **num lugar só**,
+`mail.cpp:272`, dentro do `mail_setitem` — ou seja, quando um **jogador** anexa
+item a uma carta que ele mesmo escreve. O correio do sistema é montado direto
+em `pc_attendance_claim_reward` e não passa por ali. Retirar anexo também não
+checa. A trava continua valendo para o que foi feita: impedir que a moeda vire
+mercadoria.
+
+#### O `attendance: false` do `Super Player` é letra morta
+
+`conf/groups.yml:95` diz `attendance: false` no grupo **Super Player**, do qual
+o grupo 99 herda. A leitura óbvia seria que a conta de teste não consegue abrir
+a janela. **Está errado**, e a razão está em `pc_groups.cpp:275`: herança de
+grupo é um **OU binário** (`group->permissions |= otherGroup->permissions`),
+aplicado *depois* do parse. O `Super Player` herda do `Player`, que tem
+`attendance: true` — então o bit volta a ligar, e desce até o 99.
+
+Generaliza, e é a parte que vale guardar: **em `groups.yml`, `false` só
+significa "não ligo"; nunca "desligo".** Permissão que o pai concede, o filho
+não consegue tirar. Está no `CLAUDE.md` §5.
+
+#### Como foi conferido, já que não houve teste in-game
+
+- O map-server foi **reiniciado** com o YAML novo: **nenhuma linha de
+  `attendance` no `log/map-msg_log.log`** — nem `Unknown item ID`, nem
+  `Reward for day N is missing`, nem colisão de período. Os quatro servidores
+  voltaram.
+- O `.lub` gerado passa no `Tools\luac.exe -p`.
+- `db/import/attendance.yml` foi conferido: só cabeçalho, sem `Body` — não há
+  período da máquina colidindo com os nossos.
+- A janela ativa hoje é a de agosto (`20260801`–`20260831`), e
+  `pc_attendance_period()` casa `start <= hoje <= end`.
+
+Isso prova que **o servidor carrega a tabela e o cliente compila a dele**. Não
+prova que a janela abre, nem que o RoDEX entrega. Para isso: fechar e reabrir o
+cliente (o `.lub` só é lido na inicialização) e logar.
 
 ## CONCLUÍDO — tradução do cliente para o inglês (2026-07-30)
 

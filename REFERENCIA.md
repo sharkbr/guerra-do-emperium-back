@@ -36,6 +36,7 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | Textos de quest | `cliente\data\questid2display.txt` |
 | Nomes e descrições de item | `cliente\SystemEN\LuaFiles514\itemInfo.lua` (22 MB) |
 | Config do itemInfo | `cliente\System\itemInfo_true.lub` (stub do ROenglishRE) |
+| **Logue e Ganhe** | `rathena/db/guerra/attendance.yml` **e** `cliente\System\CheckAttendance.lub` — os dois, sempre; gerados por `ferramentas/monta_logue_e_ganhe.py` |
 | Mensagens do servidor em PT-BR | `rathena/conf/msg_conf/map_msg_por.conf`; in-game `@langtype por` |
 | Inspecionar GRF e `.lub` | `ferramentas/` (ver `ferramentas/LEIAME.md`) |
 | Temática visual / cidade destruída | `CUSTOMIZACAO-VISUAL.md` |
@@ -98,6 +99,7 @@ Comandos conferidos neste repo (existem de fato):
 | Monstros | `@monster <nome/ID>`, `@mobinfo` |
 | Utilidades | `@heal`, `@zeny <n>`, `@speed <n>`, `@refine`, `@hide`, `@who` |
 | Anúncios | `@kami <msg>`, `@broadcast <msg>` |
+| Logue e Ganhe | `@reloadattendancedb` — recarrega **só o lado do servidor** |
 | Visual | `@mount`, `@size`, `@option` |
 
 Conferidos como **inexistentes**: `@ml`, `@wlup`, `@lvup`, `@levelup`, `@job`,

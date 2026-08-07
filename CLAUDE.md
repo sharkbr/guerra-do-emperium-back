@@ -44,7 +44,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 |---|---|
 | `npc/scripts_custom.conf` | uma linha `import: npc/guerra/scripts_guerra.conf` |
 | `conf/battle_athena.conf` | uma linha `import: conf/guerra/battle_guerra.txt` |
-| `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml` | um `- Path: db/guerra/...` no rodapé de cada |
+| `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `src/map/clif.cpp` | duas linhas (include + `placa_de_venda_mostra`), comentadas no arquivo |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
@@ -86,6 +86,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/` (item, conjunto) | `@reloaditemdb` — pega item **e** conjunto |
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
+| `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `src/` | recompilar (VS 2022 Community, já instalado) |
 | `itemInfo.lua` e afins no cliente | **fechar e reabrir o cliente** — só lido na inicialização |
 
@@ -116,6 +117,12 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
 8. **`grep` em `npc/` não prova que um item é inútil** — a UI do cliente consome
    item direto no C++, por tabela em `db/` (ex.: cupom de estilista,
    `db/re/stylist.yml`).
+9. **Sistema de UI do cliente tem metade da configuração NO CLIENTE.** O
+   servidor manda o estado (um contador, um índice), não a lista. Mexer só no
+   `db/` deixa as duas metades divergentes, e a divergência **não dá erro** — a
+   janela mostra uma coisa e o servidor entrega outra. Caso vivo: o Logue e
+   Ganhe (`db/guerra/attendance.yml` + `cliente\System\CheckAttendance.lub`),
+   por isso gerado dos dois lados por `ferramentas/monta_logue_e_ganhe.py`.
 
 ## 5. Armadilhas deste ambiente
 
@@ -137,6 +144,16 @@ Produziram diagnóstico falso e custaram retrabalho:
   registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só
   `SETTABLE ... ; B="NOME" C=<valor>` captura as ~127 primeiras entradas e
   devolve um número **plausível e errado**.
+- **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
+  binário aplicado **depois** do parse (`pc_groups.cpp:275`,
+  `permissions |= otherGroup->permissions`). Permissão que o pai concede, o
+  filho não consegue tirar — `attendance: false` no `Super Player` é letra
+  morta, porque ele herda do `Player`, que a concede. Ler a linha e concluir
+  "esse grupo não tem" dá diagnóstico invertido.
+- **`os.system` com a linha começando por aspas** falha no `cmd` do Windows: o
+  primeiro par de aspas é comido e sai *"A sintaxe do nome do arquivo... está
+  incorreta"* — que parece defeito do arquivo passado, e não é. Usar
+  `subprocess.call([exe, arg, ...])`.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

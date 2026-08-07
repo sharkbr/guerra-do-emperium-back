@@ -135,6 +135,25 @@ e as tabelas de `sql-files/guerra_arena_pvp.sql`. Sem as tabelas, o `query_sql`
 falha e ninguém pontua — mas o anúncio de morte continua saindo, e é esse o
 sintoma que aparece primeiro.
 
+### O Logue e Ganhe vive em 2 lugares, e o servidor não conversa com o outro
+
+| Onde | O que |
+|---|---|
+| `db/guerra/attendance.yml` | os ciclos e o prêmio que é **entregue** (por RoDEX) |
+| `cliente\System\CheckAttendance.lub` | o prêmio que é **desenhado** nos 20 quadrados |
+
+O pacote `ZC_UI_OPEN` leva **um número só** — o contador do jogador. A lista de
+prêmios nunca trafega: o cliente pinta a dele. Divergir as duas tabelas **não
+dá erro em lugar nenhum**; a janela promete um item e o correio entrega outro.
+
+Por isso as duas são **saída** de `ferramentas/monta_logue_e_ganhe.py`, que tem
+a receita uma vez só. `@reloadattendancedb` recarrega **só a metade do
+servidor** — o `.lub` exige fechar e reabrir o cliente.
+
+**Vinte dias é teto do cliente**, não escolha nossa, e o último ciclo gerado
+vence em 2027-12-31 — depois disso o sistema some sem avisar (`PENDENCIAS.md`
+§1b).
+
 ### Uma tradução de NPC vive em 2 lugares
 
 O catálogo (`npc/guerra/traducao/*.cat`) é a **fonte**; o arquivo `.txt` do

@@ -164,3 +164,22 @@ ele reconecta no mapa quebrado e cai de novo.
 
 Foi por isso que o campo de treino usa `tra_fild` (o antigo) e não
 `tra_fild01/02/03`.
+
+## 10. Mexer no Logue e Ganhe (prêmio, ou renovar os ciclos)
+
+**Nunca editar `db/guerra/attendance.yml` nem `CheckAttendance.lub` à mão.** Os
+dois carregam a MESMA tabela de prêmios em formatos diferentes, e divergir os
+dois **não dá erro**: a janela promete um item e o RoDEX entrega outro.
+
+1. Editar a receita no topo de `ferramentas/monta_logue_e_ganhe.py` —
+   `ITEM`, `PREMIOS` (vinte valores, e vinte é o teto do cliente), `PRIMEIRO`,
+   `ULTIMO`.
+2. `python ferramentas/monta_logue_e_ganhe.py --verificar` — diz o que mudaria.
+3. `python ferramentas/monta_logue_e_ganhe.py` — grava os dois lados, faz backup
+   do `.lub` e confere com o `luac -p`. Idempotente.
+4. `@reloadattendancedb` no jogo (ou reiniciar o map-server).
+5. **Fechar e reabrir o cliente.** O `.lub` só é lido na inicialização — sem
+   isso a janela continua mostrando a tabela velha, sem avisar.
+
+**Ciclo já vencido some calado.** Quando o `ULTIMO` passar, não há janela e não
+há erro. Adiantar antes: hoje o último é 2027-12-31.

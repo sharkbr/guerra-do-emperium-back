@@ -33,6 +33,7 @@ sem confirmação in-game.
 | Mercado de Visuais (3 lojas de traje) | `prontera`, y=155 | 2026-08-05 |
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
 | Máquina — loja da Moeda Nova (17 itens) | `prontera 167,199` | 2026-08-07 |
+| Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 
@@ -55,6 +56,29 @@ sem confirmação in-game.
   subir, e **reiniciar o map-server** (não basta `@reloadscript`). Sem as
   tabelas ninguém pontua, mas o anúncio de morte continua saindo — e é esse o
   sintoma que aparece primeiro.
+- **Logue e Ganhe:** a janela abre sozinha no login e **não tem NPC** — se não
+  aparecer, o roteiro acima não ajuda. O que provar, nesta ordem: (1) a janela
+  abre e mostra **20 quadrados de Moeda Nova**, 10 nos dezenove primeiros e
+  **50 no vigésimo** — se o ícone ou a quantidade divergirem, quem está
+  desatualizado é o `CheckAttendance.lub` do cliente, não o servidor; (2) o
+  prêmio chega por **RoDEX**, não direto no inventário; (3) o botão recusa a
+  segunda retirada no mesmo dia.
+
+  **Fechar e reabrir o cliente é obrigatório aqui**, e não pelo `itemInfo.lua`:
+  o `System\CheckAttendance.lub` também só é lido na inicialização.
+
+---
+
+## 1b. Vence em dezembro de 2027 — os ciclos do Logue e Ganhe
+
+`rathena/db/guerra/attendance.yml` tem **17 ciclos**, um por mês civil, e o
+último termina em **2027-12-31**. Passado isso o sistema **morre calado**: sem
+janela, sem erro, sem linha de log — o rAthena apenas não encontra período
+corrente.
+
+O conserto é uma linha: adiantar `ULTIMO` em
+`ferramentas/monta_logue_e_ganhe.py` e rodar. Ele regrava os dois lados
+(servidor e cliente) de uma vez. Ver `RECEITAS.md` §10.
 
 Contexto de cada um: `HISTORICO.md`, e o cabeçalho do arquivo em `npc/guerra/`.
 
