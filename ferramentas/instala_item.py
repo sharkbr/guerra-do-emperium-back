@@ -44,8 +44,17 @@ ITEMINFO = os.path.join(r'C:\GuerraDoEmperium\cliente',
 #             texto e gravado em cp1252, a mesma codificacao em que o bRO
 #             entrega os dele e a que o cliente desenha por causa do patch
 #             AlwaysAscii. Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
-#   descricao uma linha da caixa de descricao por elemento. "____..." e a regua
-#             separadora que o proprio arquivo usa, e `^RRGGBB` troca a cor.
+#   descricao um PARAGRAFO por elemento, nao uma linha de tela. O cliente
+#             dobra o texto sozinho na largura da caixa, entao nao ha por que
+#             quebrar a mao: quebrar so onde a quebra significa alguma coisa
+#             (um item de lista, uma regua, a ficha de Tipo/Peso no fim).
+#             Medido em 2026-08-07 contra o `iteminfo_new.lub` do bRO, que
+#             entrega a descricao do Emperium (714) numa unica string de 349
+#             caracteres e a do Bat-Katar (1298) em 444 - e o bRO esta no ar.
+#             O monte de linhas de exatos 60 caracteres do itemInfo.lua e
+#             convencao manual velha do kRO, nao um teto do cliente.
+#             "____..." e a regua separadora que o proprio arquivo usa, e
+#             `^RRGGBB` troca a cor.
 #   arte_de   ID de outro item de quem copiamos o `resourceName`, BYTE A BYTE.
 #             O `resourceName` e so um nome de recurso: nada impede dois IDs
 #             apontarem para o mesmo desenho, e assim nao precisamos criar
@@ -69,6 +78,30 @@ ITENS = [
             u'_______________________',
             u'^0000CCTipo:^000000 Etc',
             u'^0000CCPeso:^000000 1',
+        ],
+    },
+    {
+        'id': 30998,
+        'nome': u'Moeda Nova',
+        'arte_de': 6080,                    # a Moeda Manuk
+        # Uma linha por UNIDADE DE SENTIDO, e nao por largura: o paragrafo
+        # inteiro cabe numa string so. Quem dobra o texto na caixa e o
+        # cliente - medido em 2026-08-07 contra o iteminfo_new.lub do bRO,
+        # que entrega a descricao do Emperium (714) numa unica linha de 349
+        # caracteres e a do Bat-Katar (1298) em 444. Ver o LEIAME.md.
+        'descricao': [
+            u'A moeda do reino anterior estava corrompida, e por isso criar uma nova moeda foi a primeira coisa que a Ordem fez quando vieram salvar Rune Midgard.',
+            u'_______________________',
+            u'- Todo cidadão ganha 10 moedas por dia pelo Logue e Ganhe.',
+            u'- As moedas também podem ser obtidas em troca de Flores Visionárias (MVP);',
+            u'- As moedas também podem ser obtidas em troca de Moedas do Explorador;',
+            u'- As moedas também podem ser obtidas em troca de Caveira Humana;',
+            u'_______________________',
+            u'Novos serviços aceitam a moeda.',
+            u'^FF0000Não tente vender em NPCs comuns!^000000',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Etc',
+            u'^0000CCPeso:^000000 0',
         ],
     },
 ]

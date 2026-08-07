@@ -50,6 +50,54 @@ Body:
     # byte a byte do da Maca comum, entao o desenho e o mesmo sem custar
     # arquivo nenhum. Ate aqui o nome e a descricao ja sao os nossos.
 
+  - Id: 30998
+    AegisName: Moeda_Nova
+    # Nome sem acento nenhum, e por sorte: `Moeda Nova` e ASCII puro. O
+    # que o jogador le vem do itemInfo.lua do cliente, nao daqui - este
+    # `Name` so aparece em log, @iteminfo e mensagem de GM.
+    Name: Moeda Nova
+    # A MOEDA DO REINO. E a moeda-corrente da Ordem, feita para ser o
+    # preco dos servicos novos. Ate agora NENHUM npc/guerra/ a cobra nem
+    # a entrega: o item existe, as fontes (Logue e Ganhe, trocas por Flor
+    # Visionaria / Moeda do Explorador / Caveira) e os servicos ainda
+    # nao. Etc, como toda moeda do rAthena (Moeda Manuk 6080, Moeda
+    # Esplendor 6081): moeda nao se "usa", se gasta em NPC.
+    Type: Etc
+    # Peso 0, igual as moedas do rAthena. Moeda que pesa vira imposto
+    # sobre quem acumula, e a fonte diaria (Logue e Ganhe) faz acumular.
+    Weight: 0
+    # Buy/Sell omitidos = 0 dos dois lados. `NoSell` e o que torna a
+    # ultima linha da descricao literal: em NPC comum a moeda nem entra
+    # na janela de venda, em vez de entrar valendo 0 zeny.
+    #
+    # O resto do bloco e o mesmo perfil da Moeda Manuk (6080), que e a
+    # moeda-modelo do rAthena, com UMA diferenca: nao ha `NoStorage`, de
+    # proposito. O jogador guarda a moeda no armazem dele, mas ela nao
+    # sai do jogador - sem chao, sem troca, sem carrinho, sem armazem de
+    # cla, sem RoDEX e sem leilao. Isso e o que segura a moeda de virar
+    # mercadoria de mula: a renda e por cidadao (10/dia), entao trocavel
+    # ela viraria renda por CONTA CRIADA.
+    #
+    # Se um dia a decisao for abrir economia de jogador em cima dela,
+    # o passo e tirar `NoTrade` e `NoDrop` daqui - nao ha nada em
+    # script dependendo da trava.
+    #
+    # Cuidado ao testar: a conta de teste e group 99 e SENTE estas
+    # travas; um GM de group 100+ nao sente (`Override`, padrao 100).
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    # Sem arte propria: a entrada [30998] do itemInfo.lua copia o
+    # `resourceName` da Moeda Manuk (6080) byte a byte, entao o desenho
+    # e o da moeda dela. Quem poe a entrada e o
+    # ferramentas/instala_item.py - rodar de novo depois de trocar o
+    # cliente ou de mexer no texto da descricao.
+
 # =========================================================================
 # PLACEHOLDERS DO MERCADO CONTEMPORANEO - 2026-08-01
 # =========================================================================
