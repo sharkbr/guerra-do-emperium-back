@@ -11,7 +11,7 @@ separado em 2026-08-07.
 > Este arquivo é versionado: **nunca colar senha real aqui.** As senhas reais
 > vivem em `rathena/conf/import/`, que está fora do git.
 
-Estado em 2026-08-07.
+Estado em 2026-08-08.
 
 ---
 
@@ -81,6 +81,79 @@ O conserto é uma linha: adiantar `ULTIMO` em
 (servidor e cliente) de uma vez. Ver `RECEITAS.md` §10.
 
 Contexto de cada um: `HISTORICO.md`, e o cabeçalho do arquivo em `npc/guerra/`.
+
+---
+
+## 1c. O Corredor Fantasma — o que ficou em aberto
+
+**A sala foi validada em jogo em 2026-08-08** e saiu do §1. O que sobrou aqui
+não impede jogar: os dois primeiros são decisões, não esquecimentos, e o
+terceiro é só confirmação que falta.
+
+**1. A Flor Visionária não tem onde ser gasta.** O item 25503 cai em 30% das
+mortes de chefe, e o NPC de troca do bRO — 10 Flores por um Prêmio Visionário, com 1% de
+Cartão Visionário a cada 200 trocas do servidor — foi cortado a pedido. Abrir o
+destino dela **não exige mexer na sala**: basta um NPC novo que consuma o 25503.
+Os itens do bRO já existem no vendor (`23684` Cartão Visionário, e o
+`IG_2018_VISIONARY_CARD` que ele abre).
+
+**2. Os chefes aparecem com nome em inglês.** Nome de monstro vem do
+**servidor**, não do `itemInfo.lua` — então o Corredor mostra "Amon Ra", não
+"Amon Rá". Consertar é um `db/guerra/mob_db.yml` só com `Id` e `Name`, mas
+**vale para o servidor inteiro**, não só para esta sala: é uma frente de
+tradução própria, irmã da do §3, e não uma correção do Corredor. As linhas de
+spawn já usam `--ja--`, então acompanham sozinhas no dia em que isso for feito.
+
+**3. Os dois números novos nunca foram vistos em jogo.** O teste que aprovou a
+sala pegou a versão de **2 flores garantidas e 65 chefes**. Logo depois eles
+viraram **1 flor a 30% e 130 chefes**, e essa versão só foi conferida no boot
+do servidor — não jogando. Nada sugere problema (é o mesmo caminho de código,
+com outros números), mas fica dito.
+
+Ao conferir a flor: **três mortes secas seguidas não querem dizer nada** com 30%
+de chance — dá quase 35% de acontecer por acaso. Contar umas dez antes de
+suspeitar. Se em dez não vier nenhuma, o suspeito é o nome do evento na linha de
+spawn, e a armadilha está no `CLAUDE.md` §5.
+
+---
+
+## 1d. A Teletransportadora oferece destino que derruba o cliente
+
+Aberto em 2026-08-08, e **não** é sobre o Corredor Fantasma — apareceu ao testar
+ele. O personagem foi levado ao "Sticky Sea" (`1@slug`) e o cliente caiu, com o
+personagem **preso**: ao reconectar ele voltava ao mapa quebrado e caía de novo.
+
+A causa é a regra 6 do `CLAUDE.md` na forma completa:
+
+| | |
+|---|---|
+| `1@slug` no `db/map_index.txt` do rAthena | **sim** — o servidor aceita o warp |
+| `.rsw`, `.gat`, `.gnd` no GRF deste cliente | **nenhum dos três** |
+| Apelido no `resnametable.txt` | **não** — não é o falso negativo do `pvp_n_1-5` |
+
+O `npc/custom/warper.txt` é o do próprio rAthena (Euphy), montado para um
+cliente moderno, e **o `1@slug` não deve ser o único**: o menu de Instâncias e o
+de Masmorras têm mapas pós-2021 que este kRO de 2021-11-03 não tem.
+
+**Enquanto não for varrido, todo destino de Instância é suspeito.**
+
+### Como fechar
+
+A varredura é barata e já existe pronta em pedaços — `ferramentas/grf.py` lista
+os `.rsw` do GRF, e foi assim que o `vis_h01` foi aprovado antes de virar o
+Corredor. O que falta é o laço:
+
+1. Extrair todo `warp "<mapa>"` do `npc/custom/warper.txt`.
+2. Cruzar com os `.rsw` do `data.grf` **e com o `resnametable.txt`** — pular a
+   segunda tabela dá falso positivo em mapa apelidado.
+3. Podar do menu os que faltarem — em cópia nossa em `npc/guerra/`, **não**
+   editando o arquivo do rAthena (o cabeçalho do `scripts_guerra.conf` já
+   registra que é esse o caminho no dia em que se quiser versão própria).
+
+**Tirar personagem preso**, enquanto isso: com ele offline (`online = 0` na
+tabela `char`), `UPDATE char SET last_map='prontera', last_x=152, last_y=188
+WHERE char_id=...`. Conferir o `save_map` junto — se ele também estiver no mapa
+quebrado, o personagem volta para lá ao morrer.
 
 ---
 

@@ -1,0 +1,420 @@
+//===== Guerra do Emperium ===================================
+//= Corredor Fantasma
+//===== Onde =================================================
+//= A porta: comodo 208,187 - a MESMA celula do bRO. A volta
+//= desembarca em comodo 208,185, que la era o portal.
+//= A sala: vis_h01, chegada em 36,34, canto sudoeste.
+//===== Descricao ============================================
+//= Uma sala em que so ha MVP. Entra-se de graca, fica-se o
+//= tempo que quiser, e os 130 chefes voltam de dois em dois
+//= minutos. Chefe morto tem 30% de largar uma Flor Visionaria.
+//=
+//= Pedido em 2026-08-08: "tinhamos no jogo o conceito de
+//= Cheffenia, que mais tarde virou Corredor Fantasma".
+//===== O que veio do bRO, e o que nao veio ==================
+//= O Corredor Fantasma do bRO (browiki.org/wiki/Corredor_
+//= Fantasma; la fora, "Corridor of Phantoms") era evento
+//= temporario, com TRES andares, e cobrava entrada:
+//=
+//=   Selo Visionario gratis   1 hora,  recarga as 4 da manha
+//=   Selo por 10.000.000z     4 horas, sem limite
+//=
+//= NADA DISSO ENTROU, e foi decisao explicita: aqui a entrada
+//= e livre - sem preco, sem duracao, sem recarga, sem selo. O
+//= item 25504 (Selo Visionario) existe no vendor e continua
+//= sem uso nenhum.
+//=
+//= TAMBEM NAO ENTROU a troca de premio. No bRO levavam-se 10
+//= Flores ao Espectro por um Premio Visionario, e a cada 200
+//= trocas do servidor inteiro havia 1% de sair um Cartao
+//= Visionario (carta de MVP). Foi cortado a pedido - nao ha
+//= NPC de troca aqui.
+//=
+//= CONSEQUENCIA A ENCARAR: a Flor Visionaria cai e NAO TEM
+//= ONDE SER GASTA. Ela e trofeu, por enquanto. Quem for abrir
+//= o destino dela mais tarde nao precisa mexer nesta sala -
+//= basta um NPC novo que consuma o item 25503.
+//=
+//= Do bRO ficaram: o lugar (Comodo), o mapa (vis_h01), os dois
+//= minutos de renascimento, a flor, e as regras de mapa.
+//=
+//= UMA REGRA DO bRO FOI DEIXADA DE FORA de proposito: la todo
+//= dano que o jogador causava era reduzido em 30%, para o mapa
+//= nao virar farm facil. Aqui o dano e normal, por decisao de
+//= 2026-08-08. Se um dia quiser-se aquilo de volta, e uma
+//= linha de `bonus2 bMagicAddRace`-nada: exige mapflag de dano
+//= (`skill_damage`) ou codigo em src/custom, nao script.
+//===== Os tres andares viraram uma sala =====================
+//= O bRO dividia os chefes em 1o, 2o e 3o andar - e os mapas
+//= existem, vis_h01 ate vis_h04, todos com .rsw no nosso GRF.
+//= Foi decidido usar UM SO, o vis_h01, com o elenco inteiro
+//= dentro. Menos porta para atravessar, e a sala e grande o
+//= bastante: 240x240, com 16.583 celulas andaveis.
+//=
+//= Os vis_h02..04 continuam sem NPC e sem spawn nenhum. Abrir
+//= um segundo andar depois e copiar o bloco de spawn deste
+//= arquivo trocando o nome do mapa - nao ha nada preso a
+//= "vis_h01" fora as linhas abaixo e o .Mapa$ do OnInit.
+//===== Os chefes ============================================
+//= SAO 130 NO CHAO: 65 TIPOS, DOIS DE CADA. O `2` no terceiro
+//= campo da linha de spawn e a quantidade, e cada um dos dois
+//= tem vida e renascimento proprios - nao e um mob que nasce
+//= duas vezes. Dobrado em 2026-08-08, depois do primeiro teste
+//= em jogo, junto com o corte da flor.
+//=
+//= ATENCAO se um dia esse numero mudar: o `mob_count_rate` do
+//= conf/battle/monster.conf multiplica a quantidade, mas SO
+//= quando ela e maior que 1 (src/map/npc.cpp, `if (mob.num > 1
+//= && battle_config.mob_count_rate != 100)`). Enquanto era 1
+//= por linha essa taxa nao alcancava esta sala; agora alcanca.
+//= Hoje ela e 100, entao 2 e 2.
+//=
+//= Os 65 TIPOS saem dos 121 mobs que o mob_db marca com MvpExp.
+//= Os 56 que ficaram de fora, e por que:
+//=
+//=   21  copia de evento (E_*) - o original ja esta na lista
+//=    5  versao Infinita da masmorra memorial (MIN_*)
+//=    7  boss de masmorra memorial (MD_*)
+//=    2  versao Pesadelo, so existe dentro da instancia
+//=    2  versao Ilusao, so existe dentro da instancia
+//=    9  boss de instancia (Time Holder, Celine Kimi, EP16/17)
+//=    6  evento ou piada (Bring it on!, The Last One, Kublin)
+//=    4  variante de cor da Faceworm Queen - a 2529 ficou
+//=
+//= O criterio foi um so: chefe que existe SOZINHO no campo
+//= entra; chefe que so faz sentido dentro da instancia dele,
+//= nao. O elenco que sobrou cobre quase inteira a lista dos
+//= tres andares do bRO.
+//=
+//= OS 65 TIPOS (id, nivel, nome) - cada um com dois no chao:
+//=
+//=   1087  50   Orc Hero                1147  55   Maya
+//=   1190  55   Orc Lord                1086  65   Golden Thief Bug
+//=   1115  65   Eddga                   1038  68   Osiris
+//=   1511  69   Amon Ra                 1159  71   Phreeoni
+//=   1389  75   Dracula                 1046  77   Doppelganger
+//=   1059  78   Mistress                1150  79   Moonlight Flower
+//=   1688  80   Lady Tanee              1039  81   Baphomet
+//=   1157  85   Pharaoh                 1112  91   Drake
+//=   1251  92   Stormy Knight           2068  93   Boitata
+//=   1373  94   Lord of the Dead        2156  94   Leak
+//=   1272  96   Dark Lord               1630  97   White Lady
+//=   1885  97   Gopinich                1252  98   Hatii
+//=   1779  98   Ktullanux               1708  99   Thanatos Phantom
+//=   1492  100  Samurai Specter         1623  100  RSX-0806
+//=   1418  105  Evil Snake Lord         1312  110  Turtle General
+//=   1583  110  Tao Gunka               1785  113  Atroce
+//=   3450  115  Bijou                   2202  124  Kraken
+//=   1734  125  Kiel D-01               1685  128  Vesper
+//=   1719  135  Detardeurus             2131  135  Lost Dragon
+//=   1871  138  Falling Bishop          1768  139  Gloom Under Night
+//=   2087  140  Scaraba Queen           1658  141  Egnigem Cenia
+//=   1751  141  Valkyrie Randgris       2249  141  Angry Student Pyuriel
+//=   2253  142  General Daehyun         2255  143  Dark Guardian Kades
+//=   1832  146  Ifrit                   2251  146  Gioia
+//=   1874  147  Beelzebub               1917  151  Wounded Morocc
+//=   2319  151  Buwaya                  2529  155  Faceworm Queen
+//=   1646  160  Lord Knight Seyren      1647  160  Assassin Cross Eremes
+//=   1648  160  Whitesmith Howard       1649  160  High Priest Margaretha
+//=   1650  160  Sniper Cecil            1651  160  High Wizard Kathryne
+//=   2235  160  Paladin Randel          2236  160  Creator Flamel
+//=   2237  160  Professor Celia         2238  160  Champion Chen
+//=   2239  160  Stalker Gertie          2240  160  Clown Alphoccio
+//=   2241  160  Gypsy Trentini
+//=
+//= OS NOMES SAO OS DO mob_db, E ESTAO EM INGLES. O nome que o
+//= jogador le vem do SERVIDOR aqui, nao do cliente - monstro
+//= nao passa pelo itemInfo.lua. Traduzi-los e um db/guerra/
+//= mob_db.yml so com Id e Name, e vale para o servidor
+//= inteiro, nao so para esta sala. Nao foi feito: esta em
+//= PENDENCIAS.md.
+//===== NAO PONHA COMENTARIO NO FIM DA LINHA DE SPAWN ========
+//= Custou meia hora de leitura de codigo, entao fica escrito.
+//=
+//= O npc_parsesrcfile enche o w4 "to end of line"
+//= (src/map/npc.cpp, "// fill w4 (to end of line)"), e o
+//= npc_parse_mob le o nome do evento com `%77[^,]`, que so
+//= para na virgula. Um `<TAB>// Amon Ra` depois do evento
+//= entra DENTRO do nome do evento.
+//=
+//= E ai o mob_parse_dataset (src/map/mob.cpp:446) so tira a
+//= aspa se ela for o ULTIMO byte da string - com o comentario
+//= atras, nao e. Sobra `"corredor_fantasma::OnChefeMorto<TAB>
+//= // Amon Ra`, o strdb_get nao acha, e o evento nunca dispara.
+//=
+//= FALHA CALADA: o chefe nasce, anda, morre - e a flor nao sai.
+//= Nada no log aponta para a linha de spawn.
+//=
+//= Por isso as 65 linhas de spawn abaixo sao mudas, e quem diz
+//= quem e quem e a tabela do cabecalho, acima.
+//===== Onde os chefes nascem ================================
+//= `vis_h01,120,120,70,70` NAO e "70 celulas de lado". O
+//= npc_parse_mob guarda xs/ys crus e o mob_spawn chama
+//= map_search_freecell com `xs-1` (src/map/mob.cpp:1149), que
+//= sorteia em `rnd_value(bx-rx, bx+rx)`. Ou seja: 120 mais ou
+//= menos 69, isto e x e y entre 51 e 189.
+//=
+//= ESSE RETANGULO FOI ESCOLHIDO, nao chutado. Duas razoes:
+//=
+//=   1) O vis_h01 tem DOIS pedacos andaveis: o mapa de
+//=      verdade (16.104 celulas, x e y de 28 a 211) e uma
+//=      franja solta de 479 celulas na linha y=239, que e
+//=      ruido do .gat. Chefe sorteado la ficaria inalcancavel.
+//=      Entre 51 e 189 nao ha uma celula solta sequer -
+//=      conferido celula a celula antes de escrever isto.
+//=
+//=   2) A CHEGADA DO JOGADOR FICA FORA DELE. 36,34 esta a 15
+//=      celulas da borda do retangulo, entao ninguem desembarca
+//=      em cima de um Beelzebub. Mexer no retangulo sem mexer
+//=      na chegada desfaz isso.
+//=
+//= Nao usar `0,0` (mapa inteiro): ali o sorteio pega a franja.
+//===== O renascimento =======================================
+//= 120000 ms, sem variacao. Sao os 2 minutos do bRO.
+//=
+//= O rAthena rebaixa delay abaixo de `mob_respawn_time`
+//= (conf/battle/monster.conf, hoje 1000) para 5 segundos, com
+//= aviso. 120000 passa longe disso - mas se alguem baixar o
+//= numero aqui, conferir aquele teto antes.
+//=
+//= O quinto campo e 0 (delay2 = variacao aleatoria). De
+//= proposito: chefe que volta na hora certa da ao jogador uma
+//= rota para rodar. E o `mob_spawn_variance` do rAthena zera
+//= a variacao de boss sozinho, entao por outro numero ali nao
+//= faria efeito nenhum.
+//===== A Flor Visionaria ====================================
+//= Item 25503, `Flower_V`, "Flor Visionaria" - JA EXISTIA no
+//= vendor, ja com o nome em portugues. Nao foi preciso criar
+//= item nenhum.
+//=
+//= Ela NAO esta no drop dos chefes, e isso e de proposito: um
+//= db/guerra/mob_db.yml com a flor no Drops faria Amon Ra
+//= larga-la tambem dentro da piramide. Ela nasce do evento
+//= OnChefeMorto abaixo, que so os spawns DESTA sala chamam -
+//= entao a flor e, por construcao, exclusiva daqui.
+//=
+//= QUEM RECEBE E QUEM DEU O ULTIMO GOLPE. E o
+//= `mob_npc_event_type: 1` do rAthena (conf/battle/monster.conf).
+//= Casa com a regra do bRO de que aqui nao ha KS: quem matar,
+//= leva. Com o tipo 0 iria para quem deu mais dano.
+//=
+//= CAI UMA, EM 30% DAS MORTES. Ate 2026-08-08 eram DUAS,
+//= garantidas em toda morte - o primeiro teste em jogo mostrou
+//= que era chuva de flor. Os dois numeros sao `.FlorChance` e
+//= `.FlorQtd` no OnInit; nao ha outro lugar para mexer.
+//=
+//= O sorteio e `rand(100) < .FlorChance`, e o `rand(100)` do
+//= rAthena devolve 0..99 - entao 30 e 30% cravado, nao 31%.
+//===== As regras da sala ====================================
+//= As quatro que o bRO tinha, mais duas de casa:
+//=
+//=   nopenalty    nao se perde EXP ao morrer            (bRO)
+//=   nomemo       nao se grava Portal                   (bRO)
+//=   noteleport   nao se teleporta, Asa de Mosca nao vai (bRO)
+//=   nosave       o login seguinte cai no ponto de retorno
+//=   nobranch     Galho Seco nao invoca aqui - a sala ja
+//=                tem 130 chefes, nao precisa de ajuda
+//=   notomb       sem lapide de MVP. Com 130 chefes morrendo
+//=                sem parar o chao viraria um cemiterio
+//=
+//= NAO foi posto `monster_noteleport`: os chefes teleportam,
+//= como teleportam no mapa nativo deles. Foi decisao - a sala
+//= e uma cacada, nao um alvo parado. Uma linha resolve, se um
+//= dia se quiser o contrario.
+//=
+//= COMO SE SAI: pelo Espectro que fica ao lado da chegada, ou
+//= deslogando (o `nosave` devolve ao ponto de retorno). Quem
+//= morre volta pelo respawn normal - `nopenalty` tira a perda
+//= de EXP, nao muda para onde o morto vai. Ninguem fica preso.
+//===== Notas ================================================
+//= Sprite 4_M_DEATH, a Morte. Conferido no npcidentity.lub E
+//= com .spr no GRF deste cliente antes de ser escolhido - o
+//= teto de sprite de NPC daqui e real (ver CLAUDE.md).
+//=
+//= O cliente ja desenha o nome do mapa em portugues: o
+//= data\mapnametable.txt do override tem "Arena Fantasma (1)",
+//= que veio da traducao de 2026-08-03. O nome coreano original
+//= era "Corredor Fantasma 1o andar".
+//=
+//= Os textos vao COM ACENTO, gravados em cp1252. Ferramenta
+//= que assume UTF-8 troca cada letra acentuada sem avisar -
+//= editar com script que grave em cp1252, como o resto de
+//= npc/guerra/.
+//=
+//= Mudanca nos NPCs pega com @reloadscript. Mudanca nas linhas
+//= de spawn TAMBEM, mas os chefes que ja estao no chao
+//= sobrevivem ao reload - para limpar de verdade, reiniciar o
+//= map-server.
+//============================================================
+
+// O cerebro: guarda a configuracao e recebe a morte dos chefes.
+// Flutuante (sem mapa) de proposito - nao ha nada para clicar aqui,
+// e o nome curto e o que as 65 linhas de spawn referenciam.
+-	script	corredor_fantasma	-1,{
+	end;
+
+OnInit:
+	.Mapa$ = "vis_h01";     // a sala
+	.EntraX = 36;           // onde o jogador desembarca
+	.EntraY = 34;
+	.Volta$ = "comodo";     // e para onde ele volta
+	.VoltaX = 208;
+	.VoltaY = 185;
+
+	.Flor = 25503;          // Flor Visionaria
+	.FlorQtd = 1;           // quantas por chefe, quando cai
+	.FlorChance = 30;       // em quantas mortes de cada 100 ela cai
+	end;
+
+OnChefeMorto:
+	// Disparado pelas 65 linhas de spawn do fim do arquivo, e so por
+	// elas. O jogador anexado e quem deu o ultimo golpe.
+	if (!playerattached())
+		end;
+
+	// Rede de seguranca: se um dia alguem copiar uma linha de spawn
+	// deste arquivo para outro mapa e esquecer de trocar o evento, a
+	// flor nao vaza para fora da sala.
+	if (strcharinfo(3) != .Mapa$)
+		end;
+
+	// rand(100) devolve 0..99, entao `< 30` e 30% cravado.
+	if (rand(100) >= .FlorChance)
+		end;
+
+	getitem .Flor, .FlorQtd;
+	end;
+}
+
+// A PORTA, em Comodo. Mesma celula do bRO.
+comodo,208,187,4	script	Espectro da Morte#porta	4_M_DEATH,{
+	mes "[Espectro da Morte]";
+	mes "Você ouve? É o Corredor Fantasma, logo ali.";
+	mes "Lá dentro não há pescador, não há areia e não há";
+	mes "descanso. Só os grandes, e eles voltam sempre.";
+	next;
+	mes "[Espectro da Morte]";
+	mes "A entrada é livre. Não cobro nada, não tenho hora";
+	mes "para fechar, e você vai e volta quantas vezes quiser.";
+	next;
+	mes "[Espectro da Morte]";
+	mes "Antes, saiba de três coisas:";
+	mes "Lá dentro não se grava Portal e não se teleporta.";
+	mes "Quem morre não perde experiência.";
+	mes "E de vez em quando um deles deixa cair uma ^0000FFFlor Visionária^000000.";
+	next;
+	switch (select("Entrar no Corredor Fantasma:Ficar por aqui")) {
+	case 1:
+		mes "[Espectro da Morte]";
+		mes "Então vá. Eu conto os que voltam.";
+		close2;
+		warp getvariableofnpc(.Mapa$, "corredor_fantasma"),
+		     getvariableofnpc(.EntraX, "corredor_fantasma"),
+		     getvariableofnpc(.EntraY, "corredor_fantasma");
+		end;
+	case 2:
+		mes "[Espectro da Morte]";
+		mes "O corredor não tem pressa. Nem eu.";
+		close;
+	}
+}
+
+// A SAIDA, ao lado de onde o jogador desembarca.
+vis_h01,34,34,4	script	Espectro da Morte#saida	4_M_DEATH,{
+	mes "[Espectro da Morte]";
+	mes "Já teve o bastante por hoje?";
+	next;
+	if (select("Voltar para Comodo:Ficar mais um pouco") == 2) {
+		mes "[Espectro da Morte]";
+		mes "Boa caçada. Eu espero aqui.";
+		close;
+	}
+	mes "[Espectro da Morte]";
+	mes "Até a próxima.";
+	close2;
+	warp getvariableofnpc(.Volta$, "corredor_fantasma"),
+	     getvariableofnpc(.VoltaX, "corredor_fantasma"),
+	     getvariableofnpc(.VoltaY, "corredor_fantasma");
+	end;
+}
+
+// As regras da sala. Explicadas no cabecalho, secao "As regras da sala".
+vis_h01	mapflag	nopenalty
+vis_h01	mapflag	nomemo
+vis_h01	mapflag	noteleport
+vis_h01	mapflag	nosave	SavePoint
+vis_h01	mapflag	nobranch
+vis_h01	mapflag	notomb
+
+// Os chefes: 65 linhas, DOIS de cada, 130 no chao. O `2` e a quantidade
+// por linha - ver o cabecalho, secao "Os chefes".
+// NAO PONHA COMENTARIO NO FIM DESTAS LINHAS - o motivo
+// esta no cabecalho, secao "NAO PONHA COMENTARIO NO FIM DA LINHA DE
+// SPAWN", e a falha e calada. Quem e quem esta na tabela do cabecalho.
+// "--ja--" faz o spawn usar o nome do proprio mob_db: se um dia os
+// chefes forem traduzidos, estas linhas acompanham sozinhas.
+vis_h01,120,120,70,70	monster	--ja--	1087,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1147,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1190,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1086,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1115,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1038,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1511,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1159,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1389,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1046,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1059,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1150,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1688,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1039,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1157,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1112,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1251,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2068,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1373,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2156,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1272,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1630,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1885,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1252,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1779,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1708,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1492,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1623,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1418,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1312,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1583,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1785,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	3450,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2202,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1734,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1685,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1719,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2131,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1871,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1768,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2087,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1658,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1751,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2249,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2253,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2255,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1832,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2251,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1874,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1917,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2319,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2529,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1646,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1647,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1648,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1649,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1650,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	1651,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2235,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2236,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2237,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2238,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2239,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2240,2,120000,0,"corredor_fantasma::OnChefeMorto"
+vis_h01,120,120,70,70	monster	--ja--	2241,2,120000,0,"corredor_fantasma::OnChefeMorto"

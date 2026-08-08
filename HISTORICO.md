@@ -2679,3 +2679,162 @@ que o próprio rAthena documenta para isso.
 **Validado no jogo em 2026-08-07**, no mesmo dia em que foi escrito — a bênção
 acendendo no +6 e o teto recusando o +17, com a mensagem chegando na caixa de
 chat com os acentos certos. Saiu do `PENDENCIAS.md`.
+
+---
+
+## O Corredor Fantasma — a sala de MVP de Comodo (2026-08-08)
+
+Pedido assim: *"tínhamos no jogo o conceito de Cheffênia, que mais tarde virou
+Corredor Fantasma. A mais recente ficava em Comodo, é um mapa que você entra
+para matar apenas MVPs."*
+
+### O que se descobriu antes de escrever uma linha
+
+**O rAthena não tem nada disso.** O Corredor Fantasma é conteúdo exclusivo do
+bRO — evento temporário, com três andares, encerrado junto com o servidor. Os
+chefes de lá eram clones ("Fantasma de Rá", "Fantasma do Bode"), com elemento
+trocado e sem drop de carta, e não existem no `mob_db` do vendor.
+
+**Mas o vendor tem as peças.** Três achados que definiram o trabalho inteiro:
+
+| O quê | Onde estava |
+|---|---|
+| O mapa `vis_h01` | `.rsw` e `.gat` no GRF do cliente, mais `db/map_index.txt`, `db/map_cache.dat` e `conf/maps_athena.conf` — nas quatro |
+| A **Flor Visionária** | item `25503`, `Flower_V`, **já com o nome em português** |
+| O nome PT do mapa | `data\mapnametable.txt` do override já dizia "Arena Fantasma (1)", da tradução de 2026-08-03 |
+
+O nome do mapa foi o que destravou tudo: o pedido veio com "lá fora o evento se
+chama *Corridor of Phantoms*, e o mapa é o `vis_h01`". Sem isso a busca teria
+parado na bROWiki, que não publica código de mapa — e o caminho alternativo era
+escolher um mapa parecido à mão.
+
+### O que ficou de fora do bRO, e por quê
+
+Três cortes, todos pedidos explicitamente:
+
+- **A entrada é de graça.** No bRO comprava-se um Selo Visionário: grátis valia
+  1 hora com recarga às 4 da manhã, ou 4 horas por 10.000.000z. Aqui não há
+  preço, duração nem recarga. O item `25504` (Selo Visionário) segue no vendor
+  sem uso nenhum.
+- **Não há NPC de troca.** Lá 10 Flores viravam um Prêmio Visionário, e a cada
+  200 trocas do servidor inteiro havia 1% de sair um Cartão Visionário (carta de
+  MVP). **Consequência assumida: a Flor cai e não tem onde ser gasta.** Abrir o
+  destino dela depois não exige mexer na sala — basta um NPC que consuma o
+  25503.
+- **Dano normal.** No bRO todo dano do jogador era reduzido em 30%, para o mapa
+  não virar farm fácil.
+
+E uma simplificação: **os três andares viraram uma sala só.** `vis_h02..04`
+existem no GRF e ficaram vazios.
+
+### O elenco: por que não são os "Fantasma de X"
+
+A lista da bROWiki é de clones, e vários apelidos não mapeiam de volta para um
+MVP conhecido ("Fantasma do Fofinho", "do Pesar", "da Malícia", "do Piano"). Com
+a decisão de usar os MVPs normais — que o pedido aceitou explicitamente, desde
+que largassem a Flor — a adivinhação sumiu junto.
+
+Sobraram **65 tipos de chefe**, tirados dos 121 mobs que o `mob_db` marca com
+`MvpExp` (viraram 130 no chão no mesmo dia — ver o fim desta seção).
+O critério de corte foi um só: **chefe que existe sozinho no campo entra; chefe
+que só faz sentido dentro da instância dele, não.** Os 56 descartados são 21
+cópias de evento (`E_*`), 5 versões Infinitas, 7 de masmorra memorial, 2
+Pesadelo, 2 Ilusão, 9 de instância, 6 de evento/piada e 4 variantes de cor da
+Faceworm Queen. O que sobrou cobre quase inteira a lista dos três andares do
+bRO.
+
+### A armadilha que custou meia hora — e subiu para o `CLAUDE.md`
+
+**Comentário no fim de uma linha de spawn entra dentro do nome do evento.** O
+`npc_parsesrcfile` enche o `w4` *"to end of line"*, e o `npc_parse_mob` lê o
+evento com `%77[^,]`, que só para na vírgula. O `mob_parse_dataset`
+(`src/map/mob.cpp:446`) só tira a aspa quando ela é o **último** byte — com o
+comentário atrás, não é.
+
+O resultado é falha calada: o chefe nasce, anda, morre, e o evento nunca
+dispara. Nada no log aponta para a linha. Por isso as 65 linhas de spawn são
+mudas e quem diz quem é quem é a tabela do cabeçalho do arquivo.
+
+Foi por essa mesma leitura que se descobriu o resto da mecânica de spawn:
+`vis_h01,120,120,70,70` **não** é "70 células de lado" — o `mob_spawn` chama
+`map_search_freecell` com `xs-1` e sorteia em `rnd_value(bx-rx, bx+rx)`, ou seja
+120 ± 69. O retângulo foi escolhido para (1) excluir as 479 células soltas que o
+`.gat` do `vis_h01` tem na linha y=239, que deixariam um chefe inalcançável, e
+(2) deixar a chegada do jogador fora dele, para ninguém desembarcar em cima de
+um Beelzebub.
+
+### Como se provou que carregou
+
+O log limpo não prova nada — provaria igual se o `npc:` novo tivesse sido
+ignorado. A prova foi uma **sonda**: uma 66ª linha de spawn com um mob inexistente,
+um reinício, e a confirmação de que o erro saiu **apontando para o arquivo e para
+a linha certa**:
+
+```
+[ Error ] : npc_parse_mob: Unknown mob ID 999999 (file 'npc/guerra/corredor_fantasma.txt', line '393').
+```
+
+Isso provou de uma vez que o arquivo é lido, que a linha do `scripts_guerra.conf`
+funciona, que o formato de spawn é aceito e que as outras 65 passaram sem uma
+queixa. A sonda foi removida e o servidor reiniciado limpo.
+
+**Falta ver no jogo** — está no `PENDENCIAS.md`.
+
+### Primeiro teste em jogo, e os dois ajustes que ele pediu (2026-08-08)
+
+O Corredor entrou funcionando na primeira subida — o mapa desenhou, o cliente
+não caiu, os chefes nasceram e a flor caiu. Duas coisas apareceram só jogando:
+
+**A flor virou chuva.** Eram 2 garantidas por morte, e com 65 chefes voltando de
+2 em 2 minutos isso enche o inventário sem esforço — ainda mais sendo item sem
+onde ser gasto. Passou para **1 flor com 30% de chance**. Os dois números são
+`.FlorQtd` e `.FlorChance` no `OnInit`, e não há outro lugar para mexer. O
+sorteio é `rand(100) < .FlorChance`, e o `rand(100)` do rAthena devolve 0..99 —
+então 30 é 30% cravado, não 31%.
+
+**A sala estava vazia demais.** 65 chefes espalhados em 240x240 dão muita
+caminhada entre um e outro. O número **dobrou para 130** — 65 tipos, dois de
+cada, pelo terceiro campo da linha de spawn (`,2,` no lugar de `,1,`). Cada um
+dos dois tem vida e renascimento próprios; não é um mob que nasce duas vezes.
+
+> **Isso acendeu uma dependência que antes não existia.** O `mob_count_rate` do
+> `conf/battle/monster.conf` multiplica a quantidade, mas **só quando ela é maior
+> que 1** (`if (mob.num > 1 && battle_config.mob_count_rate != 100)`, em
+> `src/map/npc.cpp`). Enquanto era 1 por linha, essa taxa não alcançava a sala.
+> Agora alcança. Hoje ela é 100, então 2 é 2 — mas mexer nela passou a mexer no
+> Corredor, e está anotado no cabeçalho do arquivo.
+
+As duas mudanças foram feitas **direto nos bytes cp1252**, por script com
+asserção em cada troca — o arquivo tem acento no diálogo, e uma delas era
+justamente a fala que prometia a flor em toda morte. Passar por UTF-8 para
+trocar uma linha é exatamente como os acentos do `item_db.yml` viraram U+FFFD em
+2026-08-07.
+
+**Validado no jogo em 2026-08-08**, no mesmo dia em que foi escrito: o mapa
+desenhou, o cliente não caiu, os chefes nasceram e a flor caiu. Saiu do
+`PENDENCIAS.md` §1. O que continua sem confirmação in-game são só os dois
+números ajustados **depois** desse teste — a flor a 30% e os 130 chefes —, que
+foram conferidos no boot do servidor, não jogando. Está anotado no §1c.
+
+### O efeito colateral que o teste revelou — e não era do Corredor
+
+Para testar, o personagem `Abemus` foi levado pela Teletransportadora ao
+**"Sticky Sea"** (`1@slug`) e o cliente caiu, com o personagem preso lá: ao
+reconectar ele voltava ao mapa quebrado e caía de novo. É exatamente a regra 6
+do `CLAUDE.md`, e desta vez completa:
+
+| | |
+|---|---|
+| `1@slug` no `db/map_index.txt` do rAthena | **sim** (linha 1215) — por isso o servidor aceitou o warp |
+| `.rsw`, `.gat`, `.gnd` no GRF do cliente | **nenhum dos três** |
+| Apelido no `resnametable.txt` | **não** — não é o falso negativo que o `pvp_n_1-5` dá |
+
+Saída pelo banco, com o personagem offline (`online = 0`): `UPDATE char SET
+last_map='prontera', last_x=152, last_y=188`. O `save_map` dele não tinha sido
+contaminado, e nenhum outro personagem estava preso em mapa `1@`/`2@` — foi
+conferido na mesma consulta.
+
+**O que isso revelou é maior que o incidente:** a Teletransportadora
+(`npc/custom/warper.txt`, o do próprio rAthena, montado para cliente moderno)
+**oferece destinos que derrubam este cliente**, e o `1@slug` não é o único. A
+varredura do menu inteiro contra o GRF não foi feita — está no `PENDENCIAS.md`.

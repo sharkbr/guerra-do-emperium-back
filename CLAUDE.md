@@ -197,6 +197,24 @@ Produziram diagnóstico falso e custaram retrabalho:
   `MAX_REFINE` sem cortar os níveis do `.yml` desliga o refino de Armor e
   Weapon inteiros, com um aviso no log que parece inofensivo. O mesmo padrão
   aparece nos outros `parseBodyNode`.
+- **Comentário no fim de uma linha de spawn entra DENTRO do nome do evento.**
+  O `npc_parsesrcfile` enche o `w4` *"to end of line"* (`src/map/npc.cpp`), e o
+  `npc_parse_mob` lê o evento com `%77[^,]` — que só para na vírgula. Um
+  `<TAB>// Amon Ra` depois do evento vira parte dele, e o `mob_parse_dataset`
+  (`src/map/mob.cpp:446`) só tira a aspa quando ela é o **último** byte. Falha
+  **calada**: o chefe nasce, anda, morre, e o evento nunca dispara — nada no log
+  aponta para a linha. Quem documenta um spawn documenta **acima** dele, ou no
+  cabeçalho do arquivo (ver `npc/guerra/corredor_fantasma.txt`).
+- **Em spawn com área, `<xs>,<ys>` NÃO é o lado do retângulo.** O `mob_spawn`
+  chama `map_search_freecell` com `xs-1` (`src/map/mob.cpp:1149`), que sorteia em
+  `rnd_value(bx-rx, bx+rx)`. `mapa,120,120,70,70` é **120 ± 69**, não 120±35 nem
+  um quadrado de 70. Ler como lado erra a área por quatro, e o erro não se
+  denuncia — os monstros nascem, só que em lugar diferente do planejado.
+- **Mapa pode ter pedaço andável solto, e `0,0` no spawn sorteia lá.** O
+  `vis_h01` tem 16.104 células no mapa de verdade **mais 479 na linha y=239**,
+  ruído do `.gat`. Monstro sorteado ali fica inalcançável. Antes de usar `0,0`,
+  varrer os pedaços conectados do `.gat` — ou dar coordenada e área, como o
+  `corredor_fantasma.txt` faz.
 - **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
   binário aplicado **depois** do parse (`pc_groups.cpp:275`,
   `permissions |= otherGroup->permissions`). Permissão que o pai concede, o
