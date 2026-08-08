@@ -122,6 +122,28 @@ Sem (2), o cliente mostra caixa de erro. Sem (3), o chapéu é invisível. Sem (
 quando necessário, `instala_visual.py` relata "faltando 0" e o item continua
 invisível.
 
+### Uma loja de troca (`barter`) vive em 3 lugares, e o cliente é um deles
+
+| Onde | O que | Recarrega com |
+|---|---|---|
+| `npc/guerra/barters_guerra.yml` | a lista: item, moeda e quantidade por linha | `@reloadbarterdb` |
+| `npc/guerra/<npc>.txt` | a **porta** — a fala e o `callshop` | `@reloadscript` |
+| `itemInfo.lua` do cliente | **o nome e o ícone que a janela desenha** | fechar e reabrir |
+
+O terceiro é o contra-intuitivo: o pacote da janela de troca leva **só o ID**
+(`clif.cpp:23225`), então quem nomeia cada linha é o cliente. Num menu de
+`select` seria o servidor, via `getitemname()`. **Nome errado numa loja de
+troca não se conserta com o `nomes_pt_item_db.py`.**
+
+Os dois primeiros são independentes: desligar a linha do NPC no
+`scripts_guerra.conf` tira a porta e **deixa a loja carregada e inalcançável**;
+a loja é carregada pelo `npc/barters.yml`, não pelo índice dos nossos NPCs.
+
+E há um acoplamento a mais quando a linha é um **pacote**: o `barter` cobra por
+unidade e não tem campo de quantidade para o item vendido, então "5 por 1
+Moeda" exige que as 5 sejam **um item** — uma caixa, que por sua vez é um item
+novo com todos os lugares da tabela acima.
+
 ### Uma reputação vive em 3 lugares, todos com o mesmo `Id`
 
 | Onde | O que |

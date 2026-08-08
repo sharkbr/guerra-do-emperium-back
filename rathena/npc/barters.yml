@@ -51,3 +51,6 @@ Footer:
   - Path: npc/re/merchants/barters.yml
     Mode: Renewal
   - Path: npc/custom/barters.yml
+  # Guerra do Emperium: as nossas lojas de troca. Unica linha nossa neste
+  # arquivo do rAthena - ver CLAUDE.md, secao 2.
+  - Path: npc/guerra/barters_guerra.yml

@@ -104,6 +104,50 @@ ITENS = [
             u'^0000CCPeso:^000000 0',
         ],
     },
+    # As duas caixas da Maquina, 2026-08-07. Elas nao sao item de jogo novo:
+    # sao EMBALAGEM. A loja de troca (npc/guerra/barters_guerra.yml) cobra por
+    # unidade, entao "5 por 1 Moeda" so existe se as 5 forem um item so.
+    # Dezesseis das dezoito linhas daquela loja usam caixa que o bRO ja tinha
+    # pronta; estas duas sao as que faltavam. Ver db/guerra/item_db.yml.
+    #
+    # O texto segue a VOZ DAS CAIXAS DO bRO, e nao a das duas entradas acima:
+    # primeira linha "Uma caixa contendo N ...", depois o efeito do conteudo.
+    # Foi lido do iteminfo_new.lub (13610, 16395, 16262) para nao inventar
+    # forma nova para um item que o jogador vai ver ao lado de quinze irmaos.
+    {
+        'id': 30997,
+        'nome': u'Cx. Bênção do Ferreiro (5)',
+        # A caixa de 3 do bRO. Copiar a arte dela e nao a MECANICA e
+        # deliberado: aquela entrega por `getgroupitem`, e sorteio aqui nao
+        # faz sentido nenhum.
+        'arte_de': 101047,
+        'descricao': [
+            u'Uma caixa contendo 5 Bênçãos do Ferreiro.',
+            u'^000088Garrafa mágica que só pode ser usada junto com outros minérios na hora de refinar. Em casos de falha, você não perderá o equipamento e o refino atual, mas esse item será consumido independente do resultado.^000000',
+            u'_______________________',
+            u'A janela de refino exige a Bênção para passar de +7, e a quantidade cresce rápido: +8 pede 1, +9 pede 2, e daí 4, 7, 11, 16 e 22.',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Caixa',
+            u'^0000CCPeso:^000000 0',
+        ],
+    },
+    {
+        'id': 30996,
+        'nome': u'Cx. Poção de Guyak (30)',
+        # A caixa de 20 do bRO (Guyak_Pudding_20_Box). O item dela foi
+        # reprovado por trazer 20 e por ter nome COREANO no itemInfo.lua -
+        # mas a ARTE esta completa, e e so ela que aproveitamos.
+        'arte_de': 22668,
+        'descricao': [
+            u'Uma caixa contendo 30 Poções de Guyak.',
+            u'^000088Duplica a velocidade de movimento por 5 minutos.^000000',
+            u'_______________________',
+            u'A produção desse consumível se tornou muito mais eficiente desde que decidiram fazer poções com Guyak, em vez de pudins. O efeito ainda é o mesmo!',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Caixa',
+            u'^0000CCPeso:^000000 0',
+        ],
+    },
 ]
 
 

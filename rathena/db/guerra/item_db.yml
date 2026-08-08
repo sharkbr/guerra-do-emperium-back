@@ -22,7 +22,7 @@ Header:
 Body:
   - Id: 30999
     AegisName: Maca_Da_Inocencia
-    Name: Maï¿½ï¿½ da Inocï¿½ncia
+    Name: Maçã da Inocência
     # Etc, e nao Usable, de proposito: a Maca nao e usada pelo jogador.
     # Quem a consome e o Mestre de UP (npc/guerra/mestre_de_up.txt).
     # Como Usable, o cliente ofereceria um botao de usar que nao faria
@@ -108,6 +108,82 @@ Body:
     # e o da moeda dela. Quem poe a entrada e o
     # ferramentas/instala_item.py - rodar de novo depois de trocar o
     # cliente ou de mexer no texto da descricao.
+
+
+  # ----- As duas caixas da Maquina - 2026-08-07 -------------------------
+  #
+  # Item nosso de ID nosso, como a Maca e a Moeda acima. Mas a razao de
+  # existirem e diferente das duas, e vale registrar: elas nao sao itens
+  # novos de jogo, sao EMBALAGEM.
+  #
+  # A loja de troca da Maquina (npc/guerra/barters_guerra.yml) cobra POR
+  # UNIDADE - o rAthena nao tem campo de quantidade para o item vendido
+  # numa loja de barter. "5 Bencoes por 1 Moeda" so existe se as 5
+  # Bencoes forem UM item. Dezesseis das dezoito linhas daquela loja usam
+  # caixa que o bRO ja tinha pronta; estas duas sao as que faltavam.
+  #
+  # Se um dia a Maquina deixar de ser loja de troca, estas duas perdem a
+  # razao de ser junto com ela.
+  #
+  # As duas copiam arte de uma caixa existente (`arte_de` no
+  # ferramentas/instala_item.py), entao nao ha arquivo de arte novo.
+
+  - Id: 30997
+    AegisName: Cx_Bencao_Do_Ferreiro_5
+    Name: "Cx. Bênção do Ferreiro (5)"
+    # A unica caixa da Maquina que o bRO nao tinha em tamanho nenhum que
+    # servisse: la existem a de 2 e a `Blacksmith_Bless_Box_3` (101047),
+    # e essa ultima entrega por `getgroupitem`, nao por `getitem`.
+    # Copiamos a ARTE dela e nao o mecanismo - grupo de item traria a
+    # incerteza de sorteio, que aqui nao faz sentido nenhum.
+    Type: Usable
+    # Peso 0 como a caixa de 3 do bRO. Caixa que se abre no ato nao
+    # deveria cobrar pedagio de peso.
+    Weight: 0
+    # Mesmo perfil de travas das caixas irmas do bRO (13610, 16262...) e
+    # da propria Moeda que a compra. Sem `NoStorage`, tambem como elas: o
+    # jogador guarda no armazem dele, mas a caixa nao passa para outro.
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    # `getitem` direto, e nao `getgroupitem`: o conteudo e fixo.
+    # Cuidado ao mexer - o 6635 e a Bencao do Ferreiro de verdade, e a
+    # quantidade aqui e a unica coisa que sustenta o preco de 1 Moeda
+    # na loja de troca. Mudar uma exige mudar a outra.
+    Script: |
+      getitem 6635,5;
+
+  - Id: 30996
+    AegisName: Cx_Pocao_De_Guyak_30
+    Name: "Cx. Poção de Guyak (30)"
+    # O bRO TEM uma caixa de Guyak - a `Guyak_Pudding_20_Box` (22668) -
+    # e ela foi reprovada por duas razoes somadas, nao por uma:
+    #
+    #   1) traz 20, e a Maquina vende 30 por 3 Moedas;
+    #   2) o nome dela no itemInfo.lua do cliente esta em COREANO. O item
+    #      nao existe no bRO, entao nao ha nome em portugues para trazer,
+    #      e a regra do CLAUDE.md secao 4.2 e clara: so entra na loja
+    #      item com nome em portugues.
+    #
+    # A segunda sozinha ja bastaria. A arte dela, por outro lado, esta
+    # completa (4 de 4 no estado_item.py) - e e dela que a nossa copia.
+    Type: Usable
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12710,30;
 
 # =========================================================================
 # PLACEHOLDERS DO MERCADO CONTEMPORANEO - 2026-08-01
@@ -1161,7 +1237,7 @@ Body:
     # para ca em db/guerra/item_combos.yml. Sem isso a versao com cova
     # seria PIOR que a sem cova para quem usa Boina Alada ou Traje
     # Protetor, e a perda seria calada.
-    Name: "Diadema do Paraï¿½so"
+    Name: "Diadema do Paraíso"
     Type: Armor
     Weight: 500
     Slots: 1

@@ -32,13 +32,15 @@ sem confirmação in-game.
 | Mestre do Refino | `prontera 184,177` | 2026-08-04 |
 | Mercado de Visuais (3 lojas de traje) | `prontera`, y=155 | 2026-08-05 |
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
-| Máquina — loja da Moeda Nova (17 itens) | `prontera 167,199` | 2026-08-07 |
+| Máquina — loja de troca da Moeda Nova (18 itens) | `prontera 167,199` | 2026-08-07 |
 | Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 
 1. `@reloaditemdb` e **depois** `@reloadscript` — a loja valida cada ID ao
-   carregar, então o `item_db` precisa estar de pé antes.
+   carregar, então o `item_db` precisa estar de pé antes. **A Máquina pede um
+   terceiro, no meio: `@reloadbarterdb`** — a mercadoria dela não está no
+   script, e `@reloadscript` não a alcança.
 2. **Fechar e reabrir o cliente** — entradas novas de `itemInfo.lua` e
    `accessoryid.lub` só são lidas na inicialização. Sem isso o item aparece sem
    nome ou o chapéu continua invisível, e a conclusão errada é achar que o
@@ -66,6 +68,20 @@ sem confirmação in-game.
 
   **Fechar e reabrir o cliente é obrigatório aqui**, e não pelo `itemInfo.lua`:
   o `System\CheckAttendance.lub` também só é lido na inicialização.
+
+- **Máquina:** o que provar, nesta ordem: (1) a fala abre e o saldo bate; (2) ao
+  fechar, a **janela de troca** aparece — a mesma de Malangdo, com o ícone da
+  Moeda e a quantidade em cada uma das **18 linhas**; (3) comprar **mais de um
+  de uma vez** cobra o múltiplo certo; (4) usar a caixa entrega a quantidade
+  certa. Fechar e reabrir o cliente é obrigatório: as duas caixas novas (30997
+  e 30996) são entradas novas de `itemInfo.lua`.
+
+  **Se as linhas aparecerem sem nome, o problema é o cliente, não o servidor** —
+  a janela de troca desenha o nome do `itemInfo.lua`, não o do `item_db`.
+
+  **Se a janela não abrir**, olhar `log/map-msg_log.log` por
+  `barter_parseBodyNode` — ID inexistente derruba a loja inteira no carregamento,
+  e o sintoma é o `callshop` reclamar que o shop não existe.
 
 ---
 

@@ -1684,6 +1684,10 @@ que a UI de refino recusa, calada. O critério virou: **vale o ID que o
 
 #### Por que menu e não `itemshop`
 
+> **Superado na mesma noite.** A conclusão abaixo estava certa sobre o
+> `itemshop` e **errada sobre a alternativa**: existe um terceiro tipo, o
+> `barter`, que era o caminho o tempo todo. Ver a seção seguinte.
+
 O rAthena tem o tipo `itemshop`, que é literalmente "loja que cobra em item":
 seria uma linha só, com a janela de compra de sempre e ícone. Não serve aqui
 por um motivo único: ele cobra **por unidade**, e **onze das dezessete linhas
@@ -1707,6 +1711,144 @@ caminho certo.
 Isso prova que **o script compila e a tabela está certa**. Não prova a
 navegação dos menus nem que a compra entrega o item. Para isso:
 `@reloadscript`, `@item 30998 200` e ir a Prontera.
+
+---
+
+### A Máquina virou loja de troca — 2026-08-07 (noite), NÃO testada in-game
+
+O pedido veio como uma pergunta com um print junto: a loja de pedras de
+encantamento de Malangdo cobra em moeda de gato, com a janela nativa do
+cliente — *"não conseguimos fazer igual pra máquina?"*
+
+Conseguimos. E o caminho **não era o `itemshop`** que a seção anterior tinha
+descartado por preço.
+
+#### Aquela janela é `barter`, e nenhum dos dois candidatos óbvios a abre
+
+O rAthena tem três tipos de loja que cobram em algo que não é zeny, e os três
+foram confundidos até aqui:
+
+| tipo | cobra em | janela |
+|---|---|---|
+| `itemshop` | um item | `clif_cashshop_show` — saldo em número, **sem ícone** |
+| `pointshop` | uma variável | idem |
+| **`barter`** | item, por linha | **janela de troca** — ícone da moeda em cada linha |
+
+Quem desenha o ícone e a quantidade do print é o próprio pacote:
+`currencyNameid` e `currencyAmount`, em `clif.cpp:23243`. `itemshop` e
+`pointshop` nem carregam esse campo. Ou seja: o `itemshop` **nunca** teria
+produzido a tela do print, independentemente de preço.
+
+#### E o `itemshop` teria falhado por um motivo pior, que ninguém veria vindo
+
+A Moeda Nova é `NoSell: true`. O `itemshop` cobra varrendo a bolsa e passando
+cada item por `pc_can_sell_item` (`npc.cpp:2465`), que **recusa item `NoSell`**
+enquanto `allow_bound_sell` não tiver o bit `ISR_SELLABLE` — e o nosso
+`conf/battle/items.conf` traz `allow_bound_sell: 0x0`.
+
+O sintoma seria cruel: a loja **abre**, mostra a lista, e a compra falha com
+*"is not enough as payment"* mesmo com as moedas na bolsa. O conserto óbvio
+seria tirar o `NoSell` da moeda — que é justamente a trava que a impede de
+virar mercadoria de mula.
+
+O `barter` não chama `pc_can_sell_item` em lugar nenhum (`npc_barter_purchase`,
+`npc.cpp:3140`): ele só ignora item equipado, em *equip switch* e favorito.
+Moeda `NoTrade`/`NoDrop`/`NoSell` paga normalmente.
+
+#### A trava do pacote continuou existindo — e a saída foi embalagem
+
+O `barter` cobra **por unidade** igual ao `itemshop`
+(`requirement->amount * amount`, `npc.cpp:3206`), e o YAML dele **não tem campo
+de quantidade para o item vendido** — só `Item`, `Stock`, `Zeny`, `Refine` e
+`RequiredItems`.
+
+A saída é a que o próprio RO usa, e que o **13710 já era desde o primeiro dia**
+da Máquina: se o pacote for **um item só**, o preço unitário volta a existir.
+Toda linha de pacote virou caixa.
+
+**A surpresa foi quanta caixa já existia pronta.** O pedido listava cinco itens
+como "vai ter que criar"; `estado_item.py` mostrou que **três deles já estavam
+no bRO**, com nome em português e arte 4/4:
+
+| pedido dizia | é | |
+|---|---|---|
+| "Elunium Perfeito (5) — não achei, vai ter que criar" | **16395** `HD_Elu_Box5` | já existia |
+| "Oridecon Perfeito (5) — não achei, vai ter que criar" | **16393** `HD_Ori_Box5` | já existia |
+| "Carnium: se não tiver a de 5, usa a de 10 a 4 Moedas" | **16263** `F_HD_Carnium_Box5` | a de 5 existe — preço fica 2 |
+
+Das dezoito linhas, **dezesseis usam caixa do bRO**. Só duas foram feitas por
+nós, e as duas por razão registrada:
+
+- **30997 `Cx_Bencao_Do_Ferreiro_5`** — no rAthena inteiro só há caixa de 2 e a
+  `Blacksmith_Bless_Box_3` (101047), e essa entrega por `getgroupitem`. Nenhuma
+  de 5. Arte copiada da 101047.
+- **30996 `Cx_Pocao_De_Guyak_30`** — a `Guyak_Pudding_20_Box` (22668) existe,
+  mas traz 20 **e tem nome coreano no `itemInfo.lua`**: o item não está no bRO,
+  então não há português para trazer. Reprovada pela regra do nome em PT. Arte
+  copiada dela mesma, que está completa.
+
+Duas linhas mudaram de tamanho por decisão do dono do projeto, aproveitando
+caixa pronta: **Cogumelo Grelhado** e **Bala Amarga** passaram a 100 unidades
+por 4 Moedas (13996 e 13999) — as duas são irmãs no bRO, mesmo tamanho e mesmo
+preço. E entrou uma linha nova: **Pergaminho de Arma +6 (6231)**, ao lado do de
+Armadura, 1 Moeda por unidade.
+
+#### São dois NPCs agora, e o motivo não é organização
+
+Loja de `barter` **não roda script nenhum**. Se a Máquina fosse a loja, o
+jogador clicaria e cairia direto na janela — sem fala, sem saldo, sem máquina.
+
+Então a loja virou **flutuante**: `Maquina#loja`, sem mapa e sem sprite, só a
+lista. O NPC de script continua em `prontera 167,199`, dialoga, conta a moeda e
+chama a loja com `close2` + `callshop`. Loja sem mapa continua alcançável por
+nome — o rAthena faz `strdb_put(npcname_db, ...)` mesmo com `m < 0`
+(`npc.cpp:843`), e o `callshop` aceita `NPCTYPE_BARTER` (`script.cpp:18222`).
+
+#### O que mudou de lugar junto, e é o que vai custar caro esquecer
+
+**O nome do item na loja agora vem do CLIENTE.** O menu montava cada linha com
+`getitemname()`, que lê o `Name` do `item_db` do servidor. A janela de troca
+recebe só o ID e desenha o que o `itemInfo.lua` tiver. Nome errado numa loja de
+troca **não se conserta mais** com o `nomes_pt_item_db.py` — conserta-se no
+cliente, e exige fechar e reabrir. Subiu para o `CLAUDE.md` §4.9, como segundo
+caso vivo da regra que o Logue e Ganhe abriu.
+
+**O `checkweight` saiu do script**, e não por descuido: `npc_barter_purchase` já
+checa peso e slot livre **antes** de cobrar (`pc_checkadditem`, `requiredSlots`,
+`requiredWeight`). Refazer a conta daria duas respostas para a mesma pergunta.
+
+**Perderam-se os três grupos** ("Passes e cupons", "Refino", "Consumíveis") —
+eram cabeçalho de menu e a janela de troca não tem separador. O que restou deles
+é a **ordem** das linhas, pelo `Index` do YAML.
+
+#### Um defeito antigo apareceu no caminho
+
+O `db/guerra/item_db.yml` estava **em UTF-8**, contra a regra §4.1 — e pior:
+os acentos já tinham virado `U+FFFD` (`\xef\xbf\xbd`). "Maçã da Inocência" e
+"Diadema do Paraíso" estavam gravados com o byte do acento **perdido para
+sempre**, não mojibake reversível.
+
+Ninguém percebeu porque o nome que o jogador lê vem do `itemInfo.lua`; o `Name`
+do servidor só aparece em log, `@iteminfo` e diálogo de NPC. O arquivo foi
+convertido para cp1252 e os 4 caracteres reconstruídos do contexto. A armadilha
+subiu para o `CLAUDE.md` §5, com o teste de uma linha.
+
+#### Como foi conferido, já que não houve teste in-game
+
+- As 18 linhas do YAML foram relidas por script e cruzadas contra os quatro
+  `item_db`: **todo `AegisName` resolve para um ID real**, toda moeda é
+  `Moeda_Nova`, nenhum `Index` repetido, um requisito por linha.
+- Os itens novos e os já existentes passaram pelo `estado_item.py`: **arte 4 de
+  4 em todos**.
+- `instala_item.py --verificar` aprovou as duas entradas novas antes de gravar;
+  o `itemInfo.lua` cresceu 1642 bytes e ganhou backup.
+- O `item_db.yml` foi relido em cp1252 depois da conversão: os 4 acentos
+  antigos e os 2 novos aparecem certos, e não sobrou nenhum `U+FFFD`.
+
+Isso prova que **a lista está consistente e o cliente conhece os itens**. Não
+prova que a janela abre nem que a troca entrega. Para isso: `@reloaditemdb`,
+`@reloadbarterdb`, `@reloadscript`, **fechar e reabrir o cliente**,
+`@item 30998 200` e ir a Prontera.
 
 ---
 

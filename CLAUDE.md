@@ -43,6 +43,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | Arquivo do rAthena | Enxerto |
 |---|---|
 | `npc/scripts_custom.conf` | uma linha `import: npc/guerra/scripts_guerra.conf` |
+| `npc/barters.yml` | um `- Path: npc/guerra/barters_guerra.yml` no rodapé |
 | `conf/battle_athena.conf` | uma linha `import: conf/guerra/battle_guerra.txt` |
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `src/map/clif.cpp` | duas linhas (include + `placa_de_venda_mostra`), comentadas no arquivo |
@@ -84,6 +85,7 @@ Errar o comando faz a mudança parecer que não pegou.
 |---|---|
 | Script de NPC | `@reloadscript` |
 | `db/` (item, conjunto) | `@reloaditemdb` — pega item **e** conjunto |
+| `npc/guerra/barters_guerra.yml` (loja de troca) | `@reloadbarterdb` — **não** é `@reloadscript` |
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
@@ -100,8 +102,13 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
 
 1. **Texto de jogo é cp1252, nunca UTF-8.** Acento sim; UTF-8 quebra. Quem faz o
    cliente desenhar byte acentuado é o patch `AlwaysAscii`. Vale para `.txt` de
-   NPC, `itemInfo.lua` (ANSI/CP949), `.lub`. Estes `.md` são UTF-8 — a regra é
-   para texto que o **jogo** lê.
+   NPC, `itemInfo.lua` (ANSI/CP949), `.lub`, **e o `db/guerra/item_db.yml`**.
+   Estes `.md` são UTF-8 — a regra é para texto que o **jogo** lê.
+   **Escrever é o passo perigoso, não ler:** editor e ferramenta de edição
+   gravam UTF-8 por padrão, e o estrago é calado. Depois de gerar um desses
+   arquivos, converter e conferir — `python -c "open(p,'wb').write(open(p,'rb')
+   .read().decode('utf-8').encode('cp1252'))"`, e então reler em cp1252 para
+   ver os acentos certos. Ver §5, entrada do U+FFFD.
 2. **Só entra na loja item com nome em português.** Inglês se detecta pela
    ausência no bRO; coreano por byte. Um critério não serve para o outro.
 3. **Quando falta algo, traz-se do bRO** — a instalação do Ragnarok Brazil desta
@@ -123,6 +130,18 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
    janela mostra uma coisa e o servidor entrega outra. Caso vivo: o Logue e
    Ganhe (`db/guerra/attendance.yml` + `cliente\System\CheckAttendance.lub`),
    por isso gerado dos dois lados por `ferramentas/monta_logue_e_ganhe.py`.
+   **Segundo caso vivo: o nome do item na janela de troca (barter).** O pacote
+   leva só o ID (`clif.cpp:23225`) — quem desenha o nome é o `itemInfo.lua` do
+   cliente. Menu de `select` usa `getitemname()` e lê o servidor; janela nativa,
+   não. Nome errado numa loja de troca **não** se conserta com o
+   `nomes_pt_item_db.py`.
+10. **Loja que cobra em ITEM é `barter`, não `itemshop`.** São os dois tipos que
+    parecem servir, e só um funciona aqui: o `itemshop` passa a moeda por
+    `pc_can_sell_item`, que **recusa item `NoSell`** enquanto
+    `allow_bound_sell` for `0x0` (o nosso padrão) — a loja abre e a compra
+    falha, com a moeda na mão do jogador. O `barter` não faz essa checagem. Só
+    ele abre a janela de troca com ícone de moeda por linha; `itemshop` e
+    `pointshop` caem no `clif_cashshop_show`, que é outra janela.
 
 ## 5. Armadilhas deste ambiente
 
@@ -133,6 +152,13 @@ Produziram diagnóstico falso e custaram retrabalho:
 - **`[Text.Encoding]::Latin1` não existe** no PowerShell 5.1 → devolve `$null` e
   todo resultado derivado é lixo. Usar `GetEncoding(28591)`.
 - **`Get-ChildItem -Include`** sem curinga no caminho retorna vazio.
+- **Arquivo cp1252 salvo como UTF-8 vira `\xef\xbf\xbd` (U+FFFD) e o acento se
+  perde para sempre.** Não é mojibake reversível: o byte original já não está
+  lá. Achado em 2026-08-07 no `db/guerra/item_db.yml` — 4 acentos de "Maçã da
+  Inocência" e "Diadema do Paraíso" tinham virado isso, e ninguém percebeu
+  porque o nome que o jogador lê vem do `itemInfo.lua`, não do servidor.
+  O teste, em qualquer arquivo que o jogo leia:
+  `python -c "d=open(p,'rb').read(); print '\xef\xbf\xbd' in d"`.
 - **`.lub` do GRF é bytecode** (header `\x1bLua`); os do ROenglishRE são texto
   puro. Comparar tamanho entre os dois não significa nada.
 - **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`

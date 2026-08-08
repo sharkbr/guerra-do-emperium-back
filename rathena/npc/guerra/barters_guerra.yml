@@ -1,0 +1,270 @@
+###########################################################################
+# Guerra do Emperium - Lojas de troca (barter)
+###########################################################################
+#
+# Este arquivo e NOSSO. Ele e encadeado a partir do `Footer: Imports:` de
+# npc/barters.yml, que so ganhou uma linha apontando para ca.
+#
+# O QUE E UMA LOJA DE TROCA, e por que ela nao e um `shop` de script:
+#
+# O barter e o unico tipo de loja do rAthena que abre a janela de TROCA do
+# cliente - a mesma da Loja de Pedras de Malangdo, com o icone da moeda e a
+# quantidade em cada linha, e o painel "itens que voce quer trocar" ao lado.
+# `itemshop` e `pointshop` NAO abrem essa janela: os dois passam pelo
+# clif_cashshop_show (src/map/clif.cpp), que e a janela de cash shop, com um
+# saldo em numero e sem icone de moeda por linha.
+#
+# Exige feature.barter (conf/battle/feature.conf) e cliente 2019-01-16 ou
+# mais novo - o nosso e 20211103. Quem desenha o icone e a quantidade e o
+# proprio pacote: `currencyNameid` e `currencyAmount`, em clif.cpp:23243.
+#
+# POR QUE BARTER E NAO `itemshop`, e este e o motivo que decide:
+#
+#   A Moeda Nova (30998) e `NoSell: true`. O itemshop cobra passando cada
+#   item da bolsa por `pc_can_sell_item` (npc.cpp:2465), que devolve FALSO
+#   para item NoSell quando `allow_bound_sell` nao tem o bit ISR_SELLABLE -
+#   e o nosso conf/battle/items.conf traz `allow_bound_sell: 0x0`. Ou seja
+#   o itemshop simplesmente NAO ENXERGA a moeda na bolsa: a loja abriria,
+#   a compra falharia com "is not enough as payment", e o jogador estaria
+#   com as moedas na mao. So funcionaria tirando o NoSell da moeda, que e
+#   justamente a trava que a impede de virar mercadoria de mula.
+#
+#   O barter nao chama `pc_can_sell_item` em lugar nenhum
+#   (npc_barter_purchase, npc.cpp:3140). Ele so ignora item equipado, em
+#   equip switch e favorito. Moeda NoTrade/NoDrop/NoSell paga normalmente.
+#
+# A TRAVA QUE MOLDOU A LISTA: o custo do barter e POR UNIDADE
+# (`requirement->amount * amount`, npc.cpp:3206), e o YAML nao tem campo de
+# quantidade para o item VENDIDO - so `Item`, `Stock`, `Zeny`, `Refine` e
+# `RequiredItems`. Nao existe "5 Elunium Perfeito por 1 Moeda" em preco
+# unitario: dariam 0,2 Moeda cada.
+#
+# Por isso todo pacote desta lista e uma CAIXA - um item so, que ao ser
+# usado entrega as N unidades. E o padrao do proprio RO (o 13710 ja era
+# isso desde o primeiro dia da Maquina), e o que permite a janela nativa
+# sem mexer em preco nenhum. Quinze das dezoito caixas ja existiam no bRO
+# com nome em portugues e arte completa; so duas foram feitas por nos
+# (30997 e 30996, em db/guerra/item_db.yml).
+#
+# Mudanca neste arquivo pega com `@reloadbarterdb`.
+#
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  # A loja da Maquina. SEM `Map`, de proposito: ela e uma loja FLUTUANTE,
+  # que nao existe em mapa nenhum e nao tem sprite. Quem esta em prontera
+  # 167,199 e o NPC de script (npc/guerra/maquina.txt), que dialoga e so
+  # entao chama esta loja com `callshop "Maquina#loja",0`.
+  #
+  # Dois motivos para nao ser a Maquina em si:
+  #
+  #   1) loja de barter nao roda script nenhum, entao ela sozinha perderia
+  #      a fala da maquina - o jogador clicaria e cairia direto na janela.
+  #   2) o barter tambem nao tem como negar atendimento nem contar moeda
+  #      antes de abrir; o script na frente e onde isso cabe.
+  #
+  # Loja flutuante e alcancavel por nome: mesmo com `m < 0` o rAthena faz
+  # `strdb_put(npcname_db, ...)` (npc.cpp:843), e o `callshop` aceita
+  # NPCTYPE_BARTER (script.cpp:18222).
+  #
+  # O `Index` e a ORDEM NA JANELA, e e por isso que ele segue os tres
+  # grupos que o menu antigo tinha: passes e cupons, refino, consumiveis.
+  # A janela de troca nao tem separador, entao a ordem e a unica coisa que
+  # agrupa. Nao renumerar por gosto: o indice tambem e a chave do estoque
+  # na tabela `barter` do SQL, se um dia alguma linha ganhar `Stock`.
+  - Name: Maquina#loja
+    Items:
+      # ----- Passes e cupons -----------------------------------------
+      # Caixa, nao passe: usa-la faz `getitem 7776,10`. Dez passes por
+      # 100 Moedas, ou seja 10 por passe - a mesma faixa dos cupons ao
+      # lado. O passe e gasto no `Ripped Cabus#GymPass`, payon 173,141.
+      - Index: 0
+        Item: Max_Weight_Up_Box          # 13710 Passe Antigravitacional[1]
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 100
+
+      # Os cinco cupons sao gastos na UI DE ESTILISTA DO CLIENTE, nao em
+      # NPC: quem os consome e `clif_parse_stylist_buy` (src/map/clif.cpp)
+      # lendo db/re/stylist.yml. Procurar o ID em npc/ nao devolve nada, e
+      # a conclusao facil - e errada - seria que o cupom nao serve para
+      # nada aqui. A UI abre pelo `Stylist#prontera`, prt_in 243,168.
+      - Index: 1
+        Item: New_Style_Coupon           # 7622 Cupom de Corte de Cabelo
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
+      - Index: 2
+        Item: J_Shop_Coupon              # 6707 Cupom de Penteado
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
+      - Index: 3
+        Item: J_Shop_Coupon2             # 25736 Cupom de Penteado 2
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
+      # DUAS RESSALVAS, as duas do tipo que nao da erro nenhum. O Cupom de
+      # Roupa mexe em Body2 (corpo alternativo) e NAO foi verificado se o
+      # GRF de 2021 tem os sprites `_body` que ele pede; o de Tintura
+      # cobre Clothes_Color 2..7 e este cliente so tem palette 0..3 da 2a
+      # classe em diante. Indice sem palette nao da erro: o cliente
+      # desenha a cor padrao. Ou seja parte das opcoes come um cupom e nao
+      # muda nada na tela. O remedio nao e aqui - e podar db/re/stylist.yml
+      # (que teria de virar override nosso) ou tirar o cupom da lista.
+      - Index: 4
+        Item: Costume_Ticket             # 6959 Cupom de Roupa
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
+      - Index: 5
+        Item: Clothing_Dye_Coupon        # 6046 Cupom de Tintura
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
+      # ----- Refino ---------------------------------------------------
+      # Os dois Pergaminhos sao os UNICOS itens avulsos da lista: 1 Moeda
+      # por unidade, sem caixa, porque a 1:1 o barter ja expressa. Levam a
+      # peca a +6 de uma vez e sem chance de quebrar, no Mestre do Refino
+      # (prontera 184,177).
+      - Index: 6
+        Item: Guarantee_Armor_6Up        # 6235 Pergaminho de Armadura +6
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      - Index: 7
+        Item: Guarantee_Weapon_6Up       # 6231 Pergaminho de Arma +6
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      # As seis caixas de minerio. O minerio de dentro e lido pela UI de
+      # refino do cliente (`feature.refineui: on`) a partir de
+      # db/re/refine.yml. A divisao arma/armadura NAO e simetrica como o
+      # nome sugere, e vale saber antes de mexer em preco:
+      #
+      #   armadura: Elunium, Elunium Enriquecido, Elunium Perfeito,
+      #             Carnium, Carnium Perfeito
+      #   arma:     Oridecon, Oridecon Enriquecido, Oridecon Perfeito,
+      #             Bradium, Bradium Perfeito
+      #
+      # Ou seja o par Carnium/Bradium repete a divisao do par
+      # Elunium/Oridecon para a faixa mais alta - Carnium nao e "elunium
+      # melhor", e o elunium DE OUTRA FAIXA. "Perfeito" e o HD do rAthena:
+      # ao falhar, a peca perde um nivel em vez de quebrar. "Enriquecido"
+      # aumenta a chance de acertar, mas quebra.
+      #
+      # CUIDADO AO TROCAR ID: existem homonimos `LI_` (variantes de evento
+      # com o MESMO nome exibido) que NAO aparecem no db/re/refine.yml.
+      # Comprar um deles daria um item de nome certo que a UI de refino
+      # recusa, sem erro nenhum para denunciar. O criterio e: vale o id
+      # que o refine.yml cita.
+      - Index: 8
+        Item: HD_Elu_Box5                # 16395 -> 5x 6241 Elunium Perfeito
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      - Index: 9
+        Item: HD_Ori_Box5                # 16393 -> 5x 6240 Oridecon Perfeito
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      - Index: 10
+        Item: Enriched_Elunium_Box5      # 13610 -> 5x 7619 Elunium Enriquecido
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      - Index: 11
+        Item: Enriched_Oridecon_Box5     # 13611 -> 5x 7620 Oridecon Enriquecido
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      # A Bencao do Ferreiro nao e minerio: e o catalisador que a UI de
+      # refino exige para passar de +7, e a quantidade cresce rapido (para
+      # armadura nivel 1: +8 pede 1, +9 pede 2, e dai 4, 7, 11, 16, 22).
+      # Cinco por Moeda parece barato ao lado dos outros ate se somar
+      # quanto custa uma peca de +14.
+      #
+      # A UNICA das dezoito sem caixa pronta no bRO: la existem so a de 2
+      # e a `Blacksmith_Bless_Box_3` (101047, por getgroupitem). A nossa
+      # de 5 e o 30997, em db/guerra/item_db.yml.
+      - Index: 12
+        Item: Cx_Bencao_Do_Ferreiro_5    # 30997 -> 5x 6635 Bencao do Ferreiro
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
+      - Index: 13
+        Item: F_HD_Carnium_Box5          # 16263 -> 5x 6225 Carnium Perfeito
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+
+      - Index: 14
+        Item: F_HD_Bradium_Box5          # 16262 -> 5x 6226 Bradium Perfeito
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+
+      # ----- Consumiveis ----------------------------------------------
+      # Nao precisam de NPC nenhum: sao itens de usar.
+      #
+      # A caixa de Guyak e nossa (30996). A do bRO, `Guyak_Pudding_20_Box`
+      # (22668), foi REPROVADA por duas razoes somadas: traz 20 e nao 30,
+      # e o nome dela no itemInfo.lua do cliente esta em COREANO - o item
+      # nao existe no bRO, entao nao ha nome em portugues para ele. Ver a
+      # regra do nome em PT no CLAUDE.md, secao 4.
+      - Index: 15
+        Item: Cx_Pocao_De_Guyak_30       # 30996 -> 30x 12710 Pocao de Guyak
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 3
+
+      # As duas ultimas sao irmas: mesmo tamanho de pacote (100) e mesmo
+      # preco (4), porque as duas caixas ja existiam no bRO nesse tamanho.
+      # O AegisName do conteudo nao ajuda a reconhecer nenhum dos dois
+      # (`Big_Bun` e `Pill_`); o nome em portugues e a unica referencia
+      # confiavel, e foi por ele que os dois foram achados.
+      - Index: 16
+        Item: Big_Bun_Box100             # 13996 -> 100x 14522 Cogumelo Grelhado
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 4
+
+      - Index: 17
+        Item: Pill__Box100               # 13999 -> 100x 14523 Bala Amarga
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 4
