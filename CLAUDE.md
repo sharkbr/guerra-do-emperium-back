@@ -248,6 +248,17 @@ Produziram diagnóstico falso e custaram retrabalho:
   filho não consegue tirar — `attendance: false` no `Super Player` é letra
   morta, porque ele herda do `Player`, que a concede. Ler a linha e concluir
   "esse grupo não tem" dá diagnóstico invertido.
+- **`OnNPCKillEvent` NUNCA dispara para mob que tem evento próprio.** Em
+  `mob.cpp:3592` os dois são ramos de um `else if`: se `md->npc_event[0]` está
+  preenchido, roda o evento do mob e o global **não roda**. Como todo chefe de
+  instância nasce com `instance_npcname(...)+"::OnMyMobDead"`, **nenhum deles
+  dispara o evento global** — um contador de caçada feito assim compila, sobe,
+  não erra no log e conta zero. Quem conta morte de verdade é o objetivo
+  `HUNTING` de quest: o `quest_update_objective` roda antes, fora daquele `if`,
+  e o `map_foreachinallrange` (`mob.cpp:3575`) ainda propaga para a **party
+  inteira dentro de `AREA_SIZE`**. É o que as instâncias do próprio rAthena
+  usam. Mesmo quando o global dispara, é para o `first_sd` — o primeiro do
+  registro de dano, não o matador.
 - **`os.system` com a linha começando por aspas** falha no `cmd` do Windows: o
   primeiro par de aspas é comido e sai *"A sintaxe do nome do arquivo... está
   incorreta"* — que parece defeito do arquivo passado, e não é. Usar

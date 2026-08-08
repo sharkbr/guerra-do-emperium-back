@@ -276,6 +276,10 @@ Explorador" como fonte pensada e não feita.
 
 **Antes da Ordem, as instâncias que ela usa precisam estar validadas em jogo.**
 
+**O briefing de construção da Ordem está na §1g**, pronto para uma sessão
+limpa: as 16 missões com Id de mob, as peças, a faixa de Id de quest e — o que
+mais importa — por que `OnNPCKillEvent` não serve.
+
 ### O que já está resolvido, e é quase tudo
 
 **As instâncias do rAthena já estão todas carregadas.** O caminho é
@@ -378,6 +382,148 @@ instância para tradução e uma segunda tradução divergente **quebra o
 São **4.910 linhas de `mes`** nos 16, com distribuição muito torta: Sonho
 Sombrio (1.261) e Quarto Crescente (973) são 45% do total; Batalha dos Orcs tem
 55 e Lago de Bakonawa 62.
+
+---
+
+## 1g. A Ordem dos Exploradores — briefing de construção
+
+Levantado em 2026-08-08 **para ser construído numa sessão limpa**. Nada disso
+existe ainda: nem o NPC, nem a moeda, nem as placas. É conteúdo exclusivo do
+bRO, a ser escrito do zero em `npc/guerra/`.
+
+**Ler antes:** §1f (as 16 instâncias) e `ARQUITETURA.md` §4.
+
+### O que é, no bRO
+
+Um grupo de aventureiros em **`alberta 116,71`**. Placas de missão dão caçadas
+dentro de instâncias e pagam **Moeda do Explorador**. Detalhes que vieram do
+browiki e que definem o comportamento:
+
+- Quatro placas: **Missões A, B, C** (caçada) e **D** (conversão de item).
+- As placas oferecem **pegar/entregar todas as missões de uma vez**.
+- Ao entregar, espera até **as 6h da manhã** para refazer. Ao reportar, a placa
+  já dá a missão do dia seguinte — então o jogador não precisa voltar para
+  pegar, só para entregar.
+- Dá **EXP de base e de classe** ao completar.
+- Um **Teleportador** leva a qualquer instância por **5.000z**.
+
+### Escopo decidido em 2026-08-08
+
+- **Missões A, B e C.** As **D ficam de fora** — são conversão de item por
+  moeda, não caçada, e mudam a natureza do sistema.
+- **Só as 16 instâncias sem requisito de quest** (§1f). Isso corta 14 das 30
+  missões A/B/C.
+- Sobram **16 missões**: 9 do grupo A, 3 do B, 4 do C.
+
+### A DESCOBERTA QUE DECIDE A ARQUITETURA — não usar `OnNPCKillEvent`
+
+**O evento global de morte de mob NUNCA dispara para chefe de instância.** Em
+`src/map/mob.cpp:3592` a estrutura é um `else if` de verdade:
+
+```
+if( md->npc_event[0] && !md->state.npc_killmonster ) {
+        ... dispara o evento PRÓPRIO do mob ...
+} else if( first_sd != nullptr && !md->state.npc_killmonster ) {
+        npc_script_event( *first_sd, NPCE_KILLNPC );   // o OnNPCKillEvent
+}
+```
+
+Todo chefe de instância nasce com `instance_npcname(...)+"::OnMyMobDead"`, ou
+seja, **todos têm `npc_event`** — e por isso caem sempre no primeiro ramo.
+Construir a Ordem sobre `OnNPCKillEvent` dá um sistema que compila, sobe, não
+dá erro nenhum e **nunca conta uma morte**.
+
+(De quebra: mesmo quando dispara, é para o `first_sd` — o primeiro do registro
+de dano, não o matador e não a party.)
+
+**O que funciona é quest com objetivo `HUNTING`**, e a razão está trinta linhas
+acima, em `mob.cpp:3575`:
+
+```
+if (sd->status.party_id)
+        map_foreachinallrange(quest_update_objective_sub, md, AREA_SIZE,
+                              BL_PC, sd->status.party_id, md);
+```
+
+Isso roda **antes e independente** do ramo do `npc_event`, e **propaga para a
+party inteira** que estiver dentro de `AREA_SIZE` da morte. É exatamente o que
+as próprias instâncias do rAthena usam — `checkquest(12279,HUNTING)` no
+Bakonawa, `checkquest(9222,HUNTING)` no Bangungot.
+
+**Consequência boa:** a Ordem cabe inteira em `npc/guerra/` + um `db/guerra/`,
+sem tocar nos 16 arquivos de instância. A lei da §2 fica intacta.
+
+### As 16 missões
+
+Moedas e EXP são os do bRO. **Os Ids de mob foram levantados dos spawns dos
+próprios scripts** — mas o nome PT do browiki nem sempre casa com o nome do
+`mob_db`, então a coluna tem grau de confiança. **Conferir os `?` antes de
+escrever a quest**; o jeito é abrir o script da instância e ver qual mob morre
+no fim.
+
+| Grp | Instância | Alvo (browiki) | Mob | Id | Moedas | EXP |
+|---|---|---|---|---|---|---|
+| A | Batalha dos Orcs | 1x Orc Falso | Orc Elite Guard **?** / Orc Lady **?** | 1981 / 1984 | 5 | 200.000 |
+| A | Torneio de Magia | 1x Muliphen | **não achado** | ? | 5 | 200.000 |
+| A | Memórias de Sarah | 1x Lorde Irine | Doyen Irene | 2542 | 5 | 200.000 |
+| A | Palácio das Mágoas | 1x Angústia Torturante | Torturous Redeemer | 2959 / 2961 | 5 | 600.000 |
+| A | Hospital Abandonado | 1x Bangungot | Bangungot | 2317 | 7 | 800.000 |
+| A | Aos Pés do Rei | 1x Charleston 03 | Charleston 3 | **3124** | 10 | 800.000 |
+| A | Fábrica do Terror | 1x Antonio | **não spawna**; chefe é Celine Kimi | 2996 **?** | 5 | 800.000 |
+| A | Sonho Sombrio | 1x Réquiem de Marfim | Awakened Ferre **?** | 3073 **?** | 10 | 800.000 |
+| A | Covil de Vermes | 4x Verme Sombrio com Rosto | Faceworm Queen **?** | 2529/2532 **?** | 5 | 600.000 |
+| B | Lago de Bakonawa | 1x Tesouro de Bakonawa | Bakonawa's Treasure | **2335** | 7 | 800.000 |
+| B | Sarah vs Fenrir | 6x Gigante Ancestral | Ancient Gigantes | **3196** | 25 | 800.000 |
+| B | Torre do Demônio | 3x+3x+3x (Sombras / Inferno / Trevas) | Evil Shadow, três Ids **?** | 2939/2940/2941 **?** | 5 | 400.000 |
+| C | Vila dos Porings | 1x Rei Poring | spawn por variável — **não resolvido** | ? | 5 | 50.000 |
+| C | Caverna do Polvo | 1x Polvo Gigante | Giant Octopus | **2194** | 5 | 100.000 |
+| C | Quarto Crescente | 1x Espectro de Ktullanux | Vision of Ktullanux | **3526** | 7 | 1.000.000 |
+| C | Maldição de Glastheim | 1x Origem da Maldição + 1x Amdarais | Corrupted Soul **?** + Amdarais | 2475 **?** / **2476** | 10 | 800.000 |
+
+Em negrito, os sete que casaram sem ambiguidade. O `3196` foi confirmado por
+dois lados: o nome e o **total de 6 spawns**, que é a quantidade pedida.
+
+### As peças a construir, e onde cada uma mora
+
+| # | Peça | Onde | Observação |
+|---|---|---|---|
+| 1 | **Moeda do Explorador** | item novo — **os 6 lugares** do `ARQUITETURA.md` §4 | ID novo, arte do bRO, `itemInfo.lua`. Peso 0 e `NoSell`, como a Moeda Nova |
+| 2 | **As 16 quests de caçada** | `db/guerra/quest_db.yml` | objetivo `HUNTING`; falta pôr `Footer: Imports:` no `db/re/quest_db.yml` — ele ainda não tem, mas o `parseImports` é genérico |
+| 3 | **As quests de espera** | idem | uma por placa, `TimeLimit` até as 6h |
+| 4 | **As três placas** | `npc/guerra/ordem_dos_exploradores.txt` | `alberta 116,71`; pegar/entregar em lote |
+| 5 | **O Teleportador** | mesmo arquivo | 5.000z; a `teletransportadora.txt` já tem o menu de instâncias pronto para copiar |
+| 6 | Linha + parágrafo | `npc/guerra/scripts_guerra.conf` | obrigatório |
+
+**Faixa de Id de quest sugerida: 30000–30049.** Está dentro do maior bloco
+contíguo livre do `quest_db.yml` (21174–49999, 28.826 ids), é redonda e não
+encosta em nada do rAthena.
+
+### Decisões que são do dono, e travam o desenho
+
+1. **A Moeda do Explorador é moeda nova ou a missão paga Moeda Nova (30998)?**
+   Uma moeda a mais é mais fiel ao bRO; reaproveitar a Moeda Nova aproveita a
+   Máquina, que já a cobra em 17 itens, e evita criar item novo (6 lugares).
+2. **Onde a Moeda do Explorador se gasta.** Item que entra e não sai é moeda
+   queimada — foi a lição da Moeda Nova (ver `HISTORICO.md`). Se for moeda
+   nova, ela precisa de destino no mesmo trabalho.
+3. **Os valores do bRO servem?** 25 moedas por 6 Gigantes Ancestrais contra 5
+   por um Rei Poring é a curva do bRO, com a economia do bRO. A nossa tem
+   `exp 10x, drop 50x`.
+4. **Loja da Ordem?** Se houver, é **`barter`, não `itemshop`** — regra §4.10 do
+   `CLAUDE.md`, e a moeda vai ser `NoSell`.
+
+### Armadilhas que já se conhecem
+
+- **`OnNPCKillEvent` não serve** — a de cima, e é a que custa o dia.
+- **`getitem` com mochila cheia larga no chão** se o item não for `NoDrop`
+  (`CLAUDE.md` §5). A moeda tem de nascer `NoDrop`.
+- **A janela de missões não lê o `questid2display.txt`** — quem desenha é o
+  `OngoingQuestInfoList_Sakray.lub` do cliente. Missão sem entrada lá aparece
+  sem título.
+- **Texto em cp1252**, e conferir o cabeçalho linha a linha depois de gerar —
+  as duas armadilhas que apagam arquivo de NPC calado.
+- **`AREA_SIZE`**: o membro da party só conta a morte se estiver perto. Em
+  instância grande, quem ficou para trás não pontua.
 
 ---
 
