@@ -1609,7 +1609,14 @@ não desenha**, e a única autoridade é o `npcidentity.lub`.
 
 ---
 
-### A Máquina virou a loja da Moeda Nova — 2026-08-07, NÃO testada in-game
+### A Máquina virou a loja da Moeda Nova — 2026-08-07 (manhã), a versão de menu
+
+> **A Máquina de hoje não é esta.** O menu descrito aqui foi substituído por uma
+> loja de troca na mesma noite, e essa sim está confirmada no jogo — ver "A
+> Máquina virou loja de troca", logo abaixo. Esta seção fica porque **o trabalho
+> de descobrir onde cada item é gasto continua valendo**: a lista, os cupons de
+> estilista e a armadilha dos homônimos `LI_` atravessaram a mudança inteiros.
+> O que envelheceu é a forma da loja, não o conteúdo dela.
 
 A Máquina de `prontera 167,199` era uma fala só (*"a máquina não funciona"*).
 Agora ela vende **17 itens em três grupos**, cobrando **Moeda Nova (30998)** —
@@ -1714,7 +1721,7 @@ navegação dos menus nem que a compra entrega o item. Para isso:
 
 ---
 
-### A Máquina virou loja de troca — 2026-08-07 (noite), NÃO testada in-game
+### A Máquina virou loja de troca — 2026-08-07 (noite), CONFIRMADA no jogo
 
 O pedido veio como uma pergunta com um print junto: a loja de pedras de
 encantamento de Malangdo cobra em moeda de gato, com a janela nativa do
@@ -1833,7 +1840,9 @@ do servidor só aparece em log, `@iteminfo` e diálogo de NPC. O arquivo foi
 convertido para cp1252 e os 4 caracteres reconstruídos do contexto. A armadilha
 subiu para o `CLAUDE.md` §5, com o teste de uma linha.
 
-#### Como foi conferido, já que não houve teste in-game
+#### Conferido offline, e depois no jogo
+
+Antes de subir:
 
 - As 18 linhas do YAML foram relidas por script e cruzadas contra os quatro
   `item_db`: **todo `AegisName` resolve para um ID real**, toda moeda é
@@ -1845,10 +1854,18 @@ subiu para o `CLAUDE.md` §5, com o teste de uma linha.
 - O `item_db.yml` foi relido em cp1252 depois da conversão: os 4 acentos
   antigos e os 2 novos aparecem certos, e não sobrou nenhum `U+FFFD`.
 
-Isso prova que **a lista está consistente e o cliente conhece os itens**. Não
-prova que a janela abre nem que a troca entrega. Para isso: `@reloaditemdb`,
-`@reloadbarterdb`, `@reloadscript`, **fechar e reabrir o cliente**,
-`@item 30998 200` e ir a Prontera.
+**Validada no jogo pelo dono do projeto em 2026-08-07**, com
+`@reloaditemdb` → `@reloadbarterdb` → `@reloadscript`, cliente fechado e
+reaberto. Sem ressalva: a fala abre, a janela de troca aparece com as 18 linhas
+e o ícone da Moeda, a compra múltipla cobra o valor certo e as caixas entregam
+a quantidade certa. **É a primeira das onze pendências de "falta ver no jogo" a
+ser fechada** — foi aberta e encerrada no mesmo dia, e por isso nunca chegou a
+constar da lista num commit.
+
+Vale registrar o que a validação prova além da Máquina, porque não era óbvio
+antes: o `@reloadbarterdb` **funciona a quente**, sem reiniciar o map-server, e
+a loja flutuante alcançada por `callshop` se recria junto. Loja de troca nova
+não precisa de janela de manutenção.
 
 ---
 
