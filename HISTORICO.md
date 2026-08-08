@@ -3025,11 +3025,34 @@ empacotado. `vem`, `fome` e `comeon` não aparecem em nenhum deles. A ligação 
 pelo sentido, e é a mesma aposta que o `/fome` do Edgard fez e acertou. Se sair
 o emote errado, é um número no `OnTimer4000`.
 
-### Estado
+### O sprite dos guardas — 966, e a conferência valeu do mesmo jeito
 
-Os quatro NPCs da cena e a Máquina estão escritos e conferidos offline: cabeçalho
-inteiro em `//` (a varredura que nasceu do erro acima), chaves e aspas
-balanceadas, campos por TAB, cp1252 sem U+FFFD, e as células `214,185`, `221,184`
-e `224,184` andáveis no `comodo.gat`. **A Alleria, o Saback e a Máquina estão
-confirmados no jogo**; os dois guardas, o emote e a Máquina na posição nova
-dependem de um `@reloadscript`. Está no `PENDENCIAS.md` §1.
+Os guardas nasceram com o 470 `4_M_KNIGHT_SILVER`, escolha nossa, e trocaram para
+**966 `4_M_RUSKNIGHT`** no mesmo dia, a pedido. Os dois usam o **mesmo** sprite de
+propósito: são tropa, e é o Saback que tem de destacar.
+
+> **A conferência foi refeita mesmo com o número vindo pronto no pedido**, e é
+> essa a parte que vale guardar: `4_M_RUSKNIGHT` está no `npcidentity.lub` deste
+> cliente valendo 966, batendo com o `npc.hpp`, e tem `.spr`/`.act` no
+> `data.grf`. Um número correto no pedido não substitui a checagem — foi
+> exatamente assim que o `4_M_JOB_KNIGHT` caiu em 2026-08-05.
+
+O 470 saiu de toda a documentação junto com o código, para não sobrar número
+velho contradizendo o arquivo.
+
+### Estado — validado no jogo em 2026-08-08
+
+A cena inteira de Comodo foi vista no jogo e está **fora do `PENDENCIAS.md`**: a
+Máquina em `214,185` virada para a esquerda, a Alleria, o Saback, os dois guardas
+com o sprite 966 e o emote saindo sozinho de 4 em 4 segundos.
+
+**O `ET_COMEON` (44) era mesmo o `/vem`.** Era a única peça que não tinha como ser
+provada offline — comando de emote é string do executável, e não existe nem no
+nosso kRO nem no `Ragexe` empacotado do bRO. A aposta pelo sentido acertou pela
+segunda vez, depois do `/fome` do Edgard, e isso consolida o método: **conferir o
+número no `emotionlist.lub` e deduzir o nome PT pelo significado.**
+
+O que o teste **não** cobriu, e fica dito sem virar pendência: a compra com a
+bolsa **cheia** de flores. É o caso que o `delitem` antes do `getitem` foi
+escrito para atender, e o único caminho do arquivo que um teste casual não
+percorre.

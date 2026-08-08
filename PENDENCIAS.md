@@ -33,9 +33,6 @@ sem confirmação in-game.
 | Mercado de Visuais (3 lojas de traje) | `prontera`, y=155 | 2026-08-05 |
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
 | Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
-| Dois Guardas da Ordem | `comodo 221,184` / `224,184` | 2026-08-08 |
-| O emote `/vem` da Alleria, de 4 em 4 segundos | `comodo 221,182` | 2026-08-08 |
-| Máquina de Comodo na posição e no giro novos | `comodo 214,185` | 2026-08-08 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 
@@ -59,15 +56,6 @@ sem confirmação in-game.
   subir, e **reiniciar o map-server** (não basta `@reloadscript`). Sem as
   tabelas ninguém pontua, mas o anúncio de morte continua saindo — e é esse o
   sintoma que aparece primeiro.
-- **A cena de Comodo.** A Alleria, o Saback e a Máquina já foram vistos em jogo
-  em 2026-08-08; o que falta é o ajuste feito depois. Três coisas para olhar:
-  (1) a Máquina em `214,185` virada para a **esquerda** — se aparecer virada para
-  a direita, o `facing` certo é o outro da tabela do cabeçalho, não um vizinho;
-  (2) os dois guardas em `221,184` e `224,184`; (3) o emote da Alleria saindo
-  sozinho de 4 em 4 segundos — se sair o emote **errado**, o número está no
-  `OnTimer4000` e o cabeçalho explica por que ele não pôde ser provado offline.
-  Da compra em si o que ainda não foi visto é a bolsa **cheia** de flores não
-  travar a troca — o `delitem` vem antes do `getitem` justamente por isso.
 - **Logue e Ganhe:** a janela abre sozinha no login e **não tem NPC** — se não
   aparecer, o roteiro acima não ajuda. O que provar, nesta ordem: (1) a janela
   abre e mostra **20 quadrados de Moeda Nova**, 10 nos dezenove primeiros e
