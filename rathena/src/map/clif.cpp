@@ -61,6 +61,7 @@
 
 // Guerra do Emperium: nosso codigo vive em src/custom; aqui so o ponteiro.
 #include <custom/placa_de_venda.hpp>
+#include <custom/refino.hpp>
 
 using namespace rathena;
 
@@ -22587,6 +22588,13 @@ void clif_refineui_info( map_session_data* sd, uint16 index ){
 
 	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
 
+	// Guerra do Emperium: teto de refino (src/custom/refino.hpp). Zerar o
+	// `info` faz a janela abrir sem minerio nenhum para escolher, que e o
+	// mesmo que ela ja faz com item nao refinavel.
+	if( refino_no_teto_avisa( *sd, *item ) ){
+		info = nullptr;
+	}
+
 	// No possibilities were found
 	if( info == nullptr ){
 		p->blacksmithBlessing = 0;
@@ -22689,6 +22697,13 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 	}
 
 	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
+
+	// Guerra do Emperium: teto de refino (src/custom/refino.hpp). Sem aviso -
+	// quem chegou aqui ja levou a mensagem ao escolher o item, e cliente
+	// remendado nao merece resposta.
+	if( refino_no_teto( *item ) ){
+		return;
+	}
 
 	// No refine possible
 	if( info == nullptr ){

@@ -2581,3 +2581,101 @@ O caminho existe porque o parser copia o quarto campo para um `char w4[2048]` e
 **trunca com aviso** em vez de recusar; a lista de arma dá 2804 caracteres. O
 corpo de um `script` não tem esse teto — o `npc_parse_script` procura o `,{` no
 buffer original, não no `w4`.
+
+---
+
+## A janela de refino — teto em +16 e a Bênção do Ferreiro (2026-08-07)
+
+Começou como suspeita de configuração desligada: a Bênção do Ferreiro não
+aparecia disponível ao refinar um Cocar do Orc Herói **+6**. Não estava
+desligada — estava fazendo exatamente o que o `db/re/refine.yml` do rAthena
+manda, e o que ele manda não é o que o bRO fazia.
+
+### O que estava acontecendo
+
+Quem acende o slot da bênção é o servidor, em `clif_refineui_info`
+(`clif.cpp`): ele manda `p->blacksmithBlessing = info->blessing_amount`, e o
+cliente desenha o slot morto quando esse valor é `0`. O valor sai do
+`BlacksmithBlessingAmount` do `refine.yml`, que no rAthena só existe a partir
+do `Level: 8`.
+
+E `Level: 8` **não** quer dizer "item +8". A armadilha subiu para o
+`CLAUDE.md` §5: o leitor faz `refine_level -= 1` e compara com o refino atual,
+então `Level: 8` é a tentativa de sair do +7 para o +8. Era o degrau seguinte
+ao do print — daí o slot apagado.
+
+### A tabela do rAthena não é a do bRO
+
+A descrição do item no cliente, que veio do bRO e é o que o jogador lê antes de
+comprar, traz a tabela inteira — e ela discorda do rAthena em seis dos oito
+degraus:
+
+| Refino | descrição (bRO) | rAthena |
+|---|---|---|
+| +6 → +7 | 1 | não aceitava |
+| +7 → +8 | 1 | 1 |
+| +8 → +9 | 1 | 2 |
+| +9 → +10 | 1 | 4 |
+| +10 → +11 | 1 | 7 |
+| +11 → +12 | 1 | 11 |
+| +12 → +13 | 15 | 16 |
+| +13 → +14 | 22 | 22 |
+| +14 → +15 | não aceita | não aceita |
+
+Ficou valendo a descrição, por decisão de 2026-08-07. O motivo não é nostalgia:
+a janela de refino **mostra a quantidade exigida** ("0/4"), então divergência
+entre o que o item promete e o que o servidor cobra aparece na tela, não fica
+escondida. Repare que o topo da faixa já estava certo — o +13 → +14 sempre
+funcionou e o +14 → +15 nunca funcionou, nos dois lados. Faltava só o degrau de
+baixo, e os custos do meio estavam caros.
+
+Mora em `db/guerra/refine.yml`, importado pelo rodapé do `db/refine.yml`. O
+arquivo mexe **só** no `BlacksmithBlessingAmount`: o leitor de YAML mescla por
+chave, então omitir `Chances` preserva as taxas do rAthena inteiras.
+
+> `db/refine.yml` é o ponto de entrada do banco de refino, **não**
+> `db/re/refine.yml` — o `getDefaultLocation()` do `RefineDatabase` devolve
+> `db/refine.yml`, e é ele que importa o `re/`, o `pre-re/` e o `import/`.
+> Procurar rodapé no `db/re/refine.yml` não acha nada e dá a impressão errada
+> de que a base não aceita import.
+
+### O teto em +16
+
+Pedido junto: não deixar tentar o +17. O caminho barato seria apagar os níveis
+17 a 20 do `refine.yml`, e ele não serve por dois motivos, os dois registrados
+no `CLAUDE.md` §5 e no cabeçalho do `src/custom/refino.hpp`:
+
+1. **Import não remove.** O leitor só mescla — acrescenta e sobrescreve campo,
+   nunca tira nível. Cortar exigiria editar arquivo do rAthena.
+2. **Baixar o `MAX_REFINE` para 16 quebra a base inteira.** Nível acima do
+   `MAX_REFINE` não é "pulado" apesar do que o aviso diz: o `return 0` logo
+   abaixo descarta o **grupo todo**. Armor e Weapon deixariam de carregar e
+   ninguém refinaria mais nada, com um aviso no log de aparência inofensiva.
+
+E nenhum dos dois daria a mensagem que o jogador lê. Ficou em C++, em
+`src/custom/refino.hpp`, com duas chamadas na janela de refino: uma ao escolher
+o item (a janela abre sem minério nenhum e o aviso vai para a caixa de chat) e
+outra no pedido de refino em si (recusa calada, para cliente remendado).
+
+**Só a janela precisou de trava.** Os três NPCs refinadores param no +10
+sozinhos — `npc/merchants/refine.txt`, `advanced_refiner.txt` e o
+`re/merchants/ticket_refiner.txt` que ligamos, todos comparando
+`getequiprefinerycnt` com 10 ou com o nível do bilhete. Acima de +10 a janela
+era o único caminho. Fora do alcance de propósito: `@refine` de GM e
+`successrefitem` de script.
+
+O número não está cravado no C++: é `refino_teto: 16` no
+`conf/guerra/battle_guerra.txt`, pela mecânica de battle config custom que o
+rAthena já oferece (`src/custom/battle_config_struct.inc` e
+`battle_config_init.inc`, até então vazios). Muda com `@reloadbattleconf`, sem
+recompilar; `0` desliga a trava.
+
+A mensagem é a **1550** do `conf/guerra/map_msg_guerra.conf`, e não uma string
+no `.cpp` — texto que o jogador lê é cp1252, e arquivo de código não é lugar
+para guardar acento. A faixa 1550+ passou a ser nossa: o rAthena para na 1540 e
+o teto da tabela subiu para 1600 no `src/custom/defines_pre.hpp`, que é o lugar
+que o próprio rAthena documenta para isso.
+
+**Validado no jogo em 2026-08-07**, no mesmo dia em que foi escrito — a bênção
+acendendo no +6 e o teto recusando o +17, com a mensagem chegando na caixa de
+chat com os acentos certos. Saiu do `PENDENCIAS.md`.

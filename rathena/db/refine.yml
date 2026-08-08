@@ -51,4 +51,8 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/refine.yml
     Mode: Renewal
+  # Guerra do Emperium: unica linha nossa neste arquivo do rAthena. Vem
+  # DEPOIS do db/re para sobrescrever, e ANTES do db/import para o import da
+  # maquina (taxa de evento) continuar tendo a ultima palavra.
+  - Path: db/guerra/refine.yml
   - Path: db/import/refine.yml

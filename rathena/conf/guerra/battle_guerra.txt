@@ -68,3 +68,22 @@ item_group_rate: 5000
 // recompensa de Guerra do Emperium - mexer aqui mexe direto na
 // economia da guerra, nao no farm de monstro.
 item_rate_treasure: 5000
+
+//--------------------------------------------------------------
+// Teto de refino.
+//
+// Esta opcao NAO existe no rAthena - e nossa, definida em
+// src/custom/battle_config_init.inc e usada por
+// src/custom/refino.hpp. Alterar aqui exige `@reloadbattleconf`,
+// nao recompilar.
+//
+// O rAthena vai ate +20. Acima do teto a janela de refino abre
+// sem minerio nenhum para escolher e o jogador recebe a mensagem
+// 1550 do conf/guerra/map_msg_guerra.conf.
+//
+// Nao afeta `@refine` de GM nem `successrefitem` de script. Os
+// NPCs refinadores param no +10 sozinhos, entao a janela era o
+// unico caminho acima disso.
+//
+// 0 desliga a trava e devolve o comportamento do rAthena.
+refino_teto: 16

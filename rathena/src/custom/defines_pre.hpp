@@ -33,4 +33,18 @@
 // anterior. Comparar sempre em UTC ou KST, nunca no fuso local.
 #define PACKETVER 20211103
 
+// Quantas mensagens de map-server cabem na tabela. O padrao do rAthena e 1550
+// (src/map/map.cpp), e ele ja usa ate a 1540 - sobram nove numeros, que o
+// upstream vai ocupar na proxima atualizacao. Mensagem nossa em cima de
+// numero que o rAthena passe a usar nao da erro: simplesmente troca o texto
+// de uma mensagem dele, calado.
+//
+// Subindo o teto, a faixa 1550+ e so nossa. Cada numero custa um ponteiro na
+// tabela, entao a folga e de graca. As mensagens ficam em
+// conf/guerra/map_msg_guerra.conf.
+//
+// O rAthena documenta este define exatamente aqui - ver o comentario no topo
+// de conf/msg_conf/map_msg.conf.
+#define MAP_MAX_MSG 1600
+
 #endif /* CONFIG_CUSTOM_DEFINES_PRE_HPP */

@@ -11,3 +11,8 @@
  *	 { "name", &battle_config.<variable name>, <default value>, <minimum value>, <maximum value> },
  **/
 
+// Guerra do Emperium: teto de refino. O valor de verdade esta em
+// conf/guerra/battle_guerra.txt; o 16 aqui e so o padrao de quem clonar o
+// repo sem esse arquivo. Ver src/custom/refino.hpp.
+{ "refino_teto",                        &battle_config.refino_teto,                     16,     0,      MAX_REFINE,     },
+

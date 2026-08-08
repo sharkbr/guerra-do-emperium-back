@@ -12,3 +12,7 @@
  *	 <datatype> name;
  **/
 
+// Guerra do Emperium: refino maximo que a janela de refino aceita.
+// Usado em src/custom/refino.hpp. 0 desliga a trava.
+int32 refino_teto;
+

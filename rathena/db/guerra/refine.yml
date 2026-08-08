@@ -1,0 +1,187 @@
+###########################################################################
+# Guerra do Emperium - Bencao do Ferreiro (item 6635)
+#
+# Este arquivo e VERSIONADO e vale para qualquer clone do repo. Ele e
+# importado por db/refine.yml, logo depois de db/re/refine.yml e logo antes
+# de db/import/refine.yml - ou seja, sobrescreve o rAthena e continua podendo
+# ser sobrescrito por maquina.
+#
+# ---------------------------------------------------------- o que ele muda
+#
+# So o campo BlacksmithBlessingAmount. Nada de taxa de sucesso, preco ou
+# minerio: o leitor de YAML do rAthena MESCLA por chave. Em
+# `RefineDatabase::parseBodyNode` (src/map/status.cpp), quando o nivel ja
+# existe ele so troca os campos que aparecem no arquivo novo - omitir
+# `Chances` preserva as chances do arquivo original, inteiras.
+#
+# Por isso nao ha uma linha de taxa aqui, e nao deve haver: taxa de refino se
+# mexe em db/re/refine.yml ou em db/import/refine.yml, nunca neste arquivo,
+# que existe para um assunto so.
+#
+# ------------------------------------------------------------------ por que
+#
+# O rAthena so libera a bencao a partir do +7, e cobra 1/2/4/7/11/16/22.
+# A descricao do item no cliente - que veio do bRO e e o que o jogador LE
+# antes de comprar - diz outra coisa: comeca no +6 e cobra 1/1/1/1/1/1/15/22.
+#
+# Quem manda e a descricao. A janela de refino mostra a quantidade exigida
+# ("0/4"), entao divergencia entre o que o item promete e o que o servidor
+# cobra aparece na tela do jogador, nao fica escondida. O texto vive no
+# itemInfo.lua do cliente, entrada [6635] - ver CLAUDE.md sobre o cliente ser
+# quem desenha nome e descricao de item.
+#
+# ------------------------------------------------ ATENCAO: Level e 1-based
+#
+# `Level: 7` NAO quer dizer "item +7". O leitor faz `refine_level -= 1` com o
+# comentario "Database is 1 based, code is 0 based" (status.cpp:189) e depois
+# compara com o refino ATUAL do item. Entao `Level: 7` e a tentativa de sair
+# do +6 para o +7, e `Level: 14` e a de sair do +13 para o +14.
+#
+# Ler esse numero como se fosse o refino atual erra por um em toda a tabela -
+# e o erro passa despercebido, porque a tabela continua fazendo sentido.
+#
+# ------------------------------------------- por que Shadow nao esta aqui
+#
+# Os grupos Shadow_Armor e Shadow_Weapon param no +10 e nunca aceitaram
+# bencao no oficial. Ficam como estao.
+#
+# ------------------------------------------------------- como recarregar
+#
+# Nao tem comando @. O refine_db so e lido no boot: reiniciar o map-server.
+###########################################################################
+
+Header:
+  Type: REFINE_DB
+  Version: 2
+
+Body:
+  - Group: Armor
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22
+      - Level: 2
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22
+  - Group: Weapon
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22
+      - Level: 2
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22
+      - Level: 3
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22
+      - Level: 4
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22
+      - Level: 5
+        RefineLevels:
+          - Level: 7                        # +6 -> +7
+            BlacksmithBlessingAmount: 1
+          - Level: 8                        # +7 -> +8
+            BlacksmithBlessingAmount: 1
+          - Level: 9                        # +8 -> +9
+            BlacksmithBlessingAmount: 1
+          - Level: 10                       # +9 -> +10
+            BlacksmithBlessingAmount: 1
+          - Level: 11                       # +10 -> +11
+            BlacksmithBlessingAmount: 1
+          - Level: 12                       # +11 -> +12
+            BlacksmithBlessingAmount: 1
+          - Level: 13                       # +12 -> +13
+            BlacksmithBlessingAmount: 15
+          - Level: 14                       # +13 -> +14
+            BlacksmithBlessingAmount: 22

@@ -45,8 +45,8 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `npc/scripts_custom.conf` | uma linha `import: npc/guerra/scripts_guerra.conf` |
 | `npc/barters.yml` | um `- Path: npc/guerra/barters_guerra.yml` no rodapé |
 | `conf/battle_athena.conf` | uma linha `import: conf/guerra/battle_guerra.txt` |
-| `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml` | um `- Path: db/guerra/...` no rodapé de cada |
-| `src/map/clif.cpp` | duas linhas (include + `placa_de_venda_mostra`), comentadas no arquivo |
+| `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
+| `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -88,6 +88,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `npc/guerra/barters_guerra.yml` (loja de troca) | `@reloadbarterdb` — **não** é `@reloadscript` |
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
+| `db/guerra/refine.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `src/` | recompilar (VS 2022 Community, já instalado) |
 | `itemInfo.lua` e afins no cliente | **fechar e reabrir o cliente** — só lido na inicialização |
@@ -170,6 +171,32 @@ Produziram diagnóstico falso e custaram retrabalho:
   registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só
   `SETTABLE ... ; B="NOME" C=<valor>` captura as ~127 primeiras entradas e
   devolve um número **plausível e errado**.
+- **Compilar pela linha de comando exige `SolutionDir` explícito.** O
+  `map-server.vcxproj` tira os caminhos de include dessa variável, que só o
+  `.sln` define. Sem ela o compilador não acha `common/cbasetypes.hpp` e
+  despeja dezenas de `C1083` — que parecem código quebrado, e não são. E
+  `MSBuild rAthena.sln -t:map-server` **não** funciona: o alvo é repassado a
+  todo projeto da solução e cada um responde `MSB4057`. O que funciona:
+  ```
+  MSBuild.exe src/map/map-server.vcxproj -p:Configuration=Release \
+    -p:Platform=x64 "-p:SolutionDir=<raiz>/rathena/"
+  ```
+  **Parar o map-server antes de linkar** — executável no ar dá `LNK1104`, e aí
+  o binário em disco continua o antigo enquanto tudo mais indica sucesso.
+- **Em `db/refine.yml`, `Level:` é 1-based e NÃO é o refino do item.** O leitor
+  faz `refine_level -= 1` — comentário *"Database is 1 based, code is 0 based"*
+  em `status.cpp:189` — e compara com o refino **atual**. `Level: 7` é a
+  tentativa de sair do +6 para o +7. Ler o número como refino atual erra por um
+  na tabela inteira, e o erro não se denuncia: a tabela continua fazendo
+  sentido, só está deslocada. Foi por isso que a Bênção do Ferreiro pareceu
+  "desativada" em 2026-08-07.
+- **`invalidWarning` no leitor de YAML diz "skipping" e descarta o registro
+  inteiro.** No `RefineDatabase::parseBodyNode` (`status.cpp:183`), um nível de
+  refino acima do `MAX_REFINE` emite *"Refine level %hu is invalid, skipping"*
+  e cai num `return 0` que joga fora o **grupo todo**, não a linha. Baixar o
+  `MAX_REFINE` sem cortar os níveis do `.yml` desliga o refino de Armor e
+  Weapon inteiros, com um aviso no log que parece inofensivo. O mesmo padrão
+  aparece nos outros `parseBodyNode`.
 - **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
   binário aplicado **depois** do parse (`pc_groups.cpp:275`,
   `permissions |= otherGroup->permissions`). Permissão que o pai concede, o
