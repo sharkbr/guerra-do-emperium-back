@@ -1,13 +1,26 @@
 //===== Guerra do Emperium ===================================
 //= A Maquina
 //===== Onde =================================================
-//= prontera 167,199. Celula conferida no prontera.gat DESTE
-//= cliente: tipo 0, andavel, altura 1.00.
+//= SAO DUAS, e a segunda e duplicata da primeira:
 //=
-//= Ela abre a fila dos tres da praca, a duas celulas da quina do
-//= quarteirao (de x=162 a x=165 e bloqueado entre y=198 e y=201):
+//=   prontera 167,199   a original
+//=   comodo   214,185   duplicate, desde 2026-08-08
+//=
+//= Celulas conferidas no .gat DESTE cliente: as duas sao tipo 0,
+//= andaveis (a de prontera com altura 1.00, a de comodo com
+//= 0.02).
+//=
+//= Em Prontera ela abre a fila dos tres da praca, a duas celulas
+//= da quina do quarteirao (de x=162 a x=165 e bloqueado entre
+//= y=198 e y=201):
 //=
 //=     y=199   Maquina (167,199)   Edgard (170,199)   Xanin (172,199)
+//=
+//= Em Comodo ela fica na cena do Corredor Fantasma, com a Alleria
+//= (221,182), o Saback (223,182) e os dois guardas - ver
+//= npc/guerra/flores_da_ordem.txt. E de proposito: o Corredor da
+//= a Flor Visionaria, a Alleria a troca por Moeda Nova, e a
+//= Maquina gasta a moeda ali mesmo, sem viagem a Prontera.
 //===== Descricao ============================================
 //= A PORTA DA LOJA DA MOEDA NOVA. Este arquivo e so a fala e o
 //= corpo da maquina; a MERCADORIA vive em outro lugar:
@@ -76,6 +89,25 @@
 //= "Consumiveis") eram cabecalho de menu e nao existem na janela de
 //= troca. O que restou deles e a ORDEM das linhas, pelo `Index` do
 //= YAML - por isso nao se renumera aquilo por gosto.
+//===== A de Comodo e duplicate, nao copia ===================
+//= A linha do fim do arquivo e um `duplicate`: mesmo codigo,
+//= mesmo sprite, mesma loja. Nao ha uma segunda copia da fala
+//= para sair de sincronia com a primeira, e a mercadoria continua
+//= vindo de um lugar so (barters_guerra.yml).
+//=
+//= AS DUAS DIVIDEM O `.moeda` DO OnInit, e isso nao e acidente:
+//= variavel de escopo `.` mora no `st->script->local`
+//= (src/map/script.cpp:3050), que pertence ao SCRIPT, e o
+//= npc_duplicate_sub aponta o duplicate para o script do original
+//= (src/map/npc.cpp:4602). Trocar o ID da Moeda continua sendo
+//= uma linha, valendo para as duas.
+//=
+//= O nome unico dela e `Maquina#comodo`; o jogador le so o pedaco
+//= antes do `#`, entao as duas se chamam "Maquina" na tela. Nome
+//= unico repetido faria a segunda simplesmente nao nascer.
+//=
+//= Abrir uma terceira e uma linha igual aquela, com outro mapa e
+//= outro sufixo depois do `#`.
 //===== Notas ================================================
 //= Sprite 564 (2_VENDING_MACHINE1), o mesmo da "Contribution
 //= Certificate Vending Machine" de morocc 52,197
@@ -84,10 +116,17 @@
 //= e o .spr e o .act conferidos no nosso data.grf - a regra
 //= desde a armadilha do 10605 no Mestre de Classe.
 //=
-//= Facing 6 (leste). Com a camera padrao do cliente as direcoes
-//= caem na diagonal da tela: o 6 desenha a maquina virada para a
-//= direita. O 4 (sul), que ela tinha antes, aparecia virada para
-//= a esquerda.
+//= Facing: a de Prontera usa 6 (leste) e a de Comodo usa 4 (sul).
+//= Com a camera padrao do cliente as direcoes caem na diagonal da
+//= tela, entao o que se ve nao e o ponto cardeal:
+//=
+//=     6 (leste)  desenha a maquina virada para a DIREITA
+//=     4 (sul)    desenha a maquina virada para a ESQUERDA
+//=
+//= A de Comodo nasceu com 6 e foi virada em 2026-08-08, no mesmo
+//= ajuste que a moveu uma celula para o oeste. Quem for mexer
+//= nisso de novo: e a tabela acima que vale, nao a intuicao de
+//= que "leste e para a direita".
 //=
 //= Ela NAO tem placa sobre a cabeca, ao contrario das 21 lojas dos
 //= tres mercados. A placa (src/custom/placa_de_venda) foi feita
@@ -157,3 +196,7 @@ OnInit:
 	.moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
 	end;
 }
+
+// A segunda Maquina, em Comodo - ver a secao "A de Comodo e
+// duplicate, nao copia", no cabecalho.
+comodo,214,185,4	duplicate(Máquina)	Máquina#comodo	564

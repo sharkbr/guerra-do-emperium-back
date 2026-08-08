@@ -205,6 +205,25 @@ Produziram diagnóstico falso e custaram retrabalho:
   **calada**: o chefe nasce, anda, morre, e o evento nunca dispara — nada no log
   aponta para a linha. Quem documenta um spawn documenta **acima** dele, ou no
   cabeçalho do arquivo (ver `npc/guerra/corredor_fantasma.txt`).
+- **Uma linha ruim mata o ARQUIVO INTEIRO, não a linha — inclusive linha de
+  comentário.** O `npc_parsesrcfile` (`src/map/npc.cpp:5646`) imprime
+  *"Unknown syntax in file '...', line 'N'. Stopping..."* e **para de ler o
+  arquivo ali**. Tudo que vier abaixo simplesmente não existe, sem outro aviso.
+  Achado em 2026-08-08: um `\n` dentro do texto de um gerador partiu uma linha
+  `//=` do **cabeçalho** em duas, e a metade órfã (`pc\ do`) derrubou os dois
+  NPCs que estavam 25 linhas mais abaixo. Duas consequências:
+  1. **Um erro no cabeçalho é tão fatal quanto um erro no código.** Depois de
+     gerar arquivo de NPC, conferir que **toda linha antes da primeira definição
+     começa com `//`** ou está vazia.
+  2. **O log não ajuda a achar.** Essa única linha de `[Error]` fica soterrada
+     sob centenas de `[Warning]` inofensivos dos mercados. Procurar por
+     `Unknown syntax`, não ler o fim do log.
+- **Heredoc do Bash aqui come a contrabarra dupla.** `<<'EOF'` deveria ser
+  literal e não é: `\\` chega como `\` no arquivo gerado. Se esse arquivo for um
+  script Python, o `\n` que sobra vira quebra de linha de verdade dentro do
+  texto — foi essa a causa da armadilha acima. Ao gerar texto com caminho do
+  Windows (`data\sprite\npc\`), escrever o script com a ferramenta de escrita de
+  arquivo, não por heredoc — ou montar a contrabarra com `chr(92)`.
 - **Em spawn com área, `<xs>,<ys>` NÃO é o lado do retângulo.** O `mob_spawn`
   chama `map_search_freecell` com `xs-1` (`src/map/mob.cpp:1149`), que sorteia em
   `rnd_value(bx-rx, bx+rx)`. `mapa,120,120,70,70` é **120 ± 69**, não 120±35 nem

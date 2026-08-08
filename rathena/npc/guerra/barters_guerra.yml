@@ -56,9 +56,13 @@ Header:
 
 Body:
   # A loja da Maquina. SEM `Map`, de proposito: ela e uma loja FLUTUANTE,
-  # que nao existe em mapa nenhum e nao tem sprite. Quem esta em prontera
-  # 167,199 e o NPC de script (npc/guerra/maquina.txt), que dialoga e so
-  # entao chama esta loja com `callshop "Maquina#loja",0`.
+  # que nao existe em mapa nenhum e nao tem sprite. Quem esta no mapa e o
+  # NPC de script (npc/guerra/maquina.txt), que dialoga e so entao chama
+  # esta loja com `callshop "Maquina#loja",0`.
+  #
+  # SAO DOIS NPCs chamando esta MESMA loja desde 2026-08-08 - prontera
+  # 167,199 e comodo 215,185, o segundo um `duplicate` do primeiro. Abrir
+  # uma terceira porta nao mexe neste arquivo: a mercadoria e uma so.
   #
   # Dois motivos para nao ser a Maquina em si:
   #

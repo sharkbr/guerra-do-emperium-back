@@ -33,6 +33,9 @@ sem confirmação in-game.
 | Mercado de Visuais (3 lojas de traje) | `prontera`, y=155 | 2026-08-05 |
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
 | Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
+| Dois Guardas da Ordem | `comodo 221,184` / `224,184` | 2026-08-08 |
+| O emote `/vem` da Alleria, de 4 em 4 segundos | `comodo 221,182` | 2026-08-08 |
+| Máquina de Comodo na posição e no giro novos | `comodo 214,185` | 2026-08-08 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 
@@ -56,6 +59,15 @@ sem confirmação in-game.
   subir, e **reiniciar o map-server** (não basta `@reloadscript`). Sem as
   tabelas ninguém pontua, mas o anúncio de morte continua saindo — e é esse o
   sintoma que aparece primeiro.
+- **A cena de Comodo.** A Alleria, o Saback e a Máquina já foram vistos em jogo
+  em 2026-08-08; o que falta é o ajuste feito depois. Três coisas para olhar:
+  (1) a Máquina em `214,185` virada para a **esquerda** — se aparecer virada para
+  a direita, o `facing` certo é o outro da tabela do cabeçalho, não um vizinho;
+  (2) os dois guardas em `221,184` e `224,184`; (3) o emote da Alleria saindo
+  sozinho de 4 em 4 segundos — se sair o emote **errado**, o número está no
+  `OnTimer4000` e o cabeçalho explica por que ele não pôde ser provado offline.
+  Da compra em si o que ainda não foi visto é a bolsa **cheia** de flores não
+  travar a troca — o `delitem` vem antes do `getitem` justamente por isso.
 - **Logue e Ganhe:** a janela abre sozinha no login e **não tem NPC** — se não
   aparecer, o roteiro acima não ajuda. O que provar, nesta ordem: (1) a janela
   abre e mostra **20 quadrados de Moeda Nova**, 10 nos dezenove primeiros e
@@ -87,24 +99,25 @@ Contexto de cada um: `HISTORICO.md`, e o cabeçalho do arquivo em `npc/guerra/`.
 ## 1c. O Corredor Fantasma — o que ficou em aberto
 
 **A sala foi validada em jogo em 2026-08-08** e saiu do §1. O que sobrou aqui
-não impede jogar: os dois primeiros são decisões, não esquecimentos, e o
-terceiro é só confirmação que falta.
+não impede jogar: o primeiro é decisão, não esquecimento, e o segundo é só
+confirmação que falta.
 
-**1. A Flor Visionária não tem onde ser gasta.** O item 25503 cai em 30% das
-mortes de chefe, e o NPC de troca do bRO — 10 Flores por um Prêmio Visionário, com 1% de
-Cartão Visionário a cada 200 trocas do servidor — foi cortado a pedido. Abrir o
-destino dela **não exige mexer na sala**: basta um NPC novo que consuma o 25503.
-Os itens do bRO já existem no vendor (`23684` Cartão Visionário, e o
-`IG_2018_VISIONARY_CARD` que ele abre).
+> **O destino da flor deixou de estar aberto em 2026-08-08.** A Alleria
+> (`comodo 221,182`) paga 1 Moeda Nova por Flor Visionária — ver `HISTORICO.md`,
+> seção "A Flor Visionária ganhou destino". Não é a troca do bRO (10 Flores por
+> um Prêmio Visionário, com sorteio de carta de MVP), que continua cortada; os
+> itens dela seguem sem uso no vendor (`23684` Cartão Visionário e o
+> `IG_2018_VISIONARY_CARD` que ele abre). Os NPCs novos ainda não subiram — estão
+> no §1.
 
-**2. Os chefes aparecem com nome em inglês.** Nome de monstro vem do
+**1. Os chefes aparecem com nome em inglês.** Nome de monstro vem do
 **servidor**, não do `itemInfo.lua` — então o Corredor mostra "Amon Ra", não
 "Amon Rá". Consertar é um `db/guerra/mob_db.yml` só com `Id` e `Name`, mas
 **vale para o servidor inteiro**, não só para esta sala: é uma frente de
 tradução própria, irmã da do §3, e não uma correção do Corredor. As linhas de
 spawn já usam `--ja--`, então acompanham sozinhas no dia em que isso for feito.
 
-**3. Os dois números novos nunca foram vistos em jogo.** O teste que aprovou a
+**2. Os dois números novos nunca foram vistos em jogo.** O teste que aprovou a
 sala pegou a versão de **2 flores garantidas e 65 chefes**. Logo depois eles
 viraram **1 flor a 30% e 130 chefes**, e essa versão só foi conferida no boot
 do servidor — não jogando. Nada sugere problema (é o mesmo caminho de código,

@@ -1,0 +1,257 @@
+//===== Guerra do Emperium ===================================
+//= Flores da Ordem - Alleria e Saback
+//===== Onde =================================================
+//= comodo 221,182   Alleria, quem compra a flor
+//= comodo 223,182   Saback, quem manda falar com ela
+//= comodo 221,184   Guarda da Ordem, atras da Alleria
+//= comodo 224,184   Guarda da Ordem, atras do Saback
+//=
+//= Os dois guardas entraram em 2026-08-08, depois do primeiro
+//= teste em jogo. Ficam na fileira de tras (y=184), com os dois
+//= que trabalham na da frente (y=182):
+//=
+//=     y=184           Guarda (221)        Guarda (224)
+//=     y=182           Alleria (221)  Saback (223)
+//=     y=185   Maquina (214)
+//=
+//= A cena inteira fica a treze celulas do Espectro da Morte
+//= (208,187), que e a porta do Corredor Fantasma, e fecha um
+//= circuito:
+//=
+//=   Corredor Fantasma   a flor cai, 30% por chefe morto
+//=   Alleria             paga 1 Moeda Nova por flor
+//=   Maquina             gasta a Moeda nas dezoito linhas do barter
+//=
+//= As QUATRO celulas foram conferidas no comodo.gat DESTE
+//= cliente: tipo 0, andaveis. O NPC do rAthena mais proximo e o
+//= Muff, em comodo 224,187 - fica tres celulas ao norte do guarda
+//= do Saback, sem sobreposicao.
+//===== Descricao ============================================
+//= O DESTINO DA FLOR VISIONARIA. Ate 2026-08-08 o item 25503
+//= caia dos 130 chefes do Corredor Fantasma e NAO TINHA ONDE SER
+//= GASTO - estava escrito como pendencia no cabecalho daquele
+//= arquivo e no PENDENCIAS.md. Este arquivo fecha isso.
+//=
+//= NAO E A TROCA DO bRO, e a diferenca e proposital. La o
+//= Espectro pedia 10 Flores por um Premio Visionario, e a cada
+//= 200 trocas do SERVIDOR INTEIRO havia 1% de sair um Cartao
+//= Visionario (carta de MVP). Aquilo foi cortado a pedido em
+//= 2026-08-08. Aqui a flor vira MOEDA, uma por uma, sem sorteio,
+//= sem caixa e sem contador de servidor.
+//=
+//= A Alleria e, com isso, a SEGUNDA fonte de Moeda Nova. A
+//= primeira e o Logue e Ganhe (db/guerra/attendance.yml), que
+//= entrega 240 por CONTA por mes, de graca. Esta e por ESFORCO e
+//= nao tem teto: quem cacar mais chefe, ganha mais.
+//=
+//= ATENCAO AO ABRIR A TORNEIRA. A flor cai em 30% das mortes de
+//= chefe e a sala tem 130 chefes voltando de dois em dois
+//= minutos - entao o teto teorico desta fonte e alto. Se um dia
+//= a Moeda inflacionar, os dois numeros a mexer sao o `.preco`
+//= do OnInit abaixo e o `.FlorChance` do corredor_fantasma.txt.
+//===== Por que ela compra tudo de uma vez ===================
+//= "Sim, toma!" leva TODAS as flores da bolsa - nao uma, nem um
+//= numero digitado. Foi assim que o pedido veio ("toma!"), e
+//= poupa a caixa de `input`, que precisaria de validacao a mao.
+//=
+//= A ORDEM DAS DUAS LINHAS IMPORTA, e NAO HA checkweight:
+//=
+//=   delitem primeiro   esvazia o slot inteiro da flor, entao o
+//=                      getitem seguinte tem sempre onde entrar
+//=   peso nao aperta    a flor pesa 10 e a Moeda Nova pesa 0, ou
+//=                      seja, a troca so ALIVIA a bolsa
+//=
+//= Um checkweight ANTES do delitem recusaria justamente quem
+//= esta com a bolsa cheia de flores, que e o cliente desta NPC.
+//= Comparar com o cabecalho do maquina.txt, secao 2: la o
+//= checkweight saiu por outro motivo - a loja de troca ja o faz
+//= sozinha, e refaze-lo daria duas respostas para a mesma
+//= pergunta.
+//===== Os dois guardas ======================================
+//= Nao fazem nada alem de falar, como o Saback. Foram pedidos em
+//= 2026-08-08 para dar corpo a cena - a Ordem "decretou guarda
+//= nos pontos principais", e o Corredor Fantasma e um deles.
+//=
+//= AS DUAS FALAS SAO METALINGUAGEM, de proposito: as duas citam o
+//= servidor vazio. Quem for povoar o servidor um dia vai querer
+//= reescreve-las - estao aqui e em lugar nenhum mais.
+//=
+//= Os dois se chamam "Guarda da Ordem" na tela. O que os separa e
+//= o sufixo depois do `#` (`#alleria` e `#saback`), que o cliente
+//= nao desenha e o servidor usa como nome unico. Sem sufixo o
+//= segundo nao nasceria: nome unico repetido faz o rAthena
+//= renomear para `1_<mapa>_<x>_<y>` com um aviso no log
+//= (npc_parsename, src/map/npc.cpp:3703).
+//===== O emote da Alleria ===================================
+//= Ela solta o `/vem` de 4 em 4 segundos, sozinha, sem ninguem
+//= clicar. E npctimer, o mesmo par do Edgard em prontera 170,199
+//= (npc/guerra/xanin_e_edgard.txt) e do npc/events/easter_2010.txt
+//= do rAthena: o OnInit chama initnpctimer, e o OnTimer4000 solta
+//= o emote e rearma (stopnpctimer + initnpctimer).
+//=
+//= O timer roda com a praia vazia; o emote so viaja para quem
+//= estiver com ela na tela, entao nao custa nada parado.
+//=
+//= QUAL NUMERO - o pedido disse `/vem`, que e o nome bRO. O que
+//= vai no fio e o NUMERO, e o numero e ET_COMEON (44) - o emote
+//= de chamar com a mao, que o proprio rAthena comenta como
+//= "/com, /comeon" no enum emotion_type (src/map/clif.hpp:308).
+//=
+//= O 44 foi CONFERIDO no emotionlist.lub do cliente, nao chutado:
+//= a tabela de la declara as ET_* na mesma ordem do clif.hpp, e
+//= ET_COMEON cai no indice 44 nas duas (o ET_HUNGRY do Edgard
+//= cai no 37 nas duas, o que revalida o metodo). Lido do .lub do
+//= bRO, porque o do nosso data.grf esta com a flag DES.
+//=
+//= O QUE NAO DA PARA PROVAR AQUI: que `/vem` e o nome bRO DESTE
+//= emote. Comando de emote e string do executavel, e nao ha nem
+//= no nosso (kRO, comandos em coreano) nem no Ragexe do bRO, que
+//= esta empacotado - `vem`, `fome` e `comeon` nao aparecem em
+//= nenhum dos dois. A ligacao e pelo sentido, e e a mesma aposta
+//= que o `/fome` do Edgard fez e acertou.
+//=
+//= Se sair o emote errado em jogo, e trocar UM numero no
+//= OnTimer4000, e o intervalo e o NOME do label (OnTimer4000 =
+//= 4000 ms) - mudar o intervalo e renomear o label, nao mexer
+//= no initnpctimer.
+//===== Notas ================================================
+//= Os sprites, e todos conferidos duas vezes:
+//=
+//=   Alleria   612  4_F_PINKWOMAN
+//=   Saback    468  4_M_KNIGHT_BLACK
+//=   guardas   966  4_M_RUSKNIGHT (os dois)
+//=
+//= Os guardas nasceram com o 470 (4_M_KNIGHT_SILVER) e viraram
+//= 966 no mesmo dia, a pedido. Os dois usam o MESMO sprite de
+//= proposito: sao tropa, e e o Saback que tem de destacar.
+//=
+//= AS DUAS CONFERENCIAS, para cada um dos tres: o npcidentity.lub
+//= DESTE cliente (que da 612, 468 e 966, batendo com o npc.hpp do
+//= rAthena) e o .spr e o .act na pasta de sprite de NPC do nosso
+//= data.grf. E a regra desde a armadilha do 10605 no Mestre de
+//= Classe, e depois do 4_M_JOB_KNIGHT, que o rAthena conhece e
+//= este cliente nao desenha - e vale mesmo para sprite que o
+//= pedido ja traz com o numero pronto.
+//=
+//= Facing 4 (sul) nos QUATRO. Com a camera padrao deste cliente
+//= as direcoes caem na diagonal da tela, entao "virar um para o
+//= outro" nao se resolve escolhendo leste e oeste - a tabela que
+//= vale esta no maquina.txt, secao Notas. O 4 e o que a maioria
+//= das NPCs de dialogo do projeto usa.
+//=
+//= O SABACK NAO FAZ NADA alem de falar, e e de proposito: ele e
+//= a placa que aponta para a Alleria, para quem sai do Corredor
+//= com a bolsa cheia e nao sabe o que fazer com a flor.
+//=
+//= A FLOR NAO E NoTrade nem NoDrop (db/re/item_db_etc.yml), ao
+//= contrario da Moeda Nova. Entao ela circula entre jogadores, e
+//= esta NPC e o cambio: quem nao caca pode comprar flor de quem
+//= caca. Foi deixado assim - a trava esta na moeda, que e o que
+//= nao se troca.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+comodo,221,182,4	script	Alleria	612,{
+	mes "[Alleria]";
+	mes "A Ordem me autorizou pagar uma moeda para cada";
+	mes "^0000FFFlor Visionária^000000 que você quiser vender.";
+	mes "Se for do seu interesse me mostre que eu avalio";
+	mes "e autorizo seu pagamento.";
+	next;
+
+	if (select("Sim, toma!:Não, deixa quieto.") == 2) {
+		mes "[Alleria]";
+		mes "Como quiser. A Ordem não tem pressa,";
+		mes "e flor guardada não murcha.";
+		close;
+	}
+
+	.@qtd = countitem(.flor);
+	if (.@qtd == 0) {
+		mes "[Alleria]";
+		mes "Você me mostra as mãos vazias.";
+		mes "Sem flor não há avaliação, e sem avaliação";
+		mes "não há pagamento. Volte com alguma.";
+		close;
+	}
+
+	.@pago = .@qtd * .preco;
+
+	// A ORDEM IMPORTA, e o cabecalho explica por que nao ha
+	// checkweight aqui: o delitem esvazia o slot da flor, entao o
+	// getitem sempre tem onde entrar, e a Moeda Nova pesa 0.
+	delitem .flor, .@qtd;
+	getitem .moeda, .@pago;
+
+	mes "[Alleria]";
+	if (.@qtd == 1)
+		mes "Avaliada. Uma flor, e a Ordem paga por ela.";
+	else
+		mes "Avaliadas, todas as ^0000FF" + .@qtd + "^000000.";
+	mes "Autorizo o pagamento de ^0000FF" + .@pago + "^000000 " +
+	    ((.@pago == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+	next;
+	mes "[Alleria]";
+	mes "A Ordem agradece. Traga mais quando tiver.";
+	close;
+
+OnInit:
+	// Os tres numeros moram aqui e nao espalhados pelo corpo pelo
+	// mesmo motivo do maquina.txt: se um ID ou o preco mudar,
+	// muda-se numa linha so.
+	.flor  = 25503;   // Flor Visionaria, db/re/item_db_etc.yml
+	.moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
+	.preco = 1;       // Moedas Novas por flor
+
+	// Arma o `/vem`. Ver "O emote da Alleria" no cabecalho.
+	initnpctimer;
+	end;
+
+OnTimer4000:
+	// O intervalo e o NOME deste label, nao um argumento.
+	// `emotion` sem segundo argumento sai do proprio NPC
+	// (src/map/script.cpp, BUILDIN_FUNC(emotion): cai no st->oid).
+	emotion ET_COMEON;
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+// So fala. O porque de ele nao fazer nada esta no cabecalho.
+comodo,223,182,4	script	Saback	468,{
+	mes "[Saback]";
+	mes "A Ordem precisa das flores.";
+	mes "Lady Alleria concordou em ajudar com a";
+	mes "verificação... bom, se tiver algumas fale com ela!";
+	next;
+	mes "[Saback]";
+	mes "E sem muita piadinha, jogo rápido.";
+	close;
+}
+
+// Os dois guardas. So falam - ver o cabecalho, secao "Os dois
+// guardas". O sufixo depois do `#` e o que os separa; o cliente
+// desenha so "Guarda da Ordem" nos dois.
+comodo,221,184,4	script	Guarda da Ordem#alleria	966,{
+	mes "[Guarda da Ordem]";
+	mes "Acho que o Saback gosta dela, haha!";
+	next;
+	mes "[Guarda da Ordem]";
+	mes "Mas também, não tem mais ninguém no server,";
+	mes "então vale tudo!";
+	close;
+}
+
+comodo,224,184,4	script	Guarda da Ordem#saback	966,{
+	mes "[Guarda da Ordem]";
+	mes "Com o servidor vazio a Ordem decretou guarda";
+	mes "nos pontos principais.";
+	next;
+	mes "[Guarda da Ordem]";
+	mes "As coisas estão estranhas.";
+	close;
+}

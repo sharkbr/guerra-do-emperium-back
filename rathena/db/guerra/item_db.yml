@@ -59,13 +59,20 @@ Body:
     # A MOEDA DO REINO. E a moeda-corrente da Ordem, feita para ser o
     # preco dos servicos novos. Desde 2026-08-07 o circuito FECHA:
     #
-    #   ONDE GASTAR  a Maquina (npc/guerra/maquina.txt, prontera 167,199)
-    #                cobra a moeda em dezessete itens.
-    #   DE ONDE VEM  o Logue e Ganhe (db/guerra/attendance.yml) entrega
-    #                10 por dia e 50 no vigesimo - 240 por CONTA por mes.
+    #   ONDE GASTAR  a Maquina (npc/guerra/maquina.txt) cobra a moeda em
+    #                dezessete itens. Sao DUAS desde 2026-08-08 - prontera
+    #                167,199 e comodo 215,185, a segunda um `duplicate`.
+    #   DE ONDE VEM  1) o Logue e Ganhe (db/guerra/attendance.yml) entrega
+    #                   10 por dia e 50 no vigesimo - 240 por CONTA por mes,
+    #                   independente de jogar.
+    #                2) a Alleria (npc/guerra/flores_da_ordem.txt, comodo
+    #                   221,182) paga 1 por Flor Visionaria, desde
+    #                   2026-08-08. E a fonte por ESFORCO, e nao tem teto:
+    #                   a flor cai em 30% das mortes de chefe do Corredor
+    #                   Fantasma.
     #
-    # As outras fontes pensadas (trocas por Flor Visionaria / Moeda do
-    # Explorador / Caveira) continuam por fazer.
+    # As outras fontes pensadas (troca por Moeda do Explorador / Caveira)
+    # continuam por fazer.
     #
     # O premio do Logue e Ganhe chega por RoDEX, e o `NoMail` abaixo NAO
     # atrapalha: o itemdb_canmail so e checado quando um JOGADOR anexa

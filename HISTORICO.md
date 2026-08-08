@@ -2838,3 +2838,198 @@ conferido na mesma consulta.
 (`npc/custom/warper.txt`, o do próprio rAthena, montado para cliente moderno)
 **oferece destinos que derrubam este cliente**, e o `1@slug` não é o único. A
 varredura do menu inteiro contra o GRF não foi feita — está no `PENDENCIAS.md`.
+
+---
+
+## A Flor Visionária ganhou destino — Alleria, Saback e a segunda Máquina (2026-08-08)
+
+Três NPCs em Comodo, a poucos passos da porta do Corredor Fantasma, fechando o
+circuito que a sala tinha deixado aberto no mesmo dia:
+
+| NPC | Onde | Sprite | O que faz |
+|---|---|---|---|
+| Máquina | `comodo 214,185` | 564 `2_VENDING_MACHINE1` | `duplicate` da de Prontera — mesma loja de troca |
+| Alleria | `comodo 221,182` | 612 `4_F_PINKWOMAN` | compra **todas** as Flores Visionárias da bolsa, a 1 Moeda Nova cada |
+| Saback | `comodo 223,182` | 468 `4_M_KNIGHT_BLACK` | só fala — aponta o jogador para a Alleria |
+
+### O circuito que se fechou
+
+Até aqui a Flor Visionária (25503) caía em 30% das mortes dos 130 chefes e
+**não tinha onde ser gasta** — era troféu, e estava escrito assim no cabeçalho
+do `corredor_fantasma.txt` e no `PENDENCIAS.md` §1c. Agora:
+
+```
+Corredor Fantasma  ->  Flor Visionária (30% por chefe morto)
+Alleria            ->  1 Moeda Nova por flor
+Máquina de Comodo  ->  as dezoito linhas do barter, ali mesmo
+```
+
+A terceira peça é o motivo de a Máquina ter vindo junto: sem ela o jogador
+venderia a flor em Comodo e teria de viajar a Prontera para gastar a moeda.
+
+**A Alleria é a segunda fonte de Moeda Nova, e a primeira por esforço.** A
+outra é o Logue e Ganhe, que entrega 240 por **conta** por mês independente de
+jogar. Esta não tem teto: quem caçar mais chefe, ganha mais. Se um dia a moeda
+inflacionar, os dois números a mexer são o `.preco` do `OnInit` da Alleria e o
+`.FlorChance` do `corredor_fantasma.txt` — está anotado nos dois cabeçalhos.
+
+**Não é a troca do bRO.** Lá se levavam 10 Flores ao Espectro por um Prêmio
+Visionário, com 1% de sair um Cartão Visionário (carta de MVP) a cada 200 trocas
+do servidor inteiro. Aquilo foi cortado a pedido em 2026-08-08 e continua
+cortado — aqui a flor vira moeda, uma por uma, sem sorteio e sem contador.
+
+### Por que a compra leva tudo de uma vez, e por que não há `checkweight`
+
+"Sim, toma!" consome **todas** as flores da bolsa. Foi assim que o pedido veio, e
+poupa a caixa de `input` — que pede um número e aceita zero, e teria de ser
+validada à mão.
+
+A ordem das duas linhas importa, e é o oposto da intuição:
+
+```
+delitem .flor, .@qtd;
+getitem .moeda, .@pago;
+```
+
+O `delitem` esvazia o slot inteiro da flor, então o `getitem` seguinte **sempre**
+tem onde entrar; e a flor pesa 10 contra 0 da Moeda Nova, então a troca só alivia
+a bolsa. Um `checkweight` **antes** do `delitem` recusaria justamente quem está
+com a bolsa cheia de flores — que é o cliente desta NPC.
+
+> Comparar com o `maquina.txt`: lá o `checkweight` também não existe, mas por
+> outro motivo — a loja de troca já o faz sozinha, em `npc_barter_purchase`.
+> Mesma ausência, razões diferentes; as duas estão escritas nos cabeçalhos.
+
+### A segunda Máquina é `duplicate`, e isso tem consequência no código
+
+```
+comodo,215,185,6	duplicate(Máquina)	Máquina#comodo	564
+```
+
+Mesmo código, mesmo sprite, mesma loja flutuante — não há segunda cópia da fala
+para sair de sincronia, e a mercadoria continua vindo de um lugar só
+(`barters_guerra.yml`).
+
+**As duas dividem o `.moeda` do `OnInit`, e isso não é acidente do rAthena:**
+variável de escopo `.` mora no `st->script->local` (`src/map/script.cpp:3050`),
+que pertence ao **script**, e o `npc_duplicate_sub` aponta o duplicate para o
+script do original (`src/map/npc.cpp:4602`). Trocar o ID da Moeda continua sendo
+uma linha, valendo para as duas.
+
+O nome único é `Máquina#comodo`; o jogador lê só o pedaço antes do `#`, então as
+duas se chamam "Máquina" na tela. Nome único repetido faria a segunda não nascer.
+
+### O que foi conferido antes de escrever
+
+A receita de sempre, e desta vez nada caiu:
+
+| Conferência | Resultado |
+|---|---|
+| `4_F_PINKWOMAN` e `4_M_KNIGHT_BLACK` no `npcidentity.lub` **deste** cliente | **612** e **468** — batem com o `npc.hpp` do rAthena |
+| `.spr` e `.act` na pasta de sprite de NPC do nosso `data.grf` | os quatro arquivos existem |
+| Células `215,185`, `221,182` e `223,182` no `comodo.gat` do GRF | as três tipo 0, andáveis |
+| NPC do rAthena por perto | só o `Muff`, em `comodo 224,187` — sem sobreposição |
+| Nomes `Alleria` e `Saback` no `npc/` inteiro | livres |
+
+A leitura do `npcidentity.lub` passou pela armadilha do `RK` já documentada no
+`CLAUDE.md` §5: o parser trata `LOADK` em registrador além do índice 255, e por
+isso leu **4.578** entradas. A prova de que estava certo veio de graça —
+`JT_4_M_JOB_KNIGHT` apareceu **ausente**, que é exatamente o sprite que caiu na
+conferência de 2026-08-05.
+
+### A primeira subida falhou — e a lição subiu para o `CLAUDE.md`
+
+A Máquina de Comodo apareceu; a Alleria e o Saback, não. O `@reloadscript` deixou
+**uma linha** no `log/map-msg_log.log`:
+
+```
+[ Error ] : npc_parsesrcfile: Unknown syntax in file
+            'npc/guerra/flores_da_ordem.txt', line '64'. Stopping...
+ * w1=pc\ do
+```
+
+A linha 64 era **comentário de cabeçalho**. O gerador do arquivo passou por um
+heredoc do Bash que **comeu a contrabarra dupla**: o texto `data\\sprite\\npc\\`
+chegou ao Python como `data\sprite\npc\`, e ali o `\n` virou quebra de linha de
+verdade. A frase partiu em duas, e a metade órfã (`pc\ do`) deixou de começar
+com `//`.
+
+**O estrago foi desproporcional à causa, e é esse o ponto:** o
+`npc_parsesrcfile` (`src/map/npc.cpp:5646`) **para de ler o arquivo** na primeira
+linha que não entende. Os dois NPCs estavam 25 linhas abaixo e simplesmente não
+existiram — sem erro próprio, sem sintoma no jogo além da ausência.
+
+E o log não entrega isso de graça: essa única linha de `[ Error ]` fica soterrada
+sob **centenas** de `[ Warning ]` inofensivos dos mercados de cartas. Quem lê o
+fim do log vê aviso de preço de carta, não o erro. Procurar por `Unknown syntax`.
+
+As duas armadilhas — a do parser e a do heredoc — estão no `CLAUDE.md` §5. A
+conferência que passou a existir por causa disto: **toda linha antes da primeira
+definição de NPC tem de começar com `//`**, verificada por varredura depois de
+gerar o arquivo.
+
+> A mesma frase quebrou na tabela de conferências deste histórico, gerada pelo
+> mesmo caminho. Foi consertada junto.
+
+### Confirmado no jogo, e os ajustes que o teste pediu (2026-08-08)
+
+Depois da correção o `@reloadscript` levantou os dois, e a cena foi ajustada no
+mesmo dia:
+
+**A Máquina saiu de `215,185` para `214,185` e virou para a esquerda** — o
+`facing` foi de 6 (leste) para 4 (sul). Com a câmera padrão deste cliente as
+direções caem na diagonal da tela, então o ponto cardeal não é o que se vê:
+
+| facing | como aparece |
+|---|---|
+| 6 (leste) | virada para a **direita** |
+| 4 (sul) | virada para a **esquerda** |
+
+A tabela está no cabeçalho do `maquina.txt`, porque é o tipo de coisa que se
+redescobre por tentativa toda vez.
+
+**Dois guardas novos**, `comodo 221,184` e `224,184`, sprite 966
+`4_M_RUSKNIGHT`, um atrás da Alleria e um atrás do Saback. Só falam. Os dois se
+chamam "Guarda da Ordem" na tela; o que os separa é o sufixo depois do `#`, que o
+cliente não desenha.
+
+> **As duas falas são metalinguagem** — as duas citam o servidor vazio ("não tem
+> mais ninguém no server", "com o servidor vazio a Ordem decretou guarda"). É
+> deliberado, e é a primeira coisa a reescrever no dia em que o servidor encher.
+> Está anotado no cabeçalho e no `scripts_guerra.conf`.
+
+Os dois usam o **mesmo** sprite de propósito: são tropa, e é o Saback que tem de
+destacar. Nasceram com o 470 `4_M_KNIGHT_SILVER` e trocaram para o 966 no mesmo
+dia, a pedido — e o 966 passou pela mesma conferência dos outros, que **vale
+mesmo quando o pedido já traz o número pronto**: `npcidentity.lub` deste cliente
+(966, batendo com o `npc.hpp`) e `.spr`/`.act` no `data.grf`.
+
+### O emote da Alleria — `/vem` de 4 em 4 segundos
+
+Mesmo par do Edgard de `prontera 170,199`: `initnpctimer` no `OnInit`, e um
+`OnTimer4000` que solta o emote e rearma. O intervalo é o **nome do label**, não
+um argumento — mudar de 4s para outro valor é renomear `OnTimer4000`, não mexer
+no `initnpctimer`.
+
+**O número é `ET_COMEON` (44)**, o emote de chamar com a mão, que o próprio
+rAthena comenta como `/com, /comeon` no `emotion_type` (`src/map/clif.hpp:308`).
+Conferido no `emotionlist.lub` do cliente, não chutado: a tabela de lá declara as
+`ET_*` na mesma ordem do `clif.hpp`, e `ET_COMEON` cai no índice 44 nas duas. O
+`ET_HUNGRY` do Edgard cai no 37 nas duas, o que revalida o método de 2026-08-04.
+Lido do `.lub` do bRO, porque o do nosso `data.grf` está com a flag DES.
+
+**O que não deu para provar:** que `/vem` é o nome bRO **deste** emote. Comando
+de emote é string do executável, e não existe em nenhum dos dois desta máquina —
+o nosso é kRO com os comandos em coreano, e o `Ragexe.exe` do bRO está
+empacotado. `vem`, `fome` e `comeon` não aparecem em nenhum deles. A ligação é
+pelo sentido, e é a mesma aposta que o `/fome` do Edgard fez e acertou. Se sair
+o emote errado, é um número no `OnTimer4000`.
+
+### Estado
+
+Os quatro NPCs da cena e a Máquina estão escritos e conferidos offline: cabeçalho
+inteiro em `//` (a varredura que nasceu do erro acima), chaves e aspas
+balanceadas, campos por TAB, cp1252 sem U+FFFD, e as células `214,185`, `221,184`
+e `224,184` andáveis no `comodo.gat`. **A Alleria, o Saback e a Máquina estão
+confirmados no jogo**; os dois guardas, o emote e a Máquina na posição nova
+dependem de um `@reloadscript`. Está no `PENDENCIAS.md` §1.
