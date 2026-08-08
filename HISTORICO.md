@@ -3286,14 +3286,41 @@ pelo `instala_item.py`, com a arte copiada da Caveira comum (7420), que tem os
 4 arquivos completos neste cliente. Peso 0 e travada como pedido — sem chão,
 troca, armazém, RoDEX, leilão, carrinho ou revenda.
 
-**Nada a entrega ainda**, e isso está no `PENDENCIAS.md` §4b. A descrição
-promete que ela cai de jogador morto na arena, e o `honra_de_combate.txt` hoje
-conta o ponto e não dá item. As duas condições da descrição são exatamente as
-que ele já testa, então o lugar de escrever isso já está pronto — só não foi
-pedido agora.
-
 Ela já era citada de fora antes de existir: a descrição da Moeda Nova (30998)
 lista "em troca de Caveira Humana" como fonte de moeda desde 2026-08-07.
+
+#### Ela ganhou fonte no mesmo dia
+
+Pedida horas depois da criação do item: cair de jogador morto na Arena de
+Prontera, direto no inventário, só de quem tem Honra de Combate **maior que
+zero** e nível máximo. Foi escrita no `OnPCKillEvent` do
+`npc/guerra/honra_de_combate.txt`, que já lia as duas coisas — ele anexa no
+morto para colher nível, nome e `#RepPointsPvP` antes de pontuar.
+
+**"Maior que zero" não é o mesmo `.Piso` da pontuação.** Pontuar exige zero ou
+mais; o troféu exige um ou mais. É uma diferença de um, e por isso os dois
+números ficaram separados no `OnInit` (`.Piso` e `.TrofeuPiso`) em vez de um só
+— quem ler o script tem de ver que a diferença é deliberada.
+
+**A terceira condição não foi pedida: o troféu só sai quando a morte pontua**,
+ou seja, passa também pelo anti-conluio do `.Limite`. O motivo é que a Caveira
+é **moeda** — a descrição da Moeda Nova já promete trocá-la —, e sem essa trava
+duas contas em nível máximo revezando mortes fabricariam moeda sem teto. O
+`.Limite` já existia para o placar e saiu de graça aqui. Mover o bloco para
+antes do `query_sql` do `.Limite` desfaz a decisão em uma linha.
+
+**"Nunca no chão" não depende do script.** O `getitem`, com a mochila cheia,
+tenta `map_addflooritem` — mas passa antes por `pc_candrop`
+(`src/map/script.cpp`), que recusa item `NoDrop`. Como a caveira já era
+`NoDrop`, mochila cheia **perde** a caveira em vez de largá-la no chão, e o
+cliente avisa o jogador. Não havia o que escrever.
+
+O texto da placa ganhou uma linha explicando o troféu, com o número vindo do
+`.TrofeuPiso` — regra e explicação mudam juntas.
+
+**Falta ver no jogo**, com o resto da praça (§1 do `PENDENCIAS.md`): matar na
+arena e ver a caveira entrar. Lembrar da armadilha da conta de teste — grupo 99
+ignora `NoDrop`, então testar "não cai no chão" nela dá falso negativo.
 
 ### O Mister Peso
 

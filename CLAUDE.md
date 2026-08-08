@@ -234,6 +234,14 @@ Produziram diagnóstico falso e custaram retrabalho:
   ruído do `.gat`. Monstro sorteado ali fica inalcançável. Antes de usar `0,0`,
   varrer os pedaços conectados do `.gat` — ou dar coordenada e área, como o
   `corredor_fantasma.txt` faz.
+- **`getitem` com a mochila cheia LARGA O ITEM NO CHÃO.** O
+  `buildin_getitem` (`src/map/script.cpp`) chama `pc_additem`, e no fracasso
+  cai num `map_addflooritem` — então "vai direto para o inventário" não é
+  garantia do script, é garantia do **item**. Quem impede a queda é o
+  `pc_candrop`, que recusa item `NoDrop`; com ele o item se perde e o cliente
+  avisa. Item sem `NoDrop` entregue por script aparece no chão da arena, ao
+  alcance de qualquer um, e nada no log denuncia. Caso vivo: a Caveira Humana
+  (30995), em `npc/guerra/honra_de_combate.txt`.
 - **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
   binário aplicado **depois** do parse (`pc_groups.cpp:275`,
   `permissions |= otherGroup->permissions`). Permissão que o pai concede, o

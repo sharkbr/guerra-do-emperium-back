@@ -199,15 +199,21 @@ Body:
     # em PvP - level maximo e reputacao positiva, dentro da arena de
     # Prontera. A descricao que o jogador le (itemInfo.lua) ja diz isso.
     #
-    # ATENCAO: EM 2026-08-08 NADA A ENTREGA AINDA. O item existe e esta
-    # travado, mas nenhum script a solta: o npc/guerra/honra_de_combate.txt
-    # conta o ponto da morte e nao da item nenhum. Enquanto isso nao for
-    # escrito, a unica fonte e @item - e a descricao promete um caminho que
-    # nao existe. Ver PENDENCIAS.md.
+    # QUEM A ENTREGA: o OnPCKillEvent do npc/guerra/honra_de_combate.txt,
+    # desde 2026-08-08, no mesmo bloco que pontua a morte. Sao TRES
+    # condicoes - os dois lados em nivel 200, o morto com 1 ponto ou mais
+    # de Honra de Combate, e a morte tem de passar pelo anti-conluio do
+    # .Limite. O cabecalho daquele arquivo, secao "O trofeu da arena",
+    # explica por que a terceira existe sem ter sido pedida.
+    #
+    # O `NoDrop` abaixo NAO e so tematico: e ele que cumpre o "nunca no
+    # chao". Com a mochila cheia o getitem tenta map_addflooritem, mas
+    # passa antes por pc_candrop (src/map/script.cpp), que recusa item
+    # NoDrop - entao a caveira se perde em vez de cair no chao.
     #
     # Ela tambem ja e citada de FORA: a descricao da Moeda Nova (30998), no
     # ferramentas/instala_item.py, lista "em troca de Caveira Humana" como
-    # uma das fontes de moeda. Esse NPC de troca tambem nao existe ainda.
+    # uma das fontes de moeda. Esse NPC de troca ainda nao existe.
     #
     # Etc, e nao Usable, pelo mesmo motivo da Maca da Inocencia: o jogador
     # nao usa a Caveira. Como Usable o cliente ofereceria um botao de usar

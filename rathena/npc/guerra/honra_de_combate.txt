@@ -74,6 +74,42 @@
 //= O ANÚNCIO SAI SEMPRE, mesmo quando a morte não pontua. Foi
 //= pedido assim: o broadcast conta o que aconteceu, não o que
 //= valeu ponto.
+//===== O troféu da arena ====================================
+//= A Caveira Humana (30995) vai para o INVENTÁRIO do matador
+//= no instante em que a morte pontua. Ela não cai no chão em
+//= caso nenhum, e isso não depende deste script: o item é
+//= `NoDrop` no db/guerra/item_db.yml, o que fecha o único
+//= caminho pelo qual o `getitem` largaria item no chão - com a
+//= mochila cheia o buildin tenta `map_addflooritem`, mas passa
+//= antes por `pc_candrop` (src/map/script.cpp), que recusa item
+//= `NoDrop`. Mochila cheia perde a caveira, e o cliente avisa o
+//= jogador com a mensagem de inventário lotado.
+//=
+//= SÃO TRÊS CONDIÇÕES, e duas delas já eram as da pontuação:
+//=   1) matador e morto em nível .Nivel;
+//=   2) a morte precisa PONTUAR - ou seja, passar também pelo
+//=      anti-conluio do .Limite;
+//=   3) o morto precisa ter .TrofeuPiso ou mais de Honra de
+//=      Combate ANTES de morrer.
+//=
+//= A (3) É MAIS APERTADA QUE O .Piso: pontuar exige zero ou
+//= mais, a caveira exige um ou mais. Foi pedido assim em
+//= 2026-08-08 ("reputação maior que 0"), então quem está em
+//= zero ainda vale ponto e não vale troféu. Os dois números
+//= estão separados no OnInit de propósito, para que essa
+//= diferença de um seja visível a quem for mexer.
+//=
+//= A (2) NÃO foi pedida, e está aqui por um motivo: a Caveira é
+//= MOEDA - a descrição da Moeda Nova (30998) já promete trocá-la
+//= por moeda. Sem o anti-conluio, duas contas em nível máximo
+//= revezando mortes fabricariam moeda sem teto, e o .Limite
+//= existente sairia de graça. Para soltar a caveira em TODA
+//= morte válida, basta subir o bloco para antes do query_sql do
+//= .Limite - e aí o revezamento volta a pagar.
+//=
+//= O número lido é `.@pontos_morto`, colhido ANTES do S_Pontua:
+//= vale a reputação que o morto tinha ao morrer, e não a de
+//= depois de perder o ponto pela própria morte.
 //===== Notas ================================================
 //= `killedrid` é ACCOUNT ID: para jogador, o id de bloco é o
 //= account_id (src/map/pc.cpp, `sd->id = account_id`).
@@ -135,6 +171,8 @@ prontera,152,187,4	script	Placar da Arena	20269,{
 	mes " ";
 	mes "Pontuação só ocorre se o morto tiver pontuação 0 ou maior e for nível máximo.";
 	mes " ";
+	mes "Quem vence uma luta que pontua ainda recolhe a ^0000FFCaveira Humana^000000 do perdedor - mas só se ele tiver ^0000FF" + .TrofeuPiso + "^000000 ponto ou mais de Honra de Combate.";
+	mes " ";
 	mes "^777777(O matador também precisa ser nível " + .Nivel + ".)^000000";
 	next;
 
@@ -177,6 +215,8 @@ OnInit:
 	.Grupo = 4;             // o Id: de db/guerra/reputation_group.yml
 	.Nivel = 200;           // nível de base exigido dos DOIS lados
 	.Piso = 0;              // o morto precisa ter ISTO ou mais para valer
+	.Trofeu = 30995;        // Caveira Humana - o troféu que o matador leva
+	.TrofeuPiso = 1;        // e a reputação MÍNIMA do morto para largá-lo
 	.Limite = 2;            // saldo máximo por par de contas, por dia
 	.Top = 5;               // linhas do quadro de cima
 	.Completo = 15;         // linhas do "Ranking completo"
@@ -231,6 +271,13 @@ OnPCKillEvent:
 	if (.@novo > .Limite || .@novo < (0 - .Limite))
 		end;
 	query_sql("INSERT INTO guerra_pvp_confronto (dia, conta_a, conta_b, saldo) VALUES (CURDATE(), " + .@a + ", " + .@b + ", " + .@novo + ") ON DUPLICATE KEY UPDATE saldo = " + .@novo);
+
+	// O troféu sai ANTES dos S_Pontua de propósito: aqui o jogador anexado
+	// ainda é com certeza o matador. Ver "O troféu da arena", no cabeçalho.
+	if (.@pontos_morto >= .TrofeuPiso) {
+		getitem .Trofeu, 1;
+		dispbottom "Você recolheu a Caveira Humana de " + .@nome_morto$ + ".";
+	}
 
 	callsub S_Pontua, .@matador, .@cid_matador, .@nome_matador$, 1;
 	callsub S_Pontua, .@morto, .@cid_morto, .@nome_morto$, -1;

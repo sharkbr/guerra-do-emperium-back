@@ -39,6 +39,7 @@ sem confirmação in-game.
 | Mestre das Montarias (Riding Creature Master em PT) | `prontera 130,213` | 2026-08-08 |
 | Arena e Área de Treinamento trocadas de lugar | `prontera 154/157,187` | 2026-08-08 |
 | Placar da Arena — modal novo, na coordenada nova | `prontera 152,187` | 2026-08-08 |
+| Caveira Humana caindo de jogador morto | `pvp_n_1-5` | 2026-08-08 |
 | Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
@@ -395,27 +396,19 @@ de tela. Item assim não precisa de arte de manto nenhuma, e procurar a arte que
 
 ---
 
-## 4b. A Caveira Humana existe e nada a entrega
+## 4b. A Caveira Humana já cai — falta o NPC que a compra
 
-Aberto em 2026-08-08. O item **30995 Caveira Humana** foi criado dos dois lados
-— `db/guerra/item_db.yml` e a entrada do `itemInfo.lua` pelo
-`ferramentas/instala_item.py` — e está travado como pedido: peso 0, sem chão,
-troca, armazém, RoDEX, leilão, carrinho ou revenda.
+**A metade de baixo fechou em 2026-08-08**: o `OnPCKillEvent` do
+`npc/guerra/honra_de_combate.txt` entrega a Caveira Humana (30995) no
+inventário do matador. Ver `HISTORICO.md`, seção "A Caveira Humana (30995)".
 
-**Só que nenhum script a solta.** A descrição que o jogador lê promete que "só
-cai de jogadores no level máximo com reputação positiva dentro da Arena de
-Prontera", e em 2026-08-08 a única fonte é `@item`. Quem conta a morte na arena
-é o `npc/guerra/honra_de_combate.txt`, no `OnPCKillEvent`, e ele hoje pontua e
-não dá item nenhum.
+**O que sobrou:** a descrição da Moeda Nova (30998) lista "em troca de Caveira
+Humana" como uma das fontes de moeda, e **esse NPC de troca não existe**. Hoje
+a caveira entra e não sai de lugar nenhum.
 
-**Onde entra, quando for escrito:** o mesmo `OnPCKillEvent`, depois das travas
-que já existem — as duas condições da descrição são exatamente as que ele já
-testa (`.Nivel` dos dois lados e `.Piso` do morto). Decidir se a caveira sai
-**sempre** ou só quando a morte pontua; hoje o anúncio sai sempre e o ponto não.
-
-**E ela já é citada de fora:** a descrição da Moeda Nova (30998) lista "em troca
-de Caveira Humana" como uma das fontes de moeda. Esse NPC de troca também não
-existe.
+Quando for escrito, é `barter` e não `itemshop` — a caveira é `NoSell`, e o
+`itemshop` passa a moeda por `pc_can_sell_item`, que recusa item `NoSell`. Ver
+`CLAUDE.md` §4.10, que existe exatamente por causa deste caso.
 
 ---
 
