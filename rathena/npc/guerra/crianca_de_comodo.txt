@@ -1,0 +1,197 @@
+//===== Guerra do Emperium ===================================
+//= A Crianca de Comodo - o cartaz vivo do Corredor Fantasma
+//===== Onde =================================================
+//= comodo 207,148
+//=
+//= Celula conferida no comodo.gat DESTE cliente: tipo 0,
+//= andavel, altura 0.01, e as celulas em volta tambem sao tipo 0
+//= (o mapa e 360x380). Vizinhos, todos do proprio rAthena, e
+//= nenhum na celula dela:
+//=
+//=   Devellin           204,148   tres celulas a oeste
+//=   Bulletin Board     210,148   tres celulas a leste
+//=   Shopping Board     206,153
+//=   Guild Warehouse    204,153
+//=
+//= (O terreno ali ondula um pouco - a altura vai de -0.36 a 0.78
+//= nas celulas em volta -, entao o `plano_e_livre` do gat.py
+//= reprova o ponto. Aquilo e trava da frente VISUAL, para plantar
+//= modelo 3D; NPC fica no chao e nao se importa.)
+//=
+//= ELA ESTA NA LINHA DO ESPECTRO. A porta do Corredor Fantasma
+//= fica em comodo 208,187 - UMA celula em x e 39 em y daqui, ou
+//= seja quase em linha reta ao norte. Quem clicar no "Fica aqui"
+//= da segunda caixa so precisa subir.
+//=
+//= E ELA ESTA NO CANTO DE APOSTA DE COMODO, o que casa com a fala
+//= do Cassino sem ter sido combinado. O rAthena ja poe ali o par
+//= de npc/other/comodo_gambling.txt: a Devellin de 204,148, que
+//= fala da obsessao da Kachua por diamante, e a propria Kachua em
+//= 219,158, que troca Diamante de 3 Quilates por item aleatorio.
+//= E o que Comodo tem de cassino hoje - e esta em ingles.
+//=
+//= A CENA DO CORREDOR CONTINUA LONGE, encostada na praia: Alleria
+//= em 221,182, Saback, os dois guardas e a Maquina em 214,185.
+//= Quem desembarca em Comodo nao passa por la e nao tem como
+//= saber que existe. Esta NPC e o cartaz que aponta para o resto.
+//===== Descricao ============================================
+//= SO FALA. Nao vende, nao troca, nao teleporta e nao guarda
+//= variavel nenhuma - a porta de verdade continua sendo o
+//= Espectro da Morte (npc/guerra/corredor_fantasma.txt), e e ele
+//= quem warpa. Esta e a placa que manda o jogador ate ele, do
+//= mesmo jeito que o Saback e a placa que manda ate a Alleria.
+//=
+//= O que ela faz de diferente de toda outra NPC de fala do
+//= projeto e o LINK DE NAVEGACAO: "Fica aqui" e clicavel, e
+//= tracar o caminho ate o Espectro no minimapa e a resposta a
+//= pergunta dela mesma ("Voce nao sabe aonde e?").
+//===== O link de navegacao - o primeiro do projeto ==========
+//= A sintaxe e uma etiqueta HTML dentro do proprio `mes`, lida
+//= pelo CLIENTE, nao pelo servidor (doc/script_commands.txt,
+//= secao "Navigation", a partir do cliente 2011-10-10a):
+//=
+//=   <NAVI>Texto<INFO>mapa,x,y,tipo,icone,flag</INFO></NAVI>
+//=
+//= Os tres numeros do fim, e por que estao assim:
+//=
+//=   tipo   0    ir a uma POSICAO. E o unico valor que aparece
+//=               nos scripts do rAthena.
+//=   icone  000  sem icone. O outro valor comum no rAthena e
+//=               101, que e um sprite de NPC generico
+//=               (JT_4W_F_01 no npcidentity.lub deste cliente).
+//=               NAO da para pedir o sprite do Espectro aqui: o
+//=               4_M_DEATH e 10028 neste cliente, cinco digitos
+//=               num campo de tres.
+//=   flag   0    NAO abrir a janela de Navegacao. O caminho e
+//=               marcado no minimapa do mesmo jeito - e o que o
+//=               proprio rAthena faz nos guias de Rock Ridge
+//=               ("I've marked the location ... on your
+//=               mini-map"). Trocar por 1 abre a janela grande.
+//=
+//= O AZUL E NOSSO, nao do cliente: o link nao muda de cor
+//= sozinho, entao vai um ^4D4DFF na mao, como fazem os scripts
+//= oficiais. O texto do link e ASCII puro de proposito - o
+//= doc/script_commands.txt avisa que codigo de cor colado em
+//= letra acentuada embaralha.
+//=
+//= ISTO DEPENDE DE DADO DO CLIENTE, e por isso foi conferido
+//= antes de ser escrito: a navegacao le
+//= data\luafiles514\lua files\navigation\, e o `comodo` esta na
+//= tabela do navi_map com o tamanho 360x380 - o mesmo do .gat.
+//= Mapa fora dessa tabela nao tem rota, e a falha seria calada.
+//= Vale a pena lembrar disso no dia de apontar um link para
+//= mapa nosso: o vis_h01 do Corredor, por exemplo, NAO esta la.
+//===== O balao de MVP =======================================
+//= Ela solta o balao de MVP - o mesmo que sobe quando um chefe
+//= morre - de 4 em 4 segundos, sozinha, sem ninguem clicar.
+//=
+//= O par e o mesmo da Alleria (npc/guerra/flores_da_ordem.txt) e
+//= do Edgard de prontera 170,199: `initnpctimer` no OnInit, e um
+//= OnTimer4000 que dispara e rearma. O intervalo e o NOME do
+//= label, nao um argumento - mudar de 4s e RENOMEAR o label, nao
+//= mexer no initnpctimer.
+//=
+//= O QUE MUDA EM RELACAO AO EMOTE DA ALLERIA: aquilo e `emotion`
+//= (balao de conversa), isto e `specialeffect` (efeito de tela).
+//= Sao dois caminhos diferentes no cliente, e o de MVP e o
+//= segundo - EF_MVP, que o proprio rAthena descreve como "MVP
+//= Banner" em doc/effect_list.md.
+//=
+//= O NUMERO E 68, e foi contado, nao chutado: o enum
+//= e_effect_type comeca em EF_NONE = -1 e EF_HIT1 = 0
+//= (src/map/script.hpp:765) e nao tem nenhum valor explicito ate
+//= o EF_MVP, que cai na linha 834 - 68 posicoes depois do
+//= EF_HIT1. Bate com a tabela do doc/effect_list.md.
+//=
+//= NAO E O `clif_mvp_effect` do servidor. Aquele (src/map/clif.cpp
+//= :8579, pacote ZC_MVP 0x010c) so aceita `map_session_data` -
+//= e um PACOTE DE JOGADOR, e nao ha comando de script que o
+//= exponha. NPC nao consegue disparar aquele; consegue este.
+//=
+//= `specialeffect` sem argumento de alvo sai do PROPRIO NPC e vai
+//= para a area (BUILDIN_FUNC(specialeffect): `map_id2bl(st->oid)`
+//= e AREA por padrao). O rAthena usa EF_MVP em NPC assim mesmo -
+//= ver npc/events/gdevent_aru.txt.
+//=
+//= O timer roda com a praia vazia, e nao custa nada parado: o
+//= efeito so viaja para quem estiver com ela na tela.
+//===== A fala cita um Cassino que ainda nao existe ==========
+//= A segunda caixa termina em "O Cassino tambem ta funcionando,
+//= com Moeda Nova!". Em 2026-08-08, quando esta NPC foi escrita,
+//= NAO HAVIA cassino nenhum no servidor - nem NPC, nem script,
+//= nem entrada no scripts_guerra.conf.
+//=
+//= A FRASE FICA DE PROPOSITO: o dono do projeto confirmou no
+//= mesmo dia que o cassino vem nos proximos dias, e a coordenada
+//= desta NPC foi escolhida em cima disso - ela esta no canto de
+//= aposta de Comodo, tres celulas da Devellin. A fala esta
+//= adiantada, nao errada.
+//=
+//= Quem chegar aqui antes do cassino existir e achar que e bug:
+//= nao e, esta no PENDENCIAS.md. Se o cassino for cancelado, o
+//= conserto e apagar UMA linha - a ultima da segunda caixa.
+//=
+//= A Moeda Nova (30998) citada na frase ESSA existe, e tem duas
+//= fontes: o Logue e Ganhe (db/guerra/attendance.yml) e a Alleria
+//= de comodo 221,182. Gasta-se na Maquina - inclusive na de
+//= comodo 214,185, a poucos passos do Espectro.
+//===== Notas ================================================
+//= O sprite e 944 (4_M_DST_CHILD), o menino de Comodo - e o
+//= sprite da propria cidade, que e o que faz ela parecer moradora
+//= e nao NPC plantada.
+//=
+//= AS DUAS CONFERENCIAS DE SEMPRE, feitas mesmo com o numero
+//= vindo pronto no pedido (foi assim que o 4_M_JOB_KNIGHT caiu em
+//= 2026-08-05):
+//=
+//=   npcidentity.lub DESTE cliente   JT_4_M_DST_CHILD = 944
+//=   data.grf                        4_m_dst_child.spr e .act
+//=                                   em data\sprite\npc\
+//=
+//= O 944 tambem bate com o JT_4_M_DST_CHILD do src/map/npc.hpp do
+//= rAthena, ancorado no 966 do 4_M_RUSKNIGHT e no 612 do
+//= 4_F_PINKWOMAN, que ja estao em jogo.
+//=
+//= Facing 4 (sul), como a maioria das NPCs de dialogo do projeto.
+//=
+//= O nome tem cedilha e til, e isso ja tem precedente: "Maquina",
+//= "Emissario da Ordem", "Funcionaria Kafra" e "Area de
+//= Treinamento" desenham normalmente com o patch AlwaysAscii.
+//=
+//= A FALA E DE CRIANCA DE PROPOSITO - "24!!", "ta funcionando",
+//= "quando eu pegar level". Nao e descuido de revisao.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+comodo,207,148,4	script	Criança	944,{
+	mes "[Criança]";
+	mes "O Corredor Fantasma fica aberto 24!!";
+	mes "Quando eu pegar level vou ver se meu pai está lá.";
+	next;
+	mes "[Criança]";
+	// O link de navegacao. Os tres numeros do fim estao
+	// explicados no cabecalho - o 0 do meio e "sem icone", e o
+	// 0 do fim e "nao abrir a janela grande".
+	mes "Você não sabe aonde é? <NAVI>^4D4DFFFica aqui^000000<INFO>comodo,208,187,0,000,0</INFO></NAVI>.";
+	mes "O Cassino também tá funcionando, com Moeda Nova!";
+	close;
+
+OnInit:
+	// Arma o balao de MVP. Ver "O balao de MVP" no cabecalho.
+	initnpctimer;
+	end;
+
+OnTimer4000:
+	// O intervalo e o NOME deste label, nao um argumento.
+	// `specialeffect` sem alvo sai do proprio NPC, para a area
+	// (src/map/script.cpp, BUILDIN_FUNC(specialeffect): cai no
+	// st->oid, com AREA por padrao).
+	specialeffect EF_MVP;
+	stopnpctimer;
+	initnpctimer;
+	end;
+}

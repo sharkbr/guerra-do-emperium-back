@@ -33,6 +33,7 @@ sem confirmação in-game.
 | Mercado de Visuais (3 lojas de traje) | `prontera`, y=155 | 2026-08-05 |
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
 | Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
+| Criança — link de navegação e balão de MVP | `comodo 207,148` | 2026-08-08 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 
@@ -155,6 +156,67 @@ Corredor. O que falta é o laço:
 tabela `char`), `UPDATE char SET last_map='prontera', last_x=152, last_y=188
 WHERE char_id=...`. Conferir o `save_map` junto — se ele também estiver no mapa
 quebrado, o personagem volta para lá ao morrer.
+
+---
+
+## 1e. A Criança de Comodo — duas estreias e uma promessa
+
+Aberto em 2026-08-08, com a NPC de `comodo 207,148`
+(`npc/guerra/crianca_de_comodo.txt`). A NPC em si está na tabela do §1, com
+todas as outras que faltam ver no jogo. O que fica aqui é o que **não** se
+resolve olhando a NPC aparecer.
+
+**1. O link de navegação é o primeiro do projeto.** A marcação "Fica aqui" da
+segunda caixa é uma etiqueta `<NAVI>` dentro do `mes`, e quem a lê é o
+**cliente**, não o servidor — então nada no log do map-server vai dizer se
+funcionou. O que provar, nesta ordem: (1) o texto sai **azul e sublinhado**, não
+com as etiquetas à mostra — se aparecer `<NAVI>` cru na tela, este cliente não
+tem o recurso e o conserto é tirar a etiqueta; (2) clicar traça o caminho até
+`comodo 208,187` no minimapa.
+
+Se sair o caminho mas sem marcador, é o campo do ícone (`000`, sem ícone) — o
+cabeçalho do arquivo explica os três números e o que trocar. Se der para clicar
+e nada acontecer, o suspeito é a tabela de navegação do cliente, e **não** o
+script: `comodo` foi conferido em `navi_map` antes de escrever, mas o override
+em `cliente\data\luafiles514\lua files\navigation\` é do ROenglishRE e pode
+estar descasado do GRF de 2021 — a armadilha de sempre.
+
+**2. O balão de MVP nunca foi disparado por NPC nosso.** É `specialeffect
+EF_MVP` (68) num `OnTimer4000`, e o caminho é outro que o do emote da Alleria:
+aquilo é `emotion`, isto é efeito de tela. Deve subir de 4 em 4 segundos sozinho,
+sem clicar. **Não confundir com o emote da Alleria**, do outro lado da cidade: o
+dela é um balão de conversa com a mão chamando; o desta é o banner de MVP, o
+mesmo que sobe quando um chefe morre.
+
+**3. A fala já promete o Cassino, que ainda não existe.** A segunda caixa termina
+em "O Cassino também tá funcionando, com Moeda Nova!". Em 2026-08-08 **não há
+cassino nenhum no servidor** — nem NPC, nem script, nem linha no
+`scripts_guerra.conf`.
+
+**Isso é adiantamento deliberado, não erro:** o dono do projeto confirmou no
+mesmo dia que o cassino vem nos próximos dias, e a coordenada da Criança foi
+escolhida em cima disso — `207,148` é o canto de aposta de Comodo. A frase fica.
+
+Enquanto o cassino não nasce, a Criança é a única coisa no servidor que fala
+dele. Se o plano mudar, o conserto é apagar **uma linha** — a última da segunda
+caixa do arquivo.
+
+A Moeda Nova citada na frase essa existe, e tem duas fontes (Logue e Ganhe, e a
+Alleria de `comodo 221,182`). É só o cassino que falta.
+
+### O que o canto de aposta já tem, para quem for construir
+
+O rAthena põe em Comodo o par de `npc/other/comodo_gambling.txt`, e ele fica
+exatamente ali: a **Devellin** em `204,148` (três células da Criança), que só
+fala da obsessão da Kachua por diamante, e a **Kachua** em `219,158`, que troca
+Diamante de 3 Quilates por item aleatório. É o que a cidade tem de cassino hoje —
+e está **em inglês**, como todo NPC do rAthena que a frente do §3 ainda não
+alcançou.
+
+Decidir cedo se o Cassino novo convive com esses dois, substitui um deles pela
+receita de sempre (`disablenpc` no original + duplicata nossa em `npc/guerra/`),
+ou ignora os dois. As três saídas são legítimas; o que custa caro é descobrir
+que existiam depois de plantar o NPC novo em cima.
 
 ---
 

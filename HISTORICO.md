@@ -3056,3 +3056,151 @@ O que o teste **não** cobriu, e fica dito sem virar pendência: a compra com a
 bolsa **cheia** de flores. É o caso que o `delitem` antes do `getitem` foi
 escrito para atender, e o único caminho do arquivo que um teste casual não
 percorre.
+
+---
+
+## A Criança de Comodo — o primeiro link de navegação do projeto (2026-08-08)
+
+`comodo 207,148`, sprite **944** (`4_M_DST_CHILD`, o menino da própria cidade),
+virada para o sul. **Só fala.** Não vende, não troca, não teleporta e não guarda
+variável nenhuma. Arquivo: `npc/guerra/crianca_de_comodo.txt`.
+
+O que ela é: **um cartaz vivo.** A cena inteira do Corredor Fantasma — o Espectro
+da Morte em `208,187`, a Alleria em `221,182`, o Saback, os dois guardas e a
+Máquina em `214,185` — fica encostada na praia. Quem desembarca em Comodo **não
+passa por lá** e não tem como saber que existe. Esta NPC fica na cidade e aponta
+para o resto.
+
+É a mesma função que o Saback exerce dentro da cena (a placa que manda procurar a
+Alleria), um nível acima: a placa que manda até a cena.
+
+### A coordenada mudou no mesmo dia, e melhorou por dois motivos
+
+Ela nasceu em `190,153`, na praça, entre a Kafra e o Warper — escolha nossa, pelo
+movimento. Foi movida para **`207,148`** a pedido, ainda em 2026-08-08, e o ponto
+novo é melhor por duas razões que só apareceram ao conferir os vizinhos:
+
+**1. Ela ficou na linha do Espectro.** De `207,148` para `208,187` é **uma**
+célula em x e 39 em y — quase reto ao norte. Quem clica no "Fica aqui" só precisa
+subir, e o caminho traçado no minimapa vira uma reta em vez de uma diagonal
+atravessando a cidade.
+
+**2. Ela caiu no canto de aposta de Comodo**, o que casa com a fala do Cassino
+sem ter sido combinado. O rAthena já põe ali o par de
+`npc/other/comodo_gambling.txt`: a **Devellin** de `204,148` — três células a
+oeste —, que fala da obsessão da Kachua por diamante, e a própria **Kachua** de
+`219,158`, que troca Diamante de 3 Quilates por item aleatório. É o que a cidade
+tem de cassino hoje, e está em inglês.
+
+A célula nova passou pela mesma conferência da antiga: tipo 0, andável, altura
+0.01, com as vizinhas também tipo 0, e sem NPC nenhum em cima — os mais próximos
+são a Devellin (`204,148`) e o Bulletin Board (`210,148`), três de cada lado.
+
+> **O `plano_e_livre` do `gat.py` reprova esse ponto, e isso não é problema.** O
+> terreno ali ondula de -0.36 a 0.78 nas células em volta, e aquela função é
+> trava da frente **visual**, para plantar modelo 3D nivelado. NPC fica no chão e
+> não se importa. Ler a reprovação como "célula ruim" seria diagnóstico falso.
+
+### O link de navegação — e por que ele não é assunto do servidor
+
+A marcação **"Fica aqui"** da segunda caixa é clicável e traça o caminho até o
+Espectro no minimapa. A sintaxe é uma etiqueta HTML dentro do próprio `mes`:
+
+```
+<NAVI>Texto<INFO>mapa,x,y,tipo,ícone,flag</INFO></NAVI>
+```
+
+**Quem lê a etiqueta é o CLIENTE, não o servidor** (`doc/script_commands.txt`,
+seção "Navigation", a partir do cliente 2011-10-10a). Isso tem uma consequência
+prática que vale mais que a sintaxe: **nada no log do map-server vai dizer se
+funcionou.** Link quebrado sai como texto cru na tela do jogador, e de mais lugar
+nenhum.
+
+Os três números do fim, e por que estão assim:
+
+| campo | valor | por quê |
+|---|---|---|
+| tipo | `0` | ir a uma **posição**. É o único valor que aparece nos scripts do rAthena |
+| ícone | `000` | sem ícone. O outro valor comum é `101`, que é sprite de NPC genérico (`JT_4W_F_01` no `npcidentity.lub` deste cliente) |
+| flag | `0` | **não** abrir a janela de Navegação. O caminho é marcado no minimapa do mesmo jeito |
+
+**Não dá para pedir o sprite do Espectro no campo do ícone:** o `4_M_DEATH` é
+**10028** neste cliente, cinco dígitos num campo de três. O campo aceita o ícone
+genérico ou nenhum.
+
+O azul é nosso, não do cliente — o link não muda de cor sozinho, então vai um
+`^4D4DFF` na mão, como fazem os scripts oficiais do rAthena. O texto do link é
+ASCII puro de propósito: o `doc/script_commands.txt` avisa que código de cor
+colado em letra acentuada embaralha.
+
+### O que foi conferido antes de escrever o link
+
+**A navegação depende de dado do CLIENTE**, e é uma tabela a mais que ninguém
+lembra de olhar: `data\luafiles514\lua files\navigation\`. O `comodo` está no
+`navi_map` com o tamanho **360×380** — o mesmo do `.gat`, o que fecha a
+conferência dos dois lados.
+
+> **Mapa fora daquela tabela não tem rota, e a falha é calada.** Fica dito para o
+> dia em que alguém apontar um link para mapa nosso: o `vis_h01` do Corredor
+> Fantasma, por exemplo, **não** está lá.
+
+### O balão de MVP — `specialeffect`, não `emotion`
+
+Ela solta o balão de MVP — o mesmo que sobe quando um chefe morre — de 4 em 4
+segundos, sozinha. O par é o mesmo da Alleria e do Edgard: `initnpctimer` no
+`OnInit`, e um `OnTimer4000` que dispara e rearma. O intervalo é o **nome do
+label**, não um argumento.
+
+**O que muda em relação ao emote da Alleria é o comando.** Aquilo é `emotion`
+(balão de conversa); isto é `specialeffect` (efeito de tela). São dois caminhos
+diferentes no cliente, e a confusão entre os dois é o que faz alguém procurar o
+balão de MVP na lista de emotes, onde ele não está.
+
+**O número é `EF_MVP` = 68, e foi contado, não chutado:** o enum `e_effect_type`
+começa em `EF_NONE = -1` e `EF_HIT1 = 0` (`src/map/script.hpp:765`), não tem
+nenhum valor explícito até o `EF_MVP` da linha 834 — 68 posições depois. Bate com
+`doc/effect_list.md`, que o descreve como **"MVP Banner"**.
+
+> **Não é o `clif_mvp_effect` do servidor**, e essa foi a primeira pista falsa.
+> Aquele (`src/map/clif.cpp:8579`, pacote `ZC_MVP` `0x010c`) só aceita
+> `map_session_data` — é **pacote de jogador**, e não há comando de script que o
+> exponha. NPC não dispara aquele; dispara este. O próprio rAthena usa `EF_MVP`
+> em NPC assim mesmo, em `npc/events/gdevent_aru.txt`.
+
+`specialeffect` sem argumento de alvo sai do próprio NPC e vai para a área —
+`map_id2bl(st->oid)` e `AREA` por padrão, exatamente como o `emotion`.
+
+### As conferências de sempre
+
+A célula foi lida no `comodo.gat` **deste** cliente — a antiga e a nova, cada uma
+antes de ser usada. O detalhe da `207,148` está na seção da mudança, acima.
+
+O sprite passou pelas duas conferências de sempre, **feitas mesmo com o número
+vindo pronto no pedido**: `JT_4_M_DST_CHILD = 944` no `npcidentity.lub` deste
+cliente, e `4_m_dst_child.spr`/`.act` em `data\sprite\npc\` do `data.grf`. O 944
+bate com o `npc.hpp` do rAthena, ancorado no 966 do `4_M_RUSKNIGHT` e no 612 do
+`4_F_PINKWOMAN`, que já estão em jogo.
+
+O nome tem cedilha e til, e isso já tem precedente no projeto — "Máquina",
+"Emissário da Ordem", "Funcionária Kafra" e "Área de Treinamento" desenham
+normalmente com o patch `AlwaysAscii`.
+
+### A fala anuncia um Cassino que ainda não existe
+
+A segunda caixa termina em "O Cassino também tá funcionando, com Moeda Nova!".
+Fica registrado que em 2026-08-08 **não há cassino nenhum no servidor** — nem
+NPC, nem script, nem linha no `scripts_guerra.conf`. A busca por "cassino" no
+projeto inteiro só acha essa frase.
+
+**É adiantamento deliberado, não erro.** O dono do projeto confirmou no mesmo dia
+que o cassino vem nos próximos dias, e foi por isso que a coordenada da Criança
+mudou para o canto de aposta da cidade. Quem for construí-lo tem no
+`PENDENCIAS.md` §1e o que já existe ali do rAthena, para não plantar em cima.
+
+A Moeda Nova citada essa existe, e tem duas fontes — o Logue e Ganhe e a Alleria.
+
+### Estado
+
+Escrita, registrada no `scripts_guerra.conf` e conferida offline. **Nunca subiu
+em jogo** — está no `PENDENCIAS.md` §1, e as duas estreias (o link de navegação e
+o balão de MVP) têm roteiro próprio no §1e.
