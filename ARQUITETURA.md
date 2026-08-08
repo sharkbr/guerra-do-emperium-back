@@ -111,8 +111,10 @@ outras **quebra calado**.
 |---|---|---|---|
 | 1 | `db/guerra/item_db.yml` | ID, tipo, bônus, peso, preço, `Location` | à mão |
 | 2 | `SystemEN\LuaFiles514\itemInfo.lua` | nome PT, descrição, ícone, recurso | `instala_item.py` / `completa_iteminfo.py` |
-| 3 | `data\sprite\` | a arte (4 arquivos, para chapéu) | `instala_visual.py` |
+| 3 | `data\sprite\` | a arte (4 de item + 4 de cabeça) | `instala_visual.py` |
+| 3b | `data\sprite\<manto>\` | a arte de manto, **se for `Costume_Garment`** — uma pasta, com um par de arquivos por CLASSE de personagem | `instala_manto.py` |
 | 4 | `accessoryid.lub` + `accname.lub` | o slot de visual, **se for de cabeça e novo** | `estende_accessoryid.py` |
+| 4b | `spriterobeid.lub` + `spriterobename.lub` | o slot de manto, **se for manto e novo** | **não existe** — ver `PENDENCIAS.md` §4 |
 | 5 | `npc/guerra/mercado_*.txt` | a loja que vende | à mão / gerador |
 | 6 | `db/guerra/item_combos.yml` | o conjunto, se fizer parte de um | à mão |
 
@@ -121,6 +123,22 @@ outras **quebra calado**.
 Sem (2), o cliente mostra caixa de erro. Sem (3), o chapéu é invisível. Sem (4)
 quando necessário, `instala_visual.py` relata "faltando 0" e o item continua
 invisível.
+
+**Manto é a exceção que muda onde a falha aparece.** As camadas 3 e 3b falham em
+momentos diferentes, e a segunda é a cara:
+
+| falta | quando estoura |
+|---|---|
+| os 4 arquivos de **item** (ícone, collection, spr, act de chão) | **ao abrir a loja** — caixa modal, antes de qualquer compra |
+| a arte de **manto** por classe (3b) | **ao equipar** — a loja abre, vende, e só então falha |
+
+E a camada 4b não tem ferramenta: manto cujo `View` esteja fora das 120 entradas
+da nossa `spriterobeid.lub` **não desenha, e arte nenhuma resolve**. O
+`instala_manto.py` recusa esse caso em vez de copiar centenas de arquivos que o
+cliente nunca vai procurar.
+
+**Nem todo `Costume_Garment` usa 3b:** peça sem `View` (a Aura Nevada, 480097) é
+só um `hateffect` no `Script` do item — efeito de tela, sem desenho vestido.
 
 ### Uma loja de troca (`barter`) vive em 3 lugares, e o cliente é um deles
 

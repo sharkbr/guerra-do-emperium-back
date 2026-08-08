@@ -58,11 +58,43 @@ Mais a entrada em `db/guerra/item_db.yml` (à mão) e a linha na loja.
 **A armadilha grande:** a pasta da arte no disco **não** tem o nome coreano que
 se espera. Ver `ferramentas/LEIAME.md`, seção `instala_visual.py`.
 
+## 2b. Manto cosmético novo (`Costume_Garment`)
+
+O `valida_visual.py` **não serve sozinho aqui**, e é o ponto inteiro desta
+receita: para manto ele confere só os 4 arquivos de item, e responder "4 de 4"
+não diz nada sobre a arte de manto. Item aprovado por ele pode abrir a loja,
+vender, equipar — e só então dar `Cannot find File`.
+
+```
+1. python varre_cosmeticos.py --listar manto        # tem de dizer `ok`
+2. python instala_manto.py --ids <lista>            # o que falta de manto
+3. python instala_manto.py --ids <lista> --aplicar
+4. python instala_manto.py --ids <lista>            # TEM QUE DAR 0 faltando
+5. fechar e reabrir o cliente
+```
+
+**Como ler o resultado do passo 1:**
+
+| resposta | o que fazer |
+|---|---|
+| `ok` | seguir — o `View` está na nossa `spriterobeid.lub`. Falta só a arte |
+| `view N de manto so existe no robe do bRO` | **parar.** Falta a ferramenta que estende a tabela — `PENDENCIAS.md` §4 |
+| `view N de manto nao existe em robe nenhum` | **parar.** Não há o que instalar |
+
+**Duas coisas que parecem defeito e não são:**
+
+- **Manto sem `View`** (a Aura Nevada, 480097) é `hateffect` — efeito de tela,
+  não desenho vestido. O passo 2 recusa dizendo isso, e o item funciona.
+- **`ok` no passo 1 com centenas de arquivos faltando no passo 2** é o caso
+  normal, não contradição: as duas perguntas são diferentes.
+
+Depois disso, a receita 3 normalmente.
+
 ## 3. Item novo numa loja existente
 
 1. Conferir se o item **desenha**: `python valida_visual.py --id <id>`. Se não
-   der 0, fazer a receita 2 antes. **Item sem arte entrega caixa de erro ao
-   jogador.**
+   der 0, fazer a receita 2 antes — ou a **2b**, se for `Costume_Garment`.
+   **Item sem arte entrega caixa de erro ao jogador.**
 2. Conferir se o nome está em **português** — só entra na loja quem está
    (`estado_item.py --id <id>`).
 3. Acrescentar a linha no `npc/guerra/mercado_*.txt`.

@@ -263,6 +263,10 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
+A tabela tem cinco itens em 2026-08-08 — 30999 Maçã da Inocência, 30998 Moeda
+Nova, 30997 e 30996 (as duas caixas da Máquina) e 30995 Caveira Humana, que
+copia a arte da Caveira comum (7420).
+
 ## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
 
 ```
@@ -1619,6 +1623,71 @@ Quem lê só as linhas `SETTABLE ... ; B="NOME" C=<valor>` captura apenas as ~12
 primeiras entradas e conclui, errado, que a tabela é minúscula. É preciso
 acompanhar os `LOADK` e resolver os registradores — ver
 `filtra_lub_por_skid.py:skids_do_cliente`.
+
+## `instala_manto.py` — põe a arte de um manto cosmético no lugar certo
+
+```
+python instala_manto.py --id 480117                    # só relata
+python instala_manto.py --id 480117 --aplicar
+python instala_manto.py --ids 480055,480096 --aplicar
+python instala_manto.py --id 480117 --grf <outra.grf>   # outra origem
+```
+
+Irmão do `instala_visual.py`, para a camada que ele não alcança. Escrito em
+2026-08-08, quando o Manteleiro (`Costume_Garment`) abriu no Mercado de
+Visuais — até então manto era a única frente cosmética sem ferramenta, e o
+`PENDENCIAS.md` §4 registrava isso como aberto.
+
+**A diferença que obrigou um script separado é a FORMA da arte:**
+
+| | chapéu | manto |
+|---|---|---|
+| arquivos de item | 4 | 4 |
+| arquivos de visual | 4 (M/F × spr/act) | **uma pasta por recurso**, com spr e act por CLASSE de personagem e por sexo |
+| total por item | 8 | **250 a 700** |
+
+Por isso aqui não existe lista canônica de caminhos como o
+`valida_visual.Cliente.caminhos`: o alvo é a subárvore
+`data\sprite\<manto>\<recurso>\` inteira, e o que vai para o disco é a
+**diferença** entre o que a origem tem e o que o nosso cliente já tem. Rodar
+duas vezes não copia nada na segunda.
+
+### O que ele NÃO faz, e por que isso não impediu de usá-lo
+
+Ele **não** estende o `spriterobeid.lub`/`spriterobename.lub` — a tabela que
+traduz o `View` do `item_db` no nome da pasta. É o que o
+`estende_accessoryid.py` faz do lado do chapéu, e é a metade que continua
+faltando.
+
+A diferença é que ela nem sempre é necessária. A nossa tabela tem **120
+entradas**, e todo manto cujo `View` já esteja lá precisa apenas da arte — que
+é o que este script copia. Foi exatamente o caso dos treze do Manteleiro: os
+`View` deles vão de 61 a 114, todos dentro das 120.
+
+**Manto com `View` fora da tabela é RECUSADO**, com o motivo por extenso, em
+vez de copiar 600 arquivos que o cliente nunca vai procurar. Prometer cura que
+não há como cumprir foi o erro que o `varre_cosmeticos.py` já evita do outro
+lado.
+
+### Duas armadilhas que ele resolve
+
+**O prefixo tem de ser exato, com a barra no fim.** `Wing_Of_Angel_Move` é
+prefixo de `Wing_Of_Angel_Move_RD` e de `_BK` e `_GD`: casar por substring
+mistura quatro mantos diferentes num só e faz a conta de arquivos faltando dar
+um número plausível e errado.
+
+**Manto sem `View` não é manto quebrado.** A Aura Nevada (480097) não tem
+`View` nenhum, e não é falha: o que ela faz é um `hateffect` no `Script` do
+item — efeito de tela, não desenho vestido. O script separa esse caso dos
+outros e diz que não há arte a instalar.
+
+### O que ele compartilha com o `instala_visual.py`
+
+Grava em `cliente\data\`, que o `DataFolderFirst` faz vencer o GRF — **o GRF
+nunca é aberto para escrita**, e apagar a pasta reverte. E usa o
+`vv.caminho_disco` para o nome no disco, que **não** é o nome coreano: é o
+mojibake que o `CreateFileA` produz na codepage ANSI do sistema. Gravar com o
+nome "certo" cria uma pasta que o cliente nunca abre.
 
 ## `estende_accessoryid.py` — ensina ao cliente um slot de visual que ele não conhece
 

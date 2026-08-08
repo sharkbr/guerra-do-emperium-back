@@ -28,6 +28,20 @@ da ferramenta tampouco:
 - saíram sete do Camareiro, a pedido: 20310, 31257 e os cinco balões
   (31421, 31422, 31423, 31424, 31429).
 
+**A rodada de 2026-08-08** abriu a quarta loja da fileira, o
+**Manteleiro** (`prontera 163,155`), com treze mantos cosméticos, e pôs
+a **Glória Imperial** (420029) no Camareiro. Nenhum dos catorze sai da
+ferramenta: foram pedidos item por item, e manto o `varre_cosmeticos.py`
+nem classifica como curável — falta a metade dele que estende o
+`spriterobeid.lub`.
+
+Cinco dos treze não desenhavam neste cliente. O que faltava era arte, e
+não tabela: os treze `View` (61 a 114) já estavam nas 120 entradas da
+nossa `spriterobeid.lub`. Os 2925 arquivos de sprite de manto vieram da
+GRF do bRO pelo `ferramentas/instala_manto.py`, escrito nesse dia — o
+irmão do `instala_visual.py` para essa camada. **Cliente novo perde a
+cópia**; a receita para repor está no cabeçalho da loja.
+
 ## Costumeiro — Costume topo (146 itens)
 
 `prontera 151,155` — sprite `1_F_MERCHANT_01`
@@ -304,7 +318,7 @@ da ferramenta tampouco:
 | 436010 | Cabeça de Tarantuling |
 | 480200 | Asas do Anjo Fiel |
 
-## Camareiro — Costume baixo (116 itens)
+## Camareiro — Costume baixo (117 itens)
 
 `prontera 159,155` — sprite `1_F_MERCHANT_02`
 
@@ -327,6 +341,7 @@ da ferramenta tampouco:
 | 410265 | [Visual] Anéis |
 | 420014 | Peruca de Animação |
 | 420026 | Gravata Bombom |
+| 420029 | Glória Imperial ★ |
 | 420044 | Gola Escolar de Marujo ★ |
 | 420046 | Manta Digníssima ★ |
 | 420047 | Capa de Cavaleiro ★ |
@@ -426,3 +441,38 @@ da ferramenta tampouco:
 | 420359 | Costume Catbell |
 | 420360 | Peruca do Sino Felino |
 | 490242 | Cabelo de Valquíria |
+
+## Manteleiro — Costume capa (13 itens)
+
+`prontera 163,155` — sprite `1_M_MERCHANT`
+
+Aberta em 2026-08-08. Os treze foram pedidos item por item e **nenhum
+sai de varredura** — ver a nota da rodada, no topo.
+
+A coluna "arte" diz de onde veio a sprite de manto por classe: `GRF`
+significa que este cliente já a tinha; `bRO` que ela foi copiada em
+2026-08-08 pelo `instala_manto.py`, e que um cliente novo precisa da
+cópia de novo.
+
+| id | nome | view | arte |
+|---|---|---|---|
+| 480055 | Asas Encantadas de Rudra | 72 | bRO |
+| 480056 | Asas Amaldiçoadas de Arcanjo | 73 | GRF |
+| 480058 | Asas Áureas de Arcanjo | 75 | GRF |
+| 480069 | Asas Encantadas de Arcanjo | 61 | GRF + bRO |
+| 480071 | Recipiente das Areias | 82 | GRF + bRO |
+| 480096 | Casaco Aconchegante | 99 | bRO |
+| 480097 | Aura Nevada | — | não veste |
+| 480107 | Espadas Cruzadas | 104 | GRF |
+| 480110 | Mochila do Doram Aventureiro | 107 | GRF + bRO |
+| 480117 | Guitarra de Rockstar | 108 | bRO |
+| 480118 | Espada do General | 114 | bRO |
+| 480121 | Asas Orientais | 111 | bRO |
+| 480122 | Asas Carnavalescas | 112 | GRF |
+
+**A Aura Nevada não é manto.** Ela não tem `View`: o que ela faz é um
+`hateffect` (`HAT_EF_SNOW_POWDER`) no `Script` do item — efeito de tela,
+não desenho vestido. Está na loja de propósito, e o `instala_manto.py`
+a recusa dizendo exatamente isso. Não confundir com os três
+"Invisíveis" das outras lojas, em que o nada é o produto: aqui o
+produto é a neve, e ela aparece.

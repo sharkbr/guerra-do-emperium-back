@@ -1,30 +1,43 @@
 //===== Guerra do Emperium ===================================
 //= Arena de Combate
 //===== Onde =================================================
-//= prontera 157,187 - tres celulas a leste da porta do campo de
-//= treino (154,187), na mesma fileira. Ali ficava a "Smile
-//= Assistance".
+//= prontera 154,187 - a esquina do quarteirao a oeste da
+//= praca central, na mesma fileira do Placar da Arena
+//= (152,187) e da porta do campo de treino (157,187). Ali
+//= ficava o Guia de Prontera.
+//=
+//= ATE 2026-08-08 ESTA PORTA FICAVA EM 157,187 e a Area de
+//= Treinamento em 154,187. As duas TROCARAM DE LUGAR, a
+//= pedido, e a troca arrastou junto o `disablenpc` do OnInit:
+//= cada arquivo desliga o NPC do rAthena que ocupa a celula
+//= que ELE passou a ocupar. Sem isso sobrariam dois NPCs
+//= empilhados numa celula e nenhum na outra - e o empilhamento
+//= nao da erro nenhum, so um NPC invisivel por cima do outro.
+//= Aqui o alvo virou "GuideProntera", o Guia; a "Smile
+//= Assistance#prt", que era o alvo daqui, passou a ser
+//= desligada pelo porteiro_do_treinamento.txt.
 //===== Descricao ============================================
 //= A porta da arena de PvP. Faz uma pergunta so e, se a resposta
 //= for sim, leva para pvp_n_1-5.
 //=
 //= Pedido em 2026-08-06.
 //===== Como, e por que assim ================================
-//= O NPC que estava em 157,187 e "Smile Assistance#prt", uma das
-//= SEIS duplicatas de "SmileHelper" (npc/quests/mrsmile.txt). As
-//= outras cinco - Alberta, Al De Baran, Geffen, Ruinas de Morroc
-//= e Payon - continuam de pe.
+//= O NPC que esta em 154,187 e o "Guide#01prontera", exname
+//= "GuideProntera", de npc/re/guides/guides_prontera.txt.
 //=
-//= Como no porteiro_do_treinamento e no armazem_do_cla, sao dois
-//= movimentos DE FORA:
-//=   1) `disablenpc` na duplicata, daqui;
+//= Como no armazem_do_cla, sao dois movimentos DE FORA:
+//=   1) `disablenpc` no original, daqui;
 //=   2) este NPC nosso, na mesma coordenada.
-//= O npc/quests/mrsmile.txt fica byte a byte igual ao upstream.
+//= O npc/re/guides/guides_prontera.txt fica byte a byte igual
+//= ao upstream.
 //=
-//= Aqui e mais simples que no guia de Prontera: aquele era o
-//= ORIGINAL de que saiam quatro duplicatas, e desliga-lo exigia
-//= explicar por que as quatro sobreviviam. "Smile Assistance#prt"
-//= e ELA PROPRIA uma duplicata - desliga-la nao alcanca ninguem.
+//= DESLIGAR O ORIGINAL NAO DESLIGA AS DUPLICATAS, e por isso
+//= as outras QUATRO de guia de Prontera - 282,208, 29,200,
+//= 160,29 e 159,326 - continuam guiando. Uma duplicata copia o
+//= estado do original UMA vez, na hora em que nasce
+//= (src/map/npc.cpp, npc_duplicate_sub), e as quatro nascem
+//= durante a leitura do arquivo delas, muito antes deste
+//= OnInit. O cabecalho do porteiro_do_treinamento.txt detalha.
 //===== O mapa ===============================================
 //= pvp_n_1-5 e a "Sala Bussola". Ja vem pronta: o
 //= npc/mapflag/pvp.txt liga o `pvp` nela, entao o combate abre
@@ -44,7 +57,7 @@
 //===== A volta ==============================================
 //= QUEM MORRE VOLTA PARA PRONTERA 155,183, a mesma celula em que
 //= o Warper desembarca (npc/custom/warper.txt, rotulo `T1`) -
-//= quatro celulas da porta da arena, que fica em 157,187.
+//= quatro celulas da porta da arena, que fica em 154,187.
 //=
 //= Isso e script nosso, no OnPCDieEvent abaixo, e NAO mapflag: o
 //= `nosave` nao alcanca morte. Quem devolve o morto e o
@@ -165,7 +178,7 @@
 //= Mudanca neste arquivo pega com @reloadscript.
 //============================================================
 
-prontera,157,187,4	script	Arena de Combate	966,{
+prontera,154,187,4	script	Arena de Combate	966,{
 	mes "[Arena de Combate]";
 	mes "Deseja entrar na gloriosa e";
 	mes "eterna arena de combate?";
@@ -190,22 +203,23 @@ OnInit:
 	                        // 1000ms do rAthena de proposito: ver a secao
 	                        // "Por que ele ja esteve desligado".
 
-	// "Smile Assistance#prt" e nome E exname ao mesmo tempo: a linha
-	// do rAthena (npc/quests/mrsmile.txt) e
-	//   prontera,157,187,4  duplicate(SmileHelper)  Smile Assistance#prt  92
-	// e duplicata sem `::` fica indexada pelo proprio nome. E por
-	// exname que o rAthena indexa NPC (npcname_db, src/map/npc.cpp),
-	// entao e ele que getnpcid e disablenpc enxergam.
+	// E "GuideProntera" e nao "Guide#01prontera": a linha do rAthena
+	// e `Guide#01prontera::GuideProntera`, e o que vem depois do `::`
+	// e o EXNAME. E por exname que o rAthena indexa NPC (npcname_db,
+	// src/map/npc.cpp), entao e ele que getnpcid e disablenpc
+	// enxergam - "Guide#01prontera" e so o nome que aparece na tela.
+	// As quatro duplicatas tem exname proprio (Guide#02prontera e
+	// irmas) e nao sao alcancadas por esta linha.
 	//
 	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste, um
-	// nome fora de sincronia com o mrsmile.txt do rAthena abortaria o
-	// OnInit calado - e sobrariam DOIS NPCs na mesma celula, a Smile
-	// Assistance e este, um por cima do outro.
-	if (!getnpcid(0, "Smile Assistance#prt")) {
-		debugmes "ArenaDeCombate: nao achei 'Smile Assistance#prt'. O npc/quests/mrsmile.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 157,187.";
+	// nome fora de sincronia com o guides_prontera.txt do rAthena
+	// abortaria o OnInit calado - e sobrariam DOIS NPCs na mesma
+	// celula, o guia e este, um por cima do outro.
+	if (!getnpcid(0, "GuideProntera")) {
+		debugmes "ArenaDeCombate: nao achei 'GuideProntera'. O npc/re/guides/guides_prontera.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 154,187.";
 		end;
 	}
-	disablenpc "Smile Assistance#prt";
+	disablenpc "GuideProntera";
 	end;
 
 OnPCDieEvent:

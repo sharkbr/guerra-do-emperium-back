@@ -1,0 +1,145 @@
+//===== Guerra do Emperium ===================================
+//= Mestre das Montarias
+//===== Onde =================================================
+//= prontera 130,213 - a mesma celula do "Riding Creature
+//= Master" do rAthena, e o mesmo sprite (105).
+//===== Descricao ============================================
+//= O NPC que entrega Dragao a Cavaleiro Runico e Grifo a
+//= Guardiao Real. E o "Riding Creature Master" de
+//= npc/re/merchants/renters.txt, palavra por palavra, com o
+//= dialogo e o nome em portugues.
+//=
+//= Pedido em 2026-08-08: traduzir o de PRONTERA.
+//===== Como, e por que assim ================================
+//= Mesma receita DE FORA do porteiro_do_treinamento.txt e do
+//= armazem_do_cla.txt, e pelo mesmo motivo - o
+//= npc/re/merchants/renters.txt fica byte a byte igual ao
+//= upstream:
+//=   1) `disablenpc` no original, daqui;
+//=   2) este NPC nosso, na mesma coordenada.
+//=
+//= SO PRONTERA MUDA DE IDIOMA, e isso e consequencia do pedido,
+//= nao descuido. O NPC de prontera 130,213 e o ORIGINAL de que
+//= saem CINCO duplicatas - Geffen (100,55), Payon (166,102),
+//= Al De Baran (133,109), Juno (171,187) e Rachel (106,130) -,
+//= e desligar o original NAO desliga duplicata que ja nasceu:
+//= ela copia o estado dele UMA vez, na hora em que nasce
+//= (src/map/npc.cpp, npc_duplicate_sub), e as cinco nascem
+//= durante a leitura do renters.txt, muito antes deste OnInit.
+//= As cinco continuam de pe, em ingles.
+//=
+//= No dia em que as outras cinco tambem forem traduzidas, o
+//= caminho e o mesmo cinco vezes - ou um `duplicate` deste NPC
+//= nas cinco coordenadas, com `disablenpc` em cada uma das
+//= duplicatas do rAthena.
+//===== O nome ===============================================
+//= "Mestre das Montarias" NAO veio do bRO: o
+//= navi_npc_br.lub da instalacao do Ragnarok Brazil desta
+//= maquina nao tem este NPC (conferido nas 5815 strings da
+//= tabela). Foi escolhido aqui, e por isso fica registrado -
+//= se um dia aparecer o nome oficial, e este que troca.
+//=
+//= "Cavaleiro Runico" e "Guardiao Real" ESSES vieram da tabela:
+//= sao os nomes 625 e 631 de conf/msg_conf/map_msg_por.conf,
+//= que e o proprio rAthena traduzido. Nome de classe nao se
+//= traduz de memoria - ver PENDENCIAS.md, secao 3.
+//===== Notas ================================================
+//= O `//if (!getskilllv("RK_DRAGONTRAINING"))` comentado no
+//= original foi mantido comentado aqui, no mesmo lugar: e uma
+//= decisao do upstream sobre qual habilidade cobrar, e apagar
+//= isso esconderia que existe uma alternativa.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1).
+//= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= ATENCAO ao editar: por causa do acento, ferramenta que
+//= assume UTF-8 troca cada letra acentuada por '?' sem avisar.
+//= Editar com script que grave em cp1252, como o resto de
+//= npc/guerra/.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,130,213,5	script	Mestre das Montarias	105,{
+	mes "[Mestre das Montarias]";
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) {
+		mes "Bem-vindo. Gostaria de alugar um Dragão?";
+		next;
+		switch (select("Sim:Não")) {
+		case 1:
+			//if (!getskilllv("RK_DRAGONTRAINING")) {
+			if (!getskilllv("KN_RIDING")) {
+				mes "[Mestre das Montarias]";
+				mes "Antes aprenda a montar um Dragão.";
+				close;
+			}
+			else if (checkdragon()) {
+				mes "[Mestre das Montarias]";
+				mes "Você já tem um Dragão.";
+				close;
+			}
+			else if (ismounting()) {
+				mes "[Mestre das Montarias]";
+				mes "Desmonte a sua montaria de cash primeiro.";
+				close;
+			}
+			setdragon;
+			close;
+		case 2:
+			mes "[Mestre das Montarias]";
+			mes "Entendo. Então tenha um ótimo dia.";
+			close;
+		}
+	}
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_ROYAL_GUARD) {
+		mes "Bem-vindo. Gostaria de alugar um Grifo?";
+		next;
+		switch (select("Sim:Não")) {
+		case 1:
+			if (!getskilllv("KN_RIDING")) {
+				mes "[Mestre das Montarias]";
+				mes "Antes aprenda a montar um Grifo.";
+				close;
+			}
+			else if (checkriding()) {
+				mes "[Mestre das Montarias]";
+				mes "Você já tem um Grifo.";
+				close;
+			}
+			else if (ismounting()) {
+				mes "[Mestre das Montarias]";
+				mes "Desmonte a sua montaria de cash primeiro.";
+				close;
+			}
+			setriding;
+			close;
+		case 2:
+			mes "[Mestre das Montarias]";
+			mes "Entendo. Então tenha um ótimo dia.";
+			close;
+		}
+	}
+	mes "Estou aqui para dar montarias aos Cavaleiros Rúnicos e aos Guardiões Reais.";
+	close;
+
+OnInit:
+	// O original de prontera e nome E exname ao mesmo tempo: a linha do
+	// rAthena (npc/re/merchants/renters.txt) e
+	//   prontera,130,213,5  script  Riding Creature Master  105,{
+	// e script sem `::` fica indexado pelo proprio nome. E por exname
+	// que o rAthena indexa NPC (npcname_db, src/map/npc.cpp), entao e
+	// ele que getnpcid e disablenpc enxergam. As cinco duplicatas tem
+	// exname proprio ("Riding Creature Master#2" e irmas) e NAO sao
+	// alcancadas por esta linha.
+	//
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste, um
+	// nome fora de sincronia com o renters.txt do rAthena abortaria o
+	// OnInit calado - e sobrariam DOIS NPCs na mesma celula, o original
+	// em ingles e este, um por cima do outro.
+	if (!getnpcid(0, "Riding Creature Master")) {
+		debugmes "MestreDasMontarias: nao achei 'Riding Creature Master'. O npc/re/merchants/renters.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 130,213.";
+		end;
+	}
+	disablenpc "Riding Creature Master";
+	end;
+}

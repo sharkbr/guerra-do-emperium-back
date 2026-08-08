@@ -34,6 +34,12 @@ sem confirmação in-game.
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
 | Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
 | Criança — link de navegação e balão de MVP | `comodo 207,148` | 2026-08-08 |
+| Manteleiro (13 mantos cosméticos) | `prontera 163,155` | 2026-08-08 |
+| Mister Peso | `prontera 99,64` | 2026-08-08 |
+| Mestre das Montarias (Riding Creature Master em PT) | `prontera 130,213` | 2026-08-08 |
+| Arena e Área de Treinamento trocadas de lugar | `prontera 154/157,187` | 2026-08-08 |
+| Placar da Arena — modal novo, na coordenada nova | `prontera 152,187` | 2026-08-08 |
+| Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 
@@ -57,6 +63,24 @@ sem confirmação in-game.
   subir, e **reiniciar o map-server** (não basta `@reloadscript`). Sem as
   tabelas ninguém pontua, mas o anúncio de morte continua saindo — e é esse o
   sintoma que aparece primeiro.
+- **Manteleiro:** é a primeira loja de manto cosmético do projeto, e é onde a
+  arte nova de 2026-08-08 aparece. O que provar: (1) a loja **abre** — item sem
+  os 4 arquivos de item dispara caixa modal ao abrir, não ao equipar; (2)
+  **equipar cada um dos cinco que vieram do bRO** (480055, 480096, 480117,
+  480118, 480121) e ver o manto desenhado, porque é aí que a sprite por classe
+  é lida. Um `Cannot find File` ao equipar significa que a classe do
+  personagem de teste ficou de fora da cópia — repor com
+  `python ferramentas/instala_manto.py --ids <id> --aplicar`; (3) a **Aura
+  Nevada** (480097) não veste manto nenhum e não é falha: ela é efeito de tela.
+
+- **Arena, Área de Treinamento e Placar:** os três trocaram de célula no mesmo
+  pedido. O que denuncia erro aqui é **NPC empilhado**: se o `disablenpc` de um
+  dos dois arquivos errar o alvo, sobram dois NPCs numa célula e nenhum na
+  outra, e isso **não dá erro no log** — os dois arquivos imprimem um
+  `debugmes` próprio se não acharem o NPC do rAthena, e é esse aviso que se
+  procura. Andar de 152 a 157 em y=187 tem de mostrar, nesta ordem: placa,
+  porta da arena, porta do treino.
+
 - **Logue e Ganhe:** a janela abre sozinha no login e **não tem NPC** — se não
   aparecer, o roteiro acima não ajuda. O que provar, nesta ordem: (1) a janela
   abre e mostra **20 quadrados de Moeda Nova**, 10 nos dezenove primeiros e
@@ -145,7 +169,12 @@ A varredura é barata e já existe pronta em pedaços — `ferramentas/grf.py` l
 os `.rsw` do GRF, e foi assim que o `vis_h01` foi aprovado antes de virar o
 Corredor. O que falta é o laço:
 
-1. Extrair todo `warp "<mapa>"` do `npc/custom/warper.txt`.
+> **A cópia do passo 3 já existe desde 2026-08-08.** É o
+> `npc/guerra/teletransportadora.txt`, criada por outro motivo (mover o par de
+> Alberta — ver §4c), e é ela que sobe hoje. O passo 3 deixou de depender de
+> nada: é editar aquele arquivo. O que falta é a varredura dos passos 1 e 2.
+
+1. Extrair todo `warp "<mapa>"` do `npc/guerra/teletransportadora.txt`.
 2. Cruzar com os `.rsw` do `data.grf` **e com o `resnametable.txt`** — pular a
    segunda tabela dá falso positivo em mapa apelidado.
 3. Podar do menu os que faltarem — em cópia nossa em `npc/guerra/`, **não**
@@ -311,41 +340,106 @@ O `ferramentas/LEIAME.md` tem o detalhe das travas e do formato. Duas regras que
 
 ---
 
-## 4. EM ABERTO — o manto cosmético (`Costume_Garment`)
+## 4. METADE RESOLVIDA — o manto cosmético (`Costume_Garment`)
 
 Aberto em 2026-08-05, ao varrer o acervo cosmético para o Mercado de Visuais.
-Os três slots de cabeça ficaram **zerados** — nenhum item curável restante —,
-e o manto ficou inteiro de fora, com 45 curáveis parados.
+**Metade fechou em 2026-08-08**, com o Manteleiro e o `instala_manto.py`; a
+outra metade continua aqui.
 
-O motivo é que manto tem **uma camada a mais** que chapéu, e não há ferramenta
-nossa para ela:
+Manto tem **duas camadas a mais** que chapéu, e cada uma tinha a sua lacuna:
 
-| camada | chapéu | manto |
-|---|---|---|
-| nome e descrição | `itemInfo.lua` | igual |
-| slot de visual | `accessoryid.lub` + `accname.lub` | `spriterobeid.lub` + `spriterobename.lub` |
-| ferramenta que estende o slot | `estende_accessoryid.py` | **não existe** |
-| arquivos de arte | 4 de item + 4 de cabeça | 4 de item + sprite de manto **por classe** |
+| camada | chapéu | manto | estado |
+|---|---|---|---|
+| nome e descrição | `itemInfo.lua` | igual | — |
+| slot de visual | `accessoryid.lub` + `accname.lub` | `spriterobeid.lub` + `spriterobename.lub` | **em aberto** |
+| ferramenta que estende o slot | `estende_accessoryid.py` | **não existe** | **em aberto** |
+| arquivos de arte | 4 de item + 4 de cabeça | 4 de item + sprite de manto **por classe** | resolvido |
+| ferramenta que instala a arte | `instala_visual.py` | `instala_manto.py` | resolvido |
 
-A nossa `spriterobeid.lub` tem **120 entradas**. Manto cujo `View` esteja fora
-dela não desenha, e arte nenhuma resolve — é exatamente o caso que o
-`estende_accessoryid.py` cura do lado do chapéu.
+### O que fechou
 
-O `varre_cosmeticos.py` já classifica manto e **se recusa a chamar de curável**
-o que depende dessa ferramenta ausente. Isso é de propósito: chamar de "sem
-cura" o que só precisava de outra ferramenta foi o erro de 2026-08-01, e
-prometer cura que não há como cumprir é o erro simétrico.
+A arte. O `ferramentas/instala_manto.py` copia a subárvore de sprite de manto
+da GRF do bRO para `cliente\data\`, item a item, só o que falta — 2925 arquivos
+para os treze do Manteleiro. Tem `--verificar` implícito (sem `--aplicar` só
+relata) e é idempotente. Ver `ferramentas/LEIAME.md`.
 
-**O que falta, se um dia valer a pena:** um `estende_robeid.py` espelhado no
+### O que continua em aberto
+
+Estender a `spriterobeid.lub`. A nossa tem **120 entradas**; manto cujo `View`
+esteja fora dela **não desenha, e arte nenhuma resolve**. Os treze do
+Manteleiro não esbarraram nisso por sorte de catálogo — os `View` deles vão de
+61 a 114, todos dentro das 120 —, mas o acervo maior esbarra.
+
+O `instala_manto.py` **recusa** esse caso em vez de copiar 600 arquivos que o
+cliente nunca vai procurar, e diz por quê. O `varre_cosmeticos.py` continua se
+recusando a chamar manto de `curavel` pela mesma razão: chamar de "sem cura" o
+que só precisava de outra ferramenta foi o erro de 2026-08-01, e prometer cura
+que não há como cumprir é o erro simétrico.
+
+**O que falta escrever:** um `estende_robeid.py` espelhado no
 `estende_accessoryid.py` (mesma base-relida-do-GRF, mesmo round-trip, mesmas
-duas travas), mais estender o `valida_visual.Cliente.caminhos` para conhecer a
-sprite de manto por classe. A segunda parte é a maior: manto não tem 4 arquivos
-como chapéu, tem um por classe de personagem.
+duas travas). Feito isso, o `varre_cosmeticos.py` pode passar a classificar
+manto como `curavel`, e os 45 que estavam parados em 2026-08-05 voltam à mesa.
+
+### Duas confusões que continuam valendo
 
 **Não confundir com as "capas" que já funcionam.** 420010 (Aura da Escuridão) e
 420047 (Capa de Cavaleiro) estão no Retoqueiro e desenham normalmente — elas são
 `Costume_Head_Low`, não `Costume_Garment`. O nome engana; quem manda é o
 `Locations:` do `item_db`.
+
+**Nem toda peça de `Costume_Garment` desenha manto.** A Aura Nevada (480097),
+no Manteleiro, não tem `View`: ela é um `hateffect` no `Script` do item, efeito
+de tela. Item assim não precisa de arte de manto nenhuma, e procurar a arte que
+"falta" nele é perder tempo.
+
+---
+
+## 4b. A Caveira Humana existe e nada a entrega
+
+Aberto em 2026-08-08. O item **30995 Caveira Humana** foi criado dos dois lados
+— `db/guerra/item_db.yml` e a entrada do `itemInfo.lua` pelo
+`ferramentas/instala_item.py` — e está travado como pedido: peso 0, sem chão,
+troca, armazém, RoDEX, leilão, carrinho ou revenda.
+
+**Só que nenhum script a solta.** A descrição que o jogador lê promete que "só
+cai de jogadores no level máximo com reputação positiva dentro da Arena de
+Prontera", e em 2026-08-08 a única fonte é `@item`. Quem conta a morte na arena
+é o `npc/guerra/honra_de_combate.txt`, no `OnPCKillEvent`, e ele hoje pontua e
+não dá item nenhum.
+
+**Onde entra, quando for escrito:** o mesmo `OnPCKillEvent`, depois das travas
+que já existem — as duas condições da descrição são exatamente as que ele já
+testa (`.Nivel` dos dois lados e `.Piso` do morto). Decidir se a caveira sai
+**sempre** ou só quando a morte pontua; hoje o anúncio sai sempre e o ponto não.
+
+**E ela já é citada de fora:** a descrição da Moeda Nova (30998) lista "em troca
+de Caveira Humana" como uma das fontes de moeda. Esse NPC de troca também não
+existe.
+
+---
+
+## 4c. O Warper virou cópia nossa, e não foi podado
+
+Aberto em 2026-08-08. Para mover o par de Alberta (chegada `28,234` → `117,57`,
+NPC `28,240` → `105,63`) foi preciso **forkar** o `npc/custom/warper.txt` para
+`npc/guerra/teletransportadora.txt`: o destino de cada cidade é um
+`Go("mapa",x,y)` **dentro** do corpo do script, e nenhum comando alcança isso de
+outro arquivo. A posição do NPC sairia com `movenpc`; a chegada, não.
+
+A linha do arquivo do rAthena está **comentada** no `scripts_guerra.conf` — os
+dois não podem subir juntos, porque os nomes de NPC batem.
+
+**Duas consequências:**
+
+1. **A cópia não acompanha o upstream.** Correção que o rAthena fizer no
+   warper.txt tem de ser trazida à mão. O diff é barato enquanto a diferença
+   forem as três linhas de Alberta, e é por isso que elas estão listadas uma a
+   uma no cabeçalho da cópia.
+2. **A poda do §1d agora tem onde ser feita.** Aquela seção pedia "cópia nossa
+   em `npc/guerra/`" como pré-requisito para tirar do menu os mapas que este
+   cliente não tem. A cópia existe; a poda **não foi feita**. Todo destino de
+   Instância continua suspeito.
 
 ---
 

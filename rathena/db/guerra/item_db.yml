@@ -192,6 +192,50 @@ Body:
     Script: |
       getitem 12710,30;
 
+  - Id: 30995
+    AegisName: Caveira_Humana
+    Name: Caveira Humana
+    # O TROFEU DA ARENA. Pedida em 2026-08-08 para cair de jogador morto
+    # em PvP - level maximo e reputacao positiva, dentro da arena de
+    # Prontera. A descricao que o jogador le (itemInfo.lua) ja diz isso.
+    #
+    # ATENCAO: EM 2026-08-08 NADA A ENTREGA AINDA. O item existe e esta
+    # travado, mas nenhum script a solta: o npc/guerra/honra_de_combate.txt
+    # conta o ponto da morte e nao da item nenhum. Enquanto isso nao for
+    # escrito, a unica fonte e @item - e a descricao promete um caminho que
+    # nao existe. Ver PENDENCIAS.md.
+    #
+    # Ela tambem ja e citada de FORA: a descricao da Moeda Nova (30998), no
+    # ferramentas/instala_item.py, lista "em troca de Caveira Humana" como
+    # uma das fontes de moeda. Esse NPC de troca tambem nao existe ainda.
+    #
+    # Etc, e nao Usable, pelo mesmo motivo da Maca da Inocencia: o jogador
+    # nao usa a Caveira. Como Usable o cliente ofereceria um botao de usar
+    # que nao faria nada.
+    Type: Etc
+    # Peso 0 a pedido: quem briga na arena nao pode ser punido por vencer.
+    Weight: 0
+    # Presa a quem matou: sem chao, sem troca, sem armazem, sem RoDEX, sem
+    # leilao, sem carrinho e sem revenda em NPC.
+    #
+    # Cuidado ao mexer: `Override` (padrao 100) e o group_id que ignora tudo
+    # isto. A conta de teste e group 99, entao ela SENTE as travas - se um
+    # dia um GM de 100+ testar, nao vai sentir. Ver CLAUDE.md secao 4.7.
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+    # Sem AliasName: a entrada [30995] do itemInfo.lua e posta pelo
+    # ferramentas/instala_item.py, e e de la que sai o nome e a descricao
+    # que o jogador le. A arte e copiada byte a byte da Caveira comum
+    # (7420, Skull_), que tem os 4 arquivos completos no GRF deste cliente -
+    # entao a Caveira Humana nao custa arquivo de arte nenhum.
+
 # =========================================================================
 # PLACEHOLDERS DO MERCADO CONTEMPORANEO - 2026-08-01
 # =========================================================================

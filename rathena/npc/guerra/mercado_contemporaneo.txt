@@ -480,6 +480,21 @@ OnInit:
 // arquivos de arte, trazidos da GRF do bRO pelo instala_visual.py.
 // Capa nao e chapeu: sao 4 arquivos e nao 8, e nao passa pelo
 // accessoryid.lub. Reconferida com valida_visual.py: 0 faltando.
+//
+// RODADA DE 2026-08-08: entraram QUATRO capas, pedidas item por item.
+//   + 480045  Manto do Guardiao Morto
+//   + 480064  Abafador de Tempestades
+//   + 480075  Avental de Porquinho     [1]
+//   + 480114  Mikoshi Sagrado          [1]
+// A lista pedida trazia uma quinta, a Capa de Magma [1] (480077) -
+// e ela JA ESTAVA aqui desde a rodada de 2026-08-01. Nao entrou de
+// novo; conferir antes de acrescentar e o que impede a mesma capa
+// aparecer duas vezes na vitrine.
+//
+// As quatro passaram no valida_visual.py com 4 de 4 antes de entrar.
+// Sao capa DE VERDADE (Garment), nao visual: tem Defense, peso e
+// refino, e por isso vivem aqui e nao no Manteleiro do
+// mercado_de_visuais.txt.
 prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
@@ -488,7 +503,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,480220:1,20735:1,20734:1,20745:1,480094:1,480081:1,480084:1,20991:1,20925:1,20952:1,480077:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480220:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas

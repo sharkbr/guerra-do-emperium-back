@@ -1,9 +1,15 @@
 //===== Guerra do Emperium ===================================
 //= Area de Treinamento
 //===== Onde =================================================
-//= prontera 154,187 - a esquina do quarteirao a oeste da praca
-//= central, onde ficava o Guia de Prontera. Mesma celula, mesmo
-//= sprite (105) e mesma imagem (cutin "prt_soldier") de antes.
+//= prontera 157,187 - na mesma fileira do Placar da Arena
+//= (152,187) e da porta da arena (154,187). Ali ficava a
+//= "Smile Assistance".
+//=
+//= ATE 2026-08-08 ESTE NPC FICAVA EM 154,187, a celula do
+//= Guia de Prontera, e a Arena de Combate em 157,187. Os dois
+//= TROCARAM DE LUGAR, a pedido. O sprite (105) e a imagem
+//= (cutin "prt_soldier") FICARAM: sao deste NPC, nao da
+//= celula - foi so o lugar que mudou.
 //===== Descricao ============================================
 //= Porteiro do campo de treino. Leva para as duas areas do
 //= tra_fild, as mesmas do Instrutor de Treino de 246,62:
@@ -19,36 +25,35 @@
 //= to Prontera" no menu. E o mapa tem `nosave SavePoint`, entao
 //= deslogar la tambem devolve o jogador ao ponto de retorno.
 //===== Como, e por que assim ================================
-//= O NPC que estava em 154,187 e o "Guide#01prontera", exname
-//= "GuideProntera", de npc/re/guides/guides_prontera.txt. Ele nao
-//= esta sozinho: e o ORIGINAL de que saem as outras QUATRO
-//= duplicatas de guia de Prontera - 282,208, 29,200, 160,29 e
-//= 159,326. Essas quatro continuam guiando normalmente; so esta
-//= saiu do ar.
+//= O NPC que esta em 157,187 e "Smile Assistance#prt", uma das
+//= SEIS duplicatas de "SmileHelper" (npc/quests/mrsmile.txt).
+//= As outras cinco - Alberta, Al De Baran, Geffen, Ruinas de
+//= Morroc e Payon - continuam de pe.
 //=
-//= Por isso ele nao foi apagado nem editado la. Como no
-//= armazem_do_cla.txt, sao dois movimentos DE FORA:
-//=   1) `disablenpc` no original, daqui;
+//= Como no armazem_do_cla.txt, sao dois movimentos DE FORA:
+//=   1) `disablenpc` na duplicata, daqui;
 //=   2) este NPC nosso, na mesma coordenada.
-//= O npc/re/guides/guides_prontera.txt fica byte a byte igual ao
-//= upstream.
+//= O npc/quests/mrsmile.txt fica byte a byte igual ao upstream.
 //=
-//= DESLIGAR O ORIGINAL NAO DESLIGA AS DUPLICATAS. Uma duplicata
-//= copia o estado do original UMA vez, na hora em que nasce
-//= (src/map/npc.cpp, npc_duplicate_sub: "copy the original npc
-//= state"), e as quatro nascem durante a leitura do arquivo
-//= delas - muito antes deste OnInit rodar, que so acontece
-//= quando npc/scripts_custom.conf e alcancado. Vale tambem no
-//= @reloadscript, que refaz a leitura na mesma ordem.
+//= Aqui e mais simples que no Guia de Prontera, que era o alvo
+//= deste arquivo ate 2026-08-08: aquele e o ORIGINAL de que
+//= saem quatro duplicatas, e desliga-lo exigia explicar por que
+//= as quatro sobreviviam (uma duplicata copia o estado do
+//= original UMA vez, na hora em que nasce - src/map/npc.cpp,
+//= npc_duplicate_sub - e as quatro nascem durante a leitura do
+//= arquivo delas, antes de qualquer OnInit nosso). A "Smile
+//= Assistance#prt" e ELA PROPRIA uma duplicata: desliga-la nao
+//= alcanca ninguem. Quem desliga o Guia agora e o
+//= arena_de_combate.txt, que passou a ocupar a celula dele.
 //=
 //= E COPIA E NAO `duplicate()` porque nao ha o que reaproveitar:
-//= o corpo do guia e o menu de navegacao da cidade inteira, que
-//= e justamente o que se quer tirar daqui.
+//= o corpo do guia era o menu de navegacao da cidade inteira,
+//= que e justamente o que se quis tirar dali.
 //===== O nome ===============================================
 //= "Area de Treinamento" (com acento no arquivo), sem sufixo
 //= `#identificador`: nome de NPC e chave unica no rAthena, e
-//= nenhum outro NPC usa este. O original desligado continua
-//= ocupando "Guide#01prontera" / "GuideProntera", outro nome.
+//= nenhum outro NPC usa este. A duplicata desligada continua
+//= ocupando "Smile Assistance#prt", outro nome.
 //===== Notas ================================================
 //= As coordenadas de destino (112,167 e 111,74) sao as mesmas
 //= que o npc/re/warps/other/TrainingZone.txt usa - copiadas de
@@ -70,7 +75,7 @@
 //= Mudanca neste arquivo pega com @reloadscript.
 //============================================================
 
-prontera,154,187,4	script	햞ea de Treinamento	105,{
+prontera,157,187,4	script	햞ea de Treinamento	105,{
 	cutin "prt_soldier",2;
 	mes "[햞ea de Treinamento]";
 	mes "A corte montou um campo de treino";
@@ -117,22 +122,21 @@ prontera,154,187,4	script	햞ea de Treinamento	105,{
 	end;
 
 OnInit:
-	// E "GuideProntera" e nao "Guide#01prontera": a linha do rAthena
-	// e `Guide#01prontera::GuideProntera`, e o que vem depois do
-	// `::` e o EXNAME. E por exname que o rAthena indexa NPC
-	// (npcname_db, src/map/npc.cpp), entao e ele que getnpcid e
-	// disablenpc enxergam - "Guide#01prontera" e so o nome que
-	// aparece na tela. As quatro duplicatas tem exname proprio
-	// (Guide#02prontera e irmas) e nao sao alcancadas por esta linha.
+	// "Smile Assistance#prt" e nome E exname ao mesmo tempo: a linha
+	// do rAthena (npc/quests/mrsmile.txt) e
+	//   prontera,157,187,4  duplicate(SmileHelper)  Smile Assistance#prt  92
+	// e duplicata sem `::` fica indexada pelo proprio nome. E por
+	// exname que o rAthena indexa NPC (npcname_db, src/map/npc.cpp),
+	// entao e ele que getnpcid e disablenpc enxergam.
 	//
-	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste,
-	// um nome fora de sincronia com o guides_prontera.txt do
-	// rAthena abortaria o OnInit calado - e sobrariam DOIS NPCs na
-	// mesma celula, o guia e este, um por cima do outro.
-	if (!getnpcid(0, "GuideProntera")) {
-		debugmes "AreaDeTreinamento: nao achei 'GuideProntera'. O npc/re/guides/guides_prontera.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 154,187.";
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste, um
+	// nome fora de sincronia com o mrsmile.txt do rAthena abortaria o
+	// OnInit calado - e sobrariam DOIS NPCs na mesma celula, a Smile
+	// Assistance e este, um por cima do outro.
+	if (!getnpcid(0, "Smile Assistance#prt")) {
+		debugmes "AreaDeTreinamento: nao achei 'Smile Assistance#prt'. O npc/quests/mrsmile.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 157,187.";
 		end;
 	}
-	disablenpc "GuideProntera";
+	disablenpc "Smile Assistance#prt";
 	end;
 }

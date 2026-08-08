@@ -3204,3 +3204,275 @@ A Moeda Nova citada essa existe, e tem duas fontes — o Logue e Ganhe e a Aller
 Escrita, registrada no `scripts_guerra.conf` e conferida offline. **Nunca subiu
 em jogo** — está no `PENDENCIAS.md` §1, e as duas estreias (o link de navegação e
 o balão de MVP) têm roteiro próprio no §1e.
+
+---
+
+## A rodada de 2026-08-08 — dez pedidos numa tacada
+
+Dez itens pedidos de uma vez, e não uma frente só: mudança de praça, regra de
+PvP, tradução, item novo, NPC novo, Alberta, e três mexidas de loja. O que os
+une é serem todos pequenos — e o que os separa é que dois deles cobraram um
+preço que não estava no pedido. Esses dois têm seção própria mais abaixo.
+
+### A praça: Arena, Área de Treinamento e Placar
+
+A **Arena de Combate** e a **Área de Treinamento** trocaram de célula: a arena
+foi de `prontera 157,187` para `154,187`, e o campo de treino o contrário. O
+**Placar da Arena** saiu de `163,187` — a outra ponta da fileira — para
+`152,187`. A fileira agora se lê, de oeste para leste: placa, arena, treino,
+Mestre de UP.
+
+**A troca arrastou junto o `disablenpc` de cada arquivo, e isso é o que tinha
+como dar errado.** Cada um dos dois NPCs nossos existe porque desliga *de fora*
+um NPC do rAthena que ocupava aquela célula: a arena desligava a
+`Smile Assistance#prt` (157,187), o treino desligava o `GuideProntera`
+(154,187). Trocar só a coordenada deixaria cada arquivo desligando o NPC da
+célula do outro — dois NPCs empilhados numa, nenhum na outra, **sem erro
+nenhum no log**. Então o alvo do `disablenpc` trocou junto: cada arquivo passa
+a desligar o NPC que ocupa a célula que *ele* passou a ocupar.
+
+O sprite e o `cutin "prt_soldier"` ficaram com a Área de Treinamento. São dela,
+não da célula — só o lugar mudou.
+
+### O modal do Placar da Arena, refeito
+
+O texto do placar era uma lista de 20 e uma linha de saldo. Virou:
+
+- **TOP 5 fixo**, sempre com cinco linhas — quando falta gente, a linha sai
+  `vago`. Pódio com buraco diz "cabe mais um" melhor que uma lista curta;
+- **as três regras por extenso**, com os números vindos do `OnInit` e não do
+  texto, para mexer em `.Limite` consertar a regra e a explicação de uma vez;
+- **um menu**: `Ranking completo` (até 15, só pontuação positiva) ou
+  `Minha pontuação`, que é o caminho antigo para o modal de reputação.
+
+**E uma regra de jogo mudou junto:** o piso saiu de `-10` para **0**. Só vale
+matar quem tem pontuação zero ou positiva. Antes a faixa negativa ainda
+pontuava, o que fazia de quem estava perdendo um alvo melhor que os outros.
+
+O teste também mudou de `<=` para `<`. Não é detalhe: `.Piso` deixou de ser "o
+primeiro valor que já não vale" e passou a ser "o menor que ainda vale". Trocar
+um sem o outro erra por um, e o erro não se denuncia.
+
+**Uma linha foi acrescentada ao texto pedido.** O pedido dizia "Pontuação só
+ocorre se o morto tiver pontuação 0 ou maior e for nível máximo" — e o script
+também exige nível máximo **do matador**, regra que já existia e que não foi
+pedida para sair. Ela ficou, e o modal ganhou um `(O matador também precisa ser
+nível 200.)` em cinza, para o jogador não ficar sem explicação quando a morte
+não pontuar.
+
+### O Mestre das Montarias
+
+O `Riding Creature Master` de `prontera 130,213` — o NPC que dá Dragão a
+Cavaleiro Rúnico e Grifo a Guardião Real — ganhou nome e diálogo em português,
+em `npc/guerra/mestre_das_montarias.txt`. Receita de sempre: `disablenpc` no
+original mais cópia nossa na mesma célula, com o
+`npc/re/merchants/renters.txt` byte a byte igual ao upstream.
+
+**Só Prontera mudou de idioma, e isso é consequência do pedido.** O de Prontera
+é o *original* de que saem cinco duplicatas — Geffen, Payon, Al De Baran, Juno
+e Rachel —, e desligar o original não desliga duplicata que já nasceu. As cinco
+continuam em inglês.
+
+**O nome é invenção nossa, e fica dito.** O `navi_npc_br.lub` da instalação do
+bRO desta máquina **não tem este NPC** — conferido nas 5815 strings da tabela.
+"Mestre das Montarias" foi escolhido aqui. Já `Cavaleiro Rúnico` e
+`Guardião Real` vieram da tabela: são os nomes 625 e 631 de
+`conf/msg_conf/map_msg_por.conf`.
+
+### A Caveira Humana (30995)
+
+Item novo dos dois lados: `db/guerra/item_db.yml` e a entrada do `itemInfo.lua`
+pelo `instala_item.py`, com a arte copiada da Caveira comum (7420), que tem os
+4 arquivos completos neste cliente. Peso 0 e travada como pedido — sem chão,
+troca, armazém, RoDEX, leilão, carrinho ou revenda.
+
+**Nada a entrega ainda**, e isso está no `PENDENCIAS.md` §4b. A descrição
+promete que ela cai de jogador morto na arena, e o `honra_de_combate.txt` hoje
+conta o ponto e não dá item. As duas condições da descrição são exatamente as
+que ele já testa, então o lugar de escrever isso já está pronto — só não foi
+pedido agora.
+
+Ela já era citada de fora antes de existir: a descrição da Moeda Nova (30998)
+lista "em troca de Caveira Humana" como fonte de moeda desde 2026-08-07.
+
+### O Mister Peso
+
+`prontera 99,64`. Come Passe Antigravitacional (7776) e devolve peso: cada
+passe sobe um nível de `ALL_INCCARRY`, que vale `2000 * skill` em
+`src/map/status.cpp:3687` — ou **+200** no número que o jogador lê, já que a
+tela divide por dez. Teto de 10, o mesmo `MaxLevel` da habilidade.
+
+**É a segunda porta para o mesmo lugar.** O rAthena já tem o
+`Ripped Cabus#GymPass` em `payon 173,141`, e ele está **ligado**
+(`npc/scripts_athena.conf:183`). Os dois mexem na mesma variável de personagem
+(`gympassmemory`) e na mesma habilidade, então ninguém soma vinte níveis indo
+aos dois. Foi pedido acrescentar, não trocar de lugar — e por isso o de Payon
+ficou.
+
+O menu tem uma segunda opção, herdada do NPC oficial: repor a habilidade no
+nível que a variável diz, sem cobrar passe. A variável é a verdade; a
+habilidade é a cópia dela.
+
+### As três mexidas de loja
+
+- **Capeiro** (capa de verdade, `Garment`): entraram 480045 Manto do Guardião
+  Morto, 480064 Abafador de Tempestades, 480075 Avental de Porquinho [1] e
+  480114 Mikoshi Sagrado [1]. Passou de 11 para 15.
+- **Camareiro** (`Costume_Head_Low`): entrou 420029 Glória Imperial. 117 itens.
+- **Manteleiro**: loja nova — ver a seção própria abaixo.
+
+**A lista pedida para o Capeiro trazia uma quinta capa, a Capa de Magma [1]
+(480077) — e ela já estava lá** desde a rodada de 2026-08-01. Não entrou de
+novo. Conferir antes de acrescentar é o que impede a mesma peça aparecer duas
+vezes na vitrine.
+
+Todas passaram no `valida_visual.py` com 4 de 4 (ou 8 de 8, na Glória Imperial)
+**antes** de entrar, como manda o `CLAUDE.md` §4.4.
+
+---
+
+## O Manteleiro, e a ferramenta que faltava para o manto (2026-08-08)
+
+O pedido era "adicionar NPC de Visuais: Capa" com treze mantos cosméticos. O
+`PENDENCIAS.md` §4 dizia, desde 2026-08-05, que isso **não dava** — manto tinha
+uma camada sem ferramenta nossa.
+
+Estava certo pela metade, e a metade que faltava era menor do que parecia.
+
+### O diagnóstico: eram duas lacunas, não uma
+
+O §4 tratava como uma coisa só o que eram duas:
+
+| lacuna | o que é | vale para os treze? |
+|---|---|---|
+| a tabela `spriterobeid.lub` | traduz o `View` do `item_db` no nome da pasta de arte. A nossa tem 120 entradas | **não** — os `View` dos treze vão de 61 a 114 |
+| a arte de manto **por classe** | um `.spr` e um `.act` para cada classe de personagem e cada sexo | **sim, para cinco deles** |
+
+A primeira é a cara, e é a que continua aberta. A segunda é mecânica.
+
+**O que o `varre_cosmeticos.py` já respondia e o que não.** Ele classificou os
+treze como `ok`, o que significa: entrada no `itemInfo.lua`, os 4 arquivos de
+item, e o `View` dentro da nossa `spriterobeid.lub`. O que ele **não** olha é a
+arte de manto — o próprio `PENDENCIAS.md` §4 dizia isso, na linha "estender o
+`valida_visual.Cliente.caminhos` para conhecer a sprite de manto por classe".
+
+Ou seja: `ok` ali não era promessa de que o manto desenha. E de fato **cinco
+dos treze não tinham arte nenhuma neste cliente** — 480055 (Rudra), 480096
+(Casaco Aconchegante), 480117 (Guitarra), 480118 (Espada do General) e 480121
+(Asas Orientais), mais pedaços de outros três.
+
+**Isso importa por causa de onde a falha aparece.** Item sem os 4 arquivos de
+*item* estoura caixa modal **ao abrir a loja**. Manto sem a arte de *manto*
+abre a loja, vende, equipa — e só então falha. É a falha mais cara das duas,
+porque chega depois do dinheiro do jogador.
+
+### A ferramenta: `ferramentas/instala_manto.py`
+
+Irmão do `instala_visual.py`, para essa camada. Copia da GRF do bRO para
+`cliente\data\` a subárvore de sprite de manto de um item, só o que falta.
+
+A diferença que obrigou script separado é a **forma** da arte: chapéu são 8
+arquivos de nomes fixos; manto é uma pasta inteira, com um par de arquivos por
+classe de personagem — entre 250 e 700 por item. Por isso aqui não há lista
+canônica de caminhos como o `vv.Cliente.caminhos`: o alvo é a subárvore, e o
+que vai para o disco é a diferença entre as duas pontas.
+
+**Ele recusa o que não tem como curar.** Manto cujo `View` esteja fora das 120
+entradas da nossa tabela é rejeitado com o motivo por extenso, em vez de copiar
+600 arquivos que o cliente nunca vai procurar. É a mesma disciplina do
+`varre_cosmeticos.py`, e existe pela mesma razão: prometer cura que não há como
+cumprir é o erro simétrico de chamar de "sem cura" o que só precisava de outra
+ferramenta.
+
+**Duas armadilhas que ele resolve, e que dariam número plausível e errado:**
+
+1. **O prefixo tem de ser exato, com a barra no fim.** `Wing_Of_Angel_Move` é
+   prefixo de `_RD`, `_BK` e `_GD`. Casar por substring mistura quatro mantos
+   num só — a primeira medição deu 1235 arquivos para um item que tem 256.
+2. **Manto sem `View` não é manto quebrado.** A Aura Nevada (480097) não tem
+   `View` nenhum: ela é um `hateffect` (`HAT_EF_SNOW_POWDER`) no `Script` do
+   item — efeito de tela, não desenho vestido. Procurar a arte que "falta" nela
+   é perder tempo, e o script diz isso em vez de contar zero e parecer falha.
+
+Aplicado em 2026-08-08: **2925 arquivos** copiados, e a segunda passada relata
+"já completo" nos doze que vestem.
+
+### A loja
+
+`prontera 163,155`, quarta coluna da fileira de visual, sprite `1_M_MERCHANT` —
+que continua a alternância homem/mulher que atravessa os dois arquivos do
+quarteirão e que o Camareiro tinha deixado em aberto. Placa `Visuais: capa`.
+
+**O nome é invenção nossa, e fica dito.** Costumeiro, Adereceiro e Camareiro
+são cargos de guarda-roupa de teatro de verdade; para manto não há um, então
+"Manteleiro" foi montado no mesmo molde (`-eiro`) para a fileira não destoar.
+
+**Cliente novo perde os 2925 arquivos.** A receita para repor está no cabeçalho
+da loja e no `CATALOGO-VISUAIS.md`, que agora traz, por item, se a arte veio do
+nosso GRF ou do bRO.
+
+---
+
+## Alberta, e por que o Warper virou cópia nossa (2026-08-08)
+
+O pedido era pequeno: mover a chegada do warp em Alberta de `28,234` para
+`117,57`, e o NPC de `28,240` para `105,63`. O par ficava na quina noroeste,
+longe de tudo — quem se teletransportava para a cidade caía num canto isolado.
+
+O preço foi forkar o `npc/custom/warper.txt`.
+
+### Por que não deu para fazer de fora
+
+As duas metades do pedido não são iguais:
+
+| o quê | dá de fora? |
+|---|---|
+| a **posição do NPC** (`28,240`) | **sim** — `movenpc "Warper#alb",105,63;` |
+| a **chegada** (`28,234`) | **não** |
+
+A chegada é um `Go("alberta",28,234)` **dentro** do corpo do script, num rótulo
+(`T2:`). Não há comando de script que alcance o corpo de outro NPC. E o
+`CLAUDE.md` §2 fecha a outra saída: editar o arquivo do rAthena é alteração em
+código de terceiros.
+
+Sobrou o caminho que o próprio `scripts_guerra.conf` já registrava por escrito,
+desde que o warper foi ligado — *"se um dia quisermos versão própria, o caminho
+é copiar para `npc/guerra/` e comentar esta linha, não editar o arquivo do
+rAthena"*. Este foi esse dia.
+
+`npc/guerra/teletransportadora.txt` é cópia byte a byte com **três linhas**
+diferentes, todas de Alberta: o `Go` do rótulo `T2`, o `naviregisterwarp`
+correspondente (que tem de bater com ele, senão o minimapa aponta para o lugar
+antigo) e a coordenada da duplicata `Warper#alb`. As três estão listadas uma a
+uma no cabeçalho do arquivo — é isso que mantém barato trazer correção futura
+do rAthena.
+
+A linha do arquivo do rAthena ficou **comentada** no `scripts_guerra.conf`. Os
+dois não podem subir juntos: os nomes de NPC batem e o segundo a ser lido não
+nasce.
+
+### O que veio de graça, e o que continua caro
+
+**De graça:** o `PENDENCIAS.md` §1d pedia "cópia nossa em `npc/guerra/`" como
+pré-requisito para podar do menu os mapas que este cliente não tem — o `1@slug`
+que derruba o cliente e prende o personagem. A cópia existe agora. A poda
+**não** foi feita, e todo destino de Instância continua suspeito.
+
+**Continua caro:** a cópia não acompanha o upstream. Está registrado no §4c.
+
+### Uma armadilha evitada de propósito
+
+A linha da duplicata levou um comentário — mas **acima** dela, nunca no fim.
+`npc_parsesrcfile` enche o último campo *"to end of line"*, e comentário de fim
+de linha vira parte dele. É a armadilha do `CLAUDE.md` §5, a mesma que em
+2026-08-08 fez um evento de spawn nascer, andar, morrer e nunca disparar.
+
+O `sprite_teletransportadora.txt` continua funcionando sem alteração de código:
+ele acha as 45 duplicatas **pelo nome**, e nenhum nome mudou. Só as referências
+do cabeçalho dele foram reapontadas.
+
+### Estado
+
+Tudo acima subiu num boot limpo em 2026-08-08 — sem `Unknown syntax`, sem nome
+de NPC duplicado, sem item inválido em loja. **Nada foi visto em jogo**; está no
+`PENDENCIAS.md` §1.

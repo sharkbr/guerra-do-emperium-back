@@ -4,21 +4,25 @@
 //= Em lugar nenhum. E um NPC flutuante, sem corpo e sem mapa:
 //= so existe para rodar uma vez no OnInit.
 //===== Descricao ============================================
-//= Troca o sprite das 45 duplicatas do Warper (npc/custom/
-//= warper.txt) de 811 (4_F_KAFRA1, a moca de uniforme da Kafra)
-//= para 10007 (JT_PORTAL, o portal).
-//===== Por que de fora, e nao editando o warper.txt =========
-//= O sprite esta escrito 45 vezes, uma por duplicata, no fim do
-//= warper.txt - que e arquivo do rAthena, nao nosso. Editar as
-//= 45 linhas la sujaria o vendor e faria toda atualizacao futura
-//= daquele arquivo bater de frente com a nossa mudanca.
-//= setnpcdisplay faz o mesmo de fora e deixa o warper.txt byte a
-//= byte igual ao upstream.
+//= Troca o sprite das 45 duplicatas do Warper
+//= (npc/guerra/teletransportadora.txt) de 811 (4_F_KAFRA1, a
+//= moca de uniforme da Kafra) para 10007 (JT_PORTAL, o portal).
+//===== Por que de fora, e nao na propria tabela =============
+//= O sprite esta escrito 45 vezes, uma por duplicata, no fim
+//= daquele arquivo. Ate 2026-08-08 o motivo de nao mexer la era
+//= que ele era o npc/custom/warper.txt do rAthena, e editar 45
+//= linhas de codigo de terceiros sujaria o vendor.
 //=
-//= ARMADILHA AO DEPURAR: quem abrir o warper.txt vai ler 811 e
-//= nao vai bater com o portal que aparece no jogo. A troca e
-//= aqui. Se um dia quiser a Kafra de volta, basta comentar a
-//= linha deste arquivo no scripts_guerra.conf - o warper.txt
+//= HOJE AQUELE ARQUIVO E UMA COPIA NOSSA, e o motivo mudou de
+//= forma sem mudar de conclusao: a copia vale exatamente pelo
+//= diff curto contra o upstream, e 45 linhas trocadas la
+//= tornariam caro trazer qualquer correcao futura do rAthena.
+//= setnpcdisplay faz o mesmo de fora e nao custa linha nenhuma.
+//=
+//= ARMADILHA AO DEPURAR: quem abrir a teletransportadora vai ler
+//= 811 e nao vai bater com o portal que aparece no jogo. A troca
+//= e aqui. Se um dia quiser a Kafra de volta, basta comentar a
+//= linha deste arquivo no scripts_guerra.conf - aquele arquivo
 //= sozinho ja nasce Kafra.
 //===== Notas ================================================
 //= 10007 = JT_PORTAL, de src/map/npc.hpp:944, contado a partir
@@ -26,18 +30,19 @@
 //= faixa que o npcdb_checkid aceita (npc.hpp:1595) e tem
 //= viewdata montada em npc.cpp:6332.
 //=
-//= A lista de nomes saiu do proprio warper.txt. Ela detecta nome
-//= que SUMIU (avisa no console), mas nao detecta nome que o
-//= rAthena tenha ACRESCENTADO numa atualizacao: cidade nova
-//= nasceria Kafra e ficaria fora da lista, calada. Ao atualizar o
-//= rAthena, reconferir contra o fim do warper.txt.
+//= A lista de nomes saiu do proprio arquivo da
+//= teletransportadora. Ela detecta nome que SUMIU (avisa no
+//= console), mas nao detecta nome ACRESCENTADO: cidade nova
+//= nasceria Kafra e ficaria fora da lista, calada. Ao trazer
+//= mudanca do rAthena para a copia, reconferir contra o fim
+//= dela.
 //============================================================
 
 -	script	SpriteTeletransportadora	-1,{
 	end;
 
 OnInit:
-	// Ordem igual a do fim do warper.txt: primeiro o bloco comum,
+	// Ordem igual a do fim da teletransportadora: primeiro o bloco comum,
 	// depois o bloco Renewal.
 	setarray .@nome$[0],
 		"Warper#tre",   "Warper#alb",   "Warper#alde",  "Warper#ama",
@@ -62,6 +67,6 @@ OnInit:
 	}
 
 	if (.@sumiram)
-		debugmes "SpriteTeletransportadora: "+.@sumiram+" de "+getarraysize(.@nome$)+" duplicatas do Warper nao foram encontradas. A lista deste arquivo saiu de sincronia com o fim de npc/custom/warper.txt.";
+		debugmes "SpriteTeletransportadora: "+.@sumiram+" de "+getarraysize(.@nome$)+" duplicatas do Warper nao foram encontradas. A lista deste arquivo saiu de sincronia com o fim de npc/guerra/teletransportadora.txt.";
 	end;
 }

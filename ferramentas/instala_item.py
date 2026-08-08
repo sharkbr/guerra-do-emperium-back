@@ -148,6 +148,26 @@ ITENS = [
             u'^0000CCPeso:^000000 0',
         ],
     },
+    # O trofeu da arena, 2026-08-08. Ele nao tem fonte ainda: nada no servidor
+    # o entrega, e a segunda linha da descricao promete um caminho que sera
+    # escrito depois. Ver db/guerra/item_db.yml, entrada 30995, e PENDENCIAS.md.
+    {
+        'id': 30995,
+        'nome': u'Caveira Humana',
+        # A Caveira comum (Skull_), que tem os 4 arquivos completos neste
+        # cliente - `estado_item.py --id 7420` da "4 de 4 ok". Copiar o
+        # resourceName dela poupa criar arte para um item que e, no desenho,
+        # exatamente a mesma caveira.
+        'arte_de': 7420,
+        'descricao': [
+            u'Caveira humana de um jogador morto em combate.',
+            u'_______________________',
+            u'Essa caveira só cai de jogadores no level máximo com reputação positiva dentro da Arena de Prontera.',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Etc',
+            u'^0000CCPeso:^000000 0',
+        ],
+    },
 ]
 
 

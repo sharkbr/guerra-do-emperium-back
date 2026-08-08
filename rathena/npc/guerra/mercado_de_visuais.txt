@@ -4,19 +4,21 @@
 //= prontera, quarta fileira do quarteirão do Mercado
 //= Contemporâneo, uma coluna por slot de visual:
 //=
-//=            x=151          x=155          x=159
+//=            x=151          x=155          x=159          x=163
 //=  y=173   Chapeleiro     Ocleiro        Retoqueiro
 //=  y=167   Sr das Armas   Lorde das Arm. Escudeiro
 //=  y=161   Capeiro        Sapateiro      Acessorista
-//=  y=155   Costumeiro     Adereceiro     Camareiro   <- este arquivo
+//=  y=155   Costumeiro     Adereceiro     Camareiro     Manteleiro
+//=                                                      <- este arquivo
 //=
-//= As três células foram conferidas no prontera.gat antes de
-//= plantar: tipo 0, andável, como as nove de cima. A faixa
-//= x=148..162 está livre de y=150 a y=160, então há espaço de
-//= sobra entre as colunas para o jogador circular.
+//= As QUATRO células foram conferidas no prontera.gat antes de
+//= plantar: tipo 0, andável, como as nove de cima, e a de x=163
+//= com as nove vizinhas livres. A faixa x=148..162 está livre de
+//= y=150 a y=160, então há espaço de sobra entre as colunas para o
+//= jogador circular.
 //===== Descrição ============================================
-//= Três lojas de VISUAL, uma por slot de cabeça. 384 itens,
-//= tudo a 1 zeny.
+//= QUATRO lojas de VISUAL: três por slot de cabeça e, desde
+//= 2026-08-08, uma de MANTO. 392 itens, tudo a 1 zeny.
 //===== Notas ================================================
 //= O QUE ESTÁ À VENDA, E POR QUE SÓ ISTO
 //=
@@ -68,12 +70,33 @@
 //= tem - mais novos que a instalação desta máquina. Não há
 //= arte para eles em lugar nenhum ao nosso alcance.
 //=
-//= MANTO FICOU DE FORA, e não é esquecimento. Costume_Garment
-//= tem uma NONA camada que nenhuma ferramenta nossa toca: a
-//= tabela spriterobeid.lub/spriterobename.lub, que é para o
-//= manto o que o accessoryid.lub é para o chapéu - a nossa tem
-//= 120 entradas -, mais as sprites de manto por classe. Falta
-//= escrever o equivalente do estende_accessoryid.py desse lado.
+//= MANTO ENTROU EM 2026-08-08, e até então estava fora. O que
+//= faltava era ferramenta, não arte: `Costume_Garment` tem uma
+//= NONA camada que nenhum script nosso tocava - a tabela
+//= spriterobeid.lub/spriterobename.lub, que é para o manto o
+//= que o accessoryid.lub é para o chapéu -, mais as sprites de
+//= manto POR CLASSE de personagem, que são centenas de arquivos
+//= por item em vez dos 4 de um chapéu.
+//=
+//= Os TREZE que entraram foram pedidos item por item, e nenhum
+//= precisou da primeira metade: a nossa spriterobeid.lub tem 120
+//= entradas e os `View` dos treze (61 a 114) já estavam todos lá.
+//= Faltava só a arte, e para ela foi escrito o
+//= `ferramentas/instala_manto.py` - o irmão do instala_visual.py
+//= desse lado. Ele copiou 2925 arquivos da GRF do bRO para
+//= `cliente\data\` em 2026-08-08.
+//=
+//= A METADE QUE CONTINUA FALTANDO é estender a spriterobeid: manto
+//= cujo `View` esteja fora das nossas 120 entradas segue sem cura,
+//= e o instala_manto.py RECUSA esse caso em vez de copiar 600
+//= arquivos que o cliente nunca vai procurar. Ver PENDENCIAS.md.
+//=
+//= UM DOS TREZE NÃO TEM MANTO NENHUM, e está na loja de propósito:
+//= a Aura Nevada (480097) não tem `View`. O que ela faz é um
+//= `hateffect` (HAT_EF_SNOW_POWDER) no Script do item - efeito de
+//= tela, não desenho vestido. Não é o caso dos três "Invisíveis"
+//= logo abaixo, em que o nada é o produto: aqui o produto é a
+//= neve, e ela aparece.
 //=
 //= As "capas" desta fileira NÃO são manto: são Costume_Head_Low,
 //= e é por isso que elas funcionaram. É o caso das cinco que
@@ -204,7 +227,11 @@ OnInit:
 -	shop	Adereceiro#loja	-1,15840:1,15953:1,18742:1,19603:1,21200:1,31462:1,31515:1,31949:1,31953:1,31954:1,400491:1,410011:1,410030:1,410031:1,410032:1,410033:1,410034:1,410035:1,410036:1,410037:1,410038:1,410039:1,410040:1,410041:1,410042:1,410043:1,410044:1,410045:1,410047:1,410053:1,410059:1,410060:1,410072:1,410074:1,410098:1,410111:1,410112:1,410113:1,410114:1,410115:1,410116:1,410117:1,410118:1,410121:1,410128:1,410131:1,410132:1,410133:1,410144:1,410156:1,410157:1,410160:1,410178:1,410179:1,410182:1,410196:1,410198:1,410199:1,410200:1,410201:1,410202:1,410212:1,410217:1,410218:1,410219:1,410220:1,410224:1,410226:1,410234:1,410236:1,410240:1,410242:1,410245:1,410248:1,410251:1,410252:1,410253:1,410261:1,410262:1,410263:1,410264:1,410277:1,410278:1,410286:1,410289:1,410290:1,410296:1,410297:1,410311:1,410316:1,410317:1,410320:1,410326:1,410328:1,410329:1,410330:1,410331:1,410338:1,410351:1,410352:1,410353:1,410357:1,410359:1,410361:1,410364:1,420293:1,420294:1,420295:1,420296:1,420297:1,420298:1,420299:1,420300:1,436008:1,436010:1,480200:1
 
 // ----- Camareiro (x=159): Visual de cabeca baixo -- cachecol, aura, bicho de ombro, cauda.
-// 116 itens.
+// 117 itens. A Gloria Imperial (420029) entrou em 2026-08-08,
+// pedida item por item como os dez do cabecalho. Ela ja passava no
+// valida_visual.py com 8 de 8 antes de entrar - View 2056, e as
+// quatro sprites de cabeca (M e F, .spr e .act) estao no GRF deste
+// cliente. Nao custou ferramenta de cura nenhuma.
 //
 // SETE SAIRAM em 2026-08-07, a pedido, e sao seis baloes e um
 // pote: 20310 (Costume Cute Parrot), 31257 (Poring Jars Of Clay),
@@ -235,4 +262,37 @@ OnInit:
 	placadevenda "Visuais: cabeça baixo";
 	end;
 }
--	shop	Camareiro#loja	-1,15954:1,19604:1,31305:1,31386:1,31500:1,31503:1,31584:1,31593:1,31594:1,31882:1,400258:1,400327:1,400425:1,400427:1,410265:1,420014:1,420026:1,420044:1,420046:1,420047:1,420054:1,420070:1,420071:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
+-	shop	Camareiro#loja	-1,15954:1,19604:1,31305:1,31386:1,31500:1,31503:1,31584:1,31593:1,31594:1,31882:1,400258:1,400327:1,400425:1,400427:1,410265:1,420014:1,420026:1,420029:1,420044:1,420046:1,420047:1,420054:1,420070:1,420071:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
+
+// ----- Manteleiro (x=163): Visual de CAPA -- manto, asa, mochila, instrumento.
+// 13 itens, e a quarta loja da fileira. Pedida em 2026-08-08, item
+// por item: ela NAO sai de varredura nenhuma, porque o
+// varre_cosmeticos.py nao classifica manto como `curavel` - falta a
+// outra metade da ferramenta (ver o cabecalho, secao do manto).
+//
+// Cinco dos treze nao desenhavam neste cliente ate 2026-08-08: o
+// 480055 (Rudra), o 480096 (Casaco Aconchegante), o 480117
+// (Guitarra), o 480118 (Espada do General) e o 480121 (Asas
+// Orientais) nao tinham a pasta de manto no data.grf. Os 2925
+// arquivos vieram do bRO pelo instala_manto.py. Quem trocar de
+// cliente perde isso e precisa rodar o script de novo:
+//   python ferramentas/instala_manto.py --ids <lista> --aplicar
+//
+// O NOME e invencao nossa, e fica dito: Costumeiro, Adereceiro e
+// Camareiro sao cargos de guarda-roupa de teatro de verdade; para
+// manto nao ha um, entao "Manteleiro" foi montado no mesmo molde
+// (-eiro) para a fileira nao destoar.
+//
+// Sprite 1_M_MERCHANT: continua a alternancia homem/mulher que
+// atravessa os dois arquivos e que o Camareiro (mulher) deixou em
+// aberto. Conferido no npcidentity.lub deste cliente, com .spr e
+// .act em data\sprite\npc\ - a armadilha de sempre.
+prontera,163,155,4	script	Manteleiro	1_M_MERCHANT,{
+	callshop "Manteleiro#loja",0;
+	end;
+
+OnInit:
+	placadevenda "Visuais: capa";
+	end;
+}
+-	shop	Manteleiro#loja	-1,480055:1,480056:1,480058:1,480069:1,480071:1,480096:1,480097:1,480107:1,480110:1,480117:1,480118:1,480121:1,480122:1

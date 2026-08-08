@@ -1,0 +1,143 @@
+//===== Guerra do Emperium ===================================
+//= Mister Peso
+//===== Onde =================================================
+//= prontera 99,64 - o quarteirao a sudoeste da praca central.
+//= Celula conferida no prontera.gat antes de plantar: tipo 0,
+//= com as nove vizinhas andaveis, entao ha espaco para o
+//= jogador chegar e sair.
+//===== Descricao ============================================
+//= Come Passe Antigravitacional (7776) e devolve peso.
+//=
+//= Cada passe sobe UM nivel de `ALL_INCCARRY`, que vale 2000
+//= internos - `sd->max_weight += 2000 * skill` em
+//= src/map/status.cpp:3687. O que o jogador LE na tela e esse
+//= numero dividido por dez, entao cada passe aparece como +200,
+//= e os dez como +2000.
+//=
+//= Pedido em 2026-08-08.
+//===== E o mesmo bau do Ripped Cabus, e isso importa =========
+//= O rAthena ja tem um NPC que faz isto: o "Ripped
+//= Cabus#GymPass", em payon 173,141 (npc/other/gympass.txt),
+//= LIGADO pelo npc/scripts_athena.conf linha 183.
+//=
+//= Os dois mexem na MESMA variavel de personagem
+//= (`gympassmemory`) e na MESMA habilidade, entao nao ha como
+//= um jogador somar vinte niveis indo aos dois: quem treinou
+//= cinco vezes em Payon chega aqui com cinco, e leva no maximo
+//= mais cinco. Sao duas portas para o mesmo lugar.
+//=
+//= Isso e deliberado: o pedido foi ACRESCENTAR um NPC em
+//= Prontera, nao trocar o de Payon de lugar. Se um dia se
+//= quiser porta unica, a receita e a de sempre - `disablenpc`
+//= no de Payon a partir daqui, sem editar o gympass.txt.
+//===== O teto ===============================================
+//= .Teto = 10, que e o oficial e tambem o `MaxLevel: 10` da
+//= ALL_INCCARRY em db/re/skill_db.yml. Subir o .Teto sem subir
+//= o MaxLevel NAO da erro: o `skill` grava o nivel e o
+//= status.cpp multiplica por ele, mas a habilidade passa a
+//= mostrar um nivel que a tabela nao conhece. Mexer nos dois.
+//===== "Meu treino sumiu" ===================================
+//= A segunda opcao do menu repoe a habilidade no nivel que a
+//= variavel diz, sem cobrar passe. Ela existe no NPC oficial e
+//= foi mantida porque a variavel e a verdade: se a habilidade
+//= se perder por reset, mudanca de classe ou conserto de banco,
+//= o jogador ficaria sem o peso que ja pagou e sem como provar.
+//===== Notas ================================================
+//= Sprite 899 (4_M_HUMAN_02), o mesmo do Ripped Cabus.
+//= Conferido no npcidentity.lub DESTE cliente e com .spr/.act
+//= em data\sprite\npc\ do data.grf - a armadilha de sempre e a
+//= tabela do rAthena conhecer nome que este kRO de 2021 nao
+//= desenha.
+//=
+//= O passe e `NoSell`, `NoTrade` e `NoDrop` no item_db do
+//= rAthena. Quem quiser dar passe a alguem tem de dar por NPC.
+//=
+//= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1).
+//= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
+//=
+//= ATENCAO ao editar: por causa do acento, ferramenta que
+//= assume UTF-8 troca cada letra acentuada por '?' sem avisar.
+//= Editar com script que grave em cp1252, como o resto de
+//= npc/guerra/.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,99,64,4	script	Mister Peso	899,{
+	mes "[Mister Peso]";
+	mes "Carregar peso é músculo, e músculo se treina.";
+	mes "Traga um ^FF0000" + getitemname(.Passe) + "^000000 e eu te ensino a levar mais coisa nas costas.";
+	next;
+	mes "[Mister Peso]";
+	mes "Cada treino soma ^0000FF" + .PorPasse + "^000000 de peso, e dá para repetir ^0000FF" + .Teto + "^000000 vezes.";
+	mes " ";
+	mes "Você já treinou ^0000FF" + gympassmemory + "^000000 de " + .Teto + ".";
+	next;
+
+	switch (select("Treinar (custa 1 passe):Meu treino sumiu:Agora não")) {
+	case 1:
+		if (gympassmemory >= .Teto) {
+			mes "[Mister Peso]";
+			mes "Chega. Mais que isso e o seu corpo reclama.";
+			mes "Você já está no limite: ^0000FF" + .Teto + "^000000 de " + .Teto + ".";
+			close;
+		}
+		if (countitem(.Passe) < 1) {
+			mes "[Mister Peso]";
+			mes "Sem ^FF0000" + getitemname(.Passe) + "^000000 não tem treino.";
+			close;
+		}
+
+		// A ordem importa: tira o passe PRIMEIRO e só depois grava. Ao
+		// contrário, um erro no delitem deixaria o nível dado sem custo.
+		delitem .Passe, 1;
+		gympassmemory = gympassmemory + 1;
+		// SKILL_PERM_GRANT e nao SKILL_PERM: `grant` marca a habilidade como
+		// concedida por NPC, que e o que impede um reset de habilidades de
+		// levar embora o peso que o jogador pagou com passe.
+		skill "ALL_INCCARRY", gympassmemory, SKILL_PERM_GRANT;
+
+		specialeffect2 EF_EARTHSPIKE;
+		next;
+		specialeffect2 EF_POTION_BERSERK;
+		mes "[Mister Peso]";
+		mes "Isso! Agora você carrega ^0000FF" + (.PorPasse * gympassmemory) + "^000000 a mais.";
+		if (gympassmemory >= .Teto)
+			mes "E chegou ao limite: " + .Teto + " de " + .Teto + ".";
+		else
+			mes "Ainda dá para treinar mais ^0000FF" + (.Teto - gympassmemory) + "^000000 vez(es).";
+		close;
+
+	case 2:
+		if (gympassmemory <= 0) {
+			mes "[Mister Peso]";
+			mes "Nós nunca treinamos juntos. Disso eu lembro.";
+			close;
+		}
+		// A variavel e a verdade; a habilidade e so a copia dela. Se as duas
+		// desencontrarem, quem manda e a variavel - foi ela que o passe pagou.
+		if (getskilllv("ALL_INCCARRY") >= gympassmemory) {
+			mes "[Mister Peso]";
+			mes "Seu treino está todo aí: ^0000FF" + gympassmemory + "^000000 de " + .Teto + ".";
+			close;
+		}
+		skill "ALL_INCCARRY", gympassmemory, SKILL_PERM_GRANT;
+		specialeffect2 EF_POTION_BERSERK;
+		mes "[Mister Peso]";
+		mes "Pronto, voltou. Músculo tem memória.";
+		mes "Você está de novo com ^0000FF" + gympassmemory + "^000000 de " + .Teto + ".";
+		close;
+
+	case 3:
+		mes "[Mister Peso]";
+		mes "Quando quiser treinar, eu estou aqui.";
+		close;
+	}
+	end;
+
+OnInit:
+	.Passe = 7776;     // Passe Antigravitacional (Max_Weight_Up_Scroll)
+	.Teto = 10;        // igual ao MaxLevel da ALL_INCCARRY em db/re/skill_db.yml
+	.PorPasse = 200;   // o que o jogador LE por nivel: 2000 internos / 10
+	end;
+}
