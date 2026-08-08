@@ -487,30 +487,90 @@ dois lados: o nome e o **total de 6 spawns**, que é a quantidade pedida.
 
 | # | Peça | Onde | Observação |
 |---|---|---|---|
-| 1 | **Moeda do Explorador** | item novo — **os 6 lugares** do `ARQUITETURA.md` §4 | ID novo, arte do bRO, `itemInfo.lua`. Peso 0 e `NoSell`, como a Moeda Nova |
+| 1 | **Moeda do Explorador (25737)** | item novo — os lugares 1 e 2 do `ARQUITETURA.md` §4 | ID do bRO, **não inventado**. Ver abaixo: a arte já está no nosso GRF, então as camadas 3 e 4 não têm trabalho |
 | 2 | **As 16 quests de caçada** | `db/guerra/quest_db.yml` | objetivo `HUNTING`; falta pôr `Footer: Imports:` no `db/re/quest_db.yml` — ele ainda não tem, mas o `parseImports` é genérico |
 | 3 | **As quests de espera** | idem | uma por placa, `TimeLimit` até as 6h |
 | 4 | **As três placas** | `npc/guerra/ordem_dos_exploradores.txt` | `alberta 116,71`; pegar/entregar em lote |
 | 5 | **O Teleportador** | mesmo arquivo | 5.000z; a `teletransportadora.txt` já tem o menu de instâncias pronto para copiar |
-| 6 | Linha + parágrafo | `npc/guerra/scripts_guerra.conf` | obrigatório |
+| 6 | **A Máquina de Troca** | mesmo arquivo + `npc/guerra/barters_guerra.yml` | `alberta,115,72`; 10 Moeda do Explorador = 1 Moeda Nova. Ver abaixo |
+| 7 | Linha + parágrafo | `npc/guerra/scripts_guerra.conf` | obrigatório |
 
 **Faixa de Id de quest sugerida: 30000–30049.** Está dentro do maior bloco
 contíguo livre do `quest_db.yml` (21174–49999, 28.826 ids), é redonda e não
 encosta em nada do rAthena.
 
-### Decisões que são do dono, e travam o desenho
+### DECIDIDO em 2026-08-08: a moeda é a 25737, e o circuito fecha
 
-1. **A Moeda do Explorador é moeda nova ou a missão paga Moeda Nova (30998)?**
-   Uma moeda a mais é mais fiel ao bRO; reaproveitar a Moeda Nova aproveita a
-   Máquina, que já a cobra em 17 itens, e evita criar item novo (6 lugares).
-2. **Onde a Moeda do Explorador se gasta.** Item que entra e não sai é moeda
-   queimada — foi a lição da Moeda Nova (ver `HISTORICO.md`). Se for moeda
-   nova, ela precisa de destino no mesmo trabalho.
-3. **Os valores do bRO servem?** 25 moedas por 6 Gigantes Ancestrais contra 5
+**A Moeda do Explorador é a do bRO, `25737`** — nome `Moeda do Explorador`,
+recurso `Dalcom_Coin`. Não se inventa ID: foi resolvida pelo `iteminfo_new.lub`
+do bRO, a ponte de sempre. (Um `grep` por "Explor" no `item_db` **não** a acha,
+porque lá o nome é inglês — foi assim que ela quase passou por inexistente.)
+
+**Ela não existe no nosso servidor nem no nosso cliente** (`estado_item.py --id
+25737` diz "FORA" dos dois). Mas **a arte já está no GRF do nosso cliente** — os
+quatro recursos de `Dalcom_Coin` (`.spr`, `.act`, ícone e ícone grande)
+conferidos um a um. Então das seis camadas de um item novo, só duas têm
+trabalho: a entrada em `db/guerra/item_db.yml` e a do `itemInfo.lua`
+(`completa_iteminfo.py --id 25737`).
+
+Descrição do bRO, para reaproveitar: *"Uma pequena moeda dourada criada pela
+Ordem dos Exploradores. Nela está entalhada um Poporing na frente e [bW] no
+verso."* Peso 0, e `Intransferível` — ou seja, nasce **`NoDrop`** (o que também
+resolve a armadilha do `getitem` com mochila cheia) e **`NoSell`**.
+
+**Onde ela se gasta: uma Máquina de Troca dentro da própria Ordem, a 10 por 1
+Moeda Nova.** O circuito fecha sem inventar destino novo — a Moeda Nova já tem
+dezessete itens na Máquina de Prontera e Comodo.
+
+### A Máquina de Troca — `alberta,115,72`
+
+Escolhida em 2026-08-08 conferindo o `.gat` do mapa, não de olho. **A Ordem fica
+numa alcova murada**, com uma entrada só:
+
+```
+        113 114 115 116 117 118 119 120
+  y74    #   #   #   #   #   #   #   #     <- parede ao fundo
+  y73    #   .   .   .   .   .   .   #
+  y72    #   .   M   .   .   .   .   #     M = a Maquina (115,72)
+  y71    #   .   .   O   .   .   .   #     O = a Ordem (116,71)
+  y70    #   N   .   .   .   .   N   #     N = NPC do rAthena ja la
+  y69    .   .   .   .   .   .   .   .     <- unica entrada, pelo sul
+```
+
+Um pátio de 6x4 entre dois prédios, com o Cool Event Staff (`114,70`) e o Kafra
+Voting Staff (`119,70`) já ocupando os cantos de baixo. **Sobram 19 células
+livres** — folga de sobra para as três placas e o Teleportador, e a fileira do
+fundo (`y73`) é o lugar natural para elas, como na foto do browiki.
+
+`115,72` foi escolhida porque passa no teste de célula andável **e plana com um
+de raio** (`gat.plano_e_livre`), não empilha em NPC nenhum, e deixa `116,71`
+livre para quem for o rosto da Ordem. `114,72` seria o canto mais "de máquina",
+mas encosta na parede e reprova no teste de raio.
+
+**Sprite 564 e loja `barter`**, como a Máquina que já existe
+(`npc/guerra/maquina.txt`, sprite 564, `callshop` numa loja flutuante do
+`barters_guerra.yml`). A troca 10:1 é **uma linha de barter**: item vendido
+`30998` (Moeda Nova), moeda `25737`, quantidade 10.
+
+**Barter e não `itemshop`, e desta vez por dois motivos** — a regra §4.10 do
+`CLAUDE.md` já bastava (o `itemshop` recusa moeda `NoSell`), e aqui as **duas**
+moedas são `NoSell`.
+
+**É loja nova, não `duplicate` da Máquina existente:** aquela vende 17 itens por
+Moeda Nova, esta converte moeda em moeda. Mercadoria diferente, arquivo de
+barter com entrada própria.
+
+### Decisões que continuam com o dono
+
+1. **Os valores do bRO servem?** 25 moedas por 6 Gigantes Ancestrais contra 5
    por um Rei Poring é a curva do bRO, com a economia do bRO. A nossa tem
-   `exp 10x, drop 50x`.
-4. **Loja da Ordem?** Se houver, é **`barter`, não `itemshop`** — regra §4.10 do
-   `CLAUDE.md`, e a moeda vai ser `NoSell`.
+   `exp 10x, drop 50x`. E a taxa 10:1 da Máquina precisa fazer sentido contra
+   os 5 a 25 que cada missão paga — hoje uma missão média vira meia Moeda Nova.
+2. **A Ordem tem loja própria?** O bRO tem Slot, Encantamento, Fortalecimento e
+   Enriquecimento na mesma página. Nada disso foi levantado — se entrar, é
+   trabalho separado.
+3. **Quem é o rosto da Ordem em `116,71`?** As três placas podem bastar, ou pode
+   haver uma NPC que apresenta o grupo. Não foi decidido.
 
 ### Armadilhas que já se conhecem
 

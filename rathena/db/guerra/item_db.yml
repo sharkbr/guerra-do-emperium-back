@@ -71,8 +71,14 @@ Body:
     #                   a flor cai em 30% das mortes de chefe do Corredor
     #                   Fantasma.
     #
-    # As outras fontes pensadas (troca por Moeda do Explorador / Caveira)
-    # continuam por fazer.
+    # As outras duas fontes pensadas continuam POR FAZER, mas desde
+    # 2026-08-08 as duas ja tem desenho, e nenhuma delas e fonte nova de
+    # riqueza - as duas so CONVERTEM item que ja custou trabalho:
+    #                3) a Moeda do Explorador (25737) a 10 por 1, na Maquina
+    #                   de Troca da Ordem dos Exploradores (alberta 115,72).
+    #                   Ver PENDENCIAS.md secao 1g.
+    #                4) a Caveira Humana (30995), que espera o NPC que a
+    #                   compra. Ver PENDENCIAS.md secao 4b.
     #
     # O premio do Logue e Ganhe chega por RoDEX, e o `NoMail` abaixo NAO
     # atrapalha: o itemdb_canmail so e checado quando um JOGADOR anexa
