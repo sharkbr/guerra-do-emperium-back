@@ -54,7 +54,7 @@ dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 		mes "We must, no matter how much fear grips our hearts, save the princess!";
 		close;
 	}
-	instance_create("Ghost Palace");
+	instance_create("Palácio das Mágoas");
 	mes "[Unpleasant Royal Guard]";
 	mes "Thank you..";
 	mes "I will open the secret passage to the ^0000ffGhost Palace^000000.";
@@ -105,7 +105,7 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 		close;
 	}
 
-	.@md_name$ = "Ghost Palace";
+	.@md_name$ = "Palácio das Mágoas";
 	switch( instance_enter(.@md_name$) ) {
 	case IE_OTHER:
 		mes "An unknown error occurred.";

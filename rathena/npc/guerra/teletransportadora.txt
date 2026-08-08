@@ -629,13 +629,13 @@ G8: Restrict("RE");
 // --------------------------------------------------
 	Instances:
 // --------------------------------------------------
-menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
-		"Devil Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
-		"Faceworms Nest",I7, "Geffen Magic Tournament",I8, "Ghost Palace",I9,
-		"Hazy Forest",I10, "Horror Toy Factory",I11, "Malangdo Culvert",I12,
-		"Nidhoggur's Nest",I13, "Octopus Cave",I14, "Old Glast Heim",I15,
-		"Orc's Memory",I16, "Sarah and Fenrir",I17, "Sara Memory",I18,
-		"Sealed Shrine",I19, "Wolfchev's Laboratory",I20;
+menu	"Lago de Bakonawa",I1, "Hospital Abandonado",I2, "Caverna de Buwaya",I3,
+		"Torre do Demônio",I4, "Eclage Interior",I5, "Endless Tower",I6,
+		"Covil de Vermes",I7, "Torneio de Magia",I8, "Palácio das Mágoas",I9,
+		"Hazy Forest",I10, "Fábrica do Terror",I11, "Esgotos de Malangdo",I12,
+		"Ninho de Nidhogg",I13, "Caverna do Polvo",I14, "Maldição de Glastheim",I15,
+		"Batalha dos Orcs",I16, "Sarah vs Fenrir",I17, "Memórias de Sarah",I18,
+		"Altar do Selo",I19, "Laboratório de Wolfchev",I20;
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);

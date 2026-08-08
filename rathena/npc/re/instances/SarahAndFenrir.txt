@@ -57,7 +57,7 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 			mes "[Professor Bernhard]";
 			mes "I set the Dimensional Device to Glast Heim of the past, where Fenrir and Sarah once fought.";
 			mes "The operating time isn't long so hurry up and come back.";
-			instance_create("Fenrir and Sarah");
+			instance_create("Sarah vs Fenrir");
 			close;
 		case 1:
 			mes "[Professor Bernhard]";
@@ -132,7 +132,7 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 				mes "It won't last long so hurry up and come back.";
 				close;
 			}
-			instance_create("Fenrir and Sarah");
+			instance_create("Sarah vs Fenrir");
 		}
 		close;
 	}
@@ -169,7 +169,7 @@ dali02,99,148,3	script	Dimensional Device#XX1	PORTAL,{
 		mes "- There is a damp presence. -";
 		close;
 	}
-	.@md_name$ = "Fenrir and Sarah";
+	.@md_name$ = "Sarah vs Fenrir";
 	switch( instance_enter(.@md_name$) ) {
 	case IE_OTHER:
 		mes "An unknown error occurred.";

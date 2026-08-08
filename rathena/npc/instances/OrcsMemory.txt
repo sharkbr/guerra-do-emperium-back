@@ -38,7 +38,7 @@
 gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 
 	set .@party_id,getcharid(1);
-	set .@md_name$,"Orc's Memory";
+	set .@md_name$,"Batalha dos Orcs";
 
 	if (!instance_check_party(.@party_id,2,30,80)) {
 		mes "Only users between Levels ^ff000030 ~ 80^000000 can enter this Dungeon.";
@@ -84,7 +84,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	mes "In order to generate a dungeon you must be the Party Leader and have at least 2 members in the party.";
 	close;
 L_Enter:
-	switch(instance_enter("Orc's Memory")) {
+	switch(instance_enter("Batalha dos Orcs")) {
 	case IE_OTHER:
 		mes "An unknown error has occurred.";
 		close;

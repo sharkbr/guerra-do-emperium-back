@@ -162,7 +162,21 @@ O `npc/custom/warper.txt` é o do próprio rAthena (Euphy), montado para um
 cliente moderno, e **o `1@slug` não deve ser o único**: o menu de Instâncias e o
 de Masmorras têm mapas pós-2021 que este kRO de 2021-11-03 não tem.
 
-**Enquanto não for varrido, todo destino de Instância é suspeito.**
+> **Metade varrida em 2026-08-08.** Os **109 mapas do `db/re/instance_db.yml`**
+> foram cruzados com o `data.grf`: 73 das 78 instâncias têm todos os mapas, e as
+> 5 restantes dependem de quatro mapas ausentes — `1@iwp`, `1@jorchs`,
+> `1@jorlab`, `1@whl`. Os quatro **já estão comentados** no
+> `conf/maps_athena.conf`, então o `@warp` para eles agora responde "mapa não
+> encontrado" em vez de prender o personagem. As cinco instâncias não perdem
+> nada: nenhuma tem script, são registros órfãos do `db/`.
+>
+> **Falta ainda a varredura do menu de Masmorras** e dos destinos do
+> `teletransportadora.txt` que não são instância — é lá que o `1@slug` mora.
+
+**Sobre o passo 2 da receita abaixo:** o `resnametable.txt` deste cliente existe
+e tem 2155 linhas (dentro do `data.grf`, sem cópia solta em `data\`) — a
+checagem de apelido é obrigatória mesmo. Nenhum dos quatro mapas acima está
+apelidado; eles faltam de verdade.
 
 ### Como fechar
 
@@ -247,6 +261,123 @@ Decidir cedo se o Cassino novo convive com esses dois, substitui um deles pela
 receita de sempre (`disablenpc` no original + duplicata nossa em `npc/guerra/`),
 ou ignora os dois. As três saídas são legítimas; o que custa caro é descobrir
 que existiam depois de plantar o NPC novo em cima.
+
+---
+
+## 1f. As instâncias da Ordem dos Exploradores — falta ver no jogo
+
+Aberto em 2026-08-08. A meta é a **Ordem dos Exploradores** (`alberta 116,71` no
+bRO): placas de missão que pagam **Moeda do Explorador** por matar o chefe de
+uma instância. **Ela não existe no rAthena** — nem o NPC, nem as placas, nem a
+moeda (nenhum item com "Explor" no `item_db`). É conteúdo exclusivo do bRO, a
+ser escrito do zero em `npc/guerra/`. Isso fecha uma ponta já prevista: o
+cabeçalho da Moeda Nova em `db/guerra/item_db.yml` lista "troca por Moeda do
+Explorador" como fonte pensada e não feita.
+
+**Antes da Ordem, as instâncias que ela usa precisam estar validadas em jogo.**
+
+### O que já está resolvido, e é quase tudo
+
+**As instâncias do rAthena já estão todas carregadas.** O caminho é
+`npc/re/scripts_main.conf` → `npc/re/scripts_athena.conf:65-112` (47 arquivos,
+só `WaveMode.txt` comentado) + `npc/scripts_athena.conf:120-123` (4 pre-RE).
+**Não há nada a "ativar"** — exceto uma, abaixo.
+
+O critério "sem requisito de quest" do browiki foi **conferido contra o script**,
+não aceito de fora: em todas as 15 da tabela, a quest que o NPC de entrada exige
+é iniciada pelo **próprio script** (o `setquest` daquele id não existe em mais
+nenhum arquivo de `npc/`). O gate é nível + tempo de espera, e se resolve
+falando com a NPC.
+
+| # | Instância (bRO) | rAthena | Script | Nv | Missão |
+|---|---|---|---|---|---|
+| 1 | Vila dos Porings | Poring Village | `re/instances/PoringVillage.txt` | 30 | C |
+| 2 | Batalha dos Orcs | Orc's Memory | `instances/OrcsMemory.txt` | 50 | A |
+| 3 | Quarto Crescente | Half Moon In The Daylight | `re/instances/EddaHalfMoonInTheDaylight.txt` | 80 | C |
+| 4 | Torneio de Magia | Geffen Magic Tournament | `custom/official/GeffenMagicTournament.txt` | 90 | A |
+| 5 | Caverna do Polvo | Octopus Cave | `re/instances/OctopusCave.txt` | 90 | C |
+| 6 | Memórias de Sarah | Sara's Memories | `re/instances/SaraMemory.txt` | 99 | A |
+| 7 | Hospital Abandonado | Bangungot Hospital 2F | `re/instances/BangungotHospital.txt` | 100 | A |
+| 8 | Palácio das Mágoas | Ghost Palace | `re/instances/GhostPalace.txt` | 120 | A |
+| 9 | Sonho Sombrio | Nightmarish Jitterbug | `re/instances/NightmarishJitterbug.txt` | 120 | A |
+| 10 | Aos Pés do Rei | Charleston in Distress | `re/instances/CharlestonCrisis.txt` | 130 | A |
+| 11 | Maldição de Glast Heim | Old Glast Heim | `re/instances/OldGlastHeim.txt` | 130 | C |
+| 12 | Torre do Demônio | Devil's Tower | `re/instances/DevilTower.txt` | 130 | B |
+| 13 | Fábrica do Terror | Horror Toy Factory | `re/instances/HorrorToyFactory.txt` | 140 | A |
+| 14 | Covil de Vermes | Faceworm's Nest | `re/instances/FacewormsNest.txt` | 140 | A |
+| 15 | Lago de Bakonawa | Bakonawa Lake | `re/instances/BakonawaLake.txt` | 140 | B |
+| 16 | Sarah vs Fenrir | Fenrir and Sarah | `re/instances/SarahAndFenrir.txt` | 145 | B |
+
+**Os 16 têm todos os mapas no GRF deste cliente** — conferido contra o
+`data.grf` na varredura do §1d.
+
+### A única que precisa ser ligada
+
+**O Torneio de Magia (#4) está em `npc/custom/official/`, e essa pasta não é
+carregada.** O `npc/scripts_custom.conf` tem uma linha só descomentada, a nossa
+(`import: npc/guerra/scripts_guerra.conf`). Os três mapas (`1@gef`, `1@gef_in`,
+`1@ge_st`) já estão no `maps_athena.conf` e existem no GRF; o gate é nível 90 +
+espera (quest 9316).
+
+**Ligar não é descomentar a linha do rAthena** — a lei da §2 do `CLAUDE.md` vale
+aqui: cópia nossa em `npc/guerra/` + linha no `scripts_guerra.conf`. Vale
+decidir antes se o Torneio entra: ele é `custom/`, não conversão oficial, e o
+cabeçalho dele não diz de onde veio.
+
+### Fora de escopo por decisão, em 2026-08-08
+
+- **As Missões D inteiras** — são conversão de item por moeda, não caçada.
+- **As instâncias com requisito de quest**, por enquanto: Salão de Ymir
+  (Ritual de Coroação), Sala Final (Investigando o Passado), Ninho de Nidhogg
+  (Guardiã de Yggdrasil), Caverna de Buwaya (Segredos na Floresta), Glast Heim
+  Sombria (Maldição de Glastheim), Ilha Bios (Viagem Dimensional), Templo do
+  Demônio Rei (Caverna de Mors), Laboratório Werner e Base Militar (Terra
+  Gloria), Missão OS (Ocupação OS), Laboratório de Wolfchev (Rumores Sérios),
+  Memorial COR (Ilusión), Caverna de Mors (Ilha Bios).
+
+### O que ficou sem resposta
+
+**"Sussurro Sombrio"** (Missões C, chefes Espírito/Habitante/Convidado
+*Imortal*) **não foi identificado** — não aparece na lista de instâncias do
+browiki e os chefes parecem variante da Torre do Demônio. Resolver antes de
+montar as placas de Missões C.
+
+### Como fechar
+
+Entrar em cada uma das 16 e confirmar que abre, que o chefe nasce e que o mapa
+não derruba o cliente. **A conta de teste (grupo 99) serve aqui** — o problema
+dela é trava de item (§7 do `CLAUDE.md`), não instância.
+
+**A Vila dos Porings foi vista no jogo em 2026-08-08 e funcionou.** É a
+primeira instância validada. **Faltam 15.**
+
+### Os nomes já estão em português (2026-08-08)
+
+As 16 têm nome PT no `db/guerra/instance_db.yml`, e os **26 literais** dos
+scripts foram trocados na mesma passada — o nome é chave, não rótulo
+(`ARQUITETURA.md` §4). O menu da `teletransportadora.txt` acompanhou, com 17
+rótulos.
+
+**Três rótulos do menu ficaram em inglês de propósito**, por falta de fonte no
+bRO (regra §4.3 — não inventar): `Eclage Interior`, `Endless Tower` e
+`Hazy Forest`. Achar o nome PT dos três e fechar.
+
+E o menu **deixou de estar em ordem alfabética**, porque foi traduzido no
+lugar. Reordenar é seguro — cada par `"texto",Label` anda junto —, mas não foi
+feito.
+
+### Pré-condição para criar o grupo `instancias` na tradução
+
+**Antes de rodar `--extrair instancias`, proteger o nome da instância no
+`traduz_npcs.py`.** O `.@md_name$ = "..."` casa com o `RE_ATRIB` e entra no
+catálogo como se fosse fala; o `RE_TECNICO`, que protege nome de mapa e item,
+não cobre atribuição a variável. Sem isso, o catálogo oferece o nome da
+instância para tradução e uma segunda tradução divergente **quebra o
+`instance_create`** — falha calada, e só em jogo.
+
+São **4.910 linhas de `mes`** nos 16, com distribuição muito torta: Sonho
+Sombrio (1.261) e Quarto Crescente (973) são 45% do total; Batalha dos Orcs tem
+55 e Lago de Bakonawa 62.
 
 ---
 

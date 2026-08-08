@@ -126,7 +126,7 @@ moc_para01,29,95,5	script	Runane#sara	4_F_RUNAIN,{
 		close3;
 	}
 	.@party_id = getcharid(1);
-	.@md_name$ = "Nightmarish Jitterbug";
+	.@md_name$ = "Sonho Sombrio";
 	if (.@party_id < 1) {
 		mes "[Runane]";
 		mes "^ff0000You first must form/join a party of at least 1 person to enter this dungeon.^000000";

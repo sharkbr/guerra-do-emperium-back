@@ -231,7 +231,7 @@ prt_fild05,145,235,5	script	Emily#0	4_GEFFEN_03,4,4,{
 		mes "Hmm you should create a party first to start this grand adventure.";
 		close;
 	}
-	.@md_name$ = "Poring Village";
+	.@md_name$ = "Vila dos Porings";
 
 	if (is_party_leader())
 		.@menu$[0] = "Create the entrance";

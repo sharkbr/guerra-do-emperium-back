@@ -194,6 +194,46 @@ servidor** — o `.lub` exige fechar e reabrir o cliente.
 vence em 2027-12-31 — depois disso o sistema some sem avisar (`PENDENCIAS.md`
 §1b).
 
+### O nome de uma instância vive em 2 lugares, e é CHAVE — não rótulo
+
+Aberto em 2026-08-08, ao traduzir os nomes. **É a exceção à regra da §1**: o
+nome da instância é o raro texto que o **servidor** manda. O
+`clif_instance_create` (`clif.cpp:18794`) empacota `db->name` no pacote `0x2cb`,
+e é esse o título que o jogador lê na janela. Não vem do `itemInfo.lua` —
+traduzir é mudança de servidor só, sem fechar o cliente.
+
+| Onde | O que | Recarrega com |
+|---|---|---|
+| `db/guerra/instance_db.yml` | o `Name:` — o título na janela e no `mapannounce` | `@reloadinstancedb` |
+| o `.txt` da instância | o **literal** em `instance_create` / `instance_enter` / `.@md_name$` | `@reloadscript` |
+
+**Os dois têm de mudar na mesma passada.** `instance_create("<nome>")`,
+`instance_enter("<nome>")` e `instance_live_info(ILI_NAME,...) == "<nome>"`
+resolvem por **string**: trocar o `Name:` no db sem trocar o literal faz a
+instância parar de abrir. Na prática é barato — quase todo script declara
+`.@md_name$ = "..."` **uma vez** e usa por variável.
+
+O `db/guerra/` só precisa do `Id` e do `Name`: o `parseBodyNode`
+(`instance.cpp:52`) faz `find(id)` e sobrescreve **apenas os campos presentes**.
+Repetir `Enter`/`AdditionalMaps` seria criar uma segunda verdade.
+
+**Duas armadilhas caladas:**
+
+1. **Nome repetido é descartado sem erro.** O parser emite *"Instance name %s
+   already exists, skipping"* e cai num `return 0` — a instância fica com o nome
+   antigo e só um aviso afogado no log denuncia.
+2. **O extrator da tradução captura o nome como se fosse fala.**
+   `instance_create` **não** está em `CONTEXTOS` (`traduz_npcs.py:75`), mas
+   `.@md_name$ = "..."` casa com `RE_ATRIB`, e o `RE_TECNICO` — que protege nome
+   de mapa e item — **não cobre esse caso**. Criar o grupo `instancias` sem
+   proteger antes deixa o catálogo oferecer o nome da instância para tradução,
+   e uma segunda tradução divergente quebra o `instance_create`. Ver
+   `PENDENCIAS.md` §1f.
+
+O menu da `teletransportadora.txt` cita os mesmos nomes, mas ali é **rótulo de
+verdade**: ela nunca chama `instance_create`, só `Go(mapa,x,y)`. Divergir não
+quebra nada — só faz o jogador ler dois nomes para a mesma coisa.
+
 ### Uma tradução de NPC vive em 2 lugares
 
 O catálogo (`npc/guerra/traducao/*.cat`) é a **fonte**; o arquivo `.txt` do
@@ -230,3 +270,62 @@ git.
 **Cuidado com o ROenglishRE:** ele é atualizado para clientes mais novos que o
 nosso (kRO 2021-11-03). Luafiles de 2024-2026 sobre GRF de 2021 quebram —
 conferir "Last updated" antes de depurar.
+
+## 7. Os tetos — o que estoura primeiro quando o servidor encher
+
+Levantado em 2026-08-08, ao avaliar ligar instâncias. **Nada aqui aperta hoje**;
+está escrito para o dia em que a população crescer, para que a conta não precise
+ser refeita.
+
+### O gargalo é slot de mapa, e não é uma ladeira — é uma parede
+
+```
+MAX_MAP_PER_SERVER = 1500     src/common/mmo.hpp:42
+mapas carregados   = 1258     conf/maps_athena.conf
+                     ----
+livres para clone  =  242
+```
+
+**Cada rodada de instância clona um mapa novo por mapa da instância**, em tempo
+de execução (`map_addinstancemap`, `src/map/map.cpp:2818`). Não é uma cópia
+lógica: é `CREATE`/`aCalloc` de células e blocos, ocupando um índice do array
+global `map[MAX_MAP_PER_SERVER]`.
+
+Das 78 instâncias do `db/re/instance_db.yml`, **62 usam 1 mapa** — mas a Endless
+Tower usa 6 e a Thanatos Tower 8. Então o consumo não é "uma party, um slot":
+
+| cenário | slots |
+|---|---|
+| 200 parties, todas em instância de 1 mapa | 200 — encosta em 242 |
+| 40 dessas parties na Endless Tower | 40 × 6 = 240 — **estoura sozinho** |
+
+**Quando estoura, a falha é limpa e visível:** `map_addinstancemap` devolve `-3`
+e loga *"Could not add map ... the limit of maps has been reached"*
+(`map.cpp:2844`). A instância não é criada. Não corrompe personagem nem banco —
+mas o jogador leva um "não" sem explicação.
+
+### As duas saídas, em ordem de custo
+
+1. **Podar `conf/maps_athena.conf`.** Libera slot 1:1, não exige recompilar, e
+   já há precedente no arquivo (os `tra_fild` e os quatro `1@jor*`/`1@iwp`/
+   `1@whl` desligados). Carregamos 1258 mapas de episódios que em boa parte não
+   usamos.
+2. **Subir `MAX_MAP_PER_SERVER`.** O teto seguro é **9999**, e não é chute: o
+   `#error` em `instance.cpp:803` marca exatamente esse limite, porque o nome do
+   mapa clonado é montado como `%04u#%04u` (`instance_generate_mapname`) e só
+   cabem 4 dígitos de cada lado em `MAP_NAME_LENGTH`. Exige recompilar o
+   map-server.
+
+### O que NÃO é gargalo — medido, não estimado
+
+| Recurso | Veredito | Por quê |
+|---|---|---|
+| **Banco** | **zero** | `src/map/instance.cpp` não tem uma única chamada SQL. Instância vive só em memória (`instances`, um `unordered_map`). O único vestígio no banco é `char.last_instanceid`, um `int` (`sql-files/main.sql:262`) |
+| **Memória** | desprezível | mediana **0,20 MB** por rodada; média 0,24; a maior (Endless Tower, 6 mapas) 1,51 MB. Mil jogadores em instância não passam de ~50 MB de células |
+| **CPU** | neutra | mapa vazio não custa. Instância é *isolamento*, não trabalho novo — o custo continua proporcional a jogador e mob ativo, como em qualquer mapa |
+
+A conta de memória por clone, para refazer: `cell` = `xs·ys·2` bytes
+(`struct mapcell` são 2 bytes com `CELL_NOSTACK` desligado —
+`src/config/core.hpp:31`), mais `block` e `block_mob`, cada um
+`(xs/8)·(ys/8)·8` bytes. **Não inclui mobs nem NPCs da rodada**, que somam por
+cima e não foram medidos.

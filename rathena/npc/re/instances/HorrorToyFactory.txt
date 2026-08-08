@@ -153,7 +153,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		}
 		if (select( "Unlock Horror Toy Factory", "Cancel" ) == 1) {
 			mes "Door will be.. opened soon.. Would you wait for a moment?";
-			instance_create("Horror Toy Factory");
+			instance_create("Fábrica do Terror");
 		}
 		close;
 	case 0:
@@ -189,7 +189,7 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 	}
 	switch( checkquest(12331,PLAYTIME) ) {
 	case -1:
-		switch( instance_enter("Horror Toy Factory") ) {
+		switch( instance_enter("Fábrica do Terror") ) {
 		case 3:
 			mes "An unknown error has occurred.";
 			close;

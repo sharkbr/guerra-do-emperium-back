@@ -1,0 +1,88 @@
+# Guerra do Emperium - nomes das instancias em portugues
+#
+# Alcancado por UMA linha `- Path:` no `Footer: Imports:` do
+# db/re/instance_db.yml - a unica marca que deixamos naquele arquivo do
+# rAthena. Mesmo arranjo do db/guerra/item_db.yml e do reputation.yml.
+#
+# POR QUE SO O `Name:` BASTA: o InstanceDatabase::parseBodyNode
+# (src/map/instance.cpp:52) faz `find(instance_id)` e, se o Id ja existe,
+# sobrescreve APENAS os campos presentes no no. Entao nao e preciso repetir
+# Enter, AdditionalMaps nem TimeLimit - e nao se deve, porque repetir seria
+# duas verdades sobre a mesma coisa, e a errada e sempre a que alguem le.
+#
+# O NOME AQUI E CHAVE, NAO ROTULO. Tres pontas dependem de ele bater:
+#
+#   1. o pacote 0x2cb (clif_instance_create, src/map/clif.cpp:18794) leva
+#      `db->name` para o cliente - e ESTE e o titulo que o jogador ve na
+#      janela. Ao contrario de nome de item, nao vem do itemInfo.lua: vem
+#      daqui. Por isso traduzir e mudanca de servidor so.
+#   2. `instance_create("<nome>")` e `instance_enter("<nome>")` nos scripts
+#      resolvem por STRING.
+#   3. `instance_live_info(ILI_NAME, ...) == "<nome>"` compara por string.
+#
+# Trocar o nome aqui sem trocar o literal no script faz a instancia parar de
+# abrir. As 26 ocorrencias nos 16 arquivos foram trocadas junto, em
+# 2026-08-08.
+#
+# E CUIDADO COM DUPLICATA: nome repetido faz o parser emitir
+# "Instance name %s already exists, skipping" e cair num `return 0` que
+# DESCARTA a alteracao - a instancia continua com o nome antigo e nada
+# denuncia, fora um aviso afogado no log.
+#
+# Teto de 60 bytes por nome (INSTANCE_NAME_LENGTH, src/map/instance.hpp:25).
+#
+# Arquivo em cp1252, como todo texto que o jogo le (CLAUDE.md secao 4.1).
+
+Header:
+  Type: INSTANCE_DB
+  Version: 2
+
+Body:
+  # Orc's Memory
+  - Id: 3
+    Name: Batalha dos Orcs
+  # Octopus Cave
+  - Id: 7
+    Name: Caverna do Polvo
+  # Bangungot Hospital 2F
+  - Id: 8
+    Name: Hospital Abandonado
+  # Bakonawa Lake
+  - Id: 10
+    Name: Lago de Bakonawa
+  # Old Glast Heim
+  - Id: 12
+    Name: Maldição de Glastheim
+  # Sara's Memories
+  - Id: 14
+    Name: Memórias de Sarah
+  # Geffen Magic Tournament
+  - Id: 15
+    Name: Torneio de Magia
+  # Horror Toy Factory
+  - Id: 16
+    Name: Fábrica do Terror
+  # Faceworm's Nest
+  - Id: 17
+    Name: Covil de Vermes
+  # Ghost Palace
+  - Id: 18
+    Name: Palácio das Mágoas
+  # Devil's Tower
+  - Id: 19
+    Name: Torre do Demônio
+  # Fenrir and Sarah
+  - Id: 21
+    Name: Sarah vs Fenrir
+  # Nightmarish Jitterbug
+  - Id: 24
+    Name: Sonho Sombrio
+  # Charleston in Distress
+  - Id: 30
+    Name: Aos Pés do Rei
+  # Half Moon In The Daylight
+  - Id: 44
+    Name: Edda do Quarto Crescente
+  # Poring Village
+  - Id: 47
+    Name: Vila dos Porings

@@ -3503,3 +3503,138 @@ do cabeçalho dele foram reapontadas.
 Tudo acima subiu num boot limpo em 2026-08-08 — sem `Unknown syntax`, sem nome
 de NPC duplicado, sem item inválido em loja. **Nada foi visto em jogo**; está no
 `PENDENCIAS.md` §1.
+
+---
+
+## As instâncias, o teto de mapas e um personagem preso (2026-08-08)
+
+A pergunta que abriu o dia era de capacidade: **ligar instâncias deixa o
+servidor pesado?** A resposta curta é que a premissa estava invertida — **as
+instâncias já estavam todas ligadas** — e que o custo delas não está onde se
+esperava.
+
+### O que já estava de pé
+
+`npc/re/scripts_main.conf` → `npc/re/scripts_athena.conf:65-112` carrega 47
+arquivos de instância (só `WaveMode.txt` comentado), mais 4 pre-RE em
+`npc/scripts_athena.conf`. Nada a ativar. O que separa o jogador da instância é
+o gate **dentro do script**, não a configuração.
+
+E o gate engana: "Requisito: -" no browiki não quer dizer "sem trava", quer
+dizer "sem cadeia de quest anterior". O Hugin do Old Glast Heim exige nível 130
+e a quest 12316 — que ele mesmo entrega na conversa. O teste que separa um caso
+do outro é **onde está o `setquest` daquele id**: se só no próprio arquivo, o
+gate é auto-suficiente. Nas 15 instâncias conferidas, era.
+
+**A exceção é o Torneio de Magia**, que mora em `npc/custom/official/` — pasta
+que o `scripts_custom.conf` não carrega, porque lá só está descomentada a nossa
+linha. É a única do lote que precisa mesmo ser ligada.
+
+### O custo não é banco nem CPU — é slot de mapa
+
+A conta está no `ARQUITETURA.md` §7 e não se repete aqui. O resumo: banco é
+**zero** (`instance.cpp` não tem uma chamada SQL), memória é desprezível
+(mediana de 0,20 MB por rodada), CPU é neutra. O único limite real é
+`MAX_MAP_PER_SERVER = 1500` contra 1258 mapas já carregados — e ele só aperta
+perto de mil jogadores simultâneos em party.
+
+**Decidido em 2026-08-08: não mexer em nada disso agora.** A análise foi
+escrita para o dia em que a população crescer, não para ser executada.
+
+### O acidente, e os quatro mapas que saíram do ar
+
+Ao testar, um personagem foi levado a `1@jorlab` e ficou **preso**: o mapa não
+existe no GRF deste cliente, o cliente caía ao entrar e caía de novo ao
+reconectar. É exatamente a regra 6 do `CLAUDE.md`, e o segundo caso registrado
+depois do `1@slug` (`PENDENCIAS.md` §1d).
+
+Saiu de lá pelo banco, com o personagem offline — a receita já estava escrita no
+§1d e funcionou sem alteração. **O `save_map` também precisa ser conferido**, ou
+o personagem volta ao mapa quebrado ao morrer; neste caso estava em Prontera.
+
+Aproveitando, os 109 mapas do `db/re/instance_db.yml` foram cruzados com o
+`data.grf`: **73 das 78 instâncias têm todos os mapas**. As 5 restantes dependem
+de `1@iwp`, `1@jorchs`, `1@jorlab` e `1@whl`, que faltam de verdade — nenhum
+deles está apelidado no `resnametable.txt` do cliente, que existe e tem 2155
+linhas. Os quatro foram comentados no `conf/maps_athena.conf`, com o mesmo
+tratamento e o mesmo motivo dos `tra_fild`.
+
+**Desligar não tirou conteúdo:** as cinco instâncias que usam esses mapas não
+têm script nenhum, são registros órfãos do `db/`. Não havia porta de entrada
+para o jogador — só para o `@warp` de quem administra, que foi justamente o que
+aconteceu.
+
+### Estado
+
+A mudança no `conf/maps_athena.conf` **só vale no próximo boot do map-server** —
+a lista de mapas é lida na inicialização. Até lá os quatro continuam
+alcançáveis por `@warp`.
+
+A meta seguinte é a **Ordem dos Exploradores**, que **não existe no rAthena** e
+terá de ser escrita do zero. As 16 instâncias que ela usa, e o que ficou de
+fora, estão no `PENDENCIAS.md` §1f.
+
+**A Vila dos Porings foi entrada e jogada no mesmo dia, e funcionou** — a
+primeira instância validada do projeto. As outras 15 continuam por ver.
+
+---
+
+## Os nomes das instâncias em português (2026-08-08)
+
+Logo depois de validar a Vila dos Porings veio a pergunta óbvia: **está tudo em
+inglês, dá para traduzir?** Dá — e o nome da instância é um caso separado do
+diálogo, muito mais barato e muito mais visível.
+
+### É a exceção à regra que rege todo o resto
+
+O projeto inteiro gira em torno de "o servidor manda ID, o cliente decide o que
+desenhar". **O nome da instância é o contrário:** o `clif_instance_create`
+(`clif.cpp:18794`) empacota o `Name:` do db no pacote `0x2cb`, e é esse o
+título que o jogador lê na janela. Nada de `itemInfo.lua`, nada de fechar o
+cliente — é mudança de servidor só.
+
+### O que fez o trabalho ser cuidadoso: o nome é chave
+
+`instance_create("<nome>")`, `instance_enter("<nome>")` e
+`instance_live_info(ILI_NAME,...)` resolvem **por string**. Trocar o `Name:` no
+db sem trocar o literal no script faz a instância deixar de abrir — e o db e o
+script são arquivos diferentes, então nada acusa até alguém tentar entrar.
+
+O levantamento achou **26 literais nos 16 arquivos**. A distribuição foi uma
+boa notícia: quase todo script declara `.@md_name$ = "..."` **uma vez** e usa
+por variável, então a maioria era uma linha. Só o Sarah vs Fenrir tinha três.
+
+O detalhe que decidiu a forma: o `parseBodyNode` (`instance.cpp:52`) faz
+`find(id)` e **sobrescreve apenas os campos presentes no nó**. Então
+`db/guerra/instance_db.yml` tem só `Id` e `Name` — repetir `Enter` e
+`AdditionalMaps` seria criar uma segunda verdade sobre a mesma coisa. O arquivo
+do rAthena ganhou uma linha `- Path:` no rodapé, como os outros db.
+
+A regra e as duas armadilhas (nome repetido é descartado calado; o extrator da
+tradução captura o nome como se fosse fala) estão no `ARQUITETURA.md` §4 e não
+se repetem aqui.
+
+### O menu da teletransportadora veio junto, e ali é rótulo
+
+Os mesmos nomes aparecem no menu de Instâncias da `teletransportadora.txt`, mas
+**ali não são chave**: ela nunca chama `instance_create`, só `Go(mapa,x,y)`.
+Foram 17 rótulos traduzidos. **Três ficaram em inglês de propósito** —
+`Eclage Interior`, `Endless Tower` e `Hazy Forest` — por não haver fonte no bRO
+para o nome deles, e a regra é não inventar.
+
+### Um susto que não era
+
+A conferência de encoding acusou `GeffenMagicTournament.txt` como "parece
+UTF-8". Não foi obra da tradução: são **54 bytes `\xcf\xaf`** decorativos, de
+uma régua de comentário que já vinha do arquivo, e **todos os 54 estão dentro de
+linha `//`**. Conferido um a um, justamente porque a §5 do `CLAUDE.md` avisa que
+uma linha ruim de comentário mata o arquivo inteiro. Vale lembrar que **esse
+arquivo nunca foi carregado** — é o do Torneio de Magia, que está em
+`npc/custom/official/` e continua desligado.
+
+### Estado
+
+Aplicado em disco e conferido: 16 nomes únicos, todos dentro dos 60 bytes do
+`INSTANCE_NAME_LENGTH`, os 26 literais casando com o db um a um, nenhum U+FFFD,
+tudo em cp1252. **Não foi visto em jogo ainda** — aplica com
+`@reloadinstancedb` + `@reloadscript`, sem derrubar o servidor.

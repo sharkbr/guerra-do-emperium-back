@@ -268,7 +268,7 @@ dali02,137,121,3	script	Magic Scholar Artie#tnm	4_M_FAIRYKID6,{
 	mes "The Dimensional Device is activated.";
 	mes "If you're lucky, you can get through this quickly.";
 	mes "I look forward to hearing good news.";
-	instance_create("Devil's Tower");
+	instance_create("Torre do Demônio");
 	close;
 }
 
@@ -305,7 +305,7 @@ dali02,141,120,3	script	Dimensional Device#tnm0	PORTAL,{
 		mes "It seems like quite a long time has passed since you activated the device. Am I right?";
 		close;
 	}
-	.@md_name$ = "Devil's Tower";
+	.@md_name$ = "Torre do Demônio";
 	switch( instance_enter(.@md_name$) ) {
 	case IE_OTHER:
 		mes "An unknown error occurred.";

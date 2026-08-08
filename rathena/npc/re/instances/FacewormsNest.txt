@@ -325,7 +325,7 @@ dali,80,60,4	script	Magic Scholar	4_M_SAGE_C,{
 		close;
 	}
 	.@party_id = getcharid(1);
-	.@md_name$ = "Faceworm's Nest";
+	.@md_name$ = "Covil de Vermes";
 	if (.@party_id < 1) {
 		mes "[Magic Scholar]";
 		mes "You don't have a party? Please come back again after creating a party even if you've come alone.";
@@ -396,7 +396,7 @@ dali,72,55,4	script	Interdimensional Device	CLEAR_NPC,{
 		close;
 	}
 	.@party_id = getcharid(1);
-	.@md_name$ = "Faceworm's Nest";
+	.@md_name$ = "Covil de Vermes";
 	if (.@party_id < 1) {
 		mes "[Interdimensional Device]";
 		mes "No party? Please come back again after creating a party even if you've come alone.";
