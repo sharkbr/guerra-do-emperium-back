@@ -1,0 +1,224 @@
+//===== Guerra do Emperium ===================================
+//= A porta da Batalha dos Orcs - a Cientista
+//===== Onde =================================================
+//= gef_fild10 231,203, a coordenada do bRO.
+//=
+//= O NPC que ela SUBSTITUI, o "Dimensional Gorge Piece" do
+//= rAthena, ficava em 242,202 - onze celulas a leste - e e
+//= desligado pelo OnInit deste arquivo.
+//=
+//= O "Mad Scientist#orc" (gef_fild10 238,202) NAO foi tocado:
+//= ele nao abre instancia nenhuma, e so a conversa sobre a
+//= Fenda Dimensional. A variavel `mad` que ele usa nao aparece
+//= em mais nenhum arquivo de npc/.
+//===== Descricao ============================================
+//= ABRE A BATALHA DOS ORCS, com o requisito do bRO.
+//=
+//= Este arquivo existe por UMA razao: **a trava do rAthena
+//= estava errada e tornava a instancia inalcancavel.** O
+//= Dimensional Gorge Piece pedia
+//=
+//=     instance_check_party(.@party_id, 2, 30, 80)
+//=
+//= ou seja: party com DUAS pessoas online, e TODAS entre nivel
+//= 30 e 80. Personagem de nivel alto nao entrava - nem sozinho,
+//= nem acompanhado, porque o teto vale para o grupo inteiro.
+//=
+//= O rAthena tem a versao ANTIGA da instancia. O bRO de hoje
+//= (arquivo.browiki.org/wiki/Batalha_dos_Orcs) pede:
+//=
+//=     Nv. de base: 60
+//=     Grupo: 1 pessoa ou mais
+//=     Reserva com a Cientista, gef_fild10 231,203
+//=
+//= E isso que este NPC faz. A conta vira
+//=
+//=     instance_check_party(.@party_id, 1, 60)
+//=
+//= - o `max` omitido vale MAX_LEVEL (script.cpp:22048), entao
+//= NAO ha teto. O `1` continua exigindo estar EM PARTY, porque
+//= `instance_check_party` devolve 0 quando nao ha party e
+//= porque o `instance_create` do rAthena e por party de
+//= qualquer jeito. Party de um serve.
+//===== O que NAO foi trazido do bRO =========================
+//= Por decisao de 2026-08-09, e a pedido:
+//=
+//=   - o Anel dos Orcs, o premio de primeira vez;
+//=   - a Mulher Suspeita (gef_fild10 225,195), que troca 10
+//=     Insignia dos Orcs por Cavalinho Poderoso ou Magico;
+//=   - o Homem Suspeito (gef_fild10 227,197), que encanta o
+//=     anel.
+//=
+//= Nada de item novo e nada de encantamento. Quem quiser
+//= trazer isso depois: sao tres NPCs e um item, e a lista de
+//= cima e o escopo inteiro.
+//===== Por que um arquivo nosso, e nao um remendo ===========
+//= A receita da secao 2 do CLAUDE.md: `disablenpc` no original
+//= mais duplicata nossa. O npc/instances/OrcsMemory.txt fica
+//= byte a byte igual ao upstream - as 900 linhas dele, com os
+//= spawns, os quatro #Resurrect Monsters e o Kruger, continuam
+//= sendo do rAthena e continuam funcionando.
+//=
+//= So a PORTA e nossa. Foi o menor corte possivel: trocar o
+//= arquivo inteiro por uma copia sujaria o diff e faria o
+//= projeto herdar a manutencao de tudo aquilo.
+//=
+//= Comentar a linha deste arquivo no scripts_guerra.conf
+//= devolve o Dimensional Gorge Piece e a trava de 30-80.
+//===== O tempo de espera ====================================
+//= A quest 12059 ("Orc's Memory Time Limit") e quem guarda o
+//= tempo, e ela e do rAthena - vinha com `TimeLimit: +2h`.
+//=
+//= O bRO diz "Retorno: Reseta meia-noite", entao ela foi
+//= sobrescrita para `0h` (hora EXATA, sem o `+`) em
+//= db/guerra/quest_db.yml. Sem o sinal, o `quest_time()`
+//= devolve o proximo 00:00 - ver CLAUDE.md secao 5.
+//=
+//= Ela nao e usada por mais nada: os outros dois `12059` de
+//= npc/ sao o ITEM 12059 (Lutie Cold Noodle), que e outro
+//= espaco de numeracao.
+//===== Notas ================================================
+//= Sprite 982 (JT_4_F_SCIENCE), conferido no npcidentity.lub e
+//= com .spr/.act no data.grf DESTE cliente. E uma cientista
+//= MULHER de proposito - o "Mad Scientist" vizinho e o 865
+//= (4_LGTSCIENCE), e dois sprites iguais a sete celulas um do
+//= outro confundiriam.
+//=
+//= A celula 231,203 foi conferida no map_cache: tipo 0,
+//= andavel. O Teleportador da Ordem larga o jogador em
+//= gef_fild10 240,198, a nove passos daqui.
+//=
+//= O nome da instancia ("Batalha dos Orcs") e CHAVE, nao
+//= rotulo: `instance_create` e `instance_enter` resolvem por
+//= string, e o nome tem de bater com o `Name:` de
+//= db/guerra/instance_db.yml. Ver ARQUITETURA.md secao 4.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Mudanca aqui pega com @reloadscript; a do tempo de
+//= espera, com @reloadquestdb.
+//============================================================
+
+gef_fild10,231,203,6	script	Cientista	982,{
+	.@party_id = getcharid(1);
+
+	mes "[Cientista]";
+	mes "A tribo dos Orcs está sendo governada";
+	mes "por um ^0000FFfalso Herói^000000.";
+	next;
+	mes "[Cientista]";
+	mes "Eu consigo te disfarçar de Guerreiro Orc";
+	mes "e te mandar para dentro da memória deles.";
+	mes "Lá você salva a vila de um exército";
+	mes "de mortos-vivos.";
+	next;
+
+	// A TRAVA DO bRO: nivel 60 ou mais, uma pessoa ou mais.
+	// O `max` omitido vale MAX_LEVEL - nao ha teto. Ver o
+	// cabecalho: era o teto de 80 do rAthena que tornava esta
+	// instancia inalcancavel para personagem de nivel alto.
+	if (!instance_check_party(.@party_id, 1, 60)) {
+		mes "[Cientista]";
+		mes "Assim eu não consigo te mandar.";
+		mes "Você precisa estar em um ^0000FFgrupo^000000, e todo";
+		mes "mundo do grupo precisa ter ^0000FFnível 60^000000 ou mais.";
+		next;
+		mes "[Cientista]";
+		mes "Um grupo de uma pessoa só também serve,";
+		mes "se você preferir ir sozinho.";
+		close;
+	}
+
+	.@orctime = checkquest(.espera, PLAYTIME);
+	if (.@orctime == -1) {
+		if (is_party_leader() == true) {
+			mes "[Cientista]";
+			mes "Grupo conferido. Quer que eu reserve a";
+			mes "^0000FF" + .md$ + "^000000 para vocês?";
+			next;
+			switch (select("Reservar a " + .md$ +
+			               ":Entrar na memória:Agora não")) {
+			case 1:
+				if (instance_create(.md$) < 0) {
+					mes "[Cientista]";
+					mes "Grupo: " + getpartyname(.@party_id);
+					mes "Líder: " + strcharinfo(0);
+					mes "A reserva ^FF0000falhou^000000.";
+					close;
+				}
+				mes "[Cientista]";
+				mes "Reservada.";
+				mes "Fale comigo de novo e escolha";
+				mes "^0000FFEntrar na memória^000000 quando estiverem prontos.";
+				close;
+			case 2:
+				callsub L_Entrar, 0;
+			case 3:
+				close;
+			}
+		}
+		// Quem nao e lider so pode entrar no que o lider reservou.
+		if (select("Entrar na " + .md$ + ":Agora não") == 2)
+			end;
+		callsub L_Entrar, 1;
+	} else if (.@orctime == 0 || .@orctime == 1) {
+		mes "[Cientista]";
+		mes "Se a memória já estiver aberta, pode entrar.";
+		next;
+		if (select("Entrar na " + .md$ + ":Agora não") == 2)
+			close;
+		callsub L_Entrar, 0;
+	} else if (.@orctime == 2) {
+		mes "[Cientista]";
+		mes "Passou da meia-noite: o registro da sua última";
+		mes "visita foi apagado. Dá para entrar de novo.";
+		erasequest .espera;
+		close;
+	}
+
+	mes "[Cientista]";
+	mes "Para abrir a memória é preciso ser o";
+	mes "^0000FFlíder do grupo^000000.";
+	close;
+
+L_Entrar:
+	switch (instance_enter(.md$)) {
+	case IE_OTHER:
+		mes "[Cientista]";
+		mes "Alguma coisa deu errado, e nem eu sei o quê.";
+		close;
+	case IE_NOINSTANCE:
+		mes "[Cientista]";
+		mes "A memória não está aberta.";
+		mes "Ou o líder do grupo a desfez, ou o tempo dela";
+		mes "acabou. É preciso reservar de novo.";
+		close;
+	case IE_NOMEMBER:
+		mes "[Cientista]";
+		mes "Só quem está no grupo pode entrar.";
+		close;
+	case IE_OK:
+		mapannounce "gef_fild10",
+		            "O grupo " + getpartyname(getcharid(1)) + " entrou na " +
+		            .md$ + " com " + strcharinfo(0) + ".", bc_map, "0x00ff99";
+		if (checkquest(.espera) == -1)
+			setquest .espera;
+		// O `instance_enter` ja levou o jogador; o warp do
+		// original estava comentado la tambem.
+		if (getarg(0) == 0) close;
+		else end;
+	}
+	end;
+
+OnInit:
+	// O nome da instancia e CHAVE: tem de bater com o `Name:` de
+	// db/guerra/instance_db.yml, senao o instance_create falha.
+	.md$ = "Batalha dos Orcs";
+	// A quest que guarda o tempo de espera. E do rAthena; o
+	// TimeLimit dela e sobrescrito em db/guerra/quest_db.yml.
+	.espera = 12059;
+
+	// A porta velha do rAthena, com a trava de 30-80 que tornava
+	// a instancia inalcancavel. Ver o cabecalho.
+	disablenpc "Dimensional Gorge Piece";
+	end;
+}

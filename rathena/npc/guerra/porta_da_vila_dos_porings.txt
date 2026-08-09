@@ -1,0 +1,136 @@
+//===== Guerra do Emperium ===================================
+//= A porta da Vila dos Porings - o Batedor da Ordem
+//===== Onde =================================================
+//= prt_fild05 147,235, duas celulas a leste da Emily do
+//= rAthena (145,235), e uma da chegada do Teleportador da
+//= Ordem (146,235).
+//===== Descricao ============================================
+//= ABRE A VILA DOS PORINGS PARA QUEM JA PASSOU DO NIVEL 60.
+//=
+//= Irmao do npc/guerra/porta_dos_orcs.txt, e pela mesma razao:
+//= a porta do rAthena TEM TETO DE NIVEL e por isso a missao da
+//= Ordem era impossivel. A Emily recusa em duas linhas:
+//=
+//=     if (BaseLevel > 60) { ... close; }
+//=
+//= (PoringVillage.txt:145). Personagem de nivel alto ouvia
+//= "agora voce esta mais forte que eu" e ia embora.
+//===== A DIFERENCA PARA A PORTA DOS ORCS ====================
+//= Nos Orcs deu para copiar o bRO: la a instancia foi refeita,
+//= a Cientista fica em gef_fild10 231,203, e bastou por a nossa
+//= naquela coordenada.
+//=
+//= AQUI NAO DA. No bRO a Vila dos Porings entra por
+//= **izlude 46,103** - outro MAPA. O rAthena tem a versao
+//= antiga, cuja porta e a Emily em prt_fild05. Nao ha como
+//= "seguir o bRO" sem trazer a instancia inteira dele, que nao
+//= temos.
+//=
+//= Entao esta porta e NOSSA de verdade, e nao uma copia: um
+//= batedor da Ordem dos Exploradores que abre a mesma memoria
+//= do rAthena, sem o teto. E coerente com o resto - e a Ordem
+//= que manda cacar la, entao e a Ordem que abre o caminho.
+//===== A EMILY CONTINUA DE PE, e isso e de proposito =========
+//= Ao contrario dos Orcs, aqui NAO ha `disablenpc`. A Emily
+//= tem uma cadeia de historia inteira (as quests 12416, 12417
+//= e 12418, a conversa do "meio a meio") que e o conteudo de
+//= NOVATO daquele campo, e desliga-la tiraria isso do jogo.
+//=
+//= As duas portas convivem: quem tem entre 30 e 60 fala com a
+//= Emily e ganha a historia; quem passou disso fala com o
+//= batedor e entra direto. As duas abrem a MESMA instancia
+//= ("Vila dos Porings"), entao nao ha duplicata de memoria.
+//=
+//= O batedor tambem NAO da as quests da Emily. Quem entrar por
+//= aqui nao ganha 12416/12417/12418, e isso e de proposito: sao
+//= a historia dela, e a Ordem nao tem nada com aquilo. A
+//= contagem da missao da Ordem nao depende delas - quem conta e
+//= o objetivo HUNTING da quest 30030.
+//===== Notas ================================================
+//= Sprite 755 (JT_4_M_SAGE_C), conferido no npcidentity.lub e
+//= com .spr/.act no data.grf DESTE cliente. E o mesmo tipo de
+//= sprite que o rAthena usa em quem abre memoria - o Hugin da
+//= Maldicao de Glastheim e o Magic Scholar do Covil de Vermes
+//= sao os dois `4_M_SAGE_C`.
+//=
+//= A celula 147,235 foi conferida no map_cache: tipo 0.
+//=
+//= O nome da instancia ("Vila dos Porings") e CHAVE, nao
+//= rotulo: tem de bater com o `Name:` de
+//= db/guerra/instance_db.yml. Ver ARQUITETURA.md secao 4.
+//=
+//= NAO ha teto de nivel aqui, e nao ha piso tambem - a
+//= instancia e de nivel 30 no papel, e quem quiser levar um
+//= personagem fraco continua podendo falar com a Emily.
+//=
+//= Gravado em Latin-1 (ISO-8859-1). Mudanca pega com
+//= @reloadscript.
+//============================================================
+
+prt_fild05,147,235,4	script	Batedor da Ordem	755,{
+	.@md$ = "Vila dos Porings";
+
+	mes "[Batedor da Ordem]";
+	mes "A Ordem dos Exploradores mapeou esta";
+	mes "memória faz tempo. A garota ali do lado";
+	mes "acha que ela é coisa de novato...";
+	next;
+	mes "[Batedor da Ordem]";
+	mes "...e é mesmo. Mas a Ordem paga por serviço";
+	mes "feito, e não por serviço difícil.";
+	mes "Se você quer entrar, eu abro.";
+	next;
+
+	// A instancia e por PARTY, entao sem party nao ha o que abrir.
+	// Party de um serve - e o mesmo criterio da Emily.
+	if (getcharid(1) < 1) {
+		mes "[Batedor da Ordem]";
+		mes "Sozinho de verdade eu não consigo mandar.";
+		mes "Monte um ^0000FFgrupo^000000 - mesmo que só com você -";
+		mes "e eu abro a passagem.";
+		close;
+	}
+
+	// O menu se monta conforme o estado, como no original: so o
+	// lider abre, e "entrar" so aparece quando ha o que entrar.
+	if (is_party_leader())
+		.@op$[0] = "Abrir a passagem";
+	if (instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == .@md$)
+		.@op$[1] = "Entrar na memória";
+
+	switch (select(.@op$[0], .@op$[1], "Agora não")) {
+	case 1:
+		mes "[Batedor da Ordem]";
+		mes "Estou procurando a fresta. Fale comigo de novo";
+		mes "quando ela estiver aberta.";
+		instance_create(.@md$);
+		close;
+	case 2:
+		switch (instance_enter(.@md$)) {
+		case IE_OTHER:
+			mes "[Batedor da Ordem]";
+			mes "Alguma coisa deu errado, e nem eu sei o quê.";
+			close;
+		case IE_NOINSTANCE:
+			mes "[Batedor da Ordem]";
+			mes "A fresta ainda não está aberta.";
+			close;
+		case IE_NOMEMBER:
+			mes "[Batedor da Ordem]";
+			mes "Só quem está no grupo pode entrar.";
+			close;
+		case IE_OK:
+			mapannounce "prt_fild05",
+			            "O grupo " + getpartyname(getcharid(1)) + " entrou na " +
+			            .@md$ + " com " + strcharinfo(0) + ".", bc_map, 0xFF9900;
+			// Sem `setquest 12417`: aquelas tres quests sao a
+			// historia da Emily, nao da Ordem. Ver o cabecalho.
+			end;
+		}
+	case 3:
+		mes "[Batedor da Ordem]";
+		mes "A memória não vai a lugar nenhum.";
+		close;
+	}
+	end;
+}

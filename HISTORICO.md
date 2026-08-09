@@ -3570,8 +3570,9 @@ A mudança no `conf/maps_athena.conf` **só vale no próximo boot do map-server*
 a lista de mapas é lida na inicialização. Até lá os quatro continuam
 alcançáveis por `@warp`.
 
-A meta seguinte é a **Ordem dos Exploradores**, que **não existe no rAthena** e
-terá de ser escrita do zero. As 16 instâncias que ela usa, e o que ficou de
+A meta seguinte era a **Ordem dos Exploradores**, que **não existe no rAthena**
+e teve de ser escrita do zero — feita ainda em 2026-08-08, na seção "A Ordem
+dos Exploradores" mais abaixo. As 16 instâncias que ela usa, e o que ficou de
 fora, estão no `PENDENCIAS.md` §1f.
 
 **A Vila dos Porings foi entrada e jogada no mesmo dia, e funcionou** — a
@@ -3638,3 +3639,519 @@ Aplicado em disco e conferido: 16 nomes únicos, todos dentro dos 60 bytes do
 `INSTANCE_NAME_LENGTH`, os 26 literais casando com o db um a um, nenhum U+FFFD,
 tudo em cp1252. **Não foi visto em jogo ainda** — aplica com
 `@reloadinstancedb` + `@reloadscript`, sem derrubar o servidor.
+
+---
+
+## A Ordem dos Exploradores (2026-08-08)
+
+O pedido foi curto — *"vamos ativar a Ordem dos Exploradores, existe uma
+análise feita"*. A análise era o briefing da §1g do `PENDENCIAS.md`, levantado
+no mesmo dia, e ele estava certo no essencial e errado em três detalhes que
+teriam custado caro.
+
+**O que a Ordem é:** três placas em um salão, cada uma com um lote de caçadas
+dentro de instâncias. Matar o chefe, voltar, receber **Moeda do Explorador**
+(25737) e EXP. A moeda se gasta ali mesmo, numa Máquina de Troca, a 10 por 1
+**Moeda Nova** — a moeda-corrente que as Máquinas de Prontera e Comodo já
+cobram. É conteúdo exclusivo do bRO: o rAthena não tem nada disto.
+
+### O que decidiu a arquitetura, e já estava no briefing
+
+**`OnNPCKillEvent` nunca dispara para chefe de instância.** Em `mob.cpp:3592`
+os dois caminhos são ramos de um `else if`: se o mob tem evento próprio, o
+global não roda — e **todo** chefe de instância nasce com
+`instance_npcname(...)+"::OnMyMobDead"`. Um contador de caçada feito assim
+compila, sobe, não erra no log e conta zero.
+
+Quem conta é o objetivo `HUNTING` de quest, que roda antes e fora daquele
+`if` (`mob.cpp:3575`) e ainda propaga para a party dentro de `AREA_SIZE`.
+A consequência boa é que a Ordem coube inteira em `npc/guerra/` mais um
+`db/guerra/`, **sem tocar em nenhum dos 16 arquivos de instância** — a lei da
+§2 do `CLAUDE.md` ficou intacta.
+
+Isso já estava levantado. O que esta sessão acrescentou foi o resto.
+
+### Três correções ao briefing, todas achadas lendo o script
+
+O briefing tirou os Ids de mob do browiki cruzado com o `mob_db`, e marcou com
+`?` os que não casaram. O jeito de fechar era abrir o script de cada instância
+e ver qual mob morre no fim. Três estavam errados:
+
+| Instância | O briefing dizia | O script diz |
+|---|---|---|
+| Fábrica do Terror | "Antonio **não spawna**; o chefe é a Celine Kimi (2996)" | `XM_ANTONIO` **2988**, em `HorrorToyFactory.txt:939`. Spawna. |
+| Covil de Vermes | Faceworm Queen, 2529 ou 2532 | `FACEWORM_DARK` **2530** — e a quantidade é que confirma: o alvo do bRO é "4x Verme Sombrio com Rosto", e ele nasce **exatamente 4 vezes** |
+| Vila dos Porings | "spawn por variável — não resolvido" | `MD_GOLDRING` **3811**. O spawn usa a *string* `"MD_GOLDRING"`, e por isso um grep por número não achava |
+
+E um caso que só o código resolvia: o **Palácio das Mágoas** tem **dois**
+"Torturous Redeemer", 2959 e 2961, com o mesmo nome na tela. O alvo é o
+**2959**. O 2961 nasce numa cena e leva `killmonster` cinco segundos depois
+(`GhostPalace.txt:758`) — morte por `killmonster` não passa pelo
+`quest_update_objective`, então mirar nele daria uma missão **impossível, sem
+nada no log**.
+
+Os 17 AegisNames foram conferidos por script contra o `mob_db` antes de
+escrever a primeira quest. Não é zelo: AegisName errado emite *"Mob %s does not
+exist, skipping"* e **descarta a quest inteira** (`quest.cpp:132`), não a linha
+do alvo.
+
+### Duas missões não tinham alvo, e ficaram reservadas
+
+- **Torneio de Magia.** O "Muliphen" do bRO **não existe como monstro em lugar
+  nenhum** — o Torneio é duelo de NPC. E a instância nem está carregada.
+- **Sonho Sombrio.** O "Réquiem de Marfim" também não casa com nada: o arquivo
+  inteiro tem **seis** monstros (Ferre 3069-3072 e Jitterbug1/2 3108/3109), e
+  nenhum é chefe único.
+
+As duas foram cortadas a pedido, com a instrução de deixar a adição fácil
+depois. Ficaram **comentadas lado a lado** no `quest_db.yml` e na tabela do
+`OnInit` das placas, cada uma com o candidato anotado. Sobraram **14 missões**:
+7 do grupo A, 3 do B, 4 do C.
+
+### O lugar mudou, e o dono é que sabia
+
+O briefing tinha conferido o `.gat` de Alberta e escolhido a alcova de
+`116,71` — o pátio murado de 24 células atrás do prédio de portas azuis — com
+as placas na fileira do fundo e a Máquina em `115,72`. Estava bem medido, e
+estava errado: **no bRO aquelas coordenadas são um portal**, e a Ordem fica
+*dentro* do prédio. O dono apontou isso com um screenshot do próprio cliente.
+
+O primeiro caminho investigado foi `alberta_in` — varrendo as 18 regiões
+andáveis do mapa e cruzando com os 76 NPCs que o rAthena planta lá, sobrava
+uma sala vazia (`x60-77, y170-189`). Serviria. Mas o dono achou o lugar de
+verdade: **`auction_02`**, a metade que era o Salão do Leilão de Lighthalzen,
+cujo portal de saída (`43,17`) no bRO volta para Alberta — e aqui ia para
+Lighthalzen, que é o padrão do rAthena.
+
+Duas coisas tornaram isso barato:
+
+1. **O mapa já está no nosso GRF** — `auction_02.rsw`, `.gnd` e `.gat`,
+   conferidos. Sem mapa novo, sem o risco da §4.6.
+2. **O leilão está desligado** (`feature.auction: off`). Os quatro salões são
+   espaço morto e os Auction Broker não fazem nada. Reaproveitar um não tira
+   função de ninguém.
+
+A metade de Yuno do mesmo mapa não foi tocada: é uma região andável separada,
+então o portal de Yuno continua como era.
+
+**Cinco NPCs do rAthena foram desligados**, todos por `disablenpc` e sem
+editar arquivo de terceiros: o warp `43,17 -> lighthalzen`, a porta do leilão
+em Lighthalzen com a placa ao lado, e os três Auction Broker de dentro do
+salão. Comentar a linha do `scripts_guerra.conf` devolve os cinco.
+
+Empilhar o nosso warp na **mesma célula** do desligado funciona, e o código diz
+por quê: `npc_touch_areanpc` devolve cedo quando o NPC está `is_invisible`
+(`npc.cpp:1900`), e o laço de cima continua procurando (`npc.cpp:1978`).
+
+### Um erro de codificação, e o que ele ensina
+
+A primeira tentativa de pôr a moeda no `db/guerra/item_db.yml` foi com a
+ferramenta de edição comum. Ela leu o arquivo cp1252 como UTF-8, não conseguiu
+decodificar os 9 bytes acentuados, e regravou tudo em UTF-8 — **os 9 acentos
+viraram U+FFFD**, o dano irreversível que o `CLAUDE.md` §5 descreve. O arquivo
+foi restaurado do git e a inserção refeita por script, no nível de bytes, com
+três asserções: mesmo número de bytes não-ASCII antes e depois, nenhum U+FFFD,
+e o resultado tem de continuar decodificando em cp1252.
+
+A regra já estava escrita (§4.1: *"escrever é o passo perigoso, não ler"*). O
+que faltava era a consequência prática: **para qualquer arquivo que o jogo lê e
+que já tenha acento, a edição é por script, não pela ferramenta de edição.**
+Foi assim que o `ordem_dos_exploradores.txt` nasceu — 73 bytes acentuados,
+gravados de uma vez, com a conferência do cabeçalho embutida no gerador.
+
+### O que ficou no ar
+
+Sete peças em `auction_02`: três placas (sprite 837, `JT_2_BULLETIN_BOARD`), o
+Teleportador (10007, 5.000z, 14 destinos), a Máquina de Troca (564, o mesmo
+sprite das outras duas Máquinas) e os dois portais. Mais a moeda nos dois
+lados, 14 quests de caçada e 3 de espera.
+
+**A espera trava a entrega, não a retirada** — ao entregar, a placa já devolve
+os pedidos do dia seguinte, como no bRO. O prazo é `TimeLimit: 6h` **sem** o
+`+`: sem o sinal o campo é *hora exata*, e o `quest_time()` devolve o próximo
+06:00 sozinho, sem temporizador nenhum do nosso lado.
+
+**Os valores são os do bRO**, por decisão do dono — 5 a 25 moedas, 50k a 1M de
+EXP, troca 10:1. Ao medir isso um dia, lembrar do que se descobriu aqui: o
+`getexp` **não passa pela nossa taxa de 10x**. A `base_exp_rate` só é aplicada
+ao EXP de **mob**, no carregamento do `mob_db` (`mob.cpp:5077`); o que mexe no
+`getexp` é o `quest_exp_rate`, que está em 100. Então 800.000 na tabela é
+800.000 na tela, num servidor onde o monstro rende dez vezes mais — a
+recompensa de missão vale relativamente um décimo do que o número sugere.
+Subiu para o `CLAUDE.md` §5.
+
+### O que foi verificado, e o que não foi
+
+O map-server foi reiniciado e o trecho novo do `log/map-msg_log.log` lido: **zero
+`Unknown syntax`**, zero aviso de quest descartada, zero erro nos seis
+`disablenpc`. Esse último é a prova positiva que importa — `disablenpc` com
+nome inexistente emite `ShowError` (`script.cpp:12368`), então o silêncio prova
+que o arquivo parseou, que o `OnInit` rodou e que os seis nomes estão certos.
+Os únicos erros no trecho são dois pré-existentes do `item_db.yml` (chicote e
+instrumento musical dos placeholders Brutais), sem relação.
+
+**Nada disso foi tocado por um jogador.** O que falta testar em jogo está no
+`PENDENCIAS.md` §1g — e o teste que prova a decisão central é uma missão
+inteira na Vila dos Porings, a única instância já validada.
+
+### A Opheliac, os dois guardas, e o que a moeda compra
+
+Ainda em 2026-08-08, o dono apontou o que faltava: **a moeda não comprava
+nada além de outra moeda.** No bRO quem resolve isso é a **Opheliac**, e o
+pedido veio com a tabela do browiki e com a fala dela escrita palavra por
+palavra.
+
+Ela faz três coisas lá — troca de moedas, transformação de visuais e
+encantamento do Robozinho Sabe-Tudo — e **só a primeira entrou**, por decisão
+do dono. As outras duas não são só escopo: são **janela do cliente**, com
+metade da configuração do lado de lá (`CLAUDE.md` §4.9), e nenhuma está
+montada neste cliente. Um NPC que as abrisse não faria nada.
+
+**Resolver 32 nomes em português para 32 IDs** foi o trabalho de verdade, e
+seguiu a ponte de sempre: o `iteminfo_new.lub` do bRO. Uma armadilha no
+caminho — aquele arquivo é **bytecode Lua 5.1**, não texto, então a primeira
+tentativa (regex) devolveu zero itens e parecia que a tabela estava vazia.
+Quem o lê é o `le_bro()` do `ferramentas/completa_iteminfo.py`, que já
+existia.
+
+O resultado do cruzamento com o nosso `item_db`:
+
+| Situação | Quantos | O que se fez |
+|---|---|---|
+| completos nos dois lados | 21 | nada |
+| no servidor, **sem entrada de cliente** | 8 | `completa_iteminfo.py` — sem ela o item aparece **sem nome e sem ícone** |
+| sem entrada de cliente **e sem arte** | 1 | o Cartão SSD (490578); a arte veio do GRF do bRO, pelo `instala_visual.py` |
+| **fora do nosso `item_db`** | 2 | criados em `db/guerra/item_db.yml` |
+
+Os dois criados são os **Saltos da Rainha Scaraba (15368)** e o **Memorável
+Anel Rústico (490174)**, nos IDs oficiais do bRO, no mesmo molde da seção de
+placeholders do Mercado Contemporâneo. Os bônus próprios funcionam; os de
+**conjunto** ficaram como `# TODO` — o primeiro pertence a três conjuntos e o
+segundo a cinco, e implementar metade de um conjunto dá bônus fantasma.
+
+Aqui apareceu um número que não é óbvio e que vale para qualquer item trazido
+do bRO: **a conversão de peso é ×10.** O bRO escreve *"Peso: 70"* e o rAthena
+grava `Weight: 700`. Foi conferido contra as Botas do Ocultista (22138), que
+existem nos dois lados — bRO "Peso: 50", nosso db `Weight: 500`.
+
+E uma desambiguação que só o número de covas resolvia: existem **duas** "Botas
+do Ocultista", `Demonist_Shoes` (22138, sem cova) e `Demonist_Shoes_` (22221,
+com uma). A do browiki é a **22138** — a lista de lá marca cova com "[1]", como
+faz na Venda Sombria, e esta linha não tem a marca.
+
+**Quatro itens do bRO ficaram fora da loja**, todos com razão registrada no
+`PENDENCIAS.md` §1g: os três "Combinador" (são encantamento, que o pedido
+excluiu) e os Chapéus Sortidos (caixa aleatória, que precisaria de um grupo
+em `item_group_db` e de sete chapéus com arte).
+
+**A Opheliac também fechou uma pergunta que estava em aberto:** quem é o rosto
+da Ordem. O salão tinha três placas que se apresentavam sozinhas; agora tem
+alguém que recebe o jogador na entrada, e a fala dela — do dono — é o que
+amarra a Ordem à ficção do servidor destruído. Sprite **894**
+(`JT_4_F_KHELLISIA`), a que mais se aproxima da foto do browiki.
+
+Os **dois guardas** (38,28 e 49,28) usam o sprite **966** (`4_M_RUSKNIGHT`), o
+mesmo dos dois Guarda da Ordem que já estavam em Comodo — de propósito: é a
+mesma Ordem, e o jogador reconhece a farda. Ficam virados para dentro, e a
+direção seguiu a tabela empírica do `maquina.txt` (6 desenha virado para a
+direita, 4 para a esquerda), não a intuição de ponto cardeal.
+
+Da fala da Opheliac só se mexeu no que era acento faltando ao digitar (*"ja"*
+e *"a ativa"*); o *"tava"* é coloquial e ficou.
+
+**Verificação:** o map-server subiu de novo sem um `Unknown syntax` e **sem um
+único aviso de barter**. Esse silêncio é a prova positiva que importa aqui —
+`barter_parseBodyNode` (`npc.cpp:572`) emite *"Unknown item %s"* e **descarta
+a loja inteira** para qualquer AegisName que não resolva. Zero avisos = os 29
+AegisNames das três lojas existem. O que a loja ainda não teve é um jogador
+abrindo a janela e conferindo nome e ícone linha a linha.
+
+### O primeiro teste em jogo, e o bug que ele achou (2026-08-08)
+
+As placas subiram e o primeiro clique em "Pegar os pedidos que faltam"
+**derrubou o cliente**: mais de trinta caixas de erro seguidas, uma atrás da
+outra, e a conexão caiu. A mensagem era
+
+```
+GetOngoingQuestInfoByID
+.../data/LuaFiles514/Lua Files/Datainfo/QuestInfo_f.lua:4:
+attempt to index field '?' (a nil value)
+```
+
+O erro **não é do script** — é do cliente, e é uma armadilha que o projeto já
+tinha registrada **pela metade**. O que estava escrito, e que veio do episódio
+da quest 5153 em 2026-08-07, era: *"a janela de missões não lê o
+`questid2display.txt`; quem desenha é o `QuestInfoList` — missão sem entrada lá
+aparece sem título."*
+
+**Não aparece sem título. Derruba.** Desmontando o `questinfo_f.lub` com o
+`luadis.py`, a linha 4 é
+
+```lua
+QuestInfoList[id].Title
+```
+
+sem guarda de nil. E o detalhe que torna isso uma enxurrada: as *outras* três
+funções do mesmo arquivo — `GetOngoingDescription`, `GetOngoingRewardInfo` e
+`GetCoolTimeQuest` — **têm** a guarda (`if ... == nil then return end`). Só a do
+título não tem. Como a janela consulta o título a cada atualização, e as
+Missões A são sete de uma vez, o cliente entra num laço de caixas de erro.
+
+A correção certa não era editar o `.lub` à mão: `OngoingQuestInfoList_True.lub`
+e `_Sakray.lub` são **gerados** pelo `traduz_ptbr.py questinfo`, que os
+reconstrói do coreano de 2021 congelado no `.COREANO`. Entrada posta à mão
+sobrevive até a próxima rodada da tradução e some sem aviso — e o sintoma seria
+o cliente voltar a cair, meses depois, por um motivo aparentemente sem relação.
+
+Então nasceu o **`ferramentas/monta_missoes_da_ordem.py`**, irmão do
+`monta_logue_e_ganhe.py` e pelo mesmo motivo: sistema de UI com metade da
+configuração no cliente. Ele lê as ids do `db/guerra/quest_db.yml` — que é onde
+se diz quais missões existem — e tem o texto PT dentro. Três decisões nele
+valem registro:
+
+- **Aborta se faltar texto.** Missão no YAML sem entrada na tabela `TEXTO` para
+  a gravação e lista o que falta. Uma missão sem entrada no cliente é
+  exatamente o bug que o script existe para impedir; deixá-la passar com aviso
+  seria repetir o acidente.
+- **É idempotente**: antes de inserir, retira toda entrada da faixa
+  30000–30049 que já esteja no arquivo. Rodar duas vezes dá o mesmo tamanho.
+- **Passa pelo `luac -p`** antes de gravar, como todo `.lub` de texto que o
+  projeto gera.
+
+A ordem de uso é a única armadilha que sobra, e está no `LEIAME.md`:
+`traduz_ptbr.py questinfo` **primeiro**, este script **depois**.
+
+O texto segue o padrão do próprio bRO, que este cliente já traz: a caçada leva
+o nome da instância, e a espera vem com `[Espera]` na frente — como a quest
+293444, *"[Espera] Shibasays"*, com `Summary = "Reseta 4 da manhã."`.
+
+**A regra subiu para o `CLAUDE.md`** — §5 (a armadilha, com o código) e §4.9
+(terceiro caso vivo de UI do cliente, e o único que não falha calado).
+
+### O segundo bug: o Teleportador levava ao lugar errado nos catorze
+
+Com a janela de missões consertada, a Ordem funcionou — e o teste seguinte
+achou outra coisa. O Teleportador cobrava os 5.000z, teleportava, e entregava
+no lugar errado: *"Batalha dos Orcs"* levava a `prt_fild05` (Vila dos Porings)
+e *"Hospital Abandonado"* levava a `mal_dun01` (Caverna do Polvo).
+
+A causa é banal e o registro fica pelo **formato** dela: o menu e a tabela de
+destinos tinham sido escritos em **ordens diferentes**. O `.menu$` seguia a
+ordem das placas (grupo A, depois B, depois C); o `.mapa$`/`.mx`/`.my` seguia a
+ordem em que os mapas tinham sido validados por script. O `select` devolve a
+posição no menu, e essa posição indexava a outra lista. Nenhum dos catorze
+caía no lugar certo.
+
+**O que torna isso caro é o silêncio.** Não há erro: o NPC funciona, cobra o
+zeny, teleporta. Nada no log. E o cabeçalho do próprio arquivo **afirmava** que
+as ordens eram a mesma — a frase estava lá, escrita com confiança, e era falsa.
+
+Duas coisas mudaram por causa disso, e a segunda importa mais que o conserto:
+
+1. **O menu passou a ser gerado da própria tabela.** Não existe mais uma
+   segunda lista de nomes: há `.dest$[]`, e o `.menu$` sai dela num laço no
+   `OnInit`. Mais um `getarraysize` comparando as quatro colunas, que denuncia
+   com `debugmes` se uma tiver tamanho diferente. A classe inteira de bug
+   deixou de ser possível.
+2. **A conferência passou a ler o arquivo GERADO.** O script que validou os
+   destinos da primeira vez conferia a lista que eu tinha na cabeça, não a que
+   foi gravada — e por isso passou com "14 destinos, 0 problemas" enquanto o
+   NPC estava todo trocado. O novo extrai as quatro tabelas do `.txt` e cruza
+   destino a destino.
+
+**A regra subiu para o `CLAUDE.md` §4.11:** menu de `select` e tabela indexada
+pelo mesmo número saem da mesma fonte, e a trava é um laço, não um comentário.
+*Comentário não é trava* — foi a lição das duas noites.
+
+### A porta da Batalha dos Orcs, e a instância que ninguém conseguia abrir
+
+A pergunta foi *"cadê o NPC de entrada da instância dos Orcs?"*. A resposta
+curta: era a **pedra** — `Dimensional Gorge Piece`, `gef_fild10 242,202`,
+sprite 406 — e não parece um NPC, que é por que ninguém a acha. Mas ler o
+código dela achou uma coisa bem maior.
+
+```
+instance_check_party(.@party_id, 2, 30, 80)
+```
+
+Party com **duas** pessoas online, e **todas entre nível 30 e 80**. O teto vale
+para o grupo inteiro (`script.cpp:22081` sai do laço no primeiro membro fora da
+faixa), então personagem de nível alto **não entra de jeito nenhum** — nem
+sozinho, nem acompanhado. A missão "Batalha dos Orcs" da Ordem era impossível.
+
+Varrendo as catorze portas, duas barram um personagem 200:
+
+| Instância | Porta | O que barra |
+|---|---|---|
+| Batalha dos Orcs | Dimensional Gorge Piece | teto de nível 80 + party de 2 |
+| Vila dos Porings | Emily (`prt_fild05 145,235`) | recusa `BaseLevel > 60` |
+
+Ironia registrada: a Vila dos Porings era justamente a que o `PENDENCIAS.md`
+recomendava como *"o teste mais barato"* da Ordem.
+
+**O rAthena tem a versão antiga da instância.** O browiki de hoje
+(`Batalha_dos_Orcs`) diz *"Nv. de base: 60"*, *"Grupo: 1 pessoa ou mais"*, e a
+reserva é com a **Cientista** em `gef_fild10 231,203` — outro NPC, em outra
+coordenada. Foi o dono quem apontou isso, com o print da página.
+
+O conserto seguiu a receita da §2, e o corte foi o **menor possível**: não uma
+cópia do `OrcsMemory.txt` (900 linhas, com os spawns, os quatro
+`#Resurrect Monsters` e o Kruger), e sim **só a porta**. O
+`npc/guerra/porta_dos_orcs.txt` tem um NPC e um `disablenpc`:
+
+- **Cientista**, `gef_fild10 231,203` (a coordenada do bRO), sprite 982
+  (`4_F_SCIENCE` — mulher, como o dono lembrou), com
+  `instance_check_party(.@party_id, 1, 60)`. O `max` omitido vale `MAX_LEVEL`
+  (`script.cpp:22048`), então **não há teto**; o `1` continua exigindo party,
+  porque `instance_check_party` devolve 0 sem party e o `instance_create` é por
+  party de qualquer jeito. Party de um serve.
+- `disablenpc "Dimensional Gorge Piece"` — a porta velha.
+
+O `Mad Scientist#orc` (238,202) **não foi tocado**: não abre instância nenhuma,
+e a variável `mad` dele não aparece em mais nenhum arquivo de `npc/`.
+
+**O tempo de espera acompanhou.** A quest 12059 é do rAthena e vinha com
+`TimeLimit: +2h`; o browiki diz *"Reseta meia-noite"*. Virou `0h` — **sem** o
+`+`, que é a forma de hora exata — num override em `db/guerra/quest_db.yml`,
+o primeiro daquele arquivo a não ser da nossa faixa. Ela não pega mais nada:
+os outros dois "12059" de `npc/` são o **item** 12059.
+
+**Fora de escopo por decisão do dono:** o Anel dos Orcs, a troca de Insígnia
+por chapéu (Mulher Suspeita) e o encantamento do anel (Homem Suspeito).
+Nenhum item novo, nenhum encantamento.
+
+E de quebra, o mesmo cruzamento achou que o Teleportador largava o jogador a
+**28 passos** da porta da Vila dos Porings — no NPC de encantar legumes, e não
+na Emily. O destino tinha vindo do menu de Instâncias do warper do rAthena, que
+aponta para *o lugar*, não para *quem abre a instância*. Corrigido, junto com o
+dos Orcs, que agora aponta para a Cientista. As catorze caem a 10 passos ou
+menos da porta, conferido por script contra o arquivo gerado.
+
+### O cliente do bRO como fonte, e três missões destravadas (2026-08-09)
+
+A pergunta foi *"você tem acesso a como eram as instâncias no bRO?"*. A resposta
+acabou valendo mais que a pergunta.
+
+O `System\OngoingQuestInfoList_True.lub` da instalação do Ragnarok Brazil —
+bytecode Lua, lido pelo `luadis.py` — carrega **as 30 missões de instância da
+Ordem dos Exploradores**, cada uma no formato
+
+```
+Na <NAVI>[Batalha dos Orcs]<INFO>gef_fild10,231,203,000,0</INFO></NAVI>,
+elimine 1 Orc Falso.
+```
+
+Ou seja: nome da instância, **coordenada do NPC de entrada** e **alvo**, ditos
+pelo próprio jogo. É melhor que o browiki para a lista — e o browiki, aliás,
+devolve **403** para busca automática, então só o dono o lê.
+
+O que o cliente **não** tem é a mecânica. Isso ficou registrado no
+`ARQUITETURA.md` §6, junto com o resto do que aquela instalação responde.
+
+**O teste que a descoberta permitiu**, e que respondeu à preocupação real do
+dono (*"se as outras forem no mesmo padrão acho que vamos tirar"*): comparar a
+coordenada da porta entre os dois lados. **14 das 16 batem** — o rAthena tem o
+NPC de entrada na coordenada exata do bRO, a 0 ou 1 passo. Só duas divergiram,
+e eram justamente as duas que já tinham dado problema. Não é padrão; é exceção.
+
+De quebra, o texto do bRO **confirmou quatro Ids de mob** que tinham sido
+deduzidos lendo script: *"4 Vermes Sombrios com Rosto"*, *"1 Antonio"*,
+*"6 Gigantes Ancestrais"*, *"Origem da Maldição e Amdarais"*.
+
+#### O Réquiem de Marfim existia o tempo todo
+
+A missão do Sonho Sombrio estava **comentada** no `quest_db.yml` com a
+justificativa de que o alvo do bRO não casava com nada — *"o arquivo inteiro da
+instância tem seis monstros e nenhum é chefe único"*.
+
+Estava errado, e o erro é instrutivo. A varredura tinha procurado o padrão
+`"--ja--", <id>`, que é como **quase todo** spawn daquele arquivo é escrito. A
+linha do chefe é a única que usa o nome literal:
+
+```
+monster 'map_jtb$,322,335, "Awakened Ferre", 3073,1, .@label$;   // GRAND_PERE
+```
+
+**Levantamento por grep de um padrão só não prova ausência.** O `Awakened Ferre`
+(3073) é o chefe final, nasce no quarto do chefe e o script guarda o id dele em
+`'boss_id`. A missão 30007 entrou, com 10 moedas e 800.000 de EXP, e as placas
+passaram de 14 para **15 missões** (8 do grupo A).
+
+#### A Vila dos Porings ganhou porta própria
+
+A Emily recusa `BaseLevel > 60` (`PoringVillage.txt:145`), e por isso a missão
+era impossível para personagem de nível alto. Aqui **não deu para copiar o
+bRO**, ao contrário dos Orcs: lá a Vila dos Porings entra por
+**`izlude 46,103`** — outro *mapa* —, e o rAthena tem a versão antiga.
+
+Então a porta é nossa de verdade: o **Batedor da Ordem**, `prt_fild05 147,235`,
+sprite 755 (`4_M_SAGE_C`, o mesmo tipo do Hugin e do Magic Scholar, que é quem
+abre memória no rAthena). Abre a mesma instância, sem teto.
+
+**A Emily continua ligada**, e isso é a diferença para os Orcs: ela tem a cadeia
+de história do campo (quests 12416/12417/12418), que é o conteúdo de novato
+dali. As duas portas convivem e abrem a mesma memória; quem entra pelo Batedor
+não ganha as quests dela.
+
+#### As duas que continuam fora
+
+- **Torneio de Magia.** O alvo do bRO é *"1 Muliphen"* — e **`Muliphen` não
+  existe no nosso `mob_db`**, com nenhum nome. Não é questão de achar o Id: o
+  monstro não está no vendor. Continua comentada.
+- **Sussurro Sombrio.** A coordenada do bRO (`dali02 121,63`) é a `Scientist
+  Doyeon#a2` da **Sky Fortress Invasion**, que já está carregada e pede só
+  nível 145 (sem teto, sem quest) — serviria. Mas o alvo do bRO é *"elimine os
+  Demônios de cada tipo"*, e a instância tem **onze** monstros `Immortal_`.
+  Escolher três seria inventar, contra a regra §4.3. Falta a página do browiki.
+
+### O Palácio das Mágoas em português (2026-08-09)
+
+Testada e aprovada em jogo, a instância veio com o pedido óbvio: *"tá tudo em
+inglês ainda"*. Traduzir instância já estava previsto na frente do §3 do
+`PENDENCIAS.md`, mas com uma **pré-condição** anotada e não cumprida.
+
+**A pré-condição, e ela era real.** O nome da instância é CHAVE —
+`instance_create` e `instance_enter` resolvem por string —, e nos scripts ele
+aparece assim:
+
+```
+.@md_name$ = "Palácio das Mágoas";
+switch( instance_enter(.@md_name$) ) { ... }
+```
+
+A atribuição casa com o `RE_ATRIB` do extrator, então o nome entra no catálogo
+como se fosse fala. E o `RE_TECNICO` **não** cobre: ele protege literal que
+está *dentro* da chamada (`warp "gef_fild10"`), e aqui a chamada recebe uma
+variável. Uma tradução divergente — "Palácio das Maguas", digamos — faria o
+`instance_enter` procurar uma instância que não existe.
+
+A cura foi o `nomes_de_instancia()`: lê os `Name:` de `db/re/instance_db.yml` e
+`db/guerra/instance_db.yml` e os acrescenta a `tokens_intocaveis`. **A lista sai
+do próprio banco, e não de uma constante** — assim acompanha sozinha quando uma
+instância for renomeada.
+
+**Um grupo por instância, e não um grupo `instancias`.** A regra do projeto é
+só aplicar grupo inteiro: arquivo quase todo em inglês com uma frase solta em
+português é pior que arquivo em inglês. As 16 juntas dão 4.910 falas, com
+distribuição muito torta — num grupo só, nada seria aplicável até a última estar
+pronta. Quinze apelidos entraram (`magoas`, `orcs`, `sarah`, …), um por arquivo.
+
+**O Palácio das Mágoas fechou:** 303 pares, **201 textos distintos**, 255
+traduzidos e **48 deixados em branco de propósito** — nome de mapa (`1@spa`),
+label de evento (`::OnMyMobDead1`), nome único de NPC (`Lurid Royal Guard#dk`),
+o `.bmp` dos cutins e o nome da instância. O `--aplicar` trocou 256 textos, com
+**0 recusas**.
+
+Duas escolhas de tradução que valem registro, porque os dois guardas se
+confundem: **`Unpleasant Royal Guard` → Guarda Real Rabugento** (o da entrada,
+que chama o jogador de "noob") e **`Lurid Royal Guard` → Guarda Real Sombrio**
+(o do roteiro, que vira o Sakray).
+
+Conferido depois de aplicar: o `instance_create("Palácio das Mágoas")` e o
+`.@md_name$` continuam idênticos, os 128 labels e nomes únicos intactos, o
+arquivo em cp1252 com 214 bytes acentuados e **zero U+FFFD**, e o map-server
+subiu sem um `Unknown syntax`.
+
+**As outras catorze continuam em inglês**, cada uma com o seu grupo pronto para
+`--extrair`. A ordem barata é pelo tamanho: Batalha dos Orcs (55 falas) e Lago
+de Bakonawa (62) são de uma sentada; Sonho Sombrio (1.261) é um projeto.

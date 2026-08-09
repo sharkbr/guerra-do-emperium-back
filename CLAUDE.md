@@ -46,6 +46,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `npc/barters.yml` | um `- Path: npc/guerra/barters_guerra.yml` no rodapé |
 | `conf/battle_athena.conf` | uma linha `import: conf/guerra/battle_guerra.txt` |
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
+| `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
@@ -90,6 +91,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
 | `db/guerra/refine.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
+| `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
 | `src/` | recompilar (VS 2022 Community, já instalado) |
 | `itemInfo.lua` e afins no cliente | **fechar e reabrir o cliente** — só lido na inicialização |
 
@@ -136,6 +138,10 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
    cliente. Menu de `select` usa `getitemname()` e lê o servidor; janela nativa,
    não. Nome errado numa loja de troca **não** se conserta com o
    `nomes_pt_item_db.py`.
+   **Terceiro caso vivo, e o único que NÃO falha calado: a janela de
+   missões.** Quest que o cliente não conhece **derruba o cliente**, não
+   aparece sem título — ver §5. As missões da Ordem são geradas dos dois
+   lados por `ferramentas/monta_missoes_da_ordem.py`.
 10. **Loja que cobra em ITEM é `barter`, não `itemshop`.** São os dois tipos que
     parecem servir, e só um funciona aqui: o `itemshop` passa a moeda por
     `pc_can_sell_item`, que **recusa item `NoSell`** enquanto
@@ -143,6 +149,18 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     falha, com a moeda na mão do jogador. O `barter` não faz essa checagem. Só
     ele abre a janela de troca com ícone de moeda por linha; `itemshop` e
     `pointshop` caem no `clif_cashshop_show`, que é outra janela.
+11. **Menu de `select` e tabela de dados indexados pelo mesmo número saem da
+    MESMA fonte.** Se o menu é uma string escrita à mão e o destino é um
+    `setarray` escrito à parte, as duas ordens divergem mais cedo ou mais
+    tarde — e a divergência **não dá erro**: o NPC funciona, cobra, entrega, e
+    entrega a coisa errada. O certo é guardar os rótulos num array e **montar
+    o menu num laço** a partir dele, mais um `getarraysize` que compare as
+    colunas e grite com `debugmes`. Caso vivo, e caro: em 2026-08-08 o
+    Teleportador da Ordem levou ao lugar errado nos **catorze** destinos —
+    "Batalha dos Orcs" ia para a Vila dos Porings — porque o menu seguia a
+    ordem das placas e os arrays seguiam a ordem em que os mapas tinham sido
+    validados. **O cabeçalho do arquivo afirmava que as duas ordens eram a
+    mesma. Comentário não é trava.**
 
 ## 5. Armadilhas deste ambiente
 
@@ -259,6 +277,40 @@ Produziram diagnóstico falso e custaram retrabalho:
   inteira dentro de `AREA_SIZE`**. É o que as instâncias do próprio rAthena
   usam. Mesmo quando o global dispara, é para o `first_sd` — o primeiro do
   registro de dano, não o matador.
+- **Quest que o cliente não conhece DERRUBA O CLIENTE.** Não é "aparece sem
+  título" — é caixa de erro de Lua, uma **por missão e por atualização da
+  janela**, até a conexão cair. O `GetOngoingQuestInfoByID`
+  (`data\luafiles514\lua files\datainfo\questinfo_f.lub`, linha 4) faz
+  `QuestInfoList[id].Title` **sem guarda de nil**, e sai
+  *"attempt to index field '?' (a nil value)"*. As outras funções do mesmo
+  arquivo (`Description`, `RewardItemList`, `CoolTimeQuest`) **têm** guarda —
+  só a do título não. Pegar sete missões de uma vez rende dezenas de caixas
+  seguidas. Achado em 2026-08-08, no primeiro teste das placas da Ordem.
+  A entrada mora em `System\OngoingQuestInfoList_True.lub` e
+  `_Sakray.lub`, e o mínimo que impede o estouro é
+  `[<id>] = { Title = "...", Description = { "..." }, Summary = "..." }`.
+  **Aqueles dois arquivos são gerados** pelo `traduz_ptbr.py questinfo`, que
+  os reconstrói do coreano de 2021 — entrada posta à mão some na próxima
+  rodada. Por isso as nossas são geradas por
+  `ferramentas/monta_missoes_da_ordem.py`, que roda **depois** dele.
+- **`getexp` NÃO passa pela taxa de EXP do servidor.** A `base_exp_rate` é
+  aplicada uma vez só, ao EXP de **mob**, no carregamento do `mob_db`
+  (`mob.cpp:5077`); o `getexp` de script só é multiplicado pelo
+  `quest_exp_rate` (`conf/battle/exp.conf`), que está em **100**. Então
+  `getexp 800000,800000` entrega 800.000 num servidor cujo monstro rende dez
+  vezes mais — a recompensa de NPC vale **um décimo** do que o número sugere,
+  em relação ao resto. Ler "somos 10x" e supor que o script acompanha erra a
+  economia inteira, e nada denuncia.
+- **Em `TimeLimit` de quest, o `+` é o que decide o significado.** `+3h` é
+  intervalo (três horas a partir de agora); `6h`, sem o sinal, é **hora
+  exata** — o `quest_time()` (`quest.cpp:554`) devolve o próximo 06:00, hoje
+  ou amanhã. Os dois caminhos saem do mesmo campo (`quest.cpp:71`), e trocar
+  um pelo outro dá um prazo plausível e errado. Reset diário não precisa de
+  temporizador: é a forma sem `+`.
+- **`MAX_QUEST_OBJECTIVES` é 3** (`src/common/mmo.hpp:111`). Um quarto alvo
+  numa quest emite *"Targets list exceeds the maximum"* e cai no mesmo
+  `return 0` de sempre, que descarta a **quest inteira** — não o alvo a mais.
+  O mesmo vale para `Mob:` com AegisName inexistente (`quest.cpp:132`).
 - **`os.system` com a linha começando por aspas** falha no `cmd` do Windows: o
   primeiro par de aspas é comido e sai *"A sintaxe do nome do arquivo... está
   incorreta"* — que parece defeito do arquivo passado, e não é. Usar

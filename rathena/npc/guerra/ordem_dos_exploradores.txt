@@ -1,0 +1,801 @@
+//===== Guerra do Emperium ===================================
+//= A Ordem dos Exploradores
+//===== Onde =================================================
+//= O salao fica em auction_02, a metade que era o Salao do
+//= Leilao de Lighthalzen. A porta e em Alberta:
+//=
+//=   alberta      116,73   o portal, na parede da alcova
+//=   auction_02    43,17   o portal de volta
+//=   auction_02    38,28   Guarda da Ordem, virado para dentro
+//=   auction_02    49,28   Guarda da Ordem, virado para dentro
+//=   auction_02    44,41   a Opheliac, a loja da Ordem
+//=   auction_02    59,34   placa das Missoes A
+//=   auction_02    59,36   placa das Missoes B
+//=   auction_02    59,38   placa das Missoes C
+//=   auction_02    37,39   o Teleportador
+//=   auction_02    50,39   a Maquina de Troca
+//=
+//= O patio de Alberta e uma alcova murada de 24 celulas
+//= (x114-119, y70-73), com uma entrada so, pelo sul, e o
+//= predio de portas azuis fechando o norte em y74:
+//=
+//=       113 114 115 116 117 118 119 120
+//=  y74   #   #   #   P   P   #   #   #    <- a porta (o portal)
+//=  y73   #   .   .   .   .   .   .   #
+//=  y72   #   .   .   .   .   .   .   #
+//=  y71   #   .   .   .   .   .   .   #
+//=  y70   #   N   .   .   .   .   N   #    N = NPC do rAthena
+//=  y69   .   .   .   .   .   .   .   .    <- unica entrada
+//=
+//= O warp de entrada e `1,0`: pega so x115-117 na fileira y73,
+//= tres celulas coladas na porta. Com `1,1` ele pegaria seis
+//= celulas e o jogador seria sugado ao andar pelo patio.
+//=
+//= E o salao, ja com as pecas no lugar. Desenhado do map_cache
+//= do rAthena, celula a celula - `.` anda, `#` nao:
+//=
+//=       x30                                       x60
+//=  y42  ####.........##.........#######
+//=  y41  ..........####O###..........###   O = Opheliac
+//=  y40  ..........########..........###
+//=  y39  .......T..########..M.......###   T = Teleportador
+//=  y38  ..........########..........#C#   M = Maquina de Troca
+//=  y37  ............................###
+//=  y36  ............................#B#   A B C = as tres placas
+//=  y35  ......##............##......###
+//=  y34  ......##............##......#A#
+//=  y33  ............................###
+//=  y32  ............................###
+//=  y31  ####....................#######
+//=  y30  ####....................#######
+//=  y29  ####....................#######
+//=  y28  ####....g..........g....#######   g = os dois guardas
+//=  y27  ############....###############   <- corredor de entrada
+//=  y26  ############....###############
+//=
+//= O jogador chega pelo corredor (x42-45) e sobe: encontra
+//= primeiro os dois guardas, depois o salao, e a Opheliac ao
+//= fundo.
+//=
+//= QUATRO DAS DEZ CELULAS NAO SAO ANDAVEIS, e nao e engano - as
+//= posicoes vieram do dono. As tres placas ficam DENTRO da
+//= parede leste (x59, com x58 e x60 solidos), e a Opheliac fica
+//= em cima do bloco central. Isso funciona: NPC de script nao
+//= precisa de chao, e o alcance de clique e `AREA_SIZE+1`, ou
+//= seja 15 celulas (npc_checknear, npc.cpp:2158) - da ultima
+//= celula andavel do salao (x57) ate as placas sao 2. O proprio
+//= rAthena faz isso neste mapa: os Auction Broker de 57,46 e
+//= 43,65 tambem estao em celula bloqueada.
+//=
+//= O que NAO da para provar daqui e se a geometria da parede
+//= esconde a placa - isso so o jogo mostra. Se esconder, mover
+//= para x57 nas mesmas alturas resolve sem mexer em mais nada.
+//=
+//= Os tres NPCs do rAthena que sobravam no salao (os Auction
+//= Broker de 57,46, 31,46 e 43,65) sao desligados pelo OnInit
+//= deste arquivo.
+//===== Descricao ============================================
+//= AS MISSOES DIARIAS DE CACADA EM INSTANCIA. Tres placas dao
+//= um lote de missoes cada uma, todas de matar o chefe de uma
+//= instancia, e pagam em MOEDA DO EXPLORADOR (25737). A moeda
+//= se gasta ali mesmo, na Maquina de Troca, a 10 por 1 Moeda
+//= Nova (30998) - a moeda-corrente que a Maquina de Prontera e
+//= a de Comodo ja cobram.
+//=
+//= Conteudo exclusivo do bRO: o rAthena nao tem NADA disto -
+//= nem o NPC, nem as placas, nem a moeda. Foi escrito do zero.
+//=
+//= Esta e a MESMA Ordem do resto do servidor - a que recebe o
+//= novato no navio (emissario_da_ordem.txt) e a que autoriza a
+//= Alleria a comprar Flor Visionaria em Comodo
+//= (flores_da_ordem.txt). Nao e uma segunda ordem: este e o
+//= braco de exploracao dela.
+//===== Por que o salao do leilao, e nao a alcova ============
+//= No bRO a Ordem NAO fica no patio: `alberta 116,71` e um
+//= PORTAL, que leva para dentro do predio. O salao la e o do
+//= antigo Leilao, com o portal de saida em `auction_02 43,17`
+//= levando a Alberta. Aqui esse mesmo portal levava a
+//= Lighthalzen, que e o padrao do rAthena.
+//=
+//= Duas coisas tornaram isso barato de reproduzir:
+//=
+//= 1) O MAPA JA EXISTE. `auction_02.rsw`, `.gnd` e `.gat` estao
+//=    no data.grf deste cliente - conferidos. Nao ha mapa novo,
+//=    nem risco da armadilha do CLAUDE.md secao 4.6.
+//= 2) O LEILAO ESTA DESLIGADO. `feature.auction: off`, em
+//=    conf/battle/feature.conf. Os quatro saloes de leilao sao
+//=    espaco morto no nosso servidor, e os Auction Broker nao
+//=    fazem nada. Reaproveitar um nao tira funcao de ninguem.
+//=
+//= A metade de Yuno do mesmo mapa (x145-160) NAO foi tocada: e
+//= uma regiao andavel separada desta, entao o portal de Yuno
+//= continua indo e voltando como antes.
+//===== O que este arquivo desliga do rAthena ================
+//= Cinco NPCs, todos no OnInit do #ordem_montagem, e todos pela
+//= receita de sempre (disablenpc, sem editar arquivo de
+//= terceiros - CLAUDE.md secao 2):
+//=
+//=   auction_enterance_lhz     o warp 43,17 -> lighthalzen. E o
+//=                             que este arquivo substitui.
+//=   Auction Hall Guide#lhz    em lighthalzen 205,169. Levava
+//=   Information Post#lhz      para dentro do salao, dizendo
+//=                             "Auction Hall" - viraria uma
+//=                             segunda porta com o nome errado.
+//=   Auction Broker#lhz1..3    os tres do salao. O leilao esta
+//=                             desligado; eles so ocupariam a
+//=                             sala da Ordem.
+//=
+//= Desligar um warp FUNCIONA: o npc_touch_areanpc devolve cedo
+//= quando `is_invisible` (npc.cpp:1900), e o laco de cima
+//= continua procurando - por isso o nosso warp pode ficar na
+//= MESMA celula 43,17 e ainda assim disparar.
+//=
+//= Para devolver o leilao de Lighthalzen: comentar a linha
+//= deste arquivo no scripts_guerra.conf. Os cinco voltam.
+//===== A DECISAO QUE MOLDOU TUDO: quest, nao OnNPCKillEvent ==
+//= Contar morte de chefe de instancia com `OnNPCKillEvent` NAO
+//= FUNCIONA, e falha calada. Em mob.cpp:3592 os dois sao ramos
+//= de um `else if`: se o mob tem evento proprio, o global nao
+//= roda - e TODO chefe de instancia nasce com
+//= `instance_npcname(...)+"::OnMyMobDead"`.
+//=
+//= Quem conta e o objetivo HUNTING de quest, que roda antes e
+//= fora daquele `if`, e ainda propaga para a party dentro de
+//= AREA_SIZE. O registro completo, com o codigo, esta no
+//= cabecalho de db/guerra/quest_db.yml - e la que moram as
+//= missoes, e os dois arquivos sao uma peca so.
+//=
+//= LIMITE CONHECIDO: quem estiver longe da morte nao pontua.
+//= Em instancia grande, o membro da party que ficou para tras
+//= perde a contagem. Nao ha o que fazer daqui.
+//===== O bug do Teleportador, e o que ficou no lugar ========
+//= Em 2026-08-08 o Teleportador levou ao lugar ERRADO nos
+//= catorze destinos: "Batalha dos Orcs" ia para prt_fild05
+//= (Vila dos Porings) e "Hospital Abandonado" ia para
+//= mal_dun01 (Caverna do Polvo).
+//=
+//= A causa foi banal e o registro fica pelo formato dela: o
+//= MENU e a TABELA DE DESTINOS foram escritos em ordens
+//= diferentes. O menu seguia a ordem das placas (grupo A, B,
+//= C); os arrays seguiam a ordem em que os mapas tinham sido
+//= validados. `select` devolve a posicao no menu, e essa
+//= posicao indexava a outra lista.
+//=
+//= O que torna isso caro: NAO HA ERRO. O NPC funciona, cobra o
+//= zeny, teleporta - so que para outro lugar. Nada no log, e o
+//= cabecalho deste arquivo AFIRMAVA que as ordens eram a
+//= mesma. Comentario nao e trava.
+//=
+//= A trava de verdade veio junto com o conserto, e e o que
+//= vale copiar: O MENU PASSOU A SER GERADO DA PROPRIA TABELA,
+//= no OnInit. Nao existe mais uma segunda lista de nomes para
+//= sair de sincronia - so `.dest$`, e o `.menu$` sai dela num
+//= laco. Mais um `getarraysize` nas quatro colunas, que
+//= denuncia com `debugmes` se uma tiver tamanho diferente.
+//===== MISSAO NOVA EXIGE MEXER NO CLIENTE ===================
+//= E a armadilha que derrubou o primeiro teste em jogo, em
+//= 2026-08-08: pegar as sete Missoes A abriu mais de trinta
+//= caixas de erro seguidas e derrubou a conexao.
+//=
+//= Quest que o cliente nao conhece NAO aparece sem titulo -
+//= ela ESTOURA. O `GetOngoingQuestInfoByID` do
+//= `datainfo/questinfo_f.lub`, na linha 4, faz
+//=
+//=     QuestInfoList[id].Title
+//=
+//= sem guarda de nil. As outras tres funcoes do mesmo arquivo
+//= (Description, RewardItemList, CoolTimeQuest) TEM a guarda;
+//= so a do titulo nao tem. E como a janela consulta o titulo a
+//= cada atualizacao, uma missao desconhecida vira laco de
+//= caixas de erro.
+//=
+//= Entao a missao vive em TRES lugares, e o terceiro e o
+//= cliente:
+//=
+//=   db/guerra/quest_db.yml            o alvo
+//=   o OnInit deste arquivo            a recompensa
+//=   System/OngoingQuestInfoList_*.lub o texto da janela
+//=
+//= O terceiro sai do `ferramentas/monta_missoes_da_ordem.py`,
+//= que le as ids do quest_db e tem o texto PT dentro. Rodar
+//= DEPOIS do `traduz_ptbr.py questinfo`, que reconstroi aqueles
+//= .lub do coreano de 2021 e apagaria as nossas entradas.
+//=
+//= E o cliente le aquilo so na INICIALIZACAO: depois de
+//= acrescentar missao, fechar e reabrir.
+//===== As tabelas, e por que elas sao uma so =================
+//= As tres placas sao UM script e dois `duplicate`. Elas
+//= dividem os arrays `.` do OnInit, porque variavel de escopo
+//= `.` pertence ao SCRIPT e o duplicate aponta para o script do
+//= original (npc.cpp:4602) - o mesmo arranjo da Maquina de
+//= Prontera e a de Comodo.
+//=
+//= Como cada placa sabe qual e: pelo pedaco depois do `#` do
+//= nome dela (`strnpcinfo(2)`), que e `ordem_a`, `ordem_b` ou
+//= `ordem_c`. Dai saem `.ini[]` e `.fim[]`, o intervalo daquela
+//= placa dentro das tabelas.
+//=
+//= ACRESCENTAR UMA MISSAO e uma linha em cada tabela mais o
+//= ajuste de `.ini`/`.fim` - e a quest correspondente no
+//= db/guerra/quest_db.yml. As duas que faltam (Torneio de
+//= Magia e Sonho Sombrio) estao comentadas la e aqui, uma do
+//= lado da outra, para entrarem juntas.
+//=
+//= A ORDEM DAS TABELAS E LEI: `.quest`, `.nome$`, `.paga` e
+//= `.exp` sao lidas pelo MESMO indice. Inserir no meio de uma
+//= sem inserir nas outras troca o pagamento de missao,
+//= silenciosamente.
+//===== Os numeros sao os do bRO, e o que isso quer dizer ====
+//= Moedas (5 a 25) e EXP (50.000 a 1.000.000) foram mantidos
+//= como no bRO, por decisao de 2026-08-08.
+//=
+//= ATENCAO ao ler esses numeros: o `getexp` NAO passa pela
+//= nossa taxa de 10x. A `base_exp_rate` so e aplicada ao EXP de
+//= MOB, no carregamento do mob_db (mob.cpp:5077); o que mexe no
+//= getexp e o `quest_exp_rate`, que esta em 100 (ou seja, 1x).
+//= Entao 800.000 aqui e 800.000 na tela - num servidor onde o
+//= monstro rende dez vezes mais. Se um dia a EXP das missoes
+//= parecer irrelevante, o lugar de mexer e a tabela `.exp` do
+//= OnInit, nao a taxa.
+//=
+//= A taxa 10:1 da Maquina de Troca conversa com isso: uma
+//= missao media (7 moedas) vale hoje sete decimos de uma Moeda
+//= Nova. Se ficar apertado, o numero a mexer e o `Amount` da
+//= linha no npc/guerra/barters_guerra.yml.
+//===== O que a espera trava, e o que nao trava ==============
+//= As quests 30040-30042 (`TimeLimit: 6h`) travam a ENTREGA, e
+//= nao a retirada. Ao entregar, a placa ja devolve as cacadas
+//= do dia seguinte - entao o jogador nao precisa voltar para
+//= pegar, so para entregar. E o comportamento do bRO.
+//=
+//= `6h` sem `+` e hora EXATA, nao intervalo: o leitor separa os
+//= dois casos pela presenca do `+` (quest.cpp:71), e o
+//= `quest_time()` devolve o proximo 06:00. Nao ha temporizador
+//= nenhum do nosso lado.
+//===== A Opheliac, e o que ela NAO faz =======================
+//= No bRO a Opheliac faz TRES coisas: troca de moedas,
+//= transformacao de visuais e encantamento do Robozinho
+//= Sabe-Tudo. Aqui ela so TROCA - as outras duas ficaram de
+//= fora por decisao de 2026-08-08.
+//=
+//= Nao foi so escopo. As duas que sairam sao sistema de UI do
+//= cliente, com metade da configuracao do lado de la
+//= (CLAUDE.md secao 4.9): a janela de Combinacao e a de
+//= transformacao nao estao montadas neste cliente, e um NPC
+//= que as abrisse nao faria nada. Pela mesma razao, os tres
+//= pergaminhos "Combinador" do bRO ficaram fora da lista - o
+//= registro esta no npc/guerra/barters_guerra.yml.
+//=
+//= A MERCADORIA dela vive naquele arquivo, nao aqui: dezoito
+//= equipamentos e dez consumiveis, nos precos do browiki. Os
+//= 32 itens foram validados um a um antes de entrar (existe no
+//= servidor, tem entrada no itemInfo.lua, arte completa) -
+//= item sem arte entrega CAIXA DE ERRO ao jogador.
+//=
+//= A fala dela e do dono, palavra por palavra. So os acentos
+//= que faltavam foram postos ("ja" -> "ja" com acento, "a
+//= ativa" -> "a" com crase); o "tava" e coloquial de
+//= proposito e ficou.
+//===== Os dois guardas ======================================
+//= Sprite 966 (4_M_RUSKNIGHT), o MESMO dos dois Guarda da
+//= Ordem que ja existem em comodo 221,184 e 224,184
+//= (npc/guerra/flores_da_ordem.txt) - e de proposito: e a
+//= mesma Ordem, e o jogador reconhece a farda.
+//=
+//= Ficam nos dois cantos da boca do corredor, virados para
+//= dentro. As direcoes seguem a tabela do maquina.txt, que e
+//= empirica e nao a intuicao de ponto cardeal:
+//=
+//=     6 (leste)  desenha o NPC virado para a DIREITA
+//=     4 (sul)    desenha o NPC virado para a ESQUERDA
+//=
+//= Entao o da esquerda (38,28) usa 6 e o da direita (49,28)
+//= usa 4, e os dois olham para quem entra.
+//=
+//= So falam, e cada um tem UMA fala - nao ha menu, nao ha
+//= estado. As duas sao do dono, palavra por palavra.
+//===== Notas ================================================
+//= O `checkweight` ANTES de pagar nao e zelo: a Moeda do
+//= Explorador e `NoDrop`, entao com a bolsa cheia o getitem
+//= perderia a moeda em vez de larga-la no chao - e o jogador
+//= teria entregado a missao de graca. A conferencia vem antes
+//= de qualquer `erasequest`, para que uma bolsa cheia nao
+//= consuma missao nenhuma.
+//=
+//= Sprites, conferidos no npcidentity.lub e no data.grf DESTE
+//= cliente (a regra desde a armadilha do 10605):
+//=   837    JT_2_BULLETIN_BOARD    as tres placas
+//=   10007  JT_PORTAL              o Teleportador
+//=   564    JT_2_VENDING_MACHINE1  a Maquina de Troca, o mesmo
+//=          sprite da Maquina de Prontera e da de Comodo
+//=   894    JT_4_F_KHELLISIA       a Opheliac
+//=   966    JT_4_M_RUSKNIGHT       os dois guardas, o mesmo dos
+//=          Guarda da Ordem de Comodo
+//=
+//= A MERCADORIA da Maquina de Troca NAO esta neste arquivo -
+//= vive em npc/guerra/barters_guerra.yml, como a da outra
+//= Maquina. Loja de troca nao roda script, por isso sao dois
+//= NPCs: este, que dialoga, e uma loja flutuante sem mapa.
+//=
+//= Os destinos do Teleportador foram conferidos nas duas
+//= travas: `.rsw` no GRF (senao o cliente cai E prende o
+//= personagem la) e celula andavel no map_cache.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca NESTE arquivo pega com @reloadscript.
+//= Mudanca nas MISSOES (db/guerra/quest_db.yml) pega com
+//= @reloadquestdb.
+//= Mudanca na MERCADORIA pega com @reloadbarterdb.
+//============================================================
+
+// ---------------------------------------------------------------
+// As tres placas de missao
+// ---------------------------------------------------------------
+auction_02,59,34,4	script	Missões A#ordem_a	837,{
+	// Qual placa e esta: sai do pedaco depois do `#` do nome. As
+	// tres dividem este script e as tabelas do OnInit, entao este
+	// e o unico jeito de uma duplicata saber quem e.
+	.@g$ = strnpcinfo(2);
+	if (.@g$ == "ordem_a")      .@g = 0;
+	else if (.@g$ == "ordem_b") .@g = 1;
+	else                        .@g = 2;
+
+	.@ini = .ini[.@g];
+	.@fim = .fim[.@g];
+	.@esp = .espera[.@g];
+
+	mes "[" + strnpcinfo(1) + "]";
+	mes "Um quadro de cortica tomado de recortes,";
+	mes "cada um com o carimbo da ^0000FFOrdem dos Exploradores^000000.";
+	mes "Sao pedidos de caçada - todos dentro de memórias,";
+	mes "e todos pagos em ^0000FFMoeda do Explorador^000000.";
+	next;
+
+	// O estado de cada missao do lote. checkquest(...,HUNTING):
+	//   -1 nunca pegou   0 em andamento   2 pronta
+	.@nova = 0; .@pronta = 0; .@andando = 0;
+	mes "[" + strnpcinfo(1) + "]";
+	for (.@i = .@ini; .@i <= .@fim; .@i++) {
+		.@e = checkquest(.quest[.@i], HUNTING);
+		if (.@e == -1) {
+			mes " ^777777" + .nome$[.@i] + "^000000";
+			.@nova++;
+		} else if (.@e == 2) {
+			mes " ^0000FF" + .nome$[.@i] + "^000000  ^0000FF(pronta)^000000";
+			.@pronta++;
+		} else {
+			mes " " + .nome$[.@i] + "  ^777777(em andamento)^000000";
+			.@andando++;
+		}
+	}
+	next;
+
+	mes "[" + strnpcinfo(1) + "]";
+	mes "Você tem ^0000FF" + countitem(.moeda) + "^000000 " +
+	    ((countitem(.moeda) == 1) ? "Moeda do Explorador" :
+	                                "Moedas do Explorador") + ".";
+	next;
+
+	switch (select("Pegar os pedidos que faltam:" +
+	               "Prestar contas das caçadas prontas:" +
+	               "Só estava olhando")) {
+
+	// ----- pegar --------------------------------------------------
+	case 1:
+		if (.@nova == 0) {
+			mes "[" + strnpcinfo(1) + "]";
+			mes "Você já está com todos os pedidos deste quadro.";
+			mes "Não há recorte novo para levar.";
+			close;
+		}
+		// So o que ainda nao foi pego: `setquest` de quest repetida
+		// deixa aviso no log e nao acrescenta nada.
+		for (.@i = .@ini; .@i <= .@fim; .@i++)
+			if (checkquest(.quest[.@i], HAVEQUEST) == -1)
+				setquest .quest[.@i];
+
+		mes "[" + strnpcinfo(1) + "]";
+		mes "Você copia ^0000FF" + .@nova + "^000000 " +
+		    ((.@nova == 1) ? "pedido" : "pedidos") + " para o seu diário.";
+		mes "A Ordem não cobra prazo: vá quando puder,";
+		mes "e volte quando tiver o que contar.";
+		close;
+
+	// ----- entregar -----------------------------------------------
+	case 2:
+		if (.@pronta == 0) {
+			mes "[" + strnpcinfo(1) + "]";
+			if (.@andando > 0) {
+				mes "Nenhuma caçada fechada ainda.";
+				mes "A Ordem paga por serviço terminado.";
+			} else {
+				mes "Você não tem o que prestar contas.";
+				mes "Leve os pedidos primeiro.";
+			}
+			close;
+		}
+
+		// A trava do dia. PLAYTIME devolve 0 enquanto nao deu 6h;
+		// -1 (nunca pegou) e 2 (ja passou) liberam.
+		if (checkquest(.@esp, PLAYTIME) == 0) {
+			mes "[" + strnpcinfo(1) + "]";
+			mes "O quadro já foi fechado hoje.";
+			mes "A Ordem só reabre a escrita às ^0000FFseis da manhã^000000 -";
+			mes "é quando o escrivão chega.";
+			close;
+		}
+
+		.@moedas = 0;
+		.@ganho = 0;
+		for (.@i = .@ini; .@i <= .@fim; .@i++)
+			if (checkquest(.quest[.@i], HUNTING) == 2) {
+				.@moedas += .paga[.@i];
+				.@ganho  += .exp[.@i];
+			}
+
+		// ANTES de apagar quest nenhuma. A moeda e NoDrop: com a
+		// bolsa cheia o getitem a PERDERIA em vez de larga-la no
+		// chao, e a caçada teria sido de graca.
+		if (!checkweight(.moeda, .@moedas)) {
+			mes "[" + strnpcinfo(1) + "]";
+			mes "O escrivão olha a sua bolsa e balança a cabeça.";
+			mes "Não há onde guardar ^0000FF" + .@moedas + "^000000 " +
+			    ((.@moedas == 1) ? "moeda" : "moedas") + ".";
+			mes "Abra espaço e volte - o pedido continua seu.";
+			close;
+		}
+
+		getitem .moeda, .@moedas;
+		getexp .@ganho, .@ganho;
+
+		// Apaga e repoe na mesma passada: e o que faz o jogador nao
+		// precisar voltar amanha so para pegar de novo.
+		for (.@i = .@ini; .@i <= .@fim; .@i++)
+			if (checkquest(.quest[.@i], HUNTING) == 2) {
+				erasequest .quest[.@i];
+				setquest .quest[.@i];
+			}
+
+		// A espera. Apagar antes de por de novo e o que reinicia o
+		// prazo para o proximo 06:00.
+		if (checkquest(.@esp, HAVEQUEST) != -1)
+			erasequest .@esp;
+		setquest .@esp;
+
+		mes "[" + strnpcinfo(1) + "]";
+		mes "^0000FF" + .@pronta + "^000000 " +
+		    ((.@pronta == 1) ? "caçada conferida" : "caçadas conferidas") +
+		    " e assinada" + ((.@pronta == 1) ? "" : "s") + ".";
+		mes "A Ordem paga ^0000FF" + .@moedas + "^000000 " +
+		    ((.@moedas == 1) ? "Moeda do Explorador" :
+		                       "Moedas do Explorador") + ".";
+		next;
+		mes "[" + strnpcinfo(1) + "]";
+		mes "Os recortes já foram trocados pelos de amanhã.";
+		mes "Pode ir caçando; a escrita reabre às seis.";
+		close;
+
+	case 3:
+		mes "[" + strnpcinfo(1) + "]";
+		mes "O quadro fica. A Ordem também.";
+		close;
+	}
+	end;
+
+OnInit:
+	// AS QUATRO TABELAS SAO LIDAS PELO MESMO INDICE. Mexer numa sem
+	// mexer nas outras troca o pagamento de missao, sem erro nenhum.
+	//
+	// O OnInit roda uma vez por NPC, entao roda TRES vezes (o
+	// original e as duas duplicatas) - as tres escrevem os mesmos
+	// valores por cima, o que e inofensivo. As tabelas ficam num
+	// lugar so por isso mesmo.
+
+	// As quests. Os IDs e os alvos moram em db/guerra/quest_db.yml.
+	setarray .quest[0],
+		30000, 30002, 30003, 30004, 30005, 30006, 30007, 30008,  // A
+		30020, 30021, 30022,                                     // B
+		30030, 30031, 30032, 30033;                              // C
+
+	// O nome que o jogador le. E o nome PT da instancia, o mesmo de
+	// db/guerra/instance_db.yml - nome de instancia e CHAVE, nao
+	// rotulo, entao estes tem de bater com os de la.
+	setarray .nome$[0],
+		"Batalha dos Orcs", "Memórias de Sarah",
+		"Palácio das Mágoas", "Hospital Abandonado",
+		"Aos Pés do Rei", "Fábrica do Terror", "Sonho Sombrio",
+		"Covil de Vermes",
+		"Lago de Bakonawa", "Sarah vs Fenrir", "Torre do Demônio",
+		"Vila dos Porings", "Caverna do Polvo",
+		"Quarto Crescente", "Maldição de Glastheim";
+
+	// Moedas por missao. Os valores do bRO.
+	setarray .paga[0],
+		5, 5, 5, 7, 10, 5, 10, 5,
+		7, 25, 5,
+		5, 5, 7, 10;
+
+	// EXP de base e de classe, o mesmo numero para os dois. NAO
+	// passa pela taxa de 10x - ver o cabecalho.
+	setarray .exp[0],
+		200000, 200000, 600000, 800000, 800000, 800000, 800000, 600000,
+		800000, 800000, 400000,
+		50000, 100000, 1000000, 800000;
+
+	// O intervalo de cada placa dentro das tabelas acima, e a
+	// quest de espera de cada uma.
+	setarray .ini[0],    0,  8, 11;
+	setarray .fim[0],    7, 10, 14;
+	setarray .espera[0], 30040, 30041, 30042;
+
+	// O ID mora aqui e nao espalhado pelo corpo: se a moeda um dia
+	// mudar de ID, muda-se numa linha, e vale para as tres placas.
+	.moeda = 25737;   // Moeda do Explorador, db/guerra/item_db.yml
+	end;
+}
+
+// As outras duas placas. Mesmo codigo, mesmas tabelas; so o pedaco
+// depois do `#` muda, e e ele que diz qual lote cada uma oferece.
+auction_02,59,36,4	duplicate(Missões A#ordem_a)	Missões B#ordem_b	837
+auction_02,59,38,4	duplicate(Missões A#ordem_a)	Missões C#ordem_c	837
+
+
+// ---------------------------------------------------------------
+// A Opheliac - a Troca de Moedas
+// ---------------------------------------------------------------
+// Ver a secao "A Opheliac, e o que ela NAO faz", no cabecalho: aqui
+// ela SO troca. A mercadoria vive em npc/guerra/barters_guerra.yml,
+// na loja flutuante `Opheliac#loja`.
+auction_02,44,41,4	script	Opheliac	894,{
+	mes "[Opheliac]";
+	mes "Graças aos Deuses a Ordem dos Exploradores";
+	mes "voltou à ativa!";
+	next;
+	mes "[Opheliac]";
+	mes "Eu já te contei a história que ficamos nos";
+	mes "bunkers por mais de 15 dias, quando saímos";
+	mes "tudo estava destruído e o pessoal de preto";
+	mes "da Ordem tava pelas ruas. Foi assustador!";
+	next;
+	mes "[Opheliac]";
+	mes "Mas vamos aos negócios novamente!";
+
+	// `close2` e nao `close`, pelo mesmo motivo das duas Maquinas:
+	// fecha a caixa mas mantem o jogador preso ao NPC, que e o que
+	// permite a janela de troca abrir em seguida.
+	close2;
+	callshop "Opheliac#loja";
+	end;
+}
+
+
+// ---------------------------------------------------------------
+// Os dois guardas
+// ---------------------------------------------------------------
+// So falam. O sufixo depois do `#` e o que os separa; o jogador le
+// so o pedaco antes dele, entao os dois se chamam "Guarda da Ordem"
+// na tela - como os outros dois, em Comodo.
+//
+// Facing 6 no da esquerda e 4 no da direita: os dois olham para
+// dentro, para quem sobe o corredor. Ver o cabecalho.
+auction_02,38,28,6	script	Guarda da Ordem#ordem_esq	966,{
+	mes "[Guarda da Ordem]";
+	mes "A Ordem dos Exploradores é um patrimônio";
+	mes "histórico do Ragnarok Contemporâneo!";
+	mes "A Ordem não poderia deixar tudo acabar";
+	mes "por conta de negligências!";
+	close;
+}
+
+auction_02,49,28,4	script	Guarda da Ordem#ordem_dir	966,{
+	mes "[Guarda da Ordem]";
+	mes "O Objetivo da Ordem é manter um legado de";
+	mes "algo que poderia ter sido mais.";
+	mes "E um dia quem sabe ultrapassemos todas as";
+	mes "barreiras e possamos chegar ao desconhecido";
+	mes "maravilhoso!?!";
+	close;
+}
+
+
+// ---------------------------------------------------------------
+// O Teleportador
+// ---------------------------------------------------------------
+// Leva a PORTA da instancia, nao para dentro dela: quem abre a
+// memoria continua sendo a NPC de entrada de cada uma. Isso e de
+// proposito - a instancia tem gate de nivel e de espera, e nao
+// cabe a este NPC pular nenhum dos dois.
+auction_02,37,39,4	script	Teleportador#ordem	10007,{
+	mes "[Teleportador]";
+	mes "O aparelho da Ordem abre passagem para a";
+	mes "porta de qualquer memória da lista.";
+	mes "A travessia custa ^0000FF" + .taxa + "^000000 zeny.";
+	next;
+
+	.@i = select(.menu$) - 1;
+	if (.@i >= getarraysize(.mapa$)) {
+		mes "[Teleportador]";
+		mes "O aparelho esfria e volta a zumbir baixo.";
+		close;
+	}
+
+	if (Zeny < .taxa) {
+		mes "[Teleportador]";
+		mes "Não há zeny suficiente.";
+		mes "A travessia custa ^0000FF" + .taxa + "^000000, e você tem " +
+		    "^0000FF" + Zeny + "^000000.";
+		close;
+	}
+
+	Zeny -= .taxa;
+	mes "[Teleportador]";
+	mes "Boa caçada.";
+	close2;
+	warp .mapa$[.@i], .mx[.@i], .my[.@i];
+	end;
+
+OnInit:
+	.taxa = 5000;   // zeny por travessia, como no bRO
+
+	// UMA TABELA SO, EM QUATRO COLUNAS ALINHADAS, e o MENU SAI DELA -
+	// nao ha uma segunda lista de nomes para sair de sincronia. Ver a
+	// secao "O bug do Teleportador" no cabecalho: em 2026-08-08 o menu
+	// e os destinos foram escritos em ordens diferentes e o
+	// Teleportador levou ao lugar errado nos catorze.
+	//
+	// A ordem e a mesma das instancias na lista das placas (grupo A,
+	// depois B, depois C), para que os dois se leiam juntos.
+	//
+	// Cada destino foi conferido nas duas travas que derrubam cliente:
+	//   1) o mapa tem .rsw no data.grf deste cliente;
+	//   2) a celula e andavel no map_cache do rAthena.
+	// Mapa do rAthena pos-2021 sem .rsw no GRF derruba o cliente E
+	// PRENDE o personagem la - CLAUDE.md secao 4.6.
+	setarray .dest$[0],
+		"Batalha dos Orcs",      "Memórias de Sarah",
+		"Palácio das Mágoas",    "Hospital Abandonado",
+		"Aos Pés do Rei",         "Fábrica do Terror",
+		"Sonho Sombrio",         "Covil de Vermes",
+		"Lago de Bakonawa",      "Sarah vs Fenrir",
+		"Torre do Demônio",       "Vila dos Porings",
+		"Caverna do Polvo",      "Quarto Crescente",
+		"Maldição de Glastheim";
+	setarray .mapa$[0],
+		"gef_fild10", "dali",
+		"dali02",     "ma_dun01",
+		"verus04",    "xmas",
+		"moc_para01", "dali",
+		"ma_scene01", "dali02",
+		"dali02",     "prt_fild05",
+		"mal_dun01",  "rachel",
+		"glast_01";
+	setarray .mx[0],
+		233, 133,
+		 46, 151,
+		 75, 234,
+		 26,  85,
+		172,  92,
+		137, 146,
+		152, 173,
+		204;
+	setarray .my[0],
+		203, 108,
+		128,   8,
+		117, 298,
+		 98,  64,
+		175, 141,
+		115, 235,
+		230, 138,
+		268;
+
+	// A trava que faltava. Coluna a menos numa das quatro desalinha
+	// tudo dali para baixo, e em jogo isso so aparece como "o
+	// Teleportador me levou para o lugar errado".
+	.@n = getarraysize(.dest$);
+	if (.@n != getarraysize(.mapa$) || .@n != getarraysize(.mx) ||
+	    .@n != getarraysize(.my)) {
+		debugmes "Ordem dos Exploradores: as tabelas do Teleportador " +
+		         "estao com tamanhos diferentes - destinos DESALINHADOS.";
+		end;
+	}
+
+	// O menu sai da MESMA tabela. A ultima entrada e a saida, e o
+	// corpo a reconhece por ser a primeira DEPOIS do fim de .mapa$.
+	.menu$ = "";
+	for (.@i = 0; .@i < .@n; .@i++)
+		.menu$ = .menu$ + .dest$[.@i] + ":";
+	.menu$ = .menu$ + "Deixa para depois";
+	end;
+}
+
+
+// ---------------------------------------------------------------
+// A Maquina de Troca
+// ---------------------------------------------------------------
+// Sprite 564, o mesmo da Maquina de Prontera e da de Comodo, e de
+// proposito: e a mesma familia de aparelho, e o jogador reconhece.
+//
+// NAO e `duplicate` daquela. Aquela vende dezoito itens por Moeda
+// Nova; esta converte moeda em moeda. Mercadoria diferente, linha
+// propria no npc/guerra/barters_guerra.yml.
+auction_02,50,39,4	script	Máquina de Troca	564,{
+	mes "[Máquina de Troca]";
+	mes "Um irmão mais velho da máquina de Prontera,";
+	mes "com duas fendas em vez de uma.";
+	next;
+
+	.@saldo = countitem(.moeda);
+	mes "[Máquina de Troca]";
+	if (.@saldo == 0) {
+		mes "Você não tem nenhuma";
+		mes "^0000FFMoeda do Explorador^000000.";
+		mes "O mostrador acende assim mesmo.";
+	} else {
+		mes "Você tem ^0000FF" + .@saldo + "^000000 " +
+		    ((.@saldo == 1) ? "Moeda do Explorador" :
+		                      "Moedas do Explorador") + ".";
+		mes "Dá para trocar ^0000FF" + (.@saldo / 10) + "^000000 " +
+		    (((.@saldo / 10) == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+	}
+
+	// `close2` e nao `close`: fecha a caixa mas mantem o jogador
+	// preso ao NPC, que e o que permite a janela de troca abrir em
+	// seguida. Com `close` a loja nao abriria. O mesmo idioma da
+	// npc/guerra/maquina.txt.
+	close2;
+	callshop "Ordem#loja";
+	end;
+
+OnInit:
+	.moeda = 25737;   // Moeda do Explorador, db/guerra/item_db.yml
+	end;
+}
+
+
+// ---------------------------------------------------------------
+// Os dois portais
+// ---------------------------------------------------------------
+// A entrada e `1,0`: pega so as tres celulas coladas na porta
+// (x115-117, y73). Com `1,1` pegaria seis, e o jogador seria
+// sugado ao andar pelo patio.
+alberta,116,73,0	warp	ordem_entrada	1,0,auction_02,43,21
+
+// A saida fica na MESMA celula do warp do rAthena que este arquivo
+// desliga. Empilhar funciona: o laco do npc_touch_area_allnpc
+// continua procurando depois de achar um NPC desligado
+// (npc.cpp:1978, `case 1: f = 0; break;`).
+//
+// A chegada de la e 43,21 e nao 43,18: o raio `1,1` deste warp
+// cobre y16-18, e chegar dentro dele devolveria o jogador a
+// Alberta na hora.
+auction_02,43,17,0	warp	ordem_saida	1,1,alberta,116,72
+
+
+// ---------------------------------------------------------------
+// A montagem: desliga o que o rAthena deixou no lugar
+// ---------------------------------------------------------------
+// NPC flutuante, sem mapa e sem sprite - existe so pelo OnInit.
+// Ver a secao "O que este arquivo desliga do rAthena", no
+// cabecalho, para o porque de cada um dos cinco.
+-	script	#ordem_montagem	-1,{
+OnInit:
+	// O warp 43,17 -> lighthalzen. Substituido pelo `ordem_saida`
+	// acima, que leva a Alberta como no bRO.
+	disablenpc "auction_enterance_lhz";
+
+	// A porta de Lighthalzen. Levava para dentro deste salao
+	// dizendo "Auction Hall" - com a Ordem aqui, viraria uma
+	// segunda entrada com o nome errado.
+	disablenpc "Auction Hall Guide#lhz";
+	disablenpc "Information Post#lhz";
+
+	// Os tres do salao. O leilao esta desligado no servidor
+	// (`feature.auction: off`), entao nao fazem nada - so
+	// ocupariam a sala.
+	disablenpc "Auction Broker#lhz1";
+	disablenpc "Auction Broker#lhz2";
+	disablenpc "Auction Broker#lhz3";
+	end;
+}

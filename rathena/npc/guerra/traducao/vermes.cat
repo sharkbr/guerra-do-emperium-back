@@ -1,0 +1,1005 @@
+# Catalogo de traducao PT-BR - grupo "vermes"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/FacewormsNest.txt  (331 textos)
+#: npc/re/instances/FacewormsNest.txt#1 (mes)
+- "You have too many kind of belongings. Let's try again after reducing the kind of items."
++ ""
+#: npc/re/instances/FacewormsNest.txt#2 (mes)
+- "Your belongings are too heavy to continue. Let's try again after reducing the weight."
++ ""
+#: npc/re/instances/FacewormsNest.txt#3 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#4 (mes)
+- "I am still living in the memory. Make more memories..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#5 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#6 (mes)
+- "Oh are you level 140 yet? I won't talk to any weak adventurers."
++ ""
+#: npc/re/instances/FacewormsNest.txt#7 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#8 (mes)
+- "When I was a young girl many years ago there was a man who I had crush on. I didn't know to tell him how I felt..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#9 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#10 (mes)
+- "I used to tease his Peco Peco and wanted him to notice that I was interested. This went on and on for a while."
++ ""
+#: npc/re/instances/FacewormsNest.txt#11 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#12 (mes)
+- "Then we started dating somehow. It's still embarrasing to talk about it."
++ ""
+#: npc/re/instances/FacewormsNest.txt#13 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#14 (mes)
+- "Anyway, we got married when we became old enough to marry. He used to say sorry for not being able to afford to buy a ring for me."
++ ""
+#: npc/re/instances/FacewormsNest.txt#15 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#16 (mes)
+- "It has been 40 years since we were married and he still says ^0000ff'Darling~ Do you want to have a ring?'^000000."
++ ""
+#: npc/re/instances/FacewormsNest.txt#17 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#18 (mes)
+- "I told him.. What good is a ring for an old lady?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#19 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#20 (mes)
+- "I should have stopped him. I still remember his face early."
++ ""
+#: npc/re/instances/FacewormsNest.txt#21 (select)
+- "What happened to him?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#22 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#23 (mes)
+- "He had not came back since he left home to buy a ring."
++ ""
+#: npc/re/instances/FacewormsNest.txt#24 (mes)
+- "^0000ffThe old lady turned her face down with reddened eyes.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#25 (select)
+- "Stop talking.:Show the ring from the Faceworm's Nest."
++ ""
+#: npc/re/instances/FacewormsNest.txt#26 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#27 (mes)
+- "What about this ring?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#28 (mes)
+- "[Jeum-sun]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#29 (mes)
+- "Oh... Darling~"
++ ""
+#: npc/re/instances/FacewormsNest.txt#30 (mes)
+- "^0000ffThe lady read an inscription inside the ring and started weeping."
++ ""
+#: npc/re/instances/FacewormsNest.txt#31 (mes)
+- "[Jeum-sun, my darling flower]^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#32 (mes)
+- "^0000ffYou sense a warm energy emanating. Maybe this is the wish of the man who made this ring.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#33 (mes)
+- "The warm energy has inspired you with strength."
++ ""
+#: npc/re/instances/FacewormsNest.txt#34 (mes)
+- "The lady keeps crying over and over holding a ring. It seems to be no use talking to her right now."
++ ""
+#: npc/re/instances/FacewormsNest.txt#35 (mes)
+- "Sadly, this woman does not seem to remember the past because of abrupt emotional changes. Let's talk carefully and listen to her story."
++ ""
+#: npc/re/instances/FacewormsNest.txt#36 (mes)
+- "You have too many types of belongings. Let's try again after reducing the types of items."
++ ""
+#: npc/re/instances/FacewormsNest.txt#37 (mes)
+- "Your belongings are too heavy to continue. Let's try again after reducing the weight."
++ ""
+#: npc/re/instances/FacewormsNest.txt#38 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#39 (mes)
+- "Fortune or fame is not important. The most important thing is family."
++ ""
+#: npc/re/instances/FacewormsNest.txt#40 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#41 (mes)
+- "Are you at least level 140 yet?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#42 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#43 (mes)
+- "I have a blurry memory of when I used to travel with my father's armed-merchant group."
++ ""
+#: npc/re/instances/FacewormsNest.txt#44 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#45 (mes)
+- "I vaguely remember everyone of the group were scattered after being attacked by a giant snake-like creature."
++ ""
+#: npc/re/instances/FacewormsNest.txt#46 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#47 (mes)
+- "I had lost my family at that time. I do not clearly remember even their faces."
++ ""
+#: npc/re/instances/FacewormsNest.txt#48 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#49 (mes)
+- "Now I've made my own armed-merchant group and got my life back. But the memory of my past keeps haunting me."
++ ""
+#: npc/re/instances/FacewormsNest.txt#50 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#51 (mes)
+- "I just stopped by this town to possibly find a record of my family and the armed-merchant group but so far I've found nothing."
++ ""
+#: npc/re/instances/FacewormsNest.txt#52 (select)
+- "Stop talking.:Show him the Old Photo Album"
++ ""
+#: npc/re/instances/FacewormsNest.txt#53 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#54 (mes)
+- "Yes! I remembered. This is the one who used to work for my father's armed-merchant group."
++ ""
+#: npc/re/instances/FacewormsNest.txt#55 (mes)
+- "[Sergio]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#56 (mes)
+- "Oh my... There are other pictures here too..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#57 (mes)
+- "^0000ffA smile of lonely satisfaction spreads over the face of Sergio while looking at a photo album.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#58 (mes)
+- "^0000ffA gentle energy surrounds Sergio.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#59 (mes)
+- "You are touched by seeing the satisfaction on Sergio's face."
++ ""
+#: npc/re/instances/FacewormsNest.txt#60 (mes)
+- "Sergio keeps looking at the photo album. Let's leave him alone."
++ ""
+#: npc/re/instances/FacewormsNest.txt#61 (mes)
+- "You can talk to Sergio again when you pick up a new photo album from the Faceworm's Nest."
++ ""
+#: npc/re/instances/FacewormsNest.txt#62 (mes)
+- "You have too many types of belongings. Let's try again after reducing the types of items."
++ ""
+#: npc/re/instances/FacewormsNest.txt#63 (mes)
+- "Your belongings are too heavy to continue. Let's try again after reducing the weight."
++ ""
+#: npc/re/instances/FacewormsNest.txt#64 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#65 (mes)
+- "What can I do for you?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#66 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#67 (mes)
+- "Are you at least level 140 yet?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#68 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#69 (mes)
+- "I used to be a servant to a very wealthy lady. She was always kind to me but she suffered from a severe cough that wouldn't go away unless she took a special pill."
++ ""
+#: npc/re/instances/FacewormsNest.txt#70 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#71 (mes)
+- "I used to get the pill from a group of armed-merchants but I heard that they were attacked by a snake and that's when I couldn't get any more pills."
++ ""
+#: npc/re/instances/FacewormsNest.txt#72 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#73 (mes)
+- "I searched everywhere but no one could get that pill for me so eventually my lady passed away. If it wasn't for that slithering..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#74 (select)
+- "Do you want to revenge?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#75 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#76 (mes)
+- "Well..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#77 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#78 (mes)
+- "Yes... But, I have nothing to do with that snake. I am just a worthless servant who once served for my lady."
++ ""
+#: npc/re/instances/FacewormsNest.txt#79 (mes)
+- "^0000ffYou catch a glimpse of complicated rage and sorrow in his eyes.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#80 (select)
+- "Stop talking.:Show him the Old Pill."
++ ""
+#: npc/re/instances/FacewormsNest.txt#81 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#82 (mes)
+- "Wait! Where did you get this?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#83 (select)
+- "I killed a snake..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#84 (mes)
+- "[Dol-Seoi]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#85 (mes)
+- "This pill... My lady, if I had this pill..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#86 (mes)
+- "^0000ffHe begins to weep like a wounded Muka. She must have meant a lot to him...^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#87 (mes)
+- "^0000ffI feel gentle energy around Dol-Seoi.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#88 (mes)
+- "Dol-Seoi is standing absent-mindedly clutching the Old Pill. Let's leave him alone now."
++ ""
+#: npc/re/instances/FacewormsNest.txt#89 (mes)
+- "You can talk to Dol-Seoi again if you get another Old Pill from the Faceworm's Nest."
++ ""
+#: npc/re/instances/FacewormsNest.txt#90 (mes)
+- "You have too many types of belongings. Let's try again after reducing the types of items."
++ ""
+#: npc/re/instances/FacewormsNest.txt#91 (mes)
+- "Your belongings are too heavy to continue. Let's try again after reducing the weight."
++ ""
+#: npc/re/instances/FacewormsNest.txt#92 (mes)
+- "[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#93 (mes)
+- "..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#94 (mes)
+- "[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#95 (mes)
+- "Unless you're level 140, I won't have a real conversation with you."
++ ""
+#: npc/re/instances/FacewormsNest.txt#96 (mes)
+- "^0000ffIt looks like a dead soul but you don't feel maliciousness from it. His thoughts have been delivered piece by piece so it isn't easy to understand.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#97 (mes)
+- "^999999[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#98 (mes)
+- "Keaton... Not good at speaking.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#99 (mes)
+- "^999999[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#100 (mes)
+- "Keaton has died long time ago. Keaton is not bad.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#101 (mes)
+- "^999999[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#102 (mes)
+- "Keaton... Need bracelet, that is important. Keaton's friend gave the bracelet.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#103 (mes)
+- "^999999[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#104 (mes)
+- "Keaton, will go after a snake to find a bracelet. The bad snake killed keaton.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#105 (select)
+- "Stop talking.:Show him the Rusty Bracelet."
++ ""
+#: npc/re/instances/FacewormsNest.txt#106 (mes)
+- "^999999[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#107 (mes)
+- "It is the bracelet of Keaton!!^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#108 (mes)
+- "^999999[Keaton]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#109 (mes)
+- "Keaton...glad. Defeat bad snake!!^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#110 (mes)
+- "^0000ffKeaton seems to shine brighter.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#111 (mes)
+- "Keaton's soul seems to be smiling. Best to give him whatever peace he can have for now."
++ ""
+#: npc/re/instances/FacewormsNest.txt#112 (mes)
+- "Keaton is very sad maybe it is because the bracelet was broken. Bring him any other Rusty Bracelets found in the Faceworm's Nest."
++ ""
+#: npc/re/instances/FacewormsNest.txt#114 (mes)
+- "There's no sign because no one updates the record."
++ ""
+#: npc/re/instances/FacewormsNest.txt#115 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#116 (atrib)
+- "Second"
++ ""
+#: npc/re/instances/FacewormsNest.txt#117 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#118 (atrib)
+- "Minute"
++ ""
+#: npc/re/instances/FacewormsNest.txt#120 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#121 (atrib)
+- "Second"
++ ""
+#: npc/re/instances/FacewormsNest.txt#122 (atrib)
+- " with ^ff0044"
++ ""
+#: npc/re/instances/FacewormsNest.txt#123 (atrib)
+- " party "
++ ""
+#: npc/re/instances/FacewormsNest.txt#124 (atrib)
+- "members"
++ ""
+#: npc/re/instances/FacewormsNest.txt#125 (atrib)
+- "members"
++ ""
+#: npc/re/instances/FacewormsNest.txt#126 (atrib)
+- "^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#127 (mes)
+- "-- Faceworm's Nest Records --"
++ ""
+#: npc/re/instances/FacewormsNest.txt#128 (mes)
+- "Best time belongs to adventurer ^ff0044"
++ ""
+#: npc/re/instances/FacewormsNest.txt#129 (mes)
+- "^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#130 (mes)
+- "."
++ ""
+#: npc/re/instances/FacewormsNest.txt#131 (mes)
+- "Current record time is ^0000ff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#132 (mes)
+- "^000000."
++ ""
+#: npc/re/instances/FacewormsNest.txt#134 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#135 (mes)
+- "You are not qualified enough to enter here. How about visiting other places until you become level 140."
++ ""
+#: npc/re/instances/FacewormsNest.txt#136 (atrib)
+- "Covil de Vermes"
++ ""
+#: npc/re/instances/FacewormsNest.txt#137 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#138 (mes)
+- "You don't have a party? Please come back again after creating a party even if you've come alone."
++ ""
+#: npc/re/instances/FacewormsNest.txt#139 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#140 (mes)
+- "What can I do for you?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#141 (select)
+- "Reserve Faceworm's Nest:What are you doing here?:Stop Talking."
++ ""
+#: npc/re/instances/FacewormsNest.txt#142 (dispbottom)
+- "Memorial Dungeon, '"
++ ""
+#: npc/re/instances/FacewormsNest.txt#143 (dispbottom)
+- "' is already in progress."
++ ""
+#: npc/re/instances/FacewormsNest.txt#144 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#145 (mes)
+- "Oops, my hands are slip off. It is required to activate the craks again."
++ ""
+#: npc/re/instances/FacewormsNest.txt#146 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#147 (mes)
+- "The spaces are under control."
++ ""
+#: npc/re/instances/FacewormsNest.txt#148 (mes)
+- "Please wait for a minute."
++ ""
+#: npc/re/instances/FacewormsNest.txt#149 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#150 (mes)
+- "Okay, I got it. Please come back again if you change your mind."
++ ""
+#: npc/re/instances/FacewormsNest.txt#151 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#152 (mes)
+- "I am researching the dimensional cracks in space here."
++ ""
+#: npc/re/instances/FacewormsNest.txt#153 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#154 (mes)
+- "My research is to stabilize the space here with magic to utilize it for dimensional travel."
++ ""
+#: npc/re/instances/FacewormsNest.txt#155 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#156 (mes)
+- "This particular crack in space goes to a memory of the past. Many adventurers have been in there but no one will tell me what is in there..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#157 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#158 (mes)
+- "And there's this strange sign here that records names and times on it which I can only assume belongs to those adventurers."
++ ""
+#: npc/re/instances/FacewormsNest.txt#159 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#160 (mes)
+- "Anyways, I can activate the passage for you if you're a party leader."
++ ""
+#: npc/re/instances/FacewormsNest.txt#161 (mes)
+- "[Magic Scholar]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#162 (mes)
+- "The crack in time is not safe enough to pass back and forth. Please come back again if the after effect timer has passed."
++ ""
+#: npc/re/instances/FacewormsNest.txt#163 (mes)
+- "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#164 (mes)
+- "[Interdimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#165 (mes)
+- "Your power level is not high enough to travel the space. Please come back again when you reach at least level 140."
++ ""
+#: npc/re/instances/FacewormsNest.txt#166 (atrib)
+- "Covil de Vermes"
++ ""
+#: npc/re/instances/FacewormsNest.txt#167 (mes)
+- "[Interdimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#168 (mes)
+- "No party? Please come back again after creating a party even if you've come alone."
++ ""
+#: npc/re/instances/FacewormsNest.txt#169 (mes)
+- "[Interdimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#170 (mes)
+- "An unknown error has occurred."
++ ""
+#: npc/re/instances/FacewormsNest.txt#171 (mes)
+- "[Interdimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#172 (mes)
+- "The passage for space travel is not activated yet."
++ ""
+#: npc/re/instances/FacewormsNest.txt#173 (mes)
+- "[Interdimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#174 (mes)
+- "You are not allowed to access the device."
++ ""
+#: npc/re/instances/FacewormsNest.txt#181 (mes)
+- "[Interdimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#182 (mes)
+- "Traces of recent space travel have been detected. Access is denied."
++ ""
+#: npc/re/instances/FacewormsNest.txt#183 (mes)
+- "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000"
++ ""
+#: npc/re/instances/FacewormsNest.txt#184 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#185 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#186 (mes)
+- "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#188 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#189 (mes)
+- "Really? I didn't know that a bounty hunter was coming here."
++ ""
+#: npc/re/instances/FacewormsNest.txt#190 (npctalk)
+- "Chaos: Really? I didn't know that a bounty hunter was coming here."
++ ""
+#: npc/re/instances/FacewormsNest.txt#191 (select)
+- "Wait! It's a misunderstanding."
++ ""
+#: npc/re/instances/FacewormsNest.txt#193 (mes)
+- "["
++ ""
+#: npc/re/instances/FacewormsNest.txt#194 (mes)
+- "]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#195 (mes)
+- "No! I think you're mistaken! We are not bounty hunters..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#197 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#198 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#199 (mes)
+- "No, No need to make an excuse... The faceworm belongs to nobody."
++ ""
+#: npc/re/instances/FacewormsNest.txt#200 (npctalk)
+- "Chaos: No, No need to make an excuse... The faceworm belongs to nobody."
++ ""
+#: npc/re/instances/FacewormsNest.txt#201 (select)
+- "Faceworm?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#203 (mes)
+- "["
++ ""
+#: npc/re/instances/FacewormsNest.txt#204 (mes)
+- "]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#205 (mes)
+- "Faceworm? I've never heard about it."
++ ""
+#: npc/re/instances/FacewormsNest.txt#209 (atrib)
+- "Iris#0"
++ ""
+#: npc/re/instances/FacewormsNest.txt#214 (npctalk)
+- "Chaos: Hahaha, you really never heard about it? Faceworm is the name of a monster which has recently showed up in this area."
++ ""
+#: npc/re/instances/FacewormsNest.txt#215 (npctalk)
+- "Chaos: I don't care. I would not care as long as you don't disturb me."
++ ""
+#: npc/re/instances/FacewormsNest.txt#216 (npctalk)
+- "Iris: Ah~ A gentle breeze~"
++ ""
+#: npc/re/instances/FacewormsNest.txt#217 (npctalk)
+- "Iris: Hehe, the weather has been great. I'm so happy~"
++ ""
+#: npc/re/instances/FacewormsNest.txt#218 (npctalk)
+- "Iris: How about you Chaos?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#219 (npctalk)
+- "Chaos: It will only be for the time being."
++ ""
+#: npc/re/instances/FacewormsNest.txt#220 (npctalk)
+- "Chaos: A black wind has started blowing."
++ ""
+#: npc/re/instances/FacewormsNest.txt#221 (npctalk)
+- "Chaos: Iris! I feel like faceworms are around here. Maybe, the queen's nest is in the deepest side of this forest!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#222 (npctalk)
+- "Iris: Ahah~ Let's take care of it as always like usual ok?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#223 (npctalk)
+- "Chaos: Yes, let's take care of it and go back. Hey, adventurers. Watch out! I'm sure lots of faceworms will be here soon."
++ ""
+#: npc/re/instances/FacewormsNest.txt#233 (cutin)
+- "h_iris02"
++ ""
+#: npc/re/instances/FacewormsNest.txt#234 (mes)
+- "[Iris]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#235 (mes)
+- "Sorry~ I enjoy a gentle breeze so talk to me next time."
++ ""
+#: npc/re/instances/FacewormsNest.txt#238 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#279 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#297 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#298 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#299 (mes)
+- "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#301 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#302 (mes)
+- "Wow, you're fast enough to follow me."
++ ""
+#: npc/re/instances/FacewormsNest.txt#303 (npctalk)
+- "Chaos: Wow, you're fast enough to follow me."
++ ""
+#: npc/re/instances/FacewormsNest.txt#304 (select)
+- "The big one, just right before..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#306 (mes)
+- "["
++ ""
+#: npc/re/instances/FacewormsNest.txt#307 (mes)
+- "]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#308 (mes)
+- "The big one just right before we saw is a boss here?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#310 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#311 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#312 (mes)
+- "No~~ It can't be the faceworm queen."
++ ""
+#: npc/re/instances/FacewormsNest.txt#317 (atrib)
+- "Iris#1"
++ ""
+#: npc/re/instances/FacewormsNest.txt#320 (npctalk)
+- "Chaos: No~~ It can't be the faceworm queen."
++ ""
+#: npc/re/instances/FacewormsNest.txt#321 (npctalk)
+- "Chaos: The one we just saw before is a mutant faceworm."
++ ""
+#: npc/re/instances/FacewormsNest.txt#322 (npctalk)
+- "Chaos: Wait! The dead faceworm's castoff skin might be useful."
++ ""
+#: npc/re/instances/FacewormsNest.txt#323 (npctalk)
+- "Iris: But, if the fight takes too long. The scales might be damaged. They'll be worthless!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#324 (npctalk)
+- "Iris: I heard that skillful hunters are good at taking the scales off super fast."
++ ""
+#: npc/re/instances/FacewormsNest.txt#325 (npctalk)
+- "Iris: Chaos, are you any good at it?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#326 (npctalk)
+- "Chaos: No... Not at all! I use Magnum Break only, so the scales will probably get burned..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#327 (npctalk)
+- "Iris: Useless Chaos."
++ ""
+#: npc/re/instances/FacewormsNest.txt#328 (npctalk)
+- "Chaos: Besides, the one we are looking for is not here. I will go back first, so take care of the rest ok?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#330 (npctalk)
+- "Iris: Chaos! Are you leaving me alone?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#336 (cutin)
+- "h_iris02"
++ ""
+#: npc/re/instances/FacewormsNest.txt#337 (mes)
+- "[Iris]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#338 (mes)
+- "Chaos is a good friend even though he's only able to use Magnum Break..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#342 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#415 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#416 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#417 (mes)
+- "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#419 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#420 (mes)
+- "You're pretty good! But you have to be careful from now on. This narrow canyon seems to be full of dangers."
++ ""
+#: npc/re/instances/FacewormsNest.txt#421 (npctalk)
+- "Chaos: You're pretty good! But you have to be careful from now on. This narrow canyon seems to be full of dangers."
++ ""
+#: npc/re/instances/FacewormsNest.txt#428 (npctalk)
+- "Iris: I do not feel good here. Let's get outta here right now Chaos!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#429 (npctalk)
+- "Iris#2"
++ ""
+#: npc/re/instances/FacewormsNest.txt#430 (npctalk)
+- "Chaos: Ok, let's get out of here. Carefully follow me!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#438 (cutin)
+- "h_iris01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#439 (mes)
+- "[Iris]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#440 (mes)
+- "This canyon. I am not feeling good here. I don't want to stay anymore."
++ ""
+#: npc/re/instances/FacewormsNest.txt#565 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#571 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#591 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#592 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#593 (mes)
+- "Hew. This puddle is weird."
++ ""
+#: npc/re/instances/FacewormsNest.txt#595 (atrib)
+- "Iris#4"
++ ""
+#: npc/re/instances/FacewormsNest.txt#596 (atrib)
+- "Chaos#5"
++ ""
+#: npc/re/instances/FacewormsNest.txt#597 (npctalk)
+- "Chaos: Iris, what is this puddle for?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#598 (npctalk)
+- "Iris: Well, I think it is too big to be the nest of a faceworm."
++ ""
+#: npc/re/instances/FacewormsNest.txt#599 (npctalk)
+- "Chaos: Hmm, okay, should I go down there and check it out?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#600 (npctalk)
+- "Iris: Chaos! Cut the crap."
++ ""
+#: npc/re/instances/FacewormsNest.txt#601 (npctalk)
+- "Chaos: Why not? It doesn't even look that dangerous!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#603 (npctalk)
+- "Iris: Arrghh, Chaos you're such a troublemaker."
++ ""
+#: npc/re/instances/FacewormsNest.txt#604 (npctalk)
+- "Chaos: Ugh! Arrgh!! What is this?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#605 (npctalk)
+- "Iris: Chaos! What is it?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#606 (npctalk)
+- "Chaos: Ah"
++ ""
+#: npc/re/instances/FacewormsNest.txt#607 (npctalk)
+- "Chaos: Argh"
++ ""
+#: npc/re/instances/FacewormsNest.txt#608 (npctalk)
+- "Chaos: Argghh"
++ ""
+#: npc/re/instances/FacewormsNest.txt#609 (npctalk)
+- "Chaos: Argghhhhh"
++ ""
+#: npc/re/instances/FacewormsNest.txt#610 (npctalk)
+- "Chaos: Argghhhhhhh"
++ ""
+#: npc/re/instances/FacewormsNest.txt#611 (npctalk)
+- "Chaos: Argghhhhhhhhh"
++ ""
+#: npc/re/instances/FacewormsNest.txt#612 (npctalk)
+- "Chaos: Argghhhhhhhhhhh!!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#614 (npctalk)
+- "Chaos: Damn, I was close to being eaten alive."
++ ""
+#: npc/re/instances/FacewormsNest.txt#615 (npctalk)
+- "Iris: I asked you what happened dummy!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#616 (npctalk)
+- "Chaos: Uhh, the faceworm queen is crawling up now and it looks like really pissed off. So let's, uh, get outta here."
++ ""
+#: npc/re/instances/FacewormsNest.txt#618 (npctalk)
+- "Iris: Chaos you idiot!!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#625 (cutin)
+- "h_iris01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#626 (mes)
+- "[Iris]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#627 (mes)
+- "Something seems fishy around here. It's dangerous."
++ ""
+#: npc/re/instances/FacewormsNest.txt#633 (mes)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#678 (atrib)
+- "wind"
++ ""
+#: npc/re/instances/FacewormsNest.txt#679 (atrib)
+- "earth"
++ ""
+#: npc/re/instances/FacewormsNest.txt#680 (atrib)
+- "water"
++ ""
+#: npc/re/instances/FacewormsNest.txt#681 (atrib)
+- "its original"
++ ""
+#: npc/re/instances/FacewormsNest.txt#777 (npctalk)
+- "Chaos: You can't even manage to lure the queen to me?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#790 (npctalk)
+- "Chaos: Hey~ We are partners. You can't just keep running alone!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#803 (npctalk)
+- "Chaos: Lure and bring it with you, I can't beat it alone!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#816 (npctalk)
+- "Chaos: Why'd you leave the queen behind? Our lives are at stake here. Pull it together!"
++ ""
+#: npc/re/instances/FacewormsNest.txt#831 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#835 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#856 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#862 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#885 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#891 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#908 (cutin)
+- "h_chaos01"
++ ""
+#: npc/re/instances/FacewormsNest.txt#909 (mes)
+- "[Chaos]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#910 (mes)
+- "Hmm.. You are pretty good, I am impressed."
++ ""
+#: npc/re/instances/FacewormsNest.txt#912 (atrib)
+- "Iris#6"
++ ""
+#: npc/re/instances/FacewormsNest.txt#922 (npctalk)
+- "Chaos: Phew... That was quite a long fight."
++ ""
+#: npc/re/instances/FacewormsNest.txt#923 (npctalk)
+- "Iris: But that is not the one we were looking for."
++ ""
+#: npc/re/instances/FacewormsNest.txt#924 (npctalk)
+- "Chaos: We can't help it. Our equipment is damaged so we should retreat for now."
++ ""
+#: npc/re/instances/FacewormsNest.txt#925 (npctalk)
+- "Iris: Yes, I feel bad that we could not see the Faceworm King. But luckily we weren't hurt."
++ ""
+#: npc/re/instances/FacewormsNest.txt#926 (npctalk)
+- "Chaos: So... Hey, you over there! You're not too shabby."
++ ""
+#: npc/re/instances/FacewormsNest.txt#927 (npctalk)
+- "Chaos: Today's hunting is all yours, I won't touch it."
++ ""
+#: npc/re/instances/FacewormsNest.txt#928 (npctalk)
+- "Chaos: Ahah~ I hoped that there would be some treasure that the merchant prince dropped..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#929 (npctalk)
+- "Iris: Chaos, I am getting tired. Let's go back to the village."
++ ""
+#: npc/re/instances/FacewormsNest.txt#930 (npctalk)
+- "Chaos: Sorry, shall we go?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#934 (cutin)
+- "h_iris02"
++ ""
+#: npc/re/instances/FacewormsNest.txt#935 (mes)
+- "[Iris]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#936 (mes)
+- "That was dangerous. Hehehe..."
++ ""
+#: npc/re/instances/FacewormsNest.txt#939 (mes)
+- "[Dimensional Device]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#940 (mes)
+- "Your time is finished here. You may look arround or go leave. What do you want to do?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#941 (select)
+- "Stop:Return to Dimensional Gap"
++ ""
+#: npc/re/instances/FacewormsNest.txt#950 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#951 (atrib)
+- "Second"
++ ""
+#: npc/re/instances/FacewormsNest.txt#952 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#953 (atrib)
+- "Minute"
++ ""
+#: npc/re/instances/FacewormsNest.txt#955 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#956 (atrib)
+- "Second"
++ ""
+#: npc/re/instances/FacewormsNest.txt#972 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#973 (atrib)
+- "Second"
++ ""
+#: npc/re/instances/FacewormsNest.txt#974 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#975 (atrib)
+- "Minute"
++ ""
+#: npc/re/instances/FacewormsNest.txt#977 (atrib)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#978 (atrib)
+- "Second"
++ ""
+#: npc/re/instances/FacewormsNest.txt#989 (mes)
+- "[Time Manager]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#990 (mes)
+- "What time would you like to return?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#991 (select)
+- "Cancel:1st Stage Start:2nd Stage Start:3rd Stage Start:4th Stage Start:Boss Start:Treasures"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1030 (mes)
+- " people."
++ ""
+#: npc/re/instances/FacewormsNest.txt#1032 (mes)
+- "[Boss Manager]"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1033 (mes)
+- "What time would you like to return?"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1034 (select)
+- "Cancel:1st Boss:2nd Boss:3rd Boss:4th Boss:Final Boss"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1059 (atrib)
+- "1@face"
++ ""

@@ -266,19 +266,19 @@ que existiam depois de plantar o NPC novo em cima.
 
 ## 1f. As instâncias da Ordem dos Exploradores — falta ver no jogo
 
-Aberto em 2026-08-08. A meta é a **Ordem dos Exploradores** (`alberta 116,71` no
-bRO): placas de missão que pagam **Moeda do Explorador** por matar o chefe de
-uma instância. **Ela não existe no rAthena** — nem o NPC, nem as placas, nem a
-moeda (nenhum item com "Explor" no `item_db`). É conteúdo exclusivo do bRO, a
-ser escrito do zero em `npc/guerra/`. Isso fecha uma ponta já prevista: o
-cabeçalho da Moeda Nova em `db/guerra/item_db.yml` lista "troca por Moeda do
-Explorador" como fonte pensada e não feita.
+Aberto em 2026-08-08. **A Ordem dos Exploradores já está construída** — ver a
+§1g. O que continua em aberto é o outro lado: as **instâncias que ela manda
+caçar** nunca foram abertas em jogo, uma a uma.
 
-**Antes da Ordem, as instâncias que ela usa precisam estar validadas em jogo.**
+Isso importa mais agora do que quando esta seção nasceu. Cada uma das 14
+missões escritas aponta para o chefe de uma destas instâncias, e o Id de mob
+de cada alvo foi lido do `monster`/`areamonster` do script, não testado. Uma
+instância que não abre, ou um chefe que não nasce, deixa a missão
+correspondente **impossível sem nada no log**.
 
-**O briefing de construção da Ordem está na §1g**, pronto para uma sessão
-limpa: as 16 missões com Id de mob, as peças, a faixa de Id de quest e — o que
-mais importa — por que `OnNPCKillEvent` não serve.
+**A Vila dos Porings foi vista no jogo em 2026-08-08 e funcionou.** É a
+primeira instância validada, e por isso é também o teste recomendado da Ordem
+inteira (§1g, passo 2). **Faltam 15.**
 
 ### O que já está resolvido, e é quase tudo
 
@@ -343,17 +343,19 @@ cabeçalho dele não diz de onde veio.
 
 **"Sussurro Sombrio"** (Missões C, chefes Espírito/Habitante/Convidado
 *Imortal*) **não foi identificado** — não aparece na lista de instâncias do
-browiki e os chefes parecem variante da Torre do Demônio. Resolver antes de
-montar as placas de Missões C.
+browiki e os chefes parecem variante da Torre do Demônio.
+
+**Deixou de ser bloqueio:** as placas de Missões C foram montadas sem ele, com
+as quatro instâncias que se identificaram (Vila dos Porings, Caverna do Polvo,
+Quarto Crescente e Maldição de Glastheim). Se o Sussurro Sombrio um dia for
+identificado, entra como missão nova — uma linha no `quest_db.yml` e uma na
+tabela do `OnInit`.
 
 ### Como fechar
 
 Entrar em cada uma das 16 e confirmar que abre, que o chefe nasce e que o mapa
 não derruba o cliente. **A conta de teste (grupo 99) serve aqui** — o problema
 dela é trava de item (§7 do `CLAUDE.md`), não instância.
-
-**A Vila dos Porings foi vista no jogo em 2026-08-08 e funcionou.** É a
-primeira instância validada. **Faltam 15.**
 
 ### Os nomes já estão em português (2026-08-08)
 
@@ -370,220 +372,161 @@ E o menu **deixou de estar em ordem alfabética**, porque foi traduzido no
 lugar. Reordenar é seguro — cada par `"texto",Label` anda junto —, mas não foi
 feito.
 
-### Pré-condição para criar o grupo `instancias` na tradução
+### A tradução das instâncias — a pré-condição foi cumprida
 
-**Antes de rodar `--extrair instancias`, proteger o nome da instância no
-`traduz_npcs.py`.** O `.@md_name$ = "..."` casa com o `RE_ATRIB` e entra no
-catálogo como se fosse fala; o `RE_TECNICO`, que protege nome de mapa e item,
-não cobre atribuição a variável. Sem isso, o catálogo oferece o nome da
-instância para tradução e uma segunda tradução divergente **quebra o
-`instance_create`** — falha calada, e só em jogo.
+**Resolvido em 2026-08-09.** O `traduz_npcs.py` ganhou o `nomes_de_instancia()`,
+que lê os `Name:` dos dois `instance_db.yml` e os põe em `tokens_intocaveis` —
+então o `--aplicar` **recusa** traduzir nome de instância, venha de onde vier.
+
+Era preciso porque o `.@md_name$ = "..."` casa com o `RE_ATRIB` e entra no
+catálogo como se fosse fala, e o `RE_TECNICO` não cobre esse caso: ele protege
+literal que está *dentro* da chamada (`warp "gef_fild10"`), e ali a chamada
+recebe uma variável. Uma segunda tradução divergente quebraria o
+`instance_create` — falha calada, e só em jogo.
 
 São **4.910 linhas de `mes`** nos 16, com distribuição muito torta: Sonho
 Sombrio (1.261) e Quarto Crescente (973) são 45% do total; Batalha dos Orcs tem
-55 e Lago de Bakonawa 62.
+55 e Lago de Bakonawa 62. Por isso a tradução é **um grupo por instância** —
+ver §3.
 
 ---
 
-## 1g. A Ordem dos Exploradores — briefing de construção
+## 1g. A Ordem dos Exploradores — falta ver em jogo
 
-Levantado em 2026-08-08 **para ser construído numa sessão limpa**. Nada disso
-existe ainda: nem o NPC, nem a moeda, nem as placas. É conteúdo exclusivo do
-bRO, a ser escrito do zero em `npc/guerra/`.
+**Construída em 2026-08-08.** O briefing que morava aqui saiu: o que ele
+mandava fazer está feito, e o *porquê* de cada decisão foi para o
+`HISTORICO.md` e para os cabeçalhos de
+`npc/guerra/ordem_dos_exploradores.txt` e `db/guerra/quest_db.yml`.
 
-**Ler antes:** §1f (as 16 instâncias) e `ARQUITETURA.md` §4.
+**O que está no ar, e conferido no carregamento:** a moeda (25737) nos dois
+lados, as 15 missões de caçada + 3 de espera, as três placas, o
+Teleportador, a Máquina de Troca, a **Opheliac com a loja de 28 itens**, os
+**dois guardas**, os dois portais e os cinco NPCs do rAthena desligados. O
+map-server subiu sem um `Unknown syntax`, sem aviso de quest descartada, sem
+erro nos seis `disablenpc` e sem um único aviso de barter — o que prova que
+o arquivo parseou, que o `OnInit` rodou e que os 29 AegisNames das três
+lojas resolveram (item desconhecido descarta a loja inteira, com aviso).
 
-### O que é, no bRO
+**Nada disso foi tocado por um jogador ainda.** O que falta é entrar e usar:
 
-Um grupo de aventureiros em **`alberta 116,71`**. Placas de missão dão caçadas
-dentro de instâncias e pagam **Moeda do Explorador**. Detalhes que vieram do
-browiki e que definem o comportamento:
+1. **O caminho até lá.** Ir a `alberta 116,73`, atravessar o portal, e voltar
+   por `auction_02 43,17`. Conferir que o de volta não devolve para dentro de
+   si mesmo (a chegada é `43,21`, fora do raio 1,1 — mas só o jogo prova).
+> **O primeiro teste em jogo foi feito em 2026-08-08 e achou um bug, já
+> corrigido:** pegar as missões derrubava o cliente com dezenas de caixas de
+> erro de Lua. Faltava a entrada das quests na tabela do CLIENTE, e a correção
+> foi o `ferramentas/monta_missoes_da_ordem.py` — ver `HISTORICO.md`. **Rodar
+> o cliente de novo exige fechar e reabrir**, porque aqueles `.lub` só são
+> lidos na inicialização. O resto da lista abaixo continua por fazer.
 
-- Quatro placas: **Missões A, B, C** (caçada) e **D** (conversão de item).
-- As placas oferecem **pegar/entregar todas as missões de uma vez**.
-- Ao entregar, espera até **as 6h da manhã** para refazer. Ao reportar, a placa
-  já dá a missão do dia seguinte — então o jogador não precisa voltar para
-  pegar, só para entregar.
-- Dá **EXP de base e de classe** ao completar.
-- Um **Teleportador** leva a qualquer instância por **5.000z**.
+2. **Uma missão inteira, do quadro ao pagamento.** **É o único teste que
+   prova a decisão central** — que `HUNTING` conta onde `OnNPCKillEvent` não
+   contaria. A **Batalha dos Orcs** é a candidata agora: a porta dela é nossa
+   desde 2026-08-09 (`npc/guerra/porta_dos_orcs.txt`, nível 60+, party de 1),
+   então um personagem de nível alto entra.
 
-### Escopo decidido em 2026-08-08
+   > **A Vila dos Porings foi destravada em 2026-08-09.** A Emily
+   > (`prt_fild05 145,235`) recusa `BaseLevel > 60`, e aqui **não deu para
+   > copiar o bRO** como se fez com os Orcs: lá a instância entra por
+   > `izlude 46,103`, outro *mapa*. A porta é nossa de verdade — o **Batedor
+   > da Ordem**, `prt_fild05 147,235`
+   > (`npc/guerra/porta_da_vila_dos_porings.txt`), que abre a mesma memória
+   > sem teto. A Emily continua ligada, com a cadeia de história de novato
+   > dela.
+3. **A trava das 6h.** Entregar duas vezes seguidas e ver a segunda ser
+   recusada.
+4. **A Máquina de Troca.** Juntar 10 moedas e ver a janela de troca abrir com
+   o ícone certo. **Atenção:** o nome do item na janela de barter vem do
+   `itemInfo.lua` do cliente, não do servidor — se sair errado, o conserto é
+   no cliente (`CLAUDE.md` §4.9). A entrada [25737] já foi posta, mas
+   **exige fechar e reabrir o cliente**.
+5. **O Teleportador**, nos 14 destinos. Ele **já foi testado e já teve um bug
+   corrigido** em 2026-08-08: o menu e a tabela de destinos estavam em ordens
+   diferentes e os catorze levavam ao lugar errado, sem erro nenhum. Depois do
+   conserto o pareamento foi conferido lendo o arquivo gerado, destino a
+   destino, mas **só duas opções foram vistas em jogo**. Falta percorrer as
+   outras doze — e mapa que derruba cliente é justamente o que não se vê de
+   fora.
+6. **A loja da Opheliac.** Falar com ela e ver a janela de troca abrir com os
+   28 itens. **Conferir nome e ícone linha a linha** — é aqui que a falta de
+   uma entrada de cliente apareceria, e nove dos itens ganharam a entrada
+   nesta sessão. Os dois itens criados por nós (Saltos da Rainha Scaraba
+   15368, Memorável Anel Rústico 490174) merecem um olhar extra: equipar e
+   ver se o bônus próprio pega.
+7. **Os dois guardas e a fala da Opheliac**, só para ver a acentuação
+   desenhada — é o teste barato que pega erro de cp1252.
 
-- **Missões A, B e C.** As **D ficam de fora** — são conversão de item por
-  moeda, não caçada, e mudam a natureza do sistema.
-- **Só as 16 instâncias sem requisito de quest** (§1f). Isso corta 14 das 30
-  missões A/B/C.
-- Sobram **16 missões**: 9 do grupo A, 3 do B, 4 do C.
+**A conta de teste (grupo 99) NÃO serve para o passo 4.** As duas moedas são
+`NoDrop`/`NoSell`/`NoTrade`, e o grupo 99 ignora as sete travas — ver
+`CLAUDE.md` §4.7.
 
-### A DESCOBERTA QUE DECIDE A ARQUITETURA — não usar `OnNPCKillEvent`
+### As missões que continuam fora — e o que falta para cada uma
 
-**O evento global de morte de mob NUNCA dispara para chefe de instância.** Em
-`src/map/mob.cpp:3592` a estrutura é um `else if` de verdade:
+**São 15 missões desde 2026-08-09** (8 do grupo A, 3 do B, 4 do C). O Sonho
+Sombrio entrou: o "Réquiem de Marfim" é o **`Awakened Ferre` (3073)**, o chefe
+final, e estava lá o tempo todo — a varredura anterior o perdeu porque
+procurava um padrão de spawn só. Ver `HISTORICO.md`.
 
-```
-if( md->npc_event[0] && !md->state.npc_killmonster ) {
-        ... dispara o evento PRÓPRIO do mob ...
-} else if( first_sd != nullptr && !md->state.npc_killmonster ) {
-        npc_script_event( *first_sd, NPCE_KILLNPC );   // o OnNPCKillEvent
-}
-```
+Duas continuam **comentadas** em `db/guerra/quest_db.yml`, e as duas por falta
+de alvo, não por escopo:
 
-Todo chefe de instância nasce com `instance_npcname(...)+"::OnMyMobDead"`, ou
-seja, **todos têm `npc_event`** — e por isso caem sempre no primeiro ramo.
-Construir a Ordem sobre `OnNPCKillEvent` dá um sistema que compila, sobe, não
-dá erro nenhum e **nunca conta uma morte**.
+- **Torneio de Magia.** O alvo do bRO é *"1 Muliphen"*, e **`Muliphen` não
+  existe no nosso `mob_db` com nome nenhum** — não é questão de achar o Id, o
+  monstro não está no vendor. Os únicos mobs do arquivo são Alphonse (2565),
+  Alphonse Jr (2566) e os capangas de Geffen; o Torneio é duelo de NPC. E a
+  instância nem está carregada: mora em `npc/custom/official/`. **Para
+  destravar seria preciso criar o mob**, o que é outra natureza de trabalho.
 
-(De quebra: mesmo quando dispara, é para o `first_sd` — o primeiro do registro
-de dano, não o matador e não a party.)
+- **Sussurro Sombrio.** Esta é nova, e está mais perto do que parecia. A
+  coordenada que o cliente do bRO dá (`dali02 121,63`) é a
+  **`Scientist Doyeon#a2`**, ou seja a **Sky Fortress Invasion** — que já está
+  carregada (`npc/re/scripts_athena.conf:101`) e pede só **nível 145**, sem
+  teto e sem quest. Serviria.
 
-**O que funciona é quest com objetivo `HUNTING`**, e a razão está trinta linhas
-acima, em `mob.cpp:3575`:
+  **O que falta é o alvo.** O bRO diz *"elimine os Demônios de cada tipo"*, e a
+  instância tem **onze** monstros `Immortal_` (3474 a 3483) mais o
+  Stefan.J.E.Wolf. Escolher três seria inventar, contra a regra §4.3.
+  **Basta a página do browiki dela** — com os três nomes, é uma entrada no
+  `quest_db.yml`, uma linha em cada tabela do `OnInit` e uma no
+  `monta_missoes_da_ordem.py`.
 
-```
-if (sd->status.party_id)
-        map_foreachinallrange(quest_update_objective_sub, md, AREA_SIZE,
-                              BL_PC, sd->status.party_id, md);
-```
-
-Isso roda **antes e independente** do ramo do `npc_event`, e **propaga para a
-party inteira** que estiver dentro de `AREA_SIZE` da morte. É exatamente o que
-as próprias instâncias do rAthena usam — `checkquest(12279,HUNTING)` no
-Bakonawa, `checkquest(9222,HUNTING)` no Bangungot.
-
-**Consequência boa:** a Ordem cabe inteira em `npc/guerra/` + um `db/guerra/`,
-sem tocar nos 16 arquivos de instância. A lei da §2 fica intacta.
-
-### As 16 missões
-
-Moedas e EXP são os do bRO. **Os Ids de mob foram levantados dos spawns dos
-próprios scripts** — mas o nome PT do browiki nem sempre casa com o nome do
-`mob_db`, então a coluna tem grau de confiança. **Conferir os `?` antes de
-escrever a quest**; o jeito é abrir o script da instância e ver qual mob morre
-no fim.
-
-| Grp | Instância | Alvo (browiki) | Mob | Id | Moedas | EXP |
-|---|---|---|---|---|---|---|
-| A | Batalha dos Orcs | 1x Orc Falso | Orc Elite Guard **?** / Orc Lady **?** | 1981 / 1984 | 5 | 200.000 |
-| A | Torneio de Magia | 1x Muliphen | **não achado** | ? | 5 | 200.000 |
-| A | Memórias de Sarah | 1x Lorde Irine | Doyen Irene | 2542 | 5 | 200.000 |
-| A | Palácio das Mágoas | 1x Angústia Torturante | Torturous Redeemer | 2959 / 2961 | 5 | 600.000 |
-| A | Hospital Abandonado | 1x Bangungot | Bangungot | 2317 | 7 | 800.000 |
-| A | Aos Pés do Rei | 1x Charleston 03 | Charleston 3 | **3124** | 10 | 800.000 |
-| A | Fábrica do Terror | 1x Antonio | **não spawna**; chefe é Celine Kimi | 2996 **?** | 5 | 800.000 |
-| A | Sonho Sombrio | 1x Réquiem de Marfim | Awakened Ferre **?** | 3073 **?** | 10 | 800.000 |
-| A | Covil de Vermes | 4x Verme Sombrio com Rosto | Faceworm Queen **?** | 2529/2532 **?** | 5 | 600.000 |
-| B | Lago de Bakonawa | 1x Tesouro de Bakonawa | Bakonawa's Treasure | **2335** | 7 | 800.000 |
-| B | Sarah vs Fenrir | 6x Gigante Ancestral | Ancient Gigantes | **3196** | 25 | 800.000 |
-| B | Torre do Demônio | 3x+3x+3x (Sombras / Inferno / Trevas) | Evil Shadow, três Ids **?** | 2939/2940/2941 **?** | 5 | 400.000 |
-| C | Vila dos Porings | 1x Rei Poring | spawn por variável — **não resolvido** | ? | 5 | 50.000 |
-| C | Caverna do Polvo | 1x Polvo Gigante | Giant Octopus | **2194** | 5 | 100.000 |
-| C | Quarto Crescente | 1x Espectro de Ktullanux | Vision of Ktullanux | **3526** | 7 | 1.000.000 |
-| C | Maldição de Glastheim | 1x Origem da Maldição + 1x Amdarais | Corrupted Soul **?** + Amdarais | 2475 **?** / **2476** | 10 | 800.000 |
-
-Em negrito, os sete que casaram sem ambiguidade. O `3196` foi confirmado por
-dois lados: o nome e o **total de 6 spawns**, que é a quantidade pedida.
-
-### As peças a construir, e onde cada uma mora
-
-| # | Peça | Onde | Observação |
-|---|---|---|---|
-| 1 | **Moeda do Explorador (25737)** | item novo — os lugares 1 e 2 do `ARQUITETURA.md` §4 | ID do bRO, **não inventado**. Ver abaixo: a arte já está no nosso GRF, então as camadas 3 e 4 não têm trabalho |
-| 2 | **As 16 quests de caçada** | `db/guerra/quest_db.yml` | objetivo `HUNTING`; falta pôr `Footer: Imports:` no `db/re/quest_db.yml` — ele ainda não tem, mas o `parseImports` é genérico |
-| 3 | **As quests de espera** | idem | uma por placa, `TimeLimit` até as 6h |
-| 4 | **As três placas** | `npc/guerra/ordem_dos_exploradores.txt` | `alberta 116,71`; pegar/entregar em lote |
-| 5 | **O Teleportador** | mesmo arquivo | 5.000z; a `teletransportadora.txt` já tem o menu de instâncias pronto para copiar |
-| 6 | **A Máquina de Troca** | mesmo arquivo + `npc/guerra/barters_guerra.yml` | `alberta,115,72`; 10 Moeda do Explorador = 1 Moeda Nova. Ver abaixo |
-| 7 | Linha + parágrafo | `npc/guerra/scripts_guerra.conf` | obrigatório |
-
-**Faixa de Id de quest sugerida: 30000–30049.** Está dentro do maior bloco
-contíguo livre do `quest_db.yml` (21174–49999, 28.826 ids), é redonda e não
-encosta em nada do rAthena.
-
-### DECIDIDO em 2026-08-08: a moeda é a 25737, e o circuito fecha
-
-**A Moeda do Explorador é a do bRO, `25737`** — nome `Moeda do Explorador`,
-recurso `Dalcom_Coin`. Não se inventa ID: foi resolvida pelo `iteminfo_new.lub`
-do bRO, a ponte de sempre. (Um `grep` por "Explor" no `item_db` **não** a acha,
-porque lá o nome é inglês — foi assim que ela quase passou por inexistente.)
-
-**Ela não existe no nosso servidor nem no nosso cliente** (`estado_item.py --id
-25737` diz "FORA" dos dois). Mas **a arte já está no GRF do nosso cliente** — os
-quatro recursos de `Dalcom_Coin` (`.spr`, `.act`, ícone e ícone grande)
-conferidos um a um. Então das seis camadas de um item novo, só duas têm
-trabalho: a entrada em `db/guerra/item_db.yml` e a do `itemInfo.lua`
-(`completa_iteminfo.py --id 25737`).
-
-Descrição do bRO, para reaproveitar: *"Uma pequena moeda dourada criada pela
-Ordem dos Exploradores. Nela está entalhada um Poporing na frente e [bW] no
-verso."* Peso 0, e `Intransferível` — ou seja, nasce **`NoDrop`** (o que também
-resolve a armadilha do `getitem` com mochila cheia) e **`NoSell`**.
-
-**Onde ela se gasta: uma Máquina de Troca dentro da própria Ordem, a 10 por 1
-Moeda Nova.** O circuito fecha sem inventar destino novo — a Moeda Nova já tem
-dezessete itens na Máquina de Prontera e Comodo.
-
-### A Máquina de Troca — `alberta,115,72`
-
-Escolhida em 2026-08-08 conferindo o `.gat` do mapa, não de olho. **A Ordem fica
-numa alcova murada**, com uma entrada só:
-
-```
-        113 114 115 116 117 118 119 120
-  y74    #   #   #   #   #   #   #   #     <- parede ao fundo
-  y73    #   .   .   .   .   .   .   #
-  y72    #   .   M   .   .   .   .   #     M = a Maquina (115,72)
-  y71    #   .   .   O   .   .   .   #     O = a Ordem (116,71)
-  y70    #   N   .   .   .   .   N   #     N = NPC do rAthena ja la
-  y69    .   .   .   .   .   .   .   .     <- unica entrada, pelo sul
-```
-
-Um pátio de 6x4 entre dois prédios, com o Cool Event Staff (`114,70`) e o Kafra
-Voting Staff (`119,70`) já ocupando os cantos de baixo. **Sobram 19 células
-livres** — folga de sobra para as três placas e o Teleportador, e a fileira do
-fundo (`y73`) é o lugar natural para elas, como na foto do browiki.
-
-`115,72` foi escolhida porque passa no teste de célula andável **e plana com um
-de raio** (`gat.plano_e_livre`), não empilha em NPC nenhum, e deixa `116,71`
-livre para quem for o rosto da Ordem. `114,72` seria o canto mais "de máquina",
-mas encosta na parede e reprova no teste de raio.
-
-**Sprite 564 e loja `barter`**, como a Máquina que já existe
-(`npc/guerra/maquina.txt`, sprite 564, `callshop` numa loja flutuante do
-`barters_guerra.yml`). A troca 10:1 é **uma linha de barter**: item vendido
-`30998` (Moeda Nova), moeda `25737`, quantidade 10.
-
-**Barter e não `itemshop`, e desta vez por dois motivos** — a regra §4.10 do
-`CLAUDE.md` já bastava (o `itemshop` recusa moeda `NoSell`), e aqui as **duas**
-moedas são `NoSell`.
-
-**É loja nova, não `duplicate` da Máquina existente:** aquela vende 17 itens por
-Moeda Nova, esta converte moeda em moeda. Mercadoria diferente, arquivo de
-barter com entrada própria.
+  Nota: isto corrige o §1f, que listava o Sussurro Sombrio como *"não
+  identificado"*.
 
 ### Decisões que continuam com o dono
 
-1. **Os valores do bRO servem?** 25 moedas por 6 Gigantes Ancestrais contra 5
-   por um Rei Poring é a curva do bRO, com a economia do bRO. A nossa tem
-   `exp 10x, drop 50x`. E a taxa 10:1 da Máquina precisa fazer sentido contra
-   os 5 a 25 que cada missão paga — hoje uma missão média vira meia Moeda Nova.
-2. **A Ordem tem loja própria?** O bRO tem Slot, Encantamento, Fortalecimento e
-   Enriquecimento na mesma página. Nada disso foi levantado — se entrar, é
-   trabalho separado.
-3. **Quem é o rosto da Ordem em `116,71`?** As três placas podem bastar, ou pode
-   haver uma NPC que apresenta o grupo. Não foi decidido.
+1. **Os valores do bRO ficaram como estão** (5 a 25 moedas, 50k a 1M de EXP,
+   troca 10:1), por decisão de 2026-08-08 — entra igual ao bRO e se ajusta
+   depois de ver em jogo. Duas coisas a olhar quando isso for revisto: o
+   `getexp` **não** passa pela nossa taxa 10x (`CLAUDE.md` §5), então a EXP
+   das missões é relativamente menor aqui do que lá; e a taxa 10:1 faz uma
+   missão média (7 moedas) valer sete décimos de uma Moeda Nova.
+2. **A Ordem não tem loja de serviço.** O bRO tem Slot, Encantamento,
+   Fortalecimento e Enriquecimento na mesma página. Nada disso foi levantado
+   — se entrar, é trabalho separado. A **loja de itens** da Opheliac entrou
+   em 2026-08-08; o que continua fora dela é abaixo.
 
-### Armadilhas que já se conhecem
+### Os quatro itens da loja da Opheliac que ficaram de fora
 
-- **`OnNPCKillEvent` não serve** — a de cima, e é a que custa o dia.
-- **`getitem` com mochila cheia larga no chão** se o item não for `NoDrop`
-  (`CLAUDE.md` §5). A moeda tem de nascer `NoDrop`.
-- **A janela de missões não lê o `questid2display.txt`** — quem desenha é o
-  `OngoingQuestInfoList_Sakray.lub` do cliente. Missão sem entrada lá aparece
-  sem título.
-- **Texto em cp1252**, e conferir o cabeçalho linha a linha depois de gerar —
-  as duas armadilhas que apagam arquivo de NPC calado.
-- **`AREA_SIZE`**: o membro da party só conta a morte se estiver perto. Em
-  instância grande, quem ficou para trás não pontua.
+A lista do browiki tem 32 itens e a loja tem 28. Os quatro que faltam não
+foram esquecidos:
+
+- **Combinador Heróico (100283), Combinador do Herói (100284) e Combinador de
+  Tatuagens (100285).** Os três são pergaminho de **encantamento** — a
+  descrição do bRO diz *"Abre a janela de Combinação"* —, e encantamento foi
+  o que o pedido de 2026-08-08 excluiu. Mesmo que não fosse: janela de
+  encantamento é sistema de UI do cliente, com metade da configuração do lado
+  de lá (`CLAUDE.md` §4.9), e nenhuma delas está montada. Vendidos assim, não
+  fariam nada.
+- **Chapéus Sortidos (103189).** Caixa de chapéu aleatório, e não existe no
+  nosso `item_db`. Não é só criar a entrada: precisa de um grupo em
+  `item_group_db` com os sete chapéus dentro, e cada um deles precisa existir
+  e ter arte. É um trabalho separado, e o único dos quatro que vale a pena
+  fazer um dia.
+
+**A transformação de visuais e o encantamento do Robozinho Sabe-Tudo**, que a
+Opheliac também faz no bRO, ficaram de fora pela mesma razão — são janela do
+cliente, não NPC.
 
 ---
 
@@ -632,6 +575,19 @@ fechada, e é a maior: **19.260 falas**, das quais 10.903 distintas.
 | `novico` | 14/322 | 4% | **não começou** |
 | `classe1` | 13/1518 | 1% | **não começou** |
 | `classe2` | 235/12489 | 2% | **não começou** |
+| `magoas` | 255/303 | **aplicado** | Palácio das Mágoas — a primeira instância |
+
+**As instâncias entraram na frente em 2026-08-09**, e com um desenho próprio:
+**um grupo por instância**, não um grupo `instancias` único. A razão é a regra
+de baixo — só se aplica grupo inteiro —, e as 16 juntas dão 4.910 falas com
+distribuição muito torta (Sonho Sombrio 1.261, Lago de Bakonawa 62). Num grupo
+só, nada seria aplicável até a última estar pronta; uma por vez, cada uma fecha
+e entra em jogo sozinha.
+
+Os apelidos são `magoas`, `orcs`, `sarah`, `hospital`, `charleston`,
+`brinquedos`, `jitterbug`, `vermes`, `bakonawa`, `fenrir`, `demonio`,
+`porings`, `polvo`, `crescente` e `glastheim` — `--estado` lista todos.
+**Só `magoas` tem catálogo**; as outras catorze estão por extrair.
 
 Os três de baixo são as quests de mudança de classe — 88% do volume que resta,
 e o que o dono do projeto pediu explicitamente por nostalgia. O pouco que

@@ -248,6 +248,171 @@ Body:
     # (7420, Skull_), que tem os 4 arquivos completos no GRF deste cliente -
     # entao a Caveira Humana nao custa arquivo de arte nenhum.
 
+  # ----- A moeda da Ordem dos Exploradores -------------------------------
+  #
+  # ATENCAO AO ID: 25737 esta FORA da nossa faixa 30000-30999, e nao e
+  # descuido. Este item NAO e nosso - e um item real do bRO que o nosso
+  # rAthena vendorizado nao conhece, e por isso entra no ID oficial dele.
+  # E o mesmo criterio da secao de placeholders logo abaixo. Inventar um
+  # ID de 30xxx aqui teria sido o erro caro: o item ja existe, ja tem nome
+  # em portugues e JA TEM ARTE NO NOSSO GRF.
+  #
+  # Um `grep` por "Explor" no item_db NAO acha esta moeda, e foi assim que
+  # ela quase passou por inexistente: no rAthena o nome dela seria ingles.
+  # Quem a resolveu foi o `iteminfo_new.lub` do bRO, a ponte de sempre
+  # (ferramentas/estado_item.py --id 25737).
+  #
+  # O AegisName e o oficial (`Dalcom_Coin`), e nao um slug em portugues
+  # como o das nossas moedas de 30xxx. E de proposito: se um dia o rAthena
+  # trouxer o 25737 de verdade, a entrada dele e a nossa falam do mesmo
+  # item pelo mesmo nome e a mesclagem sai limpa. Com nome inventado, a
+  # NOSSA venceria a boa e calada - a armadilha que a secao de
+  # placeholders descreve logo abaixo.
+  #
+  # ARTE: os quatro recursos de `Dalcom_Coin` (.spr, .act, icone e icone
+  # grande) ja estavam no data.grf deste cliente - `estado_item.py --id
+  # 25737` diz "arte 4 de 4 ok". Das seis camadas de um item novo, so duas
+  # tiveram trabalho: esta, e a entrada do itemInfo.lua posta pelo
+  # `ferramentas/completa_iteminfo.py --id 25737` em 2026-08-08.
+  #
+  # ONDE SE GANHA: as tres placas de missao da Ordem dos Exploradores
+  # (npc/guerra/ordem_dos_exploradores.txt, no salao de auction_02). Cada
+  # missao paga de 5 a 25 moedas, os valores do bRO.
+  # ONDE SE GASTA: a Maquina de Troca da propria Ordem, a 10 por 1 Moeda
+  # Nova (30998). O circuito fecha sem inventar destino novo - a Moeda
+  # Nova ja tem dezoito itens nas Maquinas de Prontera e de Comodo.
+  - Id: 25737
+    AegisName: Dalcom_Coin
+    Name: Moeda do Explorador
+    # Etc, como toda moeda: nao se "usa", se gasta em NPC. Ver a nota da
+    # Moeda Nova (30998), mais acima neste arquivo.
+    Type: Etc
+    # Peso 0 e o que a descricao do bRO diz por extenso ("Peso: 0"), nao
+    # uma escolha nossa. Ver `estado_item.py --id 25737 --descricao`.
+    Weight: 0
+    # "Intransferivel" e a primeira linha da descricao do bRO, em vermelho.
+    #
+    # O `NoDrop` faz DOIS trabalhos, e o segundo e o que importa: ele e a
+    # unica garantia de que a moeda nao cai no chao da instancia. O
+    # `getitem` da placa chama `pc_additem`, e no fracasso (mochila cheia)
+    # cai num `map_addflooritem` - que passa antes pelo `pc_candrop`, e
+    # esse recusa item NoDrop. Sem esta linha o pagamento de uma missao
+    # apareceria no chao, ao alcance de qualquer um, sem nada no log.
+    # Ver CLAUDE.md secao 5.
+    #
+    # O `NoSell` nao atrapalha a Maquina de Troca: `barter` nao passa a
+    # moeda por `pc_can_sell_item`. Com `itemshop` atrapalharia, e ali as
+    # DUAS moedas sao NoSell - ver CLAUDE.md secao 4.10.
+    #
+    # Sem `NoStorage`, pelo mesmo motivo da Moeda Nova: o jogador guarda a
+    # moeda no armazem dele; ela so nao sai do jogador.
+    #
+    # Cuidado ao testar: a conta de teste e group 99 e SENTE estas travas;
+    # um GM de group 100+ nao sente (`Override`, padrao 100).
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+
+  # ----- Os dois equipamentos da loja da Ordem ---------------------------
+  #
+  # Mesmo criterio da moeda acima e da secao de placeholders logo abaixo:
+  # sao itens REAIS do bRO nos IDs oficiais deles, e nao itens nossos.
+  # Entraram em 2026-08-08 porque a loja da Opheliac
+  # (npc/guerra/ordem_dos_exploradores.txt) os vende, e dos 32 itens da
+  # lista do bRO estes dois eram os unicos que faltavam no nosso item_db.
+  #
+  # De onde veio cada numero, e vale a mesma tabela da secao de baixo:
+  # Tipo, Defesa, Peso e Nivel sairam das linhas "Tipo:/Defesa:/Peso:" da
+  # descricao do bRO (`estado_item.py --id <n> --descricao`); o numero de
+  # covas veio do `iteminfo_new.lub`; a forma do Script veio de um item
+  # vizinho do mesmo slot no proprio rAthena.
+  #
+  # A CONVERSAO DE PESO E x10, e nao e obvia: o bRO escreve "Peso: 50" e o
+  # rAthena grava `Weight: 500`. Conferido contra as Botas do Ocultista
+  # (22138), que existem nos dois lados - bRO "Peso: 50", nosso db
+  # `Weight: 500`.
+  #
+  # O `AegisName` e NOSSO e provisorio, no molde do vizinho de familia. Se
+  # um dia o rAthena trouxer estes itens de verdade, o `Footer: Imports:`
+  # faz o NOSSO arquivo ser lido DEPOIS do db/re/ - entao estas entradas
+  # venceriam a versao boa, calado. Ver o aviso da secao de baixo.
+
+  - Id: 15368
+    AegisName: Scaraba_Queen_Heels_BR
+    Name: Saltos da Rainha Scaraba
+    # bRO: "Sapatos de salto alto que toda Rainha Scaraba usa, afinal, e
+    # preciso reforcar sua superioridade e autoridade ate na altura."
+    Type: Armor
+    Weight: 700            # bRO "Peso: 70"
+    Defense: 12            # bRO "Defesa: 12"
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 85
+    Refineable: true
+    # `Classes: Todas` da descricao = ausencia de `Jobs:`, que no rAthena
+    # ja significa todas.
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      if (.@r>=5) {
+         bonus bMaxHPrate,4;
+         bonus bMaxSPrate,4;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,4;
+         bonus bMaxSPrate,4;
+      }
+    # TODO conjunto: a descricao do bRO traz TRES conjuntos para este
+    # calcado - [Maca Carga], [Durga] e [Arco Elfico] -, cada um com
+    # bonus por refino da ARMA (SP max +400, dano contra Chefe +20%,
+    # recarga de [Temporal de Flechas] -2s, e por ai). Nada disso esta
+    # implementado, pelo motivo de sempre: conjunto exige a outra peca, e
+    # implementar so a metade daria bonus fantasma. Quem comprar leva o
+    # item com os bonus proprios (os tres acima) funcionando.
+
+  - Id: 490174
+    AegisName: Memorial_Rustic_Ring_BR
+    Name: Memoravel Anel Rustico
+    # bRO: "Pequeno acessorio empoeirado que foi encontrado nos esgotos de
+    # Lighthalzen."
+    Type: Armor
+    Weight: 100            # bRO "Peso: 10"
+    # Sem `Defense:` de proposito: o bRO diz "DEF: 0  DEFM: 15", e no
+    # rAthena a DEF MAGICA de armadura nao e campo - sai do `bonus bMdef`
+    # do Script, abaixo. Por o 15 em `Defense:` daria DEF FISICA 15, que e
+    # outra coisa.
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 170
+    # "Intransferivel", a primeira linha da descricao do bRO, em vermelho.
+    # Cuidado ao testar: a conta de teste e group 99 e SENTE estas travas.
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+    Script: |
+      bonus bMdef,15;
+      bonus bAllStats,3;
+    # TODO conjunto: a descricao traz CINCO conjuntos "Memoravel" (Poder
+    # das Runas, Sacrificio do Protetor, Misterio da Magia, Suplica do
+    # Cisne, Sentido de Caca), cada um com recarga e conjuracao de uma
+    # pericia especifica. Mesma razao de sempre para nao implementar pela
+    # metade. O bonus proprio - todos os atributos +3 e DEFM 15 - funciona.
+
 # =========================================================================
 # PLACEHOLDERS DO MERCADO CONTEMPORANEO - 2026-08-01
 # =========================================================================

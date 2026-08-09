@@ -75,6 +75,21 @@ VALOR = r'(?:[^"\\\r\n]|\\.)*'
 CONTEXTOS = (
     'mes', 'mesf', 'npctalk', 'dispbottom', 'message', 'select', 'prompt',
     'menu', 'setarray', 'cutin', 'title', 'mesq',
+    # Entraram em 2026-08-09, com as instancias. Sao o texto que aparece na
+    # FAIXA DO ALTO e no balao do monstro - "The passage on the 2nd floor is
+    # open", "X of the party Y is entering the Ghost Palace" -, e ficavam
+    # 100% em ingles porque nao estavam nesta lista. Nas 16 instancias
+    # sozinhas sao ~2.300 ocorrencias.
+    #
+    # `mapannounce` TAMBEM esta no RE_TECNICO, e isso nao e conflito: o
+    # primeiro argumento dele e nome de MAPA e continua protegido, porque o
+    # RE_TECNICO e testado depois e ganha de qualquer contexto. O que passa a
+    # ser extraido e o segundo argumento, que e a mensagem.
+    #
+    # Acrescentar contexto NAO desloca indice de catalogo antigo: o
+    # `literais_todos` numera TODOS os literais do arquivo, exibiveis ou nao,
+    # justamente para esta lista poder crescer. Os pares novos nascem VAZIOS.
+    'mapannounce', 'announce', 'unittalk',
 )
 RE_CHAMADA = re.compile(
     r'\b(%s)\b([^\r\n;]*)' % '|'.join(CONTEXTOS))
@@ -144,6 +159,51 @@ GRUPOS['pvp'] = _glob('npc/other/pvp*.txt')
 GRUPOS['classe1'] = _glob('npc/re/jobs/1-1/*.txt', 'npc/jobs/1-1e/*.txt')
 GRUPOS['classe2'] = _glob('npc/jobs/2-1/*.txt', 'npc/jobs/2-2/*.txt',
                           'npc/jobs/2-1a/*.txt', 'npc/jobs/2-2a/*.txt')
+
+# As instancias que a Ordem dos Exploradores manda cacar: UM GRUPO POR
+# INSTANCIA, e nao um grupo `instancias` unico.
+#
+# A razao e a regra do proprio projeto - so se aplica grupo INTEIRO, porque
+# arquivo quase todo em ingles com uma frase solta em portugues no meio e pior
+# que arquivo em ingles (PENDENCIAS.md secao 3). As 16 juntas dao 4.910 falas,
+# com distribuicao muito torta: o Sonho Sombrio sozinho tem 1.261 e o Lago de
+# Bakonawa tem 62. Num grupo so, nada seria aplicavel ate a ultima estar
+# pronta.
+#
+# Uma por vez, cada uma fecha e entra em jogo sozinha.
+#
+# PRE-CONDICAO, e ela ja esta cumprida: o nome da instancia e CHAVE
+# (`instance_create`/`instance_enter` resolvem por string) e cai no catalogo
+# por causa do `.@md_name$ = "..."`. Quem o protege e o
+# `nomes_de_instancia()`, la embaixo - ver a nota grande dele.
+for _apelido, _arq in [
+        ('magoas',      'npc/re/instances/GhostPalace.txt'),
+        ('orcs',        'npc/instances/OrcsMemory.txt'),
+        ('sarah',       'npc/re/instances/SaraMemory.txt'),
+        ('hospital',    'npc/re/instances/BangungotHospital.txt'),
+        ('charleston',  'npc/re/instances/CharlestonCrisis.txt'),
+        ('brinquedos',  'npc/re/instances/HorrorToyFactory.txt'),
+        ('jitterbug',   'npc/re/instances/NightmarishJitterbug.txt'),
+        ('vermes',      'npc/re/instances/FacewormsNest.txt'),
+        ('bakonawa',    'npc/re/instances/BakonawaLake.txt'),
+        ('fenrir',      'npc/re/instances/SarahAndFenrir.txt'),
+        ('demonio',     'npc/re/instances/DevilTower.txt'),
+        ('porings',     'npc/re/instances/PoringVillage.txt'),
+        ('polvo',       'npc/re/instances/OctopusCave.txt'),
+        ('crescente',   'npc/re/instances/EddaHalfMoonInTheDaylight.txt'),
+        ('glastheim',   'npc/re/instances/OldGlastHeim.txt'),
+]:
+    GRUPOS[_apelido] = [_arq]
+
+# A FENDA DIMENSIONAL - `dali` e `dali02`, o saguao que e a porta de entrada de
+# metade das instancias (Memorias de Sarah, Palacio das Magoas, Covil de
+# Vermes, Sarah vs Fenrir, Torre do Demonio, Sky Fortress...). Nao e instancia
+# nenhuma: e a praca onde elas se abrem, e o jogador passa por ali toda vez.
+#
+# Ficou de fora do primeiro recorte por descuido - as instancias foram
+# agrupadas por arquivo de instancia, e o saguao mora em outro lugar.
+GRUPOS['fenda'] = ['npc/re/other/dimensional_gap.txt',
+                   'npc/re/merchants/ghost_palace_exchange.txt']
 
 
 class Erro(Exception):
@@ -239,7 +299,48 @@ def tokens_intocaveis(dados):
     for _, t, _c in literais_todos(dados):
         if RE_LABEL.match(t):
             intocaveis.add(t)
+    intocaveis |= nomes_de_instancia()
     return intocaveis
+
+
+_INSTANCIAS = [None]
+
+
+def nomes_de_instancia():
+    u"""Os nomes de instancia, que sao CHAVE e nunca se traduzem.
+
+    A pre-condicao que o PENDENCIAS.md secao 1f exigia antes de extrair
+    instancia nenhuma, e ela nao e teorica:
+
+        .@md_name$ = "Palacio das Magoas";
+        switch( instance_enter(.@md_name$) ) { ... }
+
+    A atribuicao casa com o `RE_ATRIB`, entao o nome entra no catalogo como
+    se fosse fala. E o `RE_TECNICO` NAO cobre este caso: ele protege literal
+    que esta DENTRO da chamada (`warp "gef_fild10"`), e aqui a chamada recebe
+    uma variavel. Uma segunda traducao divergente - "Palacio das Maguas",
+    digamos - faria o `instance_enter` procurar uma instancia que nao existe.
+    Falha calada, e so em jogo.
+
+    A lista sai do proprio `instance_db.yml`, e nao de uma constante aqui:
+    assim ela acompanha sozinha quando uma instancia for renomeada. Le os
+    dois, porque o nosso db/guerra/ sobrescreve o Name: do rAthena e o que
+    vale no script e o nome FINAL - mas o antigo tambem entra na lista, que
+    proteger demais nao custa nada.
+    """
+    if _INSTANCIAS[0] is None:
+        nomes = set()
+        for rel in (os.path.join('db', 're', 'instance_db.yml'),
+                    os.path.join('db', 'guerra', 'instance_db.yml')):
+            p = os.path.join(RATHENA, rel)
+            if not os.path.exists(p):
+                continue
+            for linha in open(p, 'rb').read().split('\n'):
+                m = re.match(r'\s*Name:\s*"?(.+?)"?\s*$', linha)
+                if m:
+                    nomes.add(m.group(1))
+        _INSTANCIAS[0] = nomes
+    return _INSTANCIAS[0]
 
 
 def extrair(grupo, arquivos):

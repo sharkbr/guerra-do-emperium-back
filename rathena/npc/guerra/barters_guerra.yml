@@ -272,3 +272,293 @@ Body:
           - Index: 0
             Item: Moeda_Nova
             Amount: 4
+
+  # =====================================================================
+  # A Maquina de Troca da Ordem dos Exploradores
+  # =====================================================================
+  #
+  # Tambem FLUTUANTE, e pelo mesmo motivo da de cima: quem esta no mapa e
+  # o NPC de script (npc/guerra/ordem_dos_exploradores.txt, em
+  # auction_02 50,39), que conta a moeda do jogador e so entao chama esta
+  # loja com `callshop "Ordem#loja"`.
+  #
+  # NAO E `duplicate` DA MAQUINA ACIMA, e a diferenca e de mercadoria,
+  # nao de lugar: aquela vende dezoito itens POR Moeda Nova; esta CONVERTE
+  # Moeda do Explorador EM Moeda Nova. Duas listas diferentes, duas
+  # entradas.
+  #
+  # UMA LINHA SO, e e o circuito inteiro da Ordem se fechando. A Moeda do
+  # Explorador (25737) nao compra mais nada em lugar nenhum - ela vira
+  # Moeda Nova aqui, e e a Moeda Nova que tem onde ser gasta. Isso e de
+  # proposito: acrescentar item a esta lista abriria uma segunda economia
+  # em paralelo a das Maquinas de Prontera e Comodo.
+  #
+  # POR QUE BARTER E NAO `itemshop`, e aqui o motivo vale EM DOBRO: a
+  # regra da secao 4.10 do CLAUDE.md ja bastava (o `itemshop` passa a
+  # moeda por `pc_can_sell_item`, que recusa item `NoSell` enquanto
+  # `allow_bound_sell` for 0x0), e nesta linha as DUAS moedas sao NoSell -
+  # a que se paga e a que se recebe.
+  #
+  # A TAXA E 10:1, o numero do bRO. Ela e o unico freio entre a caca de
+  # instancia e a economia da Moeda Nova, entao mexer neste `Amount` mexe
+  # no valor de TODAS as catorze missoes de uma vez. Para calibrar: uma
+  # missao media paga 7 moedas, ou seja sete decimos de uma Moeda Nova; as
+  # missoes vao de 5 a 25. Baixar para 5 faria a missao media valer 1,4.
+  #
+  # Mudanca aqui pega com `@reloadbarterdb`, NAO com @reloadscript.
+  - Name: Ordem#loja
+    Items:
+      - Index: 0
+        Item: Moeda_Nova                 # 30998, db/guerra/item_db.yml
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin            # 25737 Moeda do Explorador
+            Amount: 10
+
+  # =====================================================================
+  # A loja da Opheliac - a Troca de Moedas da Ordem dos Exploradores
+  # =====================================================================
+  #
+  # FLUTUANTE, como as outras duas. Quem esta no mapa e a Opheliac
+  # (npc/guerra/ordem_dos_exploradores.txt, auction_02 44,41), que fala e
+  # so entao chama esta loja com `callshop "Opheliac#loja"`.
+  #
+  # A LISTA E A DO bRO, na ordem e nos precos do browiki: dezoito
+  # equipamentos de 200 a 2.000 moedas, e dez consumiveis de 1 a 200.
+  # Nada foi inventado - cada linha saiu da tabela "Troca de Moedas" da
+  # pagina Ordem_dos_Exploradores, e cada ID foi resolvido pelo nome em
+  # portugues no `iteminfo_new.lub` do bRO (ferramentas/estado_item.py).
+  #
+  # OS 32 ITENS FORAM VALIDADOS UM A UM antes de entrar (CLAUDE.md 4.4):
+  # existe no servidor, tem entrada no itemInfo.lua do cliente, e a arte
+  # esta completa. Nove precisaram de entrada de cliente, posta pelo
+  # `completa_iteminfo.py`; o Cartao SSD (490578) precisou tambem da arte,
+  # trazida do GRF do bRO pelo `instala_visual.py`. Item sem arte entrega
+  # CAIXA DE ERRO ao jogador, e nada no log denuncia.
+  #
+  # DOIS ITENS NAO EXISTIAM NO NOSSO rAthena e foram criados em
+  # db/guerra/item_db.yml, nos IDs oficiais do bRO: os Saltos da Rainha
+  # Scaraba (15368) e o Memoravel Anel Rustico (490174). Os bonus proprios
+  # dos dois funcionam; os de CONJUNTO ficaram como `# TODO`, pela razao
+  # de sempre - conjunto exige a outra peca, e meia implementacao daria
+  # bonus fantasma. Ler la antes de vender por 500 e 2.000 moedas.
+  #
+  # QUATRO ITENS DO bRO FICARAM DE FORA, e nao por descuido:
+  #
+  #   100283  Combinador Heroico       "Abre a janela de Combinacao"
+  #   100284  Combinador do Heroi      idem
+  #   100285  Combinador de Tatuagens  idem
+  #     Os tres sao pergaminho de ENCANTAMENTO, que era o que o pedido
+  #     excluiu. E, mesmo que nao fosse: janela de encantamento e sistema
+  #     de UI do cliente, com metade da configuracao do lado de la
+  #     (CLAUDE.md 4.9), e nenhuma delas esta montada. Vendidos assim,
+  #     nao fariam nada.
+  #
+  #   103189  Chapeus Sortidos
+  #     Caixa de chapeu aleatorio. Nao existe no nosso item_db, e nao e
+  #     so criar a entrada: precisa de um grupo em item_group_db com os
+  #     sete chapeus dentro, e cada um deles precisa existir e ter arte.
+  #     E um trabalho separado.
+  #
+  # A TRANSFORMACAO DE VISUAIS e o ENCANTAMENTO DO ROBOZINHO, que a
+  # Opheliac tambem faz no bRO, ficaram de fora por decisao de
+  # 2026-08-08. Ela so vende.
+  #
+  # SOBRE OS PRECOS: sao os do bRO e sao ALTOS perto do que a Ordem paga.
+  # Uma missao media da 7 moedas e as tres placas juntas dao ~100 por dia,
+  # entao o Anel Temporal (2.000) e coisa de vinte dias. E a curva do bRO,
+  # mantida de proposito; se for para mexer, mexe-se aqui e nao na tabela
+  # `.paga` do NPC - aquela e o que a missao vale, esta e o que a coisa
+  # custa.
+  #
+  # Mudanca aqui pega com `@reloadbarterdb`.
+  - Name: Opheliac#loja
+    Items:
+      # ----- Equipamentos ---------------------------------------------
+      - Index: 0
+        Item: MemorialD_Assistant        # 15385 Robozinho Sabe-Tudo
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 200
+      - Index: 1
+        Item: WhistleK                   # 400000 Cancao
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 200
+      - Index: 2
+        Item: CD_In_MouthK               # 420003 CD Antiquado
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 200
+      - Index: 3
+        Item: Tatoo_Brush_BR             # 15924 Pincel de Tatuagem
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 300
+      - Index: 4
+        Item: Boina_Sustenida_BR         # 400476 Boina Sustenida
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 300
+      - Index: 5
+        Item: Ferramentas_BR             # 400477 Ferramentas Agricolas
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 300
+      - Index: 6
+        Item: Cor_Core_Headset_          # 410015 Fones COR
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 300
+      - Index: 7
+        Item: Immortal_Dog_Tag           # 32204 Pulseira Militar
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 350
+      - Index: 8
+        Item: Brooch_Of_Hero             # 32222 Broche Heroico
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 350
+      - Index: 9
+        Item: Chrismas_Tree              # 20955 Guardia do Natal
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 400
+      - Index: 10
+        Item: Ice_Dream_Tree_BR          # 480332 Guardia do Sonho
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 400
+      - Index: 11
+        Item: Commander_manteau_J        # 20925 Capa do Comandante
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 400
+      # Item NOSSO, criado em 2026-08-08 - ver db/guerra/item_db.yml.
+      - Index: 12
+        Item: Scaraba_Queen_Heels_BR     # 15368 Saltos da Rainha Scaraba
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 500
+      - Index: 13
+        Item: ShoesOfHero                # 22129 Botas Veteranas
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 500
+      # 22138 e nao 22221: existem duas "Botas do Ocultista", e a do
+      # browiki e a SEM cova (a 22221, `Demonist_Shoes_`, tem 1 e apareceria
+      # como "[1]" na lista de la, como a Venda Sombria aparece).
+      - Index: 14
+        Item: Demonist_Shoes             # 22138 Botas do Ocultista
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 500
+      # `aegis_490578` e o nome que o proprio rAthena deu - o item entrou no
+      # vendor sem AegisName de verdade. Nao e nosso; nao renomear, ou a
+      # proxima atualizacao do rAthena desencontra.
+      - Index: 15
+        Item: aegis_490578               # 490578 Cartao SSD
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 1500
+      - Index: 16
+        Item: Temporal_Ring              # 28594 Anel Temporal
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 2000
+      # Item NOSSO, criado em 2026-08-08 - ver db/guerra/item_db.yml.
+      - Index: 17
+        Item: Memorial_Rustic_Ring_BR    # 490174 Memoravel Anel Rustico
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 2000
+
+      # ----- Consumiveis ----------------------------------------------
+      - Index: 18
+        Item: WOB_Box                    # 23136 Cx. De Asas Coloridas
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 1
+      - Index: 19
+        Item: Full_SwingK                # 12418 Pocao do Furor Fisico
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 1
+      - Index: 20
+        Item: Mana_Plus                  # 12419 Pocao do Furor Magico
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 1
+      # O AegisName engana nestes dois: `Sealed_Kiel_Card_` e
+      # `Sealed_Dracula_Card_` nao sao CARTA - sao pocao que da o efeito da
+      # carta por tempo. O nome PT do bRO ("Pocao Fantastica", "Pocao
+      # Magica") e o que descreve o item, e os dois estao em
+      # db/re/item_db_usable.yml, nao no de carta.
+      - Index: 21
+        Item: Sealed_Kiel_Card_          # 23173 Pocao Fantastica
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 40
+      - Index: 22
+        Item: Sealed_Dracula_Card_       # 22846 Pocao Magica
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 40
+      - Index: 23
+        Item: Temporal_Refine_Cube       # 100268 Cubo de Refino Temporal
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 100
+      - Index: 24
+        Item: Geffen_Refine_Cube         # 100269 Cubo de Refino de Geffen
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 100
+      - Index: 25
+        Item: OS_Weapon_Refine_Cube      # 100321 Cubo de Refino OS
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 100
+      # Os dois pergaminhos ja sao vendidos por Moeda Nova na Maquina de
+      # Prontera, dentro de caixas de dez. Aqui vao UM a um, por moeda de
+      # caca - as duas portas nao se atrapalham, e o preco por unidade sai
+      # parecido.
+      - Index: 26
+        Item: Guarantee_Weapon_6Up       # 6231 Pergaminho de Arma +6
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 200
+      - Index: 27
+        Item: Guarantee_Armor_6Up        # 6235 Pergaminho de Armadura +6
+        RequiredItems:
+          - Index: 0
+            Item: Dalcom_Coin
+            Amount: 200

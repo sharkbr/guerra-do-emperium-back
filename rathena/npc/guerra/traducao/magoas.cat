@@ -1,0 +1,1086 @@
+# Catalogo de traducao PT-BR - grupo "magoas"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/GhostPalace.txt  (358 textos)
+#: npc/re/instances/GhostPalace.txt#1 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#2 (mes)
+- "Although I need help with a task, you are not strong enough to assist me, noob~!"
++ "Até que eu precise de ajuda, mas você não tem força para me servir, novato~!"
+#: npc/re/instances/GhostPalace.txt#3 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#4 (mes)
+- "Come back later when you have done some training and are at least level 120!"
++ "Volte quando tiver treinado e chegado ao nível 120, no mínimo!"
+#: npc/re/instances/GhostPalace.txt#5 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#6 (mes)
+- "I can only open the secret passage for party leaders. Please have your party leader talk to me."
++ "Só abro a passagem secreta para líder de grupo. Chame o líder do seu grupo para falar comigo."
+#: npc/re/instances/GhostPalace.txt#7 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#8 (mes)
+- "Have you found the princess yet?! Is she safe?"
++ "Já achou a princesa?! Ela está bem?"
+#: npc/re/instances/GhostPalace.txt#9 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#10 (mes)
+- "The monsters around the secret passage have disappeared. Now is our chance to save the princess!"
++ "Os monstros em volta da passagem secreta sumiram. É agora a nossa chance de salvar a princesa!"
+#: npc/re/instances/GhostPalace.txt#11 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#12 (mes)
+- "I need help, even from the likes of you."
++ "Eu preciso de ajuda, nem que seja da sua laia."
+#: npc/re/instances/GhostPalace.txt#13 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#14 (mes)
+- "In the middle of battle the princess disappeared while I was guarding the palace."
++ "No meio da batalha a princesa sumiu, enquanto eu guardava o palácio."
+#: npc/re/instances/GhostPalace.txt#15 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#16 (mes)
+- "You run ahead and I will catch up. We must save her."
++ "Vá na frente que eu alcanço. Precisamos salvá-la."
+#: npc/re/instances/GhostPalace.txt#17 (select)
+- "I will help."
++ "Eu ajudo."
+#: npc/re/instances/GhostPalace.txt#18 (select)
+- "This is not a good time."
++ "Agora não dá."
+#: npc/re/instances/GhostPalace.txt#19 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#20 (mes)
+- "Even now all the royal guards are fighting and dying from the monsters."
++ "Neste momento os guardas reais ainda lutam, e morrem, contra os monstros."
+#: npc/re/instances/GhostPalace.txt#21 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#22 (mes)
+- "We must, no matter how much fear grips our hearts, save the princess!"
++ "Por mais medo que aperte o nosso peito, temos de salvar a princesa!"
+#: npc/re/instances/GhostPalace.txt#24 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#25 (mes)
+- "Thank you.."
++ "Obrigado.."
+#: npc/re/instances/GhostPalace.txt#26 (mes)
+- "I will open the secret passage to the ^0000ffGhost Palace^000000."
++ "Vou abrir a passagem secreta para o ^0000ffPalácio das Mágoas^000000."
+#: npc/re/instances/GhostPalace.txt#27 (mes)
+- "Please be ready!"
++ "Prepare-se!"
+#: npc/re/instances/GhostPalace.txt#28 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#29 (mes)
+- "Althought I need help with a task, you are not strong enough to assist me, noob~!"
++ "Até que eu precise de ajuda, mas você não tem força para me servir, novato~!"
+#: npc/re/instances/GhostPalace.txt#30 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#31 (mes)
+- "Come back later when you have done some training and are at least level 120!"
++ "Volte quando tiver treinado e chegado ao nível 120, no mínimo!"
+#: npc/re/instances/GhostPalace.txt#32 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#33 (mes)
+- "I can see the secret passage into the palace. Are you ready to save the princess?!"
++ "Estou vendo a passagem secreta para o palácio. Pronto para salvar a princesa?!"
+#: npc/re/instances/GhostPalace.txt#34 (select)
+- "Enter"
++ "Entrar"
+#: npc/re/instances/GhostPalace.txt#35 (select)
+- "Stop"
++ "Parar"
+#: npc/re/instances/GhostPalace.txt#36 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#37 (mes)
+- "Even now all the royal guards are fighting and dying from the monsters."
++ "Neste momento os guardas reais ainda lutam, e morrem, contra os monstros."
+#: npc/re/instances/GhostPalace.txt#38 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#39 (mes)
+- "We must, no matter how much fear grips our hearts, save the princess!"
++ "Por mais medo que aperte o nosso peito, temos de salvar a princesa!"
+#: npc/re/instances/GhostPalace.txt#40 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#41 (mes)
+- "The monsters that attacked the palace are wandering around the secret entrance. It would be very bad if they spotted us... Please wait."
++ "Os monstros que atacaram o palácio estão rondando a entrada secreta. Seria muito ruim se nos vissem... Espere."
+#: npc/re/instances/GhostPalace.txt#42 (mes)
+- "When the time limit for the entrance is up"
++ "Quando o prazo da entrada acabar,"
+#: npc/re/instances/GhostPalace.txt#43 (mes)
+- "let's try to re-enter."
++ "tentamos entrar de novo."
+#: npc/re/instances/GhostPalace.txt#44 (mes)
+- "^0000ffThe time limit for entering to the Curse of the Swordsman is finished. Please try to talk to the Unpleasent Royal Guard again..^000000"
++ "^0000ffO prazo para entrar no Palácio das Mágoas acabou. Fale com o Guarda Real Rabugento outra vez..^000000"
+#: npc/re/instances/GhostPalace.txt#45 (mes)
+- "[Unpleasant Royal Guard]"
++ "[Guarda Real Rabugento]"
+#: npc/re/instances/GhostPalace.txt#46 (mes)
+- "I can only open the secret passage for party leaders. Please have your party leader talk to me."
++ "Só abro a passagem secreta para líder de grupo. Chame o líder do seu grupo para falar comigo."
+#: npc/re/instances/GhostPalace.txt#47 (atrib)
+- "Palácio das Mágoas"
++ ""
+#: npc/re/instances/GhostPalace.txt#48 (mes)
+- "An unknown error occurred."
++ "Alguma coisa deu errado, e nem eu sei o quê."
+#: npc/re/instances/GhostPalace.txt#49 (mes)
+- "^ff0000Inside the devices you see a dark hole. If you wish to enter you must to talk to the Unpleasent Royal Guard first.^000000"
++ "^ff0000Dentro do aparelho você vê um buraco escuro. Para entrar, fale antes com o Guarda Real Rabugento.^000000"
+#: npc/re/instances/GhostPalace.txt#50 (mes)
+- "Only registered members can enter the "
++ "Só quem está inscrito pode entrar em "
+#: npc/re/instances/GhostPalace.txt#51 (mes)
+- " instance."
++ "."
+#: npc/re/instances/GhostPalace.txt#52 (mapannounce)
+- "dali"
++ ""
+#: npc/re/instances/GhostPalace.txt#54 (mapannounce)
+- " of the party, "
++ ""
+#: npc/re/instances/GhostPalace.txt#55 (mapannounce)
+- ", is entering the Ghost Palace."
++ ""
+#: npc/re/instances/GhostPalace.txt#57 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#58 (mes)
+- "You are hereby appointed as the personal guard to Princess Tiara. I trust your loyalty above all else."
++ "Fica você nomeado guarda pessoal da Princesa Tiara. Confio na sua lealdade acima de tudo."
+#: npc/re/instances/GhostPalace.txt#59 (npctalk)
+- "King: You are hereby appointed as the personal guard to Princess Tiara. I trust your loyalty above all else."
++ "Rei: Fica você nomeado guarda pessoal da Princesa Tiara. Confio na sua lealdade acima de tudo."
+#: npc/re/instances/GhostPalace.txt#60 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#61 (mes)
+- "I will protect the princess with my life."
++ "Protegerei a princesa com a minha vida."
+#: npc/re/instances/GhostPalace.txt#62 (npctalk)
+- "Lurid Royal Guard: I will protect the princess with my life."
++ "Guarda Real Sombrio: Protegerei a princesa com a minha vida."
+#: npc/re/instances/GhostPalace.txt#63 (npctalk)
+- "Lurid Royal Guard#dk"
++ ""
+#: npc/re/instances/GhostPalace.txt#64 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#65 (mes)
+- "The marriage arrangements are going as planned. The prince is here to meet with the princess."
++ "Os preparativos do casamento seguem como o planejado. O príncipe chegou para conhecer a princesa."
+#: npc/re/instances/GhostPalace.txt#66 (npctalk)
+- "King: The marriage arrangements are going as planned. The prince is here to meet with the princess."
++ "Rei: Os preparativos do casamento seguem como o planejado. O príncipe chegou para conhecer a princesa."
+#: npc/re/instances/GhostPalace.txt#67 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#68 (mes)
+- "...Yes, Your Majesty."
++ "...Sim, Majestade."
+#: npc/re/instances/GhostPalace.txt#69 (npctalk)
+- "Lurid Royal Guard: ...Yes, Your Majesty."
++ "Guarda Real Sombrio: ...Sim, Majestade."
+#: npc/re/instances/GhostPalace.txt#70 (npctalk)
+- "Lurid Royal Guard#dk"
++ ""
+#: npc/re/instances/GhostPalace.txt#71 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#72 (mes)
+- "My gods, there are monsters in the castle! Get rid of them now!"
++ "Pelos deuses, há monstros no castelo! Acabem com eles agora!"
+#: npc/re/instances/GhostPalace.txt#73 (npctalk)
+- "King: My gods, there are monsters in the castle! Get rid of them now!"
++ "Rei: Pelos deuses, há monstros no castelo! Acabem com eles agora!"
+#: npc/re/instances/GhostPalace.txt#76 (atrib)
+- "1@spa"
++ ""
+#: npc/re/instances/GhostPalace.txt#120 (atrib)
+- "::OnMyMobDead1"
++ ""
+#: npc/re/instances/GhostPalace.txt#132 (atrib)
+- "::OnMyMobDead2"
++ ""
+#: npc/re/instances/GhostPalace.txt#144 (atrib)
+- "::OnMyMobDead3"
++ ""
+#: npc/re/instances/GhostPalace.txt#150 (mapannounce)
+- "The passage on the 2nd floor in the palace of ghost is open ."
++ ""
+#: npc/re/instances/GhostPalace.txt#154 (atrib)
+- "Princess Tiara#dk"
++ ""
+#: npc/re/instances/GhostPalace.txt#155 (cutin)
+- "npc-tiara.bmp"
++ ""
+#: npc/re/instances/GhostPalace.txt#156 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#157 (mes)
+- "Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him..."
++ "Alteza, o Rei convidou um príncipe de um reino vizinho para ser seu prometido. Prepare-se para recebê-lo..."
+#: npc/re/instances/GhostPalace.txt#158 (npctalk)
+- "Lurid Royal Guard: Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him..."
++ "Guarda Real Sombrio: Alteza, o Rei convidou um príncipe de um reino vizinho para ser seu prometido. Prepare-se para recebê-lo..."
+#: npc/re/instances/GhostPalace.txt#159 (mes)
+- "[Princess Tiara]"
++ "[Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#160 (mes)
+- "If...If a marriage is arranged what should I do?"
++ "Se... se arranjarem esse casamento, o que eu faço?"
+#: npc/re/instances/GhostPalace.txt#161 (npctalk)
+- "Princess Tiara: If...If a marriage is arranged what should I do?"
++ "Princesa Tiara: Se... se arranjarem esse casamento, o que eu faço?"
+#: npc/re/instances/GhostPalace.txt#162 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#163 (mes)
+- "The only thing I can do is protect you from physical harm."
++ "A única coisa que posso fazer é protegê-la do mal que se vê."
+#: npc/re/instances/GhostPalace.txt#164 (npctalk)
+- "Lurid Royal Guard: The only thing I can do is protect you from physical harm."
++ "Guarda Real Sombrio: A única coisa que posso fazer é protegê-la do mal que se vê."
+#: npc/re/instances/GhostPalace.txt#165 (mes)
+- "[Princess Tiara]"
++ "[Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#166 (mes)
+- "Then, what can I do?"
++ "Então o que resta a mim?"
+#: npc/re/instances/GhostPalace.txt#167 (npctalk)
+- "Princess Tiara: Then, what can I do?"
++ "Princesa Tiara: Então o que resta a mim?"
+#: npc/re/instances/GhostPalace.txt#168 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#169 (mes)
+- "You must decide that for yourself Your Highness..."
++ "Isso a senhora terá de decidir sozinha, Alteza..."
+#: npc/re/instances/GhostPalace.txt#170 (npctalk)
+- "Lurid Royal Guard: You must decide that for yourself Your Highness..."
++ "Guarda Real Sombrio: Isso a senhora terá de decidir sozinha, Alteza..."
+#: npc/re/instances/GhostPalace.txt#171 (mes)
+- "[Princess Tiara]"
++ "[Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#172 (mes)
+- "Would it be easier for you if I were married and sent off to another country?"
++ "Seria mais fácil para você se eu casasse e fosse mandada para outro reino?"
+#: npc/re/instances/GhostPalace.txt#173 (npctalk)
+- "Princess Tiara: Would it be easier for you if I were married and sent off to another country?"
++ "Princesa Tiara: Seria mais fácil para você se eu casasse e fosse mandada para outro reino?"
+#: npc/re/instances/GhostPalace.txt#174 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#175 (mes)
+- "I will always stand by you and protect you forever."
++ "Estarei sempre ao seu lado, e a protegerei para sempre."
+#: npc/re/instances/GhostPalace.txt#176 (npctalk)
+- "Lurid Royal Guard: I will always stand by you and protect you forever."
++ "Guarda Real Sombrio: Estarei sempre ao seu lado, e a protegerei para sempre."
+#: npc/re/instances/GhostPalace.txt#177 (cutin)
+- "npc-tiara.bmp"
++ ""
+#: npc/re/instances/GhostPalace.txt#178 (mes)
+- "[Princess Tiara]"
++ "[Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#179 (mes)
+- "Monsters have gotten inside the castle? Please, protect me!"
++ "Entraram monstros no castelo? Por favor, me proteja!"
+#: npc/re/instances/GhostPalace.txt#180 (npctalk)
+- "Princess Tiara: Monsters have gotten inside the castle? Please, protect me!"
++ "Princesa Tiara: Entraram monstros no castelo? Por favor, me proteja!"
+#: npc/re/instances/GhostPalace.txt#181 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#182 (mes)
+- "Stay behind me. Let's go!"
++ "Fique atrás de mim. Vamos!"
+#: npc/re/instances/GhostPalace.txt#183 (npctalk)
+- "Lurid Royal Guard: Stay behind me. Let's go!"
++ "Guarda Real Sombrio: Fique atrás de mim. Vamos!"
+#: npc/re/instances/GhostPalace.txt#198 (atrib)
+- "::OnMyMobDead1"
++ ""
+#: npc/re/instances/GhostPalace.txt#206 (atrib)
+- "::OnMyMobDead2"
++ ""
+#: npc/re/instances/GhostPalace.txt#213 (atrib)
+- "::OnMyMobDead3"
++ ""
+#: npc/re/instances/GhostPalace.txt#219 (mapannounce)
+- "The passage on the 3rd floor of the palace is open."
++ ""
+#: npc/re/instances/GhostPalace.txt#228 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#229 (mes)
+- "It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?"
++ "Foi você quem trouxe os monstros! Quer se livrar de mim e ficar com a princesa?"
+#: npc/re/instances/GhostPalace.txt#230 (npctalk)
+- "King: It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?"
++ "Rei: Foi você quem trouxe os monstros! Quer se livrar de mim e ficar com a princesa?"
+#: npc/re/instances/GhostPalace.txt#231 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#232 (mes)
+- "It is a trap Your Majesty! You must trust me!"
++ "É uma armadilha, Majestade! Confie em mim!"
+#: npc/re/instances/GhostPalace.txt#233 (npctalk)
+- "Lurid Royal Guard: It is a trap Your Majesty! You must trust me!"
++ "Guarda Real Sombrio: É uma armadilha, Majestade! Confie em mim!"
+#: npc/re/instances/GhostPalace.txt#234 (npctalk)
+- "Lurid Royal Guard#dk2"
++ ""
+#: npc/re/instances/GhostPalace.txt#235 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#236 (mes)
+- "Shut up! You've betrayed me! I trusted you... you must pay for your disgrace."
++ "Cale-se! Você me traiu! Eu confiei em você... vai pagar por essa desonra."
+#: npc/re/instances/GhostPalace.txt#237 (npctalk)
+- "King: Shut up! You've betrayed me! I trusted you... you must pay for your disgrace."
++ "Rei: Cale-se! Você me traiu! Eu confiei em você... vai pagar por essa desonra."
+#: npc/re/instances/GhostPalace.txt#238 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#239 (mes)
+- "You will suffer for the rest of your life."
++ "Você vai sofrer pelo resto da sua vida."
+#: npc/re/instances/GhostPalace.txt#240 (npctalk)
+- "King: You will suffer for the rest of your life."
++ "Rei: Você vai sofrer pelo resto da sua vida."
+#: npc/re/instances/GhostPalace.txt#252 (npctalk)
+- "Ominous Voice: Oh, faithful royal guard, you are trapped."
++ "Voz Sinistra: Oh, guarda real fiel, você caiu na armadilha."
+#: npc/re/instances/GhostPalace.txt#253 (npctalk)
+- "Ominous Voice: The conspiracy in the palace has your princess in grave danger..."
++ "Voz Sinistra: A conspiração no palácio deixou a sua princesa em grave perigo..."
+#: npc/re/instances/GhostPalace.txt#254 (npctalk)
+- "Lurid Royal Guard: Who are you? Show yourself!"
++ "Guarda Real Sombrio: Quem é você? Mostre-se!"
+#: npc/re/instances/GhostPalace.txt#255 (npctalk)
+- "Lurid Royal Guard#dk3"
++ ""
+#: npc/re/instances/GhostPalace.txt#256 (npctalk)
+- "Ominous Voice: Ah... so you do you hear me?"
++ "Voz Sinistra: Ah... então você me ouve mesmo?"
+#: npc/re/instances/GhostPalace.txt#257 (npctalk)
+- "Lurid Royal Guard: ...?"
++ "Guarda Real Sombrio: ...?"
+#: npc/re/instances/GhostPalace.txt#258 (npctalk)
+- "Lurid Royal Guard#dk3"
++ ""
+#: npc/re/instances/GhostPalace.txt#259 (npctalk)
+- "Ominous Voice: I can give you unlimited power. If you make a pact with me."
++ "Voz Sinistra: Posso lhe dar poder sem limite. Se fizer um pacto comigo."
+#: npc/re/instances/GhostPalace.txt#260 (npctalk)
+- "Lurid Royal Guard: I..I..."
++ "Guarda Real Sombrio: E-eu..."
+#: npc/re/instances/GhostPalace.txt#261 (npctalk)
+- "Lurid Royal Guard#dk3"
++ ""
+#: npc/re/instances/GhostPalace.txt#262 (npctalk)
+- "Magic Sword Tartanos: Kukuku... What do you want boy?"
++ "Espada Mágica Tartanos: Kukuku... O que você quer, garoto?"
+#: npc/re/instances/GhostPalace.txt#269 (atrib)
+- "::OnMyMobDead1"
++ ""
+#: npc/re/instances/GhostPalace.txt#280 (atrib)
+- "::OnMyMobDead2"
++ ""
+#: npc/re/instances/GhostPalace.txt#290 (mapannounce)
+- "The passage on the 4th floor of the palace is open."
++ ""
+#: npc/re/instances/GhostPalace.txt#299 (atrib)
+- "::OnMyMobDead3"
++ ""
+#: npc/re/instances/GhostPalace.txt#301 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#303 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#305 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#307 (unittalk)
+- "Faithful royal guard..."
++ ""
+#: npc/re/instances/GhostPalace.txt#309 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#311 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#313 (unittalk)
+- "You put your princess in grave danger..."
++ ""
+#: npc/re/instances/GhostPalace.txt#315 (unittalk)
+- "Faithful royal guard..."
++ ""
+#: npc/re/instances/GhostPalace.txt#317 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#319 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#321 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#323 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#325 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#327 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#329 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#331 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#333 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#335 (unittalk)
+- "Faithful royal guard..."
++ ""
+#: npc/re/instances/GhostPalace.txt#337 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#339 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#341 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#343 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#345 (unittalk)
+- "You put your princess in grave danger..."
++ ""
+#: npc/re/instances/GhostPalace.txt#347 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#349 (unittalk)
+- "Faithful royal guard..."
++ ""
+#: npc/re/instances/GhostPalace.txt#351 (unittalk)
+- "Run away quickly!"
++ ""
+#: npc/re/instances/GhostPalace.txt#353 (unittalk)
+- "Run away!"
++ ""
+#: npc/re/instances/GhostPalace.txt#355 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#357 (unittalk)
+- "Faithful royal guard..."
++ ""
+#: npc/re/instances/GhostPalace.txt#359 (unittalk)
+- "You put your princess in grave danger..."
++ ""
+#: npc/re/instances/GhostPalace.txt#361 (unittalk)
+- "You are trapped..."
++ ""
+#: npc/re/instances/GhostPalace.txt#368 (atrib)
+- "::OnMyMobDead1"
++ ""
+#: npc/re/instances/GhostPalace.txt#381 (atrib)
+- "::OnMyMobDead2"
++ ""
+#: npc/re/instances/GhostPalace.txt#396 (atrib)
+- "Visiting Prince#dk"
++ ""
+#: npc/re/instances/GhostPalace.txt#397 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#398 (mes)
+- "Where is Princess Tiara?"
++ "Onde está a Princesa Tiara?"
+#: npc/re/instances/GhostPalace.txt#399 (npctalk)
+- "Lurid Royal Guard: Where is Princess Tiara?"
++ "Guarda Real Sombrio: Onde está a Princesa Tiara?"
+#: npc/re/instances/GhostPalace.txt#400 (mes)
+- "[Visiting Prince]"
++ "[Príncipe Visitante]"
+#: npc/re/instances/GhostPalace.txt#401 (mes)
+- "You are too late... but you brought what I was looking for. Thanks for your help."
++ "Chegou tarde demais... mas trouxe o que eu procurava. Obrigado pela ajuda."
+#: npc/re/instances/GhostPalace.txt#402 (npctalk)
+- "Visiting Prince: You are too late... but you brought what I was looking for. Thanks for your help."
++ "Príncipe Visitante: Chegou tarde demais... mas trouxe o que eu procurava. Obrigado pela ajuda."
+#: npc/re/instances/GhostPalace.txt#403 (mes)
+- "[Visiting Prince]"
++ "[Príncipe Visitante]"
+#: npc/re/instances/GhostPalace.txt#404 (mes)
+- "Cursed Magic Sword Tartanos! Are you ready to have a new master?"
++ "Espada Mágica Amaldiçoada Tartanos! Pronta para ter um novo dono?"
+#: npc/re/instances/GhostPalace.txt#405 (npctalk)
+- "Visiting Prince: Cursed Magic Sword Tartanos! Are you ready to have a new master?"
++ "Príncipe Visitante: Espada Mágica Amaldiçoada Tartanos! Pronta para ter um novo dono?"
+#: npc/re/instances/GhostPalace.txt#406 (cutin)
+- "tartanos.bmp"
++ ""
+#: npc/re/instances/GhostPalace.txt#407 (mes)
+- "[Magic Sword Tartanos]"
++ "[Espada Mágica Tartanos]"
+#: npc/re/instances/GhostPalace.txt#408 (mes)
+- "How dare you!"
++ "Como ousa!"
+#: npc/re/instances/GhostPalace.txt#409 (npctalk)
+- "Magic Sword Tartanos: How dare you!"
++ "Espada Mágica Tartanos: Como ousa!"
+#: npc/re/instances/GhostPalace.txt#410 (npctalk)
+- "Magic Sword Tartanos#dk2"
++ ""
+#: npc/re/instances/GhostPalace.txt#411 (mes)
+- "[Visiting Prince]"
++ "[Príncipe Visitante]"
+#: npc/re/instances/GhostPalace.txt#412 (mes)
+- "aah, aah !!!"
++ "aah, aah !!!"
+#: npc/re/instances/GhostPalace.txt#413 (npctalk)
+- "Visiting Prince: Aah, aah!!!"
++ "Príncipe Visitante: Aah, aah!!!"
+#: npc/re/instances/GhostPalace.txt#429 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/GhostPalace.txt#436 (mapannounce)
+- "The passage on the 5th floor of the palace is open."
++ ""
+#: npc/re/instances/GhostPalace.txt#446 (atrib)
+- "Lurid Royal Guard#dk5"
++ ""
+#: npc/re/instances/GhostPalace.txt#447 (mes)
+- "[Princess Tiara]"
++ "[Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#448 (mes)
+- "You kept your promise."
++ "Você cumpriu a promessa."
+#: npc/re/instances/GhostPalace.txt#449 (npctalk)
+- "Princess Tiara: You kept your promise."
++ "Princesa Tiara: Você cumpriu a promessa."
+#: npc/re/instances/GhostPalace.txt#450 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#451 (mes)
+- "princess!"
++ "princesa!"
+#: npc/re/instances/GhostPalace.txt#452 (npctalk)
+- "Lurid Royal Guard: Princess!"
++ "Guarda Real Sombrio: Princesa!"
+#: npc/re/instances/GhostPalace.txt#453 (cutin)
+- "npc-tiara.bmp"
++ ""
+#: npc/re/instances/GhostPalace.txt#454 (mes)
+- "[Princess Tiara]"
++ "[Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#455 (mes)
+- "Thank you... now I can rest beside you..."
++ "Obrigada... agora posso descansar ao seu lado..."
+#: npc/re/instances/GhostPalace.txt#456 (npctalk)
+- "Princess Tiara: Thank you... now I can rest beside you..."
++ "Princesa Tiara: Obrigada... agora posso descansar ao seu lado..."
+#: npc/re/instances/GhostPalace.txt#457 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#458 (mes)
+- "No..No!!!!!"
++ "Não.. não!!!!!"
+#: npc/re/instances/GhostPalace.txt#459 (npctalk)
+- "Lurid Royal Guard: No..No!!!!!"
++ "Guarda Real Sombrio: Não.. não!!!!!"
+#: npc/re/instances/GhostPalace.txt#460 (mes)
+- "[The voice of Princess Tiara]"
++ "[A voz da Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#461 (mes)
+- "I want to be with you forever in peace...forever..."
++ "Quero ficar com você em paz para sempre... para sempre..."
+#: npc/re/instances/GhostPalace.txt#462 (npctalk)
+- "Princess Tiara: I want to be with you forever in peace...forever..."
++ "Princesa Tiara: Quero ficar com você em paz para sempre... para sempre..."
+#: npc/re/instances/GhostPalace.txt#463 (cutin)
+- "b-tiara.BMP"
++ ""
+#: npc/re/instances/GhostPalace.txt#464 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#465 (mes)
+- "no.....Ahh ahh ahh!!!!~!"
++ "não..... Ahh ahh ahh!!!!~!"
+#: npc/re/instances/GhostPalace.txt#466 (npctalk)
+- "Lurid Royal Guard: no.....Ahh ahh ahh!!!!~!"
++ "Guarda Real Sombrio: não..... Ahh ahh ahh!!!!~!"
+#: npc/re/instances/GhostPalace.txt#467 (mes)
+- "[The voice of Princess Tiara]"
++ "[A voz da Princesa Tiara]"
+#: npc/re/instances/GhostPalace.txt#468 (mes)
+- "I love you..."
++ "Eu te amo..."
+#: npc/re/instances/GhostPalace.txt#469 (npctalk)
+- "Princess Tiara: I love you..."
++ "Princesa Tiara: Eu te amo..."
+#: npc/re/instances/GhostPalace.txt#486 (atrib)
+- "::OnMyMobDead1"
++ ""
+#: npc/re/instances/GhostPalace.txt#488 (unittalk)
+- "Wake up! look at us... We are monsters?"
++ ""
+#: npc/re/instances/GhostPalace.txt#490 (unittalk)
+- "Sakray killed the King and tried to kill us!"
++ ""
+#: npc/re/instances/GhostPalace.txt#492 (unittalk)
+- "What is this..??"
++ ""
+#: npc/re/instances/GhostPalace.txt#494 (unittalk)
+- "Sakray killed a princess!"
++ ""
+#: npc/re/instances/GhostPalace.txt#498 (atrib)
+- "::OnMyMobDead2"
++ ""
+#: npc/re/instances/GhostPalace.txt#500 (unittalk)
+- "Wake up! look at us... We are monsters?"
++ ""
+#: npc/re/instances/GhostPalace.txt#502 (unittalk)
+- "Sakray..?? why.....Sakray!"
++ ""
+#: npc/re/instances/GhostPalace.txt#504 (unittalk)
+- "Sakray killed the King and tried to kill us!"
++ ""
+#: npc/re/instances/GhostPalace.txt#506 (unittalk)
+- "Sakray killed a princess!"
++ ""
+#: npc/re/instances/GhostPalace.txt#510 (atrib)
+- "::OnMyMobDead3"
++ ""
+#: npc/re/instances/GhostPalace.txt#512 (unittalk)
+- "Wake up! look at us... We are monsters?"
++ ""
+#: npc/re/instances/GhostPalace.txt#514 (unittalk)
+- "Sakray..?? why.....Sakray!"
++ ""
+#: npc/re/instances/GhostPalace.txt#516 (unittalk)
+- "Sakray killed the King and tried to kill us!"
++ ""
+#: npc/re/instances/GhostPalace.txt#518 (unittalk)
+- "Sakray killed a princess!"
++ ""
+#: npc/re/instances/GhostPalace.txt#524 (unittalk)
+- "Magic Sword Tartanos! I will destroy you if I can't have you... Oh no! How could this be?"
++ ""
+#: npc/re/instances/GhostPalace.txt#530 (mes)
+- "[Lurid Royal Guard]"
++ "[Guarda Real Sombrio]"
+#: npc/re/instances/GhostPalace.txt#531 (mes)
+- "Are you satisfied..? Magic Sword Tartanos?"
++ "Está satisfeita..? Espada Mágica Tartanos?"
+#: npc/re/instances/GhostPalace.txt#532 (npctalk)
+- "Lurid Royal Guard: Are you satisfied..? Magic Sword Tartanos?"
++ "Guarda Real Sombrio: Está satisfeita..? Espada Mágica Tartanos?"
+#: npc/re/instances/GhostPalace.txt#533 (mes)
+- "[Magic Sword Tartanos]"
++ "[Espada Mágica Tartanos]"
+#: npc/re/instances/GhostPalace.txt#534 (mes)
+- "I need more blood..Sakray, offer me his blood."
++ "Preciso de mais sangue.. Sakray, ofereça-me o sangue dele."
+#: npc/re/instances/GhostPalace.txt#535 (npctalk)
+- "Magic Sword Tartanos: I need more blood..Sakray, offer me his blood."
++ "Espada Mágica Tartanos: Preciso de mais sangue.. Sakray, ofereça-me o sangue dele."
+#: npc/re/instances/GhostPalace.txt#536 (npctalk)
+- "Magic Sword Tartanos#dk3"
++ ""
+#: npc/re/instances/GhostPalace.txt#537 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#538 (mes)
+- "Okay, that is good. A traveller. Did you see?"
++ "Muito bem. Um viajante. Você viu?"
+#: npc/re/instances/GhostPalace.txt#539 (npctalk)
+- "Sakray: Okay, that is good. A traveller. Did you see?"
++ "Sakray: Muito bem. Um viajante. Você viu?"
+#: npc/re/instances/GhostPalace.txt#540 (mes)
+- "["
++ ""
+#: npc/re/instances/GhostPalace.txt#541 (mes)
+- "]"
++ ""
+#: npc/re/instances/GhostPalace.txt#542 (mes)
+- "Sakray, what do you want? Sympathy? Or is it a trap?"
++ "Sakray, o que você quer? Compaixão? Ou é armadilha?"
+#: npc/re/instances/GhostPalace.txt#544 (unittalk)
+- " : Sakray, what do you want? Sympathy? Or is it a trap?"
++ ""
+#: npc/re/instances/GhostPalace.txt#545 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#546 (mes)
+- "No... I do not need to make any effort to catch a novice."
++ "Não... não preciso me esforçar para pegar um novato."
+#: npc/re/instances/GhostPalace.txt#547 (npctalk)
+- "Sakray: No... I do not need to make any effort to catch a novice."
++ "Sakray: Não... não preciso me esforçar para pegar um novato."
+#: npc/re/instances/GhostPalace.txt#548 (mes)
+- "["
++ ""
+#: npc/re/instances/GhostPalace.txt#549 (mes)
+- "]"
++ ""
+#: npc/re/instances/GhostPalace.txt#550 (mes)
+- "If so... then why...?"
++ "Se é assim... então por quê...?"
+#: npc/re/instances/GhostPalace.txt#552 (unittalk)
+- " : If so... then why...?"
++ ""
+#: npc/re/instances/GhostPalace.txt#553 (cutin)
+- "cry-b.bmp"
++ ""
+#: npc/re/instances/GhostPalace.txt#554 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#555 (mes)
+- "I wanted to get rid of a piece of humanity inside of me through you."
++ "Eu queria me livrar, através de você, de um pedaço de humanidade que ainda tenho."
+#: npc/re/instances/GhostPalace.txt#556 (npctalk)
+- "Sakray: I wanted to get rid of a piece of humanity inside of me through you."
++ "Sakray: Eu queria me livrar, através de você, de um pedaço de humanidade que ainda tenho."
+#: npc/re/instances/GhostPalace.txt#557 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#558 (mes)
+- "I am quite satisfied with the result."
++ "Estou bastante satisfeito com o resultado."
+#: npc/re/instances/GhostPalace.txt#559 (npctalk)
+- "Sakray: I am quite satisfied with the result."
++ "Sakray: Estou bastante satisfeito com o resultado."
+#: npc/re/instances/GhostPalace.txt#560 (mes)
+- "[Magic Sword Tartanos]"
++ "[Espada Mágica Tartanos]"
+#: npc/re/instances/GhostPalace.txt#561 (mes)
+- "Sakray, offer the blood to me now!"
++ "Sakray, ofereça-me o sangue agora!"
+#: npc/re/instances/GhostPalace.txt#562 (npctalk)
+- "Magic Sword Tartanos: Sakray, offer the blood to me now!"
++ "Espada Mágica Tartanos: Sakray, ofereça-me o sangue agora!"
+#: npc/re/instances/GhostPalace.txt#563 (npctalk)
+- "Magic Sword Tartanos#dk3"
++ ""
+#: npc/re/instances/GhostPalace.txt#564 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#565 (mes)
+- "If you were me, what would you do?"
++ "Se você fosse eu, o que faria?"
+#: npc/re/instances/GhostPalace.txt#566 (npctalk)
+- "Sakray: If you were me, what would you do?"
++ "Sakray: Se você fosse eu, o que faria?"
+#: npc/re/instances/GhostPalace.txt#567 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#568 (mes)
+- "Can you set yourself free from this curse?"
++ "Você conseguiria se livrar desta maldição?"
+#: npc/re/instances/GhostPalace.txt#569 (npctalk)
+- "Sakray: Can you set yourself free from this curse?"
++ "Sakray: Você conseguiria se livrar desta maldição?"
+#: npc/re/instances/GhostPalace.txt#570 (mes)
+- "["
++ ""
+#: npc/re/instances/GhostPalace.txt#571 (mes)
+- "]"
++ ""
+#: npc/re/instances/GhostPalace.txt#572 (mes)
+- "..."
++ "..."
+#: npc/re/instances/GhostPalace.txt#574 (unittalk)
+- " : ..."
++ ""
+#: npc/re/instances/GhostPalace.txt#575 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#576 (mes)
+- "Heh heh... I will keep watching you until the day comes when you are old enough."
++ "Heh heh... Vou ficar de olho em você até o dia em que estiver crescido o bastante."
+#: npc/re/instances/GhostPalace.txt#577 (npctalk)
+- "Sakray: Heh heh... I will keep watching you until the day comes when you are old enough."
++ "Sakray: Heh heh... Vou ficar de olho em você até o dia em que estiver crescido o bastante."
+#: npc/re/instances/GhostPalace.txt#578 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#579 (mes)
+- "I am willing to hunt you later for Tartanos."
++ "Um dia eu vou caçar você, pela Tartanos."
+#: npc/re/instances/GhostPalace.txt#580 (npctalk)
+- "Sakray: I am willing to hunt you later for Tartanos."
++ "Sakray: Um dia eu vou caçar você, pela Tartanos."
+#: npc/re/instances/GhostPalace.txt#582 (mes)
+- "[Sakray]"
++ "[Sakray]"
+#: npc/re/instances/GhostPalace.txt#583 (mes)
+- "Farewell then."
++ "Adeus, então."
+#: npc/re/instances/GhostPalace.txt#584 (npctalk)
+- "Sakray: Farewell then."
++ "Sakray: Adeus, então."
+#: npc/re/instances/GhostPalace.txt#592 (npctalk)
+- "Voice of Princess Tiara : What can I do for you?"
++ "Voz da Princesa Tiara : O que posso fazer por você?"
+#: npc/re/instances/GhostPalace.txt#593 (npctalk)
+- "Voice of Sakray : I will always stand by you. Please rest beside me."
++ "Voz de Sakray : Estarei sempre ao seu lado. Descanse aqui comigo."
+#: npc/re/instances/GhostPalace.txt#595 (npctalk)
+- "Magic Sword Tartanos: Sakray, do not forget the covenant of blood between us."
++ "Espada Mágica Tartanos: Sakray, não esqueça o pacto de sangue entre nós."
+#: npc/re/instances/GhostPalace.txt#597 (npctalk)
+- "Magic Sword Tartanos: Your soul is mine until you find the blood that satisfies me..."
++ "Espada Mágica Tartanos: A sua alma é minha até que ache o sangue que me satisfaça..."
+#: npc/re/instances/GhostPalace.txt#599 (npctalk)
+- "Voice of Sakray : Rest in the shadow with me."
++ "Voz de Sakray : Descanse na sombra comigo."
+#: npc/re/instances/GhostPalace.txt#601 (npctalk)
+- "Voice of Sakray : In the dark forever..."
++ "Voz de Sakray : No escuro, para sempre..."
+#: npc/re/instances/GhostPalace.txt#606 (mapannounce)
+- "It is time to leave the Ghost Palace."
++ ""
+#: npc/re/instances/GhostPalace.txt#609 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#610 (mes)
+- "Hey there, are you alive?"
++ "Ei, você aí, está vivo?"
+#: npc/re/instances/GhostPalace.txt#611 (mes)
+- "I did not expect to meet someone who is still alive."
++ "Não esperava encontrar alguém ainda vivo."
+#: npc/re/instances/GhostPalace.txt#612 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#613 (mes)
+- "Do you possibly have the ^006400"
++ "Por acaso você tem o ^006400"
+#: npc/re/instances/GhostPalace.txt#614 (mes)
+- "^000000?"
++ "^000000?"
+#: npc/re/instances/GhostPalace.txt#615 (mes)
+- "Can you give it to me?"
++ "Pode me dar?"
+#: npc/re/instances/GhostPalace.txt#616 (mes)
+- "The memories of the faithful royal guard"
++ "As memórias do guarda real fiel"
+#: npc/re/instances/GhostPalace.txt#617 (mes)
+- "and the memories of everyone he loved"
++ "e as memórias de todos que ele amou"
+#: npc/re/instances/GhostPalace.txt#618 (mes)
+- "are contained inside of these shards."
++ "estão guardadas dentro destes cacos."
+#: npc/re/instances/GhostPalace.txt#619 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#620 (mes)
+- "Will you give the ^006400"
++ "Você me dá o ^006400"
+#: npc/re/instances/GhostPalace.txt#621 (mes)
+- "^000000 to me?"
++ "^000000?"
+#: npc/re/instances/GhostPalace.txt#622 (mes)
+- "The guilt is eating my soul."
++ "A culpa está comendo a minha alma."
+#: npc/re/instances/GhostPalace.txt#623 (mes)
+- "My soul is trapped inside the Ghost Palace."
++ "A minha alma está presa dentro do Palácio das Mágoas."
+#: npc/re/instances/GhostPalace.txt#624 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#625 (mes)
+- "I am collecting Sakray's abandoned memories from these shards."
++ "Estou juntando as memórias que o Sakray abandonou nestes cacos."
+#: npc/re/instances/GhostPalace.txt#626 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#627 (mes)
+- "If you give any ^006400"
++ "Se me der ^006400"
+#: npc/re/instances/GhostPalace.txt#628 (mes)
+- "^000000s to me, I can make equipment for you."
++ "^000000, eu faço equipamento para você."
+#: npc/re/instances/GhostPalace.txt#629 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#630 (mes)
+- "The cursed knight..."
++ "O cavaleiro amaldiçoado..."
+#: npc/re/instances/GhostPalace.txt#631 (mes)
+- "Please help me save the soul of Sakray."
++ "Por favor, me ajude a salvar a alma do Sakray."
+#: npc/re/instances/GhostPalace.txt#652 (menu)
+- ":"
++ ""
+#: npc/re/instances/GhostPalace.txt#653 (menu)
+- "Cancel"
++ "Cancelar"
+#: npc/re/instances/GhostPalace.txt#654 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#655 (mes)
+- "Someday, Sakray will"
++ "Um dia o Sakray vai"
+#: npc/re/instances/GhostPalace.txt#656 (mes)
+- "get out of this curse for sure."
++ "se livrar desta maldição, com certeza."
+#: npc/re/instances/GhostPalace.txt#657 (mes)
+- "I believe"
++ "Eu acredito que"
+#: npc/re/instances/GhostPalace.txt#658 (mes)
+- "^006400"
++ ""
+#: npc/re/instances/GhostPalace.txt#659 (mes)
+- "^000000s are the only method"
++ "^000000 são o único jeito"
+#: npc/re/instances/GhostPalace.txt#660 (mes)
+- "to save him...."
++ "de salvá-lo...."
+#: npc/re/instances/GhostPalace.txt#661 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#662 (mes)
+- "To make a ^FF0000"
++ "Para fazer um ^FF0000"
+#: npc/re/instances/GhostPalace.txt#663 (mes)
+- "^000000"
++ ""
+#: npc/re/instances/GhostPalace.txt#664 (mes)
+- "I need "
++ "eu preciso de "
+#: npc/re/instances/GhostPalace.txt#665 (mes)
+- " ^006400"
++ " ^006400"
+#: npc/re/instances/GhostPalace.txt#666 (mes)
+- "^000000."
++ "^000000."
+#: npc/re/instances/GhostPalace.txt#667 (select)
+- "Cancel"
++ "Cancelar"
+#: npc/re/instances/GhostPalace.txt#668 (select)
+- "Hand over "
++ "Entregar "
+#: npc/re/instances/GhostPalace.txt#670 (select)
+- "."
++ ""
+#: npc/re/instances/GhostPalace.txt#671 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#672 (mes)
+- "Someday, Sakray will"
++ "Um dia o Sakray vai"
+#: npc/re/instances/GhostPalace.txt#673 (mes)
+- "get out of this curse for sure."
++ "se livrar desta maldição, com certeza."
+#: npc/re/instances/GhostPalace.txt#674 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#675 (mes)
+- "You do not have enough ^006400"
++ "Você não tem ^006400"
+#: npc/re/instances/GhostPalace.txt#676 (mes)
+- "^000000"
++ ""
+#: npc/re/instances/GhostPalace.txt#677 (mes)
+- "to make a ^FF0000"
++ "suficiente para fazer um ^FF0000"
+#: npc/re/instances/GhostPalace.txt#678 (mes)
+- "^000000."
++ "^000000."
+#: npc/re/instances/GhostPalace.txt#679 (mes)
+- "I need "
++ "eu preciso de "
+#: npc/re/instances/GhostPalace.txt#680 (mes)
+- " ^006400"
++ " ^006400"
+#: npc/re/instances/GhostPalace.txt#681 (mes)
+- "^000000."
++ "^000000."
+#: npc/re/instances/GhostPalace.txt#682 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#683 (mes)
+- "I will make a ^FF0000"
++ "Vou fazer um ^FF0000"
+#: npc/re/instances/GhostPalace.txt#684 (mes)
+- "^000000"
++ ""
+#: npc/re/instances/GhostPalace.txt#685 (mes)
+- "with "
++ "com "
+#: npc/re/instances/GhostPalace.txt#686 (mes)
+- " ^006400"
++ " ^006400"
+#: npc/re/instances/GhostPalace.txt#687 (mes)
+- "^000000."
++ "^000000."
+#: npc/re/instances/GhostPalace.txt#688 (mes)
+- "You see a light through the folded hands of the king and it gradually takes on a shape."
++ "Uma luz atravessa as mãos postas do rei e vai, pouco a pouco, ganhando forma."
+#: npc/re/instances/GhostPalace.txt#689 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#690 (mes)
+- "All right, it is done."
++ "Pronto, está feito."
+#: npc/re/instances/GhostPalace.txt#691 (mes)
+- "Take this ^FF0000"
++ "Leve este ^FF0000"
+#: npc/re/instances/GhostPalace.txt#692 (mes)
+- "^000000"
++ ""
+#: npc/re/instances/GhostPalace.txt#693 (mes)
+- "to confront Sakray and Tartanos."
++ "para enfrentar o Sakray e a Tartanos."
+#: npc/re/instances/GhostPalace.txt#694 (mes)
+- "[King]"
++ "[Rei]"
+#: npc/re/instances/GhostPalace.txt#695 (mes)
+- "The power requires a sacrifice."
++ "O poder cobra um sacrifício."
+#: npc/re/instances/GhostPalace.txt#696 (mes)
+- "Please be careful..."
++ "Tome cuidado..."
+#: npc/re/instances/GhostPalace.txt#697 (mes)
+- "It is time to leave the Ghost Palace."
++ "É hora de deixar o Palácio das Mágoas."
+#: npc/re/instances/GhostPalace.txt#698 (mes)
+- "Everything is now complete"
++ "Tudo está completo agora"
+#: npc/re/instances/GhostPalace.txt#699 (mes)
+- "and will vanish.."
++ "e vai desaparecer.."

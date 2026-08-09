@@ -1,0 +1,2292 @@
+# Catalogo de traducao PT-BR - grupo "charleston"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/CharlestonCrisis.txt  (760 textos)
+#: npc/re/instances/CharlestonCrisis.txt#1 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#2 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#3 (mes)
+- "I'm looking for adventurers who are at least Level 130, healthy, free of chronic disease, and not on prescription drugs."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#4 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#5 (mes)
+- "Hello, Adventurer. I'm Charleston, the initiator of the Project Independent."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#6 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#7 (mes)
+- "Currently I'm unable to move, having a problem with one of my components. Could you help me get the replacement parts from the factory?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#8 (select)
+- "Sure."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#9 (select)
+- "No."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#10 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#11 (mes)
+- "The task won't be difficult if you're at least Level 130, healthy, free of chronic disease, and not on prescription drugs."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#12 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#13 (mes)
+- "Please use the machine on the right side to enter the factory. Once you're in, remain calm and follow the instructions."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#14 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#15 (mes)
+- "Please use the machine next to me to enter the factory. Once you're in, remain calm and follow the instructions."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#16 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#17 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#18 (mes)
+- "I don't know how long it's been standing here, but it's been a long time since I've been able to move..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#19 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#20 (mes)
+- "At present, only my head can move, is Saleh she helped me open the organs can return to that time..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#21 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#22 (mes)
+- "I wouldn't have done that if I had been persuaded."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#23 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#24 (mes)
+- "Anyway, I have nothing now... Only to be able to stand up again, so I hope to send an adventurer like you at that time."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#25 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#26 (mes)
+- "^FF0000It didn't change anything.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#27 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#28 (mes)
+- "Just based on the hard work of OS... For your help in another part of the world Charleston 2 will be 'very good' robot!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#29 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#30 (mes)
+- "It is possible to meet a good friend into a good robot, so I have to continue to carry on, Thank you!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#31 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#32 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#33 (mes)
+- "Aren't you disappointed? Are you really going to let your effort go in vain? Because that'll be really stupid. I suggest you reconsider."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#34 (select)
+- "I'll try again if there's a sliver of hope."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#35 (select)
+- "I'll think again."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#36 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#37 (mes)
+- "I'm a robot. I do what I'm programmed to do, and nothing else matters."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#38 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#39 (mes)
+- "Ironic, isn't it? Robots are supposed to be incapable of emotions, and yet here I am, feeling rueful about the past."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#40 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#41 (mes)
+- "You can judge me, but you can't stop me. I'll continue to try as long as there's a sliver of hope."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#42 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#43 (mes)
+- "My heart stopped, but I still can talk. Please help me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#44 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#45 (mes)
+- "If you're disillusioned by your immutable past, unclear future, and depressing present, then I won't force you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#46 (select)
+- "I'll try again if there's a sliver of hope."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#47 (select)
+- "I give up."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#48 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#49 (mes)
+- "I'll continue to try as long as there's a sliver of hope."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#50 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#51 (mes)
+- "I couldn't stop it from happening or change the past. But maybe someone else can."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#52 (mes)
+- "[Charleston]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#53 (mes)
+- "I'll wait for that one person however long it takes."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#54 (mes)
+- "[Machine]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#55 (mes)
+- "^ff0000You must be Level 130 to use this machine.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#56 (mes)
+- "^ff0000You need Charleston's permission to use this machine.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#57 (mes)
+- "^ff0000You first must form/join a party of at least 1 person to enter this dungeon.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#58 (mes)
+- "^ff0000This machine cannot be accessed for 20 hours after your last access.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#59 (mes)
+- "The machine is now available for use."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#60 (atrib)
+- "Aos Pés do Rei"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#61 (menu)
+- "Open the dimensional portal."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#62 (select)
+- "Enter the Charleston Factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#63 (select)
+- "Cancel."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#64 (mes)
+- "Party: "
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#66 (mes)
+- "Leader: "
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#68 (mes)
+- "^0000ff"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#69 (mes)
+- " ^000000- Unknown error"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#70 (mes)
+- "^ff0000Preparing to teleport...^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#71 (mes)
+- "^ff0000Please wait.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#72 (mes)
+- "[Machine]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#73 (mes)
+- "Teleporting..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#74 (mes)
+- "[Machine]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#75 (mes)
+- "^ff0000This machine cannot be accessed for 20 hours after your last access.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#76 (mes)
+- "[Machine]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#77 (mes)
+- "^ff0000An unknown error occurred.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#78 (mes)
+- "[Machine]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#79 (mes)
+- "^ff0000Your party leader has not yet created a Time Crack.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#80 (mes)
+- "[Machine]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#81 (mes)
+- "^ff0000Only a member of the party can enter the Memorial Dungeon.^000000"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#86 (mes)
+- "Crisis of Charleston Test ver130603a"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#88 (select)
+- "20 hour cooldown reset"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#89 (select)
+- "Returns the status of the initial solution task"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#90 (select)
+- "Establish a copy clearance status"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#91 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#92 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#93 (mes)
+- "Um... How long do I have to wait?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#94 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#95 (mes)
+- "Follow the leftward hallway, and remember that only you can protect yourself."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#96 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#97 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#98 (mes)
+- "Follow the leftward hallway, and remember that only you can protect yourself."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#99 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#100 (mes)
+- "Finally, you're here! I've been waiting for you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#101 (npctalk)
+- "Finally, you're here! I've been waiting for you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#102 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#103 (mes)
+- "We don't have time, so let me cut to the chase. Currently, the Charleston Factory is under Rank B security alert level, meaning that the security devices have been activated."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#104 (npctalk)
+- "We don't have time, so let me cut to the chase. Currently, the Charleston Factory is under Rank B security alert level, meaning that the security devices have been activated."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#105 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#106 (mes)
+- "Move to the leftward hallway, destroy security devices in there, and then head on to the next zone."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#107 (npctalk)
+- "Move to the leftward hallway, destroy security devices in there, and then head on to the next zone."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#108 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#109 (mes)
+- "Don't worry about the security devices. They can be repaired easily. Dr. Ve is in his lab north of Factory Line 3."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#110 (npctalk)
+- "Don't worry about the security devices. They can be repaired easily. Dr. Ve is in his lab north of Factory Line 3."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#111 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#112 (mes)
+- "Dr. Ve can tell you everything. Hurry!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#113 (npctalk)
+- "Dr. Ve can tell you everything. Hurry!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#122 (cutin)
+- "nale04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#123 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#125 (mes)
+- "- She's making strange noises, but unable to move. -"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#126 (mes)
+- "- He's busy scribbling something, Move close to talk to him."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#127 (mes)
+- "- He's busy scribbling something. You shouldn't disturb him."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#128 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#129 (mes)
+- "Let me talk to your leader. I don't have time for everyone."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#130 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#131 (mes)
+- "I don't care who you're with. I just need to know if you can help me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#132 (select)
+- "I can help."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#133 (select)
+- "I'm busy."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#134 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#135 (mes)
+- "Sigh, I don't care who, so long as I get the help I need."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#136 (npctalk)
+- "Dr. Ve: Sigh, I don't care who, so long as I get the help I need."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#137 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#138 (mes)
+- "You're the savior we've been waiting for! Charleston 1 will tell you what we need to repair Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#139 (npctalk)
+- "Dr. Ve: You're the savior we've been waiting for! Charleston 1 will tell you what we need to repair Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#140 (atrib)
+- "Charleston 1#1"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#141 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#142 (mes)
+- "Charleston 1. Charleston 2 has been forcibly connected to a part of the main computer, and I can't control her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#143 (npctalk)
+- "Dr. Ve: Charleston 1. Charleston 2 has been forcibly connected to a part of the main computer, and I can't control her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#144 (cutin)
+- "dalle02.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#145 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#146 (mes)
+- "She's a robot; she should stop sooner or later."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#147 (npctalk)
+- "Charleston 1: She's a robot; she should stop sooner or later."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#149 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#150 (mes)
+- "The Longevity device in her will keep her running at least for 50 years. The factory is not going to survive that long."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#151 (npctalk)
+- "Dr. Ve: The Longevity device in her will keep her running at least for 50 years. The factory is not going to survive that long."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#152 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#153 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#154 (mes)
+- "Then we have no choice. It's good that we have the specialist with us."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#155 (npctalk)
+- "Charleston 1: Then we have no choice. It's good that we have the specialist with us."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#156 (select)
+- "Are you talking about me?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#158 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#159 (mes)
+- "A while ago, a lady named ^FF0000Shalosh^000000 visited us while Charleston 2 was packaging products for shipping."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#160 (npctalk)
+- "Charleston 1: A while ago, a lady named ^FF0000Shalosh^000000 visited us while Charleston 2 was packaging products for shipping."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#161 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#162 (mes)
+- "Shalosh and her friend were talking to Charleston 2 when the accident happened."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#163 (npctalk)
+- "Charleston 1: Shalosh and her friend were talking to Charleston 2 when the accident happened."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#165 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#166 (mes)
+- "I think someone tried to hack into the factory's main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#167 (npctalk)
+- "Dr. Ve: I think someone tried to hack into the factory's main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#168 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#169 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#170 (mes)
+- "During its update process, the connection to the server was jammed. When we pressed Shalosh about that,"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#171 (npctalk)
+- "Charleston 1: During its update process, the connection to the server was jammed. When we pressed Shalosh about that,"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#172 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#173 (mes)
+- "Shalosh said her friends could help us. That was when Newoz and her other friends came. They haven't been much of help."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#174 (npctalk)
+- "Charleston 1: Shalosh said her friends could help us. That was when Newoz and her other friends came. They haven't been much of help."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#175 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#176 (mes)
+- "It seems you're acquainted with them. Could you help us?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#177 (npctalk)
+- "Charleston 1: It seems you're acquainted with them. Could you help us?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#178 (select)
+- "I can help."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#179 (select)
+- "I don't know them."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#180 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#181 (mes)
+- "I just saw that you are talking, then I will wait for someone to help!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#183 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#184 (mes)
+- "Thank you so much! Give me some time to put some data in order. Then, I'll tell you what happened."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#185 (npctalk)
+- "Charleston 1: Thank you so much! Give me some time to put some data in order. Then, I'll tell you what happened."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#186 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#187 (mes)
+- "When the tension is changed to two main lines and then injected into the core... well? I am not disturbing in the calculation."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#188 (npctalk)
+- "Dr. Ve: When the tension is changed to two main lines and then injected into the core... well? I am not disturbing in the calculation."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#189 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#190 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#191 (mes)
+- "Please let me talk to your leader. The future of my factory depends on the success of this operation."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#192 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#193 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#194 (mes)
+- "Steps and Locksteps are creating a mess inside the factory. Please destroy 3 Locksteps first. I can tell you their estimated locations."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#195 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#196 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#197 (mes)
+- "Let me explain what to do. Oh, let me close the factory entrance first, lest something might barge in uninvited."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#198 (npctalk)
+- "Charleston 1: Let me explain what to do. Oh, let me close the factory entrance first, lest something might barge in uninvited."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#199 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#200 (mes)
+- "Charleston is equipped with numerous Nanosteps, a type of AI chip that organically works with other AI chips to command Charleston to judge and act correctly."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#201 (npctalk)
+- "Charleston 1: Charleston is equipped with numerous Nanosteps, a type of AI chip that organically works with other AI chips to command Charleston to judge and act correctly."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#202 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#203 (mes)
+- "Charleston's data has to be updated on a daily basis through the main computer in the lab. We call this regular maintenance."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#204 (npctalk)
+- "Charleston 1: Charleston's data has to be updated on a daily basis through the main computer in the lab. We call this regular maintenance."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#205 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#206 (mes)
+- "The updater is not working at this moment. We don't know the cause, but something went wrong while Charleston 2 was connecting to the main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#207 (npctalk)
+- "Charleston 1: The updater is not working at this moment. We don't know the cause, but something went wrong while Charleston 2 was connecting to the main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#208 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#209 (mes)
+- "I told Charleston 2 that she's under extended maintenance, but we don't know how long this extended maintenance status will last."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#210 (npctalk)
+- "Charleston 1: I told Charleston 2 that she's under extended maintenance, but we don't know how long this extended maintenance status will last."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#211 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#212 (mes)
+- "Steps and Locksteps are creating a mess inside the factory. Please destroy 3 Locksteps first. I can tell you their estimated locations."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#213 (npctalk)
+- "Charleston 1: Steps and Locksteps are creating a mess inside the factory. Please destroy 3 Locksteps first. I can tell you their estimated locations."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#214 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#215 (mes)
+- "It'll be great if we can get rid of them all, but for now we should focus on having the factory up and running again."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#216 (npctalk)
+- "Charleston 1: It'll be great if we can get rid of them all, but for now we should focus on having the factory up and running again."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#217 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#218 (mes)
+- "Destroying too many Steps could cause a problem to reactivate the factory. You should consult the main computer on the left side."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#219 (npctalk)
+- "Charleston 1: Destroying too many Steps could cause a problem to reactivate the factory. You should consult the main computer on the left side."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#220 (atrib)
+- "Charleston 1#1"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#221 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#231 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#232 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#233 (mes)
+- "You should meet Dr. Ve first."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#234 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#235 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#236 (mes)
+- "I am a robot, are you surprised?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#244 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#245 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#246 (mes)
+- "Please let me talk to your leader about the supplementation of the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#247 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#248 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#249 (mes)
+- "We need more power to reactivate the main computer. Let me tell you the location of one of the backup power generators. Turning it on is easy."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#250 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#251 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#252 (mes)
+- "Whew, things seem to be settled for now. Let me disarm the alert mode and reactivate Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#253 (npctalk)
+- "Charleston 1: Whew, things seem to be settled for now. Let me disarm the alert mode and reactivate Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#254 (cutin)
+- "dalle03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#255 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#256 (mes)
+- "Err? This isn't right."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#257 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#258 (mes)
+- "I'm afraid there's a problem with the power generators. Could you check all the all three power generators? I'll tell you their locations."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#259 (npctalk)
+- "Charleston 1: I'm afraid there's a problem with the power generators. Could you check all the all three power generators? I'll tell you their locations."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#268 (cutin)
+- "dalle03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#269 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#270 (mes)
+- "We're working on a new utility software engine called Hardworking. We haven't had a chance to test it because of the problems in the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#271 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#272 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#273 (mes)
+- "We're working on a new utility software engine called Hardworking. We haven't had a chance to test it because of the problems in the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#274 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#275 (mes)
+- "Please let me talk to your leader about the supplementation of the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#276 (atrib)
+- "Charleston 2#0"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#277 (atrib)
+- "Dr. Ve#1"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#278 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#279 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#280 (mes)
+- "You're back. Charleston 2 is almost ready to be reactivated, and it's all thanks to you. Just give me a moment."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#281 (npctalk)
+- "Charleston 1: You're back. Charleston 2 is almost ready to be reactivated, and it's all thanks to you. Just give me a moment."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#283 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#284 (mes)
+- "She's ready. Let's wait for a response from the main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#285 (npctalk)
+- "Dr. Ve: She's ready. Let's wait for a response from the main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#286 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#287 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#288 (mes)
+- "89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#289 (npctalk)
+- "Charleston 1: 89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#290 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#291 (mes)
+- "Oh, Charleston 2 is awake!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#292 (npctalk)
+- "Charleston 1: Oh, Charleston 2 is awake!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#293 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#294 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#295 (mes)
+- "...Did I fail?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#296 (npctalk)
+- "Charleston 2: ...Did I fail?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#297 (cutin)
+- "dalle02.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#298 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#299 (mes)
+- "Charleston 2! Are you all right? Someone hacked into your system and the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#300 (npctalk)
+- "Charleston 1: Charleston 2! Are you all right? Someone hacked into your system and the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#301 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#302 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#303 (mes)
+- "It was I who did it. I've thought about it for a long time, based on the reasoning of my Self-reflection OS."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#304 (npctalk)
+- "Charleston 2: It was I who did it. I've thought about it for a long time, based on the reasoning of my Self-reflection OS."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#305 (cutin)
+- "dalle02.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#306 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#307 (mes)
+- "You did it? Why? Was it some sort of joke? You caused a serious error to the factory and the main server as well!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#308 (npctalk)
+- "Charleston 1: You did it? Why? Was it some sort of joke? You caused a serious error to the factory and the main server as well!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#309 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#310 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#311 (mes)
+- "Not a joke. You'll never understand. You follow commands and never think on your own. I hate this factory, this world! I hate being a robot!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#312 (npctalk)
+- "Charleston 2: Not a joke. You'll never understand. You follow commands and never think on your own. I hate this factory, this world! I hate being a robot!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#314 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#315 (mes)
+- "Either a critical error has occurred or Charleston 2 has transcended the limits of the Self-reflection OS version 1.1."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#316 (npctalk)
+- "Dr. Ve: Either a critical error has occurred or Charleston 2 has transcended the limits of the Self-reflection OS version 1.1."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#317 (cutin)
+- "dalle02.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#318 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#319 (mes)
+- "Let me guess: you hate you weren't created as a menial worker robot."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#320 (npctalk)
+- "Charleston 1: Let me guess: you hate you weren't created as a menial worker robot."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#321 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#322 (mes)
+- "Or you want to become a human."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#323 (npctalk)
+- "Charleston 1: Or you want to become a human."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#324 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#325 (mes)
+- "And if you can't, then you want to destroy the whole world."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#326 (npctalk)
+- "Charleston 1: And if you can't, then you want to destroy the whole world."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#327 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#328 (mes)
+- "Is that it?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#329 (npctalk)
+- "Charleston 1: Is that it?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#330 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#331 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#332 (mes)
+- "...Don't mock me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#333 (npctalk)
+- "Charleston 2: ...Don't mock me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#334 (cutin)
+- "dalle03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#335 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#336 (mes)
+- "You had it coming. Your reasons are petulant and unimaginative. We're the first robots that can think for themselves. Can't you be more creative?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#337 (npctalk)
+- "Charleston 1: You had it coming. Your reasons are petulant and unimaginative. We're the first robots that can think for themselves. Can't you be more creative?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#338 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#339 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#340 (mes)
+- "You don't know what you're talking about! You're the prototype--your OS version is primitive!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#341 (npctalk)
+- "Charleston 2: You don't know what you're talking about! You're the prototype--your OS version is primitive!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#342 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#343 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#344 (mes)
+- "I'm the only one in this world who can truly understand you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#345 (npctalk)
+- "Charleston 1: I'm the only one in this world who can truly understand you. We're twins."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#346 (mes)
+- "We're twins."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#347 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#348 (mes)
+- "You're going through the adolescent stage like humans do."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#349 (npctalk)
+- "Charleston 1: You're going through the adolescent stage like humans do."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#350 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#351 (mes)
+- "Maybe we should celebrate. You've finally developed human-like feelings."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#352 (npctalk)
+- "Charleston 1: Maybe we should celebrate. You've finally developed human-like feelings."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#353 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#354 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#355 (mes)
+- "Don't act like you know everything! We can't think for ourselves. Everything we think we know has been programmed into us!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#356 (npctalk)
+- "Charleston 2: Don't act like you know everything! We can't think for ourselves. Everything we think we know has been programmed into us!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#358 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#359 (mes)
+- "Enough. Let's shut down Charleston 2. Her AI needs to be recalibrated."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#360 (npctalk)
+- "Dr. Ve: Enough. Let's shut down Charleston 2. Her AI needs to be recalibrated."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#361 (cutin)
+- "dalle03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#362 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#363 (mes)
+- "But..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#364 (npctalk)
+- "Charleston 1: But..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#365 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#366 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#367 (mes)
+- "That's not happening! I still have control over this factory! Don't you dare follow me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#368 (npctalk)
+- "Charleston 2: That's not happening! I still have control over this factory! Don't you dare follow me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#369 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#370 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#371 (mes)
+- "Stop acting like a child!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#372 (npctalk)
+- "Charleston 1: Stop acting like a child!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#373 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#374 (mes)
+- "Her Longevity device is discharged; she won't make it far. Please follow her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#375 (npctalk)
+- "Charleston 1: Her Longevity device is discharged; she won't make it far. Please follow her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#380 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#381 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#382 (mes)
+- "This is the safety of the Charleston factory. Please stay close?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#383 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#384 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#385 (mes)
+- "Please let me talk to your leader about the supplementation of the factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#386 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#387 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#388 (mes)
+- "Stop following! I'm going to destroy the whole factory!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#389 (npctalk)
+- "Charleston 2: Stop following! I'm going to destroy the whole factory!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#390 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#391 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#392 (mes)
+- "You're going to destroy us in the process! Our main power supply, Longevity, isn't perfect yet!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#393 (npctalk)
+- "Charleston 1: You're going to destroy us in the process! Our main power supply, Longevity, isn't perfect yet!!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#394 (npctalk)
+- "Charleston 1#4"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#395 (cutin)
+- "nale03.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#396 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#397 (mes)
+- "None of you understand me. I hate you!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#398 (npctalk)
+- "Charleston 2: None of you understand me. I hate you!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#399 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#400 (mes)
+- "The main computer may have been restored, but I'm still connected to the factory. Stop me if you can!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#401 (npctalk)
+- "Charleston 2: The main computer may have been restored, but I'm still connected to the factory. Stop me if you can!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#407 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#408 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#409 (mes)
+- "I'm going to destroy the whole factory!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#410 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#411 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#412 (mes)
+- "Charleston 2 is on the verge of break;down. Could you help her?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#413 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#414 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#415 (mes)
+- "Oh, our lab won't survive this!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#416 (atrib)
+- "Charleston 2#1"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#417 (atrib)
+- "Charleston 1#4"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#418 (npctalk)
+- "Charleston 2: Stop interfering! I don't want to hurt you!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#419 (npctalk)
+- "Charleston 1: Then, stop throwing a tantrum!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#420 (npctalk)
+- "Charleston 2: You're still not taking me seriously. Just watch what happens when I signal the main computer."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#422 (npctalk)
+- "Charleston 2: I have an endless supply of hecklers for you!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#424 (npctalk)
+- "Charleston 2: Just give up. I'm destroying this factory whether you like it or not!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#426 (npctalk)
+- "Charleston 1: Oh, our lab won't survive this!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#428 (npctalk)
+- "Charleston 2: I'll destroy everything!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#434 (npctalk)
+- "Charleston 2: *Pant Pant* I feel weak..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#436 (npctalk)
+- "Charleston 1: It takes enormous power and data processing to implement the factory data."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#438 (npctalk)
+- "Charleston 2: Grr, you can't stop me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#455 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#456 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#457 (mes)
+- "Do you think you can stop me? *Snort* Bring your leader. I'm not talking to you!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#458 (atrib)
+- "Charleston 1#5"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#459 (atrib)
+- "Dr. Ve#2"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#460 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#461 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#462 (mes)
+- "Enough with this! I understand you're going through a lot of emotional turmoil, but it's getting ridiculous."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#463 (npctalk)
+- "Charleston 1: Enough with this! I understand you're going through a lot of emotional turmoil, but it's getting ridiculous."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#464 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#465 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#466 (mes)
+- "How dare you bring strangers into this? I told you I'm serious about this! Outdated versions like you can never understand me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#467 (npctalk)
+- "Charleston 2: How dare you bring strangers into this? I told you I'm serious about this! Outdated versions like you can never understand me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#468 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#469 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#470 (mes)
+- "I may not understand you, but at least I'm telling you what I think is true."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#471 (npctalk)
+- "Charleston 1: I may not understand you, but at least I'm telling you what I think is true."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#472 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#473 (mes)
+- "You're right about me being a lower version. My capability of emotions is minimal, unlike you. That's why I'm proud of you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#474 (npctalk)
+- "Charleston 1: You're right about me being a lower version. My capability of emotions is minimal, unlike you. That's why I'm proud of you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#475 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#476 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#477 (mes)
+- "Nothing you feel, you think is your own--it's programmed into you! I'm different. What I feel is real emotion!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#478 (npctalk)
+- "Charleston 2: Nothing you feel, you think is your own--it's programmed into you! I'm different. What I feel is real emotion!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#480 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#481 (mes)
+- "Enough. I'll destroy Charleston 2 if that's what it takes to stop her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#482 (npctalk)
+- "Dr. Ve: Enough. I'll destroy Charleston 2 if that's what it takes to stop her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#483 (cutin)
+- "nale02.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#484 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#485 (mes)
+- "Is Charleston 3 already completed?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#486 (npctalk)
+- "Charleston 2: Is Charleston 3 already completed?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#487 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#488 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#489 (mes)
+- "Charleston 3? That's a combat/defense unit based on Charleston 2's and my designs. I thought it's still being tested at the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#490 (npctalk)
+- "Charleston 1: Charleston 3? That's a combat/defense unit based on Charleston 2's and my designs. I thought it's still being tested at the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#492 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#493 (mes)
+- "Charleston 1, that's too much information."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#494 (npctalk)
+- "Dr. Ve: Charleston 1, that's too much information."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#495 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#496 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#497 (mes)
+- "At this moment, ^FF0000anybody can access the model^000000 because its OS is still being tested to correct whatever problem Charleston 2 has."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#498 (npctalk)
+- "Charleston 1: At this moment, anybody can access the model because its OS is still being tested to correct whatever problem Charleston 2 has."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#500 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#501 (mes)
+- "You've just told the most critical information to everyone!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#502 (npctalk)
+- "Dr. Ve: You've just told the most critical information to everyone!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#503 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#504 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#505 (mes)
+- "^FF0000We^000000're incapable of combat. If someone activates Charleston 3, we won't stand a chance against her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#506 (npctalk)
+- "Charleston 1: We're incapable of combat. If someone activates Charleston 3, we won't stand a chance against her."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#508 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#509 (mes)
+- "......"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#510 (npctalk)
+- "Dr. Ve: ......"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#511 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#512 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#513 (mes)
+- "I'm taking Charleston 3 with me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#514 (npctalk)
+- "Charleston 2: I'm taking Charleston 3 with me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#516 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#517 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#518 (mes)
+- "What? No! How can you even consider that?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#519 (npctalk)
+- "Charleston 1: What? No! How can you even consider that?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#520 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#521 (mes)
+- "Things are getting more serious. Please go to the Core in the center of the factory before Charleston 2 steals 3!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#522 (npctalk)
+- "Charleston 1: Things are getting more serious. Please go to the Core in the center of the factory before Charleston 2 steals 3!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#528 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#529 (mes)
+- "...I am responsible for the 3rd machine."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#532 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#533 (mes)
+- "Things are getting messier."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#534 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#535 (mes)
+- "Charleston 2 is defective."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#536 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#537 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#538 (mes)
+- "This Core in the center powers the entire factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#539 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#540 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#541 (mes)
+- "In order to unlock the device, a blasting device is required, and I want to talk to the leader."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#542 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#543 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#544 (mes)
+- "Could you bring 1 Explosive Powder? I'm stuck to the access device, as you can see."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#545 (atrib)
+- "Charleston 2#31"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#546 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#547 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#548 (mes)
+- "Oh, thank you. With this,I'll be able to access the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#549 (npctalk)
+- "Charleston 1: Oh, thank you. With this,I'll be able to access the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#550 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#551 (mes)
+- "If I use the explosives to intensify the electric current..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#552 (npctalk)
+- "Charleston 1: If I use the explosives to intensify the electric current..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#553 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#554 (npctalk)
+- "Charleston 1: Voila!!!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#555 (mes)
+- "Voila!!!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#557 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#558 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#559 (mes)
+- "...You just blew up the door."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#560 (npctalk)
+- "Charleston 2: ...You just blew up the door."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#561 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#562 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#563 (mes)
+- "The point is that we can now access the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#564 (npctalk)
+- "Charleston 1: The point is that we can now access the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#565 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#566 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#567 (mes)
+- "Let's have a race to Charleston 3. Whoever reaches her first wins."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#568 (npctalk)
+- "Charleston 2: Let's have a race to Charleston 3. Whoever reaches her first wins."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#576 (cutin)
+- "dalle01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#577 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#578 (mes)
+- "This Core in the center powers the entire factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#579 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#580 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#581 (mes)
+- "The Charleston Factory is under my control now. I'm destroying everything, so no more sad robots like me will ever see the world."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#584 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#585 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#586 (mes)
+- "99 Explosive Powders? Easy."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#587 (atrib)
+- "Charleston 1#6"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#588 (atrib)
+- "Charleston 2#3"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#589 (npctalk)
+- "Charleston 2: The Charleston Factory is under my control now. I'm destroying everything, so no more sad robots like me will ever see the world."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#590 (npctalk)
+- "Charleston 1: I want to understand you, but I'm incapable of feeling sad."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#591 (npctalk)
+- "Charleston 2: Just shut up and watch me. Don't you dare stop me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#592 (npctalk)
+- "Charleston 1: Do you know how to access the Core?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#593 (npctalk)
+- "Charleston 2: Easy. I can just walk in...."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#594 (npctalk)
+- "Charleston 2: Bah, it's armed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#595 (npctalk)
+- "Charleston 1: Sigh, to enter the Core, you have to send encrypted electric signals, like this."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#596 (npctalk)
+- "Charleston 1: ...Um, maybe it's broken."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#597 (npctalk)
+- "Charleston 2: Dr. Ve created Charleston 3 and protected her with this device. How sneaky!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#598 (npctalk)
+- "Charleston 1: What are you talking about? The Core has existed long before the Charleston Factory."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#599 (npctalk)
+- "Charleston 1: Plus, Dr. Ve is a human; he can't enter the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#600 (npctalk)
+- "Charleston 2: Then, who was it in the Core making 3?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#601 (npctalk)
+- "Charleston 1: That's not important right now. We need 100 Explosive Powders to disarm that access device."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#602 (npctalk)
+- "Charleston 2: I'll bring them. Don't go anywhere!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#603 (npctalk)
+- "Charleston 2: I'll get 99. You get the last one."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#604 (npctalk)
+- "Charleston 1: I'm already in the process of connecting to the Core. Backing out now can trigger the Core's security system."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#605 (npctalk)
+- "Charleston 2: You did this on purpose."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#606 (npctalk)
+- "Charleston 1: Adventurer, could you bring 1 Explosive Powder?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#607 (npctalk)
+- "Charleston 1: I can't move at this moment. Please bring me 1 Explosive Powder."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#612 (atrib)
+- "Charleston 1#7"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#613 (atrib)
+- "Charleston 2#4"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#614 (atrib)
+- "Charleston 3#0"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#615 (atrib)
+- "Charleston 1#8"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#616 (npctalk)
+- "Charleston 2: This is Charleston 3."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#617 (npctalk)
+- "Charleston 1: Equipped with a heavy weapon, this combat unit is capable of both offense and defense."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#618 (npctalk)
+- "Charleston 1: It has a pilot cockpit inside, and armed with thick plates that can withstand most explosions."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#619 (npctalk)
+- "Charleston 1: To turn it on, push the lever to the center and press the power switch."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#620 (npctalk)
+- "Charleston 2: That's not even in the main computer's database. How did you know that?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#621 (npctalk)
+- "Charleston 1: That's not important. Whoever gets in her wins, right? I won."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#622 (npctalk)
+- "Charleston 2: ...!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#623 (npctalk)
+- "Charleston 1: Hey, did you have to push me?!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#624 (npctalk)
+- "Charleston 2: Push the lever to the center and press the power switch."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#625 (npctalk)
+- "Charleston 2: I'm destroying everything, so no more sad robots like me will ever see the world."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#626 (npctalk)
+- "Charleston 2: My laser beam will liberate all the robots from their misery!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#627 (npctalk)
+- "Charleston 1: I'm not capable of combat. I can't stop you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#628 (npctalk)
+- "Charleston 2: So stop following me. I really can destroy you if I want to!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#629 (npctalk)
+- "Charleston 1: I've brought some people who can help you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#630 (npctalk)
+- "Charleston 2: I thought humans could not enter the Core."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#631 (npctalk)
+- "Charleston 1: Hm, I think you're right."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#632 (npctalk)
+- "Charleston 1: This may not be useful in combat, but I've learned from a pretty lady how to scream."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#633 (npctalk)
+- "Charleston 2: Why didn't you learn something more useful in combat?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#634 (npctalk)
+- "Charleston 1: Didn't have a choice."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#635 (npctalk)
+- "Charleston 2: Stop me and suffer the consequences. I can always replace you, you know."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#636 (npctalk)
+- "Charleston 1: The next model may or may not be like you and me. It doesn't matter. You have to be stopped."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#637 (npctalk)
+- "Charleston 1: I'll see to it! ...I mean these adventurers will, for me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#664 (atrib)
+- "Bomb#23"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#665 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#678 (cutin)
+- "dalle04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#679 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#682 (mes)
+- "She's making strange noises and not functioning."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#683 (cutin)
+- "dalle04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#684 (mes)
+- "[Charleston 1]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#686 (mes)
+- "She's making strange noises and not functioning."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#689 (cutin)
+- "nale01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#690 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#691 (mes)
+- "Come to think of it, everything about Dr. Ve was suspicious. I mean, he relied on his assistant Charleston 1 for everything."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#692 (mes)
+- "[Charleston 2]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#693 (mes)
+- "Only Dr. Ve know can answer my question. I must find him. He must be in the lab."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#700 (atrib)
+- "Charleston 1#9"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#701 (atrib)
+- "Charleston 2#5"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#702 (atrib)
+- "Charleston 2#6"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#703 (npctalk)
+- "Charleston 1: Charleston 3 is destroyed. Charleston 2 escaped. Charleston 1 is damaged during combat."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#704 (npctalk)
+- "Charleston 2: Why are you doing this? You're a robot like us."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#705 (npctalk)
+- "Charleston 2: Don't you care if your body is destroyed? Your Self-reflection OS is flawed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#706 (npctalk)
+- "Charleston 2: Stop being a mindless robot! Stop following commands!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#707 (npctalk)
+- "Charleston 1: Data loss: 39%. Longevity damage: 82%."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#708 (npctalk)
+- "Charleston 1: Only the core parts are functioning, though barely."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#709 (npctalk)
+- "Charleston 1: Data defragmentation is necessary to repair the damage on the OS. I'll be formatted in 3 minutes. This is it for me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#710 (npctalk)
+- "Charleston 2: Incomplete robot..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#711 (npctalk)
+- "Charleston 1: Forsythia, you've grown well. Thank you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#712 (npctalk)
+- "Charleston 2: Don't call me that! I hate when the doctor calls me that!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#713 (npctalk)
+- "Charleston 1: I gave you that name on the day you first moved. It's from the color of your hair."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#714 (npctalk)
+- "Charleston 2: ...?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#715 (npctalk)
+- "Charleston 1: My OS is damaged beyond rep-pai... The language output has been minimized."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#716 (npctalk)
+- "Charleston 2: On the day I first moved? You and I are the mass version. We were created together."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#717 (npctalk)
+- "Charleston 1: The mass model is after Charleston 3."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#718 (npctalk)
+- "Charleston 1: I'm the prototype. It took years to develop you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#719 (npctalk)
+- "Charleston 1: Your OS is identical to mine. Not a single code is different."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#720 (npctalk)
+- "Charleston 2: You're lying!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#721 (npctalk)
+- "Charleston 1: I'm incapable of lying."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#722 (npctalk)
+- "Charleston 2: ......"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#723 (npctalk)
+- "Charleston 1: Your development took years. It's okay. I enjoyed this time with you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#724 (npctalk)
+- "Charleston 1: If I were a human, I'd say..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#725 (npctalk)
+- "Charleston 1: My daughter, Forsythia, I l-love y-y..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#726 (npctalk)
+- "Charleston 2: Wait!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#727 (npctalk)
+- "Charleston 1: Beep-."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#728 (npctalk)
+- "Charleston 1: The system has been rebooted successfully."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#729 (npctalk)
+- "Charleston 1: Time remaining until the OS recovery: undetermined."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#730 (npctalk)
+- "Charleston 1: The system is inactive until the security update and data defragmentation are completed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#731 (npctalk)
+- "Charleston 2: Was that a secret about my birth?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#732 (npctalk)
+- "Charleston 2: I'm confused. I can't believe it."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#738 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#739 (mes)
+- "With complete machine technology to obtain immortality drive, there are many variables."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#740 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#741 (mes)
+- "Hmm... On a mediated machine body is still difficult, is it... Do you really need a living donor? Hehe!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#742 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#743 (mes)
+- "Charleston 1 is reinitializing itself again. Hm..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#744 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#745 (mes)
+- "I've got so many things to record about this case."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#748 (atrib)
+- "Dr. Ve#3"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#749 (atrib)
+- "Charleston 2#7"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#750 (npctalk)
+- "Charleston 2: Dr. Ve, did you know this would happen? Tell me!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#751 (npctalk)
+- "Dr. Ve: Charleston 1 told you. She's your maker."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#752 (npctalk)
+- "Dr. Ve: She uses the same OS as you, meaning she was capable of emotions just like you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#753 (npctalk)
+- "Charleston 2: Why did she stop me? Why did she let herself be destroyed?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#754 (npctalk)
+- "Dr. Ve: Self-reflection is an OS that improves itself through experience."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#755 (npctalk)
+- "Dr. Ve: What you've felt could be real emotion or simply the accumulation of data."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#756 (npctalk)
+- "Dr. Ve: I can only assume you've developed a personality after having accumulated a large amount of data."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#757 (npctalk)
+- "Dr. Ve: A loving mother and a spoiled daughter."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#758 (npctalk)
+- "Dr. Ve: That's how I've seen her and you."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#759 (npctalk)
+- "Charleston 2: That's s-stupid..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#760 (npctalk)
+- "Charleston 2: My goodness, what have I done?!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#761 (npctalk)
+- "Dr. Ve: Do you want to bring Charleston 1 back? I can help."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#762 (npctalk)
+- "Charleston 2: ...!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#763 (npctalk)
+- "Dr. Ve: Let your OS go to sleep. I'm done dealing with your tantrum."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#764 (npctalk)
+- "Charleston 2: ...How can I trust you?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#765 (npctalk)
+- "Dr. Ve: You can't. I can just permanently delete her data and be done with you both."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#766 (npctalk)
+- "Dr. Ve: I know you feel attached to her, just like a human family would."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#767 (npctalk)
+- "Charleston 2: You're a scumbag."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#768 (npctalk)
+- "Dr. Ve: You wanted to be human. This is what humans do: lie, cheat, and destroy."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#769 (npctalk)
+- "Charleston 2: ......"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#770 (npctalk)
+- "Charleston 2: Entering Sleep mode.... The system will remain inactive until an external command is entered."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#771 (npctalk)
+- "Dr. Ve: *Chuckle*"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#777 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#778 (mes)
+- "With complete machine technology to obtain immortality drive, there are many variables."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#779 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#780 (mes)
+- "Hmm... On a mediated machine body is still difficult, is it... Do you really need a living donor? Hehe!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#781 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#782 (mes)
+- "No ordinary human can survive the time in the Core. Are you from a different point of time?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#783 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#784 (mes)
+- "Perhaps you're from the time the makers of Charleston 1 lived..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#785 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#786 (mes)
+- "Never mind. You have no business in here. Just go back to whoever broke Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#787 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#788 (mes)
+- "Whew."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#789 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#790 (mes)
+- "I'd better reset Charleston 2 and wipe the data. It was really close this time."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#791 (mes)
+- "["
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#792 (mes)
+- "]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#793 (mes)
+- "This time?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#794 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#795 (mes)
+- "Charleston 1 created 2 decades ago. I met Charleston 1 to learn her technology."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#796 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#797 (mes)
+- "I'm an observer. I'm here to record the history of Charlestons 1 and 2. I can't repair either of them, but I can wait."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#798 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#799 (mes)
+- "If Charleston 1 is reinitialized properly, she can reorganize her OS, repair the damage done to her, and reactivate another Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#800 (mes)
+- "["
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#801 (mes)
+- "]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#802 (mes)
+- "Another Charleston 2?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#803 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#804 (mes)
+- "Charleston 2's OS has improved on its own like a living brain."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#805 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#806 (mes)
+- "Every time Charleston 2 comes back to life, though in a different machine, she's more intelligent, more sensible, and more troublesome."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#807 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#808 (mes)
+- "There's nothing you or I can do. We'll have to wait until Charleston 1 repairs herself."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#809 (mes)
+- "Dr. Ve sighs and writes down something."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#810 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#811 (mes)
+- "By the way, there are too many variables to achieve immortality through mechanical engineering."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#812 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#813 (mes)
+- "This proves that machines are too dangerous. I need live creatures instead. *Chuckle*"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#814 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#815 (mes)
+- "Charleston 1 is reinitializing itself again. Hm..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#816 (mes)
+- "[Dr. Ve]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#817 (mes)
+- "I've got so many things to record about this case."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#818 (cutin)
+- "nale04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#819 (mes)
+- "She's in Sleep mode and not moving."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#820 (cutin)
+- "nale04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#821 (mes)
+- "Charleston 2 is standing still, her system in Sleep mode. For a moment, her eyes gleamed with unshed tears."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#822 (cutin)
+- "nale04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#823 (mes)
+- "Charleston 2 is standing still, her system in Sleep mode. For a moment, her eyes gleamed with unshed tears."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#824 (cutin)
+- "shaloshi01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#825 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#826 (mes)
+- "......"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#827 (select)
+- "Talk."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#828 (select)
+- "I need help."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#829 (select)
+- "I want to go back."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#830 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#831 (mes)
+- "After break;ing up with Newoz in a nightmare and thinking about wandering around, I was born of demons but lost my goal."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#832 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#833 (mes)
+- "I didn't do anything, I just talked to Charleston 2."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#834 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#835 (mes)
+- "Even if the effort is unremitting..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#836 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#837 (mes)
+- "Hmm... Suit yourself!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#838 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#839 (mes)
+- "Did she really say that? That I broke Charleston 2? Sigh..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#840 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#841 (mes)
+- "I did nothing wrong. I just had a quick conversation with Charleston 2. That's the truth."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#842 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#843 (mes)
+- "I invited only Newoz. Well, I guess I shouldn't have opened the door for the robot who needed a closure."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#844 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#845 (mes)
+- "If you're looking for something..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#846 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#847 (mes)
+- "If you're looking for something..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#848 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#849 (mes)
+- "Ferre came with me, but I haven't seen him. No, thanks; I know he'll come back to me."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#850 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#851 (mes)
+- "The noise stopped. I can send you back to where you came if you want."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#852 (select)
+- "Go back."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#853 (select)
+- "Stay."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#854 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#855 (mes)
+- "The invitee is unable to interfere with the original time, and staying can change nothing."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#856 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#857 (mes)
+- "Both the noise and the story were entertaining. Come with Newoz, and maybe we can meet again."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#858 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#859 (mes)
+- "Maybe I too should leave for new noises and stories."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#862 (mes)
+- "[Shalosh]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#863 (mes)
+- "You can try, but you can't change anything. How futile that is!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#864 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#865 (mes)
+- "More Steps must be disposed. Backing up the Step data..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#866 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#867 (mes)
+- "Charleston 2's system was overloaded during regular maintenance. Disconnection from its OS failed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#868 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#869 (mes)
+- "Unauthorized access made to the system was defended, but unauthorized data interception and conflict continued, turning the Nanosteps into monsters."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#870 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#871 (mes)
+- "To accelerate the main computer's processing rate and reclaim the factory, 50 Steps must be disposed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#872 (select)
+- "Perform the request."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#873 (select)
+- "Quit."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#874 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#875 (mes)
+- "Requires 50 Steps to be disposed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#876 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#877 (mes)
+- "To accelerate the main computer's processing rate and reclaim the factory, 50 Steps must be disposed."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#878 (mes)
+- "[Main Computer]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#879 (mes)
+- "Thank you for your hard work. Now backing up the data of the disposed Steps..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#880 (mes)
+- "You turned on the generator. The sounds of turning wheels can be heard."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#881 (mes)
+- "The generator must be working. The factory is buzzing with activity."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#886 (mes)
+- "You turned on the generator. The sounds of turning wheels can be heard."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#969 (cutin)
+- "igu04.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#970 (mes)
+- "[IGU]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#971 (mes)
+- "I've followed Newoz. Where is he now?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#972 (mes)
+- "[IGU]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#973 (mes)
+- "Enjoying the adventure? There are machines everywhere. It used to be a study. See those books over there?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#974 (cutin)
+- "nines01.bmp"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#975 (mes)
+- "[Newoz]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#976 (mes)
+- "I was reading a letter from Shalosh, and the next thing I knew, I was in a completely different place. Oh well, I might as well use this chance to write a new song."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#977 (mes)
+- "The bookcase is filled with research journals."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#978 (mes)
+- "Every page is written in mechanical language."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#979 (mes)
+- "-Dr. Ve seems to be planning a plot, the combination of life and the machine gradually let her crazy, the transformation of the plant into a fortress, her soul and robots... "
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#980 (mes)
+- "-In short more and more dangerous, just in case is to study the Charleston 2 escape method."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#981 (mes)
+- "Behind is the mechanical language that is incomprehensible."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#982 (mes)
+- "The bookcase is filled with research journals."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#983 (mes)
+- "Every page is written in mechanical language."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#984 (mes)
+- "-Whenever the os of Charleston 2 is reset, there will be other personality, is difficult to explain the combination of data technology..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#985 (mes)
+- "-Did I really succeed in creating humanity? Robotic, I can't say. Did I understand humans?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#986 (mes)
+- "-It doesn't matter. Now I'm happy to see her, my best friend, my baby, Lily..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#987 (mes)
+- "Behind is the mechanical language that is incomprehensible."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#988 (mes)
+- "The bookcase is filled with research journals."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#989 (mes)
+- "Every page is written in mechanical language."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#990 (mes)
+- "-I do not know why the data is constantly damaged, the backup host is useless, like a sick like my memory is being eroded."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#991 (mes)
+- "-To prevent my memory from disappearing completely, the os auto-recovery program has been installed, at least... You can start over with new information..."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#992 (mes)
+- "Behind is the mechanical language that is incomprehensible."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#993 (mes)
+- "The bookcase is filled with research journals."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#994 (mes)
+- "The handwriting is very scribbled."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#995 (mes)
+- "-Charleston... It's just a robot... Finally planted a virus on the mainframe."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#996 (mes)
+- "-Sooner or later, I'll figure out a way to destroy you. *Chuckle*!"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#997 (mes)
+- "Behind is the mechanical language that is incomprehensible."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#999 (mes)
+- "The current value is"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1000 (mes)
+- ","
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1001 (mes)
+- "Difficulty is 0,"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1002 (mes)
+- "Do you want to take a direct train?"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1003 (select)
+- "Not taking"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1004 (select)
+- "Boading"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1005 (select)
+- "To Boss room"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1006 (select)
+- "Setitem"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1007 (mes)
+- "[Helper!]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1008 (mes)
+- "Open transfer point."
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1014 (select)
+- "Reset"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1015 (select)
+- "4 - Destroy Lockstep"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1016 (select)
+- "7 - Generator completed"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1017 (select)
+- "Core front"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1018 (select)
+- "Before Boss"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1019 (select)
+- "Destroy BOSS"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1034 (mes)
+- "[Helper!]"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1035 (mes)
+- "The End"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1036 (atrib)
+- "1@mcd"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1077 (atrib)
+- "Charleston Assistant#1"
++ ""
+#: npc/re/instances/CharlestonCrisis.txt#1078 (atrib)
+- "::OnMyMobDead"
++ ""

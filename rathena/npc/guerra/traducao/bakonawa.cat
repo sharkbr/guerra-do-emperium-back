@@ -1,0 +1,375 @@
+# Catalogo de traducao PT-BR - grupo "bakonawa"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/BakonawaLake.txt  (121 textos)
+#: npc/re/instances/BakonawaLake.txt#2 (mes)
+- "You are carrying too many items. Come back after taking off some of them."
++ "Você está carregando itens demais. Volte depois de tirar alguns."
+#: npc/re/instances/BakonawaLake.txt#3 (mes)
+- "You are carrying too much weight. Come back after reducing the weight."
++ "Você está carregando peso demais. Volte depois de aliviar a carga."
+#: npc/re/instances/BakonawaLake.txt#4 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#5 (mes)
+- "Hey. This is too dangerous a place for you. You cannot keep yourself safe. Get out of here and go to the village right now!"
++ "Ei. Este lugar é perigoso demais para você. Não tem como se proteger aqui. Saia e volte para a vila agora mesmo!"
+#: npc/re/instances/BakonawaLake.txt#6 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#7 (mes)
+- "We are gonna be killed all by that Bakonawa. Ah, we must slay him but unfortunately we are not prepared."
++ "Aquele Bakonawa vai matar todos nós. Ah, precisamos abatê-lo, mas infelizmente não estamos preparados."
+#: npc/re/instances/BakonawaLake.txt#9 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#10 (mes)
+- "Isn't there any company who can go with you? Or even if you wanna go alone, come after organizing a party."
++ "Não há ninguém que possa ir com você? E mesmo se quiser ir sozinho, volte depois de montar um grupo."
+#: npc/re/instances/BakonawaLake.txt#11 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#12 (mes)
+- "Are you the leader of the Bakonawa slayers? The road is not well so we have to go down the cliff with a rope, is that OK?"
++ "Você é o líder dos caçadores de Bakonawa? O caminho não está bom, então temos de descer o penhasco por uma corda. Tudo bem?"
+#: npc/re/instances/BakonawaLake.txt#13 (select)
+- "Please weave a rope.:Now I will go down.:Cancel."
++ "Trança uma corda.:Vou descer agora.:Cancelar."
+#: npc/re/instances/BakonawaLake.txt#14 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#15 (mes)
+- "You came for slaying Bakonawa. The leader of your party has to help me weaving the rope for going down."
++ "Você veio abater o Bakonawa. O líder do seu grupo tem de me ajudar a trançar a corda da descida."
+#: npc/re/instances/BakonawaLake.txt#16 (select)
+- ":Now I will go down.:Cancel."
++ ":Vou descer agora.:Cancelar."
+#: npc/re/instances/BakonawaLake.txt#17 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#18 (mes)
+- "Oh, the rope got dropped. I have to make a new one."
++ "Ah, a corda caiu. Vou ter de fazer outra."
+#: npc/re/instances/BakonawaLake.txt#19 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#20 (mes)
+- "Now I'm weaving, so you can go down when I'm done."
++ "Estou trançando; quando eu terminar você pode descer."
+#: npc/re/instances/BakonawaLake.txt#21 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#22 (mes)
+- "An unknown error occurred."
++ "Alguma coisa deu errado, e nem eu sei o quê."
+#: npc/re/instances/BakonawaLake.txt#23 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#24 (mes)
+- "The rope hasn't been weaved yet. Wait a little."
++ "A corda ainda não está trançada. Espere um pouco."
+#: npc/re/instances/BakonawaLake.txt#25 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#26 (mes)
+- "Civilians cannot enter."
++ "Civis não entram."
+#: npc/re/instances/BakonawaLake.txt#27 (mapannounce)
+- "ma_scene01"
++ ""
+#: npc/re/instances/BakonawaLake.txt#28 (mapannounce)
+- "A party member, "
++ ""
+#: npc/re/instances/BakonawaLake.txt#29 (mapannounce)
+- " of the party "
++ ""
+#: npc/re/instances/BakonawaLake.txt#30 (mapannounce)
+- " is entering the dungeon, "
++ ""
+#: npc/re/instances/BakonawaLake.txt#31 (mapannounce)
+- "."
++ ""
+#: npc/re/instances/BakonawaLake.txt#32 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/BakonawaLake.txt#34 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#35 (mes)
+- "The rope used for getting to the Lake is already broken. We are now cleaning up the surroundings so come back after some time."
++ "A corda que descia até o Lago já arrebentou. Estamos limpando a área, então volte daqui a algum tempo."
+#: npc/re/instances/BakonawaLake.txt#36 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#37 (mes)
+- "It's all cleaned up around here. Now you can go down again after getting a rope."
++ "A área já está limpa. Agora dá para descer de novo, com uma corda."
+#: npc/re/instances/BakonawaLake.txt#39 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#40 (mes)
+- "My name is Minky."
++ "Meu nome é Minky."
+#: npc/re/instances/BakonawaLake.txt#42 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#43 (mes)
+- "Heehee, I could join the Bakonawa hunt, but I'd rather hide behind that rock and cheer you guys on."
++ "Heehee, eu até poderia entrar na caçada ao Bakonawa, mas prefiro me esconder atrás daquela pedra e torcer por vocês."
+#: npc/re/instances/BakonawaLake.txt#44 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#45 (mes)
+- "Bakonawa becomes invincible at some point. When that time comes, listen to my guides carefully. Just trust me and all will be good."
++ "Em algum momento o Bakonawa fica invencível. Quando isso acontecer, escute bem o que eu disser. Confie em mim e vai dar tudo certo."
+#: npc/re/instances/BakonawaLake.txt#46 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#47 (mes)
+- "Now I will make Bakonawa spring out from the lake."
++ "Agora vou fazer o Bakonawa saltar do lago."
+#: npc/re/instances/BakonawaLake.txt#48 (select)
+- "Hold on! I'm not ready yet!:Let's do it!"
++ "Espera! Ainda não estou pronto!:Vamos nessa!"
+#: npc/re/instances/BakonawaLake.txt#49 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#50 (mes)
+- "Oh... alright... tell me when you are ready."
++ "Ah... tudo bem... me avise quando estiver pronto."
+#: npc/re/instances/BakonawaLake.txt#51 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#52 (mes)
+- "Then I will drop a drop of Albopal to this lake."
++ "Então vou pingar uma gota de Albopal neste lago."
+#: npc/re/instances/BakonawaLake.txt#53 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#54 (mes)
+- "Once Bakonawa tastes this, he will surface..."
++ "Assim que o Bakonawa provar isto, ele vem à tona..."
+#: npc/re/instances/BakonawaLake.txt#58 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#59 (mes)
+- "I am dropping the Alpopal to make Bakonawa mad. Bakonawa can be a good source of protein once we get him."
++ "Estou pingando o Albopal para enfurecer o Bakonawa. Ele até que é uma boa fonte de proteína, se conseguirmos pegá-lo."
+#: npc/re/instances/BakonawaLake.txt#63 (mapannounce)
+- "Taho: I can see him there on the surface! ATTACK!!!"
++ ""
+#: npc/re/instances/BakonawaLake.txt#64 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#89 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#90 (mapannounce)
+- "Time Limit: 30 seconds"
++ ""
+#: npc/re/instances/BakonawaLake.txt#91 (mapannounce)
+- "0xff4400"
++ ""
+#: npc/re/instances/BakonawaLake.txt#95 (mapannounce)
+- "Bakonawa has escaped deep into the lake."
++ ""
+#: npc/re/instances/BakonawaLake.txt#96 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/BakonawaLake.txt#104 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#105 (mapannounce)
+- "Time Limit: "
++ ""
+#: npc/re/instances/BakonawaLake.txt#106 (mapannounce)
+- "0xff4400"
++ ""
+#: npc/re/instances/BakonawaLake.txt#125 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#126 (mapannounce)
+- "Taho: Good! Bakonawa is hidden under water. He will now try to swallow the moon."
++ ""
+#: npc/re/instances/BakonawaLake.txt#127 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#128 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#129 (mapannounce)
+- "Taho: We must make loud noises with caldron and gong so he can never concentrate on the moon!"
++ ""
+#: npc/re/instances/BakonawaLake.txt#130 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#131 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#132 (mapannounce)
+- "Taho: Do not engage on him even if he come above the surface. Just make loud noises!"
++ ""
+#: npc/re/instances/BakonawaLake.txt#133 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#134 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#135 (mapannounce)
+- "Mission - Destroy 2 caldrons and 2 gongs on left and right sides of the lake."
++ ""
+#: npc/re/instances/BakonawaLake.txt#136 (mapannounce)
+- "0xff3300"
++ ""
+#: npc/re/instances/BakonawaLake.txt#157 (mapannounce)
+- "Taho: Good! "
++ ""
+#: npc/re/instances/BakonawaLake.txt#158 (mapannounce)
+- " left to go!"
++ ""
+#: npc/re/instances/BakonawaLake.txt#159 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#174 (mapannounce)
+- "Bakonawa has escaped deep into the lake."
++ ""
+#: npc/re/instances/BakonawaLake.txt#175 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/BakonawaLake.txt#183 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#184 (mapannounce)
+- "Time Limit: "
++ ""
+#: npc/re/instances/BakonawaLake.txt#185 (mapannounce)
+- "0xff4400"
++ ""
+#: npc/re/instances/BakonawaLake.txt#201 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#202 (mapannounce)
+- "Taho: He is back into the lake again. Is it over?"
++ ""
+#: npc/re/instances/BakonawaLake.txt#203 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#204 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#205 (mapannounce)
+- "Taho: UHM! Something is moving up rapidly under the water! Ba... Bakonawa is coming!!"
++ ""
+#: npc/re/instances/BakonawaLake.txt#206 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#207 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#208 (mapannounce)
+- "Mission - Eliminate Bakonawa who became more fierce."
++ ""
+#: npc/re/instances/BakonawaLake.txt#209 (mapannounce)
+- "0xff3300"
++ ""
+#: npc/re/instances/BakonawaLake.txt#224 (mapannounce)
+- "Taho: We got him! I can see he has threw up something that looks like a box."
++ ""
+#: npc/re/instances/BakonawaLake.txt#225 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#250 (mapannounce)
+- "Bakonawa has escaped deep into the lake."
++ ""
+#: npc/re/instances/BakonawaLake.txt#251 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/BakonawaLake.txt#257 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#258 (mapannounce)
+- "Time Limit: "
++ ""
+#: npc/re/instances/BakonawaLake.txt#259 (mapannounce)
+- "0xff4400"
++ ""
+#: npc/re/instances/BakonawaLake.txt#276 (mes)
+- "It seems you are carrying too many different kinds of items. Please try again after reducing it."
++ "Parece que você está carregando tipos de item demais. Tente de novo depois de reduzir."
+#: npc/re/instances/BakonawaLake.txt#277 (mes)
+- "It seems you are already carrying items of too much weight. Please try again after reducing the weight."
++ "Parece que você já está carregando peso demais. Tente de novo depois de aliviar a carga."
+#: npc/re/instances/BakonawaLake.txt#278 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#279 (mes)
+- "This was found from Bakonawa's corpse. It would be better if you take this."
++ "Isto foi achado no corpo do Bakonawa. É melhor que fique com você."
+#: npc/re/instances/BakonawaLake.txt#280 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#281 (mes)
+- "We better hurry and get out of this place. This place is still dangerous even without Bakonawa..."
++ "É melhor sairmos logo daqui. Este lugar continua perigoso mesmo sem o Bakonawa..."
+#: npc/re/instances/BakonawaLake.txt#282 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#283 (mes)
+- "Then let's use to the rope to go up!"
++ "Então vamos usar a corda para subir!"
+#: npc/re/instances/BakonawaLake.txt#289 (mapannounce)
+- "1@ma_b"
++ ""
+#: npc/re/instances/BakonawaLake.txt#290 (mapannounce)
+- "Taho: After opening the treasure box, please visit me at the top of the hill. I've got something to give to you."
++ ""
+#: npc/re/instances/BakonawaLake.txt#291 (mapannounce)
+- "0x00ffff"
++ ""
+#: npc/re/instances/BakonawaLake.txt#292 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#293 (mes)
+- "HMM. We almost got him but he is one fast creature..."
++ "HMM. Quase o pegamos, mas ele é uma criatura rápida..."
+#: npc/re/instances/BakonawaLake.txt#294 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#295 (mes)
+- "Are we going to try again?"
++ "Vamos tentar de novo?"
+#: npc/re/instances/BakonawaLake.txt#296 (select)
+- "Hold on a sec!:Of course! We cannot stand back now!"
++ "Espera aí!:Claro! Não dá para recuar agora!"
+#: npc/re/instances/BakonawaLake.txt#297 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#298 (mes)
+- "AWW... I almost brought him out."
++ "AAH... quase o trouxe para fora."
+#: npc/re/instances/BakonawaLake.txt#299 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#300 (mes)
+- "Then I will use Albopal once again to the lake."
++ "Então vou pingar Albopal no lago outra vez."
+#: npc/re/instances/BakonawaLake.txt#301 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#302 (mes)
+- "We are about to see Bakonawa with intenser anger..."
++ "Estamos prestes a ver o Bakonawa com ainda mais raiva..."
+#: npc/re/instances/BakonawaLake.txt#306 (mes)
+- "[Taho]"
++ "[Taho]"
+#: npc/re/instances/BakonawaLake.txt#307 (mes)
+- "I am dropping Albopal like I did a while ago. I hope it pisses him off..."
++ "Estou pingando Albopal como fiz há pouco. Tomara que o deixe furioso..."

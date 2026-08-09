@@ -1,0 +1,435 @@
+# Catalogo de traducao PT-BR - grupo "polvo"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/OctopusCave.txt  (141 textos)
+#: npc/re/instances/OctopusCave.txt#2 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#3 (mes)
+- "You alone is powerless, hehe!"
++ "Você sozinho não pode nada, hehe!"
+#: npc/re/instances/OctopusCave.txt#4 (mes)
+- "Better get someone to help you out."
++ "É melhor arrumar quem te ajude."
+#: npc/re/instances/OctopusCave.txt#5 (mes)
+- "Make a party, and come back later."
++ "Monte um grupo e volte depois."
+#: npc/re/instances/OctopusCave.txt#6 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#7 (mes)
+- "Where is your leader, hehe."
++ "Cadê o seu líder, hehe."
+#: npc/re/instances/OctopusCave.txt#8 (mes)
+- "I don't talk to some random people."
++ "Eu não falo com qualquer um."
+#: npc/re/instances/OctopusCave.txt#9 (mes)
+- "Bring your boss to me."
++ "Traga o seu chefe aqui."
+#: npc/re/instances/OctopusCave.txt#10 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#11 (mes)
+- "I am guarding here, hehe!"
++ "Eu guardo este lugar, hehe!"
+#: npc/re/instances/OctopusCave.txt#12 (mes)
+- "It is just roughly blocked for now."
++ "Por ora está só mal tapado."
+#: npc/re/instances/OctopusCave.txt#13 (mes)
+- "But someday this cave must be sealed forever, hehe!"
++ "Mas um dia esta caverna vai ter de ser selada para sempre, hehe!"
+#: npc/re/instances/OctopusCave.txt#14 (select)
+- "Ask what's going on.:Ask to open the gate.:Go to other location."
++ "Perguntar o que houve.:Pedir para abrir o portão.:Ir para outro lugar."
+#: npc/re/instances/OctopusCave.txt#15 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#16 (mes)
+- "Lately, our Starfish lady is"
++ "Ultimamente a nossa dama"
+#: npc/re/instances/OctopusCave.txt#17 (mes)
+- "suffering with some issues, ooh ooh."
++ "Estrela-do-Mar anda com problemas, ooh ooh."
+#: npc/re/instances/OctopusCave.txt#18 (mes)
+- "Something bad happen in this"
++ "Coisa ruim aconteceu neste"
+#: npc/re/instances/OctopusCave.txt#19 (mes)
+- "peaceful place, hehe!"
++ "lugar tão pacífico, hehe!"
+#: npc/re/instances/OctopusCave.txt#20 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#21 (mes)
+- "Weird looking limbs came out"
++ "Uns braços esquisitos saíram"
+#: npc/re/instances/OctopusCave.txt#22 (mes)
+- "from the hole there,"
++ "daquele buraco ali"
+#: npc/re/instances/OctopusCave.txt#23 (mes)
+- "tried to kidnap our lady Starfish."
++ "e tentaram levar a nossa dama."
+#: npc/re/instances/OctopusCave.txt#24 (mes)
+- "Ooh Ooh."
++ "Ooh Ooh."
+#: npc/re/instances/OctopusCave.txt#25 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#26 (mes)
+- "It seems those limbs belong to"
++ "Parece que aqueles braços são"
+#: npc/re/instances/OctopusCave.txt#27 (mes)
+- "that ugly octopus."
++ "daquele polvo horroroso."
+#: npc/re/instances/OctopusCave.txt#28 (mes)
+- "That monster should be taken care of,"
++ "Alguém precisa dar um jeito naquele monstro,"
+#: npc/re/instances/OctopusCave.txt#29 (mes)
+- "but it's hard for ourselves only to make it happen, hehe."
++ "mas sozinhos nós não damos conta, hehe."
+#: npc/re/instances/OctopusCave.txt#30 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#31 (mes)
+- "I want to find someone special,"
++ "Quero achar alguém especial"
+#: npc/re/instances/OctopusCave.txt#32 (mes)
+- "and ask to punish this ugly octopus."
++ "para castigar esse polvo horroroso."
+#: npc/re/instances/OctopusCave.txt#33 (mes)
+- "I hope this octopus won't ever"
++ "Tomara que esse polvo nunca mais"
+#: npc/re/instances/OctopusCave.txt#34 (mes)
+- "harass our lady, hehe."
++ "importune a nossa dama, hehe."
+#: npc/re/instances/OctopusCave.txt#35 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#36 (mes)
+- "Go catch that octopus and stick it to this pick."
++ "Vá pegar aquele polvo e espete-o neste palito."
+#: npc/re/instances/OctopusCave.txt#37 (mes)
+- "If you bring back the pick, I will"
++ "Se voltar com o palito, eu"
+#: npc/re/instances/OctopusCave.txt#38 (mes)
+- "open this gate for a while."
++ "abro este portão por um tempo."
+#: npc/re/instances/OctopusCave.txt#39 (mes)
+- "You should challenge if you are interested, hehe."
++ "Encare, se estiver interessado, hehe."
+#: npc/re/instances/OctopusCave.txt#40 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#41 (mes)
+- "Octopus is not around now, hehe."
++ "O polvo não está por perto agora, hehe."
+#: npc/re/instances/OctopusCave.txt#42 (mes)
+- "Please come back later."
++ "Volte mais tarde, por favor."
+#: npc/re/instances/OctopusCave.txt#43 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#44 (mes)
+- "Party name is... "
++ "O grupo é... "
+#: npc/re/instances/OctopusCave.txt#45 (mes)
+- "."
++ ""
+#: npc/re/instances/OctopusCave.txt#46 (mes)
+- "Party leader is... "
++ "O líder é... "
+#: npc/re/instances/OctopusCave.txt#47 (mes)
+- "."
++ ""
+#: npc/re/instances/OctopusCave.txt#48 (mes)
+- "^0000ff"
++ ""
+#: npc/re/instances/OctopusCave.txt#49 (mes)
+- "^000000, I cannot open now, hehe."
++ "^000000, não dá para abrir agora, hehe."
+#: npc/re/instances/OctopusCave.txt#50 (mes)
+- "Now is not the time, please wait."
++ "Agora não é hora, espere."
+#: npc/re/instances/OctopusCave.txt#51 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#52 (mes)
+- "I will open the gate for a while to ^0000ff"
++ "Vou abrir o portão por um tempo para ^0000ff"
+#: npc/re/instances/OctopusCave.txt#53 (mes)
+- "^000000."
++ ""
+#: npc/re/instances/OctopusCave.txt#54 (mes)
+- "Please catch that pervert octopus,"
++ "Pegue aquele polvo tarado"
+#: npc/re/instances/OctopusCave.txt#55 (mes)
+- "and come back with it sticked to the pick, hehe."
++ "e volte com ele espetado no palito, hehe."
+#: npc/re/instances/OctopusCave.txt#56 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#57 (mes)
+- "Prepare a pick first,"
++ "Prepare um palito antes,"
+#: npc/re/instances/OctopusCave.txt#58 (mes)
+- "so you can thread that octopus"
++ "para poder espetar aquele polvo"
+#: npc/re/instances/OctopusCave.txt#59 (mes)
+- "with that pick."
++ "com ele."
+#: npc/re/instances/OctopusCave.txt#60 (mes)
+- "Then, I will let you in for a while, hehe."
++ "Aí eu deixo você entrar por um tempo, hehe."
+#: npc/re/instances/OctopusCave.txt#61 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#62 (mes)
+- "This is not a good location, check someplace else."
++ "Este lugar não serve, procure outro."
+#: npc/re/instances/OctopusCave.txt#63 (mes)
+- "There is a strange entrance"
++ "Há uma entrada estranha"
+#: npc/re/instances/OctopusCave.txt#64 (mes)
+- "blocked roughly with some boards."
++ "mal tapada com umas tábuas."
+#: npc/re/instances/OctopusCave.txt#65 (select)
+- "Go in.:Stop."
++ "Entrar.:Parar."
+#: npc/re/instances/OctopusCave.txt#67 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#68 (mes)
+- "Ah, now is not the time..."
++ "Ah, agora não é hora..."
+#: npc/re/instances/OctopusCave.txt#69 (mes)
+- "Would you come back later? Hehe."
++ "Volta depois? Hehe."
+#: npc/re/instances/OctopusCave.txt#70 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#71 (mes)
+- "There is a secret with that entrance."
++ "Aquela entrada guarda um segredo."
+#: npc/re/instances/OctopusCave.txt#72 (mes)
+- "So, please be careful with it, will ya? Hehe."
++ "Então tome cuidado com ela, tá? Hehe."
+#: npc/re/instances/OctopusCave.txt#73 (mapannounce)
+- "mal_dun01"
++ ""
+#: npc/re/instances/OctopusCave.txt#74 (mapannounce)
+- " party's "
++ ""
+#: npc/re/instances/OctopusCave.txt#75 (mapannounce)
+- " member started to hunt the Octopus!"
++ ""
+#: npc/re/instances/OctopusCave.txt#76 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#78 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#79 (mes)
+- "Shhh... Weird aura is"
++ "Shhh... uma aura esquisita"
+#: npc/re/instances/OctopusCave.txt#80 (mes)
+- "coming from that entrance."
++ "vem daquela entrada."
+#: npc/re/instances/OctopusCave.txt#81 (mes)
+- "Big trouble is waiting, if you go in now."
++ "Encrenca grande espera quem entrar agora."
+#: npc/re/instances/OctopusCave.txt#82 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#83 (mes)
+- "You should definitely prepare"
++ "É melhor mesmo preparar um"
+#: npc/re/instances/OctopusCave.txt#84 (mes)
+- "hunting stick if you want to"
++ "palito de caça se você quer"
+#: npc/re/instances/OctopusCave.txt#85 (mes)
+- "punish the Octopus."
++ "castigar o Polvo."
+#: npc/re/instances/OctopusCave.txt#86 (mes)
+- "Or I will not let you in! Hehe."
++ "Senão eu não deixo você entrar! Hehe."
+#: npc/re/instances/OctopusCave.txt#87 (mes)
+- "[Starfish]"
++ "[Estrela-do-Mar]"
+#: npc/re/instances/OctopusCave.txt#88 (mes)
+- "Yes Yes, you better quit."
++ "Isso, isso, melhor desistir."
+#: npc/re/instances/OctopusCave.txt#105 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#106 (mapannounce)
+- "Pervert Octopus : How dare you to come inside of my place!"
++ ""
+#: npc/re/instances/OctopusCave.txt#107 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#108 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#109 (mapannounce)
+- "Pervert Octopus : But I blocked all the cave gates!! There is nothing you can do!"
++ ""
+#: npc/re/instances/OctopusCave.txt#110 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#111 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#112 (mapannounce)
+- "Pervert Octopus : My juniors~ There is your toy! Play with it~ kakaka"
++ ""
+#: npc/re/instances/OctopusCave.txt#113 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#146 (mapannounce)
+- "Hey you!! I'll personally take care of you all! Let's bring it on!"
++ ""
+#: npc/re/instances/OctopusCave.txt#147 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#149 (mapannounce)
+- "Arrgg!! That hurts!!! I need another strategy..."
++ ""
+#: npc/re/instances/OctopusCave.txt#150 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#202 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#203 (mapannounce)
+- "Come out all my babies and help me out!"
++ ""
+#: npc/re/instances/OctopusCave.txt#204 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#206 (mapannounce)
+- "Let's give them a lesson!"
++ ""
+#: npc/re/instances/OctopusCave.txt#207 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#222 (mapannounce)
+- "You hurt my babies!!? You'll have to pay for this!!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#223 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#294 (mapannounce)
+- "Don't let them break through, stop them!!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#295 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#303 (mapannounce)
+- "Headquarters are empty, GO!!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#304 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#308 (mapannounce)
+- "Run, RUN! Go, GO!!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#309 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#312 (mapannounce)
+- "No time, come out fast!"
++ ""
+#: npc/re/instances/OctopusCave.txt#313 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#316 (mapannounce)
+- "Let's take over the headquarters!!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#317 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#320 (mapannounce)
+- "There is no time to lose, hurry up!!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#321 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#332 (mapannounce)
+- "Kakaka! Suprised??!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#333 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#335 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#336 (mapannounce)
+- "... Looks like we have a spy among us."
++ ""
+#: npc/re/instances/OctopusCave.txt#337 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#356 (mapannounce)
+- "What a successful pincer tactic! The enemy is strong! Let's not lose yourselves! Anyway, where are all the mercenaries??"
++ ""
+#: npc/re/instances/OctopusCave.txt#357 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#359 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#360 (mapannounce)
+- "Mercenary Squid : eh...eh... wrong direction. No enemies are shown in this direction."
++ ""
+#: npc/re/instances/OctopusCave.txt#361 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#362 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#363 (mapannounce)
+- "Pervert Octopus : Fools! Can't you read the map??!! Useless!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#364 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/re/instances/OctopusCave.txt#397 (mapannounce)
+- "1@cash"
++ ""
+#: npc/re/instances/OctopusCave.txt#398 (mapannounce)
+- "Disgusting Octopus : "
++ ""
+#: npc/re/instances/OctopusCave.txt#399 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#403 (mapannounce)
+- "Disgusting Octopus : That's it for the today! Next time, I will play with you badly!"
++ ""
+#: npc/re/instances/OctopusCave.txt#404 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#417 (mapannounce)
+- "Disgusting Octopus : Do you know how many legs octopus have? It doesn't matter, I have unlimited legs!!"
++ ""
+#: npc/re/instances/OctopusCave.txt#418 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#422 (mapannounce)
+- "Disgusting Octopus : I...cannot..hold anymore, my babies~ please come out and fight!"
++ ""
+#: npc/re/instances/OctopusCave.txt#423 (mapannounce)
+- "0xFFFF00"
++ ""
+#: npc/re/instances/OctopusCave.txt#433 (mes)
+- "Do you want to go out from the octopus dungeon?"
++ "Quer sair da caverna do polvo?"
+#: npc/re/instances/OctopusCave.txt#434 (select)
+- "No!:Yes!"
++ "Não!:Sim!"

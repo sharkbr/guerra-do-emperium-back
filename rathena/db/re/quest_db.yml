@@ -13398,3 +13398,14 @@ Body:
   - Id: 62238
     Title: Midgardian Mercenary timer
     TimeLimit: +3h
+
+# Guerra do Emperium: as nossas missoes. Unica alteracao nossa neste arquivo
+# do rAthena - ver CLAUDE.md, secao 2.
+#
+# Este arquivo NAO tinha `Footer:` nenhum antes de 2026-08-08; o bloco todo
+# e novo. Isso e seguro porque o `parseImports` nao e do quest_db: mora no
+# YamlDatabase (src/common/database.cpp:176) e vale para todo banco em YAML.
+# O leitor do quest_db nao precisou saber de nada.
+Footer:
+  Imports:
+    - Path: db/guerra/quest_db.yml

@@ -1,0 +1,438 @@
+# Catalogo de traducao PT-BR - grupo "hospital"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/BangungotHospital.txt  (142 textos)
+#: npc/re/instances/BangungotHospital.txt#2 (cutin)
+- "malaya_nurseB"
++ ""
+#: npc/re/instances/BangungotHospital.txt#3 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#4 (mes)
+- "You got rid of Bangungot!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#5 (mes)
+- "The nurse might be waiting for you"
++ ""
+#: npc/re/instances/BangungotHospital.txt#6 (mes)
+- "in front of the hospital!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#8 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#9 (mes)
+- ".........."
++ ""
+#: npc/re/instances/BangungotHospital.txt#11 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#12 (mes)
+- "Now the entrance"
++ ""
+#: npc/re/instances/BangungotHospital.txt#13 (mes)
+- "to go up second floor"
++ ""
+#: npc/re/instances/BangungotHospital.txt#14 (mes)
+- "is closed."
++ ""
+#: npc/re/instances/BangungotHospital.txt#15 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#16 (mes)
+- "To go up"
++ ""
+#: npc/re/instances/BangungotHospital.txt#17 (mes)
+- "the second floor again"
++ ""
+#: npc/re/instances/BangungotHospital.txt#18 (mes)
+- "Open the gate"
++ ""
+#: npc/re/instances/BangungotHospital.txt#19 (mes)
+- "after lapse of time."
++ ""
+#: npc/re/instances/BangungotHospital.txt#21 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#22 (mes)
+- "From the Bangungot at second floor"
++ ""
+#: npc/re/instances/BangungotHospital.txt#23 (mes)
+- "You returned safely to here!!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#24 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#25 (mes)
+- "If you want to go up"
++ ""
+#: npc/re/instances/BangungotHospital.txt#26 (mes)
+- "second floor again"
++ ""
+#: npc/re/instances/BangungotHospital.txt#27 (mes)
+- "Please come to me."
++ ""
+#: npc/re/instances/BangungotHospital.txt#29 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#30 (mes)
+- "......."
++ ""
+#: npc/re/instances/BangungotHospital.txt#32 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#33 (mes)
+- ".....?"
++ ""
+#: npc/re/instances/BangungotHospital.txt#34 (mes)
+- "Now you can't go up"
++ ""
+#: npc/re/instances/BangungotHospital.txt#35 (mes)
+- "to the 2nd floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#37 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#38 (mes)
+- "This is fatal situation."
++ ""
+#: npc/re/instances/BangungotHospital.txt#39 (mes)
+- "that is why you can't go up"
++ ""
+#: npc/re/instances/BangungotHospital.txt#40 (mes)
+- "2nd floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#42 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#43 (mes)
+- "To the second floor of hospital"
++ ""
+#: npc/re/instances/BangungotHospital.txt#44 (mes)
+- "Do you want go up second floor again?"
++ ""
+#: npc/re/instances/BangungotHospital.txt#45 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#46 (mes)
+- "You have too much stuff."
++ ""
+#: npc/re/instances/BangungotHospital.txt#47 (mes)
+- "Please reduce your stuff and"
++ ""
+#: npc/re/instances/BangungotHospital.txt#48 (mes)
+- "come to me again."
++ ""
+#: npc/re/instances/BangungotHospital.txt#50 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#51 (mes)
+- "It's too heavy."
++ ""
+#: npc/re/instances/BangungotHospital.txt#52 (mes)
+- "Please reduce the weight and"
++ ""
+#: npc/re/instances/BangungotHospital.txt#53 (mes)
+- "come to me again."
++ ""
+#: npc/re/instances/BangungotHospital.txt#58 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#59 (mes)
+- "......."
++ ""
+#: npc/re/instances/BangungotHospital.txt#61 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#62 (mes)
+- "- The door is closed to 1st floor"
++ ""
+#: npc/re/instances/BangungotHospital.txt#63 (mes)
+- "when this Nurse came in?"
++ ""
+#: npc/re/instances/BangungotHospital.txt#64 (mes)
+- "I call her behind but"
++ ""
+#: npc/re/instances/BangungotHospital.txt#65 (mes)
+- "She doesn't respond. -"
++ ""
+#: npc/re/instances/BangungotHospital.txt#67 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#68 (mes)
+- "You returned safely from the Bangungot on the second floor!!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#69 (mes)
+- "However, it's not"
++ ""
+#: npc/re/instances/BangungotHospital.txt#70 (mes)
+- "really over yet."
++ ""
+#: npc/re/instances/BangungotHospital.txt#71 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#72 (mes)
+- "I'm pretty sure it"
++ ""
+#: npc/re/instances/BangungotHospital.txt#73 (mes)
+- "never disappears easily."
++ ""
+#: npc/re/instances/BangungotHospital.txt#74 (mes)
+- "I don't know what will happen"
++ ""
+#: npc/re/instances/BangungotHospital.txt#75 (mes)
+- "about Bangungot, so"
++ ""
+#: npc/re/instances/BangungotHospital.txt#76 (mes)
+- "after a lapse of time"
++ ""
+#: npc/re/instances/BangungotHospital.txt#77 (mes)
+- "please return to me."
++ ""
+#: npc/re/instances/BangungotHospital.txt#78 (mes)
+- "- I guess..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#79 (mes)
+- "I can't talk him alone."
++ ""
+#: npc/re/instances/BangungotHospital.txt#80 (mes)
+- "After registering a party"
++ ""
+#: npc/re/instances/BangungotHospital.txt#81 (mes)
+- "let me try to say something. -"
++ ""
+#: npc/re/instances/BangungotHospital.txt#83 (atrib)
+- "Hospital Abandonado"
++ ""
+#: npc/re/instances/BangungotHospital.txt#84 (menu)
+- "Prepare to enter the second floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#85 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#86 (mes)
+- "I already heard that story so"
++ ""
+#: npc/re/instances/BangungotHospital.txt#87 (mes)
+- "I pretty much know that."
++ ""
+#: npc/re/instances/BangungotHospital.txt#88 (mes)
+- "What are you going to do?"
++ ""
+#: npc/re/instances/BangungotHospital.txt#89 (mes)
+- "Do you want to go up"
++ ""
+#: npc/re/instances/BangungotHospital.txt#90 (mes)
+- "to the second floor?"
++ ""
+#: npc/re/instances/BangungotHospital.txt#91 (mes)
+- "You are back..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#92 (mes)
+- "There is bad news."
++ ""
+#: npc/re/instances/BangungotHospital.txt#93 (mes)
+- "I heard that"
++ ""
+#: npc/re/instances/BangungotHospital.txt#94 (mes)
+- "the Bangungot is appeared"
++ ""
+#: npc/re/instances/BangungotHospital.txt#95 (mes)
+- "again."
++ ""
+#: npc/re/instances/BangungotHospital.txt#96 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#98 (mes)
+- " 's help"
++ ""
+#: npc/re/instances/BangungotHospital.txt#99 (mes)
+- "is needed again."
++ ""
+#: npc/re/instances/BangungotHospital.txt#100 (mes)
+- "Please could you give me"
++ ""
+#: npc/re/instances/BangungotHospital.txt#101 (mes)
+- "one more chance?"
++ ""
+#: npc/re/instances/BangungotHospital.txt#102 (select)
+- "Enter the second floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#103 (select)
+- "Do not enter."
++ ""
+#: npc/re/instances/BangungotHospital.txt#104 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#105 (mes)
+- "A critical situation has happened."
++ ""
+#: npc/re/instances/BangungotHospital.txt#106 (mes)
+- "You can't go up to the 2nd floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#107 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#108 (mes)
+- "We are preparing to go up"
++ ""
+#: npc/re/instances/BangungotHospital.txt#109 (mes)
+- "to the second floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#110 (mes)
+- "At the second floor"
++ ""
+#: npc/re/instances/BangungotHospital.txt#111 (mes)
+- "there is a chaotic rumor that"
++ ""
+#: npc/re/instances/BangungotHospital.txt#112 (mes)
+- "the dead do not die."
++ ""
+#: npc/re/instances/BangungotHospital.txt#113 (mes)
+- "Please refer to this story."
++ ""
+#: npc/re/instances/BangungotHospital.txt#114 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#115 (mes)
+- "When you finish everything,"
++ ""
+#: npc/re/instances/BangungotHospital.txt#116 (mes)
+- "please talk to me again."
++ ""
+#: npc/re/instances/BangungotHospital.txt#117 (mes)
+- "I really appreciate it."
++ ""
+#: npc/re/instances/BangungotHospital.txt#118 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#119 (mes)
+- "A critical situation has happened."
++ ""
+#: npc/re/instances/BangungotHospital.txt#120 (mes)
+- "You can't go up to the 2nd floor."
++ ""
+#: npc/re/instances/BangungotHospital.txt#121 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#122 (mes)
+- "You can't go up to"
++ ""
+#: npc/re/instances/BangungotHospital.txt#123 (mes)
+- "the 2nd floor now."
++ ""
+#: npc/re/instances/BangungotHospital.txt#124 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#125 (mes)
+- "It's too dangerous to go"
++ ""
+#: npc/re/instances/BangungotHospital.txt#126 (mes)
+- "up to the 2nd floor alone."
++ ""
+#: npc/re/instances/BangungotHospital.txt#127 (mes)
+- "Please come here with"
++ ""
+#: npc/re/instances/BangungotHospital.txt#128 (mes)
+- "several people."
++ ""
+#: npc/re/instances/BangungotHospital.txt#136 (mes)
+- "[Nurse Maenne]"
++ ""
+#: npc/re/instances/BangungotHospital.txt#137 (mes)
+- "Alright."
++ ""
+#: npc/re/instances/BangungotHospital.txt#138 (mes)
+- "If you change mind, come back again."
++ ""
+#: npc/re/instances/BangungotHospital.txt#140 (mes)
+- "Password"
++ ""
+#: npc/re/instances/BangungotHospital.txt#143 (mes)
+- "Good Luck."
++ ""
+#: npc/re/instances/BangungotHospital.txt#144 (select)
+- "Receive 9222:Receive 9223:Erase 9222:Erase 9223:Receive 9224:Erase 9224:Receive malaya_bang 30:Receive malaya_bang 40:Receive 11309:Erase 11309:Cancel"
++ ""
+#: npc/re/instances/BangungotHospital.txt#170 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#193 (atrib)
+- "Bangungot: I will let you see the pain and the agony actually be real....."
++ ""
+#: npc/re/instances/BangungotHospital.txt#194 (atrib)
+- "Bangungot: Diseased spirits are the source of my energy, and my life..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#195 (atrib)
+- "Bangungot: Scream more....and more...... your pain..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#196 (atrib)
+- "Bangungot: Deeply and more deeply in pain..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#197 (atrib)
+- "Bangungot: Be horrified...be petrified."
++ ""
+#: npc/re/instances/BangungotHospital.txt#200 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#322 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#331 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#340 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#349 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#358 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#367 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#465 (atrib)
+- "1@ma_h"
++ ""
+#: npc/re/instances/BangungotHospital.txt#467 (atrib)
+- "Screaming Patient: Aaaaargh!!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#468 (atrib)
+- "Patient in Pain: Oooooowwww!! It's killing me!!!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#469 (atrib)
+- "Passed Out Patient: ........"
++ ""
+#: npc/re/instances/BangungotHospital.txt#470 (atrib)
+- "Patient with Nightmare: Help~!!! Save me!!!"
++ ""
+#: npc/re/instances/BangungotHospital.txt#471 (atrib)
+- "Sick Looking Patient: Hu..a...aaah.."
++ ""
+#: npc/re/instances/BangungotHospital.txt#472 (atrib)
+- "Horrified Patient: Get away!! Please...."
++ ""
+#: npc/re/instances/BangungotHospital.txt#473 (atrib)
+- "Patient in Sorrow: crying and crying......"
++ ""
+#: npc/re/instances/BangungotHospital.txt#474 (atrib)
+- "Suffering Patient: Stop... please..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#475 (atrib)
+- "Wriggling Patient: awwww..."
++ ""
+#: npc/re/instances/BangungotHospital.txt#476 (atrib)
+- "Patient in Cold Sweat: Help.....help...."
++ ""
+#: npc/re/instances/BangungotHospital.txt#477 (atrib)
+- "Howling Patient: aaaaahhhhhhhhhh!!"
++ ""

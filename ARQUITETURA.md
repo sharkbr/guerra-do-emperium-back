@@ -234,6 +234,65 @@ O menu da `teletransportadora.txt` cita os mesmos nomes, mas ali é **rótulo de
 verdade**: ela nunca chama `instance_create`, só `Go(mapa,x,y)`. Divergir não
 quebra nada — só faz o jogador ler dois nomes para a mesma coisa.
 
+### Uma missão da Ordem vive em 3 lugares, e um deles é o CLIENTE
+
+Aberto em 2026-08-08, com a Ordem dos Exploradores. O **alvo** de uma caçada e
+a **recompensa** dela moram em arquivos diferentes, porque o `quest_db` do
+rAthena não tem campo de recompensa — ele só sabe de `Drops` (item que cai do
+mob), e a Ordem paga na entrega. E o **texto** que o jogador lê na janela de
+missões não vem de nenhum dos dois: vem do cliente.
+
+| Onde | O que | Recarrega com |
+|---|---|---|
+| `db/guerra/quest_db.yml` | o `Id`, o `Title` e os `Targets` (mob + quantidade) | `@reloadquestdb` |
+| o `OnInit` de `npc/guerra/ordem_dos_exploradores.txt` | `.quest[]`, `.nome$[]`, `.paga[]`, `.exp[]` — e `.ini[]`/`.fim[]`, que fatiam as tabelas por placa | `@reloadscript` |
+| `cliente\System\OngoingQuestInfoList_True.lub` e `_Sakray.lub` | o título, a descrição e o resumo na janela de missões | **fechar e reabrir o cliente** |
+
+**O terceiro não é cosmético: sem ele o cliente cai.** O
+`GetOngoingQuestInfoByID` indexa `QuestInfoList[id].Title` sem guarda de nil,
+então uma missão que o cliente não conhece abre caixa de erro de Lua **por
+missão e por atualização da janela** até a conexão cair. Ver `CLAUDE.md` §5.
+
+Aqueles dois `.lub` são **gerados** pelo `traduz_ptbr.py questinfo`, que os
+reconstrói do coreano de 2021 — entrada posta à mão some na próxima rodada.
+Por isso as nossas saem de `ferramentas/monta_missoes_da_ordem.py`, que lê as
+ids do `quest_db.yml` e tem o texto PT dentro. **A ordem importa:**
+`traduz_ptbr.py questinfo` primeiro, o nosso script depois. É o mesmo arranjo
+do Logue e Ganhe.
+
+**As quatro tabelas do NPC são lidas pelo mesmo índice.** Inserir uma missão no
+meio de uma sem inserir nas outras troca o pagamento de missão — silenciosamente,
+porque nada valida o alinhamento. Acrescentar missão é: uma entrada no
+`quest_db.yml`, uma linha em **cada** uma das quatro tabelas, e o ajuste de
+`.ini`/`.fim` do grupo.
+
+**Esse alinhamento já quebrou uma vez, no Teleportador do mesmo arquivo** — o
+menu e os destinos ficaram em ordens diferentes e os catorze teleportes foram
+para o lugar errado, sem erro nenhum (`CLAUDE.md` §4.11). Lá o conserto foi
+gerar o menu da própria tabela; aqui as placas não têm menu gerado, então o
+alinhamento das quatro colunas **continua sendo responsabilidade de quem
+edita**. Ao mexer, conferir contando: `.quest`, `.nome$`, `.paga` e `.exp` têm
+de ter o mesmo tamanho, e `.fim[2]+1` tem de ser esse tamanho.
+
+**As três placas dividem essas tabelas.** São um script e dois `duplicate`, e
+variável de escopo `.` pertence ao *script* (`npc.cpp:4602`) — o mesmo arranjo
+das duas Máquinas. Cada placa descobre quem é pelo pedaço depois do `#` do nome
+(`strnpcinfo(2)`).
+
+**Duas armadilhas caladas, as duas do leitor de YAML:**
+
+1. **AegisName de mob inexistente descarta a quest inteira.** `quest.cpp:132`
+   emite *"Mob %s does not exist, skipping"* e cai num `return 0` que joga fora
+   a quest toda, não a linha do alvo. Conferir nome novo contra o `mob_db`
+   antes de gravar.
+2. **`MAX_QUEST_OBJECTIVES` é 3** (`src/common/mmo.hpp:111`), e a Torre do
+   Demônio já usa os três. Um quarto alvo cai no mesmo `return 0`.
+
+O nome da instância aparece nas duas tabelas do NPC (`.nome$[]` e o `.menu$` do
+Teleportador) e ali é **rótulo**, não chave — a Ordem nunca chama
+`instance_create`. Divergir não quebra nada; só faz o jogador ler dois nomes
+para a mesma coisa.
+
 ### Uma tradução de NPC vive em 2 lugares
 
 O catálogo (`npc/guerra/traducao/*.cat`) é a **fonte**; o arquivo `.txt` do
@@ -270,6 +329,35 @@ git.
 **Cuidado com o ROenglishRE:** ele é atualizado para clientes mais novos que o
 nosso (kRO 2021-11-03). Luafiles de 2024-2026 sobre GRF de 2021 quebram —
 conferir "Last updated" antes de depurar.
+
+### O cliente do bRO responde "como é lá?" — até certo ponto
+
+Descoberto em 2026-08-09, ao perguntar se dava para saber como as instâncias
+são no bRO. A instalação do Ragnarok Brazil não serve só de fonte de **arte e
+nome**: ela carrega tabelas que descrevem **conteúdo**.
+
+| Arquivo do bRO | O que responde |
+|---|---|
+| `System\OngoingQuestInfoList_True.lub` | título, descrição e resumo de toda missão — **incluindo as 30 missões de instância da Ordem dos Exploradores**, cada uma com a coordenada do NPC de entrada e o alvo por extenso |
+| `System\iteminfo_new.lub` | nome PT, descrição e recurso de 18.845 itens |
+| `navigation\navi_mob_br.lub` (no GRF) | nome PT de 2.473 monstros — **só os que aparecem na navegação**; chefe de instância **não está lá** |
+| `navigation\navi_npc_br.lub` (no GRF) | NPCs de navegação, com mapa e coordenada |
+| `data.grf` | mapas, sprites, ícones |
+
+Os `.lub` são **bytecode Lua 5.1** — busca de string neles não é confiável;
+quem os lê é o `ferramentas/luadis.py`.
+
+**O limite, e ele é duro: o cliente NUNCA carrega a mecânica.** O que a
+instância faz — o líder virar Orc Herói, as áreas com status escalando, o chefe
+invocando flores — é script de **servidor**, e não sai da Gravity. Para isso só
+há o browiki, e **`browiki.org` devolve 403** para busca automática: quem lê é
+o dono, no navegador.
+
+**Para que isso serve na prática:** comparar a **coordenada da porta** de cada
+instância entre o bRO e o nosso rAthena é um teste barato de "é a mesma
+versão?". Coincidir não prova que a mecânica é igual; **divergir prova que
+não**. Foi assim que se soube que 14 das 16 instâncias da Ordem batem, e que só
+a Batalha dos Orcs e a Vila dos Porings divergiram.
 
 ## 7. Os tetos — o que estoura primeiro quando o servidor encher
 

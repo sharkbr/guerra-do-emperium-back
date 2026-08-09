@@ -1,0 +1,579 @@
+# Catalogo de traducao PT-BR - grupo "orcs"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/instances/OrcsMemory.txt  (189 textos)
+#: npc/instances/OrcsMemory.txt#2 (mes)
+- "Only users between Levels ^ff000030 ~ 80^000000 can enter this Dungeon."
++ "Só quem está entre os níveis ^ff000030 e 80^000000 pode entrar nesta masmorra."
+#: npc/instances/OrcsMemory.txt#3 (mes)
+- "Party status confirmed. Would you like to book entrance to the "
++ "Grupo conferido. Quer reservar a entrada para a "
+#: npc/instances/OrcsMemory.txt#4 (mes)
+- "?"
++ "?"
+#: npc/instances/OrcsMemory.txt#5 (select)
+- "Reserve the "
++ "Reservar a "
+#: npc/instances/OrcsMemory.txt#6 (select)
+- ":Enter the Dungeon:Cancel"
++ ":Entrar na masmorra:Cancelar"
+#: npc/instances/OrcsMemory.txt#7 (mes)
+- "Party Name: "
++ "Grupo: "
+#: npc/instances/OrcsMemory.txt#8 (mes)
+- "Party Leader: "
++ "Líder: "
+#: npc/instances/OrcsMemory.txt#9 (mes)
+- "^0000ff"
++ ""
+#: npc/instances/OrcsMemory.txt#10 (mes)
+- " ^000000 - Reservation Failed."
++ " ^000000 - a reserva falhou."
+#: npc/instances/OrcsMemory.txt#11 (mes)
+- "^0000ff"
++ ""
+#: npc/instances/OrcsMemory.txt#12 (mes)
+- "^000000- Attempting to book an entrance"
++ "^000000 - tentando reservar a entrada"
+#: npc/instances/OrcsMemory.txt#13 (mes)
+- "After making a reservation, you have to select 'Enter the Dungeon' from the menu if you wish to enter the "
++ "Depois de reservar, escolha 'Entrar na masmorra' no menu para entrar na "
+#: npc/instances/OrcsMemory.txt#14 (mes)
+- "."
++ ""
+#: npc/instances/OrcsMemory.txt#15 (select)
+- " Enter the Memorial Dungeon:Cancel"
++ " Entrar na memória:Cancelar"
+#: npc/instances/OrcsMemory.txt#16 (mes)
+- "You can enter the Dungeon if it has been generated."
++ "Se a masmorra já estiver aberta, você pode entrar."
+#: npc/instances/OrcsMemory.txt#17 (select)
+- "Enter the Dungeon "
++ "Entrar na "
+#: npc/instances/OrcsMemory.txt#18 (select)
+- ":Cancel"
++ ":Cancelar"
+#: npc/instances/OrcsMemory.txt#19 (mes)
+- "^0000ffAll records and after-effects related to the Orc's Memory Dungeon are deleted. You can now regenerate or re-enter the dungeon.^000000"
++ "^0000ffTodo o registro da Batalha dos Orcs foi apagado. Dá para abrir ou entrar de novo.^000000"
+#: npc/instances/OrcsMemory.txt#20 (mes)
+- "In order to generate a dungeon you must be the Party Leader and have at least 2 members in the party."
++ "Para abrir a masmorra é preciso ser o líder do grupo e ter pelo menos 2 pessoas nele."
+#: npc/instances/OrcsMemory.txt#22 (mes)
+- "An unknown error has occurred."
++ "Alguma coisa deu errado, e nem eu sei o quê."
+#: npc/instances/OrcsMemory.txt#23 (mes)
+- "Memorial Dungeon Orc's Memory does not exist."
++ "A memória da Batalha dos Orcs não existe."
+#: npc/instances/OrcsMemory.txt#24 (mes)
+- "Memorial Dungeon has been destroyed by the Party Leader, or because of the time limit. Please try again after 2 hours."
++ "A memória foi desfeita pelo líder do grupo, ou o tempo dela acabou. Tente de novo daqui a 2 horas."
+#: npc/instances/OrcsMemory.txt#25 (mes)
+- "Only a member of the party can enter the Memorial Dungeon."
++ "Só quem está no grupo pode entrar na memória."
+#: npc/instances/OrcsMemory.txt#26 (mapannounce)
+- "gef_fild10"
++ ""
+#: npc/instances/OrcsMemory.txt#27 (mapannounce)
+- " party's member "
++ ""
+#: npc/instances/OrcsMemory.txt#28 (mapannounce)
+- " has entered the Orc's Memory."
++ ""
+#: npc/instances/OrcsMemory.txt#29 (mapannounce)
+- "0x00ff99"
++ ""
+#: npc/instances/OrcsMemory.txt#31 (mes)
+- "The Mad Scientist doesn't seem to notice you and keeps mumbling to himself..."
++ "O Cientista Maluco nem parece notar você, e segue resmungando sozinho..."
+#: npc/instances/OrcsMemory.txt#32 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#33 (mes)
+- "Haha, no Orcs are coming near me!"
++ "Haha, nenhum Orc chega perto de mim!"
+#: npc/instances/OrcsMemory.txt#34 (mes)
+- "The power of the Dimensional Gorge is undefeatable!!"
++ "O poder da Fenda Dimensional é imbatível!!"
+#: npc/instances/OrcsMemory.txt#35 (select)
+- "Orcs don't attack you?:You wish!"
++ "Os Orcs não atacam você?:Sei, sei!"
+#: npc/instances/OrcsMemory.txt#36 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#37 (mes)
+- "Yeah, yeah.. I know it's hard to belive. I don't blame ya."
++ "Sim, sim.. eu sei que é difícil de acreditar. Não levo a mal."
+#: npc/instances/OrcsMemory.txt#38 (mes)
+- "I used to study the Dimensional Gorge discovered near Morocc."
++ "Eu estudava a Fenda Dimensional que descobriram perto de Morroc."
+#: npc/instances/OrcsMemory.txt#39 (mes)
+- "According to my research, the minerals found there have enormous power inside them!"
++ "Pela minha pesquisa, os minerais que se acham lá guardam um poder enorme!"
+#: npc/instances/OrcsMemory.txt#40 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#41 (mes)
+- "You are a pretty distrustful person, huh?"
++ "Você é uma pessoa bem desconfiada, hein?"
+#: npc/instances/OrcsMemory.txt#42 (select)
+- "Oh? Like what, travel to alternate space?"
++ "Ah é? Poder de quê, viajar para outro espaço?"
+#: npc/instances/OrcsMemory.txt#43 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#44 (mes)
+- "Very smart! I have actually just done that! See that statue over there? It's not your normal Monolith!"
++ "Muito esperto! Foi exatamente o que eu fiz! Está vendo aquela estátua? Não é um Monólito qualquer!"
+#: npc/instances/OrcsMemory.txt#45 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#46 (mes)
+- "I have created it with a combination of our technology and the unlimited energy I discovered from the Gorge! Want to try it?"
++ "Eu a criei juntando a nossa tecnologia com a energia sem limite que achei na Fenda! Quer experimentar?"
+#: npc/instances/OrcsMemory.txt#47 (select)
+- "...Um, that doesn't sound legal?"
++ "...Hum, isso aí é legalizado?"
+#: npc/instances/OrcsMemory.txt#48 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#49 (mes)
+- "Hey, since when did something so interesting have to be legal!? How about it! You can talk to the Orcs! C'mon!"
++ "Ei, desde quando uma coisa tão interessante precisa ser legalizada!? Que tal? Você vai poder falar com os Orcs! Vamos lá!"
+#: npc/instances/OrcsMemory.txt#50 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#51 (mes)
+- "Chances are they'll just give you lots of instructions once they see you, so just wing it! They're always saying the same thing, to the point where I memorized them!"
++ "O mais provável é que eles te encham de instruções assim que te virem, então vá na conversa! Falam sempre a mesma coisa, a ponto de eu ter decorado!"
+#: npc/instances/OrcsMemory.txt#52 (select)
+- "Alright... What do I do?:Umm, maybe not."
++ "Certo... o que eu faço?:Hum, melhor não."
+#: npc/instances/OrcsMemory.txt#53 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#54 (mes)
+- "Very good! Just sit in the hands of this statue! And try to act natural when you're in there!"
++ "Muito bem! É só sentar nas mãos desta estátua! E tente agir com naturalidade quando estiver lá dentro!"
+#: npc/instances/OrcsMemory.txt#55 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#56 (mes)
+- "Oh fine, be that way!"
++ "Ah, tudo bem, fique aí então!"
+#: npc/instances/OrcsMemory.txt#57 (mes)
+- "[Mad Scientist]"
++ "[Cientista Maluco]"
+#: npc/instances/OrcsMemory.txt#58 (mes)
+- "Hmm? Put your hand on that Monemus Statue if you want to experience traveling through dimensions!"
++ "Hmm? Ponha a mão naquela Estátua de Monemus se quiser viajar entre dimensões!"
+#: npc/instances/OrcsMemory.txt#77 (mapannounce)
+- "High Orc: We need more defenses! Get more people here!"
++ ""
+#: npc/instances/OrcsMemory.txt#78 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#82 (mapannounce)
+- "Where are the High Orcs!? Get them to stop the enemies!"
++ ""
+#: npc/instances/OrcsMemory.txt#83 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#87 (mapannounce)
+- "Caution: The army's starting to concentrate at Zone No. 4."
++ ""
+#: npc/instances/OrcsMemory.txt#88 (mapannounce)
+- "0x77ff77"
++ ""
+#: npc/instances/OrcsMemory.txt#89 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#90 (mapannounce)
+- "Shouts of the Chief Orc of Safeguards: Looks like this will take longer than expected. Summon the Stalactic Golems!"
++ ""
+#: npc/instances/OrcsMemory.txt#91 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#93 (mapannounce)
+- "Stalactic Golems are digging out of the deep underground."
++ ""
+#: npc/instances/OrcsMemory.txt#94 (mapannounce)
+- "0x77ff77"
++ ""
+#: npc/instances/OrcsMemory.txt#134 (mapannounce)
+- "High Orc: Attack them from behind! Cut off their support!"
++ ""
+#: npc/instances/OrcsMemory.txt#135 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#158 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#159 (mapannounce)
+- "Kruger: Damn... What took you so long!! I don't have all day!!"
++ ""
+#: npc/instances/OrcsMemory.txt#160 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#161 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#162 (mapannounce)
+- "Kruger: My plan was to let our comrades open the gate, but it's all ruined since I got busted by the Orc Shaman."
++ ""
+#: npc/instances/OrcsMemory.txt#163 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#164 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#165 (mapannounce)
+- "Shouts of the Chief Orc of Safeguards: I smell a rat.. Send some patrols to the entrance!!"
++ ""
+#: npc/instances/OrcsMemory.txt#166 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#167 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#168 (mapannounce)
+- "Kruger: Darn it.. They'll be here any minute. Ok. Listen to me now."
++ ""
+#: npc/instances/OrcsMemory.txt#169 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#170 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#171 (mapannounce)
+- "Kruger: The Orc Shaman has sealed the 1st basement by dividing it into 4 zones. Each zone has one Enchanted Orc who has the power to unseal the next zone."
++ ""
+#: npc/instances/OrcsMemory.txt#172 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#173 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#174 (mapannounce)
+- "Kruger: Find those Enchanted Orcs and get rid of them to move to the next zone."
++ ""
+#: npc/instances/OrcsMemory.txt#175 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#176 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#177 (mapannounce)
+- "Kruger: Try to avoid encountering Orcs other then the Enchanted ones. Everytime you kill a normal Orc, High Orcs will gather at the last path to the 2nd floor."
++ ""
+#: npc/instances/OrcsMemory.txt#178 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#179 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#180 (mapannounce)
+- "Kruger: In the worst case, the path to the 2nd floor could be completely blocked. For your own sake, you should be as sneaky as possible."
++ ""
+#: npc/instances/OrcsMemory.txt#181 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#182 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#183 (mapannounce)
+- "Mission: Sneak in and get rid of the 'Enchanted Orcs'. Avoiding battles with other Orcs is the best way of getting into the 2nd floor."
++ ""
+#: npc/instances/OrcsMemory.txt#184 (mapannounce)
+- "0x44ffff"
++ ""
+#: npc/instances/OrcsMemory.txt#205 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#206 (mapannounce)
+- "Kruger's Whisper: The Orcs here used to be my companions. They just lost their will ever since the Orc Shaman started to control them with her magic."
++ ""
+#: npc/instances/OrcsMemory.txt#207 (mapannounce)
+- "0xff4499"
++ ""
+#: npc/instances/OrcsMemory.txt#208 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#209 (mapannounce)
+- "Kruger's Whisper: There's nothing we can do but to defeat the Orc Shaman if we want to save the remaining tribes."
++ ""
+#: npc/instances/OrcsMemory.txt#210 (mapannounce)
+- "0xff4499"
++ ""
+#: npc/instances/OrcsMemory.txt#220 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#221 (mapannounce)
+- "Kruger's Whisper: I saw the bodies of our tribe. It seems that the Orc Shaman used those Orcs for her rituals."
++ ""
+#: npc/instances/OrcsMemory.txt#222 (mapannounce)
+- "0xff4499"
++ ""
+#: npc/instances/OrcsMemory.txt#223 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#224 (mapannounce)
+- "Kruger's Whisper: ... It all has to do with me. I am responsible for this evil."
++ ""
+#: npc/instances/OrcsMemory.txt#225 (mapannounce)
+- "0xff4499"
++ ""
+#: npc/instances/OrcsMemory.txt#235 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#236 (mapannounce)
+- "Please, hang in there!"
++ ""
+#: npc/instances/OrcsMemory.txt#237 (mapannounce)
+- "0xff4499"
++ ""
+#: npc/instances/OrcsMemory.txt#238 (mapannounce)
+- "1@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#239 (mapannounce)
+- "We'll get some rest when we get to the 2nd basement after passing through here."
++ ""
+#: npc/instances/OrcsMemory.txt#240 (mapannounce)
+- "0xff4499"
++ ""
+#: npc/instances/OrcsMemory.txt#281 (mapannounce)
+- "Warning: High Orcs are gathering near area 3."
++ ""
+#: npc/instances/OrcsMemory.txt#282 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#286 (mapannounce)
+- "Caution: The Forces have started to concentrate at the Shaman's Altar."
++ ""
+#: npc/instances/OrcsMemory.txt#287 (mapannounce)
+- "0x77ff77"
++ ""
+#: npc/instances/OrcsMemory.txt#288 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#289 (mapannounce)
+- "Voice from somewhere: Foolish... Do you really think the altar would fall like that?"
++ ""
+#: npc/instances/OrcsMemory.txt#290 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#292 (mapannounce)
+- "[ Wraiths were summoned by an unknown power ]"
++ ""
+#: npc/instances/OrcsMemory.txt#293 (mapannounce)
+- "0x77ff77"
++ ""
+#: npc/instances/OrcsMemory.txt#312 (mapannounce)
+- "Warning: Orc Archer teams are gathering near the altar."
++ ""
+#: npc/instances/OrcsMemory.txt#313 (mapannounce)
+- "0xff4444"
++ ""
+#: npc/instances/OrcsMemory.txt#336 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#337 (mapannounce)
+- "Kruger's Whisper: I'll tell you how to get to the Shaman's altar."
++ ""
+#: npc/instances/OrcsMemory.txt#338 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#339 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#340 (mapannounce)
+- "Kruger's Whisper: Do you see the braziers that light the path? Unseal the next zone by strengthening their flames."
++ ""
+#: npc/instances/OrcsMemory.txt#341 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#342 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#343 (mapannounce)
+- "Kruger's Whisper: Of course those monsters won't let you touch the braziers that easily."
++ ""
+#: npc/instances/OrcsMemory.txt#344 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#345 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#346 (mapannounce)
+- "Kruger's Whisper: But still, try keep the battles not too noticable so the Shaman won't guard the altar with her army squad."
++ ""
+#: npc/instances/OrcsMemory.txt#347 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#348 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#349 (mapannounce)
+- "Kruger's Whisper: Only the Party Leader can strengthen the flames, so protect your leader."
++ ""
+#: npc/instances/OrcsMemory.txt#350 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#351 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#352 (mapannounce)
+- "Mission: Unseal the zone by lighting the braziers. They can only be lit in a certain order, so be careful."
++ ""
+#: npc/instances/OrcsMemory.txt#353 (mapannounce)
+- "0x4444ff"
++ ""
+#: npc/instances/OrcsMemory.txt#374 (mapannounce)
+- "The Chief Orc of Safeguards: Oh!! Looks like I have company. Defeat me if you can!!"
++ ""
+#: npc/instances/OrcsMemory.txt#375 (mapannounce)
+- "0xff8888"
++ ""
+#: npc/instances/OrcsMemory.txt#387 (mapannounce)
+- "Orc Sniper: Hah! Pretty impressive that you made it this far, but your foolish little trip ends here..."
++ ""
+#: npc/instances/OrcsMemory.txt#388 (mapannounce)
+- "0xff8888"
++ ""
+#: npc/instances/OrcsMemory.txt#400 (mapannounce)
+- "Depraved Orc Spirit: I smell flesh! Hungry! Wanna try some human meat!!"
++ ""
+#: npc/instances/OrcsMemory.txt#401 (mapannounce)
+- "0xff8888"
++ ""
+#: npc/instances/OrcsMemory.txt#407 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#408 (mapannounce)
+- "Shaman Cargalache: Hahaha!! So, you finally made it here. The assassin you sent was just terrible. That stupid Orc is getting cold under my feet."
++ ""
+#: npc/instances/OrcsMemory.txt#409 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#410 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#411 (mapannounce)
+- "Shaman Cargalache: My loyal slave, go get those intruders!"
++ ""
+#: npc/instances/OrcsMemory.txt#412 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#413 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#414 (mapannounce)
+- "Depraved Orc Hero: Whatever you say, my lord."
++ ""
+#: npc/instances/OrcsMemory.txt#415 (mapannounce)
+- "0xff7777"
++ ""
+#: npc/instances/OrcsMemory.txt#416 (mapannounce)
+- "2@orcs"
++ ""
+#: npc/instances/OrcsMemory.txt#417 (mapannounce)
+- "Caution: You have been discovered by Shaman Cargalache. Kruger's plan to assassinate the Shaman has failed. You must defeat Cargalache and find traces of Kruger."
++ ""
+#: npc/instances/OrcsMemory.txt#418 (mapannounce)
+- "0x8888ff"
++ ""
+#: npc/instances/OrcsMemory.txt#430 (mapannounce)
+- "Shaman Cargalache: How... How could this be... How could someone like you...!!"
++ ""
+#: npc/instances/OrcsMemory.txt#431 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#432 (mapannounce)
+- "Shaman Cargalache: How is it that I've been overpowered by mere humans!"
++ ""
+#: npc/instances/OrcsMemory.txt#433 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#434 (mapannounce)
+- "Shaman Cargalache: This... This can't be the end..."
++ ""
+#: npc/instances/OrcsMemory.txt#435 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#436 (mapannounce)
+- "Shaman Cargalache: I... Can't die... Yet...!"
++ ""
+#: npc/instances/OrcsMemory.txt#437 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#438 (mapannounce)
+- "Shaman Cargalache: Defeated by these fools... It can't be happening...!"
++ ""
+#: npc/instances/OrcsMemory.txt#439 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/instances/OrcsMemory.txt#449 (mes)
+- "[Kruger]"
++ "[Kruger]"
+#: npc/instances/OrcsMemory.txt#450 (mes)
+- "*Coughing*"
++ "*Tossindo*"
+#: npc/instances/OrcsMemory.txt#452 (mes)
+- ", it's you..."
++ ", é você..."
+#: npc/instances/OrcsMemory.txt#453 (mes)
+- "["
++ ""
+#: npc/instances/OrcsMemory.txt#454 (mes)
+- "] "
++ ""
+#: npc/instances/OrcsMemory.txt#455 (mes)
+- "Don't move! You are wounded!"
++ "Não se mexa! Você está ferido!"
+#: npc/instances/OrcsMemory.txt#456 (mes)
+- "[Kruger]"
++ "[Kruger]"
+#: npc/instances/OrcsMemory.txt#457 (mes)
+- "It's... all right.. I'm dying..."
++ "Está... tudo bem.. eu estou morrendo..."
+#: npc/instances/OrcsMemory.txt#458 (mes)
+- "...."
++ "...."
+#: npc/instances/OrcsMemory.txt#459 (mes)
+- "The Shaman? What about the Shaman?"
++ "O Xamã? O que tem o Xamã?"
+#: npc/instances/OrcsMemory.txt#460 (mes)
+- "["
++ ""
+#: npc/instances/OrcsMemory.txt#461 (mes)
+- "] "
++ ""
+#: npc/instances/OrcsMemory.txt#462 (mes)
+- "The Shaman's dead now. Who was that Shaman really?"
++ "O Xamã está morto. Quem era aquele Xamã, afinal?"
+#: npc/instances/OrcsMemory.txt#463 (mes)
+- "Kruger seemed to be relieved as he hears of the death of the Shaman, but you notice the bitter expression on his face."
++ "Kruger parece aliviado ao saber da morte do Xamã, mas você nota a amargura no rosto dele."
+#: npc/instances/OrcsMemory.txt#464 (mes)
+- "[Kruger]"
++ "[Kruger]"
+#: npc/instances/OrcsMemory.txt#465 (mes)
+- "I.. I just couldn't kill my own daughter..."
++ "Eu.. eu simplesmente não consegui matar a minha própria filha..."
+#: npc/instances/OrcsMemory.txt#466 (mes)
+- "Thank you, I'm sure she's finally free from the nightmare that used to choke her soul."
++ "Obrigado. Tenho certeza de que ela enfim se livrou do pesadelo que sufocava a alma dela."
+#: npc/instances/OrcsMemory.txt#467 (mes)
+- "Kruger was about to say something more, but he breathed his last breath before he could..."
++ "Kruger ia dizer mais alguma coisa, mas deu o último suspiro antes..."
+#: npc/instances/OrcsMemory.txt#468 (mes)
+- "You can see the dead body of Kruger, peacefully lying on the ground."
++ "Você vê o corpo de Kruger, caído no chão em paz."

@@ -1,0 +1,381 @@
+# Catalogo de traducao PT-BR - grupo "porings"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/PoringVillage.txt  (123 textos)
+#: npc/re/instances/PoringVillage.txt#1 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#2 (mes)
+- "50 Jellopies and 20,000 zeny are all you need to get special effect on your green onion or carrot!"
++ ""
+#: npc/re/instances/PoringVillage.txt#3 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#4 (mes)
+- "Enchant and reset have ^ff000030% of failure.^000000 Invest in your veggie and luck!"
++ ""
+#: npc/re/instances/PoringVillage.txt#5 (select)
+- "How much do I need to enchant?"
++ ""
+#: npc/re/instances/PoringVillage.txt#6 (select)
+- "Enchant to Poring Village Veggie"
++ ""
+#: npc/re/instances/PoringVillage.txt#7 (select)
+- "Reset Poring Village Veggie"
++ ""
+#: npc/re/instances/PoringVillage.txt#8 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#9 (mes)
+- "As I heard, you can get Poring Village Green Onion or Carrot if you go west a bit more from here."
++ ""
+#: npc/re/instances/PoringVillage.txt#10 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#11 (mes)
+- "I do enchant to the fresh vegetable."
++ ""
+#: npc/re/instances/PoringVillage.txt#12 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#13 (mes)
+- "Enchant or Reset requires 20,000z and 50 Jellopy! It's not bad, is it?"
++ ""
+#: npc/re/instances/PoringVillage.txt#14 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#15 (mes)
+- "Well... As you know, it's a vegetable any way. So sometimes it can be broken."
++ ""
+#: npc/re/instances/PoringVillage.txt#16 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#17 (mes)
+- "Please put on the equipment you'd like to enchant first."
++ ""
+#: npc/re/instances/PoringVillage.txt#18 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#19 (mes)
+- "This is not a vegetable!?"
++ ""
+#: npc/re/instances/PoringVillage.txt#20 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#21 (mes)
+- "This vegetable cannot be enchanted anymore."
++ ""
+#: npc/re/instances/PoringVillage.txt#22 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#23 (mes)
+- "This enchant requires 50 Jellopy and 20,000z..... But... you don't have them."
++ ""
+#: npc/re/instances/PoringVillage.txt#24 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#25 (mes)
+- "Tada! Enchant is done! Check your vegetable."
++ ""
+#: npc/re/instances/PoringVillage.txt#26 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#27 (mes)
+- "It must have been a rotten vegetable. It's a shame that I can't stand this level of power..."
++ ""
+#: npc/re/instances/PoringVillage.txt#28 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#29 (mes)
+- "Please put on the equipment you'd like to enchant first."
++ ""
+#: npc/re/instances/PoringVillage.txt#30 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#31 (mes)
+- "This is not a vegetable!?"
++ ""
+#: npc/re/instances/PoringVillage.txt#32 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#33 (mes)
+- "This is a vegetable that has never been fortified..."
++ ""
+#: npc/re/instances/PoringVillage.txt#34 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#35 (mes)
+- "This enchant requires 50 Jellopy and 20,000z..... But... you don't have them."
++ ""
+#: npc/re/instances/PoringVillage.txt#36 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#37 (mes)
+- "The item is complete! Check it out."
++ ""
+#: npc/re/instances/PoringVillage.txt#38 (mes)
+- "[Veggie Enchanter]"
++ ""
+#: npc/re/instances/PoringVillage.txt#39 (mes)
+- "It must have been a rotten vegetable. It's a shame that I can't stand this level of power..."
++ ""
+#: npc/re/instances/PoringVillage.txt#40 (npctalk)
+- "Veggie Enchanter: Make your green onion or carrot stronger!"
++ ""
+#: npc/re/instances/PoringVillage.txt#42 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#43 (mes)
+- "Wow~ You look like a novice. I do want to adventure with you someday when you grow up!"
++ ""
+#: npc/re/instances/PoringVillage.txt#44 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#45 (mes)
+- "Oh, now you are stronger than me. How did you grow so fast?"
++ ""
+#: npc/re/instances/PoringVillage.txt#46 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#47 (mes)
+- "I should find another adventurer who is similar with my level. It's been nice knowing you."
++ ""
+#: npc/re/instances/PoringVillage.txt#48 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#49 (mes)
+- "My name is Emily. I was waiting for someone who will go on adventures with me!"
++ ""
+#: npc/re/instances/PoringVillage.txt#50 (select)
+- "Who said I will adventure with you?"
++ ""
+#: npc/re/instances/PoringVillage.txt#51 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#52 (mes)
+- "Well, come one. Don't be stern. Listen, you can decide after listening to my story. Of course, I can give you a proper reward."
++ ""
+#: npc/re/instances/PoringVillage.txt#53 (select)
+- "Proper Reward?"
++ ""
+#: npc/re/instances/PoringVillage.txt#54 (select)
+- "I'm not interested."
++ ""
+#: npc/re/instances/PoringVillage.txt#55 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#56 (mes)
+- "How square! It's much better to be together!"
++ ""
+#: npc/re/instances/PoringVillage.txt#57 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#58 (mes)
+- "Yes! Proper Reward."
++ ""
+#: npc/re/instances/PoringVillage.txt#59 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#60 (mes)
+- "It seems this Poring Village can be defeated by beginners just like us. It's just a wild guess though..."
++ ""
+#: npc/re/instances/PoringVillage.txt#61 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#62 (mes)
+- "Well, actually I cannot give you the reward officially through adventurer association. But we can separate the income after hunting."
++ ""
+#: npc/re/instances/PoringVillage.txt#63 (select)
+- "But 50-50 sounds fair to me."
++ ""
+#: npc/re/instances/PoringVillage.txt#64 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#65 (mes)
+- "No way. 70-30. And I'm 70 of course."
++ ""
+#: npc/re/instances/PoringVillage.txt#66 (select)
+- "It's gotta be 50-50 or it's no good"
++ ""
+#: npc/re/instances/PoringVillage.txt#67 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#68 (mes)
+- "How about 60-40!!"
++ ""
+#: npc/re/instances/PoringVillage.txt#69 (select)
+- "50-50 ..."
++ ""
+#: npc/re/instances/PoringVillage.txt#70 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#71 (mes)
+- "This drives me crazy. OK, 50-50. Let's go with this."
++ ""
+#: npc/re/instances/PoringVillage.txt#72 (mes)
+- "^ff0000Any processing of monsters such as monster taming inside the dungeon will not be considered a normal progress. Please note that.^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#73 (mes)
+- "^ff0000In beginner mode, the player transforms into a monster. Please note that the existing transformation effect disappears when entering and proceeding.^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#74 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#75 (mes)
+- "So, are you ready?"
++ ""
+#: npc/re/instances/PoringVillage.txt#76 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#77 (mes)
+- "You look very tired."
++ ""
+#: npc/re/instances/PoringVillage.txt#78 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#79 (mes)
+- "Why don't you come back after a while? Take a break for now."
++ ""
+#: npc/re/instances/PoringVillage.txt#80 (mes)
+- "^ff0000Any processing of monsters such as monster taming inside the dungeon will not be considered a normal progress. Please note that.^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#81 (mes)
+- "^ff0000In beginner mode, the player transforms into a monster. Please note that the existing transformation effect disappears when entering and proceeding. ^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#82 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#83 (mes)
+- "So, are you ready?"
++ ""
+#: npc/re/instances/PoringVillage.txt#84 (mes)
+- "^0000ffAll Traces of the Poring Village quest were removed. Now, talk to Emily again to enter^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#85 (mes)
+- "^ff0000Any processing of monsters such as monster taming inside the dungeon will not be considered a normal progress. Please note that.^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#86 (mes)
+- "^ff0000In beginner mode, the player transforms into a monster. Please note that the existing transformation effect disappears when entering and proceeding.^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#87 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#88 (mes)
+- "So, are you ready?"
++ ""
+#: npc/re/instances/PoringVillage.txt#89 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#90 (mes)
+- "Hmm you should create a party first to start this grand adventure."
++ ""
+#: npc/re/instances/PoringVillage.txt#91 (atrib)
+- "Vila dos Porings"
++ ""
+#: npc/re/instances/PoringVillage.txt#92 (menu)
+- "Create the entrance"
++ ""
+#: npc/re/instances/PoringVillage.txt#93 (menu)
+- "Enter the dungeon"
++ ""
+#: npc/re/instances/PoringVillage.txt#94 (select)
+- "Cancel"
++ ""
+#: npc/re/instances/PoringVillage.txt#95 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#96 (mes)
+- "Now I'm looking for the entrance, please talk to me again after it's totally open."
++ ""
+#: npc/re/instances/PoringVillage.txt#97 (mes)
+- "An unknown error occurred."
++ ""
+#: npc/re/instances/PoringVillage.txt#98 (mes)
+- "^ff0000Time's crack is not created yet.^000000"
++ ""
+#: npc/re/instances/PoringVillage.txt#105 (npctalk)
+- "Emily: Hey, there! May I talk to you for a minute?"
++ ""
+#: npc/re/instances/PoringVillage.txt#109 (atrib)
+- "1@begi"
++ ""
+#: npc/re/instances/PoringVillage.txt#112 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#113 (mes)
+- "Let's go forward."
++ ""
+#: npc/re/instances/PoringVillage.txt#114 (npctalk)
+- "Emily: So.. is this Poring Village?"
++ ""
+#: npc/re/instances/PoringVillage.txt#115 (npctalk)
+- "Emily: OK. Let's go!"
++ ""
+#: npc/re/instances/PoringVillage.txt#120 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#121 (mes)
+- "I'm going to start slowly now..."
++ ""
+#: npc/re/instances/PoringVillage.txt#122 (npctalk)
+- "Emily: Hmmm. It seems they made barriers not to let us go easily."
++ ""
+#: npc/re/instances/PoringVillage.txt#123 (npctalk)
+- "Emily: I'm quite sure Poring gathered a lot of treasure somewhere."
++ ""
+#: npc/re/instances/PoringVillage.txt#125 (npctalk)
+- "Emily: What is it saying?"
++ ""
+#: npc/re/instances/PoringVillage.txt#126 (npctalk)
+- "Emily: It sounds someone is rushing here... "
++ ""
+#: npc/re/instances/PoringVillage.txt#128 (npctalk)
+- "Emily: Well... OK. They don't seem very friendly. Quick, hide!"
++ ""
+#: npc/re/instances/PoringVillage.txt#129 (npctalk)
+- "Emily: Oooops. Can't you hide? Well..... Cheer up!"
++ ""
+#: npc/re/instances/PoringVillage.txt#141 (atrib)
+- "poring_village_1"
++ ""
+#: npc/re/instances/PoringVillage.txt#142 (atrib)
+- "::OnMobDead"
++ ""
+#: npc/re/instances/PoringVillage.txt#224 (atrib)
+- "poring_village_2"
++ ""
+#: npc/re/instances/PoringVillage.txt#225 (atrib)
+- "::OnMobDead"
++ ""
+#: npc/re/instances/PoringVillage.txt#390 (atrib)
+- "poring_village_3"
++ ""
+#: npc/re/instances/PoringVillage.txt#391 (atrib)
+- "::OnMobDead"
++ ""
+#: npc/re/instances/PoringVillage.txt#491 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#492 (mes)
+- "You can have all of the items you find in this dungeon. I already have some."
++ ""
+#: npc/re/instances/PoringVillage.txt#493 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#494 (mes)
+- "Ah, I found some items. Let me give you one of them. Just to celebrate your first visit!"
++ ""
+#: npc/re/instances/PoringVillage.txt#495 (mes)
+- "[Emily]"
++ ""
+#: npc/re/instances/PoringVillage.txt#496 (mes)
+- "I don't need this novice box. You can take it. Now, let's go out side!"
++ ""

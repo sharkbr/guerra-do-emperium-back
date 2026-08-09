@@ -1,0 +1,5685 @@
+# Catalogo de traducao PT-BR - grupo "crescente"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/EddaHalfMoonInTheDaylight.txt  (1891 textos)
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#3 (mes)
+- "Sorry. I am busy at the moment."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#4 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#5 (mes)
+- "May Freyja's blessing be with you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#6 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#7 (mes)
+- "Adventurer, you came. Thank you so much for taking the time while you are busy."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#8 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#9 (mes)
+- "I asked to meet you like this because I have something to ask of the adventurer."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#10 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#11 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#12 (mes)
+- "If it's a long request...did anything happen to the Pope?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#13 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#14 (mes)
+- "First of all, forgive me for giving you the request."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#15 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#16 (mes)
+- "Regarding the Pope, it is strictly forbidden to make any public announcement except that it is permitted to be revealed in the temple. It is a felony punishment for anyone who speaks or hears."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#17 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#18 (mes)
+- "However, even if this is the situation and the adventurer sees me as a reliable person, listen to what I have to say from now on, and whether you accept the request or not, you must keep today's dialogue absolutely confidential."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#19 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#20 (mes)
+- "Do you understand?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#21 (select)
+- "I don't really know."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#22 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#23 (mes)
+- "After all, I think you are trustworthy, so I will trust you and tell you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#24 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#25 (mes)
+- "As the adventurer speculates, a small problem recently occurred with the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#26 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#27 (mes)
+- "^0000cdPope's sleeping time^000000 is abnormal, and it is increasing more and more."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#28 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#29 (mes)
+- "At first, she started to go to bed early in the evening, then she started to get up much later in the morning, and now she goes to bed more often."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#30 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#31 (mes)
+- "Right now, she's still asleep."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#32 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#33 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#34 (mes)
+- "Is there something wrong with her health?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#35 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#36 (mes)
+- "It's not like that. We also tried all kinds of tests, thinking that the Pope's health might have been abnormal, but the physical condition was extremely good except for falling asleep all the time."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#37 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#38 (mes)
+- "But..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#39 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#40 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#41 (mes)
+- "But?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#42 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#43 (mes)
+- "After waking up, she has a sad expression, often immersed in other thoughts, and shows a loss of concentration. And she just goes back to sleep."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#44 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#45 (mes)
+- "As the situation continues like this, words of mouth are starting to spread out little by little even inside the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#46 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#47 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#48 (mes)
+- "If it's not her health, what is the problem?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#49 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#50 (mes)
+- "It must be a psychological issue. In my opinion, it seems to be connected to what she sees in her ^0000cdDreams^000000."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#51 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#52 (mes)
+- "Just once, she woke up and asked about her ^0000cdbrother Luwmin^000000."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#53 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#54 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#55 (mes)
+- "So the Pope has a family...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#56 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#57 (mes)
+- "Yes. However, it is a matter of our religion that before coming to the temple and becoming a Pope, everything must be washed away and forgotten."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#58 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#59 (mes)
+- "This includes any connection to families."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#60 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#61 (mes)
+- "It is a once in a life chance: born as a child of choice and entering the temple to be reborn as a body to enshrine the goddess."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#62 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#63 (mes)
+- "So, officially, the Pope has no secular family."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#64 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#65 (mes)
+- "When the Pope, who knows that fact, asks about her family's affairs after dreaming, it means she's seeing something in her dreams."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#66 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#67 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#68 (mes)
+- "But it's just a dream, isn't it?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#69 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#70 (mes)
+- "Yes, it's just a dream, of course, but I don't see it that way. And that's why we enlisted adventurers."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#71 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#72 (mes)
+- "The Pope is not allowed to touch anyone in the temple, and if someone had to approach the Pope, this person would have to bribe someone within the temple or use another method."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#73 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#74 (mes)
+- "However, that method is rather unlikely due to the high probability of getting caught."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#75 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#76 (mes)
+- "The only way to get in touch without getting anyone else's suspicions is to dream. It seems that someone is breaking through the surveillance and interfering with the Pope's dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#77 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#78 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#79 (mes)
+- "Is that possible?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#80 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#81 (mes)
+- "It cannot be confirmed, but it is possible."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#82 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#83 (mes)
+- "And there is one, someone who has doubts."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#84 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#85 (mes)
+- "The Pope's ^0000cdtwin brother^000000, who was sealed in ice by ^0000ffKthullanax^000000 in the depths of the ^0000ffIce Cave^000000."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#86 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#87 (mes)
+- "According to a recent investigation report, it was due to the influence of Kthullanax that it was given a weak magical power."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#88 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#89 (mes)
+- "In one instance, there must be a special connection as the twins born at one day and at one o'clock."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#90 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#91 (mes)
+- "If somehow, through a dream, consciousness came into contact with the Pope, it would be possible to intervene in everything about the Pope through a dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#92 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#93 (mes)
+- "In the unconscious way."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#94 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#95 (mes)
+- "As the current Pope's sleep time is getting slower, it is speculated that someone is trying to hold onto her or that the Pope does not want to wake herself up."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#96 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#97 (mes)
+- "So I hope you can get into the Pope's dream and see what's going on, and if you find any problems, you can solve them."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#98 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#99 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#100 (mes)
+- "But how do you get into someone else's dream?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#101 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#102 (mes)
+- "It is possible through a ^0000cdspecial device^000000 that crosses the dreams."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#103 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#104 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#105 (mes)
+- "But why do I have to go, not the temple officials?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#106 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#107 (mes)
+- "I can't give you more details, but the situation in Arunafelz is not very good, especially inside the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#108 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#109 (mes)
+- "It is a situation in which the current state of the Pope may be politically exploited."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#110 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#111 (mes)
+- "That's why the Pope secretly enlisted the adventurer after trying to find someone who was open to both sides and was reliable."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#112 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#113 (mes)
+- "I was inevitably asked to do this because I had to keep my position and take care of the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#114 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#115 (mes)
+- "The Pope is Arunafelz's hope and dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#116 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#117 (mes)
+- "If her dreaming duration continually increase, then one day she won't wake up and sleep forever..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#118 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#119 (mes)
+- "Protect the Pope in your dreams and go as far as possible to find out what's going on."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#120 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#121 (mes)
+- "However, as it is a dream, I do not know what there might be. No one knows what the Pope will show or how she will react."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#122 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#123 (mes)
+- "Maybe it's really dangerous. So please be careful."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#124 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#125 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#126 (mes)
+- "Okay."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#127 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#128 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#129 (mes)
+- "Would you like to enter her dream right now? Or do you need time to prepare?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#130 (select)
+- "Let me do some preparations."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#131 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#132 (mes)
+- "Okay. Then, please prepare yourself and speak to me again when you are ready to walk your dream path."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#133 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#134 (mes)
+- "Adventurer, what was the Pope's dream state like?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#135 (mes)
+- "- You describe the dream of the Pope and Luwmin in detail -"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#136 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#137 (mes)
+- "That's bizzare. So you found out that her dream was due to her anxiety in daily life?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#138 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#139 (mes)
+- "I'm sure she came to her senses."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#140 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#141 (mes)
+- "Adventurer, do you mind if I were to ask for another favour?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#142 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#143 (mes)
+- "Could you accompany the Pope in her dream again? She...needs company."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#144 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#145 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#146 (mes)
+- "Sure. I've also promised that to the Pope herself."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#147 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#148 (mes)
+- "Thank you very much. She is haunted by her inner demons..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#149 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#150 (mes)
+- "As for today, it's time for you to relax comfortably."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#151 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#152 (mes)
+- "...I don't think that this is right."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#153 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#154 (mes)
+- "You should form a party first before we proceed any further."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#155 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#156 (mes)
+- "I need your help."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#157 (mes)
+- "Recently, the Pope began to have long dreams. And they got longer as days went by."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#158 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#159 (mes)
+- "Maybe by entering her dream, we could identify the cause behind it and resolve it safely."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#160 (select)
+- "I will enter the Pope's dreams. "
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#161 (select)
+- "Cancel"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#162 (atrib)
+- "Edda do Quarto Crescente"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#163 (mes)
+- "[Niren]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#164 (mes)
+- "The Pope has yet to fall into slumber."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#165 (mes)
+- "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#166 (mes)
+- "[Dream Path]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#167 (mes)
+- "The crack in time is not safe enough to pass back and forth. Please come back again when the after effect timer has passed."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#168 (mes)
+- "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#169 (mes)
+- "[Dream Path]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#170 (mes)
+- "Only party leaders may enter."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#171 (mes)
+- "[Dream Path]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#172 (mes)
+- "Hello, I am a pathway to dreams. How can I help you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#173 (select)
+- "Let me enter your dreams."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#174 (select)
+- "Cancel"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#175 (mes)
+- "[Dream Path]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#176 (mes)
+- "Okay, I got it. Please come back again if you change your mind."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#177 (mes)
+- "[Dream Path]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#178 (mes)
+- "Only party leaders may enter."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#179 (atrib)
+- "Edda do Quarto Crescente"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#180 (mes)
+- "The passage is not activated yet."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#181 (mes)
+- "An unknown error has occurred."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#182 (mes)
+- "[Dream Path]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#183 (mes)
+- "I will open my dreams."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#184 (mes)
+- "I hope you have a pleasant dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#190 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#191 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#192 (mes)
+- ".... Niren?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#193 (npctalk)
+- ".... Niren?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#194 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#195 (mes)
+- "Niren ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#196 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#197 (mes)
+- "I can't find Tilibi."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#198 (mes)
+- "It is too ... dark here ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#199 (npctalk)
+- "I can't see anything ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#200 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#201 (mes)
+- "Niren ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#202 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#203 (mes)
+- ".... Where are you ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#204 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#205 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#206 (mes)
+- "Pope, I'm here for you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#207 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#208 (mes)
+- "..........."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#209 (mes)
+- "..........."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#210 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#211 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#212 (mes)
+- "Pope, please calm down. I have been sent by Niren."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#213 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#214 (mes)
+- "Who ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#215 (npctalk)
+- "By Niren ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#216 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#217 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#218 (mes)
+- "I am the adventurer, "
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#219 (mes)
+- "."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#220 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#222 (mes)
+- "?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#223 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#224 (mes)
+- "Niren ... did she send you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#225 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#226 (mes)
+- "Where is Niren?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#227 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#228 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#229 (mes)
+- "Niren has been busy for a while and sent me instead."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#230 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#231 (mes)
+- "Yeah ... I remember now. Adventurer ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#232 (npctalk)
+- "I remember ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#233 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#234 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#235 (mes)
+- "What were you doing?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#236 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#237 (mes)
+- "Tilibi ... is gone. No matter how much I searched..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#238 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#239 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#240 (mes)
+- "Who is Tilibi?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#241 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#242 (mes)
+- "Niren gave the doll to me. I had it just a little while ago."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#243 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#244 (mes)
+- "I think I lost the doll here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#245 (npctalk)
+- "Where did you go ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#246 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#247 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#248 (mes)
+- "Let's find it."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#249 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#250 (mes)
+- "No, it's too late now.."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#251 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#252 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#253 (mes)
+- "It's okay. You'll be able to find it."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#254 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#255 (mes)
+- "No ... I have a promise."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#256 (mes)
+- "I have someone to meet."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#257 (npctalk)
+- "I am late."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#258 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#259 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#260 (mes)
+- "Promise? Is it here?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#261 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#262 (mes)
+- "It's outside of the temple ... But it does not look like Tilibi."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#263 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#264 (mes)
+- "It's too late to find Tilibi."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#265 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#266 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#267 (mes)
+- "Tilbi does not seem to be here, so how about looking for it elsewhere?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#268 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#269 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#270 (mes)
+- "Let's find it together."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#271 (cutin)
+- "POP_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#272 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#273 (mes)
+- "... okay."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#274 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#275 (mes)
+- "Your name, what was it again?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#276 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#277 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#279 (mes)
+- "."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#280 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#281 (mes)
+- "Come on, let us go together."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#283 (atrib)
+- "1@pop1"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#284 (atrib)
+- "1@pop2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#285 (atrib)
+- "1@pop3"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#286 (npctalk)
+- "Head south..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#288 (mes)
+- "[Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#289 (mes)
+- "Your Holiness."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#290 (npctalk)
+- "Your Holiness"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#291 (npctalk)
+- "Priest#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#292 (mes)
+- "[Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#293 (mes)
+- "The Pope has arrived."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#294 (npctalk)
+- "The Pope has arrived."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#295 (npctalk)
+- "Priest#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#296 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#297 (mes)
+- "We have been waiting."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#298 (npctalk)
+- "We have been waiting."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#299 (npctalk)
+- "Devotee#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#300 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#301 (mes)
+- "It is also a blasphemy of Freyja to not honour one's time. Please act with discretion."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#302 (npctalk)
+- "It is also a blasphemy of Freyja to not honour one's time. Please act with discretion."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#303 (npctalk)
+- "Devotee#1hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#304 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#305 (mes)
+- "Pope, please behave yourself in public."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#306 (npctalk)
+- "Pope, please behave yourself in public."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#307 (npctalk)
+- "Devotee#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#308 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#309 (mes)
+- "What a disrespect to the Pope! Take a look at yourself!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#310 (npctalk)
+- "What a disrespect to the Pope! Take a look at yourself!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#311 (npctalk)
+- "Devotee#1hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#312 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#313 (mes)
+- "The Pope is divine! Let's keep that ideal. Don't speak up!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#314 (npctalk)
+- "The Pope is divine! Let's keep that ideal. Don't speak up!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#315 (npctalk)
+- "Devotee#1hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#316 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#317 (mes)
+- "The pope is a vessel for the Goddess, who will one day rise. Isn't it natural that the Avatar should be clean?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#318 (npctalk)
+- "The pope is a vessel for the Goddess, who will one day rise. Isn't it natural that the Avatar should be clean?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#319 (npctalk)
+- "Devotee#1hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#320 (mes)
+- "[Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#321 (mes)
+- "Stop the ruckus! The Pope is the one who gives us joy and hope, just by her being!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#322 (npctalk)
+- "Stop the ruckus! The Pope is the one who gives us joy and hope, just by her being!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#323 (npctalk)
+- "Priest#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#324 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#325 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#326 (mes)
+- "..... I, I am.... the Pope..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#327 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#328 (mes)
+- "..... I have to go...."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#329 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#330 (mes)
+- "........ got promise..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#331 (mes)
+- "to keep............"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#332 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#333 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#334 (mes)
+- "A promise? The Pope should not leave the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#335 (npctalk)
+- "A promise? The Pope should not leave the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#336 (npctalk)
+- "Devotee#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#337 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#338 (mes)
+- "She should not be in contact with outsiders!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#339 (npctalk)
+- "Outsiders are filthy"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#340 (npctalk)
+- "Priest#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#341 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#342 (mes)
+- "Pope can only meet people who are authorized in the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#343 (npctalk)
+- "Pope can only meet people who are authorized in the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#344 (npctalk)
+- "Devotee#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#345 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#346 (mes)
+- "The Pope will need to act according to our objectives."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#347 (npctalk)
+- "The Pope will need to act according to our objectives."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#348 (npctalk)
+- "Devotee#1hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#349 (mes)
+- "[Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#350 (mes)
+- "The Pope's actions are none of your concern."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#351 (npctalk)
+- "The Pope's actions are none of your concern."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#352 (npctalk)
+- "Priest#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#353 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#354 (mes)
+- "Step down if you disagree."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#355 (npctalk)
+- "Step down if you disagree."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#356 (npctalk)
+- "Devotee#1hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#357 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#358 (mes)
+- "Quiet! You dare to disobey us?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#359 (npctalk)
+- "Quiet! You dare to disobey us?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#360 (npctalk)
+- "Devotee#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#361 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#362 (mes)
+- "Please listen to me. You should stop whatever you're doing!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#363 (npctalk)
+- "Please listen to me. You should stop whatever you're doing!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#364 (npctalk)
+- "Priest#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#365 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#366 (mes)
+- "However, it is true that the current Pope lacks qualities."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#367 (npctalk)
+- "However, it is true that the current Pope lacks qualities."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#368 (npctalk)
+- "Priest#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#369 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#370 (mes)
+- "If she's not enough, we can swap her out. Isn't there another perfect candidate?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#371 (npctalk)
+- "If she's not enough, we can swap her out. Isn't there another perfect candidate?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#372 (npctalk)
+- "Devotee#1hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#373 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#374 (mes)
+- "The second Avatar, born at the same time...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#375 (npctalk)
+- "The second Avatar, born at the same time...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#376 (npctalk)
+- "Devotee#1hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#377 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#378 (mes)
+- "We may have made the wrong choice."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#379 (npctalk)
+- "We may have made the wrong choice."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#380 (npctalk)
+- "Devotee#1hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#381 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#382 (mes)
+- "If I had to change my choice right now...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#383 (npctalk)
+- "If I had to change my choice right now...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#384 (npctalk)
+- "Devotee#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#385 (mes)
+- "[Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#386 (mes)
+- "The imperfect Pope needs to be replaced."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#387 (npctalk)
+- "The imperfect Pope needs to be replaced."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#388 (npctalk)
+- "Priest#1hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#389 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#390 (mes)
+- "I need a Pope who listens to my concerns."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#391 (npctalk)
+- "I need a Pope who listens to my concerns."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#392 (npctalk)
+- "Devotee#1hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#393 (mes)
+- "[Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#394 (mes)
+- "We don't need the current Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#395 (npctalk)
+- "We don't need the current Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#396 (npctalk)
+- "Priest#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#397 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#398 (mes)
+- "Don't stand still Pope, and make a stand!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#399 (npctalk)
+- "Don't stand still Pope, and make a stand!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#400 (npctalk)
+- "Devotee#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#401 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#402 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#403 (mes)
+- "Pope, Pope! Get the hang of it!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#406 (atrib)
+- "Pope#1hmoon09"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#407 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#408 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#409 (mes)
+- ".... I... I am... I..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#410 (npctalk)
+- ".... I... I am... I..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#411 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#412 (mes)
+- ".......... I am not needed....?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#413 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#414 (mes)
+- "What am I... to these people?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#415 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#416 (mes)
+- "A sacred vessel of the Goddess."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#417 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#418 (mes)
+- "An imperfect being."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#419 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#420 (mes)
+- "I am incomplete."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#421 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#422 (mes)
+- "I was the result of a wrong decision."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#423 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#424 (mes)
+- "I didn't have any qualifications from the beginning."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#425 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#426 (mes)
+- "This is not my seat."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#427 (npctalk)
+- "This is not my seat."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#428 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#429 (mes)
+- "But this is not what I want."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#430 (npctalk)
+- "But this is not what I want."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#431 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#432 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#433 (mes)
+- "Pope, calm down. This is all a dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#434 (mes)
+- "Your anxiety distorts the dream. Outside the dream, everyone awaits you as the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#435 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#436 (mes)
+- "Dream...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#437 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#438 (mes)
+- "But... I... I've made a promise."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#439 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#440 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#441 (mes)
+- "This is a dream!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#442 (atrib)
+- "Pope#1hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#443 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#444 (mes)
+- "I have an appointment. I have to meet."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#445 (mes)
+- "Come on, we have to get out of here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#446 (npctalk)
+- "I have an appointment. I have to meet. Come on, we have to get out of here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#447 (npctalk)
+- "Pope#1hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#448 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#449 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#450 (mes)
+- "Pope! Where are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#451 (npctalk)
+- "Pope! Where are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#464 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#465 (mes)
+- "Pope, don't leave your seat!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#466 (npctalk)
+- "Pope, don't leave your seat!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#467 (npctalk)
+- "Devotee#1hmoon16"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#468 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#469 (mes)
+- "This is where the Pope should remain!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#470 (npctalk)
+- "This is where the Pope should remain!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#471 (npctalk)
+- "Devotee#1hmoon12"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#472 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#473 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#474 (mes)
+- "Nobody actually needs me!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#475 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#476 (mes)
+- "Nobody treats me properly!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#477 (atrib)
+- "Pope#1hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#478 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#479 (mes)
+- "I do not have a place here!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#480 (npctalk)
+- "I do not have a place here!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#481 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#498 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#499 (mes)
+- "Pope! Please remain seated, for your own good!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#500 (npctalk)
+- "Pope! Please remain seated, for your own good!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#501 (npctalk)
+- "Devotee#1hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#502 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#503 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#504 (mes)
+- "I really have to go..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#505 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#506 (mes)
+- "All of you, restrain the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#507 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#508 (mes)
+- "Adventurer, please....help me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#509 (cutin)
+- "pop_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#510 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#511 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#512 (mes)
+- "Certainly, Pope. Please stand behind me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#515 (npctalk)
+- "We are here for a greater purpose!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#516 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#531 (npctalk)
+- "We have outnumbered you, adventurer."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#532 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#533 (npctalk)
+- "Stop!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#534 (npctalk)
+- "Guard#1hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#535 (npctalk)
+- "Stop!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#536 (npctalk)
+- "Guard#1hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#543 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#544 (npctalk)
+- "Guard#1hmoon24"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#545 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#546 (npctalk)
+- "Guard#1hmoon25"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#547 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#548 (npctalk)
+- "Guard#1hmoon24"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#549 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#550 (npctalk)
+- "Guard#1hmoon25"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#553 (npctalk)
+- "Halt!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#554 (npctalk)
+- "Guard#1hmoon23"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#555 (npctalk)
+- "Halt!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#556 (npctalk)
+- "Guard#1hmoon26"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#557 (npctalk)
+- "Halt!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#558 (npctalk)
+- "Guard#1hmoon23"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#559 (npctalk)
+- "Halt!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#560 (npctalk)
+- "Guard#1hmoon26"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#563 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#564 (npctalk)
+- "Guard#1hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#565 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#566 (npctalk)
+- "Guard#1hmoon30"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#567 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#568 (npctalk)
+- "Guard#1hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#569 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#570 (npctalk)
+- "Guard#1hmoon30"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#573 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#574 (npctalk)
+- "Guard#1hmoon28"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#575 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#576 (npctalk)
+- "Guard#1hmoon29"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#577 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#578 (npctalk)
+- "Guard#1hmoon28"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#579 (npctalk)
+- "Halt!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#580 (npctalk)
+- "Guard#1hmoon29"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#581 (npctalk)
+- "You shall not leave the temple!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#582 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#583 (npctalk)
+- "You shall not leave the temple!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#584 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#585 (npctalk)
+- "Please step back. Otherwise, we will exercise force."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#586 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#587 (npctalk)
+- "Please step back. Otherwise, we will exercise force."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#588 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#589 (npctalk)
+- "Three !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#590 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#591 (npctalk)
+- "Three !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#592 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#593 (npctalk)
+- "Two !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#594 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#595 (npctalk)
+- "Two !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#596 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#597 (npctalk)
+- "One !!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#598 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#599 (npctalk)
+- "One !!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#600 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#603 (npctalk)
+- "From now on, the adventurer is considered our enemy!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#604 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#607 (npctalk)
+- "Protect the Pope and eliminate the adventurer!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#608 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#609 (npctalk)
+- "Protect the Pope and eliminate the adventurer!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#610 (npctalk)
+- "Guard#1hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#611 (npctalk)
+- "Protect the Pope and eliminate the adventurer!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#612 (npctalk)
+- "Guard#1hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#613 (npctalk)
+- "Protect the Pope and eliminate the adventurer!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#614 (npctalk)
+- "Guard#1hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#615 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#616 (npctalk)
+- "Guard#1hmoon23"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#617 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#618 (npctalk)
+- "Guard#1hmoon24"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#619 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#620 (npctalk)
+- "Guard#1hmoon25"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#621 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#622 (npctalk)
+- "Guard#1hmoon26"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#623 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#624 (npctalk)
+- "Guard#1hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#625 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#626 (npctalk)
+- "Guard#1hmoon28"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#627 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#628 (npctalk)
+- "Guard#1hmoon29"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#629 (npctalk)
+- "Aye Aye Sir !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#630 (npctalk)
+- "Guard#1hmoon30"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#644 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#674 (npctalk)
+- "It's aready too late, you know."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#675 (npctalk)
+- "Come on, we need to get out of here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#678 (mes)
+- "[???]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#679 (mes)
+- "Oh, now is my chance."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#680 (npctalk)
+- "I was waiting."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#681 (npctalk)
+- "Luwmin#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#682 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#683 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#684 (mes)
+- "He has white hair..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#685 (mes)
+- "A boy with white hair and a pale complexion appeared."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#687 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#688 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#689 (mes)
+- "Brother."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#691 (mes)
+- "[This boy seems to be Luwmin that High Priestess Niren mentioned.]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#692 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#693 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#694 (mes)
+- "I heard you crying, hence I came here to check on you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#695 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#696 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#697 (mes)
+- "I couldn't sneak out."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#698 (cutin)
+- "loo_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#699 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#700 (mes)
+- "Are you okay? What happened?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#701 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#702 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#703 (mes)
+- "Yes. I'm okay now. The adventurers helped me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#704 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#705 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#706 (mes)
+- "Thank you for helping my sister. I'll take it from here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#707 (npctalk)
+- "Just watch from here onwards."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#708 (npctalk)
+- "Luwmin#1hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#709 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#710 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#711 (mes)
+- "I'm in charge of the Pope's welfare until she returns back here safely."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#712 (mes)
+- "I will accompany her."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#714 (cutin)
+- "loo_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#715 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#716 (mes)
+- "......"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#717 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#718 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#719 (mes)
+- "Let's go."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#720 (npctalk)
+- "Brother..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#721 (npctalk)
+- "Pope#1hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#722 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#723 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#724 (mes)
+- "These clothes attract attention. Lets get you a change of attire."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#725 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#726 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#727 (mes)
+- "Changing clothes ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#728 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#729 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#730 (mes)
+- "It's what normal children usually...wear"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#731 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#732 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#733 (mes)
+- "Ordinary clothes?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#734 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#735 (mes)
+- "Okay."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#736 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#738 (cutin)
+- "pops_bug"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#739 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#740 (mes)
+- "Fuzzy ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#741 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#742 (mes)
+- "This seems rather strange..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#743 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#744 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#745 (mes)
+- "No, not the least."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#746 (cutin)
+- "Loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#747 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#748 (mes)
+- "It's really pretty."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#749 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#750 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#751 (mes)
+- "That is fortunate."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#752 (cutin)
+- "Loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#753 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#754 (mes)
+- "Let's go now. Mom and Dad are waiting."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#755 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#756 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#757 (mes)
+- "Yes."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#758 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#769 (npctalk)
+- "Where is it ... Where is it?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#770 (npctalk)
+- "Luwmin#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#772 (npctalk)
+- "Zhed? Then I'll be safe here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#773 (npctalk)
+- "It's too late. We have to hurry."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#774 (npctalk)
+- "Luwmin#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#776 (npctalk)
+- "Let's go brother."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#779 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#780 (mes)
+- "This is the residence of the Priest right?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#781 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#782 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#783 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#784 (mes)
+- "I will survey the parameter of this guy's residence."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#787 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#788 (mes)
+- "Halt! Who goes there?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#789 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#790 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#791 (mes)
+- "We do not mean harm."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#792 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#793 (mes)
+- "Oh yeah? Identify yourself!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#794 (npctalk)
+- "Who is it here!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#795 (npctalk)
+- "Guard#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#796 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#797 (mes)
+- "We have intruders spotted in the garden!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#799 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#800 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#801 (mes)
+- "D-amn, what's this noise here. What's going on..?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#802 (cutin)
+- "RA_GMAN2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#803 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#804 (mes)
+- "High Priest, your enemes have sent children assassins to harm you!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#805 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#806 (mes)
+- "Intuders have broken into the mansion compound!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#807 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#808 (mes)
+- "We will handle this situation."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#809 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#810 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#811 (mes)
+- "P-Pope, are you not the Pope?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#812 (npctalk)
+- "P-Pope, are you not the Pope?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#813 (npctalk)
+- "High Priest Zhed#2hmoon"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#814 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#815 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#816 (mes)
+- "Ah ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#817 (npctalk)
+- "Ah ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#818 (npctalk)
+- "Pope#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#819 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#820 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#821 (mes)
+- "Where did you come from? The temple? What did you do to the Pope?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#822 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#823 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#824 (mes)
+- "I am escorting the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#826 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#827 (mes)
+- "You are an... adventurer?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#828 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#829 (mes)
+- "Still, the Pope should not have left the temple. We have strict protocols."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#830 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#831 (mes)
+- "In many cases, the fanatical worshippers takes things into their hands... Now before it is too late, please return to the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#832 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#833 (mes)
+- "Niren would not have wanted this.."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#834 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#835 (mes)
+- "If something were to happen to the Pope, it won't just be her problem as an individual. It will be a problem of all citizens of Arunafeltz!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#836 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#837 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#838 (mes)
+- "Am I just a vessel of the Goddess?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#839 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#840 (mes)
+- "Are you treating me as a mere vessel?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#841 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#842 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#843 (mes)
+- "Citizens of Arunafeltz find comfort, inspiration and hope in the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#844 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#845 (mes)
+- "It is the duty of us priests to ensure the safety of the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#846 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#847 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#848 (mes)
+- "But Zhed ... For a while, even for a while."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#849 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#850 (mes)
+- "Please help me. Please understand..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#851 (npctalk)
+- "I'll ask you again..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#852 (npctalk)
+- "Pope#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#853 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#854 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#855 (mes)
+- "I shall not put your safety at any risk. Allow me to escort you back to the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#856 (cutin)
+- "LOO_ANG"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#857 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#858 (mes)
+- "You are the real danger here... Imprisoning a little girl to some scary temple..!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#859 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#860 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#861 (mes)
+- "This face...and eyes. Are you Luwmin?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#862 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#863 (mes)
+- "H-How... did you get out?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#864 (npctalk)
+- "H-How... did you get out?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#865 (npctalk)
+- "High Priest Zhed#2hmoon"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#866 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#867 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#868 (mes)
+- "I ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#869 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#870 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#871 (mes)
+- "Guards, sieze that boy!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#872 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#873 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#874 (mes)
+- "It's best for us to scatter here to lose them. Let's regroup at the village."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#875 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#877 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#878 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#879 (mes)
+- "This is just like..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#880 (npctalk)
+- "This is just like..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#881 (npctalk)
+- "Pope#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#882 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#883 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#884 (mes)
+- "Pope, was that boy there..?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#885 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#886 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#887 (mes)
+- "The person..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#888 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#893 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#894 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#895 (mes)
+- "Pope, did Niren approve of you sneaking out of the temple?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#896 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#897 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#898 (mes)
+- "Zhed! I am not relinquishing my duties. It's just that for a short while... Please! just for a short while..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#899 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#900 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#901 (mes)
+- "We cannot waste any more time being outside the temple compounds. I will take you on personally."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#902 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#903 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#904 (mes)
+- "I hate it."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#905 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#906 (mes)
+- "[High Priest Zhed]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#907 (mes)
+- "Pope, you should go."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#908 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#909 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#910 (mes)
+- "I hate it! I will not go !!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#911 (npctalk)
+- "I hate it!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#912 (npctalk)
+- "Pope#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#913 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#920 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#921 (mes)
+- "The Pope is over here!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#922 (npctalk)
+- "Pope is here"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#923 (npctalk)
+- "Guard#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#924 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#925 (mes)
+- "Pope, please do not resist. We're just doing our job."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#926 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#927 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#928 (mes)
+- "No, I will not go now!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#929 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#930 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#931 (mes)
+- "Pope! You must go together!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#932 (npctalk)
+- "Pope! You have to go together!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#933 (npctalk)
+- "Guard#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#934 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#935 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#936 (mes)
+- "I hate, hate it!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#937 (npctalk)
+- "I hate, hate it!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#938 (npctalk)
+- "Pope#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#940 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#941 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#942 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#943 (mes)
+- "Let the Pope leave peacefully. Otherwise, I will exercise force."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#944 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#945 (mes)
+- "Submit! You are just a mere adventurer!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#946 (npctalk)
+- "You are just a mere adventurer!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#947 (npctalk)
+- "Guard#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#948 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#949 (mes)
+- "Outsiders should not bother about our business!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#950 (npctalk)
+- "Outsiders should not bother about our business!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#951 (npctalk)
+- "Guard#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#952 (npctalk)
+- "All of you! Shut up!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#953 (npctalk)
+- "Guard#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#954 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#955 (mes)
+- "The adventurer is a hostle target. Eliminate him with prejudice!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#956 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#957 (mes)
+- "Remember, don't hurt the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#958 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#959 (mes)
+- "Ready?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#960 (mes)
+- "[Guards]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#961 (mes)
+- "Halt !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#962 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#963 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#964 (mes)
+- "Pope, come here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#965 (npctalk)
+- "Halt !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#966 (npctalk)
+- "Guard#2hmoon0"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#974 (npctalk)
+- "Thank you so much."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#975 (npctalk)
+- "Pope#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#977 (npctalk)
+- "Huh? I'll be waiting for you there."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#978 (npctalk)
+- "Pope#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#980 (npctalk)
+- "Don't worry. I'm fine."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#981 (npctalk)
+- "Pope#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#987 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#988 (mes)
+- "Why were you so late?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#989 (npctalk)
+- "Woof!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#990 (npctalk)
+- "Puppy#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#991 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#992 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#993 (mes)
+- "Puppy?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#994 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#995 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#996 (mes)
+- "Yea, I found it wandering without an owner..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#997 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#998 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#999 (mes)
+- "Cute!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1000 (cutin)
+- "LOO_SMI"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1001 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1002 (mes)
+- "I thought that perhaps you might be interested in raising one?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1003 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1004 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1005 (mes)
+- "Certainly! Shall we raise him together as our pet?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1006 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1007 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1008 (mes)
+- "Let's get mom and dad to approve."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1009 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1010 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1011 (mes)
+- "Right!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1012 (npctalk)
+- "What is your name?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1013 (npctalk)
+- "Pope#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1014 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1016 (mes)
+- "[Friend]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1017 (mes)
+- "Are you coming?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1018 (npctalk)
+- "Are you coming?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1019 (npctalk)
+- "Friend#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1022 (mes)
+- "[Friend]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1023 (mes)
+- "I thought you were not coming today."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1024 (npctalk)
+- "I thought you were not coming today."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1025 (npctalk)
+- "Friend#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1026 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1027 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1028 (mes)
+- "We... were in the middle of something."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1029 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1030 (mes)
+- "[Friend]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1031 (mes)
+- "Since this is a rare opporutnity, let's play together. Then we will visit each other's home~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1032 (mes)
+- "[Friend]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1033 (mes)
+- "Sure, let's do that."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1034 (npctalk)
+- "Sure, let's do that."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1035 (npctalk)
+- "Friend#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1036 (mes)
+- "[Friend]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1037 (mes)
+- "How about we head home first?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1038 (cutin)
+- "pops_lau"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1039 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1040 (mes)
+- "Yes !!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1041 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1042 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1043 (mes)
+- "I have to hurry. Mom and dad should be expecting us.."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1044 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1059 (npctalk)
+- "Your dad is making weapons for a living now?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1060 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1061 (npctalk)
+- "Yup. Do you want to see him at work?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1062 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1063 (npctalk)
+- "No ... I'm scared."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1064 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1065 (npctalk)
+- "Well what sort of weapons does he make?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1066 (npctalk)
+- "Luwmin#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1067 (npctalk)
+- "I think it's some common swords and the likes of it, for the guards."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1068 (npctalk)
+- "Friend#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1069 (npctalk)
+- "That's interesting."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1070 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1071 (npctalk)
+- "Why? You interested in such stuff?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1072 (npctalk)
+- "Friend#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1073 (npctalk)
+- "I really do not know to what say..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1074 (npctalk)
+- "Friend#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1075 (npctalk)
+- "Well if you want to, go ahead."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1076 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1077 (npctalk)
+- "Hey, how about we go the Ra's place next?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1078 (npctalk)
+- "Friend#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1079 (npctalk)
+- "I haven't been there for some time."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1080 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1081 (npctalk)
+- "Hehe. Let's go~."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1082 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1083 (npctalk)
+- "Really? But we just got here...."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1084 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1085 (npctalk)
+- "Kids, don't forget to go home before dusk!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1087 (npctalk)
+- "You guys go ahead. My curfew starts now..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1088 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1089 (npctalk)
+- "It was fun meeting you guys after all this while."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1090 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1091 (npctalk)
+- "Yes. So we'll see you tomorrow."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1092 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1093 (npctalk)
+- "Yup! Tomorrow let's play just like today!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1094 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1095 (npctalk)
+- "Yes !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1096 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1097 (npctalk)
+- "Bye!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1098 (npctalk)
+- "Friend#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1099 (npctalk)
+- "Bye!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1100 (npctalk)
+- "Friend#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1101 (npctalk)
+- "Bye ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1102 (npctalk)
+- "Friend#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1103 (npctalk)
+- "Bye ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1104 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1106 (npctalk)
+- "Let's go guys?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1107 (npctalk)
+- "Luwmin#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1108 (npctalk)
+- "Right!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1109 (npctalk)
+- "Pope#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1122 (npctalk)
+- "Your home is quite clean."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1123 (npctalk)
+- "Isn't it pretty?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1124 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1125 (npctalk)
+- "Yes. It's well maintained."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1126 (npctalk)
+- "Let's play a game while we're here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1127 (npctalk)
+- "Luwmin#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1128 (npctalk)
+- "Good idea!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1129 (npctalk)
+- "Let's play Whack-the-Poring?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1130 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1131 (npctalk)
+- "Or hide-and-seek?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1132 (npctalk)
+- "Friend#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1133 (npctalk)
+- "Let's Role Play!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1134 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1135 (npctalk)
+- "That's more fun than hide-and-seek."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1136 (npctalk)
+- "Friend#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1137 (npctalk)
+- "It's decided!! I shall be the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1138 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1139 (npctalk)
+- "No, I want to be the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1140 (npctalk)
+- "Friend#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1141 (npctalk)
+- "We can only have one Pope..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1142 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1143 (npctalk)
+- "Well, we have other roles like the High Priest, the Guard..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1144 (npctalk)
+- "Friend#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1145 (npctalk)
+- "Both of you can become Popes!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1146 (npctalk)
+- "It's eating time, come and get your delicous food!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1148 (npctalk)
+- "Yeah ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1149 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1150 (npctalk)
+- "How about we just play hide-and-seek tommorow?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1151 (npctalk)
+- "Agreed, it's easier that way~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1152 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1153 (npctalk)
+- "Bye ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1154 (npctalk)
+- "Bye ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1155 (npctalk)
+- "Friend#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1156 (npctalk)
+- "Bye ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1157 (npctalk)
+- "Friend#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1158 (npctalk)
+- "Tomorrow then ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1160 (npctalk)
+- "We will go quickly and have our food !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1161 (npctalk)
+- "Luwmin#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1172 (npctalk)
+- "Brother! Look at that! It looks delicious."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1173 (npctalk)
+- "Do you want to have a little?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1174 (npctalk)
+- "Friend#2hmoon09"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1175 (npctalk)
+- "No, it's okay."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1176 (npctalk)
+- "It's always good to have guests over for a meal."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1177 (npctalk)
+- "Friend#2hmoon09"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1178 (npctalk)
+- "Well ... Still ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1179 (npctalk)
+- "Thank you. I'll eat well."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1180 (npctalk)
+- "Luwmin#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1181 (npctalk)
+- "Brother?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1182 (npctalk)
+- "Oh ~ My hunger has been satisfied ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1183 (npctalk)
+- "Luwmin#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1184 (npctalk)
+- "Yes. Go go and eat dinner."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1185 (npctalk)
+- "Friend#2hmoon09"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1186 (npctalk)
+- "Yes. So we'll see you tomorrow."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1187 (npctalk)
+- "Yeah. - let's meet up again tomorrow! Do not forget to play hide and seek!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1188 (npctalk)
+- "Friend#2hmoon09"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1189 (npctalk)
+- "Yes! And play hide-and-seek!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1190 (npctalk)
+- "Bye ~"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1191 (npctalk)
+- "Friend#2hmoon09"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1192 (npctalk)
+- "Good bye !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1194 (npctalk)
+- "What do we have for this evening?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1195 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1196 (npctalk)
+- "Let's go."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1197 (npctalk)
+- "Luwmin#2hmoon08"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1209 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1210 (mes)
+- "Mom!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1211 (npctalk)
+- "Mom!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1212 (npctalk)
+- "Pope#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1213 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1214 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1215 (mes)
+- "Where did you go? I told you to come back before the meal time."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1216 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1217 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1218 (mes)
+- "I'm sorry. We will come home earlier next time."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1219 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1220 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1221 (mes)
+- "Mom, we brought this little doggy back!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1222 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1223 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1224 (mes)
+- "Cute puppy."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1225 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1226 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1227 (mes)
+- "Could I raise it?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1228 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1229 (mes)
+- "[Dad]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1230 (mes)
+- "I'm not sure if that's a good idea..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1231 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1232 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1233 (mes)
+- "Yeah."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1234 (npctalk)
+- "Yeah."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1235 (npctalk)
+- "Luwmin#2hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1236 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1237 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1238 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1239 (mes)
+- "I wonder if this is the Pope's fantasy - to live a normal life."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1240 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1241 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1242 (mes)
+- "It's a far cry from her daily routines as the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1243 (mes)
+- "[???]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1244 (mes)
+- "There She is."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1245 (npctalk)
+- "There She is."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1246 (npctalk)
+- "High Priest#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1247 (mes)
+- "[???]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1248 (mes)
+- "You are right. That is indeed her.."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1249 (npctalk)
+- "You are right. That is indeed her."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1250 (npctalk)
+- "High Priest#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1251 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1252 (mes)
+- "What's with this noise...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1254 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1255 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1256 (mes)
+- "This search has been fruitful after all."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1257 (npctalk)
+- "This search has been fruitful after all."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1258 (npctalk)
+- "High Priest#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1260 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1261 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1262 (mes)
+- "This is the home of our new Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1263 (npctalk)
+- "This is the home of our new Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1264 (npctalk)
+- "High Priest#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1265 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1267 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1268 (mes)
+- "Behold, the birth of our new Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1279 (npctalk)
+- "You must prevent outsiders from approaching here!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1280 (npctalk)
+- "Devotee#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1281 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1282 (npctalk)
+- "Guard#2hmoon41"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1283 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1284 (npctalk)
+- "Guard#2hmoon42"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1285 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1286 (npctalk)
+- "Guard#2hmoon43"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1287 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1288 (npctalk)
+- "Guard#2hmoon44"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1289 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1290 (npctalk)
+- "Guard#2hmoon45"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1291 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1292 (npctalk)
+- "Guard#2hmoon46"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1293 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1294 (npctalk)
+- "Guard#2hmoon47"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1295 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1296 (npctalk)
+- "Guard#2hmoon48"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1297 (npctalk)
+- "Yes Sir!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1298 (npctalk)
+- "Guard#2hmoon49"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1310 (npctalk)
+- "The Pope, our Glory!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1311 (npctalk)
+- "Devotee#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1312 (mes)
+- "[Villager]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1313 (mes)
+- "Did you just heard?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1314 (npctalk)
+- "Did you just heard?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1315 (npctalk)
+- "Townsfolk#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1316 (mes)
+- "[Villager]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1317 (mes)
+- "To think that the Pope would have been born within our neighborhood!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1318 (npctalk)
+- "To think that the Pope would have been born within our neighborhood!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1319 (npctalk)
+- "Townsfolk#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1321 (mes)
+- "[Villager]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1322 (mes)
+- "What? Pope?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1323 (npctalk)
+- "What? Pope ??"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1324 (npctalk)
+- "Townsfolk#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1326 (mes)
+- "[Villager]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1327 (mes)
+- "We were blessed with such a gift...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1328 (npctalk)
+- "We were blessed with such a gift...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1329 (npctalk)
+- "Townsfolk#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1331 (mes)
+- "[Villager]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1332 (mes)
+- "It seems to be a kid living next to our home. I had some close encounters with her before.... Ahem!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1333 (npctalk)
+- "It seems to be a kid living next to our home. I had some close encounters with her before.... Ahem!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1334 (npctalk)
+- "Townsfolk#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1336 (mes)
+- "[Villager]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1337 (mes)
+- "Pope? Am I dreaming...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1338 (npctalk)
+- "Pope? Am I dreaming...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1339 (npctalk)
+- "Townsfolk#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1341 (npctalk)
+- "This is the house where the new Pope....?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1342 (npctalk)
+- "Townsfolk#2hmoon17"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1343 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1344 (mes)
+- "What is this about?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1345 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1346 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1347 (mes)
+- "I came to find a child who meets the criteria for a new Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1350 (npctalk)
+- "This is the house where the new Pope is from....?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1351 (npctalk)
+- "Townsfolk#2hmoon12"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1352 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1353 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1354 (mes)
+- "Fair skin, white hair, eyes of different colours. There is no doubt."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1355 (npctalk)
+- "Pope, the chosen one hailing from such a tattered neighbourhood?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1356 (npctalk)
+- "Townsfolk#2hmoon23"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1357 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1358 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1359 (mes)
+- "We have waited for this special moment!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1360 (npctalk)
+- "We have waited for this special moment!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1361 (npctalk)
+- "High Priest#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1363 (npctalk)
+- "Without a doubt. She is indeed the Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1364 (npctalk)
+- "Townsfolk#2hmoon14"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1365 (mes)
+- "[Dad]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1366 (mes)
+- "Pope? Our kids are just kids."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1367 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1368 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1369 (mes)
+- "Whether or not she would be the vessel for the Goddess, it shall be determined in the temple."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1372 (npctalk)
+- "Or, so these are the new candidates?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1373 (npctalk)
+- "Townsfolk#2hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1374 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1375 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1376 (mes)
+- "If she fails, we shall send her back here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1377 (npctalk)
+- "A little louder please, I can't hear what's going on!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1378 (npctalk)
+- "Townsfolk#2hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1379 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1380 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1381 (mes)
+- "These are just ordinary children."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1383 (npctalk)
+- "I can't miss this moment!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1384 (npctalk)
+- "Townsfolk#2hmoon16"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1385 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1386 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1387 (mes)
+- "These children have the same signs?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1388 (npctalk)
+- "These children have the same signs?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1389 (npctalk)
+- "High Priest#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1390 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1391 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1392 (mes)
+- "There wasn't such a precedent before..!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1394 (npctalk)
+- "Make space, I need to see!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1395 (npctalk)
+- "Townsfolk#2hmoon25"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1397 (npctalk)
+- "Praise the birth of a new Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1398 (npctalk)
+- "Townsfolk#2hmoon18"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1399 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1400 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1401 (mes)
+- "Niren? Is that you, Niren? Don't separate me from my family!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1402 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1403 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1404 (mes)
+- "How do you know my...name? Is this Freyja's will?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1405 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1406 (mes)
+- "This girl is undoubtly the true Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1407 (npctalk)
+- "This girl is undoubtly the true Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1408 (npctalk)
+- "High Priest#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1410 (npctalk)
+- "I know that kid! I know !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1411 (npctalk)
+- "Townsfolk#2hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1412 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1413 (mes)
+- "It is Freyja's will, to be reincarnated in such a vessel."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1414 (npctalk)
+- "It is Freyja's will, to be reincarnated in such a vessel."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1415 (npctalk)
+- "High Priest#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1417 (npctalk)
+- "This is a historical moment!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1418 (npctalk)
+- "Townsfolk#2hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1419 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1420 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1421 (mes)
+- "Oh, praise the birth of a new Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1422 (npctalk)
+- "Oh, praise the birth of a new Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1423 (npctalk)
+- "Devotee#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1424 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1425 (npctalk)
+- "Townsfolk#2hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1426 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1427 (npctalk)
+- "Townsfolk#2hmoon12"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1428 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1429 (npctalk)
+- "Townsfolk#2hmoon13"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1430 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1431 (npctalk)
+- "Townsfolk#2hmoon14"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1432 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1433 (npctalk)
+- "Townsfolk#2hmoon15"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1434 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1435 (npctalk)
+- "Townsfolk#2hmoon16"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1436 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1437 (npctalk)
+- "Townsfolk#2hmoon17"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1438 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1439 (npctalk)
+- "Townsfolk#2hmoon18"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1440 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1441 (npctalk)
+- "Townsfolk#2hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1442 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1443 (npctalk)
+- "Townsfolk#2hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1444 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1445 (npctalk)
+- "Townsfolk#2hmoon23"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1446 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1447 (npctalk)
+- "Townsfolk#2hmoon24"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1448 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1449 (npctalk)
+- "Townsfolk#2hmoon25"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1450 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1451 (npctalk)
+- "Townsfolk#2hmoon26"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1452 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1453 (npctalk)
+- "Townsfolk#2hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1454 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1455 (npctalk)
+- "Townsfolk#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1456 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1457 (npctalk)
+- "Townsfolk#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1458 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1459 (npctalk)
+- "Townsfolk#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1460 (npctalk)
+- "Praise the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1461 (npctalk)
+- "Townsfolk#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1463 (npctalk)
+- "Hmmm, this is indeed my fortune to witness such an event!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1464 (npctalk)
+- "Townsfolk#2hmoon15"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1466 (npctalk)
+- "The Pope has finally descended!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1467 (npctalk)
+- "Townsfolk#2hmoon24"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1468 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1469 (mes)
+- "Praise the goddess!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1470 (npctalk)
+- "Praise the goddess!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1471 (npctalk)
+- "Devotee#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1472 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1473 (npctalk)
+- "Townsfolk#2hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1474 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1475 (npctalk)
+- "Townsfolk#2hmoon12"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1476 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1477 (npctalk)
+- "Townsfolk#2hmoon13"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1478 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1479 (npctalk)
+- "Townsfolk#2hmoon14"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1480 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1481 (npctalk)
+- "Townsfolk#2hmoon15"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1482 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1483 (npctalk)
+- "Townsfolk#2hmoon16"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1484 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1485 (npctalk)
+- "Townsfolk#2hmoon17"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1486 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1487 (npctalk)
+- "Townsfolk#2hmoon18"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1488 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1489 (npctalk)
+- "Townsfolk#2hmoon21"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1490 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1491 (npctalk)
+- "Townsfolk#2hmoon22"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1492 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1493 (npctalk)
+- "Townsfolk#2hmoon23"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1494 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1495 (npctalk)
+- "Townsfolk#2hmoon24"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1496 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1497 (npctalk)
+- "Townsfolk#2hmoon25"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1498 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1499 (npctalk)
+- "Townsfolk#2hmoon26"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1500 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1501 (npctalk)
+- "Townsfolk#2hmoon27"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1502 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1503 (npctalk)
+- "Townsfolk#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1504 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1505 (npctalk)
+- "Townsfolk#2hmoon02"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1506 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1507 (npctalk)
+- "Townsfolk#2hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1508 (npctalk)
+- "Long live the Goddess!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1509 (npctalk)
+- "Townsfolk#2hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1511 (npctalk)
+- "I'm afraid I'm going to go! Pope I love you!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1512 (npctalk)
+- "Townsfolk#2hmoon13"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1513 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1514 (mes)
+- "Our child is the Pope...? Is that really true?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1516 (npctalk)
+- "Without a doubt. I shall take the girl."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1517 (npctalk)
+- "Townsfolk#2hmoon26"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1518 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1519 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1520 (mes)
+- "Without a doubt. I shall take the girl."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1521 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1522 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1523 (mes)
+- "Life in the temple will be safe and comfortable."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1524 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1525 (mes)
+- "[Dad]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1526 (mes)
+- "What about our son then?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1527 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1528 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1529 (mes)
+- "A boy with the same citeria but knows nothing is useless..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1530 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1531 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1532 (mes)
+- "The Pope was only one minute apart from generations. And not a single boy was selected."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1533 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1534 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1535 (mes)
+- "What does that mean? Or does Freyja want to have her words communicated through this boy?."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1536 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1537 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1538 (mes)
+- "We need to study this further. The experts should be the ones determining on this issue."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1539 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1540 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1541 (mes)
+- "...We must make a decision soon."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1542 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1543 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1544 (mes)
+- "I don't want to go. I hate it. Please! Mom...? Dad...? Adventurer...? Save me...!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1545 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1546 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1547 (mes)
+- "Listen to me. We will never be apart from one another."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1548 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1549 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1550 (mes)
+- "Yes!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1551 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1552 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1553 (mes)
+- "Remember the dreamland that the two of us often talked about?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1554 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1555 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1556 (mes)
+- "Yes, the 'Secret Garden'! I remember that."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1557 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1558 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1559 (mes)
+- "You can reach there via the south gate. I'll meet you there. We shall be protected from any threats over there."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1560 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1561 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1562 (mes)
+- "You're going to leave me now?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1563 (npctalk)
+- "Are you going to leave me now?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1564 (npctalk)
+- "Pope#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1565 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1566 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1567 (mes)
+- "It's best for us to part ways here. I'll meet you at the south gate."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1568 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1571 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1572 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1573 (mes)
+- "Don't go! Don't leave me just like that..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1574 (npctalk)
+- "Don't go! Don't leave me just like that..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1575 (npctalk)
+- "Pope#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1576 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1577 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1578 (mes)
+- "Pope, Pope! Relax! This is a dream! It's just a dream, just wake up!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1579 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1580 (mes)
+- "Mom! Dad!! ...Don't call me Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1581 (npctalk)
+- "Mom! Dad !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1582 (npctalk)
+- "Pope#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1583 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1584 (mes)
+- "[Dad]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1585 (mes)
+- "I am very pleased to have such a child!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1586 (npctalk)
+- "I am very pleased to have such a child!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1587 (npctalk)
+- "Dad#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1588 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1589 (mes)
+- "It is our honor to have our child as the Pope, vessel of the Goddess!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1590 (npctalk)
+- "It is our honor to have our child as the Pope, vessel of the Goddess!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1591 (npctalk)
+- "Mom#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1592 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1593 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1594 (mes)
+- "Mom...? Dad...? Are you abandoning me?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1595 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1596 (mes)
+- "[Dad]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1597 (mes)
+- "Pope, come on. Follow them."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1598 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1599 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1600 (mes)
+- "I hate separations, no!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1601 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1602 (mes)
+- "[Mom]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1603 (mes)
+- "Isn't it a great honor, my child...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1604 (cutin)
+- "ra_gwoman"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1605 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1606 (mes)
+- "We will ensure the safety of our Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1607 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1608 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1609 (mes)
+- "No !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1610 (npctalk)
+- "I hate it !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1611 (npctalk)
+- "Pope#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1612 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1613 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1614 (mes)
+- "We have no choice but to use force."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1615 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1616 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1617 (mes)
+- "I hate it! I will not go !!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1618 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1619 (mes)
+- "[High Priest]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1620 (mes)
+- "It is not up for you to decide. It's been determined."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1621 (cutin)
+- "ra_gman2"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1622 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1623 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1624 (mes)
+- "It's pointless to use force!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1625 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1626 (mes)
+- "How dare you interfere with this...!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1627 (mes)
+- "[Devotee]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1628 (mes)
+- "It is unforgivable to defy the will of the Goddess!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1629 (npctalk)
+- "It is unforgivable to defy the will of the Goddess!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1630 (npctalk)
+- "Devotee#2hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1673 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1694 (npctalk)
+- "We will secure the safety of our new Pope."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1695 (npctalk)
+- "Guard#2hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1696 (npctalk)
+- "Anyone who disagrees will be dealt with by force."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1697 (npctalk)
+- "Guard#2hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1729 (npctalk)
+- "We must take care not to injure the Pope!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1730 (npctalk)
+- "Guard#2hmoon30"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1731 (npctalk)
+- "We will secure her safety."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1732 (npctalk)
+- "Guard#2hmoon30"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1787 (npctalk)
+- "Running away won't solve anything."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1788 (npctalk)
+- "Pope#2hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1789 (npctalk)
+- "We will need to face them anyhow..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1790 (npctalk)
+- "Pope#2hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1792 (npctalk)
+- "......"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1793 (npctalk)
+- "Pope#2hmoon10"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1820 (npctalk)
+- "I miss Mom, Dad and Luwmin."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1821 (npctalk)
+- "Pope#2hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1822 (npctalk)
+- "I feel like I want to escape reality."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1823 (npctalk)
+- "Pope#2hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1824 (npctalk)
+- "......"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1825 (npctalk)
+- "Pope#2hmoon11"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1848 (npctalk)
+- "Don't bother with me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1849 (npctalk)
+- "Pope#2hmoon12"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1850 (npctalk)
+- "Go back to where you belong!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1851 (npctalk)
+- "Pope#2hmoon12"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1862 (npctalk)
+- "I'm not waiting for it. I came to take her. Let's go before the come back. Hurry up!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1863 (npctalk)
+- "Luwmin#2hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1865 (npctalk)
+- "Adventurer, come with us."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1866 (npctalk)
+- "Pope#2hmoon07"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1871 (npctalk)
+- "Adventurer ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1872 (npctalk)
+- "Pope#2hmoon13"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1875 (npctalk)
+- "I ... I ... I ... I am ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1876 (npctalk)
+- "Pope#2hmoon13"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1878 (npctalk)
+- "Adventurer, please follow me ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1879 (npctalk)
+- "Pope#2hmoon13"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1882 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1883 (mes)
+- "Brother, this is the place...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1884 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1885 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1886 (mes)
+- "It's okay now. We are safe."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1887 (cutin)
+- "pops_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1888 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1889 (mes)
+- "The place of dreams that we always talked about? How?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1890 (cutin)
+- "loo_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1891 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1892 (mes)
+- "I wish, I wished. I wanted to make my dream into reality."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1893 (cutin)
+- "pops_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1894 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1895 (mes)
+- "I thought this was a place that existed only in dreams."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1896 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1897 (mes)
+- "This fountain is the same as I imagined. That tree too. And... that doll!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1898 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1899 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1900 (mes)
+- "If we're hiding in here. Nobody can find us."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1901 (cutin)
+- "pops_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1902 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1903 (mes)
+- "No one can ever find us?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1904 (npctalk)
+- "Nobody?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1905 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1906 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1907 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1908 (mes)
+- "Yes, you can send that adventurer back now."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1909 (npctalk)
+- "Let's return now."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1910 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1911 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1912 (mes)
+- "They are no longer needed as we are now safe."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1913 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1914 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1915 (mes)
+- "Adventurer? But ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1916 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1917 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1918 (mes)
+- "I will stay with the Pope until the end."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1920 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1921 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1922 (mes)
+- "Keep her safe from what? We were fine until you came!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1923 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1924 (mes)
+- "After you appeared, we had high priests and guards coming for us.... We even got separated from our parents!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1925 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1926 (mes)
+- "You are a risk to us!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1927 (npctalk)
+- "You are a risk to us!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1928 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1929 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1930 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1931 (mes)
+- "Brother, don't say that. The Adventurer has been a trustful companion."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1932 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1933 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1934 (mes)
+- "Really? Are you for real? Even though everyone out there betrayed us?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1935 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1936 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1937 (mes)
+- "Yes. I believe in the adventurer."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1938 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1939 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1940 (mes)
+- "I thought this place was just for the two of us...now this?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1941 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1942 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1943 (mes)
+- "You think that this adventurer could protect you better than I could?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1944 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1945 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1946 (mes)
+- "But ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1947 (npctalk)
+- "But ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1948 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1949 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1950 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1951 (mes)
+- "We will be hidden here forever. Free from the priests, guards... even mom and dad."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1952 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1953 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1954 (mes)
+- "... Nobody will ever find us! I would bet my life on that..!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1955 (npctalk)
+- "Forever ... Nobody will find ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1956 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1957 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1958 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1959 (mes)
+- "Pope! You cannot stay here forever, you need to wake up eventually!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1960 (cutin)
+- "pops_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1961 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1962 (mes)
+- "Dream ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1963 (npctalk)
+- "Dream ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1964 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1965 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1966 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1967 (mes)
+- "In reality, many people are awaiting your presence. This is just a dream which may not reflect what have happened in the past."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1968 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1969 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1970 (mes)
+- "Do not listen to him! It's all a lie!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1971 (npctalk)
+- "Do not listen to him! It's all a lie!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1972 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1973 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1974 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1975 (mes)
+- "This is a dream ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1976 (npctalk)
+- "This is a dream ...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1977 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1978 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1979 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1980 (mes)
+- "Yes, that's right. This is just a dream. It's a manifestation of all of your anxiety and Luwmin's. Not everything you saw was real."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1981 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1982 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1983 (mes)
+- "A lie! It's all a lie!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1984 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1985 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1986 (mes)
+- "I lost Tilibi in the darkness, and...then, I met the adventurer."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1987 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1988 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1989 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1990 (mes)
+- "Your anxiety has been terribly distorted in this dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1991 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1992 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1993 (mes)
+- "Don't listen to that. Don't even think about that!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1994 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1995 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1996 (mes)
+- "Mom and dad abandoned me..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1997 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1998 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#1999 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2000 (mes)
+- "Those people weren't your real parents..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2001 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2002 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2003 (mes)
+- "I... I need to go back there..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2004 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2005 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2006 (mes)
+- "You want to go back? You can stay here forever without the interference from others. You told me life outside is...suffocating."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2007 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2008 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2009 (mes)
+- "I can withstand it brother. I can withstand it."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2010 (npctalk)
+- "Going together."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2011 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2012 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2013 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2014 (mes)
+- "Don't do that. Luwmin is frozen and can not move."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2015 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2016 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2017 (mes)
+- "He's frozen?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2018 (npctalk)
+- "He's frozen?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2019 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2020 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2021 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2022 (mes)
+- "Before coming here, I was told by Niren."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2023 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2024 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2025 (mes)
+- "That the Pope's twin brother, Luwmin, was sealed in the depths of the Ice Cave."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2026 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2027 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2028 (mes)
+- "What do you know...! People are evil to the core! We never had a choice!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2029 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2030 (mes)
+- "Just because we were born with this appearance, we were snatched to the temple. I was imprisoned in ice for this very reason!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2031 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2032 (mes)
+- "We didn't even receive a proper explanation!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2033 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2034 (mes)
+- "Why was I even born into such a fate in the first place..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2035 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2036 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2037 (mes)
+- "Sealed? My brother...sealed?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2038 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2039 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2040 (mes)
+- "It doesn't matter now. We will always be together from now on."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2041 (npctalk)
+- "We are always together."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2042 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2043 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2044 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2045 (mes)
+- "That was a long time ago..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2046 (npctalk)
+- "That was a long time ago..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2047 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2048 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2049 (mes)
+- "My brother suddenly disappeared."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2050 (npctalk)
+- "My brother suddenly disappeared."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2051 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2052 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2053 (mes)
+- "Seal ... Ice Cave ... It's cold now."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2054 (npctalk)
+- "It's cold now."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2055 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2056 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2057 (mes)
+- "What do you dream of now, brother?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2058 (npctalk)
+- "What do you dream of now, brother?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2059 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2060 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2061 (mes)
+- "Is that why my brother wants to share a dream with me?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2062 (npctalk)
+- "Is that why my brother wants to share a dream with me?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2063 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2064 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2065 (mes)
+- "What do you want to dream about?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2066 (npctalk)
+- "What do you want to dream about?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2067 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2068 (cutin)
+- "loo_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2069 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2070 (mes)
+- "To be together as before."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2071 (npctalk)
+- "To be together as before."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2072 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2073 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2074 (mes)
+- "Here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2075 (npctalk)
+- "Here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2076 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2077 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2078 (mes)
+- "Forever."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2079 (npctalk)
+- "Forever."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2080 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2081 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2082 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2083 (mes)
+- "This isn't right."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2084 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2085 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2086 (mes)
+- "Don't you dare interfere!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2087 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2088 (mes)
+- "The annoying adventurer will soon be gone!!!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2089 (npctalk)
+- "The annoying adventurer will soon be gone!!!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2090 (npctalk)
+- "Luwmin#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2091 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2093 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2094 (mes)
+- "[Luwmin]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2095 (mes)
+- "Begone!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2096 (cutin)
+- "loo_ang"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2097 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2098 (mes)
+- "Brother...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2099 (npctalk)
+- "Brother...?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2100 (npctalk)
+- "Pope#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2101 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2102 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2103 (mes)
+- "Pope, it's dangerous!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2104 (mes)
+- "Come closer to me...!!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2111 (mes)
+- "[?????]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2112 (mes)
+- "It's a trivial human."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2113 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2114 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2115 (mes)
+- "Who are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2116 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2117 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2118 (mes)
+- "This here is the owner of the Ice Cave."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2119 (npctalk)
+- "Do you not recognize me?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2120 (npctalk)
+- "Ktullanux#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2122 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2123 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2124 (mes)
+- "The owner of the Ice Cave? Was this not the dream of the Pope and Luwmin?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2125 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2126 (mes)
+- "Siblings can share a dream, through sheer determination."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2127 (npctalk)
+- "Siblings can share a dream, through sheer determination."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2128 (npctalk)
+- "Ktullanux#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2129 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2130 (mes)
+- "A mere child who became the Pope and her twin sibling Luwmin who was sealed?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2131 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2132 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2133 (mes)
+- "Why was my brother..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2134 (npctalk)
+- "Why ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2135 (npctalk)
+- "Pope#3hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2136 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2137 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2138 (mes)
+- "Why? Why you ask?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2139 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2140 (mes)
+- "Luwmin, the younger sibling, was forcefully pushed deep into the cave and became frozen."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2141 (npctalk)
+- "......"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2142 (npctalk)
+- "Pope#3hmoon04"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2143 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2144 (mes)
+- "Humans carrying the fire of Odin threatening me to keep this child frozen here..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2145 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2146 (mes)
+- "I am still capable of some compassion to humans."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2147 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2148 (mes)
+- "Hence I looked into the consciousness of Luwmin."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2149 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2150 (mes)
+- "I could see what transpired back then..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2151 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2152 (mes)
+- "The memories were mainly related to his twin."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2153 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2154 (mes)
+- "Remember that you used to play together with your brother, share conversations in bed, and to cry and laugh together."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2155 (npctalk)
+- "That was a precious memory."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2156 (npctalk)
+- "Ktullanux#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2157 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2158 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2159 (mes)
+- "Brother ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2160 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2161 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2162 (mes)
+- "I decided to help Luwmin. It was a way to help him."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2163 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2164 (mes)
+- "We have found a way to be liberated. And it was not difficult."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2165 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2166 (mes)
+- "Luwmin had the power to share a dream with his sibling."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2167 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2168 (mes)
+- "To make his sister, sitting on the throne of the Pope, to be trapped forever in a dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2169 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2170 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2171 (mes)
+- "How did it help you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2172 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2173 (mes)
+- "The men who threatened the Pope had me stuck in eternal slumber must be worried right now. Both of us have a common enemy."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2174 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2175 (mes)
+- "How upsetting it must be having their leader in slumber... deep slumber."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2176 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2177 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2178 (mes)
+- "So you could share this revenge with Luwmin?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2179 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2180 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2181 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2182 (mes)
+- "What a dream you have..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2184 (npctalk)
+- "You are rude!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2185 (npctalk)
+- "Ktullanux#3hmoon01"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2186 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2187 (mes)
+- "If you did not interfere !!!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2188 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2189 (mes)
+- "I will get rid of both the Pope and Luwmin."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2190 (mes)
+- "[Ktullanux]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2191 (mes)
+- "Pope, come here!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2198 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2199 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2200 (mes)
+- "Pope, are you all right?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2201 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2202 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2203 (mes)
+- "Brother...was frozen in the Ice Cave."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2204 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2205 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2206 (mes)
+- "Luwmin's consciousness is no longer in this dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2207 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2208 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2209 (mes)
+- "This was a dream realm created by Luwmin, shared by the Pope. The fate of twins simultaneously made this dream possible."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2210 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2211 (mes)
+- "I wish to save my brother. I want to accompany him here.."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2212 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2213 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2214 (mes)
+- "If the Pope does not return, many will be upset."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2215 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2216 (mes)
+- "I don't wanna go back. This is where I belong."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2218 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2219 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2220 (mes)
+- "Go back."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2221 (npctalk)
+- "Go back to where you belong."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2222 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2223 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2224 (mes)
+- "The place of dreams whose passage opens at night..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2225 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2226 (mes)
+- "I cannot hide."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2229 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2230 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2231 (mes)
+- "Who are you, who are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2232 (npctalk)
+- "Who are you, who are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2233 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2234 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2235 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2236 (mes)
+- "Do you know who you are?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2237 (npctalk)
+- "Who are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2238 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2239 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2240 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2241 (mes)
+- "I ... I ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2242 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2243 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2244 (mes)
+- "You already know the answer."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2245 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2246 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2247 (mes)
+- "I do not know the answer ... I'll be with my brother, here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2248 (npctalk)
+- "... I'll be with my brother, here."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2249 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2250 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2251 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2252 (mes)
+- "I always wanted to be with my brother."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2253 (npctalk)
+- "I always wanted to be with my brother."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2254 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2255 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2256 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2257 (mes)
+- "Mom and dad would not have wanted this..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2258 (npctalk)
+- "Mom and dad would not have wanted this..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2259 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2260 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2261 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2262 (mes)
+- "Our mom, our dad. They were 'honored' to offer us."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2263 (npctalk)
+- "Our mom, our dad. They were 'honored' to offer us."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2264 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2265 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2266 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2267 (mes)
+- "Nobody wanted me in the first place."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2268 (npctalk)
+- "Nobody wanted me in the first place."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2269 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2270 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2271 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2272 (mes)
+- "Then what about the people waiting for you in reality?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2273 (npctalk)
+- "Then what about the people waiting for you in reality?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2274 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2275 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2276 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2277 (mes)
+- "...I'm nobody's replacement, I did not want anything like this to happen in the first place!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2278 (npctalk)
+- "...I'm nobody's replacement, I did not want anything like this to happen in the first place!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2279 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2280 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2281 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2282 (mes)
+- "Life is a blessing. Sometimes, you don't get to choose what you want in life."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2283 (npctalk)
+- "Life is a blessing. Sometimes, you don't get to choose what you want in life."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2284 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2285 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2286 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2287 (mes)
+- "Even so, that would...make me very happy."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2288 (npctalk)
+- "Even so, that would...make me very happy."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2289 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2290 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2291 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2292 (mes)
+- "You are the one who can give yourself a chance by giving others a chance. You are of a special existence, such as being a moon in the darkness."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2293 (npctalk)
+- "You are the one who can give yourself a chance by giving others a chance. You are of a special existence, such as being a moon in the darkness."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2294 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2295 (cutin)
+- "pops_sim"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2296 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2297 (mes)
+- "I, I ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2298 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2299 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2300 (mes)
+- "Who are you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2301 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2302 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2303 (mes)
+- "I am the Pope of Arunafeltz."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2304 (npctalk)
+- "I am the Pope of Arunafeltz."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2305 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2306 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2307 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2308 (mes)
+- "You are me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2309 (npctalk)
+- "You are me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2310 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2311 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2312 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2313 (mes)
+- "I am you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2314 (npctalk)
+- "I am you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2315 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2316 (cutin)
+- "pops_smi"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2317 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2318 (mes)
+- "I am the Pope of Arunafeltz."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2319 (npctalk)
+- "I am the Pope of Arunafeltz."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2320 (npctalk)
+- "Pope#3hmoon05"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2321 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2322 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2323 (mes)
+- "I am the Pope of Arunafeltz."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2324 (npctalk)
+- "I am the Pope of Arunafeltz."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2325 (npctalk)
+- "Pope#3hmoon03"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2326 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2339 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2340 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2341 (mes)
+- "Are you okay?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2342 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2343 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2344 (mes)
+- "I finally understood..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2345 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2346 (mes)
+- "People love me. To do my best...is to be myself."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2347 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2348 (mes)
+- "It's time to wake up from this dream."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2349 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2350 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2351 (mes)
+- "How was your dream?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2352 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2353 (mes)
+- "It was fun, I would never want to forget it. I was so happy. Still, it was a happy dream and it can also be terrible nightmare."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2354 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2355 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2356 (mes)
+- "... But I was happy to meet my brother like this."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2357 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2358 (mes)
+- "It's been a long time"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2359 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2360 (mes)
+- "If I can have this dream again, I want to save my brother."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2361 (npctalk)
+- "If you can get ..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2362 (npctalk)
+- "Pope#3hmoon06"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2363 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2364 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2365 (mes)
+- "However..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2366 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2367 (mes)
+- "Don't worry, it's not as if I will be sleeping forever."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2368 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2369 (mes)
+- "I still ... Perhaps I'll have this dream again."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2370 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2371 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2372 (mes)
+- "...and a dream of having my brother by my side..."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2373 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2374 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2375 (mes)
+- "We will face this together."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2376 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2377 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2378 (mes)
+- "Thank...you."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2379 (cutin)
+- "pop_nor"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2380 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2381 (mes)
+- "To wait for a Half Moon in the Daylight."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2382 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2383 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2384 (mes)
+- "By the way, I found this doll."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2385 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2386 (mes)
+- "Tilibi!"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2387 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2388 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2389 (mes)
+- "The lost doll.. does it have a special significance to you?"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2390 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2391 (mes)
+- "My brother gave me the doll to comfort me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2392 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2393 (mes)
+- "Now I no longer need it, as long as I have my brother. I am not lonely."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2394 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2395 (mes)
+- "I will go back to where I belong."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2396 (mes)
+- "["
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2397 (mes)
+- "]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2398 (mes)
+- "Well, I'll see you tomorrow."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2399 (mes)
+- "[Pope]"
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2400 (mes)
+- "Thank you for helping me."
++ ""
+#: npc/re/instances/EddaHalfMoonInTheDaylight.txt#2405 (cutin)
+- "pop_nor"
++ ""

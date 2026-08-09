@@ -61,6 +61,53 @@ leitura do `netstat`. O `netstat` desta máquina pode sair traduzido (`OUVINDO`
 em vez de `LISTENING`) e quebraria o parse; conexão não depende de idioma. O
 `netstat` é usado só para exibir o PID, e nunca para decidir.
 
+## `monta_missoes_da_ordem.py` — põe as missões da Ordem na janela do cliente
+
+```
+python monta_missoes_da_ordem.py              # grava (faz backup antes)
+python monta_missoes_da_ordem.py --verificar  # só relata, não grava
+```
+
+**Sem isto, pegar uma missão da Ordem derruba o cliente.** Não é "aparece sem
+título": o `GetOngoingQuestInfoByID` (`questinfo_f.lub`, linha 4) faz
+`QuestInfoList[id].Title` **sem guarda de nil**, e uma missão desconhecida sai
+como *"attempt to index field '?' (a nil value)"* — uma caixa de erro por
+missão e por atualização da janela, até a conexão cair. Foi assim que as sete
+Missões A renderam mais de trinta modais em 2026-08-08. As outras funções do
+mesmo arquivo (`Description`, `RewardItemList`, `CoolTimeQuest`) **têm** a
+guarda; só a do título não tem.
+
+Escreve os dois arquivos que definem o global `QuestInfoList`:
+`System\OngoingQuestInfoList_True.lub` e `_Sakray.lub`, em **cp1252 com
+CRLF**, como o resto deles.
+
+**A ordem importa, e é a única armadilha de uso:**
+
+```
+python traduz_ptbr.py questinfo      # PRIMEIRO — ele reconstrói o arquivo
+python monta_missoes_da_ordem.py     # DEPOIS — ele acrescenta as nossas
+```
+
+Aqueles `.lub` são **gerados** pelo `traduz_ptbr.py`, que parte do coreano de
+2021 congelado no `.COREANO` ao lado. Rodar a tradução depois deste script
+apaga as nossas entradas sem avisar — e o sintoma é o cliente voltar a cair.
+
+**As ids vêm do `rathena/db/guerra/quest_db.yml`**, que é onde se diz quais
+missões existem; o **texto em português** mora na tabela `TEXTO` do script.
+Missão que exista no YAML e não tenha texto aqui **aborta a gravação** com a
+lista do que falta — é de propósito: uma missão sem entrada no cliente é
+exatamente o bug que este arquivo existe para impedir. As duas missões
+reservadas (Torneio de Magia e Sonho Sombrio) estão comentadas no YAML, então
+não entram.
+
+É **idempotente**: antes de inserir, retira toda entrada da faixa
+30000–30049 que já esteja no arquivo. Rodar duas vezes dá o mesmo tamanho.
+Passa pelo `luac -p` do ROenglishRE antes de gravar, e faz backup.
+
+Irmão do `monta_logue_e_ganhe.py` abaixo — existe pelo mesmo motivo (sistema
+de UI com metade da configuração no cliente, `CLAUDE.md` §4.9) e se usa do
+mesmo jeito. **O cliente lê esses arquivos só na inicialização.**
+
 ## `monta_logue_e_ganhe.py` — gera as duas metades do Logue e Ganhe
 
 ```
@@ -802,6 +849,37 @@ python traduz_npcs.py --preencher --forcar   # e SOBRESCREVE o que divergir
 python traduz_npcs.py --aplicar kafra        # escreve nos arquivos do rAthena
 python traduz_npcs.py --estado               # quanto já foi traduzido
 ```
+
+### As instâncias: um grupo por instância, e o nome é intocável
+
+Acrescentado em 2026-08-09. Os grupos `magoas`, `orcs`, `sarah`, `hospital`,
+`charleston`, `brinquedos`, `jitterbug`, `vermes`, `bakonawa`, `fenrir`,
+`demonio`, `porings`, `polvo`, `crescente` e `glastheim` são **um arquivo cada**
+— um por instância que a Ordem dos Exploradores manda caçar.
+
+**Por que não um grupo `instancias` único:** a regra é só aplicar grupo
+inteiro, e as 16 juntas dão 4.910 falas com distribuição muito torta (Sonho
+Sombrio 1.261, Lago de Bakonawa 62). Num grupo só, nada seria aplicável até a
+última estar pronta. Uma por vez, cada uma fecha e entra em jogo sozinha.
+
+**O nome da instância nunca se traduz, e agora a ferramenta garante.** Ele é
+CHAVE — `instance_create` e `instance_enter` resolvem por string — e aparece no
+script como `.@md_name$ = "Palácio das Mágoas";`. Essa atribuição casa com o
+`RE_ATRIB`, então o nome **entra no catálogo como se fosse fala**; e o
+`RE_TECNICO` não cobre, porque ele protege literal que está *dentro* da chamada
+e ali a chamada recebe uma variável.
+
+Quem protege é o `nomes_de_instancia()`, que lê os `Name:` de
+`db/re/instance_db.yml` e `db/guerra/instance_db.yml` e os põe em
+`tokens_intocaveis` — o `--aplicar` passa a **recusar** esses textos. A lista
+sai do banco e não de uma constante, então acompanha sozinha uma renomeação.
+
+**O que fica em branco de propósito** num catálogo de instância, e é bastante:
+nome de mapa (`1@spa`), label de evento (`::OnMyMobDead1`), nome único de NPC
+(`Lurid Royal Guard#dk`, que vem de `disablenpc`/`npctalk`) e o `.bmp` dos
+cutins. No Palácio das Mágoas foram 48 de 303. O `--estado` conta esses como
+"não feitos", então **84% ali quer dizer completo** — é o mesmo efeito dos 7
+que sobram em `cidades`, que marca 99%.
 
 O `--forcar` existe porque corrigir o glossário não bastava: `--preencher`
 sozinho só enche o que está vazio, então uma tradução já gravada continuava

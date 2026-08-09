@@ -1,0 +1,813 @@
+# Catalogo de traducao PT-BR - grupo "brinquedos"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/HorrorToyFactory.txt  (267 textos)
+#: npc/re/instances/HorrorToyFactory.txt#1 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#2 (mes)
+- "Aaa.. Are you going to go into there?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#3 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#4 (mes)
+- "You'd better release your transformation if you'd like to enter. It could be dangerous in some ways."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#5 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#6 (mes)
+- "Ah, wait! Please wait. This is not a good place for a promising young "
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#7 (mes)
+- "man"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#8 (mes)
+- "woman"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#9 (mes)
+- " like you!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#10 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#11 (mes)
+- "If you must, come back later after you become far stronger. Hmmm.. I would say.. Lv.140?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#12 (mes)
+- "^ff0000Be cautious taming or other ways than hunting monsters are not considered as normal killing counts.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#13 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#14 (mes)
+- "Do.. Don't be afraid of me. Now I look ugly, but I wasn't like this before."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#15 (mes)
+- "^0000ffThe skull-faced girl in front of you is speaking in a tearful voice. Void holes where there should be eyes are staring at you.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#16 (select)
+- "What's wrong with your face?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#17 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#18 (mes)
+- "This is a long story.. Would you mind if I talk to you? If you waste your time on someone like me?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#19 (select)
+- "Quit."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#20 (select)
+- "Please keep talking."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#21 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#22 (mes)
+- "Okay, take care of yourself. And don't ever come near that odd entrance."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#23 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#24 (mes)
+- "Mmm.. Where should I start.. The story of this town first?..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#25 (mes)
+- "^0000ffWith a sigh, the girl begins to speak in a subdued tone like a bard who tells an old story.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#26 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#27 (mes)
+- "There was a toy factory in this town. All of the people in this town work there and I was one of the employees."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#28 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#29 (mes)
+- "We all were happy in the beginning. We used to gather around together and have a friendly chat having gingerbread and hot tea after work."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#30 (select)
+- "I couldn't even imagine, seeing this mood..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#31 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#32 (mes)
+- "Yes, because we couldn't earn a living by packaging toys forever. The situations got tough after the villagers left in ones and twos."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#33 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#34 (mes)
+- "I was the one who worked as an assistant beside the doll craftsman who made dolls to the end."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#35 (mes)
+- "^0000ffI could feel her slender jawbone is trembling due to the subtle change of her emotion.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#36 (select)
+- "Ask her to continue."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#37 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#38 (mes)
+- "On the day when the factory is decided to be closed, the doll maker dressed the last doll he made and shed tears."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#39 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#40 (mes)
+- "Perhaps he thought he wouldn't make dolls anymore."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#41 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#42 (mes)
+- "He named the last doll ^0000ffCeline Kimi^000000 and stopped all the lines in the factory."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#43 (select)
+- "Did he give a doll a name?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#44 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#45 (mes)
+- "Sometimes so much work goes into a doll as if it were their child to doll makers. Kimi was the one for him."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#46 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#47 (mes)
+- "I guess his earnestness breathed life to Kimi."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#48 (select)
+- "Do you mean the doll is alive?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#49 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#50 (mes)
+- "Yes, ^0000ffShe^000000 became a living creature. I don't know how, but she is striding in the toy factory with heavy sorrow and rage."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#51 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#52 (mes)
+- "When I first saw her, she was standing beside the doll maker who died and collapsed. She stood there with a bare expression."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#53 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#54 (mes)
+- "That's the end. I was outside when I woke up again after I had blacked out. My face has become like this."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#55 (select)
+- "Did Kimi do that?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#56 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#57 (mes)
+- "I don't know.. She would do it, or it could be a different problem. I have no memory of it."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#58 (select)
+- "Do you blame her?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#59 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#60 (mes)
+- "Ah, no. I don't blame her! I just want to know what happened to the doll craftsman on that day."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#61 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#62 (mes)
+- "I don't think the scene I saw was everything. However, getting into the factory again is.. Re-entering there is..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#63 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#64 (mes)
+- "Yes, I am scared and reluctant to do it. If there's someone who can help me.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#65 (select)
+- "I am not very helpful to you."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#66 (select)
+- "Maybe I can help you with it."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#67 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#68 (mes)
+- "Thank you for.. for listening to me. Hope you will enjoy your trip.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#69 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#70 (mes)
+- "Heh? You would do me a favor?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#71 (select)
+- "Let's get into the factory."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#72 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#73 (mes)
+- "We.. Well, I cannot help you at all except for providing you with directions. Besides, this can be very dangerous to you."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#74 (select)
+- "You can reunite with Kimi, can't you?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#75 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#76 (mes)
+- "Kimi, you mean Kimi.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#77 (mes)
+- "^0000ffShe is thinking about something intently with gaping eyes.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#78 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#79 (mes)
+- "I.. I've decided. It won't be a great help to you, but I can simply let you know the directions."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#80 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#81 (mes)
+- "Wait, please wait until I am prepared. I can guide you when I am ready."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#82 (mes)
+- "Done. Let me try to open the closed door."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#83 (mes)
+- "Kimi's soul is still staying in this ground. When I can let her rest in peace..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#84 (mes)
+- "^0000ffYou need to organize a party having more than one member to get into Horror Toy Factory.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#85 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#86 (mes)
+- "Eh.. Give me a second. I am talking to the person in charge. Please wait a little bit."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#87 (select)
+- "Unlock Horror Toy Factory"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#88 (select)
+- "Cancel"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#89 (mes)
+- "Door will be.. opened soon.. Would you wait for a moment?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#91 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#92 (mes)
+- "The smell of preservative from the factory has not gone away. You cannot enter under this state."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#93 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#94 (mes)
+- "I will keep you from entering until the scent of preservative is completely gone."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#95 (mes)
+- "^0000ffThe smell of preservative has gone away. You can talk to Catherine Jet Johnson.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#96 (mes)
+- "[Factory Dimension Teleporter]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#97 (mes)
+- "There are some work study programs as monster workers during the Horror Toy Factory tour. Therefore, ^ff0000you are unable to enter when you are transformed.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#98 (mes)
+- "[Factory Dimension Teleporter]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#99 (mes)
+- "You are not eligible for dimensional shifting. You should be at least Lv.140."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#100 (mes)
+- "[Factory Dimension Teleporter]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#101 (mes)
+- "You don't have any support? Please organize a party and come again if you go in alone."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#103 (mes)
+- "An unknown error has occurred."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#104 (mes)
+- "The gateway for dimensional shifting has not been activated."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#105 (mes)
+- "[Factory Dimension Teleporter]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#106 (mes)
+- "You don't have any support? Please organize a party and come again if you go in alone."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#111 (mes)
+- "You already have a trail of dimensional shifting. Your access has been denied."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#112 (mes)
+- "^0000ffThe trail of dimensional shifting disappeared. You are allowed to use Factory Dimension Teleporter.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#113 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#114 (mes)
+- "You cannot come here if you are under the effect of a monster transformation."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#115 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#116 (mes)
+- "Please wait until the transformation is finished. You cannot move to another area until you become normal."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#117 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#118 (mes)
+- "Eh.. Give me a second. I am talking to the person in charge. Please wait."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#119 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#120 (mes)
+- "Everyone is in their mortal corruptible state right?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#121 (npctalk)
+- "Catherine Jet Johnson: Everyone is in their mortal corruptible state right?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#122 (select)
+- "Quit the story"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#123 (select)
+- "Listen to her story."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#124 (select)
+- "I know your situation. Let's start quickly!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#125 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#126 (mes)
+- "Oh, dear. Let me know when you are ready."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#134 (npctalk)
+- "Catherine Jet Johnson: This area was Factory No.1. It used to be the place where the toys and dolls were stored before given as presents."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#135 (npctalk)
+- "Catherine Jet Johnson: Ah, I remember several things. If someone wasn't in the employee's uniform, the guards used to come and scold them...."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#136 (npctalk)
+- "Catherine Jet Johnson: By the way..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#141 (npctalk)
+- "Catherine Jet Johnson: Wh.. What happened? Toys and dolls are wandering instead of human workers. As if they are employees..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#142 (npctalk)
+- "Catherine Jet Johnson: I think other spirits have inhabited the empty factory for too long."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#145 (npctalk)
+- "Catherine Jet Johnson: It's just like when humans worked here."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#148 (npctalk)
+- "Catherine Jet Johnson: But, it's not the time to be happy. Once we find the last factory area, we will need to halt all production lines."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#151 (npctalk)
+- "Catherine Jet Johnson: Ah, maybe we should restore those toys and gift boxes to their original condition."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#152 (npctalk)
+- "Catherine Jet Johnson: Eh? I... I mean... To return them as they were.. Yes... We need to fight them? I don't know how exactly."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#155 (npctalk)
+- "Catherine Jet Johnson: Good heavens, I hope the guards are still human. There were boxes of uniforms near here in the past.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#159 (npctalk)
+- "Catherine Jet Johnson: Ah, they are behind me. You'd better change into the uniform. Fortunately, I still have my employee card."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#160 (npctalk)
+- "Catherine Jet Johnson: I will find my way around here. Let's meet near the second production line. Cheer up, it's a toy factory. It can't be all that bad!!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#166 (npctalk)
+- "Catherine Jet Johnson: Ah.. We have explored here before? Okay, let's meet at the same spot again."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#183 (mes)
+- "^0000ffYou put on a factory uniform. There still seems to be a few uniforms left in the box.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#184 (mes)
+- "^ff0000You are in transformation."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#185 (mes)
+- "You cannot use the uniform box when already transformed.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#187 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#198 (mes)
+- "[Coordinator]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#199 (mes)
+- "I can't find the other workers. We don't have time for dawdling. Children are waiting for presents."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#200 (mes)
+- "[Coordinator]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#201 (mes)
+- "Hurry up! Carry ^ff0000the gift box over there^000000 and move to the east."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#203 (npctalk)
+- "Coordinator: Hurry up! Carry the gift box over there and move to the east."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#204 (mes)
+- "Why are you hanging around! Carry ^ff0000the gift box over here^000000 and move to the east."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#205 (mes)
+- "What!? Humans!!!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#209 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#210 (npctalk)
+- "Coordinator: Guard! Where is a guard! Humans are invading!!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#214 (npctalk)
+- "Coordinator: This kind of thing happens a lot these days..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#216 (mes)
+- "^0000ffYou are carrying the packaged present.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#217 (mes)
+- "^009900The box is in your hands. You cannot carry more than one box.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#218 (mes)
+- "^ff0000You are not in uniform. The Coordinator won't let you pick it up.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#241 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#247 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#248 (mes)
+- "Lucky you got here safely."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#249 (select)
+- "Quit the story"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#250 (select)
+- "Listen to her tactics."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#251 (select)
+- "I know what to do. Proceed quickly!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#252 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#253 (mes)
+- "Oh, dear. Let me know when you are ready."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#258 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#259 (mes)
+- "Hold on~ I am talking to your manager, so please wait."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#263 (npctalk)
+- "Catherine Jet Johnson: If you find all clues, search other places. I will look for the spot where I met the doll maker last time I was here."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#264 (npctalk)
+- "Catherine Jet Johnson: This place was Factory No.2."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#265 (npctalk)
+- "Catherine Jet Johnson: It used to be filled with people, but now it isn't."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#266 (npctalk)
+- "Catherine Jet Johnson: Ah, I realized something while coming here. Some...Children..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#267 (npctalk)
+- "Catherine Jet Johnson: How can I say.. There were lots of very scary, but awfully sad, looking souls."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#268 (npctalk)
+- "Catherine Jet Johnson: How pitiful they are, but please make them rest if they attack you. Fortunately, they won't come at me."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#269 (npctalk)
+- "Catherine Jet Johnson: If you see a worker toy on duty while searching here, would you ask it about the doll maker?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#270 (npctalk)
+- "Catherine Jet Johnson: He might be sent to Heaven if they recall the memory of doll maker. That's the best hope."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#271 (npctalk)
+- "Catherine Jet Johnson: If you find all clues, search other places. I will look for the spot where I met the doll maker last time I was here."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#272 (npctalk)
+- "Catherine Jet Johnson: Sorry that I can't be a big help to you. See you in a minute."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#282 (mes)
+- "^0000ff>You changed into uniform.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#283 (mes)
+- "^ff0000You transformed into a different form."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#284 (mes)
+- "You can't seem to put on the uniform over your fangs.^000000"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#288 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#303 (mes)
+- "[Worker]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#304 (mes)
+- "Huh? What happened?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#305 (select)
+- "No, nothing special"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#306 (select)
+- "Do you know about the doll maker?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#307 (mes)
+- "[Worker]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#308 (mes)
+- "I'm working now! I'm very busy!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#309 (mes)
+- "I'm very busy with working, so could you stop chatting?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#310 (npctalk)
+- "Worker: Ah! Grandpa? He's a real good man. He oiled us everyday and cleaned the dust very often."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#311 (npctalk)
+- "Worker: I wish he wouldn't pass away. Ah... Ahah... I feel better."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#312 (npctalk)
+- "Worker: Did Kimi kill the craftsman grandpa? Who said that? That's not true. Kimi was going to save him!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#313 (npctalk)
+- "Worker: Ah... B.. By the way, why my does my body become..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#314 (npctalk)
+- "Worker: He had a chronic cardiac disease, but it was so sudden when it started and he died. Kimi found him and gave him first aid, but.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#315 (npctalk)
+- "Worker: Ah.. Did you do something to me? I feel strange..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#316 (npctalk)
+- "Worker: Kimi didn't move at all for sometime and sat down like ordinary dolls."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#317 (npctalk)
+- "Worker: She was about to fly her soul forever... Like me now... Oh, my... What happened to me?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#318 (npctalk)
+- "Worker: Oh, Kimi.. My dear.. She thought the doll maker passed away because she startled him."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#319 (npctalk)
+- "Worker: Grandpa was just very pleased that Kimi was moving.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#320 (npctalk)
+- "Worker: He could see a living doll for a while. That's what Kimi first did."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#321 (npctalk)
+- "Worker: And what she first saw was his death. What a misery."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#322 (npctalk)
+- "Worker: Kimi was able to hear the Grandpa's voice and feel before she was indwelled."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#323 (npctalk)
+- "Worker: Perhaps Grandpa's affection made her move and become alive. Ahah.. I'm sleepy.."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#324 (npctalk)
+- "Worker: Grandpa was a good man! Pity on Kimi! Kimi loved Grandpa! But Grandpa died. I'm sad!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#325 (npctalk)
+- "Worker: He was so amazed to see Kimi's opening eyes and his heart... It became like that."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#326 (npctalk)
+- "Worker: Anyhow, why my is my body... It's likely to float in the air.... Something strange."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#327 (npctalk)
+- "Worker: Kimi didn't hurt Grandpa! Kimi's wanted to save Grandpa! People are scared of Kimi, but Kimi is kind! Kimi is a good girl!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#328 (npctalk)
+- "Worker: Grandpa... I miss him. Grandpa, Grandpa..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#331 (mes)
+- "[Worker]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#332 (mes)
+- "What!? You are not one of us!!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#335 (npctalk)
+- "Worker: Guard! Guard!!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#336 (npctalk)
+- "Worker: Guard, Guard! Where are you?! Humans are here!!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#347 (mes)
+- "[Captured Santa]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#348 (mes)
+- "Even if no one owns it, its not right to steal it from everyone."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#349 (mes)
+- "[Antonio]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#350 (mes)
+- "Hey, Santa. Stop being stuffy, you old man. Fair is fair after all, kekeke."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#351 (atrib)
+- "Antonio#1"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#352 (atrib)
+- "Captured Santa#3"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#353 (npctalk)
+- "Antonio: Listen to me, Santa~ I mean, I like this factory."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#354 (npctalk)
+- "Antonio: No one owns it~ And there are a number of things I can use."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#355 (npctalk)
+- "Captured Santa: You silly! Just to be sure, I followed you. Now you steal from everyones factory!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#356 (npctalk)
+- "Antonio: Hey, is this a big deal if I have surplus presents? I don't know about that~"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#357 (npctalk)
+- "Captured Santa: Whew... Okay, but think about that how children feel when they got them."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#358 (npctalk)
+- "Captured Santa: How they feel if they know you distributed the masterless things to them?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#359 (npctalk)
+- "Antonio: Hmm..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#360 (npctalk)
+- "Antonio: Maybe... I will be happy?! Anyway, that's a present, kekekeke."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#361 (npctalk)
+- "Captured Santa: Who said the present itself is the problem! You'd better stop this theft, Antonio!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#366 (npctalk)
+- "Antonio: Oh! Wohuhu! A bunch of presents are delayed. Let's have a party today?!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#367 (npctalk)
+- "Antonio: Hey, human. You can follow me if you'd like to help. I'm okay unless you disturb me!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#368 (npctalk)
+- "Captured Santa: Tha.. That dude has no ethics!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#369 (npctalk)
+- "Captured Santa: Hey, would you go kick that Antonio out? He might run away if you hit several times."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#370 (npctalk)
+- "Captured Santa: Its not right to steal from the community!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#384 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#390 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#418 (mes)
+- "[Celine Kimi]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#419 (mes)
+- "Did you come here as well? Why are all of the humans so anxious to destroy what we built?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#425 (mes)
+- "[Catherine Jet Johnson]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#426 (mes)
+- "Wa.. Watch out! Kimi isn't under the normal status."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#427 (atrib)
+- "Celine Kimi#0"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#428 (npctalk)
+- "Catherine Jet Johnson: Kimi! Listen to me. I didn't come here to blame you."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#429 (npctalk)
+- "Celine Kimi: Everyone hates me!... You don't like me as well? This ugly and creepy doll likes me..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#430 (npctalk)
+- "Catherine Jet Johnson: Kimi, I heard about you from dolls here. The doll maker adored you so much!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#433 (npctalk)
+- "Celine Kimi: Don't lie. If that's true, why didn't he see me with love in his eyes?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#434 (npctalk)
+- "Celine Kimi: Why didn't he say my name? [Kimi] [Kimi!] I was anxious to hear the Grandpa's voice."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#437 (npctalk)
+- "Catherine Jet Johnson: No, don't listen to it, Kimi! He really cherished you."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#438 (npctalk)
+- "Celine Kimi: Did he... cherish me?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#439 (npctalk)
+- "Catherine Jet Johnson: Yes, when you start to move, he was so plea..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#442 (npctalk)
+- "Celine Kimi: D.. Did I.. kill him?..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#443 (npctalk)
+- "Catherine Jet Johnson: No, Kimi! I've realized that. I misunderstood you. He was sick!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#444 (npctalk)
+- "Celine Kimi: D.. Di.. Did I... kill... him?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#447 (npctalk)
+- "Celine Kimi: I... I..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#450 (npctalk)
+- "Celine Kimi: Because of me, grandpa is dead..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#451 (npctalk)
+- "Catherine Jet Johnson: It has become serious. Kimi is suffering. It would be dangerous under this condition!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#454 (npctalk)
+- "Catherine Jet Johnson: I will find the emergency exit to escape. Run away, adventurer!"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#461 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#513 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#515 (atrib)
+- "::OnMyMobDead"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#520 (mes)
+- "[Celine Kimi]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#521 (mes)
+- "You also... came here to kill me?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#522 (npctalk)
+- "Celine Kimi: You also... came here to kill me?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#540 (npctalk)
+- "Catherine Jet Johnson: Unfortunately, I have failed to persuade Kimi."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#541 (npctalk)
+- "Catherine Jet Johnson: What was the voice of that phantom? Why does it torment Kimi so harshly..."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#542 (npctalk)
+- "Catherine Jet Johnson: I guess that the curse of my face was from the unidentified voice."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#543 (npctalk)
+- "Catherine Jet Johnson: Anyway, even Kimi hates everyone and has collected her recollections here a lot."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#544 (npctalk)
+- "Catherine Jet Johnson: I will end this thing safely even if her soul will return and she won't be disappointed."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#545 (npctalk)
+- "Catherine Jet Johnson: Thanks to you, everything that I have wondered is completely resolved. Please call me again if you are going to send her to Heaven next time."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#546 (npctalk)
+- "Catherine Jet Johnson: I will open the exit way out. I will go outside first, so just follow me."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#549 (mes)
+- "Will you exit?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#550 (select)
+- "Take a look around"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#551 (select)
+- "Go outside"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#552 (mes)
+- "Stop the machine."
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#555 (mes)
+- "[Time Manager]"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#556 (mes)
+- "What time would you like to return?"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#557 (select)
+- "Cancel:Factory No.1 Complete:Factory No.2 Complete:Factory No.3 Complete:Boss Start:Boss Complete"
++ ""
+#: npc/re/instances/HorrorToyFactory.txt#575 (atrib)
+- "1@xm_d"
++ ""

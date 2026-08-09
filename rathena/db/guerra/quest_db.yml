@@ -1,0 +1,366 @@
+###########################################################################
+# Guerra do Emperium - As missoes da Ordem dos Exploradores
+###########################################################################
+#
+# Este arquivo e NOSSO. Ele e encadeado a partir do `Footer: Imports:` de
+# db/re/quest_db.yml, que ganhou o bloco inteiro em 2026-08-08 - aquele
+# arquivo nao tinha `Footer:` nenhum antes. Isso e seguro porque o
+# `parseImports` NAO e do quest_db: mora no YamlDatabase
+# (src/common/database.cpp:176) e vale para todo banco em YAML.
+#
+# QUEM USA ISTO: npc/guerra/ordem_dos_exploradores.txt, as tres placas de
+# missao no salao de auction_02. Ler o cabecalho daquele arquivo antes de
+# mexer aqui - os dois lados sao uma peca so.
+#
+# ------------------------------------------------------------------------
+# A DESCOBERTA QUE DECIDE ESTE ARQUIVO EXISTIR: nao da para contar morte
+# de chefe de instancia com `OnNPCKillEvent`.
+# ------------------------------------------------------------------------
+#
+# Em src/map/mob.cpp:3592 os dois caminhos sao ramos de um `else if` de
+# verdade:
+#
+#     if( md->npc_event[0] && !md->state.npc_killmonster ) {
+#             ... dispara o evento PROPRIO do mob ...
+#     } else if( first_sd != nullptr && !md->state.npc_killmonster ) {
+#             npc_script_event( *first_sd, NPCE_KILLNPC );   // OnNPCKillEvent
+#     }
+#
+# Todo chefe de instancia nasce com `instance_npcname(...)+"::OnMyMobDead"`,
+# ou seja, TODOS tem `npc_event` preenchido - e por isso caem sempre no
+# primeiro ramo. Uma Ordem construida sobre `OnNPCKillEvent` compila, sobe,
+# nao erra no log e CONTA ZERO. (De quebra: mesmo quando dispara, dispara
+# para o `first_sd`, que e o primeiro do registro de dano - nao o matador.)
+#
+# O que funciona e o objetivo `HUNTING` de quest, e a razao esta trinta
+# linhas acima, em mob.cpp:3575:
+#
+#     if (sd->status.party_id)
+#             map_foreachinallrange(quest_update_objective_sub, md, AREA_SIZE,
+#                                   BL_PC, sd->status.party_id, md);
+#
+# Isso roda ANTES e INDEPENDENTE do ramo do `npc_event`, e propaga para a
+# party inteira que estiver dentro de `AREA_SIZE` da morte. E o que as
+# proprias instancias do rAthena usam (`checkquest(12279,HUNTING)` no
+# Bakonawa, `checkquest(9222,HUNTING)` no Bangungot).
+#
+# Consequencia boa, e o motivo de a lei da secao 2 do CLAUDE.md continuar
+# intacta: a Ordem cabe inteira em npc/guerra/ + este arquivo, SEM tocar
+# em nenhum dos 16 arquivos de instancia do rAthena.
+#
+# Consequencia ruim, que e limite e nao defeito: quem ficou longe da morte
+# nao pontua. Em instancia grande, o membro da party que ficou para tras
+# perde a contagem. Nao ha o que fazer daqui - `AREA_SIZE` e do servidor.
+#
+# ------------------------------------------------------------------------
+# O QUE ESTE ARQUIVO NAO TEM, e de proposito
+# ------------------------------------------------------------------------
+#
+# NAO tem recompensa. O quest_db do rAthena so sabe de `Drops` (item que
+# cai do mob), e a Ordem paga na entrega, pelo NPC. As moedas e o EXP de
+# cada missao moram no `OnInit` de ordem_dos_exploradores.txt, numa tabela
+# alinhada com os IDs daqui. Mexeu num, confira o outro.
+#
+# NAO tem `TimeLimit` nas missoes de cacada. So as tres quests de espera
+# (30040-30042) tem. Uma cacada com prazo expiraria sozinha na mochila do
+# jogador e o `checkquest(...,HUNTING)` passaria a devolver 1 (falhou) em
+# vez de 2 (completa) - o jogador perderia o progresso sem entender.
+#
+# ------------------------------------------------------------------------
+# A FAIXA DE ID: 30000-30049
+# ------------------------------------------------------------------------
+#
+# Escolhida dentro do maior bloco contiguo livre do db/re/quest_db.yml
+# (21174-49999, 28.826 ids). E redonda, nao encosta em nada do rAthena, e
+# sobra espaco para a Ordem crescer.
+#
+# A numeracao e por GRUPO, e nao sequencial, para que acrescentar missao
+# depois nao renumere nada:
+#
+#     30000-30019   Missoes A     30030-30039   Missoes C
+#     30020-30029   Missoes B     30040-30049   as quests de espera
+#
+# ------------------------------------------------------------------------
+# DE ONDE VIERAM OS IDs DE MOB
+# ------------------------------------------------------------------------
+#
+# NAO do browiki. O nome em portugues das missoes do bRO quase nunca casa
+# com o nome do mob_db, e a tabela de nomes PT que temos (db/guerra/
+# mob_db.yml, tirada do navi_mob_br do bRO) cobre so 1061 dos 2675
+# monstros - e mob de instancia NAO aparece na navegacao, entao nenhum dos
+# chefes daqui esta la. Todos os IDs abaixo foram lidos do `monster`/
+# `areamonster` do script da propria instancia, em 2026-08-08.
+#
+# Tres deles corrigem o levantamento anterior (PENDENCIAS.md secao 1g):
+#
+#   Fabrica do Terror   dizia-se que "Antonio nao spawna". Spawna:
+#                       XM_ANTONIO 2988, em HorrorToyFactory.txt:939.
+#   Covil de Vermes     nao e a Faceworm Queen. O alvo do bRO e "4x Verme
+#                       Sombrio com Rosto" = FACEWORM_DARK 2530, e ele
+#                       nasce EXATAMENTE 4 vezes (os quatro #fwormboss).
+#                       A quantidade confirma o mob.
+#   Vila dos Porings    o spawn e por variavel (`"MD_GOLDRING"` como
+#                       string). Resolvido: 3811.
+#
+# E um caso que so o codigo resolve - Palacio das Magoas: existem DOIS
+# "Torturous Redeemer", 2959 e 2961, com o mesmo nome na tela. O alvo e o
+# 2959. O 2961 (E_TORTUROUS_REDEEMER) nasce numa cena e leva `killmonster`
+# cinco segundos depois (GhostPalace.txt:758-763) - morte por `killmonster`
+# nao passa pelo `quest_update_objective`, entao mirar nele daria uma
+# missao impossivel, sem nada no log.
+#
+# ------------------------------------------------------------------------
+# DUAS ARMADILHAS DO LEITOR, ao editar este arquivo
+# ------------------------------------------------------------------------
+#
+# 1) AegisName errado descarta a QUEST INTEIRA. Em quest.cpp:132 o
+#    `mobdb_search_aegisname` que falha emite "Mob %s does not exist,
+#    skipping" e cai num `return 0` que joga fora a quest toda, nao a
+#    linha do alvo. Conferir nome novo contra o mob_db antes de gravar.
+#
+# 2) MAX_QUEST_OBJECTIVES E 3 (src/common/mmo.hpp:111). A Torre do Demonio
+#    usa os tres, no limite. Um quarto alvo emitiria "Targets list exceeds
+#    the maximum" e - de novo - descartaria a quest inteira.
+#
+# Mudanca neste arquivo pega com `@reloadquestdb`.
+#
+###########################################################################
+
+Header:
+  Type: QUEST_DB
+  Version: 3
+
+Body:
+
+# =========================================================================
+# MISSOES A - 30000 a 30019
+# =========================================================================
+# As mais pesadas: instancias de nivel 50 a 140. No bRO sao nove; aqui sao
+# sete escritas e duas reservadas (ver os buracos, com o porque em cada um).
+
+  - Id: 30000
+    Title: Ordem dos Exploradores - Batalha dos Orcs
+    # O chefe final do 2@orcs. No script ele se chama "Shaman Cargalache"
+    # (OrcsMemory.txt:824); no mob_db o AegisName e I_ORC_LADY.
+    Targets:
+      - Mob: I_ORC_LADY
+        Count: 1
+
+  # 30001 RESERVADO - Torneio de Magia (Geffen Magic Tournament).
+  #
+  # Fora por ora, e por dois motivos somados. O alvo do bRO ("1x Muliphen")
+  # NAO EXISTE como monstro em lugar nenhum do rAthena: o Torneio e duelo
+  # de NPC, e os unicos mobs do arquivo sao Alphonse (2565), Alphonse Jr
+  # (2566) e os capangas de Geffen. E a instancia nem esta carregada - ela
+  # mora em npc/custom/official/, e aquela pasta nao e lida.
+  #
+  # Para ligar depois: descomentar o bloco abaixo com o alvo escolhido, e
+  # acrescentar a linha correspondente na tabela do OnInit da placa A em
+  # ordem_dos_exploradores.txt. Nada mais precisa mudar.
+  #
+  # - Id: 30001
+  #   Title: Ordem dos Exploradores - Torneio de Magia
+  #   Targets:
+  #     - Mob: ???
+  #       Count: 1
+
+  - Id: 30002
+    Title: Ordem dos Exploradores - Memorias de Sarah
+    Targets:
+      - Mob: IRENE_ELDER
+        Count: 1
+
+  - Id: 30003
+    Title: Ordem dos Exploradores - Palacio das Magoas
+    # 2959 e nao 2961 - os dois se chamam "Torturous Redeemer" na tela.
+    # Ver a nota no cabecalho.
+    Targets:
+      - Mob: TORTUROUS_REDEEMER
+        Count: 1
+
+  - Id: 30004
+    Title: Ordem dos Exploradores - Hospital Abandonado
+    Targets:
+      - Mob: BANGUNGOT_1
+        Count: 1
+
+  - Id: 30005
+    Title: Ordem dos Exploradores - Aos Pes do Rei
+    Targets:
+      - Mob: CHARLESTON3
+        Count: 1
+
+  - Id: 30006
+    Title: Ordem dos Exploradores - Fabrica do Terror
+    # Antonio spawna sim - HorrorToyFactory.txt:939. O levantamento antigo
+    # dizia que nao, e mandava mirar na Celine Kimi (2996).
+    Targets:
+      - Mob: XM_ANTONIO
+        Count: 1
+
+  - Id: 30007
+    Title: Ordem dos Exploradores - Sonho Sombrio
+    # O "Requiem de Marfim" do bRO e o AWAKENED FERRE (3073, GRAND_PERE), e
+    # ele e o chefe final da instancia - nasce no quarto do chefe (sala 23),
+    # em NightmarishJitterbug.txt:4392, e o script guarda o id dele em
+    # `'boss_id`.
+    #
+    # ESTA MISSAO ESTEVE COMENTADA AQUI, e o registro do erro vale mais que
+    # a linha: a primeira varredura concluiu que o arquivo so tinha SEIS
+    # monstros (Ferre 3069-3072 e Jitterbug1/2) e que nenhum era chefe
+    # unico. Estava errado. O grep procurava o padrao `"--ja--", <id>`, que
+    # e como quase todo spawn daquele arquivo e escrito - e a linha do chefe
+    # e a UNICA que usa o nome literal:
+    #
+    #     monster 'map_jtb$,322,335, "Awakened Ferre", 3073,1, .@label$;
+    #
+    # Levantamento por grep de UM padrao so nao prova ausencia. O que
+    # resolveu foi cruzar com o cliente do bRO, que traz a missao por
+    # extenso - ver ARQUITETURA.md secao 6.
+    Targets:
+      - Mob: GRAND_PERE
+        Count: 1
+
+  - Id: 30008
+    Title: Ordem dos Exploradores - Covil de Vermes
+    # Quatro, e nao um: o alvo do bRO e "4x Verme Sombrio com Rosto", e o
+    # FACEWORM_DARK nasce exatamente 4 vezes na instancia (os quatro
+    # #fwormboss). Foi a quantidade que confirmou o mob.
+    Targets:
+      - Mob: FACEWORM_DARK
+        Count: 4
+
+# =========================================================================
+# MISSOES B - 30020 a 30029
+# =========================================================================
+
+  - Id: 30020
+    Title: Ordem dos Exploradores - Lago de Bakonawa
+    Targets:
+      - Mob: MA_TREASURE
+        Count: 1
+
+  - Id: 30021
+    Title: Ordem dos Exploradores - Sarah vs Fenrir
+    # Seis. O mob foi confirmado por dois lados independentes: o nome
+    # (Ancient Gigantes) e o TOTAL DE SPAWNS no script, que e 6 - a mesma
+    # quantidade que o bRO pede.
+    Targets:
+      - Mob: MM_L_GIGAN3
+        Count: 6
+
+  - Id: 30022
+    Title: Ordem dos Exploradores - Torre do Demonio
+    # Os tres "Evil Shadow" tem o mesmo nome na tela e IDs diferentes -
+    # 2939, 2940 e 2941, comentados no proprio DevilTower.txt como
+    # MM_EVIL_SHADOW1/2/3. O bRO pede 3 de cada.
+    #
+    # ESTA QUEST ESTA NO LIMITE: MAX_QUEST_OBJECTIVES e 3. Um quarto alvo
+    # aqui descartaria a quest inteira, com um aviso que parece inofensivo.
+    Targets:
+      - Mob: MM_EVIL_SHADOW1
+        Count: 3
+      - Mob: MM_EVIL_SHADOW2
+        Count: 3
+      - Mob: MM_EVIL_SHADOW3
+        Count: 3
+
+# =========================================================================
+# MISSOES C - 30030 a 30039
+# =========================================================================
+# As leves: nivel 30 a 130, e a porta de entrada da Ordem.
+
+  - Id: 30030
+    Title: Ordem dos Exploradores - Vila dos Porings
+    # O spawn no script e por STRING ("MD_GOLDRING"), nao por numero - foi
+    # por isso que o levantamento anterior nao o resolveu. 3811.
+    Targets:
+      - Mob: MD_GOLDRING
+        Count: 1
+
+  - Id: 30031
+    Title: Ordem dos Exploradores - Caverna do Polvo
+    Targets:
+      - Mob: MD_GIANT_OCTOPUS
+        Count: 1
+
+  - Id: 30032
+    Title: Ordem dos Exploradores - Quarto Crescente
+    Targets:
+      - Mob: POPE_MD_H_KTULLANUX
+        Count: 1
+
+  - Id: 30033
+    Title: Ordem dos Exploradores - Maldicao de Glastheim
+    # Dois alvos, como no bRO: "1x Origem da Maldicao + 1x Amdarais". O
+    # primeiro e o MG_CORRUPTION_ROOT (2475), que no script se chama
+    # "Corrupted Soul" - o AegisName e que denuncia qual e.
+    Targets:
+      - Mob: MG_CORRUPTION_ROOT
+        Count: 1
+      - Mob: MG_AMDARAIS
+        Count: 1
+
+# =========================================================================
+# AS QUESTS DE ESPERA - 30040 a 30042
+# =========================================================================
+#
+# Uma por placa. Nao tem alvo: existem so pelo prazo.
+#
+# `TimeLimit: 6h` SEM `+` e a forma exata, nao a relativa - o leitor separa
+# os dois casos pela presenca do `+` (quest.cpp:71). Sem `+`, o
+# `quest_time()` (quest.cpp:554) devolve o PROXIMO 06:00: hoje, se ainda
+# nao deu seis da manha; amanha, se ja passou. E exatamente a regra do bRO,
+# e nao precisa de temporizador nenhum do nosso lado.
+#
+# COMO A PLACA LE ISSO: `checkquest(30040, PLAYTIME)` devolve
+#     -1  nunca pegou            -> pode entregar
+#      0  ainda nao deu 6h       -> "volte depois das seis"
+#      2  ja passou das 6h       -> pode entregar
+# A placa apaga a quest e a poe de novo a cada entrega.
+#
+# O que a espera trava e a ENTREGA, nao a retirada. Ao entregar, a placa ja
+# devolve as cacadas do dia seguinte - entao o jogador cacador nao precisa
+# voltar para pegar, so para entregar. E o comportamento do bRO.
+
+  - Id: 30040
+    Title: Ordem dos Exploradores - espera das Missoes A
+    TimeLimit: 6h
+
+  - Id: 30041
+    Title: Ordem dos Exploradores - espera das Missoes B
+    TimeLimit: 6h
+
+  - Id: 30042
+    Title: Ordem dos Exploradores - espera das Missoes C
+    TimeLimit: 6h
+
+# =========================================================================
+# FORA DA NOSSA FAIXA: um override de quest do rAthena
+# =========================================================================
+#
+# A unica entrada deste arquivo que NAO e nossa. Vale a mesma nota da secao
+# de placeholders do item_db: o `Footer: Imports:` faz este arquivo ser lido
+# DEPOIS do db/re/quest_db.yml, entao o que se repete aqui VENCE - e isso
+# corta os dois lados. Ao atualizar o rathena/, conferir esta secao.
+#
+# `parseBodyNode` sobrescreve apenas os campos presentes (`find(id)` e
+# depois `if (this->nodeExists(...))`), entao repetir so o `TimeLimit` NAO
+# apaga o `Title` do rAthena. O `Title` esta aqui de proposito mesmo assim,
+# para quem ler este bloco saber de que quest se trata sem abrir o outro
+# arquivo.
+#
+# 12059 e o tempo de espera da Batalha dos Orcs. O rAthena traz `+2h`
+# (intervalo de duas horas); o bRO diz "Retorno: Reseta meia-noite", e e o
+# bRO que estamos seguindo nesta instancia - ver o cabecalho de
+# npc/guerra/porta_dos_orcs.txt.
+#
+# `0h` SEM o `+` e hora EXATA, nao intervalo: o leitor separa os dois casos
+# pela presenca do sinal (quest.cpp:71), e sem ele o `quest_time()` devolve
+# o proximo 00:00. Trocar por `+0h` nao daria erro - daria prazo zero.
+#
+# Nao pega mais nada: os outros dois "12059" de npc/ sao o ITEM 12059
+# (Lutie Cold Noodle), que e outro espaco de numeracao.
+  - Id: 12059
+    Title: Orc's Memory Time Limit
+    TimeLimit: 0h
