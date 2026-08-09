@@ -4397,3 +4397,145 @@ reinício do map-server procurando `Unknown syntax` no `log/map-msg_log.log` —
 
 A gravação passou por três travas próprias: recusa caractere fora do cp1252,
 recusa `\xef\xbf\xbd` no resultado e recusa aspa dupla dentro da tradução.
+
+---
+
+## A rodada de 2026-08-09 — 47 itens, e a metade que faltava do manto
+
+O pedido tinha seis listas de item e uma linha de trava, e o que ele
+custou não estava nas listas: **nove dos onze mantos pedidos eram, até
+aquele dia, impossíveis**. Fechar isso é a parte desta rodada que vai
+sobreviver a ela.
+
+### A trava: a Maçã da Inocência aparecia na aba de venda
+
+A Maçã (30999) já tinha `NoDrop`, `NoTrade`, `NoStorage`,
+`NoGuildStorage`, `NoMail`, `NoAuction` e `NoCart` — a lista inteira
+menos uma, e a que faltava era justamente a que o jogador vê. Sem
+`NoSell` ela entrava na aba de venda de qualquer NPC de loja.
+
+Foi um campo. O que precisou ser conferido antes é o `CLAUDE.md` §10:
+`itemshop` passa a moeda por `pc_can_sell_item`, que **recusa item
+`NoSell`** — se a Maçã fosse cobrada por uma loja assim, a trava
+quebraria a compra. Não é o caso: o Mestre de UP cobra com
+`countitem`/`delitem` (`npc/guerra/mestre_de_up.txt:102`), fora de
+qualquer loja.
+
+### `ferramentas/estende_robeid.py` — o que o `PENDENCIAS.md` §4 pedia
+
+O §4 registrava desde 2026-08-05: *"o que falta escrever: um
+`estende_robeid.py` espelhado no `estende_accessoryid.py`"*. Nove dos onze
+mantos pedidos esbarraram exatamente nisso — `View` fora das 120 entradas
+da nossa `spriterobeid.lub` de 2021-11-03, e o `instala_manto.py` os
+recusava por escrito.
+
+Escrito, aplicado, e a tabela foi de **120 para 129 slots**. O detalhe do
+formato está em `ferramentas/LEIAME.md`; aqui ficam as três coisas que só
+apareceram ao fazer.
+
+**O `spriterobename.lub` tem TRÊS globais, e o terceiro é um vetor.**
+`RobeNameTable`, `RobeNameTable_Eng` e `RobeTopLayer` — este último não é
+mapa: é a lista dos mantos que o cliente desenha **por cima** do
+personagem (mochila, bolsa, asa que passa na frente), 38 dos nossos 120.
+Regerar o arquivo sem ele compila, sobe e não dá erro nenhum; os 38
+passariam a desenhar atrás, calados. Dos nove novos, oito entraram no
+vetor porque o bRO os põe lá; o de fora é a Capa de Herói, que é capuz.
+
+**O `instala_manto.py` estava lendo a tabela errada, e por sorte não doía.**
+`vv.tabela_lua` devolve os pares de todas as tabelas do arquivo numa lista
+só, e um `dict()` por cima ficava com a última — a `_Eng`. Medido: das 120
+entradas, 98 têm os dois nomes iguais e a diferença não aparecia; **nas 17
+em que diferem, a pasta que existe no GRF é a da `RobeNameTable` em 17 de
+17, e a da `_Eng` em 0**. O `_Eng` é lista paralela de consulta, não
+caminho. Os treze de 2026-08-08 caíram todos nas 98.
+
+**A terceira trava é mais dura aqui do que no chapéu, e a assimetria é do
+formato.** O `estende_accessoryid.py` só confere arte antes de gravar num
+ramo, com o argumento de que View novo já chega quebrado com modal.
+Manto **não**: sem entrada de tabela ele fica invisível e **calado**,
+porque o cliente nem tem nome de pasta para procurar. Gravar a entrada sem
+ter a arte troca silêncio por caixa de erro — e isso é piorar. Então aqui a
+conferência vale para todo View novo.
+
+**E o `instala_manto.py` precisou aprender a ler o disco antes do GRF.**
+Custou uma rodada: com o override já gravado, ele continuou respondendo
+pelo GRF de 2021 e recusou um manto cuja entrada acabara de ser posta.
+Mesma lição que o `valida_visual.le_tabelas_acessorio` já tinha aprendido
+do outro lado — o `DataFolderFirst` faz `cliente\data\` vencer, e
+ferramenta que consulta a tabela tem de consultar a que o cliente lê.
+
+### As seis lojas, e as três leituras que o pedido exigiu
+
+O pedido listava "Capa" duas vezes e "Cabeça meio" duas vezes, e as duas
+duplicatas não eram engano: quem decide é o `Locations:` do `item_db`.
+
+| lista do pedido | loja | por quê |
+|---|---|---|
+| "NPC de Visuais: Capa" | Manteleiro | `Costume_Garment` |
+| "Capa" (três com `[1]`) | **Capeiro** | `Garment` de verdade — Defense, peso, refino |
+| "Visual: Cabeça topo/meio/baixo" | Costumeiro / Adereceiro / Camareiro | `Costume_Head_*` |
+| "Cabeça meio" (um com `[1]`) | **Ocleiro** | `Head_Mid` de verdade |
+
+Contagem final: Costumeiro 146→164, Adereceiro 116→124, Camareiro
+117→123, Manteleiro 13→24, Capeiro 15→18, Ocleiro 11→12. **47 itens.**
+
+**Duas repetições no pedido, e nenhuma virou item repetido na vitrine.**
+O Meda Elmo (410121) estava no Adereceiro desde 2026-08-05 e não entrou de
+novo; o Traje de Leão (20194) vinha listado duas vezes na mesma lista de
+topo e entrou uma. Conferir antes de acrescentar é o que impede a mesma
+peça aparecer duas vezes — a lição da Capa de Magma, de 2026-08-08.
+
+**Uma mudou de loja no mesmo dia, e é a que deu a regra.** A Máscara de
+Minorous (21207) veio na lista de topo e é `Costume_Head_Low`/`_Mid` no
+`item_db`, sem `Head_Top` nenhum — no Costumeiro ela não equiparia no slot
+que a placa anuncia. Entrou lá na primeira passada, a ressalva foi escrita,
+e o dono mandou movê-la: foi para o **Adereceiro**, a loja de meio, onde
+equipa. Os outros seis da rodada que servem a mais de um slot têm
+`Costume_Head_Top` entre eles, então para esses a placa não mente e eles
+ficaram.
+
+É a segunda peça da fileira a mudar de vitrine por esse motivo. A primeira
+foi a Piscadela de Freya, em 2026-08-07, e aquela ainda custou um override
+no `item_db` porque o nosso rAthena discordava do bRO. Esta não custou
+nada: o `Locations:` já estava certo, faltava lê-lo. Virou o `CLAUDE.md`
+§4.14.
+
+**Cinco itens estavam fora do `itemInfo.lua`** — apareceriam sem nome e sem
+ícone na própria vitrine. Vieram do bRO pelo `completa_iteminfo.py`, com o
+`Name` do servidor sincronizado depois pelo `nomes_pt_item_db.py`: 480155
+(Capa de Herói, que o `item_db` chamava de "Costume National Flag"), 20612
+(Escudo de Oridecon), 480188 (Asas da Valquíria Caída), 480251 (Asas
+Majestosas) e 410010 (Olhos Ilusórios).
+
+**A 480188 é a primeira capa do Capeiro com `View`.** As outras dezessete
+são capa de status, sem desenho vestido. O `View` dela é 131, o **mesmo** da
+versão cosmética que foi para o Manteleiro (480189) — então a entrada de
+tabela e a pasta de sprite serviram às duas, e não houve nada a fazer por
+ela em separado.
+
+### O que foi verificado
+
+`valida_visual.py` deu **0 faltando** nos 47. O map-server foi reiniciado e
+o `log/map-msg_log.log` não trouxe nenhum `Unknown syntax` — a busca que o
+`CLAUDE.md` §5 manda fazer, porque uma linha ruim mata o arquivo inteiro e
+o erro fica soterrado sob centenas de `[Warning]` inofensivos. Os dois
+`.lub` gerados passaram no `Tools\luac.exe -p` do ROenglishRE. E o
+`estende_robeid.py` foi rodado três vezes seguidas para provar que o
+override não deriva: 129 constantes nas três.
+
+**O cabeçalho do `mercado_de_visuais.txt` mandava conferir uma coisa, e ela
+aconteceu.** Ele afirmava que aquele arquivo não devia produzir o aviso
+`npc_parse_shop: Item X discounted buying price`, e que se aparecesse era
+para conferir. Apareceu, sete vezes. A conta foi refeita item a item: são
+nove itens com `Buy` entre 435, todos com `Buy` 10 ou 20, ou seja 4 ou 9
+zeny de lucro por compra — o mesmo tamanho das duas exceções que o
+cabeçalho já aceitava. A frase mudou; a lista dos nove ficou escrita, para
+que a próxima conferência saiba quais ignorar.
+
+### O que falta ver no jogo
+
+Os mantos. O cliente lê `spriterobeid.lub` e `itemInfo.lua` **só na
+inicialização** — fechar e reabrir antes de testar. O que ninguém viu ainda
+é o manto **desenhado nas costas do personagem**: a tabela, a arte e a
+validação dizem que sim, e as três já disseram isso junto antes sem que
+alguém tivesse olhado.

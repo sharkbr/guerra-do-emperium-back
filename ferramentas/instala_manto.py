@@ -18,17 +18,24 @@ o alvo e a subarvore `data\\sprite\\<manto>\\<recurso>\\` inteira, e o que
 mandamos para o disco e a diferenca entre o que a origem tem e o que o nosso
 cliente ja tem. Um item de manto custa entre 250 e 700 arquivos.
 
-O QUE ESTE SCRIPT NAO FAZ, e por que isso nao impediu de usa-lo
---------------------------------------------------------------
+O QUE ESTE SCRIPT NAO FAZ - e quem faz, desde 2026-08-09
+-------------------------------------------------------
 Ele NAO estende o `spriterobeid.lub`/`spriterobename.lub` - a tabela que
-traduz o `View` do item_db no nome da pasta. E o que o `estende_accessoryid.py`
-faz do lado do chapeu, e a metade que o PENDENCIAS.md secao 4 registra como
-ausente. Continua ausente.
+traduz o `View` do item_db no nome da pasta. Isso e do `estende_robeid.py`,
+como o `estende_accessoryid.py` e do lado do chapeu. A divisao e a mesma:
+UM TRAZ A ENTRADA DE TABELA, O OUTRO TRAZ OS ARQUIVOS, e so os dois juntos
+curam o item. A ordem nao e preferencia:
 
-A diferenca e que ela nem sempre e necessaria: a nossa tabela tem 120 entradas,
-e todo manto cujo `View` ja esteja la precisa apenas da ARTE - que e o que este
-script copia. Item com `View` fora da tabela e recusado aqui, com o motivo por
-extenso, em vez de copiar 600 arquivos que o cliente nunca vai procurar.
+    python estende_robeid.py --id <n>              # a entrada de tabela
+    python instala_manto.py  --ids <n> --aplicar   # a arte
+
+Invertido, este aqui recusa - so sabe em que PASTA copiar depois que a tabela
+conhece o `View`.
+
+A tabela do nosso GRF tem 120 entradas, e todo manto cujo `View` ja esteja la
+precisa apenas da ARTE. Item com `View` fora dela e recusado aqui, com o motivo
+por extenso, em vez de copiar 600 arquivos que o cliente nunca vai procurar - e
+a recusa agora tem conserto, que e rodar o `estende_robeid.py` e voltar.
 
 Nao mexe no GRF: o `DataFolderFirst` faz o disco vencer, entao apagar reverte.
 
@@ -65,12 +72,35 @@ def tabelas_robe(caminho_grf):
     Mesmo par de tabelas que o `estende_accessoryid.py` le do lado do chapeu:
     uma leva o numero a uma constante (`ROBE_Calabash`) e a outra a constante
     ao nome da pasta (`Calabash`).
+
+    Duas correcoes de 2026-08-09, as duas do `estende_robeid.py`:
+
+    **DISCO PRIMEIRO quando o GRF e o NOSSO**, pela mesma razao do
+    `vv.le_tabelas_acessorio`: o `DataFolderFirst` faz `cliente\\data\\` vencer
+    o GRF, entao depois de o `estende_robeid.py` gravar o override e ele que o
+    cliente le. Sem isto o script continuava respondendo pelo GRF de 2021 e
+    RECUSAVA - "view X so existe no spriterobeid do bRO" - um manto cuja
+    entrada acabara de ser posta.
+
+    **`RobeNameTable`, e nao `RobeNameTable_Eng`.** O `spriterobename.lub` tem
+    TRES globais, e o `vv.tabela_lua` devolve os pares de todos numa lista so -
+    um `dict()` por cima ficava com a ultima, que e a `_Eng`. Das 120 entradas
+    do nosso cliente, 98 tem os dois nomes iguais e a diferenca nao aparecia;
+    nas 17 em que eles diferem, a pasta que existe no GRF e a da
+    `RobeNameTable` (nome coreano) em 17 de 17, e a da `_Eng` em 0. Ou seja: o
+    `_Eng` e lista paralela de consulta, nao caminho. Com ele, manto antigo dava
+    "a origem nao tem a pasta de manto" - alto, mas pelo motivo errado.
     """
-    grf = Grf(caminho_grf)
-    ids = dict(vv.tabela_lua(luadis.read_func(luadis.R(grf.read(ROBE_ID), 12)), []))
-    nomes = dict(vv.tabela_lua(luadis.read_func(luadis.R(grf.read(ROBE_NOME), 12)), []))
-    por_view = dict((int(v), k) for k, v in ids.items() if isinstance(k, str))
-    return por_view, nomes
+    # Import adiado de proposito: o `estende_robeid` importa ESTE modulo (pelas
+    # constantes ROBE_ID/RAIZ_MANTO/BRO_GRF), entao a importacao no topo
+    # fecharia um ciclo. Adiada para a chamada, o ciclo nao existe.
+    import estende_robeid as er
+    if caminho_grf == vv.GRF:
+        ov_ids, ov_nomes, _eng, _topo = er.tabelas_do_override()
+        if ov_ids:
+            return dict((int(v), k) for k, v in ov_ids.items()), ov_nomes
+    ids, nomes, _eng, _topo = er.tabelas_do_grf(caminho_grf)
+    return dict((int(v), k) for k, v in ids.items()), nomes
 
 
 def recurso_do_view(por_view, nomes, view):
@@ -118,9 +148,10 @@ def resolve(iid, itens, cli, por_view, nomes, bro_view, bro_nomes, origem):
         no_bro = recurso_do_view(bro_view, bro_nomes, view)
         if no_bro:
             raise Erro('view %d de %d so existe no spriterobeid do bRO (%s). '
-                       'Estender a NOSSA tabela e o que falta - ver '
-                       'PENDENCIAS.md secao 4. Copiar arte agora nao resolve.'
-                       % (view, iid, no_bro))
+                       'Copiar arte agora nao resolve - o cliente nem chega a '
+                       'procurar o arquivo. Rode antes:  python '
+                       'estende_robeid.py --id %d'
+                       % (view, iid, no_bro, iid))
         raise Erro('view %d de %d nao existe em spriterobeid nenhum' % (view, iid))
 
     do_origem = alvos(origem, res)

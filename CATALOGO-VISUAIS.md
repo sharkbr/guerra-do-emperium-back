@@ -42,7 +42,30 @@ GRF do bRO pelo `ferramentas/instala_manto.py`, escrito nesse dia — o
 irmão do `instala_visual.py` para essa camada. **Cliente novo perde a
 cópia**; a receita para repor está no cabeçalho da loja.
 
-## Costumeiro — Costume topo (146 itens)
+**A rodada de 2026-08-09** pôs **43 itens** nas quatro lojas — 18 no
+Costumeiro, 8 no Adereceiro, 6 no Camareiro e 11 no Manteleiro —, todos
+pedidos item por item e nenhum saindo de varredura. (Foram 47 no dia, mas
+quatro caíram fora deste catálogo: três capas com cova foram para o
+**Capeiro** e os Olhos Ilusórios para o **Ocleiro**, os dois no
+`mercado_contemporaneo.txt`, porque são equipamento de verdade e não
+visual — quem decide é o `Locations:` do `item_db`.)
+
+**Foi a rodada que fechou a lacuna do manto.** Nove dos onze do Manteleiro
+tinham `View` fora das 120 entradas da nossa tabela, e manto assim não
+desenha por mais arte que se copie: o cliente nem chega a procurar
+arquivo. O `ferramentas/estende_robeid.py` — escrito nesse dia, o irmão do
+`estende_accessoryid.py` do lado do manto — levou a tabela a 129 slots. A
+coluna `tabela` da lista do Manteleiro diz, item a item, qual dos dois
+caminhos cada um usou.
+
+**Uma peça mudou de loja no mesmo dia.** A Máscara de Minorous (21207)
+veio na lista de topo e é `Costume_Head_Low`/`_Mid` no `item_db`, sem
+`Head_Top` — no Costumeiro ela não equiparia no slot da placa. Foi para o
+**Adereceiro**, onde equipa. É o mesmo motivo que moveu a Piscadela de
+Freya em 2026-08-07, e a lição está no `CLAUDE.md` §4.14: **quem decide a
+vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
+
+## Costumeiro — Costume topo (164 itens)
 
 `prontera 151,155` — sprite `1_F_MERCHANT_01`
 
@@ -61,13 +84,25 @@ cópia**; a receita para repor está no cabeçalho da loja.
 | 15893 | Solarium |
 | 15925 | Boneco de Pouring |
 | 15952 | Naga Tailandesa |
+| 18740 | Cabelo de Super Saiadim |
+| 19519 | Nuvem com Raios |
+| 19598 | Elmo do Rei do Norte |
 | 19602 | Chapéu Invisível ★ |
+| 19630 | Coroa Valiosa |
+| 19639 | Chapéu Rural |
+| 19982 | Gorro de Noel |
 | 19996 | Cavalo Rei ★ |
+| 20135 | Coroa do Segredo |
+| 20180 | Chapéu de Faroeste |
+| 20183 | Presença Misteriosa |
+| 20194 | Traje de Leão |
 | 20234 | Máscara de Bafomé ★ |
 | 20244 | Disfarce de Jirtas ★ |
+| 20248 | Peruca de Saiadim |
 | 20308 | Costume Koneko Hat |
 | 20309 | Costume Dip Schmidt Helm |
 | 20385 | Elmo do Herói |
+| 21300 | Máscara do Guarda Leão |
 | 21400 | Costume Blue Dragon Statue |
 | 31108 | Balão de Fala (Abraços Grátis) |
 | 31109 | Balão de Fala (Recruto para Clã) |
@@ -76,7 +111,13 @@ cópia**; a receita para repor está no cabeçalho da loja.
 | 31112 | Balão de Fala (Hue Hue Br) |
 | 31156 | Costume Nut Shell |
 | 31159 | Chapéu de Jormungand |
+| 31172 | Cabeça de Glugluzão |
+| 31177 | Chapéu Mãe Natureza |
+| 31180 | Faixa do Shurão da Preula |
 | 31324 | Fones da DJ Kitty |
+| 31396 | Capuz Trevoso |
+| 31409 | Elmo Reforçado |
+| 31414 | Adorno de Câncer |
 | 31419 | Tiara Flap Flap |
 | 31501 | Fonte de Faíscas |
 | 31535 | Chapéu de Titica |
@@ -195,7 +236,7 @@ cópia**; a receita para repor está no cabeçalho da loja.
 | 440005 | Coroa do Diabo |
 | 440012 | Máscara de Eggman |
 
-## Adereceiro — Costume meio (116 itens)
+## Adereceiro — Costume meio (124 itens)
 
 `prontera 155,155` — sprite `4_M_HUMERCHANT`
 
@@ -204,8 +245,16 @@ cópia**; a receita para repor está no cabeçalho da loja.
 | 15840 | Óculos de Bioproteção |
 | 15953 | Carrinho do Zé |
 | 18742 | Luar de Cristal |
+| 19551 | Símbolo Élfico |
+| 19554 | Máscara Tradicional |
 | 19603 | Óculos Invisíveis ★ |
+| 19638 | Sr. Sorriso |
+| 19801 | Máscara da ANBU |
+| 20286 | Óculos da Persona |
+| 20397 | Máscara de Jakk |
 | 21200 | Lágrimas Masculinas |
+| 21207 | Máscara de Minorous |
+| 31118 | Máscara do Vilão |
 | 31462 | Brincos de Poring Rosa |
 | 31515 | Gatinho Curioso |
 | 31949 | Asas de Diabolus |
@@ -318,7 +367,7 @@ cópia**; a receita para repor está no cabeçalho da loja.
 | 436010 | Cabeça de Tarantuling |
 | 480200 | Asas do Anjo Fiel |
 
-## Camareiro — Costume baixo (117 itens)
+## Camareiro — Costume baixo (123 itens)
 
 `prontera 159,155` — sprite `1_F_MERCHANT_02`
 
@@ -326,14 +375,20 @@ cópia**; a receita para repor está no cabeçalho da loja.
 |---|---|
 | 15954 | Espaguete & Lasanha |
 | 19604 | Máscara Invisível ★ |
+| 20798 | Traje do Ceifeiro |
 | 31305 | Angeling de Estimação |
 | 31386 | Orbes Místicos |
+| 31490 | Cachecol de Poring |
 | 31500 | Costume Sparkler Stick |
 | 31503 | Deviling de Estimação |
 | 31584 | Cachecol de Marin |
 | 31593 | Lenço do Deserto |
 | 31594 | Lápis de Cor Vermelho |
+| 31698 | Chapéuzinho Carmesinho |
+| 31700 | Cachecol dos Corajosos |
+| 31735 | Gargalheira de Yawata |
 | 31882 | Espetinho de Chocolate |
+| 31932 | Gravata-Paletó |
 | 400258 | Peruca Ondulada de Jade |
 | 400327 | Peruca Estilosa Rosa |
 | 400425 | Flauta de Falcão |
@@ -442,33 +497,52 @@ cópia**; a receita para repor está no cabeçalho da loja.
 | 420360 | Peruca do Sino Felino |
 | 490242 | Cabelo de Valquíria |
 
-## Manteleiro — Costume capa (13 itens)
+## Manteleiro — Costume capa (24 itens)
 
 `prontera 163,155` — sprite `1_M_MERCHANT`
 
-Aberta em 2026-08-08. Os treze foram pedidos item por item e **nenhum
-sai de varredura** — ver a nota da rodada, no topo.
+Aberta em 2026-08-08 com treze; onze entraram em 2026-08-09.
+Os vinte e quatro foram pedidos item por item e **nenhum sai de
+varredura** — ver a nota da rodada, no topo.
 
-A coluna "arte" diz de onde veio a sprite de manto por classe: `GRF`
-significa que este cliente já a tinha; `bRO` que ela foi copiada em
-2026-08-08 pelo `instala_manto.py`, e que um cliente novo precisa da
-cópia de novo.
+**São DUAS camadas, e as duas colunas dizem uma cada.** `arte` é de onde
+veio a sprite de manto por classe: `GRF` significa que este cliente já a
+tinha; `bRO` que ela foi copiada pelo `instala_manto.py`, e que um cliente
+novo precisa da cópia de novo. `tabela` é o `spriterobeid.lub`, que traduz
+o `View` no nome da pasta: `GRF` são os que cabiam nas 120 entradas de
+2021-11-03; **`override`** são os nove que só passaram a existir com o
+`estende_robeid.py`, em 2026-08-09.
 
-| id | nome | view | arte |
-|---|---|---|---|
-| 480055 | Asas Encantadas de Rudra | 72 | bRO |
-| 480056 | Asas Amaldiçoadas de Arcanjo | 73 | GRF |
-| 480058 | Asas Áureas de Arcanjo | 75 | GRF |
-| 480069 | Asas Encantadas de Arcanjo | 61 | GRF + bRO |
-| 480071 | Recipiente das Areias | 82 | GRF + bRO |
-| 480096 | Casaco Aconchegante | 99 | bRO |
-| 480097 | Aura Nevada | — | não veste |
-| 480107 | Espadas Cruzadas | 104 | GRF |
-| 480110 | Mochila do Doram Aventureiro | 107 | GRF + bRO |
-| 480117 | Guitarra de Rockstar | 108 | bRO |
-| 480118 | Espada do General | 114 | bRO |
-| 480121 | Asas Orientais | 111 | bRO |
-| 480122 | Asas Carnavalescas | 112 | GRF |
+**As duas se perdem num cliente novo, e em ordem.** Repor é rodar
+`estende_robeid.py` e só depois `instala_manto.py` — invertido, o segundo
+recusa.
+
+| id | nome | view | arte | tabela |
+|---|---|---|---|---|
+| 20612 | Escudo de Oridecon | 90 | bRO | GRF |
+| 480055 | Asas Encantadas de Rudra | 72 | bRO | GRF |
+| 480056 | Asas Amaldiçoadas de Arcanjo | 73 | GRF | GRF |
+| 480058 | Asas Áureas de Arcanjo | 75 | GRF | GRF |
+| 480069 | Asas Encantadas de Arcanjo | 61 | GRF + bRO | GRF |
+| 480071 | Recipiente das Areias | 82 | GRF + bRO | GRF |
+| 480096 | Casaco Aconchegante | 99 | bRO | GRF |
+| 480097 | Aura Nevada | — | não veste | — |
+| 480107 | Espadas Cruzadas | 104 | GRF | GRF |
+| 480110 | Mochila do Doram Aventureiro | 107 | GRF + bRO | GRF |
+| 480117 | Guitarra de Rockstar | 108 | bRO | GRF |
+| 480118 | Espada do General | 114 | bRO | GRF |
+| 480121 | Asas Orientais | 111 | bRO | GRF |
+| 480122 | Asas Carnavalescas | 112 | GRF | GRF |
+| 480127 | Chapéu Pendurado de Palha | 115 | bRO | GRF |
+| 480155 | Capa de Herói | 122 | bRO | **override** |
+| 480169 | Guitarra de Deviling | 125 | bRO | **override** |
+| 480189 | Asas Amaldiçoadas de Valquíria | 131 | bRO | **override** |
+| 480198 | Asas Laureadas | 136 | bRO | **override** |
+| 480207 | Mochila Multiuso | 137 | bRO | **override** |
+| 480223 | Muranyasa | 147 | bRO | **override** |
+| 480235 | Tridente com Lacinho | 148 | bRO | **override** |
+| 480237 | Katanas do Mestre Tengu | 158 | bRO | **override** |
+| 480246 | Lança de Valquíria | 154 | bRO | **override** |
 
 **A Aura Nevada não é manto.** Ela não tem `View`: o que ela faz é um
 `hateffect` (`HAT_EF_SNOW_POWDER`) no `Script` do item — efeito de tela,

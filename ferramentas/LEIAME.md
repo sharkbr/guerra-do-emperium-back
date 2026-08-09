@@ -1859,22 +1859,42 @@ Por isso aqui não existe lista canônica de caminhos como o
 **diferença** entre o que a origem tem e o que o nosso cliente já tem. Rodar
 duas vezes não copia nada na segunda.
 
-### O que ele NÃO faz, e por que isso não impediu de usá-lo
+### O que ele NÃO faz — e quem passou a fazer, em 2026-08-09
 
 Ele **não** estende o `spriterobeid.lub`/`spriterobename.lub` — a tabela que
-traduz o `View` do `item_db` no nome da pasta. É o que o
-`estende_accessoryid.py` faz do lado do chapéu, e é a metade que continua
-faltando.
+traduz o `View` do `item_db` no nome da pasta. Isso agora é do
+**`estende_robeid.py`**, logo abaixo; até 2026-08-09 não era de ninguém, e o
+`PENDENCIAS.md` §4 registrava a falta.
 
-A diferença é que ela nem sempre é necessária. A nossa tabela tem **120
-entradas**, e todo manto cujo `View` já esteja lá precisa apenas da arte — que
-é o que este script copia. Foi exatamente o caso dos treze do Manteleiro: os
-`View` deles vão de 61 a 114, todos dentro das 120.
+A divisão continua a mesma dos dois do lado do chapéu: **um traz a entrada de
+tabela, o outro traz os arquivos**, e só os dois juntos curam o item.
 
-**Manto com `View` fora da tabela é RECUSADO**, com o motivo por extenso, em
-vez de copiar 600 arquivos que o cliente nunca vai procurar. Prometer cura que
-não há como cumprir foi o erro que o `varre_cosmeticos.py` já evita do outro
-lado.
+A tabela do nosso GRF tem **120 entradas**, e todo manto cujo `View` já esteja
+lá precisa apenas da arte — que é o que este script copia. Foi o caso dos treze
+do Manteleiro de 2026-08-08: os `View` deles vão de 61 a 114, todos dentro das
+120. Nove dos onze de 2026-08-09 não tiveram essa sorte.
+
+**Manto com `View` fora da tabela continua sendo RECUSADO**, com o motivo por
+extenso, em vez de copiar 600 arquivos que o cliente nunca vai procurar. O que
+mudou é que agora a recusa tem conserto: rodar o `estende_robeid.py` e voltar.
+
+### Duas correções de 2026-08-09, as duas vindas do `estende_robeid.py`
+
+**Disco primeiro, quando o GRF é o nosso.** O `tabelas_robe` lia só o GRF, e o
+`DataFolderFirst` faz `cliente\data\` vencer — então, logo depois de o
+`estende_robeid.py` gravar o override, este script continuava respondendo pelo
+GRF de 2021 e **recusava um manto cuja entrada acabara de ser posta**. Mesma
+lição que o `valida_visual.le_tabelas_acessorio` já tinha aprendido do lado do
+chapéu, e que aqui custou uma rodada.
+
+**`RobeNameTable`, e não `RobeNameTable_Eng`.** O `spriterobename.lub` tem
+**três** globais, e o `vv.tabela_lua` devolve os pares de todos numa lista só —
+um `dict()` por cima ficava com a última, que é a `_Eng`. Das 120 entradas do
+nosso cliente, 98 têm os dois nomes iguais e a diferença não aparecia; nas **17
+em que eles diferem, a pasta que existe no GRF é a da `RobeNameTable`** (nome
+coreano) em 17 de 17, e a da `_Eng` em 0. O `_Eng` é lista paralela de
+consulta, não caminho. Com ele, manto antigo dava *"a origem não tem a pasta de
+manto"* — alto, mas pelo motivo errado.
 
 ### Duas armadilhas que ele resolve
 
@@ -2056,6 +2076,80 @@ constante **dentro** da base do GRF, então o teste antigo (`const not in
 base_ids`) não a reconhecia como nossa — e como a base é relida do GRF a cada
 rodada, a rodada seguinte a apagaria calada. Agora `const in ov_nomes and const
 not in base_nomes` também conta.
+
+## `estende_robeid.py` — o mesmo, do lado do MANTO
+
+```
+python estende_robeid.py                              # o que já foi acrescentado
+python estende_robeid.py --id 480169 --grf <bro>      # pelo item
+python estende_robeid.py --view 125 --grf <bro>       # pelo View
+python estende_robeid.py --id 480169 --verificar      # --grf tem padrão: o bRO
+python estende_robeid.py --reverter                   # apaga o override
+```
+
+Escrito em 2026-08-09, e é a metade que o `PENDENCIAS.md` §4 registrava como
+ausente desde 2026-08-05. **Espelho do `estende_accessoryid.py`**: mesma base
+relida do GRF, mesma recuperação por diferença, mesmo round-trip antes de
+gravar, mesmo `--reverter`. Ler aquela seção primeiro; aqui está só o que
+difere, e o que difere é o formato do arquivo.
+
+O que ele destravou na primeira rodada: **nove dos onze mantos** do Manteleiro
+de 2026-08-09. A nossa tabela foi de 120 para 129 slots.
+
+### Três globais, não dois — e o terceiro é uma LISTA
+
+Do lado do chapéu são duas tabelas em dois arquivos. Aqui são **três globais**
+em dois arquivos:
+
+| arquivo | global | forma |
+|---|---|---|
+| `spriterobeid.lub` | `SPRITE_ROBE_IDs` | `{const = view}` |
+| `spriterobename.lub` | `RobeNameTable` | `{[SPRITE_ROBE_IDs.const] = "pasta"}` |
+| | `RobeNameTable_Eng` | idem, a lista paralela em inglês |
+| | `RobeTopLayer` | **vetor** de constantes |
+
+`RobeNameTable` é quem dá o nome da **pasta** de sprite; nas entradas velhas
+ela vem em coreano (CP949) e nas novas em ASCII. `RobeTopLayer` **não é mapa**:
+é o vetor dos mantos que o cliente desenha **por cima** do personagem —
+mochila, bolsa, asa que passa na frente. São 38 dos nossos 120, e 151 dos 258
+do bRO.
+
+**Reescrever o arquivo sem o `RobeTopLayer` compila, sobe e não dá erro
+nenhum** — os 38 mantos que hoje desenham na frente passariam a desenhar atrás,
+calados. Por isso ele é preservado inteiro, na ordem original (vetor
+reordenado é mudança de conteúdo), e um manto novo entra nele se, e só se, o
+bRO também o puser lá. Dos nove de 2026-08-09, oito entraram; o único de fora
+foi a Capa de Herói (`C_Vietnam_flag_hood`), que é capuz e desenha atrás.
+
+Ler os três exigiu cortar o bytecode por `SETGLOBAL` — o `vv.tabela_lua`
+devolve tudo numa lista só, e `RobeNameTable` e `_Eng` têm as **mesmas
+chaves**: um `dict()` por cima colapsa uma na outra sem avisar. Foi essa a
+armadilha que o `instala_manto.py` tinha desde 2026-08-08.
+
+### A terceira trava, que do lado do chapéu vale só para um ramo
+
+`estende_accessoryid.py` recusa gravar sufixo sem arte **apenas** no ramo
+`[nome]`, com o argumento de que View novo já chega quebrado com modal, então
+acrescentar não piora. **Aqui a trava vale para TODO View novo**, e a
+assimetria é do formato:
+
+- chapéu sem entrada de tabela → `Cannot find File` modal, já de saída;
+- manto sem entrada de tabela → **invisível e calado**, porque o cliente nem
+  tem nome de pasta para procurar.
+
+Gravar a entrada sem ter a arte troca silêncio por caixa de erro — e isso é
+piorar. Então o script confere que a pasta de sprite existe em algum dos dois
+GRFs (ou já no disco) antes de aceitar o View.
+
+### A ordem importa, e o `instala_manto.py` a cobra
+
+```
+python estende_robeid.py --id <n>              # a entrada de tabela
+python instala_manto.py  --ids <n> --aplicar   # a arte
+```
+
+Invertido, o segundo **recusa** — ele agora lê o override do disco antes do
+GRF, então sabe a diferença. Alto, com o motivo por extenso, e não em silêncio.
 
 ## `varre_cosmeticos.py` — o que dá para vestir, e o que daria depois da cura
 

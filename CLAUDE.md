@@ -190,6 +190,29 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     Em 2026-08-09 onze dos dezesseis catálogos de instância estavam sem os
     `mapannounce`/`unittalk` (o `vermes` tinha 331 pares onde havia 453), e
     quatro grupos foram dados por prontos antes de o buraco aparecer.
+14. **Em que loja um item entra é decidido pelo `Locations:` do `item_db`,
+    nunca pelo nome nem pela lista em que ele foi pedido.** As doze lojas do
+    quarteirão de Prontera são pares: uma de VISUAL e uma de EQUIPAMENTO por
+    slot — Manteleiro/Capeiro (capa), Adereceiro/Ocleiro (cabeça meio), e
+    assim por diante. `Costume_Garment` vai para a de visual, a 1 zeny;
+    `Garment` com Defense, peso e refino vai para a de equipamento. Um pedido
+    que diga "Capa" pode querer as duas, e em 2026-08-09 queria: onze
+    cosméticos e três capas com cova, na mesma lista. **Ler a lista e não o
+    `Locations:` põe equipamento de status numa vitrine de 1 zeny.**
+
+    O `estado_item.py --id <n>` responde isso numa linha, e a resposta pode
+    contrariar o nome. Os dois casos vivos, os dois na fileira de visual:
+    a **Piscadela de Freya** é de meio e o nosso rAthena a dava como baixo
+    (2026-08-07, custou um override no `item_db`); a **Máscara de Minorous**
+    é `Costume_Head_Low`/`_Mid` e foi pedida na lista de topo (2026-08-09,
+    não custou nada — o `Locations:` já estava certo, faltava lê-lo). As
+    duas acabaram no Adereceiro.
+
+    **Divergência entre o pedido e o `item_db` é para levantar na entrega,
+    não para resolver sozinho.** Escrever no comentário da loja e dizer ao
+    dono; a Minorous foi entregue como pedida, com a ressalva por escrito, e
+    a mudança de loja veio dele na volta. O que não pode é a divergência
+    ficar só na cabeça de quem editou.
 
 ## 5. Armadilhas deste ambiente
 
@@ -234,6 +257,27 @@ Produziram diagnóstico falso e custaram retrabalho:
   registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só
   `SETTABLE ... ; B="NOME" C=<valor>` captura as ~127 primeiras entradas e
   devolve um número **plausível e errado**.
+- **Um `.lub` pode definir MAIS DE UMA tabela, e ler tudo numa lista só
+  colapsa uma na outra.** O `valida_visual.tabela_lua` devolve os pares de
+  todas as tabelas do arquivo achatados; um `dict()` por cima fica com a
+  **última**. O `spriterobename.lub` tem três globais — `RobeNameTable`,
+  `RobeNameTable_Eng` e `RobeTopLayer` —, e as duas primeiras têm as mesmas
+  chaves com valores diferentes. O `instala_manto.py` leu a errada de
+  2026-08-08 a 2026-08-09 e não doeu porque 98 das 120 entradas têm os dois
+  nomes iguais; nas 17 em que diferem, a pasta que existe no GRF é a da
+  **primeira**, em 17 de 17. Quem lê `.lub` corta o bytecode por `SETGLOBAL`
+  (ver `estende_robeid._globais`) antes de indexar. E cuidado com o terceiro
+  tipo: `RobeTopLayer` é **vetor** (`SETLIST`), não mapa — quem só olha
+  `SETTABLE` o vê vazio e o descarta, e regerar o arquivo sem ele faz 38
+  mantos passarem a desenhar atrás do personagem, calados.
+- **Ferramenta que consulta tabela do cliente tem de ler `cliente\data\`
+  ANTES do GRF.** O `DataFolderFirst` faz o disco vencer, então depois de
+  qualquer `estende_*.py` gravar o override é ele que o cliente lê. Uma
+  ferramenta que só leia o GRF continua respondendo pelo arquivo de
+  2021-11-03 e **nega a existência do que acabou de ser posto** — o
+  `instala_manto.py` recusou, em 2026-08-09, um manto cuja entrada de tabela
+  existia havia um minuto. O `valida_visual.le_tabelas_acessorio` já
+  documentava isso do lado do chapéu; o erro foi não aplicar do outro.
 - **Compilar pela linha de comando exige `SolutionDir` explícito.** O
   `map-server.vcxproj` tira os caminhos de include dessa variável, que só o
   `.sln` define. Sem ela o compilador não acha `common/cbasetypes.hpp` e

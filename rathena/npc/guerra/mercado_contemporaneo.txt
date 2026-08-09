@@ -361,6 +361,24 @@ OnInit:
 // Artifacts"), foi sincronizado pelo nomes_pt_item_db.py. Arte
 // nao faltou em nenhum dos tres: 8 de 8 no valida_visual.py.
 //
+// DOZE, desde 2026-08-09: entraram os Olhos Ilusorios (410010,
+// View 1779), pedidos item por item. Head_Mid de verdade, com uma
+// cova, EquipLevelMin 100 - a versao com cova do 410009, e por isso
+// o AegisName termina em `_` (`Eyes_Of_Illusion_`).
+//
+// Repetiu a licao dos dois 410xxx logo acima, pela terceira vez: o
+// rAthena o tinha, o CLIENTE nao. Sem entrada no itemInfo.lua o
+// item aparece sem nome e sem icone na propria vitrine. Veio do bRO
+// pelo completa_iteminfo.py, e o `Name` do servidor, que estava em
+// ingles ("Eyes of Illusion"), foi sincronizado pelo
+// nomes_pt_item_db.py. Arte nao faltou: 8 de 8 no valida_visual.py.
+//
+// Ele TEM `Buy: 20` no item_db - o unico desta loja que tem. Vendido
+// a 1 zeny, revende por 10, ou seja 9 de lucro por compra. Nao move
+// nada, mas e por causa dele que este arquivo faz o rAthena imprimir
+// mais uma linha de `npc_parse_shop: Item X discounted buying price`
+// na subida.
+//
 // OITAVO ITEM em 2026-08-05: a Diadema Arco-iris (18894, View 1019).
 // Foi pedida "no Chapeleiro" e veio parar aqui porque o item_db a da
 // como `Head_Mid`, e a descricao do bRO concorda ("Equipa em: Meio").
@@ -375,7 +393,7 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 //
@@ -495,6 +513,32 @@ OnInit:
 // Sao capa DE VERDADE (Garment), nao visual: tem Defense, peso e
 // refino, e por isso vivem aqui e nao no Manteleiro do
 // mercado_de_visuais.txt.
+//
+// RODADA DE 2026-08-09: entraram TRES, e a loja foi a dezoito.
+//   + 480188  Asas da Valquiria Caida  [1]
+//   + 480228  Capa de Necromante       [1]
+//   + 480251  Asas Majestosas          [1]
+//
+// AS TRES SAO GARMENT COM COVA, e e por isso que estao aqui e nao
+// no Manteleiro, ainda que o pedido as tenha listado logo depois
+// das capas de visual: quem decide e o `Locations:` do item_db, e
+// la elas sao `Garment`, com Defense, peso, refino e Script. As
+// duas primeiras vem com EquipLevelMin 100.
+//
+// DUAS ESTAVAM FORA DO itemInfo.lua - o cliente as mostraria sem
+// nome e sem icone. "Asas da Valquiria Caida" (480188) e "Asas
+// Majestosas" (480251) sao os nomes do bRO; o item_db as chamava de
+// "Valkyrie Curse Bright" e "Mystery Wing". Vieram pelo
+// completa_iteminfo.py, com o `Name` do servidor sincronizado
+// depois pelo nomes_pt_item_db.py.
+//
+// A 480188 E A PRIMEIRA CAPA DESTA LOJA COM `View`, e por isso a
+// unica que precisou da tabela de manto. As outras dezessete nao
+// tem `View` nenhum: sao capa de status, sem desenho vestido. O
+// View dela e o 131, o MESMO da versao cosmetica (480189, no
+// Manteleiro) - entao a entrada de tabela do estende_robeid.py e a
+// pasta de sprite copiada pelo instala_manto.py servem as duas, e
+// nao houve nada a fazer por ela em separado.
 prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
@@ -503,7 +547,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480220:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas

@@ -653,46 +653,36 @@ O `ferramentas/LEIAME.md` tem o detalhe das travas e do formato. Duas regras que
 
 ---
 
-## 4. METADE RESOLVIDA — o manto cosmético (`Costume_Garment`)
+## 4. O manto cosmético (`Costume_Garment`) — falta só o `varre_cosmeticos.py`
 
 Aberto em 2026-08-05, ao varrer o acervo cosmético para o Mercado de Visuais.
-**Metade fechou em 2026-08-08**, com o Manteleiro e o `instala_manto.py`; a
-outra metade continua aqui.
-
-Manto tem **duas camadas a mais** que chapéu, e cada uma tinha a sua lacuna:
+**A ferramenta que faltava foi escrita em 2026-08-09** (`estende_robeid.py`);
+o que sobra aqui é uma consequência dela, não a lacuna original. O relato
+completo está no `HISTORICO.md`, seção "O manto cosmético".
 
 | camada | chapéu | manto | estado |
 |---|---|---|---|
 | nome e descrição | `itemInfo.lua` | igual | — |
-| slot de visual | `accessoryid.lub` + `accname.lub` | `spriterobeid.lub` + `spriterobename.lub` | **em aberto** |
-| ferramenta que estende o slot | `estende_accessoryid.py` | **não existe** | **em aberto** |
+| slot de visual | `accessoryid.lub` + `accname.lub` | `spriterobeid.lub` + `spriterobename.lub` | resolvido |
+| ferramenta que estende o slot | `estende_accessoryid.py` | `estende_robeid.py` | resolvido |
 | arquivos de arte | 4 de item + 4 de cabeça | 4 de item + sprite de manto **por classe** | resolvido |
 | ferramenta que instala a arte | `instala_visual.py` | `instala_manto.py` | resolvido |
 
-### O que fechou
-
-A arte. O `ferramentas/instala_manto.py` copia a subárvore de sprite de manto
-da GRF do bRO para `cliente\data\`, item a item, só o que falta — 2925 arquivos
-para os treze do Manteleiro. Tem `--verificar` implícito (sem `--aplicar` só
-relata) e é idempotente. Ver `ferramentas/LEIAME.md`.
-
 ### O que continua em aberto
 
-Estender a `spriterobeid.lub`. A nossa tem **120 entradas**; manto cujo `View`
-esteja fora dela **não desenha, e arte nenhuma resolve**. Os treze do
-Manteleiro não esbarraram nisso por sorte de catálogo — os `View` deles vão de
-61 a 114, todos dentro das 120 —, mas o acervo maior esbarra.
+**O `varre_cosmeticos.py` ainda não classifica manto como `curavel`.** Ele se
+recusava a isso porque a cura não existia — chamar de "sem cura" o que só
+precisava de outra ferramenta foi o erro de 2026-08-01, e prometer cura que não
+há como cumprir é o erro simétrico. Agora a cura existe, e a recusa virou
+conservadorismo sem motivo.
 
-O `instala_manto.py` **recusa** esse caso em vez de copiar 600 arquivos que o
-cliente nunca vai procurar, e diz por quê. O `varre_cosmeticos.py` continua se
-recusando a chamar manto de `curavel` pela mesma razão: chamar de "sem cura" o
-que só precisava de outra ferramenta foi o erro de 2026-08-01, e prometer cura
-que não há como cumprir é o erro simétrico.
+Feita essa mudança, os **45 mantos** que estavam parados em `curavel` desde
+2026-08-05 voltam à mesa — e com eles a pergunta de quantos dos 193 "sem cura"
+daquela contagem eram, na verdade, `View` fora da tabela e não falta de arte.
 
-**O que falta escrever:** um `estende_robeid.py` espelhado no
-`estende_accessoryid.py` (mesma base-relida-do-GRF, mesmo round-trip, mesmas
-duas travas). Feito isso, o `varre_cosmeticos.py` pode passar a classificar
-manto como `curavel`, e os 45 que estavam parados em 2026-08-05 voltam à mesa.
+Nada disso é bloqueio: manto pedido item por item continua entrando pelo
+caminho de sempre, que é o que as rodadas de 2026-08-08 e 2026-08-09 fizeram.
+O que falta é a **varredura**, para não depender de pedido.
 
 ### Duas confusões que continuam valendo
 

@@ -74966,7 +74966,7 @@ Body:
       }
   - Id: 15385
     AegisName: MemorialD_Assistant
-    Name: Little Robot Know-It-All    # !todo check english name
+    Name: "Robozinho Sabe-Tudo"
     Type: Armor
     Weight: 10
     Locations:
@@ -78671,7 +78671,7 @@ Body:
       bonus bFlee2,2*((readparam(bAgi)+readparam(bLuk))/15);
   - Id: 15924
     AegisName: Tatoo_Brush_BR
-    Name: Tattoo Brush
+    Name: "Pincel de Tatuagem"
     Type: Armor
     Weight: 100
     Locations:
@@ -111023,7 +111023,7 @@ Body:
       hateffect(HAT_EF_160LV_SOUL_R_GRAY,false);
   - Id: 20612
     AegisName: C_Ten_G_Shield_TW
-    Name: Costume Ten Guardian Shield
+    Name: "Escudo de Oridecon"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -172786,7 +172786,7 @@ Body:
       hateffect HAT_EF_C_BULB_WREATH,false;
   - Id: 400476
     AegisName: Boina_Sustenida_BR
-    Name: Sustained Beret
+    Name: "Boina Sustenida"
     Type: Armor
     Weight: 400
     Slots: 1
@@ -172813,7 +172813,7 @@ Body:
       }
   - Id: 400477
     AegisName: Ferramentas_BR
-    Name: Agricultural Tools
+    Name: "Ferramentas Agrícolas"
     Type: Armor
     Weight: 700
     Slots: 1
@@ -180993,7 +180993,7 @@ Body:
          bonus bFixedCastrate,-70;
   - Id: 410010
     AegisName: Eyes_Of_Illusion_
-    Name: Eyes of Illusion
+    Name: "Olhos Ilusórios"
     Type: Armor
     Buy: 20
     Weight: 500
@@ -181059,7 +181059,7 @@ Body:
       bonus bDelayrate,-10;
   - Id: 410015
     AegisName: Cor_Core_Headset_
-    Name: Cor Core Headphone
+    Name: "Fones COR"
     Type: Armor
     View: 2017
     Weight: 100
@@ -184436,7 +184436,7 @@ Body:
     View: 666
   - Id: 410320
     AegisName: C_Blink_Eyes_D_Freyja
-    Name: "Piscadela de Freya"
+    Name: Costume Demi-Freya's Twinkling Eyes
     Type: Armor
     Jobs:
       All: true
@@ -212862,7 +212862,7 @@ Body:
          bonus2 bIgnoreMdefClassRate,Class_Boss,10;
   - Id: 480155
     AegisName: C_Vietnam_flag_hood
-    Name: Costume National Flag
+    Name: "Capa de Herói"
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -213373,7 +213373,7 @@ Body:
     View: 130
   - Id: 480188
     AegisName: Valkyrie_Curse_blight
-    Name: Valkyrie Curse Bright
+    Name: "Asas da Valquíria Caída"
     Type: Armor
     Weight: 400
     Defense: 38
@@ -214407,7 +214407,7 @@ Body:
     Refineable: true
   - Id: 480251
     AegisName: Mystical_Wing
-    Name: Mystery Wing
+    Name: "Asas Majestosas"
     Type: Armor
     Weight: 500
     Defense: 50
@@ -215788,7 +215788,7 @@ Body:
       }
   - Id: 480332
     AegisName: Ice_Dream_Tree_BR
-    Name: Dream Guardian
+    Name: "Guardiã do Sonho"
     Type: Armor
     Defense: 100
     Slots: 1
@@ -228069,7 +228069,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,5;
   - Id: 490578
     AegisName: aegis_490578
-    Name: SSD Card
+    Name: "Cartão SSD"
     Type: Armor
     Weight: 300
     Defense: 15

@@ -18,7 +18,7 @@
 //= jogador circular.
 //===== Descrição ============================================
 //= QUATRO lojas de VISUAL: três por slot de cabeça e, desde
-//= 2026-08-08, uma de MANTO. 392 itens, tudo a 1 zeny.
+//= 2026-08-08, uma de MANTO. 435 itens, tudo a 1 zeny.
 //===== Notas ================================================
 //= O QUE ESTÁ À VENDA, E POR QUE SÓ ISTO
 //=
@@ -86,10 +86,18 @@
 //= desse lado. Ele copiou 2925 arquivos da GRF do bRO para
 //= `cliente\data\` em 2026-08-08.
 //=
-//= A METADE QUE CONTINUA FALTANDO é estender a spriterobeid: manto
-//= cujo `View` esteja fora das nossas 120 entradas segue sem cura,
-//= e o instala_manto.py RECUSA esse caso em vez de copiar 600
-//= arquivos que o cliente nunca vai procurar. Ver PENDENCIAS.md.
+//= A OUTRA METADE FECHOU EM 2026-08-09, com o
+//= `ferramentas/estende_robeid.py`. Ele é para o manto o que o
+//= `estende_accessoryid.py` é para o chapéu: grava um override em
+//= texto de `spriterobeid.lub` e `spriterobename.lub` sobre
+//= `cliente\data\`, e com ele manto cujo `View` esteja fora da
+//= tabela de 2021-11-03 passa a desenhar. A nossa foi de 120 para
+//= 129 slots, e é o que pôs onze mantos nesta loja naquele dia.
+//=
+//= CUIDADO COM A ORDEM, e ela não é preferência: o
+//= `instala_manto.py` só sabe em que PASTA copiar a arte depois que
+//= a tabela conhece o `View`. Invertido, ele recusa - alto, com o
+//= motivo por extenso, e não em silêncio.
 //=
 //= UM DOS TREZE NÃO TEM MANTO NENHUM, e está na loja de propósito:
 //= a Aura Nevada (480097) não tem `View`. O que ela faz é um
@@ -125,18 +133,28 @@
 //= PREÇO: 1 zeny, como o Mercado Contemporâneo.
 //=
 //= Aqui a revenda NÃO é problema, e isso foi medido antes de
-//= escolher o preço: 382 dos 384 não têm `Buy` nem `Sell`
-//= no item_db, então revendem por 0 em qualquer NPC. As duas
-//= exceções são o 18742 (Luar de Cristal), com `Buy: 20`, e o
-//= 19996 (Cavalo Rei), com `Buy: 10`, que entrou em 2026-08-05.
-//= Revendem por 10 e por 5 - 9 e 4 de lucro por compra, que não
-//= move nada.
+//= escolher o preço: em 2026-08-09, 426 dos 435 não têm `Buy` nem
+//= `Sell` no item_db, então revendem por 0 em qualquer NPC. As NOVE
+//= exceções revendem por 10 (`Buy: 20`) ou por 5 (`Buy: 10`) - 9 e
+//= 4 de lucro por compra, que não move nada:
 //=
-//= Ou seja: ao contrário do Mercado Contemporâneo, este arquivo
-//= não deve fazer o rAthena imprimir o aviso
-//= `npc_parse_shop: Item X discounted buying price`. Se ele
-//= aparecer, algum item novo entrou com preço - conferir, não
-//= ignorar.
+//=   18740 Cabelo de Super Saiadim   18742 Luar de Cristal
+//=   19551 Símbolo Élfico            19554 Máscara Tradicional
+//=   19598 Elmo do Rei do Norte      19630 Coroa Valiosa
+//=   19638 Sr. Sorriso               19639 Chapéu Rural
+//=   19996 Cavalo Rei
+//=
+//= ESTE ARQUIVO FAZ, SIM, o rAthena imprimir o aviso
+//= `npc_parse_shop: Item X discounted buying price` - nove vezes,
+//= uma por item da lista acima. Até 2026-08-09 eram duas, e o
+//= cabeçalho dizia que ele não devia aparecer; sete dos itens
+//= daquela rodada trouxeram as outras sete, e a conta foi refeita
+//= item a item antes de a frase mudar.
+//=
+//= A conferência continua valendo, e é ela que importa: aviso com
+//= item que NÃO esteja nesta lista é item novo com preço, e aí é
+//= preciso olhar quanto ele revende antes de deixar passar. O que a
+//= lista compra é saber quais nove ignorar.
 //=
 //= ------------------------------------------------------------
 //= COMO ACRESCENTAR ITEM
@@ -159,6 +177,24 @@
 //= equipar, e não é só ficar feio. Foi o que custou a rodada de
 //= 2026-08-01, quando 43 dos 77 itens do Mercado Contemporâneo
 //= estavam sem nenhum dos 4 arquivos.
+//=
+//= PARA MANTO (`Costume_Garment`, o Manteleiro) o passo 2 é OUTRO,
+//= porque a camada é outra - e o 1, o 3 e o 4 continuam valendo:
+//=        completa_iteminfo.py  --id <n>
+//=        estende_robeid.py     --id <n>
+//=        instala_manto.py      --ids <n> --aplicar
+//=        instala_visual.py     --id <n> --grf "<grf do bRO>"
+//=
+//= A mesma dependência de ordem vale aqui, e pelo mesmo motivo: o
+//= `instala_manto.py` só sabe em que PASTA copiar depois que a
+//= tabela conhece o `View`. Invertido, ele recusa - alto, e não em
+//= silêncio como o instala_visual faria.
+//=
+//= O `instala_visual.py` no FIM é pelos QUATRO arquivos de item -
+//= sprite de chão e os dois ícones -, que valem para qualquer item
+//= e que o `instala_manto.py` não traz: ele cuida só da subárvore
+//= de sprite de manto. Foi o que faltou em 2 dos 11 mantos de
+//= 2026-08-09, e quem pegou foi o passo 3.
 //=
 //= ------------------------------------------------------------
 //= SPRITES conferidos no npcidentity.lub DESTE cliente antes de
@@ -196,7 +232,36 @@
 //============================================================
 
 // ----- Costumeiro (x=151): Visual de cabeca topo -- chapeu, coroa, asa, chifre.
-// 146 itens. O Disfarce de Jirtas (20244) entrou em 2026-08-07,
+// 164 itens.
+//
+// DEZOITO ENTRARAM EM 2026-08-09, pedidos item por item, e nenhum
+// custou ferramenta de cura: os dezoito ja passavam no
+// valida_visual.py com 8 de 8, com arte e entrada de cliente. Foi
+// so acrescentar o ID.
+//   18740 Cabelo de Super Saiadim    19519 Nuvem com Raios
+//   19598 Elmo do Rei do Norte       19630 Coroa Valiosa
+//   19639 Chapeu Rural               19982 Gorro de Noel
+//   20135 Coroa do Segredo           20180 Chapeu de Faroeste
+//   20183 Presenca Misteriosa        20194 Traje de Leao
+//   20248 Peruca de Saiadim          21300 Mascara do Guarda Leao
+//   31172 Cabeca de Glugluzao        31177 Chapeu Mae Natureza
+//   31180 Faixa do Shurao da Preula  31396 Capuz Trevoso
+//   31409 Elmo Reforcado             31414 Adorno de Cancer
+//
+// O PEDIDO TRAZIA UM DEZENOVE, a Mascara de Minorous (21207), e ela
+// NAO esta aqui: o item_db a da como `Costume_Head_Low` e
+// `Costume_Head_Mid`, sem `Head_Top` nenhum, entao ela nao equipa
+// no slot desta loja. Foi posta aqui na primeira passada e movida
+// para o ADERECEIRO no mesmo dia, a pedido - quem decide a vitrine
+// e o `Locations:`, nao a lista do pedido (CLAUDE.md secao 4,
+// regra 14).
+//
+// Seis dos dezoito TAMBEM servem a mais de um slot - 20183, 19598,
+// 21300, 31409, 31172 e o 20244 abaixo -, e esses ficam: os seis
+// tem `Costume_Head_Top` entre os seus, entao para eles a placa
+// nao mente.
+//
+// O Disfarce de Jirtas (20244) entrou em 2026-08-07,
 // pedido item por item como os dez do cabecalho - e, como eles,
 // nao sai de varredura nenhuma: o varre_cosmeticos.py ja o punha
 // no balde `ok`, ou seja ele nunca foi conteudo novo. O item_db o
@@ -210,10 +275,34 @@ OnInit:
 	placadevenda "Visuais: cabeça topo";
 	end;
 }
--	shop	Costumeiro#loja	-1,15825:1,15838:1,15841:1,15842:1,15846:1,15847:1,15851:1,15854:1,15875:1,15888:1,15893:1,15925:1,15952:1,19602:1,19996:1,20234:1,20244:1,20308:1,20309:1,20385:1,21400:1,31108:1,31109:1,31110:1,31111:1,31112:1,31156:1,31159:1,31324:1,31419:1,31501:1,31535:1,31536:1,31539:1,31557:1,31558:1,31587:1,31595:1,31596:1,31597:1,31613:1,31665:1,31666:1,31702:1,31722:1,31821:1,31890:1,31897:1,31935:1,31950:1,31952:1,400080:1,400091:1,400092:1,400093:1,400131:1,400133:1,400136:1,400143:1,400158:1,400166:1,400167:1,400168:1,400175:1,400195:1,400205:1,400206:1,400207:1,400208:1,400209:1,400210:1,400211:1,400212:1,400221:1,400224:1,400225:1,400232:1,400253:1,400271:1,400272:1,400277:1,400278:1,400290:1,400309:1,400310:1,400311:1,400313:1,400314:1,400321:1,400343:1,400351:1,400354:1,400355:1,400356:1,400357:1,400358:1,400370:1,400398:1,400402:1,400405:1,400406:1,400407:1,400424:1,400426:1,400428:1,400429:1,400430:1,400431:1,400432:1,400435:1,400436:1,400439:1,400448:1,400450:1,400458:1,400460:1,400462:1,400466:1,400480:1,400496:1,400497:1,400502:1,400517:1,400567:1,400585:1,400588:1,400594:1,400596:1,400604:1,400633:1,400634:1,400635:1,400656:1,400664:1,400671:1,400684:1,400692:1,400693:1,400703:1,400708:1,430001:1,430005:1,440001:1,440004:1,440005:1,440012:1
+-	shop	Costumeiro#loja	-1,15825:1,15838:1,15841:1,15842:1,15846:1,15847:1,15851:1,15854:1,15875:1,15888:1,15893:1,15925:1,15952:1,18740:1,19519:1,19598:1,19602:1,19630:1,19639:1,19982:1,19996:1,20135:1,20180:1,20183:1,20194:1,20234:1,20244:1,20248:1,20308:1,20309:1,20385:1,21300:1,21400:1,31108:1,31109:1,31110:1,31111:1,31112:1,31156:1,31159:1,31172:1,31177:1,31180:1,31324:1,31396:1,31409:1,31414:1,31419:1,31501:1,31535:1,31536:1,31539:1,31557:1,31558:1,31587:1,31595:1,31596:1,31597:1,31613:1,31665:1,31666:1,31702:1,31722:1,31821:1,31890:1,31897:1,31935:1,31950:1,31952:1,400080:1,400091:1,400092:1,400093:1,400131:1,400133:1,400136:1,400143:1,400158:1,400166:1,400167:1,400168:1,400175:1,400195:1,400205:1,400206:1,400207:1,400208:1,400209:1,400210:1,400211:1,400212:1,400221:1,400224:1,400225:1,400232:1,400253:1,400271:1,400272:1,400277:1,400278:1,400290:1,400309:1,400310:1,400311:1,400313:1,400314:1,400321:1,400343:1,400351:1,400354:1,400355:1,400356:1,400357:1,400358:1,400370:1,400398:1,400402:1,400405:1,400406:1,400407:1,400424:1,400426:1,400428:1,400429:1,400430:1,400431:1,400432:1,400435:1,400436:1,400439:1,400448:1,400450:1,400458:1,400460:1,400462:1,400466:1,400480:1,400496:1,400497:1,400502:1,400517:1,400567:1,400585:1,400588:1,400594:1,400596:1,400604:1,400633:1,400634:1,400635:1,400656:1,400664:1,400671:1,400684:1,400692:1,400693:1,400703:1,400708:1,430001:1,430005:1,440001:1,440004:1,440005:1,440012:1
 
 // ----- Adereceiro (x=155): Visual de cabeca meio -- oculos, mascara, tapa-olho, adorno lateral.
-// 116 itens. O que entrou em 2026-08-07 nao veio de fora: a
+// 124 itens.
+//
+// OITO ENTRARAM EM 2026-08-09, pedidos item por item, todos com 8
+// de 8 no valida_visual.py antes de entrar:
+//   19551 Simbolo Elfico             19554 Mascara Tradicional
+//   19638 Sr. Sorriso                19801 Mascara da ANBU
+//   20286 Oculos da Persona          20397 Mascara de Jakk
+//   21207 Mascara de Minorous        31118 Mascara do Vilao
+//
+// A MASCARA DE MINOROUS (21207) VEIO DO COSTUMEIRO, no mesmo dia.
+// O pedido a listou entre os visuais de TOPO e o item_db a da como
+// `Costume_Head_Low`/`Costume_Head_Mid`, sem `Head_Top` - la ela
+// nao equiparia no slot da placa. Aqui equipa. Foi a segunda peca
+// da fileira a mudar de loja por esse motivo; a primeira foi a
+// Piscadela de Freya, em 2026-08-07, e aquela ainda custou um
+// override no item_db. Esta nao custou nada: bastou ler o
+// `Locations:`.
+//
+// O PEDIDO TRAZIA UM OITAVO, o Meda Elmo (410121), e ele JA ESTAVA
+// nesta loja desde a rodada de 2026-08-05. Nao entrou de novo -
+// conferir antes de acrescentar e o que impede a mesma peca
+// aparecer duas vezes na vitrine, como o Capeiro ja tinha ensinado
+// com a Capa de Magma.
+//
+// O que entrou em 2026-08-07 nao veio de fora: a
 // Piscadela de Freya (410320) VEIO DO CAMAREIRO, e a mudanca de
 // loja e a metade barata dela. Ver a nota do Camareiro, abaixo.
 prontera,155,155,4	script	Adereceiro	4_M_HUMERCHANT,{
@@ -224,10 +313,19 @@ OnInit:
 	placadevenda "Visuais: cabeça meio";
 	end;
 }
--	shop	Adereceiro#loja	-1,15840:1,15953:1,18742:1,19603:1,21200:1,31462:1,31515:1,31949:1,31953:1,31954:1,400491:1,410011:1,410030:1,410031:1,410032:1,410033:1,410034:1,410035:1,410036:1,410037:1,410038:1,410039:1,410040:1,410041:1,410042:1,410043:1,410044:1,410045:1,410047:1,410053:1,410059:1,410060:1,410072:1,410074:1,410098:1,410111:1,410112:1,410113:1,410114:1,410115:1,410116:1,410117:1,410118:1,410121:1,410128:1,410131:1,410132:1,410133:1,410144:1,410156:1,410157:1,410160:1,410178:1,410179:1,410182:1,410196:1,410198:1,410199:1,410200:1,410201:1,410202:1,410212:1,410217:1,410218:1,410219:1,410220:1,410224:1,410226:1,410234:1,410236:1,410240:1,410242:1,410245:1,410248:1,410251:1,410252:1,410253:1,410261:1,410262:1,410263:1,410264:1,410277:1,410278:1,410286:1,410289:1,410290:1,410296:1,410297:1,410311:1,410316:1,410317:1,410320:1,410326:1,410328:1,410329:1,410330:1,410331:1,410338:1,410351:1,410352:1,410353:1,410357:1,410359:1,410361:1,410364:1,420293:1,420294:1,420295:1,420296:1,420297:1,420298:1,420299:1,420300:1,436008:1,436010:1,480200:1
+-	shop	Adereceiro#loja	-1,15840:1,15953:1,18742:1,19551:1,19554:1,19603:1,19638:1,19801:1,20286:1,20397:1,21200:1,21207:1,31118:1,31462:1,31515:1,31949:1,31953:1,31954:1,400491:1,410011:1,410030:1,410031:1,410032:1,410033:1,410034:1,410035:1,410036:1,410037:1,410038:1,410039:1,410040:1,410041:1,410042:1,410043:1,410044:1,410045:1,410047:1,410053:1,410059:1,410060:1,410072:1,410074:1,410098:1,410111:1,410112:1,410113:1,410114:1,410115:1,410116:1,410117:1,410118:1,410121:1,410128:1,410131:1,410132:1,410133:1,410144:1,410156:1,410157:1,410160:1,410178:1,410179:1,410182:1,410196:1,410198:1,410199:1,410200:1,410201:1,410202:1,410212:1,410217:1,410218:1,410219:1,410220:1,410224:1,410226:1,410234:1,410236:1,410240:1,410242:1,410245:1,410248:1,410251:1,410252:1,410253:1,410261:1,410262:1,410263:1,410264:1,410277:1,410278:1,410286:1,410289:1,410290:1,410296:1,410297:1,410311:1,410316:1,410317:1,410320:1,410326:1,410328:1,410329:1,410330:1,410331:1,410338:1,410351:1,410352:1,410353:1,410357:1,410359:1,410361:1,410364:1,420293:1,420294:1,420295:1,420296:1,420297:1,420298:1,420299:1,420300:1,436008:1,436010:1,480200:1
 
 // ----- Camareiro (x=159): Visual de cabeca baixo -- cachecol, aura, bicho de ombro, cauda.
-// 117 itens. A Gloria Imperial (420029) entrou em 2026-08-08,
+// 123 itens.
+//
+// SEIS ENTRARAM EM 2026-08-09, pedidos item por item. Sao os unicos
+// da rodada em que a placa e o item_db concordam sem ressalva: os
+// seis sao `Costume_Head_Low` e so isso. 8 de 8 no valida_visual.py.
+//   20798 Traje do Ceifeiro          31490 Cachecol de Poring
+//   31698 Chapeuzinho Carmesinho     31700 Cachecol dos Corajosos
+//   31735 Gargalheira de Yawata      31932 Gravata-Paleto
+//
+// A Gloria Imperial (420029) entrou em 2026-08-08,
 // pedida item por item como os dez do cabecalho. Ela ja passava no
 // valida_visual.py com 8 de 8 antes de entrar - View 2056, e as
 // quatro sprites de cabeca (M e F, .spr e .act) estao no GRF deste
@@ -262,13 +360,46 @@ OnInit:
 	placadevenda "Visuais: cabeça baixo";
 	end;
 }
--	shop	Camareiro#loja	-1,15954:1,19604:1,31305:1,31386:1,31500:1,31503:1,31584:1,31593:1,31594:1,31882:1,400258:1,400327:1,400425:1,400427:1,410265:1,420014:1,420026:1,420029:1,420044:1,420046:1,420047:1,420054:1,420070:1,420071:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
+-	shop	Camareiro#loja	-1,15954:1,19604:1,20798:1,31305:1,31386:1,31490:1,31500:1,31503:1,31584:1,31593:1,31594:1,31698:1,31700:1,31735:1,31882:1,31932:1,400258:1,400327:1,400425:1,400427:1,410265:1,420014:1,420026:1,420029:1,420044:1,420046:1,420047:1,420054:1,420070:1,420071:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
 
 // ----- Manteleiro (x=163): Visual de CAPA -- manto, asa, mochila, instrumento.
-// 13 itens, e a quarta loja da fileira. Pedida em 2026-08-08, item
+// 24 itens, e a quarta loja da fileira. Pedida em 2026-08-08, item
 // por item: ela NAO sai de varredura nenhuma, porque o
-// varre_cosmeticos.py nao classifica manto como `curavel` - falta a
-// outra metade da ferramenta (ver o cabecalho, secao do manto).
+// varre_cosmeticos.py nao classifica manto como `curavel`.
+//
+// ONZE ENTRARAM EM 2026-08-09, e esta foi a rodada que fechou a
+// OUTRA METADE da ferramenta de manto. NOVE dos onze eram, ate
+// aquele dia, impossiveis: o `View` deles esta fora das 120
+// entradas do nosso `spriterobeid.lub` de 2021-11-03, e manto assim
+// nao desenha por mais arte que se copie - o cliente nem chega a
+// procurar arquivo. O `instala_manto.py` os recusava por escrito.
+//
+// Quem os destravou foi o `ferramentas/estende_robeid.py`, escrito
+// nesta rodada: o irmao do `estende_accessoryid.py` do lado do
+// manto. Ele grava um override em texto de `spriterobeid.lub` e
+// `spriterobename.lub` sobre `cliente\data\`, e a nossa tabela foi
+// de 120 para 129 slots. Quem trocar de cliente perde isso e
+// precisa rodar os dois scripts de novo, NESTA ordem:
+//   python ferramentas/estende_robeid.py --id <lista>
+//   python ferramentas/instala_manto.py  --ids <lista> --aplicar
+// Invertido, o segundo recusa - e diz por que.
+//
+//   20612 Escudo de Oridecon      * 480127 Chapeu Pendurado de Palha
+//  480155 Capa de Heroi             480169 Guitarra de Deviling
+//  480189 Asas Amaldicoadas de Valquiria
+//  480198 Asas Laureadas            480207 Mochila Multiuso
+//  480223 Muranyasa                 480235 Tridente com Lacinho
+//  480237 Katanas do Mestre Tengu   480246 Lanca de Valquiria
+// (* os dois marcados ja tinham o View na nossa tabela; so a arte
+//  faltava, e ela veio pelo instala_manto.py como em 2026-08-08.)
+//
+// O 480155 e o 20612 tambem estavam FORA do itemInfo.lua - "Capa de
+// Heroi" e "Escudo de Oridecon" sao os nomes que o bRO lhes da, e
+// no nosso item_db eles se chamavam "Costume National Flag" e
+// "Costume Ten Guardian Shield". Vieram pelo completa_iteminfo.py, e
+// o `Name` do servidor foi sincronizado pelo nomes_pt_item_db.py.
+// Os quatro arquivos de arte de item dos dois vieram do bRO pelo
+// instala_visual.py. Os onze terminaram com 0 faltando.
 //
 // Cinco dos treze nao desenhavam neste cliente ate 2026-08-08: o
 // 480055 (Rudra), o 480096 (Casaco Aconchegante), o 480117
@@ -295,4 +426,4 @@ OnInit:
 	placadevenda "Visuais: capa";
 	end;
 }
--	shop	Manteleiro#loja	-1,480055:1,480056:1,480058:1,480069:1,480071:1,480096:1,480097:1,480107:1,480110:1,480117:1,480118:1,480121:1,480122:1
+-	shop	Manteleiro#loja	-1,20612:1,480055:1,480056:1,480058:1,480069:1,480071:1,480096:1,480097:1,480107:1,480110:1,480117:1,480118:1,480121:1,480122:1,480127:1,480155:1,480169:1,480189:1,480198:1,480207:1,480223:1,480235:1,480237:1,480246:1

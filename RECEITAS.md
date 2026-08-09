@@ -66,27 +66,49 @@ não diz nada sobre a arte de manto. Item aprovado por ele pode abrir a loja,
 vender, equipar — e só então dar `Cannot find File`.
 
 ```
-1. python varre_cosmeticos.py --listar manto        # tem de dizer `ok`
+1. python completa_iteminfo.py --id <lista>         # se o cliente não o conhece
 2. python instala_manto.py --ids <lista>            # o que falta de manto
-3. python instala_manto.py --ids <lista> --aplicar
-4. python instala_manto.py --ids <lista>            # TEM QUE DAR 0 faltando
-5. fechar e reabrir o cliente
+3. python estende_robeid.py --id <lista>            # SÓ se o passo 2 recusar
+4. python instala_manto.py --ids <lista> --aplicar
+5. python instala_manto.py --ids <lista>            # TEM QUE DAR 0 faltando
+6. python instala_visual.py --id <lista> --grf "<grf do bRO>"
+7. python valida_visual.py  --id <lista>            # TEM QUE DAR 0
+8. fechar e reabrir o cliente
 ```
 
-**Como ler o resultado do passo 1:**
+**Por que 3 antes de 4, e não depois:** o `instala_manto.py` só sabe em que
+**pasta** copiar depois que a tabela conhece o `View`. Invertido, ele recusa —
+alto, com o motivo por extenso. E gravar a entrada de tabela sem ter a arte
+troca "invisível e calado" por caixa de erro modal, que é pior; por isso o
+`estende_robeid.py` confere a arte antes de aceitar o View.
+
+**Por que 6, se o 4 já copiou centenas de arquivos:** são camadas diferentes. O
+`instala_manto.py` cuida só da subárvore de sprite de manto; os **4 arquivos de
+item** (sprite de chão e os dois ícones) são do `instala_visual.py`, valem para
+qualquer item, e a falta deles entrega caixa modal **ao abrir a loja**. Foi o
+que faltou em 2 dos 11 mantos de 2026-08-09, e quem pegou foi o passo 7.
+
+**Como ler o resultado do passo 2:**
 
 | resposta | o que fazer |
 |---|---|
-| `ok` | seguir — o `View` está na nossa `spriterobeid.lub`. Falta só a arte |
-| `view N de manto so existe no robe do bRO` | **parar.** Falta a ferramenta que estende a tabela — `PENDENCIAS.md` §4 |
-| `view N de manto nao existe em robe nenhum` | **parar.** Não há o que instalar |
+| `N arquivo(s) faltando` | seguir para o 4 — o `View` já está na nossa `spriterobeid.lub` |
+| `view N ... so existe no spriterobeid do bRO` | fazer o **passo 3** e voltar ao 2 |
+| `view N ... nao existe em spriterobeid nenhum` | **parar.** Não há o que instalar |
+| `nao e Costume_Garment` | é capa **de verdade** (`Garment`) — vai para o Capeiro, e a arte é a receita 2 normal |
 
 **Duas coisas que parecem defeito e não são:**
 
 - **Manto sem `View`** (a Aura Nevada, 480097) é `hateffect` — efeito de tela,
   não desenho vestido. O passo 2 recusa dizendo isso, e o item funciona.
-- **`ok` no passo 1 com centenas de arquivos faltando no passo 2** é o caso
-  normal, não contradição: as duas perguntas são diferentes.
+- **`valida_visual.py` dando "4 de 4" com centenas de arquivos faltando no passo
+  2** é o caso normal, não contradição: as duas perguntas são diferentes.
+
+**E uma que é defeito, e engana:** se o passo 2 recusar um item **logo depois**
+de o passo 3 ter rodado, a ferramenta está lendo o GRF em vez do disco. Não
+deveria mais acontecer — foi corrigido em 2026-08-09 —, mas é o sintoma a
+reconhecer: o `DataFolderFirst` faz `cliente\data\` vencer, e ferramenta que
+consulta a tabela tem de consultar a que o **cliente** lê.
 
 Depois disso, a receita 3 normalmente.
 
