@@ -12,936 +12,936 @@
 ### npc/re/other/dimensional_gap.txt  (293 textos)
 #: npc/re/other/dimensional_gap.txt#1 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#2 (mes)
 - "Are you going to enter the ^0000FFDimensional Gap^000000?  Please use this Transport Device you see here."
-+ ""
++ "Você vai entrar no ^0000FFEspaço Dimensional^000000?  Por favor, use este Dispositivo de Transporte aqui."
 #: npc/re/other/dimensional_gap.txt#3 (select)
 - "What is the Dimensional Gap?:End Conversation."
-+ ""
++ "O que é o Espaço Dimensional?:Encerrar a conversa."
 #: npc/re/other/dimensional_gap.txt#4 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#5 (mes)
 - "As you know we've already entered through the Dimensional Rift to get to Ash Vacuum right?  The Dimensional Gap is an expansion of that initial discovery."
-+ ""
++ "Como você sabe, nós já atravessamos a Fenda Dimensional para chegar ao Ash Vacuum, certo?  O Espaço Dimensional é uma ampliação daquela primeira descoberta."
 #: npc/re/other/dimensional_gap.txt#6 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#7 (mes)
 - "A member of the Expedition team found these backdoor passages to get through the Dimensional Rifts."
-+ ""
++ "Um membro da equipe de Expedição achou estas passagens dos fundos para atravessar as Fendas Dimensionais."
 #: npc/re/other/dimensional_gap.txt#8 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#9 (mes)
 - "This is like a Midgard Alliance version of the Bifrost bridge so it can connect us to different parts of the New World."
-+ ""
++ "Isto é como uma versão da Aliança de Midgard da ponte Bifröst, então dá para nos ligar a diferentes partes do Novo Mundo."
 #: npc/re/other/dimensional_gap.txt#10 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#11 (mes)
 - "Time and space is distorted in the Dimensional Gap.  Not all passageways have been discovered so please be sure to use caution when entering an unverified area."
-+ ""
++ "O tempo e o espaço estão distorcidos no Espaço Dimensional.  Nem todas as passagens foram descobertas, então tome muito cuidado ao entrar numa área não verificada."
 #: npc/re/other/dimensional_gap.txt#12 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#13 (mes)
 - "Anyone who has become lost here has yet to return."
-+ ""
++ "Ninguém que se perdeu aqui voltou até hoje."
 #: npc/re/other/dimensional_gap.txt#14 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#15 (mes)
 - "Take care."
-+ ""
++ "Se cuide."
 #: npc/re/other/dimensional_gap.txt#16 (mes)
 - "[Expedition Guide]"
-+ ""
++ "[Guia da Expedição]"
 #: npc/re/other/dimensional_gap.txt#17 (mes)
 - "Please use a ^0000FFTransport Device^000000 if you wish to travel through the dimensional rift.  The insides have not been fully explored yet so please be careful in there."
-+ ""
++ "Por favor, use um ^0000FFDispositivo de Transporte^000000 se quiser viajar pela fenda dimensional.  O interior ainda não foi todo explorado, então tome cuidado lá dentro."
 #: npc/re/other/dimensional_gap.txt#18 (mes)
 - "[Allied Forces Soldier]"
-+ ""
++ "[Soldado das Forças Aliadas]"
 #: npc/re/other/dimensional_gap.txt#19 (mes)
 - "This dimensional rift is connected to the Allied Forces ^0000FFExpedition Camp^000000 in Jotunheim."
-+ ""
++ "Esta fenda dimensional liga ao ^0000FFAcampamento da Expedição da Aliança^000000, em Jotunheim."
 #: npc/re/other/dimensional_gap.txt#20 (mes)
 - "[Allied Forces Soldier]"
-+ ""
++ "[Soldado das Forças Aliadas]"
 #: npc/re/other/dimensional_gap.txt#21 (mes)
 - "Do not worry, it has been set up after testing hundreds of experiments for safe teleportation."
-+ ""
++ "Não se preocupe, ela foi montada depois de centenas de experimentos de teletransporte seguro."
 #: npc/re/other/dimensional_gap.txt#22 (mes)
 - "[Morocc Soldier]"
-+ ""
++ "[Soldado de Morroc]"
 #: npc/re/other/dimensional_gap.txt#23 (mes)
 - "This dimensional rift is connected to ^0000FFMorocc^000000 back in Midgard."
-+ ""
++ "Esta fenda dimensional liga a ^0000FFMorroc^000000, lá em Midgard."
 #: npc/re/other/dimensional_gap.txt#24 (mes)
 - "[Morocc Soldier]"
-+ ""
++ "[Soldado de Morroc]"
 #: npc/re/other/dimensional_gap.txt#25 (mes)
 - "This is the fastest gateway back to our world.  The area is still destroyed but restoration efforts will soon be on the way."
-+ ""
++ "É o caminho mais rápido de volta ao nosso mundo.  A região ainda está destruída, mas os esforços de reconstrução começam logo."
 #: npc/re/other/dimensional_gap.txt#26 (mes)
 - "[Spledide Soldier]"
-+ ""
++ "[Soldado de Esplendor]"
 #: npc/re/other/dimensional_gap.txt#27 (mes)
 - "This dimensional rift is connected to the south of ^0000FFBifrost^000000.  It enables quick travel to the Splendide frontline."
-+ ""
++ "Esta fenda dimensional liga ao sul de ^0000FFBifröst^000000.  Ela permite chegar depressa à linha de frente de Esplendor."
 #: npc/re/other/dimensional_gap.txt#28 (mes)
 - "[Spledide Soldier]"
-+ ""
++ "[Soldado de Esplendor]"
 #: npc/re/other/dimensional_gap.txt#29 (mes)
 - "If we use it properly, it enables us to advance more easily to the capital of the Sapha."
-+ ""
++ "Se usarmos direito, ela permite avançar com mais facilidade até a capital dos Sapha."
 #: npc/re/other/dimensional_gap.txt#30 (mes)
 - "[Spledide Soldier]"
-+ ""
++ "[Soldado de Esplendor]"
 #: npc/re/other/dimensional_gap.txt#31 (mes)
 - "The Mayor has asked us to cooperate as best we can instead of fighting, so I'm under orders not to do anything.  Since we have a common enemy we won't fight the Sapha... for now..."
-+ ""
++ "O Prefeito nos pediu para cooperar o máximo possível em vez de brigar, então tenho ordens de não fazer nada.  Como temos um inimigo em comum, não vamos brigar com os Sapha... por enquanto..."
 #: npc/re/other/dimensional_gap.txt#32 (mes)
 - "[Dispatched Sapha]"
-+ ""
++ "[Sapha Destacado]"
 #: npc/re/other/dimensional_gap.txt#33 (mes)
 - "This dimensional rift is connected to the southern area of the ^0000FFKamidal Mountains^000000 in El Dicastes.  I just dropped by for my research, but it is incredible."
-+ ""
++ "Esta fenda dimensional liga à região sul do ^0000FFMonte Kamidal^000000, em El Dicastes.  Eu só passei por aqui para a minha pesquisa, mas é incrível."
 #: npc/re/other/dimensional_gap.txt#34 (mes)
 - "[Dispatched Sapha]"
-+ ""
++ "[Sapha Destacado]"
 #: npc/re/other/dimensional_gap.txt#35 (mes)
 - "Moreover it is next to the Laphine capital..... Hmm... Do not worry, I do not want to fight in such a place."
-+ ""
++ "E ainda por cima fica ao lado da capital dos Laphine..... Hmm... Não se preocupe, eu não quero brigar num lugar desses."
 #: npc/re/other/dimensional_gap.txt#36 (mes)
 - "[Logistics Manager]"
-+ ""
++ "[Gerente de Logística]"
 #: npc/re/other/dimensional_gap.txt#37 (mes)
 - "Welcome.  I am in charge of logistics to take care of your items in this weird place.  Do you need to access your storage?"
-+ ""
++ "Bem-vindo.  Eu cuido da logística dos seus itens neste lugar esquisito.  Você precisa acessar o seu armazém?"
 #: npc/re/other/dimensional_gap.txt#38 (select)
 - "Open Storage 200 Zeny.:No Thanks."
-+ ""
++ "Abrir o armazém por 200 Zeny.:Não, obrigado."
 #: npc/re/other/dimensional_gap.txt#40 (mes)
 - "[Logistics Manager]"
-+ ""
++ "[Gerente de Logística]"
 #: npc/re/other/dimensional_gap.txt#41 (mes)
 - "You are not yet qualified to use the Storage."
-+ ""
++ "Você ainda não está habilitado a usar o Armazém."
 #: npc/re/other/dimensional_gap.txt#42 (mes)
 - "[Logistics Manager]"
-+ ""
++ "[Gerente de Logística]"
 #: npc/re/other/dimensional_gap.txt#43 (mes)
 - "You need at least 200 zeny to use the Storage."
-+ ""
++ "Você precisa de pelo menos 200 zeny para usar o Armazém."
 #: npc/re/other/dimensional_gap.txt#44 (mes)
 - "[Logistics Manager]"
-+ ""
++ "[Gerente de Logística]"
 #: npc/re/other/dimensional_gap.txt#45 (mes)
 - "Let me know if you change your mind."
-+ ""
++ "Me avise se mudar de ideia."
 #: npc/re/other/dimensional_gap.txt#52 (npctalk)
 - "Attention!!!"
-+ ""
++ "Atenção!!!"
 #: npc/re/other/dimensional_gap.txt#53 (npctalk)
 - "Party Leader#dali2"
 + ""
 #: npc/re/other/dimensional_gap.txt#54 (npctalk)
 - "Here, here. Everybody be quiet and line up!"
-+ ""
++ "Ei, ei. Todo mundo quieto e em fila!"
 #: npc/re/other/dimensional_gap.txt#55 (npctalk)
 - "Party Leader#dali2"
 + ""
 #: npc/re/other/dimensional_gap.txt#56 (npctalk)
 - "We have now entered the inside of the Dimensional Crack. Where should be go first?"
-+ ""
++ "Nós já entramos na Fenda Dimensional. Para onde vamos primeiro?"
 #: npc/re/other/dimensional_gap.txt#57 (npctalk)
 - "Party Leader#dali2"
 + ""
 #: npc/re/other/dimensional_gap.txt#58 (npctalk)
 - "Anyone have an opinion?"
-+ ""
++ "Alguém tem alguma opinião?"
 #: npc/re/other/dimensional_gap.txt#59 (npctalk)
 - "Party Leader#dali2"
 + ""
 #: npc/re/other/dimensional_gap.txt#60 (npctalk)
 - "I heard rumors about some magic swordman. Let's go find him."
-+ ""
++ "Ouvi boatos sobre um espadachim mágico. Vamos atrás dele."
 #: npc/re/other/dimensional_gap.txt#61 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#62 (npctalk)
 - "We heard about a magic competition being held here!"
-+ ""
++ "Ouvimos falar de uma competição de magia acontecendo aqui!"
 #: npc/re/other/dimensional_gap.txt#63 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#64 (npctalk)
 - "Where is it?!"
-+ ""
++ "Onde é?!"
 #: npc/re/other/dimensional_gap.txt#65 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#66 (npctalk)
 - "Uh, I'm a little bit hungry... I wonder if anybody is selling some warm sweet potatoes or even dumplings..."
-+ ""
++ "Ah, estou com um pouquinho de fome... Será que alguém vende batata-doce quentinha, ou nem que seja bolinho..."
 #: npc/re/other/dimensional_gap.txt#67 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#68 (npctalk)
 - "You want to eat again?"
-+ ""
++ "Você quer comer de novo?"
 #: npc/re/other/dimensional_gap.txt#69 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#70 (npctalk)
 - "I am just wondering about the tournament.."
-+ ""
++ "Eu só estou pensando no torneio.."
 #: npc/re/other/dimensional_gap.txt#71 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#72 (npctalk)
 - "I need to eat something before doing anything."
-+ ""
++ "Eu preciso comer alguma coisa antes de fazer qualquer coisa."
 #: npc/re/other/dimensional_gap.txt#73 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#74 (npctalk)
 - "By the way, I also heard about something called the Devil's Tower."
-+ ""
++ "Aliás, eu também ouvi falar de uma tal Torre do Demônio."
 #: npc/re/other/dimensional_gap.txt#75 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#76 (npctalk)
 - "I just saw a street trader passing by... Where is he?"
-+ ""
++ "Acabei de ver um vendedor ambulante passando... Cadê ele?"
 #: npc/re/other/dimensional_gap.txt#77 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#79 (npctalk)
 - "Huh? What is this? You still haven't entered?"
-+ ""
++ "Hein? O que é isso? Vocês ainda não entraram?"
 #: npc/re/other/dimensional_gap.txt#80 (npctalk)
 - "Party Member#SURA"
 + ""
 #: npc/re/other/dimensional_gap.txt#81 (npctalk)
 - "I am curious about the Faceworms I heard about from a Laphine."
-+ ""
++ "Estou curioso sobre os Faceworms de que um Laphine me falou."
 #: npc/re/other/dimensional_gap.txt#82 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#83 (npctalk)
 - "Can I come back after having a meal?"
-+ ""
++ "Eu posso voltar depois de comer?"
 #: npc/re/other/dimensional_gap.txt#84 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#85 (npctalk)
 - "Can you even catch that?"
-+ ""
++ "Você consegue pegar isso, por acaso?"
 #: npc/re/other/dimensional_gap.txt#86 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#87 (npctalk)
 - "Are you awake?"
-+ ""
++ "Você está acordado?"
 #: npc/re/other/dimensional_gap.txt#88 (npctalk)
 - "Party Member#SHADOW"
 + ""
 #: npc/re/other/dimensional_gap.txt#90 (npctalk)
 - "Why are you still here?"
-+ ""
++ "Por que você ainda está aqui?"
 #: npc/re/other/dimensional_gap.txt#91 (npctalk)
 - "Party Member#SURA"
 + ""
 #: npc/re/other/dimensional_gap.txt#92 (npctalk)
 - "Hang on a bit. The merchant is going to pass by soon."
-+ ""
++ "Espere um pouco. O mercador vai passar por aqui logo."
 #: npc/re/other/dimensional_gap.txt#93 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#94 (npctalk)
 - "That is your wish...."
-+ ""
++ "Esse é o seu desejo...."
 #: npc/re/other/dimensional_gap.txt#95 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#96 (npctalk)
 - "I want to buy cold grape juice~"
-+ ""
++ "Eu quero comprar suco de uva gelado~"
 #: npc/re/other/dimensional_gap.txt#97 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#98 (npctalk)
 - "I have no idea. There might be an accident up front."
-+ ""
++ "Não faço ideia. Deve ter acontecido alguma coisa lá na frente."
 #: npc/re/other/dimensional_gap.txt#99 (npctalk)
 - "Party Member#SHADOW"
 + ""
 #: npc/re/other/dimensional_gap.txt#100 (npctalk)
 - "What? How dare you?!"
-+ ""
++ "O quê? Como você ousa?!"
 #: npc/re/other/dimensional_gap.txt#101 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#102 (npctalk)
 - "Give me a sip of juice."
-+ ""
++ "Me dá um gole do suco."
 #: npc/re/other/dimensional_gap.txt#103 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#104 (npctalk)
 - "Cough~ Cough~"
-+ ""
++ "Cof~ Cof~"
 #: npc/re/other/dimensional_gap.txt#105 (npctalk)
 - "Party Member#EINOLD"
 + ""
 #: npc/re/other/dimensional_gap.txt#107 (npctalk)
 - "Damn! I am pissed off! I came here because I heard only a party is allowed to get in!"
-+ ""
++ "Droga! Estou irritado! Eu vim aqui porque ouvi dizer que só grupo podia entrar!"
 #: npc/re/other/dimensional_gap.txt#108 (npctalk)
 - "Party Member#SURA"
 + ""
 #: npc/re/other/dimensional_gap.txt#109 (npctalk)
 - "Are you going to hit me? Do it!"
-+ ""
++ "Você vai me bater? Bate!"
 #: npc/re/other/dimensional_gap.txt#110 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#112 (npctalk)
 - "You pay for your food."
-+ ""
++ "A sua comida você paga."
 #: npc/re/other/dimensional_gap.txt#113 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#115 (npctalk)
 - "Whatever, I'm not eating."
-+ ""
++ "Que seja, eu não vou comer."
 #: npc/re/other/dimensional_gap.txt#116 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#117 (npctalk)
 - "So mean.. I won't eat then."
-+ ""
++ "Que maldade.. Então eu não como."
 #: npc/re/other/dimensional_gap.txt#118 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#119 (npctalk)
 - "Right.. I should have entered with another group!"
-+ ""
++ "É.. Eu devia ter entrado com outro grupo!"
 #: npc/re/other/dimensional_gap.txt#120 (npctalk)
 - "Party Member#SHADOW"
 + ""
 #: npc/re/other/dimensional_gap.txt#122 (npctalk)
 - "Hey. Are you pissed off?"
-+ ""
++ "Ei. Você está irritado?"
 #: npc/re/other/dimensional_gap.txt#123 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#124 (npctalk)
 - "Not at all."
-+ ""
++ "Nem um pouco."
 #: npc/re/other/dimensional_gap.txt#125 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#127 (npctalk)
 - "Look at him snoozing. Hehe."
-+ ""
++ "Olha ele cochilando. Hehe."
 #: npc/re/other/dimensional_gap.txt#128 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#130 (npctalk)
 - "Bah, I don't care. I'm gonna take a nap, so wake me up when we're ready."
-+ ""
++ "Bah, não me importo. Vou tirar um cochilo, então me acordem quando estivermos prontos."
 #: npc/re/other/dimensional_gap.txt#132 (npctalk)
 - "You are upset!!"
-+ ""
++ "Você está chateado!!"
 #: npc/re/other/dimensional_gap.txt#133 (npctalk)
 - "Party Member#CRU"
 + ""
 #: npc/re/other/dimensional_gap.txt#134 (npctalk)
 - "Can I get back before I die..."
-+ ""
++ "Será que eu volto antes de morrer..."
 #: npc/re/other/dimensional_gap.txt#135 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#136 (npctalk)
 - "What? You, we gotta talk! I've been too nice to you!"
-+ ""
++ "O quê? Você, nós precisamos conversar! Eu fui bonzinho demais com você!"
 #: npc/re/other/dimensional_gap.txt#137 (npctalk)
 - "Party Member#EINOLD"
 + ""
 #: npc/re/other/dimensional_gap.txt#138 (npctalk)
 - "Excuse me..... everyone.............?"
-+ ""
++ "Com licença..... pessoal.............?"
 #: npc/re/other/dimensional_gap.txt#139 (npctalk)
 - "Party Leader#dali2"
 + ""
 #: npc/re/other/dimensional_gap.txt#141 (npctalk)
 - "No!!!!!!!!!"
-+ ""
++ "Não!!!!!!!!!"
 #: npc/re/other/dimensional_gap.txt#142 (npctalk)
 - "Party Member#GUILL"
 + ""
 #: npc/re/other/dimensional_gap.txt#143 (npctalk)
 - "Whatever~"
-+ ""
++ "Tanto faz~"
 #: npc/re/other/dimensional_gap.txt#144 (npctalk)
 - "Party Member#MONK"
 + ""
 #: npc/re/other/dimensional_gap.txt#146 (npctalk)
 - "Please listen to me...."
-+ ""
++ "Por favor, me escutem...."
 #: npc/re/other/dimensional_gap.txt#147 (npctalk)
 - "Party Leader#dali2"
 + ""
 #: npc/re/other/dimensional_gap.txt#148 (npctalk)
 - "He's angry all right...."
-+ ""
++ "Ele está bravo mesmo...."
 #: npc/re/other/dimensional_gap.txt#149 (npctalk)
 - "Party Member#WANDERER"
 + ""
 #: npc/re/other/dimensional_gap.txt#150 (npctalk)
 - "Take a nap. I am sleepy too, so we'll take shifts."
-+ ""
++ "Tire um cochilo. Eu também estou com sono, então a gente reveza."
 #: npc/re/other/dimensional_gap.txt#151 (npctalk)
 - "Party Member#SHADOW"
 + ""
 #: npc/re/other/dimensional_gap.txt#155 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#156 (mes)
 - "Who're you?"
-+ ""
++ "Quem é você?"
 #: npc/re/other/dimensional_gap.txt#157 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#158 (mes)
 - "What do you want?"
-+ ""
++ "O que você quer?"
 #: npc/re/other/dimensional_gap.txt#159 (mes)
 - "You looking something in"
-+ ""
++ "Está procurando alguma coisa"
 #: npc/re/other/dimensional_gap.txt#160 (mes)
 - "particular?"
-+ ""
++ "em especial?"
 #: npc/re/other/dimensional_gap.txt#161 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#162 (mes)
 - "So some enforcers have been"
-+ ""
++ "Uns fiscais andaram apertando"
 #: npc/re/other/dimensional_gap.txt#163 (mes)
 - "cracking down on merchants lately."
-+ ""
++ "o cerco aos mercadores."
 #: npc/re/other/dimensional_gap.txt#164 (mes)
 - "I can not sell anything."
-+ ""
++ "Eu não posso vender nada."
 #: npc/re/other/dimensional_gap.txt#165 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#166 (mes)
 - "Come here..."
-+ ""
++ "Venha cá..."
 #: npc/re/other/dimensional_gap.txt#167 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#168 (mes)
 - "I knew you would be here!!"
-+ ""
++ "Eu sabia que você estaria aqui!!"
 #: npc/re/other/dimensional_gap.txt#169 (mes)
 - "No illegal trading is allowed"
-+ ""
++ "Não é permitido comércio ilegal"
 #: npc/re/other/dimensional_gap.txt#170 (mes)
 - "here!"
-+ ""
++ "aqui!"
 #: npc/re/other/dimensional_gap.txt#171 (mes)
 - "Don't you know?"
-+ ""
++ "Você não sabia?"
 #: npc/re/other/dimensional_gap.txt#173 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#174 (mes)
 - "Says who?"
-+ ""
++ "Quem disse?"
 #: npc/re/other/dimensional_gap.txt#175 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#176 (mes)
 - "Ok, then show me your permit."
-+ ""
++ "Certo, então me mostre a sua licença."
 #: npc/re/other/dimensional_gap.txt#177 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#178 (mes)
 - "Permit?"
-+ ""
++ "Licença?"
 #: npc/re/other/dimensional_gap.txt#179 (mes)
 - "No one's in charge here!"
-+ ""
++ "Não tem ninguém no comando aqui!"
 #: npc/re/other/dimensional_gap.txt#180 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#181 (mes)
 - "You! If you need anything come to"
-+ ""
++ "Você! Se precisar de alguma coisa, venha"
 #: npc/re/other/dimensional_gap.txt#182 (mes)
 - "me ok?"
-+ ""
++ "falar comigo, certo?"
 #: npc/re/other/dimensional_gap.txt#183 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#184 (mes)
 - "I will catch you!"
-+ ""
++ "Eu vou pegar você!"
 #: npc/re/other/dimensional_gap.txt#190 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#191 (mes)
 - "Cold juice!"
-+ ""
++ "Suco gelado!"
 #: npc/re/other/dimensional_gap.txt#192 (mes)
 - "Apple, grape, orange~"
-+ ""
++ "Maçã, uva, laranja~"
 #: npc/re/other/dimensional_gap.txt#193 (mes)
 - "Anything you want!"
-+ ""
++ "O que você quiser!"
 #: npc/re/other/dimensional_gap.txt#194 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#195 (mes)
 - "Sweet potato, dumpling~"
-+ ""
++ "Batata-doce, bolinho~"
 #: npc/re/other/dimensional_gap.txt#196 (mes)
 - "Here we have delicious desserts~"
-+ ""
++ "Aqui temos sobremesas deliciosas~"
 #: npc/re/other/dimensional_gap.txt#198 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#199 (mes)
 - "You need to pay a toll to get past here."
-+ ""
++ "Você precisa pagar pedágio para passar por aqui."
 #: npc/re/other/dimensional_gap.txt#200 (select)
 - "What toll?"
-+ ""
++ "Que pedágio?"
 #: npc/re/other/dimensional_gap.txt#201 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#202 (mes)
 - "You did not know?"
-+ ""
++ "Você não sabia?"
 #: npc/re/other/dimensional_gap.txt#203 (mes)
 - "500 zeny"
-+ ""
++ "500 zeny"
 #: npc/re/other/dimensional_gap.txt#204 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#205 (mes)
 - "You there!"
-+ ""
++ "Ei, você aí!"
 #: npc/re/other/dimensional_gap.txt#206 (mes)
 - "Stop right there!"
-+ ""
++ "Pare aí mesmo!"
 #: npc/re/other/dimensional_gap.txt#208 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#209 (mes)
 - "Ugh! How are you always following me?"
-+ ""
++ "Ugh! Como é que você me segue sempre?"
 #: npc/re/other/dimensional_gap.txt#210 (mes)
 - "Got some kind of crush on me or something? I don't think you and I make a good match..."
-+ ""
++ "Está a fim de mim, por acaso? Eu acho que nós dois não combinamos..."
 #: npc/re/other/dimensional_gap.txt#211 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#212 (mes)
 - "Why don't we find out then?"
-+ ""
++ "Então por que a gente não descobre?"
 #: npc/re/other/dimensional_gap.txt#213 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#214 (mes)
 - "That's it no more talking."
-+ ""
++ "Chega, acabou a conversa."
 #: npc/re/other/dimensional_gap.txt#215 (mes)
 - "I'm outta here~"
-+ ""
++ "Estou fora~"
 #: npc/re/other/dimensional_gap.txt#216 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#217 (mes)
 - "Keep running you sneaky coward!"
-+ ""
++ "Continue correndo, seu covarde safado!"
 #: npc/re/other/dimensional_gap.txt#223 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#224 (mes)
 - "500 zeny"
-+ ""
++ "500 zeny"
 #: npc/re/other/dimensional_gap.txt#226 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#227 (mes)
 - "You are lucky that you have met up"
-+ ""
++ "Você tem sorte de ter topado"
 #: npc/re/other/dimensional_gap.txt#228 (mes)
 - "with me."
-+ ""
++ "comigo."
 #: npc/re/other/dimensional_gap.txt#229 (mes)
 - "Who am I?"
-+ ""
++ "Quem sou eu?"
 #: npc/re/other/dimensional_gap.txt#230 (mes)
 - "I'm here to become a merchant"
-+ ""
++ "Eu estou aqui para virar o Rei"
 #: npc/re/other/dimensional_gap.txt#231 (mes)
 - "King."
-+ ""
++ "dos mercadores."
 #: npc/re/other/dimensional_gap.txt#232 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#233 (mes)
 - "I might be working a street stall"
-+ ""
++ "Posso estar numa barraca de rua"
 #: npc/re/other/dimensional_gap.txt#234 (mes)
 - "now but I'll have an actual shop"
-+ ""
++ "agora, mas um dia eu vou ter uma"
 #: npc/re/other/dimensional_gap.txt#235 (mes)
 - "some day."
-+ ""
++ "loja de verdade."
 #: npc/re/other/dimensional_gap.txt#236 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#237 (mes)
 - "It's my first day so I'm having a"
-+ ""
++ "É o meu primeiro dia, então estou"
 #: npc/re/other/dimensional_gap.txt#238 (mes)
 - "major sale."
-+ ""
++ "com uma baita liquidação."
 #: npc/re/other/dimensional_gap.txt#239 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#240 (mes)
 - "Let's see I've got a..."
-+ ""
++ "Deixa eu ver, eu tenho um..."
 #: npc/re/other/dimensional_gap.txt#241 (mes)
 - "Ring of something!"
-+ ""
++ "Anel de alguma coisa!"
 #: npc/re/other/dimensional_gap.txt#242 (mes)
 - "Sword of stuff!"
-+ ""
++ "Espada de sei lá o quê!"
 #: npc/re/other/dimensional_gap.txt#243 (mes)
 - "A backpack of some sort!"
-+ ""
++ "Uma mochila de algum tipo!"
 #: npc/re/other/dimensional_gap.txt#244 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#245 (mes)
 - "Tell me if you need anything,"
-+ ""
++ "Me diga se precisar de alguma coisa,"
 #: npc/re/other/dimensional_gap.txt#247 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#248 (mes)
 - "What are you doing here?"
-+ ""
++ "O que você está fazendo aqui?"
 #: npc/re/other/dimensional_gap.txt#249 (mes)
 - "This is my spot for a shop"
-+ ""
++ "Este é o meu ponto de venda"
 #: npc/re/other/dimensional_gap.txt#250 (mes)
 - "Get outta my turf!"
-+ ""
++ "Fora do meu território!"
 #: npc/re/other/dimensional_gap.txt#251 (mes)
 - "[Jumpy Knight]"
-+ ""
++ "[Cavaleiro Saltitante]"
 #: npc/re/other/dimensional_gap.txt#252 (mes)
 - "Bah!!"
-+ ""
++ "Bah!!"
 #: npc/re/other/dimensional_gap.txt#253 (mes)
 - "You're gonna regret those words!"
-+ ""
++ "Você vai se arrepender dessas palavras!"
 #: npc/re/other/dimensional_gap.txt#254 (mes)
 - "[Prince Canet]"
-+ ""
++ "[Príncipe Canet]"
 #: npc/re/other/dimensional_gap.txt#255 (mes)
 - "I'm shaking..."
-+ ""
++ "Estou tremendo..."
 #: npc/re/other/dimensional_gap.txt#262 (mes)
 - "[Curious Knight]"
-+ ""
++ "[Cavaleiro Curioso]"
 #: npc/re/other/dimensional_gap.txt#263 (mes)
 - "The Royal Guard in here"
-+ ""
++ "O Guarda Real daqui"
 #: npc/re/other/dimensional_gap.txt#264 (mes)
 - "was desperate for help."
-+ ""
++ "estava desesperado por ajuda."
 #: npc/re/other/dimensional_gap.txt#265 (mes)
 - "We entered through a secret place"
-+ ""
++ "Nós entramos por um lugar secreto"
 #: npc/re/other/dimensional_gap.txt#266 (mes)
 - "in the palace."
-+ ""
++ "do palácio."
 #: npc/re/other/dimensional_gap.txt#267 (mes)
 - "[Curious Knight]"
-+ ""
++ "[Cavaleiro Curioso]"
 #: npc/re/other/dimensional_gap.txt#268 (mes)
 - "We were whisked away here..."
-+ ""
++ "Fomos arrastados para cá..."
 #: npc/re/other/dimensional_gap.txt#269 (mes)
 - "No idea where I am but I have to"
-+ ""
++ "Não faço ideia de onde estou, mas eu"
 #: npc/re/other/dimensional_gap.txt#270 (mes)
 - "establish a base here for the"
-+ ""
++ "tenho que montar uma base aqui para a"
 #: npc/re/other/dimensional_gap.txt#271 (mes)
 - "Knighthood."
-+ ""
++ "Ordem dos Cavaleiros."
 #: npc/re/other/dimensional_gap.txt#272 (mes)
 - "[Confused Thief]"
-+ ""
++ "[Ladrão Confuso]"
 #: npc/re/other/dimensional_gap.txt#273 (mes)
 - "One minute I'm in a bar..."
-+ ""
++ "Num minuto eu estou num bar..."
 #: npc/re/other/dimensional_gap.txt#274 (mes)
 - "The next minute I'm here..."
-+ ""
++ "No minuto seguinte estou aqui..."
 #: npc/re/other/dimensional_gap.txt#275 (mes)
 - "What is this place?"
-+ ""
++ "Que lugar é este?"
 #: npc/re/other/dimensional_gap.txt#276 (mes)
 - "[Confused Thief]"
-+ ""
++ "[Ladrão Confuso]"
 #: npc/re/other/dimensional_gap.txt#277 (mes)
 - "There's no night or day in here."
-+ ""
++ "Aqui não tem noite nem dia."
 #: npc/re/other/dimensional_gap.txt#278 (mes)
 - "Hmm, something has to be valuable"
-+ ""
++ "Hmm, tem que haver alguma coisa de valor"
 #: npc/re/other/dimensional_gap.txt#279 (mes)
 - "in this place..."
-+ ""
++ "neste lugar..."
 #: npc/re/other/dimensional_gap.txt#280 (mes)
 - "[Adventurous Rafflesia]"
-+ ""
++ "[Rafflesia Aventureira]"
 #: npc/re/other/dimensional_gap.txt#281 (mes)
 - "No no this has to be Thanatos"
-+ ""
++ "Não, não, isto tem que ser a Torre"
 #: npc/re/other/dimensional_gap.txt#282 (mes)
 - "Tower..."
-+ ""
++ "de Thanatos..."
 #: npc/re/other/dimensional_gap.txt#283 (mes)
 - "I sense dark magic here."
-+ ""
++ "Eu sinto magia negra aqui."
 #: npc/re/other/dimensional_gap.txt#284 (mes)
 - "[Guide]"
-+ ""
++ "[Guia]"
 #: npc/re/other/dimensional_gap.txt#285 (mes)
 - "Oh, we're back here again."
-+ ""
++ "Ah, voltamos para cá de novo."
 #: npc/re/other/dimensional_gap.txt#286 (mes)
 - "I cannot find a way out!"
-+ ""
++ "Eu não acho a saída!"
 #: npc/re/other/dimensional_gap.txt#287 (mes)
 - "We are trapped in this maze!"
-+ ""
++ "Estamos presos neste labirinto!"
 #: npc/re/other/dimensional_gap.txt#288 (mes)
 - "[Tourist]"
-+ ""
++ "[Turista]"
 #: npc/re/other/dimensional_gap.txt#289 (mes)
 - "Is this place the famous Prontera?"
-+ ""
++ "Este lugar é a famosa Prontera?"
 #: npc/re/other/dimensional_gap.txt#290 (mes)
 - "It is dark just like a big city!"
-+ ""
++ "É escuro igual a uma cidade grande!"
 #: npc/re/other/dimensional_gap.txt#291 (mes)
 - "[Traveller]"
-+ ""
++ "[Viajante]"
 #: npc/re/other/dimensional_gap.txt#292 (mes)
 - "I hear a ticking clock."
-+ ""
++ "Estou ouvindo um relógio batendo."
 #: npc/re/other/dimensional_gap.txt#293 (mes)
 - "This place must be Geffen!"
-+ ""
++ "Este lugar deve ser Geffen!"
 #: npc/re/other/dimensional_gap.txt#294 (mes)
 - "[Guide]"
-+ ""
++ "[Guia]"
 #: npc/re/other/dimensional_gap.txt#295 (mes)
 - "Oh, we're back here again."
-+ ""
++ "Ah, voltamos para cá de novo."
 #: npc/re/other/dimensional_gap.txt#296 (mes)
 - "I cannot find a way out!"
-+ ""
++ "Eu não acho a saída!"
 #: npc/re/other/dimensional_gap.txt#297 (mes)
 - "We are trapped in this maze!"
-+ ""
++ "Estamos presos neste labirinto!"
 #: npc/re/other/dimensional_gap.txt#298 (mes)
 - "[Tourist]"
-+ ""
++ "[Turista]"
 #: npc/re/other/dimensional_gap.txt#299 (mes)
 - "Is this place the famous Prontera?"
-+ ""
++ "Este lugar é a famosa Prontera?"
 #: npc/re/other/dimensional_gap.txt#300 (mes)
 - "It is dark just like a big city!"
-+ ""
++ "É escuro igual a uma cidade grande!"
 #: npc/re/other/dimensional_gap.txt#301 (mes)
 - "[Traveller]"
-+ ""
++ "[Viajante]"
 #: npc/re/other/dimensional_gap.txt#302 (mes)
 - "I hear a ticking clock."
-+ ""
++ "Estou ouvindo um relógio batendo."
 #: npc/re/other/dimensional_gap.txt#303 (mes)
 - "This place must be Geffen!"
-+ ""
++ "Este lugar deve ser Geffen!"
 #: npc/re/other/dimensional_gap.txt#304 (mes)
 - "[Adventurous Rafflesia]"
-+ ""
++ "[Rafflesia Aventureira]"
 #: npc/re/other/dimensional_gap.txt#305 (mes)
 - "No no this has to be Thanatos"
-+ ""
++ "Não, não, isto tem que ser a Torre"
 #: npc/re/other/dimensional_gap.txt#306 (mes)
 - "Tower..."
-+ ""
++ "de Thanatos..."
 #: npc/re/other/dimensional_gap.txt#307 (mes)
 - "I sense dark magic here."
-+ ""
++ "Eu sinto magia negra aqui."
 #: npc/re/other/dimensional_gap.txt#308 (mes)
 - "[Tourist]"
-+ ""
++ "[Turista]"
 #: npc/re/other/dimensional_gap.txt#309 (mes)
 - "Is this place the famous Prontera?"
-+ ""
++ "Este lugar é a famosa Prontera?"
 #: npc/re/other/dimensional_gap.txt#310 (mes)
 - "It is dark just like a big city!"
-+ ""
++ "É escuro igual a uma cidade grande!"
 #: npc/re/other/dimensional_gap.txt#311 (mes)
 - "[Adventurous Rafflesia]"
-+ ""
++ "[Rafflesia Aventureira]"
 #: npc/re/other/dimensional_gap.txt#312 (mes)
 - "No no this has to be Thanatos"
-+ ""
++ "Não, não, isto tem que ser a Torre"
 #: npc/re/other/dimensional_gap.txt#313 (mes)
 - "Tower..."
-+ ""
++ "de Thanatos..."
 #: npc/re/other/dimensional_gap.txt#314 (mes)
 - "I sense dark magic here."
-+ ""
++ "Eu sinto magia negra aqui."
 #: npc/re/other/dimensional_gap.txt#315 (mes)
 - "[Guide]"
-+ ""
++ "[Guia]"
 #: npc/re/other/dimensional_gap.txt#316 (mes)
 - "Oh, we're back here again."
-+ ""
++ "Ah, voltamos para cá de novo."
 #: npc/re/other/dimensional_gap.txt#317 (mes)
 - "I cannot find a way out!"
-+ ""
++ "Eu não acho a saída!"
 #: npc/re/other/dimensional_gap.txt#318 (mes)
 - "We are trapped in this maze!"
-+ ""
++ "Estamos presos neste labirinto!"
 #: npc/re/other/dimensional_gap.txt#319 (mes)
 - "[Traveller]"
-+ ""
++ "[Viajante]"
 #: npc/re/other/dimensional_gap.txt#320 (mes)
 - "I hear a ticking clock."
-+ ""
++ "Estou ouvindo um relógio batendo."
 #: npc/re/other/dimensional_gap.txt#321 (mes)
 - "This place must be Geffen!"
-+ ""
++ "Este lugar deve ser Geffen!"
 #: npc/re/other/dimensional_gap.txt#322 (mes)
 - "[Traveller]"
-+ ""
++ "[Viajante]"
 #: npc/re/other/dimensional_gap.txt#323 (mes)
 - "I hear a ticking clock."
-+ ""
++ "Estou ouvindo um relógio batendo."
 #: npc/re/other/dimensional_gap.txt#324 (mes)
 - "This place must be Geffen!"
-+ ""
++ "Este lugar deve ser Geffen!"
 #: npc/re/other/dimensional_gap.txt#325 (mes)
 - "[Guide]"
-+ ""
++ "[Guia]"
 #: npc/re/other/dimensional_gap.txt#326 (mes)
 - "Oh, we're back here again."
-+ ""
++ "Ah, voltamos para cá de novo."
 #: npc/re/other/dimensional_gap.txt#327 (mes)
 - "I cannot find a way out!"
-+ ""
++ "Eu não acho a saída!"
 #: npc/re/other/dimensional_gap.txt#328 (mes)
 - "We are trapped in this maze!"
-+ ""
++ "Estamos presos neste labirinto!"
 #: npc/re/other/dimensional_gap.txt#329 (mes)
 - "[Tourist]"
-+ ""
++ "[Turista]"
 #: npc/re/other/dimensional_gap.txt#330 (mes)
 - "Is this place the famous Prontera?"
-+ ""
++ "Este lugar é a famosa Prontera?"
 #: npc/re/other/dimensional_gap.txt#331 (mes)
 - "It is dark just like a big city!"
-+ ""
++ "É escuro igual a uma cidade grande!"
 #: npc/re/other/dimensional_gap.txt#332 (mes)
 - "[Adventurous Rafflesia]"
-+ ""
++ "[Rafflesia Aventureira]"
 #: npc/re/other/dimensional_gap.txt#333 (mes)
 - "No no this has to be Thanatos"
-+ ""
++ "Não, não, isto tem que ser a Torre"
 #: npc/re/other/dimensional_gap.txt#334 (mes)
 - "Tower..."
-+ ""
++ "de Thanatos..."
 #: npc/re/other/dimensional_gap.txt#335 (mes)
 - "I sense dark magic here."
-+ ""
++ "Eu sinto magia negra aqui."
 
 ### npc/re/merchants/ghost_palace_exchange.txt  (41 textos)
 #: npc/re/merchants/ghost_palace_exchange.txt#1 (mes)
 - "- You cannot proceed because you have too many items with you. -"
-+ ""
++ "- Você não pode prosseguir porque está com itens demais. -"
 #: npc/re/merchants/ghost_palace_exchange.txt#2 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#3 (mes)
 - "Adventurer friend, "
-+ ""
++ "Amigo aventureiro, "
 #: npc/re/merchants/ghost_palace_exchange.txt#4 (mes)
 - " is what I need. How about exchanging it with something I have?"
-+ ""
++ " é do que eu preciso. Que tal trocar por alguma coisa que eu tenho?"
 #: npc/re/merchants/ghost_palace_exchange.txt#5 (select)
 - "Show me your weapon."
-+ ""
++ "Me mostre a sua arma."
 #: npc/re/merchants/ghost_palace_exchange.txt#6 (select)
 - "Show me your armor."
-+ ""
++ "Me mostre a sua armadura."
 #: npc/re/merchants/ghost_palace_exchange.txt#7 (select)
 - "Anything special?"
-+ ""
++ "Alguma coisa especial?"
 #: npc/re/merchants/ghost_palace_exchange.txt#8 (select)
 - "I do not need."
-+ ""
++ "Não preciso."
 #: npc/re/merchants/ghost_palace_exchange.txt#9 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#10 (mes)
 - "Oh! Are you interested in weapons? We have all the weapons we can get from the Ghost Palace. Why don't you choose one?"
-+ ""
++ "Ah! Você se interessa por armas? Nós temos todas as armas que dá para tirar do Palácio das Mágoas. Que tal escolher uma?"
 #: npc/re/merchants/ghost_palace_exchange.txt#11 (mes)
 - "Armor? We have all the armors we can get from the Ghost Palace. Why don't you choose one?"
-+ ""
++ "Armadura? Nós temos todas as armaduras que dá para tirar do Palácio das Mágoas. Que tal escolher uma?"
 #: npc/re/merchants/ghost_palace_exchange.txt#12 (mes)
 - "Huhh! It seems like many of them already heard that I have the best stuff. Feel free to check out my collections."
-+ ""
++ "Ora! Parece que muita gente já ouviu dizer que eu tenho as melhores coisas. Fique à vontade para olhar a minha coleção."
 #: npc/re/merchants/ghost_palace_exchange.txt#13 (mes)
 - "Goodbye friend~ Come again!"
-+ ""
++ "Até logo, amigo~ Volte sempre!"
 #: npc/re/merchants/ghost_palace_exchange.txt#14 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#15 (mes)
 - "Ah! The number that is written beside "
-+ ""
++ "Ah! O número que está escrito ao lado de "
 #: npc/re/merchants/ghost_palace_exchange.txt#16 (mes)
 - " will be needed."
-+ ""
++ " vai ser necessário."
 #: npc/re/merchants/ghost_palace_exchange.txt#17 (mes)
 - "Please keep that in mind."
-+ ""
++ "Guarde bem isso."
 #: npc/re/merchants/ghost_palace_exchange.txt#18 (menu)
 - " - "
 + ""
@@ -950,67 +950,67 @@
 + ""
 #: npc/re/merchants/ghost_palace_exchange.txt#20 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#21 (mes)
 - "Do you mean "
-+ ""
++ "Você quer dizer "
 #: npc/re/merchants/ghost_palace_exchange.txt#22 (mes)
 - "?"
-+ ""
++ "?"
 #: npc/re/merchants/ghost_palace_exchange.txt#24 (mes)
 - " ^006400"
-+ ""
++ " ^006400"
 #: npc/re/merchants/ghost_palace_exchange.txt#25 (mes)
 - "^000000 are required in exchange."
-+ ""
++ "^000000 são necessários na troca."
 #: npc/re/merchants/ghost_palace_exchange.txt#26 (select)
 - "Let's exchange."
-+ ""
++ "Vamos trocar."
 #: npc/re/merchants/ghost_palace_exchange.txt#27 (select)
 - "Let me see other stuff."
-+ ""
++ "Deixa eu ver as outras coisas."
 #: npc/re/merchants/ghost_palace_exchange.txt#28 (select)
 - "I will come back later."
-+ ""
++ "Eu volto depois."
 #: npc/re/merchants/ghost_palace_exchange.txt#29 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#30 (mes)
 - "I have more than enough weapons."
-+ ""
++ "Eu tenho armas de sobra."
 #: npc/re/merchants/ghost_palace_exchange.txt#31 (mes)
 - "We have many armors for you. Why don't you pick one?"
-+ ""
++ "Nós temos muitas armaduras para você. Que tal escolher uma?"
 #: npc/re/merchants/ghost_palace_exchange.txt#32 (mes)
 - "If you bring me "
-+ ""
++ "Se você me trouxer "
 #: npc/re/merchants/ghost_palace_exchange.txt#33 (mes)
 - ", I will trade it with anything you want."
-+ ""
++ ", eu troco por qualquer coisa que você quiser."
 #: npc/re/merchants/ghost_palace_exchange.txt#34 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#35 (mes)
 - "Take care friend~ See you next time!"
-+ ""
++ "Se cuide, amigo~ Até a próxima!"
 #: npc/re/merchants/ghost_palace_exchange.txt#36 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#37 (mes)
 - "You put me in a difficult situation, friend."
-+ ""
++ "Você me põe numa situação difícil, amigo."
 #: npc/re/merchants/ghost_palace_exchange.txt#38 (mes)
 - "I am in need of "
-+ ""
++ "Eu estou precisando de "
 #: npc/re/merchants/ghost_palace_exchange.txt#39 (mes)
 - ". I will exchange it for ^006400"
-+ ""
++ ". Eu troco por ^006400"
 #: npc/re/merchants/ghost_palace_exchange.txt#41 (mes)
 - "^000000."
-+ ""
++ "^000000."
 #: npc/re/merchants/ghost_palace_exchange.txt#42 (mes)
 - "[Dimension Traveler]"
-+ ""
++ "[Viajante Dimensional]"
 #: npc/re/merchants/ghost_palace_exchange.txt#43 (mes)
 - "Thank you. Come back if you need anything else."
-+ ""
++ "Obrigado. Volte se precisar de mais alguma coisa."

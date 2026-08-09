@@ -9,904 +9,916 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/DevilTower.txt  (601 textos)
+### npc/re/instances/DevilTower.txt  (632 textos)
 #: npc/re/instances/DevilTower.txt#1 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#2 (mes)
 - "Are you volunteering to explore the Devil's Tower?"
-+ ""
++ "Você está se voluntariando para explorar a Torre do Demônio?"
 #: npc/re/instances/DevilTower.txt#3 (mes)
 - "It's extremely dangerous so you need to be at least ^4d4dffLevel 130^000000."
-+ ""
++ "É extremamente perigoso, então você precisa ser pelo menos ^4d4dffNível 130^000000."
 #: npc/re/instances/DevilTower.txt#4 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#5 (mes)
 - "Will you come back when you get stronger?"
-+ ""
++ "Você volta quando ficar mais forte?"
 #: npc/re/instances/DevilTower.txt#6 (mes)
 - "You know what I mean right?"
-+ ""
++ "Você entende o que eu quero dizer, certo?"
 #: npc/re/instances/DevilTower.txt#7 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#8 (mes)
 - "You want to explore again so soon?"
-+ ""
++ "Você quer explorar de novo tão cedo?"
 #: npc/re/instances/DevilTower.txt#9 (mes)
 - "Your body needs to recover from the time traveling."
-+ ""
++ "O seu corpo precisa se recuperar da viagem no tempo."
 #: npc/re/instances/DevilTower.txt#10 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#11 (mes)
 - "Take a rest day and come back tomorrow.!"
-+ ""
++ "Descanse um dia e volte amanhã!"
 #: npc/re/instances/DevilTower.txt#12 (mes)
 - "You understand?"
-+ ""
++ "Entendeu?"
 #: npc/re/instances/DevilTower.txt#13 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#14 (mes)
 - "Have you rested long enough?"
-+ ""
++ "Você descansou o bastante?"
 #: npc/re/instances/DevilTower.txt#15 (mes)
 - "I am scheduled to explore today!"
-+ ""
++ "Eu estou com exploração marcada para hoje!"
 #: npc/re/instances/DevilTower.txt#16 (mes)
 - "I have always been waiting for a member of the expedition!"
-+ ""
++ "Eu sempre esperei por um membro para a expedição!"
 #: npc/re/instances/DevilTower.txt#17 (mes)
 - "!- Notice -!"
-+ ""
++ "!- Aviso -!"
 #: npc/re/instances/DevilTower.txt#18 (mes)
 - "You can now re-enter the Devil's Tower."
-+ ""
++ "Você já pode entrar de novo na Torre do Demônio."
 #: npc/re/instances/DevilTower.txt#19 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#20 (mes)
 - "So time and space seem to have converged there?"
-+ ""
++ "Então o tempo e o espaço parecem ter convergido ali?"
 #: npc/re/instances/DevilTower.txt#21 (mes)
 - "I'm amazed that time travel is possible."
-+ ""
++ "Eu fico impressionado que a viagem no tempo seja possível."
 #: npc/re/instances/DevilTower.txt#22 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#23 (mes)
 - "This is all you have."
-+ ""
++ "É tudo o que você tem."
 #: npc/re/instances/DevilTower.txt#24 (mes)
 - "You did a good job."
-+ ""
++ "Você fez um bom trabalho."
 #: npc/re/instances/DevilTower.txt#25 (mes)
 - "I look forward to more discoveries!"
-+ ""
++ "Fico no aguardo de mais descobertas!"
 #: npc/re/instances/DevilTower.txt#26 (mes)
 - "Please come back tomorrow!"
-+ ""
++ "Por favor, volte amanhã!"
 #: npc/re/instances/DevilTower.txt#27 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#28 (mes)
 - "Oh, you are back so soon..."
-+ ""
++ "Ah, você voltou tão cedo..."
 #: npc/re/instances/DevilTower.txt#29 (mes)
 - "Ok, I see what happened."
-+ ""
++ "Certo, entendi o que aconteceu."
 #: npc/re/instances/DevilTower.txt#30 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#31 (mes)
 - "This is all you have."
-+ ""
++ "É tudo o que você tem."
 #: npc/re/instances/DevilTower.txt#32 (mes)
 - "You did a good job."
-+ ""
++ "Você fez um bom trabalho."
 #: npc/re/instances/DevilTower.txt#33 (mes)
 - "I look forward to more discoveries!"
-+ ""
++ "Fico no aguardo de mais descobertas!"
 #: npc/re/instances/DevilTower.txt#34 (mes)
 - "Please come back tomorrow!"
-+ ""
++ "Por favor, volte amanhã!"
 #: npc/re/instances/DevilTower.txt#35 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#36 (mes)
 - "Oh, you are back."
-+ ""
++ "Ah, você voltou."
 #: npc/re/instances/DevilTower.txt#37 (mes)
 - "Let me see... you mean this tower has a passage to connect to the demon world."
-+ ""
++ "Deixa eu ver... você quer dizer que esta torre tem uma passagem que liga ao mundo dos demônios."
 #: npc/re/instances/DevilTower.txt#38 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#39 (mes)
 - "This is all you have."
-+ ""
++ "É tudo o que você tem."
 #: npc/re/instances/DevilTower.txt#40 (mes)
 - "You did a good job."
-+ ""
++ "Você fez um bom trabalho."
 #: npc/re/instances/DevilTower.txt#41 (mes)
 - "I look forward to more discoveries!"
-+ ""
++ "Fico no aguardo de mais descobertas!"
 #: npc/re/instances/DevilTower.txt#42 (mes)
 - "Please come back tomorrow!"
-+ ""
++ "Por favor, volte amanhã!"
 #: npc/re/instances/DevilTower.txt#43 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#44 (mes)
 - "Are you volunteering to explore the Devil's Tower? I have been waiting for someone like you!"
-+ ""
++ "Você está se voluntariando para explorar a Torre do Demônio? Eu estava esperando alguém como você!"
 #: npc/re/instances/DevilTower.txt#45 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#46 (mes)
 - "Finally, someone to share the mysteries of the tower for me."
-+ ""
++ "Finalmente, alguém para dividir comigo os mistérios da torre."
 #: npc/re/instances/DevilTower.txt#47 (mes)
 - "No one has been volunteering up this point so I was getting worried."
-+ ""
++ "Ninguém tinha se voluntariado até agora, então eu estava ficando preocupado."
 #: npc/re/instances/DevilTower.txt#48 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#49 (mes)
 - "Please report anything you find in the tower to me."
-+ ""
++ "Por favor, me relate tudo o que achar na torre."
 #: npc/re/instances/DevilTower.txt#50 (mes)
 - "The better the info~ the better the zeny I'll pay you!"
-+ ""
++ "Quanto melhor a informação~ melhor o zeny que eu pago!"
 #: npc/re/instances/DevilTower.txt#51 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#52 (mes)
 - "That Laphine scholar over there will open up the dimensional gap with this time device."
-+ ""
++ "Aquele erudito Laphine ali vai abrir a fenda dimensional com este dispositivo do tempo."
 #: npc/re/instances/DevilTower.txt#53 (mes)
 - "It is still unstable so your time for exploring will be limited."
-+ ""
++ "Ele ainda está instável, então o seu tempo de exploração vai ser limitado."
 #: npc/re/instances/DevilTower.txt#54 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#55 (mes)
 - "If you are unexpectedly bounced back to here again, you should return quickly."
-+ ""
++ "Se você for jogado de volta para cá sem esperar, deve voltar depressa."
 #: npc/re/instances/DevilTower.txt#56 (mes)
 - "If you do you may or may not be able to re-enter depending on how fast you are."
-+ ""
++ "Se fizer isso, você pode ou não conseguir entrar de novo, dependendo da sua rapidez."
 #: npc/re/instances/DevilTower.txt#57 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#58 (mes)
 - "But if you run out of time, the access to the tower will disappear."
-+ ""
++ "Mas se o seu tempo acabar, o acesso à torre vai sumir."
 #: npc/re/instances/DevilTower.txt#59 (mes)
 - "So do you want to volunteer?"
-+ ""
++ "E então, você quer se voluntariar?"
 #: npc/re/instances/DevilTower.txt#60 (select)
 - "Volunteer"
-+ ""
++ "Me voluntariar"
 #: npc/re/instances/DevilTower.txt#61 (select)
 - "No Thanks"
-+ ""
++ "Não, obrigado"
 #: npc/re/instances/DevilTower.txt#62 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#63 (mes)
 - "Oh that's too bad"
-+ ""
++ "Ah, que pena"
 #: npc/re/instances/DevilTower.txt#64 (mes)
 - "There is nothing I can do I guess."
-+ ""
++ "Acho que não há nada que eu possa fazer."
 #: npc/re/instances/DevilTower.txt#65 (mes)
 - "I'll just find someone else..."
-+ ""
++ "Eu vou procurar outra pessoa..."
 #: npc/re/instances/DevilTower.txt#66 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#67 (mes)
 - "Thank you."
-+ ""
++ "Obrigado."
 #: npc/re/instances/DevilTower.txt#68 (mes)
 - "Okay, gather your party and remember to report to me what you find."
-+ ""
++ "Certo, junte o seu grupo e lembre-se de me relatar o que achar."
 #: npc/re/instances/DevilTower.txt#69 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#70 (mes)
 - "^4d4dffExploring time limit is for your safety^000000!"
-+ ""
++ "^4d4dffO limite de tempo de exploração é para a sua segurança^000000!"
 #: npc/re/instances/DevilTower.txt#71 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#72 (mes)
 - "You seem to be late."
-+ ""
++ "Parece que você se atrasou."
 #: npc/re/instances/DevilTower.txt#73 (mes)
 - "You took an extraordinarily long time."
-+ ""
++ "Você demorou um tempo absurdo."
 #: npc/re/instances/DevilTower.txt#74 (mes)
 - "....."
 + ""
 #: npc/re/instances/DevilTower.txt#75 (mes)
 - "I can't use any of your info."
-+ ""
++ "Eu não consigo usar nenhuma informação sua."
 #: npc/re/instances/DevilTower.txt#76 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#77 (mes)
 - "There is nothing we can do ."
-+ ""
++ "Não há nada que a gente possa fazer."
 #: npc/re/instances/DevilTower.txt#78 (mes)
 - "There's always opportunities for other expeditions."
-+ ""
++ "Sempre haverá oportunidade para outras expedições."
 #: npc/re/instances/DevilTower.txt#79 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#80 (mes)
 - "First of all, you need to reserve a queue at the gate."
-+ ""
++ "Antes de mais nada, você precisa reservar um lugar na fila do portão."
 #: npc/re/instances/DevilTower.txt#81 (mes)
 - "The Laphine Scholar Artie will reserve your queue for you."
-+ ""
++ "O Erudito Laphine Artie faz a reserva para você."
 #: npc/re/instances/DevilTower.txt#82 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#83 (mes)
 - "Time is limited because the dimensional gap is still unstable."
-+ ""
++ "O tempo é limitado porque a fenda dimensional ainda está instável."
 #: npc/re/instances/DevilTower.txt#84 (mes)
 - "Make your exploration short and sweet."
-+ ""
++ "Faça uma exploração curta e certeira."
 #: npc/re/instances/DevilTower.txt#85 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#86 (mes)
 - "Rewards will be different depending on your time."
-+ ""
++ "As recompensas variam conforme o seu tempo."
 #: npc/re/instances/DevilTower.txt#87 (mes)
 - "Good luck!"
-+ ""
++ "Boa sorte!"
 #: npc/re/instances/DevilTower.txt#88 (select)
 - "Trust me!"
-+ ""
++ "Confie em mim!"
 #: npc/re/instances/DevilTower.txt#89 (select)
 - "Cancel my reservation"
-+ ""
++ "Cancelar a minha reserva"
 #: npc/re/instances/DevilTower.txt#90 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#91 (mes)
 - "I believe that you can manage under these restrictions."
-+ ""
++ "Eu acredito que você se vira com essas restrições."
 #: npc/re/instances/DevilTower.txt#92 (mes)
 - "I believe in you!"
-+ ""
++ "Eu acredito em você!"
 #: npc/re/instances/DevilTower.txt#93 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#94 (mes)
 - "You seem to be tired of exploring."
-+ ""
++ "Você parece cansado de explorar."
 #: npc/re/instances/DevilTower.txt#95 (mes)
 - "^4d4dffIf you cancel now. You will be able to challenge one day after.^000000"
-+ ""
++ "^4d4dffSe você cancelar agora, só vai poder tentar de novo daqui a um dia.^000000"
 #: npc/re/instances/DevilTower.txt#96 (mes)
 - "Is that okay?"
-+ ""
++ "Tudo bem assim?"
 #: npc/re/instances/DevilTower.txt#97 (select)
 - "Yes Cancel."
-+ ""
++ "Sim, cancele."
 #: npc/re/instances/DevilTower.txt#98 (select)
 - "Wait, don't cancel!"
-+ ""
++ "Espere, não cancele!"
 #: npc/re/instances/DevilTower.txt#99 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#100 (mes)
 - "Ok, I won't cancel."
-+ ""
++ "Certo, eu não vou cancelar."
 #: npc/re/instances/DevilTower.txt#101 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#102 (mes)
 - "Really."
-+ ""
++ "Sério."
 #: npc/re/instances/DevilTower.txt#103 (mes)
 - "then, come back tomorrow."
-+ ""
++ "então volte amanhã."
 #: npc/re/instances/DevilTower.txt#104 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#105 (mes)
 - "Really?"
-+ ""
++ "Sério?"
 #: npc/re/instances/DevilTower.txt#106 (mes)
 - "After listening to all this explanation?"
-+ ""
++ "Depois de ouvir toda essa explicação?"
 #: npc/re/instances/DevilTower.txt#107 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#108 (mes)
 - "let's have fun since we just left bifrost."
-+ ""
++ "vamos nos divertir, já que a gente acabou de sair de Bifröst."
 #: npc/re/instances/DevilTower.txt#109 (mes)
 - "No?"
-+ ""
++ "Não?"
 #: npc/re/instances/DevilTower.txt#110 (mes)
 - "you are applying as a volunteer?"
-+ ""
++ "você está se candidatando como voluntário?"
 #: npc/re/instances/DevilTower.txt#111 (mes)
 - "You'd better gather a party for this expedition."
-+ ""
++ "É melhor você juntar um grupo para esta expedição."
 #: npc/re/instances/DevilTower.txt#112 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#113 (mes)
 - "Don't take any unncessary risks, okay?"
-+ ""
++ "Não corra risco desnecessário, certo?"
 #: npc/re/instances/DevilTower.txt#114 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#115 (mes)
 - "Bring the Expedition Chief."
-+ ""
++ "Traga o Chefe da Expedição."
 #: npc/re/instances/DevilTower.txt#116 (mes)
 - "Devil's Tower is not a place to visit alone."
-+ ""
++ "A Torre do Demônio não é lugar para se visitar sozinho."
 #: npc/re/instances/DevilTower.txt#117 (mes)
 - "Bring the manager."
-+ ""
++ "Traga o responsável."
 #: npc/re/instances/DevilTower.txt#118 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#119 (mes)
 - "You have already entered by connecting it."
-+ ""
++ "Você já entrou fazendo a conexão."
 #: npc/re/instances/DevilTower.txt#120 (mes)
 - "Connect to the space again? I can not do that."
-+ ""
++ "Conectar ao espaço de novo? Isso eu não posso fazer."
 #: npc/re/instances/DevilTower.txt#121 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#122 (mes)
 - "Hrm... It is difficult to connect to unless it is an appointed exploration time."
-+ ""
++ "Hm... É difícil conectar fora do horário marcado de exploração."
 #: npc/re/instances/DevilTower.txt#123 (mes)
 - "Not to mention dangerous as well."
-+ ""
++ "Sem falar que é perigoso."
 #: npc/re/instances/DevilTower.txt#124 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#125 (mes)
 - "Are you a volunteer to explore the Devil's Tower?"
-+ ""
++ "Você é voluntário para explorar a Torre do Demônio?"
 #: npc/re/instances/DevilTower.txt#126 (mes)
 - "Do you want me to activate the Dimensional Device?"
-+ ""
++ "Você quer que eu ative o Dispositivo Dimensional?"
 #: npc/re/instances/DevilTower.txt#127 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#128 (mes)
 - "Decide quickly because you only have a finite amount of time in there."
-+ ""
++ "Decida rápido, porque o seu tempo lá dentro é limitado."
 #: npc/re/instances/DevilTower.txt#129 (select)
 - "Yes, activate the device."
-+ ""
++ "Sim, ative o dispositivo."
 #: npc/re/instances/DevilTower.txt#130 (select)
 - "Wait for a minute."
-+ ""
++ "Espere um minuto."
 #: npc/re/instances/DevilTower.txt#131 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#132 (mes)
 - "Your time to explore is dwindling."
-+ ""
++ "O seu tempo de exploração está diminuindo."
 #: npc/re/instances/DevilTower.txt#133 (mes)
 - "Time is very important."
-+ ""
++ "O tempo é muito importante."
 #: npc/re/instances/DevilTower.txt#134 (mes)
 - "What are you waiting for?"
-+ ""
++ "O que você está esperando?"
 #: npc/re/instances/DevilTower.txt#135 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#136 (mes)
 - "The Dimensional Device is activated."
-+ ""
++ "O Dispositivo Dimensional está ativado."
 #: npc/re/instances/DevilTower.txt#137 (mes)
 - "If you're lucky, you can get through this quickly."
-+ ""
++ "Se você tiver sorte, dá para resolver isso depressa."
 #: npc/re/instances/DevilTower.txt#138 (mes)
 - "I look forward to hearing good news."
-+ ""
++ "Fico no aguardo de boas notícias."
 #: npc/re/instances/DevilTower.txt#140 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#141 (mes)
 - "Hey, Hey"
-+ ""
++ "Ei, ei"
 #: npc/re/instances/DevilTower.txt#142 (mes)
 - "It is difficult to send to you through the device right now."
-+ ""
++ "Está difícil mandar você pelo dispositivo agora."
 #: npc/re/instances/DevilTower.txt#143 (mes)
 - "We should stop exploring today and let's go again another day."
-+ ""
++ "É melhor a gente parar de explorar hoje e voltar outro dia."
 #: npc/re/instances/DevilTower.txt#144 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#145 (mes)
 - "Look, I am sorry but it is not allowed to enter except during the allowed time, Devil's Tower is dangerous."
-+ ""
++ "Olhe, me desculpe, mas não é permitido entrar fora do horário permitido, a Torre do Demônio é perigosa."
 #: npc/re/instances/DevilTower.txt#146 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#147 (mes)
 - "Yes, this is the Dimensional Device."
-+ ""
++ "Sim, este é o Dispositivo Dimensional."
 #: npc/re/instances/DevilTower.txt#148 (mes)
 - "It is used to travel time."
-+ ""
++ "Ele serve para viajar no tempo."
 #: npc/re/instances/DevilTower.txt#149 (mes)
 - "It will be difficult to enter again if you leave."
-+ ""
++ "Vai ser difícil entrar de novo se você sair."
 #: npc/re/instances/DevilTower.txt#150 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#151 (mes)
 - "Don't worry though, I'm a genius scholar~"
-+ ""
++ "Mas não se preocupe, eu sou um erudito genial~"
 #: npc/re/instances/DevilTower.txt#152 (mes)
 - "Anyway, ready to enter?"
-+ ""
++ "Enfim, pronto para entrar?"
 #: npc/re/instances/DevilTower.txt#153 (select)
 - "Enter the device."
-+ ""
++ "Entrar no dispositivo."
 #: npc/re/instances/DevilTower.txt#154 (select)
 - "Stop."
-+ ""
++ "Parar."
 #: npc/re/instances/DevilTower.txt#155 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#156 (mes)
 - "Right."
-+ ""
++ "Certo."
 #: npc/re/instances/DevilTower.txt#157 (mes)
 - "It seems like quite a long time has passed since you activated the device. Am I right?"
-+ ""
++ "Parece que passou um bom tempo desde que você ativou o dispositivo. Estou certo?"
 #: npc/re/instances/DevilTower.txt#158 (atrib)
 - "Torre do Demônio"
 + ""
 #: npc/re/instances/DevilTower.txt#159 (mes)
 - "An unknown error occurred."
-+ ""
++ "Ocorreu um erro desconhecido."
 #: npc/re/instances/DevilTower.txt#160 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#161 (mes)
 - "The Dimensional Device needs to be activated first before entering."
-+ ""
++ "O Dispositivo Dimensional precisa ser ativado antes de você entrar."
 #: npc/re/instances/DevilTower.txt#162 (mes)
 - "It doesn't seem to be activated yet."
-+ ""
++ "Parece que ele ainda não foi ativado."
 #: npc/re/instances/DevilTower.txt#163 (mes)
 - "[Shep]"
-+ ""
++ "[Shep]"
 #: npc/re/instances/DevilTower.txt#164 (mes)
 - "Please get a permission to activate it by talking to the Magic Scholar Artie."
-+ ""
++ "Peça permissão para ativá-lo falando com o Erudito Mágico Artie."
 #: npc/re/instances/DevilTower.txt#165 (mes)
 - "[Artie]"
-+ ""
++ "[Artie]"
 #: npc/re/instances/DevilTower.txt#166 (mes)
 - "Exploring Devil's Tower will be permitted only for expeditions in parties."
-+ ""
++ "A exploração da Torre do Demônio só é permitida a expedições em grupo."
 #: npc/re/instances/DevilTower.txt#167 (mes)
 - "Make sure you are ready."
++ "Verifique se você está pronto."
+#: npc/re/instances/DevilTower.txt#168 (mapannounce)
+- "dali02"
 + ""
+#: npc/re/instances/DevilTower.txt#169 (mapannounce)
+- "Party member "
++ "O aventureiro "
+#: npc/re/instances/DevilTower.txt#170 (mapannounce)
+- " of party's "
++ ", do grupo "
+#: npc/re/instances/DevilTower.txt#171 (mapannounce)
+- " enters Room "
++ ", entra na Sala "
 #: npc/re/instances/DevilTower.txt#175 (npctalk)
 - "Artie: Hey, you! How is your research going?"
-+ ""
++ "Artie: Ei, você! Como vai a sua pesquisa?"
 #: npc/re/instances/DevilTower.txt#176 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#177 (npctalk)
 - "Shep: Who are you calling hey you? You're just a dusty little fairy!"
-+ ""
++ "Shep: Quem é você chamando de ei, você? Você não passa de uma feizinha empoeirada!"
 #: npc/re/instances/DevilTower.txt#178 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#179 (npctalk)
 - "Artie: A dusty little what? I'll have you know, I have superior genes to your species you ape!"
-+ ""
++ "Artie: Uma o quê empoeirada? Fique sabendo que eu tenho genes superiores aos da sua espécie, seu macaco!"
 #: npc/re/instances/DevilTower.txt#180 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#181 (npctalk)
 - "Shep: What do I care what you say? Even our kids are bigger than you tiny little fairies!"
-+ ""
++ "Shep: E eu com isso? Até as nossas crianças são maiores que vocês, feezinhas!"
 #: npc/re/instances/DevilTower.txt#182 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#183 (npctalk)
 - "Shep: Think you're so big just because you're a magic scholar huh?"
-+ ""
++ "Shep: Você se acha o máximo só porque é erudita mágica, é?"
 #: npc/re/instances/DevilTower.txt#184 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#185 (npctalk)
 - "Artie: You know nothing human. Remind me again who found this tower entrance?"
-+ ""
++ "Artie: Você não sabe nada, humano. Me lembre de novo quem achou a entrada desta torre?"
 #: npc/re/instances/DevilTower.txt#186 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#187 (npctalk)
 - "Shep: *Sigh*... Y....You did."
-+ ""
++ "Shep: *Suspiro*... V....Você achou."
 #: npc/re/instances/DevilTower.txt#188 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#189 (npctalk)
 - "Artie: Y....You? Did I stutter? And who solved the formula calculating the dimensional gap connected to the tower?"
-+ ""
++ "Artie: V....Você? Eu gaguejei? E quem resolveu a fórmula que calcula a fenda dimensional ligada à torre?"
 #: npc/re/instances/DevilTower.txt#190 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#191 (npctalk)
 - "Shep: Yes, yes it was you!"
-+ ""
++ "Shep: Sim, sim, foi você!"
 #: npc/re/instances/DevilTower.txt#192 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#193 (npctalk)
 - "Artie: So I take it you're no longer questioning how smart I am right?"
-+ ""
++ "Artie: Então eu entendo que você não questiona mais o quanto eu sou inteligente, certo?"
 #: npc/re/instances/DevilTower.txt#194 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#195 (npctalk)
 - "Shep: Alright, alright. I need an adventurer to explore the tower for us."
-+ ""
++ "Shep: Está bem, está bem. Eu preciso de um aventureiro para explorar a torre para nós."
 #: npc/re/instances/DevilTower.txt#196 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#197 (npctalk)
 - "Shep: No one has volunteered because everyone says it's too dangerous!"
-+ ""
++ "Shep: Ninguém se voluntariou porque todo mundo diz que é perigoso demais!"
 #: npc/re/instances/DevilTower.txt#198 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#199 (npctalk)
 - "Artie: No volunteers? Come on. Harness your motivational skills and find someone."
-+ ""
++ "Artie: Sem voluntários? Ora essa. Use os seus dotes de motivação e ache alguém."
 #: npc/re/instances/DevilTower.txt#200 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#202 (npctalk)
 - "Shep: Hello!!! Now recruiting new members to exploring the Devil's Tower!"
-+ ""
++ "Shep: Alô!!! Recrutando membros novos para explorar a Torre do Demônio!"
 #: npc/re/instances/DevilTower.txt#203 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#204 (npctalk)
 - "Shep: Please come! Now's your chance to possibly come face to face with the infamous minions of Satan Morocc himself!"
-+ ""
++ "Shep: Venham! É a sua chance de encarar cara a cara os famosos lacaios do próprio Satan Morocc!"
 #: npc/re/instances/DevilTower.txt#205 (npctalk)
 - "Historian Shep#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#206 (npctalk)
 - "Artie: You sure that's the right thing to say? Maybe your recruiting tactics need refining..."
-+ ""
++ "Artie: Você tem certeza de que é isso que se deve dizer? Talvez a sua tática de recrutamento precise de ajuste..."
 #: npc/re/instances/DevilTower.txt#207 (npctalk)
 - "Magic Scholar Artie#tnm"
 + ""
 #: npc/re/instances/DevilTower.txt#210 (npctalk)
 - "Officer Heim: This is an emergency.. How things are going?"
-+ ""
++ "Oficial Heim: Isto é uma emergência.. Como estão as coisas?"
 #: npc/re/instances/DevilTower.txt#211 (npctalk)
 - "Officer Heim#heim0"
 + ""
 #: npc/re/instances/DevilTower.txt#212 (npctalk)
 - "A tirailleur: Next floor is the highest one... but there are so many demons..."
-+ ""
++ "Um Atirador: O próximo andar é o mais alto... mas há demônios demais..."
 #: npc/re/instances/DevilTower.txt#213 (npctalk)
 - "A tirailleur#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#215 (npctalk)
 - "A tirailleur: It is impossible to break through with the number of our people."
-+ ""
++ "Um Atirador: É impossível romper com o número de gente que temos."
 #: npc/re/instances/DevilTower.txt#216 (npctalk)
 - "A tirailleur#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#218 (npctalk)
 - "Officer Heim: How many soldiers have survived now? When is the support team arriving?"
-+ ""
++ "Oficial Heim: Quantos soldados sobraram vivos? Quando chega a equipe de apoio?"
 #: npc/re/instances/DevilTower.txt#219 (npctalk)
 - "Officer Heim#heim0"
 + ""
 #: npc/re/instances/DevilTower.txt#221 (npctalk)
 - "An aide: There aren't enough to call in..."
-+ ""
++ "Um Ajudante: Não há gente suficiente para convocar..."
 #: npc/re/instances/DevilTower.txt#222 (npctalk)
 - "An aide#tnm02"
 + ""
 #: npc/re/instances/DevilTower.txt#223 (npctalk)
 - "An aide: The good news is the demons have stopped attacking."
-+ ""
++ "Um Ajudante: A boa notícia é que os demônios pararam de atacar."
 #: npc/re/instances/DevilTower.txt#224 (npctalk)
 - "An aide#tnm02"
 + ""
 #: npc/re/instances/DevilTower.txt#225 (npctalk)
 - "Officer Heim: We can't just be stuck here and can go further. Why did the demons stop attacking ?"
-+ ""
++ "Oficial Heim: Não podemos ficar presos aqui e podemos ir mais longe. Por que os demônios pararam de atacar?"
 #: npc/re/instances/DevilTower.txt#226 (npctalk)
 - "Officer Heim#heim0"
 + ""
 #: npc/re/instances/DevilTower.txt#227 (npctalk)
 - "A tirailleur: It seems like there is something going on up there..."
-+ ""
++ "Um Atirador: Parece que tem alguma coisa acontecendo lá em cima..."
 #: npc/re/instances/DevilTower.txt#228 (npctalk)
 - "A tirailleur#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#231 (npctalk)
 - "Officer Heim: Who are you?"
-+ ""
++ "Oficial Heim: Quem é você?"
 #: npc/re/instances/DevilTower.txt#232 (npctalk)
 - "Officer Heim#heim"
 + ""
 #: npc/re/instances/DevilTower.txt#233 (mes)
 - "[Officer Heim]"
-+ ""
++ "[Oficial Heim]"
 #: npc/re/instances/DevilTower.txt#234 (mes)
 - "Who brought you all here?"
-+ ""
++ "Quem trouxe vocês todos para cá?"
 #: npc/re/instances/DevilTower.txt#235 (mes)
 - "I will talk to a representative."
-+ ""
++ "Eu vou falar com um representante."
 #: npc/re/instances/DevilTower.txt#236 (mes)
 - "[Officer Heim]"
-+ ""
++ "[Oficial Heim]"
 #: npc/re/instances/DevilTower.txt#237 (mes)
 - "Back up soldiers? So why are you just standing there?"
-+ ""
++ "Soldados de apoio? Então por que vocês estão aí parados?"
 #: npc/re/instances/DevilTower.txt#238 (npctalk)
 - "Officer Heim: Back up soldiers? So why are you just standing there?"
-+ ""
++ "Oficial Heim: Soldados de apoio? Então por que vocês estão aí parados?"
 #: npc/re/instances/DevilTower.txt#239 (select)
 - "Right now?"
-+ ""
++ "Agora mesmo?"
 #: npc/re/instances/DevilTower.txt#241 (mes)
 - "[Healer Fama]"
-+ ""
++ "[Curandeira Fama]"
 #: npc/re/instances/DevilTower.txt#242 (mes)
 - "Commander please help me. I can't do it by myself~!"
-+ ""
++ "Comandante, por favor me ajude. Eu não dou conta sozinha~!"
 #: npc/re/instances/DevilTower.txt#243 (npctalk)
 - "Healer Fama: Commander please help me. I can't do it by myself~!"
-+ ""
++ "Curandeira Fama: Comandante, por favor me ajude. Eu não dou conta sozinha~!"
 #: npc/re/instances/DevilTower.txt#244 (npctalk)
 - "Healer Fama#feima"
 + ""
 #: npc/re/instances/DevilTower.txt#245 (mes)
 - "[Officer Heim]"
-+ ""
++ "[Oficial Heim]"
 #: npc/re/instances/DevilTower.txt#246 (mes)
 - "Do you hear that?"
-+ ""
++ "Você está ouvindo isso?"
 #: npc/re/instances/DevilTower.txt#247 (mes)
 - "Help Fama take care of the injured soldiers."
-+ ""
++ "Ajude a Fama a cuidar dos soldados feridos."
 #: npc/re/instances/DevilTower.txt#248 (mes)
 - "Fama will give you first aid-kits, use it to help the injured people."
-+ ""
++ "A Fama vai lhe dar kits de primeiros socorros, use-os para ajudar os feridos."
 #: npc/re/instances/DevilTower.txt#249 (npctalk)
 - "Officer Heim: Do you hear that?"
-+ ""
++ "Oficial Heim: Você está ouvindo isso?"
 #: npc/re/instances/DevilTower.txt#250 (npctalk)
 - "Officer Heim: Help Fama take care of the injured soldiers."
-+ ""
++ "Oficial Heim: Ajude a Fama a cuidar dos soldados feridos."
 #: npc/re/instances/DevilTower.txt#251 (npctalk)
 - "Healer Fama: Okay~ You are going to help me? Come here and receive the first aid kit~!"
-+ ""
++ "Curandeira Fama: Certo~ Você vai me ajudar? Venha aqui pegar o kit de primeiros socorros~!"
 #: npc/re/instances/DevilTower.txt#252 (mes)
 - "[Officer Heim]"
-+ ""
++ "[Oficial Heim]"
 #: npc/re/instances/DevilTower.txt#253 (mes)
 - "It is priority to treat the injured soldiers by assisting Fama."
-+ ""
++ "É prioridade tratar os soldados feridos ajudando a Fama."
 #: npc/re/instances/DevilTower.txt#254 (mes)
 - "Please do your best even if the environment is the worst."
-+ ""
++ "Por favor, faça o seu melhor, mesmo que as condições sejam péssimas."
 #: npc/re/instances/DevilTower.txt#255 (mes)
 - "[Officer Heim]"
-+ ""
++ "[Oficial Heim]"
 #: npc/re/instances/DevilTower.txt#256 (mes)
 - "Luckily, no one is dead yet."
-+ ""
++ "Por sorte, ninguém morreu ainda."
 #: npc/re/instances/DevilTower.txt#257 (mes)
 - "I do not want to see my soldiers die."
-+ ""
++ "Eu não quero ver os meus soldados morrerem."
 #: npc/re/instances/DevilTower.txt#258 (mes)
 - "[Healer Fama]"
-+ ""
++ "[Curandeira Fama]"
 #: npc/re/instances/DevilTower.txt#259 (mes)
 - "Please cure the injured with this first aid kit."
-+ ""
++ "Por favor, cure os feridos com este kit de primeiros socorros."
 #: npc/re/instances/DevilTower.txt#260 (mes)
 - "It's not difficult. Just follow the instructions."
-+ ""
++ "Não é difícil. É só seguir as instruções."
 #: npc/re/instances/DevilTower.txt#261 (mes)
 - "[Healer Fama]"
-+ ""
++ "[Curandeira Fama]"
 #: npc/re/instances/DevilTower.txt#262 (mes)
 - "We are low on supplies. So I will give them once at a time."
-+ ""
++ "Estamos com pouco suprimento. Então eu dou um de cada vez."
 #: npc/re/instances/DevilTower.txt#263 (mes)
 - "Sorry, please request again if you run out."
-+ ""
++ "Desculpe, peça de novo se acabar."
 #: npc/re/instances/DevilTower.txt#264 (mes)
 - "[Healer Fama]"
-+ ""
++ "[Curandeira Fama]"
 #: npc/re/instances/DevilTower.txt#265 (mes)
 - "Sorry... procurement is not good right now so I can only provide one first-aid kit at a time."
-+ ""
++ "Desculpe... o abastecimento não está bom agora, então eu só posso dar um kit de primeiros socorros por vez."
 #: npc/re/instances/DevilTower.txt#266 (mes)
 - "Please request again if you run out."
-+ ""
++ "Por favor, peça de novo se acabar."
 #: npc/re/instances/DevilTower.txt#267 (mes)
 - "[Healer Fama]"
-+ ""
++ "[Curandeira Fama]"
 #: npc/re/instances/DevilTower.txt#268 (mes)
 - "Huh... Okay, we can take a break now."
-+ ""
++ "Ufa... Certo, agora dá para descansar."
 #: npc/re/instances/DevilTower.txt#269 (mes)
 - "Thank you very much!"
-+ ""
++ "Muito obrigada!"
 #: npc/re/instances/DevilTower.txt#270 (mes)
 - "I need 1 first-aid-kit to treat the injured soldier."
-+ ""
++ "Eu preciso de 1 kit de primeiros socorros para tratar o soldado ferido."
 #: npc/re/instances/DevilTower.txt#271 (mes)
 - "This soldier has lost consciousness and groaning."
-+ ""
++ "Este soldado perdeu a consciência e está gemendo."
 #: npc/re/instances/DevilTower.txt#272 (mes)
 - "Should I use the first-aid kit?"
-+ ""
++ "Devo usar o kit de primeiros socorros?"
 #: npc/re/instances/DevilTower.txt#273 (select)
 - "Use first-aid kit."
-+ ""
++ "Usar o kit de primeiros socorros."
 #: npc/re/instances/DevilTower.txt#274 (select)
 - "Observe condition."
-+ ""
++ "Observar o estado dele."
 #: npc/re/instances/DevilTower.txt#275 (mes)
 - "You decide to observe the condition of the injured soldier more."
-+ ""
++ "Você decide observar mais um pouco o estado do soldado ferido."
 #: npc/re/instances/DevilTower.txt#276 (mes)
 - "You administer the first-aid-kit to the soldier."
-+ ""
++ "Você aplica o kit de primeiros socorros no soldado."
 #: npc/re/instances/DevilTower.txt#284 (mes)
 - "It worked."
-+ ""
++ "Funcionou."
 #: npc/re/instances/DevilTower.txt#285 (npctalk)
 - "Healer Fama: Assassins?!"
-+ ""
++ "Curandeira Fama: Assassinos?!"
 #: npc/re/instances/DevilTower.txt#286 (npctalk)
 - "Healer Fama#feima"
 + ""
 #: npc/re/instances/DevilTower.txt#293 (npctalk)
 - "Injured Soldier: groaning...."
-+ ""
++ "Soldado Ferido: gemendo...."
 #: npc/re/instances/DevilTower.txt#294 (npctalk)
 - "Injured Soldier: Owww..."
-+ ""
++ "Soldado Ferido: Owww..."
 #: npc/re/instances/DevilTower.txt#295 (npctalk)
 - "Injured Soldier: .... aah.. aah.."
-+ ""
++ "Soldado Ferido: .... aah.. aah.."
 #: npc/re/instances/DevilTower.txt#296 (npctalk)
 - "Injured Soldier: Owww..."
-+ ""
++ "Soldado Ferido: Owww..."
 #: npc/re/instances/DevilTower.txt#297 (npctalk)
 - "Injured Soldier: I do not want to die..."
-+ ""
++ "Soldado Ferido: Eu não quero morrer..."
 #: npc/re/instances/DevilTower.txt#298 (npctalk)
 - "Injured Soldier: Owww~"
-+ ""
++ "Soldado Ferido: Owww~"
 #: npc/re/instances/DevilTower.txt#299 (npctalk)
 - "Injured Soldier: Groaning..."
-+ ""
++ "Soldado Ferido: Gemendo..."
 #: npc/re/instances/DevilTower.txt#300 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#301 (mes)
 - "whew.. it seems to be okay now."
-+ ""
++ "ufa.. parece que agora está tudo bem."
 #: npc/re/instances/DevilTower.txt#302 (mes)
 - "Thank you."
-+ ""
++ "Obrigado."
 #: npc/re/instances/DevilTower.txt#303 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#304 (mes)
 - "Groaning... Just let me die."
-+ ""
++ "Gemendo... Deixe eu morrer logo."
 #: npc/re/instances/DevilTower.txt#305 (mes)
 - "No it hurts too much."
-+ ""
++ "Não, dói demais."
 #: npc/re/instances/DevilTower.txt#306 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#307 (mes)
 - "His conscious seems to be blur still."
-+ ""
++ "A consciência dele parece ainda estar turva."
 #: npc/re/instances/DevilTower.txt#308 (mes)
 - "Leave him to get some rest."
-+ ""
++ "Deixe ele descansar um pouco."
 #: npc/re/instances/DevilTower.txt#309 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#310 (mes)
 - "I thought I was going to die."
-+ ""
++ "Eu achei que ia morrer."
 #: npc/re/instances/DevilTower.txt#311 (mes)
 - "But I'm alive!"
-+ ""
++ "Mas eu estou vivo!"
 #: npc/re/instances/DevilTower.txt#312 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#313 (mes)
 - "I can't die here. I have to propose to my beloved when I get home."
-+ ""
++ "Eu não posso morrer aqui. Eu tenho que pedir a minha amada em casamento quando chegar em casa."
 #: npc/re/instances/DevilTower.txt#314 (mes)
 - "We will be happy for sure?"
-+ ""
++ "A gente vai ser feliz, não vai?"
 #: npc/re/instances/DevilTower.txt#315 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#316 (mes)
 - "I feel much better but I still can't move."
-+ ""
++ "Eu estou bem melhor, mas ainda não consigo me mexer."
 #: npc/re/instances/DevilTower.txt#317 (mes)
 - "Still I'm lucky to be alive."
-+ ""
++ "Mesmo assim, tenho sorte de estar vivo."
 #: npc/re/instances/DevilTower.txt#318 (mes)
 - "[Injured soldiers]"
-+ ""
++ "[Soldados feridos]"
 #: npc/re/instances/DevilTower.txt#319 (mes)
 - "Thank you.. Thank you.."
-+ ""
++ "Obrigado.. Obrigado.."
 #: npc/re/instances/DevilTower.txt#320 (mes)
 - "[An aide]"
-+ ""
++ "[Um Ajudante]"
 #: npc/re/instances/DevilTower.txt#321 (mes)
 - "The calamity that happened hundreds of years ago will not happen again right?"
-+ ""
++ "A calamidade que aconteceu centenas de anos atrás não vai acontecer de novo, vai?"
 #: npc/re/instances/DevilTower.txt#322 (mes)
 - "Why have the demons showed up again so suddenly?"
-+ ""
++ "Por que os demônios apareceram de novo assim de repente?"
 #: npc/re/instances/DevilTower.txt#323 (mes)
 - "[A tirailleur]"
-+ ""
++ "[Um Atirador]"
 #: npc/re/instances/DevilTower.txt#324 (mes)
 - "Are you a member of back-up team?"
-+ ""
++ "Você é da equipe de apoio?"
 #: npc/re/instances/DevilTower.txt#325 (mes)
 - "Good. things are getting worse here."
-+ ""
++ "Ótimo. As coisas estão piorando por aqui."
 #: npc/re/instances/DevilTower.txt#326 (mes)
 - "Glad that you all are here to help."
-+ ""
++ "Que bom que vocês vieram ajudar."
 #: npc/re/instances/DevilTower.txt#327 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#328 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#329 (mes)
 - "Who is in charge of the back-up team?"
-+ ""
++ "Quem é o responsável pela equipe de apoio?"
 #: npc/re/instances/DevilTower.txt#330 (atrib)
 - "Lucile#tnm01"
 + ""
@@ -918,34 +930,34 @@
 + ""
 #: npc/re/instances/DevilTower.txt#333 (npctalk)
 - "Lucile: I am Lucile from the Assassin Guild."
-+ ""
++ "Lucile: Eu sou Lucile, do Sindicato dos Assassinos."
 #: npc/re/instances/DevilTower.txt#334 (npctalk)
 - "Officer Heim: Our back-up is from the Assassin Guild? Thanks for arriving in time."
-+ ""
++ "Oficial Heim: O nosso apoio é do Sindicato dos Assassinos? Obrigado por chegar a tempo."
 #: npc/re/instances/DevilTower.txt#335 (npctalk)
 - "Lucile: The situation doesn't seem to be good."
-+ ""
++ "Lucile: A situação não parece boa."
 #: npc/re/instances/DevilTower.txt#336 (npctalk)
 - "Lucile: What happened to the brave knights of Prontera?"
-+ ""
++ "Lucile: O que aconteceu com os bravos cavaleiros de Prontera?"
 #: npc/re/instances/DevilTower.txt#337 (npctalk)
 - "Officer Heim: Are you mocking me?"
-+ ""
++ "Oficial Heim: Você está zombando de mim?"
 #: npc/re/instances/DevilTower.txt#338 (npctalk)
 - "Lucile: Not at all. I really want to know. What's going on upstairs?"
-+ ""
++ "Lucile: De jeito nenhum. Eu quero saber de verdade. O que está acontecendo lá em cima?"
 #: npc/re/instances/DevilTower.txt#339 (npctalk)
 - "Officer Heim: How did you know that? Yes, the demons have stopped their attack from upstairs."
-+ ""
++ "Oficial Heim: Como você sabia disso? Sim, os demônios pararam o ataque lá de cima."
 #: npc/re/instances/DevilTower.txt#340 (npctalk)
 - "Lucile: What do you think about the situation Magic Swordman?"
-+ ""
++ "Lucile: O que você acha da situação, Espadachim Mágico?"
 #: npc/re/instances/DevilTower.txt#341 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#342 (npctalk)
 - "Magic swordman: Hmm, I will go and investigate."
-+ ""
++ "Espadachim Mágico: Hmm, eu vou lá investigar."
 #: npc/re/instances/DevilTower.txt#343 (npctalk)
 - "Magic Swordman#tnm01"
 + ""
@@ -954,304 +966,313 @@
 + ""
 #: npc/re/instances/DevilTower.txt#347 (npctalk)
 - "Lucile: How are you so fast?"
-+ ""
++ "Lucile: Como você é tão rápido?"
 #: npc/re/instances/DevilTower.txt#348 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#349 (npctalk)
 - "Officer Heim: What are you doing? If you go alone you will be killed!"
-+ ""
++ "Oficial Heim: O que você está fazendo? Se for sozinho, vai ser morto!"
 #: npc/re/instances/DevilTower.txt#350 (npctalk)
 - "Lucile: I won't be alone. There are still some uninjured soldiers!"
-+ ""
++ "Lucile: Eu não vou sozinha. Ainda há soldados sem ferimento!"
 #: npc/re/instances/DevilTower.txt#351 (npctalk)
 - "Lucile: All right, I will ask you to be my back up. Hahaha right Dewey?"
-+ ""
++ "Lucile: Muito bem, eu peço a vocês que sejam o meu apoio. Hahaha, certo, Dewey?"
 #: npc/re/instances/DevilTower.txt#354 (npctalk)
 - "Dewey: Okay, I will."
-+ ""
++ "Dewey: Certo, eu vou."
 #: npc/re/instances/DevilTower.txt#355 (npctalk)
 - "Assassin Dewey#tnm01"
 + ""
 #: npc/re/instances/DevilTower.txt#359 (npctalk)
 - "Officer Heim: They are so unpredictable. You know what is going on right? Back them up..."
-+ ""
++ "Oficial Heim: Eles são imprevisíveis demais. Você sabe o que está acontecendo, certo? Dê apoio a eles..."
 #: npc/re/instances/DevilTower.txt#360 (npctalk)
 - "Officer Heim: Help us take care of the demons coming down from upstairs."
-+ ""
++ "Oficial Heim: Ajude a gente a dar conta dos demônios que descem lá de cima."
 #: npc/re/instances/DevilTower.txt#361 (mes)
 - "[Dewey]"
-+ ""
++ "[Dewey]"
 #: npc/re/instances/DevilTower.txt#362 (mes)
 - "I will guide you to the upper floor."
-+ ""
++ "Eu guio você até o andar de cima."
 #: npc/re/instances/DevilTower.txt#363 (mes)
 - "Do not forget to get rid of any demons that you encounter on the way."
-+ ""
++ "Não esqueça de acabar com qualquer demônio que encontrar no caminho."
 #: npc/re/instances/DevilTower.txt#364 (select)
 - "Move now"
-+ ""
++ "Ir agora"
 #: npc/re/instances/DevilTower.txt#365 (select)
 - "I need more time to prepare."
-+ ""
++ "Eu preciso de mais tempo para me preparar."
 #: npc/re/instances/DevilTower.txt#366 (mes)
 - "[Dewey]"
-+ ""
++ "[Dewey]"
 #: npc/re/instances/DevilTower.txt#367 (mes)
 - "Be prepared for anything."
-+ ""
++ "Esteja preparado para tudo."
 #: npc/re/instances/DevilTower.txt#368 (mes)
 - "[Dewey]"
-+ ""
++ "[Dewey]"
 #: npc/re/instances/DevilTower.txt#369 (mes)
 - "Travel carefully."
-+ ""
++ "Viaje com cuidado."
+#: npc/re/instances/DevilTower.txt#376 (unittalk)
+- "What is this? A human? How dare they must have lost their minds!"
++ "O que é isso? Um humano? Como ousam, devem ter perdido o juízo!"
+#: npc/re/instances/DevilTower.txt#380 (unittalk)
+- "Did you make a resolution?"
++ "Você já se decidiu?"
+#: npc/re/instances/DevilTower.txt#384 (unittalk)
+- "Ha ha ha ha....Let's fight..!!!"
++ "Ha ha ha ha....Vamos lutar..!!!"
 #: npc/re/instances/DevilTower.txt#457 (mes)
 - "[Louie]"
-+ ""
++ "[Louie]"
 #: npc/re/instances/DevilTower.txt#458 (mes)
 - "The Captain says that we need to get rid of all of the demons..."
-+ ""
++ "O Capitão diz que a gente precisa acabar com todos os demônios..."
 #: npc/re/instances/DevilTower.txt#459 (mes)
 - "Better get to it."
-+ ""
++ "Melhor começar logo."
 #: npc/re/instances/DevilTower.txt#460 (mes)
 - "[Louie]"
-+ ""
++ "[Louie]"
 #: npc/re/instances/DevilTower.txt#461 (mes)
 - "A lot of soldiers still survived the attacks."
-+ ""
++ "Muitos soldados sobreviveram aos ataques."
 #: npc/re/instances/DevilTower.txt#462 (mes)
 - "They got rid of all the demons."
-+ ""
++ "Eles acabaram com todos os demônios."
 #: npc/re/instances/DevilTower.txt#463 (mes)
 - "[Louie]"
-+ ""
++ "[Louie]"
 #: npc/re/instances/DevilTower.txt#464 (mes)
 - "I was making sure that no one goes upstairs, I was afraid something might happen again."
-+ ""
++ "Eu estava garantindo que ninguém subisse, eu tinha medo de acontecer alguma coisa de novo."
 #: npc/re/instances/DevilTower.txt#465 (mes)
 - "[Louie]"
-+ ""
++ "[Louie]"
 #: npc/re/instances/DevilTower.txt#466 (mes)
 - "I wish you would help me."
-+ ""
++ "Eu queria que você me ajudasse."
 #: npc/re/instances/DevilTower.txt#467 (mes)
 - "I will guide you."
-+ ""
++ "Eu vou guiar você."
 #: npc/re/instances/DevilTower.txt#468 (mes)
 - "I have been exploring the passages of this tower for a while now."
-+ ""
++ "Eu já estou explorando as passagens desta torre faz um tempo."
 #: npc/re/instances/DevilTower.txt#469 (mes)
 - "You wave your hand in front of her but she doesn't react."
-+ ""
++ "Você acena com a mão na frente dela, mas ela não reage."
 #: npc/re/instances/DevilTower.txt#470 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#471 (mes)
 - "I am sorry if I'm giving you any attitude but I can't move."
-+ ""
++ "Desculpe se eu estou sendo grosseira, mas eu não consigo me mexer."
 #: npc/re/instances/DevilTower.txt#472 (npctalk)
 - "Lucile: I am sorry if I'm giving you any attitude but I can't move."
-+ ""
++ "Lucile: Desculpe se eu estou sendo grosseira, mas eu não consigo me mexer."
 #: npc/re/instances/DevilTower.txt#473 (cutin)
 - "tnm_lucile02.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#474 (select)
 - "Can I help?"
-+ ""
++ "Posso ajudar?"
 #: npc/re/instances/DevilTower.txt#475 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#476 (mes)
 - "I can use self-recovery but I don't have time for that."
-+ ""
++ "Eu consigo me autorreparar, mas não tenho tempo para isso."
 #: npc/re/instances/DevilTower.txt#477 (mes)
 - "Will you share your power with me?"
-+ ""
++ "Você divide o seu poder comigo?"
 #: npc/re/instances/DevilTower.txt#478 (npctalk)
 - "Lucile: I can use self-recovery but I don't have time for that. Will you share your power with me?"
-+ ""
++ "Lucile: Eu consigo me autorreparar, mas não tenho tempo para isso. Você divide o seu poder comigo?"
 #: npc/re/instances/DevilTower.txt#479 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#480 (mes)
 - "I need your help to activate my restoration system."
-+ ""
++ "Eu preciso da sua ajuda para ativar o meu sistema de restauração."
 #: npc/re/instances/DevilTower.txt#481 (mes)
 - "Please hold tight."
-+ ""
++ "Por favor, segure firme."
 #: npc/re/instances/DevilTower.txt#482 (npctalk)
 - "Lucile: I need your help to activate my restoration system."
-+ ""
++ "Lucile: Eu preciso da sua ajuda para ativar o meu sistema de restauração."
 #: npc/re/instances/DevilTower.txt#483 (npctalk)
 - "Lucile: Please hold tight."
-+ ""
++ "Lucile: Por favor, segure firme."
 #: npc/re/instances/DevilTower.txt#486 (cutin)
 - "tnm_lucile03.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#487 (mes)
 - "Lucile seems to be a machine."
-+ ""
++ "A Lucile parece ser uma máquina."
 #: npc/re/instances/DevilTower.txt#488 (mes)
 - "I can hear mechanical sounds all of a sudden."
-+ ""
++ "De repente dá para ouvir sons mecânicos."
 #: npc/re/instances/DevilTower.txt#490 (mes)
 - "System is restored."
-+ ""
++ "O sistema foi restaurado."
 #: npc/re/instances/DevilTower.txt#491 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#492 (mes)
 - "Wow! You fixed it faster than I thought."
-+ ""
++ "Uau! Você consertou mais rápido do que eu esperava."
 #: npc/re/instances/DevilTower.txt#493 (mes)
 - "Did that surprise you?"
-+ ""
++ "Isso surpreendeu você?"
 #: npc/re/instances/DevilTower.txt#494 (mes)
 - "I have to be fixed occasionally because I don't have a normal body"
-+ ""
++ "Eu tenho que ser consertada de vez em quando porque eu não tenho um corpo normal"
 #: npc/re/instances/DevilTower.txt#495 (cutin)
 - "tnm_lucile02.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#496 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#497 (mes)
 - "This body was a gift from the gods."
-+ ""
++ "Este corpo foi um presente dos deuses."
 #: npc/re/instances/DevilTower.txt#498 (mes)
 - "Do you see the gate in the middle?"
-+ ""
++ "Você está vendo o portão no meio?"
 #: npc/re/instances/DevilTower.txt#499 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#500 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#501 (mes)
 - "Hurry up or this world will be in a danger."
-+ ""
++ "Depressa, ou este mundo vai correr perigo."
 #: npc/re/instances/DevilTower.txt#503 (npctalk)
 - "Lucile: Let me excuse myself, follow me if you want to save the world."
-+ ""
++ "Lucile: Com licença, me sigam se vocês quiserem salvar o mundo."
 #: npc/re/instances/DevilTower.txt#504 (npctalk)
 - "Huey: sister..."
-+ ""
++ "Huey: irmã..."
 #: npc/re/instances/DevilTower.txt#505 (npctalk)
 - "Huey#hui02"
 + ""
 #: npc/re/instances/DevilTower.txt#510 (mes)
 - "[Huey]"
-+ ""
++ "[Huey]"
 #: npc/re/instances/DevilTower.txt#511 (mes)
 - "I am concerned about her."
-+ ""
++ "Eu estou preocupado com ela."
 #: npc/re/instances/DevilTower.txt#512 (mes)
 - "It happens whenever she's wounded."
-+ ""
++ "Isso acontece sempre que ela se fere."
 #: npc/re/instances/DevilTower.txt#513 (mes)
 - "Because she's mostly machine..."
-+ ""
++ "Porque ela é quase toda máquina..."
 #: npc/re/instances/DevilTower.txt#514 (mes)
 - "[Huey]"
-+ ""
++ "[Huey]"
 #: npc/re/instances/DevilTower.txt#515 (mes)
 - "I know the path upstairs..."
-+ ""
++ "Eu conheço o caminho lá para cima..."
 #: npc/re/instances/DevilTower.txt#516 (mes)
 - "First of all, we have to get rid of these demons!"
-+ ""
++ "Antes de mais nada, temos que acabar com estes demônios!"
 #: npc/re/instances/DevilTower.txt#517 (mes)
 - "[Huey]"
-+ ""
++ "[Huey]"
 #: npc/re/instances/DevilTower.txt#518 (mes)
 - "I wonder how the others are doing..."
-+ ""
++ "Eu me pergunto como estão os outros..."
 #: npc/re/instances/DevilTower.txt#519 (mes)
 - "Only Thanatos and Lucile have ever entered to upper floor..."
-+ ""
++ "Só o Thanatos e a Lucile chegaram a entrar no andar de cima..."
 #: npc/re/instances/DevilTower.txt#520 (mes)
 - "[Huey]"
-+ ""
++ "[Huey]"
 #: npc/re/instances/DevilTower.txt#521 (mes)
 - "If you want to assist them, you must hurry."
-+ ""
++ "Se você quer ajudá-los, tem que se apressar."
 #: npc/re/instances/DevilTower.txt#522 (mes)
 - "I will guide the way for you."
-+ ""
++ "Eu vou guiar o caminho para você."
 #: npc/re/instances/DevilTower.txt#523 (select)
 - "Move immediately."
-+ ""
++ "Ir imediatamente."
 #: npc/re/instances/DevilTower.txt#524 (select)
 - "Do not follow."
-+ ""
++ "Não seguir."
 #: npc/re/instances/DevilTower.txt#525 (mes)
 - "[Huey]"
-+ ""
++ "[Huey]"
 #: npc/re/instances/DevilTower.txt#526 (mes)
 - "...I see."
-+ ""
++ "...Entendo."
 #: npc/re/instances/DevilTower.txt#527 (mes)
 - "[Huey]"
-+ ""
++ "[Huey]"
 #: npc/re/instances/DevilTower.txt#528 (mes)
 - "This way."
-+ ""
++ "Por aqui."
 #: npc/re/instances/DevilTower.txt#529 (mes)
 - "Be careful."
-+ ""
++ "Cuidado."
 #: npc/re/instances/DevilTower.txt#531 (npctalk)
 - "Huey: Oh no, sister watch out! Demons have suddenly appeared!"
-+ ""
++ "Huey: Ah, não, irmã, cuidado! Apareceram demônios de repente!"
 #: npc/re/instances/DevilTower.txt#547 (npctalk)
 - "Huey: Where are they coming from? Demons again......"
-+ ""
++ "Huey: De onde eles estão vindo? Demônios de novo......"
 #: npc/re/instances/DevilTower.txt#566 (npctalk)
 - "Huey: Oh, no..."
-+ ""
++ "Huey: Ah, não..."
 #: npc/re/instances/DevilTower.txt#582 (npctalk)
 - "Huey: This way. This way... we can go upstairs by using the gap that the demons were coming from!"
-+ ""
++ "Huey: Por aqui. Por aqui... a gente sobe pela fenda de onde os demônios estavam vindo!"
 #: npc/re/instances/DevilTower.txt#583 (mes)
 - "[Magic Swordman Thanatos]"
-+ ""
++ "[Espadachim Mágico Thanatos]"
 #: npc/re/instances/DevilTower.txt#584 (mes)
 - "I am sorry but I have been through tough time..."
-+ ""
++ "Desculpe, mas eu passei por maus bocados..."
 #: npc/re/instances/DevilTower.txt#585 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#586 (mes)
 - "I am talking to your party leader now so please step back for a while."
-+ ""
++ "Eu estou falando com o líder do seu grupo agora, então afaste-se um pouco."
 #: npc/re/instances/DevilTower.txt#587 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#588 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#589 (mes)
 - "Oh. You just have arrived in time."
-+ ""
++ "Ah. Você chegou bem na hora."
 #: npc/re/instances/DevilTower.txt#590 (mes)
 - "Do you want to take a look over there?"
-+ ""
++ "Você quer dar uma olhada ali?"
 #: npc/re/instances/DevilTower.txt#591 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#592 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#593 (mes)
 - "We need to stop the demon..."
-+ ""
++ "Nós precisamos deter o demônio..."
 #: npc/re/instances/DevilTower.txt#594 (mes)
 - "Can you do that?"
-+ ""
++ "Você consegue fazer isso?"
 #: npc/re/instances/DevilTower.txt#595 (npctalk)
 - "Lucile: We need to stop the demon... Can you do that?"
-+ ""
++ "Lucile: Nós precisamos deter o demônio... Você consegue fazer isso?"
 #: npc/re/instances/DevilTower.txt#596 (atrib)
 - "Demon Morocc#tnm01"
 + ""
@@ -1260,43 +1281,46 @@
 + ""
 #: npc/re/instances/DevilTower.txt#598 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#599 (mes)
 - "We need to hold this spot until the trap is set by the Magic Swordman."
-+ ""
++ "Nós precisamos segurar este ponto até o Espadachim Mágico armar a armadilha."
 #: npc/re/instances/DevilTower.txt#600 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#601 (npctalk)
 - "Demon Morocc: You silly human. How long do you think you can manage to tie me up!"
-+ ""
++ "Demônio Morocc: Seu humano tolo. Por quanto tempo você acha que consegue me prender!"
 #: npc/re/instances/DevilTower.txt#602 (npctalk)
 - "Demon Morocc: Shadows! Come out and kill all enemies of darkness!"
-+ ""
++ "Demônio Morocc: Sombras! Venham e matem todos os inimigos da escuridão!"
 #: npc/re/instances/DevilTower.txt#605 (npctalk)
 - "Thanatos: You are so desperate that you're begging me to save you."
-+ ""
++ "Thanatos: Você está tão desesperado que está me implorando para salvar você."
 #: npc/re/instances/DevilTower.txt#606 (npctalk)
 - "Lucile: Thanatos. Sir, should you be bluffing like that?"
-+ ""
++ "Lucile: Thanatos. Senhor, o senhor devia blefar desse jeito?"
 #: npc/re/instances/DevilTower.txt#607 (npctalk)
 - "Demon Morocc: Be afraid of the destruction that I will bring when I'm released!"
-+ ""
++ "Demônio Morocc: Temam a destruição que eu vou trazer quando for solto!"
 #: npc/re/instances/DevilTower.txt#608 (npctalk)
 - "Thanatos: Shut up! You will never leave here unless I kill you!"
-+ ""
++ "Thanatos: Cale a boca! Você nunca vai sair daqui, a não ser que eu mate você!"
 #: npc/re/instances/DevilTower.txt#609 (npctalk)
 - "Thanatos: Lucile! Watch my back while I conjure up a shield to hold him!"
-+ ""
++ "Thanatos: Lucile! Cubra as minhas costas enquanto eu conjuro um escudo para prendê-lo!"
 #: npc/re/instances/DevilTower.txt#610 (npctalk)
 - "Lucile: Yes sir."
-+ ""
++ "Lucile: Sim, senhor."
 #: npc/re/instances/DevilTower.txt#611 (npctalk)
 - "Lucile: Okay everyone, now we know what to do. We have to prevent the Magic Seal from reaching here!"
-+ ""
++ "Lucile: Certo, pessoal, agora a gente sabe o que fazer. Temos que impedir que o Selo Mágico chegue até aqui!"
 #: npc/re/instances/DevilTower.txt#612 (npctalk)
 - "Demon Morocc: No way!! Troublemakers!"
-+ ""
++ "Demônio Morocc: De jeito nenhum!! Encrenqueiros!"
+#: npc/re/instances/DevilTower.txt#613 (mapannounce)
+- "Demon Morocc: No way!! Troublemakers!"
++ "Demônio Morocc: De jeito nenhum!! Encrenqueiros!"
 #: npc/re/instances/DevilTower.txt#615 (atrib)
 - "::OnFlameDead"
 + ""
@@ -1315,9 +1339,33 @@
 #: npc/re/instances/DevilTower.txt#633 (setarray)
 - "DIR_NORTH"
 + ""
+#: npc/re/instances/DevilTower.txt#639 (mapannounce)
+- "A Magic Seal has just appeared in southeast direction of the tower."
++ "Um Selo Mágico acaba de aparecer na direção sudeste da torre."
+#: npc/re/instances/DevilTower.txt#644 (mapannounce)
+- "Lucile: We should stop before Magic Seal has just started to move again."
++ "Lucile: A gente deve detê-lo antes que o Selo Mágico volte a se mover."
+#: npc/re/instances/DevilTower.txt#645 (mapannounce)
+- "Lucile: We should stop before Magic Seal reaches the center."
++ "Lucile: A gente deve detê-lo antes que o Selo Mágico chegue ao centro."
+#: npc/re/instances/DevilTower.txt#646 (mapannounce)
+- "Lucile: The Magic Seal has just started to move again."
++ "Lucile: O Selo Mágico voltou a se mover."
+#: npc/re/instances/DevilTower.txt#647 (mapannounce)
+- "Lucile: It is coming closer... No... It's too dangerous."
++ "Lucile: Está chegando perto... Não... É perigoso demais."
+#: npc/re/instances/DevilTower.txt#648 (mapannounce)
+- "Lucile: The Magic Seal is almost approaching the center!!"
++ "Lucile: O Selo Mágico está quase chegando ao centro!!"
+#: npc/re/instances/DevilTower.txt#651 (mapannounce)
+- "Lucile: We should stop it now!"
++ "Lucile: A gente tem que detê-lo agora!"
 #: npc/re/instances/DevilTower.txt#652 (npctalk)
 - "Thanatos: What are you doing!!! Are you playing a game now?!"
-+ ""
++ "Thanatos: O que vocês estão fazendo!!! Vocês estão brincando agora?!"
+#: npc/re/instances/DevilTower.txt#653 (mapannounce)
+- "Thanatos: What are you doing!!! Are you playing a game now?!"
++ "Thanatos: O que vocês estão fazendo!!! Vocês estão brincando agora?!"
 #: npc/re/instances/DevilTower.txt#654 (setarray)
 - "DIR_NORTHWEST"
 + ""
@@ -1335,157 +1383,190 @@
 + ""
 #: npc/re/instances/DevilTower.txt#661 (npctalk)
 - "Demon Morocc: Are you going to keep disturbing me!!!"
-+ ""
++ "Demônio Morocc: Vocês vão continuar me atrapalhando!!!"
+#: npc/re/instances/DevilTower.txt#662 (mapannounce)
+- "Demon Morocc: Are you going to keep disturbing me!!!"
++ "Demônio Morocc: Vocês vão continuar me atrapalhando!!!"
 #: npc/re/instances/DevilTower.txt#663 (npctalk)
 - "Demon Morocc: Okay, Let's see who is going to win!!! Come out!"
-+ ""
++ "Demônio Morocc: Certo, vamos ver quem vai vencer!!! Venham!"
+#: npc/re/instances/DevilTower.txt#664 (mapannounce)
+- "Demon Morocc: Okay, Let's see who is going to win!!! Come out!"
++ "Demônio Morocc: Certo, vamos ver quem vai vencer!!! Venham!"
 #: npc/re/instances/DevilTower.txt#665 (npctalk)
 - "Thanatos: It will be the same no matter how many times you try! Give up and go back to demon world!!"
-+ ""
++ "Thanatos: Vai ser igual, não importa quantas vezes você tente! Desista e volte para o mundo dos demônios!!"
+#: npc/re/instances/DevilTower.txt#666 (mapannounce)
+- "Thanatos: It will be the same no matter how many times you try! Give up and go back to demon world!!"
++ "Thanatos: Vai ser igual, não importa quantas vezes você tente! Desista e volte para o mundo dos demônios!!"
 #: npc/re/instances/DevilTower.txt#735 (npctalk)
 - "Demon Morocc: Kuh ha ha ha ha Pieces of my power! Gather here again!!!"
-+ ""
++ "Demônio Morocc: Kuh ha ha ha ha Pedaços do meu poder! Juntem-se aqui de novo!!!"
+#: npc/re/instances/DevilTower.txt#736 (mapannounce)
+- "Demon Morocc: Kuh ha ha ha ha Pieces of my power! Gather here again!!!"
++ "Demônio Morocc: Kuh ha ha ha ha Pedaços do meu poder! Juntem-se aqui de novo!!!"
 #: npc/re/instances/DevilTower.txt#737 (npctalk)
 - "Thanatos: Stop him! Prevent him from coming closer!!!"
-+ ""
++ "Thanatos: Detenham ele! Impeçam que ele chegue mais perto!!!"
+#: npc/re/instances/DevilTower.txt#738 (mapannounce)
+- "Thanatos: Stop him! Prevent him from coming closer!!!"
++ "Thanatos: Detenham ele! Impeçam que ele chegue mais perto!!!"
+#: npc/re/instances/DevilTower.txt#739 (mapannounce)
+- "Lucile: It is too early to feel easy! There are Magic Seals that haven't been destroyed yet."
++ "Lucile: É cedo demais para relaxar! Ainda há Selos Mágicos que não foram destruídos."
+#: npc/re/instances/DevilTower.txt#740 (mapannounce)
+- "There are still Magic Seals to destroy."
++ "Ainda há Selos Mágicos para destruir."
+#: npc/re/instances/DevilTower.txt#755 (mapannounce)
+- "Demon Morocc: No.. This can't be.. Who the hell.. are you!"
++ "Demônio Morocc: Não.. Não pode ser.. Quem diabos.. é você!"
 #: npc/re/instances/DevilTower.txt#756 (npctalk)
 - "Demon Morocc: No.. This can't be.. Who the hell.. are you!"
-+ ""
++ "Demônio Morocc: Não.. Não pode ser.. Quem diabos.. é você!"
+#: npc/re/instances/DevilTower.txt#757 (mapannounce)
+- "Thanatos: It will be the last time to show off!! Good bye!!!"
++ "Thanatos: Vai ser a última vez que você se exibe!! Adeus!!!"
 #: npc/re/instances/DevilTower.txt#758 (npctalk)
 - "Thanatos: It will be the last time to show off!! Good bye!!!"
-+ ""
++ "Thanatos: Vai ser a última vez que você se exibe!! Adeus!!!"
 #: npc/re/instances/DevilTower.txt#764 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#765 (mes)
 - "I guess the power of Demon Morocc to break the shield of seal has collided with Thanatos."
-+ ""
++ "Acho que o poder do Demônio Morocc de quebrar o escudo do selo colidiu com o Thanatos."
 #: npc/re/instances/DevilTower.txt#766 (cutin)
 - "tnm_lucile01.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#767 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#768 (mes)
 - "It has gone too far somewhere in the south"
-+ ""
++ "Foi longe demais, para algum lugar ao sul"
 #: npc/re/instances/DevilTower.txt#769 (mes)
 - "Will you go there?"
-+ ""
++ "Você vai até lá?"
 #: npc/re/instances/DevilTower.txt#770 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#771 (mes)
 - "The collision of those two powers is too much to handle."
-+ ""
++ "A colisão daqueles dois poderes é forte demais."
 #: npc/re/instances/DevilTower.txt#772 (mes)
 - "It could have influenced the south of Rune-Midgarts."
-+ ""
++ "Ela pode ter afetado o sul de Rune-Midgard."
 #: npc/re/instances/DevilTower.txt#773 (select)
 - "Follow."
-+ ""
++ "Seguir."
 #: npc/re/instances/DevilTower.txt#774 (select)
 - "Stop."
-+ ""
++ "Parar."
 #: npc/re/instances/DevilTower.txt#775 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#776 (mes)
 - "...I guess this is what you are able to?"
-+ ""
++ "...Acho que é isso que você consegue?"
 #: npc/re/instances/DevilTower.txt#777 (cutin)
 - "tnm_lucile02.bmp"
 + ""
 #: npc/re/instances/DevilTower.txt#778 (mes)
 - "[Lucile]"
-+ ""
++ "[Lucile]"
 #: npc/re/instances/DevilTower.txt#779 (mes)
 - "Good luck."
-+ ""
++ "Boa sorte."
+#: npc/re/instances/DevilTower.txt#782 (mapannounce)
+- "Young Girl: Odin Preserve me! A demon!! Help me!"
++ "Menina: Que Odin me proteja! Um demônio!! Me ajude!"
 #: npc/re/instances/DevilTower.txt#819 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#820 (mes)
 - "Why are there demons in the castle?!"
-+ ""
++ "Por que há demônios no castelo?!"
 #: npc/re/instances/DevilTower.txt#821 (mes)
 - "HELP ME!"
-+ ""
++ "ME AJUDE!"
 #: npc/re/instances/DevilTower.txt#822 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#823 (mes)
 - "*weeping* The demons are so scary."
-+ ""
++ "*chorando* Os demônios são tão assustadores."
 #: npc/re/instances/DevilTower.txt#824 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#825 (mes)
 - "Why would demons come all of a sudden,"
-+ ""
++ "Por que os demônios viriam assim de repente,"
 #: npc/re/instances/DevilTower.txt#826 (mes)
 - "lots of guards are hurt."
-+ ""
++ "muitos guardas estão feridos."
 #: npc/re/instances/DevilTower.txt#827 (npctalk)
 - "Young Girl: Why would demons come all of a sudden, lots of guards are hurt."
-+ ""
++ "Menina: Por que os demônios viriam assim de repente, muitos guardas estão feridos."
 #: npc/re/instances/DevilTower.txt#828 (select)
 - "Where are they?"
-+ ""
++ "Onde eles estão?"
+#: npc/re/instances/DevilTower.txt#830 (unittalk)
+- " : Where are they?"
++ " : Onde eles estão?"
 #: npc/re/instances/DevilTower.txt#831 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#832 (mes)
 - "They are in Morocc castle. My father is a knight."
-+ ""
++ "Eles estão no castelo de Morroc. O meu pai é cavaleiro."
 #: npc/re/instances/DevilTower.txt#833 (npctalk)
 - "They are in Morocc castle. My father is a knight."
-+ ""
++ "Eles estão no castelo de Morroc. O meu pai é cavaleiro."
 #: npc/re/instances/DevilTower.txt#834 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#835 (mes)
 - "It seems like something is happening, I hear strange noises downstairs."
-+ ""
++ "Parece que tem alguma coisa acontecendo, eu ouço barulhos estranhos lá embaixo."
 #: npc/re/instances/DevilTower.txt#836 (npctalk)
 - "Young Girl: It seems like something is happening, I hear strange noises downstairs."
-+ ""
++ "Menina: Parece que tem alguma coisa acontecendo, eu ouço barulhos estranhos lá embaixo."
 #: npc/re/instances/DevilTower.txt#837 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#838 (mes)
 - "I saw some guys in black entering. What is going on in the castle?"
-+ ""
++ "Eu vi uns caras de preto entrando. O que está acontecendo no castelo?"
 #: npc/re/instances/DevilTower.txt#839 (npctalk)
 - "Young Girl: I saw some guys in black entering. What is going on in the castle?"
-+ ""
++ "Menina: Eu vi uns caras de preto entrando. O que está acontecendo no castelo?"
 #: npc/re/instances/DevilTower.txt#840 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#841 (mes)
 - "Papa.. Papa please be safe. *sob*"
-+ ""
++ "Papai.. Papai, fique bem, por favor. *soluço*"
 #: npc/re/instances/DevilTower.txt#842 (mes)
 - "Please come with me through the passage behind that shelf!"
-+ ""
++ "Por favor, venha comigo pela passagem atrás daquela estante!"
 #: npc/re/instances/DevilTower.txt#843 (npctalk)
 - "Young Girl: Please come with me through the passage behind that shelf!"
-+ ""
++ "Menina: Por favor, venha comigo pela passagem atrás daquela estante!"
 #: npc/re/instances/DevilTower.txt#846 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#847 (mes)
 - "Behind that shelf is a secret passage to the basement!"
-+ ""
++ "Atrás daquela estante tem uma passagem secreta para o subsolo!"
 #: npc/re/instances/DevilTower.txt#848 (mes)
 - "Please come with me to make sure my Papa is safe."
-+ ""
++ "Por favor, venha comigo garantir que o meu Papai está bem."
 #: npc/re/instances/DevilTower.txt#849 (npctalk)
 - "Young Girl: Thank you for saving me... but why is there a demon?"
-+ ""
++ "Menina: Obrigada por me salvar... mas por que tem um demônio aqui?"
 #: npc/re/instances/DevilTower.txt#852 (npctalk)
 - "Young Girl: Look! More demons, they will overwhelm the castle soon!"
-+ ""
++ "Menina: Olhe! Mais demônios, eles vão tomar o castelo logo!"
 #: npc/re/instances/DevilTower.txt#853 (npctalk)
 - "Young Girl#tnm02"
 + ""
@@ -1513,60 +1594,63 @@
 #: npc/re/instances/DevilTower.txt#875 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/DevilTower.txt#880 (mapannounce)
+- "Young Girl: The way underground is along this aisle!"
++ "Menina: O caminho para o subsolo é por este corredor!"
 #: npc/re/instances/DevilTower.txt#883 (npctalk)
 - "Young Girl: The way underground is along this aisle!"
-+ ""
++ "Menina: O caminho para o subsolo é por este corredor!"
 #: npc/re/instances/DevilTower.txt#884 (npctalk)
 - "Young Girl#tnm03"
 + ""
 #: npc/re/instances/DevilTower.txt#887 (mes)
 - "[Young Girl]"
-+ ""
++ "[Menina]"
 #: npc/re/instances/DevilTower.txt#888 (mes)
 - "From here.. I do not know well..."
-+ ""
++ "Daqui em diante.. eu não sei bem..."
 #: npc/re/instances/DevilTower.txt#889 (mes)
 - "I see so many stairs..."
-+ ""
++ "Eu vejo tanta escada..."
 #: npc/re/instances/DevilTower.txt#890 (mes)
 - "See there are so many demons. My father will be in a danger!"
-+ ""
++ "Olhe quantos demônios. O meu pai vai estar em perigo!"
 #: npc/re/instances/DevilTower.txt#891 (mes)
 - "Please save him."
-+ ""
++ "Por favor, salve ele."
 #: npc/re/instances/DevilTower.txt#892 (npctalk)
 - "Evil Shadow: I thought I smelled rats sneaking in here. I was right!!"
-+ ""
++ "Sombra Maligna: Eu achei que tinha sentido cheiro de rato se esgueirando por aqui. Eu estava certo!!"
 #: npc/re/instances/DevilTower.txt#893 (npctalk)
 - "Evil Shadow: You will rue your curiosity and interference. Time to feed!"
-+ ""
++ "Sombra Maligna: Vocês vão lamentar a curiosidade e a intromissão. Hora de comer!"
 #: npc/re/instances/DevilTower.txt#894 (npctalk)
 - "Evil Shadow: I summon the Darkness!!"
-+ ""
++ "Sombra Maligna: Eu invoco a Escuridão!!"
 #: npc/re/instances/DevilTower.txt#918 (npctalk)
 - "Demonic Shade: So you are the trouble makers!"
-+ ""
++ "Vulto Demoníaco: Então vocês são os encrenqueiros!"
 #: npc/re/instances/DevilTower.txt#919 (npctalk)
 - "Demonic Shade: Tsk, You couldn't even manage to protect..?.whatever.. you will all die here."
-+ ""
++ "Vulto Demoníaco: Tsc, vocês nem conseguiram proteger..?.tanto faz.. vocês todos vão morrer aqui."
 #: npc/re/instances/DevilTower.txt#920 (npctalk)
 - "Demonic Shade: The eternal truth is I will turn your deaths into the Demon's life with your hearts' blood!!!"
-+ ""
++ "Vulto Demoníaco: A verdade eterna é que eu vou transformar a morte de vocês na vida do Demônio, com o sangue dos seus corações!!!"
 #: npc/re/instances/DevilTower.txt#929 (atrib)
 - "::OnMobDead"
 + ""
 #: npc/re/instances/DevilTower.txt#962 (mes)
 - "[Morocc Lord Knight]"
-+ ""
++ "[Cavaleiro Sagrado de Morroc]"
 #: npc/re/instances/DevilTower.txt#963 (mes)
 - "You were the rats who were sneaking around here!"
-+ ""
++ "Eram vocês os ratos que estavam se esgueirando por aqui!"
 #: npc/re/instances/DevilTower.txt#966 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#967 (mes)
 - "You have no power here."
-+ ""
++ "Você não tem poder aqui."
 #: npc/re/instances/DevilTower.txt#969 (atrib)
 - "Morocc Lord Knight#mocl"
 + ""
@@ -1575,46 +1659,46 @@
 + ""
 #: npc/re/instances/DevilTower.txt#971 (npctalk)
 - "Morocc Lord Knight: So.. the rat was an assassin? You came here to die?"
-+ ""
++ "Cavaleiro Sagrado de Morroc: Então.. o rato era um assassino? Você veio aqui para morrer?"
 #: npc/re/instances/DevilTower.txt#972 (npctalk)
 - "Loki: What will you accomplish by waking the Demon in the Wall?"
-+ ""
++ "Loki: O que você vai ganhar acordando o Demônio da Muralha?"
 #: npc/re/instances/DevilTower.txt#973 (npctalk)
 - "Loki: My mission brought me here to bury it again."
-+ ""
++ "Loki: A minha missão me trouxe aqui para enterrá-lo de novo."
 #: npc/re/instances/DevilTower.txt#974 (npctalk)
 - "Morocc Lord Knight: Really.. the Assassin guild who I thought was on a mission to balance power in the world."
-+ ""
++ "Cavaleiro Sagrado de Morroc: Sério.. o Sindicato dos Assassinos, que eu achava que tinha a missão de equilibrar o poder no mundo."
 #: npc/re/instances/DevilTower.txt#975 (npctalk)
 - "Morocc Lord Knight: Resurrecting the demon would bring balance! Even the mightiest become slaves to a god.."
-+ ""
++ "Cavaleiro Sagrado de Morroc: Ressuscitar o demônio traria equilíbrio! Até os mais poderosos viram escravos de um deus.."
 #: npc/re/instances/DevilTower.txt#976 (npctalk)
 - "Morocc Lord Knight: The gods have their own plans. Do you know what the gods plan for you or I?"
-+ ""
++ "Cavaleiro Sagrado de Morroc: Os deuses têm os planos deles. Você sabe o que os deuses planejam para você ou para mim?"
 #: npc/re/instances/DevilTower.txt#977 (npctalk)
 - "Morocc Lord Knight: They want this world to only be in their image. Where do we fit into that?!"
-+ ""
++ "Cavaleiro Sagrado de Morroc: Eles querem que este mundo seja só à imagem deles. Onde é que a gente se encaixa nisso?!"
 #: npc/re/instances/DevilTower.txt#978 (npctalk)
 - "Loki: Shut up!"
-+ ""
++ "Loki: Cale a boca!"
 #: npc/re/instances/DevilTower.txt#979 (npctalk)
 - "Loki: I do not care about gods or demons or the plans that they have made. The only thing that matters is kill you."
-+ ""
++ "Loki: Eu não me importo com deuses, com demônios ou com os planos que eles fizeram. A única coisa que importa é matar você."
 #: npc/re/instances/DevilTower.txt#980 (npctalk)
 - "Loki: That is my mission!"
-+ ""
++ "Loki: É essa a minha missão!"
 #: npc/re/instances/DevilTower.txt#981 (npctalk)
 - "Morocc Lord Knight: So all you want is to finish your damn mission?.."
-+ ""
++ "Cavaleiro Sagrado de Morroc: Então tudo o que você quer é cumprir a sua maldita missão?.."
 #: npc/re/instances/DevilTower.txt#982 (npctalk)
 - "Loki: *Grins* Of course!!"
-+ ""
++ "Loki: *Sorri* Claro que sim!!"
 #: npc/re/instances/DevilTower.txt#983 (npctalk)
 - "Loki: Mind blaster-!!!"
-+ ""
++ "Loki: Mind Blaster-!!!"
 #: npc/re/instances/DevilTower.txt#985 (npctalk)
 - "Young Girl: No..!! Don't hurt my Papa!!!"
-+ ""
++ "Menina: Não..!! Não machuque o meu Papai!!!"
 #: npc/re/instances/DevilTower.txt#986 (npctalk)
 - "Young Girl#tnm04"
 + ""
@@ -1623,172 +1707,181 @@
 + ""
 #: npc/re/instances/DevilTower.txt#991 (npctalk)
 - "Morocc Lord Knight: Oh no.. They should have sent better than you, Mr. Assassin, for this mission."
-+ ""
++ "Cavaleiro Sagrado de Morroc: Ah, não.. Eles deviam ter mandado alguém melhor que você para esta missão, Sr. Assassino."
 #: npc/re/instances/DevilTower.txt#992 (npctalk)
 - "Young Girl: Something is wrong...."
-+ ""
++ "Menina: Tem alguma coisa errada...."
 #: npc/re/instances/DevilTower.txt#993 (npctalk)
 - "Young Girl#tnm04"
 + ""
 #: npc/re/instances/DevilTower.txt#994 (npctalk)
 - "Young Girl: My Papa would never act this way.. Ugh.."
-+ ""
++ "Menina: O meu Papai nunca agiria assim.. Ugh.."
 #: npc/re/instances/DevilTower.txt#995 (npctalk)
 - "Young Girl#tnm04"
 + ""
 #: npc/re/instances/DevilTower.txt#996 (npctalk)
 - "Morocc Lord Knight: Human.. To do such a stupid thing.. a sacrifice."
-+ ""
++ "Cavaleiro Sagrado de Morroc: Humano.. Fazer uma bobagem dessas.. um sacrifício."
 #: npc/re/instances/DevilTower.txt#997 (npctalk)
 - "Morocc Lord Knight: You know, the truth is, that it is useless."
-+ ""
++ "Cavaleiro Sagrado de Morroc: Sabe, a verdade é que não adianta nada."
 #: npc/re/instances/DevilTower.txt#998 (npctalk)
 - "Morocc Lord Knight: Gwuaaa hahahaha. You stupid humans I will kill you all as sacrifices for the demon!!"
-+ ""
++ "Cavaleiro Sagrado de Morroc: Gwuaaa hahahaha. Seus humanos idiotas, eu vou matar vocês todos como sacrifício para o demônio!!"
 #: npc/re/instances/DevilTower.txt#999 (npctalk)
 - "Loki:... tsk! useless....!"
-+ ""
++ "Loki:... tsc! inútil....!"
 #: npc/re/instances/DevilTower.txt#1005 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1006 (mes)
 - "I am talking to your boss."
-+ ""
++ "Eu estou falando com o seu chefe."
 #: npc/re/instances/DevilTower.txt#1007 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1008 (mes)
 - "...embarrassing."
-+ ""
++ "...que constrangedor."
 #: npc/re/instances/DevilTower.txt#1009 (mes)
 - "You should ^4d4dffTerminate the mercenary contract^000000, if you want to help me on this mission."
-+ ""
++ "Você precisa ^4d4dffencerrar o contrato de mercenário^000000 se quiser me ajudar nesta missão."
 #: npc/re/instances/DevilTower.txt#1010 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1011 (mes)
 - "Where did you come from?"
-+ ""
++ "De onde você veio?"
 #: npc/re/instances/DevilTower.txt#1012 (mes)
 - "I may need help here."
-+ ""
++ "Eu posso precisar de ajuda aqui."
 #: npc/re/instances/DevilTower.txt#1013 (npctalk)
 - "Loki: Where did you come from? I may need help here."
-+ ""
++ "Loki: De onde você veio? Eu posso precisar de ajuda aqui."
 #: npc/re/instances/DevilTower.txt#1014 (npctalk)
 - "Loki#tnmloki02"
 + ""
 #: npc/re/instances/DevilTower.txt#1015 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1016 (mes)
 - "The Lord Knight is no longer human. I have to send him to his eternity for his demonic followings."
-+ ""
++ "O Cavaleiro Sagrado não é mais humano. Eu tenho que mandá-lo para a eternidade por seguir os demônios."
 #: npc/re/instances/DevilTower.txt#1017 (npctalk)
 - "Loki: The Lord Knight is no longer human. I have to send him to his eternity."
-+ ""
++ "Loki: O Cavaleiro Sagrado não é mais humano. Eu tenho que mandá-lo para a eternidade."
 #: npc/re/instances/DevilTower.txt#1018 (npctalk)
 - "Loki#tnmloki02"
 + ""
 #: npc/re/instances/DevilTower.txt#1019 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1020 (mes)
 - "^4d4dffThe ones who are infernally blessed by demons are invincible. We can sever the blessing with Mind Blaster.^000000"
-+ ""
++ "^4d4dffOs que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster.^000000"
 #: npc/re/instances/DevilTower.txt#1021 (npctalk)
 - "Loki: The ones who are infernally blessed by demons are invincible. We can sever the blessing with Mind Blaster."
-+ ""
++ "Loki: Os que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster."
 #: npc/re/instances/DevilTower.txt#1022 (npctalk)
 - "Loki#tnmloki02"
 + ""
 #: npc/re/instances/DevilTower.txt#1023 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1024 (mes)
 - "You will be in charge of activating Mind Blaster."
-+ ""
++ "Você vai ficar encarregado de ativar o Mind Blaster."
 #: npc/re/instances/DevilTower.txt#1025 (npctalk)
 - "Loki: You will be in charge of activating Mind Blaster."
-+ ""
++ "Loki: Você vai ficar encarregado de ativar o Mind Blaster."
 #: npc/re/instances/DevilTower.txt#1026 (npctalk)
 - "Loki#tnmloki02"
 + ""
 #: npc/re/instances/DevilTower.txt#1028 (mes)
 - "^4d4dffLoki, Guillotine Cross of the Assassin Guild, has joined your party."
-+ ""
++ "^4d4dffLoki, Cruz Justiceira do Sindicato dos Assassinos, entrou no seu grupo."
 #: npc/re/instances/DevilTower.txt#1029 (mes)
 - "We have to get rid of the demonic Lord Knight by Mind Blasting him with Loki's skill.^000000"
-+ ""
++ "Nós temos que acabar com o Cavaleiro Sagrado demoníaco usando o Mind Blaster com a habilidade do Loki.^000000"
+#: npc/re/instances/DevilTower.txt#1030 (mapannounce)
+- "Demon Worshipper's Voice: Such rubbish! Where did you hide yourself?"
++ "Voz do Adorador de Demônios: Que baboseira! Onde você se escondeu?"
+#: npc/re/instances/DevilTower.txt#1035 (mapannounce)
+- "Demon Worshipper's Voice: You will all be sacrificed to awaken the Demon!!!"
++ "Voz do Adorador de Demônios: Vocês todos vão ser sacrificados para despertar o Demônio!!!"
 #: npc/re/instances/DevilTower.txt#1039 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/DevilTower.txt#1086 (mapannounce)
+- "Demon Worshipper's Voice: NO it is impossible. It cannot be.. This force.. power.. you.. may..be you are.."
++ "Voz do Adorador de Demônios: NÃO, é impossível. Não pode ser.. Esta força.. este poder.. você.. talvez.. você seja.."
 #: npc/re/instances/DevilTower.txt#1091 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1092 (mes)
 - ".. annoying"
-+ ""
++ ".. irritante"
 #: npc/re/instances/DevilTower.txt#1093 (mes)
 - "The demon was destroyed before the resurrection ceremony was completed."
-+ ""
++ "O demônio foi destruído antes de a cerimônia de ressurreição ser concluída."
 #: npc/re/instances/DevilTower.txt#1094 (mes)
 - "Things will be fine for awhile."
-+ ""
++ "As coisas vão ficar bem por um tempo."
 #: npc/re/instances/DevilTower.txt#1095 (mes)
 - "I have gained unexpected information during my exploration of the Tower."
-+ ""
++ "Eu obtive informação inesperada durante a minha exploração da Torre."
 #: npc/re/instances/DevilTower.txt#1096 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1097 (mes)
 - "I will remain apart from my conscience for a bit longer"
-+ ""
++ "Eu vou continuar afastado da minha consciência por mais um tempo"
 #: npc/re/instances/DevilTower.txt#1098 (mes)
 - "someday I'll let myself feel again, and today will occupy my thoughts.."
-+ ""
++ "um dia eu deixo eu mesmo voltar a sentir, e o dia de hoje vai ocupar os meus pensamentos.."
 #: npc/re/instances/DevilTower.txt#1099 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1100 (mes)
 - "Interesting.. there is a daughter.."
-+ ""
++ "Interessante.. há uma filha.."
 #: npc/re/instances/DevilTower.txt#1101 (mes)
 - "What should be done about it?"
-+ ""
++ "O que se deve fazer a respeito?"
 #: npc/re/instances/DevilTower.txt#1102 (mes)
 - "I am not sure of what my next move is to be.."
-+ ""
++ "Eu não tenho certeza de qual vai ser o meu próximo passo.."
 #: npc/re/instances/DevilTower.txt#1103 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1104 (mes)
 - "But no matter, you obviously shouldn't be here, now."
-+ ""
++ "Mas não importa, é óbvio que você não deveria estar aqui, agora."
 #: npc/re/instances/DevilTower.txt#1105 (mes)
 - "Will stay here any longer?"
-+ ""
++ "Vai ficar mais tempo aqui?"
 #: npc/re/instances/DevilTower.txt#1106 (mes)
 - "I can send you back where and when you belong."
-+ ""
++ "Eu posso mandar você de volta ao lugar e ao tempo a que pertence."
 #: npc/re/instances/DevilTower.txt#1107 (select)
 - "Get out of here."
-+ ""
++ "Sair daqui."
 #: npc/re/instances/DevilTower.txt#1108 (select)
 - "Take a look around."
-+ ""
++ "Dar uma olhada por aí."
 #: npc/re/instances/DevilTower.txt#1109 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1110 (mes)
 - "It is unwise to linger where time is distorted."
-+ ""
++ "Não é sensato ficar onde o tempo está distorcido."
 #: npc/re/instances/DevilTower.txt#1111 (mes)
 - "[Loki]"
-+ ""
++ "[Loki]"
 #: npc/re/instances/DevilTower.txt#1112 (mes)
 - "Perhaps, our missions will ally us again in the future.."
-+ ""
++ "Talvez as nossas missões nos unam de novo no futuro.."
 #: npc/re/instances/DevilTower.txt#1114 (atrib)
 - "1@tnm1"
 + ""

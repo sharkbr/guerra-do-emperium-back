@@ -9,373 +9,436 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/PoringVillage.txt  (123 textos)
+### npc/re/instances/PoringVillage.txt  (144 textos)
 #: npc/re/instances/PoringVillage.txt#1 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#2 (mes)
 - "50 Jellopies and 20,000 zeny are all you need to get special effect on your green onion or carrot!"
-+ ""
++ "50 Jellopys e 20.000 zeny é tudo de que você precisa para pôr efeito especial na sua cebolinha ou cenourinha!"
 #: npc/re/instances/PoringVillage.txt#3 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#4 (mes)
 - "Enchant and reset have ^ff000030% of failure.^000000 Invest in your veggie and luck!"
-+ ""
++ "Encantar e redefinir têm ^ff000030% de chance de falhar.^000000 Invista no seu vegetal e na sua sorte!"
 #: npc/re/instances/PoringVillage.txt#5 (select)
 - "How much do I need to enchant?"
-+ ""
++ "Quanto custa para encantar?"
 #: npc/re/instances/PoringVillage.txt#6 (select)
 - "Enchant to Poring Village Veggie"
-+ ""
++ "Encantar vegetal da Vila dos Porings"
 #: npc/re/instances/PoringVillage.txt#7 (select)
 - "Reset Poring Village Veggie"
-+ ""
++ "Redefinir vegetal da Vila dos Porings"
 #: npc/re/instances/PoringVillage.txt#8 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#9 (mes)
 - "As I heard, you can get Poring Village Green Onion or Carrot if you go west a bit more from here."
-+ ""
++ "Pelo que ouvi dizer, dá para conseguir a Cebolinha ou a Cenourinha da Vila dos Porings indo um pouco mais para o oeste daqui."
 #: npc/re/instances/PoringVillage.txt#10 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#11 (mes)
 - "I do enchant to the fresh vegetable."
-+ ""
++ "Eu encanto o vegetal fresquinho."
 #: npc/re/instances/PoringVillage.txt#12 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#13 (mes)
 - "Enchant or Reset requires 20,000z and 50 Jellopy! It's not bad, is it?"
-+ ""
++ "Encantar ou redefinir custa 20.000z e 50 Jellopys! Não é nada mau, não é mesmo?"
 #: npc/re/instances/PoringVillage.txt#14 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#15 (mes)
 - "Well... As you know, it's a vegetable any way. So sometimes it can be broken."
-+ ""
++ "Bem... Como você sabe, no fim das contas é um vegetal. Então às vezes ele quebra."
 #: npc/re/instances/PoringVillage.txt#16 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#17 (mes)
 - "Please put on the equipment you'd like to enchant first."
-+ ""
++ "Por favor, equipe primeiro o que você quer encantar."
 #: npc/re/instances/PoringVillage.txt#18 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#19 (mes)
 - "This is not a vegetable!?"
-+ ""
++ "Isto não é um vegetal!?"
 #: npc/re/instances/PoringVillage.txt#20 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#21 (mes)
 - "This vegetable cannot be enchanted anymore."
-+ ""
++ "Este vegetal não pode mais ser encantado."
 #: npc/re/instances/PoringVillage.txt#22 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#23 (mes)
 - "This enchant requires 50 Jellopy and 20,000z..... But... you don't have them."
-+ ""
++ "Este encantamento custa 50 Jellopys e 20.000z..... Mas... você não tem isso."
 #: npc/re/instances/PoringVillage.txt#24 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#25 (mes)
 - "Tada! Enchant is done! Check your vegetable."
-+ ""
++ "Tcharam! Encantamento pronto! Confira o seu vegetal."
 #: npc/re/instances/PoringVillage.txt#26 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#27 (mes)
 - "It must have been a rotten vegetable. It's a shame that I can't stand this level of power..."
-+ ""
++ "Devia estar podre esse vegetal. É uma pena que ele não aguente tanto poder..."
 #: npc/re/instances/PoringVillage.txt#28 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#29 (mes)
 - "Please put on the equipment you'd like to enchant first."
-+ ""
++ "Por favor, equipe primeiro o que você quer encantar."
 #: npc/re/instances/PoringVillage.txt#30 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#31 (mes)
 - "This is not a vegetable!?"
-+ ""
++ "Isto não é um vegetal!?"
 #: npc/re/instances/PoringVillage.txt#32 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#33 (mes)
 - "This is a vegetable that has never been fortified..."
-+ ""
++ "Este é um vegetal que nunca foi fortalecido..."
 #: npc/re/instances/PoringVillage.txt#34 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#35 (mes)
 - "This enchant requires 50 Jellopy and 20,000z..... But... you don't have them."
-+ ""
++ "Este encantamento custa 50 Jellopys e 20.000z..... Mas... você não tem isso."
 #: npc/re/instances/PoringVillage.txt#36 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#37 (mes)
 - "The item is complete! Check it out."
-+ ""
++ "O item está pronto! Dê uma olhada."
 #: npc/re/instances/PoringVillage.txt#38 (mes)
 - "[Veggie Enchanter]"
-+ ""
++ "[Encantador de Vegetais]"
 #: npc/re/instances/PoringVillage.txt#39 (mes)
 - "It must have been a rotten vegetable. It's a shame that I can't stand this level of power..."
-+ ""
++ "Devia estar podre esse vegetal. É uma pena que ele não aguente tanto poder..."
 #: npc/re/instances/PoringVillage.txt#40 (npctalk)
 - "Veggie Enchanter: Make your green onion or carrot stronger!"
-+ ""
++ "Encantador de Vegetais: Deixe a sua cebolinha ou cenourinha mais forte!"
 #: npc/re/instances/PoringVillage.txt#42 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#43 (mes)
 - "Wow~ You look like a novice. I do want to adventure with you someday when you grow up!"
-+ ""
++ "Uau~ Você parece novato. Quero muito me aventurar com você um dia, quando você crescer!"
 #: npc/re/instances/PoringVillage.txt#44 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#45 (mes)
 - "Oh, now you are stronger than me. How did you grow so fast?"
-+ ""
++ "Ah, agora você está mais forte do que eu. Como cresceu tão rápido?"
 #: npc/re/instances/PoringVillage.txt#46 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#47 (mes)
 - "I should find another adventurer who is similar with my level. It's been nice knowing you."
-+ ""
++ "É melhor eu procurar outro aventureiro do meu nível. Foi bom conhecer você."
 #: npc/re/instances/PoringVillage.txt#48 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#49 (mes)
 - "My name is Emily. I was waiting for someone who will go on adventures with me!"
-+ ""
++ "Meu nome é Emily. Eu estava esperando alguém para se aventurar comigo!"
 #: npc/re/instances/PoringVillage.txt#50 (select)
 - "Who said I will adventure with you?"
-+ ""
++ "Quem disse que vou me aventurar com você?"
 #: npc/re/instances/PoringVillage.txt#51 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#52 (mes)
 - "Well, come one. Don't be stern. Listen, you can decide after listening to my story. Of course, I can give you a proper reward."
-+ ""
++ "Ora, vamos. Não seja durão. Escute, você decide depois de ouvir a minha história. E claro, posso lhe dar uma recompensa à altura."
 #: npc/re/instances/PoringVillage.txt#53 (select)
 - "Proper Reward?"
-+ ""
++ "Recompensa à altura?"
 #: npc/re/instances/PoringVillage.txt#54 (select)
 - "I'm not interested."
-+ ""
++ "Não estou interessado."
 #: npc/re/instances/PoringVillage.txt#55 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#56 (mes)
 - "How square! It's much better to be together!"
-+ ""
++ "Que quadrado! É muito melhor em dupla!"
 #: npc/re/instances/PoringVillage.txt#57 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#58 (mes)
 - "Yes! Proper Reward."
-+ ""
++ "Isso! Recompensa à altura."
 #: npc/re/instances/PoringVillage.txt#59 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#60 (mes)
 - "It seems this Poring Village can be defeated by beginners just like us. It's just a wild guess though..."
-+ ""
++ "Parece que esta Vila dos Porings pode ser vencida por iniciantes como nós. É só um palpite, claro..."
 #: npc/re/instances/PoringVillage.txt#61 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#62 (mes)
 - "Well, actually I cannot give you the reward officially through adventurer association. But we can separate the income after hunting."
-+ ""
++ "Bem, na verdade eu não posso lhe pagar a recompensa oficialmente pela associação de aventureiros. Mas dá para dividir o que a gente ganhar na caçada."
 #: npc/re/instances/PoringVillage.txt#63 (select)
 - "But 50-50 sounds fair to me."
-+ ""
++ "Mas 50-50 me parece justo."
 #: npc/re/instances/PoringVillage.txt#64 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#65 (mes)
 - "No way. 70-30. And I'm 70 of course."
-+ ""
++ "De jeito nenhum. 70-30. E os 70 são meus, claro."
 #: npc/re/instances/PoringVillage.txt#66 (select)
 - "It's gotta be 50-50 or it's no good"
-+ ""
++ "Tem que ser 50-50, senão não vale"
 #: npc/re/instances/PoringVillage.txt#67 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#68 (mes)
 - "How about 60-40!!"
-+ ""
++ "Que tal 60-40!!"
 #: npc/re/instances/PoringVillage.txt#69 (select)
 - "50-50 ..."
-+ ""
++ "50-50 ..."
 #: npc/re/instances/PoringVillage.txt#70 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#71 (mes)
 - "This drives me crazy. OK, 50-50. Let's go with this."
-+ ""
++ "Isso me deixa louca. Está bem, 50-50. Vamos com isso."
 #: npc/re/instances/PoringVillage.txt#72 (mes)
 - "^ff0000Any processing of monsters such as monster taming inside the dungeon will not be considered a normal progress. Please note that.^000000"
-+ ""
++ "^ff0000Qualquer manipulação de monstro dentro da masmorra, como domesticação, não conta como progresso normal. Fica o aviso.^000000"
 #: npc/re/instances/PoringVillage.txt#73 (mes)
 - "^ff0000In beginner mode, the player transforms into a monster. Please note that the existing transformation effect disappears when entering and proceeding.^000000"
-+ ""
++ "^ff0000No modo iniciante, o jogador se transforma em monstro. Fica o aviso de que a transformação que você já tiver desaparece ao entrar e ao avançar.^000000"
 #: npc/re/instances/PoringVillage.txt#74 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#75 (mes)
 - "So, are you ready?"
-+ ""
++ "E então, está pronto?"
 #: npc/re/instances/PoringVillage.txt#76 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#77 (mes)
 - "You look very tired."
-+ ""
++ "Você parece bem cansado."
 #: npc/re/instances/PoringVillage.txt#78 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#79 (mes)
 - "Why don't you come back after a while? Take a break for now."
-+ ""
++ "Por que não volta daqui a pouco? Descanse um pouco por enquanto."
 #: npc/re/instances/PoringVillage.txt#80 (mes)
 - "^ff0000Any processing of monsters such as monster taming inside the dungeon will not be considered a normal progress. Please note that.^000000"
-+ ""
++ "^ff0000Qualquer manipulação de monstro dentro da masmorra, como domesticação, não conta como progresso normal. Fica o aviso.^000000"
 #: npc/re/instances/PoringVillage.txt#81 (mes)
 - "^ff0000In beginner mode, the player transforms into a monster. Please note that the existing transformation effect disappears when entering and proceeding. ^000000"
-+ ""
++ "^ff0000No modo iniciante, o jogador se transforma em monstro. Fica o aviso de que a transformação que você já tiver desaparece ao entrar e ao avançar. ^000000"
 #: npc/re/instances/PoringVillage.txt#82 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#83 (mes)
 - "So, are you ready?"
-+ ""
++ "E então, está pronto?"
 #: npc/re/instances/PoringVillage.txt#84 (mes)
 - "^0000ffAll Traces of the Poring Village quest were removed. Now, talk to Emily again to enter^000000"
-+ ""
++ "^0000ffTodo vestígio da missão da Vila dos Porings foi removido. Agora fale com a Emily de novo para entrar^000000"
 #: npc/re/instances/PoringVillage.txt#85 (mes)
 - "^ff0000Any processing of monsters such as monster taming inside the dungeon will not be considered a normal progress. Please note that.^000000"
-+ ""
++ "^ff0000Qualquer manipulação de monstro dentro da masmorra, como domesticação, não conta como progresso normal. Fica o aviso.^000000"
 #: npc/re/instances/PoringVillage.txt#86 (mes)
 - "^ff0000In beginner mode, the player transforms into a monster. Please note that the existing transformation effect disappears when entering and proceeding.^000000"
-+ ""
++ "^ff0000No modo iniciante, o jogador se transforma em monstro. Fica o aviso de que a transformação que você já tiver desaparece ao entrar e ao avançar.^000000"
 #: npc/re/instances/PoringVillage.txt#87 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#88 (mes)
 - "So, are you ready?"
-+ ""
++ "E então, está pronto?"
 #: npc/re/instances/PoringVillage.txt#89 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#90 (mes)
 - "Hmm you should create a party first to start this grand adventure."
-+ ""
++ "Hmm, você precisa criar um grupo antes de começar esta grande aventura."
 #: npc/re/instances/PoringVillage.txt#91 (atrib)
 - "Vila dos Porings"
 + ""
 #: npc/re/instances/PoringVillage.txt#92 (menu)
 - "Create the entrance"
-+ ""
++ "Criar a entrada"
 #: npc/re/instances/PoringVillage.txt#93 (menu)
 - "Enter the dungeon"
-+ ""
++ "Entrar na masmorra"
 #: npc/re/instances/PoringVillage.txt#94 (select)
 - "Cancel"
-+ ""
++ "Cancelar"
 #: npc/re/instances/PoringVillage.txt#95 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#96 (mes)
 - "Now I'm looking for the entrance, please talk to me again after it's totally open."
-+ ""
++ "Estou procurando a entrada agora, fale comigo de novo quando ela estiver totalmente aberta."
 #: npc/re/instances/PoringVillage.txt#97 (mes)
 - "An unknown error occurred."
-+ ""
++ "Ocorreu um erro desconhecido."
 #: npc/re/instances/PoringVillage.txt#98 (mes)
 - "^ff0000Time's crack is not created yet.^000000"
++ "^ff0000A fenda do tempo ainda não foi criada.^000000"
+#: npc/re/instances/PoringVillage.txt#99 (mapannounce)
+- "prt_fild05"
++ ""
+#: npc/re/instances/PoringVillage.txt#100 (mapannounce)
+- "Party member "
++ "O aventureiro "
+#: npc/re/instances/PoringVillage.txt#101 (mapannounce)
+- " of the party "
++ ", do grupo "
+#: npc/re/instances/PoringVillage.txt#102 (mapannounce)
+- " enters "
++ ", entrou em "
+#: npc/re/instances/PoringVillage.txt#103 (mapannounce)
+- "."
 + ""
 #: npc/re/instances/PoringVillage.txt#105 (npctalk)
 - "Emily: Hey, there! May I talk to you for a minute?"
-+ ""
++ "Emily: Ei, você aí! Posso falar com você um minutinho?"
 #: npc/re/instances/PoringVillage.txt#109 (atrib)
 - "1@begi"
 + ""
 #: npc/re/instances/PoringVillage.txt#112 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#113 (mes)
 - "Let's go forward."
-+ ""
++ "Vamos em frente."
 #: npc/re/instances/PoringVillage.txt#114 (npctalk)
 - "Emily: So.. is this Poring Village?"
-+ ""
++ "Emily: Então.. esta é a Vila dos Porings?"
 #: npc/re/instances/PoringVillage.txt#115 (npctalk)
 - "Emily: OK. Let's go!"
-+ ""
++ "Emily: Certo. Vamos lá!"
 #: npc/re/instances/PoringVillage.txt#120 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#121 (mes)
 - "I'm going to start slowly now..."
-+ ""
++ "Vou começar devagar agora..."
 #: npc/re/instances/PoringVillage.txt#122 (npctalk)
 - "Emily: Hmmm. It seems they made barriers not to let us go easily."
-+ ""
++ "Emily: Hmmm. Parece que eles fizeram barreiras para não deixar a gente passar fácil."
 #: npc/re/instances/PoringVillage.txt#123 (npctalk)
 - "Emily: I'm quite sure Poring gathered a lot of treasure somewhere."
-+ ""
++ "Emily: Tenho quase certeza de que os Porings juntaram um monte de tesouro em algum lugar."
+#: npc/re/instances/PoringVillage.txt#124 (mapannounce)
+- "???: I can hear a human's voice. Make them welcome, everybody."
++ "???: Estou ouvindo voz de humano. Recebam bem essa gente, pessoal."
 #: npc/re/instances/PoringVillage.txt#125 (npctalk)
 - "Emily: What is it saying?"
-+ ""
++ "Emily: O que ele está dizendo?"
 #: npc/re/instances/PoringVillage.txt#126 (npctalk)
 - "Emily: It sounds someone is rushing here... "
-+ ""
++ "Emily: Parece que tem alguém vindo correndo para cá... "
+#: npc/re/instances/PoringVillage.txt#127 (mapannounce)
+- "???: Don't let them run! Take all valuable items from them!"
++ "???: Não deixem eles fugirem! Peguem tudo o que for valioso!"
 #: npc/re/instances/PoringVillage.txt#128 (npctalk)
 - "Emily: Well... OK. They don't seem very friendly. Quick, hide!"
-+ ""
++ "Emily: Bom... Certo. Eles não parecem nada amigáveis. Rápido, esconda-se!"
 #: npc/re/instances/PoringVillage.txt#129 (npctalk)
 - "Emily: Oooops. Can't you hide? Well..... Cheer up!"
-+ ""
++ "Emily: Ooopa. Você não consegue se esconder? Bem..... Ânimo!"
 #: npc/re/instances/PoringVillage.txt#141 (atrib)
 - "poring_village_1"
 + ""
 #: npc/re/instances/PoringVillage.txt#142 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/PoringVillage.txt#185 (mapannounce)
+- "Emily: Wow~ You are quite strong! You defeated all these Porings!"
++ "Emily: Uau~ Você é bem forte mesmo! Derrotou todos esses Porings!"
+#: npc/re/instances/PoringVillage.txt#186 (mapannounce)
+- "Emily: But the Poring looks unique somehow. Be careful!"
++ "Emily: Mas esse Poring parece diferente dos outros. Cuidado!"
+#: npc/re/instances/PoringVillage.txt#187 (mapannounce)
+- "Emily: Ah, there is a unique force if you go near the column of blue light."
++ "Emily: Ah, tem uma força estranha se você chegar perto da coluna de luz azul."
 #: npc/re/instances/PoringVillage.txt#224 (atrib)
 - "poring_village_2"
 + ""
 #: npc/re/instances/PoringVillage.txt#225 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/PoringVillage.txt#358 (mapannounce)
+- "Emily: Hmm.. here is another Boss... It looks strong..."
++ "Emily: Hmm.. aqui tem outro Chefe... Parece forte..."
+#: npc/re/instances/PoringVillage.txt#359 (mapannounce)
+- "Emily: I'm not good at battle.. Let me look for treasure first. See you soon~"
++ "Emily: Eu não sou boa de briga.. Vou procurar tesouro primeiro. Até já~"
 #: npc/re/instances/PoringVillage.txt#390 (atrib)
 - "poring_village_3"
 + ""
 #: npc/re/instances/PoringVillage.txt#391 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/PoringVillage.txt#468 (mapannounce)
+- "King Poring: Excuse me... But... Would you please get back now?..."
++ "Poring Rei: Com licença... Mas... Vocês podiam voltar agora?..."
+#: npc/re/instances/PoringVillage.txt#469 (mapannounce)
+- "Emily: What? Who are you?"
++ "Emily: O quê? Quem é você?"
+#: npc/re/instances/PoringVillage.txt#470 (mapannounce)
+- "King Poring: I am the leader of this Poring Village. Sorry for the late introduction."
++ "Poring Rei: Eu sou o líder desta Vila dos Porings. Desculpe a apresentação tardia."
+#: npc/re/instances/PoringVillage.txt#471 (mapannounce)
+- "King Poring: Maybe there is some misunderstanding on our flyers. This village is so poor and has nothing valuable."
++ "Poring Rei: Talvez tenha havido algum mal-entendido nos nossos panfletos. Esta vila é pobre e não tem nada de valor."
+#: npc/re/instances/PoringVillage.txt#472 (mapannounce)
+- "Emily: It's for me to judge after looking around more...."
++ "Emily: Isso quem julga sou eu, depois de olhar mais um pouco...."
+#: npc/re/instances/PoringVillage.txt#473 (mapannounce)
+- "King Poring: Ugh.... I don't like fighting but there is no choice."
++ "Poring Rei: Ugh.... Eu não gosto de brigar, mas não há escolha."
+#: npc/re/instances/PoringVillage.txt#486 (unittalk)
+- " : Ohhhhh!!! Release the parrot inside!!!!"
++ " : Ohhhhh!!! Soltem o papagaio!!!!"
+#: npc/re/instances/PoringVillage.txt#488 (unittalk)
+- " : I think it's ok to peck someone right now!!"
++ " : Acho que dá para bicar alguém agora mesmo!!"
+#: npc/re/instances/PoringVillage.txt#490 (unittalk)
+- " : Have you been bitten by a mad parrot?"
++ " : Você já foi mordido por um papagaio louco?"
 #: npc/re/instances/PoringVillage.txt#491 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#492 (mes)
 - "You can have all of the items you find in this dungeon. I already have some."
-+ ""
++ "Você pode ficar com todos os itens que achar nesta masmorra. Eu já peguei alguns."
 #: npc/re/instances/PoringVillage.txt#493 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#494 (mes)
 - "Ah, I found some items. Let me give you one of them. Just to celebrate your first visit!"
-+ ""
++ "Ah, achei alguns itens. Vou lhe dar um deles. Só para comemorar a sua primeira visita!"
 #: npc/re/instances/PoringVillage.txt#495 (mes)
 - "[Emily]"
-+ ""
++ "[Emily]"
 #: npc/re/instances/PoringVillage.txt#496 (mes)
 - "I don't need this novice box. You can take it. Now, let's go out side!"
-+ ""
++ "Não preciso desta caixa de novato. Pode ficar com ela. Agora vamos lá para fora!"

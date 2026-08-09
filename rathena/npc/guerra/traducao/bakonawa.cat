@@ -87,13 +87,13 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#28 (mapannounce)
 - "A party member, "
-+ ""
++ "O aventureiro "
 #: npc/re/instances/BakonawaLake.txt#29 (mapannounce)
 - " of the party "
-+ ""
++ " do grupo "
 #: npc/re/instances/BakonawaLake.txt#30 (mapannounce)
 - " is entering the dungeon, "
-+ ""
++ " está entrando na masmorra, "
 #: npc/re/instances/BakonawaLake.txt#31 (mapannounce)
 - "."
 + ""
@@ -165,7 +165,7 @@
 + "Estou pingando o Albopal para enfurecer o Bakonawa. Ele até que é uma boa fonte de proteína, se conseguirmos pegá-lo."
 #: npc/re/instances/BakonawaLake.txt#63 (mapannounce)
 - "Taho: I can see him there on the surface! ATTACK!!!"
-+ ""
++ "Taho: Estou vendo ele ali na superfície! ATAQUEM!!!"
 #: npc/re/instances/BakonawaLake.txt#64 (mapannounce)
 - "0x00ffff"
 + ""
@@ -174,13 +174,13 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#90 (mapannounce)
 - "Time Limit: 30 seconds"
-+ ""
++ "Tempo restante: 30 segundos"
 #: npc/re/instances/BakonawaLake.txt#91 (mapannounce)
 - "0xff4400"
 + ""
 #: npc/re/instances/BakonawaLake.txt#95 (mapannounce)
 - "Bakonawa has escaped deep into the lake."
-+ ""
++ "Bakonawa fugiu para o fundo do lago."
 #: npc/re/instances/BakonawaLake.txt#96 (mapannounce)
 - "0xffff00"
 + ""
@@ -189,7 +189,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#105 (mapannounce)
 - "Time Limit: "
-+ ""
++ "Tempo restante: "
 #: npc/re/instances/BakonawaLake.txt#106 (mapannounce)
 - "0xff4400"
 + ""
@@ -198,7 +198,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#126 (mapannounce)
 - "Taho: Good! Bakonawa is hidden under water. He will now try to swallow the moon."
-+ ""
++ "Taho: Muito bem! Bakonawa está escondido debaixo d'água. Agora ele vai tentar engolir a lua."
 #: npc/re/instances/BakonawaLake.txt#127 (mapannounce)
 - "0x00ffff"
 + ""
@@ -207,7 +207,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#129 (mapannounce)
 - "Taho: We must make loud noises with caldron and gong so he can never concentrate on the moon!"
-+ ""
++ "Taho: Precisamos fazer barulho com os caldeirões e os gongos para ele nunca conseguir se concentrar na lua!"
 #: npc/re/instances/BakonawaLake.txt#130 (mapannounce)
 - "0x00ffff"
 + ""
@@ -216,7 +216,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#132 (mapannounce)
 - "Taho: Do not engage on him even if he come above the surface. Just make loud noises!"
-+ ""
++ "Taho: Não o enfrentem nem se ele subir à superfície. Só façam barulho!"
 #: npc/re/instances/BakonawaLake.txt#133 (mapannounce)
 - "0x00ffff"
 + ""
@@ -225,22 +225,22 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#135 (mapannounce)
 - "Mission - Destroy 2 caldrons and 2 gongs on left and right sides of the lake."
-+ ""
++ "Missão - Destrua 2 caldeirões e 2 gongos nos lados esquerdo e direito do lago."
 #: npc/re/instances/BakonawaLake.txt#136 (mapannounce)
 - "0xff3300"
 + ""
 #: npc/re/instances/BakonawaLake.txt#157 (mapannounce)
 - "Taho: Good! "
-+ ""
++ "Taho: Muito bem! Faltam "
 #: npc/re/instances/BakonawaLake.txt#158 (mapannounce)
 - " left to go!"
-+ ""
++ "!"
 #: npc/re/instances/BakonawaLake.txt#159 (mapannounce)
 - "0x00ffff"
 + ""
 #: npc/re/instances/BakonawaLake.txt#174 (mapannounce)
 - "Bakonawa has escaped deep into the lake."
-+ ""
++ "Bakonawa fugiu para o fundo do lago."
 #: npc/re/instances/BakonawaLake.txt#175 (mapannounce)
 - "0xffff00"
 + ""
@@ -249,7 +249,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#184 (mapannounce)
 - "Time Limit: "
-+ ""
++ "Tempo restante: "
 #: npc/re/instances/BakonawaLake.txt#185 (mapannounce)
 - "0xff4400"
 + ""
@@ -258,7 +258,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#202 (mapannounce)
 - "Taho: He is back into the lake again. Is it over?"
-+ ""
++ "Taho: Ele voltou para o lago. Será que acabou?"
 #: npc/re/instances/BakonawaLake.txt#203 (mapannounce)
 - "0x00ffff"
 + ""
@@ -267,7 +267,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#205 (mapannounce)
 - "Taho: UHM! Something is moving up rapidly under the water! Ba... Bakonawa is coming!!"
-+ ""
++ "Taho: OPA! Alguma coisa está subindo depressa debaixo d'água! Ba... Bakonawa está vindo!!"
 #: npc/re/instances/BakonawaLake.txt#206 (mapannounce)
 - "0x00ffff"
 + ""
@@ -276,19 +276,19 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#208 (mapannounce)
 - "Mission - Eliminate Bakonawa who became more fierce."
-+ ""
++ "Missão - Elimine Bakonawa, que ficou ainda mais feroz."
 #: npc/re/instances/BakonawaLake.txt#209 (mapannounce)
 - "0xff3300"
 + ""
 #: npc/re/instances/BakonawaLake.txt#224 (mapannounce)
 - "Taho: We got him! I can see he has threw up something that looks like a box."
-+ ""
++ "Taho: Conseguimos! Estou vendo que ele cuspiu uma coisa parecida com um baú."
 #: npc/re/instances/BakonawaLake.txt#225 (mapannounce)
 - "0x00ffff"
 + ""
 #: npc/re/instances/BakonawaLake.txt#250 (mapannounce)
 - "Bakonawa has escaped deep into the lake."
-+ ""
++ "Bakonawa fugiu para o fundo do lago."
 #: npc/re/instances/BakonawaLake.txt#251 (mapannounce)
 - "0xffff00"
 + ""
@@ -297,7 +297,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#258 (mapannounce)
 - "Time Limit: "
-+ ""
++ "Tempo restante: "
 #: npc/re/instances/BakonawaLake.txt#259 (mapannounce)
 - "0xff4400"
 + ""
@@ -330,7 +330,7 @@
 + ""
 #: npc/re/instances/BakonawaLake.txt#290 (mapannounce)
 - "Taho: After opening the treasure box, please visit me at the top of the hill. I've got something to give to you."
-+ ""
++ "Taho: Depois de abrir o baú do tesouro, venha me ver no alto da colina. Tenho uma coisa para lhe dar."
 #: npc/re/instances/BakonawaLake.txt#291 (mapannounce)
 - "0x00ffff"
 + ""

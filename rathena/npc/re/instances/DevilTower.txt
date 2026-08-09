@@ -10,12 +10,12 @@
 dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 	if (BaseLevel < 130) {
 		mes "[Shep]";
-		mes "Are you volunteering to explore the Devil's Tower?";
-		mes "It's extremely dangerous so you need to be at least ^4d4dffLevel 130^000000.";
+		mes "Você está se voluntariando para explorar a Torre do Demônio?";
+		mes "É extremamente perigoso, então você precisa ser pelo menos ^4d4dffNível 130^000000.";
 		next;
 		mes "[Shep]";
-		mes "Will you come back when you get stronger?";
-		mes "You know what I mean right?";
+		mes "Você volta quando ficar mais forte?";
+		mes "Você entende o que eu quero dizer, certo?";
 		close;
 	}
 	switch( checkquest(7577,PLAYTIME) ) {// daily timer
@@ -24,35 +24,35 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 	case 0:
 	case 1:
 		mes "[Shep]";
-		mes "You want to explore again so soon?";
-		mes "Your body needs to recover from the time traveling.";
+		mes "Você quer explorar de novo tão cedo?";
+		mes "O seu corpo precisa se recuperar da viagem no tempo.";
 		next;
 		mes "[Shep]";
-		mes "Take a rest day and come back tomorrow.!";
-		mes "You understand?";
+		mes "Descanse um dia e volte amanhã!";
+		mes "Entendeu?";
 		close;
 	case 2:
 		mes "[Shep]";
-		mes "Have you rested long enough?";
-		mes "I am scheduled to explore today!";
-		mes "I have always been waiting for a member of the expedition!";
+		mes "Você descansou o bastante?";
+		mes "Eu estou com exploração marcada para hoje!";
+		mes "Eu sempre esperei por um membro para a expedição!";
 		erasequest 7577;// Space distortion
 		devil_tower_can_reenter = 0;
 		devil_tower_enter = 0;
 		next;
-		mes "!- Notice -!";
-		mes "You can now re-enter the Devil's Tower.";
+		mes "!- Aviso -!";
+		mes "Você já pode entrar de novo na Torre do Demônio.";
 		close;
 	}
 	if (isbegin_quest(7576) > 0) {// instance completed
 		mes "[Shep]";
-		mes "So time and space seem to have converged there?";
-		mes "I'm amazed that time travel is possible.";
+		mes "Então o tempo e o espaço parecem ter convergido ali?";
+		mes "Eu fico impressionado que a viagem no tempo seja possível.";
 		next;
 		mes "[Shep]";
-		mes "This is all you have.";
-		mes "You did a good job.";
-		mes "I look forward to more discoveries!";
+		mes "É tudo o que você tem.";
+		mes "Você fez um bom trabalho.";
+		mes "Fico no aguardo de mais descobertas!";
 		setquest 7577;// Space distortion
 		erasequest 7568;// Explore the tower
 		erasequest 7571;// Tower Expedition
@@ -61,18 +61,18 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 		getexp 450000,450000;
 		devil_tower_can_reenter = 0;
 		devil_tower_enter = 0;
-		mes "Please come back tomorrow!";
+		mes "Por favor, volte amanhã!";
 		close;
 	}
 	if (isbegin_quest(7574) > 0) {// failed after seal
 		mes "[Shep]";
-		mes "Oh, you are back so soon...";
-		mes "Ok, I see what happened.";
+		mes "Ah, você voltou tão cedo...";
+		mes "Certo, entendi o que aconteceu.";
 		next;
 		mes "[Shep]";
-		mes "This is all you have.";
-		mes "You did a good job.";
-		mes "I look forward to more discoveries!";
+		mes "É tudo o que você tem.";
+		mes "Você fez um bom trabalho.";
+		mes "Fico no aguardo de mais descobertas!";
 		setquest 7577;// Space distortion
 		erasequest 7568;// Explore the tower
 		erasequest 7571;// Tower Expedition
@@ -80,18 +80,18 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 		getexp 300000,300000;
 		devil_tower_can_reenter = 0;
 		devil_tower_enter = 0;
-		mes "Please come back tomorrow!";
+		mes "Por favor, volte amanhã!";
 		close;
 	}
 	if (isbegin_quest(7571) > 0) {// failed at stair 2 tnm1
 		mes "[Shep]";
-		mes "Oh, you are back.";
-		mes "Let me see... you mean this tower has a passage to connect to the demon world.";
+		mes "Ah, você voltou.";
+		mes "Deixa eu ver... você quer dizer que esta torre tem uma passagem que liga ao mundo dos demônios.";
 		next;
 		mes "[Shep]";
-		mes "This is all you have.";
-		mes "You did a good job.";
-		mes "I look forward to more discoveries!";
+		mes "É tudo o que você tem.";
+		mes "Você fez um bom trabalho.";
+		mes "Fico no aguardo de mais descobertas!";
 		setquest 7577;// Space distortion
 		erasequest 7568;// Explore the tower
 		erasequest 7571;// Tower Expedition
@@ -100,47 +100,47 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 		getexp 200000,200000;
 		devil_tower_can_reenter = 0;
 		devil_tower_enter = 0;
-		mes "Please come back tomorrow!";
+		mes "Por favor, volte amanhã!";
 		close;
 	}
 	switch( checkquest(7568,PLAYTIME) ) {// entrance timer - 1h30 to enter
 	case -1:
 		mes "[Shep]";
-		mes "Are you volunteering to explore the Devil's Tower? I have been waiting for someone like you!";
+		mes "Você está se voluntariando para explorar a Torre do Demônio? Eu estava esperando alguém como você!";
 		next;
 		mes "[Shep]";
-		mes "Finally, someone to share the mysteries of the tower for me.";
-		mes "No one has been volunteering up this point so I was getting worried.";
+		mes "Finalmente, alguém para dividir comigo os mistérios da torre.";
+		mes "Ninguém tinha se voluntariado até agora, então eu estava ficando preocupado.";
 		next;
 		mes "[Shep]";
-		mes "Please report anything you find in the tower to me.";
-		mes "The better the info~ the better the zeny I'll pay you!";
+		mes "Por favor, me relate tudo o que achar na torre.";
+		mes "Quanto melhor a informação~ melhor o zeny que eu pago!";
 		next;
 		mes "[Shep]";
-		mes "That Laphine scholar over there will open up the dimensional gap with this time device.";
-		mes "It is still unstable so your time for exploring will be limited.";
+		mes "Aquele erudito Laphine ali vai abrir a fenda dimensional com este dispositivo do tempo.";
+		mes "Ele ainda está instável, então o seu tempo de exploração vai ser limitado.";
 		next;
 		mes "[Shep]";
-		mes "If you are unexpectedly bounced back to here again, you should return quickly.";
-		mes "If you do you may or may not be able to re-enter depending on how fast you are.";
+		mes "Se você for jogado de volta para cá sem esperar, deve voltar depressa.";
+		mes "Se fizer isso, você pode ou não conseguir entrar de novo, dependendo da sua rapidez.";
 		next;
 		mes "[Shep]";
-		mes "But if you run out of time, the access to the tower will disappear.";
-		mes "So do you want to volunteer?";
+		mes "Mas se o seu tempo acabar, o acesso à torre vai sumir.";
+		mes "E então, você quer se voluntariar?";
 		next;
-		if (select( "Volunteer", "No Thanks" ) == 2) {
+		if (select( "Me voluntariar", "Não, obrigado" ) == 2) {
 			mes "[Shep]";
-			mes "Oh that's too bad";
-			mes "There is nothing I can do I guess.";
-			mes "I'll just find someone else...";
+			mes "Ah, que pena";
+			mes "Acho que não há nada que eu possa fazer.";
+			mes "Eu vou procurar outra pessoa...";
 			close;
 		}
 		mes "[Shep]";
-		mes "Thank you.";
-		mes "Okay, gather your party and remember to report to me what you find.";
+		mes "Obrigado.";
+		mes "Certo, junte o seu grupo e lembre-se de me relatar o que achar.";
 		next;
 		mes "[Shep]";
-		mes "^4d4dffExploring time limit is for your safety^000000!";
+		mes "^4d4dffO limite de tempo de exploração é para a sua segurança^000000!";
 		setquest 7568;// Explore the tower
 		close;
 	case 0:
@@ -150,14 +150,14 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 		// fall through
 	case 2:
 		mes "[Shep]";
-		mes "You seem to be late.";
-		mes "You took an extraordinarily long time.";
+		mes "Parece que você se atrasou.";
+		mes "Você demorou um tempo absurdo.";
 		mes ".....";
-		mes "I can't use any of your info.";
+		mes "Eu não consigo usar nenhuma informação sua.";
 		next;
 		mes "[Shep]";
-		mes "There is nothing we can do .";
-		mes "There's always opportunities for other expeditions.";
+		mes "Não há nada que a gente possa fazer.";
+		mes "Sempre haverá oportunidade para outras expedições.";
 		setquest 7577;// Space distortion
 		erasequest 7568;
 		if (isbegin_quest(7569)) erasequest 7569;// Treat the injured
@@ -167,37 +167,37 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 		close;
 	}
 	mes "[Shep]";
-	mes "First of all, you need to reserve a queue at the gate.";
-	mes "The Laphine Scholar Artie will reserve your queue for you.";
+	mes "Antes de mais nada, você precisa reservar um lugar na fila do portão.";
+	mes "O Erudito Laphine Artie faz a reserva para você.";
 	next;
 	mes "[Shep]";
-	mes "Time is limited because the dimensional gap is still unstable.";
-	mes "Make your exploration short and sweet.";
+	mes "O tempo é limitado porque a fenda dimensional ainda está instável.";
+	mes "Faça uma exploração curta e certeira.";
 	next;
 	mes "[Shep]";
-	mes "Rewards will be different depending on your time.";
-	mes "Good luck!";
+	mes "As recompensas variam conforme o seu tempo.";
+	mes "Boa sorte!";
 	next;
-	if (select( "Trust me!", "Cancel my reservation" ) == 1) {
+	if (select( "Confie em mim!", "Cancelar a minha reserva" ) == 1) {
 		mes "[Shep]";
-		mes "I believe that you can manage under these restrictions.";
-		mes "I believe in you!";
+		mes "Eu acredito que você se vira com essas restrições.";
+		mes "Eu acredito em você!";
 		close;
 	}
 	if (devil_tower_enter == 1) {
 		mes "[Shep]";
-		mes "You seem to be tired of exploring.";
-		mes "^4d4dffIf you cancel now. You will be able to challenge one day after.^000000";
-		mes "Is that okay?";
+		mes "Você parece cansado de explorar.";
+		mes "^4d4dffSe você cancelar agora, só vai poder tentar de novo daqui a um dia.^000000";
+		mes "Tudo bem assim?";
 		next;
-		if (select( "Yes Cancel.", "Wait, don't cancel!" ) == 2) {
+		if (select( "Sim, cancele.", "Espere, não cancele!" ) == 2) {
 			mes "[Shep]";
-			mes "Ok, I won't cancel.";
+			mes "Certo, eu não vou cancelar.";
 			close;
 		}
 		mes "[Shep]";
-		mes "Really.";
-		mes "then, come back tomorrow.";
+		mes "Sério.";
+		mes "então volte amanhã.";
 		setquest 7577;// Space distortion
 		erasequest 7568;
 		if (isbegin_quest(7569)) erasequest 7569;// Treat the injured
@@ -207,8 +207,8 @@ dali02,134,119,5	script	Historian Shep#tnm01	4_F_NOVICE,{
 		close;
 	}
 	mes "[Shep]";
-	mes "Really?";
-	mes "After listening to all this explanation?";
+	mes "Sério?";
+	mes "Depois de ouvir toda essa explicação?";
 	erasequest 7568;// Explore the tower
 	close;
 }
@@ -217,26 +217,26 @@ dali02,137,121,3	script	Magic Scholar Artie#tnm	4_M_FAIRYKID6,{
 	.@party_id = getcharid(1);
 	if (.@party_id == 0) {
 		mes "[Artie]";
-		mes "let's have fun since we just left bifrost.";
-		mes "No?";
-		mes "you are applying as a volunteer?";
-		mes "You'd better gather a party for this expedition.";
+		mes "vamos nos divertir, já que a gente acabou de sair de Bifröst.";
+		mes "Não?";
+		mes "você está se candidatando como voluntário?";
+		mes "É melhor você juntar um grupo para esta expedição.";
 		next;
 		mes "[Artie]";
-		mes "Don't take any unncessary risks, okay?";
+		mes "Não corra risco desnecessário, certo?";
 		close;
 	}
 	if (is_party_leader() == false) {
 		mes "[Artie]";
-		mes "Bring the Expedition Chief.";
-		mes "Devil's Tower is not a place to visit alone.";
-		mes "Bring the manager.";
+		mes "Traga o Chefe da Expedição.";
+		mes "A Torre do Demônio não é lugar para se visitar sozinho.";
+		mes "Traga o responsável.";
 		close;
 	}
 	if (devil_tower_enter == 1) {
 		mes "[Artie]";
-		mes "You have already entered by connecting it.";
-		mes "Connect to the space again? I can not do that.";
+		mes "Você já entrou fazendo a conexão.";
+		mes "Conectar ao espaço de novo? Isso eu não posso fazer.";
 		close;
 	}
 	switch( checkquest(7568,PLAYTIME) ) {
@@ -246,28 +246,28 @@ dali02,137,121,3	script	Magic Scholar Artie#tnm	4_M_FAIRYKID6,{
 	case -1:
 	case 2:
 		mes "[Artie]";
-		mes "Hrm... It is difficult to connect to unless it is an appointed exploration time.";
-		mes "Not to mention dangerous as well.";
+		mes "Hm... É difícil conectar fora do horário marcado de exploração.";
+		mes "Sem falar que é perigoso.";
 		close;
 	}
 	mes "[Artie]";
-	mes "Are you a volunteer to explore the Devil's Tower?";
-	mes "Do you want me to activate the Dimensional Device?";
+	mes "Você é voluntário para explorar a Torre do Demônio?";
+	mes "Você quer que eu ative o Dispositivo Dimensional?";
 	next;
 	mes "[Artie]";
-	mes "Decide quickly because you only have a finite amount of time in there.";
+	mes "Decida rápido, porque o seu tempo lá dentro é limitado.";
 	next;
-	if (select( "Yes, activate the device.", "Wait for a minute." ) == 2) {
+	if (select( "Sim, ative o dispositivo.", "Espere um minuto." ) == 2) {
 		mes "[Artie]";
-		mes "Your time to explore is dwindling.";
-		mes "Time is very important.";
-		mes "What are you waiting for?";
+		mes "O seu tempo de exploração está diminuindo.";
+		mes "O tempo é muito importante.";
+		mes "O que você está esperando?";
 		close;
 	}
 	mes "[Artie]";
-	mes "The Dimensional Device is activated.";
-	mes "If you're lucky, you can get through this quickly.";
-	mes "I look forward to hearing good news.";
+	mes "O Dispositivo Dimensional está ativado.";
+	mes "Se você tiver sorte, dá para resolver isso depressa.";
+	mes "Fico no aguardo de boas notícias.";
 	instance_create("Torre do Demônio");
 	close;
 }
@@ -275,9 +275,9 @@ dali02,137,121,3	script	Magic Scholar Artie#tnm	4_M_FAIRYKID6,{
 dali02,141,120,3	script	Dimensional Device#tnm0	PORTAL,{
 	if (devil_tower_can_reenter == 1) {// can't re-enter
 		mes "[Artie]";
-		mes "Hey, Hey";
-		mes "It is difficult to send to you through the device right now.";
-		mes "We should stop exploring today and let's go again another day.";
+		mes "Ei, ei";
+		mes "Está difícil mandar você pelo dispositivo agora.";
+		mes "É melhor a gente parar de explorar hoje e voltar outro dia.";
 		close;
 	}
 	switch( checkquest(7568,PLAYTIME) ) {
@@ -287,44 +287,44 @@ dali02,141,120,3	script	Dimensional Device#tnm0	PORTAL,{
 	case -1:
 	case 2:
 		mes "[Artie]";
-		mes "Look, I am sorry but it is not allowed to enter except during the allowed time, Devil's Tower is dangerous.";
+		mes "Olhe, me desculpe, mas não é permitido entrar fora do horário permitido, a Torre do Demônio é perigosa.";
 		close;
 	}
 	mes "[Artie]";
-	mes "Yes, this is the Dimensional Device.";
-	mes "It is used to travel time.";
-	mes "It will be difficult to enter again if you leave.";
+	mes "Sim, este é o Dispositivo Dimensional.";
+	mes "Ele serve para viajar no tempo.";
+	mes "Vai ser difícil entrar de novo se você sair.";
 	next;
 	mes "[Artie]";
-	mes "Don't worry though, I'm a genius scholar~";
-	mes "Anyway, ready to enter?";
+	mes "Mas não se preocupe, eu sou um erudito genial~";
+	mes "Enfim, pronto para entrar?";
 	next;
-	if (select( "Enter the device.", "Stop." ) == 2) {
+	if (select( "Entrar no dispositivo.", "Parar." ) == 2) {
 		mes "[Artie]";
-		mes "Right.";
-		mes "It seems like quite a long time has passed since you activated the device. Am I right?";
+		mes "Certo.";
+		mes "Parece que passou um bom tempo desde que você ativou o dispositivo. Estou certo?";
 		close;
 	}
 	.@md_name$ = "Torre do Demônio";
 	switch( instance_enter(.@md_name$) ) {
 	case IE_OTHER:
-		mes "An unknown error occurred.";
+		mes "Ocorreu um erro desconhecido.";
 		close;
 	case IE_NOINSTANCE:
 		mes "[Shep]";
-		mes "The Dimensional Device needs to be activated first before entering.";
-		mes "It doesn't seem to be activated yet.";
+		mes "O Dispositivo Dimensional precisa ser ativado antes de você entrar.";
+		mes "Parece que ele ainda não foi ativado.";
 		next;
 		mes "[Shep]";
-		mes "Please get a permission to activate it by talking to the Magic Scholar Artie.";
+		mes "Peça permissão para ativá-lo falando com o Erudito Mágico Artie.";
 		close;
 	case IE_NOMEMBER:
 		mes "[Artie]";
-		mes "Exploring Devil's Tower will be permitted only for expeditions in parties.";
-		mes "Make sure you are ready.";
+		mes "A exploração da Torre do Demônio só é permitida a expedições em grupo.";
+		mes "Verifique se você está pronto.";
 		close;
 	case IE_OK:
-		mapannounce "dali02", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters Room " + .@md_name$ + "", bc_map,0xFF99;
+		mapannounce "dali02", "O aventureiro " + strcharinfo(0) + ", do grupo " + getpartyname( getcharid(1) ) + ", entra na Sala " + .@md_name$ + "", bc_map,0xFF99;
 		// warp "1@tnm1",50,104;
 		devil_tower_enter = 1;
 		end;
@@ -338,55 +338,55 @@ OnTouch_:
 	initnpctimer;
 	end;
 OnTimer1000:
-	npctalk "Artie: Hey, you! How is your research going?", "Magic Scholar Artie#tnm";
+	npctalk "Artie: Ei, você! Como vai a sua pesquisa?", "Magic Scholar Artie#tnm";
 	end;
 OnTimer3000:
-	npctalk "Shep: Who are you calling hey you? You're just a dusty little fairy!", "Historian Shep#tnm01";
+	npctalk "Shep: Quem é você chamando de ei, você? Você não passa de uma feizinha empoeirada!", "Historian Shep#tnm01";
 	end;
 OnTimer6000:
-	npctalk "Artie: A dusty little what? I'll have you know, I have superior genes to your species you ape!", "Magic Scholar Artie#tnm";
+	npctalk "Artie: Uma o quê empoeirada? Fique sabendo que eu tenho genes superiores aos da sua espécie, seu macaco!", "Magic Scholar Artie#tnm";
 	end;
 OnTimer9000:
-	npctalk "Shep: What do I care what you say? Even our kids are bigger than you tiny little fairies!", "Historian Shep#tnm01";
+	npctalk "Shep: E eu com isso? Até as nossas crianças são maiores que vocês, feezinhas!", "Historian Shep#tnm01";
 	end;
 OnTimer12000:
-	npctalk "Shep: Think you're so big just because you're a magic scholar huh?", "Historian Shep#tnm01";
+	npctalk "Shep: Você se acha o máximo só porque é erudita mágica, é?", "Historian Shep#tnm01";
 	end;
 OnTimer14000:
-	npctalk "Artie: You know nothing human. Remind me again who found this tower entrance?", "Magic Scholar Artie#tnm";
+	npctalk "Artie: Você não sabe nada, humano. Me lembre de novo quem achou a entrada desta torre?", "Magic Scholar Artie#tnm";
 	end;
 OnTimer18000:
-	npctalk "Shep: *Sigh*... Y....You did.", "Historian Shep#tnm01";
+	npctalk "Shep: *Suspiro*... V....Você achou.", "Historian Shep#tnm01";
 	end;
 OnTimer21000:
-	npctalk "Artie: Y....You? Did I stutter? And who solved the formula calculating the dimensional gap connected to the tower?", "Magic Scholar Artie#tnm";
+	npctalk "Artie: V....Você? Eu gaguejei? E quem resolveu a fórmula que calcula a fenda dimensional ligada à torre?", "Magic Scholar Artie#tnm";
 	end;
 OnTimer24000:
-	npctalk "Shep: Yes, yes it was you!", "Historian Shep#tnm01";
+	npctalk "Shep: Sim, sim, foi você!", "Historian Shep#tnm01";
 	end;
 OnTimer27000:
-	npctalk "Artie: So I take it you're no longer questioning how smart I am right?", "Magic Scholar Artie#tnm";
+	npctalk "Artie: Então eu entendo que você não questiona mais o quanto eu sou inteligente, certo?", "Magic Scholar Artie#tnm";
 	end;
 OnTimer30000:
-	npctalk "Shep: Alright, alright. I need an adventurer to explore the tower for us.", "Historian Shep#tnm01";
+	npctalk "Shep: Está bem, está bem. Eu preciso de um aventureiro para explorar a torre para nós.", "Historian Shep#tnm01";
 	end;
 OnTimer33000:
-	npctalk "Shep: No one has volunteered because everyone says it's too dangerous!", "Historian Shep#tnm01";
+	npctalk "Shep: Ninguém se voluntariou porque todo mundo diz que é perigoso demais!", "Historian Shep#tnm01";
 	end;
 OnTimer36000:
-	npctalk "Artie: No volunteers? Come on. Harness your motivational skills and find someone.", "Magic Scholar Artie#tnm";
+	npctalk "Artie: Sem voluntários? Ora essa. Use os seus dotes de motivação e ache alguém.", "Magic Scholar Artie#tnm";
 	end;
 OnTimer37000:
 	emotion ET_KIK, getnpcid(0, "Magic Scholar Artie#tnm");
 	end;
 OnTimer39000:
-	npctalk "Shep: Hello!!! Now recruiting new members to exploring the Devil's Tower!", "Historian Shep#tnm01";
+	npctalk "Shep: Alô!!! Recrutando membros novos para explorar a Torre do Demônio!", "Historian Shep#tnm01";
 	end;
 OnTimer42000:
-	npctalk "Shep: Please come! Now's your chance to possibly come face to face with the infamous minions of Satan Morocc himself!", "Historian Shep#tnm01";
+	npctalk "Shep: Venham! É a sua chance de encarar cara a cara os famosos lacaios do próprio Satan Morocc!", "Historian Shep#tnm01";
 	end;
 OnTimer45000:
-	npctalk "Artie: You sure that's the right thing to say? Maybe your recruiting tactics need refining...", "Magic Scholar Artie#tnm";
+	npctalk "Artie: Você tem certeza de que é isso que se deve dizer? Talvez a sua tática de recrutamento precise de ajuste...", "Magic Scholar Artie#tnm";
 	stopnpctimer;
 	enablenpc "#tnmtks01";
 	end;
@@ -400,40 +400,40 @@ OnTouch:
 	initnpctimer;
 	end;
 OnTimer2000:
-	npctalk "Officer Heim: This is an emergency.. How things are going?", instance_npcname("Officer Heim#heim0");
+	npctalk "Oficial Heim: Isto é uma emergência.. Como estão as coisas?", instance_npcname("Officer Heim#heim0");
 	end;
 OnTimer5000:
-	npctalk "A tirailleur: Next floor is the highest one... but there are so many demons...", instance_npcname("A tirailleur#tnm01");
+	npctalk "Um Atirador: O próximo andar é o mais alto... mas há demônios demais...", instance_npcname("A tirailleur#tnm01");
 	end;
 OnTimer6000:
 	emotion ET_THINK, getnpcid(0, instance_npcname("Officer Heim#heim0"));
 	end;
 OnTimer8000:
-	npctalk "A tirailleur: It is impossible to break through with the number of our people.", instance_npcname("A tirailleur#tnm01");
+	npctalk "Um Atirador: É impossível romper com o número de gente que temos.", instance_npcname("A tirailleur#tnm01");
 	emotion ET_PROFUSELY_SWEAT, getnpcid(0, instance_npcname("A tirailleur#tnm01"));
 	end;
 OnTimer11000:
-	npctalk "Officer Heim: How many soldiers have survived now? When is the support team arriving?", instance_npcname("Officer Heim#heim0");
+	npctalk "Oficial Heim: Quantos soldados sobraram vivos? Quando chega a equipe de apoio?", instance_npcname("Officer Heim#heim0");
 	end;
 OnTimer12000:
 	emotion ET_THINK, getnpcid(0, instance_npcname("An aide#tnm02"));
 	end;
 OnTimer16000:
-	npctalk "An aide: There aren't enough to call in...", instance_npcname("An aide#tnm02");
+	npctalk "Um Ajudante: Não há gente suficiente para convocar...", instance_npcname("An aide#tnm02");
 	end;
 OnTimer17000:
-	npctalk "An aide: The good news is the demons have stopped attacking.", instance_npcname("An aide#tnm02");
+	npctalk "Um Ajudante: A boa notícia é que os demônios pararam de atacar.", instance_npcname("An aide#tnm02");
 	end;
 OnTimer21000:
-	npctalk "Officer Heim: We can't just be stuck here and can go further. Why did the demons stop attacking ?", instance_npcname("Officer Heim#heim0");
+	npctalk "Oficial Heim: Não podemos ficar presos aqui e podemos ir mais longe. Por que os demônios pararam de atacar?", instance_npcname("Officer Heim#heim0");
 	end;
 OnTimer24000:
-	npctalk "A tirailleur: It seems like there is something going on up there...", instance_npcname("A tirailleur#tnm01");
+	npctalk "Um Atirador: Parece que tem alguma coisa acontecendo lá em cima...", instance_npcname("A tirailleur#tnm01");
 	end;
 OnTimer26000:
 	disablenpc instance_npcname("Officer Heim#heim0");
 	enablenpc instance_npcname("Officer Heim#heim");
-	npctalk "Officer Heim: Who are you?", instance_npcname("Officer Heim#heim");
+	npctalk "Oficial Heim: Quem é você?", instance_npcname("Officer Heim#heim");
 	stopnpctimer;
 	end;
 }
@@ -442,48 +442,48 @@ OnTimer26000:
 
 1@tnm1,56,110,3	script	Officer Heim#heim	4_TOWER_05,{
 	if (is_party_leader() == false) {
-		mes "[Officer Heim]";
-		mes "Who brought you all here?";
-		mes "I will talk to a representative.";
+		mes "[Oficial Heim]";
+		mes "Quem trouxe vocês todos para cá?";
+		mes "Eu vou falar com um representante.";
 		close;
 	}
 	switch('devil_tower) {
 	case 0:
-		mes "[Officer Heim]";
-		mes "Back up soldiers? So why are you just standing there?";
-		npctalk "Officer Heim: Back up soldiers? So why are you just standing there?";
+		mes "[Oficial Heim]";
+		mes "Soldados de apoio? Então por que vocês estão aí parados?";
+		npctalk "Oficial Heim: Soldados de apoio? Então por que vocês estão aí parados?";
 		next;
-		select("Right now?");
+		select("Agora mesmo?");
 		if (is_party_leader() == true && 'devil_tower == 0) {
 			enablenpc instance_npcname("Healer Fama#feima");
 			'devil_tower = 1;
 		}
-		mes "[Healer Fama]";
-		mes "Commander please help me. I can't do it by myself~!";
-		npctalk "Healer Fama: Commander please help me. I can't do it by myself~!", instance_npcname("Healer Fama#feima");
+		mes "[Curandeira Fama]";
+		mes "Comandante, por favor me ajude. Eu não dou conta sozinha~!";
+		npctalk "Curandeira Fama: Comandante, por favor me ajude. Eu não dou conta sozinha~!", instance_npcname("Healer Fama#feima");
 		next;
-		mes "[Officer Heim]";
-		mes "Do you hear that?";
-		mes "Help Fama take care of the injured soldiers.";
-		mes "Fama will give you first aid-kits, use it to help the injured people.";
+		mes "[Oficial Heim]";
+		mes "Você está ouvindo isso?";
+		mes "Ajude a Fama a cuidar dos soldados feridos.";
+		mes "A Fama vai lhe dar kits de primeiros socorros, use-os para ajudar os feridos.";
 		close2;
 		setpcblock PCBLOCK_NPC, true;
-		npctalk "Officer Heim: Do you hear that?";
+		npctalk "Oficial Heim: Você está ouvindo isso?";
 		sleep2 2000;
-		npctalk "Officer Heim: Help Fama take care of the injured soldiers.";
+		npctalk "Oficial Heim: Ajude a Fama a cuidar dos soldados feridos.";
 		sleep2 2000;
-		npctalk "Healer Fama: Okay~ You are going to help me? Come here and receive the first aid kit~!";
+		npctalk "Curandeira Fama: Certo~ Você vai me ajudar? Venha aqui pegar o kit de primeiros socorros~!";
 		setpcblock PCBLOCK_NPC, false;
 		end;
 	case 1:
-		mes "[Officer Heim]";
-		mes "It is priority to treat the injured soldiers by assisting Fama.";
-		mes "Please do your best even if the environment is the worst.";
+		mes "[Oficial Heim]";
+		mes "É prioridade tratar os soldados feridos ajudando a Fama.";
+		mes "Por favor, faça o seu melhor, mesmo que as condições sejam péssimas.";
 		close;
 	default:
-		mes "[Officer Heim]";
-		mes "Luckily, no one is dead yet.";
-		mes "I do not want to see my soldiers die.";
+		mes "[Oficial Heim]";
+		mes "Por sorte, ninguém morreu ainda.";
+		mes "Eu não quero ver os meus soldados morrerem.";
 		close;
 	}
 }
@@ -491,25 +491,25 @@ OnTimer26000:
 1@tnm1,47,109,3	script	Healer Fama#feima	4_TOWER_10,{
 	if ('devil_tower == 1) {
 		if (countitem(7641) < 1) {
-			mes "[Healer Fama]";
-			mes "Please cure the injured with this first aid kit.";
-			mes "It's not difficult. Just follow the instructions.";
+			mes "[Curandeira Fama]";
+			mes "Por favor, cure os feridos com este kit de primeiros socorros.";
+			mes "Não é difícil. É só seguir as instruções.";
 			next;
-			mes "[Healer Fama]";
-			mes "We are low on supplies. So I will give them once at a time.";
-			mes "Sorry, please request again if you run out.";
+			mes "[Curandeira Fama]";
+			mes "Estamos com pouco suprimento. Então eu dou um de cada vez.";
+			mes "Desculpe, peça de novo se acabar.";
 			if ('devil_tower == 1)
 				getitem 7641,1;// Medical_Cure_Box
 			close;
 		}
-		mes "[Healer Fama]";
-		mes "Sorry... procurement is not good right now so I can only provide one first-aid kit at a time.";
-		mes "Please request again if you run out.";
+		mes "[Curandeira Fama]";
+		mes "Desculpe... o abastecimento não está bom agora, então eu só posso dar um kit de primeiros socorros por vez.";
+		mes "Por favor, peça de novo se acabar.";
 		close;
 	}
-	mes "[Healer Fama]";
-	mes "Huh... Okay, we can take a break now.";
-	mes "Thank you very much!";
+	mes "[Curandeira Fama]";
+	mes "Ufa... Certo, agora dá para descansar.";
+	mes "Muito obrigada!";
 	close;
 }
 
@@ -517,17 +517,17 @@ OnTimer26000:
 	if ('devil_tower != 1)
 		end;
 	if (countitem(7641) < 1) {
-		mes "I need 1 first-aid-kit to treat the injured soldier.";
+		mes "Eu preciso de 1 kit de primeiros socorros para tratar o soldado ferido.";
 		close;
 	}
-	mes "This soldier has lost consciousness and groaning.";
-	mes "Should I use the first-aid kit?";
+	mes "Este soldado perdeu a consciência e está gemendo.";
+	mes "Devo usar o kit de primeiros socorros?";
 	next;
-	if (select( "Use first-aid kit.", "Observe condition." ) == 2) {
-		mes "You decide to observe the condition of the injured soldier more.";
+	if (select( "Usar o kit de primeiros socorros.", "Observar o estado dele." ) == 2) {
+		mes "Você decide observar mais um pouco o estado do soldado ferido.";
 		close;
 	}
-	mes "You administer the first-aid-kit to the soldier.";
+	mes "Você aplica o kit de primeiros socorros no soldado.";
 	next;
 	specialeffect EF_SPHERE;
 	progressbar "000000",10;
@@ -537,11 +537,11 @@ OnTimer26000:
 		disablenpc();
 		enablenpc instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
 		specialeffect EF_ENTRY,AREA, instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
-		mes "It worked.";
+		mes "Funcionou.";
 		'heal_count++;
 		if ('heal_count == 7) {
 			'devil_tower = 2;
-			npctalk "Healer Fama: Assassins?!", instance_npcname("Healer Fama#feima");
+			npctalk "Curandeira Fama: Assassinos?!", instance_npcname("Healer Fama#feima");
 			enablenpc instance_npcname("Lucile#tnm01");
 			enablenpc instance_npcname("Magic Swordman#tnm01");
 			enablenpc instance_npcname("Assassin Huey#tnm01");
@@ -553,19 +553,19 @@ OnTimer26000:
 OnTouch:
 	.@num = atoi( replacestr( strnpcinfo(2), "_1", "" ) );
 	if (.@num == 1)
-		npctalk "Injured Soldier: groaning....";
+		npctalk "Soldado Ferido: gemendo....";
 	else if (.@num == 2)
-		npctalk "Injured Soldier: Owww...";
+		npctalk "Soldado Ferido: Owww...";
 	else if (.@num == 3)
-		npctalk "Injured Soldier: .... aah.. aah..";
+		npctalk "Soldado Ferido: .... aah.. aah..";
 	else if (.@num == 4)
-		npctalk "Injured Soldier: Owww...";
+		npctalk "Soldado Ferido: Owww...";
 	else if (.@num == 5)
-		npctalk "Injured Soldier: I do not want to die...";
+		npctalk "Soldado Ferido: Eu não quero morrer...";
 	else if (.@num == 6)
-		npctalk "Injured Soldier: Owww~";
+		npctalk "Soldado Ferido: Owww~";
 	else
-		npctalk "Injured Soldier: Groaning...";
+		npctalk "Soldado Ferido: Gemendo...";
 	end;
 }
 
@@ -577,65 +577,65 @@ OnTouch:
 1@tnm1,31,110,3	duplicate(Injured Soldier#1_1)	Injured Soldier#7_1	4_TOWER_03,3,3
 
 1@tnm1,39,114,3	script	Injured Soldier#1	4_TOWER_02,{
-	mes "[Injured soldiers]";
-	mes "whew.. it seems to be okay now.";
-	mes "Thank you.";
+	mes "[Soldados feridos]";
+	mes "ufa.. parece que agora está tudo bem.";
+	mes "Obrigado.";
 	close;
 }
 
 1@tnm1,30,120,3	script	Injured Soldier#2	4_TOWER_04,{
-	mes "[Injured soldiers]";
-	mes "Groaning... Just let me die.";
-	mes "No it hurts too much.";
+	mes "[Soldados feridos]";
+	mes "Gemendo... Deixe eu morrer logo.";
+	mes "Não, dói demais.";
 	close;
 }
 
 1@tnm1,25,117,5	script	Injured Soldier#3	4_TOWER_07,{
-	mes "[Injured soldiers]";
-	mes "His conscious seems to be blur still.";
-	mes "Leave him to get some rest.";
+	mes "[Soldados feridos]";
+	mes "A consciência dele parece ainda estar turva.";
+	mes "Deixe ele descansar um pouco.";
 	close;
 }
 
 1@tnm1,19,118,4	script	Injured Soldier#4	4_TOWER_09,{
-	mes "[Injured soldiers]";
-	mes "I thought I was going to die.";
-	mes "But I'm alive!";
+	mes "[Soldados feridos]";
+	mes "Eu achei que ia morrer.";
+	mes "Mas eu estou vivo!";
 	close;
 }
 
 1@tnm1,18,110,4	script	Injured Soldier#5	4_TOWER_12,{
-	mes "[Injured soldiers]";
-	mes "I can't die here. I have to propose to my beloved when I get home.";
-	mes "We will be happy for sure?";
+	mes "[Soldados feridos]";
+	mes "Eu não posso morrer aqui. Eu tenho que pedir a minha amada em casamento quando chegar em casa.";
+	mes "A gente vai ser feliz, não vai?";
 	close;
 }
 
 1@tnm1,24,104,7	script	Injured Soldier#6	4_TOWER_14,{
-	mes "[Injured soldiers]";
-	mes "I feel much better but I still can't move.";
-	mes "Still I'm lucky to be alive.";
+	mes "[Soldados feridos]";
+	mes "Eu estou bem melhor, mas ainda não consigo me mexer.";
+	mes "Mesmo assim, tenho sorte de estar vivo.";
 	close;
 }
 
 1@tnm1,31,110,3	script	Injured Soldier#7	4_TOWER_04,{
-	mes "[Injured soldiers]";
-	mes "Thank you.. Thank you..";
+	mes "[Soldados feridos]";
+	mes "Obrigado.. Obrigado..";
 	close;
 }
 
 1@tnm1,61,110,3	script	An aide#tnm02	4_M_MOCASS2,{
-	mes "[An aide]";
-	mes "The calamity that happened hundreds of years ago will not happen again right?";
-	mes "Why have the demons showed up again so suddenly?";
+	mes "[Um Ajudante]";
+	mes "A calamidade que aconteceu centenas de anos atrás não vai acontecer de novo, vai?";
+	mes "Por que os demônios apareceram de novo assim de repente?";
 	close;
 }
 
 1@tnm1,61,113,3	script	A tirailleur#tnm01	4_M_MOCASS1,{
-	mes "[A tirailleur]";
-	mes "Are you a member of back-up team?";
-	mes "Good. things are getting worse here.";
-	mes "Glad that you all are here to help.";
+	mes "[Um Atirador]";
+	mes "Você é da equipe de apoio?";
+	mes "Ótimo. As coisas estão piorando por aqui.";
+	mes "Que bom que vocês vieram ajudar.";
 	close;
 }
 
@@ -643,7 +643,7 @@ OnTouch:
 	if (is_party_leader() == false) {
 		cutin "tnm_lucile01.bmp",2;
 		mes "[Lucile]";
-		mes "Who is in charge of the back-up team?";
+		mes "Quem é o responsável pela equipe de apoio?";
 		close3;
 	}
 	if ('devil_tower == 2) {
@@ -653,44 +653,44 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, true;
 		cutin "tnm_lucile01.bmp",2;
 		sleep2 1500;
-		npctalk "Lucile: I am Lucile from the Assassin Guild.", .@lucile$;
+		npctalk "Lucile: Eu sou Lucile, do Sindicato dos Assassinos.", .@lucile$;
 		sleep2 2000;
-		npctalk "Officer Heim: Our back-up is from the Assassin Guild? Thanks for arriving in time.", .@heim$;
+		npctalk "Oficial Heim: O nosso apoio é do Sindicato dos Assassinos? Obrigado por chegar a tempo.", .@heim$;
 		sleep2 3000;
-		npctalk "Lucile: The situation doesn't seem to be good.", .@lucile$;
+		npctalk "Lucile: A situação não parece boa.", .@lucile$;
 		sleep2 3000;
-		npctalk "Lucile: What happened to the brave knights of Prontera?", .@lucile$;
+		npctalk "Lucile: O que aconteceu com os bravos cavaleiros de Prontera?", .@lucile$;
 		sleep2 3000;
-		npctalk "Officer Heim: Are you mocking me?", .@heim$;
+		npctalk "Oficial Heim: Você está zombando de mim?", .@heim$;
 		sleep2 3000;
-		npctalk "Lucile: Not at all. I really want to know. What's going on upstairs?", .@lucile$;
+		npctalk "Lucile: De jeito nenhum. Eu quero saber de verdade. O que está acontecendo lá em cima?", .@lucile$;
 		sleep2 2500;
 		emotion ET_OHNO, getnpcid(0, .@heim$);
 		sleep2 1000;
-		npctalk "Officer Heim: How did you know that? Yes, the demons have stopped their attack from upstairs.", .@heim$;
+		npctalk "Oficial Heim: Como você sabia disso? Sim, os demônios pararam o ataque lá de cima.", .@heim$;
 		sleep2 3000;
 		emotion ET_SMILE, getnpcid(0, .@lucile$);
-		npctalk "Lucile: What do you think about the situation Magic Swordman?", .@lucile$;
+		npctalk "Lucile: O que você acha da situação, Espadachim Mágico?", .@lucile$;
 		cutin "tnm_lucile01.bmp",0;
 		sleep2 3000;
-		npctalk "Magic swordman: Hmm, I will go and investigate.", instance_npcname("Magic Swordman#tnm01");
+		npctalk "Espadachim Mágico: Hmm, eu vou lá investigar.", instance_npcname("Magic Swordman#tnm01");
 		cutin "tnm_loki.bmp",2;
 		sleep2 2000;
 		cutin "",255;
 		disablenpc instance_npcname("Magic Swordman#tnm01");
 		sleep2 1000;
-		npctalk "Lucile: How are you so fast?", .@lucile$;
+		npctalk "Lucile: Como você é tão rápido?", .@lucile$;
 		cutin "tnm_lucile01.bmp",2;
 		sleep2 2000;
-		npctalk "Officer Heim: What are you doing? If you go alone you will be killed!", .@heim$;
+		npctalk "Oficial Heim: O que você está fazendo? Se for sozinho, vai ser morto!", .@heim$;
 		sleep2 3000;
-		npctalk "Lucile: I won't be alone. There are still some uninjured soldiers!", .@lucile$;
+		npctalk "Lucile: Eu não vou sozinha. Ainda há soldados sem ferimento!", .@lucile$;
 		sleep2 2500;
-		npctalk "Lucile: All right, I will ask you to be my back up. Hahaha right Dewey?", .@lucile$;
+		npctalk "Lucile: Muito bem, eu peço a vocês que sejam o meu apoio. Hahaha, certo, Dewey?", .@lucile$;
 		sleep2 500;
 		enablenpc instance_npcname("Assassin Dewey#tnm01");
 		enablenpc instance_npcname("#tnm1stepmob");
-		npctalk "Dewey: Okay, I will.", instance_npcname("Assassin Dewey#tnm01");
+		npctalk "Dewey: Certo, eu vou.", instance_npcname("Assassin Dewey#tnm01");
 		'devil_tower = 4;
 		sleep2 500;
 		cutin "",255;
@@ -698,9 +698,9 @@ OnTouch:
 		disablenpc instance_npcname("Assassin Huey#tnm01");
 		disablenpc instance_npcname("Assassin Louie#tnm01");
 		sleep2 2000;
-		npctalk "Officer Heim: They are so unpredictable. You know what is going on right? Back them up...", .@heim$;
+		npctalk "Oficial Heim: Eles são imprevisíveis demais. Você sabe o que está acontecendo, certo? Dê apoio a eles...", .@heim$;
 		sleep2 2500;
-		npctalk "Officer Heim: Help us take care of the demons coming down from upstairs.", .@heim$;
+		npctalk "Oficial Heim: Ajude a gente a dar conta dos demônios que descem lá de cima.", .@heim$;
 		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
@@ -718,16 +718,16 @@ OnTouch:
 	if (isbegin_quest(7570) == 0)
 		setquest 7570;// Destroy the demons
 	mes "[Dewey]";
-	mes "I will guide you to the upper floor.";
-	mes "Do not forget to get rid of any demons that you encounter on the way.";
+	mes "Eu guio você até o andar de cima.";
+	mes "Não esqueça de acabar com qualquer demônio que encontrar no caminho.";
 	next;
-	if (select( "Move now", "I need more time to prepare." ) == 2) {
+	if (select( "Ir agora", "Eu preciso de mais tempo para me preparar." ) == 2) {
 		mes "[Dewey]";
-		mes "Be prepared for anything.";
+		mes "Esteja preparado para tudo.";
 		close;
 	}
 	mes "[Dewey]";
-	mes "Travel carefully.";
+	mes "Viaje com cuidado.";
 	close2;
 	warp 'map_tnm1$,91,23;
 	devil_tower_can_reenter = 1;// nb. different from official (condition overcomplicated)
@@ -750,13 +750,13 @@ OnTouch:
 	end;
 OnTimer2000:
 	if (unitexists('mob_id) == true)
-		unittalk 'mob_id, "What is this? A human? How dare they must have lost their minds!";
+		unittalk 'mob_id, "O que é isso? Um humano? Como ousam, devem ter perdido o juízo!";
 	end;
 OnTimer5000:
 	monster 'map_tnm1$,103,21,"Evil Shadow",2940,1, instance_npcname("#tnm1stepmob") + "::OnMobDead";	// MM_EVIL_SHADOW2
-	unittalk $@mobid[0], "Did you make a resolution?";
+	unittalk $@mobid[0], "Você já se decidiu?";
 	monster 'map_tnm1$,103,26,"Evil Shadow",2941,1, instance_npcname("#tnm1stepmob") + "::OnMobDead";	// MM_EVIL_SHADOW3
-	unittalk $@mobid[0], "Ha ha ha ha....Let's fight..!!!";
+	unittalk $@mobid[0], "Ha ha ha ha....Vamos lutar..!!!";
 	end;
 OnTimer11000:
 	monster 'map_tnm1$,106,25,"Evil Shadow",2939,1, instance_npcname("#tnm1stepmob") + "::OnMobDead";	// MM_EVIL_SHADOW1
@@ -804,27 +804,27 @@ OnMobDead:
 		end;
 	if (checkquest(7570,HUNTING) != 2) {
 		mes "[Louie]";
-		mes "The Captain says that we need to get rid of all of the demons...";
-		mes "Better get to it.";
+		mes "O Capitão diz que a gente precisa acabar com todos os demônios...";
+		mes "Melhor começar logo.";
 		close;
 	}
 	mes "[Louie]";
-	mes "A lot of soldiers still survived the attacks.";
-	mes "They got rid of all the demons.";
+	mes "Muitos soldados sobreviveram aos ataques.";
+	mes "Eles acabaram com todos os demônios.";
 	next;
 	mes "[Louie]";
-	mes "I was making sure that no one goes upstairs, I was afraid something might happen again.";
+	mes "Eu estava garantindo que ninguém subisse, eu tinha medo de acontecer alguma coisa de novo.";
 	next;
 	mes "[Louie]";
-	mes "I wish you would help me.";
-	mes "I will guide you.";
+	mes "Eu queria que você me ajudasse.";
+	mes "Eu vou guiar você.";
 	if (isbegin_quest(7571) == 0) {
 		erasequest 7569;// Treat the injured
 		erasequest 7570;// Destroy the demons
 		setquest 7571;// Tower Expedition
 	}
 	next;
-	mes "I have been exploring the passages of this tower for a while now.";
+	mes "Eu já estou explorando as passagens desta torre faz um tempo.";
 	close2;
 	warp 'map_tnm1$,124,86;
 	end;
@@ -835,7 +835,7 @@ OnMobDead:
 	if (isbegin_quest(7571) == 0)
 		end;
 	if (is_party_leader() == false) {
-		mes "You wave your hand in front of her but she doesn't react.";
+		mes "Você acena com a mão na frente dela, mas ela não reage.";
 		close;
 	}
 	if ('devil_tower < 4)
@@ -843,23 +843,23 @@ OnMobDead:
 	if ('devil_tower < 6) {
 		if ('devil_tower == 4) {
 			mes "[Lucile]";
-			mes "I am sorry if I'm giving you any attitude but I can't move.";
-			npctalk "Lucile: I am sorry if I'm giving you any attitude but I can't move.";
+			mes "Desculpe se eu estou sendo grosseira, mas eu não consigo me mexer.";
+			npctalk "Lucile: Desculpe se eu estou sendo grosseira, mas eu não consigo me mexer.";
 			cutin "tnm_lucile02.bmp",2;
 			next;
-			select("Can I help?");
+			select("Posso ajudar?");
 			mes "[Lucile]";
-			mes "I can use self-recovery but I don't have time for that.";
-			mes "Will you share your power with me?";
-			npctalk "Lucile: I can use self-recovery but I don't have time for that. Will you share your power with me?";
+			mes "Eu consigo me autorreparar, mas não tenho tempo para isso.";
+			mes "Você divide o seu poder comigo?";
+			npctalk "Lucile: Eu consigo me autorreparar, mas não tenho tempo para isso. Você divide o seu poder comigo?";
 			next;
 			mes "[Lucile]";
-			mes "I need your help to activate my restoration system.";
-			mes "Please hold tight.";
-			npctalk "Lucile: I need your help to activate my restoration system.";
+			mes "Eu preciso da sua ajuda para ativar o meu sistema de restauração.";
+			mes "Por favor, segure firme.";
+			npctalk "Lucile: Eu preciso da sua ajuda para ativar o meu sistema de restauração.";
 			next;
 			sleep2 750;
-			npctalk "Lucile: Please hold tight.";
+			npctalk "Lucile: Por favor, segure firme.";
 			if (is_party_leader() == true && 'devil_tower == 4) {
 				donpcevent instance_npcname("Huey#hui02") + "::OnEnable";
 				'devil_tower = 5;
@@ -867,8 +867,8 @@ OnMobDead:
 			percentheal -30,0;
 		}
 		cutin "tnm_lucile03.bmp",2;
-		mes "Lucile seems to be a machine.";
-		mes "I can hear mechanical sounds all of a sudden.";
+		mes "A Lucile parece ser uma máquina.";
+		mes "De repente dá para ouvir sons mecânicos.";
 		specialeffect EF_LEVEL99_3;
 		progressbar "000000",40;
 		if (is_party_leader() == true && 'devil_tower == 5) {
@@ -876,30 +876,30 @@ OnMobDead:
 				setquest 7572;// Lucile...?
 			'devil_tower = 6;
 		}
-		mes "System is restored.";
+		mes "O sistema foi restaurado.";
 		next;
 		mes "[Lucile]";
-		mes "Wow! You fixed it faster than I thought.";
-		mes "Did that surprise you?";
-		mes "I have to be fixed occasionally because I don't have a normal body";
+		mes "Uau! Você consertou mais rápido do que eu esperava.";
+		mes "Isso surpreendeu você?";
+		mes "Eu tenho que ser consertada de vez em quando porque eu não tenho um corpo normal";
 		cutin "tnm_lucile02.bmp",2;
 		next;
 		mes "[Lucile]";
-		mes "This body was a gift from the gods.";
-		mes "Do you see the gate in the middle?";
+		mes "Este corpo foi um presente dos deuses.";
+		mes "Você está vendo o portão no meio?";
 		cutin "tnm_lucile01.bmp",2;
 		next;
 		mes "[Lucile]";
-		mes "Hurry up or this world will be in a danger.";
+		mes "Depressa, ou este mundo vai correr perigo.";
 		close2;
 		cutin "",255;
 		// continue
 	}
 	if ('devil_tower == 6) {
 		sleep 1500;
-		npctalk "Lucile: Let me excuse myself, follow me if you want to save the world.";
+		npctalk "Lucile: Com licença, me sigam se vocês quiserem salvar o mundo.";
 		sleep 2000;
-		npctalk "Huey: sister...", instance_npcname("Huey#hui02");
+		npctalk "Huey: irmã...", instance_npcname("Huey#hui02");
 		if ('devil_tower == 6) {
 			disablenpc instance_npcname("Lucile#tnm02");
 			enablenpc instance_npcname("Lucile#tnm03");
@@ -916,33 +916,33 @@ OnMobDead:
 		end;
 	if ('devil_tower == 5 || 'devil_tower == 6) {
 		mes "[Huey]";
-		mes "I am concerned about her.";
-		mes "It happens whenever she's wounded.";
-		mes "Because she's mostly machine...";
+		mes "Eu estou preocupado com ela.";
+		mes "Isso acontece sempre que ela se fere.";
+		mes "Porque ela é quase toda máquina...";
 		close;
 	}
 	if ('mob_count > 0) {
 		mes "[Huey]";
-		mes "I know the path upstairs...";
-		mes "First of all, we have to get rid of these demons!";
+		mes "Eu conheço o caminho lá para cima...";
+		mes "Antes de mais nada, temos que acabar com estes demônios!";
 		close;
 	}
 	mes "[Huey]";
-	mes "I wonder how the others are doing...";
-	mes "Only Thanatos and Lucile have ever entered to upper floor...";
+	mes "Eu me pergunto como estão os outros...";
+	mes "Só o Thanatos e a Lucile chegaram a entrar no andar de cima...";
 	next;
 	mes "[Huey]";
-	mes "If you want to assist them, you must hurry.";
-	mes "I will guide the way for you.";
+	mes "Se você quer ajudá-los, tem que se apressar.";
+	mes "Eu vou guiar o caminho para você.";
 	next;
-	if (select( "Move immediately.", "Do not follow." ) == 2) {
+	if (select( "Ir imediatamente.", "Não seguir." ) == 2) {
 		mes "[Huey]";
-		mes "...I see.";
+		mes "...Entendo.";
 		close;
 	}
 	mes "[Huey]";
-	mes "This way.";
-	mes "Be careful.";
+	mes "Por aqui.";
+	mes "Cuidado.";
 	close2;
 	warp 'map_tnm2$,152,130;
 	end;
@@ -952,7 +952,7 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer3000:
-	npctalk "Huey: Oh no, sister watch out! Demons have suddenly appeared!";
+	npctalk "Huey: Ah, não, irmã, cuidado! Apareceram demônios de repente!";
 	'mob_count = 16;
 	monster 'map_tnm1$,142,90,"Evil Shadow",2939,1, instance_npcname("Huey#hui02") + "::OnMobDead";	// MM_EVIL_SHADOW1
 	monster 'map_tnm1$,139,91,"Evil Shadow",2940,1, instance_npcname("Huey#hui02") + "::OnMobDead";	// MM_EVIL_SHADOW2
@@ -961,7 +961,7 @@ OnTimer3000:
 	monster 'map_tnm1$,134,90,"Evil Shadow",2941,1, instance_npcname("Huey#hui02") + "::OnMobDead";
 	end;
 OnTimer6000:
-	npctalk "Huey: Where are they coming from? Demons again......";
+	npctalk "Huey: De onde eles estão vindo? Demônios de novo......";
 	end;
 OnTimer8000:
 	monster 'map_tnm1$,137,103,"Evil Shadow",2939,1, instance_npcname("Huey#hui02") + "::OnMobDead";	// MM_EVIL_SHADOW1
@@ -972,7 +972,7 @@ OnTimer8000:
 	monster 'map_tnm1$,135,107,"Evil Shadow",2941,1, instance_npcname("Huey#hui02") + "::OnMobDead";	// MM_EVIL_SHADOW3
 	end;
 OnTimer11000:
-	npctalk "Huey: Oh, no...";
+	npctalk "Huey: Ah, não...";
 	end;
 OnTimer12000:
 	monster 'map_tnm1$,135,107,"Evil Shadow",2939,1, instance_npcname("Huey#hui02") + "::OnMobDead";	// MM_EVIL_SHADOW1
@@ -985,14 +985,14 @@ OnTimer12000:
 OnMobDead:
 	'mob_count--;
 	if ('mob_count == 0)
-		npctalk "Huey: This way. This way... we can go upstairs by using the gap that the demons were coming from!";
+		npctalk "Huey: Por aqui. Por aqui... a gente sobe pela fenda de onde os demônios estavam vindo!";
 	end;
 }
 
 // Morocc - Thanatos Battle
 1@tnm2,136,139,3	script	Magic Swordman#tnm02	THANATOS_KEEP,{
-	mes "[Magic Swordman Thanatos]";
-	mes "I am sorry but I have been through tough time...";
+	mes "[Espadachim Mágico Thanatos]";
+	mes "Desculpe, mas eu passei por maus bocados...";
 	close;
 }
 
@@ -1001,20 +1001,20 @@ OnMobDead:
 1@tnm2,144,137,3	script	Lucile#tnm03	4_F_LUCILE,{
 	if (is_party_leader() == false) {
 		mes "[Lucile]";
-		mes "I am talking to your party leader now so please step back for a while.";
+		mes "Eu estou falando com o líder do seu grupo agora, então afaste-se um pouco.";
 		cutin "tnm_lucile01.bmp",2;
 		close3;
 	}
 	if ('devil_tower == 7) {
 		mes "[Lucile]";
-		mes "Oh. You just have arrived in time.";
-		mes "Do you want to take a look over there?";
+		mes "Ah. Você chegou bem na hora.";
+		mes "Você quer dar uma olhada ali?";
 		cutin "tnm_lucile01.bmp",2;
 		next;
 		mes "[Lucile]";
-		mes "We need to stop the demon...";
-		mes "Can you do that?";
-		npctalk "Lucile: We need to stop the demon... Can you do that?";
+		mes "Nós precisamos deter o demônio...";
+		mes "Você consegue fazer isso?";
+		npctalk "Lucile: Nós precisamos deter o demônio... Você consegue fazer isso?";
 		if (is_party_leader() == true && 'devil_tower == 7) {
 			if (isbegin_quest(7573) == 0)
 				setquest 7573;// Magic Swordman Thanatos
@@ -1026,39 +1026,39 @@ OnMobDead:
 		close3;
 	}
 	mes "[Lucile]";
-	mes "We need to hold this spot until the trap is set by the Magic Swordman.";
+	mes "Nós precisamos segurar este ponto até o Espadachim Mágico armar a armadilha.";
 	cutin "tnm_lucile01.bmp",2;
 	close3;
 
 OnTimer2000:
-	npctalk "Demon Morocc: You silly human. How long do you think you can manage to tie me up!", 'demon$;
+	npctalk "Demônio Morocc: Seu humano tolo. Por quanto tempo você acha que consegue me prender!", 'demon$;
 	end;
 OnTimer5000:
-	npctalk "Demon Morocc: Shadows! Come out and kill all enemies of darkness!", 'demon$;
+	npctalk "Demônio Morocc: Sombras! Venham e matem todos os inimigos da escuridão!", 'demon$;
 	end;
 OnTimer6000:
 	donpcevent instance_npcname("#devil_seal_timer") + "::OnStart";
 	end;
 OnTimer8000:
-	npctalk "Thanatos: You are so desperate that you're begging me to save you.", 'thanatos$;
+	npctalk "Thanatos: Você está tão desesperado que está me implorando para salvar você.", 'thanatos$;
 	end;
 OnTimer11500:
-	npctalk "Lucile: Thanatos. Sir, should you be bluffing like that?";
+	npctalk "Lucile: Thanatos. Senhor, o senhor devia blefar desse jeito?";
 	end;
 OnTimer12000:
-	npctalk "Demon Morocc: Be afraid of the destruction that I will bring when I'm released!", 'demon$;
+	npctalk "Demônio Morocc: Temam a destruição que eu vou trazer quando for solto!", 'demon$;
 	end;
 OnTimer15000:
-	npctalk "Thanatos: Shut up! You will never leave here unless I kill you!", 'thanatos$;
+	npctalk "Thanatos: Cale a boca! Você nunca vai sair daqui, a não ser que eu mate você!", 'thanatos$;
 	end;
 OnTimer16500:
-	npctalk "Thanatos: Lucile! Watch my back while I conjure up a shield to hold him!", 'thanatos$;
+	npctalk "Thanatos: Lucile! Cubra as minhas costas enquanto eu conjuro um escudo para prendê-lo!", 'thanatos$;
 	end;
 OnTimer19500:
-	npctalk "Lucile: Yes sir.";
+	npctalk "Lucile: Sim, senhor.";
 	end;
 OnTimer22500:
-	npctalk "Lucile: Okay everyone, now we know what to do. We have to prevent the Magic Seal from reaching here!";
+	npctalk "Lucile: Certo, pessoal, agora a gente sabe o que fazer. Temos que impedir que o Selo Mágico chegue até aqui!";
 	stopnpctimer;
 	end;
 }
@@ -1066,8 +1066,8 @@ OnTimer22500:
 1@tnm2,1,1,0	script	#devil_flamecross	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	npctalk "Demon Morocc: No way!! Troublemakers!", 'demon$;
-	mapannounce 'map_tnm2$, "Demon Morocc: No way!! Troublemakers!", bc_map,0xFF0000;
+	npctalk "Demônio Morocc: De jeito nenhum!! Encrenqueiros!", 'demon$;
+	mapannounce 'map_tnm2$, "Demônio Morocc: De jeito nenhum!! Encrenqueiros!", bc_map,0xFF0000;
 	initnpctimer;
 	end;
 OnTimer1000:
@@ -1117,36 +1117,36 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer5000:
-	mapannounce 'map_tnm2$, "A Magic Seal has just appeared in southeast direction of the tower.", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Um Selo Mágico acaba de aparecer na direção sudeste da torre.", bc_map,0xFFFFFF;
 	donpcevent instance_npcname("#devil_seal_spawn_global") + "::OnFirstSpawn";
 	end;
 OnTimer10000:
 	donpcevent instance_npcname("#devil_flamecross") + "::OnStart";
 	end;
 OnTimer25000:
-	mapannounce 'map_tnm2$, "Lucile: We should stop before Magic Seal has just started to move again.", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Lucile: A gente deve detê-lo antes que o Selo Mágico volte a se mover.", bc_map,0xFFFFFF;
 	end;
 OnTimer65000:
-	mapannounce 'map_tnm2$, "Lucile: We should stop before Magic Seal reaches the center.", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Lucile: A gente deve detê-lo antes que o Selo Mágico chegue ao centro.", bc_map,0xFFFFFF;
 	end;
 OnTimer95000:
-	mapannounce 'map_tnm2$, "Lucile: The Magic Seal has just started to move again.", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Lucile: O Selo Mágico voltou a se mover.", bc_map,0xFFFFFF;
 	end;
 OnTimer125000:
-	mapannounce 'map_tnm2$, "Lucile: It is coming closer... No... It's too dangerous.", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Lucile: Está chegando perto... Não... É perigoso demais.", bc_map,0xFFFFFF;
 	end;
 OnTimer155000:
-	mapannounce 'map_tnm2$, "Lucile: The Magic Seal is almost approaching the center!!", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Lucile: O Selo Mágico está quase chegando ao centro!!", bc_map,0xFFFFFF;
 	end;
 OnTimer180000:
 	donpcevent instance_npcname("#devil_flamecross") + "::OnStop";
 	end;
 OnTimer185000:
-	mapannounce 'map_tnm2$, "Lucile: We should stop it now!", bc_map,0xFFFFFF;
+	mapannounce 'map_tnm2$, "Lucile: A gente tem que detê-lo agora!", bc_map,0xFFFFFF;
 	end;
 OnTimer191000:
-	npctalk "Thanatos: What are you doing!!! Are you playing a game now?!", 'thanatos$;
-	mapannounce 'map_tnm2$, "Thanatos: What are you doing!!! Are you playing a game now?!", bc_map,0xFF00;
+	npctalk "Thanatos: O que vocês estão fazendo!!! Vocês estão brincando agora?!", 'thanatos$;
+	mapannounce 'map_tnm2$, "Thanatos: O que vocês estão fazendo!!! Vocês estão brincando agora?!", bc_map,0xFF00;
 	end;
 OnTimer193000:
 	specialeffect EF_MAGNUMBREAK,AREA, 'thanatos$;
@@ -1156,16 +1156,16 @@ OnTimer193000:
 		donpcevent instance_npcname("devil_seal_spawn#" + .@direction$[.@i]) + "::OnStop";
 	end;
 OnTimer195000:
-	npctalk "Demon Morocc: Are you going to keep disturbing me!!!", 'demon$;
-	mapannounce 'map_tnm2$, "Demon Morocc: Are you going to keep disturbing me!!!", bc_map,0xFF0000;
+	npctalk "Demônio Morocc: Vocês vão continuar me atrapalhando!!!", 'demon$;
+	mapannounce 'map_tnm2$, "Demônio Morocc: Vocês vão continuar me atrapalhando!!!", bc_map,0xFF0000;
 	end;
 OnTimer198000:
-	npctalk "Demon Morocc: Okay, Let's see who is going to win!!! Come out!", 'demon$;
-	mapannounce 'map_tnm2$, "Demon Morocc: Okay, Let's see who is going to win!!! Come out!", bc_map,0xFF0000;
+	npctalk "Demônio Morocc: Certo, vamos ver quem vai vencer!!! Venham!", 'demon$;
+	mapannounce 'map_tnm2$, "Demônio Morocc: Certo, vamos ver quem vai vencer!!! Venham!", bc_map,0xFF0000;
 	end;
 OnTimer201000:
-	npctalk "Thanatos: It will be the same no matter how many times you try! Give up and go back to demon world!!", 'thanatos$;
-	mapannounce 'map_tnm2$, "Thanatos: It will be the same no matter how many times you try! Give up and go back to demon world!!", bc_map,0xFF00;
+	npctalk "Thanatos: Vai ser igual, não importa quantas vezes você tente! Desista e volte para o mundo dos demônios!!", 'thanatos$;
+	mapannounce 'map_tnm2$, "Thanatos: Vai ser igual, não importa quantas vezes você tente! Desista e volte para o mundo dos demônios!!", bc_map,0xFF00;
 	initnpctimer;
 	end;
 OnStop:
@@ -1298,12 +1298,12 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer2000:
-	npctalk "Demon Morocc: Kuh ha ha ha ha Pieces of my power! Gather here again!!!", 'demon$;
-	mapannounce 'map_tnm2$, "Demon Morocc: Kuh ha ha ha ha Pieces of my power! Gather here again!!!", bc_map,0xFF0000;
+	npctalk "Demônio Morocc: Kuh ha ha ha ha Pedaços do meu poder! Juntem-se aqui de novo!!!", 'demon$;
+	mapannounce 'map_tnm2$, "Demônio Morocc: Kuh ha ha ha ha Pedaços do meu poder! Juntem-se aqui de novo!!!", bc_map,0xFF0000;
 	end;
 OnTimer4000:
-	npctalk "Thanatos: Stop him! Prevent him from coming closer!!!", 'thanatos$;
-	mapannounce 'map_tnm2$, "Thanatos: Stop him! Prevent him from coming closer!!!", bc_map,0xFF00;
+	npctalk "Thanatos: Detenham ele! Impeçam que ele chegue mais perto!!!", 'thanatos$;
+	mapannounce 'map_tnm2$, "Thanatos: Detenham ele! Impeçam que ele chegue mais perto!!!", bc_map,0xFF00;
 	stopnpctimer;
 	disablenpc();
 	end;
@@ -1327,9 +1327,9 @@ S_Sealdead:
 	.@total_seal = 'seal_dead[DIR_NORTHWEST] + 'seal_dead[DIR_SOUTHWEST] + 'seal_dead[DIR_SOUTHEAST] + 'seal_dead[DIR_NORTHEAST] + 'seal_dead[DIR_NORTH];
 	if (.@total_seal != 5) {
 		if (getarg(0) == DIR_NORTHWEST)
-			mapannounce 'map_tnm2$, "Lucile: It is too early to feel easy! There are Magic Seals that haven't been destroyed yet.", bc_map,0xFF00;
+			mapannounce 'map_tnm2$, "Lucile: É cedo demais para relaxar! Ainda há Selos Mágicos que não foram destruídos.", bc_map,0xFF00;
 		else
-			mapannounce 'map_tnm2$, "There are still Magic Seals to destroy.", bc_map,0xFF00;
+			mapannounce 'map_tnm2$, "Ainda há Selos Mágicos para destruir.", bc_map,0xFF00;
 	}
 	else {
 		donpcevent instance_npcname("#devil_seal_spawn_global") + "::OnStop";
@@ -1339,14 +1339,14 @@ S_Sealdead:
 		donpcevent instance_npcname("devil_seal_spawn#DIR_SOUTHEAST") + "::OnDisable";
 		donpcevent instance_npcname("devil_seal_spawn#DIR_NORTHEAST") + "::OnDisable";
 		donpcevent instance_npcname("devil_seal_spawn#DIR_NORTH") + "::OnDisable";
-		mapannounce 'map_tnm2$, "Demon Morocc: No.. This can't be.. Who the hell.. are you!", bc_map,0xFF0000;
-		npctalk "Demon Morocc: No.. This can't be.. Who the hell.. are you!", 'demon$;
+		mapannounce 'map_tnm2$, "Demônio Morocc: Não.. Não pode ser.. Quem diabos.. é você!", bc_map,0xFF0000;
+		npctalk "Demônio Morocc: Não.. Não pode ser.. Quem diabos.. é você!", 'demon$;
 		initnpctimer;
 	}
 	end;
 OnTimer3000:
-	mapannounce 'map_tnm2$, "Thanatos: It will be the last time to show off!! Good bye!!!", bc_map,0xFF0000;
-	npctalk "Thanatos: It will be the last time to show off!! Good bye!!!", 'thanatos$;
+	mapannounce 'map_tnm2$, "Thanatos: Vai ser a última vez que você se exibe!! Adeus!!!", bc_map,0xFF0000;
+	npctalk "Thanatos: Vai ser a última vez que você se exibe!! Adeus!!!", 'thanatos$;
 	end;
 OnTimer5000:
 	specialeffect EF_LORD,AREA, 'thanatos$;
@@ -1384,27 +1384,27 @@ OnTimer7000:
 			erasequest 7573;// Magic Swordman Thanatos
 		setquest 7574;// Thanatos Tower
 		mes "[Lucile]";
-		mes "I guess the power of Demon Morocc to break the shield of seal has collided with Thanatos.";
+		mes "Acho que o poder do Demônio Morocc de quebrar o escudo do selo colidiu com o Thanatos.";
 		cutin "tnm_lucile01.bmp",2;
 		next;
 		mes "[Lucile]";
-		mes "It has gone too far somewhere in the south";
-		mes "Will you go there?";
+		mes "Foi longe demais, para algum lugar ao sul";
+		mes "Você vai até lá?";
 	}
 	else {
 		mes "[Lucile]";
-		mes "The collision of those two powers is too much to handle.";
-		mes "It could have influenced the south of Rune-Midgarts.";
+		mes "A colisão daqueles dois poderes é forte demais.";
+		mes "Ela pode ter afetado o sul de Rune-Midgard.";
 	}
 	next;
-	if (select( "Follow.", "Stop." ) == 2) {
+	if (select( "Seguir.", "Parar." ) == 2) {
 		mes "[Lucile]";
-		mes "...I guess this is what you are able to?";
+		mes "...Acho que é isso que você consegue?";
 		cutin "tnm_lucile02.bmp",2;
 		close3;
 	}
 	mes "[Lucile]";
-	mes "Good luck.";
+	mes "Boa sorte.";
 	close2;
 	warp 'map_tnm3$,21,171;
 	end;
@@ -1420,7 +1420,7 @@ OnTouch:
 	disablenpc instance_npcname("#tnm3event01");
 	enablenpc instance_npcname("Young Girl#tnm01");
 	sleep2 4000;
-	mapannounce 'map_tnm3$, "Young Girl: Odin Preserve me! A demon!! Help me!", bc_map,0xFF00;
+	mapannounce 'map_tnm3$, "Menina: Que Odin me proteja! Um demônio!! Me ajude!", bc_map,0xFF00;
 	'mob_count = 12;
 	initnpctimer;
 	setpcblock PCBLOCK_NPC, false;
@@ -1462,40 +1462,40 @@ OnTimer9000:
 	if ('devil_tower < 9)
 		end;
 	if ('devil_tower == 9) {
-		mes "[Young Girl]";
-		mes "Why are there demons in the castle?!";
-		mes "HELP ME!";
+		mes "[Menina]";
+		mes "Por que há demônios no castelo?!";
+		mes "ME AJUDE!";
 		close;
 	}
 	if ('devil_tower == 10) {
 		if (is_party_leader() == false) {
-			mes "[Young Girl]";
-			mes "*weeping* The demons are so scary.";
+			mes "[Menina]";
+			mes "*chorando* Os demônios são tão assustadores.";
 			close;
 		}
-		mes "[Young Girl]";
-		mes "Why would demons come all of a sudden,";
-		mes "lots of guards are hurt.";
-		npctalk "Young Girl: Why would demons come all of a sudden, lots of guards are hurt.";
+		mes "[Menina]";
+		mes "Por que os demônios viriam assim de repente,";
+		mes "muitos guardas estão feridos.";
+		npctalk "Menina: Por que os demônios viriam assim de repente, muitos guardas estão feridos.";
 		next;
-		select("Where are they?");
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Where are they?";
-		mes "[Young Girl]";
-		mes "They are in Morocc castle. My father is a knight.";
-		npctalk "They are in Morocc castle. My father is a knight.";
+		select("Onde eles estão?");
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Onde eles estão?";
+		mes "[Menina]";
+		mes "Eles estão no castelo de Morroc. O meu pai é cavaleiro.";
+		npctalk "Eles estão no castelo de Morroc. O meu pai é cavaleiro.";
 		next;
-		mes "[Young Girl]";
-		mes "It seems like something is happening, I hear strange noises downstairs.";
-		npctalk "Young Girl: It seems like something is happening, I hear strange noises downstairs.";
+		mes "[Menina]";
+		mes "Parece que tem alguma coisa acontecendo, eu ouço barulhos estranhos lá embaixo.";
+		npctalk "Menina: Parece que tem alguma coisa acontecendo, eu ouço barulhos estranhos lá embaixo.";
 		next;
-		mes "[Young Girl]";
-		mes "I saw some guys in black entering. What is going on in the castle?";
-		npctalk "Young Girl: I saw some guys in black entering. What is going on in the castle?";
+		mes "[Menina]";
+		mes "Eu vi uns caras de preto entrando. O que está acontecendo no castelo?";
+		npctalk "Menina: Eu vi uns caras de preto entrando. O que está acontecendo no castelo?";
 		next;
-		mes "[Young Girl]";
-		mes "Papa.. Papa please be safe. *sob*";
-		mes "Please come with me through the passage behind that shelf!";
-		npctalk "Young Girl: Please come with me through the passage behind that shelf!";
+		mes "[Menina]";
+		mes "Papai.. Papai, fique bem, por favor. *soluço*";
+		mes "Por favor, venha comigo pela passagem atrás daquela estante!";
+		npctalk "Menina: Por favor, venha comigo pela passagem atrás daquela estante!";
 		close2;
 		if (is_party_leader() == true && 'devil_tower == 10) {
 			enablenpc instance_npcname("#tnm3gate01");
@@ -1505,9 +1505,9 @@ OnTimer9000:
 		end;
 	}
 	if ('devil_tower == 11) {
-		mes "[Young Girl]";
-		mes "Behind that shelf is a secret passage to the basement!";
-		mes "Please come with me to make sure my Papa is safe.";
+		mes "[Menina]";
+		mes "Atrás daquela estante tem uma passagem secreta para o subsolo!";
+		mes "Por favor, venha comigo garantir que o meu Papai está bem.";
 		close;
 	}
 	end;
@@ -1516,7 +1516,7 @@ OnMobDead:
 	'mob_count--;
 	if ('mob_count == 0) {
 		'devil_tower = 10;
-		npctalk "Young Girl: Thank you for saving me... but why is there a demon?";
+		npctalk "Menina: Obrigada por me salvar... mas por que tem um demônio aqui?";
 	}
 	end;
 }
@@ -1531,7 +1531,7 @@ OnTouch:
 		end;
 	disablenpc instance_npcname("#tnm3event02ect");
 	enablenpc instance_npcname("Young Girl#tnm02");
-	npctalk "Young Girl: Look! More demons, they will overwhelm the castle soon!", instance_npcname("Young Girl#tnm02");
+	npctalk "Menina: Olhe! Mais demônios, eles vão tomar o castelo logo!", instance_npcname("Young Girl#tnm02");
 	'mob_count = 18;
 	initnpctimer;
 	end;
@@ -1573,10 +1573,10 @@ OnTimer7000:
 OnMobDead:
 	'mob_count--;
 	if ('mob_count == 0) {
-		mapannounce 'map_tnm3$, "Young Girl: The way underground is along this aisle!", bc_map,0xFF00;
+		mapannounce 'map_tnm3$, "Menina: O caminho para o subsolo é por este corredor!", bc_map,0xFF00;
 		disablenpc instance_npcname("Young Girl#tnm02");
 		enablenpc instance_npcname("Young Girl#tnm03");
-		npctalk "Young Girl: The way underground is along this aisle!", instance_npcname("Young Girl#tnm03");
+		npctalk "Menina: O caminho para o subsolo é por este corredor!", instance_npcname("Young Girl#tnm03");
 		enablenpc instance_npcname("#tnm3gate02");
 		enablenpc instance_npcname("Evil Shadow#tnm3mob01");
 	}
@@ -1584,11 +1584,11 @@ OnMobDead:
 }
 
 1@tnm3,128,164,3	script	Young Girl#tnm03	4_F_DST_CHILD,{
-	mes "[Young Girl]";
-	mes "From here.. I do not know well...";
-	mes "I see so many stairs...";
-	mes "See there are so many demons. My father will be in a danger!";
-	mes "Please save him.";
+	mes "[Menina]";
+	mes "Daqui em diante.. eu não sei bem...";
+	mes "Eu vejo tanta escada...";
+	mes "Olhe quantos demônios. O meu pai vai estar em perigo!";
+	mes "Por favor, salve ele.";
 	close;
 }
 
@@ -1602,11 +1602,11 @@ OnTouch_:
 		'devil_tower = 12;
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
-		npctalk "Evil Shadow: I thought I smelled rats sneaking in here. I was right!!";
+		npctalk "Sombra Maligna: Eu achei que tinha sentido cheiro de rato se esgueirando por aqui. Eu estava certo!!";
 		sleep2 3000;
-		npctalk "Evil Shadow: You will rue your curiosity and interference. Time to feed!";
+		npctalk "Sombra Maligna: Vocês vão lamentar a curiosidade e a intromissão. Hora de comer!";
 		sleep2 3000;
-		npctalk "Evil Shadow: I summon the Darkness!!";
+		npctalk "Sombra Maligna: Eu invoco a Escuridão!!";
 		disablenpc instance_npcname("Evil Shadow#tnm3mob01");
 		donpcevent instance_npcname("Evil Shadow kill#tnm3mob01") + "::OnSummon";
 		setpcblock PCBLOCK_NPC, false;
@@ -1654,11 +1654,11 @@ OnTouch_:// possibility to skip this step
 		'shade = 1;
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
-		npctalk "Demonic Shade: So you are the trouble makers!";
+		npctalk "Vulto Demoníaco: Então vocês são os encrenqueiros!";
 		sleep2 2000;
-		npctalk "Demonic Shade: Tsk, You couldn't even manage to protect..?.whatever.. you will all die here.";
+		npctalk "Vulto Demoníaco: Tsc, vocês nem conseguiram proteger..?.tanto faz.. vocês todos vão morrer aqui.";
 		sleep2 3000;
-		npctalk "Demonic Shade: The eternal truth is I will turn your deaths into the Demon's life with your hearts' blood!!!";
+		npctalk "Vulto Demoníaco: A verdade eterna é que eu vou transformar a morte de vocês na vida do Demônio, com o sangue dos seus corações!!!";
 		disablenpc instance_npcname("Demonic Shade#mobmaster");
 		donpcevent instance_npcname("#mobmaster_kill") + "::OnSummon";
 		setpcblock PCBLOCK_NPC, false;
@@ -1715,8 +1715,8 @@ OnMobDead:
 }
 
 1@tnm3,93,52,4	script	Morocc Lord Knight#mocl	1_M_MOC_LORD,{
-	mes "[Morocc Lord Knight]";
-	mes "You were the rats who were sneaking around here!";
+	mes "[Cavaleiro Sagrado de Morroc]";
+	mes "Eram vocês os ratos que estavam se esgueirando por aqui!";
 	close;
 }
 
@@ -1727,7 +1727,7 @@ OnMobDead:
 		end;
 	}
 	mes "[Loki]";
-	mes "You have no power here.";
+	mes "Você não tem poder aqui.";
 	close;
 }
 
@@ -1739,49 +1739,49 @@ OnStart:
 	enablenpc instance_npcname("#morocc_lord_talk");
 	'Morocc$ = instance_npcname("Morocc Lord Knight#mocl");
 	'loki$ = instance_npcname("Loki#tnmloki01");
-	npctalk "Morocc Lord Knight: So.. the rat was an assassin? You came here to die?", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Então.. o rato era um assassino? Você veio aqui para morrer?", 'Morocc$;
 	initnpctimer;
 	end;
 OnTimer3000:
-	npctalk "Loki: What will you accomplish by waking the Demon in the Wall?", 'loki$;
+	npctalk "Loki: O que você vai ganhar acordando o Demônio da Muralha?", 'loki$;
 	end;
 OnTimer6000:
-	npctalk "Loki: My mission brought me here to bury it again.", 'loki$;
+	npctalk "Loki: A minha missão me trouxe aqui para enterrá-lo de novo.", 'loki$;
 	end;
 OnTimer9000:
-	npctalk "Morocc Lord Knight: Really.. the Assassin guild who I thought was on a mission to balance power in the world.", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Sério.. o Sindicato dos Assassinos, que eu achava que tinha a missão de equilibrar o poder no mundo.", 'Morocc$;
 	end;
 OnTimer12000:
-	npctalk "Morocc Lord Knight: Resurrecting the demon would bring balance! Even the mightiest become slaves to a god..", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Ressuscitar o demônio traria equilíbrio! Até os mais poderosos viram escravos de um deus..", 'Morocc$;
 	end;
 OnTimer15000:
-	npctalk "Morocc Lord Knight: The gods have their own plans. Do you know what the gods plan for you or I?", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Os deuses têm os planos deles. Você sabe o que os deuses planejam para você ou para mim?", 'Morocc$;
 	end;
 OnTimer18000:
-	npctalk "Morocc Lord Knight: They want this world to only be in their image. Where do we fit into that?!", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Eles querem que este mundo seja só à imagem deles. Onde é que a gente se encaixa nisso?!", 'Morocc$;
 	end;
 OnTimer20000:
-	npctalk "Loki: Shut up!", 'loki$;
+	npctalk "Loki: Cale a boca!", 'loki$;
 	end;
 OnTimer22000:
-	npctalk "Loki: I do not care about gods or demons or the plans that they have made. The only thing that matters is kill you.", 'loki$;
+	npctalk "Loki: Eu não me importo com deuses, com demônios ou com os planos que eles fizeram. A única coisa que importa é matar você.", 'loki$;
 	end;
 OnTimer25000:
-	npctalk "Loki: That is my mission!", 'loki$;
+	npctalk "Loki: É essa a minha missão!", 'loki$;
 	end;
 OnTimer28000:
-	npctalk "Morocc Lord Knight: So all you want is to finish your damn mission?..", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Então tudo o que você quer é cumprir a sua maldita missão?..", 'Morocc$;
 	end;
 OnTimer31000:
-	npctalk "Loki: *Grins* Of course!!", 'loki$;
+	npctalk "Loki: *Sorri* Claro que sim!!", 'loki$;
 	specialeffect EF_BEGINSPELL3,AREA, 'loki$;
 	end;
 OnTimer33000:
-	npctalk "Loki: Mind blaster-!!!", 'loki$;
+	npctalk "Loki: Mind Blaster-!!!", 'loki$;
 	end;
 OnTimer34000:
 	enablenpc instance_npcname("Young Girl#tnm04");
-	npctalk "Young Girl: No..!! Don't hurt my Papa!!!", instance_npcname("Young Girl#tnm04");
+	npctalk "Menina: Não..!! Não machuque o meu Papai!!!", instance_npcname("Young Girl#tnm04");
 	specialeffect EF_HIT3,AREA, instance_npcname("Young Girl#tnm04");
 	end;
 OnTimer34500:
@@ -1794,27 +1794,27 @@ OnTimer36500:
 	npctalk "!!!", 'loki$;
 	end;
 OnTimer38500:
-	npctalk "Morocc Lord Knight: Oh no.. They should have sent better than you, Mr. Assassin, for this mission.", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Ah, não.. Eles deviam ter mandado alguém melhor que você para esta missão, Sr. Assassino.", 'Morocc$;
 	end;
 OnTimer41500:
-	npctalk "Young Girl: Something is wrong....", instance_npcname("Young Girl#tnm04");
+	npctalk "Menina: Tem alguma coisa errada....", instance_npcname("Young Girl#tnm04");
 	end;
 OnTimer44500:
-	npctalk "Young Girl: My Papa would never act this way.. Ugh..", instance_npcname("Young Girl#tnm04");
+	npctalk "Menina: O meu Papai nunca agiria assim.. Ugh..", instance_npcname("Young Girl#tnm04");
 	end;
 OnTimer47500:
-	npctalk "Morocc Lord Knight: Human.. To do such a stupid thing.. a sacrifice.", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Humano.. Fazer uma bobagem dessas.. um sacrifício.", 'Morocc$;
 	end;
 OnTimer50500:
-	npctalk "Morocc Lord Knight: You know, the truth is, that it is useless.", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Sabe, a verdade é que não adianta nada.", 'Morocc$;
 	end;
 OnTimer53500:
-	npctalk "Morocc Lord Knight: Gwuaaa hahahaha. You stupid humans I will kill you all as sacrifices for the demon!!", 'Morocc$;
+	npctalk "Cavaleiro Sagrado de Morroc: Gwuaaa hahahaha. Seus humanos idiotas, eu vou matar vocês todos como sacrifício para o demônio!!", 'Morocc$;
 	specialeffect EF_COUPLECASTING,AREA, 'Morocc$;
 	specialeffect EF_VOLCANO,AREA, 'Morocc$;
 	end;
 OnTimer54500:
-	npctalk "Loki:... tsk! useless....!", 'loki$;
+	npctalk "Loki:... tsc! inútil....!", 'loki$;
 	end;
 OnTimer55500:
 	enablenpc instance_npcname("Loki#tnmloki02");
@@ -1833,39 +1833,39 @@ OnTimer55500:
 		end;
 	if (is_party_leader() == false) {
 		mes "[Loki]";
-		mes "I am talking to your boss.";
+		mes "Eu estou falando com o seu chefe.";
 		close;
 	}
 	if (getmercinfo(0) > 0) {
 		mes "[Loki]";
-		mes "...embarrassing.";
-		mes "You should ^4d4dffTerminate the mercenary contract^000000, if you want to help me on this mission.";
+		mes "...que constrangedor.";
+		mes "Você precisa ^4d4dffencerrar o contrato de mercenário^000000 se quiser me ajudar nesta missão.";
 		close;
 	}
 	mes "[Loki]";
-	mes "Where did you come from?";
-	mes "I may need help here.";
-	npctalk "Loki: Where did you come from? I may need help here.", instance_npcname("Loki#tnmloki02");
+	mes "De onde você veio?";
+	mes "Eu posso precisar de ajuda aqui.";
+	npctalk "Loki: De onde você veio? Eu posso precisar de ajuda aqui.", instance_npcname("Loki#tnmloki02");
 	next;
 	mes "[Loki]";
-	mes "The Lord Knight is no longer human. I have to send him to his eternity for his demonic followings.";
-	npctalk "Loki: The Lord Knight is no longer human. I have to send him to his eternity.", instance_npcname("Loki#tnmloki02");
+	mes "O Cavaleiro Sagrado não é mais humano. Eu tenho que mandá-lo para a eternidade por seguir os demônios.";
+	npctalk "Loki: O Cavaleiro Sagrado não é mais humano. Eu tenho que mandá-lo para a eternidade.", instance_npcname("Loki#tnmloki02");
 	next;
 	mes "[Loki]";
-	mes "^4d4dffThe ones who are infernally blessed by demons are invincible. We can sever the blessing with Mind Blaster.^000000";
-	npctalk "Loki: The ones who are infernally blessed by demons are invincible. We can sever the blessing with Mind Blaster.", instance_npcname("Loki#tnmloki02");
+	mes "^4d4dffOs que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster.^000000";
+	npctalk "Loki: Os que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster.", instance_npcname("Loki#tnmloki02");
 	next;
 	mes "[Loki]";
-	mes "You will be in charge of activating Mind Blaster.";
-	npctalk "Loki: You will be in charge of activating Mind Blaster.", instance_npcname("Loki#tnmloki02");
+	mes "Você vai ficar encarregado de ativar o Mind Blaster.";
+	npctalk "Loki: Você vai ficar encarregado de ativar o Mind Blaster.", instance_npcname("Loki#tnmloki02");
 	next;
 	if (is_party_leader() == true && 'devil_tower == 13) {
 		disablenpc instance_npcname("Loki#tnmloki02");
-		mes "^4d4dffLoki, Guillotine Cross of the Assassin Guild, has joined your party.";
-		mes "We have to get rid of the demonic Lord Knight by Mind Blasting him with Loki's skill.^000000";
+		mes "^4d4dffLoki, Cruz Justiceira do Sindicato dos Assassinos, entrou no seu grupo.";
+		mes "Nós temos que acabar com o Cavaleiro Sagrado demoníaco usando o Mind Blaster com a habilidade do Loki.^000000";
 		'devil_tower = 14;
 		mercenary_create 2937,1800000;// M_LOKI
-		mapannounce 'map_tnm3$, "Demon Worshipper's Voice: Such rubbish! Where did you hide yourself?", bc_map,0xFF00;
+		mapannounce 'map_tnm3$, "Voz do Adorador de Demônios: Que baboseira! Onde você se escondeu?", bc_map,0xFF00;
 		initnpctimer;
 	}
 	close;
@@ -1875,7 +1875,7 @@ OnTimer500:
 	'boss_id = $@mobid[0];
 	end;
 OnTimer2000:
-	mapannounce 'map_tnm3$, "Demon Worshipper's Voice: You will all be sacrificed to awaken the Demon!!!", bc_map,0xFF00;
+	mapannounce 'map_tnm3$, "Voz do Adorador de Demônios: Vocês todos vão ser sacrificados para despertar o Demônio!!!", bc_map,0xFF00;
 	end;
 OnTimer12000:
 	donpcevent instance_npcname("#boss_skills_timer") + "::OnStart";
@@ -2004,7 +2004,7 @@ OnBossDead:
 	killmonster 'map_tnm3$, 'label$;
 	'x_boss = 'y_boss = 'boss_id = 0;
 	'label$ = "";
-	mapannounce 'map_tnm3$, "Demon Worshipper's Voice: NO it is impossible. It cannot be.. This force.. power.. you.. may..be you are..", bc_map,0xFF0000;
+	mapannounce 'map_tnm3$, "Voz do Adorador de Demônios: NÃO, é impossível. Não pode ser.. Esta força.. este poder.. você.. talvez.. você seja..", bc_map,0xFF0000;
 	sleep2 1000;
 	warpparty 'map_tnm3$,71,70, getcharid(1), 'map_tnm3$,1,1;
 	enablenpc instance_npcname("Loki#tnmloki03");
@@ -2088,35 +2088,35 @@ OnBossDead:
 		end;
 	if (isbegin_quest(7576) == 0) {
 		mes "[Loki]";
-		mes ".. annoying";
-		mes "The demon was destroyed before the resurrection ceremony was completed.";
-		mes "Things will be fine for awhile.";
+		mes ".. irritante";
+		mes "O demônio foi destruído antes de a cerimônia de ressurreição ser concluída.";
+		mes "As coisas vão ficar bem por um tempo.";
 		setquest 7576;// Morocc castle seal
 		next;
-		mes "I have gained unexpected information during my exploration of the Tower.";
+		mes "Eu obtive informação inesperada durante a minha exploração da Torre.";
 		next;
 		mes "[Loki]";
-		mes "I will remain apart from my conscience for a bit longer";
-		mes "someday I'll let myself feel again, and today will occupy my thoughts..";
+		mes "Eu vou continuar afastado da minha consciência por mais um tempo";
+		mes "um dia eu deixo eu mesmo voltar a sentir, e o dia de hoje vai ocupar os meus pensamentos..";
 		close;
 	}
 	mes "[Loki]";
-	mes "Interesting.. there is a daughter..";
-	mes "What should be done about it?";
-	mes "I am not sure of what my next move is to be..";
+	mes "Interessante.. há uma filha..";
+	mes "O que se deve fazer a respeito?";
+	mes "Eu não tenho certeza de qual vai ser o meu próximo passo..";
 	next;
 	mes "[Loki]";
-	mes "But no matter, you obviously shouldn't be here, now.";
-	mes "Will stay here any longer?";
-	mes "I can send you back where and when you belong.";
+	mes "Mas não importa, é óbvio que você não deveria estar aqui, agora.";
+	mes "Vai ficar mais tempo aqui?";
+	mes "Eu posso mandar você de volta ao lugar e ao tempo a que pertence.";
 	next;
-	if (select( "Get out of here.", "Take a look around." ) == 2) {
+	if (select( "Sair daqui.", "Dar uma olhada por aí." ) == 2) {
 		mes "[Loki]";
-		mes "It is unwise to linger where time is distorted.";
+		mes "Não é sensato ficar onde o tempo está distorcido.";
 		close;
 	}
 	mes "[Loki]";
-	mes "Perhaps, our missions will ally us again in the future..";
+	mes "Talvez as nossas missões nos unam de novo no futuro..";
 	close2;
 	warp "dali02",134,112;
 	end;

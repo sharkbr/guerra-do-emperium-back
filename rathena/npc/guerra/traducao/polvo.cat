@@ -225,10 +225,10 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#74 (mapannounce)
 - " party's "
-+ ""
++ " - o aventureiro "
 #: npc/re/instances/OctopusCave.txt#75 (mapannounce)
 - " member started to hunt the Octopus!"
-+ ""
++ " começou a caçar o Polvo!"
 #: npc/re/instances/OctopusCave.txt#76 (mapannounce)
 - "0x00ff99"
 + ""
@@ -270,7 +270,7 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#106 (mapannounce)
 - "Pervert Octopus : How dare you to come inside of my place!"
-+ ""
++ "Polvo Pervertido : Como ousam entrar no meu covil!"
 #: npc/re/instances/OctopusCave.txt#107 (mapannounce)
 - "0xFFFF00"
 + ""
@@ -279,7 +279,7 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#109 (mapannounce)
 - "Pervert Octopus : But I blocked all the cave gates!! There is nothing you can do!"
-+ ""
++ "Polvo Pervertido : Mas eu bloqueei todos os portões da caverna!! Não há nada que vocês possam fazer!"
 #: npc/re/instances/OctopusCave.txt#110 (mapannounce)
 - "0xFFFF00"
 + ""
@@ -288,19 +288,19 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#112 (mapannounce)
 - "Pervert Octopus : My juniors~ There is your toy! Play with it~ kakaka"
-+ ""
++ "Polvo Pervertido : Meus caçulas~ Ali está o brinquedo de vocês! Brinquem com ele~ kakaka"
 #: npc/re/instances/OctopusCave.txt#113 (mapannounce)
 - "0xFFFF00"
 + ""
 #: npc/re/instances/OctopusCave.txt#146 (mapannounce)
 - "Hey you!! I'll personally take care of you all! Let's bring it on!"
-+ ""
++ "Ei, vocês!! Eu mesmo vou cuidar de todos vocês! Venham pra cima!"
 #: npc/re/instances/OctopusCave.txt#147 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#149 (mapannounce)
 - "Arrgg!! That hurts!!! I need another strategy..."
-+ ""
++ "Arrgg!! Isso doeu!!! Preciso de outra estratégia..."
 #: npc/re/instances/OctopusCave.txt#150 (mapannounce)
 - "0x00ff99"
 + ""
@@ -309,61 +309,61 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#203 (mapannounce)
 - "Come out all my babies and help me out!"
-+ ""
++ "Venham todos, meus bebês, e me ajudem!"
 #: npc/re/instances/OctopusCave.txt#204 (mapannounce)
 - "0xFFFF00"
 + ""
 #: npc/re/instances/OctopusCave.txt#206 (mapannounce)
 - "Let's give them a lesson!"
-+ ""
++ "Vamos dar uma lição neles!"
 #: npc/re/instances/OctopusCave.txt#207 (mapannounce)
 - "0xFFFF00"
 + ""
 #: npc/re/instances/OctopusCave.txt#222 (mapannounce)
 - "You hurt my babies!!? You'll have to pay for this!!!"
-+ ""
++ "Vocês machucaram os meus bebês!!? Vão pagar por isso!!!"
 #: npc/re/instances/OctopusCave.txt#223 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#294 (mapannounce)
 - "Don't let them break through, stop them!!!"
-+ ""
++ "Não deixem que eles passem, detenham-nos!!!"
 #: npc/re/instances/OctopusCave.txt#295 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#303 (mapannounce)
 - "Headquarters are empty, GO!!!"
-+ ""
++ "O quartel-general está vazio, VÃO!!!"
 #: npc/re/instances/OctopusCave.txt#304 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#308 (mapannounce)
 - "Run, RUN! Go, GO!!!"
-+ ""
++ "Corram, CORRAM! Vão, VÃO!!!"
 #: npc/re/instances/OctopusCave.txt#309 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#312 (mapannounce)
 - "No time, come out fast!"
-+ ""
++ "Não há tempo, saiam rápido!"
 #: npc/re/instances/OctopusCave.txt#313 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#316 (mapannounce)
 - "Let's take over the headquarters!!!"
-+ ""
++ "Vamos tomar o quartel-general!!!"
 #: npc/re/instances/OctopusCave.txt#317 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#320 (mapannounce)
 - "There is no time to lose, hurry up!!!"
-+ ""
++ "Não há tempo a perder, depressa!!!"
 #: npc/re/instances/OctopusCave.txt#321 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#332 (mapannounce)
 - "Kakaka! Suprised??!!"
-+ ""
++ "Kakaka! Surpresos??!!"
 #: npc/re/instances/OctopusCave.txt#333 (mapannounce)
 - "0x00ff99"
 + ""
@@ -372,13 +372,13 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#336 (mapannounce)
 - "... Looks like we have a spy among us."
-+ ""
++ "... Parece que temos um espião entre nós."
 #: npc/re/instances/OctopusCave.txt#337 (mapannounce)
 - "0x00ff99"
 + ""
 #: npc/re/instances/OctopusCave.txt#356 (mapannounce)
 - "What a successful pincer tactic! The enemy is strong! Let's not lose yourselves! Anyway, where are all the mercenaries??"
-+ ""
++ "Que manobra de pinça bem-sucedida! O inimigo é forte! Não percam a cabeça! Aliás, cadê todos os mercenários??"
 #: npc/re/instances/OctopusCave.txt#357 (mapannounce)
 - "0x00ff99"
 + ""
@@ -387,7 +387,7 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#360 (mapannounce)
 - "Mercenary Squid : eh...eh... wrong direction. No enemies are shown in this direction."
-+ ""
++ "Lula Mercenária : eh...eh... direção errada. Nenhum inimigo à vista por aqui."
 #: npc/re/instances/OctopusCave.txt#361 (mapannounce)
 - "0x00ff99"
 + ""
@@ -396,7 +396,7 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#363 (mapannounce)
 - "Pervert Octopus : Fools! Can't you read the map??!! Useless!!"
-+ ""
++ "Polvo Pervertido : Idiotas! Vocês não sabem ler um mapa??!! Inúteis!!"
 #: npc/re/instances/OctopusCave.txt#364 (mapannounce)
 - "0x00ff99"
 + ""
@@ -405,25 +405,25 @@
 + ""
 #: npc/re/instances/OctopusCave.txt#398 (mapannounce)
 - "Disgusting Octopus : "
-+ ""
++ "Polvo Nojento : "
 #: npc/re/instances/OctopusCave.txt#399 (mapannounce)
 - "0xFFFF00"
 + ""
 #: npc/re/instances/OctopusCave.txt#403 (mapannounce)
 - "Disgusting Octopus : That's it for the today! Next time, I will play with you badly!"
-+ ""
++ "Polvo Nojento : Por hoje é só! Da próxima vez eu brinco feio com vocês!"
 #: npc/re/instances/OctopusCave.txt#404 (mapannounce)
 - "0xFFFF00"
 + ""
 #: npc/re/instances/OctopusCave.txt#417 (mapannounce)
 - "Disgusting Octopus : Do you know how many legs octopus have? It doesn't matter, I have unlimited legs!!"
-+ ""
++ "Polvo Nojento : Sabem quantas pernas um polvo tem? Não importa, as minhas são infinitas!!"
 #: npc/re/instances/OctopusCave.txt#418 (mapannounce)
 - "0xFFFF00"
 + ""
 #: npc/re/instances/OctopusCave.txt#422 (mapannounce)
 - "Disgusting Octopus : I...cannot..hold anymore, my babies~ please come out and fight!"
-+ ""
++ "Polvo Nojento : Eu...não...aguento mais, meus bebês~ venham lutar, por favor!"
 #: npc/re/instances/OctopusCave.txt#423 (mapannounce)
 - "0xFFFF00"
 + ""

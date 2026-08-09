@@ -9,7 +9,7 @@
 
 dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 	if (BaseLevel < 145) {
-		mes "- You may proceed after reaching level 145 or over -";
+		mes "- Você pode prosseguir depois de chegar ao nível 145 ou mais -";
 		close;
 	}
 	switch( checkquest(9336,PLAYTIME) ) {
@@ -17,75 +17,75 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 		switch( isbegin_quest(9335) ) {
 		case 0:// First time doing instance
 			mes "[Professor Bernhard]";
-			mes "I would say I am Professor Bernhard, the best weapons researcher in Schwarzwald.";
+			mes "Eu diria que sou o Professor Bernhard, o melhor pesquisador de armas de Schwarzwald.";
 			next;
 			mes "[Professor Bernhard]";
-			mes "After endless research I have created various weapons, but I felt something was missing so I found the ancient texts.";
-			mes "I found out about the Dimensional Device during my research.";
+			mes "Depois de uma pesquisa sem fim eu criei várias armas, mas eu sentia que faltava alguma coisa, e então achei os textos antigos.";
+			mes "Foi durante a minha pesquisa que eu descobri o Dispositivo Dimensional.";
 			next;
 			mes "[Professor Bernhard]";
-			mes "I also realized that relics from the glorious past were also needed to create more powerful and superior weapons.";
-			mes "That is why..I need you..";
+			mes "Também percebi que relíquias do passado glorioso eram necessárias para criar armas mais poderosas e superiores.";
+			mes "É por isso que..eu preciso de você..";
 			next;
 			mes "[Professor Bernhard]";
 			if (is_party_leader() == false) {
-				mes "A longing for accomplishing a powerful weapon as a genuine professor!";
-				mes "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah.";
+				mes "O desejo de concluir uma arma poderosa, como um professor de verdade!";
+				mes "Para conseguir isso, nós precisamos de fragmentos dos Gigantes que apareceram na antiga batalha de Fenrir e Sarah.";
 				next;
 				mes "[Professor Bernhard]";
-				mes "I cannot leave my post.";
-				mes "I need a warrior who can bring me the shards instead..";
-				mes "You seem capable.";
+				mes "Eu não posso deixar o meu posto.";
+				mes "Eu preciso de um guerreiro que traga os fragmentos no meu lugar..";
+				mes "Você parece capaz.";
 				next;
 				mes "[Professor Bernhard]";
-				mes "I will continue discussing this further with your party leader rather than with you.";
+				mes "Eu vou tratar disso com o líder do seu grupo, e não com você.";
 				close;
 			}
-			mes "I need a warrior who can bring me the shard of Gigantes instead..";
-			mes "You seem capable.";
+			mes "Eu preciso de um guerreiro que traga o fragmento dos Gigantes no meu lugar..";
+			mes "Você parece capaz.";
 			next;
 			mes "[Professor Bernhard]";
-			mes "What do you think?";
-			mes "Would you go to the past and bring me back the shards of Gigantes?";
-			mes "I will make sure to compensate you sufficiently.";
+			mes "O que você acha?";
+			mes "Você iria ao passado e me traria os fragmentos dos Gigantes?";
+			mes "Eu garanto que vou recompensar você o bastante.";
 			next;
-			if (select( "No", "Yes" ) == 1) {
+			if (select( "Não", "Sim" ) == 1) {
 				mes "[Professor Bernhard]";
-				mes "Visit me again if you change your mind.";
+				mes "Volte a me procurar se mudar de ideia.";
 				close;
 			}
 			mes "[Professor Bernhard]";
-			mes "I set the Dimensional Device to Glast Heim of the past, where Fenrir and Sarah once fought.";
-			mes "The operating time isn't long so hurry up and come back.";
+			mes "Eu regulei o Dispositivo Dimensional para a Glast Heim do passado, onde Fenrir e Sarah um dia lutaram.";
+			mes "O tempo de funcionamento não é longo, então se apresse e volte logo.";
 			instance_create("Sarah vs Fenrir");
 			close;
 		case 1:
 			mes "[Professor Bernhard]";
-			mes "Did you successfully bring back the shards of Gigantes?";
-			mes "You probably faced a lot of danger so thank you for the effort.";
+			mes "Você conseguiu trazer os fragmentos dos Gigantes?";
+			mes "Você deve ter enfrentado muito perigo, então obrigado pelo esforço.";
 			next;
 			mes "[Professor Bernhard]";
-			mes "I don't expect to receive the shards for nothing when you have risked your life for them!";
+			mes "Eu não espero receber os fragmentos de graça, depois de você ter arriscado a sua vida por eles!";
 			if (sarah_fenrir == 0) {
-				mes "I will give you a useful looking earring from the relics I have happened to have obtained during my previous research.";
+				mes "Eu vou lhe dar um brinco de aparência útil, das relíquias que eu obtive numa pesquisa anterior.";
 				next;
-				mes "- The left earring of Sarah -";
-				mes "Usable for Heal 1Lv";
-				mes "- The right earring of Sarah -";
-				mes "Usable for Teleport 1Lv";
+				mes "- O brinco esquerdo da Sarah -";
+				mes "Permite usar Curar Nv.1";
+				mes "- O brinco direito da Sarah -";
+				mes "Permite usar Teleporte Nv.1";
 				next;
-				.@s = select( "The left earring of Sarah", "The right earring of Sarah" ) - 1;
+				.@s = select( "O brinco esquerdo da Sarah", "O brinco direito da Sarah" ) - 1;
 			}
 			mes "[Professor Bernhard]";
-			mes "If you hand the shards of Gigantes to my chief assistant, I will make sure the earrings will be correspondingly great through an enchantment.";
+			mes "Se você entregar os fragmentos dos Gigantes ao meu assistente-chefe, eu garanto que os brincos ficarão à altura com um encantamento.";
 			next;
 			mes "[Professor Bernhard]";
-			mes "The more shards of Gigantes are collected, the better.";
-			mes "However, there isn't a stable supply of energy needed to work the Dimensional Device.";
+			mes "Quanto mais fragmentos dos Gigantes forem juntados, melhor.";
+			mes "Só que não há um fornecimento estável da energia necessária para o Dispositivo Dimensional funcionar.";
 			next;
 			mes "[Professor Bernhard]";
-			mes "Come back and find me after one week has passed for the supply of Dimensional Device energy.";
-			mes "I need you to find shards of Gigantes again.";
+			mes "Volte a me procurar depois de uma semana, pelo fornecimento de energia do Dispositivo Dimensional.";
+			mes "Eu preciso que você ache fragmentos dos Gigantes de novo.";
 			erasequest 9335;// Search for shards of Gigantes
 			setquest 9336;// Go back to Professor Bernhard
 			if (isbegin_quest(9337) > 0)
@@ -101,35 +101,35 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 	case 0:
 	case 1:
 		mes "[Professor Bernhard]";
-		mes "We lack the shards of Gigantes in order to make powerful weapons.";
-		mes "Because a lot of energy is needed to open a dimension device, come back and find me when the energy has accumulated.";
+		mes "Faltam fragmentos dos Gigantes para fazer armas poderosas.";
+		mes "Como é preciso muita energia para abrir um dispositivo dimensional, volte a me procurar quando a energia tiver se acumulado.";
 		close;
 	case 2:
 		mes "[Professor Bernhard]";
-		mes "I have been waiting.";
-		mes "How is everything going?";
-		mes "While you were gone I have succeeded in accumulating dimensional energy.";
-		mes "We can open the dimension device again.";
+		mes "Eu estava esperando.";
+		mes "Como vão as coisas?";
+		mes "Enquanto você esteve fora, eu consegui acumular energia dimensional.";
+		mes "Nós podemos abrir o dispositivo dimensional de novo.";
 		next;
 		mes "[Professor Bernhard]";
-		mes "A longing for accomplishing a powerful weapon as a genuine professor!";
-		mes "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah.";
+		mes "O desejo de concluir uma arma poderosa, como um professor de verdade!";
+		mes "Para conseguir isso, nós precisamos de fragmentos dos Gigantes que apareceram na antiga batalha de Fenrir e Sarah.";
 		next;
 		mes "[Professor Bernhard]";
-		mes "Because I cannot leave my post, ";
-		mes "I need a warrior who can bring me the shards instead.";
-		mes "I think you can assist me once again..";
+		mes "Como eu não posso deixar o meu posto, ";
+		mes "eu preciso de um guerreiro que traga os fragmentos no meu lugar.";
+		mes "Eu acho que você pode me ajudar mais uma vez..";
 		next;
 		mes "[Professor Bernhard]";
-		mes "There, all the preparations are finished.";
-		mes "Can you go back in time again and bring me the shards of Gigantes?";
-		mes "I will make sure to compensate you sufficiently.";
+		mes "Pronto, todos os preparativos estão concluídos.";
+		mes "Você pode voltar no tempo de novo e me trazer os fragmentos dos Gigantes?";
+		mes "Eu garanto que vou recompensar você o bastante.";
 		if (is_party_leader() == true) {
 			next;
-			if (select( "No", "Yes" ) == 1) {
+			if (select( "Não", "Sim" ) == 1) {
 				mes "[Professor Bernhard]";
-				mes "I set the Dimensional Device to Glast Heim of the past, where Fenrir and Sarah once were.";
-				mes "It won't last long so hurry up and come back.";
+				mes "Eu regulei o Dispositivo Dimensional para a Glast Heim do passado, onde Fenrir e Sarah um dia estiveram.";
+				mes "Não vai durar muito, então se apresse e volte logo.";
 				close;
 			}
 			instance_create("Sarah vs Fenrir");
@@ -140,8 +140,8 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 
 dali02,99,148,3	script	Dimensional Device#XX1	PORTAL,{
 	if (BaseLevel < 145) {
-		mes "- You must be level 145 or over";
-		mes "It seems entry is possible. -";
+		mes "- Você precisa ser nível 145 ou mais";
+		mes "Parece que dá para entrar. -";
 		close;
 	}
 	switch( checkquest(9336,PLAYTIME) ) {
@@ -149,40 +149,40 @@ dali02,99,148,3	script	Dimensional Device#XX1	PORTAL,{
 		break;
 	case 0:
 	case 1:
-		mes "- The Dimensional Device has closed.";
-		mes "It seems entry is not possible. -";
+		mes "- O Dispositivo Dimensional se fechou.";
+		mes "Parece que não dá para entrar. -";
 		close;
 	case 2:
 		break;
 	}
 	if (isbegin_quest(9335) > 0) {
-		mes "- The Dimensional Device has closed.";
-		mes "It seems entry is not possible. -";
+		mes "- O Dispositivo Dimensional se fechou.";
+		mes "Parece que não dá para entrar. -";
 		close;
 	}
-	if (select( "Do not enter the device.", "Enter the time device" ) == 1) {
+	if (select( "Não entrar no dispositivo.", "Entrar no dispositivo do tempo" ) == 1) {
 		if (getcharid(1) > 0) {
-			mes "- It seems the Dimensional Device ";
-			mes "will contort space time -";
+			mes "- Parece que o Dispositivo Dimensional ";
+			mes "vai distorcer o espaço-tempo -";
 			close;
 		}
-		mes "- There is a damp presence. -";
+		mes "- Há uma presença úmida. -";
 		close;
 	}
 	.@md_name$ = "Sarah vs Fenrir";
 	switch( instance_enter(.@md_name$) ) {
 	case IE_OTHER:
-		mes "An unknown error occurred.";
+		mes "Ocorreu um erro desconhecido.";
 		close;
 	case IE_NOINSTANCE:
-		mes "Memorial Dungeon " + .@md_name$ + " does not exist.";
-		mes "The party leader has not created the Memorial Dungeon.";
+		mes "A masmorra memorial " + .@md_name$ + " não existe.";
+		mes "O líder do grupo não criou a masmorra memorial.";
 		close;
 	case IE_NOMEMBER:
-		mes "Only party members can enter the Memorial Dungeon.";
+		mes "Só membros do grupo podem entrar na masmorra memorial.";
 		close;
 	case IE_OK:
-		mapannounce "dali02", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters Room " + .@md_name$ + "", bc_map,0xFF99,FW_NORMAL,12;
+		mapannounce "dali02", "O aventureiro " + strcharinfo(0) + ", do grupo " + getpartyname( getcharid(1) ) + ", entra na Sala " + .@md_name$ + "", bc_map,0xFF99,FW_NORMAL,12;
 		setquest 9335;// Search for shards of Gigantes
 		if (isbegin_quest(9336) > 0)
 			erasequest 9336;
@@ -195,80 +195,80 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 	if (sarah_fenrir == 0)
 		end;
 	disable_items;
-	mes "[Chief Assistant]";
-	mes "I've heard about you from the professor.";
-	mes "The professor has told me to sufficiently compensate you for risking your life and bringing the shards of Gigantes.";
+	mes "[Assistente-Chefe]";
+	mes "O professor me falou de você.";
+	mes "O professor mandou recompensar você o bastante por arriscar a vida e trazer os fragmentos dos Gigantes.";
 	next;
-	switch( select( "Enchant earring.", "Purchase earring", "Exit conversation" ) ) {
+	switch( select( "Encantar brinco.", "Comprar brinco", "Encerrar a conversa" ) ) {
 	case 1:
-		mes "[Chief Assistant]";
-		mes "Sarah's earrings we have discovered at the archaeological site must certainly have great potential.";
+		mes "[Assistente-Chefe]";
+		mes "Os brincos da Sarah que nós descobrimos no sítio arqueológico devem ter um grande potencial.";
 		next;
-		switch( select( "Enchant Sarah's earrings", "Initialize enchantment on Sarah's earrings", "Exit conversation" ) ) {
+		switch( select( "Encantar os brincos da Sarah", "Zerar o encantamento dos brincos da Sarah", "Encerrar a conversa" ) ) {
 		case 1:
-			mes "[Chief Assistant]";
-			mes "2 enchantments are possible on one earring.";
-			mes "Which earring do you wish to enchant?";
+			mes "[Assistente-Chefe]";
+			mes "São possíveis 2 encantamentos num brinco.";
+			mes "Qual brinco você quer encantar?";
 			next;
-			switch( select( "The left earring of Sarah", "The right earring of Sarah", "Quit" ) ) {
+			switch( select( "O brinco esquerdo da Sarah", "O brinco direito da Sarah", "Desistir" ) ) {
 			case 1:
 				.@sarah_item_id = 28310;
-				.@sarah_earring$ = "left";
+				.@sarah_earring$ = "esquerdo";
 				break;
 			case 2:
 				.@sarah_item_id = 28311;
-				.@sarah_earring$ = "right";
+				.@sarah_earring$ = "direito";
 				break;
 			case 3:
-				mes "[Chief Assistant]";
-				mes "If you want an enchantment ";
-				mes "on Sarah's earrings, ";
-				mes "come and find me again.";
+				mes "[Assistente-Chefe]";
+				mes "Se você quiser um encantamento ";
+				mes "nos brincos da Sarah, ";
+				mes "volte a me procurar.";
 				close;
 			}
-			mes "[Chief Assistant]";
-			mes "You must equip the item to make enchantment possible.";
-			mes "Which column do you wish to enchant?";
+			mes "[Assistente-Chefe]";
+			mes "Você precisa equipar o item para o encantamento ser possível.";
+			mes "Qual coluna você quer encantar?";
 			next;
-			if (select( "Left column", "Right column" ) == 1) {
+			if (select( "Coluna esquerda", "Coluna direita" ) == 1) {
 				.@part = EQI_ACC_L;
-				.@column$ = "left";
+				.@column$ = "esquerdo";
 				.@bonus_size = 4;		// 4 possibilities
 				.@bonus_chance = 20;	// 20% per possibility
 			}
 			else {
 				.@part = EQI_ACC_R;
-				.@column$ = "right";
+				.@column$ = "direito";
 				.@bonus_size = 6;		// 6 possibilities
 				.@bonus_chance = 10;	// 10% per possibility
 			}
 			.@equip_id = getequipid(.@part);
 			if (.@equip_id != .@sarah_item_id) {
-				mes "[Chief Assistant]";
-				mes "If you wish to enchant, you must equip Sarah's " + .@sarah_earring$ + " earring.";
+				mes "[Assistente-Chefe]";
+				mes "Se você quer encantar, precisa equipar o brinco " + .@sarah_earring$ + " da Sarah.";
 				close;
 			}
 			setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 			if (.@card[2] > 0) {// 2 enchants
-				mes "[Chief Assistant]";
-				mes "A fully enchanted earring of Sarah cannot be enchanted any further.";
+				mes "[Assistente-Chefe]";
+				mes "Um brinco da Sarah totalmente encantado não pode ser encantado mais.";
 				close;
 			}
 			if (.@card[3] > 0) {// 1 enchant
-				mes "[Chief Assistant]";
-				mes "Sarah's Earring is currently in a state of enchantment in slot 4.";
+				mes "[Assistente-Chefe]";
+				mes "O Brinco da Sarah está encantado no espaço 4.";
 				.@slot = 3;
 			}
 			else {// none enchant
-				mes "[Chief Assistant]";
-				mes "Sarah's Earring is currently in a state without enchantment.";
+				mes "[Assistente-Chefe]";
+				mes "O Brinco da Sarah está sem encantamento.";
 				.@slot = 4;
 			}
 			next;
-			mes "[Chief Assistant]";
-			mes "Which ability do you want as an enchantment on slot " + .@slot + "?";
+			mes "[Assistente-Chefe]";
+			mes "Qual atributo você quer como encantamento no espaço " + .@slot + "?";
 			next;
-			switch( select( "CRI or Critical", "Expert archer or Bleed", "Conservation or MATK", "Delay Attack or Delay Skill" ) ) {
+			switch( select( "CRI ou Crítico", "Arqueiro Perito ou Sangramento", "Conservação ou MATK", "Atraso de Ataque ou Atraso de Habilidade" ) ) {
 			case 1:
 				setarray .@bonus[0],
 					4863,	// Fatal1
@@ -277,8 +277,8 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4940,	// Critical3
 					4941,	// Critical4
 					4865;	// Fatal3
-				mes "[Chief Assistant]";
-				mes "Selected for CRI or Critical Enchantment slot " + .@slot + ".";
+				mes "[Assistente-Chefe]";
+				mes "Escolhido CRI ou Crítico para o encantamento do espaço " + .@slot + ".";
 				break;
 			case 2:
 				setarray .@bonus[0],
@@ -288,8 +288,8 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4943,	// Dodge2
 					4944,	// Dodge3
 					4834;	// Expert_Archer3
-				mes "[Chief Assistant]";
-				mes "Selected for Expert Archer or Bleed Enchantment slot " + .@slot + ".";
+				mes "[Assistente-Chefe]";
+				mes "Escolhido Arqueiro Perito ou Sangramento para o encantamento do espaço " + .@slot + ".";
 				break;
 			case 3:
 				setarray .@bonus[0],
@@ -299,8 +299,8 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4898,	// Matk4p
 					4947,	// Thrift3
 					4899;	// Matk5p
-				mes "[Chief Assistant]";
-				mes "Selected for Conservation or MATK Enchantment slot " + .@slot + ".";
+				mes "[Assistente-Chefe]";
+				mes "Escolhido Conservação ou MATK para o encantamento do espaço " + .@slot + ".";
 				break;
 			case 4:
 				setarray .@bonus[0],
@@ -310,34 +310,34 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 					4949,	// Skill_Delay2
 					4950,	// Skill_Delay3
 					4873;	// Attack_Delay_3
-				mes "[Chief Assistant]";
-				mes "Selected for Delay Attack or Delay Skill Enchantment slot " + .@slot + ".";
+				mes "[Assistente-Chefe]";
+				mes "Escolhido Atraso de Ataque ou Atraso de Habilidade para o encantamento do espaço " + .@slot + ".";
 				break;
 			}
 			next;
-			mes "[Chief Assistant]";
-			mes "4 shards of Gigantes is required for one enchantment.";
+			mes "[Assistente-Chefe]";
+			mes "São necessários 4 fragmentos dos Gigantes para um encantamento.";
 			next;
-			mes "[Chief Assistant]";
-			mes "Because enchantment is a high risk process, there is risk of Sarah's earring being destroyed.";
-			mes "Do you still want to do it?";
+			mes "[Assistente-Chefe]";
+			mes "Como o encantamento é um processo de alto risco, há o risco de o brinco da Sarah ser destruído.";
+			mes "Você ainda quer fazer?";
 			next;
-			if (select( "No", "Yes" ) == 1) {
-				mes "[Chief Assistant]";
-				mes "Please speak to me again after making a clear decision!";
+			if (select( "Não", "Sim" ) == 1) {
+				mes "[Assistente-Chefe]";
+				mes "Fale comigo de novo depois de tomar uma decisão firme!";
 				close;
 			}
 			if (countitem(6803) < 4) {
-				mes "[Chief Assistant]";
-				mes "There are not enough shards of Gigantes.";
-				mes "4 shards of Gigantes is required to do one enchantment.";
+				mes "[Assistente-Chefe]";
+				mes "Não há fragmentos dos Gigantes suficientes.";
+				mes "São necessários 4 fragmentos dos Gigantes para fazer um encantamento.";
 				close;
 			}
-			mes "[Chief Assistant]";
-			mes "Good. I will start the enchantment!";
-			mes "I wish you luck~!";
+			mes "[Assistente-Chefe]";
+			mes "Ótimo. Eu vou começar o encantamento!";
+			mes "Boa sorte~!";
 			next;
-			mes "[Chief Assistant]";
+			mes "[Assistente-Chefe]";
 			mes "Aahhhh!!";
 			next;
 			progressbar "000000",5;
@@ -355,83 +355,83 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			if (.@i == .@bonus_size) {
 				specialeffect2 EF_CRASHEARTH;
 				specialeffect2 EF_MAXPOWER;
-				mes "[Chief Assistant]";
-				mes "Sadly... it is..";
-				mes "destroyed...";
-				mes "Whew.. ";
-				mes "enchantment is not an easy task..";
+				mes "[Assistente-Chefe]";
+				mes "Infelizmente... ele foi..";
+				mes "destruído...";
+				mes "Ufa.. ";
+				mes "encantar não é tarefa fácil..";
 				close;
 			}
 			.@card[.@slot-1] = .@bonus[.@i];
 			specialeffect2 EF_ANGEL2;
 			getitem2 .@sarah_item_id,1,1,0,0,.@card[0],.@card[1],.@card[2],.@card[3];
-			mes "[Chief Assistant]";
-			mes "Enchantment completed!";
+			mes "[Assistente-Chefe]";
+			mes "Encantamento concluído!";
 			close;
 		case 2:
-			mes "[Chief Assistant]";
-			mes "Which earring do you wish to initialize?";
+			mes "[Assistente-Chefe]";
+			mes "Qual brinco você quer zerar?";
 			next;
-			switch( select( "The left earring of Sarah", "The right earring of Sarah", "Quit" ) ) {
+			switch( select( "O brinco esquerdo da Sarah", "O brinco direito da Sarah", "Desistir" ) ) {
 			case 1:
 				.@sarah_item_id = 28310;
-				.@sarah_earring$ = "left";
+				.@sarah_earring$ = "esquerdo";
 				break;
 			case 2:
 				.@sarah_item_id = 28311;
-				.@sarah_earring$ = "right";
+				.@sarah_earring$ = "direito";
 				break;
 			case 3:
-				mes "[Chief Assistant]";
-				mes "If you want to initialize an enchantment on Sarah's earrings, come and find me again.";
+				mes "[Assistente-Chefe]";
+				mes "Se você quiser zerar um encantamento dos brincos da Sarah, volte a me procurar.";
 				close;
 			}
-			mes "[Chief Assistant]";
-			mes "On Sarah's earring. 1 shard of Gigantes is required to initialize the enchantment..";
+			mes "[Assistente-Chefe]";
+			mes "No brinco da Sarah. É preciso 1 fragmento dos Gigantes para zerar o encantamento..";
 			next;
 			if (countitem(6803) < 1) {
-				mes "[Chief Assistant]";
-				mes "There are not enough shards of Gigantes.";
-				mes "You will need them in order for initialization to take place.";
+				mes "[Assistente-Chefe]";
+				mes "Não há fragmentos dos Gigantes suficientes.";
+				mes "Você vai precisar deles para que o processo aconteça.";
 				close;
 			}
-			mes "[Chief Assistant]";
-			mes "You must equip the item to make initialization possible.";
-			mes "Which column's earring do you wish to initialize?";
+			mes "[Assistente-Chefe]";
+			mes "Você precisa equipar o item para poder zerar.";
+			mes "O brinco de qual coluna você quer zerar?";
 			next;
-			if (select( "Left column", "Right column" ) == 1) {
+			if (select( "Coluna esquerda", "Coluna direita" ) == 1) {
 				.@part = EQI_ACC_L;
-				.@column$ = "left";
+				.@column$ = "esquerdo";
 			}
 			else {
 				.@part = EQI_ACC_R;
-				.@column$ = "right";
+				.@column$ = "direito";
 			}
 			.@equip_id = getequipid(.@part);
 			setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 			if (.@equip_id == -1) {
-				mes "[Chief Assistant]";
-				mes "To initialize an enchantment, the relevant column must be equipped with gear.";
+				mes "[Assistente-Chefe]";
+				mes "Para zerar um encantamento, a coluna correspondente precisa estar equipada.";
 				close;
 			}
 			if (.@equip_id != .@sarah_item_id) {
-				mes "[Chief Assistant]";
-				mes "To initialize an enchantment, the relevant column must be equipped with Sarah's earring.";
+				mes "[Assistente-Chefe]";
+				mes "Para zerar um encantamento, a coluna correspondente precisa estar com o brinco da Sarah.";
 				close;
 			}
 			if (getequipcardid(.@part,3) < 1) {
-				mes "[Chief Assistant]";
-				mes "Sarah's earring without an enchantment cannot be initialized.";
+				mes "[Assistente-Chefe]";
+				mes "Um brinco da Sarah sem encantamento não pode ser zerado.";
 				close;
 			}
-			mes "[Chief Assistant]";
-			mes "You have selected Sarah's " + .@sarah_earring$ + " earring on the " + .@column$ + " column.";
-			mes "It is impossible to restore abilities that are gone after initialization.";
-			mes "Do you still want to proceed?";
+			mes "[Assistente-Chefe]";
+			mes "Você escolheu o brinco " + .@sarah_earring$ + " da Sarah na coluna " + .@column$ + ".";
+			mes "É impossível recuperar atributos que se perdem depois de zerar.";
+			mes "Você ainda quer prosseguir?";
 			next;
-			if (select( "No", "Yes" ) == 2) {
-				mes "[Chief Assistant]";
-				mes "Yes sir. Initialization will start.";
+			if (select( "Não", "Sim" ) == 2) {
+				mes "[Assistente-Chefe]";
+				mes "Sim, senhor. O processo vai começar.";
 				next;
 				progressbar "000000",5;
 				specialeffect2 EF_MAGICALATTHIT;
@@ -445,53 +445,53 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 
 				delequip .@part;
 				getitem .@sarah_item_id,1;
-				mes "[Chief Assistant]";
-				mes "Initialization completed.";
-				mes "Please find me if you need me.";
+				mes "[Assistente-Chefe]";
+				mes "Processo concluído.";
+				mes "Me procure se precisar de mim.";
 			}
 			close;
 		case 3:
-			mes "[Chief Assistant]";
-			mes "If you want an enchantment on Sarah's earrings, come and find me again.";
+			mes "[Assistente-Chefe]";
+			mes "Se você quiser um encantamento nos brincos da Sarah, volte a me procurar.";
 			close;
 		}
 	case 2:
-		mes "[Chief Assistant]";
-		mes "Related to Glast Heim, this is an unique and rare earring found during an excavation with the professor.";
+		mes "[Assistente-Chefe]";
+		mes "Ligado a Glast Heim, este é um brinco único e raro achado numa escavação com o professor.";
 		next;
-		mes "[Chief Assistant]";
-		mes "I think this has been worn by Sarah in the past and seems to have a great ability to draw out potential strength.";
+		mes "[Assistente-Chefe]";
+		mes "Eu acho que ele foi usado pela Sarah no passado e parece ter uma grande capacidade de despertar a força latente.";
 		next;
-		mes "[Chief Assistant]";
-		mes "I will specially trade it for 1 shard since you are the warrior who brought shards of Gigantes for the professor's work.";
+		mes "[Assistente-Chefe]";
+		mes "Eu troco por 1 fragmento, como cortesia, já que você é o guerreiro que trouxe os fragmentos dos Gigantes para o trabalho do professor.";
 		next;
-		mes "[Chief Assistant]";
-		mes "- The left earring of Sarah -";
-		mes "Usable for Heal 1Lv";
-		mes "- The right earring of Sarah -";
-		mes "Usable for Teleport 1Lv";
+		mes "[Assistente-Chefe]";
+		mes "- O brinco esquerdo da Sarah -";
+		mes "Permite usar Curar Nv.1";
+		mes "- O brinco direito da Sarah -";
+		mes "Permite usar Teleporte Nv.1";
 		mes "-----------------------";
-		mes "Which one do you wish?";
+		mes "Qual você quer?";
 		next;
-		.@s = select( "The left earring of Sarah", "The right earring of Sarah", "Exit conversation" ) - 1;
+		.@s = select( "O brinco esquerdo da Sarah", "O brinco direito da Sarah", "Encerrar a conversa" ) - 1;
 		if (.@s < 2) {
 			if (countitem(6803) < 1) {
-				mes "[Chief Assistant]";
-				mes "There are not enough shards of Gigantes.";
-				mes "You will need them for me to trade with you.";
+				mes "[Assistente-Chefe]";
+				mes "Não há fragmentos dos Gigantes suficientes.";
+				mes "Você vai precisar deles para eu poder trocar com você.";
 				close;
 			}
 			delitem 6803,1;// Shard of Gigantes
 			getitem (28310+.@s),1;
 		}
-		mes "[Chief Assistant]";
-		mes "Professor Bernhard is the professor I respect the most.";
-		mes "Do you have someone you respect?";
+		mes "[Assistente-Chefe]";
+		mes "O Professor Bernhard é o professor que eu mais respeito.";
+		mes "Você tem alguém que respeita?";
 		close;
 	case 3:
-		mes "[Chief Assistant]";
-		mes "I've heard about you from the professor.";
-		mes "The professor has told me to sufficiently compensate you for risking your life and bringing the shards of Gigantes.";
+		mes "[Assistente-Chefe]";
+		mes "O professor me falou de você.";
+		mes "O professor mandou recompensar você o bastante por arriscar a vida e trazer os fragmentos dos Gigantes.";
 		close;
 	}
 }
@@ -502,12 +502,12 @@ OnTouch:
 	disablenpc instance_npcname("#glast_event_1");
 	setpcblock PCBLOCK_NPC, true;
 	specialeffect2 EF_HIT2;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Huh? Somebody there? Hello~ You must be a traveler.";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Hein? Tem alguém aí? Olá~ Você deve ser um viajante.";
 	sleep2 3000;
 	cutin "fenrir_a.bmp",2;
-	npctalk "Fenrith Fenrir: This is strange.. I don't recall Glast Heim castle being filled with such a dark presence..", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Que estranho.. Eu não me lembro do castelo de Glast Heim tomado por uma presença tão escura..", 'fenrir_1$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Greetings can come later! Careful! It seems somebody has summoned a monster!", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: As saudações ficam para depois! Cuidado! Parece que alguém invocou um monstro!", 'fenrir_1$;
 	sleep2 3000;
 	cutin "",255;
 	specialeffect EF_LOCKON, AREA, 'fenrir_1$;
@@ -521,8 +521,8 @@ OnTouch:
 	monster 'map_glast$,364,297, "Mutant Galion",3198,1, .@label$;
 	monster 'map_glast$,364,291, "Mutant Galion",3198,1, .@label$;
 	monster 'map_glast$,353,290, "Mutant Galion",3198,1, .@label$;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : What are these things?";
-	npctalk "Fenrith Fenrir: Buy me some time while I cast magic! I will handle this!", 'fenrir_1$;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : O que são essas coisas?";
+	npctalk "Fenrith Fenrir: Ganhe tempo para mim enquanto eu conjuro! Eu cuido disso!", 'fenrir_1$;
 	donpcevent instance_npcname("#glast_event_1") + "::OnBar";
 	donpcevent instance_npcname("#glast_event_1") + "::OnEvent";
 	setpcblock PCBLOCK_NPC, false;
@@ -532,26 +532,26 @@ OnBar:
 	end;
 
 OnEvent:
-	// npctalk "Fenrith Fenrir: Buy me some time while I cast magic! I will handle this!", 'fenrir_1$;// double on official
+	// npctalk "Fenrith Fenrir: Ganhe tempo para mim enquanto eu conjuro! Eu cuido disso!", 'fenrir_1$;// double on official
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Wrath of the true sky.", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Ira do verdadeiro céu.", 'fenrir_1$;
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Thunderbolt that may split the earth!", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Raio capaz de rachar a terra!", 'fenrir_1$;
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Fall before me now!", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Caia diante de mim agora!", 'fenrir_1$;
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Aaah!! Thunder Storm!!!!!", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Aaah!! Tempestade de Raios!!!!!", 'fenrir_1$;
 	for ( .@i = 1; .@i < 8; .@i++ )
 		specialeffect EF_THUNDERSTORM, AREA, instance_npcname( "#effect_glast_event01_" + .@i );
 	killmonster 'map_glast$, instance_npcname("#glast_event_1") + "::OnMobDead";
 	sleep 4000;
-	npctalk "Fenrith Fenrir: Glast Heim, once the cathedral for the Asgard gods..", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Glast Heim, um dia a catedral dos deuses de Asgard..", 'fenrir_1$;
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Now it has completely become a habitat for monsters..", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Agora virou de vez um covil de monstros..", 'fenrir_1$;
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Wait.. Come to think of it, something is strange..", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Espere.. Pensando bem, tem uma coisa estranha..", 'fenrir_1$;
 	sleep 3000;
-	npctalk "Fenrith Fenrir: Galions are the monsters that habit this vicinity..", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Os Galion é que são os monstros que habitam esta região..", 'fenrir_1$;
 	sleep 3000;
 	enablenpc instance_npcname("#glast_event_3");
 	end;
@@ -566,27 +566,27 @@ OnTouch:
 	disablenpc instance_npcname("#glast_event_3");
 	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
-	npctalk "Fenrith Fenrir: By the way, I know it was sudden but thank you for helping.", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Aliás, eu sei que foi repentino, mas obrigado pela ajuda.", 'fenrir_1$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: Anyway, who are you?", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Enfim, quem é você?", 'fenrir_1$;
 	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Ah.. that is....";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Ah.. é que....";
 	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : .. I am a traveler who wanders around the world!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : .. Eu sou um viajante que perambula pelo mundo!";
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: Is that so..? I see.. I guess it does not matter.", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: É mesmo..? Entendo.. Acho que não faz diferença.", 'fenrir_1$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: This place seems quite dangerous now. It is not too late to turn back.", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Este lugar parece bem perigoso agora. Não é tarde demais para voltar.", 'fenrir_1$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: There is an object I need to find. I need to hurry before it is too late.", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Há um objeto que eu preciso achar. Eu preciso me apressar antes que seja tarde.", 'fenrir_1$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: Perhaps you can help me...", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Talvez você possa me ajudar...", 'fenrir_1$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: No.. Then thank you! I hope we can meet again later!", 'fenrir_1$;
+	npctalk "Fenrith Fenrir: Não.. Então obrigado! Espero que a gente se encontre de novo!", 'fenrir_1$;
 	sleep2 3000;
 	cutin "",255;
 	specialeffect EF_LOCKON, AREA, 'fenrir_1$;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Did that.. person.. really happen to be.. the.. Fenrir..? No way.. probably not..";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Será que.. aquela pessoa.. era mesmo.. o.. Fenrir..? Que nada.. provavelmente não..";
 
 	disablenpc 'fenrir_1$;
 	for ( .@i = 1; .@i < 8; .@i++ )
@@ -629,22 +629,22 @@ OnTimer2000:
 	specialeffect EF_WHITEBODY, AREA, 'sarah_ego$;
 	end;
 OnTimer3000:
-	npctalk "Sarah Irene: Impressive Fenrith Fenrir, you cleverly escaped", 'sarah_ego$;
+	npctalk "Sarah Irene: Impressionante, Fenrith Fenrir, você escapou com esperteza", 'sarah_ego$;
 	end;
 OnTimer7500:
-	npctalk "Sarah Irene: Mm.. today I will make you stand down", 'sarah_ego$;
+	npctalk "Sarah Irene: Mm.. hoje eu faço você recuar", 'sarah_ego$;
 	end;
 OnTimer8000:
-	npctalk "Fenrith Fenrir: Today I hope to end our ill fated relationship.", 'fenrir_11$;
+	npctalk "Fenrith Fenrir: Hoje eu espero encerrar a nossa relação maldita.", 'fenrir_11$;
 	end;
 OnTimer11000:
-	npctalk "Sarah Irene: However, do not think this is the end", 'sarah_ego$;
+	npctalk "Sarah Irene: Mas não pense que isto é o fim", 'sarah_ego$;
 	end;
 OnTimer14000:
-	npctalk "Sarah Irene: You will surely see me again!!!", 'sarah_ego$;
+	npctalk "Sarah Irene: Você com certeza vai me ver de novo!!!", 'sarah_ego$;
 	end;
 OnTimer14500:
-	npctalk "Fenrith Fenrir: Mm... I look forward to it Sarah Irene..", 'fenrir_11$;
+	npctalk "Fenrith Fenrir: Mm... Fico no aguardo, Sarah Irene..", 'fenrir_11$;
 	specialeffect EF_FIREPILLARON2, AREA, 'sarah_ego$;
 	end;
 OnTimer15500:
@@ -714,33 +714,33 @@ OnTouch:
 	disablenpc instance_npcname("#glast_event_5");
 	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
-	npctalk "Fenrith Fenrir: You are still in Glast Heim? Why aren't you leaving this dangerous place?", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Você ainda está em Glast Heim? Por que não sai deste lugar perigoso?", 'fenrir_2$;
 	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : I know it's dangerous but I thought it would be fun so I couldn't help myself..";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Eu sei que é perigoso, mas achei que ia ser divertido e não resisti..";
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: Hm.. Adventurers..", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Hm.. Aventureiros..", 'fenrir_2$;
 	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : You don't have to worry~! I am fairly strong myself!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Você não precisa se preocupar~! Eu sou bem forte!";
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: Oh.. really? Do you think you can assist me then?", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Ah.. é mesmo? Então você acha que pode me ajudar?", 'fenrir_2$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: The object I am looking for is located somewhere in Glast Heim!", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: O objeto que eu procuro está em algum lugar de Glast Heim!", 'fenrir_2$;
 	viewpoint 1,47,270,1,0xFF0000;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: But others looking for the object will arrive there soon!", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Mas outros que procuram o objeto chegam lá logo!", 'fenrir_2$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: This is urgent because there isn't enough time. We have to arrive there soon. 5 minutes at the latest!", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Isto é urgente porque não há tempo suficiente. Nós temos que chegar lá logo. Em 5 minutos, no máximo!", 'fenrir_2$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: I will be waiting! If you are late I will have to go by myself!", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Eu vou esperar! Se você atrasar, eu vou ter que ir sozinho!", 'fenrir_2$;
 	sleep2 2000;
-	npctalk "Fenrith Fenrir: Alright, I will go on ahead and you decide if you are going to assist me!", 'fenrir_2$;
+	npctalk "Fenrith Fenrir: Muito bem, eu vou na frente e você decide se vai me ajudar!", 'fenrir_2$;
 	sleep2 3000;
 	cutin "",255;
 	disablenpc 'fenrir_2$;
 	sleep2 1000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Hm.. what should I do..? I need shards of Gigantes as requested by Professor Bernhard..";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Hm.. o que eu faço..? Eu preciso de fragmentos dos Gigantes, como o Professor Bernhard pediu..";
 	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Should I help that person.. Or should I look for Gigantes to take the shards as requested by Professor Bernhard..?";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Eu ajudo aquela pessoa.. Ou eu procuro os Gigantes para tirar os fragmentos, como o Professor Bernhard pediu..?";
 	sleep2 2000;
 	donpcevent instance_npcname("#fenrir_left_final_2") + "::OnStart";// timer (5 mins)
 	for ( .@i = 1; .@i < 7; .@i++ )
@@ -759,13 +759,13 @@ OnTouch:
 	end;
 OnTouch:
 	if (is_party_leader() == false)
-		npctalk "Fenrith Fenrir: I would like your party leader to come and help me!", 'fenrir_3$;
+		npctalk "Fenrith Fenrir: Eu gostaria que o líder do seu grupo viesse me ajudar!", 'fenrir_3$;
 	else {
 		setpcblock PCBLOCK_NPC, true;
 		disablenpc instance_npcname("#glast_event_7");
-		npctalk "Fenrith Fenrir: You came! I was waiting!", 'fenrir_3$;
+		npctalk "Fenrith Fenrir: Você veio! Eu estava esperando!", 'fenrir_3$;
 		sleep2 2000;
-		npctalk "Fenrith Fenrir: We don't have much time! We have to go search for it now! Let's go in!", 'fenrir_3$;
+		npctalk "Fenrith Fenrir: Não temos muito tempo! Temos que ir procurar agora! Vamos entrar!", 'fenrir_3$;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
 		if ('skip_left_part == 0 && is_party_leader() == true) {// 5 mins have passed?
@@ -789,38 +789,38 @@ OnTouch:
 	disablenpc instance_npcname("#glast_event_9");
 	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
-	npctalk "Fenrith Fenrir: The sword of Baldur, Sentinel Breeze... even after 1000 years..", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: A espada de Baldur, Sentinel Breeze... mesmo depois de 1000 anos..", 'fenrir_4$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: I can feel the evil of monsters in this place.. as if they are being controlled by someone..", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Eu sinto a maldade dos monstros neste lugar.. como se eles estivessem sendo controlados por alguém..", 'fenrir_4$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Then there is someone else here other than me?", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Então tem mais alguém aqui além de mim?", 'fenrir_4$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: That will do.. Now all I have to do is use Sentinel Breeze to find Baldur's whereabouts..", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Assim serve.. Agora só me resta usar a Sentinel Breeze para achar o paradeiro de Baldur..", 'fenrir_4$;
 	sleep2 3000;
 	enablenpc 'sarah_10$;
 	enablenpc instance_npcname("Gigantes#semi1");
 	enablenpc instance_npcname("Gigantes#semi2");
 	sleep2 1000;
 	cutin "sarah_hero3.bmp",0;
-	npctalk "Sarah Irene: Hehe.. I see... just as I expected.", 'sarah_10$;
+	npctalk "Sarah Irene: Hehe.. Entendo... exatamente como eu esperava.", 'sarah_10$;
 	sleep2 3000;
-	npctalk "Sarah Irene: Was that blade the clue?", 'sarah_10$;
+	npctalk "Sarah Irene: Era aquela lâmina a pista?", 'sarah_10$;
 	sleep2 3000;
-	npctalk "Sarah Irene: Then, Fenrith Fenrir, that means a 1000 year old seal can be broken with it?", 'sarah_10$;
+	npctalk "Sarah Irene: Então, Fenrith Fenrir, isso quer dizer que um selo de 1000 anos pode ser quebrado com ela?", 'sarah_10$;
 	sleep2 3500;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Could it be he was the real Fenrir?";
-	npctalk "Fenrith Fenrir: Could this be.. Valkyrie! Now it is not fun anymore", 'fenrir_4$;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Será que ele era mesmo o Fenrir?";
+	npctalk "Fenrith Fenrir: Será que é.. Valquíria! Agora não tem mais graça", 'fenrir_4$;
 	cutin "fenrir_b.bmp",2;
 	sleep2 5000;
-	npctalk "Sarah Irene: Belated salutations, my name is Sarah Irene, one of the 12 Valkyries of Valhalla.", 'sarah_10$;
+	npctalk "Sarah Irene: Saudações tardias, o meu nome é Sarah Irene, uma das 12 Valquírias de Valhalla.", 'sarah_10$;
 	cutin "sarah_hero3.bmp",0;
 	sleep2 3000;
-	npctalk "Sarah Irene: Anyway, also to achieve Freyja's will.. hehe..", 'sarah_10$;
-	npctalk "Fenrith Fenrir: Two Gigantes! This will not be an easy fight. Help me and defeat the Gigantes!", 'fenrir_4$;
+	npctalk "Sarah Irene: Enfim, também para cumprir a vontade de Freyja.. hehe..", 'sarah_10$;
+	npctalk "Fenrith Fenrir: Dois Gigantes! Não vai ser uma luta fácil. Me ajude e derrote os Gigantes!", 'fenrir_4$;
 	cutin "fenrir_b.bmp",2;
 	sleep2 3000;
-	npctalk "Sarah Irene: Go forth! Gigantes! And my loyal monsters!", 'sarah_10$;
-	npctalk "Fenrith Fenrir: Sarah will hide and continuously summon monsters! I will take care of that monster, you face the Gigantes!", 'fenrir_4$;
+	npctalk "Sarah Irene: Avancem! Gigantes! E vocês, meus monstros fiéis!", 'sarah_10$;
+	npctalk "Fenrith Fenrir: A Sarah vai se esconder e invocar monstros sem parar! Eu cuido daquele monstro, você enfrenta os Gigantes!", 'fenrir_4$;
 	cutin "fenrir_b.bmp",255;
 	sleep2 2000;
 	disablenpc 'sarah_10$;
@@ -840,11 +840,11 @@ OnEvent:
 
 OnStart:
 	initnpctimer;
-	npctalk "Fenrith Fenrir: Currents vibrating in the atmosphere! Show me your strength!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Correntes que vibram na atmosfera! Mostrem a sua força!", 'fenrir_4$;
 	callsub S_Spawn,1,3198;// MM_M_GALION
 
 	progressbar_npc "000000",5, 'fenrir_4$;	// note: display effect after dead of Gigantes
-	npctalk "Fenrith Fenrir: Light Bolt!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Relâmpago!!!", 'fenrir_4$;
 	for ( .@i = 1; .@i < 9; .@i++ )
 		specialeffect EF_LIGHTBOLT, AREA, instance_npcname("#effect_glast_event02_" + .@i);
 	end;
@@ -852,10 +852,10 @@ OnTimer6000:
 	killmonster 'map_glast$, instance_npcname("#glast_event_9") + "::OnMobDead";
 	end;
 OnTimer15000:
-	npctalk "Fenrith Fenrir: Devour this evil presence with the fire pit of the universe!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Devore esta presença maligna com a fornalha do universo!", 'fenrir_4$;
 	callsub S_Spawn,2,3198;// MM_M_GALION
 	progressbar_npc "000000",5, 'fenrir_4$;
-	npctalk "Fenrith Fenrir: Hell fire that can swallow even space! Meteor storm~!!!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Fogo do inferno capaz de engolir até o espaço! Chuva de Meteoros~!!!!!", 'fenrir_4$;
 	for ( .@i = 1; .@i < 9; .@i++ )
 		specialeffect EF_METEORSTORM, AREA, instance_npcname("#effect_glast_event02_" + .@i);
 	end;
@@ -863,10 +863,10 @@ OnTimer21000:
 	killmonster 'map_glast$, instance_npcname("#glast_event_9") + "::OnMobDead";
 	end;
 OnTimer30000:
-	npctalk "Fenrith Fenrir: Currents vibrating in the atmosphere! Show me your strength!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Correntes que vibram na atmosfera! Mostrem a sua força!", 'fenrir_4$;
 	callsub S_Spawn,1,3199;// MM_M_MUTANT_DRAGON
 	progressbar_npc "000000",5, 'fenrir_4$;
-	npctalk "Fenrith Fenrir: Light Bolt!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Relâmpago!!!", 'fenrir_4$;
 	for ( .@i = 1; .@i < 9; .@i++ )
 		specialeffect EF_LIGHTBOLT, AREA, instance_npcname("#effect_glast_event02_" + .@i);
 	end;
@@ -874,10 +874,10 @@ OnTimer36000:
 	killmonster 'map_glast$, instance_npcname("#glast_event_9") + "::OnMobDead";
 	end;
 OnTimer45000:
-	npctalk "Fenrith Fenrir: Freeze the evil presence with frost wind!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Congele a presença maligna com o vento gelado!!!", 'fenrir_4$;
 	callsub S_Spawn,2,3199;// MM_M_MUTANT_DRAGON
 	progressbar_npc "000000",5, 'fenrir_4$;
-	npctalk "Fenrith Fenrir: A storm that can freeze even the soul!! Storm gust~!!!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Uma tempestade capaz de congelar até a alma!! Nevasca~!!!!!", 'fenrir_4$;
 	for ( .@i = 1; .@i < 9; .@i++ )
 		specialeffect EF_STORMGUST, AREA, instance_npcname("#effect_glast_event02_" + .@i);
 	end;
@@ -933,21 +933,21 @@ S_Spawn:
 OnEvent:
 	enablenpc instance_npcname("#fenrir_left_vermilion");
 	initnpctimer;
-	npctalk "Fenrith Fenrir: They are endless. I should finish this absolutely.", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Eles não têm fim. Eu tenho que acabar com isso de vez.", 'fenrir_4$;
 	progressbar_npc "000000",10, 'fenrir_4$;
 	end;
 OnTimer2000:
-	npctalk "Fenrith Fenrir: Limitlessly distant monarch with the beautiful scarlet breath!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Monarca infinitamente distante, de belo sopro escarlate!!", 'fenrir_4$;
 	end;
 OnTimer4000:
-	npctalk "Fenrith Fenrir: Where you have passed will only be filled with nothingness.", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Por onde você passar só restará o nada.", 'fenrir_4$;
 	end;
 OnTimer7000:
-	npctalk "Fenrith Fenrir: Power to shake the earth's axis! Show your grace right here and now!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Poder de sacudir o eixo da terra! Mostre a sua graça aqui e agora!!!", 'fenrir_4$;
 	end;
 OnTimer10000:
 	stopnpctimer;
-	npctalk "Fenrith Fenrir: Road of Vermilion!!!!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Ira de Thor!!!!", 'fenrir_4$;
 	for ( .@i = 1; .@i < 9; .@i++ )
 		specialeffect EF_LORD, AREA, instance_npcname("#effect_glast_event02_" + .@i);
 	killmonster 'map_glast$, instance_npcname("#fenrir_left_final_1") + "::OnMobDead";
@@ -966,21 +966,21 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer2000:
-	npctalk "Fenrith Fenrir: Alright! We have defeated a Gigantes!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Muito bem! Nós derrotamos um Gigantes!", 'fenrir_4$;
 	enablenpc 'sarah_10$;
 	end;
 OnTimer4000:
-	npctalk "Sarah Irene: As expected, Fenrith Fenrir, you do not yield easily!", 'sarah_10$;
+	npctalk "Sarah Irene: Como era de esperar, Fenrith Fenrir, você não cede fácil!", 'sarah_10$;
 	end;
 OnTimer7000:
-	npctalk "Fenrith Fenrir: Get away from the Sentinel Breeze immediately!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Afaste-se da Sentinel Breeze imediatamente!", 'fenrir_4$;
 	end;
 OnTimer9000:
-	npctalk "Sarah Irene: Hehe.. I can't do that!", 'sarah_10$;
+	npctalk "Sarah Irene: Hehe.. Isso eu não posso fazer!", 'sarah_10$;
 	specialeffect EF_WL_TELEKINESIS_INTENSE, AREA, instance_npcname("#effect_glast_event02_bis");
 	end;
 OnTimer11000:
-	npctalk "Sarah Irene: If you want it back come to Glast Heim Castle! I shall be waiting!", 'sarah_10$;
+	npctalk "Sarah Irene: Se você quer ela de volta, venha ao Castelo de Glast Heim! Eu estarei esperando!", 'sarah_10$;
 	end;
 OnTimer13000:
 	specialeffect EF_FIREPILLARON2, AREA, 'sarah_10$;
@@ -989,10 +989,10 @@ OnTimer14000:
 	disablenpc 'sarah_10$;
 	end;
 OnTimer16000:
-	npctalk "Fenrith Fenrir: We must follow quickly to retrieve the sword! I shall use a group space movement spell!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Precisamos ir atrás depressa para recuperar a espada! Eu vou usar uma magia de deslocamento em grupo!", 'fenrir_4$;
 	end;
 OnTimer19000:
-	npctalk "Fenrith Fenrir: Simultaneous large scale warp!", 'fenrir_4$;
+	npctalk "Fenrith Fenrir: Salto simultâneo em larga escala!", 'fenrir_4$;
 	end;
 OnTimer20000:
 	stopnpctimer;
@@ -1042,18 +1042,18 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
 	sleep2 1000;
-	npctalk "Fenrith Fenrir: I need to go to Glast Heim Castle to retrieve the sword of Baldur.", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Eu preciso ir ao Castelo de Glast Heim recuperar a espada de Baldur.", 'fenrir_5$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: It could be difficult alone, I would gratefully accept your help.", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Pode ser difícil sozinho, e eu aceitaria a sua ajuda com gratidão.", 'fenrir_5$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Since there isn't enough time, we can't wait long.", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Como não há tempo suficiente, nós não podemos esperar muito.", 'fenrir_5$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: I will wait in the central castle of Glast Heim for about 5 minutes.", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Eu vou esperar no castelo central de Glast Heim por uns 5 minutos.", 'fenrir_5$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Since it is dangerous you do not have to feel obligated to help me. I will try by myself if I have to.", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Como é perigoso, você não precisa se sentir obrigado a me ajudar. Eu tento sozinho, se for preciso.", 'fenrir_5$;
 	viewpoint 1,199,237,1,0xFF0000;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Then I will go on ahead! Warp!", 'fenrir_5$;
+	npctalk "Fenrith Fenrir: Então eu vou na frente! Salto!", 'fenrir_5$;
 	cutin "",255;
 	donpcevent instance_npcname("#glast_event_13") + "::OnBar";
 	setpcblock PCBLOCK_NPC, false;
@@ -1081,35 +1081,35 @@ OnTimer300000:
 	'skip_left_part = 1;
 	disablenpc instance_npcname("#glast_event_7");
 	disablenpc 'fenrir_3$;
-	mapannounce 'map_glast$, "Fenrith Fenrir: Alright! We have defeated a Gigantes!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Muito bem! Nós derrotamos um Gigantes!", bc_map,0xEBFF;
 	end;
 OnTimer302000:
-	mapannounce 'map_glast$, "Sarah Irene: As expected, Fenrith Fenrir, you do not yield easily!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Como era de esperar, Fenrith Fenrir, você não cede fácil!", bc_map,0xEBFF;
 	end;
 OnTimer305000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: Get away from the Sentinel Breeze immediately!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Afaste-se da Sentinel Breeze imediatamente!", bc_map,0xEBFF;
 	end;
 OnTimer307000:
-	mapannounce 'map_glast$, "Sarah Irene: Hehe.. I can't do that!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Hehe.. Isso eu não posso fazer!", bc_map,0xEBFF;
 	end;
 OnTimer309000:
-	mapannounce 'map_glast$, "Sarah Irene: If you want it back come to Glast Heim Castle! I shall be waiting!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Se você quer ela de volta, venha ao Castelo de Glast Heim! Eu estarei esperando!", bc_map,0xEBFF;
 	end;
 OnTimer311000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: I need to go to Glast Heim Castle to retrieve the sword of Baldur", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Eu preciso ir ao Castelo de Glast Heim recuperar a espada de Baldur", bc_map,0xEBFF;
 	end;
 OnTimer313000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: It may be difficult alone. If you are listening I will gratefully accept your help.", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Pode ser difícil sozinho. Se você estiver ouvindo, eu aceitaria a sua ajuda com gratidão.", bc_map,0xEBFF;
 	end;
 OnTimer315000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: Since there isn't enough time, we can't wait long.", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Como não há tempo suficiente, nós não podemos esperar muito.", bc_map,0xEBFF;
 	end;
 OnTimer317000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: I will wait in the central castle of Glast Heim for about 5 minutes.", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Eu vou esperar no castelo central de Glast Heim por uns 5 minutos.", bc_map,0xEBFF;
 	end;
 OnTimer319000:
 	stopnpctimer;
-	mapannounce 'map_glast$, "Fenrith Fenrir: Since it is dangerous you do not have to feel obligated to help me. I will try by myself if I have to.", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Como é perigoso, você não precisa se sentir obrigado a me ajudar. Eu tento sozinho, se for preciso.", bc_map,0xEBFF;
 	enablenpc instance_npcname("#glast_move_03");
 	enablenpc 'fenrir_6$;
 	enablenpc instance_npcname("#glast_event_15");
@@ -1131,9 +1131,9 @@ OnTouch:
 	donpcevent instance_npcname("#fenrir_boss_final_2") + "::OnStop";
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 1000;
-	npctalk "Fenrith Fenrir: I was waiting. Thank you for not being late.", 'fenrir_6$;
+	npctalk "Fenrith Fenrir: Eu estava esperando. Obrigado por não se atrasar.", 'fenrir_6$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Let us climb the castle to retrieve Sentinel Breeze! Sarah will be waiting!", 'fenrir_6$;
+	npctalk "Fenrith Fenrir: Vamos subir o castelo para recuperar a Sentinel Breeze! A Sarah deve estar esperando!", 'fenrir_6$;
 	sleep2 3000;
 	disablenpc 'fenrir_6$;
 	enablenpc instance_npcname("#glast_move_03a");
@@ -1154,38 +1154,38 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	cutin "sarah_hero3.bmp",0;
 	sleep2 1000;
-	npctalk "Sarah Irene: It seemed like forever waiting for you~ Fenrith Fenrir.", 'sarah_17$;
+	npctalk "Sarah Irene: Parecia uma eternidade esperar por você~ Fenrith Fenrir.", 'sarah_17$;
 	sleep2 3000;
 	cutin "fenrir_b.bmp",2;
-	npctalk "Fenrith Fenrir: No need for useless words, hand over the Sentinel Breeze now!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Chega de palavras inúteis, entregue a Sentinel Breeze agora!", 'fenrir_7$;
 	sleep2 3000;
 	cutin "sarah_hero3.bmp",0;
-	npctalk "Sarah Irene: Try if you can.", 'sarah_17$;
+	npctalk "Sarah Irene: Tente, se for capaz.", 'sarah_17$;
 	sleep2 3000;
 	cutin "fenrir_b.bmp",2;
-	npctalk "Fenrith Fenrir: Sarah may be too difficult for you to face alone. I must face her!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: A Sarah pode ser difícil demais para você enfrentar sozinho. Eu tenho que enfrentá-la!", 'fenrir_7$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Pure white shackles, eternal prison, make a deal with me now!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Grilhões de puro branco, prisão eterna, façam um acordo comigo agora!", 'fenrir_7$;
 	donpcevent instance_npcname("#glast_event_18") + "::OnBar";
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: White Imprison!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Exílio!!", 'fenrir_7$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	sleep2 3000;
-	npctalk "Sarah Irene: Hurk.... he..", 'sarah_17$;
-	npctalk "Fenrith Fenrir: I will weaken Sarah with white imprison and face her while she's shackled,", 'fenrir_7$;
+	npctalk "Sarah Irene: Hurk.... ele..", 'sarah_17$;
+	npctalk "Fenrith Fenrir: Eu vou enfraquecer a Sarah com o Exílio e enfrentá-la enquanto ela estiver presa,", 'fenrir_7$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: you take care of the monsters she summons. I'm counting on you.", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: você cuida dos monstros que ela invocar. Eu conto com você.", 'fenrir_7$;
 	sleep2 3000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Will do. Powerful enemies make my blood boil.";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Pode deixar. Inimigo forte me faz ferver o sangue.";
 	sleep2 6000;
-	npctalk "Fenrith Fenrir: This is a strategy to attack at once and finish Sarah off while she is in critical condition. Remember, our opponent is strong.", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: A estratégia é atacar de uma vez e acabar com a Sarah enquanto ela estiver em estado crítico. Lembre-se, a nossa adversária é forte.", 'fenrir_7$;
 	sleep2 3000;
 	cutin "sarah_hero3_2.bmp",0;
-	npctalk "Sarah Irene: So your plan was to tie me up with this sort of trick?", 'sarah_17$;
+	npctalk "Sarah Irene: Então o seu plano era me amarrar com um truque desses?", 'sarah_17$;
 	sleep2 3000;
-	npctalk "Sarah Irene: Furthermore you borrow the assistance of such rookie adventurers...", 'sarah_17$;
+	npctalk "Sarah Irene: E ainda por cima você pede ajuda a aventureiros novatos desses...", 'sarah_17$;
 	sleep2 3000;
-	npctalk "Sarah Irene: You need to disappear from here along with that worn out blade!!", 'sarah_17$;
+	npctalk "Sarah Irene: Você precisa sumir daqui junto com aquela lâmina gasta!!", 'sarah_17$;
 	sleep2 3000;
 	cutin "",255;
 	hideonnpc 'sarah_17$;
@@ -1222,7 +1222,7 @@ OnEvent:
 	enablenpc instance_npcname("#fenrir_boss_final_1");
 	initnpctimer;
 	specialeffect EF_PRIMECHARGE4, AREA, 'fenrir_7$;
-	npctalk "Fenrith Fenrir: Lethal poison, Dark clouds, appear before me and show a most painful death!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Veneno letal, Nuvens negras, apareçam diante de mim e mostrem a morte mais dolorosa!", 'fenrir_7$;
 	monster 'map_glast$,190,341, "Large Gigantes#a1", 3194,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN1
 	monster 'map_glast$,214,331, "Large Gigantes#b2", 3195,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN2
 	progressbar_npc "000000",10, 'fenrir_7$;
@@ -1232,14 +1232,14 @@ OnTimer1000:
 	end;
 OnTimer10000:
 	callsub S_Hit,1;
-	npctalk "Fenrith Fenrir: Go! Cloud Kill!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Vá! Maldição de Jormungand!!!!!", 'fenrir_7$;
 	specialeffect EF_POISONSMOKE, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		specialeffect EF_POISONSMOKE, AREA, instance_npcname("#effect_glast_event03_" + .@i);
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer10500:
-	unittalk 'boss_id, "Sarah Irene: That was sudden Fenrir. Is that all you've got?";
+	unittalk 'boss_id, "Sarah Irene: Isso foi repentino, Fenrir. É só isso que você tem?";
 	end;
 OnTimer11000:
 	specialeffect EF_POISONSMOKE2, AREA, 'sarah_17$;
@@ -1253,7 +1253,7 @@ OnTimer11000:
 	specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("#effect_glast_event03_8");
 	end;
 OnTimer13000:
-	npctalk "Fenrith Fenrir: Lethal poison, Dark clouds, appear before me and show a most painful death!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Veneno letal, Nuvens negras, apareçam diante de mim e mostrem a morte mais dolorosa!", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE4, AREA, 'fenrir_7$;
 	specialeffect EF_POISONSMOKE2, AREA, 'sarah_17$;
 	specialeffect EF_POISONSMOKE2, AREA, instance_npcname("#effect_glast_event03_1");
@@ -1267,7 +1267,7 @@ OnTimer13000:
 	end;
 OnTimer20000:
 	callsub S_Hit,2;
-	npctalk "Fenrith Fenrir: Go! Cloud Kill!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Vá! Maldição de Jormungand!!!!!", 'fenrir_7$;
 	specialeffect EF_POISONSMOKE, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
@@ -1275,7 +1275,7 @@ OnTimer20000:
 	progressbar_npc "000000",30, 'fenrir_7$;
 	end;
 OnTimer20500:
-	unittalk 'boss_id, "Sarah Irene: Try to entertain me a little more!!";
+	unittalk 'boss_id, "Sarah Irene: Tente me divertir um pouco mais!!";
 	end;
 OnTimer21000:
 	specialeffect EF_POISONSMOKE2, AREA, 'sarah_17$;
@@ -1289,7 +1289,7 @@ OnTimer21000:
 	specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("#effect_glast_event03_8");
 	end;
 OnTimer23000:
-	npctalk "Fenrith Fenrir: I speak to you who controls fire, I Fenrith, desire a fire that does not go out...", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Eu falo a você que controla o fogo, eu, Fenrith, desejo um fogo que não se apague...", 'fenrir_7$;
 	specialeffect EF_BEGINSPELL_YB, AREA, 'fenrir_7$;
 	specialeffect EF_POISONSMOKE2, AREA, 'sarah_17$;
 	specialeffect EF_POISONSMOKE2, AREA, instance_npcname("#effect_glast_event03_1");
@@ -1302,139 +1302,139 @@ OnTimer23000:
 	specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("#effect_glast_event03_8");
 	end;
 OnTimer36000:
-	npctalk "Fenrith Fenrir: Endlessly burning conflagration, a fire that can scorch even the soul!! Appear before me now!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Incêndio que arde sem fim, um fogo capaz de queimar até a alma!! Apareça diante de mim agora!!", 'fenrir_7$;
 	specialeffect EF_BEGINSPELL_YB, AREA, 'fenrir_7$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	end;
 OnTimer50000:
 	callsub S_Hit,3;
-	npctalk "Fenrith Fenrir: Emerge!! Fire Insignia!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Surja!! Insígnia do Fogo!!!!", 'fenrir_7$;
 	specialeffect EF_DEMONICFIRE, AREA, 'sarah_17$;
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer50500:
-	unittalk 'boss_id, "Sarah Irene: Oh... not bad? But not good enough!!";
+	unittalk 'boss_id, "Sarah Irene: Ah... nada mau? Mas não é bom o bastante!!";
 	end;
 OnTimer51000:
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	end;
 OnTimer53000:
-	npctalk "Fenrith Fenrir: The root of earthshaking power!! Fear the power of the earth!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: A raiz do poder que abala a terra!! Temam o poder da terra!!!", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE4, AREA, 'fenrir_7$;
 	end;
 OnTimer60000:
 	callsub S_Hit,4;
-	npctalk "Fenrith Fenrir: Go forth!! Heaven's Drive!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Avance!! Fúria da Terra!!!", 'fenrir_7$;
 	specialeffect EF_HEAVENSDRIVE, AREA, 'sarah_17$;
 	monster 'map_glast$,190,341, "Large Gigantes#a1", 3194,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN1
 	monster 'map_glast$,214,331, "Large Gigantes#b2", 3195,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN2
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer60500:
-	unittalk 'boss_id, "Sarah Irene: Why don't you stop your childish magic, Fenrir?";
+	unittalk 'boss_id, "Sarah Irene: Por que você não para com essa magia infantil, Fenrir?";
 	end;
 OnTimer63000:
 	specialeffect EF_PRIMECHARGE4, AREA, 'fenrir_7$;
-	npctalk "Fenrith Fenrir: The root of earthshaking power!! Fear the power of the earth!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: A raiz do poder que abala a terra!! Temam o poder da terra!!!", 'fenrir_7$;
 	end;
 OnTimer70000:
 	callsub S_Hit,5;
-	npctalk "Fenrith Fenrir: Go forth!! Heaven's Drive!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Avance!! Fúria da Terra!!!", 'fenrir_7$;
 	specialeffect EF_HEAVENSDRIVE, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	progressbar_npc "000000",30, 'fenrir_7$;
 	end;
 OnTimer70500:
-	unittalk 'boss_id, "Sarah Irene: Do you think that is enough to beat me?";
+	unittalk 'boss_id, "Sarah Irene: Você acha que isso basta para me vencer?";
 	end;
 OnTimer73000:
-	npctalk "Fenrith Fenrir: The mercilessly cold breath of the Northern winds,", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: O sopro impiedosamente frio dos ventos do Norte,", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE2, AREA, 'fenrir_7$;
 	end;
 OnTimer85000:
-	npctalk "Fenrith Fenrir: Come like the silent dawn mist and freeze everything!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Venha como a névoa silenciosa da madrugada e congele tudo!!", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE2, AREA, 'fenrir_7$;
 	end;
 OnTimer100000:
 	callsub S_Hit,6;
-	npctalk "Fenrith Fenrir: Appear!!! Frost Misty!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Apareça!!! Zero Absoluto!!!!!", 'fenrir_7$;
 	specialeffect EF_FROSTMYSTY, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	specialeffect EF_FROSTMYSTY, AREA, 'sarah_17$;
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer100500:
-	unittalk 'boss_id, "Sarah Irene: Not bad but.. not even close!";
+	unittalk 'boss_id, "Sarah Irene: Nada mau, mas.. nem perto do suficiente!";
 	end;
 OnTimer103000:
-	npctalk "Fenrith Fenrir: The power of doubt, a powerful force, the power of deeply hidden secrets in the mind!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: O poder da dúvida, uma força poderosa, o poder dos segredos escondidos no fundo da mente!!!", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE, AREA, 'fenrir_7$;
 	end;
 OnTimer110000:
 	callsub S_Hit,7;
-	npctalk "Fenrith Fenrir: Now!!! Psychic Wave!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Agora!!! Onda Psíquica!!!!", 'fenrir_7$;
 	specialeffect EF_SPR_PLANT10, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer110500:
-	unittalk 'boss_id, "Sarah Irene: Ugh... that is no use Fenrir!";
+	unittalk 'boss_id, "Sarah Irene: Ugh... não adianta, Fenrir!";
 	end;
 OnTimer113000:
-	npctalk "Fenrith Fenrir: The power of doubt, a powerful force, the power of deeply hidden secrets in the mind!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: O poder da dúvida, uma força poderosa, o poder dos segredos escondidos no fundo da mente!!!", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE, AREA, 'fenrir_7$;
 	end;
 OnTimer120000:
 	callsub S_Hit,8;
-	npctalk "Fenrith Fenrir: Now!!! Psychic Wave!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Agora!!! Onda Psíquica!!!!", 'fenrir_7$;
 	specialeffect EF_SPR_PLANT10, AREA, 'sarah_17$;
 	monster 'map_glast$,190,341, "Large Gigantes#a1", 3194,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN1
 	monster 'map_glast$,214,331, "Large Gigantes#b2", 3195,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN2
 	progressbar_npc "000000",30, 'fenrir_7$;
 	end;
 OnTimer120500:
-	unittalk 'boss_id, "Sarah Irene: Hurk.. such an annoying magic bombardment!!";
+	unittalk 'boss_id, "Sarah Irene: Hurk.. que bombardeio mágico irritante!!";
 	end;
 OnTimer123000:
-	npctalk "Fenrith Fenrir: I speak to you who controls fire, I Fenrith, desire a fire that does not go out...", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Eu falo a você que controla o fogo, eu, Fenrith, desejo um fogo que não se apague...", 'fenrir_7$;
 	specialeffect EF_BEGINSPELL_YB, AREA, 'fenrir_7$;
 	end;
 OnTimer135000:
-	npctalk "Fenrith Fenrir: Endlessly burning conflagration, a fire that can scorch even the soul!! Appear before me now!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Incêndio que arde sem fim, um fogo capaz de queimar até a alma!! Apareça diante de mim agora!!", 'fenrir_7$;
 	specialeffect EF_BEGINSPELL_YB, AREA, 'fenrir_7$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	end;
 OnTimer150000:
 	callsub S_Hit,9;
-	npctalk "Fenrith Fenrir: Emerge!! Fire Insignia!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Surja!! Insígnia do Fogo!!!!", 'fenrir_7$;
 	specialeffect EF_DEMONICFIRE, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer150500:
-	unittalk 'boss_id, "Sarah Irene: I am Sarah Irene! I will not fall so easily!!!";
+	unittalk 'boss_id, "Sarah Irene: Eu sou Sarah Irene! Eu não caio assim tão fácil!!!";
 	end;
 OnTimer153000:
-	npctalk "Fenrith Fenrir: True wrath of the sky, thunderbolt that may split the earth... Fall before me now!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Verdadeira ira do céu, raio capaz de rachar a terra... Caia diante de mim agora!!", 'fenrir_7$;
 	specialeffect EF_DQ9_CHARGE3, AREA, 'fenrir_7$;
 	end;
 OnTimer160000:
 	callsub S_Hit,10;
-	npctalk "Fenrith Fenrir: Come now!! Thunder Storm!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Venha agora!! Tempestade de Raios!!!!!", 'fenrir_7$;
 	specialeffect EF_THUNDERSTORM2, AREA, 'sarah_17$;
-	unittalk 'boss_id, "Sarah Irene: Ugh...you are.. stronger than I predicted Fenrir...";
+	unittalk 'boss_id, "Sarah Irene: Ugh...você é.. mais forte do que eu previa, Fenrir...";
 	progressbar_npc "000000",10, 'fenrir_7$;
 	end;
 OnTimer160500:
-	unittalk 'boss_id, "Sarah Irene: Ugh...you are.. stronger than I predicted Fenrir...";
+	unittalk 'boss_id, "Sarah Irene: Ugh...você é.. mais forte do que eu previa, Fenrir...";
 	end;
 OnTimer163000:
-	npctalk "Fenrith Fenrir: True wrath of the sky, thunderbolt that may split the earth... Fall before me now!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Verdadeira ira do céu, raio capaz de rachar a terra... Caia diante de mim agora!!", 'fenrir_7$;
 	specialeffect EF_DQ9_CHARGE3, AREA, 'fenrir_7$;
 	end;
 OnTimer170000:
 	callsub S_Hit,11;
-	npctalk "Fenrith Fenrir: Come now!! Thunder Storm!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Venha agora!! Tempestade de Raios!!!!!", 'fenrir_7$;
 	specialeffect EF_THUNDERSTORM2, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	progressbar_npc "000000",30, 'fenrir_7$;
@@ -1443,7 +1443,7 @@ OnTimer170500:
 	unittalk 'boss_id, "Sarah Irene: Argh!!!!!! Ahhh!!!!!";
 	end;
 OnTimer173000:
-	npctalk "Fenrith Fenrir: The mercilessly cold breath of the Northern winds,", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: O sopro impiedosamente frio dos ventos do Norte,", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE2, AREA, 'fenrir_7$;
 	end;
 OnTimer180000:
@@ -1453,32 +1453,32 @@ OnTimer180000:
 	monster 'map_glast$,214,331, "Large Gigantes#b2", 3195,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN2
 	end;
 OnTimer185000:
-	npctalk "Fenrith Fenrir: Come like the silent dawn mist and freeze everything!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Venha como a névoa silenciosa da madrugada e congele tudo!!", 'fenrir_7$;
 	specialeffect EF_PRIMECHARGE2, AREA, 'fenrir_7$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	end;
 OnTimer200000:
 	callsub S_Hit,12;
-	npctalk "Fenrith Fenrir: Appear!!! Frost Misty!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Apareça!!! Zero Absoluto!!!!!", 'fenrir_7$;
 	specialeffect EF_FROSTMYSTY, AREA, 'sarah_17$;
 	donpcevent 'fenrir_7$ + "::OnStart";
 	progressbar_npc "000000",50, 'fenrir_7$;
 	end;
 OnTimer200500:
-	unittalk 'boss_id, "Sarah Irene: Argh!!! I will kill you all!!!!!!";
+	unittalk 'boss_id, "Sarah Irene: Argh!!! Eu vou matar vocês todos!!!!!!";
 	specialeffect EF_FROSTMYSTY, AREA, 'sarah_17$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	end;
 OnTimer203000:
-	npctalk "Fenrith Fenrir: Heaven's sword piercing the sky", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Espada dos céus que perfura o firmamento", 'fenrir_7$;
 	specialeffect EF_BLACKBODY, AREA, 'fenrir_7$;
 	specialeffect EF_RECOGNIZED, AREA, 'fenrir_7$;
 	end;
 OnTimer216000:
-	npctalk "Fenrith Fenrir: I wish to borrow your strength for a moment!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Eu quero tomar emprestada a sua força por um instante!!", 'fenrir_7$;
 	end;
 OnTimer230000:
-	npctalk "Fenrith Fenrir: Let fall here your extreme strength that can tear even the vacuum!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Deixe cair aqui a sua força extrema, capaz de rasgar até o vácuo!!", 'fenrir_7$;
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
 	end;
 OnTimer239000:
@@ -1488,10 +1488,10 @@ OnTimer239000:
 	monster 'map_glast$,214,331, "Large Gigantes#b2", 3195,1, instance_npcname("#fenrir_boss_final_1") + "::OnMobDead";// MM_L_GIGAN2
 	end;
 OnTimer240000:
-	npctalk "Fenrith Fenrir: Sword that can control life and death, and pierce space time!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Espada capaz de controlar a vida e a morte, e de perfurar o espaço-tempo!!!", 'fenrir_7$;
 	end;
 OnTimer250000:
-	npctalk "Fenrith Fenrir: Come out Baretis Spear!!!!!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Venha, Baretis Spear!!!!!!", 'fenrir_7$;
 	specialeffect EF_PRESSURE3, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		specialeffect EF_PRESSURE3, AREA, instance_npcname("#effect_glast_event03_" + .@i);
@@ -1502,31 +1502,31 @@ OnTimer253000:
 	specialeffect EF_PRESSURE3, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		specialeffect EF_PRESSURE3, AREA, instance_npcname("#effect_glast_event03_" + .@i);
-	npctalk "Fenrith Fenrir: Now! I put Sarah in critical condition! You have to finish her off! Attack her quickly! Sarah is strong!", 'fenrir_7$;
-	mapannounce 'map_glast$, "Fenrith Fenrir: Now! I put Sarah in critical condition! You have to finish her off!! Attack her quickly! Sarah is strong!", bc_map,0xEBFF;
-	npctalk "Sarah Irene: Hurk...this.. cannot happen!!! I cannot lose!!!!!", 'sarah_17$;
+	npctalk "Fenrith Fenrir: Agora! Eu deixei a Sarah em estado crítico! Vocês têm que acabar com ela! Ataquem depressa! A Sarah é forte!", 'fenrir_7$;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Agora! Eu deixei a Sarah em estado crítico! Vocês têm que acabar com ela!! Ataquem depressa! A Sarah é forte!", bc_map,0xEBFF;
+	npctalk "Sarah Irene: Hurk...isso.. não pode acontecer!!! Eu não posso perder!!!!!", 'sarah_17$;
 	end;
 OnTimer263000:
-	npctalk "Fenrith Fenrir: Since you may not be able to finish her off alone, I will prepare one final spell!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Como vocês podem não conseguir acabar com ela sozinhos, eu vou preparar uma última magia!!", 'fenrir_7$;
 	progressbar_npc "000000",50, 'fenrir_7$;
 	end;
 OnTimer273000:
 	specialeffect EF_BOTTOM_BASILICA2, AREA, 'sarah_17$;
-	npctalk "Fenrith Fenrir: Heaven's sword piercing the sky", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Espada dos céus que perfura o firmamento", 'fenrir_7$;
 	specialeffect EF_RECOGNIZED, AREA, 'fenrir_7$;
 	specialeffect EF_BLACKBODY, AREA, 'fenrir_7$;
 	end;
 OnTimer283000:
-	npctalk "Fenrith Fenrir: I wish to borrow your strength for a moment!!", 'fenrir_7$;
+	npctalk "Fenrith Fenrir: Eu quero tomar emprestada a sua força por um instante!!", 'fenrir_7$;
 	end;
 OnTimer293000:
-	npctalk "Fenrith Fenrir: Let fall here your extreme strength that can tear even the vacuum!!";
+	npctalk "Fenrith Fenrir: Deixe cair aqui a sua força extrema, capaz de rasgar até o vácuo!!";
 	end;
 OnTimer303000:
-	npctalk "Fenrith Fenrir: Sword that can control life and death, and pierce space time!!!";
+	npctalk "Fenrith Fenrir: Espada capaz de controlar a vida e a morte, e de perfurar o espaço-tempo!!!";
 	end;
 OnTimer313000:
-	npctalk "Fenrith Fenrir: Come out Baretis Spear!!!!!!";
+	npctalk "Fenrith Fenrir: Venha, Baretis Spear!!!!!!";
 	specialeffect EF_PRESSURE3, AREA, 'sarah_17$;
 	for ( .@i = 1; .@i <= 8; .@i++ )
 		specialeffect EF_PRESSURE3, AREA, instance_npcname("#effect_glast_event03_" + .@i);
@@ -1568,16 +1568,16 @@ OnTimer6000:
 	enablenpc 'sarah_20$;
 	end;
 OnTimer9000:
-	npctalk "Fenrith Fenrir: Sentinel Breeze! I have it in my hand!", 'fenrir_8$;
+	npctalk "Fenrith Fenrir: Sentinel Breeze! Eu a tenho em mãos!", 'fenrir_8$;
 	end;
 OnTimer12000:
 	npctalk "Sarah Irene: Hurk....", 'sarah_20$;
 	end;
 OnTimer15000:
-	npctalk "Fenrith Fenrir: I can find Baldur with this!", 'fenrir_8$;
+	npctalk "Fenrith Fenrir: Com ela eu posso achar Baldur!", 'fenrir_8$;
 	end;
 OnTimer18000:
-	npctalk "Sarah Irene: Not yet!!", 'sarah_20$;
+	npctalk "Sarah Irene: Ainda não!!", 'sarah_20$;
 	progressbar_npc "000000",2, 'sarah_20$;
 	end;
 OnTimer21000:
@@ -1586,21 +1586,21 @@ OnTimer21000:
 	enablenpc 'fenrir_9$;
 	end;
 OnTimer24000:
-	npctalk "Sarah Irene: Hehe... You evade well like a rat.", 'sarah_20$;
+	npctalk "Sarah Irene: Hehe... Você foge bem, como um rato.", 'sarah_20$;
 	end;
 OnTimer27000:
-	npctalk "Sarah Irene: However, I cannot let you leave with that.", 'sarah_20$;
+	npctalk "Sarah Irene: Mas eu não posso deixar você ir embora com isso.", 'sarah_20$;
 	end;
 OnTimer30000:
-	npctalk "Sarah Irene: I will blow this entire castle away! Yaah!", 'sarah_20$;
+	npctalk "Sarah Irene: Eu vou explodir este castelo inteiro! Yaah!", 'sarah_20$;
 	progressbar_npc "000000",15, 'sarah_20$;
 	end;
 OnTimer33000:
-	npctalk "Fenrith Fenrir: She is planning to collapse this place! I must perform a large scale teleportation!!!", 'fenrir_9$;
+	npctalk "Fenrith Fenrir: Ela pretende derrubar este lugar! Eu preciso fazer um teleporte em larga escala!!!", 'fenrir_9$;
 	progressbar_npc "000000",6, 'fenrir_9$;
 	end;
 OnTimer36000:
-	npctalk "Fenrith Fenrir: Farewell Valkyrie!! I shall take the Sentinel Breeze! So long!", 'fenrir_9$;
+	npctalk "Fenrith Fenrir: Adeus, Valquíria!! Eu levo a Sentinel Breeze! Até mais!", 'fenrir_9$;
 	end;
 OnTimer39000:
 	for ( .@i = 1; .@i <= 8; .@i++ )
@@ -1645,19 +1645,19 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 1500;
 	cutin "fenrir_b.bmp",2;
-	npctalk "Fenrith Fenrir: Hehe.. You are certainly skilled but I think you have underestimated me, Valkyrie.", 'fenrir_10$;
+	npctalk "Fenrith Fenrir: Hehe.. Você é habilidosa mesmo, mas eu acho que me subestimou, Valquíria.", 'fenrir_10$;
 	sleep2 3000;
-	mapannounce 'map_glast$, "Sarah Irene: You rather entertain me Fenrith...", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Você até que me diverte, Fenrith...", bc_map,0xEBFF;
 	sleep2 3000;
-	mapannounce 'map_glast$, "Sarah Irene: Did you think you can escape that easily?", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Você achou que podia escapar assim tão fácil?", bc_map,0xEBFF;
 	sleep2 3000;
-	mapannounce 'map_glast$, "Sarah Irene: I shall turn Glast Heim into hell!!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Eu vou transformar Glast Heim num inferno!!", bc_map,0xEBFF;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: If we don't escape now we will suffer a gruesome fate by Sarah's monsters and magic!", 'fenrir_10$;
+	npctalk "Fenrith Fenrir: Se não escaparmos agora, vamos ter um fim horrível pelas mãos dos monstros e da magia da Sarah!", 'fenrir_10$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: Let's meet at Glast Heim entrance where we first met! If we flee that far it should be safe!", 'fenrir_10$;
+	npctalk "Fenrith Fenrir: Vamos nos encontrar na entrada de Glast Heim, onde nos vimos pela primeira vez! Se fugirmos até lá, deve ser seguro!", 'fenrir_10$;
 	sleep2 3000;
-	npctalk "Fenrith Fenrir: There is no time! Hurry!", 'fenrir_10$;
+	npctalk "Fenrith Fenrir: Não há tempo! Depressa!", 'fenrir_10$;
 	sleep2 3000;
 	cutin "",255;
 	disablenpc 'fenrir_10$;
@@ -1681,32 +1681,32 @@ OnTimer300000:
 	disablenpc 'fenrir_6$;
 	end;
 OnTimer305000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: Sentinel Breeze! I have it in my hand!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Sentinel Breeze! Eu a tenho em mãos!", bc_map,0xEBFF;
 	end;
 OnTimer308000:
 	mapannounce 'map_glast$, "Sarah Irene: Hurk....", bc_map,0xEBFF;
 	end;
 OnTimer311000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: Hehe.. You are certainly skilled but I think you have underestimated me, Valkyrie.", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Hehe.. Você é habilidosa mesmo, mas eu acho que me subestimou, Valquíria.", bc_map,0xEBFF;
 	end;
 OnTimer314000:
-	mapannounce 'map_glast$, "Sarah Irene: You rather entertain me Fenrith...", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Você até que me diverte, Fenrith...", bc_map,0xEBFF;
 	end;
 OnTimer317000:
-	mapannounce 'map_glast$, "Sarah Irene: Did you think you can escape that easily?", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Você achou que podia escapar assim tão fácil?", bc_map,0xEBFF;
 	end;
 OnTimer320000:
-	mapannounce 'map_glast$, "Sarah Irene: I shall turn Glast Heim into hell!!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Eu vou transformar Glast Heim num inferno!!", bc_map,0xEBFF;
 	end;
 OnTimer323000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: If we don't escape now we will suffer a gruesome fate by Sarah's monsters and magic!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Se não escaparmos agora, vamos ter um fim horrível pelas mãos dos monstros e da magia da Sarah!", bc_map,0xEBFF;
 	end;
 OnTimer326000:
-	mapannounce 'map_glast$, "Fenrith Fenrir: Let's meet at Glast Heim entrance where we first met! If we flee that far it should be safe!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Vamos nos encontrar na entrada de Glast Heim, onde nos vimos pela primeira vez! Se fugirmos até lá, deve ser seguro!", bc_map,0xEBFF;
 	end;
 OnTimer329000:
 	stopnpctimer;
-	mapannounce 'map_glast$, "Fenrith Fenrir: There is no time! Hurry!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Fenrith Fenrir: Não há tempo! Depressa!", bc_map,0xEBFF;
 	donpcevent instance_npcname("#sarah_wrath") + "::OnStart";
 	end;
 OnStop:
@@ -1731,28 +1731,28 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer10000:
-	mapannounce 'map_glast$, "Sarah Irene: Absurd little thing, you think you can escape that easily?", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Criaturinha absurda, você acha que pode escapar assim tão fácil?", bc_map,0xEBFF;
 	callsub S_Spawn,0;
 	end;
 OnTimer50000:
-	mapannounce 'map_glast$, "Sarah Irene: My minions will make sure to kill you!!!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Os meus lacaios vão matar vocês!!!", bc_map,0xEBFF;
 	callsub S_Spawn,1;
 	end;
 OnTimer80000:
-	mapannounce 'map_glast$, "Sarah Irene: I cannot let you escape!!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Eu não posso deixar vocês escaparem!!", bc_map,0xEBFF;
 	callsub S_Spawn,2;
 	end;
 OnTimer110000:
-	mapannounce 'map_glast$, "Sarah Irene: Fenrith Fenrir.... Did you think I couldn't track you because you fled?", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Fenrith Fenrir.... Você achou que eu não conseguiria rastreá-lo porque você fugiu?", bc_map,0xEBFF;
 	callsub S_Spawn,3;
 	end;
 OnTimer150000:
-	mapannounce 'map_glast$, "Sarah Irene: Absurd little thing, you think you can escape that easily?", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Criaturinha absurda, você acha que pode escapar assim tão fácil?", bc_map,0xEBFF;
 	callsub S_Spawn,4;
 	end;
 OnTimer300000:
 	stopnpctimer;
-	mapannounce 'map_glast$, "Sarah Irene: Bwahahahahahaha!! Glast Heim is being filled with my wrath!!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Bwahahahahahaha!! Glast Heim está se enchendo da minha ira!!", bc_map,0xEBFF;
 	for ( .@i = 1; .@i <= 14; .@i++ )
 		enablenpc instance_npcname("#glast_bomb_" + (.@i < 10 ? ("0"+.@i) : .@i));
 	end;
@@ -1862,7 +1862,7 @@ S_Spawn:
 	end;
 OnTouch:
 	unitkill 0;
-	mapannounce 'map_glast$, "Sarah Irene: Bwahahahahahaha!! Glast Heim is being filled with my wrath!!", bc_map,0xEBFF;
+	mapannounce 'map_glast$, "Sarah Irene: Bwahahahahahaha!! Glast Heim está se enchendo da minha ira!!", bc_map,0xEBFF;
 	specialeffect2 EF_LORD;
 	sleep2 1000;
 	specialeffect2 EF_LORD;
@@ -1889,22 +1889,22 @@ OnTouch:
 	if (isbegin_quest(9337) == 0) {
 		cutin "fenrir_a.bmp",2;
 		mes "[Fenrith Fenrir]";
-		mes "You arrived safely!";
-		mes "The dangerous situation";
-		mes "had me worried.";
-		mes "It was difficult and dangerous work";
-		mes "so I am grateful for your help.";
+		mes "Você chegou em segurança!";
+		mes "A situação perigosa";
+		mes "me deixou preocupado.";
+		mes "Foi um trabalho difícil e perigoso,";
+		mes "então eu agradeço a sua ajuda.";
 		next;
 		mes "[Fenrir]";
-		mes "I feel we will meet again";
-		mes "but perhaps it is just my imagination?";
-		mes "Mm.. that would be nice.";
+		mes "Eu sinto que nós vamos nos encontrar de novo,";
+		mes "ou será só imaginação minha?";
+		mes "Mm.. seria bom.";
 		next;
 		mes "[Fenrir]";
-		mes "We worked well together";
-		mes "so I hope we will meet again.";
-		mes "And watch for Sarah,";
-		mes "harm can come your way as well.";
+		mes "Nós trabalhamos bem juntos,";
+		mes "então espero que a gente se encontre de novo.";
+		mes "E fique de olho na Sarah,";
+		mes "o mal pode vir na sua direção também.";
 		setquest 9337;// Wrapping up the Adventure
 		getitem 607,1;// Yggdrasilberry
 		getitem 608,1;// Seed_Of_Yggdrasil
@@ -1913,8 +1913,8 @@ OnTouch:
 		end;
 	}
 	mes "[Fenrir]";
-	mes "We worked well together";
-	mes "so I hope we will meet again.";
+	mes "Nós trabalhamos bem juntos,";
+	mes "então espero que a gente se encontre de novo.";
 	close;
 }
 
@@ -1929,7 +1929,7 @@ OnTouch:
 	monster 'map_glast$,290,147, "Ancient Gigantes#X1",3196,1, .@label$;		// MM_L_GIGAN3
 	monster 'map_glast$,290,146, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
 	monster 'map_glast$,288,147, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
-	unittalk getcharid(3), "" + strcharinfo(0) + " : The Ancient Gigantes that Professor Bernhard spoke of!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Os Gigantes Antigos de que o Professor Bernhard falou!!";
 	enablenpc instance_npcname("Stone Gargoyle#glast_01");
 	enablenpc instance_npcname("Stone Gargoyle#glast_02");
 	enablenpc instance_npcname("Stone Gargoyle#glast_03");
@@ -1949,7 +1949,7 @@ OnTouch:
 	monster 'map_glast$,300,248, "Ancient Gigantes#X2",3196,1, .@label$;		// MM_L_GIGAN3
 	monster 'map_glast$,299,250, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
 	monster 'map_glast$,302,246, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
-	unittalk getcharid(3), "" + strcharinfo(0) + " : The Ancient Gigantes that Professor Bernhard spoke of!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Os Gigantes Antigos de que o Professor Bernhard falou!!";
 	enablenpc instance_npcname("Stone Gargoyle#glast_07");
 	enablenpc instance_npcname("Stone Gargoyle#glast_08");
 	enablenpc instance_npcname("Stone Gargoyle#glast_09");
@@ -1968,7 +1968,7 @@ OnTouch:
 	monster 'map_glast$,292,344, "Ancient Gigantes#X3",3196,1, .@label$;		// MM_L_GIGAN3
 	monster 'map_glast$,290,346, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
 	monster 'map_glast$,291,344, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
-	unittalk getcharid(3), "" + strcharinfo(0) + " : The Ancient Gigantes that Professor Bernhard spoke of!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Os Gigantes Antigos de que o Professor Bernhard falou!!";
 	enablenpc instance_npcname("Stone Gargoyle#glast_12");
 	enablenpc instance_npcname("Stone Gargoyle#glast_13");
 	enablenpc instance_npcname("Stone Gargoyle#glast_14");
@@ -1985,7 +1985,7 @@ OnTouch:
 	monster 'map_glast$,107,147, "Ancient Gigantes#X4",3196,1, .@label$;		// MM_L_GIGAN3
 	monster 'map_glast$,107,145, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
 	monster 'map_glast$,106,148, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
-	unittalk getcharid(3), "" + strcharinfo(0) + " : The Ancient Gigantes that Professor Bernhard spoke of!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Os Gigantes Antigos de que o Professor Bernhard falou!!";
 	enablenpc instance_npcname("Stone Gargoyle#glast_15");
 	enablenpc instance_npcname("Stone Gargoyle#glast_16");
 	enablenpc instance_npcname("Stone Gargoyle#glast_17");
@@ -2005,7 +2005,7 @@ OnTouch:
 	monster 'map_glast$,98,248, "Ancient Gigantes#X5",3196,1, .@label$;		// MM_L_GIGAN3
 	monster 'map_glast$,96,250, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
 	monster 'map_glast$,98,247, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
-	unittalk getcharid(3), "" + strcharinfo(0) + " : The Ancient Gigantes that Professor Bernhard spoke of!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Os Gigantes Antigos de que o Professor Bernhard falou!!";
 	enablenpc instance_npcname("Stone Gargoyle#glast_21");
 	enablenpc instance_npcname("Stone Gargoyle#glast_22");
 	enablenpc instance_npcname("Stone Gargoyle#glast_23");
@@ -2024,7 +2024,7 @@ OnTouch:
 	monster 'map_glast$,107,344, "Ancient Gigantes#X6",3196,1, .@label$;		// MM_L_GIGAN3
 	monster 'map_glast$,107,344, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
 	monster 'map_glast$,109,346, "Ancient Medium Gigantes",3193,1, .@label$;	// MM_M_GIGAN3
-	unittalk getcharid(3), "" + strcharinfo(0) + " : The Ancient Gigantes that Professor Bernhard spoke of!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Os Gigantes Antigos de que o Professor Bernhard falou!!";
 	enablenpc instance_npcname("Stone Gargoyle#glast_26");
 	enablenpc instance_npcname("Stone Gargoyle#glast_27");
 	enablenpc instance_npcname("Stone Gargoyle#glast_28");

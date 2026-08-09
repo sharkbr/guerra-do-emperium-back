@@ -9,1306 +9,1498 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/SarahAndFenrir.txt  (449 textos)
+### npc/re/instances/SarahAndFenrir.txt  (513 textos)
 #: npc/re/instances/SarahAndFenrir.txt#1 (mes)
 - "- You may proceed after reaching level 145 or over -"
-+ ""
++ "- Você pode prosseguir depois de chegar ao nível 145 ou mais -"
 #: npc/re/instances/SarahAndFenrir.txt#2 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#3 (mes)
 - "I would say I am Professor Bernhard, the best weapons researcher in Schwarzwald."
-+ ""
++ "Eu diria que sou o Professor Bernhard, o melhor pesquisador de armas de Schwarzwald."
 #: npc/re/instances/SarahAndFenrir.txt#4 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#5 (mes)
 - "After endless research I have created various weapons, but I felt something was missing so I found the ancient texts."
-+ ""
++ "Depois de uma pesquisa sem fim eu criei várias armas, mas eu sentia que faltava alguma coisa, e então achei os textos antigos."
 #: npc/re/instances/SarahAndFenrir.txt#6 (mes)
 - "I found out about the Dimensional Device during my research."
-+ ""
++ "Foi durante a minha pesquisa que eu descobri o Dispositivo Dimensional."
 #: npc/re/instances/SarahAndFenrir.txt#7 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#8 (mes)
 - "I also realized that relics from the glorious past were also needed to create more powerful and superior weapons."
-+ ""
++ "Também percebi que relíquias do passado glorioso eram necessárias para criar armas mais poderosas e superiores."
 #: npc/re/instances/SarahAndFenrir.txt#9 (mes)
 - "That is why..I need you.."
-+ ""
++ "É por isso que..eu preciso de você.."
 #: npc/re/instances/SarahAndFenrir.txt#10 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#11 (mes)
 - "A longing for accomplishing a powerful weapon as a genuine professor!"
-+ ""
++ "O desejo de concluir uma arma poderosa, como um professor de verdade!"
 #: npc/re/instances/SarahAndFenrir.txt#12 (mes)
 - "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah."
-+ ""
++ "Para conseguir isso, nós precisamos de fragmentos dos Gigantes que apareceram na antiga batalha de Fenrir e Sarah."
 #: npc/re/instances/SarahAndFenrir.txt#13 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#14 (mes)
 - "I cannot leave my post."
-+ ""
++ "Eu não posso deixar o meu posto."
 #: npc/re/instances/SarahAndFenrir.txt#15 (mes)
 - "I need a warrior who can bring me the shards instead.."
-+ ""
++ "Eu preciso de um guerreiro que traga os fragmentos no meu lugar.."
 #: npc/re/instances/SarahAndFenrir.txt#16 (mes)
 - "You seem capable."
-+ ""
++ "Você parece capaz."
 #: npc/re/instances/SarahAndFenrir.txt#17 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#18 (mes)
 - "I will continue discussing this further with your party leader rather than with you."
-+ ""
++ "Eu vou tratar disso com o líder do seu grupo, e não com você."
 #: npc/re/instances/SarahAndFenrir.txt#19 (mes)
 - "I need a warrior who can bring me the shard of Gigantes instead.."
-+ ""
++ "Eu preciso de um guerreiro que traga o fragmento dos Gigantes no meu lugar.."
 #: npc/re/instances/SarahAndFenrir.txt#20 (mes)
 - "You seem capable."
-+ ""
++ "Você parece capaz."
 #: npc/re/instances/SarahAndFenrir.txt#21 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#22 (mes)
 - "What do you think?"
-+ ""
++ "O que você acha?"
 #: npc/re/instances/SarahAndFenrir.txt#23 (mes)
 - "Would you go to the past and bring me back the shards of Gigantes?"
-+ ""
++ "Você iria ao passado e me traria os fragmentos dos Gigantes?"
 #: npc/re/instances/SarahAndFenrir.txt#24 (mes)
 - "I will make sure to compensate you sufficiently."
-+ ""
++ "Eu garanto que vou recompensar você o bastante."
 #: npc/re/instances/SarahAndFenrir.txt#25 (select)
 - "No"
-+ ""
++ "Não"
 #: npc/re/instances/SarahAndFenrir.txt#26 (select)
 - "Yes"
-+ ""
++ "Sim"
 #: npc/re/instances/SarahAndFenrir.txt#27 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#28 (mes)
 - "Visit me again if you change your mind."
-+ ""
++ "Volte a me procurar se mudar de ideia."
 #: npc/re/instances/SarahAndFenrir.txt#29 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#30 (mes)
 - "I set the Dimensional Device to Glast Heim of the past, where Fenrir and Sarah once fought."
-+ ""
++ "Eu regulei o Dispositivo Dimensional para a Glast Heim do passado, onde Fenrir e Sarah um dia lutaram."
 #: npc/re/instances/SarahAndFenrir.txt#31 (mes)
 - "The operating time isn't long so hurry up and come back."
-+ ""
++ "O tempo de funcionamento não é longo, então se apresse e volte logo."
 #: npc/re/instances/SarahAndFenrir.txt#33 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#34 (mes)
 - "Did you successfully bring back the shards of Gigantes?"
-+ ""
++ "Você conseguiu trazer os fragmentos dos Gigantes?"
 #: npc/re/instances/SarahAndFenrir.txt#35 (mes)
 - "You probably faced a lot of danger so thank you for the effort."
-+ ""
++ "Você deve ter enfrentado muito perigo, então obrigado pelo esforço."
 #: npc/re/instances/SarahAndFenrir.txt#36 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#37 (mes)
 - "I don't expect to receive the shards for nothing when you have risked your life for them!"
-+ ""
++ "Eu não espero receber os fragmentos de graça, depois de você ter arriscado a sua vida por eles!"
 #: npc/re/instances/SarahAndFenrir.txt#38 (mes)
 - "I will give you a useful looking earring from the relics I have happened to have obtained during my previous research."
-+ ""
++ "Eu vou lhe dar um brinco de aparência útil, das relíquias que eu obtive numa pesquisa anterior."
 #: npc/re/instances/SarahAndFenrir.txt#39 (mes)
 - "- The left earring of Sarah -"
-+ ""
++ "- O brinco esquerdo da Sarah -"
 #: npc/re/instances/SarahAndFenrir.txt#40 (mes)
 - "Usable for Heal 1Lv"
-+ ""
++ "Permite usar Curar Nv.1"
 #: npc/re/instances/SarahAndFenrir.txt#41 (mes)
 - "- The right earring of Sarah -"
-+ ""
++ "- O brinco direito da Sarah -"
 #: npc/re/instances/SarahAndFenrir.txt#42 (mes)
 - "Usable for Teleport 1Lv"
-+ ""
++ "Permite usar Teleporte Nv.1"
 #: npc/re/instances/SarahAndFenrir.txt#43 (select)
 - "The left earring of Sarah"
-+ ""
++ "O brinco esquerdo da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#44 (select)
 - "The right earring of Sarah"
-+ ""
++ "O brinco direito da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#45 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#46 (mes)
 - "If you hand the shards of Gigantes to my chief assistant, I will make sure the earrings will be correspondingly great through an enchantment."
-+ ""
++ "Se você entregar os fragmentos dos Gigantes ao meu assistente-chefe, eu garanto que os brincos ficarão à altura com um encantamento."
 #: npc/re/instances/SarahAndFenrir.txt#47 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#48 (mes)
 - "The more shards of Gigantes are collected, the better."
-+ ""
++ "Quanto mais fragmentos dos Gigantes forem juntados, melhor."
 #: npc/re/instances/SarahAndFenrir.txt#49 (mes)
 - "However, there isn't a stable supply of energy needed to work the Dimensional Device."
-+ ""
++ "Só que não há um fornecimento estável da energia necessária para o Dispositivo Dimensional funcionar."
 #: npc/re/instances/SarahAndFenrir.txt#50 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#51 (mes)
 - "Come back and find me after one week has passed for the supply of Dimensional Device energy."
-+ ""
++ "Volte a me procurar depois de uma semana, pelo fornecimento de energia do Dispositivo Dimensional."
 #: npc/re/instances/SarahAndFenrir.txt#52 (mes)
 - "I need you to find shards of Gigantes again."
-+ ""
++ "Eu preciso que você ache fragmentos dos Gigantes de novo."
 #: npc/re/instances/SarahAndFenrir.txt#53 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#54 (mes)
 - "We lack the shards of Gigantes in order to make powerful weapons."
-+ ""
++ "Faltam fragmentos dos Gigantes para fazer armas poderosas."
 #: npc/re/instances/SarahAndFenrir.txt#55 (mes)
 - "Because a lot of energy is needed to open a dimension device, come back and find me when the energy has accumulated."
-+ ""
++ "Como é preciso muita energia para abrir um dispositivo dimensional, volte a me procurar quando a energia tiver se acumulado."
 #: npc/re/instances/SarahAndFenrir.txt#56 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#57 (mes)
 - "I have been waiting."
-+ ""
++ "Eu estava esperando."
 #: npc/re/instances/SarahAndFenrir.txt#58 (mes)
 - "How is everything going?"
-+ ""
++ "Como vão as coisas?"
 #: npc/re/instances/SarahAndFenrir.txt#59 (mes)
 - "While you were gone I have succeeded in accumulating dimensional energy."
-+ ""
++ "Enquanto você esteve fora, eu consegui acumular energia dimensional."
 #: npc/re/instances/SarahAndFenrir.txt#60 (mes)
 - "We can open the dimension device again."
-+ ""
++ "Nós podemos abrir o dispositivo dimensional de novo."
 #: npc/re/instances/SarahAndFenrir.txt#61 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#62 (mes)
 - "A longing for accomplishing a powerful weapon as a genuine professor!"
-+ ""
++ "O desejo de concluir uma arma poderosa, como um professor de verdade!"
 #: npc/re/instances/SarahAndFenrir.txt#63 (mes)
 - "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah."
-+ ""
++ "Para conseguir isso, nós precisamos de fragmentos dos Gigantes que apareceram na antiga batalha de Fenrir e Sarah."
 #: npc/re/instances/SarahAndFenrir.txt#64 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#65 (mes)
 - "Because I cannot leave my post, "
-+ ""
++ "Como eu não posso deixar o meu posto, "
 #: npc/re/instances/SarahAndFenrir.txt#66 (mes)
 - "I need a warrior who can bring me the shards instead."
-+ ""
++ "eu preciso de um guerreiro que traga os fragmentos no meu lugar."
 #: npc/re/instances/SarahAndFenrir.txt#67 (mes)
 - "I think you can assist me once again.."
-+ ""
++ "Eu acho que você pode me ajudar mais uma vez.."
 #: npc/re/instances/SarahAndFenrir.txt#68 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#69 (mes)
 - "There, all the preparations are finished."
-+ ""
++ "Pronto, todos os preparativos estão concluídos."
 #: npc/re/instances/SarahAndFenrir.txt#70 (mes)
 - "Can you go back in time again and bring me the shards of Gigantes?"
-+ ""
++ "Você pode voltar no tempo de novo e me trazer os fragmentos dos Gigantes?"
 #: npc/re/instances/SarahAndFenrir.txt#71 (mes)
 - "I will make sure to compensate you sufficiently."
-+ ""
++ "Eu garanto que vou recompensar você o bastante."
 #: npc/re/instances/SarahAndFenrir.txt#72 (select)
 - "No"
-+ ""
++ "Não"
 #: npc/re/instances/SarahAndFenrir.txt#73 (select)
 - "Yes"
-+ ""
++ "Sim"
 #: npc/re/instances/SarahAndFenrir.txt#74 (mes)
 - "[Professor Bernhard]"
-+ ""
++ "[Professor Bernhard]"
 #: npc/re/instances/SarahAndFenrir.txt#75 (mes)
 - "I set the Dimensional Device to Glast Heim of the past, where Fenrir and Sarah once were."
-+ ""
++ "Eu regulei o Dispositivo Dimensional para a Glast Heim do passado, onde Fenrir e Sarah um dia estiveram."
 #: npc/re/instances/SarahAndFenrir.txt#76 (mes)
 - "It won't last long so hurry up and come back."
-+ ""
++ "Não vai durar muito, então se apresse e volte logo."
 #: npc/re/instances/SarahAndFenrir.txt#78 (mes)
 - "- You must be level 145 or over"
-+ ""
++ "- Você precisa ser nível 145 ou mais"
 #: npc/re/instances/SarahAndFenrir.txt#79 (mes)
 - "It seems entry is possible. -"
-+ ""
++ "Parece que dá para entrar. -"
 #: npc/re/instances/SarahAndFenrir.txt#80 (mes)
 - "- The Dimensional Device has closed."
-+ ""
++ "- O Dispositivo Dimensional se fechou."
 #: npc/re/instances/SarahAndFenrir.txt#81 (mes)
 - "It seems entry is not possible. -"
-+ ""
++ "Parece que não dá para entrar. -"
 #: npc/re/instances/SarahAndFenrir.txt#82 (mes)
 - "- The Dimensional Device has closed."
-+ ""
++ "- O Dispositivo Dimensional se fechou."
 #: npc/re/instances/SarahAndFenrir.txt#83 (mes)
 - "It seems entry is not possible. -"
-+ ""
++ "Parece que não dá para entrar. -"
 #: npc/re/instances/SarahAndFenrir.txt#84 (select)
 - "Do not enter the device."
-+ ""
++ "Não entrar no dispositivo."
 #: npc/re/instances/SarahAndFenrir.txt#85 (select)
 - "Enter the time device"
-+ ""
++ "Entrar no dispositivo do tempo"
 #: npc/re/instances/SarahAndFenrir.txt#86 (mes)
 - "- It seems the Dimensional Device "
-+ ""
++ "- Parece que o Dispositivo Dimensional "
 #: npc/re/instances/SarahAndFenrir.txt#87 (mes)
 - "will contort space time -"
-+ ""
++ "vai distorcer o espaço-tempo -"
 #: npc/re/instances/SarahAndFenrir.txt#88 (mes)
 - "- There is a damp presence. -"
-+ ""
++ "- Há uma presença úmida. -"
 #: npc/re/instances/SarahAndFenrir.txt#89 (atrib)
 - "Sarah vs Fenrir"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#90 (mes)
 - "An unknown error occurred."
-+ ""
++ "Ocorreu um erro desconhecido."
 #: npc/re/instances/SarahAndFenrir.txt#91 (mes)
 - "Memorial Dungeon "
-+ ""
++ "A masmorra memorial "
 #: npc/re/instances/SarahAndFenrir.txt#92 (mes)
 - " does not exist."
-+ ""
++ " não existe."
 #: npc/re/instances/SarahAndFenrir.txt#93 (mes)
 - "The party leader has not created the Memorial Dungeon."
-+ ""
++ "O líder do grupo não criou a masmorra memorial."
 #: npc/re/instances/SarahAndFenrir.txt#94 (mes)
 - "Only party members can enter the Memorial Dungeon."
++ "Só membros do grupo podem entrar na masmorra memorial."
+#: npc/re/instances/SarahAndFenrir.txt#95 (mapannounce)
+- "dali02"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#96 (mapannounce)
+- "Party member "
++ "O aventureiro "
+#: npc/re/instances/SarahAndFenrir.txt#97 (mapannounce)
+- " of party's "
++ ", do grupo "
+#: npc/re/instances/SarahAndFenrir.txt#98 (mapannounce)
+- " enters Room "
++ ", entra na Sala "
 #: npc/re/instances/SarahAndFenrir.txt#101 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#102 (mes)
 - "I've heard about you from the professor."
-+ ""
++ "O professor me falou de você."
 #: npc/re/instances/SarahAndFenrir.txt#103 (mes)
 - "The professor has told me to sufficiently compensate you for risking your life and bringing the shards of Gigantes."
-+ ""
++ "O professor mandou recompensar você o bastante por arriscar a vida e trazer os fragmentos dos Gigantes."
 #: npc/re/instances/SarahAndFenrir.txt#104 (select)
 - "Enchant earring."
-+ ""
++ "Encantar brinco."
 #: npc/re/instances/SarahAndFenrir.txt#105 (select)
 - "Purchase earring"
-+ ""
++ "Comprar brinco"
 #: npc/re/instances/SarahAndFenrir.txt#106 (select)
 - "Exit conversation"
-+ ""
++ "Encerrar a conversa"
 #: npc/re/instances/SarahAndFenrir.txt#107 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#108 (mes)
 - "Sarah's earrings we have discovered at the archaeological site must certainly have great potential."
-+ ""
++ "Os brincos da Sarah que nós descobrimos no sítio arqueológico devem ter um grande potencial."
 #: npc/re/instances/SarahAndFenrir.txt#109 (select)
 - "Enchant Sarah's earrings"
-+ ""
++ "Encantar os brincos da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#110 (select)
 - "Initialize enchantment on Sarah's earrings"
-+ ""
++ "Zerar o encantamento dos brincos da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#111 (select)
 - "Exit conversation"
-+ ""
++ "Encerrar a conversa"
 #: npc/re/instances/SarahAndFenrir.txt#112 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#113 (mes)
 - "2 enchantments are possible on one earring."
-+ ""
++ "São possíveis 2 encantamentos num brinco."
 #: npc/re/instances/SarahAndFenrir.txt#114 (mes)
 - "Which earring do you wish to enchant?"
-+ ""
++ "Qual brinco você quer encantar?"
 #: npc/re/instances/SarahAndFenrir.txt#115 (select)
 - "The left earring of Sarah"
-+ ""
++ "O brinco esquerdo da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#116 (select)
 - "The right earring of Sarah"
-+ ""
++ "O brinco direito da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#117 (select)
 - "Quit"
-+ ""
++ "Desistir"
 #: npc/re/instances/SarahAndFenrir.txt#118 (atrib)
 - "left"
-+ ""
++ "esquerdo"
 #: npc/re/instances/SarahAndFenrir.txt#119 (atrib)
 - "right"
-+ ""
++ "direito"
 #: npc/re/instances/SarahAndFenrir.txt#120 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#121 (mes)
 - "If you want an enchantment "
-+ ""
++ "Se você quiser um encantamento "
 #: npc/re/instances/SarahAndFenrir.txt#122 (mes)
 - "on Sarah's earrings, "
-+ ""
++ "nos brincos da Sarah, "
 #: npc/re/instances/SarahAndFenrir.txt#123 (mes)
 - "come and find me again."
-+ ""
++ "volte a me procurar."
 #: npc/re/instances/SarahAndFenrir.txt#124 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#125 (mes)
 - "You must equip the item to make enchantment possible."
-+ ""
++ "Você precisa equipar o item para o encantamento ser possível."
 #: npc/re/instances/SarahAndFenrir.txt#126 (mes)
 - "Which column do you wish to enchant?"
-+ ""
++ "Qual coluna você quer encantar?"
 #: npc/re/instances/SarahAndFenrir.txt#127 (select)
 - "Left column"
-+ ""
++ "Coluna esquerda"
 #: npc/re/instances/SarahAndFenrir.txt#128 (select)
 - "Right column"
-+ ""
++ "Coluna direita"
 #: npc/re/instances/SarahAndFenrir.txt#129 (atrib)
 - "left"
-+ ""
++ "esquerdo"
 #: npc/re/instances/SarahAndFenrir.txt#130 (atrib)
 - "right"
-+ ""
++ "direito"
 #: npc/re/instances/SarahAndFenrir.txt#131 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#132 (mes)
 - "If you wish to enchant, you must equip Sarah's "
-+ ""
++ "Se você quer encantar, precisa equipar o brinco "
 #: npc/re/instances/SarahAndFenrir.txt#133 (mes)
 - " earring."
-+ ""
++ " da Sarah."
 #: npc/re/instances/SarahAndFenrir.txt#134 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#135 (mes)
 - "A fully enchanted earring of Sarah cannot be enchanted any further."
-+ ""
++ "Um brinco da Sarah totalmente encantado não pode ser encantado mais."
 #: npc/re/instances/SarahAndFenrir.txt#136 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#137 (mes)
 - "Sarah's Earring is currently in a state of enchantment in slot 4."
-+ ""
++ "O Brinco da Sarah está encantado no espaço 4."
 #: npc/re/instances/SarahAndFenrir.txt#138 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#139 (mes)
 - "Sarah's Earring is currently in a state without enchantment."
-+ ""
++ "O Brinco da Sarah está sem encantamento."
 #: npc/re/instances/SarahAndFenrir.txt#140 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#141 (mes)
 - "Which ability do you want as an enchantment on slot "
-+ ""
++ "Qual atributo você quer como encantamento no espaço "
 #: npc/re/instances/SarahAndFenrir.txt#142 (mes)
 - "?"
-+ ""
++ "?"
 #: npc/re/instances/SarahAndFenrir.txt#143 (select)
 - "CRI or Critical"
-+ ""
++ "CRI ou Crítico"
 #: npc/re/instances/SarahAndFenrir.txt#144 (select)
 - "Expert archer or Bleed"
-+ ""
++ "Arqueiro Perito ou Sangramento"
 #: npc/re/instances/SarahAndFenrir.txt#145 (select)
 - "Conservation or MATK"
-+ ""
++ "Conservação ou MATK"
 #: npc/re/instances/SarahAndFenrir.txt#146 (select)
 - "Delay Attack or Delay Skill"
-+ ""
++ "Atraso de Ataque ou Atraso de Habilidade"
 #: npc/re/instances/SarahAndFenrir.txt#147 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#148 (mes)
 - "Selected for CRI or Critical Enchantment slot "
-+ ""
++ "Escolhido CRI ou Crítico para o encantamento do espaço "
 #: npc/re/instances/SarahAndFenrir.txt#149 (mes)
 - "."
-+ ""
++ "."
 #: npc/re/instances/SarahAndFenrir.txt#150 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#151 (mes)
 - "Selected for Expert Archer or Bleed Enchantment slot "
-+ ""
++ "Escolhido Arqueiro Perito ou Sangramento para o encantamento do espaço "
 #: npc/re/instances/SarahAndFenrir.txt#152 (mes)
 - "."
-+ ""
++ "."
 #: npc/re/instances/SarahAndFenrir.txt#153 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#154 (mes)
 - "Selected for Conservation or MATK Enchantment slot "
-+ ""
++ "Escolhido Conservação ou MATK para o encantamento do espaço "
 #: npc/re/instances/SarahAndFenrir.txt#155 (mes)
 - "."
-+ ""
++ "."
 #: npc/re/instances/SarahAndFenrir.txt#156 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#157 (mes)
 - "Selected for Delay Attack or Delay Skill Enchantment slot "
-+ ""
++ "Escolhido Atraso de Ataque ou Atraso de Habilidade para o encantamento do espaço "
 #: npc/re/instances/SarahAndFenrir.txt#158 (mes)
 - "."
-+ ""
++ "."
 #: npc/re/instances/SarahAndFenrir.txt#159 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#160 (mes)
 - "4 shards of Gigantes is required for one enchantment."
-+ ""
++ "São necessários 4 fragmentos dos Gigantes para um encantamento."
 #: npc/re/instances/SarahAndFenrir.txt#161 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#162 (mes)
 - "Because enchantment is a high risk process, there is risk of Sarah's earring being destroyed."
-+ ""
++ "Como o encantamento é um processo de alto risco, há o risco de o brinco da Sarah ser destruído."
 #: npc/re/instances/SarahAndFenrir.txt#163 (mes)
 - "Do you still want to do it?"
-+ ""
++ "Você ainda quer fazer?"
 #: npc/re/instances/SarahAndFenrir.txt#164 (select)
 - "No"
-+ ""
++ "Não"
 #: npc/re/instances/SarahAndFenrir.txt#165 (select)
 - "Yes"
-+ ""
++ "Sim"
 #: npc/re/instances/SarahAndFenrir.txt#166 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#167 (mes)
 - "Please speak to me again after making a clear decision!"
-+ ""
++ "Fale comigo de novo depois de tomar uma decisão firme!"
 #: npc/re/instances/SarahAndFenrir.txt#168 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#169 (mes)
 - "There are not enough shards of Gigantes."
-+ ""
++ "Não há fragmentos dos Gigantes suficientes."
 #: npc/re/instances/SarahAndFenrir.txt#170 (mes)
 - "4 shards of Gigantes is required to do one enchantment."
-+ ""
++ "São necessários 4 fragmentos dos Gigantes para fazer um encantamento."
 #: npc/re/instances/SarahAndFenrir.txt#171 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#172 (mes)
 - "Good. I will start the enchantment!"
-+ ""
++ "Ótimo. Eu vou começar o encantamento!"
 #: npc/re/instances/SarahAndFenrir.txt#173 (mes)
 - "I wish you luck~!"
-+ ""
++ "Boa sorte~!"
 #: npc/re/instances/SarahAndFenrir.txt#174 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#175 (mes)
 - "Aahhhh!!"
-+ ""
++ "Aahhhh!!"
 #: npc/re/instances/SarahAndFenrir.txt#179 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#180 (mes)
 - "Sadly... it is.."
-+ ""
++ "Infelizmente... ele foi.."
 #: npc/re/instances/SarahAndFenrir.txt#181 (mes)
 - "destroyed..."
-+ ""
++ "destruído..."
 #: npc/re/instances/SarahAndFenrir.txt#182 (mes)
 - "Whew.. "
-+ ""
++ "Ufa.. "
 #: npc/re/instances/SarahAndFenrir.txt#183 (mes)
 - "enchantment is not an easy task.."
-+ ""
++ "encantar não é tarefa fácil.."
 #: npc/re/instances/SarahAndFenrir.txt#184 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#185 (mes)
 - "Enchantment completed!"
-+ ""
++ "Encantamento concluído!"
 #: npc/re/instances/SarahAndFenrir.txt#186 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#187 (mes)
 - "Which earring do you wish to initialize?"
-+ ""
++ "Qual brinco você quer zerar?"
 #: npc/re/instances/SarahAndFenrir.txt#188 (select)
 - "The left earring of Sarah"
-+ ""
++ "O brinco esquerdo da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#189 (select)
 - "The right earring of Sarah"
-+ ""
++ "O brinco direito da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#190 (select)
 - "Quit"
-+ ""
++ "Desistir"
 #: npc/re/instances/SarahAndFenrir.txt#191 (atrib)
 - "left"
-+ ""
++ "esquerdo"
 #: npc/re/instances/SarahAndFenrir.txt#192 (atrib)
 - "right"
-+ ""
++ "direito"
 #: npc/re/instances/SarahAndFenrir.txt#193 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#194 (mes)
 - "If you want to initialize an enchantment on Sarah's earrings, come and find me again."
-+ ""
++ "Se você quiser zerar um encantamento dos brincos da Sarah, volte a me procurar."
 #: npc/re/instances/SarahAndFenrir.txt#195 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#196 (mes)
 - "On Sarah's earring. 1 shard of Gigantes is required to initialize the enchantment.."
-+ ""
++ "No brinco da Sarah. É preciso 1 fragmento dos Gigantes para zerar o encantamento.."
 #: npc/re/instances/SarahAndFenrir.txt#197 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#198 (mes)
 - "There are not enough shards of Gigantes."
-+ ""
++ "Não há fragmentos dos Gigantes suficientes."
 #: npc/re/instances/SarahAndFenrir.txt#199 (mes)
 - "You will need them in order for initialization to take place."
-+ ""
++ "Você vai precisar deles para que o processo aconteça."
 #: npc/re/instances/SarahAndFenrir.txt#200 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#201 (mes)
 - "You must equip the item to make initialization possible."
-+ ""
++ "Você precisa equipar o item para poder zerar."
 #: npc/re/instances/SarahAndFenrir.txt#202 (mes)
 - "Which column's earring do you wish to initialize?"
-+ ""
++ "O brinco de qual coluna você quer zerar?"
 #: npc/re/instances/SarahAndFenrir.txt#203 (select)
 - "Left column"
-+ ""
++ "Coluna esquerda"
 #: npc/re/instances/SarahAndFenrir.txt#204 (select)
 - "Right column"
-+ ""
++ "Coluna direita"
 #: npc/re/instances/SarahAndFenrir.txt#205 (atrib)
 - "left"
-+ ""
++ "esquerdo"
 #: npc/re/instances/SarahAndFenrir.txt#206 (atrib)
 - "right"
-+ ""
++ "direito"
 #: npc/re/instances/SarahAndFenrir.txt#207 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#208 (mes)
 - "To initialize an enchantment, the relevant column must be equipped with gear."
-+ ""
++ "Para zerar um encantamento, a coluna correspondente precisa estar equipada."
 #: npc/re/instances/SarahAndFenrir.txt#209 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#210 (mes)
 - "To initialize an enchantment, the relevant column must be equipped with Sarah's earring."
-+ ""
++ "Para zerar um encantamento, a coluna correspondente precisa estar com o brinco da Sarah."
 #: npc/re/instances/SarahAndFenrir.txt#211 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#212 (mes)
 - "Sarah's earring without an enchantment cannot be initialized."
-+ ""
++ "Um brinco da Sarah sem encantamento não pode ser zerado."
 #: npc/re/instances/SarahAndFenrir.txt#213 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#214 (mes)
 - "You have selected Sarah's "
-+ ""
++ "Você escolheu o brinco "
 #: npc/re/instances/SarahAndFenrir.txt#215 (mes)
 - " earring on the "
-+ ""
++ " da Sarah na coluna "
 #: npc/re/instances/SarahAndFenrir.txt#216 (mes)
 - " column."
-+ ""
++ "."
 #: npc/re/instances/SarahAndFenrir.txt#217 (mes)
 - "It is impossible to restore abilities that are gone after initialization."
-+ ""
++ "É impossível recuperar atributos que se perdem depois de zerar."
 #: npc/re/instances/SarahAndFenrir.txt#218 (mes)
 - "Do you still want to proceed?"
-+ ""
++ "Você ainda quer prosseguir?"
 #: npc/re/instances/SarahAndFenrir.txt#219 (select)
 - "No"
-+ ""
++ "Não"
 #: npc/re/instances/SarahAndFenrir.txt#220 (select)
 - "Yes"
-+ ""
++ "Sim"
 #: npc/re/instances/SarahAndFenrir.txt#221 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#222 (mes)
 - "Yes sir. Initialization will start."
-+ ""
++ "Sim, senhor. O processo vai começar."
 #: npc/re/instances/SarahAndFenrir.txt#226 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#227 (mes)
 - "Initialization completed."
-+ ""
++ "Processo concluído."
 #: npc/re/instances/SarahAndFenrir.txt#228 (mes)
 - "Please find me if you need me."
-+ ""
++ "Me procure se precisar de mim."
 #: npc/re/instances/SarahAndFenrir.txt#229 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#230 (mes)
 - "If you want an enchantment on Sarah's earrings, come and find me again."
-+ ""
++ "Se você quiser um encantamento nos brincos da Sarah, volte a me procurar."
 #: npc/re/instances/SarahAndFenrir.txt#231 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#232 (mes)
 - "Related to Glast Heim, this is an unique and rare earring found during an excavation with the professor."
-+ ""
++ "Ligado a Glast Heim, este é um brinco único e raro achado numa escavação com o professor."
 #: npc/re/instances/SarahAndFenrir.txt#233 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#234 (mes)
 - "I think this has been worn by Sarah in the past and seems to have a great ability to draw out potential strength."
-+ ""
++ "Eu acho que ele foi usado pela Sarah no passado e parece ter uma grande capacidade de despertar a força latente."
 #: npc/re/instances/SarahAndFenrir.txt#235 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#236 (mes)
 - "I will specially trade it for 1 shard since you are the warrior who brought shards of Gigantes for the professor's work."
-+ ""
++ "Eu troco por 1 fragmento, como cortesia, já que você é o guerreiro que trouxe os fragmentos dos Gigantes para o trabalho do professor."
 #: npc/re/instances/SarahAndFenrir.txt#237 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#238 (mes)
 - "- The left earring of Sarah -"
-+ ""
++ "- O brinco esquerdo da Sarah -"
 #: npc/re/instances/SarahAndFenrir.txt#239 (mes)
 - "Usable for Heal 1Lv"
-+ ""
++ "Permite usar Curar Nv.1"
 #: npc/re/instances/SarahAndFenrir.txt#240 (mes)
 - "- The right earring of Sarah -"
-+ ""
++ "- O brinco direito da Sarah -"
 #: npc/re/instances/SarahAndFenrir.txt#241 (mes)
 - "Usable for Teleport 1Lv"
-+ ""
++ "Permite usar Teleporte Nv.1"
 #: npc/re/instances/SarahAndFenrir.txt#242 (mes)
 - "-----------------------"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#243 (mes)
 - "Which one do you wish?"
-+ ""
++ "Qual você quer?"
 #: npc/re/instances/SarahAndFenrir.txt#244 (select)
 - "The left earring of Sarah"
-+ ""
++ "O brinco esquerdo da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#245 (select)
 - "The right earring of Sarah"
-+ ""
++ "O brinco direito da Sarah"
 #: npc/re/instances/SarahAndFenrir.txt#246 (select)
 - "Exit conversation"
-+ ""
++ "Encerrar a conversa"
 #: npc/re/instances/SarahAndFenrir.txt#247 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#248 (mes)
 - "There are not enough shards of Gigantes."
-+ ""
++ "Não há fragmentos dos Gigantes suficientes."
 #: npc/re/instances/SarahAndFenrir.txt#249 (mes)
 - "You will need them for me to trade with you."
-+ ""
++ "Você vai precisar deles para eu poder trocar com você."
 #: npc/re/instances/SarahAndFenrir.txt#250 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#251 (mes)
 - "Professor Bernhard is the professor I respect the most."
-+ ""
++ "O Professor Bernhard é o professor que eu mais respeito."
 #: npc/re/instances/SarahAndFenrir.txt#252 (mes)
 - "Do you have someone you respect?"
-+ ""
++ "Você tem alguém que respeita?"
 #: npc/re/instances/SarahAndFenrir.txt#253 (mes)
 - "[Chief Assistant]"
-+ ""
++ "[Assistente-Chefe]"
 #: npc/re/instances/SarahAndFenrir.txt#254 (mes)
 - "I've heard about you from the professor."
-+ ""
++ "O professor me falou de você."
 #: npc/re/instances/SarahAndFenrir.txt#255 (mes)
 - "The professor has told me to sufficiently compensate you for risking your life and bringing the shards of Gigantes."
-+ ""
++ "O professor mandou recompensar você o bastante por arriscar a vida e trazer os fragmentos dos Gigantes."
+#: npc/re/instances/SarahAndFenrir.txt#258 (unittalk)
+- " : Huh? Somebody there? Hello~ You must be a traveler."
++ " : Hein? Tem alguém aí? Olá~ Você deve ser um viajante."
 #: npc/re/instances/SarahAndFenrir.txt#259 (cutin)
 - "fenrir_a.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#260 (npctalk)
 - "Fenrith Fenrir: This is strange.. I don't recall Glast Heim castle being filled with such a dark presence.."
-+ ""
++ "Fenrith Fenrir: Que estranho.. Eu não me lembro do castelo de Glast Heim tomado por uma presença tão escura.."
 #: npc/re/instances/SarahAndFenrir.txt#261 (npctalk)
 - "Fenrith Fenrir: Greetings can come later! Careful! It seems somebody has summoned a monster!"
-+ ""
++ "Fenrith Fenrir: As saudações ficam para depois! Cuidado! Parece que alguém invocou um monstro!"
 #: npc/re/instances/SarahAndFenrir.txt#264 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#275 (unittalk)
+- " : What are these things?"
++ " : O que são essas coisas?"
 #: npc/re/instances/SarahAndFenrir.txt#276 (npctalk)
 - "Fenrith Fenrir: Buy me some time while I cast magic! I will handle this!"
-+ ""
++ "Fenrith Fenrir: Ganhe tempo para mim enquanto eu conjuro! Eu cuido disso!"
 #: npc/re/instances/SarahAndFenrir.txt#283 (npctalk)
 - "Fenrith Fenrir: Wrath of the true sky."
-+ ""
++ "Fenrith Fenrir: Ira do verdadeiro céu."
 #: npc/re/instances/SarahAndFenrir.txt#284 (npctalk)
 - "Fenrith Fenrir: Thunderbolt that may split the earth!"
-+ ""
++ "Fenrith Fenrir: Raio capaz de rachar a terra!"
 #: npc/re/instances/SarahAndFenrir.txt#285 (npctalk)
 - "Fenrith Fenrir: Fall before me now!"
-+ ""
++ "Fenrith Fenrir: Caia diante de mim agora!"
 #: npc/re/instances/SarahAndFenrir.txt#286 (npctalk)
 - "Fenrith Fenrir: Aaah!! Thunder Storm!!!!!"
-+ ""
++ "Fenrith Fenrir: Aaah!! Tempestade de Raios!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#290 (npctalk)
 - "Fenrith Fenrir: Glast Heim, once the cathedral for the Asgard gods.."
-+ ""
++ "Fenrith Fenrir: Glast Heim, um dia a catedral dos deuses de Asgard.."
 #: npc/re/instances/SarahAndFenrir.txt#291 (npctalk)
 - "Fenrith Fenrir: Now it has completely become a habitat for monsters.."
-+ ""
++ "Fenrith Fenrir: Agora virou de vez um covil de monstros.."
 #: npc/re/instances/SarahAndFenrir.txt#292 (npctalk)
 - "Fenrith Fenrir: Wait.. Come to think of it, something is strange.."
-+ ""
++ "Fenrith Fenrir: Espere.. Pensando bem, tem uma coisa estranha.."
 #: npc/re/instances/SarahAndFenrir.txt#293 (npctalk)
 - "Fenrith Fenrir: Galions are the monsters that habit this vicinity.."
-+ ""
++ "Fenrith Fenrir: Os Galion é que são os monstros que habitam esta região.."
 #: npc/re/instances/SarahAndFenrir.txt#296 (cutin)
 - "fenrir_a.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#297 (npctalk)
 - "Fenrith Fenrir: By the way, I know it was sudden but thank you for helping."
-+ ""
++ "Fenrith Fenrir: Aliás, eu sei que foi repentino, mas obrigado pela ajuda."
 #: npc/re/instances/SarahAndFenrir.txt#298 (npctalk)
 - "Fenrith Fenrir: Anyway, who are you?"
-+ ""
++ "Fenrith Fenrir: Enfim, quem é você?"
+#: npc/re/instances/SarahAndFenrir.txt#300 (unittalk)
+- " : Ah.. that is...."
++ " : Ah.. é que...."
+#: npc/re/instances/SarahAndFenrir.txt#302 (unittalk)
+- " : .. I am a traveler who wanders around the world!"
++ " : .. Eu sou um viajante que perambula pelo mundo!"
 #: npc/re/instances/SarahAndFenrir.txt#303 (npctalk)
 - "Fenrith Fenrir: Is that so..? I see.. I guess it does not matter."
-+ ""
++ "Fenrith Fenrir: É mesmo..? Entendo.. Acho que não faz diferença."
 #: npc/re/instances/SarahAndFenrir.txt#304 (npctalk)
 - "Fenrith Fenrir: This place seems quite dangerous now. It is not too late to turn back."
-+ ""
++ "Fenrith Fenrir: Este lugar parece bem perigoso agora. Não é tarde demais para voltar."
 #: npc/re/instances/SarahAndFenrir.txt#305 (npctalk)
 - "Fenrith Fenrir: There is an object I need to find. I need to hurry before it is too late."
-+ ""
++ "Fenrith Fenrir: Há um objeto que eu preciso achar. Eu preciso me apressar antes que seja tarde."
 #: npc/re/instances/SarahAndFenrir.txt#306 (npctalk)
 - "Fenrith Fenrir: Perhaps you can help me..."
-+ ""
++ "Fenrith Fenrir: Talvez você possa me ajudar..."
 #: npc/re/instances/SarahAndFenrir.txt#307 (npctalk)
 - "Fenrith Fenrir: No.. Then thank you! I hope we can meet again later!"
-+ ""
++ "Fenrith Fenrir: Não.. Então obrigado! Espero que a gente se encontre de novo!"
+#: npc/re/instances/SarahAndFenrir.txt#310 (unittalk)
+- " : Did that.. person.. really happen to be.. the.. Fenrir..? No way.. probably not.."
++ " : Será que.. aquela pessoa.. era mesmo.. o.. Fenrir..? Que nada.. provavelmente não.."
 #: npc/re/instances/SarahAndFenrir.txt#315 (npctalk)
 - "Sarah Irene: Impressive Fenrith Fenrir, you cleverly escaped"
-+ ""
++ "Sarah Irene: Impressionante, Fenrith Fenrir, você escapou com esperteza"
 #: npc/re/instances/SarahAndFenrir.txt#316 (npctalk)
 - "Sarah Irene: Mm.. today I will make you stand down"
-+ ""
++ "Sarah Irene: Mm.. hoje eu faço você recuar"
 #: npc/re/instances/SarahAndFenrir.txt#317 (npctalk)
 - "Fenrith Fenrir: Today I hope to end our ill fated relationship."
-+ ""
++ "Fenrith Fenrir: Hoje eu espero encerrar a nossa relação maldita."
 #: npc/re/instances/SarahAndFenrir.txt#318 (npctalk)
 - "Sarah Irene: However, do not think this is the end"
-+ ""
++ "Sarah Irene: Mas não pense que isto é o fim"
 #: npc/re/instances/SarahAndFenrir.txt#319 (npctalk)
 - "Sarah Irene: You will surely see me again!!!"
-+ ""
++ "Sarah Irene: Você com certeza vai me ver de novo!!!"
 #: npc/re/instances/SarahAndFenrir.txt#320 (npctalk)
 - "Fenrith Fenrir: Mm... I look forward to it Sarah Irene.."
-+ ""
++ "Fenrith Fenrir: Mm... Fico no aguardo, Sarah Irene.."
 #: npc/re/instances/SarahAndFenrir.txt#324 (cutin)
 - "fenrir_a.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#325 (npctalk)
 - "Fenrith Fenrir: You are still in Glast Heim? Why aren't you leaving this dangerous place?"
-+ ""
++ "Fenrith Fenrir: Você ainda está em Glast Heim? Por que não sai deste lugar perigoso?"
+#: npc/re/instances/SarahAndFenrir.txt#327 (unittalk)
+- " : I know it's dangerous but I thought it would be fun so I couldn't help myself.."
++ " : Eu sei que é perigoso, mas achei que ia ser divertido e não resisti.."
 #: npc/re/instances/SarahAndFenrir.txt#328 (npctalk)
 - "Fenrith Fenrir: Hm.. Adventurers.."
-+ ""
++ "Fenrith Fenrir: Hm.. Aventureiros.."
+#: npc/re/instances/SarahAndFenrir.txt#330 (unittalk)
+- " : You don't have to worry~! I am fairly strong myself!"
++ " : Você não precisa se preocupar~! Eu sou bem forte!"
 #: npc/re/instances/SarahAndFenrir.txt#331 (npctalk)
 - "Fenrith Fenrir: Oh.. really? Do you think you can assist me then?"
-+ ""
++ "Fenrith Fenrir: Ah.. é mesmo? Então você acha que pode me ajudar?"
 #: npc/re/instances/SarahAndFenrir.txt#332 (npctalk)
 - "Fenrith Fenrir: The object I am looking for is located somewhere in Glast Heim!"
-+ ""
++ "Fenrith Fenrir: O objeto que eu procuro está em algum lugar de Glast Heim!"
 #: npc/re/instances/SarahAndFenrir.txt#333 (npctalk)
 - "Fenrith Fenrir: But others looking for the object will arrive there soon!"
-+ ""
++ "Fenrith Fenrir: Mas outros que procuram o objeto chegam lá logo!"
 #: npc/re/instances/SarahAndFenrir.txt#334 (npctalk)
 - "Fenrith Fenrir: This is urgent because there isn't enough time. We have to arrive there soon. 5 minutes at the latest!"
-+ ""
++ "Fenrith Fenrir: Isto é urgente porque não há tempo suficiente. Nós temos que chegar lá logo. Em 5 minutos, no máximo!"
 #: npc/re/instances/SarahAndFenrir.txt#335 (npctalk)
 - "Fenrith Fenrir: I will be waiting! If you are late I will have to go by myself!"
-+ ""
++ "Fenrith Fenrir: Eu vou esperar! Se você atrasar, eu vou ter que ir sozinho!"
 #: npc/re/instances/SarahAndFenrir.txt#336 (npctalk)
 - "Fenrith Fenrir: Alright, I will go on ahead and you decide if you are going to assist me!"
-+ ""
++ "Fenrith Fenrir: Muito bem, eu vou na frente e você decide se vai me ajudar!"
+#: npc/re/instances/SarahAndFenrir.txt#339 (unittalk)
+- " : Hm.. what should I do..? I need shards of Gigantes as requested by Professor Bernhard.."
++ " : Hm.. o que eu faço..? Eu preciso de fragmentos dos Gigantes, como o Professor Bernhard pediu.."
+#: npc/re/instances/SarahAndFenrir.txt#341 (unittalk)
+- " : Should I help that person.. Or should I look for Gigantes to take the shards as requested by Professor Bernhard..?"
++ " : Eu ajudo aquela pessoa.. Ou eu procuro os Gigantes para tirar os fragmentos, como o Professor Bernhard pediu..?"
 #: npc/re/instances/SarahAndFenrir.txt#347 (npctalk)
 - "Fenrith Fenrir: I would like your party leader to come and help me!"
-+ ""
++ "Fenrith Fenrir: Eu gostaria que o líder do seu grupo viesse me ajudar!"
 #: npc/re/instances/SarahAndFenrir.txt#349 (npctalk)
 - "Fenrith Fenrir: You came! I was waiting!"
-+ ""
++ "Fenrith Fenrir: Você veio! Eu estava esperando!"
 #: npc/re/instances/SarahAndFenrir.txt#350 (npctalk)
 - "Fenrith Fenrir: We don't have much time! We have to go search for it now! Let's go in!"
-+ ""
++ "Fenrith Fenrir: Não temos muito tempo! Temos que ir procurar agora! Vamos entrar!"
 #: npc/re/instances/SarahAndFenrir.txt#355 (cutin)
 - "fenrir_a.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#356 (npctalk)
 - "Fenrith Fenrir: The sword of Baldur, Sentinel Breeze... even after 1000 years.."
-+ ""
++ "Fenrith Fenrir: A espada de Baldur, Sentinel Breeze... mesmo depois de 1000 anos.."
 #: npc/re/instances/SarahAndFenrir.txt#357 (npctalk)
 - "Fenrith Fenrir: I can feel the evil of monsters in this place.. as if they are being controlled by someone.."
-+ ""
++ "Fenrith Fenrir: Eu sinto a maldade dos monstros neste lugar.. como se eles estivessem sendo controlados por alguém.."
 #: npc/re/instances/SarahAndFenrir.txt#358 (npctalk)
 - "Fenrith Fenrir: Then there is someone else here other than me?"
-+ ""
++ "Fenrith Fenrir: Então tem mais alguém aqui além de mim?"
 #: npc/re/instances/SarahAndFenrir.txt#359 (npctalk)
 - "Fenrith Fenrir: That will do.. Now all I have to do is use Sentinel Breeze to find Baldur's whereabouts.."
-+ ""
++ "Fenrith Fenrir: Assim serve.. Agora só me resta usar a Sentinel Breeze para achar o paradeiro de Baldur.."
 #: npc/re/instances/SarahAndFenrir.txt#362 (cutin)
 - "sarah_hero3.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#363 (npctalk)
 - "Sarah Irene: Hehe.. I see... just as I expected."
-+ ""
++ "Sarah Irene: Hehe.. Entendo... exatamente como eu esperava."
 #: npc/re/instances/SarahAndFenrir.txt#364 (npctalk)
 - "Sarah Irene: Was that blade the clue?"
-+ ""
++ "Sarah Irene: Era aquela lâmina a pista?"
 #: npc/re/instances/SarahAndFenrir.txt#365 (npctalk)
 - "Sarah Irene: Then, Fenrith Fenrir, that means a 1000 year old seal can be broken with it?"
-+ ""
++ "Sarah Irene: Então, Fenrith Fenrir, isso quer dizer que um selo de 1000 anos pode ser quebrado com ela?"
+#: npc/re/instances/SarahAndFenrir.txt#367 (unittalk)
+- " : Could it be he was the real Fenrir?"
++ " : Será que ele era mesmo o Fenrir?"
 #: npc/re/instances/SarahAndFenrir.txt#368 (npctalk)
 - "Fenrith Fenrir: Could this be.. Valkyrie! Now it is not fun anymore"
-+ ""
++ "Fenrith Fenrir: Será que é.. Valquíria! Agora não tem mais graça"
 #: npc/re/instances/SarahAndFenrir.txt#369 (cutin)
 - "fenrir_b.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#370 (npctalk)
 - "Sarah Irene: Belated salutations, my name is Sarah Irene, one of the 12 Valkyries of Valhalla."
-+ ""
++ "Sarah Irene: Saudações tardias, o meu nome é Sarah Irene, uma das 12 Valquírias de Valhalla."
 #: npc/re/instances/SarahAndFenrir.txt#371 (cutin)
 - "sarah_hero3.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#372 (npctalk)
 - "Sarah Irene: Anyway, also to achieve Freyja's will.. hehe.."
-+ ""
++ "Sarah Irene: Enfim, também para cumprir a vontade de Freyja.. hehe.."
 #: npc/re/instances/SarahAndFenrir.txt#373 (npctalk)
 - "Fenrith Fenrir: Two Gigantes! This will not be an easy fight. Help me and defeat the Gigantes!"
-+ ""
++ "Fenrith Fenrir: Dois Gigantes! Não vai ser uma luta fácil. Me ajude e derrote os Gigantes!"
 #: npc/re/instances/SarahAndFenrir.txt#374 (cutin)
 - "fenrir_b.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#375 (npctalk)
 - "Sarah Irene: Go forth! Gigantes! And my loyal monsters!"
-+ ""
++ "Sarah Irene: Avancem! Gigantes! E vocês, meus monstros fiéis!"
 #: npc/re/instances/SarahAndFenrir.txt#376 (npctalk)
 - "Fenrith Fenrir: Sarah will hide and continuously summon monsters! I will take care of that monster, you face the Gigantes!"
-+ ""
++ "Fenrith Fenrir: A Sarah vai se esconder e invocar monstros sem parar! Eu cuido daquele monstro, você enfrenta os Gigantes!"
 #: npc/re/instances/SarahAndFenrir.txt#377 (cutin)
 - "fenrir_b.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#391 (npctalk)
 - "Fenrith Fenrir: Currents vibrating in the atmosphere! Show me your strength!"
-+ ""
++ "Fenrith Fenrir: Correntes que vibram na atmosfera! Mostrem a sua força!"
 #: npc/re/instances/SarahAndFenrir.txt#393 (npctalk)
 - "Fenrith Fenrir: Light Bolt!!!"
-+ ""
++ "Fenrith Fenrir: Relâmpago!!!"
 #: npc/re/instances/SarahAndFenrir.txt#397 (npctalk)
 - "Fenrith Fenrir: Devour this evil presence with the fire pit of the universe!"
-+ ""
++ "Fenrith Fenrir: Devore esta presença maligna com a fornalha do universo!"
 #: npc/re/instances/SarahAndFenrir.txt#399 (npctalk)
 - "Fenrith Fenrir: Hell fire that can swallow even space! Meteor storm~!!!!!"
-+ ""
++ "Fenrith Fenrir: Fogo do inferno capaz de engolir até o espaço! Chuva de Meteoros~!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#403 (npctalk)
 - "Fenrith Fenrir: Currents vibrating in the atmosphere! Show me your strength!"
-+ ""
++ "Fenrith Fenrir: Correntes que vibram na atmosfera! Mostrem a sua força!"
 #: npc/re/instances/SarahAndFenrir.txt#405 (npctalk)
 - "Fenrith Fenrir: Light Bolt!!!"
-+ ""
++ "Fenrith Fenrir: Relâmpago!!!"
 #: npc/re/instances/SarahAndFenrir.txt#409 (npctalk)
 - "Fenrith Fenrir: Freeze the evil presence with frost wind!!!"
-+ ""
++ "Fenrith Fenrir: Congele a presença maligna com o vento gelado!!!"
 #: npc/re/instances/SarahAndFenrir.txt#411 (npctalk)
 - "Fenrith Fenrir: A storm that can freeze even the soul!! Storm gust~!!!!!"
-+ ""
++ "Fenrith Fenrir: Uma tempestade capaz de congelar até a alma!! Nevasca~!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#420 (atrib)
 - "::OnMobDead"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#438 (npctalk)
 - "Fenrith Fenrir: They are endless. I should finish this absolutely."
-+ ""
++ "Fenrith Fenrir: Eles não têm fim. Eu tenho que acabar com isso de vez."
 #: npc/re/instances/SarahAndFenrir.txt#440 (npctalk)
 - "Fenrith Fenrir: Limitlessly distant monarch with the beautiful scarlet breath!!"
-+ ""
++ "Fenrith Fenrir: Monarca infinitamente distante, de belo sopro escarlate!!"
 #: npc/re/instances/SarahAndFenrir.txt#441 (npctalk)
 - "Fenrith Fenrir: Where you have passed will only be filled with nothingness."
-+ ""
++ "Fenrith Fenrir: Por onde você passar só restará o nada."
 #: npc/re/instances/SarahAndFenrir.txt#442 (npctalk)
 - "Fenrith Fenrir: Power to shake the earth's axis! Show your grace right here and now!!!"
-+ ""
++ "Fenrith Fenrir: Poder de sacudir o eixo da terra! Mostre a sua graça aqui e agora!!!"
 #: npc/re/instances/SarahAndFenrir.txt#443 (npctalk)
 - "Fenrith Fenrir: Road of Vermilion!!!!"
-+ ""
++ "Fenrith Fenrir: Ira de Thor!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#451 (npctalk)
 - "Fenrith Fenrir: Alright! We have defeated a Gigantes!"
-+ ""
++ "Fenrith Fenrir: Muito bem! Nós derrotamos um Gigantes!"
 #: npc/re/instances/SarahAndFenrir.txt#452 (npctalk)
 - "Sarah Irene: As expected, Fenrith Fenrir, you do not yield easily!"
-+ ""
++ "Sarah Irene: Como era de esperar, Fenrith Fenrir, você não cede fácil!"
 #: npc/re/instances/SarahAndFenrir.txt#453 (npctalk)
 - "Fenrith Fenrir: Get away from the Sentinel Breeze immediately!"
-+ ""
++ "Fenrith Fenrir: Afaste-se da Sentinel Breeze imediatamente!"
 #: npc/re/instances/SarahAndFenrir.txt#454 (npctalk)
 - "Sarah Irene: Hehe.. I can't do that!"
-+ ""
++ "Sarah Irene: Hehe.. Isso eu não posso fazer!"
 #: npc/re/instances/SarahAndFenrir.txt#456 (npctalk)
 - "Sarah Irene: If you want it back come to Glast Heim Castle! I shall be waiting!"
-+ ""
++ "Sarah Irene: Se você quer ela de volta, venha ao Castelo de Glast Heim! Eu estarei esperando!"
 #: npc/re/instances/SarahAndFenrir.txt#457 (npctalk)
 - "Fenrith Fenrir: We must follow quickly to retrieve the sword! I shall use a group space movement spell!"
-+ ""
++ "Fenrith Fenrir: Precisamos ir atrás depressa para recuperar a espada! Eu vou usar uma magia de deslocamento em grupo!"
 #: npc/re/instances/SarahAndFenrir.txt#458 (npctalk)
 - "Fenrith Fenrir: Simultaneous large scale warp!"
-+ ""
++ "Fenrith Fenrir: Salto simultâneo em larga escala!"
 #: npc/re/instances/SarahAndFenrir.txt#474 (cutin)
 - "fenrir_a.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#475 (npctalk)
 - "Fenrith Fenrir: I need to go to Glast Heim Castle to retrieve the sword of Baldur."
-+ ""
++ "Fenrith Fenrir: Eu preciso ir ao Castelo de Glast Heim recuperar a espada de Baldur."
 #: npc/re/instances/SarahAndFenrir.txt#476 (npctalk)
 - "Fenrith Fenrir: It could be difficult alone, I would gratefully accept your help."
-+ ""
++ "Fenrith Fenrir: Pode ser difícil sozinho, e eu aceitaria a sua ajuda com gratidão."
 #: npc/re/instances/SarahAndFenrir.txt#477 (npctalk)
 - "Fenrith Fenrir: Since there isn't enough time, we can't wait long."
-+ ""
++ "Fenrith Fenrir: Como não há tempo suficiente, nós não podemos esperar muito."
 #: npc/re/instances/SarahAndFenrir.txt#478 (npctalk)
 - "Fenrith Fenrir: I will wait in the central castle of Glast Heim for about 5 minutes."
-+ ""
++ "Fenrith Fenrir: Eu vou esperar no castelo central de Glast Heim por uns 5 minutos."
 #: npc/re/instances/SarahAndFenrir.txt#479 (npctalk)
 - "Fenrith Fenrir: Since it is dangerous you do not have to feel obligated to help me. I will try by myself if I have to."
-+ ""
++ "Fenrith Fenrir: Como é perigoso, você não precisa se sentir obrigado a me ajudar. Eu tento sozinho, se for preciso."
 #: npc/re/instances/SarahAndFenrir.txt#480 (npctalk)
 - "Fenrith Fenrir: Then I will go on ahead! Warp!"
-+ ""
++ "Fenrith Fenrir: Então eu vou na frente! Salto!"
+#: npc/re/instances/SarahAndFenrir.txt#491 (mapannounce)
+- "Fenrith Fenrir: Alright! We have defeated a Gigantes!"
++ "Fenrith Fenrir: Muito bem! Nós derrotamos um Gigantes!"
+#: npc/re/instances/SarahAndFenrir.txt#492 (mapannounce)
+- "Sarah Irene: As expected, Fenrith Fenrir, you do not yield easily!"
++ "Sarah Irene: Como era de esperar, Fenrith Fenrir, você não cede fácil!"
+#: npc/re/instances/SarahAndFenrir.txt#493 (mapannounce)
+- "Fenrith Fenrir: Get away from the Sentinel Breeze immediately!"
++ "Fenrith Fenrir: Afaste-se da Sentinel Breeze imediatamente!"
+#: npc/re/instances/SarahAndFenrir.txt#494 (mapannounce)
+- "Sarah Irene: Hehe.. I can't do that!"
++ "Sarah Irene: Hehe.. Isso eu não posso fazer!"
+#: npc/re/instances/SarahAndFenrir.txt#495 (mapannounce)
+- "Sarah Irene: If you want it back come to Glast Heim Castle! I shall be waiting!"
++ "Sarah Irene: Se você quer ela de volta, venha ao Castelo de Glast Heim! Eu estarei esperando!"
+#: npc/re/instances/SarahAndFenrir.txt#496 (mapannounce)
+- "Fenrith Fenrir: I need to go to Glast Heim Castle to retrieve the sword of Baldur"
++ "Fenrith Fenrir: Eu preciso ir ao Castelo de Glast Heim recuperar a espada de Baldur"
+#: npc/re/instances/SarahAndFenrir.txt#497 (mapannounce)
+- "Fenrith Fenrir: It may be difficult alone. If you are listening I will gratefully accept your help."
++ "Fenrith Fenrir: Pode ser difícil sozinho. Se você estiver ouvindo, eu aceitaria a sua ajuda com gratidão."
+#: npc/re/instances/SarahAndFenrir.txt#498 (mapannounce)
+- "Fenrith Fenrir: Since there isn't enough time, we can't wait long."
++ "Fenrith Fenrir: Como não há tempo suficiente, nós não podemos esperar muito."
+#: npc/re/instances/SarahAndFenrir.txt#499 (mapannounce)
+- "Fenrith Fenrir: I will wait in the central castle of Glast Heim for about 5 minutes."
++ "Fenrith Fenrir: Eu vou esperar no castelo central de Glast Heim por uns 5 minutos."
+#: npc/re/instances/SarahAndFenrir.txt#500 (mapannounce)
+- "Fenrith Fenrir: Since it is dangerous you do not have to feel obligated to help me. I will try by myself if I have to."
++ "Fenrith Fenrir: Como é perigoso, você não precisa se sentir obrigado a me ajudar. Eu tento sozinho, se for preciso."
 #: npc/re/instances/SarahAndFenrir.txt#511 (npctalk)
 - "Fenrith Fenrir: I was waiting. Thank you for not being late."
-+ ""
++ "Fenrith Fenrir: Eu estava esperando. Obrigado por não se atrasar."
 #: npc/re/instances/SarahAndFenrir.txt#512 (npctalk)
 - "Fenrith Fenrir: Let us climb the castle to retrieve Sentinel Breeze! Sarah will be waiting!"
-+ ""
++ "Fenrith Fenrir: Vamos subir o castelo para recuperar a Sentinel Breeze! A Sarah deve estar esperando!"
 #: npc/re/instances/SarahAndFenrir.txt#517 (cutin)
 - "sarah_hero3.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#518 (npctalk)
 - "Sarah Irene: It seemed like forever waiting for you~ Fenrith Fenrir."
-+ ""
++ "Sarah Irene: Parecia uma eternidade esperar por você~ Fenrith Fenrir."
 #: npc/re/instances/SarahAndFenrir.txt#519 (cutin)
 - "fenrir_b.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#520 (npctalk)
 - "Fenrith Fenrir: No need for useless words, hand over the Sentinel Breeze now!"
-+ ""
++ "Fenrith Fenrir: Chega de palavras inúteis, entregue a Sentinel Breeze agora!"
 #: npc/re/instances/SarahAndFenrir.txt#521 (cutin)
 - "sarah_hero3.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#522 (npctalk)
 - "Sarah Irene: Try if you can."
-+ ""
++ "Sarah Irene: Tente, se for capaz."
 #: npc/re/instances/SarahAndFenrir.txt#523 (cutin)
 - "fenrir_b.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#524 (npctalk)
 - "Fenrith Fenrir: Sarah may be too difficult for you to face alone. I must face her!"
-+ ""
++ "Fenrith Fenrir: A Sarah pode ser difícil demais para você enfrentar sozinho. Eu tenho que enfrentá-la!"
 #: npc/re/instances/SarahAndFenrir.txt#525 (npctalk)
 - "Fenrith Fenrir: Pure white shackles, eternal prison, make a deal with me now!"
-+ ""
++ "Fenrith Fenrir: Grilhões de puro branco, prisão eterna, façam um acordo comigo agora!"
 #: npc/re/instances/SarahAndFenrir.txt#528 (npctalk)
 - "Fenrith Fenrir: White Imprison!!"
-+ ""
++ "Fenrith Fenrir: Exílio!!"
 #: npc/re/instances/SarahAndFenrir.txt#529 (npctalk)
 - "Sarah Irene: Hurk.... he.."
-+ ""
++ "Sarah Irene: Hurk.... ele.."
 #: npc/re/instances/SarahAndFenrir.txt#530 (npctalk)
 - "Fenrith Fenrir: I will weaken Sarah with white imprison and face her while she's shackled,"
-+ ""
++ "Fenrith Fenrir: Eu vou enfraquecer a Sarah com o Exílio e enfrentá-la enquanto ela estiver presa,"
 #: npc/re/instances/SarahAndFenrir.txt#531 (npctalk)
 - "Fenrith Fenrir: you take care of the monsters she summons. I'm counting on you."
-+ ""
++ "Fenrith Fenrir: você cuida dos monstros que ela invocar. Eu conto com você."
+#: npc/re/instances/SarahAndFenrir.txt#533 (unittalk)
+- " : Will do. Powerful enemies make my blood boil."
++ " : Pode deixar. Inimigo forte me faz ferver o sangue."
 #: npc/re/instances/SarahAndFenrir.txt#534 (npctalk)
 - "Fenrith Fenrir: This is a strategy to attack at once and finish Sarah off while she is in critical condition. Remember, our opponent is strong."
-+ ""
++ "Fenrith Fenrir: A estratégia é atacar de uma vez e acabar com a Sarah enquanto ela estiver em estado crítico. Lembre-se, a nossa adversária é forte."
 #: npc/re/instances/SarahAndFenrir.txt#535 (cutin)
 - "sarah_hero3_2.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#536 (npctalk)
 - "Sarah Irene: So your plan was to tie me up with this sort of trick?"
-+ ""
++ "Sarah Irene: Então o seu plano era me amarrar com um truque desses?"
 #: npc/re/instances/SarahAndFenrir.txt#537 (npctalk)
 - "Sarah Irene: Furthermore you borrow the assistance of such rookie adventurers..."
-+ ""
++ "Sarah Irene: E ainda por cima você pede ajuda a aventureiros novatos desses..."
 #: npc/re/instances/SarahAndFenrir.txt#538 (npctalk)
 - "Sarah Irene: You need to disappear from here along with that worn out blade!!"
-+ ""
++ "Sarah Irene: Você precisa sumir daqui junto com aquela lâmina gasta!!"
 #: npc/re/instances/SarahAndFenrir.txt#548 (npctalk)
 - "Fenrith Fenrir: Lethal poison, Dark clouds, appear before me and show a most painful death!"
-+ ""
++ "Fenrith Fenrir: Veneno letal, Nuvens negras, apareçam diante de mim e mostrem a morte mais dolorosa!"
 #: npc/re/instances/SarahAndFenrir.txt#556 (npctalk)
 - "Fenrith Fenrir: Go! Cloud Kill!!!!!"
-+ ""
++ "Fenrith Fenrir: Vá! Maldição de Jormungand!!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#559 (unittalk)
+- "Sarah Irene: That was sudden Fenrir. Is that all you've got?"
++ "Sarah Irene: Isso foi repentino, Fenrir. É só isso que você tem?"
 #: npc/re/instances/SarahAndFenrir.txt#568 (npctalk)
 - "Fenrith Fenrir: Lethal poison, Dark clouds, appear before me and show a most painful death!"
-+ ""
++ "Fenrith Fenrir: Veneno letal, Nuvens negras, apareçam diante de mim e mostrem a morte mais dolorosa!"
 #: npc/re/instances/SarahAndFenrir.txt#577 (npctalk)
 - "Fenrith Fenrir: Go! Cloud Kill!!!!!"
-+ ""
++ "Fenrith Fenrir: Vá! Maldição de Jormungand!!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#580 (unittalk)
+- "Sarah Irene: Try to entertain me a little more!!"
++ "Sarah Irene: Tente me divertir um pouco mais!!"
 #: npc/re/instances/SarahAndFenrir.txt#589 (npctalk)
 - "Fenrith Fenrir: I speak to you who controls fire, I Fenrith, desire a fire that does not go out..."
-+ ""
++ "Fenrith Fenrir: Eu falo a você que controla o fogo, eu, Fenrith, desejo um fogo que não se apague..."
 #: npc/re/instances/SarahAndFenrir.txt#598 (npctalk)
 - "Fenrith Fenrir: Endlessly burning conflagration, a fire that can scorch even the soul!! Appear before me now!!"
-+ ""
++ "Fenrith Fenrir: Incêndio que arde sem fim, um fogo capaz de queimar até a alma!! Apareça diante de mim agora!!"
 #: npc/re/instances/SarahAndFenrir.txt#599 (npctalk)
 - "Fenrith Fenrir: Emerge!! Fire Insignia!!!!"
-+ ""
++ "Fenrith Fenrir: Surja!! Insígnia do Fogo!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#601 (unittalk)
+- "Sarah Irene: Oh... not bad? But not good enough!!"
++ "Sarah Irene: Ah... nada mau? Mas não é bom o bastante!!"
 #: npc/re/instances/SarahAndFenrir.txt#602 (npctalk)
 - "Fenrith Fenrir: The root of earthshaking power!! Fear the power of the earth!!!"
-+ ""
++ "Fenrith Fenrir: A raiz do poder que abala a terra!! Temam o poder da terra!!!"
 #: npc/re/instances/SarahAndFenrir.txt#603 (npctalk)
 - "Fenrith Fenrir: Go forth!! Heaven's Drive!!!"
-+ ""
++ "Fenrith Fenrir: Avance!! Fúria da Terra!!!"
+#: npc/re/instances/SarahAndFenrir.txt#611 (unittalk)
+- "Sarah Irene: Why don't you stop your childish magic, Fenrir?"
++ "Sarah Irene: Por que você não para com essa magia infantil, Fenrir?"
 #: npc/re/instances/SarahAndFenrir.txt#612 (npctalk)
 - "Fenrith Fenrir: The root of earthshaking power!! Fear the power of the earth!!!"
-+ ""
++ "Fenrith Fenrir: A raiz do poder que abala a terra!! Temam o poder da terra!!!"
 #: npc/re/instances/SarahAndFenrir.txt#613 (npctalk)
 - "Fenrith Fenrir: Go forth!! Heaven's Drive!!!"
-+ ""
++ "Fenrith Fenrir: Avance!! Fúria da Terra!!!"
+#: npc/re/instances/SarahAndFenrir.txt#615 (unittalk)
+- "Sarah Irene: Do you think that is enough to beat me?"
++ "Sarah Irene: Você acha que isso basta para me vencer?"
 #: npc/re/instances/SarahAndFenrir.txt#616 (npctalk)
 - "Fenrith Fenrir: The mercilessly cold breath of the Northern winds,"
-+ ""
++ "Fenrith Fenrir: O sopro impiedosamente frio dos ventos do Norte,"
 #: npc/re/instances/SarahAndFenrir.txt#617 (npctalk)
 - "Fenrith Fenrir: Come like the silent dawn mist and freeze everything!!"
-+ ""
++ "Fenrith Fenrir: Venha como a névoa silenciosa da madrugada e congele tudo!!"
 #: npc/re/instances/SarahAndFenrir.txt#618 (npctalk)
 - "Fenrith Fenrir: Appear!!! Frost Misty!!!!!"
-+ ""
++ "Fenrith Fenrir: Apareça!!! Zero Absoluto!!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#620 (unittalk)
+- "Sarah Irene: Not bad but.. not even close!"
++ "Sarah Irene: Nada mau, mas.. nem perto do suficiente!"
 #: npc/re/instances/SarahAndFenrir.txt#621 (npctalk)
 - "Fenrith Fenrir: The power of doubt, a powerful force, the power of deeply hidden secrets in the mind!!!"
-+ ""
++ "Fenrith Fenrir: O poder da dúvida, uma força poderosa, o poder dos segredos escondidos no fundo da mente!!!"
 #: npc/re/instances/SarahAndFenrir.txt#622 (npctalk)
 - "Fenrith Fenrir: Now!!! Psychic Wave!!!!"
-+ ""
++ "Fenrith Fenrir: Agora!!! Onda Psíquica!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#624 (unittalk)
+- "Sarah Irene: Ugh... that is no use Fenrir!"
++ "Sarah Irene: Ugh... não adianta, Fenrir!"
 #: npc/re/instances/SarahAndFenrir.txt#625 (npctalk)
 - "Fenrith Fenrir: The power of doubt, a powerful force, the power of deeply hidden secrets in the mind!!!"
-+ ""
++ "Fenrith Fenrir: O poder da dúvida, uma força poderosa, o poder dos segredos escondidos no fundo da mente!!!"
 #: npc/re/instances/SarahAndFenrir.txt#626 (npctalk)
 - "Fenrith Fenrir: Now!!! Psychic Wave!!!!"
-+ ""
++ "Fenrith Fenrir: Agora!!! Onda Psíquica!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#634 (unittalk)
+- "Sarah Irene: Hurk.. such an annoying magic bombardment!!"
++ "Sarah Irene: Hurk.. que bombardeio mágico irritante!!"
 #: npc/re/instances/SarahAndFenrir.txt#635 (npctalk)
 - "Fenrith Fenrir: I speak to you who controls fire, I Fenrith, desire a fire that does not go out..."
-+ ""
++ "Fenrith Fenrir: Eu falo a você que controla o fogo, eu, Fenrith, desejo um fogo que não se apague..."
 #: npc/re/instances/SarahAndFenrir.txt#636 (npctalk)
 - "Fenrith Fenrir: Endlessly burning conflagration, a fire that can scorch even the soul!! Appear before me now!!"
-+ ""
++ "Fenrith Fenrir: Incêndio que arde sem fim, um fogo capaz de queimar até a alma!! Apareça diante de mim agora!!"
 #: npc/re/instances/SarahAndFenrir.txt#637 (npctalk)
 - "Fenrith Fenrir: Emerge!! Fire Insignia!!!!"
-+ ""
++ "Fenrith Fenrir: Surja!! Insígnia do Fogo!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#639 (unittalk)
+- "Sarah Irene: I am Sarah Irene! I will not fall so easily!!!"
++ "Sarah Irene: Eu sou Sarah Irene! Eu não caio assim tão fácil!!!"
 #: npc/re/instances/SarahAndFenrir.txt#640 (npctalk)
 - "Fenrith Fenrir: True wrath of the sky, thunderbolt that may split the earth... Fall before me now!!"
-+ ""
++ "Fenrith Fenrir: Verdadeira ira do céu, raio capaz de rachar a terra... Caia diante de mim agora!!"
 #: npc/re/instances/SarahAndFenrir.txt#641 (npctalk)
 - "Fenrith Fenrir: Come now!! Thunder Storm!!!!!"
-+ ""
++ "Fenrith Fenrir: Venha agora!! Tempestade de Raios!!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#642 (unittalk)
+- "Sarah Irene: Ugh...you are.. stronger than I predicted Fenrir..."
++ "Sarah Irene: Ugh...você é.. mais forte do que eu previa, Fenrir..."
+#: npc/re/instances/SarahAndFenrir.txt#644 (unittalk)
+- "Sarah Irene: Ugh...you are.. stronger than I predicted Fenrir..."
++ "Sarah Irene: Ugh...você é.. mais forte do que eu previa, Fenrir..."
 #: npc/re/instances/SarahAndFenrir.txt#645 (npctalk)
 - "Fenrith Fenrir: True wrath of the sky, thunderbolt that may split the earth... Fall before me now!!"
-+ ""
++ "Fenrith Fenrir: Verdadeira ira do céu, raio capaz de rachar a terra... Caia diante de mim agora!!"
 #: npc/re/instances/SarahAndFenrir.txt#646 (npctalk)
 - "Fenrith Fenrir: Come now!! Thunder Storm!!!!!"
-+ ""
++ "Fenrith Fenrir: Venha agora!! Tempestade de Raios!!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#648 (unittalk)
+- "Sarah Irene: Argh!!!!!! Ahhh!!!!!"
++ "Sarah Irene: Argh!!!!!! Ahhh!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#649 (npctalk)
 - "Fenrith Fenrir: The mercilessly cold breath of the Northern winds,"
-+ ""
++ "Fenrith Fenrir: O sopro impiedosamente frio dos ventos do Norte,"
 #: npc/re/instances/SarahAndFenrir.txt#662 (npctalk)
 - "Fenrith Fenrir: Come like the silent dawn mist and freeze everything!!"
-+ ""
++ "Fenrith Fenrir: Venha como a névoa silenciosa da madrugada e congele tudo!!"
 #: npc/re/instances/SarahAndFenrir.txt#663 (npctalk)
 - "Fenrith Fenrir: Appear!!! Frost Misty!!!!!"
-+ ""
++ "Fenrith Fenrir: Apareça!!! Zero Absoluto!!!!!"
+#: npc/re/instances/SarahAndFenrir.txt#666 (unittalk)
+- "Sarah Irene: Argh!!! I will kill you all!!!!!!"
++ "Sarah Irene: Argh!!! Eu vou matar vocês todos!!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#667 (npctalk)
 - "Fenrith Fenrir: Heaven's sword piercing the sky"
-+ ""
++ "Fenrith Fenrir: Espada dos céus que perfura o firmamento"
 #: npc/re/instances/SarahAndFenrir.txt#668 (npctalk)
 - "Fenrith Fenrir: I wish to borrow your strength for a moment!!"
-+ ""
++ "Fenrith Fenrir: Eu quero tomar emprestada a sua força por um instante!!"
 #: npc/re/instances/SarahAndFenrir.txt#669 (npctalk)
 - "Fenrith Fenrir: Let fall here your extreme strength that can tear even the vacuum!!"
-+ ""
++ "Fenrith Fenrir: Deixe cair aqui a sua força extrema, capaz de rasgar até o vácuo!!"
 #: npc/re/instances/SarahAndFenrir.txt#682 (npctalk)
 - "Fenrith Fenrir: Sword that can control life and death, and pierce space time!!!"
-+ ""
++ "Fenrith Fenrir: Espada capaz de controlar a vida e a morte, e de perfurar o espaço-tempo!!!"
 #: npc/re/instances/SarahAndFenrir.txt#683 (npctalk)
 - "Fenrith Fenrir: Come out Baretis Spear!!!!!!"
-+ ""
++ "Fenrith Fenrir: Venha, Baretis Spear!!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#686 (npctalk)
 - "Fenrith Fenrir: Now! I put Sarah in critical condition! You have to finish her off! Attack her quickly! Sarah is strong!"
-+ ""
++ "Fenrith Fenrir: Agora! Eu deixei a Sarah em estado crítico! Vocês têm que acabar com ela! Ataquem depressa! A Sarah é forte!"
+#: npc/re/instances/SarahAndFenrir.txt#687 (mapannounce)
+- "Fenrith Fenrir: Now! I put Sarah in critical condition! You have to finish her off!! Attack her quickly! Sarah is strong!"
++ "Fenrith Fenrir: Agora! Eu deixei a Sarah em estado crítico! Vocês têm que acabar com ela!! Ataquem depressa! A Sarah é forte!"
 #: npc/re/instances/SarahAndFenrir.txt#688 (npctalk)
 - "Sarah Irene: Hurk...this.. cannot happen!!! I cannot lose!!!!!"
-+ ""
++ "Sarah Irene: Hurk...isso.. não pode acontecer!!! Eu não posso perder!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#689 (npctalk)
 - "Fenrith Fenrir: Since you may not be able to finish her off alone, I will prepare one final spell!!"
-+ ""
++ "Fenrith Fenrir: Como vocês podem não conseguir acabar com ela sozinhos, eu vou preparar uma última magia!!"
 #: npc/re/instances/SarahAndFenrir.txt#691 (npctalk)
 - "Fenrith Fenrir: Heaven's sword piercing the sky"
-+ ""
++ "Fenrith Fenrir: Espada dos céus que perfura o firmamento"
 #: npc/re/instances/SarahAndFenrir.txt#692 (npctalk)
 - "Fenrith Fenrir: I wish to borrow your strength for a moment!!"
-+ ""
++ "Fenrith Fenrir: Eu quero tomar emprestada a sua força por um instante!!"
 #: npc/re/instances/SarahAndFenrir.txt#693 (npctalk)
 - "Fenrith Fenrir: Let fall here your extreme strength that can tear even the vacuum!!"
-+ ""
++ "Fenrith Fenrir: Deixe cair aqui a sua força extrema, capaz de rasgar até o vácuo!!"
 #: npc/re/instances/SarahAndFenrir.txt#694 (npctalk)
 - "Fenrith Fenrir: Sword that can control life and death, and pierce space time!!!"
-+ ""
++ "Fenrith Fenrir: Espada capaz de controlar a vida e a morte, e de perfurar o espaço-tempo!!!"
 #: npc/re/instances/SarahAndFenrir.txt#695 (npctalk)
 - "Fenrith Fenrir: Come out Baretis Spear!!!!!!"
-+ ""
++ "Fenrith Fenrir: Venha, Baretis Spear!!!!!!"
 #: npc/re/instances/SarahAndFenrir.txt#708 (npctalk)
 - "Fenrith Fenrir: Sentinel Breeze! I have it in my hand!"
-+ ""
++ "Fenrith Fenrir: Sentinel Breeze! Eu a tenho em mãos!"
 #: npc/re/instances/SarahAndFenrir.txt#709 (npctalk)
 - "Sarah Irene: Hurk...."
-+ ""
++ "Sarah Irene: Hurk...."
 #: npc/re/instances/SarahAndFenrir.txt#710 (npctalk)
 - "Fenrith Fenrir: I can find Baldur with this!"
-+ ""
++ "Fenrith Fenrir: Com ela eu posso achar Baldur!"
 #: npc/re/instances/SarahAndFenrir.txt#711 (npctalk)
 - "Sarah Irene: Not yet!!"
-+ ""
++ "Sarah Irene: Ainda não!!"
 #: npc/re/instances/SarahAndFenrir.txt#713 (npctalk)
 - "Sarah Irene: Hehe... You evade well like a rat."
-+ ""
++ "Sarah Irene: Hehe... Você foge bem, como um rato."
 #: npc/re/instances/SarahAndFenrir.txt#714 (npctalk)
 - "Sarah Irene: However, I cannot let you leave with that."
-+ ""
++ "Sarah Irene: Mas eu não posso deixar você ir embora com isso."
 #: npc/re/instances/SarahAndFenrir.txt#715 (npctalk)
 - "Sarah Irene: I will blow this entire castle away! Yaah!"
-+ ""
++ "Sarah Irene: Eu vou explodir este castelo inteiro! Yaah!"
 #: npc/re/instances/SarahAndFenrir.txt#717 (npctalk)
 - "Fenrith Fenrir: She is planning to collapse this place! I must perform a large scale teleportation!!!"
-+ ""
++ "Fenrith Fenrir: Ela pretende derrubar este lugar! Eu preciso fazer um teleporte em larga escala!!!"
 #: npc/re/instances/SarahAndFenrir.txt#719 (npctalk)
 - "Fenrith Fenrir: Farewell Valkyrie!! I shall take the Sentinel Breeze! So long!"
-+ ""
++ "Fenrith Fenrir: Adeus, Valquíria!! Eu levo a Sentinel Breeze! Até mais!"
 #: npc/re/instances/SarahAndFenrir.txt#727 (cutin)
 - "fenrir_b.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#728 (npctalk)
 - "Fenrith Fenrir: Hehe.. You are certainly skilled but I think you have underestimated me, Valkyrie."
-+ ""
++ "Fenrith Fenrir: Hehe.. Você é habilidosa mesmo, mas eu acho que me subestimou, Valquíria."
+#: npc/re/instances/SarahAndFenrir.txt#729 (mapannounce)
+- "Sarah Irene: You rather entertain me Fenrith..."
++ "Sarah Irene: Você até que me diverte, Fenrith..."
+#: npc/re/instances/SarahAndFenrir.txt#730 (mapannounce)
+- "Sarah Irene: Did you think you can escape that easily?"
++ "Sarah Irene: Você achou que podia escapar assim tão fácil?"
+#: npc/re/instances/SarahAndFenrir.txt#731 (mapannounce)
+- "Sarah Irene: I shall turn Glast Heim into hell!!"
++ "Sarah Irene: Eu vou transformar Glast Heim num inferno!!"
 #: npc/re/instances/SarahAndFenrir.txt#732 (npctalk)
 - "Fenrith Fenrir: If we don't escape now we will suffer a gruesome fate by Sarah's monsters and magic!"
-+ ""
++ "Fenrith Fenrir: Se não escaparmos agora, vamos ter um fim horrível pelas mãos dos monstros e da magia da Sarah!"
 #: npc/re/instances/SarahAndFenrir.txt#733 (npctalk)
 - "Fenrith Fenrir: Let's meet at Glast Heim entrance where we first met! If we flee that far it should be safe!"
-+ ""
++ "Fenrith Fenrir: Vamos nos encontrar na entrada de Glast Heim, onde nos vimos pela primeira vez! Se fugirmos até lá, deve ser seguro!"
 #: npc/re/instances/SarahAndFenrir.txt#734 (npctalk)
 - "Fenrith Fenrir: There is no time! Hurry!"
-+ ""
++ "Fenrith Fenrir: Não há tempo! Depressa!"
+#: npc/re/instances/SarahAndFenrir.txt#741 (mapannounce)
+- "Fenrith Fenrir: Sentinel Breeze! I have it in my hand!"
++ "Fenrith Fenrir: Sentinel Breeze! Eu a tenho em mãos!"
+#: npc/re/instances/SarahAndFenrir.txt#742 (mapannounce)
+- "Sarah Irene: Hurk...."
++ "Sarah Irene: Hurk...."
+#: npc/re/instances/SarahAndFenrir.txt#743 (mapannounce)
+- "Fenrith Fenrir: Hehe.. You are certainly skilled but I think you have underestimated me, Valkyrie."
++ "Fenrith Fenrir: Hehe.. Você é habilidosa mesmo, mas eu acho que me subestimou, Valquíria."
+#: npc/re/instances/SarahAndFenrir.txt#744 (mapannounce)
+- "Sarah Irene: You rather entertain me Fenrith..."
++ "Sarah Irene: Você até que me diverte, Fenrith..."
+#: npc/re/instances/SarahAndFenrir.txt#745 (mapannounce)
+- "Sarah Irene: Did you think you can escape that easily?"
++ "Sarah Irene: Você achou que podia escapar assim tão fácil?"
+#: npc/re/instances/SarahAndFenrir.txt#746 (mapannounce)
+- "Sarah Irene: I shall turn Glast Heim into hell!!"
++ "Sarah Irene: Eu vou transformar Glast Heim num inferno!!"
+#: npc/re/instances/SarahAndFenrir.txt#747 (mapannounce)
+- "Fenrith Fenrir: If we don't escape now we will suffer a gruesome fate by Sarah's monsters and magic!"
++ "Fenrith Fenrir: Se não escaparmos agora, vamos ter um fim horrível pelas mãos dos monstros e da magia da Sarah!"
+#: npc/re/instances/SarahAndFenrir.txt#748 (mapannounce)
+- "Fenrith Fenrir: Let's meet at Glast Heim entrance where we first met! If we flee that far it should be safe!"
++ "Fenrith Fenrir: Vamos nos encontrar na entrada de Glast Heim, onde nos vimos pela primeira vez! Se fugirmos até lá, deve ser seguro!"
+#: npc/re/instances/SarahAndFenrir.txt#749 (mapannounce)
+- "Fenrith Fenrir: There is no time! Hurry!"
++ "Fenrith Fenrir: Não há tempo! Depressa!"
+#: npc/re/instances/SarahAndFenrir.txt#758 (mapannounce)
+- "Sarah Irene: Absurd little thing, you think you can escape that easily?"
++ "Sarah Irene: Criaturinha absurda, você acha que pode escapar assim tão fácil?"
+#: npc/re/instances/SarahAndFenrir.txt#759 (mapannounce)
+- "Sarah Irene: My minions will make sure to kill you!!!"
++ "Sarah Irene: Os meus lacaios vão matar vocês!!!"
+#: npc/re/instances/SarahAndFenrir.txt#760 (mapannounce)
+- "Sarah Irene: I cannot let you escape!!"
++ "Sarah Irene: Eu não posso deixar vocês escaparem!!"
+#: npc/re/instances/SarahAndFenrir.txt#761 (mapannounce)
+- "Sarah Irene: Fenrith Fenrir.... Did you think I couldn't track you because you fled?"
++ "Sarah Irene: Fenrith Fenrir.... Você achou que eu não conseguiria rastreá-lo porque você fugiu?"
+#: npc/re/instances/SarahAndFenrir.txt#762 (mapannounce)
+- "Sarah Irene: Absurd little thing, you think you can escape that easily?"
++ "Sarah Irene: Criaturinha absurda, você acha que pode escapar assim tão fácil?"
+#: npc/re/instances/SarahAndFenrir.txt#763 (mapannounce)
+- "Sarah Irene: Bwahahahahahaha!! Glast Heim is being filled with my wrath!!"
++ "Sarah Irene: Bwahahahahahaha!! Glast Heim está se enchendo da minha ira!!"
+#: npc/re/instances/SarahAndFenrir.txt#847 (mapannounce)
+- "Sarah Irene: Bwahahahahahaha!! Glast Heim is being filled with my wrath!!"
++ "Sarah Irene: Bwahahahahahaha!! Glast Heim está se enchendo da minha ira!!"
 #: npc/re/instances/SarahAndFenrir.txt#848 (cutin)
 - "fenrir_a.bmp"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#849 (mes)
 - "[Fenrith Fenrir]"
-+ ""
++ "[Fenrith Fenrir]"
 #: npc/re/instances/SarahAndFenrir.txt#850 (mes)
 - "You arrived safely!"
-+ ""
++ "Você chegou em segurança!"
 #: npc/re/instances/SarahAndFenrir.txt#851 (mes)
 - "The dangerous situation"
-+ ""
++ "A situação perigosa"
 #: npc/re/instances/SarahAndFenrir.txt#852 (mes)
 - "had me worried."
-+ ""
++ "me deixou preocupado."
 #: npc/re/instances/SarahAndFenrir.txt#853 (mes)
 - "It was difficult and dangerous work"
-+ ""
++ "Foi um trabalho difícil e perigoso,"
 #: npc/re/instances/SarahAndFenrir.txt#854 (mes)
 - "so I am grateful for your help."
-+ ""
++ "então eu agradeço a sua ajuda."
 #: npc/re/instances/SarahAndFenrir.txt#855 (mes)
 - "[Fenrir]"
-+ ""
++ "[Fenrir]"
 #: npc/re/instances/SarahAndFenrir.txt#856 (mes)
 - "I feel we will meet again"
-+ ""
++ "Eu sinto que nós vamos nos encontrar de novo,"
 #: npc/re/instances/SarahAndFenrir.txt#857 (mes)
 - "but perhaps it is just my imagination?"
-+ ""
++ "ou será só imaginação minha?"
 #: npc/re/instances/SarahAndFenrir.txt#858 (mes)
 - "Mm.. that would be nice."
-+ ""
++ "Mm.. seria bom."
 #: npc/re/instances/SarahAndFenrir.txt#859 (mes)
 - "[Fenrir]"
-+ ""
++ "[Fenrir]"
 #: npc/re/instances/SarahAndFenrir.txt#860 (mes)
 - "We worked well together"
-+ ""
++ "Nós trabalhamos bem juntos,"
 #: npc/re/instances/SarahAndFenrir.txt#861 (mes)
 - "so I hope we will meet again."
-+ ""
++ "então espero que a gente se encontre de novo."
 #: npc/re/instances/SarahAndFenrir.txt#862 (mes)
 - "And watch for Sarah,"
-+ ""
++ "E fique de olho na Sarah,"
 #: npc/re/instances/SarahAndFenrir.txt#863 (mes)
 - "harm can come your way as well."
-+ ""
++ "o mal pode vir na sua direção também."
 #: npc/re/instances/SarahAndFenrir.txt#865 (mes)
 - "[Fenrir]"
-+ ""
++ "[Fenrir]"
 #: npc/re/instances/SarahAndFenrir.txt#866 (mes)
 - "We worked well together"
-+ ""
++ "Nós trabalhamos bem juntos,"
 #: npc/re/instances/SarahAndFenrir.txt#867 (mes)
 - "so I hope we will meet again."
-+ ""
++ "então espero que a gente se encontre de novo."
 #: npc/re/instances/SarahAndFenrir.txt#869 (atrib)
 - "Ancient Gigantes#glast_1"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#870 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#875 (unittalk)
+- " : The Ancient Gigantes that Professor Bernhard spoke of!!"
++ " : Os Gigantes Antigos de que o Professor Bernhard falou!!"
 #: npc/re/instances/SarahAndFenrir.txt#883 (atrib)
 - "Ancient Gigantes#glast_2"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#884 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#889 (unittalk)
+- " : The Ancient Gigantes that Professor Bernhard spoke of!!"
++ " : Os Gigantes Antigos de que o Professor Bernhard falou!!"
 #: npc/re/instances/SarahAndFenrir.txt#896 (atrib)
 - "Ancient Gigantes#glast_3"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#897 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#902 (unittalk)
+- " : The Ancient Gigantes that Professor Bernhard spoke of!!"
++ " : Os Gigantes Antigos de que o Professor Bernhard falou!!"
 #: npc/re/instances/SarahAndFenrir.txt#907 (atrib)
 - "Ancient Gigantes#glast_4"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#908 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#913 (unittalk)
+- " : The Ancient Gigantes that Professor Bernhard spoke of!!"
++ " : Os Gigantes Antigos de que o Professor Bernhard falou!!"
 #: npc/re/instances/SarahAndFenrir.txt#921 (atrib)
 - "Ancient Gigantes#glast_5"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#922 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#927 (unittalk)
+- " : The Ancient Gigantes that Professor Bernhard spoke of!!"
++ " : Os Gigantes Antigos de que o Professor Bernhard falou!!"
 #: npc/re/instances/SarahAndFenrir.txt#934 (atrib)
 - "Ancient Gigantes#glast_6"
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#935 (atrib)
 - "::OnMobDead"
 + ""
+#: npc/re/instances/SarahAndFenrir.txt#940 (unittalk)
+- " : The Ancient Gigantes that Professor Bernhard spoke of!!"
++ " : Os Gigantes Antigos de que o Professor Bernhard falou!!"
 #: npc/re/instances/SarahAndFenrir.txt#1100 (atrib)
 - "1@glast"
 + ""
@@ -1356,4 +1548,4 @@
 + ""
 #: npc/re/instances/SarahAndFenrir.txt#1115 (atrib)
 - "Sarah Irene's alter ego"
-+ ""
++ "o alter ego da Sarah Irene"

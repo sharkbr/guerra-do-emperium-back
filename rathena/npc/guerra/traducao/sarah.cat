@@ -9,280 +9,298 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/SaraMemory.txt  (364 textos)
+### npc/re/instances/SaraMemory.txt  (461 textos)
 #: npc/re/instances/SaraMemory.txt#1 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#2 (mes)
 - "You know... this place doesn't seem to be safe for you. Please return to me once you have achieved ^0000FFLevel 99^000000 or higher."
-+ ""
++ "Sabe... este lugar não me parece seguro para você. Volte a falar comigo quando chegar ao ^0000FFNível 99^000000 ou mais."
 #: npc/re/instances/SaraMemory.txt#3 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#4 (mes)
 - "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it."
-+ ""
++ "Não tenho certeza de que você explorou a fenda no espaço-tempo até o fim. Talvez você devesse investigar um pouco mais."
 #: npc/re/instances/SaraMemory.txt#5 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#6 (mes)
 - "What did you see in there?!"
-+ ""
++ "O que foi que você viu lá dentro?!"
 #: npc/re/instances/SaraMemory.txt#7 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#8 (mes)
 - "Hrumph, Sara Irene?! She's one of the 12 Valkyries. I didn't know her story was that tragic..."
-+ ""
++ "Hunf, Sarah Irene?! Ela é uma das 12 Valquírias. Eu não sabia que a história dela era tão trágica..."
 #: npc/re/instances/SaraMemory.txt#9 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#10 (mes)
 - "It seems that you caused a huge misunderstanding between her and her father."
-+ ""
++ "Parece que você causou um enorme mal-entendido entre ela e o pai dela."
 #: npc/re/instances/SaraMemory.txt#11 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#12 (mes)
 - "You should not blame yourself for what occurred, or all the blood that was spilled. It seems that the events that day were fated to happen no matter who was there."
-+ ""
++ "Você não deve se culpar pelo que aconteceu, nem pelo sangue que foi derramado. Parece que os acontecimentos daquele dia estavam destinados a acontecer, não importa quem estivesse lá."
 #: npc/re/instances/SaraMemory.txt#13 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#14 (mes)
 - "Please don't tell anyone about your time travelling adventure. We can't have anyone thinking you more important than old Leon. Plus they wouldn't believe such a story anyway."
-+ ""
++ "Por favor, não conte a ninguém sobre a sua aventura no tempo. Não podemos deixar que achem você mais importante que o velho Leon. Além disso, ninguém acreditaria numa história dessas."
 #: npc/re/instances/SaraMemory.txt#15 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#16 (mes)
 - "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again."
-+ ""
++ "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo."
 #: npc/re/instances/SaraMemory.txt#17 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#18 (mes)
 - "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again."
-+ ""
++ "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo."
 #: npc/re/instances/SaraMemory.txt#19 (mes)
 - "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000"
-+ ""
++ "^0000FF[ Memórias de Sarah ] O tempo de espera foi zerado. Já dá para usar o dispositivo dimensional de novo.^000000"
 #: npc/re/instances/SaraMemory.txt#20 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#21 (mes)
 - "You wish to relive the past again?"
-+ ""
++ "Você quer reviver o passado outra vez?"
 #: npc/re/instances/SaraMemory.txt#22 (select)
 - "Yes:No"
-+ ""
++ "Sim:Não"
 #: npc/re/instances/SaraMemory.txt#23 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#24 (mes)
 - "Please venture through the dimensional device and report to me what you find within."
-+ ""
++ "Por favor, atravesse o dispositivo dimensional e me conte o que encontrar lá dentro."
 #: npc/re/instances/SaraMemory.txt#25 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#26 (mes)
 - "Though I should warn you. It might be unstable. Make sure you enter as soon as you can."
-+ ""
++ "Mas fica o aviso. Ele pode estar instável. Entre o quanto antes."
 #: npc/re/instances/SaraMemory.txt#27 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#28 (mes)
 - "Well... I can't force you. But if you ever find the courage please talk to me again."
-+ ""
++ "Bem... Não posso obrigar você. Mas se um dia criar coragem, fale comigo de novo."
 #: npc/re/instances/SaraMemory.txt#29 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#30 (mes)
 - "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it."
-+ ""
++ "Não tenho certeza de que você explorou a fenda no espaço-tempo até o fim. Talvez você devesse investigar um pouco mais."
 #: npc/re/instances/SaraMemory.txt#31 (mes)
 - "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000"
-+ ""
++ "^0000FF[ Memórias de Sarah ] O tempo de espera foi zerado. Já dá para usar o dispositivo dimensional de novo.^000000"
 #: npc/re/instances/SaraMemory.txt#32 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#33 (mes)
 - "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it."
-+ ""
++ "Não tenho certeza de que você explorou a fenda no espaço-tempo até o fim. Talvez você devesse investigar um pouco mais."
 #: npc/re/instances/SaraMemory.txt#34 (select)
 - "Okay:Give up"
-+ ""
++ "Certo:Desistir"
 #: npc/re/instances/SaraMemory.txt#35 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#36 (mes)
 - "I am glad to hear that! Maybe someday you can be as brave as old Leon the Lion!"
-+ ""
++ "Que bom ouvir isso! Quem sabe um dia você fique tão corajoso quanto o velho Leon, o Leão!"
 #: npc/re/instances/SaraMemory.txt#37 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#38 (mes)
 - "Well... I can't force you. But if you ever find the courage please talk to me again."
-+ ""
++ "Bem... Não posso obrigar você. Mas se um dia criar coragem, fale comigo de novo."
 #: npc/re/instances/SaraMemory.txt#39 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#40 (mes)
 - "What did you see in there?!"
-+ ""
++ "O que foi que você viu lá dentro?!"
 #: npc/re/instances/SaraMemory.txt#41 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#42 (mes)
 - "Hrumph, Sara Irene?! She's one of the 12 Valkyries. I didn't know her story was that tragic..."
-+ ""
++ "Hunf, Sarah Irene?! Ela é uma das 12 Valquírias. Eu não sabia que a história dela era tão trágica..."
 #: npc/re/instances/SaraMemory.txt#43 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#44 (mes)
 - "It seems that you caused a huge misunderstanding between her and her father."
-+ ""
++ "Parece que você causou um enorme mal-entendido entre ela e o pai dela."
 #: npc/re/instances/SaraMemory.txt#45 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#46 (mes)
 - "You should not blame yourself for what occurred, or all the blood that was spilled. It seems that the events that day were fated to happen no matter who was there."
-+ ""
++ "Você não deve se culpar pelo que aconteceu, nem pelo sangue que foi derramado. Parece que os acontecimentos daquele dia estavam destinados a acontecer, não importa quem estivesse lá."
 #: npc/re/instances/SaraMemory.txt#47 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#48 (mes)
 - "Please don't tell anyone about your time travelling adventure. We can't have anyone thinking you more important than old Leon. Plus they wouldn't believe such a story anyway."
-+ ""
++ "Por favor, não conte a ninguém sobre a sua aventura no tempo. Não podemos deixar que achem você mais importante que o velho Leon. Além disso, ninguém acreditaria numa história dessas."
 #: npc/re/instances/SaraMemory.txt#49 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#50 (mes)
 - "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again."
-+ ""
++ "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo."
 #: npc/re/instances/SaraMemory.txt#51 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#52 (mes)
 - "Excuse my rudeness! I am Pon de Leon, the famous adventurer!"
-+ ""
++ "Desculpe a falta de educação! Eu sou Pon de Leon, o famoso aventureiro!"
 #: npc/re/instances/SaraMemory.txt#53 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#54 (mes)
 - "My friends call me Leon the Lion! For my tough appearance and attitude. Plus I have quite the bite!"
-+ ""
++ "Os amigos me chamam de Leon, o Leão! Pela minha cara e pelo meu jeito duro. E olha que eu mordo!"
 #: npc/re/instances/SaraMemory.txt#55 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#56 (mes)
 - "You know, this is such a strange location..."
-+ ""
++ "Sabe, este lugar aqui é bem estranho..."
 #: npc/re/instances/SaraMemory.txt#57 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#58 (mes)
 - "As you explore it you start to see cracks in space and time. Each one covered by a dimensional device."
-+ ""
++ "Conforme você explora, começa a ver fendas no espaço-tempo. Cada uma coberta por um dispositivo dimensional."
 #: npc/re/instances/SaraMemory.txt#59 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#60 (mes)
 - "For example, I think I have caught glimpses of Payon through the one closest to us. But it doesn't seem right. Almost like it is a little bit older than it should be."
-+ ""
++ "Por exemplo, acho que já vi vislumbres de Payon pela que está mais perto de nós. Mas tem algo errado. É quase como se ela fosse um pouco mais antiga do que deveria."
 #: npc/re/instances/SaraMemory.txt#61 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#62 (mes)
 - "I want to explore it, but with my old age and my knees I don't seem to be quite up to the task."
-+ ""
++ "Eu queria explorar aquilo, mas com a minha idade e os meus joelhos não estou mais à altura da tarefa."
 #: npc/re/instances/SaraMemory.txt#63 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#64 (mes)
 - "So, I would like to ask something of you."
-+ ""
++ "Então, eu queria lhe pedir uma coisa."
 #: npc/re/instances/SaraMemory.txt#65 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#66 (mes)
 - "Please venture through the dimensional device and report to me what you find within."
-+ ""
++ "Por favor, atravesse o dispositivo dimensional e me conte o que encontrar lá dentro."
 #: npc/re/instances/SaraMemory.txt#67 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#68 (mes)
 - "Though; I should warn you. It might be unstable. Make sure you enter as soon as you can."
-+ ""
++ "Mas fica o aviso: ele pode estar instável. Entre o quanto antes."
 #: npc/re/instances/SaraMemory.txt#69 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#70 (mes)
 - "Hey! You are too young to be playing with that! Come back when you are at least ^0000FFLevel 99^000000!"
-+ ""
++ "Ei! Você é novo demais para brincar com isso! Volte quando estiver pelo menos no ^0000FFNível 99^000000!"
 #: npc/re/instances/SaraMemory.txt#71 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#72 (mes)
 - "Before you go playing around with that; Why don't you come over here and talk to me?"
-+ ""
++ "Antes de sair brincando com isso, por que não vem aqui conversar comigo?"
 #: npc/re/instances/SaraMemory.txt#74 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#75 (mes)
 - "Before you enter you need to organize a party! Don't you know how? Type /organize PARTYNAMEHERE."
-+ ""
++ "Antes de entrar você precisa montar um grupo! Não sabe como? Digite /organize NOMEDOGRUPOAQUI."
 #: npc/re/instances/SaraMemory.txt#76 (menu)
 - "Boot up the dimensional device.:Use the dimensional device.:Cancel."
-+ ""
++ "Ligar o dispositivo dimensional.:Usar o dispositivo dimensional.:Cancelar."
 #: npc/re/instances/SaraMemory.txt#77 (menu)
 - ":Use the dimensional device.:Cancel."
-+ ""
++ ":Usar o dispositivo dimensional.:Cancelar."
 #: npc/re/instances/SaraMemory.txt#78 (mes)
 - "Party Name: "
-+ ""
++ "Nome do Grupo: "
 #: npc/re/instances/SaraMemory.txt#79 (mes)
 - "Party Leader: "
-+ ""
++ "Líder do Grupo: "
 #: npc/re/instances/SaraMemory.txt#80 (mes)
 - "^0000ff"
 + ""
 #: npc/re/instances/SaraMemory.txt#81 (mes)
 - " ^000000- Reservation Failed!"
-+ ""
++ " ^000000- Falha na reserva!"
 #: npc/re/instances/SaraMemory.txt#82 (mes)
 - "^FF0000The dimensional device boots up cleanly. Use the device to enter the crack in space and time.^000000"
-+ ""
++ "^FF0000O dispositivo dimensional liga sem problema. Use o dispositivo para entrar na fenda do espaço-tempo.^000000"
 #: npc/re/instances/SaraMemory.txt#83 (mes)
 - "An unknown error has occurred."
-+ ""
++ "Ocorreu um erro desconhecido."
 #: npc/re/instances/SaraMemory.txt#84 (mes)
 - "The memorial dungeon "
-+ ""
++ "A masmorra memorial "
 #: npc/re/instances/SaraMemory.txt#85 (mes)
 - " does not exist."
-+ ""
++ " não existe."
 #: npc/re/instances/SaraMemory.txt#86 (mes)
 - "The party leader did not generate the dungeon yet."
-+ ""
++ "O líder do grupo ainda não gerou a masmorra."
 #: npc/re/instances/SaraMemory.txt#87 (mes)
 - "Only the registered members can enter the instance "
-+ ""
++ "Só os membros registrados podem entrar na instância "
 #: npc/re/instances/SaraMemory.txt#88 (mes)
 - "."
 + ""
+#: npc/re/instances/SaraMemory.txt#89 (mapannounce)
+- "dali"
++ ""
+#: npc/re/instances/SaraMemory.txt#90 (mapannounce)
+- ", member of the party "
++ ", do grupo "
+#: npc/re/instances/SaraMemory.txt#91 (mapannounce)
+- " entered the instance "
++ ", entrou na instância "
+#: npc/re/instances/SaraMemory.txt#92 (mapannounce)
+- "."
++ ""
+#: npc/re/instances/SaraMemory.txt#93 (mapannounce)
+- "0x00ff99"
++ ""
 #: npc/re/instances/SaraMemory.txt#94 (mes)
 - "^FF0000The party leader did not boot up the dimensional device.^000000"
-+ ""
++ "^FF0000O líder do grupo não ligou o dispositivo dimensional.^000000"
 #: npc/re/instances/SaraMemory.txt#95 (mes)
 - "[Adventurer Leon]"
-+ ""
++ "[Aventureiro Leon]"
 #: npc/re/instances/SaraMemory.txt#96 (mes)
 - "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again."
-+ ""
++ "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo."
 #: npc/re/instances/SaraMemory.txt#97 (mes)
 - "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000"
-+ ""
++ "^0000FF[ Memórias de Sarah ] O tempo de espera foi zerado. Já dá para usar o dispositivo dimensional de novo.^000000"
+#: npc/re/instances/SaraMemory.txt#98 (unittalk)
+- "Where am I?"
++ "Onde é que eu estou?"
 #: npc/re/instances/SaraMemory.txt#99 (mes)
 - "["
 + ""
@@ -291,19 +309,22 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#101 (mes)
 - "Where am I?"
-+ ""
++ "Onde é que eu estou?"
 #: npc/re/instances/SaraMemory.txt#102 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#103 (npctalk)
 - "Hello! This is the village of Payon. You don't seem to be from around here..."
-+ ""
++ "Olá! Esta é a vila de Payon. Você não parece ser daqui..."
 #: npc/re/instances/SaraMemory.txt#104 (mes)
 - "[A Girl]"
-+ ""
++ "[Uma Menina]"
 #: npc/re/instances/SaraMemory.txt#105 (mes)
 - "Hello! This is the village of Payon. You don't seem to be from around here..."
-+ ""
++ "Olá! Esta é a vila de Payon. Você não parece ser daqui..."
+#: npc/re/instances/SaraMemory.txt#106 (unittalk)
+- "Are you from here? You don't seem to quite match the locals either."
++ "Você é daqui? Você também não parece muito com o pessoal da vila."
 #: npc/re/instances/SaraMemory.txt#107 (mes)
 - "["
 + ""
@@ -312,25 +333,28 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#109 (mes)
 - "Are you from here? You don't seem to quite match the locals either."
-+ ""
++ "Você é daqui? Você também não parece muito com o pessoal da vila."
 #: npc/re/instances/SaraMemory.txt#110 (npctalk)
 - "Yes! I was born here! My name is Sara, Sara Irene!"
-+ ""
++ "Sou sim! Nasci aqui! Meu nome é Sarah, Sarah Irene!"
 #: npc/re/instances/SaraMemory.txt#111 (mes)
 - "[A Girl]"
-+ ""
++ "[Uma Menina]"
 #: npc/re/instances/SaraMemory.txt#112 (mes)
 - "Yes! I was born here! My name is Sara, Sara Irene!"
-+ ""
++ "Sou sim! Nasci aqui! Meu nome é Sarah, Sarah Irene!"
 #: npc/re/instances/SaraMemory.txt#115 (npctalk)
 - "My father is doyen of this village! I just take after my mother."
-+ ""
++ "Meu pai é o ancião desta vila! Eu puxei mesmo foi à minha mãe."
 #: npc/re/instances/SaraMemory.txt#116 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#117 (mes)
 - "My father is doyen of this village! I just take after my mother."
-+ ""
++ "Meu pai é o ancião desta vila! Eu puxei mesmo foi à minha mãe."
+#: npc/re/instances/SaraMemory.txt#118 (unittalk)
+- "Oh! I am sorry! Uh... Why are you standing out here all alone?"
++ "Ah! Me desculpe! Ãh... Por que você está aqui fora sozinha?"
 #: npc/re/instances/SaraMemory.txt#119 (mes)
 - "["
 + ""
@@ -339,334 +363,424 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#121 (mes)
 - "Oh! I am sorry! Uh... Why are you standing out here all alone?"
-+ ""
++ "Ah! Me desculpe! Ãh... Por que você está aqui fora sozinha?"
 #: npc/re/instances/SaraMemory.txt#122 (npctalk)
 - "I am waiting for my father. He said that he will be here soon."
-+ ""
++ "Estou esperando o meu pai. Ele disse que já vem."
 #: npc/re/instances/SaraMemory.txt#123 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#124 (mes)
 - "I am waiting for my father. He said that he will be here soon."
++ "Estou esperando o meu pai. Ele disse que já vem."
+#: npc/re/instances/SaraMemory.txt#127 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#128 (mapannounce)
+- "An older man exits the house. Sara's face brightens at the sight of him."
++ "Um homem mais velho sai da casa. O rosto da Sarah se ilumina ao vê-lo."
+#: npc/re/instances/SaraMemory.txt#129 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#130 (mes)
 - "^FF0000An older man exits the house. Sara's face brightens at the sight of him.^000000"
-+ ""
++ "^FF0000Um homem mais velho sai da casa. O rosto da Sarah se ilumina ao vê-lo.^000000"
 #: npc/re/instances/SaraMemory.txt#131 (npctalk)
 - "Hi Daddy!"
-+ ""
++ "Oi, papai!"
 #: npc/re/instances/SaraMemory.txt#132 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#133 (mes)
 - "Hi Daddy!"
-+ ""
++ "Oi, papai!"
 #: npc/re/instances/SaraMemory.txt#134 (cutin)
 - "sara_elder_irine1"
 + ""
 #: npc/re/instances/SaraMemory.txt#135 (npctalk)
 - "Sweetheart you look so happy."
-+ ""
++ "Filhinha, você está tão feliz."
 #: npc/re/instances/SaraMemory.txt#136 (npctalk)
 - "Doyen Irene#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#137 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#138 (mes)
 - "Sweetheart you look so happy."
-+ ""
++ "Filhinha, você está tão feliz."
 #: npc/re/instances/SaraMemory.txt#139 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#140 (npctalk)
 - "You said you would come back soon! I waited for you and you lied!"
-+ ""
++ "Você disse que voltava logo! Eu esperei e você mentiu!"
 #: npc/re/instances/SaraMemory.txt#141 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#142 (mes)
 - "You said you would come back soon! I waited for you and you lied!"
-+ ""
++ "Você disse que voltava logo! Eu esperei e você mentiu!"
 #: npc/re/instances/SaraMemory.txt#143 (cutin)
 - "sara_elder_irine1"
 + ""
 #: npc/re/instances/SaraMemory.txt#144 (npctalk)
 - "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected."
-+ ""
++ "Filhinha, me desculpe por ter feito você esperar tanto. A reunião com os anciãos da vila demorou mais do que eu esperava."
 #: npc/re/instances/SaraMemory.txt#145 (npctalk)
 - "Doyen Irene#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#146 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#147 (mes)
 - "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected."
-+ ""
++ "Filhinha, me desculpe por ter feito você esperar tanto. A reunião com os anciãos da vila demorou mais do que eu esperava."
 #: npc/re/instances/SaraMemory.txt#148 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#149 (npctalk)
 - "I hate those old fogeys."
-+ ""
++ "Eu detesto aqueles velhotes."
 #: npc/re/instances/SaraMemory.txt#150 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#151 (mes)
 - "I hate those old fogeys."
-+ ""
++ "Eu detesto aqueles velhotes."
 #: npc/re/instances/SaraMemory.txt#152 (cutin)
 - "sara_elder_irine1"
 + ""
 #: npc/re/instances/SaraMemory.txt#153 (npctalk)
 - "Don't say that sweetheart... Who is this with you?"
-+ ""
++ "Não fale assim, filhinha... Quem está com você?"
 #: npc/re/instances/SaraMemory.txt#154 (npctalk)
 - "Doyen Irene#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#155 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#156 (mes)
 - "Don't say that sweetheart... Who is this with you?"
++ "Não fale assim, filhinha... Quem está com você?"
+#: npc/re/instances/SaraMemory.txt#157 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#158 (mapannounce)
+- "Doyen Irene stares at you with fire in his eyes."
++ "O Ancião Irene encara você com fogo nos olhos."
+#: npc/re/instances/SaraMemory.txt#159 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#160 (mes)
 - "^FF0000Doyen Irene stares at you with fire in his eyes.^000000"
++ "^FF0000O Ancião Irene encara você com fogo nos olhos.^000000"
+#: npc/re/instances/SaraMemory.txt#161 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#162 (mapannounce)
+- "Sara starts humming and singing softly to herself. She picks some wild flowers nearby and presents them to the Doyen."
++ "Sarah começa a cantarolar baixinho. Ela colhe umas flores do mato ali perto e entrega ao Ancião."
+#: npc/re/instances/SaraMemory.txt#163 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#164 (mes)
 - "^FF0000Sara starts humming and singing softly to herself. She picks some wild flowers nearby and presents them to the Doyen.^000000"
-+ ""
++ "^FF0000Sarah começa a cantarolar baixinho. Ela colhe umas flores do mato ali perto e entrega ao Ancião.^000000"
 #: npc/re/instances/SaraMemory.txt#165 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#166 (npctalk)
 - "Here you go daddy!"
-+ ""
++ "Toma, papai!"
 #: npc/re/instances/SaraMemory.txt#167 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#168 (mes)
 - "Here you go daddy!"
-+ ""
++ "Toma, papai!"
 #: npc/re/instances/SaraMemory.txt#169 (cutin)
 - "sara_elder_irine1"
 + ""
 #: npc/re/instances/SaraMemory.txt#170 (npctalk)
 - "Oh Sara, may I have them?"
-+ ""
++ "Ah, Sarah, posso ficar com elas?"
 #: npc/re/instances/SaraMemory.txt#171 (npctalk)
 - "Doyen Irene#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#172 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#173 (mes)
 - "Oh Sara, may I have them?"
-+ ""
++ "Ah, Sarah, posso ficar com elas?"
 #: npc/re/instances/SaraMemory.txt#174 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#175 (npctalk)
 - "Of course silly daddy!"
-+ ""
++ "Claro, papai bobo!"
 #: npc/re/instances/SaraMemory.txt#176 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#177 (mes)
 - "Of course silly daddy!"
++ "Claro, papai bobo!"
+#: npc/re/instances/SaraMemory.txt#178 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#179 (mapannounce)
+- "After being given the flowers the Doyen's mood seems to greatly improve."
++ "Depois de receber as flores, o humor do Ancião parece melhorar muito."
+#: npc/re/instances/SaraMemory.txt#180 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#181 (mes)
 - "^FF0000After being given the flowers the Doyen's mood seems to greatly improve.^000000"
-+ ""
++ "^FF0000Depois de receber as flores, o humor do Ancião parece melhorar muito.^000000"
 #: npc/re/instances/SaraMemory.txt#182 (cutin)
 - "sara_elder_irine1"
 + ""
 #: npc/re/instances/SaraMemory.txt#183 (npctalk)
 - "Alright my princess, where should we go now?"
-+ ""
++ "Muito bem, minha princesa, para onde vamos agora?"
 #: npc/re/instances/SaraMemory.txt#184 (npctalk)
 - "Doyen Irene#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#185 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#186 (mes)
 - "Alright my princess, where should we go now?"
-+ ""
++ "Muito bem, minha princesa, para onde vamos agora?"
 #: npc/re/instances/SaraMemory.txt#187 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#188 (npctalk)
 - "Oh daddy! Lets go to the top of that hill over there!"
-+ ""
++ "Ah, papai! Vamos até o alto daquela colina ali!"
 #: npc/re/instances/SaraMemory.txt#189 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#190 (mes)
 - "Oh daddy! Lets go to the top of that hill over there!"
-+ ""
++ "Ah, papai! Vamos até o alto daquela colina ali!"
 #: npc/re/instances/SaraMemory.txt#191 (cutin)
 - "sara_elder_irine1"
 + ""
 #: npc/re/instances/SaraMemory.txt#192 (npctalk)
 - "Hah! Ok, hold onto me tight!"
-+ ""
++ "Rá! Certo, segure firme em mim!"
 #: npc/re/instances/SaraMemory.txt#193 (npctalk)
 - "Doyen Irene#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#194 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#195 (mes)
 - "Hah! Ok, hold onto me tight!"
-+ ""
++ "Rá! Certo, segure firme em mim!"
 #: npc/re/instances/SaraMemory.txt#196 (cutin)
 - "sara_elder_irine1"
 + ""
+#: npc/re/instances/SaraMemory.txt#205 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#206 (mapannounce)
+- "As they wander off you hear strange voices from around the corner..."
++ "Enquanto eles se afastam, você ouve vozes estranhas vindo da esquina..."
+#: npc/re/instances/SaraMemory.txt#207 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/SaraMemory.txt#208 (mes)
 - "^FF0000As they wander off you hear strange voices from around the corner...^000000"
-+ ""
++ "^FF0000Enquanto eles se afastam, você ouve vozes estranhas vindo da esquina...^000000"
 #: npc/re/instances/SaraMemory.txt#209 (npctalk)
 - "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!"
-+ ""
++ "Sinto o poder da Sarah crescendo. Não podemos ficar parados e deixar que ela alcance todo o potencial dela!"
 #: npc/re/instances/SaraMemory.txt#210 (npctalk)
 - "Strange Old Man#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#211 (mes)
 - "[Strange Old Man]"
-+ ""
++ "[Velho Estranho]"
 #: npc/re/instances/SaraMemory.txt#212 (mes)
 - "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!"
-+ ""
++ "Sinto o poder da Sarah crescendo. Não podemos ficar parados e deixar que ela alcance todo o potencial dela!"
 #: npc/re/instances/SaraMemory.txt#213 (npctalk)
 - "She was born under a bad sign and her mother isn't even one of us!"
-+ ""
++ "Ela nasceu sob um mau presságio e a mãe dela nem é uma das nossas!"
 #: npc/re/instances/SaraMemory.txt#214 (npctalk)
 - "Mysterious Old Man#02"
 + ""
 #: npc/re/instances/SaraMemory.txt#215 (mes)
 - "[Mysterious Old Man]"
-+ ""
++ "[Velho Misterioso]"
 #: npc/re/instances/SaraMemory.txt#216 (mes)
 - "She was born under a bad sign and her mother isn't even one of us!"
-+ ""
++ "Ela nasceu sob um mau presságio e a mãe dela nem é uma das nossas!"
 #: npc/re/instances/SaraMemory.txt#217 (npctalk)
 - "Someday she will cause blood to flow in our streets."
-+ ""
++ "Um dia ela vai fazer correr sangue nas nossas ruas."
 #: npc/re/instances/SaraMemory.txt#218 (npctalk)
 - "Mysterious Old Man#02"
 + ""
 #: npc/re/instances/SaraMemory.txt#219 (mes)
 - "[Mysterious Old Man]"
-+ ""
++ "[Velho Misterioso]"
 #: npc/re/instances/SaraMemory.txt#220 (mes)
 - "Someday she will cause blood to flow in our streets."
-+ ""
++ "Um dia ela vai fazer correr sangue nas nossas ruas."
 #: npc/re/instances/SaraMemory.txt#221 (npctalk)
 - "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it."
-+ ""
++ "Temos que fazer alguma coisa antes que as criaturas Sagradas a escolham. Pedi a 'ELE' que cuidasse disso."
 #: npc/re/instances/SaraMemory.txt#222 (npctalk)
 - "Strange Old Man#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#223 (mes)
 - "[Strange Old Man]"
-+ ""
++ "[Velho Estranho]"
 #: npc/re/instances/SaraMemory.txt#224 (mes)
 - "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it."
-+ ""
++ "Temos que fazer alguma coisa antes que as criaturas Sagradas a escolham. Pedi a 'ELE' que cuidasse disso."
 #: npc/re/instances/SaraMemory.txt#225 (npctalk)
 - "We will see... I look forward to hearing the bad news that has befallen her..."
-+ ""
++ "Vamos ver... Fico no aguardo da má notícia que vai cair sobre ela..."
 #: npc/re/instances/SaraMemory.txt#226 (npctalk)
 - "Mysterious Old Man#02"
 + ""
 #: npc/re/instances/SaraMemory.txt#227 (mes)
 - "[Mysterious Old Man]"
-+ ""
++ "[Velho Misterioso]"
 #: npc/re/instances/SaraMemory.txt#228 (mes)
 - "We will see... I look forward to hearing the bad news that has befallen her..."
++ "Vamos ver... Fico no aguardo da má notícia que vai cair sobre ela..."
+#: npc/re/instances/SaraMemory.txt#240 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#241 (mapannounce)
+- "The old men wander off. It seems Sara might be in danger. We have to do something!"
++ "Os velhos se afastam. Parece que a Sarah pode estar em perigo. Temos que fazer alguma coisa!"
+#: npc/re/instances/SaraMemory.txt#242 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#243 (mes)
 - "^FF0000The old men wander off. It seems Sara might be in danger. We have to do something!^000000"
-+ ""
++ "^FF0000Os velhos se afastam. Parece que a Sarah pode estar em perigo. Temos que fazer alguma coisa!^000000"
 #: npc/re/instances/SaraMemory.txt#252 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#253 (npctalk)
 - "Oh! Hello again! I remember you, what's up?"
-+ ""
++ "Ah! Olá de novo! Eu lembro de você, e aí?"
 #: npc/re/instances/SaraMemory.txt#254 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#255 (mes)
 - "Oh! Hello again! I remember you, what's up?"
-+ ""
++ "Ah! Olá de novo! Eu lembro de você, e aí?"
 #: npc/re/instances/SaraMemory.txt#256 (npctalk)
 - "I am here to give flowers to my mommy!"
-+ ""
++ "Vim trazer flores para a minha mamãe!"
 #: npc/re/instances/SaraMemory.txt#257 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#258 (mes)
 - "I am here to give flowers to my mommy!"
++ "Vim trazer flores para a minha mamãe!"
+#: npc/re/instances/SaraMemory.txt#259 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#260 (mapannounce)
+- "Sara leaps forward to open the door, flowers at the ready."
++ "Sarah corre para abrir a porta, com as flores na mão."
+#: npc/re/instances/SaraMemory.txt#261 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#262 (mes)
 - "^FF0000Sara leaps forward to open the door, flowers at the ready.^000000"
-+ ""
++ "^FF0000Sarah corre para abrir a porta, com as flores na mão.^000000"
 #: npc/re/instances/SaraMemory.txt#263 (npctalk)
 - "Mom! Dad! Look what I found!"
-+ ""
++ "Mãe! Pai! Olhem o que eu achei!"
 #: npc/re/instances/SaraMemory.txt#264 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#265 (mes)
 - "Mom! Dad! Look what I found!"
-+ ""
++ "Mãe! Pai! Olhem o que eu achei!"
 #: npc/re/instances/SaraMemory.txt#268 (cutin)
 - "sara_9sara1"
 + ""
 #: npc/re/instances/SaraMemory.txt#269 (cutin)
 - "sara_momdie"
 + ""
+#: npc/re/instances/SaraMemory.txt#270 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#271 (mapannounce)
+- "The door opens to reveal a woman near death laying on the floor and the Doyen standing over the woman with a bloody sword."
++ "A porta se abre e revela uma mulher à beira da morte caída no chão, e o Ancião de pé sobre ela com uma espada ensanguentada."
+#: npc/re/instances/SaraMemory.txt#272 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/SaraMemory.txt#273 (mes)
 - "^FF0000The door opens to reveal a woman near death laying on the floor and the Doyen standing over the woman with a bloody sword.^000000"
-+ ""
++ "^FF0000A porta se abre e revela uma mulher à beira da morte caída no chão, e o Ancião de pé sobre ela com uma espada ensanguentada.^000000"
 #: npc/re/instances/SaraMemory.txt#274 (npctalk)
 - "..."
 + ""
 #: npc/re/instances/SaraMemory.txt#275 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#276 (mes)
 - "..."
 + ""
 #: npc/re/instances/SaraMemory.txt#277 (npctalk)
 - "Sara...Ru-...away..."
-+ ""
++ "Sarah...fu-...ja..."
 #: npc/re/instances/SaraMemory.txt#278 (npctalk)
 - "Sara's Mother"
 + ""
 #: npc/re/instances/SaraMemory.txt#279 (mes)
 - "[Sara's Mother]"
-+ ""
++ "[Mãe da Sarah]"
 #: npc/re/instances/SaraMemory.txt#280 (mes)
 - "Sara...Ru-...away..."
-+ ""
++ "Sarah...fu-...ja..."
 #: npc/re/instances/SaraMemory.txt#281 (npctalk)
 - "..."
 + ""
 #: npc/re/instances/SaraMemory.txt#282 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#283 (mes)
 - "..."
 + ""
+#: npc/re/instances/SaraMemory.txt#284 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#285 (mapannounce)
+- "A gem rolls from the woman's hand and comes to a rest in front of Sara. Unconsciously Sara reaches down and picks up the gem."
++ "Uma gema rola da mão da mulher e para bem na frente da Sarah. Sem pensar, Sarah se abaixa e pega a gema."
+#: npc/re/instances/SaraMemory.txt#286 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/SaraMemory.txt#287 (mes)
 - "^FF0000A gem rolls from the woman's hand and comes to a rest in front of Sara. Unconsciously Sara reaches down and picks up the gem.^000000"
++ "^FF0000Uma gema rola da mão da mulher e para bem na frente da Sarah. Sem pensar, Sarah se abaixa e pega a gema.^000000"
+#: npc/re/instances/SaraMemory.txt#288 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#289 (mapannounce)
+- "The Doyen turns around and notices Sara."
++ "O Ancião se vira e percebe a Sarah."
+#: npc/re/instances/SaraMemory.txt#290 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#291 (mes)
 - "^FF0000The Doyen turns around and notices Sara.^000000"
-+ ""
++ "^FF0000O Ancião se vira e percebe a Sarah.^000000"
 #: npc/re/instances/SaraMemory.txt#292 (cutin)
 - "sara_momdie"
 + ""
@@ -675,16 +789,16 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#294 (npctalk)
 - "Ahh Sara! I was just looking for you..."
-+ ""
++ "Ahh, Sarah! Eu estava justamente procurando você..."
 #: npc/re/instances/SaraMemory.txt#295 (npctalk)
 - "Doyen Irene#02"
 + ""
 #: npc/re/instances/SaraMemory.txt#296 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#297 (mes)
 - "Ahh Sara! I was just looking for you..."
-+ ""
++ "Ahh, Sarah! Eu estava justamente procurando você..."
 #: npc/re/instances/SaraMemory.txt#298 (cutin)
 - "sara_9sara2"
 + ""
@@ -693,46 +807,64 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#300 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#301 (mes)
 - "..."
 + ""
 #: npc/re/instances/SaraMemory.txt#302 (select)
 - "Escape with Sara."
-+ ""
++ "Fugir com a Sarah."
 #: npc/re/instances/SaraMemory.txt#303 (cutin)
 - "sara_elder_irine3"
 + ""
 #: npc/re/instances/SaraMemory.txt#304 (npctalk)
 - "Guards! GUARDS!! There is a murderer here! Catch him!"
-+ ""
++ "Guardas! GUARDAS!! Tem um assassino aqui! Peguem ele!"
 #: npc/re/instances/SaraMemory.txt#305 (npctalk)
 - "Doyen Irene#02"
 + ""
 #: npc/re/instances/SaraMemory.txt#306 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#307 (mes)
 - "Guards! GUARDS!! There is a murderer here! Catch him!"
++ "Guardas! GUARDAS!! Tem um assassino aqui! Peguem ele!"
+#: npc/re/instances/SaraMemory.txt#308 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#309 (mapannounce)
+- "The sound of many pairs of boots can be heard running outside!"
++ "Dá para ouvir o som de várias botas correndo lá fora!"
+#: npc/re/instances/SaraMemory.txt#310 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#311 (mes)
 - "^FF0000The sound of many pairs of boots can be heard running outside!^000000"
-+ ""
++ "^FF0000Dá para ouvir o som de várias botas correndo lá fora!^000000"
 #: npc/re/instances/SaraMemory.txt#312 (cutin)
 - "sara_9sara3"
 + ""
 #: npc/re/instances/SaraMemory.txt#313 (npctalk)
 - "Mommy NO!!!!!!!!!!"
-+ ""
++ "Mamãe NÃO!!!!!!!!!!"
 #: npc/re/instances/SaraMemory.txt#314 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#315 (mes)
 - "Mommy NO!!!!!!!!!!"
++ "Mamãe NÃO!!!!!!!!!!"
+#: npc/re/instances/SaraMemory.txt#322 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#323 (mapannounce)
+- "Sara runs away and the sound of the guards is getting closer..."
++ "Sarah sai correndo e o som dos guardas vai chegando mais perto..."
+#: npc/re/instances/SaraMemory.txt#324 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#325 (mes)
 - "^FF0000Sara runs away and the sound of the guards is getting closer...^000000"
-+ ""
++ "^FF0000Sarah sai correndo e o som dos guardas vai chegando mais perto...^000000"
 #: npc/re/instances/SaraMemory.txt#326 (cutin)
 - "sara_9sara3"
 + ""
@@ -741,55 +873,58 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#362 (npctalk)
 - "Mommy!"
-+ ""
++ "Mamãe!"
 #: npc/re/instances/SaraMemory.txt#363 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#364 (mes)
 - "Mommy!"
-+ ""
++ "Mamãe!"
 #: npc/re/instances/SaraMemory.txt#365 (cutin)
 - "sara_elder_irine4"
 + ""
 #: npc/re/instances/SaraMemory.txt#366 (npctalk)
 - "Sara..."
-+ ""
++ "Sarah..."
 #: npc/re/instances/SaraMemory.txt#367 (npctalk)
 - "Doyen Irene#03"
 + ""
 #: npc/re/instances/SaraMemory.txt#368 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#369 (mes)
 - "Sara..."
-+ ""
++ "Sarah..."
 #: npc/re/instances/SaraMemory.txt#370 (cutin)
 - "sara_9sara2"
 + ""
 #: npc/re/instances/SaraMemory.txt#371 (npctalk)
 - "No!"
-+ ""
++ "Não!"
 #: npc/re/instances/SaraMemory.txt#372 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#373 (mes)
 - "No!"
-+ ""
++ "Não!"
 #: npc/re/instances/SaraMemory.txt#374 (cutin)
 - "sara_elder_irine4"
 + ""
 #: npc/re/instances/SaraMemory.txt#375 (npctalk)
 - "I have been looking for you Sara. Please come with daddy, it is very dangerous here!"
-+ ""
++ "Eu estava procurando você, Sarah. Venha com o papai, aqui é muito perigoso!"
 #: npc/re/instances/SaraMemory.txt#376 (npctalk)
 - "Doyen Irene#03"
 + ""
 #: npc/re/instances/SaraMemory.txt#377 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#378 (mes)
 - "I have been looking for you Sara. Please come with daddy, it is very dangerous here!"
-+ ""
++ "Eu estava procurando você, Sarah. Venha com o papai, aqui é muito perigoso!"
+#: npc/re/instances/SaraMemory.txt#379 (unittalk)
+- "I won't let you take Sara!"
++ "Eu não vou deixar você levar a Sarah!"
 #: npc/re/instances/SaraMemory.txt#380 (mes)
 - "["
 + ""
@@ -798,22 +933,25 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#382 (mes)
 - "I won't let you take Sara!"
-+ ""
++ "Eu não vou deixar você levar a Sarah!"
 #: npc/re/instances/SaraMemory.txt#383 (cutin)
 - "sara_elder_irine3"
 + ""
 #: npc/re/instances/SaraMemory.txt#384 (npctalk)
 - "The murderer is here! Guards! We will finish him once and for all!"
-+ ""
++ "O assassino está aqui! Guardas! Vamos acabar com ele de uma vez por todas!"
 #: npc/re/instances/SaraMemory.txt#385 (npctalk)
 - "Doyen Irene#03"
 + ""
 #: npc/re/instances/SaraMemory.txt#386 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#387 (mes)
 - "The murderer is here! Guards! We will finish him once and for all!"
-+ ""
++ "O assassino está aqui! Guardas! Vamos acabar com ele de uma vez por todas!"
+#: npc/re/instances/SaraMemory.txt#388 (unittalk)
+- "Sara... run! Save yourself!"
++ "Sarah... corra! Salve-se!"
 #: npc/re/instances/SaraMemory.txt#389 (mes)
 - "["
 + ""
@@ -822,19 +960,19 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#391 (mes)
 - "Sara... run! Save yourself!"
-+ ""
++ "Sarah... corra! Salve-se!"
 #: npc/re/instances/SaraMemory.txt#392 (cutin)
 - "sara_9sara2"
 + ""
 #: npc/re/instances/SaraMemory.txt#393 (npctalk)
 - "...okay."
-+ ""
++ "...está bem."
 #: npc/re/instances/SaraMemory.txt#394 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#395 (mes)
 - "...okay."
-+ ""
++ "...está bem."
 #: npc/re/instances/SaraMemory.txt#396 (cutin)
 - "sara_9sara3"
 + ""
@@ -843,22 +981,25 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#408 (npctalk)
 - "You... were too strong for me."
-+ ""
++ "Você... era forte demais para mim."
 #: npc/re/instances/SaraMemory.txt#409 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#410 (mes)
 - "You... were too strong for me."
-+ ""
++ "Você... era forte demais para mim."
 #: npc/re/instances/SaraMemory.txt#411 (npctalk)
 - "Why... *hack* are you trying to kill my wife and daughter?"
-+ ""
++ "Por que... *cof* você está tentando matar a minha mulher e a minha filha?"
 #: npc/re/instances/SaraMemory.txt#412 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#413 (mes)
 - "Why... *hack* are you trying to kill my wife and daughter?"
-+ ""
++ "Por que... *cof* você está tentando matar a minha mulher e a minha filha?"
+#: npc/re/instances/SaraMemory.txt#414 (unittalk)
+- "What are you talking about? We saw you standing over Sara's mother with your sword COVERED in blood!"
++ "Do que você está falando? Nós vimos você de pé sobre a mãe da Sarah, com a sua espada COBERTA de sangue!"
 #: npc/re/instances/SaraMemory.txt#415 (mes)
 - "["
 + ""
@@ -867,34 +1008,43 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#417 (mes)
 - "What are you talking about? We saw you standing over Sara's mother with your sword COVERED in blood!"
-+ ""
++ "Do que você está falando? Nós vimos você de pé sobre a mãe da Sarah, com a sua espada COBERTA de sangue!"
 #: npc/re/instances/SaraMemory.txt#418 (npctalk)
 - "You... think I killed Sara's mother?"
-+ ""
++ "Você... acha que eu matei a mãe da Sarah?"
 #: npc/re/instances/SaraMemory.txt#419 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#420 (mes)
 - "You... think I killed Sara's mother?"
-+ ""
++ "Você... acha que eu matei a mãe da Sarah?"
 #: npc/re/instances/SaraMemory.txt#421 (npctalk)
 - "She *cough* had already been stabbed by an assassin. I slew him *hack* that is why my blade was covered in blood..."
-+ ""
++ "Ela *tosse* já tinha sido esfaqueada por um assassino. Eu matei ele *cof* e foi por isso que a minha lâmina ficou coberta de sangue..."
 #: npc/re/instances/SaraMemory.txt#422 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#423 (mes)
 - "She *cough* had already been stabbed by an assassin. I slew him *hack* that is why my blade was covered in blood..."
-+ ""
++ "Ela *tosse* já tinha sido esfaqueada por um assassino. Eu matei ele *cof* e foi por isso que a minha lâmina ficou coberta de sangue..."
 #: npc/re/instances/SaraMemory.txt#424 (cutin)
 - "sara_elder_irine4"
 + ""
 #: npc/re/instances/SaraMemory.txt#425 (cutin)
 - "sara_momdie"
 + ""
+#: npc/re/instances/SaraMemory.txt#426 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#427 (mapannounce)
+- "Thinking back, you seem to recall another body laying in the left corner of the room. Maybe that was the assassin the Doyen is talking about."
++ "Pensando bem, você se lembra de outro corpo caído no canto esquerdo do quarto. Talvez fosse o assassino de quem o Ancião está falando."
+#: npc/re/instances/SaraMemory.txt#428 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/SaraMemory.txt#429 (mes)
 - "^FF0000Thinking back, you seem to recall another body laying in the left corner of the room. Maybe that was the assassin the Doyen is talking about.^000000"
-+ ""
++ "^FF0000Pensando bem, você se lembra de outro corpo caído no canto esquerdo do quarto. Talvez fosse o assassino de quem o Ancião está falando.^000000"
 #: npc/re/instances/SaraMemory.txt#430 (cutin)
 - "sara_momdie"
 + ""
@@ -903,13 +1053,16 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#432 (npctalk)
 - "If... you are the not the assassin sent to kill my wife and daughter, who are you?"
-+ ""
++ "Se... você não é o assassino mandado para matar a minha mulher e a minha filha, quem é você?"
 #: npc/re/instances/SaraMemory.txt#433 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#434 (mes)
 - "If... you are the not the assassin sent to kill my wife and daughter, who are you?"
-+ ""
++ "Se... você não é o assassino mandado para matar a minha mulher e a minha filha, quem é você?"
+#: npc/re/instances/SaraMemory.txt#435 (unittalk)
+- "I am just an adventurer who was passing through. I heard some strange men plotting their deaths and needed to intervene."
++ "Sou só um aventureiro de passagem. Ouvi uns homens estranhos tramando a morte delas e precisei intervir."
 #: npc/re/instances/SaraMemory.txt#436 (mes)
 - "["
 + ""
@@ -918,34 +1071,37 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#438 (mes)
 - "I am just an adventurer who was passing through. I heard some strange men plotting their deaths and needed to intervene."
-+ ""
++ "Sou só um aventureiro de passagem. Ouvi uns homens estranhos tramando a morte delas e precisei intervir."
 #: npc/re/instances/SaraMemory.txt#439 (npctalk)
 - "If... you are telling the truth... forgive me. I thought you were one of them."
-+ ""
++ "Se... você está falando a verdade... me perdoe. Achei que fosse um deles."
 #: npc/re/instances/SaraMemory.txt#440 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#441 (mes)
 - "If... you are telling the truth... forgive me. I thought you were one of them."
-+ ""
++ "Se... você está falando a verdade... me perdoe. Achei que fosse um deles."
 #: npc/re/instances/SaraMemory.txt#442 (npctalk)
 - "Strange men? ...I bet they were some of the village elders. Ugh..."
-+ ""
++ "Homens estranhos? ...Aposto que eram alguns dos anciãos da vila. Ugh..."
 #: npc/re/instances/SaraMemory.txt#443 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#444 (mes)
 - "Strange men? ...I bet they were some of the village elders. Ugh..."
-+ ""
++ "Homens estranhos? ...Aposto que eram alguns dos anciãos da vila. Ugh..."
 #: npc/re/instances/SaraMemory.txt#445 (npctalk)
 - "There might be more assassins so we have to find Sara as fast as we can!"
-+ ""
++ "Pode haver mais assassinos, então temos que achar a Sarah o mais rápido possível!"
 #: npc/re/instances/SaraMemory.txt#446 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#447 (mes)
 - "There might be more assassins so we have to find Sara as fast as we can!"
-+ ""
++ "Pode haver mais assassinos, então temos que achar a Sarah o mais rápido possível!"
+#: npc/re/instances/SaraMemory.txt#448 (unittalk)
+- "Sara believes that you killed her mother. We need to tell her the truth!"
++ "A Sarah acredita que você matou a mãe dela. Precisamos contar a verdade a ela!"
 #: npc/re/instances/SaraMemory.txt#449 (mes)
 - "["
 + ""
@@ -954,64 +1110,91 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#451 (mes)
 - "Sara believes that you killed her mother. We need to tell her the truth!"
-+ ""
++ "A Sarah acredita que você matou a mãe dela. Precisamos contar a verdade a ela!"
 #: npc/re/instances/SaraMemory.txt#452 (npctalk)
 - "We must do our best to find her. Lets split up and search for her. Please help me find my daughter and explain everything to her."
-+ ""
++ "Temos que fazer o possível para achá-la. Vamos nos separar e procurar por ela. Por favor, me ajude a achar a minha filha e a explicar tudo a ela."
 #: npc/re/instances/SaraMemory.txt#453 (mes)
 - "[Doyen Irene]"
-+ ""
++ "[Ancião Irene]"
 #: npc/re/instances/SaraMemory.txt#454 (mes)
 - "We must do our best to find her. Lets split up and search for her. Please help me find my daughter and explain everything to her."
-+ ""
++ "Temos que fazer o possível para achá-la. Vamos nos separar e procurar por ela. Por favor, me ajude a achar a minha filha e a explicar tudo a ela."
 #: npc/re/instances/SaraMemory.txt#455 (cutin)
 - "sara_elder_irine4"
 + ""
+#: npc/re/instances/SaraMemory.txt#456 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#457 (mapannounce)
+- "We must find Sara. You seem to remember her running in the 8 O'clock direction."
++ "Precisamos achar a Sarah. Você acha que ela correu na direção das 8 horas."
+#: npc/re/instances/SaraMemory.txt#458 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/SaraMemory.txt#468 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#469 (mapannounce)
+- "As you are about to call out to Sara, a sudden blow knocks you down from behind."
++ "Quando você vai chamar pela Sarah, um golpe repentino derruba você por trás."
+#: npc/re/instances/SaraMemory.txt#470 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/SaraMemory.txt#471 (mes)
 - "^FF0000As you are about to call out to Sara, a sudden blow knocks you down from behind.^000000"
-+ ""
++ "^FF0000Quando você vai chamar pela Sarah, um golpe repentino derruba você por trás.^000000"
 #: npc/re/instances/SaraMemory.txt#472 (cutin)
 - "sara_beholder"
 + ""
 #: npc/re/instances/SaraMemory.txt#473 (npctalk)
 - "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara."
-+ ""
++ "Os viajantes do tempo não podem mais interferir. Vocês não vão nos impedir de encontrar a Sarah."
 #: npc/re/instances/SaraMemory.txt#474 (npctalk)
 - "?????#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#475 (mes)
 - "[?????]"
-+ ""
++ "[?????]"
 #: npc/re/instances/SaraMemory.txt#476 (mes)
 - "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara."
-+ ""
++ "Os viajantes do tempo não podem mais interferir. Vocês não vão nos impedir de encontrar a Sarah."
 #: npc/re/instances/SaraMemory.txt#477 (npctalk)
 - "You should go back to the time where you belong."
-+ ""
++ "Você deveria voltar para o tempo a que pertence."
 #: npc/re/instances/SaraMemory.txt#478 (npctalk)
 - "?????#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#479 (mes)
 - "[?????]"
-+ ""
++ "[?????]"
 #: npc/re/instances/SaraMemory.txt#480 (mes)
 - "You should go back to the time where you belong."
++ "Você deveria voltar para o tempo a que pertence."
+#: npc/re/instances/SaraMemory.txt#481 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#482 (mapannounce)
+- "As you fall to the ground, two dark figures approach Sara."
++ "Enquanto você cai no chão, dois vultos escuros se aproximam da Sarah."
+#: npc/re/instances/SaraMemory.txt#483 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/SaraMemory.txt#484 (mes)
 - "^FF0000As you fall to the ground, two dark figures approach Sara.^000000"
-+ ""
++ "^FF0000Enquanto você cai no chão, dois vultos escuros se aproximam da Sarah.^000000"
 #: npc/re/instances/SaraMemory.txt#485 (npctalk)
 - "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate."
-+ ""
++ "Uma menina cheia de traição, desespero e ódio. Nós vamos guiá-la até o seu destino final."
 #: npc/re/instances/SaraMemory.txt#486 (npctalk)
 - "?????#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#487 (mes)
 - "[?????]"
-+ ""
++ "[?????]"
 #: npc/re/instances/SaraMemory.txt#488 (mes)
 - "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate."
-+ ""
++ "Uma menina cheia de traição, desespero e ódio. Nós vamos guiá-la até o seu destino final."
 #: npc/re/instances/SaraMemory.txt#489 (cutin)
 - "sara_9sara2"
 + ""
@@ -1020,7 +1203,7 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#491 (mes)
 - "[Sara Irene]"
-+ ""
++ "[Sarah Irene]"
 #: npc/re/instances/SaraMemory.txt#492 (mes)
 - "..."
 + ""
@@ -1029,43 +1212,52 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#494 (npctalk)
 - "Sara Irene, 'he' will make your dreams come true."
-+ ""
++ "Sarah Irene, 'ele' vai realizar os seus sonhos."
 #: npc/re/instances/SaraMemory.txt#495 (npctalk)
 - "?????#01"
 + ""
 #: npc/re/instances/SaraMemory.txt#496 (mes)
 - "[?????]"
-+ ""
++ "[?????]"
 #: npc/re/instances/SaraMemory.txt#497 (mes)
 - "Sara Irene, 'he' will make your dreams come true."
-+ ""
++ "Sarah Irene, 'ele' vai realizar os seus sonhos."
 #: npc/re/instances/SaraMemory.txt#498 (cutin)
 - "sara_beholder"
 + ""
+#: npc/re/instances/SaraMemory.txt#499 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#500 (mapannounce)
+- "One of the cloaked strangers covers Sara with their cloak and all three figures disappear."
++ "Um dos estranhos encapuzados cobre a Sarah com o manto, e os três vultos desaparecem."
+#: npc/re/instances/SaraMemory.txt#501 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/SaraMemory.txt#502 (mes)
 - "^FF0000One of the cloaked strangers covers Sara with their cloak and all three figures disappear.^000000"
-+ ""
++ "^FF0000Um dos estranhos encapuzados cobre a Sarah com o manto, e os três vultos desaparecem.^000000"
 #: npc/re/instances/SaraMemory.txt#513 (npctalk)
 - "Why daddy?"
-+ ""
++ "Por quê, papai?"
 #: npc/re/instances/SaraMemory.txt#520 (npctalk)
 - "Not mommy!"
-+ ""
++ "A mamãe não!"
 #: npc/re/instances/SaraMemory.txt#527 (npctalk)
 - "Why... why?"
-+ ""
++ "Por quê... por quê?"
 #: npc/re/instances/SaraMemory.txt#534 (npctalk)
 - "Nooooo..."
-+ ""
++ "Nãooooo..."
 #: npc/re/instances/SaraMemory.txt#541 (npctalk)
 - "..."
 + ""
 #: npc/re/instances/SaraMemory.txt#548 (npctalk)
 - "...Mommy"
-+ ""
++ "...Mamãe"
 #: npc/re/instances/SaraMemory.txt#555 (npctalk)
 - "Why does it hurt so much?"
-+ ""
++ "Por que dói tanto?"
 #: npc/re/instances/SaraMemory.txt#562 (npctalk)
 - "........."
 + ""
@@ -1074,31 +1266,130 @@
 + ""
 #: npc/re/instances/SaraMemory.txt#576 (npctalk)
 - "Nooooo..."
-+ ""
++ "Nãooooo..."
 #: npc/re/instances/SaraMemory.txt#583 (npctalk)
 - "........."
 + ""
 #: npc/re/instances/SaraMemory.txt#590 (npctalk)
 - "Daddy!"
-+ ""
++ "Papai!"
 #: npc/re/instances/SaraMemory.txt#597 (npctalk)
 - "Daddy why?!"
-+ ""
++ "Papai, por quê?!"
 #: npc/re/instances/SaraMemory.txt#608 (atrib)
 - "::OnMyMobDead"
++ ""
+#: npc/re/instances/SaraMemory.txt#667 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#668 (mapannounce)
+- "The guards must be defeated to gain access to the next area."
++ "É preciso derrotar os guardas para chegar à área seguinte."
+#: npc/re/instances/SaraMemory.txt#669 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/SaraMemory.txt#670 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#671 (mapannounce)
+- "Several groups of guards have formed to fight you!"
++ "Vários grupos de guardas se formaram para lutar contra você!"
+#: npc/re/instances/SaraMemory.txt#672 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/SaraMemory.txt#673 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#674 (mapannounce)
+- "Sara ran away again! You think she went in the 2 O'clock direction!"
++ "A Sarah fugiu de novo! Você acha que ela foi na direção das 2 horas!"
+#: npc/re/instances/SaraMemory.txt#675 (mapannounce)
+- "0xffff00"
 + ""
 #: npc/re/instances/SaraMemory.txt#685 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/SaraMemory.txt#702 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#703 (mapannounce)
+- "Sara ran away yet again! You think she went in the 5 O'clock direction!"
++ "A Sarah fugiu outra vez! Você acha que ela foi na direção das 5 horas!"
+#: npc/re/instances/SaraMemory.txt#704 (mapannounce)
+- "0xffff00"
++ ""
 #: npc/re/instances/SaraMemory.txt#714 (atrib)
 - "::OnMyMobDead"
++ ""
+#: npc/re/instances/SaraMemory.txt#760 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#761 (mapannounce)
+- "Sara ran away yet again! *sigh* You think she went in the 12 O'clock direction!"
++ "A Sarah fugiu mais uma vez! *suspiro* Você acha que ela foi na direção das 12 horas!"
+#: npc/re/instances/SaraMemory.txt#762 (mapannounce)
+- "0xffff00"
 + ""
 #: npc/re/instances/SaraMemory.txt#772 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/SaraMemory.txt#816 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#817 (mapannounce)
+- "Sara continues to run away! You think she went in the 12 O'clock direction!"
++ "A Sarah continua fugindo! Você acha que ela foi na direção das 12 horas!"
+#: npc/re/instances/SaraMemory.txt#818 (mapannounce)
+- "0xffff00"
++ ""
 #: npc/re/instances/SaraMemory.txt#856 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/SaraMemory.txt#858 (unittalk)
+- "I am getting too old for this sh-"
++ "Estou ficando velho demais para essa mer-"
+#: npc/re/instances/SaraMemory.txt#860 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#862 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#864 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#866 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#868 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#870 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#872 (unittalk)
+- "For Payon !!"
++ "Por Payon !!"
+#: npc/re/instances/SaraMemory.txt#875 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#876 (mapannounce)
+- "Doyen Irene draws this blade!"
++ "O Ancião Irene saca esta lâmina!"
+#: npc/re/instances/SaraMemory.txt#877 (mapannounce)
+- "0xffff00"
++ ""
 #: npc/re/instances/SaraMemory.txt#884 (atrib)
 - "::OnMyMobDead"
++ ""
+#: npc/re/instances/SaraMemory.txt#886 (unittalk)
+- "I will have revenge for Sara's mom !!"
++ "Eu vou vingar a mãe da Sarah !!"
+#: npc/re/instances/SaraMemory.txt#887 (mapannounce)
+- "1@sara"
++ ""
+#: npc/re/instances/SaraMemory.txt#888 (mapannounce)
+- "Doyen Irene has fallen."
++ "O Ancião Irene caiu."
+#: npc/re/instances/SaraMemory.txt#889 (mapannounce)
+- "0xffff00"
 + ""

@@ -575,19 +575,38 @@ fechada, e é a maior: **19.260 falas**, das quais 10.903 distintas.
 | `novico` | 14/322 | 4% | **não começou** |
 | `classe1` | 13/1518 | 1% | **não começou** |
 | `classe2` | 235/12489 | 2% | **não começou** |
-| `magoas` | 255/303 | **aplicado** | Palácio das Mágoas — a primeira instância |
+| `jitterbug` | 1073/2406 | 45% | Sonho Sombrio — **começado, NÃO aplicado** |
 
-**As instâncias entraram na frente em 2026-08-09**, e com um desenho próprio:
-**um grupo por instância**, não um grupo `instancias` único. A razão é a regra
-de baixo — só se aplica grupo inteiro —, e as 16 juntas dão 4.910 falas com
-distribuição muito torta (Sonho Sombrio 1.261, Lago de Bakonawa 62). Num grupo
-só, nada seria aplicável até a última estar pronta; uma por vez, cada uma fecha
-e entra em jogo sozinha.
+**As instâncias entraram na frente em 2026-08-09**, com um desenho próprio:
+**um grupo por instância**, não um grupo `instancias` único — porque só se
+aplica grupo inteiro, e as 16 juntas dão 9.518 pares com distribuição muito
+torta. Uma por vez, cada uma fecha e entra em jogo sozinha.
 
-Os apelidos são `magoas`, `orcs`, `sarah`, `hospital`, `charleston`,
-`brinquedos`, `jitterbug`, `vermes`, `bakonawa`, `fenrir`, `demonio`,
-`porings`, `polvo`, `crescente` e `glastheim` — `--estado` lista todos.
-**Só `magoas` tem catálogo**; as outras catorze estão por extrair.
+**Quinze das dezesseis fecharam e estão aplicadas** na mesma data: `magoas`,
+`bakonawa`, `orcs`, `polvo`, `porings`, `hospital`, `sarah`, `brinquedos`,
+`fenda`, `vermes`, `glastheim`, `fenrir`, `demonio`, `charleston` e
+`crescente`. Ver `HISTORICO.md`, "Quatorze instâncias e a Fenda Dimensional em
+português".
+
+**Sobrou uma, a maior, e ela está pela metade:**
+
+| grupo | pares | distintos traduzidos | distintos a traduzir |
+|---|---|---|---|
+| `jitterbug` | 2.406 | 418 | **835** |
+
+Sonho Sombrio, `npc/re/instances/NightmarishJitterbug.txt`. O catálogo está
+extraído e em dia; 418 dos 1.253 textos distintos foram preenchidos em
+2026-08-09, do começo do roteiro até o encontro com a Lagi.
+
+> **O grupo NÃO foi aplicado, e não deve ser até fechar.** Meia instância em
+> português é exatamente o que a regra de "só aplicar grupo inteiro" existe
+> para evitar. O arquivo do rAthena continua 100% em inglês, e o `.cat` é a
+> única coisa que mudou — reverter é `git checkout` de um arquivo só.
+
+Como retomar: `preenche_catalogo.py --pendentes jitterbug` lista **só** o que
+ainda está vazio e renumera sozinho, então é só continuar. O ciclo, as travas
+e as convenções fixadas estão no `HISTORICO.md` da mesma data e no `CLAUDE.md`
+§4.12/§4.13; o `--estado` mede.
 
 Os três de baixo são as quests de mudança de classe — 88% do volume que resta,
 e o que o dono do projeto pediu explicitamente por nostalgia. O pouco que

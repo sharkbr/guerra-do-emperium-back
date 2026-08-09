@@ -1,112 +1,122 @@
-# Prompt para a próxima sessão — traduzir as instâncias
+# Prompt para a próxima sessão — a instância que falta
 
 > Este arquivo é um **entregável de sessão**, não documentação permanente.
-> Quando a tradução das instâncias fechar, **apague-o** e registre o resultado
-> no `HISTORICO.md`, como manda o `CLAUDE.md` §7.
+> Quando `jitterbug` fechar, **apague-o** e registre o resultado no
+> `HISTORICO.md`, como manda o `CLAUDE.md` §7.
 
 ---
 
 ## Cole isto na sessão nova
 
 ```
-Terminar a tradução PT-BR das instâncias e da Fenda Dimensional.
+Terminar a tradução PT-BR das instâncias: falta uma, o Sonho Sombrio
+(grupo `jitterbug`), e ela está pela metade — 418 de 1.253 textos
+distintos preenchidos, e o grupo NÃO aplicado.
 
-Leia primeiro: CLAUDE.md, depois PENDENCIAS.md §3 (a frente de tradução) e
-ferramentas/LEIAME.md na seção do traduz_npcs.py. O contexto de por que isso
-começou está no HISTORICO.md, seção "O Palácio das Mágoas em português".
+Leia primeiro: CLAUDE.md (§4.12 e §4.13 são as regras que este trabalho
+criou), depois PENDENCIAS.md §3, e ferramentas/LEIAME.md nas seções do
+traduz_npcs.py e do preenche_catalogo.py. O contexto e as convenções já
+fixadas estão no HISTORICO.md, seção "Quatorze instâncias e a Fenda
+Dimensional em português".
 
-O trabalho é preencher catálogos e aplicar. Tudo já está extraído.
+O trabalho é terminar um catálogo e aplicar. Tudo já está extraído, e o
+`preenche_catalogo.py --pendentes` lista só o que ainda falta.
 ```
 
 ---
 
-## Onde as coisas pararam
+## Onde as coisas pararam (2026-08-09)
 
-Tudo commitado em `main` (`661d77a`).
+**Quinze dos dezesseis grupos fecharam e estão aplicados**, com o map-server
+subindo sem um `Unknown syntax`: `magoas`, `bakonawa`, `orcs`, `polvo`,
+`porings`, `hospital`, `sarah`, `brinquedos`, `fenda`, `vermes`, `glastheim`,
+`fenrir`, `demonio`, `charleston` e `crescente`.
 
-**A máquina está montada e testada.** O `ferramentas/traduz_npcs.py` ganhou:
+**Sobrou o maior, e ele está pela metade:**
 
-- **um grupo por instância** (`magoas`, `orcs`, `sarah`, `hospital`,
-  `charleston`, `brinquedos`, `jitterbug`, `vermes`, `bakonawa`, `fenrir`,
-  `demonio`, `porings`, `polvo`, `crescente`, `glastheim`) mais **`fenda`**,
-  que é a Fenda Dimensional (`dali`/`dali02`) — o saguão por onde se entra em
-  metade das instâncias;
-- `nomes_de_instancia()`, que **protege o nome da instância** de ser
-  traduzido. Ele é CHAVE (`instance_create` resolve por string) e cai no
-  catálogo por causa do `.@md_name$ = "..."`. O `--aplicar` agora recusa;
-- **`mapannounce`, `announce` e `unittalk` em `CONTEXTOS`** — o texto da faixa
-  do alto e do balão de monstro nunca tinha sido extraído.
+| grupo | pares | distintos traduzidos | distintos a traduzir |
+|---|---|---|---|
+| `jitterbug` | 2.406 | 418 | **835** |
 
-**Os 16 catálogos estão extraídos e commitados** em
-`rathena/npc/guerra/traducao/`.
+Sonho Sombrio, `npc/re/instances/NightmarishJitterbug.txt`. Os 418 cobrem do
+começo do roteiro até o encontro com a Lagi.
 
-## O que já está pronto, e o que falta
-
-| grupo | estado |
-|---|---|
-| `magoas` | **aplicado em jogo.** 255 falas prontas; **faltam ~55 broadcasts** que entraram na re-extração |
-| `bakonawa` | 66 falas prontas, faltam ~55 broadcasts. **Não aplicado** |
-| `orcs` | 63 falas prontas, faltam ~119 broadcasts. **Não aplicado** |
-| `polvo` | 79 falas prontas, faltam ~58 broadcasts. **Não aplicado** |
-| `fenda` | 334 textos, **nada traduzido** |
-| os outros 11 | extraídos, **nada traduzido** |
-
-Ordem sugerida, do mais barato ao mais caro (textos distintos a traduzir):
-
-```
-bakonawa 38   orcs 55   polvo 64   porings 67   hospital 105
-sarah 133   brinquedos 200   vermes 200   glastheim 253   fenrir 277
-demonio 402   charleston 438   crescente 666   jitterbug 1102
-```
+> **O grupo NÃO foi aplicado.** Só o `.cat` mudou; o arquivo do rAthena
+> continua inteiro em inglês. Não aplicar antes de fechar — meia instância em
+> português é pior que instância em inglês, e é a razão de o desenho ser um
+> grupo por instância.
 
 ## O ciclo, por grupo
 
 ```
-python ferramentas/traduz_npcs.py --extrair <grupo>   # só se o vendor mudou
-# preencher as linhas `+` do .cat à mão
-python ferramentas/traduz_npcs.py --aplicar <grupo> --verificar
-python ferramentas/traduz_npcs.py --aplicar <grupo>
+python ferramentas/preenche_catalogo.py --pendentes jitterbug
+# ... escrever o t_jitterbug.py (dicionário Python em UTF-8) ...
+python ferramentas/preenche_catalogo.py --gravar jitterbug t_jitterbug.py
+# repetir as duas linhas acima até sobrar só o que fica em branco
+python ferramentas/traduz_npcs.py --aplicar jitterbug --verificar
+python ferramentas/traduz_npcs.py --aplicar jitterbug
 ```
 
-Depois: **reiniciar o map-server** e conferir o log
-(`python ferramentas/servidor.py reiniciar`, depois procurar `Unknown syntax`
-no `rathena/log/map-msg_log.log` — não ler o fim do log, procurar a palavra).
+**Não rodar `--extrair jitterbug`** agora: o catálogo já está em dia e tem 418
+traduções dentro. (Re-extrair não as apagaria — a fonte é o `.INGLES` quando
+existe, e aqui ele nem existe porque o grupo nunca foi aplicado —, mas não há
+motivo.)
 
-## As cinco regras que não se negociam aqui
+Depois: **reiniciar o map-server** e procurar `Unknown syntax` no
+`rathena/log/map-msg_log.log` — procurar a palavra, não ler o fim do log.
 
-1. **Só aplicar grupo INTEIRO.** Arquivo quase todo em inglês com uma frase
-   solta em português é pior que arquivo em inglês. Foi por isso que virou um
-   grupo por instância.
-2. **O `.cat` é cp1252, e o `.txt` também.** Editar com script que grave
-   explicitamente em `cp1252` — a ferramenta de edição comum grava UTF-8 e
-   **destrói o acento sem avisar** (`CLAUDE.md` §4.1 e §5). Conferir depois:
-   nenhum `\xef\xbf\xbd` no arquivo.
-3. **Deixar em branco o que não é fala.** Nome de mapa (`1@spa`), label
-   (`::OnMyMobDead1`), nome único de NPC (`Lurid Royal Guard#dk`), `.bmp` de
-   cutin, fragmento que só tem pontuação ou código de cor. No Palácio foram
-   48 de 303 — por isso o `--estado` mostra 84% e isso quer dizer **completo**.
-4. **Preservar os códigos de cor** (`^0000ff`, `^000000`, `^FF0000`) byte a
+**Gravar em levas é o jeito, e foi assim que os outros fecharam.** O
+`--pendentes` só lista o que ainda está vazio, então gravar 200 e pedir a lista
+de novo renumera e continua de onde parou. Só não aplicar o grupo antes de ele
+estar inteiro.
+
+**Como saber que fechou:** quando o que sobrar na lista do `--pendentes` for
+só nome de mapa, arquivo de cutin, nome único de NPC (`Nome#01`), código de
+cor e pontuação. No `crescente` sobraram 133 assim, e era esse o sinal.
+
+## O que este trabalho aprendeu, e não está óbvio
+
+Tudo o que virou regra permanente subiu para o `CLAUDE.md` — **leia §4.12,
+§4.13 e as duas armadilhas novas do §5 antes de começar.** O resumo:
+
+1. **`--extrair` antes de traduzir, sempre.** Os catálogos commitados em
+   `661d77a` estavam velhos: onze dos dezesseis não tinham os `mapannounce` e
+   `unittalk`. Catálogo velho aplica sem recusa e marca 100% enquanto a
+   instância grita em inglês na tela.
+2. **Nome de habilidade, item, mapa e monstro sai da tabela que o JOGO lê** —
+   `skillinfolist.lub`, `itemInfo.lua`, `mapnametable.txt`,
+   `db/guerra/mob_db.yml`. Inclusive quando ela **não** traduziu (`Mind
+   Blaster` ficou em inglês). Nome que não está em tabela nenhuma fica em
+   inglês.
+3. **Nome de criatura traduz**, mesmo aparecendo em inglês na tela — é o que o
+   Palácio das Mágoas já fazia, e meia frase em inglês é pior.
+4. **Linha `+` vazia não é dívida.** Nome de mapa, label, nome único de NPC,
+   `.bmp` de cutin, código de cor e pontuação solta ficam em branco de
+   propósito. 86% num grupo de instância quer dizer completo.
+5. **Fragmento montado com `+` se traduz olhando a ORDEM**, não a frase. O
+   anúncio de entrada aparece em três ordens diferentes entre as instâncias.
+6. **Preservar os códigos de cor** (`^0000ff`, `^000000`, `^FF0000`) byte a
    byte, e a posição deles na frase.
-5. **Nome de habilidade, item, mapa e classe sai da tabela do bRO**, não da
-   cabeça — `skillinfolist.lub`, `mapnametable.txt`, `map_msg_por.conf`. Já
-   custou cinco correções antes.
+7. **O nome da instância nunca se traduz** — é chave, e o `--aplicar` já
+   recusa sozinho.
 
-## Duas convenções de tradução já fixadas
+## Duas coisas para conferir neste arquivo em especial
 
-Do Palácio das Mágoas, para os dois guardas não se confundirem:
-
-- `Unpleasant Royal Guard` → **Guarda Real Rabugento** (o da entrada)
-- `Lurid Royal Guard` → **Guarda Real Sombrio** (o do roteiro, que vira Sakray)
-
-E o nome da instância **nunca** se traduz de novo — ele já está em português no
-script desde 2026-08-08, e a ferramenta agora recusa mexer nele.
+- **`setarray` com literal em MAIÚSCULA e `_`** pode ser nome de variável
+  concatenado, e traduzir quebra calado. Foi o caso do `DIR_NORTHWEST` na Torre
+  do Demônio (`CLAUDE.md` §5). Conferir antes de traduzir qualquer coisa nesse
+  formato.
+- **Argumento de `F_InsertPlural`** passa por regra de plural inglesa.
+  Terminação em `-s`, `-x`, `-z`, `-f`, `-y` ou na lista de exceção em `-o`
+  sai errada na tela, e nada avisa.
 
 ## O que NÃO faz parte disto
 
-Duas missões da Ordem continuam comentadas no `db/guerra/quest_db.yml`, e as
-duas por falta de alvo — está no `PENDENCIAS.md` §1g:
-
-- **Torneio de Magia** — o `Muliphen` do bRO não existe no nosso `mob_db`.
-- **Sussurro Sombrio** — é a Sky Fortress Invasion (`dali02 121,63`), que já
-  está carregada e serve; falta a página do browiki para saber quais são os
-  três "Demônios de cada tipo" entre os onze mobs `Immortal_`.
+- **As 16 instâncias nunca foram abertas em jogo, uma a uma** — `PENDENCIAS.md`
+  §1f. A tradução é offline; ver o roteiro rodar é outra frente.
+- **Nome de monstro do servidor inteiro** continua metade em inglês
+  (`PENDENCIAS.md` §1c). Dentro de instância o nome vem do 4º argumento do
+  `monster` do script, que não entra no catálogo — então mesmo com a tradução
+  aplicada o bicho aparece em inglês. É trabalho separado, e mecânico.
+- **Duas missões da Ordem continuam comentadas** no `db/guerra/quest_db.yml`,
+  por falta de alvo — `PENDENCIAS.md` §1g.

@@ -161,6 +161,34 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     ordem das placas e os arrays seguiam a ordem em que os mapas tinham sido
     validados. **O cabeçalho do arquivo afirmava que as duas ordens eram a
     mesma. Comentário não é trava.**
+12. **Ao traduzir diálogo, nome de habilidade, item, mapa e monstro sai da
+    tabela que o JOGO lê — inclusive quando ela não traduziu.** As quatro
+    fontes: `skillinfolist.lub` (habilidade), `itemInfo.lua` do nosso cliente
+    (item), `data\mapnametable.txt` (mapa) e `db/guerra/mob_db.yml` (monstro,
+    gerado do `navi_mob_br.lub` do bRO). A regra vale **nos dois sentidos**:
+    `Mind Blaster` fica em inglês na Torre do Demônio porque é assim que o
+    cliente o mostra, e `Explosive Powder` vira **Pó Explosivo** e não
+    "Pólvora" porque é assim que o `itemInfo.lua` chama o item 6213. Nome que
+    não está em tabela nenhuma **fica em inglês** — inventar nome de lugar é
+    o que a regra 3 proíbe (caso vivo: `Ash Vacuum`).
+
+    Duas consequências que já custaram retrabalho:
+    - **Nome de criatura se traduz**, mesmo que o bicho apareça em inglês na
+      tela. Dentro de instância o nome que flutua vem do 4º argumento do
+      `monster` do próprio script, que **não** entra no catálogo — então a
+      missão em português convive com um alvo rotulado em inglês. Aceita-se:
+      meia frase em inglês é pior, e é o que a regra de "só aplicar grupo
+      inteiro" existe para evitar.
+    - **Linha `+` vazia num `.cat` não é dívida.** Nome de mapa, label de
+      evento, nome único de NPC, `.bmp` de cutin, código de cor e pontuação
+      solta ficam em branco de propósito. O `--estado` conta esses como não
+      feitos, então **86% num grupo de instância quer dizer completo**.
+13. **Rodar `--extrair` ANTES de traduzir um grupo, sempre — mesmo com
+    catálogo commitado.** Catálogo velho abre, tem conteúdo, aplica sem recusa
+    e marca 100%; o que falta nele simplesmente não existe para a ferramenta.
+    Em 2026-08-09 onze dos dezesseis catálogos de instância estavam sem os
+    `mapannounce`/`unittalk` (o `vermes` tinha 331 pares onde havia 453), e
+    quatro grupos foram dados por prontos antes de o buraco aparecer.
 
 ## 5. Armadilhas deste ambiente
 
@@ -315,6 +343,22 @@ Produziram diagnóstico falso e custaram retrabalho:
   primeiro par de aspas é comido e sai *"A sintaxe do nome do arquivo... está
   incorreta"* — que parece defeito do arquivo passado, e não é. Usar
   `subprocess.call([exe, arg, ...])`.
+- **Literal de `setarray` pode virar NOME DE VARIÁVEL, e aí traduzir quebra.**
+  No `DevilTower.txt` os cinco `"DIR_NORTHWEST"`, `"DIR_NORTH"` etc. são
+  concatenados: `'coord_seal_DIR_NORTHWEST` e `'round[DIR_NORTHWEST]`. Chegam
+  ao catálogo de tradução por um `setarray` de texto, **parecem rótulo de
+  direção** e não são — traduzir faz o script procurar variável que não
+  existe. Falha calada: o selo mágico simplesmente não anda. O `RE_TECNICO`
+  cobre `setd`/`getd`, não este caso. Regra prática: literal em MAIÚSCULA com
+  `_` dentro de `setarray` é suspeito até prova em contrário.
+- **`F_GetPlural` aplica regra de plural INGLESA à palavra que a gente
+  escrever.** O `callfunc("F_InsertPlural", n, "Second")` vira "3 Seconds";
+  traduzido para `"Segundo"` vira "3 Segundos", que está certo — mas por sorte
+  de terminação. A função (`npc/other/Global_Functions.txt`) acrescenta `-es`
+  em `-s/-x/-z/-ch/-sh`, troca `-f/-fe` por `-ves`, `-y` por `-ies`, e tem uma
+  lista de exceção em `-o` (`potato|tomato|…`). Palavra portuguesa que caia num
+  desses ramos sai errada na tela e **nada avisa**. Conferir a terminação antes
+  de traduzir argumento de `F_InsertPlural`.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

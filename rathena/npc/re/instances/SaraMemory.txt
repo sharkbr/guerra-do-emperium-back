@@ -10,158 +10,158 @@
 //= NPCs
 dali,130,107,6	script	Adventurer Leon	945,{
 	if (BaseLevel < 99) {
-		mes "[Adventurer Leon]";
-		mes "You know... this place doesn't seem to be safe for you. Please return to me once you have achieved ^0000FFLevel 99^000000 or higher.";
+		mes "[Aventureiro Leon]";
+		mes "Sabe... este lugar não me parece seguro para você. Volte a falar comigo quando chegar ao ^0000FFNível 99^000000 ou mais.";
 		close;
 	}
 	if (saramemory == 1) {
-		mes "[Adventurer Leon]";
-		mes "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it.";
+		mes "[Aventureiro Leon]";
+		mes "Não tenho certeza de que você explorou a fenda no espaço-tempo até o fim. Talvez você devesse investigar um pouco mais.";
 		close;
 	}
 	if (saramemory == 2) {
-		mes "[Adventurer Leon]";
-		mes "What did you see in there?!";
+		mes "[Aventureiro Leon]";
+		mes "O que foi que você viu lá dentro?!";
 		next;
-		mes "[Adventurer Leon]";
-		mes "Hrumph, Sara Irene?! She's one of the 12 Valkyries. I didn't know her story was that tragic...";
+		mes "[Aventureiro Leon]";
+		mes "Hunf, Sarah Irene?! Ela é uma das 12 Valquírias. Eu não sabia que a história dela era tão trágica...";
 		next;
-		mes "[Adventurer Leon]";
-		mes "It seems that you caused a huge misunderstanding between her and her father.";
+		mes "[Aventureiro Leon]";
+		mes "Parece que você causou um enorme mal-entendido entre ela e o pai dela.";
 		next;
-		mes "[Adventurer Leon]";
-		mes "You should not blame yourself for what occurred, or all the blood that was spilled. It seems that the events that day were fated to happen no matter who was there.";
+		mes "[Aventureiro Leon]";
+		mes "Você não deve se culpar pelo que aconteceu, nem pelo sangue que foi derramado. Parece que os acontecimentos daquele dia estavam destinados a acontecer, não importa quem estivesse lá.";
 		next;
-		mes "[Adventurer Leon]";
-		mes "Please don't tell anyone about your time travelling adventure. We can't have anyone thinking you more important than old Leon. Plus they wouldn't believe such a story anyway.";
+		mes "[Aventureiro Leon]";
+		mes "Por favor, não conte a ninguém sobre a sua aventura no tempo. Não podemos deixar que achem você mais importante que o velho Leon. Além disso, ninguém acreditaria numa história dessas.";
 		next;
 		set saramemory,3;
 		erasequest 15003;
 		getexp 770000,1000000;
-		mes "[Adventurer Leon]";
-		mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
+		mes "[Aventureiro Leon]";
+		mes "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo.";
 		close;
 	}
 	if (saramemory == 3) {
 		if ((checkquest(15002,PLAYTIME) == 0) || (checkquest(15002,PLAYTIME) == 1)) {
-			mes "[Adventurer Leon]";
-			mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
+			mes "[Aventureiro Leon]";
+			mes "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo.";
 			close;
 		}
 		if (checkquest(15002,PLAYTIME) == 2) {
 			erasequest 15002;
-			mes "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000";
+			mes "^0000FF[ Memórias de Sarah ] O tempo de espera foi zerado. Já dá para usar o dispositivo dimensional de novo.^000000";
 			next;
 		}
-		mes "[Adventurer Leon]";
-		mes "You wish to relive the past again?";
+		mes "[Aventureiro Leon]";
+		mes "Você quer reviver o passado outra vez?";
 		next;
-		switch(select("Yes:No")) {
+		switch(select("Sim:Não")) {
 		case 1:
-			mes "[Adventurer Leon]";
-			mes "Please venture through the dimensional device and report to me what you find within.";
+			mes "[Aventureiro Leon]";
+			mes "Por favor, atravesse o dispositivo dimensional e me conte o que encontrar lá dentro.";
 			next;
 			set saramemory,4;
 			setquest 15003;
-			mes "[Adventurer Leon]";
-			mes "Though I should warn you. It might be unstable. Make sure you enter as soon as you can.";
+			mes "[Aventureiro Leon]";
+			mes "Mas fica o aviso. Ele pode estar instável. Entre o quanto antes.";
 			close;
 		case 2:
-			mes "[Adventurer Leon]";
-			mes "Well... I can't force you. But if you ever find the courage please talk to me again.";
+			mes "[Aventureiro Leon]";
+			mes "Bem... Não posso obrigar você. Mas se um dia criar coragem, fale comigo de novo.";
 			close;
 		}
 	}
 	if (saramemory == 4) {
 		if ((checkquest(15002,PLAYTIME) == 0) || (checkquest(15002,PLAYTIME) == 1)) {
-			mes "[Adventurer Leon]";
-			mes "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it.";
+			mes "[Aventureiro Leon]";
+			mes "Não tenho certeza de que você explorou a fenda no espaço-tempo até o fim. Talvez você devesse investigar um pouco mais.";
 			close;
 		}
 		if (checkquest(15002,PLAYTIME) == 2) {
 			erasequest 15002;
-			mes "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000";
+			mes "^0000FF[ Memórias de Sarah ] O tempo de espera foi zerado. Já dá para usar o dispositivo dimensional de novo.^000000";
 			next;
 		}
-		mes "[Adventurer Leon]";
-		mes "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it.";
+		mes "[Aventureiro Leon]";
+		mes "Não tenho certeza de que você explorou a fenda no espaço-tempo até o fim. Talvez você devesse investigar um pouco mais.";
 		next;
-		switch(select("Okay:Give up")) {
+		switch(select("Certo:Desistir")) {
 		case 1:
-			mes "[Adventurer Leon]";
-			mes "I am glad to hear that! Maybe someday you can be as brave as old Leon the Lion!";
+			mes "[Aventureiro Leon]";
+			mes "Que bom ouvir isso! Quem sabe um dia você fique tão corajoso quanto o velho Leon, o Leão!";
 			close;
 		case 2:
 			set saramemory,3;
 			erasequest 15003;
-			mes "[Adventurer Leon]";
-			mes "Well... I can't force you. But if you ever find the courage please talk to me again.";
+			mes "[Aventureiro Leon]";
+			mes "Bem... Não posso obrigar você. Mas se um dia criar coragem, fale comigo de novo.";
 			close;
 		}
 	}
 	if (saramemory == 5) {
-		mes "[Adventurer Leon]";
-		mes "What did you see in there?!";
+		mes "[Aventureiro Leon]";
+		mes "O que foi que você viu lá dentro?!";
 		next;
-		mes "[Adventurer Leon]";
-		mes "Hrumph, Sara Irene?! She's one of the 12 Valkyries. I didn't know her story was that tragic...";
+		mes "[Aventureiro Leon]";
+		mes "Hunf, Sarah Irene?! Ela é uma das 12 Valquírias. Eu não sabia que a história dela era tão trágica...";
 		next;
-		mes "[Adventurer Leon]";
-		mes "It seems that you caused a huge misunderstanding between her and her father.";
+		mes "[Aventureiro Leon]";
+		mes "Parece que você causou um enorme mal-entendido entre ela e o pai dela.";
 		next;
-		mes "[Adventurer Leon]";
-		mes "You should not blame yourself for what occurred, or all the blood that was spilled. It seems that the events that day were fated to happen no matter who was there.";
+		mes "[Aventureiro Leon]";
+		mes "Você não deve se culpar pelo que aconteceu, nem pelo sangue que foi derramado. Parece que os acontecimentos daquele dia estavam destinados a acontecer, não importa quem estivesse lá.";
 		next;
-		mes "[Adventurer Leon]";
-		mes "Please don't tell anyone about your time travelling adventure. We can't have anyone thinking you more important than old Leon. Plus they wouldn't believe such a story anyway.";
+		mes "[Aventureiro Leon]";
+		mes "Por favor, não conte a ninguém sobre a sua aventura no tempo. Não podemos deixar que achem você mais importante que o velho Leon. Além disso, ninguém acreditaria numa história dessas.";
 		next;
 		set saramemory,3;
 		erasequest 15003;
 		getexp 550000,550000;
-		mes "[Adventurer Leon]";
-		mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
+		mes "[Aventureiro Leon]";
+		mes "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo.";
 		close;
 	}
-	mes "[Adventurer Leon]";
-	mes "Excuse my rudeness! I am Pon de Leon, the famous adventurer!";
+	mes "[Aventureiro Leon]";
+	mes "Desculpe a falta de educação! Eu sou Pon de Leon, o famoso aventureiro!";
 	next;
-	mes "[Adventurer Leon]";
-	mes "My friends call me Leon the Lion! For my tough appearance and attitude. Plus I have quite the bite!";
+	mes "[Aventureiro Leon]";
+	mes "Os amigos me chamam de Leon, o Leão! Pela minha cara e pelo meu jeito duro. E olha que eu mordo!";
 	next;
-	mes "[Adventurer Leon]";
-	mes "You know, this is such a strange location...";
+	mes "[Aventureiro Leon]";
+	mes "Sabe, este lugar aqui é bem estranho...";
 	next;
-	mes "[Adventurer Leon]";
-	mes "As you explore it you start to see cracks in space and time. Each one covered by a dimensional device.";
+	mes "[Aventureiro Leon]";
+	mes "Conforme você explora, começa a ver fendas no espaço-tempo. Cada uma coberta por um dispositivo dimensional.";
 	next;
-	mes "[Adventurer Leon]";
-	mes "For example, I think I have caught glimpses of Payon through the one closest to us. But it doesn't seem right. Almost like it is a little bit older than it should be.";
+	mes "[Aventureiro Leon]";
+	mes "Por exemplo, acho que já vi vislumbres de Payon pela que está mais perto de nós. Mas tem algo errado. É quase como se ela fosse um pouco mais antiga do que deveria.";
 	next;
-	mes "[Adventurer Leon]";
-	mes "I want to explore it, but with my old age and my knees I don't seem to be quite up to the task.";
+	mes "[Aventureiro Leon]";
+	mes "Eu queria explorar aquilo, mas com a minha idade e os meus joelhos não estou mais à altura da tarefa.";
 	next;
-	mes "[Adventurer Leon]";
-	mes "So, I would like to ask something of you.";
+	mes "[Aventureiro Leon]";
+	mes "Então, eu queria lhe pedir uma coisa.";
 	next;
-	mes "[Adventurer Leon]";
-	mes "Please venture through the dimensional device and report to me what you find within.";
+	mes "[Aventureiro Leon]";
+	mes "Por favor, atravesse o dispositivo dimensional e me conte o que encontrar lá dentro.";
 	next;
 	set saramemory,1;
 	setquest 15003;
-	mes "[Adventurer Leon]";
-	mes "Though; I should warn you. It might be unstable. Make sure you enter as soon as you can.";
+	mes "[Aventureiro Leon]";
+	mes "Mas fica o aviso: ele pode estar instável. Entre o quanto antes.";
 	close;
 }
 
 dali,139,118,4	script	Dimensional Device#sara	10007,{
 	if (BaseLevel < 99) {
-		mes "[Adventurer Leon]";
-		mes "Hey! You are too young to be playing with that! Come back when you are at least ^0000FFLevel 99^000000!";
+		mes "[Aventureiro Leon]";
+		mes "Ei! Você é novo demais para brincar com isso! Volte quando estiver pelo menos no ^0000FFNível 99^000000!";
 		close;
 	}
 	if ((saramemory < 1) || (saramemory == 2) || (saramemory == 3) || (saramemory == 5)) {
-		mes "[Adventurer Leon]";
-		mes "Before you go playing around with that; Why don't you come over here and talk to me?";
+		mes "[Aventureiro Leon]";
+		mes "Antes de sair brincando com isso, por que não vem aqui conversar comigo?";
 		close;
 	}
 
@@ -174,190 +174,190 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		set .@md_name$,"Memórias de Sarah";
 
 		if (!.@party_id) {
-			mes "[Adventurer Leon]";
-			mes "Before you enter you need to organize a party! Don't you know how? Type /organize PARTYNAMEHERE.";
+			mes "[Aventureiro Leon]";
+			mes "Antes de entrar você precisa montar um grupo! Não sabe como? Digite /organize NOMEDOGRUPOAQUI.";
 			close;
 		}
 
 		if (is_party_leader() == true)
-			set .@menu$, "Boot up the dimensional device.:Use the dimensional device.:Cancel.";
+			set .@menu$, "Ligar o dispositivo dimensional.:Usar o dispositivo dimensional.:Cancelar.";
 		else
-			set .@menu$, ":Use the dimensional device.:Cancel.";
+			set .@menu$, ":Usar o dispositivo dimensional.:Cancelar.";
 
 		switch(select(.@menu$)) {
 		case 1:
 			if (instance_create(.@md_name$) < 0) {
-				mes "Party Name: "+.@p_name$;
-				mes "Party Leader: "+strcharinfo(0);
-				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				mes "Nome do Grupo: "+.@p_name$;
+				mes "Líder do Grupo: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Falha na reserva!";
 				close;
 			}
-			mes "^FF0000The dimensional device boots up cleanly. Use the device to enter the crack in space and time.^000000";
+			mes "^FF0000O dispositivo dimensional liga sem problema. Use o dispositivo para entrar na fenda do espaço-tempo.^000000";
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
 			case IE_OTHER:
-				mes "An unknown error has occurred.";
+				mes "Ocorreu um erro desconhecido.";
 				close;
 			case IE_NOINSTANCE:
-				mes "The memorial dungeon "+.@md_name$+" does not exist.";
-				mes "The party leader did not generate the dungeon yet.";
+				mes "A masmorra memorial "+.@md_name$+" não existe.";
+				mes "O líder do grupo ainda não gerou a masmorra.";
 				close;
 			case IE_NOMEMBER:
-				mes "Only the registered members can enter the instance "+.@md_name$+".";
+				mes "Só os membros registrados podem entrar na instância "+.@md_name$+".";
 				close;
 			case IE_OK:
-				mapannounce "dali",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
+				mapannounce "dali",strcharinfo(0)+", do grupo "+.@p_name$+", entrou na instância "+.@md_name$+".",bc_map,"0x00ff99";
 				setquest 15002;
 				end;
 			}
 		case 3:
-			mes "^FF0000The party leader did not boot up the dimensional device.^000000";
+			mes "^FF0000O líder do grupo não ligou o dispositivo dimensional.^000000";
 			close;
 		}
 	} else if (.@ins_sara_time == 0 || .@ins_sara_time == 1) {
-		mes "[Adventurer Leon]";
-		mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
+		mes "[Aventureiro Leon]";
+		mes "Acho que umas 20 horas depois da última vez que você entrou na fenda ela vai estar estável o bastante para você atravessar de novo.";
 		close;
 	}
 	else {
 		erasequest 15002;
-		mes "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000";
+		mes "^0000FF[ Memórias de Sarah ] O tempo de espera foi zerado. Já dá para usar o dispositivo dimensional de novo.^000000";
 		close;
 	}
 }
 
 1@sara,260,156,6	script	A Girl#01	668,{
 	if (is_party_leader() == true) {
-		unittalk getcharid(3),"Where am I?";
+		unittalk getcharid(3),"Onde é que eu estou?";
 		mes "["+strcharinfo(0)+"]";
-		mes "Where am I?";
+		mes "Onde é que eu estou?";
 		next;
 		cutin "sara_9sara1",2;
-		npctalk "Hello! This is the village of Payon. You don't seem to be from around here...";
-		mes "[A Girl]";
-		mes "Hello! This is the village of Payon. You don't seem to be from around here...";
+		npctalk "Olá! Esta é a vila de Payon. Você não parece ser daqui...";
+		mes "[Uma Menina]";
+		mes "Olá! Esta é a vila de Payon. Você não parece ser daqui...";
 		next;
-		unittalk getcharid(3),"Are you from here? You don't seem to quite match the locals either.";
+		unittalk getcharid(3),"Você é daqui? Você também não parece muito com o pessoal da vila.";
 		mes "["+strcharinfo(0)+"]";
-		mes "Are you from here? You don't seem to quite match the locals either.";
+		mes "Você é daqui? Você também não parece muito com o pessoal da vila.";
 		next;
-		npctalk "Yes! I was born here! My name is Sara, Sara Irene!";
-		mes "[A Girl]";
-		mes "Yes! I was born here! My name is Sara, Sara Irene!";
+		npctalk "Sou sim! Nasci aqui! Meu nome é Sarah, Sarah Irene!";
+		mes "[Uma Menina]";
+		mes "Sou sim! Nasci aqui! Meu nome é Sarah, Sarah Irene!";
 		next;
 		setnpcdisplay(instance_npcname("A Girl#01"),"Sara Irene");
-		npctalk "My father is doyen of this village! I just take after my mother.";
-		mes "[Sara Irene]";
-		mes "My father is doyen of this village! I just take after my mother.";
+		npctalk "Meu pai é o ancião desta vila! Eu puxei mesmo foi à minha mãe.";
+		mes "[Sarah Irene]";
+		mes "Meu pai é o ancião desta vila! Eu puxei mesmo foi à minha mãe.";
 		next;
-		unittalk getcharid(3),"Oh! I am sorry! Uh... Why are you standing out here all alone?";
+		unittalk getcharid(3),"Ah! Me desculpe! Ãh... Por que você está aqui fora sozinha?";
 		mes "["+strcharinfo(0)+"]";
-		mes "Oh! I am sorry! Uh... Why are you standing out here all alone?";
+		mes "Ah! Me desculpe! Ãh... Por que você está aqui fora sozinha?";
 		next;
-		npctalk "I am waiting for my father. He said that he will be here soon.";
-		mes "[Sara Irene]";
-		mes "I am waiting for my father. He said that he will be here soon.";
+		npctalk "Estou esperando o meu pai. Ele disse que já vem.";
+		mes "[Sarah Irene]";
+		mes "Estou esperando o meu pai. Ele disse que já vem.";
 		next;
 		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnEnable";
-		mapannounce instance_mapname("1@sara"), "An older man exits the house. Sara's face brightens at the sight of him.",bc_area,"0xffffff";
-		mes "^FF0000An older man exits the house. Sara's face brightens at the sight of him.^000000";
+		mapannounce instance_mapname("1@sara"), "Um homem mais velho sai da casa. O rosto da Sarah se ilumina ao vê-lo.",bc_area,"0xffffff";
+		mes "^FF0000Um homem mais velho sai da casa. O rosto da Sarah se ilumina ao vê-lo.^000000";
 		next;
-		npctalk "Hi Daddy!";
-		mes "[Sara Irene]";
-		mes "Hi Daddy!";
+		npctalk "Oi, papai!";
+		mes "[Sarah Irene]";
+		mes "Oi, papai!";
 		next;
 		cutin "sara_elder_irine1",2;
-		npctalk "Sweetheart you look so happy.", instance_npcname("Doyen Irene#01", instance_id());
-		mes "[Doyen Irene]";
-		mes "Sweetheart you look so happy.";
+		npctalk "Filhinha, você está tão feliz.", instance_npcname("Doyen Irene#01", instance_id());
+		mes "[Ancião Irene]";
+		mes "Filhinha, você está tão feliz.";
 		next;
 		cutin "sara_9sara1",2;
-		npctalk "You said you would come back soon! I waited for you and you lied!";
-		mes "[Sara Irene]";
-		mes "You said you would come back soon! I waited for you and you lied!";
+		npctalk "Você disse que voltava logo! Eu esperei e você mentiu!";
+		mes "[Sarah Irene]";
+		mes "Você disse que voltava logo! Eu esperei e você mentiu!";
 		next;
 		cutin "sara_elder_irine1",2;
-		npctalk "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected.", instance_npcname("Doyen Irene#01", instance_id());
-		mes "[Doyen Irene]";
-		mes "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected.";
+		npctalk "Filhinha, me desculpe por ter feito você esperar tanto. A reunião com os anciãos da vila demorou mais do que eu esperava.", instance_npcname("Doyen Irene#01", instance_id());
+		mes "[Ancião Irene]";
+		mes "Filhinha, me desculpe por ter feito você esperar tanto. A reunião com os anciãos da vila demorou mais do que eu esperava.";
 		next;
 		cutin "sara_9sara1",2;
-		npctalk "I hate those old fogeys.";
-		mes "[Sara Irene]";
-		mes "I hate those old fogeys.";
+		npctalk "Eu detesto aqueles velhotes.";
+		mes "[Sarah Irene]";
+		mes "Eu detesto aqueles velhotes.";
 		next;
 		cutin "sara_elder_irine1",2;
-		npctalk "Don't say that sweetheart... Who is this with you?", instance_npcname("Doyen Irene#01", instance_id());
-		mes "[Doyen Irene]";
-		mes "Don't say that sweetheart... Who is this with you?";
+		npctalk "Não fale assim, filhinha... Quem está com você?", instance_npcname("Doyen Irene#01", instance_id());
+		mes "[Ancião Irene]";
+		mes "Não fale assim, filhinha... Quem está com você?";
 		next;
-		mapannounce instance_mapname("1@sara"), "Doyen Irene stares at you with fire in his eyes.",bc_area,"0xffffff";
-		mes "^FF0000Doyen Irene stares at you with fire in his eyes.^000000";
+		mapannounce instance_mapname("1@sara"), "O Ancião Irene encara você com fogo nos olhos.",bc_area,"0xffffff";
+		mes "^FF0000O Ancião Irene encara você com fogo nos olhos.^000000";
 		next;
-		mapannounce instance_mapname("1@sara"), "Sara starts humming and singing softly to herself. She picks some wild flowers nearby and presents them to the Doyen.",bc_area,"0xffffff";
-		mes "^FF0000Sara starts humming and singing softly to herself. She picks some wild flowers nearby and presents them to the Doyen.^000000";
+		mapannounce instance_mapname("1@sara"), "Sarah começa a cantarolar baixinho. Ela colhe umas flores do mato ali perto e entrega ao Ancião.",bc_area,"0xffffff";
+		mes "^FF0000Sarah começa a cantarolar baixinho. Ela colhe umas flores do mato ali perto e entrega ao Ancião.^000000";
 		next;
 		cutin "sara_9sara1",2;
-		npctalk "Here you go daddy!";
-		mes "[Sara Irene]";
-		mes "Here you go daddy!";
+		npctalk "Toma, papai!";
+		mes "[Sarah Irene]";
+		mes "Toma, papai!";
 		next;
 		cutin "sara_elder_irine1",2;
-		npctalk "Oh Sara, may I have them?", instance_npcname("Doyen Irene#01", instance_id());
-		mes "[Doyen Irene]";
-		mes "Oh Sara, may I have them?";
+		npctalk "Ah, Sarah, posso ficar com elas?", instance_npcname("Doyen Irene#01", instance_id());
+		mes "[Ancião Irene]";
+		mes "Ah, Sarah, posso ficar com elas?";
 		next;
 		cutin "sara_9sara1",2;
-		npctalk "Of course silly daddy!";
-		mes "[Sara Irene]";
-		mes "Of course silly daddy!";
+		npctalk "Claro, papai bobo!";
+		mes "[Sarah Irene]";
+		mes "Claro, papai bobo!";
 		next;
-		mapannounce instance_mapname("1@sara"), "After being given the flowers the Doyen's mood seems to greatly improve.",bc_area,"0xffffff";
-		mes "^FF0000After being given the flowers the Doyen's mood seems to greatly improve.^000000";
+		mapannounce instance_mapname("1@sara"), "Depois de receber as flores, o humor do Ancião parece melhorar muito.",bc_area,"0xffffff";
+		mes "^FF0000Depois de receber as flores, o humor do Ancião parece melhorar muito.^000000";
 		next;
 		cutin "sara_elder_irine1",2;
-		npctalk "Alright my princess, where should we go now?", instance_npcname("Doyen Irene#01", instance_id());
-		mes "[Doyen Irene]";
-		mes "Alright my princess, where should we go now?";
+		npctalk "Muito bem, minha princesa, para onde vamos agora?", instance_npcname("Doyen Irene#01", instance_id());
+		mes "[Ancião Irene]";
+		mes "Muito bem, minha princesa, para onde vamos agora?";
 		next;
 		cutin "sara_9sara1",2;
-		npctalk "Oh daddy! Lets go to the top of that hill over there!";
-		mes "[Sara Irene]";
-		mes "Oh daddy! Lets go to the top of that hill over there!";
+		npctalk "Ah, papai! Vamos até o alto daquela colina ali!";
+		mes "[Sarah Irene]";
+		mes "Ah, papai! Vamos até o alto daquela colina ali!";
 		next;
 		cutin "sara_elder_irine1",2;
-		npctalk "Hah! Ok, hold onto me tight!", instance_npcname("Doyen Irene#01", instance_id());
-		mes "[Doyen Irene]";
-		mes "Hah! Ok, hold onto me tight!";
+		npctalk "Rá! Certo, segure firme em mim!", instance_npcname("Doyen Irene#01", instance_id());
+		mes "[Ancião Irene]";
+		mes "Rá! Certo, segure firme em mim!";
 		next;
 		cutin "sara_elder_irine1",255;
 		donpcevent instance_npcname("A Girl#01", instance_id())+"::OnDisable";
 		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnDisable";
 		donpcevent instance_npcname("Strange Old Man#01", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Mysterious Old Man#02", instance_id())+"::OnEnable";
-		mapannounce instance_mapname("1@sara"), "As they wander off you hear strange voices from around the corner...",bc_area,"0xffffff";
-		mes "^FF0000As they wander off you hear strange voices from around the corner...^000000";
+		mapannounce instance_mapname("1@sara"), "Enquanto eles se afastam, você ouve vozes estranhas vindo da esquina...",bc_area,"0xffffff";
+		mes "^FF0000Enquanto eles se afastam, você ouve vozes estranhas vindo da esquina...^000000";
 		next;
-		npctalk "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!", instance_npcname("Strange Old Man#01", instance_id());
-		mes "[Strange Old Man]";
-		mes "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!";
+		npctalk "Sinto o poder da Sarah crescendo. Não podemos ficar parados e deixar que ela alcance todo o potencial dela!", instance_npcname("Strange Old Man#01", instance_id());
+		mes "[Velho Estranho]";
+		mes "Sinto o poder da Sarah crescendo. Não podemos ficar parados e deixar que ela alcance todo o potencial dela!";
 		next;
-		npctalk "She was born under a bad sign and her mother isn't even one of us!", instance_npcname("Mysterious Old Man#02", instance_id());
-		mes "[Mysterious Old Man]";
-		mes "She was born under a bad sign and her mother isn't even one of us!";
+		npctalk "Ela nasceu sob um mau presságio e a mãe dela nem é uma das nossas!", instance_npcname("Mysterious Old Man#02", instance_id());
+		mes "[Velho Misterioso]";
+		mes "Ela nasceu sob um mau presságio e a mãe dela nem é uma das nossas!";
 		next;
-		npctalk "Someday she will cause blood to flow in our streets.", instance_npcname("Mysterious Old Man#02", instance_id());
-		mes "[Mysterious Old Man]";
-		mes "Someday she will cause blood to flow in our streets.";
+		npctalk "Um dia ela vai fazer correr sangue nas nossas ruas.", instance_npcname("Mysterious Old Man#02", instance_id());
+		mes "[Velho Misterioso]";
+		mes "Um dia ela vai fazer correr sangue nas nossas ruas.";
 		next;
-		npctalk "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it.", instance_npcname("Strange Old Man#01", instance_id());
-		mes "[Strange Old Man]";
-		mes "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it.";
+		npctalk "Temos que fazer alguma coisa antes que as criaturas Sagradas a escolham. Pedi a 'ELE' que cuidasse disso.", instance_npcname("Strange Old Man#01", instance_id());
+		mes "[Velho Estranho]";
+		mes "Temos que fazer alguma coisa antes que as criaturas Sagradas a escolham. Pedi a 'ELE' que cuidasse disso.";
 		next;
-		npctalk "We will see... I look forward to hearing the bad news that has befallen her...", instance_npcname("Mysterious Old Man#02", instance_id());
-		mes "[Mysterious Old Man]";
-		mes "We will see... I look forward to hearing the bad news that has befallen her...";
+		npctalk "Vamos ver... Fico no aguardo da má notícia que vai cair sobre ela...", instance_npcname("Mysterious Old Man#02", instance_id());
+		mes "[Velho Misterioso]";
+		mes "Vamos ver... Fico no aguardo da má notícia que vai cair sobre ela...";
 		next;
 		donpcevent instance_npcname("Strange Old Man#01", instance_id())+"::OnDisable";
 		donpcevent instance_npcname("Mysterious Old Man#02", instance_id())+"::OnDisable";
@@ -365,8 +365,8 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		donpcevent instance_npcname("Sara Irene#01", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Sara's Mother", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Doyen Irene#02", instance_id())+"::OnEnable";
-		mapannounce instance_mapname("1@sara"), "The old men wander off. It seems Sara might be in danger. We have to do something!",bc_area,"0xffffff";
-		mes "^FF0000The old men wander off. It seems Sara might be in danger. We have to do something!^000000";
+		mapannounce instance_mapname("1@sara"), "Os velhos se afastam. Parece que a Sarah pode estar em perigo. Temos que fazer alguma coisa!",bc_area,"0xffffff";
+		mes "^FF0000Os velhos se afastam. Parece que a Sarah pode estar em perigo. Temos que fazer alguma coisa!^000000";
 		close;
 	}
 	else {
@@ -421,75 +421,75 @@ OnEnable:
 1@sara,107,325,6	script	Sara Irene#01	668,{
 	if (is_party_leader() == true) {
 		cutin "sara_9sara1",2;
-		npctalk "Oh! Hello again! I remember you, what's up?";
-		mes "[Sara Irene]";
-		mes "Oh! Hello again! I remember you, what's up?";
+		npctalk "Ah! Olá de novo! Eu lembro de você, e aí?";
+		mes "[Sarah Irene]";
+		mes "Ah! Olá de novo! Eu lembro de você, e aí?";
 		next;
-		npctalk "I am here to give flowers to my mommy!";
-		mes "[Sara Irene]";
-		mes "I am here to give flowers to my mommy!";
+		npctalk "Vim trazer flores para a minha mamãe!";
+		mes "[Sarah Irene]";
+		mes "Vim trazer flores para a minha mamãe!";
 		next;
-		mapannounce instance_mapname("1@sara"), "Sara leaps forward to open the door, flowers at the ready.",bc_area,"0xffffff";
-		mes "^FF0000Sara leaps forward to open the door, flowers at the ready.^000000";
+		mapannounce instance_mapname("1@sara"), "Sarah corre para abrir a porta, com as flores na mão.",bc_area,"0xffffff";
+		mes "^FF0000Sarah corre para abrir a porta, com as flores na mão.^000000";
 		next;
-		npctalk "Mom! Dad! Look what I found!";
-		mes "[Sara Irene]";
-		mes "Mom! Dad! Look what I found!";
+		npctalk "Mãe! Pai! Olhem o que eu achei!";
+		mes "[Sarah Irene]";
+		mes "Mãe! Pai! Olhem o que eu achei!";
 		next;
 		playBGMall "37",instance_mapname("1@sara");
 		cutin "sara_9sara1",255;
 		cutin "sara_momdie",4;
-		mapannounce instance_mapname("1@sara"), "The door opens to reveal a woman near death laying on the floor and the Doyen standing over the woman with a bloody sword.",bc_area,"0xffffff";
-		mes "^FF0000The door opens to reveal a woman near death laying on the floor and the Doyen standing over the woman with a bloody sword.^000000";
+		mapannounce instance_mapname("1@sara"), "A porta se abre e revela uma mulher à beira da morte caída no chão, e o Ancião de pé sobre ela com uma espada ensanguentada.",bc_area,"0xffffff";
+		mes "^FF0000A porta se abre e revela uma mulher à beira da morte caída no chão, e o Ancião de pé sobre ela com uma espada ensanguentada.^000000";
 		next;
 		npctalk "...";
-		mes "[Sara Irene]";
+		mes "[Sarah Irene]";
 		mes "...";
 		next;
-		npctalk "Sara...Ru-...away...", instance_npcname("Sara's Mother", instance_id());
-		mes "[Sara's Mother]";
-		mes "Sara...Ru-...away...";
+		npctalk "Sarah...fu-...ja...", instance_npcname("Sara's Mother", instance_id());
+		mes "[Mãe da Sarah]";
+		mes "Sarah...fu-...ja...";
 		next;
 		npctalk "...";
-		mes "[Sara Irene]";
+		mes "[Sarah Irene]";
 		mes "...";
 		next;
-		mapannounce instance_mapname("1@sara"), "A gem rolls from the woman's hand and comes to a rest in front of Sara. Unconsciously Sara reaches down and picks up the gem.",bc_area,"0xffffff";
-		mes "^FF0000A gem rolls from the woman's hand and comes to a rest in front of Sara. Unconsciously Sara reaches down and picks up the gem.^000000";
+		mapannounce instance_mapname("1@sara"), "Uma gema rola da mão da mulher e para bem na frente da Sarah. Sem pensar, Sarah se abaixa e pega a gema.",bc_area,"0xffffff";
+		mes "^FF0000Uma gema rola da mão da mulher e para bem na frente da Sarah. Sem pensar, Sarah se abaixa e pega a gema.^000000";
 		next;
-		mapannounce instance_mapname("1@sara"), "The Doyen turns around and notices Sara.",bc_area,"0xffffff";
-		mes "^FF0000The Doyen turns around and notices Sara.^000000";
+		mapannounce instance_mapname("1@sara"), "O Ancião se vira e percebe a Sarah.",bc_area,"0xffffff";
+		mes "^FF0000O Ancião se vira e percebe a Sarah.^000000";
 		next;
 		cutin "sara_momdie",255;
 		cutin "sara_elder_irine4",2;
-		npctalk "Ahh Sara! I was just looking for you...", instance_npcname("Doyen Irene#02", instance_id());
-		mes "[Doyen Irene]";
-		mes "Ahh Sara! I was just looking for you...";
+		npctalk "Ahh, Sarah! Eu estava justamente procurando você...", instance_npcname("Doyen Irene#02", instance_id());
+		mes "[Ancião Irene]";
+		mes "Ahh, Sarah! Eu estava justamente procurando você...";
 		next;
 		cutin "sara_9sara2",2;
 		npctalk "...";
-		mes "[Sara Irene]";
+		mes "[Sarah Irene]";
 		mes "...";
 		next;
-		switch(select("Escape with Sara.")) {}
+		switch(select("Fugir com a Sarah.")) {}
 		cutin "sara_elder_irine3",2;
-		npctalk "Guards! GUARDS!! There is a murderer here! Catch him!", instance_npcname("Doyen Irene#02", instance_id());
-		mes "[Doyen Irene]";
-		mes "Guards! GUARDS!! There is a murderer here! Catch him!";
+		npctalk "Guardas! GUARDAS!! Tem um assassino aqui! Peguem ele!", instance_npcname("Doyen Irene#02", instance_id());
+		mes "[Ancião Irene]";
+		mes "Guardas! GUARDAS!! Tem um assassino aqui! Peguem ele!";
 		next;
-		mapannounce instance_mapname("1@sara"), "The sound of many pairs of boots can be heard running outside!",bc_area,"0xffffff";
-		mes "^FF0000The sound of many pairs of boots can be heard running outside!^000000";
+		mapannounce instance_mapname("1@sara"), "Dá para ouvir o som de várias botas correndo lá fora!",bc_area,"0xffffff";
+		mes "^FF0000Dá para ouvir o som de várias botas correndo lá fora!^000000";
 		next;
 		cutin "sara_9sara3",2;
-		npctalk "Mommy NO!!!!!!!!!!";
-		mes "[Sara Irene]";
-		mes "Mommy NO!!!!!!!!!!";
+		npctalk "Mamãe NÃO!!!!!!!!!!";
+		mes "[Sarah Irene]";
+		mes "Mamãe NÃO!!!!!!!!!!";
 		next;
 		donpcevent instance_npcname("Sara Irene#01", instance_id())+"::OnDisable";
 		donpcevent instance_npcname("Sara's Mother", instance_id())+"::OnDisable";
 		donpcevent instance_npcname("Doyen Irene#02", instance_id())+"::OnDisable";
-		mapannounce instance_mapname("1@sara"), "Sara runs away and the sound of the guards is getting closer...",bc_area,"0xffffff";
-		mes "^FF0000Sara runs away and the sound of the guards is getting closer...^000000";
+		mapannounce instance_mapname("1@sara"), "Sarah sai correndo e o som dos guardas vai chegando mais perto...",bc_area,"0xffffff";
+		mes "^FF0000Sarah sai correndo e o som dos guardas vai chegando mais perto...^000000";
 		close2;
 		cutin "sara_9sara3",255;
 		donpcevent instance_npcname("#MobsSara01", instance_id())+"::OnEnable";
@@ -548,42 +548,42 @@ OnEnable:
 1@sara,152,233,6	script	Sara Irene#02	668,{
 	if (is_party_leader() == true) {
 		cutin "sara_9sara2",2;
-		npctalk "Mommy!";
-		mes "[Sara Irene]";
-		mes "Mommy!";
+		npctalk "Mamãe!";
+		mes "[Sarah Irene]";
+		mes "Mamãe!";
 		next;
 		cutin "sara_elder_irine4",2;
-		npctalk "Sara...", instance_npcname("Doyen Irene#03", instance_id());
-		mes "[Doyen Irene]";
-		mes "Sara...";
+		npctalk "Sarah...", instance_npcname("Doyen Irene#03", instance_id());
+		mes "[Ancião Irene]";
+		mes "Sarah...";
 		next;
 		cutin "sara_9sara2",2;
-		npctalk "No!";
-		mes "[Sara Irene]";
-		mes "No!";
+		npctalk "Não!";
+		mes "[Sarah Irene]";
+		mes "Não!";
 		next;
 		cutin "sara_elder_irine4",2;
-		npctalk "I have been looking for you Sara. Please come with daddy, it is very dangerous here!", instance_npcname("Doyen Irene#03", instance_id());
-		mes "[Doyen Irene]";
-		mes "I have been looking for you Sara. Please come with daddy, it is very dangerous here!";
+		npctalk "Eu estava procurando você, Sarah. Venha com o papai, aqui é muito perigoso!", instance_npcname("Doyen Irene#03", instance_id());
+		mes "[Ancião Irene]";
+		mes "Eu estava procurando você, Sarah. Venha com o papai, aqui é muito perigoso!";
 		next;
-		unittalk getcharid(3),"I won't let you take Sara!";
+		unittalk getcharid(3),"Eu não vou deixar você levar a Sarah!";
 		mes "["+strcharinfo(0)+"]";
-		mes "I won't let you take Sara!";
+		mes "Eu não vou deixar você levar a Sarah!";
 		next;
 		cutin "sara_elder_irine3",2;
-		npctalk "The murderer is here! Guards! We will finish him once and for all!", instance_npcname("Doyen Irene#03", instance_id());
-		mes "[Doyen Irene]";
-		mes "The murderer is here! Guards! We will finish him once and for all!";
+		npctalk "O assassino está aqui! Guardas! Vamos acabar com ele de uma vez por todas!", instance_npcname("Doyen Irene#03", instance_id());
+		mes "[Ancião Irene]";
+		mes "O assassino está aqui! Guardas! Vamos acabar com ele de uma vez por todas!";
 		next;
-		unittalk getcharid(3),"Sara... run! Save yourself!";
+		unittalk getcharid(3),"Sarah... corra! Salve-se!";
 		mes "["+strcharinfo(0)+"]";
-		mes "Sara... run! Save yourself!";
+		mes "Sarah... corra! Salve-se!";
 		next;
 		cutin "sara_9sara2",2;
-		npctalk "...okay.";
-		mes "[Sara Irene]";
-		mes "...okay.";
+		npctalk "...está bem.";
+		mes "[Sarah Irene]";
+		mes "...está bem.";
 		close2;
 		cutin "sara_9sara3",255;
 		donpcevent instance_npcname("Sara Irene#02", instance_id())+"::OnDisable";
@@ -619,63 +619,63 @@ OnEnable:
 1@sara,156,236,4	script	Doyen Irene#04	684,{
 	if (is_party_leader() == true) {
 		cutin "sara_elder_irine4",2;
-		npctalk "You... were too strong for me.";
-		mes "[Doyen Irene]";
-		mes "You... were too strong for me.";
+		npctalk "Você... era forte demais para mim.";
+		mes "[Ancião Irene]";
+		mes "Você... era forte demais para mim.";
 		next;
-		npctalk "Why... *hack* are you trying to kill my wife and daughter?";
-		mes "[Doyen Irene]";
-		mes "Why... *hack* are you trying to kill my wife and daughter?";
+		npctalk "Por que... *cof* você está tentando matar a minha mulher e a minha filha?";
+		mes "[Ancião Irene]";
+		mes "Por que... *cof* você está tentando matar a minha mulher e a minha filha?";
 		next;
-		unittalk getcharid(3),"What are you talking about? We saw you standing over Sara's mother with your sword COVERED in blood!";
+		unittalk getcharid(3),"Do que você está falando? Nós vimos você de pé sobre a mãe da Sarah, com a sua espada COBERTA de sangue!";
 		mes "["+strcharinfo(0)+"]";
-		mes "What are you talking about? We saw you standing over Sara's mother with your sword COVERED in blood!";
+		mes "Do que você está falando? Nós vimos você de pé sobre a mãe da Sarah, com a sua espada COBERTA de sangue!";
 		next;
-		npctalk "You... think I killed Sara's mother?";
-		mes "[Doyen Irene]";
-		mes "You... think I killed Sara's mother?";
+		npctalk "Você... acha que eu matei a mãe da Sarah?";
+		mes "[Ancião Irene]";
+		mes "Você... acha que eu matei a mãe da Sarah?";
 		next;
-		npctalk "She *cough* had already been stabbed by an assassin. I slew him *hack* that is why my blade was covered in blood...";
-		mes "[Doyen Irene]";
-		mes "She *cough* had already been stabbed by an assassin. I slew him *hack* that is why my blade was covered in blood...";
+		npctalk "Ela *tosse* já tinha sido esfaqueada por um assassino. Eu matei ele *cof* e foi por isso que a minha lâmina ficou coberta de sangue...";
+		mes "[Ancião Irene]";
+		mes "Ela *tosse* já tinha sido esfaqueada por um assassino. Eu matei ele *cof* e foi por isso que a minha lâmina ficou coberta de sangue...";
 		next;
 		cutin "sara_elder_irine4",255;
 		cutin "sara_momdie",4;
-		mapannounce instance_mapname("1@sara"), "Thinking back, you seem to recall another body laying in the left corner of the room. Maybe that was the assassin the Doyen is talking about.",bc_area,"0xffffff";
-		mes "^FF0000Thinking back, you seem to recall another body laying in the left corner of the room. Maybe that was the assassin the Doyen is talking about.^000000";
+		mapannounce instance_mapname("1@sara"), "Pensando bem, você se lembra de outro corpo caído no canto esquerdo do quarto. Talvez fosse o assassino de quem o Ancião está falando.",bc_area,"0xffffff";
+		mes "^FF0000Pensando bem, você se lembra de outro corpo caído no canto esquerdo do quarto. Talvez fosse o assassino de quem o Ancião está falando.^000000";
 		next;
 		cutin "sara_momdie",255;
 		cutin "sara_elder_irine4",2;
-		npctalk "If... you are the not the assassin sent to kill my wife and daughter, who are you?";
-		mes "[Doyen Irene]";
-		mes "If... you are the not the assassin sent to kill my wife and daughter, who are you?";
+		npctalk "Se... você não é o assassino mandado para matar a minha mulher e a minha filha, quem é você?";
+		mes "[Ancião Irene]";
+		mes "Se... você não é o assassino mandado para matar a minha mulher e a minha filha, quem é você?";
 		next;
-		unittalk getcharid(3),"I am just an adventurer who was passing through. I heard some strange men plotting their deaths and needed to intervene.";
+		unittalk getcharid(3),"Sou só um aventureiro de passagem. Ouvi uns homens estranhos tramando a morte delas e precisei intervir.";
 		mes "["+strcharinfo(0)+"]";
-		mes "I am just an adventurer who was passing through. I heard some strange men plotting their deaths and needed to intervene.";
+		mes "Sou só um aventureiro de passagem. Ouvi uns homens estranhos tramando a morte delas e precisei intervir.";
 		next;
-		npctalk "If... you are telling the truth... forgive me. I thought you were one of them.";
-		mes "[Doyen Irene]";
-		mes "If... you are telling the truth... forgive me. I thought you were one of them.";
+		npctalk "Se... você está falando a verdade... me perdoe. Achei que fosse um deles.";
+		mes "[Ancião Irene]";
+		mes "Se... você está falando a verdade... me perdoe. Achei que fosse um deles.";
 		next;
-		npctalk "Strange men? ...I bet they were some of the village elders. Ugh...";
-		mes "[Doyen Irene]";
-		mes "Strange men? ...I bet they were some of the village elders. Ugh...";
+		npctalk "Homens estranhos? ...Aposto que eram alguns dos anciãos da vila. Ugh...";
+		mes "[Ancião Irene]";
+		mes "Homens estranhos? ...Aposto que eram alguns dos anciãos da vila. Ugh...";
 		next;
-		npctalk "There might be more assassins so we have to find Sara as fast as we can!";
-		mes "[Doyen Irene]";
-		mes "There might be more assassins so we have to find Sara as fast as we can!";
+		npctalk "Pode haver mais assassinos, então temos que achar a Sarah o mais rápido possível!";
+		mes "[Ancião Irene]";
+		mes "Pode haver mais assassinos, então temos que achar a Sarah o mais rápido possível!";
 		next;
-		unittalk getcharid(3),"Sara believes that you killed her mother. We need to tell her the truth!";
+		unittalk getcharid(3),"A Sarah acredita que você matou a mãe dela. Precisamos contar a verdade a ela!";
 		mes "["+strcharinfo(0)+"]";
-		mes "Sara believes that you killed her mother. We need to tell her the truth!";
+		mes "A Sarah acredita que você matou a mãe dela. Precisamos contar a verdade a ela!";
 		next;
-		npctalk "We must do our best to find her. Lets split up and search for her. Please help me find my daughter and explain everything to her.";
-		mes "[Doyen Irene]";
-		mes "We must do our best to find her. Lets split up and search for her. Please help me find my daughter and explain everything to her.";
+		npctalk "Temos que fazer o possível para achá-la. Vamos nos separar e procurar por ela. Por favor, me ajude a achar a minha filha e a explicar tudo a ela.";
+		mes "[Ancião Irene]";
+		mes "Temos que fazer o possível para achá-la. Vamos nos separar e procurar por ela. Por favor, me ajude a achar a minha filha e a explicar tudo a ela.";
 		close2;
 		cutin "sara_elder_irine4",255;
-		mapannounce instance_mapname("1@sara"), "We must find Sara. You seem to remember her running in the 8 O'clock direction.",bc_map,"0xffff00";
+		mapannounce instance_mapname("1@sara"), "Precisamos achar a Sarah. Você acha que ela correu na direção das 8 horas.",bc_map,"0xffff00";
 		viewpoint 1,88,188,1,0x00FF00;
 		donpcevent instance_npcname("Doyen Irene#04", instance_id())+"::OnDisable";
 		enablenpc instance_npcname("#sara_warp06");
@@ -698,38 +698,38 @@ OnEnable:
 
 1@sara,39,142,4	script	Sara Irene#03	668,{
 	if (is_party_leader() == true) {
-		mapannounce instance_mapname("1@sara"), "As you are about to call out to Sara, a sudden blow knocks you down from behind.",bc_area,"0xffffff";
-		mes "^FF0000As you are about to call out to Sara, a sudden blow knocks you down from behind.^000000";
+		mapannounce instance_mapname("1@sara"), "Quando você vai chamar pela Sarah, um golpe repentino derruba você por trás.",bc_area,"0xffffff";
+		mes "^FF0000Quando você vai chamar pela Sarah, um golpe repentino derruba você por trás.^000000";
 		next;
 		cutin "sara_beholder",2;
-		npctalk "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara.", instance_npcname("?????#01", instance_id());
+		npctalk "Os viajantes do tempo não podem mais interferir. Vocês não vão nos impedir de encontrar a Sarah.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
-		mes "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara.";
+		mes "Os viajantes do tempo não podem mais interferir. Vocês não vão nos impedir de encontrar a Sarah.";
 		next;
-		npctalk "You should go back to the time where you belong.", instance_npcname("?????#01", instance_id());
+		npctalk "Você deveria voltar para o tempo a que pertence.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
-		mes "You should go back to the time where you belong.";
+		mes "Você deveria voltar para o tempo a que pertence.";
 		next;
-		mapannounce instance_mapname("1@sara"), "As you fall to the ground, two dark figures approach Sara.",bc_area,"0xffffff";
-		mes "^FF0000As you fall to the ground, two dark figures approach Sara.^000000";
+		mapannounce instance_mapname("1@sara"), "Enquanto você cai no chão, dois vultos escuros se aproximam da Sarah.",bc_area,"0xffffff";
+		mes "^FF0000Enquanto você cai no chão, dois vultos escuros se aproximam da Sarah.^000000";
 		next;
-		npctalk "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate.", instance_npcname("?????#01", instance_id());
+		npctalk "Uma menina cheia de traição, desespero e ódio. Nós vamos guiá-la até o seu destino final.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
-		mes "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate.";
+		mes "Uma menina cheia de traição, desespero e ódio. Nós vamos guiá-la até o seu destino final.";
 		next;
 		cutin "sara_9sara2",2;
 		npctalk "...";
-		mes "[Sara Irene]";
+		mes "[Sarah Irene]";
 		mes "...";
 		next;
 		cutin "sara_beholder",2;
-		npctalk "Sara Irene, 'he' will make your dreams come true.", instance_npcname("?????#01", instance_id());
+		npctalk "Sarah Irene, 'ele' vai realizar os seus sonhos.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
-		mes "Sara Irene, 'he' will make your dreams come true.";
+		mes "Sarah Irene, 'ele' vai realizar os seus sonhos.";
 		next;
 		cutin "sara_beholder",255;
-		mapannounce instance_mapname("1@sara"), "One of the cloaked strangers covers Sara with their cloak and all three figures disappear.",bc_area,"0xffffff";
-		mes "^FF0000One of the cloaked strangers covers Sara with their cloak and all three figures disappear.^000000";
+		mapannounce instance_mapname("1@sara"), "Um dos estranhos encapuzados cobre a Sarah com o manto, e os três vultos desaparecem.",bc_area,"0xffffff";
+		mes "^FF0000Um dos estranhos encapuzados cobre a Sarah com o manto, e os três vultos desaparecem.^000000";
 		close2;
 		viewpoint 1,16,143,1,0x00FF00;
 		donpcevent instance_npcname("Sara Irene#03", instance_id())+"::OnDisable";
@@ -766,7 +766,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Why daddy?";
+	npctalk "Por quê, papai?";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk01", instance_id())+"::OnDisable";
@@ -790,7 +790,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Not mommy!";
+	npctalk "A mamãe não!";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk02", instance_id())+"::OnDisable";
@@ -814,7 +814,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Why... why?";
+	npctalk "Por quê... por quê?";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk03", instance_id())+"::OnDisable";
@@ -838,7 +838,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Nooooo...";
+	npctalk "Nãooooo...";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk04", instance_id())+"::OnDisable";
@@ -886,7 +886,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "...Mommy";
+	npctalk "...Mamãe";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk06", instance_id())+"::OnDisable";
@@ -910,7 +910,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Why does it hurt so much?";
+	npctalk "Por que dói tanto?";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk07", instance_id())+"::OnDisable";
@@ -982,7 +982,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Nooooo...";
+	npctalk "Nãooooo...";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk10", instance_id())+"::OnDisable";
@@ -1030,7 +1030,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Daddy!";
+	npctalk "Papai!";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk12", instance_id())+"::OnDisable";
@@ -1054,7 +1054,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	npctalk "Daddy why?!";
+	npctalk "Papai, por quê?!";
 	sleep2 1000;
 	initnpctimer;
 	donpcevent instance_npcname("Sara Irene#talk13", instance_id())+"::OnDisable";
@@ -1155,11 +1155,11 @@ OnEnable:
 	end;
 
 OnTimer1000:
-	mapannounce instance_mapname("1@sara"), "The guards must be defeated to gain access to the next area.",bc_map,"0xffff00";
+	mapannounce instance_mapname("1@sara"), "É preciso derrotar os guardas para chegar à área seguinte.",bc_map,"0xffff00";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("1@sara"), "Several groups of guards have formed to fight you!",bc_map,"0xffff00";
+	mapannounce instance_mapname("1@sara"), "Vários grupos de guardas se formaram para lutar contra você!",bc_map,"0xffff00";
 	stopnpctimer;
 	end;
 
@@ -1167,7 +1167,7 @@ OnMyMobDead:
 	set 'Sara_Mobs,'Sara_Mobs-1;
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
-		mapannounce instance_mapname("1@sara"), "Sara ran away again! You think she went in the 2 O'clock direction!",bc_map,"0xffff00";
+		mapannounce instance_mapname("1@sara"), "A Sarah fugiu de novo! Você acha que ela foi na direção das 2 horas!",bc_map,"0xffff00";
 		if (playerattached() > 0)
 			viewpoint 1,208,250,1,0x00FF00;
 		enablenpc instance_npcname("#sara_warp02");
@@ -1215,7 +1215,7 @@ OnMyMobDead:
 	set 'Sara_Mobs,'Sara_Mobs-1;
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
-		mapannounce instance_mapname("1@sara"), "Sara ran away yet again! You think she went in the 5 O'clock direction!",bc_map,"0xffff00";
+		mapannounce instance_mapname("1@sara"), "A Sarah fugiu outra vez! Você acha que ela foi na direção das 5 horas!",bc_map,"0xffff00";
 		if (playerattached() > 0)
 			viewpoint 1,226,190,1,0x00FF00;
 		enablenpc instance_npcname("#sara_warp03");
@@ -1295,7 +1295,7 @@ OnMyMobDead:
 	set 'Sara_Mobs,'Sara_Mobs-1;
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
-		mapannounce instance_mapname("1@sara"), "Sara ran away yet again! *sigh* You think she went in the 12 O'clock direction!",bc_map,"0xffff00";
+		mapannounce instance_mapname("1@sara"), "A Sarah fugiu mais uma vez! *suspiro* Você acha que ela foi na direção das 12 horas!",bc_map,"0xffff00";
 		if (playerattached() > 0)
 			viewpoint 1,166,67,1,0x00FF00;
 		enablenpc instance_npcname("#sara_warp04");
@@ -1374,7 +1374,7 @@ OnMyMobDead:
 	set 'Sara_Mobs,'Sara_Mobs-1;
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
-		mapannounce instance_mapname("1@sara"), "Sara continues to run away! You think she went in the 12 O'clock direction!",bc_map,"0xffff00";
+		mapannounce instance_mapname("1@sara"), "A Sarah continua fugindo! Você acha que ela foi na direção das 12 horas!",bc_map,"0xffff00";
 		if (playerattached() > 0)
 			viewpoint 1,155,180,1,0x00FF00;
 		enablenpc instance_npcname("#sara_warp05");
@@ -1409,21 +1409,21 @@ OnEnable:
 	.@event$ = instance_npcname("#BossSara01")+"::OnMyMobDead";
 	killmonster .@map$, .@event$;
 	monster .@map$,150,232,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"I am getting too old for this sh-";
+	unittalk $@mobid[0],"Estou ficando velho demais para essa mer-";
 	monster .@map$,150,227,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	monster .@map$,150,222,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	monster .@map$,150,217,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	monster .@map$,161,232,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	monster .@map$,161,227,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	monster .@map$,161,222,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	monster .@map$,161,217,"Payon Soldier",2544,1, .@event$;
-	unittalk $@mobid[0],"For Payon !!";
+	unittalk $@mobid[0],"Por Payon !!";
 	areamobuseskill .@map$,155,225,10,2544,"NPC_EMOTION",1,0,0,ET_GO,0;
 	areamobuseskill .@map$,159,236,1,2543,"NPC_EMOTION",1,0,0,ET_SWEAT,0;
 	set 'Sara_Mobs,8;
@@ -1433,7 +1433,7 @@ OnMyMobDead:
 	set 'Sara_Mobs,'Sara_Mobs-1;
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
-	mapannounce instance_mapname("1@sara"), "Doyen Irene draws this blade!",bc_map,"0xffff00";
+	mapannounce instance_mapname("1@sara"), "O Ancião Irene saca esta lâmina!",bc_map,"0xffff00";
 		donpcevent instance_npcname("#BossSara02", instance_id())+"::OnEnable";
 	}
 	end;
@@ -1450,11 +1450,11 @@ OnEnable:
 	.@event$ = instance_npcname("#BossSara02")+"::OnMyMobDead";
 	killmonster .@map$, .@event$;
 	monster .@map$,155,226,"Doyen Irene",2542,1, .@event$;
-	unittalk $@mobid[0],"I will have revenge for Sara's mom !!";
+	unittalk $@mobid[0],"Eu vou vingar a mãe da Sarah !!";
 	end;
 
 OnMyMobDead:
-	mapannounce instance_mapname("1@sara"), "Doyen Irene has fallen.",bc_map,"0xffff00";
+	mapannounce instance_mapname("1@sara"), "O Ancião Irene caiu.",bc_map,"0xffff00";
 	donpcevent instance_npcname("Doyen Irene#04", instance_id())+"::OnEnable";
 	end;
 }

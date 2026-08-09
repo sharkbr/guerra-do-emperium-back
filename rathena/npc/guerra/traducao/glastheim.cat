@@ -9,238 +9,250 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/OldGlastHeim.txt  (423 textos)
+### npc/re/instances/OldGlastHeim.txt  (495 textos)
 #: npc/re/instances/OldGlastHeim.txt#1 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#2 (mes)
 - "Why don't you come back after becoming stronger?"
-+ ""
++ "Por que você não volta depois de ficar mais forte?"
 #: npc/re/instances/OldGlastHeim.txt#3 (mes)
 - "Maybe, level 130."
-+ ""
++ "Nível 130, eu diria."
 #: npc/re/instances/OldGlastHeim.txt#4 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#5 (mes)
 - "A long time ago, this castle did not look like this."
-+ ""
++ "Há muito tempo, este castelo não era assim."
 #: npc/re/instances/OldGlastHeim.txt#6 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#7 (mes)
 - "Ah, I'm sorry. I'm muttering in front of a stranger."
-+ ""
++ "Ah, me desculpe. Estou resmungando na frente de um estranho."
 #: npc/re/instances/OldGlastHeim.txt#8 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#9 (mes)
 - "My name is Hugin. I'm studying the dimensional gap between time and space."
-+ ""
++ "Meu nome é Hugin. Eu estudo a fenda dimensional entre o tempo e o espaço."
 #: npc/re/instances/OldGlastHeim.txt#10 (select)
 - "There's something like that here?"
-+ ""
++ "Existe uma coisa dessas aqui?"
 #: npc/re/instances/OldGlastHeim.txt#11 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#12 (mes)
 - "Have you ever wondered about the history of Glast Heim?"
-+ ""
++ "Você já parou para pensar na história de Glast Heim?"
 #: npc/re/instances/OldGlastHeim.txt#13 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#14 (mes)
 - "There was a King named Shumiche who was known as a tyrant in the history of the Rune-Midgarts Kingdom."
-+ ""
++ "Houve um Rei chamado Shumiche, conhecido como tirano na história do Reino de Rune-Midgard."
 #: npc/re/instances/OldGlastHeim.txt#15 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#16 (mes)
 - "Time will reveal the true answers if we look in the right places."
-+ ""
++ "O tempo revela as respostas verdadeiras, se a gente procurar nos lugares certos."
 #: npc/re/instances/OldGlastHeim.txt#17 (select)
 - "I don't care about history"
-+ ""
++ "Eu não me importo com história"
 #: npc/re/instances/OldGlastHeim.txt#18 (select)
 - "That is interesting. Did you find anything?"
-+ ""
++ "Isso é interessante. Você achou alguma coisa?"
 #: npc/re/instances/OldGlastHeim.txt#19 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#20 (mes)
 - "Really? Hmm, please come back later when you are interested then."
-+ ""
++ "Sério? Hmm, então volte depois, quando tiver interesse."
 #: npc/re/instances/OldGlastHeim.txt#21 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#22 (mes)
 - "Actually, dimensional time travel is possible but I'm too afraid to go there."
-+ ""
++ "Na verdade, a viagem dimensional no tempo é possível, mas eu tenho medo demais de ir lá."
 #: npc/re/instances/OldGlastHeim.txt#23 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#24 (mes)
 - "It might be possible for you!"
-+ ""
++ "Talvez seja possível para você!"
 #: npc/re/instances/OldGlastHeim.txt#25 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#26 (mes)
 - "Do you want to time travel?"
-+ ""
++ "Você quer viajar no tempo?"
 #: npc/re/instances/OldGlastHeim.txt#27 (select)
 - "No, thanks."
-+ ""
++ "Não, obrigado."
 #: npc/re/instances/OldGlastHeim.txt#28 (select)
 - "Yes, of course I do!"
-+ ""
++ "Sim, claro que quero!"
 #: npc/re/instances/OldGlastHeim.txt#29 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#30 (mes)
 - "Really? But, jumping gigawatts, this is such a great opportunity."
-+ ""
++ "Sério? Mas, pelos meus gigawatts, esta é uma oportunidade e tanto."
 #: npc/re/instances/OldGlastHeim.txt#31 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#32 (mes)
 - "I knew that you would understand what I said. Well, please tell me what you want to do."
-+ ""
++ "Eu sabia que você entenderia o que eu disse. Bem, me diga o que você quer fazer."
 #: npc/re/instances/OldGlastHeim.txt#33 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#34 (mes)
 - "Umm? Did you see me at another place? I don't think so. What about this time?"
-+ ""
++ "Ãh? Você me viu em outro lugar? Acho que não. E desta vez?"
 #: npc/re/instances/OldGlastHeim.txt#35 (atrib)
 - "Maldição de Glastheim"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#36 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#37 (mes)
 - "Why don't you make a party with more than 1 person and talk to me again?"
-+ ""
++ "Por que você não monta um grupo com mais de 1 pessoa e volta a falar comigo?"
 #: npc/re/instances/OldGlastHeim.txt#38 (menu)
 - "Generate Time Gap"
-+ ""
++ "Gerar a fenda no tempo"
 #: npc/re/instances/OldGlastHeim.txt#39 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#40 (mes)
 - "Have we met before? No way. It's my first time seeing you. What do you want?"
-+ ""
++ "A gente já se viu antes? Que nada. É a primeira vez que eu vejo você. O que você quer?"
 #: npc/re/instances/OldGlastHeim.txt#41 (select)
 - "Enter Old Glast Heim"
-+ ""
++ "Entrar na Maldição de Glastheim"
 #: npc/re/instances/OldGlastHeim.txt#42 (select)
 - "Cancel"
-+ ""
++ "Cancelar"
 #: npc/re/instances/OldGlastHeim.txt#43 (dispbottom)
 - "Memorial Dungeon, 'Old Glast Heim' is already in progress."
-+ ""
++ "A masmorra memorial 'Maldição de Glastheim' já está em andamento."
 #: npc/re/instances/OldGlastHeim.txt#44 (mes)
 - "Party Name: "
-+ ""
++ "Nome do Grupo: "
 #: npc/re/instances/OldGlastHeim.txt#45 (mes)
 - "Party Leader: "
-+ ""
++ "Líder do Grupo: "
 #: npc/re/instances/OldGlastHeim.txt#46 (mes)
 - "^0000ff"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#47 (mes)
 - "^000000 - time gap generation failed."
-+ ""
++ "^000000 - falha ao gerar a fenda no tempo."
 #: npc/re/instances/OldGlastHeim.txt#48 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#49 (mes)
 - "After the time gap opens, please tell me again."
-+ ""
++ "Depois que a fenda no tempo abrir, fale comigo de novo."
 #: npc/re/instances/OldGlastHeim.txt#50 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#51 (mes)
 - "An unknown error has occurred."
-+ ""
++ "Ocorreu um erro desconhecido."
 #: npc/re/instances/OldGlastHeim.txt#52 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#53 (mes)
 - "The time gap is not yet open."
-+ ""
++ "A fenda no tempo ainda não está aberta."
 #: npc/re/instances/OldGlastHeim.txt#54 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#55 (mes)
 - "Your body is not fit to enter the time gap. You won't be able to get in if you're not in a party."
++ "O seu corpo não está em condição de entrar na fenda no tempo. Você não vai conseguir entrar se não estiver em grupo."
+#: npc/re/instances/OldGlastHeim.txt#56 (mapannounce)
+- "glast_01"
++ ""
+#: npc/re/instances/OldGlastHeim.txt#58 (mapannounce)
+- " party member "
++ " - o aventureiro "
+#: npc/re/instances/OldGlastHeim.txt#59 (mapannounce)
+- " enters the "
++ " entrou em "
+#: npc/re/instances/OldGlastHeim.txt#60 (mapannounce)
+- "."
 + ""
 #: npc/re/instances/OldGlastHeim.txt#62 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#63 (mes)
 - "Oh, my..."
-+ ""
++ "Ai, meu..."
 #: npc/re/instances/OldGlastHeim.txt#64 (mes)
 - "You still have after-effects of time travel. You can't travel again with this condition."
-+ ""
++ "Você ainda está com os efeitos da viagem no tempo. Não dá para viajar de novo nessas condições."
 #: npc/re/instances/OldGlastHeim.txt#65 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#66 (mes)
 - "Staying healthy is important, so please take a break and come back again later."
-+ ""
++ "Manter a saúde é importante, então descanse e volte mais tarde."
 #: npc/re/instances/OldGlastHeim.txt#67 (mes)
 - "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000"
-+ ""
++ "^0000ffTodo rastro de acesso à Maldição de Glastheim foi removido. Agora você já pode falar com o Hugin de novo.^000000"
 #: npc/re/instances/OldGlastHeim.txt#68 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#69 (mes)
 - "Where's your leader? I need his help."
-+ ""
++ "Cadê o seu líder? Eu preciso da ajuda dele."
 #: npc/re/instances/OldGlastHeim.txt#70 (cutin)
 - "gl_barmund2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#71 (mes)
 - "You have a previous clear record. You can skip the scenario and proceed accordingly."
-+ ""
++ "Você já tem um registro de conclusão. Você pode pular o roteiro e seguir em frente."
 #: npc/re/instances/OldGlastHeim.txt#72 (select)
 - "Omit moderately."
-+ ""
++ "Pular o que der."
 #: npc/re/instances/OldGlastHeim.txt#73 (select)
 - "Appreciate everything."
-+ ""
++ "Aproveitar tudo."
 #: npc/re/instances/OldGlastHeim.txt#74 (cutin)
 - "GL_BARMUND1.bmp"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#75 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#76 (mes)
 - "I've seen you, "
-+ ""
++ "Eu já vi você, "
 #: npc/re/instances/OldGlastHeim.txt#77 (mes)
 - "."
 + ""
 #: npc/re/instances/OldGlastHeim.txt#78 (mes)
 - "I'm sure I can trust you. Let's leave right away."
-+ ""
++ "Tenho certeza de que posso confiar em você. Vamos partir agora mesmo."
 #: npc/re/instances/OldGlastHeim.txt#82 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#83 (mes)
 - "Are you the one ^0000ffHerico^000000 sent to help me?"
-+ ""
++ "Você é a pessoa que o ^0000ffHerico^000000 mandou para me ajudar?"
 #: npc/re/instances/OldGlastHeim.txt#84 (npctalk)
 - "Varmundt: Are you the one Herico sent to help me?"
-+ ""
++ "Varmundt: Você é a pessoa que o Herico mandou para me ajudar?"
 #: npc/re/instances/OldGlastHeim.txt#85 (cutin)
 - "gl_barmund1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#86 (select)
 - "Oh. Well I..."
-+ ""
++ "Ah. Bem, eu..."
 #: npc/re/instances/OldGlastHeim.txt#87 (mes)
 - "["
 + ""
@@ -249,22 +261,25 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#89 (mes)
 - "Ah yes, I am. Herico told me to meet you."
-+ ""
++ "Ah, sim, sou eu. O Herico me mandou encontrar você."
+#: npc/re/instances/OldGlastHeim.txt#90 (unittalk)
+- " : Ah yes, I am. Herico told me to meet you."
++ " : Ah, sim, sou eu. O Herico me mandou encontrar você."
 #: npc/re/instances/OldGlastHeim.txt#91 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#92 (mes)
 - "We don't have much time. We must report to Sir Heinrich about Himelmez's invasion."
-+ ""
++ "Não temos muito tempo. Precisamos avisar Sir Heinrich sobre a invasão da Himelmez."
 #: npc/re/instances/OldGlastHeim.txt#93 (npctalk)
 - "Varmundt: We don't have much time. We must report to Sir Heinrich about Himelmez's invasion."
-+ ""
++ "Varmundt: Não temos muito tempo. Precisamos avisar Sir Heinrich sobre a invasão da Himelmez."
 #: npc/re/instances/OldGlastHeim.txt#94 (cutin)
 - "gl_barmund2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#95 (select)
 - "Himelmez..."
-+ ""
++ "Himelmez..."
 #: npc/re/instances/OldGlastHeim.txt#96 (mes)
 - "["
 + ""
@@ -273,127 +288,130 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#98 (mes)
 - "Who is Himelmez?"
-+ ""
++ "Quem é Himelmez?"
+#: npc/re/instances/OldGlastHeim.txt#99 (unittalk)
+- " : Who is Himelmez?"
++ " : Quem é Himelmez?"
 #: npc/re/instances/OldGlastHeim.txt#100 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#101 (mes)
 - "Herico didn't tell you?"
-+ ""
++ "O Herico não lhe contou?"
 #: npc/re/instances/OldGlastHeim.txt#102 (npctalk)
 - "Varmundt: Herico didn't tell you?"
-+ ""
++ "Varmundt: O Herico não lhe contou?"
 #: npc/re/instances/OldGlastHeim.txt#103 (cutin)
 - "gl_barmund3"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#104 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#105 (mes)
 - "She is the Ruler of Death, Dead man's Valkyrie. Himelmez is looking to take the heart of Ymir from us."
-+ ""
++ "Ela é a Soberana da Morte, a Valquíria dos mortos. A Himelmez quer tomar de nós o coração de Ymir."
 #: npc/re/instances/OldGlastHeim.txt#106 (npctalk)
 - "Varmundt: She is the Ruler of Death, Dead man's Valkyrie. Himelmez is looking to take the heart of Ymir from us."
-+ ""
++ "Varmundt: Ela é a Soberana da Morte, a Valquíria dos mortos. A Himelmez quer tomar de nós o coração de Ymir."
 #: npc/re/instances/OldGlastHeim.txt#107 (cutin)
 - "gl_barmund2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#108 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#109 (mes)
 - "She might even destroy this whole castle if she wanted to."
-+ ""
++ "Ela seria capaz de destruir este castelo inteiro, se quisesse."
 #: npc/re/instances/OldGlastHeim.txt#110 (npctalk)
 - "Varmundt: She might even destroy this whole castle if she wanted to."
-+ ""
++ "Varmundt: Ela seria capaz de destruir este castelo inteiro, se quisesse."
 #: npc/re/instances/OldGlastHeim.txt#111 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#112 (mes)
 - "Hurry! Report to Sir. Heinrich about Himelmez. I must check the defense barrier here!"
-+ ""
++ "Depressa! Avise Sir Heinrich sobre a Himelmez. Eu preciso conferir a barreira de defesa daqui!"
 #: npc/re/instances/OldGlastHeim.txt#113 (npctalk)
 - "Varmundt: Hurry! Report to Sir. Heinrich about Himelmez. I must check the defense barrier here!"
-+ ""
++ "Varmundt: Depressa! Avise Sir Heinrich sobre a Himelmez. Eu preciso conferir a barreira de defesa daqui!"
 #: npc/re/instances/OldGlastHeim.txt#118 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#119 (mes)
 - "My work shift will be over soon, but the next crew is not coming."
-+ ""
++ "O meu turno acaba logo, mas a próxima equipe não está vindo."
 #: npc/re/instances/OldGlastHeim.txt#120 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#121 (mes)
 - "Something you want to tell me?"
-+ ""
++ "Quer me dizer alguma coisa?"
 #: npc/re/instances/OldGlastHeim.txt#122 (mes)
 - "[White Knight]"
-+ ""
++ "[Cavaleiro Branco]"
 #: npc/re/instances/OldGlastHeim.txt#123 (mes)
 - "Are you with Varmundt? Commander is waiting for you."
-+ ""
++ "Você está com o Varmundt? O Comandante está esperando você."
 #: npc/re/instances/OldGlastHeim.txt#124 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#125 (mes)
 - "I had a weird dream last night. My mom was in it... Wonder if she is ok..."
-+ ""
++ "Eu tive um sonho estranho ontem à noite. A minha mãe estava nele... Será que ela está bem..."
 #: npc/re/instances/OldGlastHeim.txt#126 (mes)
 - "[White Knight]"
-+ ""
++ "[Cavaleiro Branco]"
 #: npc/re/instances/OldGlastHeim.txt#127 (mes)
 - "Please do not make a mess here."
-+ ""
++ "Por favor, não faça bagunça aqui."
 #: npc/re/instances/OldGlastHeim.txt#128 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#129 (mes)
 - "Orders please."
-+ ""
++ "Ordens, por favor."
 #: npc/re/instances/OldGlastHeim.txt#130 (mes)
 - "[White Knight]"
-+ ""
++ "[Cavaleiro Branco]"
 #: npc/re/instances/OldGlastHeim.txt#131 (mes)
 - "How do you know Varmundt? I heard that he's not really a friendly man..."
-+ ""
++ "Como é que você conhece o Varmundt? Ouvi dizer que ele não é um homem lá muito simpático..."
 #: npc/re/instances/OldGlastHeim.txt#132 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#133 (mes)
 - "Doesn't this castle seem weird all of a sudden? Something's not quite right."
-+ ""
++ "Este castelo não parece estranho de repente? Tem alguma coisa errada."
 #: npc/re/instances/OldGlastHeim.txt#134 (mes)
 - "[White Knight]"
-+ ""
++ "[Cavaleiro Branco]"
 #: npc/re/instances/OldGlastHeim.txt#135 (mes)
 - "I do not like to chat during work."
-+ ""
++ "Eu não gosto de conversar durante o serviço."
 #: npc/re/instances/OldGlastHeim.txt#136 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#137 (mes)
 - "..."
 + ""
 #: npc/re/instances/OldGlastHeim.txt#138 (mes)
 - "[White Knight]"
-+ ""
++ "[Cavaleiro Branco]"
 #: npc/re/instances/OldGlastHeim.txt#139 (mes)
 - "What can I do for you?"
-+ ""
++ "O que eu posso fazer por você?"
 #: npc/re/instances/OldGlastHeim.txt#140 (mes)
 - "[Khalitzburg Knightage]"
-+ ""
++ "[Guarda Khalitzburg]"
 #: npc/re/instances/OldGlastHeim.txt#141 (mes)
 - "Is there something you need?"
-+ ""
++ "Você precisa de alguma coisa?"
 #: npc/re/instances/OldGlastHeim.txt#142 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#143 (mes)
 - "Where is your leader? I must talk to him."
-+ ""
++ "Cadê o seu líder? Eu preciso falar com ele."
 #: npc/re/instances/OldGlastHeim.txt#144 (cutin)
 - "gl_heinrich2"
 + ""
@@ -402,22 +420,22 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#146 (select)
 - "Heinrich, you are in the castle now..."
-+ ""
++ "Heinrich, você está no castelo agora..."
 #: npc/re/instances/OldGlastHeim.txt#147 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#148 (mes)
 - "Ohh "
-+ ""
++ "Ohh "
 #: npc/re/instances/OldGlastHeim.txt#150 (mes)
 - "I guess I can trust you. Let's leave right away."
-+ ""
++ "Acho que posso confiar em você. Vamos partir agora mesmo."
 #: npc/re/instances/OldGlastHeim.txt#154 (cutin)
 - "gl_heinrich2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#155 (select)
 - "Sir Heinrich. Varmundt..."
-+ ""
++ "Sir Heinrich. O Varmundt..."
 #: npc/re/instances/OldGlastHeim.txt#156 (mes)
 - "["
 + ""
@@ -426,28 +444,31 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#158 (mes)
 - "Sir Heinrich. Do you know what is happening in the castle now?"
-+ ""
++ "Sir Heinrich. O senhor sabe o que está acontecendo no castelo agora?"
+#: npc/re/instances/OldGlastHeim.txt#159 (unittalk)
+- " : Sir Heinrich. Do you know what is happening in the castle now?"
++ " : Sir Heinrich. O senhor sabe o que está acontecendo no castelo agora?"
 #: npc/re/instances/OldGlastHeim.txt#160 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#161 (mes)
 - "Aren't you the adventurer that came along with Varmundt?"
-+ ""
++ "Você não é o aventureiro que veio junto com o Varmundt?"
 #: npc/re/instances/OldGlastHeim.txt#162 (npctalk)
 - "Heinrich: Aren't you the adventurer that came along with Varmundt?"
-+ ""
++ "Heinrich: Você não é o aventureiro que veio junto com o Varmundt?"
 #: npc/re/instances/OldGlastHeim.txt#163 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#164 (mes)
 - "What is it? Something wrong with the castle?"
-+ ""
++ "O que foi? Alguma coisa errada com o castelo?"
 #: npc/re/instances/OldGlastHeim.txt#165 (npctalk)
 - "Heinrich: What is it? Something wrong with the castle?"
-+ ""
++ "Heinrich: O que foi? Alguma coisa errada com o castelo?"
 #: npc/re/instances/OldGlastHeim.txt#166 (select)
 - "Himelmez's invasion..."
-+ ""
++ "A invasão da Himelmez..."
 #: npc/re/instances/OldGlastHeim.txt#167 (mes)
 - "["
 + ""
@@ -456,28 +477,31 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#169 (mes)
 - "Dead man's Valkyrie, Himelmez is coming to take the Ymir's Heart piece hidden inside this castle!"
-+ ""
++ "A Valquíria dos mortos, Himelmez, está vindo tomar o pedaço do Coração de Ymir escondido dentro deste castelo!"
+#: npc/re/instances/OldGlastHeim.txt#170 (unittalk)
+- " : Dead man's Valkyrie, Himelmez is coming to take the Ymir's Heart piece hidden inside this castle!"
++ " : A Valquíria dos mortos, Himelmez, está vindo tomar o pedaço do Coração de Ymir escondido dentro deste castelo!"
 #: npc/re/instances/OldGlastHeim.txt#171 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#172 (mes)
 - "Haha. Funny. Do you really think that is possible?"
-+ ""
++ "Haha. Engraçado. Você acha mesmo que isso é possível?"
 #: npc/re/instances/OldGlastHeim.txt#173 (npctalk)
 - "Heinrich: Haha. Funny. Do you really think that is possible?"
-+ ""
++ "Heinrich: Haha. Engraçado. Você acha mesmo que isso é possível?"
 #: npc/re/instances/OldGlastHeim.txt#174 (cutin)
 - "gl_heinrich1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#175 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#176 (mes)
 - "I'm not kidding, Sir Heinrich. If I'm correct, then she will be here very soon."
-+ ""
++ "Eu não estou brincando, Sir Heinrich. Se eu estiver certo, ela chega aqui muito em breve."
 #: npc/re/instances/OldGlastHeim.txt#177 (npctalk)
 - "Varmundt: I'm not kidding, Sir Heinrich. If I'm correct, then she will be here very soon."
-+ ""
++ "Varmundt: Eu não estou brincando, Sir Heinrich. Se eu estiver certo, ela chega aqui muito em breve."
 #: npc/re/instances/OldGlastHeim.txt#178 (npctalk)
 - "Varmundt#1"
 + ""
@@ -486,19 +510,19 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#180 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#181 (mes)
 - "We must hide the heart piece in a safe place before Himelmez's attack starts!"
-+ ""
++ "Precisamos esconder o pedaço do coração num lugar seguro antes de o ataque da Himelmez começar!"
 #: npc/re/instances/OldGlastHeim.txt#182 (npctalk)
 - "Varmundt: We must hide the heart piece in a safe place before Himelmez's attack starts!"
-+ ""
++ "Varmundt: Precisamos esconder o pedaço do coração num lugar seguro antes de o ataque da Himelmez começar!"
 #: npc/re/instances/OldGlastHeim.txt#183 (npctalk)
 - "Varmundt#1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#184 (select)
 - "Even if you don't believe me..."
-+ ""
++ "Mesmo que o senhor não acredite em mim..."
 #: npc/re/instances/OldGlastHeim.txt#185 (mes)
 - "["
 + ""
@@ -507,28 +531,34 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#187 (mes)
 - "I can't make you believe me, but there's no time to argue!"
-+ ""
++ "Eu não posso obrigar o senhor a acreditar em mim, mas não há tempo para discutir!"
+#: npc/re/instances/OldGlastHeim.txt#188 (unittalk)
+- " : I can't make you believe me, but there's no time to argue!"
++ " : Eu não posso obrigar o senhor a acreditar em mim, mas não há tempo para discutir!"
 #: npc/re/instances/OldGlastHeim.txt#190 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#191 (mes)
 - "Thank you for the help. But we don't even have our king with us right now."
-+ ""
++ "Obrigado pela ajuda. Mas nem o nosso rei está conosco neste momento."
 #: npc/re/instances/OldGlastHeim.txt#192 (npctalk)
 - "Heinrich: Thank you for the help. But we don't even have our king with us right now."
-+ ""
++ "Heinrich: Obrigado pela ajuda. Mas nem o nosso rei está conosco neste momento."
 #: npc/re/instances/OldGlastHeim.txt#193 (cutin)
 - "gl_heinrich1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#194 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#195 (mes)
 - "We cannot risk moving the heart just because some stranger says so."
-+ ""
++ "Não podemos arriscar mover o coração só porque um estranho disse."
 #: npc/re/instances/OldGlastHeim.txt#196 (npctalk)
 - "Heinrich: We cannot risk moving the heart just because some stranger says so."
-+ ""
++ "Heinrich: Não podemos arriscar mover o coração só porque um estranho disse."
+#: npc/re/instances/OldGlastHeim.txt#203 (mapannounce)
+- "????'s: Muahahahaha~!"
++ "????: Muahahahaha~!"
 #: npc/re/instances/OldGlastHeim.txt#204 (atrib)
 - "Himelmez#1"
 + ""
@@ -543,97 +573,142 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#208 (npctalk)
 - "Heinrich: Who are you?"
-+ ""
++ "Heinrich: Quem é você?"
 #: npc/re/instances/OldGlastHeim.txt#209 (npctalk)
 - "Himelmez: Well well~ Am I interrupting you? Weren't you expecting me?"
-+ ""
++ "Himelmez: Ora, ora~ Estou atrapalhando? Vocês não estavam à minha espera?"
 #: npc/re/instances/OldGlastHeim.txt#210 (npctalk)
 - "Varmundt: Himelmez!! Already!"
-+ ""
++ "Varmundt: Himelmez!! Já!"
 #: npc/re/instances/OldGlastHeim.txt#211 (npctalk)
 - "Himelmez: My name is Lisa Kahn Himelmez. Master of Dullahan, Dead man's Valkyrie, that's what they call me."
-+ ""
++ "Himelmez: O meu nome é Lisa Kahn Himelmez. Senhora dos Dullahan, Valquíria dos mortos, é assim que me chamam."
 #: npc/re/instances/OldGlastHeim.txt#212 (npctalk)
 - "Heinrich: Aren't you a little too feminine to be the Ruler of death? We are not afraid of you..."
-+ ""
++ "Heinrich: Você não é feminina demais para ser a Soberana da morte? Nós não temos medo de você..."
 #: npc/re/instances/OldGlastHeim.txt#213 (npctalk)
 - "Himelmez: Let's see if you can relax like that after you find out where your king is."
-+ ""
++ "Himelmez: Vamos ver se você continua tão tranquilo depois de descobrir onde está o seu rei."
 #: npc/re/instances/OldGlastHeim.txt#214 (npctalk)
 - "Heinrich: What?"
-+ ""
++ "Heinrich: O quê?"
 #: npc/re/instances/OldGlastHeim.txt#215 (npctalk)
 - "Himelmez: Hmm, now I have your attention do I not?"
-+ ""
++ "Himelmez: Hmm, agora eu tenho a sua atenção, não tenho?"
 #: npc/re/instances/OldGlastHeim.txt#216 (npctalk)
 - "Himelmez: You don't want the king's position, just wait for him to come back. I like your purity."
-+ ""
++ "Himelmez: Você não quer o posto de rei, só espera que ele volte. Eu gosto da sua pureza."
 #: npc/re/instances/OldGlastHeim.txt#217 (npctalk)
 - "Himelmez: It's a pity to meet you in a situation like this."
-+ ""
++ "Himelmez: É uma pena conhecer você numa situação dessas."
 #: npc/re/instances/OldGlastHeim.txt#218 (npctalk)
 - "Heinrich: My king is visiting the Rune-Midgarts royal family. He's not back yet."
-+ ""
++ "Heinrich: O meu rei está visitando a família real de Rune-Midgard. Ele ainda não voltou."
 #: npc/re/instances/OldGlastHeim.txt#219 (npctalk)
 - "Heinrich: And now you are trying to trick me, what has happened to him?!"
-+ ""
++ "Heinrich: E agora você está tentando me enganar, o que aconteceu com ele?!"
 #: npc/re/instances/OldGlastHeim.txt#220 (npctalk)
 - "Himelmez: Well~ I would love to sit down and explain for you, but I'm kind of busy today~"
-+ ""
++ "Himelmez: Ora~ Eu adoraria sentar e explicar tudo, mas hoje eu estou meio ocupada~"
 #: npc/re/instances/OldGlastHeim.txt#221 (npctalk)
 - "Himelmez: I have business to take care of. My minions will treat you well enough for me~"
-+ ""
++ "Himelmez: Eu tenho assuntos a resolver. Os meus lacaios cuidam bem de vocês por mim~"
 #: npc/re/instances/OldGlastHeim.txt#222 (npctalk)
 - "Heinrich: She probably already knows where the Ymir's heart piece is."
-+ ""
++ "Heinrich: Ela provavelmente já sabe onde está o pedaço do coração de Ymir."
 #: npc/re/instances/OldGlastHeim.txt#223 (npctalk)
 - "Heinrich: All Khalitzburg and White Knights should follow me now..."
-+ ""
++ "Heinrich: Todos os Khalitzburg e os Cavaleiros Brancos me sigam agora..."
 #: npc/re/instances/OldGlastHeim.txt#231 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#243 (unittalk)
+- "Water... Someone give me water..."
++ "Água... Alguém me dê água..."
+#: npc/re/instances/OldGlastHeim.txt#245 (unittalk)
+- "Kkkrrrruughgh..."
++ "Kkkrrrruughgh..."
+#: npc/re/instances/OldGlastHeim.txt#247 (unittalk)
+- "Sir Heinrich. Save me..."
++ "Sir Heinrich. Me salve..."
+#: npc/re/instances/OldGlastHeim.txt#249 (unittalk)
+- "I miss my sister..."
++ "Que saudade da minha irmã..."
+#: npc/re/instances/OldGlastHeim.txt#251 (unittalk)
+- "Don't leave me alone, help me."
++ "Não me deixe sozinho, me ajude."
+#: npc/re/instances/OldGlastHeim.txt#253 (unittalk)
+- "Aaarrrrrhhhh"
++ "Aaarrrrrhhhh"
+#: npc/re/instances/OldGlastHeim.txt#255 (unittalk)
+- "I am so thirsty."
++ "Estou com tanta sede."
+#: npc/re/instances/OldGlastHeim.txt#257 (unittalk)
+- "Oh...No...I can't die yet..."
++ "Ah...Não...Eu ainda não posso morrer..."
+#: npc/re/instances/OldGlastHeim.txt#259 (unittalk)
+- "I feel sick to my stomach urrgg"
++ "Estou enjoado urrgg"
+#: npc/re/instances/OldGlastHeim.txt#261 (unittalk)
+- "Can someone..."
++ "Será que alguém..."
+#: npc/re/instances/OldGlastHeim.txt#263 (unittalk)
+- "Arrgg... My body"
++ "Arrgg... O meu corpo"
+#: npc/re/instances/OldGlastHeim.txt#265 (unittalk)
+- "My throat is burning!"
++ "A minha garganta está queimando!"
 #: npc/re/instances/OldGlastHeim.txt#266 (npctalk)
 - "Heinrich: My men... This can't be happening!"
-+ ""
++ "Heinrich: Meus homens... Isso não pode estar acontecendo!"
 #: npc/re/instances/OldGlastHeim.txt#267 (npctalk)
 - "Varmundt: Sir Heinrich, they're all monsters. You need to give them rest!"
-+ ""
++ "Varmundt: Sir Heinrich, eles são todos monstros. O senhor precisa dar descanso a eles!"
 #: npc/re/instances/OldGlastHeim.txt#268 (npctalk)
 - "Heinrich: I'm so sorry..."
-+ ""
++ "Heinrich: Sinto muito..."
 #: npc/re/instances/OldGlastHeim.txt#269 (npctalk)
 - "Heinrich: I am sorry, my knights! Forgive me!"
-+ ""
++ "Heinrich: Me perdoem, meus cavaleiros! Me perdoem!"
+#: npc/re/instances/OldGlastHeim.txt#270 (mapannounce)
+- "Sir Heinrich: Death to all!"
++ "Sir Heinrich: Morte a todos!"
+#: npc/re/instances/OldGlastHeim.txt#271 (mapannounce)
+- "Sir Heinrich: Go back to the darkness!"
++ "Sir Heinrich: Voltem para a escuridão!"
 #: npc/re/instances/OldGlastHeim.txt#318 (npctalk)
 - "Heinrich: I killed my own men..."
-+ ""
++ "Heinrich: Eu matei os meus próprios homens..."
 #: npc/re/instances/OldGlastHeim.txt#319 (npctalk)
 - "Varmundt: Sir Heinrich! We don't have much time!"
-+ ""
++ "Varmundt: Sir Heinrich! Não temos muito tempo!"
 #: npc/re/instances/OldGlastHeim.txt#320 (npctalk)
 - "Varmundt: If you hurry now, there's a chance!"
-+ ""
++ "Varmundt: Se o senhor se apressar agora, ainda há uma chance!"
 #: npc/re/instances/OldGlastHeim.txt#321 (npctalk)
 - "Heinrich: Varmundt is right. Now is not the time for mourning."
-+ ""
++ "Heinrich: O Varmundt tem razão. Agora não é hora de luto."
 #: npc/re/instances/OldGlastHeim.txt#322 (npctalk)
 - "Heinrich: I have a request to you followers."
-+ ""
++ "Heinrich: Eu tenho um pedido a vocês que me seguem."
 #: npc/re/instances/OldGlastHeim.txt#323 (npctalk)
 - "Heinrich: Himelmez can turn living beings into monsters."
-+ ""
++ "Heinrich: A Himelmez consegue transformar seres vivos em monstros."
 #: npc/re/instances/OldGlastHeim.txt#324 (npctalk)
 - "Heinrich: But, there might still be survivors here."
-+ ""
++ "Heinrich: Mas ainda pode haver sobreviventes aqui."
 #: npc/re/instances/OldGlastHeim.txt#325 (npctalk)
 - "Heinrich: Destroy the monsters and find any survivors."
-+ ""
++ "Heinrich: Destruam os monstros e procurem sobreviventes."
 #: npc/re/instances/OldGlastHeim.txt#326 (npctalk)
 - "Heinrich: Varmundt and I will chase Himelmez."
-+ ""
++ "Heinrich: O Varmundt e eu vamos atrás da Himelmez."
 #: npc/re/instances/OldGlastHeim.txt#327 (npctalk)
 - "Heinrich: Very well, Varmundt. Let's find Himelmez."
-+ ""
++ "Heinrich: Muito bem, Varmundt. Vamos achar a Himelmez."
+#: npc/re/instances/OldGlastHeim.txt#335 (mapannounce)
+- "????'s: Muahahahaha~!"
++ "????: Muahahahaha~!"
 #: npc/re/instances/OldGlastHeim.txt#336 (atrib)
 - "Himelmez#1"
 + ""
@@ -648,52 +723,94 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#340 (npctalk)
 - "Heinrich: Who are you?"
-+ ""
++ "Heinrich: Quem é você?"
 #: npc/re/instances/OldGlastHeim.txt#341 (npctalk)
 - "Himelmez: Well well~ Am I interrupting you? Weren't you expecting me?"
-+ ""
++ "Himelmez: Ora, ora~ Estou atrapalhando? Vocês não estavam à minha espera?"
 #: npc/re/instances/OldGlastHeim.txt#342 (npctalk)
 - "Himelmez: I have business to take care of. My minions will treat you well enough for me~"
-+ ""
++ "Himelmez: Eu tenho assuntos a resolver. Os meus lacaios cuidam bem de vocês por mim~"
 #: npc/re/instances/OldGlastHeim.txt#343 (npctalk)
 - "Heinrich: She probably already knows where the Ymir's heart piece is."
-+ ""
++ "Heinrich: Ela provavelmente já sabe onde está o pedaço do coração de Ymir."
 #: npc/re/instances/OldGlastHeim.txt#351 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#363 (unittalk)
+- "Water... Someone give me water..."
++ "Água... Alguém me dê água..."
+#: npc/re/instances/OldGlastHeim.txt#365 (unittalk)
+- "Kkkrrrruughgh..."
++ "Kkkrrrruughgh..."
+#: npc/re/instances/OldGlastHeim.txt#367 (unittalk)
+- "Sir Heinrich. Save me..."
++ "Sir Heinrich. Me salve..."
+#: npc/re/instances/OldGlastHeim.txt#369 (unittalk)
+- "I miss my sister..."
++ "Que saudade da minha irmã..."
+#: npc/re/instances/OldGlastHeim.txt#371 (unittalk)
+- "Don't leave me alone, help me."
++ "Não me deixe sozinho, me ajude."
+#: npc/re/instances/OldGlastHeim.txt#373 (unittalk)
+- "Aaarrrrrhhhh"
++ "Aaarrrrrhhhh"
+#: npc/re/instances/OldGlastHeim.txt#375 (unittalk)
+- "I am so thirsty."
++ "Estou com tanta sede."
+#: npc/re/instances/OldGlastHeim.txt#377 (unittalk)
+- "Oh...No...I can't die yet..."
++ "Ah...Não...Eu ainda não posso morrer..."
+#: npc/re/instances/OldGlastHeim.txt#379 (unittalk)
+- "I feel sick to my stomach urrgg"
++ "Estou enjoado urrgg"
+#: npc/re/instances/OldGlastHeim.txt#381 (unittalk)
+- "Can someone..."
++ "Será que alguém..."
+#: npc/re/instances/OldGlastHeim.txt#383 (unittalk)
+- "Arrgg... My body"
++ "Arrgg... O meu corpo"
+#: npc/re/instances/OldGlastHeim.txt#385 (unittalk)
+- "My throat is burning!"
++ "A minha garganta está queimando!"
 #: npc/re/instances/OldGlastHeim.txt#386 (npctalk)
 - "The dead go where the dead belong! Everyone go back!"
-+ ""
++ "Os mortos vão para onde os mortos pertencem! Voltem todos!"
 #: npc/re/instances/OldGlastHeim.txt#433 (npctalk)
 - "Heinrich: Very well, Varmundt. Let's find Himelmez."
-+ ""
++ "Heinrich: Muito bem, Varmundt. Vamos achar a Himelmez."
 #: npc/re/instances/OldGlastHeim.txt#434 (npctalk)
 - "Varmundt: Wait, I don't have time to go around the castle and clear a path. I will open a portal that can be tracked as quickly as possible."
-+ ""
++ "Varmundt: Espere, eu não tenho tempo de rodear o castelo e abrir caminho. Vou abrir um portal que possa ser rastreado o mais rápido possível."
+#: npc/re/instances/OldGlastHeim.txt#444 (mapannounce)
+- "A portal has opened to the west."
++ "Um portal se abriu a oeste."
 #: npc/re/instances/OldGlastHeim.txt#446 (atrib)
 - "::OnMyMobDead"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#453 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#454 (mapannounce)
+- "Himelmez's curse is getting weaker. Find any survivors!"
++ "A maldição da Himelmez está enfraquecendo. Procurem sobreviventes!"
 #: npc/re/instances/OldGlastHeim.txt#457 (mes)
 - "[Altar boy Domun]"
-+ ""
++ "[Coroinha Domun]"
 #: npc/re/instances/OldGlastHeim.txt#458 (mes)
 - "Save me, save me, please..."
-+ ""
++ "Me salve, me salve, por favor..."
 #: npc/re/instances/OldGlastHeim.txt#459 (mes)
 - "[Altar boy Domun]"
-+ ""
++ "[Coroinha Domun]"
 #: npc/re/instances/OldGlastHeim.txt#460 (mes)
 - "Save me! Save me!!!"
-+ ""
++ "Me salve! Me salve!!!"
 #: npc/re/instances/OldGlastHeim.txt#461 (npctalk)
 - "Save me! Save me!!!"
-+ ""
++ "Me salve! Me salve!!!"
 #: npc/re/instances/OldGlastHeim.txt#462 (select)
 - "Hold on! Are you the only survivor?"
-+ ""
++ "Espere! Você é o único sobrevivente?"
 #: npc/re/instances/OldGlastHeim.txt#463 (mes)
 - "["
 + ""
@@ -702,28 +819,31 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#465 (mes)
 - "Hold on! Are you the only survivor?"
-+ ""
++ "Espere! Você é o único sobrevivente?"
+#: npc/re/instances/OldGlastHeim.txt#466 (unittalk)
+- " : Hold on! Are you the only survivor?"
++ " : Espere! Você é o único sobrevivente?"
 #: npc/re/instances/OldGlastHeim.txt#467 (mes)
 - "[Altar boy Domun]"
-+ ""
++ "[Coroinha Domun]"
 #: npc/re/instances/OldGlastHeim.txt#468 (mes)
 - "Chamberlains... monks... They all turned into monsters. I couldn't do anything."
-+ ""
++ "Camareiros... monges... Todos viraram monstros. Eu não pude fazer nada."
 #: npc/re/instances/OldGlastHeim.txt#469 (npctalk)
 - "Altar boy Domun: Chamberlains... monks... They all turned into monsters. I couldn't do anything."
-+ ""
++ "Coroinha Domun: Camareiros... monges... Todos viraram monstros. Eu não pude fazer nada."
 #: npc/re/instances/OldGlastHeim.txt#470 (mes)
 - "[Altar boy Domun]"
-+ ""
++ "[Coroinha Domun]"
 #: npc/re/instances/OldGlastHeim.txt#471 (mes)
 - "All I could do was... Just hide in here... Nothing, nothing I could do..."
-+ ""
++ "Tudo o que eu pude fazer foi... Só me esconder aqui... Nada, eu não pude fazer nada..."
 #: npc/re/instances/OldGlastHeim.txt#472 (npctalk)
 - "Altar boy Domun: All I could do was... Just hide in here... Nothing, nothing I could do..."
-+ ""
++ "Coroinha Domun: Tudo o que eu pude fazer foi... Só me esconder aqui... Nada, eu não pude fazer nada..."
 #: npc/re/instances/OldGlastHeim.txt#473 (select)
 - "Pull it together!"
-+ ""
++ "Se recomponha!"
 #: npc/re/instances/OldGlastHeim.txt#474 (mes)
 - "["
 + ""
@@ -732,19 +852,22 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#476 (mes)
 - "Wake up kid! Go east and find the middle passage to the outside! It is safe there!"
-+ ""
++ "Acorde, garoto! Vá para o leste e ache a passagem do meio para o lado de fora! Lá é seguro!"
+#: npc/re/instances/OldGlastHeim.txt#477 (unittalk)
+- " : Wake up kid! Go east and find the middle passage to the outside! It is safe there!"
++ " : Acorde, garoto! Vá para o leste e ache a passagem do meio para o lado de fora! Lá é seguro!"
 #: npc/re/instances/OldGlastHeim.txt#478 (mes)
 - "[Altar boy Domun]"
-+ ""
++ "[Coroinha Domun]"
 #: npc/re/instances/OldGlastHeim.txt#479 (mes)
 - "To the east passage? Alone? How?"
-+ ""
++ "Para a passagem leste? Sozinho? Como?"
 #: npc/re/instances/OldGlastHeim.txt#480 (npctalk)
 - "Altar boy Domun: To the east passage? Alone? How?"
-+ ""
++ "Coroinha Domun: Para a passagem leste? Sozinho? Como?"
 #: npc/re/instances/OldGlastHeim.txt#481 (select)
 - "I will give you a weapon."
-+ ""
++ "Eu vou lhe dar uma arma."
 #: npc/re/instances/OldGlastHeim.txt#482 (mes)
 - "["
 + ""
@@ -753,40 +876,49 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#484 (mes)
 - "Here's a weapon. Just close your eye and swing for those monsters."
-+ ""
++ "Aqui está uma arma. É só fechar os olhos e golpear esses monstros."
+#: npc/re/instances/OldGlastHeim.txt#485 (unittalk)
+- " : Here's a weapon. Just close your eye and swing for those monsters."
++ " : Aqui está uma arma. É só fechar os olhos e golpear esses monstros."
 #: npc/re/instances/OldGlastHeim.txt#486 (mes)
 - "[Altar boy Domun]"
-+ ""
++ "[Coroinha Domun]"
 #: npc/re/instances/OldGlastHeim.txt#487 (mes)
 - "Ok, I... I'll try."
-+ ""
++ "Certo, eu... Eu vou tentar."
 #: npc/re/instances/OldGlastHeim.txt#488 (npctalk)
 - "Altar boy Domun: Ok, I... I'll try."
-+ ""
++ "Coroinha Domun: Certo, eu... Eu vou tentar."
+#: npc/re/instances/OldGlastHeim.txt#496 (mapannounce)
+- "A portal has opened to the east."
++ "Um portal se abriu a leste."
 #: npc/re/instances/OldGlastHeim.txt#498 (atrib)
 - "::OnMyMobDead"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#504 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#505 (mapannounce)
+- "Himelmez's curse is getting weaker. Find any survivors!"
++ "A maldição da Himelmez está enfraquecendo. Procurem sobreviventes!"
 #: npc/re/instances/OldGlastHeim.txt#508 (mes)
 - "[Holgren the Destroyer]"
-+ ""
++ "[Holgren, o Destruidor]"
 #: npc/re/instances/OldGlastHeim.txt#509 (mes)
 - "You human?"
-+ ""
++ "Você humano?"
 #: npc/re/instances/OldGlastHeim.txt#510 (mes)
 - "[Holgren the Destroyer]"
-+ ""
++ "[Holgren, o Destruidor]"
 #: npc/re/instances/OldGlastHeim.txt#511 (mes)
 - "Die!! You shall die!!!"
-+ ""
++ "Morra!! Você vai morrer!!!"
 #: npc/re/instances/OldGlastHeim.txt#512 (npctalk)
 - "Holgren the Destroyer: Die!! You shall die!!!"
-+ ""
++ "Holgren, o Destruidor: Morra!! Você vai morrer!!!"
 #: npc/re/instances/OldGlastHeim.txt#513 (select)
 - "Relax! I'm not a monster!"
-+ ""
++ "Calma! Eu não sou um monstro!"
 #: npc/re/instances/OldGlastHeim.txt#514 (mes)
 - "["
 + ""
@@ -795,19 +927,22 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#516 (mes)
 - "Relax! I am Human. Are you alone? Is anyone else here?"
-+ ""
++ "Calma! Eu sou Humano. Você está sozinho? Tem mais alguém aqui?"
+#: npc/re/instances/OldGlastHeim.txt#517 (unittalk)
+- " : Relax! I am Human. Are you alone? Is anyone else here?"
++ " : Calma! Eu sou Humano. Você está sozinho? Tem mais alguém aqui?"
 #: npc/re/instances/OldGlastHeim.txt#518 (mes)
 - "[Holgren the Destroyer]"
-+ ""
++ "[Holgren, o Destruidor]"
 #: npc/re/instances/OldGlastHeim.txt#519 (mes)
 - "It's only me."
-+ ""
++ "Só eu."
 #: npc/re/instances/OldGlastHeim.txt#520 (npctalk)
 - "Holgren the Destroyer: It's only me."
-+ ""
++ "Holgren, o Destruidor: Só eu."
 #: npc/re/instances/OldGlastHeim.txt#521 (select)
 - "It's dangerous here..."
-+ ""
++ "É perigoso aqui..."
 #: npc/re/instances/OldGlastHeim.txt#522 (mes)
 - "["
 + ""
@@ -816,19 +951,22 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#524 (mes)
 - "It's dangerous here. You know the way to the middle passage? Can you move?"
-+ ""
++ "É perigoso aqui. Você sabe o caminho da passagem do meio? Consegue andar?"
+#: npc/re/instances/OldGlastHeim.txt#525 (unittalk)
+- " : It's dangerous here. You know the way to the middle passage? Can you move?"
++ " : É perigoso aqui. Você sabe o caminho da passagem do meio? Consegue andar?"
 #: npc/re/instances/OldGlastHeim.txt#526 (mes)
 - "[Holgren the Destroyer]"
-+ ""
++ "[Holgren, o Destruidor]"
 #: npc/re/instances/OldGlastHeim.txt#527 (mes)
 - "Yes, I can move. I need to get out of here."
-+ ""
++ "Sim, eu consigo andar. Eu preciso sair daqui."
 #: npc/re/instances/OldGlastHeim.txt#528 (npctalk)
 - "Holgren the Destroyer: Yes, I can move. I need to get out of here."
-+ ""
++ "Holgren, o Destruidor: Sim, eu consigo andar. Eu preciso sair daqui."
 #: npc/re/instances/OldGlastHeim.txt#529 (select)
 - "Be safe..."
-+ ""
++ "Se cuide..."
 #: npc/re/instances/OldGlastHeim.txt#530 (mes)
 - "["
 + ""
@@ -837,58 +975,70 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#532 (mes)
 - "Sorry, I can't go with you."
-+ ""
++ "Desculpe, eu não posso ir com você."
+#: npc/re/instances/OldGlastHeim.txt#533 (unittalk)
+- " : Sorry, I can't go with you."
++ " : Desculpe, eu não posso ir com você."
 #: npc/re/instances/OldGlastHeim.txt#534 (mes)
 - "[Holgren the Destroyer]"
-+ ""
++ "[Holgren, o Destruidor]"
 #: npc/re/instances/OldGlastHeim.txt#535 (mes)
 - "It's ok. You've already done enough. I can help myself. Good luck to you too."
-+ ""
++ "Tudo bem. Você já fez o bastante. Eu me viro. Boa sorte para você também."
 #: npc/re/instances/OldGlastHeim.txt#536 (npctalk)
 - "Holgren the Destroyer: It's ok. You've already done enough. I can help myself. Good luck to you too."
-+ ""
++ "Holgren, o Destruidor: Tudo bem. Você já fez o bastante. Eu me viro. Boa sorte para você também."
+#: npc/re/instances/OldGlastHeim.txt#544 (mapannounce)
+- "A portal has appeared to the northwest."
++ "Um portal apareceu a noroeste."
 #: npc/re/instances/OldGlastHeim.txt#546 (atrib)
 - "::OnMyMobDead"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#554 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#560 (mapannounce)
+- "Himelmez: Not bad. Thought you would be dead by now by my creatures~"
++ "Himelmez: Nada mau. Achei que a essa altura você já estaria morto pelas minhas criaturas~"
+#: npc/re/instances/OldGlastHeim.txt#561 (mapannounce)
+- "Himelmez: I'll wait for you at the north of the castle. I want to see how lucky you are."
++ "Himelmez: Eu espero por você ao norte do castelo. Quero ver quanta sorte você tem."
 #: npc/re/instances/OldGlastHeim.txt#562 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#563 (mes)
 - "Himelmez... I will never forget what you've done to my men."
-+ ""
++ "Himelmez... Eu nunca vou esquecer o que você fez com os meus homens."
 #: npc/re/instances/OldGlastHeim.txt#564 (cutin)
 - "gl_heinrich1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#565 (mes)
 - "^ff0000It seems like you have too many types or weights of items. Please organize your inventory.^000000"
-+ ""
++ "^ff0000Parece que você está com tipos ou peso demais de itens. Por favor, organize o seu inventário.^000000"
 #: npc/re/instances/OldGlastHeim.txt#566 (cutin)
 - "gl_barmund1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#567 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#568 (mes)
 - "I guess this is it. Is it impossible to stop the time traveler's will?!"
-+ ""
++ "Acho que é isso. Será impossível deter a vontade do viajante do tempo?!"
 #: npc/re/instances/OldGlastHeim.txt#569 (mes)
 - "A portal seems to have appeared to the north."
-+ ""
++ "Parece que apareceu um portal ao norte."
 #: npc/re/instances/OldGlastHeim.txt#570 (mes)
 - "This item has an extraordinary aura with it. Can be very useful for someone special."
-+ ""
++ "Este item carrega uma aura extraordinária. Pode ser muito útil para alguém especial."
 #: npc/re/instances/OldGlastHeim.txt#571 (cutin)
 - "gl_himel2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#572 (mes)
 - "[Himelmez]"
-+ ""
++ "[Himelmez]"
 #: npc/re/instances/OldGlastHeim.txt#573 (mes)
 - "Don't look at me nervous like that. It will be over soon..."
-+ ""
++ "Não me olhe com esse nervosismo. Vai acabar logo..."
 #: npc/re/instances/OldGlastHeim.txt#578 (atrib)
 - "Himelmez#2"
 + ""
@@ -897,37 +1047,40 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#580 (npctalk)
 - "Himelmez: Guess you are either lucky or powerful to make it this far."
-+ ""
++ "Himelmez: Acho que você tem sorte, ou poder, para ter chegado até aqui."
 #: npc/re/instances/OldGlastHeim.txt#581 (npctalk)
 - "Himelmez: But it doesn't matter."
-+ ""
++ "Himelmez: Mas não importa."
 #: npc/re/instances/OldGlastHeim.txt#582 (npctalk)
 - "Himelmez: You will all die here."
-+ ""
++ "Himelmez: Vocês todos vão morrer aqui."
 #: npc/re/instances/OldGlastHeim.txt#583 (npctalk)
 - "Heinrich: Himelmez! We will not let you get away from us!"
-+ ""
++ "Heinrich: Himelmez! Nós não vamos deixar você escapar de nós!"
 #: npc/re/instances/OldGlastHeim.txt#584 (npctalk)
 - "Himelmez: Ha ha ha, worry about yourself. You think I am alone here?"
-+ ""
++ "Himelmez: Ha ha ha, preocupe-se consigo mesmo. Você acha que eu estou sozinha aqui?"
 #: npc/re/instances/OldGlastHeim.txt#585 (npctalk)
 - "Varmundt: Sir Heinrich! I sense something strange and strong coming!"
-+ ""
++ "Varmundt: Sir Heinrich! Estou sentindo uma coisa estranha e forte vindo!"
 #: npc/re/instances/OldGlastHeim.txt#586 (npctalk)
 - "Varmundt#2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#587 (npctalk)
 - "Heinrich: What... These are!"
-+ ""
++ "Heinrich: O que... são estes!"
 #: npc/re/instances/OldGlastHeim.txt#588 (npctalk)
 - "Himelmez: I will go on my way while my new toy entertains you."
-+ ""
++ "Himelmez: Eu vou seguir o meu caminho enquanto o meu brinquedo novo entretém vocês."
 #: npc/re/instances/OldGlastHeim.txt#589 (npctalk)
 - "Himelmez: Fare well~, hope to see you again sometime, Heinrich."
-+ ""
++ "Himelmez: Passar bem~, espero ver você de novo um dia, Heinrich."
 #: npc/re/instances/OldGlastHeim.txt#590 (npctalk)
 - "Heinrich: Sir Varmundt! Help those adventurers. I will go after Himelmez!"
-+ ""
++ "Heinrich: Sir Varmundt! Ajude aqueles aventureiros. Eu vou atrás da Himelmez!"
+#: npc/re/instances/OldGlastHeim.txt#591 (mapannounce)
+- "An echoing comes from deep inside of the knight's shrine."
++ "Um eco vem lá do fundo do santuário dos cavaleiros."
 #: npc/re/instances/OldGlastHeim.txt#595 (atrib)
 - "Himelmez#2"
 + ""
@@ -936,34 +1089,43 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#597 (npctalk)
 - "Himelmez: Guess you are either lucky or powerful to make it this far."
-+ ""
++ "Himelmez: Acho que você tem sorte, ou poder, para ter chegado até aqui."
 #: npc/re/instances/OldGlastHeim.txt#598 (npctalk)
 - "Heinrich: Sir Varmundt! Help those adventurers. I will go after Himelmez!"
-+ ""
++ "Heinrich: Sir Varmundt! Ajude aqueles aventureiros. Eu vou atrás da Himelmez!"
+#: npc/re/instances/OldGlastHeim.txt#599 (mapannounce)
+- "An echoing comes from deep inside of the knight's shrine."
++ "Um eco vem lá do fundo do santuário dos cavaleiros."
+#: npc/re/instances/OldGlastHeim.txt#607 (unittalk)
+- "Grrrrrrhh~~~"
++ "Grrrrrrhh~~~"
+#: npc/re/instances/OldGlastHeim.txt#610 (mapannounce)
+- "Opening 2nd floor entrance towards 12 O'clock direction."
++ "Abrindo a entrada do segundo andar na direção das 12 horas."
 #: npc/re/instances/OldGlastHeim.txt#611 (npctalk)
 - "Varmundt: I collected some items dropped from its body. You can take it from me."
-+ ""
++ "Varmundt: Eu recolhi alguns itens que caíram do corpo dele. Você pode pegar comigo."
 #: npc/re/instances/OldGlastHeim.txt#612 (npctalk)
 - "Varmundt#2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#621 (mes)
 - "^0000ffIt seems that you did not receive a reward for clearing the first floor. Talk to Varmundt and receive your reward.^000000"
-+ ""
++ "^0000ffParece que você não recebeu a recompensa por concluir o primeiro andar. Fale com o Varmundt e receba a sua recompensa.^000000"
 #: npc/re/instances/OldGlastHeim.txt#622 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#623 (mes)
 - "Himelmez's closed space covers everywhere..."
-+ ""
++ "O espaço fechado da Himelmez cobre tudo..."
 #: npc/re/instances/OldGlastHeim.txt#624 (cutin)
 - "gl_heinrich1"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#625 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#626 (mes)
 - "How many times have I done this job? In my dream, I did it over and over again..."
-+ ""
++ "Quantas vezes eu já fiz este trabalho? No meu sonho, eu fiz isso vezes sem conta..."
 #: npc/re/instances/OldGlastHeim.txt#627 (cutin)
 - "gl_barmund2"
 + ""
@@ -975,67 +1137,70 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#634 (npctalk)
 - "Heinrich: This structure was not in the castle before!"
-+ ""
++ "Heinrich: Esta estrutura não existia no castelo antes!"
 #: npc/re/instances/OldGlastHeim.txt#635 (npctalk)
 - "Varmundt: This is Himelmez's closed space. We blocked each area and aisle."
-+ ""
++ "Varmundt: Este é o espaço fechado da Himelmez. Cada área e cada corredor foram bloqueados."
 #: npc/re/instances/OldGlastHeim.txt#636 (npctalk)
 - "Heinrich: We tried to break it down but it's really strong."
-+ ""
++ "Heinrich: Nós tentamos derrubar, mas é muito forte."
 #: npc/re/instances/OldGlastHeim.txt#637 (npctalk)
 - "Varmundt: Step back. Let me try to dispel the magic."
-+ ""
++ "Varmundt: Afastem-se. Deixem eu tentar dissipar a magia."
 #: npc/re/instances/OldGlastHeim.txt#640 (npctalk)
 - "Varmundt: I think that part of closed space is broken down."
-+ ""
++ "Varmundt: Acho que aquela parte do espaço fechado foi derrubada."
 #: npc/re/instances/OldGlastHeim.txt#641 (npctalk)
 - "Varmundt: I have never seen this closed space."
-+ ""
++ "Varmundt: Eu nunca vi um espaço fechado assim."
 #: npc/re/instances/OldGlastHeim.txt#642 (npctalk)
 - "Varmundt: Himelmez hides stone chains in undead people's body."
-+ ""
++ "Varmundt: A Himelmez esconde correntes de pedra dentro do corpo dos mortos-vivos."
 #: npc/re/instances/OldGlastHeim.txt#643 (npctalk)
 - "Varmundt: Maybe this closed space is maintained with these stone chains."
-+ ""
++ "Varmundt: Talvez este espaço fechado se sustente com essas correntes de pedra."
 #: npc/re/instances/OldGlastHeim.txt#644 (npctalk)
 - "Varmundt: If you want to break it, you have to kill one of those who have a stone chain."
-+ ""
++ "Varmundt: Se você quer quebrá-lo, tem que matar um dos que carregam uma corrente de pedra."
 #: npc/re/instances/OldGlastHeim.txt#645 (npctalk)
 - "Varmundt: But we can't recognize who has a stone chain so we have to purify everything."
-+ ""
++ "Varmundt: Mas nós não temos como saber quem carrega uma corrente de pedra, então temos que purificar todos."
 #: npc/re/instances/OldGlastHeim.txt#646 (npctalk)
 - "Heinrich: It is inexcusable behavior."
-+ ""
++ "Heinrich: É um comportamento indesculpável."
 #: npc/re/instances/OldGlastHeim.txt#647 (npctalk)
 - "Heinrich: I already exterminated all my soldiers and maybe more..."
-+ ""
++ "Heinrich: Eu já exterminei todos os meus soldados, e talvez mais..."
 #: npc/re/instances/OldGlastHeim.txt#648 (npctalk)
 - "Varmundt: Commander..."
-+ ""
++ "Varmundt: Comandante..."
 #: npc/re/instances/OldGlastHeim.txt#649 (npctalk)
 - "Varmundt: Commander! You need to be strong."
-+ ""
++ "Varmundt: Comandante! O senhor precisa ser forte."
 #: npc/re/instances/OldGlastHeim.txt#650 (npctalk)
 - "Varmundt: Our enemy is not human."
-+ ""
++ "Varmundt: O nosso inimigo não é humano."
 #: npc/re/instances/OldGlastHeim.txt#651 (npctalk)
 - "Varmundt: Even though you deny it, they'll never turn back to human."
-+ ""
++ "Varmundt: Mesmo que o senhor negue, eles nunca vão voltar a ser humanos."
 #: npc/re/instances/OldGlastHeim.txt#652 (npctalk)
 - "Heinrich: ..."
-+ ""
++ "Heinrich: ..."
 #: npc/re/instances/OldGlastHeim.txt#653 (npctalk)
 - "Varmundt: Well, let's go then."
-+ ""
++ "Varmundt: Bem, então vamos."
 #: npc/re/instances/OldGlastHeim.txt#654 (npctalk)
 - "Varmundt: And you guys, just take a break and follow us."
-+ ""
++ "Varmundt: E vocês aí, descansem um pouco e venham atrás de nós."
 #: npc/re/instances/OldGlastHeim.txt#655 (npctalk)
 - "Varmundt: It could be hard fighting so stay strong."
-+ ""
++ "Varmundt: A luta pode ser dura, então mantenham-se firmes."
 #: npc/re/instances/OldGlastHeim.txt#656 (npctalk)
 - "Varmundt: Ok, it's time to begin Heinrich."
-+ ""
++ "Varmundt: Certo, é hora de começar, Heinrich."
+#: npc/re/instances/OldGlastHeim.txt#657 (mapannounce)
+- "A portal to the west has opened in the central hallway."
++ "Um portal para o oeste se abriu no corredor central."
 #: npc/re/instances/OldGlastHeim.txt#661 (atrib)
 - "Heinrich#21"
 + ""
@@ -1044,19 +1209,37 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#663 (npctalk)
 - "Heinrich: This structure was not in the castle before!"
-+ ""
++ "Heinrich: Esta estrutura não existia no castelo antes!"
 #: npc/re/instances/OldGlastHeim.txt#664 (npctalk)
 - "Varmundt: Ok, it's time to begin Heinrich."
-+ ""
++ "Varmundt: Certo, é hora de começar, Heinrich."
+#: npc/re/instances/OldGlastHeim.txt#665 (mapannounce)
+- "A portal to the west has opened in the central hallway."
++ "Um portal para o oeste se abriu no corredor central."
 #: npc/re/instances/OldGlastHeim.txt#670 (atrib)
 - "::OnMyMobDead"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#672 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#682 (mapannounce)
+- "Evil Forces are appearing in this area."
++ "Forças Malignas estão aparecendo nesta área."
+#: npc/re/instances/OldGlastHeim.txt#688 (mapannounce)
+- "A portal has opened to the east in the central hallway."
++ "Um portal se abriu a leste, no corredor central."
 #: npc/re/instances/OldGlastHeim.txt#700 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/OldGlastHeim.txt#747 (mapannounce)
+- "An evil presence has teleported into this area."
++ "Uma presença maligna se teleportou para esta área."
+#: npc/re/instances/OldGlastHeim.txt#753 (mapannounce)
+- "A new portal has appeared at the end of the central corridor."
++ "Um portal novo apareceu no fim do corredor central."
+#: npc/re/instances/OldGlastHeim.txt#765 (mapannounce)
+- "???: Do not come here! It's a trap... Kkkkah!!!"
++ "???: Não venham aqui! É uma armadilha... Kkkkah!!!"
 #: npc/re/instances/OldGlastHeim.txt#770 (atrib)
 - "::OnMobDead"
 + ""
@@ -1065,34 +1248,34 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#773 (mes)
 - "[Heinrich]"
-+ ""
++ "[Heinrich]"
 #: npc/re/instances/OldGlastHeim.txt#774 (mes)
 - "What are you putting on Himelmez!"
-+ ""
++ "O que você está pondo na Himelmez!"
 #: npc/re/instances/OldGlastHeim.txt#775 (mes)
 - "[Varmundt]"
-+ ""
++ "[Varmundt]"
 #: npc/re/instances/OldGlastHeim.txt#776 (mes)
 - "Can't take off this bridle..."
-+ ""
++ "Não consigo tirar este freio..."
 #: npc/re/instances/OldGlastHeim.txt#777 (cutin)
 - "gl_barmund2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#778 (mes)
 - "[Gerhalt]"
-+ ""
++ "[Gerhalt]"
 #: npc/re/instances/OldGlastHeim.txt#779 (mes)
 - "Uuuuu... Khhhah! Just run away with the commander."
-+ ""
++ "Uuuuu... Khhhah! Fuja logo com o comandante."
 #: npc/re/instances/OldGlastHeim.txt#780 (cutin)
 - "gl_himel2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#781 (mes)
 - "[Himelmez]"
-+ ""
++ "[Himelmez]"
 #: npc/re/instances/OldGlastHeim.txt#782 (mes)
 - "That is amazing ~ you made it all the way here. May I say thank you?"
-+ ""
++ "Que incrível ~ vocês chegaram até aqui. Posso dizer obrigada?"
 #: npc/re/instances/OldGlastHeim.txt#788 (atrib)
 - "Himelmez#23"
 + ""
@@ -1107,67 +1290,73 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#792 (npctalk)
 - "Himelmez: Amazing~ I thought that you were not even close to getting here..."
-+ ""
++ "Himelmez: Incrível~ Eu achava que vocês nem estavam perto de chegar aqui..."
 #: npc/re/instances/OldGlastHeim.txt#793 (npctalk)
 - "Gerhalt: Kkkkah! Run away! I can't endure anymore!"
-+ ""
++ "Gerhalt: Kkkkah! Fujam! Eu não aguento mais!"
 #: npc/re/instances/OldGlastHeim.txt#794 (npctalk)
 - "Heinrich: Gerhalt!"
-+ ""
++ "Heinrich: Gerhalt!"
 #: npc/re/instances/OldGlastHeim.txt#795 (npctalk)
 - "Heinrich: What are you doing to my soldier Himelmez!"
-+ ""
++ "Heinrich: O que você está fazendo com o meu soldado, Himelmez!"
 #: npc/re/instances/OldGlastHeim.txt#796 (npctalk)
 - "Himelmez: Hoo hoo, I already found a piece of Ymir's heart, Heinrich."
-+ ""
++ "Himelmez: Ho ho, eu já achei um pedaço do coração de Ymir, Heinrich."
 #: npc/re/instances/OldGlastHeim.txt#797 (npctalk)
 - "Himelmez: If he did not bother me it would have been faster."
-+ ""
++ "Himelmez: Se ele não tivesse me atrapalhado, teria sido mais rápido."
 #: npc/re/instances/OldGlastHeim.txt#798 (npctalk)
 - "Gerhalt: Commandant... Come on, you need to run away from here... Ugh."
-+ ""
++ "Gerhalt: Comandante... Vamos, o senhor precisa fugir daqui... Ugh."
 #: npc/re/instances/OldGlastHeim.txt#799 (npctalk)
 - "Himelmez: Really? What makes you think so?"
-+ ""
++ "Himelmez: Sério? O que faz você pensar assim?"
 #: npc/re/instances/OldGlastHeim.txt#800 (npctalk)
 - "Heinrich: Himelmez! You already made what you wanted so there is no more need for a sacrifice!"
-+ ""
++ "Heinrich: Himelmez! Você já conseguiu o que queria, então não há mais necessidade de sacrifício!"
 #: npc/re/instances/OldGlastHeim.txt#801 (npctalk)
 - "Heinrich: Let him go! I don't need to see anyone else suffer!"
-+ ""
++ "Heinrich: Solte ele! Eu não preciso ver mais ninguém sofrer!"
 #: npc/re/instances/OldGlastHeim.txt#802 (npctalk)
 - "Himelmez: Let him go? I think... No..."
-+ ""
++ "Himelmez: Soltar ele? Eu acho... Que não..."
 #: npc/re/instances/OldGlastHeim.txt#803 (npctalk)
 - "Himelmez: Besides, this is your last surviving soldier, Heinrich."
-+ ""
++ "Himelmez: Além disso, este é o seu último soldado vivo, Heinrich."
 #: npc/re/instances/OldGlastHeim.txt#804 (npctalk)
 - "Himelmez: He made life difficult for me."
-+ ""
++ "Himelmez: Ele me deu trabalho."
 #: npc/re/instances/OldGlastHeim.txt#805 (npctalk)
 - "Himelmez: He is perfectly fit for my new creation Amdarais."
-+ ""
++ "Himelmez: Ele é perfeito para a minha nova criação, Amdarais."
 #: npc/re/instances/OldGlastHeim.txt#806 (npctalk)
 - "Heinrich: I'll never forgive you."
-+ ""
++ "Heinrich: Eu nunca vou perdoar você."
 #: npc/re/instances/OldGlastHeim.txt#807 (npctalk)
 - "Himelmez: Uh uh~ I'm so scared."
-+ ""
++ "Himelmez: Ui ui~ Estou com tanto medo."
 #: npc/re/instances/OldGlastHeim.txt#808 (npctalk)
 - "Himelmez: Anyway, we will have a chance to see because we need to talk more."
-+ ""
++ "Himelmez: De todo jeito, a gente vai ter a chance de se ver, porque ainda temos muito o que conversar."
 #: npc/re/instances/OldGlastHeim.txt#809 (npctalk)
 - "Himelmez: So long boys."
-+ ""
++ "Himelmez: Até mais, rapazes."
 #: npc/re/instances/OldGlastHeim.txt#810 (npctalk)
 - "Gerhalt: You can make my body but you can't take my soul, Himelmez!"
-+ ""
++ "Gerhalt: Você pode fazer o meu corpo, mas não pode tomar a minha alma, Himelmez!"
 #: npc/re/instances/OldGlastHeim.txt#811 (npctalk)
 - "Heinrich: I'll never let you get away Himelmez!!"
-+ ""
++ "Heinrich: Eu nunca vou deixar você escapar, Himelmez!!"
 #: npc/re/instances/OldGlastHeim.txt#812 (npctalk)
 - "Varmundt: We have no choice. We have to fight against Amdarais!"
-+ ""
++ "Varmundt: Não temos escolha. Temos que lutar contra o Amdarais!"
+#: npc/re/instances/OldGlastHeim.txt#813 (mapannounce)
+- "Gerhalt's body is changing."
++ "O corpo do Gerhalt está mudando."
+#: npc/re/instances/OldGlastHeim.txt#814 (mapannounce)
+- "Varmundt: Let me help this battle with my illusion. Just follow the illusion's orders."
++ "Varmundt: Deixem eu ajudar nesta batalha com a minha ilusão. É só seguir as ordens da ilusão."
 #: npc/re/instances/OldGlastHeim.txt#819 (atrib)
 - "Himelmez#23"
 + ""
@@ -1182,100 +1371,127 @@
 + ""
 #: npc/re/instances/OldGlastHeim.txt#823 (npctalk)
 - "Himelmez: Amazing~ I thought that you were not even close to getting here..."
-+ ""
++ "Himelmez: Incrível~ Eu achava que vocês nem estavam perto de chegar aqui..."
 #: npc/re/instances/OldGlastHeim.txt#824 (npctalk)
 - "Heinrich: I'll never let you get away Himelmez!!"
-+ ""
++ "Heinrich: Eu nunca vou deixar você escapar, Himelmez!!"
 #: npc/re/instances/OldGlastHeim.txt#825 (npctalk)
 - "Varmundt: We have no choice. We have to fight against Amdarais!"
-+ ""
++ "Varmundt: Não temos escolha. Temos que lutar contra o Amdarais!"
+#: npc/re/instances/OldGlastHeim.txt#826 (mapannounce)
+- "Gerhalt's body is changing."
++ "O corpo do Gerhalt está mudando."
+#: npc/re/instances/OldGlastHeim.txt#827 (mapannounce)
+- "Varmundt: Let me help this battle with my illusion. Just follow the illusion's orders."
++ "Varmundt: Deixem eu ajudar nesta batalha com a minha ilusão. É só seguir as ordens da ilusão."
 #: npc/re/instances/OldGlastHeim.txt#831 (cutin)
 - "gl_himel2"
 + ""
 #: npc/re/instances/OldGlastHeim.txt#832 (mes)
 - "[Himelmez]"
-+ ""
++ "[Himelmez]"
 #: npc/re/instances/OldGlastHeim.txt#833 (mes)
 - "That is amazing ~ you made it all the way here. May I say thank you?"
-+ ""
++ "Que incrível ~ vocês chegaram até aqui. Posso dizer obrigada?"
+#: npc/re/instances/OldGlastHeim.txt#838 (unittalk)
+- "Run away... run away from me..."
++ "Fujam... fujam de mim..."
+#: npc/re/instances/OldGlastHeim.txt#839 (unittalk)
+- "I don't want... I don't want to kill anyone. Uhuuuuuh"
++ "Eu não quero... Eu não quero matar ninguém. Uhuuuuuh"
+#: npc/re/instances/OldGlastHeim.txt#840 (unittalk)
+- "Please kill me! Please!"
++ "Me matem, por favor! Por favor!"
+#: npc/re/instances/OldGlastHeim.txt#841 (unittalk)
+- "Eeeeee...eee...die... die..."
++ "Eeeeee...eee...morra... morra..."
+#: npc/re/instances/OldGlastHeim.txt#842 (unittalk)
+- "Demolition... Death!..."
++ "Demolição... Morte!..."
+#: npc/re/instances/OldGlastHeim.txt#852 (mapannounce)
+- "Amdarais HP "
++ "HP do Amdarais chegou a "
+#: npc/re/instances/OldGlastHeim.txt#853 (mapannounce)
+- "% reach!"
++ "%!"
 #: npc/re/instances/OldGlastHeim.txt#905 (npctalk)
 - "Varmundt's Ghost: Amdarais may use a strong magic shield! Stay close to me and I'll protect you!"
-+ ""
++ "Fantasma do Varmundt: O Amdarais pode usar um escudo mágico forte! Fiquem perto de mim que eu protejo vocês!"
 #: npc/re/instances/OldGlastHeim.txt#906 (npctalk)
 - "Varmundt's Ghost: Now's a chance to attack! Come closer to me and strike!"
-+ ""
++ "Fantasma do Varmundt: Agora é a chance de atacar! Cheguem perto de mim e golpeiem!"
 #: npc/re/instances/OldGlastHeim.txt#907 (npctalk)
 - "Varmundt's Ghost: If you don't want to be attacked by Amdarais' zombie, come to me and get more power!"
-+ ""
++ "Fantasma do Varmundt: Se vocês não querem ser atacados pelo zumbi do Amdarais, venham até mim e ganhem mais poder!"
 #: npc/re/instances/OldGlastHeim.txt#908 (npctalk)
 - "Varmundt's Ghost: If you don't want to be attacked by Amdarais's power, come to me and get more power!"
-+ ""
++ "Fantasma do Varmundt: Se vocês não querem ser atacados pelo poder do Amdarais, venham até mim e ganhem mais poder!"
 #: npc/re/instances/OldGlastHeim.txt#909 (mes)
 - "^ff0000It seems like you have too many types or weights of items. Please organize your inventory.^000000"
-+ ""
++ "^ff0000Parece que você está com tipos ou peso demais de itens. Por favor, organize o seu inventário.^000000"
 #: npc/re/instances/OldGlastHeim.txt#910 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#911 (mes)
 - "Hm, you are very well. First of all, let me give you some loot from Amdarais."
-+ ""
++ "Hm, você está muito bem. Antes de mais nada, deixe eu lhe dar um espólio do Amdarais."
 #: npc/re/instances/OldGlastHeim.txt#912 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#913 (mes)
 - "Varmundt's time is stopped by me."
-+ ""
++ "O tempo do Varmundt foi parado por mim."
 #: npc/re/instances/OldGlastHeim.txt#914 (mes)
 - "And your time will be distorted soon."
-+ ""
++ "E o seu tempo vai ser distorcido em breve."
 #: npc/re/instances/OldGlastHeim.txt#916 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#917 (mes)
 - "Maybe this poor time traveler will try to stop Glast Heim's tragedy from happening."
-+ ""
++ "Talvez este pobre viajante do tempo tente impedir que a tragédia de Glast Heim aconteça."
 #: npc/re/instances/OldGlastHeim.txt#918 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#919 (mes)
 - "However, we will never overlook his behavior now and forever..."
-+ ""
++ "Mas nós nunca vamos tolerar o comportamento dele, agora e para sempre..."
 #: npc/re/instances/OldGlastHeim.txt#920 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#921 (mes)
 - "Now let me remove your memory. If you see me again it will be someone new."
-+ ""
++ "Agora deixe eu apagar a sua memória. Se você me vir de novo, vai ser alguém novo."
 #: npc/re/instances/OldGlastHeim.txt#922 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#923 (mes)
 - "Oops. I almost distorted the time gap. Come over here. We need to go out!"
-+ ""
++ "Opa. Eu quase distorci a fenda no tempo. Venha para cá. Precisamos sair!"
 #: npc/re/instances/OldGlastHeim.txt#924 (select)
 - "You were just with me..."
-+ ""
++ "Você estava comigo agorinha..."
 #: npc/re/instances/OldGlastHeim.txt#925 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#926 (mes)
 - "What did you say just before?"
-+ ""
++ "O que você disse agora há pouco?"
 #: npc/re/instances/OldGlastHeim.txt#927 (mes)
 - "Anyway, that is not important. The gap of time will be closed so we need to get out of here."
-+ ""
++ "De todo jeito, isso não é importante. A fenda do tempo vai se fechar, então precisamos sair daqui."
 #: npc/re/instances/OldGlastHeim.txt#928 (select)
 - "Let me look around more:Please let me out"
-+ ""
++ "Deixa eu olhar mais um pouco:Por favor, me tire daqui"
 #: npc/re/instances/OldGlastHeim.txt#929 (mes)
 - "[Hugin]"
-+ ""
++ "[Hugin]"
 #: npc/re/instances/OldGlastHeim.txt#930 (mes)
 - "Really? This place will be break down soon. Please look around quickly."
-+ ""
++ "Sério? Este lugar vai desabar logo. Por favor, olhe rápido."
 #: npc/re/instances/OldGlastHeim.txt#932 (mes)
 - "The crack looks suspicious but nothing more to check."
-+ ""
++ "A fenda parece suspeita, mas não há mais nada para conferir."
 #: npc/re/instances/OldGlastHeim.txt#958 (mes)
 - "The crack looks suspicious but nothing more to check."
-+ ""
++ "A fenda parece suspeita, mas não há mais nada para conferir."

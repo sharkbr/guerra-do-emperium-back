@@ -4155,3 +4155,133 @@ subiu sem um `Unknown syntax`.
 **As outras catorze continuam em inglês**, cada uma com o seu grupo pronto para
 `--extrair`. A ordem barata é pelo tamanho: Batalha dos Orcs (55 falas) e Lago
 de Bakonawa (62) são de uma sentada; Sonho Sombrio (1.261) é um projeto.
+
+### Quatorze instâncias e a Fenda Dimensional em português (2026-08-09)
+
+Continuação direta da seção acima, na mesma data. Dos dezesseis grupos da
+frente, **quinze fecharam e foram aplicados**; sobrou o maior.
+
+| grupo | pares | traduzidos | em branco |
+|---|---|---|---|
+| `magoas` | 358 | 309 | 49 |
+| `bakonawa` | 121 | 88 | 33 |
+| `orcs` | 189 | 109 | 80 |
+| `polvo` | 141 | 104 | 37 |
+| `porings` | 144 | 134 | 10 |
+| `hospital` | 214 | 161 | 53 |
+| `sarah` | 461 | 312 | 149 |
+| `brinquedos` | 356 | 303 | 53 |
+| `fenda` | 334 | 288 | 46 |
+| `vermes` | 453 | 353 | 100 |
+| `glastheim` | 495 | 406 | 89 |
+| `fenrir` | 513 | 464 | 49 |
+| `demonio` | 632 | 540 | 92 |
+| `charleston` | 779 | 670 | 109 |
+| `crescente` | 1.922 | 1.268 | 654 |
+
+**"Em branco" não é dívida** — é nome de mapa, label de evento, nome único de
+NPC, `.bmp` de cutin, código de cor e pontuação solta. O `--estado` conta esses
+como não feitos, então 86% ali quer dizer completo. Ver `CLAUDE.md` §4.12.
+
+**Falta um, o Sonho Sombrio (`jitterbug`), e ele ficou pela metade:** 418 dos
+1.253 textos distintos preenchidos, do começo do roteiro até o encontro com a
+Lagi. **O grupo não foi aplicado**, e não deve ser até fechar — meia instância
+em português é o que a regra de "só aplicar grupo inteiro" existe para evitar.
+O arquivo do rAthena continua inteiro em inglês; só o `.cat` mudou.
+
+O `crescente` foi o primeiro feito **em levas** — 220 textos, gravar, pedir a
+lista de novo, mais 460. O `--pendentes` só lista o que ainda está vazio,
+então cada leva renumera e continua de onde parou. No fim sobraram 133
+distintos, e os 133 eram exatamente os que ficam em branco de propósito: nome
+de mapa, arquivo de cutin, nome único de NPC e pontuação. É esse o sinal de
+que um grupo fechou.
+
+#### Os catálogos commitados estavam velhos, e isso quase passou batido
+
+O `PROXIMA-SESSAO.md` afirmava que os dezesseis catálogos estavam extraídos com
+os contextos novos. **Não estavam.** O `vermes` tinha 331 pares e a re-extração
+devolveu **453** — os 122 que faltavam eram justamente `mapannounce` e
+`unittalk`, o texto da faixa do alto e do balão de monstro.
+
+Onze dos dezesseis estavam assim, e o erro é do tipo que não se denuncia: o
+catálogo abre, tem conteúdo, o `--aplicar` roda sem recusa e o grupo marca
+100% — só que a instância continua gritando em inglês na tela. Quatro grupos
+(`porings`, `hospital`, `sarah`, `brinquedos`) já tinham sido dados por prontos
+antes de o problema aparecer e precisaram de uma segunda leva.
+
+A regra que sobe disso está no `CLAUDE.md` §4.13: **`--extrair` antes de
+traduzir, sempre.**
+
+#### As três convenções que este lote fixou
+
+**1. Nome de criatura TRADUZ.** A dúvida é real: dentro de instância o nome que
+flutua sobre o monstro vem do 4º argumento do `monster`/`areamonster` do
+próprio script, que está em inglês e **não** entra no catálogo — então
+"Missão: elimine os 'Orcs Encantados'" convive com um bicho rotulado
+`Enchanted Orc`. Optou-se por traduzir mesmo assim, por dois motivos: é o que o
+Palácio das Mágoas já tinha aplicado (`Magic Sword Tartanos` → *Espada Mágica
+Tartanos*), e meia frase em inglês é exatamente o que a regra de "só aplicar
+grupo inteiro" existe para evitar. O `orcs` chegou a ser escrito com os nomes em
+inglês e foi **revertido e refeito** para não criar duas convenções no mesmo
+projeto.
+
+Onde o bRO tem nome, é o do bRO — `db/guerra/mob_db.yml`, que foi gerado do
+`navi_mob_br.lub`: `High Orc` → Grand Orc, `Orc Archer` → Orc Arqueiro,
+`Stalactic Golem` → Golem Estalactítico, `Wraith` → Alma Penada, `Orc Hero` →
+Orc Herói. Os exclusivos de instância (1981 a 1984, os `Faceworm*`, os
+`Octopus`) não estão na tabela e foram traduzidos aqui.
+
+**2. Nome de habilidade, item e mapa sai da tabela do CLIENTE, inclusive
+quando ela não traduziu.** O `skillinfolist.lub` deu os treze nomes do roteiro
+do Fenrir (`Thunder Storm` → Tempestade de Raios, `Road of Vermilion` → Ira de
+Thor, `Cloud Kill` → Maldição de Jormungand, `White Imprison` → Exílio, …). E
+deu também o contrário: **`Mind Blaster` fica em inglês** na Torre do Demônio,
+porque é assim que o `MER_INVINCIBLEOFF2` aparece no arquivo do cliente. A
+regra vale nos dois sentidos.
+
+O mesmo para item: `Explosive Powder` é o 6213, e o `itemInfo.lua` o chama de
+**Pó Explosivo** — traduzir de cabeça sairia "Pólvora", que é outro item. E
+para mapa: `Dimensional Gap` virou **Espaço Dimensional** porque é o que o
+`mapnametable.txt` põe em `dali.rsw`; `Dimensional Rift`/`Crack`, que são a
+passagem e não o lugar, viraram **Fenda Dimensional**.
+
+**`Ash Vacuum` ficou em inglês** — não está no `mapnametable`, nem em nenhuma
+outra tabela PT desta máquina, e inventar nome de lugar é o que a regra §4.3
+proíbe.
+
+**3. Fragmento montado com `+` se traduz olhando a ORDEM, não a frase.** O
+anúncio de entrada de instância aparece em oito arquivos e em três ordens
+diferentes: `[grupo][frag][personagem][frag]` nos Orcs, no Polvo e no Hospital;
+`[personagem][frag][grupo][frag]` no Palácio e na Sarah. Traduzir o fragmento
+do meio como `", do grupo "` na primeira forma sairia *"GrupoX, do grupo
+Fulano"* — plausível e invertido. A forma que serve para a primeira é
+`" - o aventureiro "`.
+
+O caso extremo está no Covil de Vermes: `n + " unbroken " + ("eggs"|"egg")`. Em
+português o adjetivo anda junto do substantivo, então o fragmento do meio virou
+**um espaço só** e `intactos` migrou para o substantivo.
+
+#### Duas armadilhas achadas lendo o script
+
+**`DIR_NORTHWEST` e irmãos, na Torre do Demônio, entram em NOME DE VARIÁVEL.**
+O `DevilTower.txt` faz `'coord_seal_DIR_NORTHWEST` e `'round[DIR_NORTHWEST]`.
+Eles chegam ao catálogo por um `setarray` de texto, parecem rótulo de direção e
+não são: traduzir faria o script procurar variável que não existe, e o selo
+mágico simplesmente não andaria. Subiu para o `CLAUDE.md` §5.
+
+**`F_GetPlural` aplica regra de plural INGLESA ao que a gente escrever.** No
+Covil de Vermes e no quadro de recordes, `verme`, `segundo`, `minuto` e `ovo`
+passam por ela. Todos os quatro caem no ramo padrão (acrescenta `-s`) e saem
+certos em português — mas só por sorte de terminação: palavra terminada em
+`-s`, `-x`, `-z`, `-f`, `-y` ou na lista de exceção em `-o`
+(`potato|tomato|…`) sairia errada, e nada avisaria.
+
+#### O que foi verificado
+
+Depois de cada lote, `--aplicar <grupo> --verificar` (0 recusas em todos) e
+reinício do map-server procurando `Unknown syntax` no `log/map-msg_log.log` —
+**nenhum**, nos quinze. O `--aplicar` recusou sozinho um caso, e corretamente:
+`"Sarah Irene's alter ego"`, no Fenrir, é dado técnico.
+
+A gravação passou por três travas próprias: recusa caractere fora do cp1252,
+recusa `\xef\xbf\xbd` no resultado e recusa aspa dupla dentro da tradução.

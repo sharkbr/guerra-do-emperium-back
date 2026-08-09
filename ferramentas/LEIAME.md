@@ -1001,6 +1001,81 @@ literais, e o comentário do `literais_todos` diz que isso é de propósito,
 justamente para a lista de contextos poder crescer. Era o ponto de extensão
 previsto.
 
+## `preenche_catalogo.py` — o meio do caminho do `traduz_npcs.py`
+
+```
+python preenche_catalogo.py --pendentes crescente          # o que falta traduzir
+python preenche_catalogo.py --pendentes crescente saida.txt
+python preenche_catalogo.py --gravar crescente t_crescente.py
+```
+
+Acrescentado em 2026-08-09, ao traduzir as instâncias. O `traduz_npcs.py`
+extrai e aplica; **o que faltava era o meio** — tirar do catálogo só o que
+ainda não foi traduzido, e devolver a tradução sem destruir o acento.
+
+**Por que não editar o `.cat` a mão:** porque escrever é o passo perigoso, não
+ler (`CLAUDE.md` §4.1). O `.cat` é cp1252, todo editor grava UTF-8 por padrão,
+e o estrago é calado — o acento vira `\xef\xbf\xbd` e o byte original já não
+está lá. Um catálogo de instância tem 300 a 700 pares e umas 150 linhas
+acentuadas: editar isso a mão é apostar 150 vezes seguidas.
+
+### O ciclo completo, por grupo
+
+```
+python traduz_npcs.py --extrair <grupo>            # SEMPRE antes (CLAUDE.md §4.13)
+python preenche_catalogo.py --pendentes <grupo>
+# ... escrever o t_<grupo>.py ...
+python preenche_catalogo.py --gravar <grupo> t_<grupo>.py
+python traduz_npcs.py --aplicar <grupo> --verificar
+python traduz_npcs.py --aplicar <grupo>
+```
+
+### A entrada é um módulo Python, e não um TSV
+
+```python
+# -*- coding: utf-8 -*-
+TRAD = {
+    2: u"O aventureiro ",
+    3: u" do grupo ",
+}
+```
+
+O índice é o número que o `--pendentes` imprimiu, do **mesmo** catálogo e na
+**mesma** ordem. Índice ausente fica em branco, e branco quer dizer "deixa em
+inglês" — é assim que se marca nome de mapa, label e nome único de NPC.
+
+**Não é TSV de propósito.** Metade dos textos de instância são fragmentos de
+frase montada com `+`, e o espaço no início e no fim deles é significativo:
+` of the party ` vira ` do grupo `. Num TSV esse espaço se perde no primeiro
+editor que apara linha, e a frase sai grudada em jogo sem nada denunciar. Entre
+aspas ele é visível e sobrevive.
+
+Pelo mesmo motivo a trava é `if not trad` e **não** `if not trad.strip()`:
+tradução de **um espaço só** é legítima. No `FacewormsNest.txt` o script monta
+`n + " unbroken " + ("eggs"|"egg")`, e em português o adjetivo anda junto do
+substantivo — o fragmento do meio vira `" "` e `intactos` migra para o
+substantivo. Filtrar por `.strip()` deixava ` unbroken ` em inglês no meio da
+frase, calado.
+
+### As três travas, todas fatais
+
+1. **Recusa caractere fora do cp1252** — aspa curva, travessão longo e
+   reticências de um byte só passam batido num editor e viram `?` no jogo.
+2. **Recusa `\xef\xbf\xbd`** (U+FFFD) em qualquer ponto do resultado.
+3. **Recusa aspa dupla** dentro da tradução — o `.cat` delimita com aspas e o
+   script do rAthena também.
+
+A gravação troca **só o miolo da linha `+`**, por fatia de bytes. Reescrever o
+registro inteiro exigiria remontar o cabeçalho `#:` com o contexto entre
+parênteses, e inventar isso é como se perde informação.
+
+### `--pendentes` é distinto por TEXTO, e na ordem do script
+
+43% do acervo é repetição, e a tradução vale para todas as ocorrências. A ordem
+é a de primeira aparição no catálogo, que é a ordem do arquivo — o diálogo vem
+em sequência, e é o que torna possível traduzir uma conversa inteira sem pular
+de um lado para o outro.
+
 ## `planta_adereco.py` — copia um adereço de um mapa para outro
 
 ```

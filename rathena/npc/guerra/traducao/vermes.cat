@@ -9,385 +9,385 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/FacewormsNest.txt  (331 textos)
+### npc/re/instances/FacewormsNest.txt  (453 textos)
 #: npc/re/instances/FacewormsNest.txt#1 (mes)
 - "You have too many kind of belongings. Let's try again after reducing the kind of items."
-+ ""
++ "Você está com tipos demais de pertences. Tente de novo depois de reduzir os tipos de itens."
 #: npc/re/instances/FacewormsNest.txt#2 (mes)
 - "Your belongings are too heavy to continue. Let's try again after reducing the weight."
-+ ""
++ "Os seus pertences estão pesados demais para continuar. Tente de novo depois de aliviar o peso."
 #: npc/re/instances/FacewormsNest.txt#3 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#4 (mes)
 - "I am still living in the memory. Make more memories..."
-+ ""
++ "Eu ainda vivo na lembrança. Faça mais lembranças..."
 #: npc/re/instances/FacewormsNest.txt#5 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#6 (mes)
 - "Oh are you level 140 yet? I won't talk to any weak adventurers."
-+ ""
++ "Ah, você já é nível 140? Eu não falo com aventureiro fraco."
 #: npc/re/instances/FacewormsNest.txt#7 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#8 (mes)
 - "When I was a young girl many years ago there was a man who I had crush on. I didn't know to tell him how I felt..."
-+ ""
++ "Quando eu era mocinha, muitos anos atrás, havia um homem por quem eu era apaixonada. Eu não sabia como dizer a ele o que eu sentia..."
 #: npc/re/instances/FacewormsNest.txt#9 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#10 (mes)
 - "I used to tease his Peco Peco and wanted him to notice that I was interested. This went on and on for a while."
-+ ""
++ "Eu implicava com o Peco Peco dele para ver se ele percebia que eu estava interessada. Isso durou um bom tempo."
 #: npc/re/instances/FacewormsNest.txt#11 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#12 (mes)
 - "Then we started dating somehow. It's still embarrasing to talk about it."
-+ ""
++ "Aí, de algum jeito, a gente começou a namorar. Ainda me dá vergonha falar disso."
 #: npc/re/instances/FacewormsNest.txt#13 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#14 (mes)
 - "Anyway, we got married when we became old enough to marry. He used to say sorry for not being able to afford to buy a ring for me."
-+ ""
++ "Enfim, a gente se casou quando ficou com idade de casar. Ele vivia pedindo desculpa por não ter dinheiro para me comprar um anel."
 #: npc/re/instances/FacewormsNest.txt#15 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#16 (mes)
 - "It has been 40 years since we were married and he still says ^0000ff'Darling~ Do you want to have a ring?'^000000."
-+ ""
++ "Já se passaram 40 anos desde que a gente se casou e ele ainda diz ^0000ff'Querida~ Você quer um anel?'^000000."
 #: npc/re/instances/FacewormsNest.txt#17 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#18 (mes)
 - "I told him.. What good is a ring for an old lady?"
-+ ""
++ "Eu dizia a ele.. Para que serve um anel para uma velha?"
 #: npc/re/instances/FacewormsNest.txt#19 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#20 (mes)
 - "I should have stopped him. I still remember his face early."
-+ ""
++ "Eu devia ter impedido ele. Ainda me lembro do rosto dele naquela manhã."
 #: npc/re/instances/FacewormsNest.txt#21 (select)
 - "What happened to him?"
-+ ""
++ "O que aconteceu com ele?"
 #: npc/re/instances/FacewormsNest.txt#22 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#23 (mes)
 - "He had not came back since he left home to buy a ring."
-+ ""
++ "Ele nunca mais voltou desde que saiu de casa para comprar um anel."
 #: npc/re/instances/FacewormsNest.txt#24 (mes)
 - "^0000ffThe old lady turned her face down with reddened eyes.^000000"
-+ ""
++ "^0000ffA velha senhora abaixou o rosto, com os olhos avermelhados.^000000"
 #: npc/re/instances/FacewormsNest.txt#25 (select)
 - "Stop talking.:Show the ring from the Faceworm's Nest."
-+ ""
++ "Encerrar a conversa.:Mostrar o anel do Covil de Vermes."
 #: npc/re/instances/FacewormsNest.txt#26 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#27 (mes)
 - "What about this ring?"
-+ ""
++ "E este anel aqui?"
 #: npc/re/instances/FacewormsNest.txt#28 (mes)
 - "[Jeum-sun]"
-+ ""
++ "[Jeum-sun]"
 #: npc/re/instances/FacewormsNest.txt#29 (mes)
 - "Oh... Darling~"
-+ ""
++ "Ah... Querido~"
 #: npc/re/instances/FacewormsNest.txt#30 (mes)
 - "^0000ffThe lady read an inscription inside the ring and started weeping."
-+ ""
++ "^0000ffA senhora leu uma inscrição dentro do anel e começou a chorar."
 #: npc/re/instances/FacewormsNest.txt#31 (mes)
 - "[Jeum-sun, my darling flower]^000000"
-+ ""
++ "[Jeum-sun, minha flor querida]^000000"
 #: npc/re/instances/FacewormsNest.txt#32 (mes)
 - "^0000ffYou sense a warm energy emanating. Maybe this is the wish of the man who made this ring.^000000"
-+ ""
++ "^0000ffVocê sente uma energia morna emanando. Talvez seja o desejo do homem que fez este anel.^000000"
 #: npc/re/instances/FacewormsNest.txt#33 (mes)
 - "The warm energy has inspired you with strength."
-+ ""
++ "A energia morna encheu você de forças."
 #: npc/re/instances/FacewormsNest.txt#34 (mes)
 - "The lady keeps crying over and over holding a ring. It seems to be no use talking to her right now."
-+ ""
++ "A senhora chora sem parar, segurando o anel. Parece que não adianta falar com ela agora."
 #: npc/re/instances/FacewormsNest.txt#35 (mes)
 - "Sadly, this woman does not seem to remember the past because of abrupt emotional changes. Let's talk carefully and listen to her story."
-+ ""
++ "Infelizmente, esta mulher não parece lembrar do passado por causa de mudanças bruscas de emoção. Vamos conversar com cuidado e ouvir a história dela."
 #: npc/re/instances/FacewormsNest.txt#36 (mes)
 - "You have too many types of belongings. Let's try again after reducing the types of items."
-+ ""
++ "Você está com tipos demais de pertences. Tente de novo depois de reduzir os tipos de itens."
 #: npc/re/instances/FacewormsNest.txt#37 (mes)
 - "Your belongings are too heavy to continue. Let's try again after reducing the weight."
-+ ""
++ "Os seus pertences estão pesados demais para continuar. Tente de novo depois de aliviar o peso."
 #: npc/re/instances/FacewormsNest.txt#38 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#39 (mes)
 - "Fortune or fame is not important. The most important thing is family."
-+ ""
++ "Fortuna e fama não importam. O mais importante é a família."
 #: npc/re/instances/FacewormsNest.txt#40 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#41 (mes)
 - "Are you at least level 140 yet?"
-+ ""
++ "Você já é pelo menos nível 140?"
 #: npc/re/instances/FacewormsNest.txt#42 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#43 (mes)
 - "I have a blurry memory of when I used to travel with my father's armed-merchant group."
-+ ""
++ "Eu tenho uma lembrança turva de quando eu viajava com o grupo de mercadores armados do meu pai."
 #: npc/re/instances/FacewormsNest.txt#44 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#45 (mes)
 - "I vaguely remember everyone of the group were scattered after being attacked by a giant snake-like creature."
-+ ""
++ "Lembro vagamente que todo mundo do grupo se dispersou depois de sermos atacados por uma criatura gigante parecida com uma cobra."
 #: npc/re/instances/FacewormsNest.txt#46 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#47 (mes)
 - "I had lost my family at that time. I do not clearly remember even their faces."
-+ ""
++ "Eu perdi a minha família naquele dia. Não me lembro nem do rosto deles direito."
 #: npc/re/instances/FacewormsNest.txt#48 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#49 (mes)
 - "Now I've made my own armed-merchant group and got my life back. But the memory of my past keeps haunting me."
-+ ""
++ "Hoje eu montei o meu próprio grupo de mercadores armados e refiz a minha vida. Mas a lembrança do meu passado não me larga."
 #: npc/re/instances/FacewormsNest.txt#50 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#51 (mes)
 - "I just stopped by this town to possibly find a record of my family and the armed-merchant group but so far I've found nothing."
-+ ""
++ "Eu só passei por esta cidade para ver se achava algum registro da minha família e do grupo de mercadores armados, mas até agora não achei nada."
 #: npc/re/instances/FacewormsNest.txt#52 (select)
 - "Stop talking.:Show him the Old Photo Album"
-+ ""
++ "Encerrar a conversa.:Mostrar a ele o Álbum de Fotos Antigo"
 #: npc/re/instances/FacewormsNest.txt#53 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#54 (mes)
 - "Yes! I remembered. This is the one who used to work for my father's armed-merchant group."
-+ ""
++ "Isso! Eu me lembrei. Este aqui é o que trabalhava para o grupo de mercadores armados do meu pai."
 #: npc/re/instances/FacewormsNest.txt#55 (mes)
 - "[Sergio]"
-+ ""
++ "[Sergio]"
 #: npc/re/instances/FacewormsNest.txt#56 (mes)
 - "Oh my... There are other pictures here too..."
-+ ""
++ "Ai, meu... Tem outras fotos aqui também..."
 #: npc/re/instances/FacewormsNest.txt#57 (mes)
 - "^0000ffA smile of lonely satisfaction spreads over the face of Sergio while looking at a photo album.^000000"
-+ ""
++ "^0000ffUm sorriso de satisfação solitária se espalha pelo rosto de Sergio enquanto ele olha o álbum de fotos.^000000"
 #: npc/re/instances/FacewormsNest.txt#58 (mes)
 - "^0000ffA gentle energy surrounds Sergio.^000000"
-+ ""
++ "^0000ffUma energia suave envolve Sergio.^000000"
 #: npc/re/instances/FacewormsNest.txt#59 (mes)
 - "You are touched by seeing the satisfaction on Sergio's face."
-+ ""
++ "Você se comove ao ver a satisfação no rosto de Sergio."
 #: npc/re/instances/FacewormsNest.txt#60 (mes)
 - "Sergio keeps looking at the photo album. Let's leave him alone."
-+ ""
++ "Sergio continua olhando o álbum de fotos. Vamos deixar ele em paz."
 #: npc/re/instances/FacewormsNest.txt#61 (mes)
 - "You can talk to Sergio again when you pick up a new photo album from the Faceworm's Nest."
-+ ""
++ "Você pode falar de novo com o Sergio quando pegar um álbum de fotos novo no Covil de Vermes."
 #: npc/re/instances/FacewormsNest.txt#62 (mes)
 - "You have too many types of belongings. Let's try again after reducing the types of items."
-+ ""
++ "Você está com tipos demais de pertences. Tente de novo depois de reduzir os tipos de itens."
 #: npc/re/instances/FacewormsNest.txt#63 (mes)
 - "Your belongings are too heavy to continue. Let's try again after reducing the weight."
-+ ""
++ "Os seus pertences estão pesados demais para continuar. Tente de novo depois de aliviar o peso."
 #: npc/re/instances/FacewormsNest.txt#64 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#65 (mes)
 - "What can I do for you?"
-+ ""
++ "O que eu posso fazer por você?"
 #: npc/re/instances/FacewormsNest.txt#66 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#67 (mes)
 - "Are you at least level 140 yet?"
-+ ""
++ "Você já é pelo menos nível 140?"
 #: npc/re/instances/FacewormsNest.txt#68 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#69 (mes)
 - "I used to be a servant to a very wealthy lady. She was always kind to me but she suffered from a severe cough that wouldn't go away unless she took a special pill."
-+ ""
++ "Eu era criado de uma senhora muito rica. Ela sempre foi boa comigo, mas sofria de uma tosse feia que só passava se ela tomasse uma pílula especial."
 #: npc/re/instances/FacewormsNest.txt#70 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#71 (mes)
 - "I used to get the pill from a group of armed-merchants but I heard that they were attacked by a snake and that's when I couldn't get any more pills."
-+ ""
++ "Eu conseguia a pílula com um grupo de mercadores armados, mas ouvi dizer que eles foram atacados por uma cobra, e foi aí que eu não consegui mais pílula nenhuma."
 #: npc/re/instances/FacewormsNest.txt#72 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#73 (mes)
 - "I searched everywhere but no one could get that pill for me so eventually my lady passed away. If it wasn't for that slithering..."
-+ ""
++ "Eu procurei em todo canto, mas ninguém conseguia aquela pílula para mim, e no fim a minha senhora morreu. Se não fosse por aquela serpente..."
 #: npc/re/instances/FacewormsNest.txt#74 (select)
 - "Do you want to revenge?"
-+ ""
++ "Você quer se vingar?"
 #: npc/re/instances/FacewormsNest.txt#75 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#76 (mes)
 - "Well..."
-+ ""
++ "Bem..."
 #: npc/re/instances/FacewormsNest.txt#77 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#78 (mes)
 - "Yes... But, I have nothing to do with that snake. I am just a worthless servant who once served for my lady."
-+ ""
++ "Sim... Mas eu não tenho nada a ver com aquela cobra. Eu sou só um criado sem valor que um dia serviu à minha senhora."
 #: npc/re/instances/FacewormsNest.txt#79 (mes)
 - "^0000ffYou catch a glimpse of complicated rage and sorrow in his eyes.^000000"
-+ ""
++ "^0000ffVocê vê de relance uma raiva e uma tristeza complicadas nos olhos dele.^000000"
 #: npc/re/instances/FacewormsNest.txt#80 (select)
 - "Stop talking.:Show him the Old Pill."
-+ ""
++ "Encerrar a conversa.:Mostrar a ele a Pílula Antiga."
 #: npc/re/instances/FacewormsNest.txt#81 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#82 (mes)
 - "Wait! Where did you get this?"
-+ ""
++ "Espere! Onde você conseguiu isto?"
 #: npc/re/instances/FacewormsNest.txt#83 (select)
 - "I killed a snake..."
-+ ""
++ "Eu matei uma cobra..."
 #: npc/re/instances/FacewormsNest.txt#84 (mes)
 - "[Dol-Seoi]"
-+ ""
++ "[Dol-Seoi]"
 #: npc/re/instances/FacewormsNest.txt#85 (mes)
 - "This pill... My lady, if I had this pill..."
-+ ""
++ "Esta pílula... Minha senhora, se eu tivesse tido esta pílula..."
 #: npc/re/instances/FacewormsNest.txt#86 (mes)
 - "^0000ffHe begins to weep like a wounded Muka. She must have meant a lot to him...^000000"
-+ ""
++ "^0000ffEle começa a chorar como um Muka ferido. Ela devia significar muito para ele...^000000"
 #: npc/re/instances/FacewormsNest.txt#87 (mes)
 - "^0000ffI feel gentle energy around Dol-Seoi.^000000"
-+ ""
++ "^0000ffEu sinto uma energia suave em volta do Dol-Seoi.^000000"
 #: npc/re/instances/FacewormsNest.txt#88 (mes)
 - "Dol-Seoi is standing absent-mindedly clutching the Old Pill. Let's leave him alone now."
-+ ""
++ "Dol-Seoi está parado, distraído, apertando a Pílula Antiga. Vamos deixar ele em paz agora."
 #: npc/re/instances/FacewormsNest.txt#89 (mes)
 - "You can talk to Dol-Seoi again if you get another Old Pill from the Faceworm's Nest."
-+ ""
++ "Você pode falar de novo com o Dol-Seoi se conseguir outra Pílula Antiga no Covil de Vermes."
 #: npc/re/instances/FacewormsNest.txt#90 (mes)
 - "You have too many types of belongings. Let's try again after reducing the types of items."
-+ ""
++ "Você está com tipos demais de pertences. Tente de novo depois de reduzir os tipos de itens."
 #: npc/re/instances/FacewormsNest.txt#91 (mes)
 - "Your belongings are too heavy to continue. Let's try again after reducing the weight."
-+ ""
++ "Os seus pertences estão pesados demais para continuar. Tente de novo depois de aliviar o peso."
 #: npc/re/instances/FacewormsNest.txt#92 (mes)
 - "[Keaton]"
-+ ""
++ "[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#93 (mes)
 - "..."
 + ""
 #: npc/re/instances/FacewormsNest.txt#94 (mes)
 - "[Keaton]"
-+ ""
++ "[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#95 (mes)
 - "Unless you're level 140, I won't have a real conversation with you."
-+ ""
++ "Se você não for nível 140, eu não tenho conversa de verdade com você."
 #: npc/re/instances/FacewormsNest.txt#96 (mes)
 - "^0000ffIt looks like a dead soul but you don't feel maliciousness from it. His thoughts have been delivered piece by piece so it isn't easy to understand.^000000"
-+ ""
++ "^0000ffParece uma alma morta, mas você não sente maldade nela. Os pensamentos dele chegam aos pedaços, então não é fácil entender.^000000"
 #: npc/re/instances/FacewormsNest.txt#97 (mes)
 - "^999999[Keaton]"
-+ ""
++ "^999999[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#98 (mes)
 - "Keaton... Not good at speaking.^000000"
-+ ""
++ "Keaton... Não fala bem.^000000"
 #: npc/re/instances/FacewormsNest.txt#99 (mes)
 - "^999999[Keaton]"
-+ ""
++ "^999999[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#100 (mes)
 - "Keaton has died long time ago. Keaton is not bad.^000000"
-+ ""
++ "Keaton morreu faz muito tempo. Keaton não é mau.^000000"
 #: npc/re/instances/FacewormsNest.txt#101 (mes)
 - "^999999[Keaton]"
-+ ""
++ "^999999[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#102 (mes)
 - "Keaton... Need bracelet, that is important. Keaton's friend gave the bracelet.^000000"
-+ ""
++ "Keaton... Precisa da pulseira, ela é importante. Amigo do Keaton deu a pulseira.^000000"
 #: npc/re/instances/FacewormsNest.txt#103 (mes)
 - "^999999[Keaton]"
-+ ""
++ "^999999[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#104 (mes)
 - "Keaton, will go after a snake to find a bracelet. The bad snake killed keaton.^000000"
-+ ""
++ "Keaton vai atrás da cobra achar pulseira. A cobra má matou keaton.^000000"
 #: npc/re/instances/FacewormsNest.txt#105 (select)
 - "Stop talking.:Show him the Rusty Bracelet."
-+ ""
++ "Encerrar a conversa.:Mostrar a ele a Pulseira Enferrujada."
 #: npc/re/instances/FacewormsNest.txt#106 (mes)
 - "^999999[Keaton]"
-+ ""
++ "^999999[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#107 (mes)
 - "It is the bracelet of Keaton!!^000000"
-+ ""
++ "É a pulseira do Keaton!!^000000"
 #: npc/re/instances/FacewormsNest.txt#108 (mes)
 - "^999999[Keaton]"
-+ ""
++ "^999999[Keaton]"
 #: npc/re/instances/FacewormsNest.txt#109 (mes)
 - "Keaton...glad. Defeat bad snake!!^000000"
-+ ""
++ "Keaton...feliz. Derrote a cobra má!!^000000"
 #: npc/re/instances/FacewormsNest.txt#110 (mes)
 - "^0000ffKeaton seems to shine brighter.^000000"
-+ ""
++ "^0000ffKeaton parece brilhar mais forte.^000000"
 #: npc/re/instances/FacewormsNest.txt#111 (mes)
 - "Keaton's soul seems to be smiling. Best to give him whatever peace he can have for now."
-+ ""
++ "A alma do Keaton parece estar sorrindo. É melhor dar a ele toda a paz que ele puder ter por agora."
 #: npc/re/instances/FacewormsNest.txt#112 (mes)
 - "Keaton is very sad maybe it is because the bracelet was broken. Bring him any other Rusty Bracelets found in the Faceworm's Nest."
-+ ""
++ "O Keaton está muito triste, talvez porque a pulseira estava quebrada. Traga a ele qualquer outra Pulseira Enferrujada achada no Covil de Vermes."
 #: npc/re/instances/FacewormsNest.txt#114 (mes)
 - "There's no sign because no one updates the record."
-+ ""
++ "Não há registro nenhum porque ninguém atualiza o quadro."
 #: npc/re/instances/FacewormsNest.txt#115 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#116 (atrib)
 - "Second"
-+ ""
++ "Segundo"
 #: npc/re/instances/FacewormsNest.txt#117 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#118 (atrib)
 - "Minute"
-+ ""
++ "Minuto"
 #: npc/re/instances/FacewormsNest.txt#120 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#121 (atrib)
 - "Second"
-+ ""
++ "Segundo"
 #: npc/re/instances/FacewormsNest.txt#122 (atrib)
 - " with ^ff0044"
-+ ""
++ " com ^ff0044"
 #: npc/re/instances/FacewormsNest.txt#123 (atrib)
 - " party "
-+ ""
++ " integrantes no "
 #: npc/re/instances/FacewormsNest.txt#124 (atrib)
 - "members"
-+ ""
++ "grupo"
 #: npc/re/instances/FacewormsNest.txt#125 (atrib)
 - "members"
-+ ""
++ "grupo"
 #: npc/re/instances/FacewormsNest.txt#126 (atrib)
 - "^000000"
 + ""
 #: npc/re/instances/FacewormsNest.txt#127 (mes)
 - "-- Faceworm's Nest Records --"
-+ ""
++ "-- Recordes do Covil de Vermes --"
 #: npc/re/instances/FacewormsNest.txt#128 (mes)
 - "Best time belongs to adventurer ^ff0044"
-+ ""
++ "O melhor tempo é do aventureiro ^ff0044"
 #: npc/re/instances/FacewormsNest.txt#129 (mes)
 - "^000000"
 + ""
@@ -396,163 +396,178 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#131 (mes)
 - "Current record time is ^0000ff"
-+ ""
++ "O tempo do recorde atual é ^0000ff"
 #: npc/re/instances/FacewormsNest.txt#132 (mes)
 - "^000000."
 + ""
 #: npc/re/instances/FacewormsNest.txt#134 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#135 (mes)
 - "You are not qualified enough to enter here. How about visiting other places until you become level 140."
-+ ""
++ "Você ainda não está qualificado para entrar aqui. Que tal visitar outros lugares até chegar ao nível 140."
 #: npc/re/instances/FacewormsNest.txt#136 (atrib)
 - "Covil de Vermes"
 + ""
 #: npc/re/instances/FacewormsNest.txt#137 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#138 (mes)
 - "You don't have a party? Please come back again after creating a party even if you've come alone."
-+ ""
++ "Você não tem grupo? Por favor, volte depois de montar um grupo, mesmo que tenha vindo sozinho."
 #: npc/re/instances/FacewormsNest.txt#139 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#140 (mes)
 - "What can I do for you?"
-+ ""
++ "O que eu posso fazer por você?"
 #: npc/re/instances/FacewormsNest.txt#141 (select)
 - "Reserve Faceworm's Nest:What are you doing here?:Stop Talking."
-+ ""
++ "Reservar o Covil de Vermes:O que você faz aqui?:Encerrar a conversa."
 #: npc/re/instances/FacewormsNest.txt#142 (dispbottom)
 - "Memorial Dungeon, '"
-+ ""
++ "A masmorra memorial '"
 #: npc/re/instances/FacewormsNest.txt#143 (dispbottom)
 - "' is already in progress."
-+ ""
++ "' já está em andamento."
 #: npc/re/instances/FacewormsNest.txt#144 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#145 (mes)
 - "Oops, my hands are slip off. It is required to activate the craks again."
-+ ""
++ "Opa, escorregou da minha mão. É preciso ativar as fendas de novo."
 #: npc/re/instances/FacewormsNest.txt#146 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#147 (mes)
 - "The spaces are under control."
-+ ""
++ "Os espaços estão sob controle."
 #: npc/re/instances/FacewormsNest.txt#148 (mes)
 - "Please wait for a minute."
-+ ""
++ "Por favor, espere um minuto."
 #: npc/re/instances/FacewormsNest.txt#149 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#150 (mes)
 - "Okay, I got it. Please come back again if you change your mind."
-+ ""
++ "Certo, entendi. Volte se mudar de ideia."
 #: npc/re/instances/FacewormsNest.txt#151 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#152 (mes)
 - "I am researching the dimensional cracks in space here."
-+ ""
++ "Eu pesquiso as fendas dimensionais do espaço aqui."
 #: npc/re/instances/FacewormsNest.txt#153 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#154 (mes)
 - "My research is to stabilize the space here with magic to utilize it for dimensional travel."
-+ ""
++ "A minha pesquisa é estabilizar o espaço daqui com magia, para usá-lo em viagem dimensional."
 #: npc/re/instances/FacewormsNest.txt#155 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#156 (mes)
 - "This particular crack in space goes to a memory of the past. Many adventurers have been in there but no one will tell me what is in there..."
-+ ""
++ "Esta fenda em especial leva a uma lembrança do passado. Muitos aventureiros já estiveram lá, mas ninguém me conta o que tem lá dentro..."
 #: npc/re/instances/FacewormsNest.txt#157 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#158 (mes)
 - "And there's this strange sign here that records names and times on it which I can only assume belongs to those adventurers."
-+ ""
++ "E tem este quadro estranho aqui, que registra nomes e tempos, e eu só posso supor que sejam daqueles aventureiros."
 #: npc/re/instances/FacewormsNest.txt#159 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#160 (mes)
 - "Anyways, I can activate the passage for you if you're a party leader."
-+ ""
++ "De todo jeito, eu posso ativar a passagem para você se você for líder de grupo."
 #: npc/re/instances/FacewormsNest.txt#161 (mes)
 - "[Magic Scholar]"
-+ ""
++ "[Erudito Mágico]"
 #: npc/re/instances/FacewormsNest.txt#162 (mes)
 - "The crack in time is not safe enough to pass back and forth. Please come back again if the after effect timer has passed."
-+ ""
++ "A fenda no tempo não está segura o bastante para ir e voltar. Por favor, volte quando o tempo de espera tiver passado."
 #: npc/re/instances/FacewormsNest.txt#163 (mes)
 - "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000"
-+ ""
++ "^0000ffO rastro da viagem pelo espaço dimensional sumiu. Você já pode se mover entre dimensões.^000000"
 #: npc/re/instances/FacewormsNest.txt#164 (mes)
 - "[Interdimensional Device]"
-+ ""
++ "[Dispositivo Interdimensional]"
 #: npc/re/instances/FacewormsNest.txt#165 (mes)
 - "Your power level is not high enough to travel the space. Please come back again when you reach at least level 140."
-+ ""
++ "O seu nível de poder não é alto o bastante para viajar pelo espaço. Volte quando chegar pelo menos ao nível 140."
 #: npc/re/instances/FacewormsNest.txt#166 (atrib)
 - "Covil de Vermes"
 + ""
 #: npc/re/instances/FacewormsNest.txt#167 (mes)
 - "[Interdimensional Device]"
-+ ""
++ "[Dispositivo Interdimensional]"
 #: npc/re/instances/FacewormsNest.txt#168 (mes)
 - "No party? Please come back again after creating a party even if you've come alone."
-+ ""
++ "Sem grupo? Por favor, volte depois de montar um grupo, mesmo que tenha vindo sozinho."
 #: npc/re/instances/FacewormsNest.txt#169 (mes)
 - "[Interdimensional Device]"
-+ ""
++ "[Dispositivo Interdimensional]"
 #: npc/re/instances/FacewormsNest.txt#170 (mes)
 - "An unknown error has occurred."
-+ ""
++ "Ocorreu um erro desconhecido."
 #: npc/re/instances/FacewormsNest.txt#171 (mes)
 - "[Interdimensional Device]"
-+ ""
++ "[Dispositivo Interdimensional]"
 #: npc/re/instances/FacewormsNest.txt#172 (mes)
 - "The passage for space travel is not activated yet."
-+ ""
++ "A passagem para viagem espacial ainda não foi ativada."
 #: npc/re/instances/FacewormsNest.txt#173 (mes)
 - "[Interdimensional Device]"
-+ ""
++ "[Dispositivo Interdimensional]"
 #: npc/re/instances/FacewormsNest.txt#174 (mes)
 - "You are not allowed to access the device."
++ "Você não tem permissão de acessar o dispositivo."
+#: npc/re/instances/FacewormsNest.txt#175 (mapannounce)
+- "dali"
++ ""
+#: npc/re/instances/FacewormsNest.txt#176 (mapannounce)
+- " party's party member "
++ " - o aventureiro "
+#: npc/re/instances/FacewormsNest.txt#177 (mapannounce)
+- " enters "
++ " entrou em "
+#: npc/re/instances/FacewormsNest.txt#178 (mapannounce)
+- "."
++ ""
+#: npc/re/instances/FacewormsNest.txt#179 (mapannounce)
+- "0x00ff99"
 + ""
 #: npc/re/instances/FacewormsNest.txt#181 (mes)
 - "[Interdimensional Device]"
-+ ""
++ "[Dispositivo Interdimensional]"
 #: npc/re/instances/FacewormsNest.txt#182 (mes)
 - "Traces of recent space travel have been detected. Access is denied."
-+ ""
++ "Foram detectados rastros de viagem espacial recente. Acesso negado."
 #: npc/re/instances/FacewormsNest.txt#183 (mes)
 - "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000"
-+ ""
++ "^0000ffO rastro da viagem pelo espaço dimensional sumiu. Você já pode se mover entre dimensões.^000000"
 #: npc/re/instances/FacewormsNest.txt#184 (cutin)
 - "h_chaos01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#185 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#186 (mes)
 - "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?"
-+ ""
++ "Eu não sei do que se trata, mas estou falando com o seu líder, então espere um pouco, certo?"
 #: npc/re/instances/FacewormsNest.txt#188 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#189 (mes)
 - "Really? I didn't know that a bounty hunter was coming here."
-+ ""
++ "Sério? Eu não sabia que vinha um caçador de recompensas para cá."
 #: npc/re/instances/FacewormsNest.txt#190 (npctalk)
 - "Chaos: Really? I didn't know that a bounty hunter was coming here."
-+ ""
++ "Chaos: Sério? Eu não sabia que vinha um caçador de recompensas para cá."
 #: npc/re/instances/FacewormsNest.txt#191 (select)
 - "Wait! It's a misunderstanding."
-+ ""
++ "Espere! É um mal-entendido."
 #: npc/re/instances/FacewormsNest.txt#193 (mes)
 - "["
 + ""
@@ -561,22 +576,25 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#195 (mes)
 - "No! I think you're mistaken! We are not bounty hunters..."
-+ ""
++ "Não! Acho que você se enganou! Nós não somos caçadores de recompensa..."
+#: npc/re/instances/FacewormsNest.txt#196 (unittalk)
+- ": No! I think you're mistaken! We are not bounty hunters..."
++ ": Não! Acho que você se enganou! Nós não somos caçadores de recompensa..."
 #: npc/re/instances/FacewormsNest.txt#197 (cutin)
 - "h_chaos01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#198 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#199 (mes)
 - "No, No need to make an excuse... The faceworm belongs to nobody."
-+ ""
++ "Não, não precisa dar desculpa... O verme não é de ninguém."
 #: npc/re/instances/FacewormsNest.txt#200 (npctalk)
 - "Chaos: No, No need to make an excuse... The faceworm belongs to nobody."
-+ ""
++ "Chaos: Não, não precisa dar desculpa... O verme não é de ninguém."
 #: npc/re/instances/FacewormsNest.txt#201 (select)
 - "Faceworm?"
-+ ""
++ "Verme?"
 #: npc/re/instances/FacewormsNest.txt#203 (mes)
 - "["
 + ""
@@ -585,76 +603,130 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#205 (mes)
 - "Faceworm? I've never heard about it."
-+ ""
++ "Verme? Eu nunca ouvi falar disso."
+#: npc/re/instances/FacewormsNest.txt#206 (unittalk)
+- ": Faceworm? I've never heard about it."
++ ": Verme? Eu nunca ouvi falar disso."
 #: npc/re/instances/FacewormsNest.txt#209 (atrib)
 - "Iris#0"
 + ""
 #: npc/re/instances/FacewormsNest.txt#214 (npctalk)
 - "Chaos: Hahaha, you really never heard about it? Faceworm is the name of a monster which has recently showed up in this area."
-+ ""
++ "Chaos: Hahaha, você nunca ouviu falar mesmo? Verme é o nome de um monstro que apareceu por aqui há pouco tempo."
 #: npc/re/instances/FacewormsNest.txt#215 (npctalk)
 - "Chaos: I don't care. I would not care as long as you don't disturb me."
-+ ""
++ "Chaos: Eu não me importo. Não vou me importar, desde que você não me atrapalhe."
 #: npc/re/instances/FacewormsNest.txt#216 (npctalk)
 - "Iris: Ah~ A gentle breeze~"
-+ ""
++ "Iris: Ah~ Uma brisa suave~"
 #: npc/re/instances/FacewormsNest.txt#217 (npctalk)
 - "Iris: Hehe, the weather has been great. I'm so happy~"
-+ ""
++ "Iris: Hehe, o tempo tem estado ótimo. Estou tão feliz~"
 #: npc/re/instances/FacewormsNest.txt#218 (npctalk)
 - "Iris: How about you Chaos?"
-+ ""
++ "Iris: E você, Chaos?"
 #: npc/re/instances/FacewormsNest.txt#219 (npctalk)
 - "Chaos: It will only be for the time being."
-+ ""
++ "Chaos: Vai ser só por enquanto."
 #: npc/re/instances/FacewormsNest.txt#220 (npctalk)
 - "Chaos: A black wind has started blowing."
-+ ""
++ "Chaos: Um vento negro começou a soprar."
 #: npc/re/instances/FacewormsNest.txt#221 (npctalk)
 - "Chaos: Iris! I feel like faceworms are around here. Maybe, the queen's nest is in the deepest side of this forest!"
-+ ""
++ "Chaos: Iris! Estou sentindo que tem vermes por aqui. Talvez o ninho da rainha esteja no fundo desta floresta!"
 #: npc/re/instances/FacewormsNest.txt#222 (npctalk)
 - "Iris: Ahah~ Let's take care of it as always like usual ok?"
-+ ""
++ "Iris: Ahah~ Vamos cuidar disso como sempre, certo?"
 #: npc/re/instances/FacewormsNest.txt#223 (npctalk)
 - "Chaos: Yes, let's take care of it and go back. Hey, adventurers. Watch out! I'm sure lots of faceworms will be here soon."
++ "Chaos: Isso, vamos cuidar disso e voltar. Ei, aventureiros. Cuidado! Tenho certeza de que vem um monte de verme aí."
+#: npc/re/instances/FacewormsNest.txt#228 (mapannounce)
+- "Faceworm time attack has started. Faster kill times gives a higher percentage of rewards."
++ "O contra-relógio dos vermes começou. Matar mais rápido dá uma porcentagem maior de recompensa."
+#: npc/re/instances/FacewormsNest.txt#229 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/FacewormsNest.txt#233 (cutin)
 - "h_iris02"
 + ""
 #: npc/re/instances/FacewormsNest.txt#234 (mes)
 - "[Iris]"
-+ ""
++ "[Iris]"
 #: npc/re/instances/FacewormsNest.txt#235 (mes)
 - "Sorry~ I enjoy a gentle breeze so talk to me next time."
-+ ""
++ "Desculpe~ Estou aproveitando a brisa suave, então fale comigo da próxima vez."
 #: npc/re/instances/FacewormsNest.txt#238 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/FacewormsNest.txt#244 (mapannounce)
+- "There "
++ "Ainda "
+#: npc/re/instances/FacewormsNest.txt#245 (mapannounce)
+- "are"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#246 (mapannounce)
+- "is"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#248 (mapannounce)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#249 (mapannounce)
+- "faceworm"
++ "verme"
+#: npc/re/instances/FacewormsNest.txt#250 (mapannounce)
+- " still alive."
++ " com vida."
+#: npc/re/instances/FacewormsNest.txt#251 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#256 (mapannounce)
+- "A giant faceworm has suddenly appeared."
++ "Um verme gigante apareceu de repente."
+#: npc/re/instances/FacewormsNest.txt#257 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#275 (mapannounce)
+- "A hole appears after killing the dark faceworm."
++ "Um buraco aparece depois que o verme sombrio morre."
+#: npc/re/instances/FacewormsNest.txt#276 (mapannounce)
+- "0xffffff"
++ ""
 #: npc/re/instances/FacewormsNest.txt#279 (atrib)
 - "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#288 (mapannounce)
+- "Dark faceworm absorbs the energy of "
++ "O verme sombrio absorve a energia de "
+#: npc/re/instances/FacewormsNest.txt#289 (mapannounce)
+- " unbroken eggs recovering "
++ " ovos intactos e recupera "
+#: npc/re/instances/FacewormsNest.txt#290 (mapannounce)
+- " energy."
++ " de energia."
+#: npc/re/instances/FacewormsNest.txt#291 (mapannounce)
+- "0xff00ee"
 + ""
 #: npc/re/instances/FacewormsNest.txt#297 (cutin)
 - "h_chaos01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#298 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#299 (mes)
 - "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?"
-+ ""
++ "Eu não sei do que se trata, mas estou falando com o seu líder, então espere um pouco, certo?"
 #: npc/re/instances/FacewormsNest.txt#301 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#302 (mes)
 - "Wow, you're fast enough to follow me."
-+ ""
++ "Uau, você é rápido o bastante para me acompanhar."
 #: npc/re/instances/FacewormsNest.txt#303 (npctalk)
 - "Chaos: Wow, you're fast enough to follow me."
-+ ""
++ "Chaos: Uau, você é rápido o bastante para me acompanhar."
 #: npc/re/instances/FacewormsNest.txt#304 (select)
 - "The big one, just right before..."
-+ ""
++ "Aquele grandão, agorinha mesmo..."
 #: npc/re/instances/FacewormsNest.txt#306 (mes)
 - "["
 + ""
@@ -663,96 +735,219 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#308 (mes)
 - "The big one just right before we saw is a boss here?"
-+ ""
++ "Aquele grandão que a gente acabou de ver é o chefe daqui?"
+#: npc/re/instances/FacewormsNest.txt#309 (unittalk)
+- ": The big one just right before we saw is a boss here?"
++ ": Aquele grandão que a gente acabou de ver é o chefe daqui?"
 #: npc/re/instances/FacewormsNest.txt#310 (cutin)
 - "h_chaos01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#311 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#312 (mes)
 - "No~~ It can't be the faceworm queen."
-+ ""
++ "Não~~ Não pode ser a rainha dos vermes."
 #: npc/re/instances/FacewormsNest.txt#317 (atrib)
 - "Iris#1"
 + ""
 #: npc/re/instances/FacewormsNest.txt#320 (npctalk)
 - "Chaos: No~~ It can't be the faceworm queen."
-+ ""
++ "Chaos: Não~~ Não pode ser a rainha dos vermes."
 #: npc/re/instances/FacewormsNest.txt#321 (npctalk)
 - "Chaos: The one we just saw before is a mutant faceworm."
-+ ""
++ "Chaos: Aquele que a gente acabou de ver é um verme mutante."
 #: npc/re/instances/FacewormsNest.txt#322 (npctalk)
 - "Chaos: Wait! The dead faceworm's castoff skin might be useful."
-+ ""
++ "Chaos: Espere! A pele que o verme morto largou pode ser útil."
 #: npc/re/instances/FacewormsNest.txt#323 (npctalk)
 - "Iris: But, if the fight takes too long. The scales might be damaged. They'll be worthless!"
-+ ""
++ "Iris: Mas se a luta demorar muito, as escamas podem se estragar. Elas não vão valer nada!"
 #: npc/re/instances/FacewormsNest.txt#324 (npctalk)
 - "Iris: I heard that skillful hunters are good at taking the scales off super fast."
-+ ""
++ "Iris: Ouvi dizer que caçador habilidoso é bom de tirar as escamas bem rápido."
 #: npc/re/instances/FacewormsNest.txt#325 (npctalk)
 - "Iris: Chaos, are you any good at it?"
-+ ""
++ "Iris: Chaos, você é bom nisso?"
 #: npc/re/instances/FacewormsNest.txt#326 (npctalk)
 - "Chaos: No... Not at all! I use Magnum Break only, so the scales will probably get burned..."
-+ ""
++ "Chaos: Não... Nem um pouco! Eu só uso Impacto Explosivo, então as escamas provavelmente vão queimar..."
 #: npc/re/instances/FacewormsNest.txt#327 (npctalk)
 - "Iris: Useless Chaos."
-+ ""
++ "Iris: Chaos inútil."
 #: npc/re/instances/FacewormsNest.txt#328 (npctalk)
 - "Chaos: Besides, the one we are looking for is not here. I will go back first, so take care of the rest ok?"
-+ ""
++ "Chaos: E além disso, o que a gente procura não está aqui. Eu vou voltar primeiro, então cuide do resto, certo?"
 #: npc/re/instances/FacewormsNest.txt#330 (npctalk)
 - "Iris: Chaos! Are you leaving me alone?"
-+ ""
++ "Iris: Chaos! Você vai me deixar sozinha?"
 #: npc/re/instances/FacewormsNest.txt#336 (cutin)
 - "h_iris02"
 + ""
 #: npc/re/instances/FacewormsNest.txt#337 (mes)
 - "[Iris]"
-+ ""
++ "[Iris]"
 #: npc/re/instances/FacewormsNest.txt#338 (mes)
 - "Chaos is a good friend even though he's only able to use Magnum Break..."
-+ ""
++ "O Chaos é um bom amigo, mesmo só sabendo usar Impacto Explosivo..."
 #: npc/re/instances/FacewormsNest.txt#342 (atrib)
 - "::OnMyMobDead"
++ ""
+#: npc/re/instances/FacewormsNest.txt#348 (mapannounce)
+- "There "
++ "Ainda "
+#: npc/re/instances/FacewormsNest.txt#349 (mapannounce)
+- "are"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#350 (mapannounce)
+- "is"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#352 (mapannounce)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#353 (mapannounce)
+- "faceworm"
++ "verme"
+#: npc/re/instances/FacewormsNest.txt#354 (mapannounce)
+- " still alive."
++ " com vida."
+#: npc/re/instances/FacewormsNest.txt#355 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#360 (mapannounce)
+- "A giant faceworm has suddenly appeared."
++ "Um verme gigante apareceu de repente."
+#: npc/re/instances/FacewormsNest.txt#361 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#379 (mapannounce)
+- "You hear something loud in the south. It must be the nest of the one we just got rid of."
++ "Você ouve uma coisa alta ao sul. Deve ser o ninho daquele que a gente acabou de eliminar."
+#: npc/re/instances/FacewormsNest.txt#380 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/FacewormsNest.txt#415 (cutin)
 - "h_chaos01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#416 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#417 (mes)
 - "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?"
-+ ""
++ "Eu não sei do que se trata, mas estou falando com o seu líder, então espere um pouco, certo?"
 #: npc/re/instances/FacewormsNest.txt#419 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#420 (mes)
 - "You're pretty good! But you have to be careful from now on. This narrow canyon seems to be full of dangers."
-+ ""
++ "Você é bom mesmo! Mas tem que tomar cuidado daqui em diante. Este desfiladeiro estreito parece cheio de perigo."
 #: npc/re/instances/FacewormsNest.txt#421 (npctalk)
 - "Chaos: You're pretty good! But you have to be careful from now on. This narrow canyon seems to be full of dangers."
-+ ""
++ "Chaos: Você é bom mesmo! Mas tem que tomar cuidado daqui em diante. Este desfiladeiro estreito parece cheio de perigo."
 #: npc/re/instances/FacewormsNest.txt#428 (npctalk)
 - "Iris: I do not feel good here. Let's get outta here right now Chaos!"
-+ ""
++ "Iris: Eu não estou gostando daqui. Vamos embora agora mesmo, Chaos!"
 #: npc/re/instances/FacewormsNest.txt#429 (npctalk)
 - "Iris#2"
 + ""
 #: npc/re/instances/FacewormsNest.txt#430 (npctalk)
 - "Chaos: Ok, let's get out of here. Carefully follow me!"
-+ ""
++ "Chaos: Certo, vamos sair daqui. Me siga com cuidado!"
 #: npc/re/instances/FacewormsNest.txt#438 (cutin)
 - "h_iris01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#439 (mes)
 - "[Iris]"
-+ ""
++ "[Iris]"
 #: npc/re/instances/FacewormsNest.txt#440 (mes)
 - "This canyon. I am not feeling good here. I don't want to stay anymore."
++ "Este desfiladeiro. Eu não estou gostando daqui. Não quero mais ficar."
+#: npc/re/instances/FacewormsNest.txt#448 (mapannounce)
+- "There "
++ "Ainda "
+#: npc/re/instances/FacewormsNest.txt#449 (mapannounce)
+- "are"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#450 (mapannounce)
+- "is"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#452 (mapannounce)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#453 (mapannounce)
+- "faceworm"
++ "verme"
+#: npc/re/instances/FacewormsNest.txt#454 (mapannounce)
+- " still alive."
++ " com vida."
+#: npc/re/instances/FacewormsNest.txt#455 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#460 (mapannounce)
+- "A giant faceworm has suddenly appeared."
++ "Um verme gigante apareceu de repente."
+#: npc/re/instances/FacewormsNest.txt#461 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#478 (mapannounce)
+- "You hear the pile of stones collapsing. This might be a gateway to go to other spaces."
++ "Você ouve a pilha de pedras desabando. Isto pode ser uma passagem para outros espaços."
+#: npc/re/instances/FacewormsNest.txt#479 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#480 (mapannounce)
+- "Dark faceworm has dropped a sack of fatal poison and recovers "
++ "O verme sombrio soltou um saco de veneno fatal e recupera "
+#: npc/re/instances/FacewormsNest.txt#481 (mapannounce)
+- " amount of energy."
++ " de energia."
+#: npc/re/instances/FacewormsNest.txt#482 (mapannounce)
+- "0x66ff00"
++ ""
+#: npc/re/instances/FacewormsNest.txt#498 (mapannounce)
+- "The voice of Chaos: Hey adventurers, you should be careful! Avoid the poison!"
++ "A voz do Chaos: Ei, aventureiros, tomem cuidado! Evitem o veneno!"
+#: npc/re/instances/FacewormsNest.txt#499 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/FacewormsNest.txt#500 (mapannounce)
+- "The voice of Chaos: We are looking for another nest so let me know if you find anything."
++ "A voz do Chaos: Nós estamos procurando outro ninho, então me avise se achar alguma coisa."
+#: npc/re/instances/FacewormsNest.txt#501 (mapannounce)
+- "0xffff00"
++ ""
+#: npc/re/instances/FacewormsNest.txt#517 (mapannounce)
+- "There "
++ "Ainda "
+#: npc/re/instances/FacewormsNest.txt#518 (mapannounce)
+- "are"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#519 (mapannounce)
+- "is"
++ "há"
+#: npc/re/instances/FacewormsNest.txt#521 (mapannounce)
+- "F_InsertPlural"
++ ""
+#: npc/re/instances/FacewormsNest.txt#522 (mapannounce)
+- "faceworm"
++ "verme"
+#: npc/re/instances/FacewormsNest.txt#523 (mapannounce)
+- " still alive."
++ " com vida."
+#: npc/re/instances/FacewormsNest.txt#524 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#529 (mapannounce)
+- "You hear something screaming to the west."
++ "Você ouve alguma coisa gritando a oeste."
+#: npc/re/instances/FacewormsNest.txt#530 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#559 (mapannounce)
+- "You hear the pile of stones collapsing. I think another gateway is found."
++ "Você ouve a pilha de pedras desabando. Acho que foi achada outra passagem."
+#: npc/re/instances/FacewormsNest.txt#560 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/FacewormsNest.txt#565 (atrib)
 - "::OnMyMobDead"
@@ -765,10 +960,10 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#592 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#593 (mes)
 - "Hew. This puddle is weird."
-+ ""
++ "Ufa. Esta poça é esquisita."
 #: npc/re/instances/FacewormsNest.txt#595 (atrib)
 - "Iris#4"
 + ""
@@ -777,97 +972,190 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#597 (npctalk)
 - "Chaos: Iris, what is this puddle for?"
-+ ""
++ "Chaos: Iris, para que serve esta poça?"
 #: npc/re/instances/FacewormsNest.txt#598 (npctalk)
 - "Iris: Well, I think it is too big to be the nest of a faceworm."
-+ ""
++ "Iris: Bem, eu acho que ela é grande demais para ser ninho de verme."
 #: npc/re/instances/FacewormsNest.txt#599 (npctalk)
 - "Chaos: Hmm, okay, should I go down there and check it out?"
-+ ""
++ "Chaos: Hmm, certo, será que eu desço lá para dar uma olhada?"
 #: npc/re/instances/FacewormsNest.txt#600 (npctalk)
 - "Iris: Chaos! Cut the crap."
-+ ""
++ "Iris: Chaos! Corta essa."
 #: npc/re/instances/FacewormsNest.txt#601 (npctalk)
 - "Chaos: Why not? It doesn't even look that dangerous!"
-+ ""
++ "Chaos: Por que não? Nem parece tão perigoso assim!"
 #: npc/re/instances/FacewormsNest.txt#603 (npctalk)
 - "Iris: Arrghh, Chaos you're such a troublemaker."
-+ ""
++ "Iris: Arrghh, Chaos, você é um encrenqueiro."
 #: npc/re/instances/FacewormsNest.txt#604 (npctalk)
 - "Chaos: Ugh! Arrgh!! What is this?"
-+ ""
++ "Chaos: Ugh! Arrgh!! O que é isso?"
 #: npc/re/instances/FacewormsNest.txt#605 (npctalk)
 - "Iris: Chaos! What is it?"
-+ ""
++ "Iris: Chaos! O que foi?"
 #: npc/re/instances/FacewormsNest.txt#606 (npctalk)
 - "Chaos: Ah"
-+ ""
++ "Chaos: Ah"
 #: npc/re/instances/FacewormsNest.txt#607 (npctalk)
 - "Chaos: Argh"
-+ ""
++ "Chaos: Argh"
 #: npc/re/instances/FacewormsNest.txt#608 (npctalk)
 - "Chaos: Argghh"
-+ ""
++ "Chaos: Argghh"
 #: npc/re/instances/FacewormsNest.txt#609 (npctalk)
 - "Chaos: Argghhhhh"
-+ ""
++ "Chaos: Argghhhhh"
 #: npc/re/instances/FacewormsNest.txt#610 (npctalk)
 - "Chaos: Argghhhhhhh"
-+ ""
++ "Chaos: Argghhhhhhh"
 #: npc/re/instances/FacewormsNest.txt#611 (npctalk)
 - "Chaos: Argghhhhhhhhh"
-+ ""
++ "Chaos: Argghhhhhhhhh"
 #: npc/re/instances/FacewormsNest.txt#612 (npctalk)
 - "Chaos: Argghhhhhhhhhhh!!"
-+ ""
++ "Chaos: Argghhhhhhhhhhh!!"
 #: npc/re/instances/FacewormsNest.txt#614 (npctalk)
 - "Chaos: Damn, I was close to being eaten alive."
-+ ""
++ "Chaos: Droga, quase fui comido vivo."
 #: npc/re/instances/FacewormsNest.txt#615 (npctalk)
 - "Iris: I asked you what happened dummy!"
-+ ""
++ "Iris: Eu perguntei o que aconteceu, seu bobo!"
 #: npc/re/instances/FacewormsNest.txt#616 (npctalk)
 - "Chaos: Uhh, the faceworm queen is crawling up now and it looks like really pissed off. So let's, uh, get outta here."
-+ ""
++ "Chaos: Ãh, a rainha dos vermes está subindo agora e parece bem irritada. Então vamos, ãh, cair fora daqui."
 #: npc/re/instances/FacewormsNest.txt#618 (npctalk)
 - "Iris: Chaos you idiot!!"
-+ ""
++ "Iris: Chaos, seu idiota!!"
 #: npc/re/instances/FacewormsNest.txt#625 (cutin)
 - "h_iris01"
 + ""
 #: npc/re/instances/FacewormsNest.txt#626 (mes)
 - "[Iris]"
-+ ""
++ "[Iris]"
 #: npc/re/instances/FacewormsNest.txt#627 (mes)
 - "Something seems fishy around here. It's dangerous."
-+ ""
++ "Tem alguma coisa estranha por aqui. É perigoso."
 #: npc/re/instances/FacewormsNest.txt#633 (mes)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/FacewormsNest.txt#634 (mapannounce)
+- "The Faceworm Queen has dropped a sack of fatal poison and recovers "
++ "A Rainha dos Vermes soltou um saco de veneno fatal e recupera "
+#: npc/re/instances/FacewormsNest.txt#635 (mapannounce)
+- " amount of energy."
++ " de energia."
+#: npc/re/instances/FacewormsNest.txt#636 (mapannounce)
+- "0x66ff00"
++ ""
+#: npc/re/instances/FacewormsNest.txt#637 (mapannounce)
+- "The Faceworm Queen absorbs the energy of "
++ "A Rainha dos Vermes absorve a energia de "
+#: npc/re/instances/FacewormsNest.txt#638 (mapannounce)
+- " unbroken "
++ " "
+#: npc/re/instances/FacewormsNest.txt#639 (mapannounce)
+- "eggs"
++ "ovos intactos"
+#: npc/re/instances/FacewormsNest.txt#640 (mapannounce)
+- "egg"
++ "ovo intacto"
+#: npc/re/instances/FacewormsNest.txt#641 (mapannounce)
+- " and recovers "
++ " e recupera "
+#: npc/re/instances/FacewormsNest.txt#642 (mapannounce)
+- " amount of energy."
++ " de energia."
+#: npc/re/instances/FacewormsNest.txt#643 (mapannounce)
+- "0x66ff00"
++ ""
+#: npc/re/instances/FacewormsNest.txt#644 (mapannounce)
+- "Chaos deals "
++ "Chaos causa "
+#: npc/re/instances/FacewormsNest.txt#645 (mapannounce)
+- " deadly damage hit points!!"
++ " pontos de dano fatal!!"
+#: npc/re/instances/FacewormsNest.txt#646 (mapannounce)
+- "0xffff33"
++ ""
+#: npc/re/instances/FacewormsNest.txt#655 (mapannounce)
+- "The faceworm rages recovering "
++ "O verme se enfurece, recupera "
+#: npc/re/instances/FacewormsNest.txt#656 (mapannounce)
+- " and its attack power is increased."
++ " e tem o poder de ataque aumentado."
+#: npc/re/instances/FacewormsNest.txt#657 (mapannounce)
+- "0xff8888"
++ ""
+#: npc/re/instances/FacewormsNest.txt#668 (mapannounce)
+- "It is too far away from the nest. The Faceworm Queen begins raging."
++ "Está longe demais do ninho. A Rainha dos Vermes começa a se enfurecer."
+#: npc/re/instances/FacewormsNest.txt#669 (mapannounce)
+- "0xff3333"
++ ""
 #: npc/re/instances/FacewormsNest.txt#678 (atrib)
 - "wind"
-+ ""
++ "vento"
 #: npc/re/instances/FacewormsNest.txt#679 (atrib)
 - "earth"
-+ ""
++ "terra"
 #: npc/re/instances/FacewormsNest.txt#680 (atrib)
 - "water"
-+ ""
++ "água"
 #: npc/re/instances/FacewormsNest.txt#681 (atrib)
 - "its original"
++ "original"
+#: npc/re/instances/FacewormsNest.txt#682 (mapannounce)
+- "Faceworm Queen is trying to shed its skin to "
++ "A Rainha dos Vermes está trocando de pele para o elemento "
+#: npc/re/instances/FacewormsNest.txt#683 (mapannounce)
+- " attribute."
++ "."
+#: npc/re/instances/FacewormsNest.txt#684 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#693 (mapannounce)
+- "Please do not go farther from the nest. The Faceworm Queen can be violent."
++ "Por favor, não se afaste mais do ninho. A Rainha dos Vermes pode ficar violenta."
+#: npc/re/instances/FacewormsNest.txt#694 (mapannounce)
+- "0xff5555"
++ ""
+#: npc/re/instances/FacewormsNest.txt#759 (mapannounce)
+- "The voice of Chaos: Hey! Lure it to the north! I will beat it!"
++ "A voz do Chaos: Ei! Atraia ela para o norte! Eu acabo com ela!"
+#: npc/re/instances/FacewormsNest.txt#760 (mapannounce)
+- "0xff44aa"
++ ""
+#: npc/re/instances/FacewormsNest.txt#763 (mapannounce)
+- "The voice of Chaos: Hey! Lure it to the south! I will beat it!"
++ "A voz do Chaos: Ei! Atraia ela para o sul! Eu acabo com ela!"
+#: npc/re/instances/FacewormsNest.txt#764 (mapannounce)
+- "0xff44aa"
++ ""
+#: npc/re/instances/FacewormsNest.txt#767 (mapannounce)
+- "The voice of Chaos: Hey! Lure it to the east! I will beat it!"
++ "A voz do Chaos: Ei! Atraia ela para o leste! Eu acabo com ela!"
+#: npc/re/instances/FacewormsNest.txt#768 (mapannounce)
+- "0xff44aa"
++ ""
+#: npc/re/instances/FacewormsNest.txt#771 (mapannounce)
+- "The voice of Chaos: Hey! Lure it to the west! I will beat it!"
++ "A voz do Chaos: Ei! Atraia ela para o oeste! Eu acabo com ela!"
+#: npc/re/instances/FacewormsNest.txt#772 (mapannounce)
+- "0xff44aa"
 + ""
 #: npc/re/instances/FacewormsNest.txt#777 (npctalk)
 - "Chaos: You can't even manage to lure the queen to me?"
-+ ""
++ "Chaos: Você nem consegue atrair a rainha até mim?"
 #: npc/re/instances/FacewormsNest.txt#790 (npctalk)
 - "Chaos: Hey~ We are partners. You can't just keep running alone!"
-+ ""
++ "Chaos: Ei~ Nós somos parceiros. Você não pode ficar correndo sozinho!"
 #: npc/re/instances/FacewormsNest.txt#803 (npctalk)
 - "Chaos: Lure and bring it with you, I can't beat it alone!"
-+ ""
++ "Chaos: Atraia e traga ela com você, eu não consigo vencer sozinho!"
 #: npc/re/instances/FacewormsNest.txt#816 (npctalk)
 - "Chaos: Why'd you leave the queen behind? Our lives are at stake here. Pull it together!"
-+ ""
++ "Chaos: Por que você deixou a rainha para trás? A nossa vida está em jogo. Se recomponha!"
 #: npc/re/instances/FacewormsNest.txt#831 (atrib)
 - "::OnMyMobDead"
 + ""
@@ -891,115 +1179,193 @@
 + ""
 #: npc/re/instances/FacewormsNest.txt#909 (mes)
 - "[Chaos]"
-+ ""
++ "[Chaos]"
 #: npc/re/instances/FacewormsNest.txt#910 (mes)
 - "Hmm.. You are pretty good, I am impressed."
-+ ""
++ "Hmm.. Você é bom mesmo, fiquei impressionado."
 #: npc/re/instances/FacewormsNest.txt#912 (atrib)
 - "Iris#6"
 + ""
 #: npc/re/instances/FacewormsNest.txt#922 (npctalk)
 - "Chaos: Phew... That was quite a long fight."
-+ ""
++ "Chaos: Ufa... Foi uma luta bem longa."
 #: npc/re/instances/FacewormsNest.txt#923 (npctalk)
 - "Iris: But that is not the one we were looking for."
-+ ""
++ "Iris: Mas não é aquele que a gente estava procurando."
 #: npc/re/instances/FacewormsNest.txt#924 (npctalk)
 - "Chaos: We can't help it. Our equipment is damaged so we should retreat for now."
-+ ""
++ "Chaos: Não tem jeito. O nosso equipamento está danificado, então é melhor recuar por agora."
 #: npc/re/instances/FacewormsNest.txt#925 (npctalk)
 - "Iris: Yes, I feel bad that we could not see the Faceworm King. But luckily we weren't hurt."
-+ ""
++ "Iris: É, fico chateada de não termos visto o Rei dos Vermes. Mas por sorte não nos machucamos."
 #: npc/re/instances/FacewormsNest.txt#926 (npctalk)
 - "Chaos: So... Hey, you over there! You're not too shabby."
-+ ""
++ "Chaos: Então... Ei, você aí! Você não é nada mau."
 #: npc/re/instances/FacewormsNest.txt#927 (npctalk)
 - "Chaos: Today's hunting is all yours, I won't touch it."
-+ ""
++ "Chaos: A caçada de hoje é toda sua, eu não vou tocar nela."
 #: npc/re/instances/FacewormsNest.txt#928 (npctalk)
 - "Chaos: Ahah~ I hoped that there would be some treasure that the merchant prince dropped..."
-+ ""
++ "Chaos: Ahah~ Eu tinha esperança de que houvesse algum tesouro largado pelo príncipe mercador..."
 #: npc/re/instances/FacewormsNest.txt#929 (npctalk)
 - "Iris: Chaos, I am getting tired. Let's go back to the village."
-+ ""
++ "Iris: Chaos, estou ficando cansada. Vamos voltar para a vila."
 #: npc/re/instances/FacewormsNest.txt#930 (npctalk)
 - "Chaos: Sorry, shall we go?"
-+ ""
++ "Chaos: Desculpe, vamos?"
 #: npc/re/instances/FacewormsNest.txt#934 (cutin)
 - "h_iris02"
 + ""
 #: npc/re/instances/FacewormsNest.txt#935 (mes)
 - "[Iris]"
-+ ""
++ "[Iris]"
 #: npc/re/instances/FacewormsNest.txt#936 (mes)
 - "That was dangerous. Hehehe..."
-+ ""
++ "Foi por pouco. Hehehe..."
 #: npc/re/instances/FacewormsNest.txt#939 (mes)
 - "[Dimensional Device]"
-+ ""
++ "[Dispositivo Dimensional]"
 #: npc/re/instances/FacewormsNest.txt#940 (mes)
 - "Your time is finished here. You may look arround or go leave. What do you want to do?"
-+ ""
++ "O seu tempo aqui acabou. Você pode dar uma olhada ou ir embora. O que você quer fazer?"
 #: npc/re/instances/FacewormsNest.txt#941 (select)
 - "Stop:Return to Dimensional Gap"
-+ ""
++ "Parar:Voltar para o Espaço Dimensional"
 #: npc/re/instances/FacewormsNest.txt#950 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#951 (atrib)
 - "Second"
-+ ""
++ "Segundo"
 #: npc/re/instances/FacewormsNest.txt#952 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#953 (atrib)
 - "Minute"
-+ ""
++ "Minuto"
 #: npc/re/instances/FacewormsNest.txt#955 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#956 (atrib)
 - "Second"
++ "Segundo"
+#: npc/re/instances/FacewormsNest.txt#957 (mapannounce)
+- "A time of "
++ "Um tempo de "
+#: npc/re/instances/FacewormsNest.txt#958 (mapannounce)
+- " has been recorded on the board. But it did not beat the best record."
++ " foi registrado no quadro. Mas não bateu o melhor recorde."
+#: npc/re/instances/FacewormsNest.txt#959 (mapannounce)
+- "0xffff33"
++ ""
+#: npc/re/instances/FacewormsNest.txt#960 (announce)
+- " beat the best record for completing the Faceworm's Nest ("
++ " bateu o recorde de conclusão do Covil de Vermes ("
+#: npc/re/instances/FacewormsNest.txt#961 (announce)
+- ")."
++ ""
+#: npc/re/instances/FacewormsNest.txt#962 (announce)
+- "0xffff33"
++ ""
+#: npc/re/instances/FacewormsNest.txt#963 (announce)
+- " with "
++ " com "
+#: npc/re/instances/FacewormsNest.txt#964 (announce)
+- " party "
++ " integrantes no "
+#: npc/re/instances/FacewormsNest.txt#965 (announce)
+- "members"
++ "grupo"
+#: npc/re/instances/FacewormsNest.txt#966 (announce)
+- "members"
++ "grupo"
+#: npc/re/instances/FacewormsNest.txt#967 (announce)
+- " beat the best record for completing the Faceworm's Nest ("
++ " bateu o recorde de conclusão do Covil de Vermes ("
+#: npc/re/instances/FacewormsNest.txt#968 (announce)
+- ")."
++ ""
+#: npc/re/instances/FacewormsNest.txt#969 (announce)
+- "0xffff33"
 + ""
 #: npc/re/instances/FacewormsNest.txt#972 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#973 (atrib)
 - "Second"
-+ ""
++ "Segundo"
 #: npc/re/instances/FacewormsNest.txt#974 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#975 (atrib)
 - "Minute"
-+ ""
++ "Minuto"
 #: npc/re/instances/FacewormsNest.txt#977 (atrib)
 - "F_InsertPlural"
 + ""
 #: npc/re/instances/FacewormsNest.txt#978 (atrib)
 - "Second"
++ "Segundo"
+#: npc/re/instances/FacewormsNest.txt#979 (mapannounce)
+- "The actual time for the battle at this stage remaining is "
++ "O tempo restante de batalha nesta fase é "
+#: npc/re/instances/FacewormsNest.txt#980 (mapannounce)
+- "."
++ ""
+#: npc/re/instances/FacewormsNest.txt#981 (mapannounce)
+- "0xffff33"
 + ""
 #: npc/re/instances/FacewormsNest.txt#989 (mes)
 - "[Time Manager]"
-+ ""
++ "[Gerente do Tempo]"
 #: npc/re/instances/FacewormsNest.txt#990 (mes)
 - "What time would you like to return?"
-+ ""
++ "Para que momento você quer voltar?"
 #: npc/re/instances/FacewormsNest.txt#991 (select)
 - "Cancel:1st Stage Start:2nd Stage Start:3rd Stage Start:4th Stage Start:Boss Start:Treasures"
++ "Cancelar:Início da Fase 1:Início da Fase 2:Início da Fase 3:Início da Fase 4:Início do chefe:Tesouros"
+#: npc/re/instances/FacewormsNest.txt#996 (mapannounce)
+- "Faceworm time attack has started. Faster kill times gives a higher percentage of rewards."
++ "O contra-relógio dos vermes começou. Matar mais rápido dá uma porcentagem maior de recompensa."
+#: npc/re/instances/FacewormsNest.txt#997 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1006 (mapannounce)
+- "A hole appears after killing the dark faceworm."
++ "Um buraco aparece depois que o verme sombrio morre."
+#: npc/re/instances/FacewormsNest.txt#1007 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1012 (mapannounce)
+- "You hear something loud in the south. It must be the nest of the one we just got rid of."
++ "Você ouve uma coisa alta ao sul. Deve ser o ninho daquele que a gente acabou de eliminar."
+#: npc/re/instances/FacewormsNest.txt#1013 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1017 (mapannounce)
+- "You hear the pile of stones collapsing. This might be a gateway to go to other spaces."
++ "Você ouve a pilha de pedras desabando. Isto pode ser uma passagem para outros espaços."
+#: npc/re/instances/FacewormsNest.txt#1018 (mapannounce)
+- "0xffffff"
++ ""
+#: npc/re/instances/FacewormsNest.txt#1024 (mapannounce)
+- "You hear the pile of stones collapsing. I think another gateway is found."
++ "Você ouve a pilha de pedras desabando. Acho que foi achada outra passagem."
+#: npc/re/instances/FacewormsNest.txt#1025 (mapannounce)
+- "0xffffff"
 + ""
 #: npc/re/instances/FacewormsNest.txt#1030 (mes)
 - " people."
-+ ""
++ " pessoas."
 #: npc/re/instances/FacewormsNest.txt#1032 (mes)
 - "[Boss Manager]"
-+ ""
++ "[Gerente do Chefe]"
 #: npc/re/instances/FacewormsNest.txt#1033 (mes)
 - "What time would you like to return?"
-+ ""
++ "Para que momento você quer voltar?"
 #: npc/re/instances/FacewormsNest.txt#1034 (select)
 - "Cancel:1st Boss:2nd Boss:3rd Boss:4th Boss:Final Boss"
-+ ""
++ "Cancelar:1º Chefe:2º Chefe:3º Chefe:4º Chefe:Chefe Final"
 #: npc/re/instances/FacewormsNest.txt#1059 (atrib)
 - "1@face"
 + ""

@@ -9,378 +9,519 @@
 #
 # Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
 
-### npc/re/instances/BangungotHospital.txt  (142 textos)
+### npc/re/instances/BangungotHospital.txt  (214 textos)
 #: npc/re/instances/BangungotHospital.txt#2 (cutin)
 - "malaya_nurseB"
 + ""
 #: npc/re/instances/BangungotHospital.txt#3 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#4 (mes)
 - "You got rid of Bangungot!"
-+ ""
++ "Você acabou com o Bangungot!"
 #: npc/re/instances/BangungotHospital.txt#5 (mes)
 - "The nurse might be waiting for you"
-+ ""
++ "A enfermeira deve estar esperando por você"
 #: npc/re/instances/BangungotHospital.txt#6 (mes)
 - "in front of the hospital!"
-+ ""
++ "na frente do hospital!"
 #: npc/re/instances/BangungotHospital.txt#8 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#9 (mes)
 - ".........."
 + ""
 #: npc/re/instances/BangungotHospital.txt#11 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#12 (mes)
 - "Now the entrance"
-+ ""
++ "Agora a entrada"
 #: npc/re/instances/BangungotHospital.txt#13 (mes)
 - "to go up second floor"
-+ ""
++ "para subir ao segundo andar"
 #: npc/re/instances/BangungotHospital.txt#14 (mes)
 - "is closed."
-+ ""
++ "está fechada."
 #: npc/re/instances/BangungotHospital.txt#15 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#16 (mes)
 - "To go up"
-+ ""
++ "Para subir"
 #: npc/re/instances/BangungotHospital.txt#17 (mes)
 - "the second floor again"
-+ ""
++ "ao segundo andar de novo"
 #: npc/re/instances/BangungotHospital.txt#18 (mes)
 - "Open the gate"
-+ ""
++ "o portão se abre"
 #: npc/re/instances/BangungotHospital.txt#19 (mes)
 - "after lapse of time."
-+ ""
++ "depois de algum tempo."
 #: npc/re/instances/BangungotHospital.txt#21 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#22 (mes)
 - "From the Bangungot at second floor"
-+ ""
++ "Do Bangungot do segundo andar"
 #: npc/re/instances/BangungotHospital.txt#23 (mes)
 - "You returned safely to here!!"
-+ ""
++ "você voltou em segurança!!"
 #: npc/re/instances/BangungotHospital.txt#24 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#25 (mes)
 - "If you want to go up"
-+ ""
++ "Se quiser subir"
 #: npc/re/instances/BangungotHospital.txt#26 (mes)
 - "second floor again"
-+ ""
++ "ao segundo andar de novo"
 #: npc/re/instances/BangungotHospital.txt#27 (mes)
 - "Please come to me."
-+ ""
++ "venha falar comigo."
 #: npc/re/instances/BangungotHospital.txt#29 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#30 (mes)
 - "......."
 + ""
 #: npc/re/instances/BangungotHospital.txt#32 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#33 (mes)
 - ".....?"
 + ""
 #: npc/re/instances/BangungotHospital.txt#34 (mes)
 - "Now you can't go up"
-+ ""
++ "Agora você não pode subir"
 #: npc/re/instances/BangungotHospital.txt#35 (mes)
 - "to the 2nd floor."
-+ ""
++ "ao 2º andar."
 #: npc/re/instances/BangungotHospital.txt#37 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#38 (mes)
 - "This is fatal situation."
-+ ""
++ "A situação é gravíssima."
 #: npc/re/instances/BangungotHospital.txt#39 (mes)
 - "that is why you can't go up"
-+ ""
++ "é por isso que você não pode subir"
 #: npc/re/instances/BangungotHospital.txt#40 (mes)
 - "2nd floor."
-+ ""
++ "ao 2º andar."
 #: npc/re/instances/BangungotHospital.txt#42 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#43 (mes)
 - "To the second floor of hospital"
-+ ""
++ "Para o segundo andar do hospital"
 #: npc/re/instances/BangungotHospital.txt#44 (mes)
 - "Do you want go up second floor again?"
-+ ""
++ "Quer subir ao segundo andar de novo?"
 #: npc/re/instances/BangungotHospital.txt#45 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#46 (mes)
 - "You have too much stuff."
-+ ""
++ "Você está com coisa demais."
 #: npc/re/instances/BangungotHospital.txt#47 (mes)
 - "Please reduce your stuff and"
-+ ""
++ "Por favor, largue um pouco e"
 #: npc/re/instances/BangungotHospital.txt#48 (mes)
 - "come to me again."
-+ ""
++ "volte a falar comigo."
 #: npc/re/instances/BangungotHospital.txt#50 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#51 (mes)
 - "It's too heavy."
-+ ""
++ "Está pesado demais."
 #: npc/re/instances/BangungotHospital.txt#52 (mes)
 - "Please reduce the weight and"
-+ ""
++ "Por favor, alivie o peso e"
 #: npc/re/instances/BangungotHospital.txt#53 (mes)
 - "come to me again."
-+ ""
++ "volte a falar comigo."
 #: npc/re/instances/BangungotHospital.txt#58 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#59 (mes)
 - "......."
 + ""
 #: npc/re/instances/BangungotHospital.txt#61 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#62 (mes)
 - "- The door is closed to 1st floor"
-+ ""
++ "- A porta do 1º andar se fechou"
 #: npc/re/instances/BangungotHospital.txt#63 (mes)
 - "when this Nurse came in?"
-+ ""
++ "quando esta Enfermeira entrou?"
 #: npc/re/instances/BangungotHospital.txt#64 (mes)
 - "I call her behind but"
-+ ""
++ "Chamei por ela, mas"
 #: npc/re/instances/BangungotHospital.txt#65 (mes)
 - "She doesn't respond. -"
-+ ""
++ "ela não responde. -"
 #: npc/re/instances/BangungotHospital.txt#67 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#68 (mes)
 - "You returned safely from the Bangungot on the second floor!!"
-+ ""
++ "Você voltou em segurança do Bangungot do segundo andar!!"
 #: npc/re/instances/BangungotHospital.txt#69 (mes)
 - "However, it's not"
-+ ""
++ "Mas isso ainda"
 #: npc/re/instances/BangungotHospital.txt#70 (mes)
 - "really over yet."
-+ ""
++ "não acabou de verdade."
 #: npc/re/instances/BangungotHospital.txt#71 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#72 (mes)
 - "I'm pretty sure it"
-+ ""
++ "Tenho quase certeza de que"
 #: npc/re/instances/BangungotHospital.txt#73 (mes)
 - "never disappears easily."
-+ ""
++ "ele nunca some assim tão fácil."
 #: npc/re/instances/BangungotHospital.txt#74 (mes)
 - "I don't know what will happen"
-+ ""
++ "Não sei o que vai acontecer"
 #: npc/re/instances/BangungotHospital.txt#75 (mes)
 - "about Bangungot, so"
-+ ""
++ "com o Bangungot, então"
 #: npc/re/instances/BangungotHospital.txt#76 (mes)
 - "after a lapse of time"
-+ ""
++ "depois de algum tempo"
 #: npc/re/instances/BangungotHospital.txt#77 (mes)
 - "please return to me."
-+ ""
++ "volte a falar comigo."
 #: npc/re/instances/BangungotHospital.txt#78 (mes)
 - "- I guess..."
-+ ""
++ "- Acho que..."
 #: npc/re/instances/BangungotHospital.txt#79 (mes)
 - "I can't talk him alone."
-+ ""
++ "não consigo falar com ele sozinho."
 #: npc/re/instances/BangungotHospital.txt#80 (mes)
 - "After registering a party"
-+ ""
++ "Depois de montar um grupo"
 #: npc/re/instances/BangungotHospital.txt#81 (mes)
 - "let me try to say something. -"
-+ ""
++ "eu tento dizer alguma coisa. -"
 #: npc/re/instances/BangungotHospital.txt#83 (atrib)
 - "Hospital Abandonado"
 + ""
 #: npc/re/instances/BangungotHospital.txt#84 (menu)
 - "Prepare to enter the second floor."
-+ ""
++ "Prepare-se para entrar no segundo andar."
 #: npc/re/instances/BangungotHospital.txt#85 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#86 (mes)
 - "I already heard that story so"
-+ ""
++ "Eu já ouvi essa história, então"
 #: npc/re/instances/BangungotHospital.txt#87 (mes)
 - "I pretty much know that."
-+ ""
++ "conheço bem o assunto."
 #: npc/re/instances/BangungotHospital.txt#88 (mes)
 - "What are you going to do?"
-+ ""
++ "O que você vai fazer?"
 #: npc/re/instances/BangungotHospital.txt#89 (mes)
 - "Do you want to go up"
-+ ""
++ "Você quer subir"
 #: npc/re/instances/BangungotHospital.txt#90 (mes)
 - "to the second floor?"
-+ ""
++ "ao segundo andar?"
 #: npc/re/instances/BangungotHospital.txt#91 (mes)
 - "You are back..."
-+ ""
++ "Você voltou..."
 #: npc/re/instances/BangungotHospital.txt#92 (mes)
 - "There is bad news."
-+ ""
++ "Tenho más notícias."
 #: npc/re/instances/BangungotHospital.txt#93 (mes)
 - "I heard that"
-+ ""
++ "Ouvi dizer que"
 #: npc/re/instances/BangungotHospital.txt#94 (mes)
 - "the Bangungot is appeared"
-+ ""
++ "o Bangungot apareceu"
 #: npc/re/instances/BangungotHospital.txt#95 (mes)
 - "again."
-+ ""
++ "de novo."
 #: npc/re/instances/BangungotHospital.txt#96 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#98 (mes)
 - " 's help"
-+ ""
++ ", a sua ajuda"
 #: npc/re/instances/BangungotHospital.txt#99 (mes)
 - "is needed again."
-+ ""
++ "é necessária mais uma vez."
 #: npc/re/instances/BangungotHospital.txt#100 (mes)
 - "Please could you give me"
-+ ""
++ "Você poderia me dar"
 #: npc/re/instances/BangungotHospital.txt#101 (mes)
 - "one more chance?"
-+ ""
++ "mais uma chance?"
 #: npc/re/instances/BangungotHospital.txt#102 (select)
 - "Enter the second floor."
-+ ""
++ "Entrar no segundo andar."
 #: npc/re/instances/BangungotHospital.txt#103 (select)
 - "Do not enter."
-+ ""
++ "Não entrar."
 #: npc/re/instances/BangungotHospital.txt#104 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#105 (mes)
 - "A critical situation has happened."
-+ ""
++ "Aconteceu uma situação crítica."
 #: npc/re/instances/BangungotHospital.txt#106 (mes)
 - "You can't go up to the 2nd floor."
-+ ""
++ "Você não pode subir ao 2º andar."
 #: npc/re/instances/BangungotHospital.txt#107 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#108 (mes)
 - "We are preparing to go up"
-+ ""
++ "Estamos nos preparando para subir"
 #: npc/re/instances/BangungotHospital.txt#109 (mes)
 - "to the second floor."
-+ ""
++ "ao segundo andar."
 #: npc/re/instances/BangungotHospital.txt#110 (mes)
 - "At the second floor"
-+ ""
++ "No segundo andar"
 #: npc/re/instances/BangungotHospital.txt#111 (mes)
 - "there is a chaotic rumor that"
-+ ""
++ "corre um boato apavorante de que"
 #: npc/re/instances/BangungotHospital.txt#112 (mes)
 - "the dead do not die."
-+ ""
++ "os mortos não morrem."
 #: npc/re/instances/BangungotHospital.txt#113 (mes)
 - "Please refer to this story."
-+ ""
++ "Leve essa história em conta."
 #: npc/re/instances/BangungotHospital.txt#114 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#115 (mes)
 - "When you finish everything,"
-+ ""
++ "Quando terminar tudo,"
 #: npc/re/instances/BangungotHospital.txt#116 (mes)
 - "please talk to me again."
-+ ""
++ "volte a falar comigo, por favor."
 #: npc/re/instances/BangungotHospital.txt#117 (mes)
 - "I really appreciate it."
-+ ""
++ "Fico muito agradecida."
 #: npc/re/instances/BangungotHospital.txt#118 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#119 (mes)
 - "A critical situation has happened."
-+ ""
++ "Aconteceu uma situação crítica."
 #: npc/re/instances/BangungotHospital.txt#120 (mes)
 - "You can't go up to the 2nd floor."
-+ ""
++ "Você não pode subir ao 2º andar."
 #: npc/re/instances/BangungotHospital.txt#121 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#122 (mes)
 - "You can't go up to"
-+ ""
++ "Você não pode subir"
 #: npc/re/instances/BangungotHospital.txt#123 (mes)
 - "the 2nd floor now."
-+ ""
++ "ao 2º andar agora."
 #: npc/re/instances/BangungotHospital.txt#124 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#125 (mes)
 - "It's too dangerous to go"
-+ ""
++ "É perigoso demais subir"
 #: npc/re/instances/BangungotHospital.txt#126 (mes)
 - "up to the 2nd floor alone."
-+ ""
++ "ao 2º andar sozinho."
 #: npc/re/instances/BangungotHospital.txt#127 (mes)
 - "Please come here with"
-+ ""
++ "Por favor, venha aqui com"
 #: npc/re/instances/BangungotHospital.txt#128 (mes)
 - "several people."
++ "mais gente."
+#: npc/re/instances/BangungotHospital.txt#129 (mapannounce)
+- "ma_dun01"
++ ""
+#: npc/re/instances/BangungotHospital.txt#130 (mapannounce)
+- " party's "
++ " - o aventureiro "
+#: npc/re/instances/BangungotHospital.txt#131 (mapannounce)
+- " member entered "
++ " entrou em "
+#: npc/re/instances/BangungotHospital.txt#132 (mapannounce)
+- "."
++ ""
+#: npc/re/instances/BangungotHospital.txt#133 (mapannounce)
+- "0x00ff99"
 + ""
 #: npc/re/instances/BangungotHospital.txt#136 (mes)
 - "[Nurse Maenne]"
-+ ""
++ "[Enfermeira Maenne]"
 #: npc/re/instances/BangungotHospital.txt#137 (mes)
 - "Alright."
-+ ""
++ "Está bem."
 #: npc/re/instances/BangungotHospital.txt#138 (mes)
 - "If you change mind, come back again."
-+ ""
++ "Se mudar de ideia, volte aqui."
 #: npc/re/instances/BangungotHospital.txt#140 (mes)
 - "Password"
-+ ""
++ "Senha"
 #: npc/re/instances/BangungotHospital.txt#143 (mes)
 - "Good Luck."
-+ ""
++ "Boa sorte."
 #: npc/re/instances/BangungotHospital.txt#144 (select)
 - "Receive 9222:Receive 9223:Erase 9222:Erase 9223:Receive 9224:Erase 9224:Receive malaya_bang 30:Receive malaya_bang 40:Receive 11309:Erase 11309:Cancel"
++ ""
+#: npc/re/instances/BangungotHospital.txt#145 (mapannounce)
+- "Bangungot: You silly "
++ "Bangungot: Sua tolinha "
+#: npc/re/instances/BangungotHospital.txt#146 (mapannounce)
+- " ...."
++ " ...."
+#: npc/re/instances/BangungotHospital.txt#147 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#148 (mapannounce)
+- "Bangungot: Get out before you die..."
++ "Bangungot: Saia antes que morra..."
+#: npc/re/instances/BangungotHospital.txt#149 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#161 (mapannounce)
+- "Bangungot: This is where your NIGHTMARE starts..."
++ "Bangungot: É aqui que o seu PESADELO começa..."
+#: npc/re/instances/BangungotHospital.txt#162 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#165 (mapannounce)
+- "Bangungot: You cannot help.... you can't defeat me."
++ "Bangungot: Não adianta.... você não pode me derrotar."
+#: npc/re/instances/BangungotHospital.txt#166 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#167 (mapannounce)
+- "Bangungot: HAHAHAHAHAHAHAHA!!!!"
++ "Bangungot: HAHAHAHAHAHAHAHA!!!!"
+#: npc/re/instances/BangungotHospital.txt#168 (mapannounce)
+- "0xFF82FF"
 + ""
 #: npc/re/instances/BangungotHospital.txt#170 (atrib)
 - "::OnMyMobDead"
 + ""
 #: npc/re/instances/BangungotHospital.txt#193 (atrib)
 - "Bangungot: I will let you see the pain and the agony actually be real....."
-+ ""
++ "Bangungot: Vou fazer você sentir na pele que a dor e a agonia são reais....."
 #: npc/re/instances/BangungotHospital.txt#194 (atrib)
 - "Bangungot: Diseased spirits are the source of my energy, and my life..."
-+ ""
++ "Bangungot: Os espíritos enfermos são a fonte da minha energia, e da minha vida..."
 #: npc/re/instances/BangungotHospital.txt#195 (atrib)
 - "Bangungot: Scream more....and more...... your pain..."
-+ ""
++ "Bangungot: Grite mais....e mais...... a sua dor..."
 #: npc/re/instances/BangungotHospital.txt#196 (atrib)
 - "Bangungot: Deeply and more deeply in pain..."
-+ ""
++ "Bangungot: Fundo, cada vez mais fundo na dor..."
 #: npc/re/instances/BangungotHospital.txt#197 (atrib)
 - "Bangungot: Be horrified...be petrified."
++ "Bangungot: Fique horrorizado...fique petrificado."
+#: npc/re/instances/BangungotHospital.txt#198 (mapannounce)
+- "0xFF82FF"
 + ""
 #: npc/re/instances/BangungotHospital.txt#200 (atrib)
 - "::OnMyMobDead"
++ ""
+#: npc/re/instances/BangungotHospital.txt#213 (mapannounce)
+- "Bangungot: You had the choice to enter here, but you have no choice to get out as you want..."
++ "Bangungot: Você teve a escolha de entrar aqui, mas não tem a escolha de sair quando quiser..."
+#: npc/re/instances/BangungotHospital.txt#214 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#228 (mapannounce)
+- "Bangungot: I....cannot.....finish...like.......this."
++ "Bangungot: Eu....não posso.....acabar...assim......."
+#: npc/re/instances/BangungotHospital.txt#229 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#246 (mapannounce)
+- "Bangungot: HAHAHAH... That's not enough, I will be even stronger...."
++ "Bangungot: HAHAHAH... Isso não basta, eu vou ficar ainda mais forte...."
+#: npc/re/instances/BangungotHospital.txt#247 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#267 (mapannounce)
+- "Bangungot: You poor little things. I will invite you to the world of infectious disease..."
++ "Bangungot: Suas coisinhas coitadas. Vou convidar vocês para o mundo da doença contagiosa..."
+#: npc/re/instances/BangungotHospital.txt#268 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#269 (mapannounce)
+- "Bangungot: You will know what it is..."
++ "Bangungot: Vocês vão saber o que é isso..."
+#: npc/re/instances/BangungotHospital.txt#270 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#272 (mapannounce)
+- "Bangungot: Real pain! You will know!!"
++ "Bangungot: Dor de verdade! Vocês vão conhecer!!"
+#: npc/re/instances/BangungotHospital.txt#273 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#275 (mapannounce)
+- "Bangungot: Have you ever heard the patients screaming?"
++ "Bangungot: Vocês já ouviram os pacientes gritando?"
+#: npc/re/instances/BangungotHospital.txt#276 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#277 (mapannounce)
+- "Bangungot: If you haven't, I will let you!!"
++ "Bangungot: Se ainda não, eu deixo!!"
+#: npc/re/instances/BangungotHospital.txt#278 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#285 (mapannounce)
+- "Bangungot: Delight coming from agony is my nutrient."
++ "Bangungot: O prazer que vem da agonia é o meu alimento."
+#: npc/re/instances/BangungotHospital.txt#286 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#289 (mapannounce)
+- "Bangungot: Remain here, cursed disease....."
++ "Bangungot: Fique aqui, doença maldita....."
+#: npc/re/instances/BangungotHospital.txt#290 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#293 (mapannounce)
+- "Bangungot: You wanna hang out with me ......?"
++ "Bangungot: Você quer brincar comigo ......?"
+#: npc/re/instances/BangungotHospital.txt#294 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#305 (mapannounce)
+- "Bangungot: You are pretty powerful..."
++ "Bangungot: Você é bem poderoso..."
+#: npc/re/instances/BangungotHospital.txt#306 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#307 (mapannounce)
+- "Bangungot: But can you..."
++ "Bangungot: Mas será que você consegue..."
+#: npc/re/instances/BangungotHospital.txt#308 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#309 (mapannounce)
+- "Bangungot: ...defeat me again...?"
++ "Bangungot: ...me derrotar de novo...?"
+#: npc/re/instances/BangungotHospital.txt#310 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#314 (mapannounce)
+- "Bangungot: You stupid persoon...."
++ "Bangungot: Sua pessoa estúpidaa...."
+#: npc/re/instances/BangungotHospital.txt#315 (mapannounce)
+- "0xFF82FF"
 + ""
 #: npc/re/instances/BangungotHospital.txt#322 (atrib)
 - "::OnMyMobDead"
@@ -400,39 +541,114 @@
 #: npc/re/instances/BangungotHospital.txt#367 (atrib)
 - "::OnMyMobDead"
 + ""
+#: npc/re/instances/BangungotHospital.txt#387 (mapannounce)
+- "Bangungot: My spirit will be with your cursed body..."
++ "Bangungot: O meu espírito vai ficar com o seu corpo amaldiçoado..."
+#: npc/re/instances/BangungotHospital.txt#388 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#389 (mapannounce)
+- "Bangungot: My inferiors...!! Go!! Go torment the patients in the wards!!"
++ "Bangungot: Meus subalternos...!! Vão!! Vão atormentar os pacientes das enfermarias!!"
+#: npc/re/instances/BangungotHospital.txt#390 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#391 (mapannounce)
+- "- Bangungot's inferiors are bothering patients!! If you don't slay them all, Bangungot will be stronger. -"
++ "- Os subalternos do Bangungot estão incomodando os pacientes!! Se você não matar todos eles, o Bangungot fica mais forte. -"
+#: npc/re/instances/BangungotHospital.txt#392 (mapannounce)
+- "0xFF8200"
++ ""
+#: npc/re/instances/BangungotHospital.txt#430 (mapannounce)
+- "Bangungot: Oh....cannot believe that I lost..."
++ "Bangungot: Ah....não acredito que eu perdi..."
+#: npc/re/instances/BangungotHospital.txt#431 (mapannounce)
+- "0xFF4500"
++ ""
+#: npc/re/instances/BangungotHospital.txt#432 (mapannounce)
+- "Bangungot: But don't think this is the end!!"
++ "Bangungot: Mas não pense que isto é o fim!!"
+#: npc/re/instances/BangungotHospital.txt#433 (mapannounce)
+- "0xFF4500"
++ ""
+#: npc/re/instances/BangungotHospital.txt#434 (mapannounce)
+- "Bangungot: I WILL BE BACK!!!!!"
++ "Bangungot: EU VOU VOLTAR!!!!!"
+#: npc/re/instances/BangungotHospital.txt#435 (mapannounce)
+- "0xFF4500"
++ ""
+#: npc/re/instances/BangungotHospital.txt#437 (mapannounce)
+- "- Bangungot's Pillar of Spirit is curing Bangungot. If you don't hunt it now, he will fully recover!! -"
++ "- O Pilar de Espírito do Bangungot está curando o Bangungot. Se você não caçá-lo agora, ele se recupera por completo!! -"
+#: npc/re/instances/BangungotHospital.txt#438 (mapannounce)
+- "0xFF8200"
++ ""
+#: npc/re/instances/BangungotHospital.txt#440 (mapannounce)
+- "Bangungot: I never die!!!!"
++ "Bangungot: Eu nunca morro!!!!"
+#: npc/re/instances/BangungotHospital.txt#441 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#443 (mapannounce)
+- "Bangungot: If you dare, kill me!! I will revive soon!!!"
++ "Bangungot: Se tiver coragem, me mate!! Eu revivo logo!!!"
+#: npc/re/instances/BangungotHospital.txt#444 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#446 (mapannounce)
+- "Bangungot: I cannot die this way...!!!!"
++ "Bangungot: Eu não posso morrer assim...!!!!"
+#: npc/re/instances/BangungotHospital.txt#447 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#451 (mapannounce)
+- "Bangungot: Hahahahaha!! I'm back with the power from the pillar of spirit!!!"
++ "Bangungot: Hahahahaha!! Voltei com o poder do pilar de espírito!!!"
+#: npc/re/instances/BangungotHospital.txt#452 (mapannounce)
+- "0xFF82FF"
++ ""
+#: npc/re/instances/BangungotHospital.txt#463 (mapannounce)
+- "Moaning Patient: aaawwww...."
++ "Paciente Gemendo: aaawwww...."
+#: npc/re/instances/BangungotHospital.txt#464 (mapannounce)
+- "0xFF0000"
++ ""
 #: npc/re/instances/BangungotHospital.txt#465 (atrib)
 - "1@ma_h"
 + ""
 #: npc/re/instances/BangungotHospital.txt#467 (atrib)
 - "Screaming Patient: Aaaaargh!!"
-+ ""
++ "Paciente aos Gritos: Aaaaargh!!"
 #: npc/re/instances/BangungotHospital.txt#468 (atrib)
 - "Patient in Pain: Oooooowwww!! It's killing me!!!"
-+ ""
++ "Paciente com Dor: Oooooowww!! Isso está me matando!!!"
 #: npc/re/instances/BangungotHospital.txt#469 (atrib)
 - "Passed Out Patient: ........"
-+ ""
++ "Paciente Desmaiado: ........"
 #: npc/re/instances/BangungotHospital.txt#470 (atrib)
 - "Patient with Nightmare: Help~!!! Save me!!!"
-+ ""
++ "Paciente com Pesadelo: Socorro~!!! Me salvem!!!"
 #: npc/re/instances/BangungotHospital.txt#471 (atrib)
 - "Sick Looking Patient: Hu..a...aaah.."
-+ ""
++ "Paciente Adoentado: Hu..a...aaah.."
 #: npc/re/instances/BangungotHospital.txt#472 (atrib)
 - "Horrified Patient: Get away!! Please...."
-+ ""
++ "Paciente Horrorizado: Fique longe!! Por favor...."
 #: npc/re/instances/BangungotHospital.txt#473 (atrib)
 - "Patient in Sorrow: crying and crying......"
-+ ""
++ "Paciente em Prantos: chorando sem parar......"
 #: npc/re/instances/BangungotHospital.txt#474 (atrib)
 - "Suffering Patient: Stop... please..."
-+ ""
++ "Paciente Sofrendo: Pare... por favor..."
 #: npc/re/instances/BangungotHospital.txt#475 (atrib)
 - "Wriggling Patient: awwww..."
-+ ""
++ "Paciente Contorcido: awwww..."
 #: npc/re/instances/BangungotHospital.txt#476 (atrib)
 - "Patient in Cold Sweat: Help.....help...."
-+ ""
++ "Paciente em Suor Frio: Socorro.....socorro...."
 #: npc/re/instances/BangungotHospital.txt#477 (atrib)
 - "Howling Patient: aaaaahhhhhhhhhh!!"
++ "Paciente Uivante: aaaaahhhhhhhhhh!!"
+#: npc/re/instances/BangungotHospital.txt#478 (mapannounce)
+- "0xFF0000"
 + ""

@@ -165,10 +165,10 @@
 + ""
 #: npc/re/instances/GhostPalace.txt#54 (mapannounce)
 - " of the party, "
-+ ""
++ ", do grupo "
 #: npc/re/instances/GhostPalace.txt#55 (mapannounce)
 - ", is entering the Ghost Palace."
-+ ""
++ ", está entrando no Palácio das Mágoas."
 #: npc/re/instances/GhostPalace.txt#57 (mes)
 - "[King]"
 + "[Rei]"
@@ -234,7 +234,7 @@
 + ""
 #: npc/re/instances/GhostPalace.txt#150 (mapannounce)
 - "The passage on the 2nd floor in the palace of ghost is open ."
-+ ""
++ "A passagem do 2º andar do palácio está aberta."
 #: npc/re/instances/GhostPalace.txt#154 (atrib)
 - "Princess Tiara#dk"
 + ""
@@ -336,7 +336,7 @@
 + ""
 #: npc/re/instances/GhostPalace.txt#219 (mapannounce)
 - "The passage on the 3rd floor of the palace is open."
-+ ""
++ "A passagem do 3º andar do palácio está aberta."
 #: npc/re/instances/GhostPalace.txt#228 (mes)
 - "[King]"
 + "[Rei]"
@@ -417,103 +417,103 @@
 + ""
 #: npc/re/instances/GhostPalace.txt#290 (mapannounce)
 - "The passage on the 4th floor of the palace is open."
-+ ""
++ "A passagem do 4º andar do palácio está aberta."
 #: npc/re/instances/GhostPalace.txt#299 (atrib)
 - "::OnMyMobDead3"
 + ""
 #: npc/re/instances/GhostPalace.txt#301 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#303 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#305 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#307 (unittalk)
 - "Faithful royal guard..."
-+ ""
++ "Fiel guarda real..."
 #: npc/re/instances/GhostPalace.txt#309 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#311 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#313 (unittalk)
 - "You put your princess in grave danger..."
-+ ""
++ "Você deixou a sua princesa em grave perigo..."
 #: npc/re/instances/GhostPalace.txt#315 (unittalk)
 - "Faithful royal guard..."
-+ ""
++ "Fiel guarda real..."
 #: npc/re/instances/GhostPalace.txt#317 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#319 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#321 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#323 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#325 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#327 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#329 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#331 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#333 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#335 (unittalk)
 - "Faithful royal guard..."
-+ ""
++ "Fiel guarda real..."
 #: npc/re/instances/GhostPalace.txt#337 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#339 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#341 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#343 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#345 (unittalk)
 - "You put your princess in grave danger..."
-+ ""
++ "Você deixou a sua princesa em grave perigo..."
 #: npc/re/instances/GhostPalace.txt#347 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#349 (unittalk)
 - "Faithful royal guard..."
-+ ""
++ "Fiel guarda real..."
 #: npc/re/instances/GhostPalace.txt#351 (unittalk)
 - "Run away quickly!"
-+ ""
++ "Fuja, depressa!"
 #: npc/re/instances/GhostPalace.txt#353 (unittalk)
 - "Run away!"
-+ ""
++ "Fuja!"
 #: npc/re/instances/GhostPalace.txt#355 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#357 (unittalk)
 - "Faithful royal guard..."
-+ ""
++ "Fiel guarda real..."
 #: npc/re/instances/GhostPalace.txt#359 (unittalk)
 - "You put your princess in grave danger..."
-+ ""
++ "Você deixou a sua princesa em grave perigo..."
 #: npc/re/instances/GhostPalace.txt#361 (unittalk)
 - "You are trapped..."
-+ ""
++ "Você está encurralado..."
 #: npc/re/instances/GhostPalace.txt#368 (atrib)
 - "::OnMyMobDead1"
 + ""
@@ -579,7 +579,7 @@
 + ""
 #: npc/re/instances/GhostPalace.txt#436 (mapannounce)
 - "The passage on the 5th floor of the palace is open."
-+ ""
++ "A passagem do 5º andar do palácio está aberta."
 #: npc/re/instances/GhostPalace.txt#446 (atrib)
 - "Lurid Royal Guard#dk5"
 + ""
@@ -657,49 +657,49 @@
 + ""
 #: npc/re/instances/GhostPalace.txt#488 (unittalk)
 - "Wake up! look at us... We are monsters?"
-+ ""
++ "Acorde! Olhe para nós... Nós somos monstros?"
 #: npc/re/instances/GhostPalace.txt#490 (unittalk)
 - "Sakray killed the King and tried to kill us!"
-+ ""
++ "Sakray matou o Rei e tentou nos matar!"
 #: npc/re/instances/GhostPalace.txt#492 (unittalk)
 - "What is this..??"
-+ ""
++ "O que é isso..??"
 #: npc/re/instances/GhostPalace.txt#494 (unittalk)
 - "Sakray killed a princess!"
-+ ""
++ "Sakray matou uma princesa!"
 #: npc/re/instances/GhostPalace.txt#498 (atrib)
 - "::OnMyMobDead2"
 + ""
 #: npc/re/instances/GhostPalace.txt#500 (unittalk)
 - "Wake up! look at us... We are monsters?"
-+ ""
++ "Acorde! Olhe para nós... Nós somos monstros?"
 #: npc/re/instances/GhostPalace.txt#502 (unittalk)
 - "Sakray..?? why.....Sakray!"
-+ ""
++ "Sakray..?? por quê.....Sakray!"
 #: npc/re/instances/GhostPalace.txt#504 (unittalk)
 - "Sakray killed the King and tried to kill us!"
-+ ""
++ "Sakray matou o Rei e tentou nos matar!"
 #: npc/re/instances/GhostPalace.txt#506 (unittalk)
 - "Sakray killed a princess!"
-+ ""
++ "Sakray matou uma princesa!"
 #: npc/re/instances/GhostPalace.txt#510 (atrib)
 - "::OnMyMobDead3"
 + ""
 #: npc/re/instances/GhostPalace.txt#512 (unittalk)
 - "Wake up! look at us... We are monsters?"
-+ ""
++ "Acorde! Olhe para nós... Nós somos monstros?"
 #: npc/re/instances/GhostPalace.txt#514 (unittalk)
 - "Sakray..?? why.....Sakray!"
-+ ""
++ "Sakray..?? por quê.....Sakray!"
 #: npc/re/instances/GhostPalace.txt#516 (unittalk)
 - "Sakray killed the King and tried to kill us!"
-+ ""
++ "Sakray matou o Rei e tentou nos matar!"
 #: npc/re/instances/GhostPalace.txt#518 (unittalk)
 - "Sakray killed a princess!"
-+ ""
++ "Sakray matou uma princesa!"
 #: npc/re/instances/GhostPalace.txt#524 (unittalk)
 - "Magic Sword Tartanos! I will destroy you if I can't have you... Oh no! How could this be?"
-+ ""
++ "Espada Mágica Tartanos! Vou destruí-la se não puder tê-la... Ah, não! Como isso é possível?"
 #: npc/re/instances/GhostPalace.txt#530 (mes)
 - "[Lurid Royal Guard]"
 + "[Guarda Real Sombrio]"
@@ -741,7 +741,7 @@
 + "Sakray, o que você quer? Compaixão? Ou é armadilha?"
 #: npc/re/instances/GhostPalace.txt#544 (unittalk)
 - " : Sakray, what do you want? Sympathy? Or is it a trap?"
-+ ""
++ " : Sakray, o que você quer? Compaixão? Ou é armadilha?"
 #: npc/re/instances/GhostPalace.txt#545 (mes)
 - "[Sakray]"
 + "[Sakray]"
@@ -762,7 +762,7 @@
 + "Se é assim... então por quê...?"
 #: npc/re/instances/GhostPalace.txt#552 (unittalk)
 - " : If so... then why...?"
-+ ""
++ " : Se é assim... então por quê...?"
 #: npc/re/instances/GhostPalace.txt#553 (cutin)
 - "cry-b.bmp"
 + ""
@@ -825,7 +825,7 @@
 + "..."
 #: npc/re/instances/GhostPalace.txt#574 (unittalk)
 - " : ..."
-+ ""
++ " : ..."
 #: npc/re/instances/GhostPalace.txt#575 (mes)
 - "[Sakray]"
 + "[Sakray]"
@@ -873,7 +873,7 @@
 + "Voz de Sakray : No escuro, para sempre..."
 #: npc/re/instances/GhostPalace.txt#606 (mapannounce)
 - "It is time to leave the Ghost Palace."
-+ ""
++ "É hora de deixar o Palácio das Mágoas."
 #: npc/re/instances/GhostPalace.txt#609 (mes)
 - "[King]"
 + "[Rei]"
