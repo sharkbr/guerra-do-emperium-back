@@ -659,73 +659,127 @@ Para o cliente **desenhar** esses bytes é preciso o `ajusta_charset_fonte.py`
 ## `ajusta_tamanho_fonte.py` — aumenta a fonte do jogo
 
 ```
-python ajusta_tamanho_fonte.py --verificar   # só relata
-python ajusta_tamanho_fonte.py               # aplica +2 (faz backup)
-python ajusta_tamanho_fonte.py --aumento 4   # outro valor
-python ajusta_tamanho_fonte.py --reverter    # volta ao original
+python ajusta_tamanho_fonte.py --verificar   # so relata
+python ajusta_tamanho_fonte.py               # aplica o estado aprovado
+python ajusta_tamanho_fonte.py --bonus 1     # cada letra um pixel maior
+python ajusta_tamanho_fonte.py --teto 12     # afrouxa o teto
+python ajusta_tamanho_fonte.py --face Gulim  # Gulim, Arial, Tahoma, Verdana
+python ajusta_tamanho_fonte.py --fixo 20     # uma altura so, para diagnostico
+python ajusta_tamanho_fonte.py --reverter
 ```
 
-**Não existe opção de tamanho de fonte neste cliente** — nem no Setup.exe, nem
-no menu, nem no `OptionInfo.lua` (a lista inteira de chaves que ele grava está
-em `data/luafiles514/lua files/optioninfo/optioninfo.lub`, e não há nenhuma de
-fonte). O `/font` da lista de comandos é outra coisa: troca a fonte do **chat**
+A conta e **`altura = min(tamanho pedido, --teto) + --bonus`**, e os padroes ja
+sao os valores aprovados no jogo em 2026-08-09: face **Arial**, **`--bonus 0`**,
+**`--teto 11`**, sem suavizacao. Rodar sem argumento reproduz esse estado.
+
+**`--bonus 0` nao e o mesmo que `--reverter`.** A face e nossa, nao a do
+cliente, e duas faces na mesma altura em pixels nao desenham do mesmo tamanho —
+entao `+0` ja e mudanca de tamanho. Foi assim que o ponto certo apareceu: nao
+subindo o bonus, mas **zerando** ele. Negativo tambem vale.
+
+**Nao existe opcao de tamanho de fonte neste cliente** — nem no Setup.exe, nem
+no menu, nem no `OptionInfo.lua` (a lista inteira de chaves que ele grava esta
+em `data/luafiles514/lua files/optioninfo/optioninfo.lub`, e nao ha nenhuma de
+fonte). O `/font` da lista de comandos e outra coisa: troca a fonte do **chat**
 por uma das `.eot` de `System/Font`.
 
-O que existe é a altura em pixels que o cliente pede ao Windows. A fonte
-principal é altura de caractere **13** (`push 0Dh` logo antes da chamada); com
-`+2` vai a 15, uns 15% maior. O default é 2 de propósito: a interface do RO tem
-caixas de tamanho fixo, e fonte grande demais transborda.
+**Resolucao tambem nao resolve, e piora.** A interface e de pixel fixo: subir a
+resolucao deixa tudo menor. Medido a 1900x1080 — o nome do mapa na selecao de
+personagem ficou ilegivel.
 
-### Por que não é o `CustomFontHgtOffset` do WARP
+### O ponto de desvio, e por que e esse
 
-Mesma armadilha do `FixFontsCharset`, por causa diferente — **aplica sem erro e
-não muda nada**. O FONTAIN do WARP desvia os call sites de `CreateFontA`, e
-neste exe:
+```
+0x004C4938  call 0x004C3660    ; pega o HFONT
+0x004C4940  call [SelectObject]
+0x004C494D  call [GetTextExtentPoint32W]   <- MEDE
 
-| função | importada | chamadas |
-|---|---|---|
-| `CreateFontA` | sim | **zero** |
-| `CreateFontIndirectA` | sim | 8 |
-
-Toda fonte nasce do `CreateFontIndirectA`, que recebe a altura dentro de um
-`LOGFONTA` em vez de argumento solto. O FONTAIN não tem o que desviar. **É a
-mesma causa do `CustomFontCharset` não ter mudado nada na fase do charset**, e
-agora está medida em vez de suposta.
-
-### O desvio
-
-Os 8 `call [CreateFontIndirectA]` (6 bytes) viram `call rel32` + `nop` para um
-stub de 25 bytes no fim da `.xdiff` — a seção que o próprio WARP criou para os
-caves dele, executável e gravável. O stub soma na altura e segue a chamada:
-
-```asm
-50              push eax
-8b 44 24 08     mov  eax, [esp+8]         ; o LOGFONTA* empilhado
-83 38 00        cmp  dword ptr [eax], 0   ; lfHeight, offset 0 da struct
-7d 05           jge  positivo
-83 28 02        sub  dword ptr [eax], 2   ; altura de CARACTERE: negativa
-eb 03           jmp  pronto
-83 00 02        add  dword ptr [eax], 2   ; altura de CÉLULA: positiva
-58              pop  eax
-ff 25 ...       jmp  dword ptr [CreateFontIndirectA]
+0x004C4A6E  call 0x004C3660    ; a MESMA funcao
+0x004C4A79  call [SelectObject]
+0x004C4A89  call [TextOutW]                <- DESENHA
 ```
 
-O sinal do `lfHeight` não é detalhe: negativo é altura de caractere, positivo é
-altura de célula. Somar cego encolheria a fonte na metade dos casos.
+`0x004C3660` e o distribuidor de fontes do cliente, e **medicao e desenho tiram
+a fonte dele**. Trocar a fonte so no desenho daria texto grande medido como
+pequeno — cortado e sobreposto. Trocando aqui, a quebra de linha acompanha.
 
-Modificar o `LOGFONTA` no lugar, sem cópia, é seguro **porque foi conferido**:
-nos 8 sites o chamador monta a struct na pilha (`lea eax,[ebp-XX]; push eax`) e
-escreve o `lfHeight` na instrução anterior. Não há struct global reaproveitada,
-então a soma não se acumula.
+E thiscall (`mov esi,ecx` no prologo), cinco argumentos de `[ebp+8]` a
+`[ebp+18]`, logo `ret 14h`. Devolve HFONT em eax. O **segundo** argumento e o
+tamanho pedido — medido, comparando a mesma caixa de dialogo com `--fixo` e
+com `--bonus`.
 
-Duas coisas que só não quebram por sorte medida: o exe **não tem ASLR**
-(`DllCharacteristics` sem DYNAMICBASE), então endereço absoluto no stub vale; e
-`call [IAT]` tem 6 bytes contra 5 do `call rel32`, então sobra exatamente um
-para o `nop`.
+A fonte nova sai de `CreateFontA`, que estava importada com **zero** chamadas:
+livre, sem risco de atropelar uso existente. Charset 0 (ANSI), o mesmo que o
+`ajusta_charset_fonte.py` forcou e o que faz o acento cp1252 aparecer. Altura
+negativa e altura de caractere; positiva seria altura de celula. A do cliente
+e 13.
 
-O script reconhece o próprio trabalho pelo formato do stub — não guarda
-endereço em lugar nenhum. Por isso `--aumento` de novo só troca o número, e
-`--reverter` devolve o exe **byte a byte** igual ao original (conferido).
+### O que ele NAO pega
+
+Titulo de janela e botao saem do outro caminho de texto (`TextOutA`, em
+`0x004D83BA`) e ficam do tamanho original. Medido: com o desvio ligado, "Do you
+agree?" cresce e "message"/"OK"/"cancel" nao.
+
+### O teto, e por que ele existe
+
+Algumas linhas pedem corpo maior que o resto — na janela de informacoes
+basicas, HP, SP, Base Lv., Job Lv. e a linha de peso e zeny. **Essa hierarquia
+e do proprio cliente e ja existia antes de qualquer patch**, conferido contra
+captura do estado original. So que a nossa face desenha maior na mesma altura
+pedida, e a diferenca, que era discreta, ficou gritante.
+
+O `--teto` limita o tamanho PEDIDO antes de criar a fonte, entao segura esses
+poucos casos e deixa o resto passar intacto. A calibragem, degrau a degrau:
+
+| teto | o que aconteceu |
+|---|---|
+| 14 | **nada** — prova que aquelas linhas pedem 14 ou menos |
+| 12 | a janela encolheu e o resto do jogo ficou igual |
+| 11 | o ponto: aprovado no jogo |
+
+O `14` nao ter feito efeito e o dado mais util da tabela: matou a hipotese de
+que aquelas linhas pediam um corpo muito maior. A diferenca era de poucos
+pixels, amplificada pela face.
+
+Abaixo de 11 o teto passa a ficar **abaixo** do que a maioria dos textos pede,
+e deixa de ser limite para virar reducao geral. O sintoma e a descricao de item
+e o inventario encolherem junto.
+
+### O que fica de fora, e nao da para consertar por aqui
+
+"Abernus" e "Rune Knight", na mesma janela, continuam do tamanho antigo: saem
+do `TextOutA`, que este desvio nao toca. Se um dia incomodar, o alvo esta
+identificado em `0x004D83BA`.
+
+### Calibrar — a interface e de caixa fixa
+
+`--bonus` soma sobre o tamanho pedido e preserva a proporcao entre titulo,
+corpo e rodape; e por isso o padrao. `--fixo` da a mesma altura para tudo e
+achata essas diferencas — serve para provar que o desvio pegou, nao para uso.
+
+Com `--fixo 20` o painel de selecao cortou "Interior de Prontera" em
+"Interior d" e os valores do inventario se sobrepuseram. Subir de 4 em 4 e
+olhar.
+
+O cache por tamanho (64 entradas em `.xdiff`) **nao e enfeite**: sem ele cada
+pedido criaria um HFONT novo e o processo vazaria handles ate cair.
+
+### A versao anterior nao funcionava — e dizia que sim
+
+Ate 2026-08-09 esta ferramenta somava na altura do `LOGFONTA` nos 8
+`CreateFontIndirectA` do exe. **Nao tinha efeito nenhum, em nenhum valor**, e o
+`--verificar` respondia *"8 ja desviadas"* porque procurava o formato do
+proprio stub — aplicado, confirmado, inocuo. Tres A/B independentes fecharam o
+caso, inclusive um stub que forcava sublinhado e nao apareceu em lugar nenhum.
+
+A licao, que vale para qualquer patch de exe: **antes de subir o numero, provar
+que o patch chega a tela**, com uma marca que nao dependa do efeito procurado.
+O relato inteiro esta na secao "Tamanho da fonte" do `HISTORICO.md`.
+
+O exe fica travado enquanto o cliente roda, e o cliente segura o proprio exe
+(renomear tambem nao resolve, ao contrario do `Setup.exe`). Fechar e o unico
+caminho — e o que ja esta aberto segue na copia em memoria, entao **fechar e
+reabrir**.
 
 ## `ajusta_charset_fonte.py` — faz o cliente desenhar Latin-1
 

@@ -94,6 +94,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
 | `src/` | recompilar (VS 2022 Community, já instalado) |
 | `itemInfo.lua` e afins no cliente | **fechar e reabrir o cliente** — só lido na inicialização |
+| Exe do cliente (fonte, charset) | **fechar o cliente ANTES de gravar** — o exe fica travado enquanto roda, e o que já está aberto segue na cópia em memória |
 
 Na dúvida, reiniciar o map-server resolve tudo do lado servidor; login e char
 podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.**
@@ -210,6 +211,22 @@ Produziram diagnóstico falso e custaram retrabalho:
   puro. Comparar tamanho entre os dois não significa nada.
 - **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`
   gerado compila.**
+- **Patch de exe "aplicado e confirmado" NÃO é patch com efeito — e script que
+  confere o próprio trabalho não prova nada.** O `ajusta_tamanho_fonte.py`
+  desviava 8 chamadas, respondia *"8 ja desviadas"* no `--verificar` e era
+  **inócuo**: procurava o formato do próprio stub, não o resultado na tela.
+  Subir o número (2 → 4 → 6) só gastou rodadas. **Antes de calibrar valor,
+  provar que o patch chega à tela com uma marca que não dependa do efeito
+  procurado** — sublinhado, negrito, outra face de fonte. Responde numa rodada
+  o que tentativa e erro não responde em cinco. Duas medições que enganam junto:
+  contar call site só por `ff 15 [IAT]` ignora `mov reg,[IAT]`, thunk,
+  delay-import e cave de patch anterior; e `int3` não mata processo quando a
+  função tem SEH (`push fs:[0]`), então "subiu vivo" não quer dizer "não
+  executou". Ver `HISTORICO.md`, "Tamanho da fonte".
+- **Comparar tamanho de texto a olho, em tela cheia, não decide.** Duas rodadas
+  foram gastas discutindo se a fonte tinha mudado. O que decidiu foi recortar a
+  mesma região de dois screenshots e ampliar em nearest-neighbor — aí "idêntico
+  ao pixel" ou "mudou" é fato, não impressão.
 - **`source` do mysql.exe quebra com barra invertida** (`\U` = comando
   desconhecido). Usar barras normais no caminho.
 - **Ler tabela grande de bytecode Lua 5.1:** o operando `RK` só endereça

@@ -598,6 +598,118 @@ python ferramentas/ajusta_charset_fonte.py --reverter
 e desfazer o commit dos `npc/guerra/*.txt`. As bandeiras `--sem-acento` do
 `traduz_ptbr.py` e do `completa_iteminfo.py` têm de andar juntas.
 
+### Tamanho da fonte — RESOLVIDO em 2026-08-09, e não onde se procurava
+
+O cliente **não tem** opção de tamanho de fonte: nem Setup.exe, nem menu, nem
+`OptionInfo.lua`. O `/font` da lista de comandos troca a fonte do **chat**, e
+só. E resolução não resolve: a interface é de pixel fixo, então subir a
+resolução deixa tudo **menor** — medido a 1900×1080, onde o nome do mapa na
+seleção de personagem ficou ilegível.
+
+Hoje quem faz isso é `ferramentas/ajusta_tamanho_fonte.py`, que desvia o
+distribuidor de fontes do cliente. **O `--verificar` diz em quanto está** — não
+perguntar a este arquivo.
+
+#### A versão anterior da ferramenta nunca funcionou, em nenhum valor
+
+É o que a seção realmente ensina, e custou uma tarde. Ela somava na altura do
+`LOGFONTA` nos 8 `CreateFontIndirectA` do exe. Aquilo **não tem efeito
+nenhum** — e o script confirmava o próprio trabalho, respondendo *"8 ja
+desviadas"*, porque procurava o formato do próprio stub. Aplicado, confirmado,
+inócuo.
+
+O pedido chegou como "já pedi e não fizemos". Estava em `+2`, e a primeira
+reação — subir para `+4`, depois `+6` — só gastou rodadas. Três frentes
+independentes fecharam o caso:
+
+1. **A/B de captura entre +2 e +6.** Recortada e ampliada a mesma janela de
+   informações básicas, os glifos são idênticos ao pixel; só o Weight muda.
+   Comparar tamanho a olho, em tela cheia, não teria decidido nunca.
+2. **Um stub que forçava SUBLINHADO** (`lfUnderline`, offset 0x15) além da
+   altura. Sublinhado não depende de tamanho, de layout nem de caixa fixa — e
+   não apareceu em lugar nenhum do jogo.
+3. **A/B entre exe patcheado e exe original**, byte a byte revertido:
+   indistinguíveis.
+
+A regra que sai daí: **antes de subir número, provar que o patch chega à tela.**
+Uma marca visual que não dependa do efeito procurado — sublinhado, negrito,
+outra face — responde numa rodada o que tentativa e erro não responde em cinco.
+
+#### Onde o texto realmente nasce
+
+```
+0x004C4938  call 0x004C3660    ; pega o HFONT
+0x004C4940  call [SelectObject]
+0x004C494D  call [GetTextExtentPoint32W]   <- MEDE
+
+0x004C4A6E  call 0x004C3660    ; a MESMA funcao
+0x004C4A79  call [SelectObject]
+0x004C4A89  call [TextOutW]                <- DESENHA
+```
+
+`0x004C3660` é o distribuidor de fontes, e **medição e desenho tiram a fonte
+dele**. Por isso o desvio vai ali: fonte trocada só no desenho daria texto
+grande medido como pequeno — cortado e sobreposto. É thiscall, cinco
+argumentos, `ret 14h`; o **segundo** argumento é o tamanho pedido, medido
+comparando `--fixo` com `--bonus` na mesma caixa de diálogo.
+
+A fonte nova sai de `CreateFontA`, que estava importada com **zero** chamadas —
+livre. Charset 0 (ANSI), o mesmo que faz o acento cp1252 aparecer.
+
+Duas coisas do caminho que valem além deste patch:
+
+- **Contar call site só por `ff 15 [IAT]` engana.** Foi assim que a ferramenta
+  antiga concluiu "CreateFontA: zero chamadas" e escolheu o alvo errado. Há
+  `mov reg,[IAT]` + `call reg`, thunk do compilador, delay-import e cave de
+  patch anterior. Aqui todos foram conferidos, um a um.
+- **`int3` não prova nada em função com SEH.** Põe-se `int3` no stub esperando
+  que o processo morra se aquilo executar; `0x004C3660` abre com
+  `push 0x00C7E270; push fs:[0]`, e a exceção pode ser engolida. O cliente sobe
+  vivo nos dois casos, e o teste não decide nada.
+
+#### O que o desvio NÃO pega
+
+Título de janela e botão saem do outro caminho de texto (`TextOutA`, em
+`0x004D83BA`) e continuam do tamanho original. Medido: com o desvio ligado,
+"Do you agree?" cresce e "message"/"OK"/"cancel" não. Se um dia incomodar, o
+alvo já está identificado.
+
+#### Os valores aprovados, e como se chegou neles
+
+O estado no jogo é face **Arial**, **`--bonus 0`**, **`--teto 11`**, sem
+suavização — e são os padrões da ferramenta, então rodá-la sem argumento
+reproduz isso.
+
+Dois passos da calibragem valem registro porque contrariaram a intuição:
+
+- **O tamanho certo veio de ZERAR o bônus, não de subir.** Depois de `+4` e
+  `+2` ficarem grandes, `+1` ainda parecia levemente grande, e a pergunta que
+  destravou foi do dono do servidor: se `+1` já está acima do ponto, `+0` não
+  precisa ser o texto minúsculo de antes. **E não é** — nós não aumentamos a
+  fonte do cliente, nós **trocamos** a fonte. Face diferente na mesma altura em
+  pixels não desenha do mesmo tamanho, então `+0` já é mudança. A ferramenta
+  chegou a recusar `0` por uma validação sem fundamento minha, que foi tirada;
+  bônus negativo também é válido, pelo mesmo motivo.
+- **O `--teto 14` não fez efeito, e foi esse o dado útil.** Provou que as
+  linhas do status pedem 14 ou menos, matando a hipótese de que pediam um corpo
+  muito maior. A diferença era de poucos pixels, amplificada pela face. De 14
+  para 12 a janela encolheu sem tocar no resto; 11 fechou.
+
+O contorno rosa que apareceu no caminho era ClearType: `DEFAULT_QUALITY` deixa
+o Windows suavizar por subpixel, e o franjado colorido sobrevive à composição
+do texto como textura. `NONANTIALIASED_QUALITY` resolveu, e é o que a fonte
+original do cliente sempre foi.
+
+#### Calibrar e olhar — a interface é de caixa fixa
+
+Com `--fixo 20` o painel de seleção cortou "Interior de Prontera" em
+"Interior d" e os valores do inventário se sobrepuseram. Por isso o padrão é
+`--bonus`, que soma sobre o tamanho pedido e preserva a proporção entre título,
+corpo e rodapé. Subir de 4 em 4 e olhar.
+
+O cache por tamanho **não é enfeite**: sem ele cada pedido criaria um HFONT
+novo, e o processo vazaria handles até cair.
+
 ### NPCs nossos hoje
 
 | NPC | Onde | O quê | Testado |
