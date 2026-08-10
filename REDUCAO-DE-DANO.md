@@ -22,9 +22,45 @@ nosso enxerto** (§2 do `CLAUDE.md`). Ao atualizar o `rathena/`, eles andam.
 sobra depois é só dano fixo que a habilidade declara explicitamente como
 acréscimo fixo.
 
-E a redução fecha de verdade: o `APPLY_CARDFIX` (`battle.cpp:808`) grampeia em
-`max(0, fix)`. **Não existe teto de 99%** — passando de 100% o dano vira zero,
-não 1%.
+E a redução fecha até um teto. O `APPLY_CARDFIX` (`battle.cpp:811`) grampeia o
+multiplicador num piso nosso, e não no zero do rAthena — ver §1b.
+
+---
+
+## 1b. O teto de 99,9% — nada é imune
+
+**`conf/guerra/battle_guerra.txt` → `reducao_dano_teto: 999`** (milésimos).
+
+No rAthena puro o `APPLY_CARDFIX` usa `max(0, fix)`: somando **100% de
+resistência, o dano vira zero**. Não é um teto de 99% que ninguém percebeu — é
+imunidade completa a tudo que passa por carta, e um Sura de guerra chegava a
+110% só com equipamento de loja (2026-08-09).
+
+Desde 2026-08-10 o `0` virou um piso configurável
+(`src/custom/reducao_de_dano.hpp`, `reducao_piso()`):
+
+| Valor | Efeito |
+|---|---|
+| `999` | **o nosso** — no máximo 99,9% de redução; sempre passa 1 milésimo |
+| `990` | no máximo 99% |
+| `1000` | desliga a trava e devolve o comportamento do rAthena |
+
+Muda com **`@reloadbattleconf`**, sem recompilar.
+
+**Por que o piso mora no fim da conta e não no passo da raça:** o `cardfix` é
+uma conta só, encadeada — elemento, tamanho, raça, classe, distância — e cada
+passo é divisão inteira. Grampear no meio não sustenta: um `cardfix` reduzido a
+1 no passo da raça vira **0** no passo seguinte (`1 * 90 / 100 == 0`) e a
+imunidade volta pela porta dos fundos.
+
+**A consequência que precisa ser dita:** o teto vale para a redução de carta
+**inteira**, não só para a de raça. Combinação de resistência a elemento, a
+tamanho ou a classe que chegasse a 100% também passa a deixar 0,1%. É de
+propósito — a regra é "nada é imune" —, mas quem for calibrar resistência a
+elemento precisa saber.
+
+E o teto **não alcança** nada da §4: o que já escapava da redução de carta
+continua escapando por inteiro.
 
 ---
 
@@ -36,15 +72,15 @@ Isto é o que decide tudo o que vem abaixo. No renewal o dano físico é montado
 | # | Onde | O que acontece |
 |---|---|---|
 | 1 | `battle_calc_skill_base_damage` | nascem `statusAtk`, `weaponAtk`, `equipAtk`, `masteryAtk`, `percentAtk` |
-| 2 | `battle.cpp:5496` | cartas **do atacante** (só ele) |
-| 3 | **`battle.cpp:5506`** | **cartas do ALVO — a redução. Parcela a parcela.** |
-| 4 | `battle.cpp:5525` | nosso enxerto: o `percentAtk` entra aqui |
-| 5 | `battle.cpp:5532` | `wd.damage = statusAtk + weaponAtk + equipAtk + percentAtk` |
-| 6 | `battle.cpp:5532+` | P.ATK, crítico, curta/longa distância — **multiplicativos** |
-| 7 | `battle.cpp:5574` | multiplicador da habilidade — **multiplicativo** |
-| 8 | `battle.cpp:5577` | `battle_calc_skill_constant_addition` — **dano fixo, SOMADO** |
-| 9 | `battle.cpp:5632` | redução por DEF |
-| 10 | `battle.cpp:5634` | `battle_calc_attack_post_defense` — **dano fixo, SOMADO** |
+| 2 | `battle.cpp:5499` | cartas **do atacante** (só ele) |
+| 3 | **`battle.cpp:5509`** | **cartas do ALVO — a redução. Parcela a parcela.** |
+| 4 | `battle.cpp:5528` | nosso enxerto: o `percentAtk` entra aqui |
+| 5 | `battle.cpp:5535` | `wd.damage = statusAtk + weaponAtk + equipAtk + percentAtk` |
+| 6 | `battle.cpp:5535+` | P.ATK, crítico, curta/longa distância — **multiplicativos** |
+| 7 | `battle.cpp:5577` | multiplicador da habilidade — **multiplicativo** |
+| 8 | `battle.cpp:5580` | `battle_calc_skill_constant_addition` — **dano fixo, SOMADO** |
+| 9 | `battle.cpp:5635` | redução por DEF |
+| 10 | `battle.cpp:5637` | `battle_calc_attack_post_defense` — **dano fixo, SOMADO** |
 | 11 | fim | `battle_calc_attack_gvg_bg`, `battle_calc_weapon_final_atk_modifiers` |
 
 **Por que reduzir na etapa 3 dá no mesmo que reduzir no fim:** tudo entre a 5 e a
@@ -55,7 +91,7 @@ Era exatamente isso que faltava: o `percentAtk` não entrava.
 **Onde escapa, então:** nas etapas 8 e 10, que **somam** depois da conta.
 
 Magia e "misc" não têm esse problema — a redução é aplicada de uma vez sobre o
-dano inteiro (`battle.cpp:6013` para magia no renewal, `battle.cpp:6649` para
+dano inteiro (`battle.cpp:6016` para magia no renewal, `battle.cpp:6652` para
 misc), e tudo o que vem depois é multiplicativo.
 
 ---
@@ -63,7 +99,7 @@ misc), e tudo o que vem depois é multiplicativo.
 ## 3. O que a redução cobre
 
 Quando ela roda, roda inteira. Estão todos no mesmo bloco
-(`battle.cpp:1091` em diante):
+(`battle.cpp:1094` em diante):
 
 - `bonus2 bSubRace,<raça>,n` e `bonus2 bSubRace,RC_All,n` — **somam na mesma
   conta**, então Cocar (`RC_All`) e Anel (`RC_Player_Human`) se acumulam
@@ -108,7 +144,7 @@ Nome em português pela tabela que o cliente lê (`skillinfolist.lub`, regra 12 
 | `NPC_SELFDESTRUCTION`, `NPC_EVILLAND`, `NPC_ICEMINE`, `NPC_FLAMECROSS`, `NPC_MAXPAIN_ATK`, `NPC_KILLING_AURA`, `NPC_MAGMA_ERUPTION_DOTDAMAGE` | — | monstro/NPC |
 
 E mais três que **não têm a flag no `.yml`** — o C++ liga na hora
-(`battle.cpp:6560`), então procurar no `skill_db` não acha:
+(`battle.cpp:6563`), então procurar no `skill_db` não acha:
 **`RA_CLUSTERBOMB`** (Bomba Relógio), **`RA_FIRINGTRAP`** (Armadilha
 Incendiária) e **`RA_ICEBOUNDTRAP`** (Armadilha Glacial).
 
@@ -130,7 +166,7 @@ Incendiária) e **`RA_ICEBOUNDTRAP`** (Armadilha Glacial).
 Estes são somados nas etapas 8 e 10 da §2, ou seja, **depois** de a redução ter
 fechado. É o comportamento correto: a habilidade declara um acréscimo fixo.
 
-`battle_calc_skill_constant_addition` (`battle.cpp:4485`):
+`battle_calc_skill_constant_addition` (`battle.cpp:4488`):
 
 | Habilidade | Acréscimo fixo |
 |---|---|
@@ -139,7 +175,7 @@ fechado. É o comportamento correto: a habilidade declara um acréscimo fixo.
 | `GS_MAGICALBULLET` — Bala Mágica | o MATK do atirador |
 | `HT_FREEZINGTRAP` — Armadilha Congelante | `40 × nível de RA_RESEARCHTRAP` |
 
-`battle_calc_attack_post_defense` (`battle.cpp:4896`):
+`battle_calc_attack_post_defense` (`battle.cpp:4899`):
 
 | Efeito | Acréscimo fixo |
 |---|---|
@@ -152,8 +188,8 @@ não passa por redução nenhuma sua:
 
 - `SC_REJECTSWORD` — Instinto de Defesa; `SC_POISONREACT` — Refletir Veneno;
   `SC_CRESCENTELBOW` — Cotovelada Ascedente
-- **Reflexo em geral** (`battle_calc_return_damage`, `battle.cpp:6813`, e o
-  `CR_REFLECTSHIELD` em `battle.cpp:5115`): o dano refletido é calculado a
+- **Reflexo em geral** (`battle_calc_return_damage`, `battle.cpp:6816`, e o
+  `CR_REFLECTSHIELD` em `battle.cpp:5118`): o dano refletido é calculado a
   partir do dano que o alvo **já tomou reduzido**, e entregue direto ao
   atacante por `battle_delay_damage`. **A resistência a humano de quem reflete
   não entra duas vezes, e a de quem toma o reflexo não entra nenhuma.**
@@ -222,12 +258,12 @@ Quando aparecer "fulano furou minha resistência", nesta ordem:
    descrição na tela** — a descrição vem do `itemInfo` do cliente e diverge
    (§5 do `CLAUDE.md`). Some `RC_Player_Human` **e** `RC_All`.
 4. **Sobrou dano com a soma acima de 100?** Então há parcela fora da etapa 3 da
-   §2. Abra o bloco `"Card Fix for target"` (`battle.cpp:5506`) e compare a
-   lista de parcelas com a soma da linha 5532. **Parcela que aparece na soma e
+   §2. Abra o bloco `"Card Fix for target"` (`battle.cpp:5509`) e compare a
+   lista de parcelas com a soma da linha 5535. **Parcela que aparece na soma e
    não aparece no bloco é o furo.**
 5. **Meça na tela.** Verificação offline que passa não é prova de efeito. Mude
    só o termo suspeito (desrefinar a arma, tirar uma carta) e olhe o número.
 
 **Ao atualizar o `rathena/`:** conferir se o enxerto do `battle.cpp` sobreviveu,
-e se a lista de parcelas da linha 5532 ganhou membro novo. Parcela nova que
+e se a lista de parcelas da linha 5535 ganhou membro novo. Parcela nova que
 ninguém puser no bloco de redução repete o bug de 2026-08-09, calada.

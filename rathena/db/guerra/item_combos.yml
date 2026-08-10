@@ -121,3 +121,47 @@ Body:
       bonus2 bSubSkill,"SR_HELLGATE",30;
       bonus2 bSubSkill,"SU_LUNATICCARROTBEAT",30;
       bonus2 bSubSkill,"SU_CN_METEOR",30;
+
+  # ----- Carta Caidos + Carta Guerreiro Orc: sem resistencia a humano ---
+  #
+  # NASCEU EM 2026-08-10, POR DECISAO DE BALANCEAMENTO DO DONO.
+  #
+  # Espelha o conjunto 27328 + 4066 do db/re/item_combos.yml, com UMA
+  # linha a menos. O original e:
+  #
+  #     bonus2 bSubRace,RC_DemiHuman,15;
+  #     bonus2 bSubRace,RC_Player_Human,15;     <- esta sai
+  #
+  # Por que: o topo de cabeca ja oferece 13 a 16% de resistencia a raca
+  # pelo proprio equipamento (o Cocar do Orc Heroi +16 da 16 via
+  # RC_All), e o conjunto com a Carta Guerreiro Orc soma outros 30. Mais
+  # 15 pela carta encaixada punha a cabeca sozinha acima de 60% e a
+  # soma do personagem em 110% - imunidade. O bRO resolveu o mesmo
+  # problema bloqueando esta carta; aqui ela continua util, so nao
+  # entrega mais resistencia a jogador.
+  #
+  # A RC_DemiHuman FICA de proposito. Ela vale contra MONSTRO
+  # humanoide e nao vale nada em PvP - jogador e RC_Player_Human
+  # (battle.cpp, o race_fix do bloco "Card Fix for target"). Tirar
+  # tambem seria punir o uso em campo por um problema de guerra.
+  #
+  # COMO ISTO SUBSTITUI O ORIGINAL: o ComboDatabase casa conjunto pela
+  # LISTA DE ITENS ordenada (`find_combo_id`, src/map/itemdb.cpp), nao
+  # por um id declarado. Repetir a mesma dupla num arquivo importado
+  # depois troca o Script do conjunto que ja existe - nao cria um
+  # segundo. Se um dia a intencao for apagar o conjunto inteiro em vez
+  # de mudar o efeito, o caminho e `Clear: true` no lugar do Script.
+  #
+  # O QUE ISTO NAO CONSERTA: a descricao na tela. O cliente continua
+  # dizendo "Resistencia as racas Humano e Humanoide +15%", porque
+  # quem escreve a descricao e o itemInfo do cliente, nao o servidor
+  # (§4.9 e §5 do CLAUDE.md). Corrigir a descricao e trabalho de
+  # cliente, e esta em aberto.
+  #
+  # Recarrega com `@reloaditemdb` - conjunto entra junto com item.
+  - Combos:
+      - Combo:
+          - LivingDeath_Card    # 27328 - Carta Caidos
+          - Orc_Warrior_Card    # 4066 - Carta Guerreiro Orc
+    Script: |
+      bonus2 bSubRace,RC_DemiHuman,15;

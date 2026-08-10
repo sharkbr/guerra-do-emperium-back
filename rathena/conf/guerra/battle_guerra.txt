@@ -87,3 +87,30 @@ item_rate_treasure: 5000
 //
 // 0 desliga a trava e devolve o comportamento do rAthena.
 refino_teto: 16
+
+//--------------------------------------------------------------
+// Teto da reducao de dano por carta, em MILESIMOS.
+//
+// Esta opcao NAO existe no rAthena - e nossa, definida em
+// src/custom/battle_config_init.inc e usada por
+// src/custom/reducao_de_dano.hpp. Alterar aqui exige
+// `@reloadbattleconf`, nao recompilar.
+//
+// O rAthena grampeia a reducao em `max(0, ...)`: somando 100% de
+// resistencia, o dano vira ZERO. Em 2026-08-09 um Sura de guerra
+// chegou a 110% de resistencia a humano so com equipamento de loja
+// - imunidade completa a tudo que passa por carta.
+//
+//   999  = 99,9% de reducao no maximo (sempre passa 1 milesimo)
+//   990  = 99%
+//   1000 = desliga a trava e devolve o comportamento do rAthena
+//
+// ATENCAO: o teto vale para a reducao de carta INTEIRA, nao so
+// para a de raca - elemento, tamanho, classe e distancia entram na
+// mesma conta. E de proposito: a regra e "nada e imune". Quem for
+// calibrar resistencia a elemento precisa saber disso.
+//
+// Nao alcanca o que ja escapava da reducao de carta por outros
+// motivos - habilidade com IgnoreDefCard, dano fixo, reflexo, dano
+// de status. A lista esta em REDUCAO-DE-DANO.md.
+reducao_dano_teto: 999

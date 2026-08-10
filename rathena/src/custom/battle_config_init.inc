@@ -16,3 +16,9 @@
 // repo sem esse arquivo. Ver src/custom/refino.hpp.
 { "refino_teto",                        &battle_config.refino_teto,                     16,     0,      MAX_REFINE,     },
 
+// Guerra do Emperium: teto da reducao de dano por carta, em milesimos.
+// O valor de verdade esta em conf/guerra/battle_guerra.txt; o 999 aqui e
+// so o padrao de quem clonar o repo sem esse arquivo. 1000 desliga a
+// trava. Ver src/custom/reducao_de_dano.hpp.
+{ "reducao_dano_teto",                  &battle_config.reducao_dano_teto,               999,    0,      1000,           },
+

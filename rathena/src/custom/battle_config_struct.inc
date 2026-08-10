@@ -16,3 +16,8 @@
 // Usado em src/custom/refino.hpp. 0 desliga a trava.
 int32 refino_teto;
 
+// Guerra do Emperium: teto da reducao de dano por carta, em MILESIMOS.
+// 999 = 99,9%; 1000 desliga a trava (comportamento do rAthena).
+// Usado em src/custom/reducao_de_dano.hpp.
+int32 reducao_dano_teto;
+

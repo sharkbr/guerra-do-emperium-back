@@ -805,7 +805,10 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 	}
 
 //Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
-#define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - max(0, fix))) / 1000); }
+// Guerra do Emperium: o `max(0, fix)` do rAthena deixa a reducao de carta
+// zerar o dano - imunidade. O reducao_piso() poe um piso configuravel no
+// lugar do 0. Ver src/custom/reducao_de_dano.hpp.
+#define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - reducao_piso(fix))) / 1000); }
 
 	switch( attack_type ) {
 		case BF_MAGIC:

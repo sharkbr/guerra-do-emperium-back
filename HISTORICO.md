@@ -4780,3 +4780,67 @@ dano fixo declarado, reflexo, dano de status — virou documento próprio,
 passos para o próximo "fulano furou minha resistência". O que sobrou em aberto
 não é código, é economia: a soma de 110% agora zera dano de verdade, e decidir o
 teto está em `PENDENCIAS.md` §1h.
+
+## O teto de 99,9%, e a Carta Caídos fora da conta de humano (2026-08-10)
+
+Com o furo do `percentAtk` fechado (seção acima) e confirmado em tela — 110% de
+resistência passou a dar miss na maioria dos golpes —, o dono foi ao problema de
+balanceamento que estava escondido atrás dele: **110% é imunidade**, e chegar lá
+custava só equipamento de loja.
+
+### A Carta Caídos sai da conta de humano
+
+O topo de cabeça já oferece 13 a 16% de resistência a raça pelo próprio
+equipamento — o Cocar do Orc Herói +16 dá 16 via `RC_All` — e o conjunto dele
+com a Carta Guerreiro Orc soma outros 30. Mais 15 pela Carta Caídos encaixada
+punha **a cabeça sozinha acima de 60%**, e o personagem em 110. O bRO resolveu
+o mesmo problema bloqueando a carta.
+
+Aqui ela continua existindo: o que saiu foi **uma linha** do conjunto 27328 +
+4066. O `bonus2 bSubRace,RC_Player_Human,15` foi embora; o
+`bonus2 bSubRace,RC_DemiHuman,15` **ficou**, porque vale contra monstro
+humanoide e não vale nada em PvP — tirar também seria punir o uso em campo por
+um problema de guerra.
+
+**Como se sobrescreve conjunto sem tocar no arquivo do rAthena:** o
+`ComboDatabase` casa conjunto pela **lista de itens ordenada**
+(`find_combo_id`, `src/map/itemdb.cpp:3796`), não por um id declarado. Repetir a
+mesma dupla num arquivo importado depois **troca o `Script` do conjunto que já
+existe**, não cria um segundo. Está em `db/guerra/item_combos.yml`, e é o mesmo
+caminho para qualquer outro conjunto que a gente queira mudar. Para apagar o
+conjunto inteiro em vez de mudar o efeito, o campo é `Clear: true`.
+
+Recarrega com `@reloaditemdb` — conjunto entra junto com item.
+
+**O que isto não conserta:** a descrição na tela. O cliente continua dizendo
+"Resistência as raças Humano e Humanoide +15%", porque quem escreve a descrição
+é o `itemInfo` do cliente. Ficou em aberto no `PENDENCIAS.md`.
+
+### O teto de 99,9%
+
+Tirar 15 de um lugar não resolve a classe do problema: some outra peça e a soma
+volta a 100. O rAthena grampeia a redução em `max(0, fix)` — **100% de
+resistência entrega dano zero**, imunidade completa a tudo que passa por carta.
+
+O `0` virou um piso configurável, em `src/custom/reducao_de_dano.hpp`
+(`reducao_piso`), com o valor em `conf/guerra/battle_guerra.txt`:
+
+```
+reducao_dano_teto: 999      // milesimos. 999 = 99,9%; 1000 desliga a trava
+```
+
+Milésimos porque é a unidade que o `cardfix` já usa (1000 = sem redução), então
+99,9% é exato — não foi preciso arredondar para 99. Muda com
+`@reloadbattleconf`.
+
+**Por que o piso mora no fim da conta e não no passo da raça.** Tentar grampear
+o passo da raça não sustenta: o `cardfix` é uma conta só, encadeada, e cada
+passo é divisão inteira — um `cardfix` reduzido a 1 na raça vira **0** no passo
+seguinte (`1 * 90 / 100 == 0`), e a imunidade volta pela porta dos fundos. Só no
+fim o piso se segura. Consequência aceita de propósito: **o teto vale para a
+redução de carta inteira**, não só para a de raça — elemento, tamanho e classe
+entram na mesma conta. A regra passou a ser "nada é imune".
+
+O catálogo do que continua escapando — habilidade com `IgnoreDefCard`, dano fixo
+declarado, reflexo, dano de status — está em `REDUCAO-DE-DANO.md`, que ganhou a
+§1b sobre o teto.

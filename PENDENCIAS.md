@@ -530,34 +530,52 @@ cliente, não NPC.
 
 ---
 
-## 1h. O teto de resistência a humano — falta decidir a economia
+## 1h. Resistência a humano — o que sobrou depois do teto
 
-O furo que fazia `bonus bAtkRate` ignorar toda redução de carta foi corrigido em
-2026-08-09 e **confirmado em jogo pelo dono em 2026-08-10**. A história está no
-`HISTORICO.md`, "A resistência a humano que não fechava a conta"; o que entra e
-o que escapa da conta está catalogado em `REDUCAO-DE-DANO.md`.
+Feito e no ar em 2026-08-10, **falta a prova em tela das duas**:
 
-**O que ficou em aberto é a economia, não o código.** Com o furo fechado, o teto
-volta a valer de verdade — e a conta do Sura de guerra dá **110%**, ou seja,
-dano zero. O bRO resolveu isso segurando a soma em ~97%, ao custo de bloquear
-carta e efeito. Aqui as peças da decisão são:
+1. **A Carta Caídos não dá mais resistência a humano.** O conjunto com a Carta
+   Guerreiro Orc perdeu o `bonus2 bSubRace,RC_Player_Human,15`; o
+   `RC_DemiHuman,15` ficou (vale contra monstro, não vale em PvP). Está em
+   `db/guerra/item_combos.yml`, sobrescrevendo o conjunto do `db/re/`.
+2. **Teto de 99,9% na redução de carta.** `reducao_dano_teto: 999` em
+   `conf/guerra/battle_guerra.txt`. Nada é imune.
 
-1. **A Carta Caídos** (`LivingDeath_Card`, 27328) é inocente do bug, mas é ela
-   que empurra a soma de 95 para 110, pelo conjunto com a Carta Guerreiro Orc
-   (`db/re/item_combos.yml:5052`). Bloquear a carta, tirar o conjunto, ou baixar
-   o valor — são três remédios diferentes, com três efeitos colaterais
-   diferentes.
-2. **Levantar quais itens à venda têm `bAtkRate` alto por refino.** A Lâmina
-   Sagrada (`Copy_Gram`, 500009) dá 160 em +16. Agora que esse bônus entra na
-   conta, ele deixou de furar resistência — mas continua sendo ATQ enorme, e
-   vale saber quantos outros existem antes de mexer no teto.
-3. **A `Capa do Comandante` (20925) descreve 5% e entrega 3%** (§5 do
-   `CLAUDE.md`). Ou se corrige o script por override em `db/guerra/item_db.yml`,
-   ou se aceita — mas a divergência tem de ser decisão, não esquecimento.
+### A sonda de cada uma
 
-**Ao atualizar o `rathena/`:** conferir se o enxerto do `battle.cpp` sobreviveu,
-e se a lista de parcelas da linha 5532 ganhou membro novo. Parcela nova que
-ninguém puser no bloco de redução repete o bug de 2026-08-09, calada.
+**Da Carta Caídos** — binária, e não depende de calcular dano nenhum: mesmo
+Sura, mesmo agressor, mesmo golpe, **com e sem a carta encaixada no Cocar**. Os
+dois números têm de ser **iguais**. Se com a carta doer menos, a sobrescrita do
+conjunto não pegou e o `db/re/` ainda está valendo. Recarrega com
+`@reloaditemdb`.
+
+**Do teto** — o Sura completo agora soma 95%, então já não serve para testar o
+teto. Para provar o piso é preciso **passar de 100 de propósito** (a Capa e o
+Anel de volta, ou `@item` de uma peça de resistência) e conferir que o dano é
+**pequeno mas nunca zero**. Se aparecer zero, o piso não está sendo aplicado.
+
+### O que continua em aberto
+
+- **Levantar os itens à venda com `bAtkRate` alto por refino.** A Lâmina Sagrada
+  (`Copy_Gram`, 500009) dá 160 em +16. Não fura mais resistência, mas continua
+  sendo ATQ enorme, e vale saber quantos outros existem.
+- **A descrição na tela mente em três lugares**, e nenhum tem conserta pelo
+  servidor — quem escreve é o `itemInfo` do cliente:
+  - a **Carta Caídos** continua anunciando "+15% Humano e Humanoide"
+  - o **Cocar do Orc Herói** continua anunciando o conjunto com os 15
+  - a **Capa do Comandante** (20925) diz 5% e o script entrega 3%
+    (§5 do `CLAUDE.md`)
+
+  Corrigir é trabalho de cliente (`itemInfo`, via `ferramentas/instala_item.py`),
+  e exige fechar e reabrir o cliente. Decidir se vale.
+- **Calibrar resistência a elemento sabendo do teto.** Ele vale para a redução
+  de carta inteira, não só para a de raça — combinação de elemento que chegasse
+  a 100% agora deixa passar 0,1%. Ver `REDUCAO-DE-DANO.md` §1b.
+
+**Ao atualizar o `rathena/`:** conferir se os **dois** enxertos do `battle.cpp`
+sobreviveram (o `reducao_alcanca_percentatk` e o `reducao_piso`), e se a lista de
+parcelas da linha 5535 ganhou membro novo. Parcela nova que ninguém puser no
+bloco de redução repete o bug de 2026-08-09, calada.
 
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 

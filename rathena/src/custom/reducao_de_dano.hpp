@@ -80,6 +80,41 @@
 #include <map/battle.hpp>
 #include <map/map.hpp>
 
+/// Piso do multiplicador de dano do `APPLY_CARDFIX`, em milesimos.
+///
+/// O rAthena grampeia o multiplicador em `max(0, fix)`: reducao de 100% ou mais
+/// entrega dano ZERO. Num servidor de guerra isso e imunidade - basta a soma de
+/// resistencia a raca passar de 100 e o jogador para de tomar dano de tudo que
+/// passa por carta.
+///
+/// Esta funcao troca o 0 por um piso configuravel. Com
+/// `reducao_dano_teto: 999` (milesimos), o piso vira 1 e a reducao maxima
+/// possivel e 99,9% - sempre passa um milesimo do dano. `1000` devolve o
+/// comportamento do rAthena.
+///
+/// POR QUE O TETO MORA AQUI E NAO NO PASSO DA RACA. O `cardfix` e uma conta so,
+/// encadeada - elemento, tamanho, raca, classe, distancia - e cada passo e uma
+/// divisao inteira. Grampear no meio nao adianta: um `cardfix` reduzido a 1 no
+/// passo da raca vira 0 no passo seguinte (`1 * 90 / 100 == 0`), e a imunidade
+/// volta pela porta dos fundos. So no fim da conta o piso se sustenta.
+///
+/// CONSEQUENCIA QUE PRECISA SER DITA: o teto vale para a reducao de carta
+/// INTEIRA, nao so para a de raca. Combinacao de resistencia a elemento, a
+/// tamanho ou a classe que hoje chegue a 100% tambem passa a deixar 0,1%. E de
+/// proposito - a regra e "nada e imune" -, mas quem for calibrar elemento
+/// precisa saber.
+///
+/// @param fix Multiplicador acumulado, em milesimos (1000 = sem reducao)
+/// @return O mesmo multiplicador, nunca abaixo do piso
+inline int32 reducao_piso(int32 fix) {
+	int32 piso = 1000 - battle_config.reducao_dano_teto;
+
+	if (piso < 0)
+		piso = 0;
+
+	return max(piso, fix);
+}
+
 #ifdef RENEWAL
 
 /// Passa o `percentAtk` pela reducao de cartas do alvo, do mesmo jeito e no

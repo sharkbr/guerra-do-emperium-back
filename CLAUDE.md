@@ -48,7 +48,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
-| `src/map/battle.cpp` | um include de `src/custom/` + uma chamada (`reducao_alcanca_percentatk`, no bloco "Card Fix for target"), comentada no arquivo. Põe o `percentAtk` na redução de cartas do alvo — sem ela, `bonus bAtkRate` fura toda resistência (ver `HISTORICO.md`, "A resistência a humano que não fechava a conta") |
+| `src/map/battle.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto de 99,9%, no lugar do `max(0, …)` que deixa a redução zerar o dano). Ver `REDUCAO-DE-DANO.md` |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
