@@ -4844,3 +4844,78 @@ entram na mesma conta. A regra passou a ser "nada é imune".
 O catálogo do que continua escapando — habilidade com `IgnoreDefCard`, dano fixo
 declarado, reflexo, dano de status — está em `REDUCAO-DE-DANO.md`, que ganhou a
 §1b sobre o teto.
+
+---
+
+## A Capa do Comandante passou a entregar o que promete (2026-08-10)
+
+Rabo do trabalho acima. A **Capa do Comandante** (20925) foi o item que denunciou
+a armadilha do `CLAUDE.md` §5 — *"a descrição do item na tela discorda do script
+do servidor, no NÚMERO, não só na presença"*. Ela apareceu em 2026-08-09, ao
+refazer no `item_db` uma soma de resistência a humano que tinha sido feita lendo
+a tela, e ficou registrada como pendência sem conserto do lado do servidor.
+
+A divergência era **dupla**, e a segunda metade é a que o relato de ontem não
+tinha:
+
+| | tela (`itemInfo.lua`) | servidor (`db/re/item_db_equip.yml`) |
+|---|---|---|
+| Humano | 5% | **3%** |
+| Doram | 5% | **nada** |
+
+O resto da descrição batia com o script linha por linha — HP e SP +3%, ATQ e
+ATQM +10, os degraus em +5 e +7. Só a linha da resistência mentia.
+
+### Corrigiu-se o servidor, e não o cliente
+
+Decisão do dono. É o mesmo raciocínio do override do **400287** (Capacete de
+Intensificação), e o comentário de lá já o dizia: entre trocar a descrição do
+cliente e trocar o efeito do servidor, **trocar o servidor é o lado barato e o
+lado certo**. Mexer no `itemInfo` custaria `instala_item.py` mais fechar e
+reabrir o cliente, e deixaria a nossa descrição divergente da do bRO — que é a
+nossa fonte de referência (`CLAUDE.md` §4.3).
+
+O conserto é um override na seção OVERRIDES do `db/guerra/item_db.yml`, com
+`RC_Player_Human,5` no lugar do `,3` e uma linha nova de `RC_Player_Doram,5`.
+
+**A armadilha que este caso acrescenta: `Script:` é um campo só.** A mesclagem
+do `ItemDatabase::parseBodyNode` é por **campo** — campo omitido mantém o valor
+do `db/re/` —, mas ela não alcança *linha* de script. Sobrescrever uma linha
+obriga a repetir o script **inteiro**, com os degraus de refino e tudo. O bloco
+foi **copiado** do `db/re/item_db_equip.yml`; reescrever de cabeça é como se
+perde um degrau sem que nada avise.
+
+Provado com `difflib` contra o original: **uma linha trocada, uma acrescentada,
+nada mais.**
+
+### O `bonus bMdef,10` ficou — e não era divergência nenhuma
+
+Era a dúvida aberta do pedido: o MDEF do script não aparece em linha azul de
+efeito na descrição. Não aparece porque **MDEF de armadura nunca aparece** — ele
+está no rodapé de status da própria descrição, `DEF: 20 DEFM: 10`, conferido no
+`itemInfo.lua` deste cliente. Manter é o que a mesclagem faz de graça, e é o que
+está certo.
+
+### O que este conserto NÃO alcança
+
+Os **três conjuntos com as botas do Herói** (22035, 22036, 22037) prometem, cada
+um, *"Resistência as raças Humano e Doram +5% adicional"*, e no
+`db/re/item_combos.yml` dão `RC_Player_Human,5` e **nada para Doram**. O valor
+bate; falta só a raça. Ficou de fora de propósito: o pedido era a capa, as três
+botas **não estão à venda em loja nossa nenhuma**, e o caminho de conserto é
+outro — `db/guerra/item_combos.yml`, do jeito que a Carta Caídos foi feita na
+seção acima.
+
+### A conta de resistência a humano, depois disto
+
+A capa passou de 3 para 5 pontos. Com o teto de 99,9% no lugar, subir 2 pontos
+não reabre a imunidade — mas é 2 a mais na soma que o dono está calibrando, e
+vale lembrar de onde eles saem ao revisitar os números de PvP.
+
+Recarrega com `@reloaditemdb`. Não exige reiniciar nem recompilar.
+
+**A prova é medida, não lida.** O tooltip não serve — ele já dizia 5% quando o
+servidor dava 3, é ele o mentiroso. Mesmo agressor, mesmo golpe, com e sem a
+capa, **com o alvo bem abaixo de 100% de resistência somada**: perto do teto o
+piso de 99,9% achata a comparação e 5 pontos parecem 0. Ficou no `PENDENCIAS.md`
+§1h, junto com as outras duas sondas da mesma frente.

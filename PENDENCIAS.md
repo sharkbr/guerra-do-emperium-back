@@ -559,15 +559,26 @@ Anel de volta, ou `@item` de uma peça de resistência) e conferir que o dano é
 - **Levantar os itens à venda com `bAtkRate` alto por refino.** A Lâmina Sagrada
   (`Copy_Gram`, 500009) dá 160 em +16. Não fura mais resistência, mas continua
   sendo ATQ enorme, e vale saber quantos outros existem.
-- **A descrição na tela mente em três lugares**, e nenhum tem conserta pelo
-  servidor — quem escreve é o `itemInfo` do cliente:
+- **A descrição na tela mente em dois lugares**, e nenhum dos dois tem conserto
+  pelo servidor — quem escreve é o `itemInfo` do cliente:
   - a **Carta Caídos** continua anunciando "+15% Humano e Humanoide"
   - o **Cocar do Orc Herói** continua anunciando o conjunto com os 15
-  - a **Capa do Comandante** (20925) diz 5% e o script entrega 3%
-    (§5 do `CLAUDE.md`)
 
   Corrigir é trabalho de cliente (`itemInfo`, via `ferramentas/instala_item.py`),
   e exige fechar e reabrir o cliente. Decidir se vale.
+
+  > A **Capa do Comandante** (20925) era o terceiro e **saiu em 2026-08-10**:
+  > ali o conserto cabia no servidor, e foi feito — override em
+  > `db/guerra/item_db.yml` levando a resistência a 5% para Humano **e** Doram,
+  > como a tela sempre prometeu. Ver `HISTORICO.md`. **Falta a prova em tela**,
+  > junto com as duas sondas acima: mesmo agressor, mesmo golpe, com e sem a
+  > capa, e a diferença tem de ser de **5** pontos de resistência, não 3. O
+  > tooltip não serve de prova — ele já dizia 5% quando o servidor dava 3.
+  >
+  > O que continua aberto no mesmo item, e é menor: os **três conjuntos com as
+  > botas do Herói** (22035, 22036, 22037) prometem "+5% Humano e Doram" e o
+  > `db/re/item_combos.yml` só dá o Humano. As três botas não estão à venda em
+  > loja nossa nenhuma, então ninguém alcança esses conjuntos hoje.
 - **Calibrar resistência a elemento sabendo do teto.** Ele vale para a redução
   de carta inteira, não só para a de raça — combinação de elemento que chegasse
   a 100% agora deixa passar 0,1%. Ver `REDUCAO-DE-DANO.md` §1b.

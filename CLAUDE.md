@@ -452,6 +452,9 @@ Produziram diagnóstico falso e custaram retrabalho:
   `bonus2 bSubRace,RC_Player_Human,3` — 3, e nada para Doram. Somar resistência
   lendo a tela dá um total plausível e errado, e a diferença não aparece em
   lugar nenhum. **Conta de efeito se fecha no `item_db`.**
+  *Esta capa foi consertada em 2026-08-10* (override no `db/guerra/item_db.yml`,
+  do lado do servidor) — quem for conferir hoje acha 5, e a armadilha continua
+  valendo para todo o resto do `item_db`.
 - **Nem toda parcela de dano do renewal passa pela redução de cartas.** O dano
   físico é montado em `statusAtk`, `weaponAtk`, `equipAtk`, `masteryAtk` e
   `percentAtk`, e a redução do alvo é aplicada **parcela a parcela, antes da
