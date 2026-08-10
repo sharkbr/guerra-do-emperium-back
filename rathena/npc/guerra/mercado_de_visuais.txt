@@ -86,17 +86,24 @@
 //= desse lado. Ele copiou 2925 arquivos da GRF do bRO para
 //= `cliente\data\` em 2026-08-08.
 //=
-//= A OUTRA METADE FECHOU EM 2026-08-09, com o
-//= `ferramentas/estende_robeid.py`. Ele é para o manto o que o
-//= `estende_accessoryid.py` é para o chapéu: grava um override em
-//= texto de `spriterobeid.lub` e `spriterobename.lub` sobre
-//= `cliente\data\`, e com ele manto cujo `View` esteja fora da
-//= tabela de 2021-11-03 passa a desenhar. A nossa foi de 120 para
-//= 129 slots, e é o que pôs onze mantos nesta loja naquele dia.
+//= A OUTRA METADE NÃO ERA O QUE PARECIA, e 2026-08-09 mediu isso na
+//= tela: ESTE CLIENTE NÃO DESENHA MANTO COM SLOT ACIMA DE 120. Não é
+//= a tabela - ela foi levada a 158 entradas contíguas, o cliente a
+//= leu, e nada mudou. Falta de arte também não era: o Escudo de
+//= Oridecon (slot 90) desenha, e a arte dele veio na mesma rodada.
+//= É teto do exe.
+//=
+//= A SAÍDA É REAPROVEITAR SLOT MORTO. Dos 120 que este cliente
+//= aceita, 40 não têm arte nenhuma aqui e já não desenhavam nada;
+//= nove receberam a arte dos nove mantos novos. Quem faz é o
+//= `ferramentas/estende_robeid.py`, e o de-para mora num lugar só:
+//= o `View:` do `db/guerra/item_db.yml`. SOBRAM 31 - depois disso,
+//= ou sai um patch de exe (PENDENCIAS.md secao 4), ou não entra
+//= manto novo.
 //=
 //= CUIDADO COM A ORDEM, e ela não é preferência: o
 //= `instala_manto.py` só sabe em que PASTA copiar a arte depois que
-//= a tabela conhece o `View`. Invertido, ele recusa - alto, com o
+//= a tabela conhece o slot. Invertido, ele recusa - alto, com o
 //= motivo por extenso, e não em silêncio.
 //=
 //= UM DOS TREZE NÃO TEM MANTO NENHUM, e está na loja de propósito:
@@ -181,14 +188,16 @@
 //= PARA MANTO (`Costume_Garment`, o Manteleiro) o passo 2 é OUTRO,
 //= porque a camada é outra - e o 1, o 3 e o 4 continuam valendo:
 //=        completa_iteminfo.py  --id <n>
-//=        estende_robeid.py     --id <n>
+//=        (pôr `View: <slot doador>` em db/guerra/item_db.yml)
+//=        estende_robeid.py
 //=        instala_manto.py      --ids <n> --aplicar
 //=        instala_visual.py     --id <n> --grf "<grf do bRO>"
 //=
 //= A mesma dependência de ordem vale aqui, e pelo mesmo motivo: o
 //= `instala_manto.py` só sabe em que PASTA copiar depois que a
-//= tabela conhece o `View`. Invertido, ele recusa - alto, e não em
-//= silêncio como o instala_visual faria.
+//= tabela conhece o slot. Invertido, ele recusa - alto, e não em
+//= silêncio como o instala_visual faria. A receita inteira, com o
+//= critério para escolher o doador, está no RECEITAS.md secao 2b.
 //=
 //= O `instala_visual.py` no FIM é pelos QUATRO arquivos de item -
 //= sprite de chão e os dois ícones -, que valem para qualquer item
@@ -367,20 +376,33 @@ OnInit:
 // por item: ela NAO sai de varredura nenhuma, porque o
 // varre_cosmeticos.py nao classifica manto como `curavel`.
 //
-// ONZE ENTRARAM EM 2026-08-09, e esta foi a rodada que fechou a
-// OUTRA METADE da ferramenta de manto. NOVE dos onze eram, ate
-// aquele dia, impossiveis: o `View` deles esta fora das 120
-// entradas do nosso `spriterobeid.lub` de 2021-11-03, e manto assim
-// nao desenha por mais arte que se copie - o cliente nem chega a
-// procurar arquivo. O `instala_manto.py` os recusava por escrito.
+// ONZE ENTRARAM EM 2026-08-09, e NOVE deles usam SLOT REAPROVEITADO.
+// Este cliente nao desenha manto com slot acima de 120, e os nove
+// tinham slot entre 122 e 158. Nao e a tabela: ela foi levada a 158
+// entradas contiguas, o cliente a leu (conferido pelo horario de
+// acesso do arquivo) e nada mudou. Nao e a arte: o Escudo de
+// Oridecon (slot 90) desenha, e a arte dele veio na mesma rodada,
+// pelo mesmo instala_manto.py. E teto do exe.
 //
-// Quem os destravou foi o `ferramentas/estende_robeid.py`, escrito
-// nesta rodada: o irmao do `estende_accessoryid.py` do lado do
-// manto. Ele grava um override em texto de `spriterobeid.lub` e
-// `spriterobename.lub` sobre `cliente\data\`, e a nossa tabela foi
-// de 120 para 129 slots. Quem trocar de cliente perde isso e
-// precisa rodar os dois scripts de novo, NESTA ordem:
-//   python ferramentas/estende_robeid.py --id <lista>
+// Entao os nove foram apontados para slot MORTO - dos 120 que este
+// cliente aceita, 40 nao tem arte nenhuma aqui e ja nao desenhavam
+// coisa alguma. O de-para esta no `View:` do db/guerra/item_db.yml,
+// e so la: o ferramentas/estende_robeid.py LE de la e escreve a
+// tabela do cliente para combinar. Sobram 31 doadores.
+//
+//   Capa de Heroi            slot 122 -> 41
+//   Guitarra de Deviling         125 -> 49
+//   Asas de Valquiria (as duas)  131 -> 74
+//   Asas Laureadas               136 -> 77
+//   Mochila Multiuso             137 -> 94
+//   Muranyasa                    147 -> 100
+//   Tridente com Lacinho         148 -> 20
+//   Lanca de Valquiria           154 -> 29
+//   Katanas do Mestre Tengu      158 -> 30
+//
+// Quem trocar de cliente perde a tabela e a arte, e precisa rodar os
+// dois scripts de novo, NESTA ordem:
+//   python ferramentas/estende_robeid.py
 //   python ferramentas/instala_manto.py  --ids <lista> --aplicar
 // Invertido, o segundo recusa - e diz por que.
 //

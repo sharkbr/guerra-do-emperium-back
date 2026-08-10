@@ -1,11 +1,67 @@
 # -*- coding: utf-8 -*-
-"""Ensina a este cliente um slot de MANTO que ele nao conhece.
+"""Poe a arte de um manto num slot que ESTE cliente aceita desenhar.
 
-    python estende_robeid.py                              # o que ja foi acrescentado
-    python estende_robeid.py --id 480169 --grf <bro>      # pelo item
-    python estende_robeid.py --view 125 --grf <bro>       # pelo View
-    python estende_robeid.py --id 480169 --grf <bro> --verificar
+    python estende_robeid.py                              # aplica e relata
+    python estende_robeid.py --verificar                  # so relata
     python estende_robeid.py --reverter                   # apaga o override
+    python estende_robeid.py --sonda 114=C_20th_Anniversary_Wing   # ver abaixo
+
+O TETO DE 120, e por que este script nao "estende" mais nada
+
+    Este cliente NAO USA slot de manto acima de 120, e a tabela nao tem nada a
+    ver com isso. Medido em 2026-08-09, na tela, com estes itens:
+
+        desenham   View 61, 73, 75, 82, 90, 99, 104, 114
+        nao        View 122, 136, 148, 154, 158
+
+    A tabela do GRF vai justamente ate 120. Antes de concluir, as tres coisas
+    que poderiam explicar sozinhas foram descartadas UMA A UMA:
+
+      - arte faltando? Nao. O Escudo de Oridecon (View 90) desenha, e a arte
+        dele foi copiada na mesma rodada, pelo mesmo instala_manto.py.
+      - o arquivo nao chega ao cliente? Chega. O horario de acesso dos dois
+        .lub mostra que o cliente os abriu na inicializacao - e a SONDA (abaixo)
+        provou na tela: reapontar o View 114 para a pasta das Asas Laureadas
+        fez a Espada do General desenhar asas.
+      - buraco na numeracao? Nao. A tabela foi refeita contigua de 1 a 158, o
+        cliente a leu, e os View acima de 120 continuaram sem desenhar.
+
+    Sobra o teto no proprio cliente. Levanta-lo seria patch de exe; a busca
+    pela constante ficou registrada no PENDENCIAS.md e NAO foi feita - varredura
+    de bytes sem desmontador so devolveu `cmp` que nao sao instrucao.
+
+O QUE ELE FAZ ENTAO: REAPROVEITA SLOT MORTO
+
+    Dos 120 slots deste cliente, 40 nao tem arte nenhuma - a tabela conhece o
+    nome da pasta e a pasta nao existe em GRF nenhum. Esses slots ja nao
+    desenham coisa alguma hoje, entao apontar um deles para a arte de um manto
+    novo nao tira nada de ninguem. E o que este script faz.
+
+    A FONTE DA VERDADE E O `db/guerra/item_db.yml`, e isto e deliberado. Quem
+    decide qual manto usa qual slot e o `View:` do nosso item_db; o script LE
+    de la e escreve a tabela do cliente para combinar. Nao ha lista de-para
+    escrita aqui, e nao pode haver: seria a metade-no-cliente do CLAUDE.md
+    secao 9 outra vez - duas listas, uma em cada lado, divergindo sem erro.
+    Com uma fonte so, rodar de novo nao muda nada e nao ha como divergir.
+
+A SONDA - "este arquivo chega a tela?", sem depender do efeito procurado
+
+    `--sonda <view>=<pasta>` reaponta um View que JA FUNCIONA para a pasta de
+    outro manto, bem diferente. Serve para uma pergunta so, e e a pergunta que
+    tentativa e erro nao responde: o cliente esta mesmo montando a tabela a
+    partir DESTE arquivo, ou le o arquivo e usa a do GRF?
+
+        python estende_robeid.py --sonda 114=C_20th_Anniversary_Wing
+
+    O View 114 e a Espada do General, que desenha hoje. Depois de reabrir o
+    cliente, equipar a Espada:
+
+        aparecem ASAS  -> o override manda; a tabela sai daqui
+        aparece a ESPADA -> o override e lido e IGNORADO; o GRF vence
+
+    E a mesma licao do `ajusta_tamanho_fonte.py` (CLAUDE.md secao 5): antes de
+    calibrar valor, provar que o patch chega a tela com uma marca que nao
+    dependa do efeito procurado. Rodar de novo sem `--sonda` desfaz.
 
 IRMAO DO `estende_accessoryid.py`, do lado do manto. E a metade que faltava
 
@@ -19,11 +75,8 @@ IRMAO DO `estende_accessoryid.py`, do lado do manto. E a metade que faltava
         arte              instala_visual.py          instala_manto.py
 
     A nossa `spriterobeid.lub` de 2021-11-03 conhece 120 slots; a do bRO
-    conhece 258. Manto cujo `View` esteja fora dos nossos 120 NAO DESENHA, e
-    arte nenhuma resolve - o `instala_manto.py` recusa esses de proposito, em
-    vez de copiar 600 arquivos que o cliente nunca vai procurar. Este script
-    traz a ENTRADA DE TABELA; o `instala_manto.py` traz os arquivos. Os dois
-    juntos e que curam o manto.
+    conhece 258. Este script cuida do NOME DA PASTA de cada slot; o
+    `instala_manto.py` traz os arquivos. Os dois juntos e que curam o manto.
 
 TRES GLOBAIS, NAO DOIS - e o terceiro e uma LISTA
 
@@ -55,29 +108,33 @@ COMO ELE GRAVA, e por que nao toca no GRF
 
 A REGRA QUE MANTEM ISTO SEGURO: a base e SEMPRE o nosso GRF
 
-    O override e derivado, nunca acumulado sobre si mesmo. A cada rodada a
-    base e relida do GRF e as entradas nossas sao reaplicadas por cima, de modo
-    que as 120 originais nao podem derivar. As nossas sao recuperadas do
-    proprio override, como diferenca contra o GRF - entao rodar duas vezes nao
-    duplica e nao perde nada.
+    O override e derivado, nunca acumulado sobre si mesmo. A cada rodada a base
+    e relida do GRF e o reaproveitamento e reaplicado por cima a partir do
+    item_db, de modo que as 120 originais nao podem derivar. O arquivo do disco
+    NAO e lido para recuperar nada: ele e refeito do zero toda vez. Isso e o que
+    faz `--reverter` e "tirar o `View:` do item_db" darem no mesmo.
 
-    Toda entrada nova passa por TRES travas:
+    Todo reaproveitamento passa por TRES travas, e as tres abortam:
 
-      - constante que ja existe aqui com View DIFERENTE   -> aborta
-      - View que ja existe aqui com constante DIFERENTE   -> aborta
-      - View cuja PASTA de sprite nao existe em GRF nenhum -> pula, com motivo
+      - slot doador ACIMA de 120                -> este cliente nao o desenha
+      - slot doador que TEM arte neste cliente  -> reaproveitar apagaria um
+                                                   manto que hoje funciona
+      - pasta de destino que nao existe em GRF
+        nem no disco                            -> viraria caixa de erro
 
-    A terceira e a licao de 2026-08-05 do `estende_accessoryid.py`, e aqui ela
-    vale para TODO View novo, nao so para um ramo. A assimetria e do formato:
-    chapeu sem entrada de tabela ja chega com `Cannot find File` modal, entao
-    acrescentar nao piora; manto sem entrada de tabela fica INVISIVEL E CALADO,
-    porque o cliente nem tem nome de pasta para procurar. Gravar a entrada sem
-    ter a arte troca silencio por caixa de erro - e isso e piorar.
+    A segunda e a que protege o acervo: 80 dos 120 slots tem arte e sao
+    intocaveis; os outros 40 ja nao desenham nada e sao os candidatos.
 
     E antes de gravar um byte, o texto gerado e relido e comparado global a
     global com o que deveria conter. Mesmo criterio de round-trip do
     `estende_accessoryid.py`: layout errado nao da erro, da arquivo corrompido
     - e aqui o arquivo corrompido levaria junto os 120 mantos que funcionam.
+
+O QUE JA FOI TENTADO E NAO ERA - para ninguem repetir
+
+    **Buraco na numeracao.** A tabela do GRF vai de 1 a 120 sem faltar numero;
+    pedir o View 154 sozinho deixava 29 vazios no meio. A tabela foi refeita
+    contigua de 1 a 158, o cliente a leu, e nada mudou. Nao era.
 
 Roda em Python 2.7 (`C:\\Python27\\python.exe`), como o resto de `ferramentas/`.
 """
@@ -101,6 +158,11 @@ G_ID = 'SPRITE_ROBE_IDs'
 G_NOME = 'RobeNameTable'
 G_ENG = 'RobeNameTable_Eng'
 G_TOPO = 'RobeTopLayer'
+
+# O maior slot de manto que ESTE cliente desenha. Nao e o tamanho da tabela: a
+# tabela foi levada a 158 entradas contiguas, o cliente a leu, e slot acima
+# deste continuou sem desenhar. Medido na tela em 2026-08-09 - ver a docstring.
+TETO = 120
 
 # `str`, nao `unicode`, pela mesma razao do estende_accessoryid.py: o corpo
 # carrega nome de pasta em CP949 ja escapado em `\\ddd`, e um cabecalho unicode
@@ -336,32 +398,40 @@ def tem_arte(nome_pasta, grfs):
     return os.path.isdir(disco)
 
 
-def views_pedidos(argv_id, argv_view):
-    """Os View pedidos, seja por --view, seja pelo item de --id."""
-    views = set(int(v) for v in argv_view.replace(',', ' ').split()) \
-        if argv_view else set()
-    if argv_id:
-        alvos = set(int(v) for v in argv_id.replace(',', ' ').split())
-        por_id = dict((i['id'], i) for i in vv.le_item_db(vv.ITEM_DB))
-        for i in sorted(alvos):
-            item = por_id.get(i)
-            if item is None:
-                print '  [!] item %d nao esta em item_db nenhum' % i
-            elif not (item['locais'] & set(['Garment', 'Costume_Garment'])):
-                # A mesma cautela do `view_cabeca` do valida_visual, do outro
-                # lado: em ARMA o `View` significa a classe de sprite da arma, e
-                # passa-lo ao spriterobeid daria resposta sem sentido.
-                print ('  [!] item %d (%s) nao e manto - o View dele nao e '
-                       'slot de manto' % (i, item['nome']))
-            elif not item.get('view'):
-                # Manto sem `View` nao e defeito: a Aura Nevada (480097) e um
-                # hateffect no Script do item, efeito de tela, sem desenho
-                # vestido. Nao ha slot para ensinar.
-                print ('  [!] item %d (%s) nao tem View - nada a fazer aqui'
-                       % (i, item['nome']))
-            else:
-                views.add(int(item['view']))
-    return sorted(views)
+def manto(item):
+    """O item e manto com desenho vestido?
+
+    A mesma cautela do `view_cabeca` do valida_visual, do outro lado: em ARMA o
+    `View` significa a classe de sprite da arma, e passa-lo ao spriterobeid
+    daria resposta sem sentido. E manto sem `View` nao e defeito - a Aura
+    Nevada (480097) e um `hateffect` no Script, efeito de tela.
+    """
+    return bool(item['view']) and bool(
+        item['locais'] & set(['Garment', 'Costume_Garment']))
+
+
+def reaproveitamentos():
+    u"""Os manto que o NOSSO item_db reaponta, lidos como (item, origem, doador).
+
+    A FONTE DA VERDADE. O `db/guerra/item_db.yml` vence o `db/re/` no servidor,
+    entao um `View:` diferente la e uma decisao ja tomada: "esta peca usa o slot
+    tal". Este script so faz a tabela do cliente combinar.
+
+    Ler daqui, em vez de guardar uma lista de-para propria, e o que impede as
+    duas metades de divergirem - CLAUDE.md secao 9. Com uma fonte so, rodar de
+    novo nao muda nada.
+    """
+    do_rathena = dict((i['id'], i) for i in vv.le_item_db(vv.ITEM_DB[0]))
+    do_nosso = dict((i['id'], i) for i in vv.le_item_db(vv.ITEM_DB[1]))
+    fora = []
+    for iid in sorted(do_nosso):
+        nosso, deles = do_nosso[iid], do_rathena.get(iid)
+        if deles is None or not manto(deles) or not nosso['view']:
+            continue
+        if int(nosso['view']) != int(deles['view']):
+            fora.append((iid, int(deles['view']), int(nosso['view']),
+                         nosso['nome'] or deles['nome']))
+    return fora
 
 
 def main(argv):
@@ -384,48 +454,84 @@ def main(argv):
           'View maximo %d' % (len(base_ids), len(base_nomes), len(base_topo),
                               max(base_ids.values()))
 
-    # As entradas nossas, recuperadas como diferenca do override contra o GRF.
-    # Recuperar em vez de acumular e o que impede o arquivo de derivar.
+    # NADA E RECUPERADO DO OVERRIDE, e isso e deliberado. A versao de 2026-08-09
+    # relia o proprio arquivo para nao perder o que rodadas anteriores tinham
+    # posto - fazia sentido quando o script ACRESCENTAVA slot. Agora ele so
+    # reaponta, e o de-para inteiro mora no db/guerra/item_db.yml: reler o
+    # disco so serviria para arrastar decisao velha que ninguem tomou de novo.
+    # Foi o que aconteceu - as 38 entradas acima de 120 da tentativa que nao
+    # funcionou sobreviviam a cada rodada sem que nada as pedisse.
     ov = tabelas_do_override()
     extras = {}
-    if ov[0]:
-        ov_ids, ov_nomes, ov_eng, ov_topo = ov
-        for const, view in ov_ids.items():
-            if const not in base_ids:
-                extras[const] = (view, ov_nomes.get(const), ov_eng.get(const),
-                                 const in ov_topo)
-        print 'override no disco: %d constantes, %d nossas' % (
-            len(ov_ids), len(extras))
-    else:
-        print 'override no disco: nao existe ainda'
+    print 'override no disco: %s' % (
+        '%d constantes (sera refeito do zero)' % len(ov[0]) if ov[0]
+        else 'nao existe ainda')
 
-    novos = views_pedidos(arg('--id'), arg('--view'))
-    if novos:
+    # A SONDA vem antes de tudo: ela reaponta um View da BASE, e por isso nao
+    # passa pelo laco dos pedidos (que so trata View que a base nao tem).
+    sonda = arg('--sonda')
+    if sonda:
+        alvo, pasta = sonda.split('=', 1)
+        alvo = int(alvo)
+        por_view_base = dict((v, k) for k, v in base_ids.items())
+        const = por_view_base.get(alvo)
+        if const is None:
+            print '\n--sonda: o View %d nao esta na base deste cliente. A ' \
+                  'sonda so vale para View que JA desenha.' % alvo
+            return 2
+        extras[const] = (alvo, pasta, pasta, const in base_topo)
+        print '\n  [SONDA ] View %d (%s): pasta %r -> %r' % (
+            alvo, const, base_nomes.get(const), pasta)
+        print '          Reabra o cliente e vista a peca desse View.'
+        print '          Mudou o desenho -> o override manda.'
+        print '          Nao mudou       -> o override e lido e ignorado.'
+
+    # O REAPROVEITAMENTO, lido do nosso item_db - ver a docstring.
+    pedidos = reaproveitamentos()
+    if pedidos:
         fonte = arg('--grf', im.BRO_GRF)
         f_ids, f_nomes, f_eng, f_topo = tabelas_do_grf(fonte)
-        por_view = dict((v, k) for k, v in f_ids.items())
+        f_por_view = dict((v, k) for k, v in f_ids.items())
+        por_view_base = dict((v, k) for k, v in base_ids.items())
         grfs = [Grf(vv.GRF), Grf(fonte)]
-        for view in novos:
-            const = por_view.get(view)
+        print
+        for iid, origem, doador, nome in pedidos:
+            const = por_view_base.get(doador)
+            pasta = f_nomes.get(f_por_view.get(origem))
             if const is None:
-                print '  [!] View %d nao existe nem na GRF de origem' % view
-            elif view in base_ids.values():
-                print '  [ja tem] View %d - o GRF deste cliente ja conhece' % view
-            elif const in extras:
-                print '  [ja tem] View %d (%s) - ja esta no override' % (view, const)
-            elif not f_nomes.get(const):
-                print '  [!] View %d (%s) nao tem nome de pasta na origem' % (
-                    view, const)
-            elif not tem_arte(f_nomes[const], grfs):
-                print ('  [!] View %d (%s) nao tem a pasta %r em GRF nenhum - '
+                print ('  [X] %d (%s): o slot doador %d nao existe neste '
+                       'cliente' % (iid, nome, doador))
+                return 2
+            if doador > TETO:
+                # A medicao de 2026-08-09, na tela. Ver a docstring.
+                print ('  [X] %d (%s): o slot doador %d passa do teto %d - '
+                       'este cliente nao desenha manto acima disso'
+                       % (iid, nome, doador, TETO))
+                return 2
+            if tem_arte(base_nomes.get(const, ''), grfs[:1]):
+                # A trava que protege o acervo: doador com arte propria e um
+                # manto que HOJE funciona, e reaproveita-lo o apagaria.
+                print ('  [X] %d (%s): o slot doador %d (%s) TEM arte neste '
+                       'cliente - reaproveitar apagaria um manto que funciona'
+                       % (iid, nome, doador, const))
+                return 2
+            if not pasta:
+                print ('  [X] %d (%s): o View de origem %d nao tem pasta na '
+                       'GRF de origem' % (iid, nome, origem))
+                return 2
+            if not tem_arte(pasta, grfs):
+                print ('  [X] %d (%s): a pasta %r nao existe em GRF nenhum - '
                        'gravar trocaria invisivel por caixa de erro'
-                       % (view, const, f_nomes[const]))
-            else:
-                extras[const] = (view, f_nomes[const], f_eng.get(const),
-                                 const in f_topo)
-                print '  [novo  ] View %d -> %s  pasta %r%s' % (
-                    view, const, f_nomes[const],
-                    '  (desenha na frente)' if const in f_topo else '')
+                       % (iid, nome, pasta))
+                return 2
+            no_topo = f_por_view.get(origem) in f_topo
+            extras[const] = (doador, pasta, pasta, no_topo)
+            print '  [slot  ] %-8d %-30s View %3d -> %3d  %s%s' % (
+                iid, nome[:30], origem, doador, pasta,
+                '  (desenha na frente)' if no_topo else '')
+
+    else:
+        print '\nnenhum manto reapontado no db/guerra/item_db.yml.'
 
     if not extras:
         print '\nnada acrescentado. O override seria identico ao GRF.'
@@ -434,6 +540,15 @@ def main(argv):
     tabelas = monta(base, extras)
     txt_id, txt_nome = texto(tabelas, len(extras))
     confere(txt_id, txt_nome, tabelas)
+    if sonda:
+        # Escrito NO ARQUIVO, e nao so na tela: sonda esquecida no disco e um
+        # manto desenhando a coisa errada meses depois, sem ninguem lembrar por
+        # que. Rodar sem --sonda apaga - a base e relida do GRF toda vez.
+        aviso = ('-- SONDA ATIVA: %s. Isto NAO e configuracao - e um teste.\n'
+                 '-- Rode `python estende_robeid.py` sem --sonda para desfazer.\n'
+                 % sonda)
+        txt_id = aviso + txt_id
+        txt_nome = aviso + txt_nome
     print '\nround-trip OK: %d constantes, %d nomes, %d no RobeTopLayer' % (
         len(tabelas[0]), len(tabelas[1]), len(tabelas[3]))
     print 'nossas: %s' % ', '.join(

@@ -50,13 +50,17 @@ quatro caíram fora deste catálogo: três capas com cova foram para o
 `mercado_contemporaneo.txt`, porque são equipamento de verdade e não
 visual — quem decide é o `Locations:` do `item_db`.)
 
-**Foi a rodada que fechou a lacuna do manto.** Nove dos onze do Manteleiro
-tinham `View` fora das 120 entradas da nossa tabela, e manto assim não
-desenha por mais arte que se copie: o cliente nem chega a procurar
-arquivo. O `ferramentas/estende_robeid.py` — escrito nesse dia, o irmão do
-`estende_accessoryid.py` do lado do manto — levou a tabela a 129 slots. A
-coluna `tabela` da lista do Manteleiro diz, item a item, qual dos dois
-caminhos cada um usou.
+**E foi a rodada que descobriu o teto do manto.** Nove dos onze do
+Manteleiro tinham slot acima de 120, e **este cliente não desenha manto com
+slot acima de 120** — a tabela foi levada a 158 entradas contíguas, o cliente
+a leu, e nada mudou. Não é falta de arte nem de tabela: é teto do exe.
+
+A saída foi **reaproveitar slot morto**. Dos 120 que o cliente aceita, 40 não
+têm arte nenhuma aqui e já não desenhavam nada; nove deles receberam a arte
+dos nove mantos novos. A coluna `slot` da lista do Manteleiro diz qual peça
+usa qual, e o de-para mora num lugar só: o `View:` do
+`db/guerra/item_db.yml`. **Sobram 31** — depois disso, ou sai um patch de exe
+(`PENDENCIAS.md` §4), ou não entra manto novo.
 
 **Uma peça mudou de loja no mesmo dia.** A Máscara de Minorous (21207)
 veio na lista de topo e é `Costume_Head_Low`/`_Mid` no `item_db`, sem
@@ -508,41 +512,42 @@ varredura** — ver a nota da rodada, no topo.
 **São DUAS camadas, e as duas colunas dizem uma cada.** `arte` é de onde
 veio a sprite de manto por classe: `GRF` significa que este cliente já a
 tinha; `bRO` que ela foi copiada pelo `instala_manto.py`, e que um cliente
-novo precisa da cópia de novo. `tabela` é o `spriterobeid.lub`, que traduz
-o `View` no nome da pasta: `GRF` são os que cabiam nas 120 entradas de
-2021-11-03; **`override`** são os nove que só passaram a existir com o
-`estende_robeid.py`, em 2026-08-09.
+novo precisa da cópia de novo. `slot` é o número que o cliente usa: quinze
+são o `View` original do `item_db`, e os **nove marcados com `←`** são slot
+reaproveitado — a peça tinha slot acima de 120, que este cliente ignora, e
+passou a usar um slot morto ≤120. O de-para está no `View:` do
+`db/guerra/item_db.yml`.
 
 **As duas se perdem num cliente novo, e em ordem.** Repor é rodar
-`estende_robeid.py` e só depois `instala_manto.py` — invertido, o segundo
-recusa.
+`estende_robeid.py` (que lê o `item_db`) e só depois `instala_manto.py` —
+invertido, o segundo recusa.
 
-| id | nome | view | arte | tabela |
-|---|---|---|---|---|
-| 20612 | Escudo de Oridecon | 90 | bRO | GRF |
-| 480055 | Asas Encantadas de Rudra | 72 | bRO | GRF |
-| 480056 | Asas Amaldiçoadas de Arcanjo | 73 | GRF | GRF |
-| 480058 | Asas Áureas de Arcanjo | 75 | GRF | GRF |
-| 480069 | Asas Encantadas de Arcanjo | 61 | GRF + bRO | GRF |
-| 480071 | Recipiente das Areias | 82 | GRF + bRO | GRF |
-| 480096 | Casaco Aconchegante | 99 | bRO | GRF |
-| 480097 | Aura Nevada | — | não veste | — |
-| 480107 | Espadas Cruzadas | 104 | GRF | GRF |
-| 480110 | Mochila do Doram Aventureiro | 107 | GRF + bRO | GRF |
-| 480117 | Guitarra de Rockstar | 108 | bRO | GRF |
-| 480118 | Espada do General | 114 | bRO | GRF |
-| 480121 | Asas Orientais | 111 | bRO | GRF |
-| 480122 | Asas Carnavalescas | 112 | GRF | GRF |
-| 480127 | Chapéu Pendurado de Palha | 115 | bRO | GRF |
-| 480155 | Capa de Herói | 122 | bRO | **override** |
-| 480169 | Guitarra de Deviling | 125 | bRO | **override** |
-| 480189 | Asas Amaldiçoadas de Valquíria | 131 | bRO | **override** |
-| 480198 | Asas Laureadas | 136 | bRO | **override** |
-| 480207 | Mochila Multiuso | 137 | bRO | **override** |
-| 480223 | Muranyasa | 147 | bRO | **override** |
-| 480235 | Tridente com Lacinho | 148 | bRO | **override** |
-| 480237 | Katanas do Mestre Tengu | 158 | bRO | **override** |
-| 480246 | Lança de Valquíria | 154 | bRO | **override** |
+| id | nome | slot | arte |
+|---|---|---|---|
+| 20612 | Escudo de Oridecon | 90 | bRO |
+| 480055 | Asas Encantadas de Rudra | 72 | bRO |
+| 480056 | Asas Amaldiçoadas de Arcanjo | 73 | GRF |
+| 480058 | Asas Áureas de Arcanjo | 75 | GRF |
+| 480069 | Asas Encantadas de Arcanjo | 61 | GRF + bRO |
+| 480071 | Recipiente das Areias | 82 | GRF + bRO |
+| 480096 | Casaco Aconchegante | 99 | bRO |
+| 480097 | Aura Nevada | — | não veste |
+| 480107 | Espadas Cruzadas | 104 | GRF |
+| 480110 | Mochila do Doram Aventureiro | 107 | GRF + bRO |
+| 480117 | Guitarra de Rockstar | 108 | bRO |
+| 480118 | Espada do General | 114 | bRO |
+| 480121 | Asas Orientais | 111 | bRO |
+| 480122 | Asas Carnavalescas | 112 | GRF |
+| 480127 | Chapéu Pendurado de Palha | 115 | bRO |
+| 480155 | Capa de Herói | 41 ← 122 | bRO |
+| 480169 | Guitarra de Deviling | 49 ← 125 | bRO |
+| 480189 | Asas Amaldiçoadas de Valquíria | 74 ← 131 | bRO |
+| 480198 | Asas Laureadas | 77 ← 136 | bRO |
+| 480207 | Mochila Multiuso | 94 ← 137 | bRO |
+| 480223 | Muranyasa | 100 ← 147 | bRO |
+| 480235 | Tridente com Lacinho | 20 ← 148 | bRO |
+| 480237 | Katanas do Mestre Tengu | 30 ← 158 | bRO |
+| 480246 | Lança de Valquíria | 29 ← 154 | bRO |
 
 **A Aura Nevada não é manto.** Ela não tem `View`: o que ela faz é um
 `hateffect` (`HAT_EF_SNOW_POWDER`) no `Script` do item — efeito de tela,

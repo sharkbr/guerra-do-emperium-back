@@ -653,36 +653,49 @@ O `ferramentas/LEIAME.md` tem o detalhe das travas e do formato. Duas regras que
 
 ---
 
-## 4. O manto cosmético (`Costume_Garment`) — falta só o `varre_cosmeticos.py`
+## 4. O manto cosmético — o teto de 120 do cliente, e 31 slots até acabar
 
-Aberto em 2026-08-05, ao varrer o acervo cosmético para o Mercado de Visuais.
-**A ferramenta que faltava foi escrita em 2026-08-09** (`estende_robeid.py`);
-o que sobra aqui é uma consequência dela, não a lacuna original. O relato
-completo está no `HISTORICO.md`, seção "O manto cosmético".
+Aberto em 2026-08-05. A ferramenta que faltava foi escrita em 2026-08-09, e no
+mesmo dia a medição em tela mostrou que **o problema não era o que se pensava**.
+O relato completo está no `HISTORICO.md`, seção da rodada de 2026-08-09.
 
 | camada | chapéu | manto | estado |
 |---|---|---|---|
 | nome e descrição | `itemInfo.lua` | igual | — |
 | slot de visual | `accessoryid.lub` + `accname.lub` | `spriterobeid.lub` + `spriterobename.lub` | resolvido |
-| ferramenta que estende o slot | `estende_accessoryid.py` | `estende_robeid.py` | resolvido |
+| ferramenta do slot | `estende_accessoryid.py` | `estende_robeid.py` | resolvido |
 | arquivos de arte | 4 de item + 4 de cabeça | 4 de item + sprite de manto **por classe** | resolvido |
-| ferramenta que instala a arte | `instala_visual.py` | `instala_manto.py` | resolvido |
+| ferramenta da arte | `instala_visual.py` | `instala_manto.py` | resolvido |
+| **teto de slot** | 2192 → estendível | **120, e não estende** | **em aberto** |
 
-### O que continua em aberto
+### 4a. O teto de 120 — o que está de fato aberto
 
-**O `varre_cosmeticos.py` ainda não classifica manto como `curavel`.** Ele se
-recusava a isso porque a cura não existia — chamar de "sem cura" o que só
-precisava de outra ferramenta foi o erro de 2026-08-01, e prometer cura que não
-há como cumprir é o erro simétrico. Agora a cura existe, e a recusa virou
-conservadorismo sem motivo.
+**Este cliente não desenha manto com slot acima de 120.** Não é a tabela: ela
+foi levada a 158 entradas contíguas, o cliente a leu (conferido pelo horário de
+acesso do `.lub`) e nada mudou. As outras explicações caíram uma a uma —
+`CLAUDE.md` §5 tem a lista.
 
-Feita essa mudança, os **45 mantos** que estavam parados em `curavel` desde
-2026-08-05 voltam à mesa — e com eles a pergunta de quantos dos 193 "sem cura"
-daquela contagem eram, na verdade, `View` fora da tabela e não falta de arte.
+A saída de hoje é **reaproveitar slot morto**: dos 120 que o cliente aceita, 40
+não têm arte nenhuma neste cliente e já não desenhavam nada. Nove foram usados
+em 2026-08-09. **Sobram 31.**
+
+**O conserto de verdade é patch de exe**, e não foi feito. A busca pela
+constante foi tentada e abandonada: sem desmontador, varredura de bytes em
+volta da referência a `ReqRobSprName` (arquivo `0x008278ca` no
+`Ragexe_unpacked.exe`) só devolve `cmp` que não são instrução. Quem for tentar
+começa por ali, e com desmontador de verdade. O prêmio são os outros 138 slots
+que o bRO conhece — e, com eles, a varredura abaixo.
+
+### 4b. O `varre_cosmeticos.py` ainda não classifica manto como `curavel`
+
+Ele se recusava a isso porque a cura não existia. Agora existe, mas é **cura de
+estoque limitado**: cada manto novo queima um dos 31 slots restantes. Prometer
+"curável" para 45 mantos quando só cabem 31 é o mesmo erro de prometer cura que
+não há como cumprir — então a mudança certa **depende do patch de exe**, ou de
+o script passar a contar o estoque.
 
 Nada disso é bloqueio: manto pedido item por item continua entrando pelo
 caminho de sempre, que é o que as rodadas de 2026-08-08 e 2026-08-09 fizeram.
-O que falta é a **varredura**, para não depender de pedido.
 
 ### Duas confusões que continuam valendo
 

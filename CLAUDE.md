@@ -270,6 +270,29 @@ Produziram diagnóstico falso e custaram retrabalho:
   tipo: `RobeTopLayer` é **vetor** (`SETLIST`), não mapa — quem só olha
   `SETTABLE` o vê vazio e o descarta, e regerar o arquivo sem ele faz 38
   mantos passarem a desenhar atrás do personagem, calados.
+- **Este cliente NÃO desenha manto com slot acima de 120**, e a tabela não
+  tem nada a ver com isso. Medido em tela em 2026-08-09: slot 61, 73, 75, 82,
+  90, 99, 104 e 114 desenham; 122, 136, 148, 154 e 158 não. A
+  `spriterobeid.lub` foi levada a **158 entradas contíguas**, o cliente a
+  leu, e nada mudou. É teto do exe. Enquanto ele não for levantado (patch de
+  exe, ver `PENDENCIAS.md` §4), manto novo entra **reaproveitando** um dos 40
+  slots ≤120 que não têm arte neste cliente — `ferramentas/estende_robeid.py`,
+  com o de-para no `View:` do `db/guerra/item_db.yml`. Sobram 31.
+- **Tabela certa + arte certa + arquivo lido pelo cliente ≠ desenha na
+  tela.** As três se verificam offline, as três deram OK, e o item continuou
+  invisível por um quarto motivo que nenhuma delas alcança. **Verificação
+  offline que passa não é prova de efeito** — o que decide é uma marca na
+  tela que não dependa do efeito procurado. Foi a sonda do
+  `estende_robeid.py` (reapontar um slot que já funciona para outra arte) que
+  respondeu em uma rodada o que três hipóteses plausíveis não responderam:
+  falta de arte, arquivo não lido e buraco na numeração — todas descartadas
+  **depois** de já terem custado tempo. Mesma família do
+  `ajusta_tamanho_fonte.py`, logo acima.
+- **O horário de ACESSO do arquivo diz se o cliente leu.** `Get-ChildItem |
+  Select LastAccessTime` no `cliente\data\...\datainfo` mostra o instante em
+  que cada `.lub` foi aberto — e compará-lo com a hora em que o cliente subiu
+  separa "o override não chega" de "o override chega e não basta" sem entrar
+  no jogo. Funciona mesmo com `DisableLastAccess = 2` neste Windows.
 - **Ferramenta que consulta tabela do cliente tem de ler `cliente\data\`
   ANTES do GRF.** O `DataFolderFirst` faz o disco vencer, então depois de
   qualquer `estende_*.py` gravar o override é ele que o cliente lê. Uma

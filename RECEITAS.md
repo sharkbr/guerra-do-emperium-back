@@ -65,35 +65,52 @@ receita: para manto ele confere só os 4 arquivos de item, e responder "4 de 4"
 não diz nada sobre a arte de manto. Item aprovado por ele pode abrir a loja,
 vender, equipar — e só então dar `Cannot find File`.
 
+**E o slot não se acrescenta — se troca.** Este cliente ignora slot de manto
+acima de **120**, e a tabela não muda isso (medido em tela em 2026-08-09, com a
+tabela contígua até 158). Manto novo tem de **reaproveitar** um dos 40 slots
+≤120 que não têm arte aqui. Sobram 31 — depois disso, só patch de exe
+(`PENDENCIAS.md` §4).
+
 ```
-1. python completa_iteminfo.py --id <lista>         # se o cliente não o conhece
-2. python instala_manto.py --ids <lista>            # o que falta de manto
-3. python estende_robeid.py --id <lista>            # SÓ se o passo 2 recusar
-4. python instala_manto.py --ids <lista> --aplicar
-5. python instala_manto.py --ids <lista>            # TEM QUE DAR 0 faltando
-6. python instala_visual.py --id <lista> --grf "<grf do bRO>"
-7. python valida_visual.py  --id <lista>            # TEM QUE DAR 0
-8. fechar e reabrir o cliente
+1. python completa_iteminfo.py --id <lista>       # se o cliente não o conhece
+2. python instala_manto.py --ids <lista>          # vai RECUSAR se o slot > 120
+3. escolher um slot doador livre e pôr `View: <doador>` no
+   db/guerra/item_db.yml   <- a FONTE DA VERDADE do de-para
+4. python estende_robeid.py                       # lê o item_db, escreve a tabela
+5. python instala_manto.py --ids <lista> --aplicar
+6. python instala_manto.py --ids <lista>          # TEM QUE DAR 0 faltando
+7. python instala_visual.py --id <lista> --grf "<grf do bRO>"
+8. python valida_visual.py  --id <lista>          # TEM QUE DAR 0
+9. reiniciar o map-server E fechar/reabrir o cliente
 ```
 
-**Por que 3 antes de 4, e não depois:** o `instala_manto.py` só sabe em que
-**pasta** copiar depois que a tabela conhece o `View`. Invertido, ele recusa —
-alto, com o motivo por extenso. E gravar a entrada de tabela sem ter a arte
-troca "invisível e calado" por caixa de erro modal, que é pior; por isso o
-`estende_robeid.py` confere a arte antes de aceitar o View.
+**Como achar um doador livre** (passo 3): é um slot ≤120 cuja pasta de arte não
+existe neste cliente — hoje ele já não desenha nada, então reaproveitá-lo não
+tira nada de ninguém. O `estende_robeid.py` **aborta** se o doador tiver arte,
+passar de 120, ou se a pasta de destino não existir. Preferir os que nenhum item
+do `item_db` cita.
 
-**Por que 6, se o 4 já copiou centenas de arquivos:** são camadas diferentes. O
+**Por que 4 antes de 5:** o `instala_manto.py` só sabe em que **pasta** copiar
+depois que a tabela conhece o slot. Invertido, ele recusa — alto, com o motivo
+por extenso.
+
+**Por que 7, se o 5 já copiou centenas de arquivos:** são camadas diferentes. O
 `instala_manto.py` cuida só da subárvore de sprite de manto; os **4 arquivos de
 item** (sprite de chão e os dois ícones) são do `instala_visual.py`, valem para
 qualquer item, e a falta deles entrega caixa modal **ao abrir a loja**. Foi o
-que faltou em 2 dos 11 mantos de 2026-08-09, e quem pegou foi o passo 7.
+que faltou em 2 dos 11 mantos de 2026-08-09, e quem pegou foi o passo 8.
+
+**Por que os DOIS reinícios no passo 9:** o `View:` é do servidor e o
+`spriterobeid.lub` é do cliente. Reiniciar só um deixa as metades divergentes,
+e a divergência não dá erro — o manto simplesmente desenha outra coisa, ou
+nada.
 
 **Como ler o resultado do passo 2:**
 
 | resposta | o que fazer |
 |---|---|
-| `N arquivo(s) faltando` | seguir para o 4 — o `View` já está na nossa `spriterobeid.lub` |
-| `view N ... so existe no spriterobeid do bRO` | fazer o **passo 3** e voltar ao 2 |
+| `N arquivo(s) faltando` | seguir para o 5 — o slot já está resolvido |
+| `view N ... so existe no spriterobeid do bRO` | fazer os passos **3 e 4** e voltar ao 2 |
 | `view N ... nao existe em spriterobeid nenhum` | **parar.** Não há o que instalar |
 | `nao e Costume_Garment` | é capa **de verdade** (`Garment`) — vai para o Capeiro, e a arte é a receita 2 normal |
 
@@ -105,10 +122,15 @@ que faltou em 2 dos 11 mantos de 2026-08-09, e quem pegou foi o passo 7.
   2** é o caso normal, não contradição: as duas perguntas são diferentes.
 
 **E uma que é defeito, e engana:** se o passo 2 recusar um item **logo depois**
-de o passo 3 ter rodado, a ferramenta está lendo o GRF em vez do disco. Não
+de o passo 4 ter rodado, a ferramenta está lendo o GRF em vez do disco. Não
 deveria mais acontecer — foi corrigido em 2026-08-09 —, mas é o sintoma a
 reconhecer: o `DataFolderFirst` faz `cliente\data\` vencer, e ferramenta que
 consulta a tabela tem de consultar a que o **cliente** lê.
+
+**E a que mais custou:** tabela certa, arte certa e arquivo lido pelo cliente
+**não** provam que a peça desenha. As três se verificam offline, as três deram
+OK, e o manto continuou invisível. Quem decide é uma marca na tela que não
+dependa do efeito procurado — `estende_robeid.py --sonda`.
 
 Depois disso, a receita 3 normalmente.
 
@@ -127,8 +149,10 @@ script de novo, não editar à mão.
 
 **O aviso `npc_parse_shop: Item X discounted buying price` na subida não é erro:**
 é o servidor apontando que preço 1 zeny permite comprar e revender com lucro.
-Esperado no mercado de equipamento e nas cartas; **não** esperado no mercado de
-visuais — se aparecer lá, item novo entrou com preço, conferir.
+Esperado no mercado de equipamento e nas cartas. No mercado de **visuais** são
+nove, e só nove — a lista dos IDs está no cabeçalho do
+`mercado_de_visuais.txt`. Aviso com item fora dela é item novo com preço:
+conferir quanto ele revende antes de deixar passar.
 
 **Teto do parser:** a lista de itens de um `shop` não cabe nos 2048 bytes do
 `char w4[2048]`. A loja de cartas de arma resolve carregando 256 na linha do

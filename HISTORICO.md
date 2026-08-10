@@ -4421,7 +4421,7 @@ quebraria a compra. Não é o caso: o Mestre de UP cobra com
 `countitem`/`delitem` (`npc/guerra/mestre_de_up.txt:102`), fora de
 qualquer loja.
 
-### `ferramentas/estende_robeid.py` — o que o `PENDENCIAS.md` §4 pedia
+### `ferramentas/estende_robeid.py` — escrito, e reescrito no mesmo dia
 
 O §4 registrava desde 2026-08-05: *"o que falta escrever: um
 `estende_robeid.py` espelhado no `estende_accessoryid.py`"*. Nove dos onze
@@ -4429,9 +4429,12 @@ mantos pedidos esbarraram exatamente nisso — `View` fora das 120 entradas
 da nossa `spriterobeid.lub` de 2021-11-03, e o `instala_manto.py` os
 recusava por escrito.
 
-Escrito, aplicado, e a tabela foi de **120 para 129 slots**. O detalhe do
-formato está em `ferramentas/LEIAME.md`; aqui ficam as três coisas que só
-apareceram ao fazer.
+Escrito, aplicado, tabela de 120 para 129 slots, `luac -p` OK, round-trip
+OK — **e nenhum dos nove desenhou.** A ferramenta que o `PENDENCIAS.md`
+pedia havia quatro dias resolvia um problema que não era o problema. O que
+veio depois está na seção seguinte, e é a parte que valeu a rodada.
+
+Aqui ficam as três coisas do formato, que continuam valendo.
 
 **O `spriterobename.lub` tem TRÊS globais, e o terceiro é um vetor.**
 `RobeNameTable`, `RobeNameTable_Eng` e `RobeTopLayer` — este último não é
@@ -4532,10 +4535,136 @@ zeny de lucro por compra — o mesmo tamanho das duas exceções que o
 cabeçalho já aceitava. A frase mudou; a lista dos nove ficou escrita, para
 que a próxima conferência saiba quais ignorar.
 
-### O que falta ver no jogo
+### O que faltava ver no jogo — e era exatamente isso
 
-Os mantos. O cliente lê `spriterobeid.lub` e `itemInfo.lua` **só na
-inicialização** — fechar e reabrir antes de testar. O que ninguém viu ainda
-é o manto **desenhado nas costas do personagem**: a tabela, a arte e a
-validação dizem que sim, e as três já disseram isso junto antes sem que
-alguém tivesse olhado.
+Ficou escrito, no fim desta seção, que o manto nas costas do personagem era
+o único pedaço que ninguém tinha visto, *"e a tabela, a arte e a validação
+dizem que sim, e as três já disseram isso junto antes sem que alguém
+tivesse olhado"*. Olhou-se, e as três estavam certas e a peça não desenhava.
+A seção seguinte é o que se aprendeu.
+
+---
+
+## O teto de 120 do manto — três hipóteses certas e uma peça invisível (2026-08-09)
+
+Continuação direta da seção acima. Os onze mantos entraram na loja com
+`valida_visual.py` dando 0, `luac -p` passando, round-trip conferido e o
+map-server subindo limpo — e **cinco deles não desenhavam nas costas do
+personagem**. É a rodada que vale mais pelo método do que pelo resultado.
+
+### O relato do dono, que virou a única medida confiável
+
+Doze peças equipadas, uma a uma:
+
+| | slot |
+|---|---|
+| desenham | 61, 73, 75, 82, 90, 99, 104, 114 |
+| **não** | 122, 136, 148, 154, 158 |
+
+Maior que funciona: 114. Menor que falha: 122. A tabela do GRF de 2021-11-03
+vai até **120**. A fronteira estava lá desde o começo, e só apareceu quando
+alguém equipou as peças e disse quais.
+
+### As três explicações plausíveis, e por que cada uma caiu
+
+Todas as três eram verificáveis offline. **Todas as três deram OK, e nenhuma
+era a causa** — que é o ponto inteiro desta seção.
+
+**1. Falta de arte.** Descartada por um item: o Escudo de Oridecon (slot 90)
+desenha, e a arte dele foi copiada na *mesma* rodada, pelo *mesmo*
+`instala_manto.py`. Se o pipeline de arte estivesse quebrado, ele também
+falharia. Conferido de perto: as pastas dos que falhavam tinham a sprite da
+classe do personagem (Sura), idêntica à de um que funciona.
+
+**2. O arquivo não chega ao cliente.** Descartada pelo **horário de acesso**:
+`spriterobeid.lub` e `spriterobename.lub` foram abertos às 21:11:39, no mesmo
+segundo que o `accessoryid.lub`, que comprovadamente funciona. Isso é um dado
+que o Windows dá de graça e que ninguém tinha pensado em olhar.
+
+**3. Buraco na numeração.** A hipótese mais bonita, e errada. A tabela do
+cliente vai de 1 a 120 sem faltar número; a do bRO, de 1 a 259 com um só
+buraco; a que eu tinha gravado pulava de 120 para 122, 125, 131 — **29
+vazios**, e os nove pedidos estavam todos depois do primeiro. Fechei a faixa,
+o cliente leu a tabela contígua de 1 a 158 (mtime 21:34, acesso 21:42,
+screenshot 21:44) e **nada mudou**.
+
+Também não era o servidor: o campo é `uint16` no pacote e `int16` no `status`.
+
+### A sonda — o que respondeu em uma rodada
+
+Depois de três hipóteses, a pergunta que faltava não era "o que está errado",
+era **"o meu arquivo chega à tela?"**. E ela não se responde procurando o
+efeito que se quer: se responde com uma marca que não dependa dele.
+
+`estende_robeid.py --sonda 114=C_20th_Anniversary_Wing` reaponta o slot 114 —
+a Espada do General, que desenha — para a pasta das Asas Laureadas. Reabrir o
+cliente, equipar a espada:
+
+- **apareceram asas** → o override manda, o cliente monta a tabela dele;
+- **apareceu a espada** → o override é lido e ignorado.
+
+Apareceram asas. Três coisas caíram no lugar de uma vez: o arquivo manda, a
+arte das Asas Laureadas está boa (foi ela que apareceu), e **o defeito é só o
+número do slot**.
+
+É a mesma lição do `ajusta_tamanho_fonte.py`, e desta vez ela foi aplicada
+tarde. Subiu para o `CLAUDE.md` §5 na forma geral: **tabela certa + arte certa
++ arquivo lido ≠ desenha na tela.**
+
+### O conserto: reaproveitar slot morto
+
+Levantar o teto é patch de exe. Tentei achar a constante em volta da
+referência a `ReqRobSprName` (`0x008278ca` no `Ragexe_unpacked.exe`) e parei:
+sem desmontador, varredura de bytes só devolve `cmp edi, 198` repetido, que
+não são instrução. Está no `PENDENCIAS.md` §4, com o ponto de partida anotado.
+
+O que dava para fazer hoje: dos 120 slots que o cliente aceita, **40 não têm
+arte nenhuma** — a tabela sabe o nome da pasta e a pasta não existe em GRF
+nenhum. Já não desenhavam nada, então apontá-los para a arte nova não tira
+nada de ninguém. Sete dos nove doadores escolhidos não são citados por item
+algum do `item_db`; os outros dois, por um item cada, nenhum deles em loja
+nossa.
+
+| peça | slot original | passa a usar |
+|---|---|---|
+| Capa de Herói | 122 | 41 |
+| Guitarra de Deviling | 125 | 49 |
+| Asas da Valquíria Caída / Amaldiçoadas | 131 | 74 |
+| Asas Laureadas | 136 | 77 |
+| Mochila Multiuso | 137 | 94 |
+| Muranyasa | 147 | 100 |
+| Tridente com Lacinho | 148 | 20 |
+| Lança de Valquíria | 154 | 29 |
+| Katanas do Mestre Tengu | 158 | 30 |
+
+**Uma fonte da verdade, e é o `View:` do `db/guerra/item_db.yml`.** O
+`estende_robeid.py` lê de lá e escreve a tabela do cliente para combinar. Não
+há lista de-para do outro lado, e não pode haver: seria a metade-no-cliente do
+`CLAUDE.md` §9 outra vez, duas listas divergindo sem dar erro. Com uma fonte
+só, rodar de novo não muda nada, e `--reverter` e "tirar o `View:`" dão no
+mesmo.
+
+**Sobram 31 doadores.** Passado isso, ou sai o patch de exe, ou não entra
+manto novo — e é por isso que o `varre_cosmeticos.py` **continua** sem
+classificar manto como `curavel`: prometer cura para 45 quando cabem 31 é o
+mesmo erro de prometer cura que não há como cumprir.
+
+### Duas coisas que escrevi hoje e desfiz no mesmo dia
+
+**O preenchimento de buracos**, escrito para a hipótese 3, ficou meia hora no
+repositório e deixava 29 entradas inúteis. Saiu.
+
+**A recuperação do próprio override.** Fazia sentido quando o script
+*acrescentava* slot — relia o arquivo para não perder rodadas anteriores.
+Depois da reescrita virou o oposto: arrastava, rodada após rodada, as 38
+entradas acima de 120 da tentativa que não funcionou, sem que nada as pedisse.
+Agora o override é refeito do zero toda vez, a partir do GRF mais o item_db.
+
+### O que foi verificado
+
+As 111 entradas não reaproveitadas ficaram byte a byte iguais às do GRF
+(conferido com um leitor independente do que gera o arquivo — buraco que a
+primeira versão tinha, porque `monta` e `confere` partiam do mesmo leitor). A
+arte dos nove destinos existe. `luac -p` passa nos dois `.lub`. O map-server
+subiu com as dez entradas novas de `item_db` e sem `Unknown syntax`. E, o que
+decide, **o dono confirmou as cinco peças na tela.**

@@ -114,7 +114,7 @@ outras **quebra calado**.
 | 3 | `data\sprite\` | a arte (4 de item + 4 de cabeça) | `instala_visual.py` |
 | 3b | `data\sprite\<manto>\` | a arte de manto, **se for `Costume_Garment`** — uma pasta, com um par de arquivos por CLASSE de personagem | `instala_manto.py` |
 | 4 | `accessoryid.lub` + `accname.lub` | o slot de visual, **se for de cabeça e novo** | `estende_accessoryid.py` |
-| 4b | `spriterobeid.lub` + `spriterobename.lub` | o slot de manto, **se for manto e novo** | `estende_robeid.py` |
+| 4b | `spriterobeid.lub` + `spriterobename.lub` | o slot de manto — **reaproveitando** um dos 40 slots ≤120 sem arte; o cliente ignora acima disso | `estende_robeid.py` |
 | 5 | `npc/guerra/mercado_*.txt` | a loja que vende | à mão / gerador |
 | 6 | `db/guerra/item_combos.yml` | o conjunto, se fizer parte de um | à mão |
 
@@ -132,22 +132,25 @@ momentos diferentes, e a segunda é a cara:
 | os 4 arquivos de **item** (ícone, collection, spr, act de chão) | **ao abrir a loja** — caixa modal, antes de qualquer compra |
 | a arte de **manto** por classe (3b) | **ao equipar** — a loja abre, vende, e só então falha |
 
-**A camada 4b é a que falha de forma diferente da 4, e desde 2026-08-09 tem
-ferramenta.** Manto cujo `View` esteja fora da `spriterobeid.lub` do cliente
-**não desenha, e arte nenhuma resolve** — o cliente nem chega a procurar
-arquivo. O `estende_robeid.py` põe a entrada; o `instala_manto.py` recusa,
-dizendo isso, enquanto ela não estiver lá.
+**A camada 4b não é simétrica com a 4, e a assimetria é dupla.**
 
-**A ordem entre 4b e 3b é obrigatória, e o inverso não é simétrico com o
-chapéu:**
+Primeiro no que o jogador vê quando falta a entrada de tabela:
 
 | falta a entrada de tabela | chapéu (4) | manto (4b) |
 |---|---|---|
 | o que o jogador vê | `Cannot find File` **modal** | **nada, em silêncio** |
 | gravar a entrada sem ter a arte | não piora — já era modal | **piora** — troca silêncio por modal |
 
-É por isso que o `estende_robeid.py` confere a arte antes de gravar **todo**
-View novo, enquanto o `estende_accessoryid.py` só o faz num ramo.
+Depois, e é o que manda: **a camada 4 estende, a 4b não.** O
+`accessoryid.lub` aceita slot novo de cabeça (2192 → 2405 hoje); o
+`spriterobeid.lub` aceita entrada nova e **o cliente ignora slot de manto acima
+de 120** — medido em tela em 2026-08-09, com a tabela contígua até 158. Então a
+4b não é "acrescentar", é **trocar**: o `estende_robeid.py` reaponta um dos 40
+slots ≤120 sem arte, e quem decide qual é o `View:` do
+`db/guerra/item_db.yml`. Sobram 31; depois disso, só patch de exe.
+
+**A ordem entre 4b e 3b continua obrigatória:** o `instala_manto.py` só sabe em
+que pasta copiar depois que a tabela conhece o slot.
 
 **Nem todo `Costume_Garment` usa 3b:** peça sem `View` (a Aura Nevada, 480097) é
 só um `hateffect` no `Script` do item — efeito de tela, sem desenho vestido.

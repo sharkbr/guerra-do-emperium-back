@@ -1859,24 +1859,25 @@ Por isso aqui não existe lista canônica de caminhos como o
 **diferença** entre o que a origem tem e o que o nosso cliente já tem. Rodar
 duas vezes não copia nada na segunda.
 
-### O que ele NÃO faz — e quem passou a fazer, em 2026-08-09
+### O que ele NÃO faz — e quem faz, desde 2026-08-09
 
-Ele **não** estende o `spriterobeid.lub`/`spriterobename.lub` — a tabela que
-traduz o `View` do `item_db` no nome da pasta. Isso agora é do
-**`estende_robeid.py`**, logo abaixo; até 2026-08-09 não era de ninguém, e o
-`PENDENCIAS.md` §4 registrava a falta.
+Ele **não** mexe no `spriterobeid.lub`/`spriterobename.lub` — a tabela que
+traduz o `View` do `item_db` no nome da pasta. Isso é do
+**`estende_robeid.py`**, logo abaixo. A divisão é a mesma dos dois do lado do
+chapéu: **um cuida do nome da pasta, o outro traz os arquivos**, e só os dois
+juntos curam o item.
 
-A divisão continua a mesma dos dois do lado do chapéu: **um traz a entrada de
-tabela, o outro traz os arquivos**, e só os dois juntos curam o item.
+**Este cliente não desenha manto com slot acima de 120** — medido em tela em
+2026-08-09, e não é a tabela que limita. Então o `estende_robeid.py` não
+acrescenta slot: ele **reaproveita** um dos 40 slots que este cliente aceita e
+que não têm arte nenhuma. A seção dele explica; aqui basta a consequência
+prática.
 
-A tabela do nosso GRF tem **120 entradas**, e todo manto cujo `View` já esteja
-lá precisa apenas da arte — que é o que este script copia. Foi o caso dos treze
-do Manteleiro de 2026-08-08: os `View` deles vão de 61 a 114, todos dentro das
-120. Nove dos onze de 2026-08-09 não tiveram essa sorte.
-
-**Manto com `View` fora da tabela continua sendo RECUSADO**, com o motivo por
-extenso, em vez de copiar 600 arquivos que o cliente nunca vai procurar. O que
-mudou é que agora a recusa tem conserto: rodar o `estende_robeid.py` e voltar.
+**Manto com `View` fora da tabela continua sendo RECUSADO** por este script,
+com o motivo por extenso, em vez de copiar 600 arquivos que o cliente nunca vai
+procurar. O conserto é pôr um `View:` reaproveitado no `db/guerra/item_db.yml`
+e rodar o `estende_robeid.py` — aí a pasta passa a existir para o script, e ele
+copia.
 
 ### Duas correções de 2026-08-09, as duas vindas do `estende_robeid.py`
 
@@ -2077,29 +2078,97 @@ base_ids`) não a reconhecia como nossa — e como a base é relida do GRF a cad
 rodada, a rodada seguinte a apagaria calada. Agora `const in ov_nomes and const
 not in base_nomes` também conta.
 
-## `estende_robeid.py` — o mesmo, do lado do MANTO
+## `estende_robeid.py` — põe a arte de um manto num slot que o cliente aceita
 
 ```
-python estende_robeid.py                              # o que já foi acrescentado
-python estende_robeid.py --id 480169 --grf <bro>      # pelo item
-python estende_robeid.py --view 125 --grf <bro>       # pelo View
-python estende_robeid.py --id 480169 --verificar      # --grf tem padrão: o bRO
-python estende_robeid.py --reverter                   # apaga o override
+python estende_robeid.py                    # aplica e relata
+python estende_robeid.py --verificar        # só relata
+python estende_robeid.py --reverter         # apaga o override
+python estende_robeid.py --sonda 114=C_20th_Anniversary_Wing
 ```
 
-Escrito em 2026-08-09, e é a metade que o `PENDENCIAS.md` §4 registrava como
-ausente desde 2026-08-05. **Espelho do `estende_accessoryid.py`**: mesma base
-relida do GRF, mesma recuperação por diferença, mesmo round-trip antes de
-gravar, mesmo `--reverter`. Ler aquela seção primeiro; aqui está só o que
-difere, e o que difere é o formato do arquivo.
+Escrito em 2026-08-09 para ser o irmão do `estende_accessoryid.py` do lado do
+manto — e **reescrito no mesmo dia**, quando a medição em tela mostrou que
+estender a tabela não serve para nada neste cliente. O nome ficou; o que ele
+faz é outra coisa.
 
-O que ele destravou na primeira rodada: **nove dos onze mantos** do Manteleiro
-de 2026-08-09. A nossa tabela foi de 120 para 129 slots.
+### O teto de 120 — a medição que mudou a ferramenta
+
+**Este cliente não desenha manto com slot acima de 120.** A tabela não tem nada
+a ver com isso: ela foi levada a 158 entradas contíguas, o cliente a leu, e
+nada mudou.
+
+| | slot |
+|---|---|
+| desenham | 61, 73, 75, 82, 90, 99, 104, 114 |
+| **não** | 122, 136, 148, 154, 158 |
+
+As outras explicações caíram uma a uma, e vale registrar **por quê** cada uma
+caiu — é o que impede alguém de refazer o mesmo caminho:
+
+| hipótese | como foi descartada |
+|---|---|
+| falta de arte | o Escudo de Oridecon (slot 90) desenha, e a arte dele foi copiada na mesma rodada pelo mesmo `instala_manto.py` |
+| o arquivo não chega ao cliente | o horário de **acesso** dos dois `.lub` mostra o cliente abrindo os dois na inicialização — e a sonda confirmou na tela |
+| buraco na numeração | a faixa foi fechada de 1 a 158 e continuou sem desenhar |
+| corte no servidor | o campo é `uint16` no pacote e `int16` no `status` |
+
+Sobra teto no próprio cliente. Levantá-lo é patch de exe, e está no
+`PENDENCIAS.md` §4 — **não** foi feito: sem desmontador, varredura de bytes só
+devolve `cmp` que não são instrução.
+
+### A sonda — "este arquivo chega à tela?"
+
+```
+python estende_robeid.py --sonda 114=C_20th_Anniversary_Wing
+```
+
+Reaponta um slot que **já funciona** para a pasta de outro manto, bem
+diferente. Serve para uma pergunta só, e é a que tentativa e erro não responde:
+o cliente está montando a tabela a partir deste arquivo, ou lê o arquivo e usa
+a do GRF?
+
+O slot 114 é a Espada do General. Depois de reabrir o cliente e equipá-la:
+**asas** = o override manda; **espada** = o override é lido e ignorado.
+
+É a mesma lição do `ajusta_tamanho_fonte.py` (`CLAUDE.md` §5): antes de
+calibrar valor, provar que o patch chega à tela com uma marca que **não**
+dependa do efeito procurado. Aqui ela respondeu numa rodada o que três
+hipóteses não responderam.
+
+A sonda se escreve em duas linhas no topo dos `.lub` gerados — sonda esquecida
+no disco é um manto desenhando a coisa errada meses depois. Rodar sem
+`--sonda` desfaz.
+
+### O que ele faz: reaproveita slot morto
+
+Dos 120 slots que este cliente aceita, **40 não têm arte nenhuma** — a tabela
+conhece o nome da pasta e a pasta não existe em GRF nenhum. Esses já não
+desenham nada, então apontá-los para a arte de um manto novo não tira coisa
+alguma de ninguém.
+
+**A fonte da verdade é o `View:` do `db/guerra/item_db.yml`**, e isso é
+deliberado. Quem decide qual manto usa qual slot é o item_db; o script lê de lá
+e escreve a tabela do cliente para combinar. **Não há lista de-para do outro
+lado, e não pode haver** — seria a metade-no-cliente do `CLAUDE.md` §9 outra
+vez, duas listas divergindo sem dar erro. Com uma fonte só, rodar de novo não
+muda nada, e `--reverter` e "tirar o `View:` do item_db" dão no mesmo.
+
+Três travas, e as três abortam:
+
+- slot doador **acima de 120** — este cliente não o desenha;
+- slot doador que **tem arte** aqui — reaproveitar apagaria um manto que hoje
+  funciona (é a que protege os 80 que valem);
+- pasta de destino que não existe em GRF nem no disco — viraria caixa de erro.
+
+**O override é refeito do zero a cada rodada**, e o arquivo do disco não é lido
+para recuperar nada. A versão da manhã relia o próprio override para não perder
+o que rodadas anteriores tinham posto — o que fazia sentido quando o script
+*acrescentava* slot. Depois da reescrita isso só arrastava decisão velha: as 38
+entradas acima de 120 da tentativa que não funcionou sobreviviam a cada rodada
+sem que nada as pedisse.
 
 ### Três globais, não dois — e o terceiro é uma LISTA
-
-Do lado do chapéu são duas tabelas em dois arquivos. Aqui são **três globais**
-em dois arquivos:
 
 | arquivo | global | forma |
 |---|---|---|
@@ -2115,41 +2184,22 @@ mochila, bolsa, asa que passa na frente. São 38 dos nossos 120, e 151 dos 258
 do bRO.
 
 **Reescrever o arquivo sem o `RobeTopLayer` compila, sobe e não dá erro
-nenhum** — os 38 mantos que hoje desenham na frente passariam a desenhar atrás,
-calados. Por isso ele é preservado inteiro, na ordem original (vetor
-reordenado é mudança de conteúdo), e um manto novo entra nele se, e só se, o
-bRO também o puser lá. Dos nove de 2026-08-09, oito entraram; o único de fora
-foi a Capa de Herói (`C_Vietnam_flag_hood`), que é capuz e desenha atrás.
+nenhum** — os 38 que hoje desenham na frente passariam a desenhar atrás,
+calados. Por isso ele é preservado inteiro, na ordem original (vetor reordenado
+é mudança de conteúdo), e um slot reaproveitado entra nele se, e só se, o bRO
+puser lá o manto de origem. Dos nove de 2026-08-09, oito entraram; o único de
+fora foi a Capa de Herói, que é capuz e desenha atrás.
 
 Ler os três exigiu cortar o bytecode por `SETGLOBAL` — o `vv.tabela_lua`
 devolve tudo numa lista só, e `RobeNameTable` e `_Eng` têm as **mesmas
 chaves**: um `dict()` por cima colapsa uma na outra sem avisar. Foi essa a
 armadilha que o `instala_manto.py` tinha desde 2026-08-08.
 
-### A terceira trava, que do lado do chapéu vale só para um ramo
+### O que sobrou de custo
 
-`estende_accessoryid.py` recusa gravar sufixo sem arte **apenas** no ramo
-`[nome]`, com o argumento de que View novo já chega quebrado com modal, então
-acrescentar não piora. **Aqui a trava vale para TODO View novo**, e a
-assimetria é do formato:
-
-- chapéu sem entrada de tabela → `Cannot find File` modal, já de saída;
-- manto sem entrada de tabela → **invisível e calado**, porque o cliente nem
-  tem nome de pasta para procurar.
-
-Gravar a entrada sem ter a arte troca silêncio por caixa de erro — e isso é
-piorar. Então o script confere que a pasta de sprite existe em algum dos dois
-GRFs (ou já no disco) antes de aceitar o View.
-
-### A ordem importa, e o `instala_manto.py` a cobra
-
-```
-python estende_robeid.py --id <n>              # a entrada de tabela
-python instala_manto.py  --ids <n> --aplicar   # a arte
-```
-
-Invertido, o segundo **recusa** — ele agora lê o override do disco antes do
-GRF, então sabe a diferença. Alto, com o motivo por extenso, e não em silêncio.
+Cada manto novo **queima um slot doador**, e eram 40. Nove foram usados; sobram
+**31**. Passado isso, ou se faz o patch de exe, ou não entra manto novo — está
+no `PENDENCIAS.md` §4.
 
 ## `varre_cosmeticos.py` — o que dá para vestir, e o que daria depois da cura
 
