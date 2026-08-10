@@ -35,6 +35,8 @@
 #include "pet.hpp"
 #include "./skills/skill_impl.hpp"
 
+#include <custom/reducao_de_dano.hpp>
+
 using namespace rathena;
 
 struct Battle_Config battle_config;
@@ -5516,6 +5518,11 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 				wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.equipAtk2, 1, wd.flag);
 				wd.masteryAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.masteryAtk2, 1, wd.flag);
 			}
+
+			// Guerra do Emperium: o percentAtk (a parcela que vem do bAtkRate
+			// da arma do atacante) faltava nesta lista e saia inteiro, furando
+			// toda resistencia de carta. Ver src/custom/reducao_de_dano.hpp.
+			reducao_alcanca_percentatk(wd, src, target, nk, right_element, left_element, is_attack_left_handed(src, skill_id));
 		}
 
 		// final attack bonuses that aren't affected by cards

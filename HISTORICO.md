@@ -4668,3 +4668,115 @@ primeira versão tinha, porque `monta` e `confere` partiam do mesmo leitor). A
 arte dos nove destinos existe. `luac -p` passa nos dois `.lub`. O map-server
 subiu com as dez entradas novas de `item_db` e sem `Unknown syntax`. E, o que
 decide, **o dono confirmou as cinco peças na tela.**
+
+## A resistência a humano que não fechava a conta (2026-08-09)
+
+O dono montou um Sura de guerra e somou, peça a peça, a resistência a humano
+que ele deveria ter. Deu perto de 100%, e o motivo de o número importar é que
+no bRO o teto ficou em 97% por muito tempo — acima de 100 o jogador
+simplesmente não toma dano, e por isso lá algumas cartas foram bloqueadas. A
+suspeita dele era a **Carta Caídos**, que fecha conjunto com a Carta Guerreiro
+Orc e dá mais 15%.
+
+Só que, com tudo equipado, um Rune Knight **sem nenhum equipamento além da
+arma** acertou 53.061 com Impacto Flamejante. Alguma coisa não fechava.
+
+### O que foi conferido antes de acusar qualquer um
+
+A conta do dono saiu das descrições da tela. Descrição vem do `itemInfo` do
+cliente, não do script do servidor (§4.9 do `CLAUDE.md`), então a primeira
+coisa foi refazer a soma pelo `item_db`:
+
+| Peça | ID | `RC_Player_Human` no servidor |
+|---|---|---|
+| Anel de Ameretat | 490290 | 3 |
+| Amuleto Mitológico | 490337 | 3 |
+| Botas de Guivra | 470274 | 10 |
+| Capa do Comandante | 20925 | **3** — a tela diz 5, e diz "Humano e Doram" |
+| Escudo Alado | 460025 | 5 |
+| O Criador (cajado) | 550021 | 10 |
+| Algazarra (armadura) | 450338 | 7 |
+| Servos de Morroc | 420236 | 3 |
+| Adorno Angelical | 410142 | 5, via `RC_All` |
+| Cocar do Orc Herói +16 | 400006 | 16, via `RC_All` |
+| conjunto Cocar + C. Guerreiro Orc | `db/re/item_combos.yml:22019` | 30 |
+| conjunto C. Caídos + C. Guerreiro Orc | `db/re/item_combos.yml:5052` | 15 |
+
+**Total: 110%.** `RC_All` entra na mesma soma que `RC_Player_Human`
+(`battle.cpp:1129`), então Cocar e Adorno contam inteiros.
+
+Três hipóteses caíram aqui:
+
+1. **Não existe teto de 99%.** O `APPLY_CARDFIX` (`battle.cpp:806`) grampeia em
+   `max(0, fix)` — passando de 100% o dano vira zero, não 1%.
+2. **Os dois conjuntos funcionam juntos.** O `pc_checkcombo`
+   (`pc.cpp:11806`) só recusa conjunto repetido **pelo id do conjunto**, e só
+   impede reusar o mesmo item **dentro do mesmo conjunto**. Uma Carta Guerreiro
+   Orc fecha os dois ao mesmo tempo, e fecha.
+3. **A Thanatos não tem nada com isso.** A carta 4399 é
+   `bonus bDefRatioAtkClass,Class_All` — ignora DEF, não passa perto do
+   `battle_calc_cardfix`.
+
+E a Caídos era inocente: sem ela o Sura ainda estava em 95%.
+
+### O furo
+
+No renewal o dano físico é montado em parcelas, e a redução do alvo é aplicada
+em cada uma **antes** de somar (`battle.cpp`, bloco "Card Fix for target"):
+`statusAtk`, `weaponAtk`, `equipAtk` e `masteryAtk` passam pela redução. O
+`percentAtk` **não estava na lista**, e entrava inteiro na soma da linha
+seguinte.
+
+Isso funcionaria se `percentAtk` fosse desprezível. Ele é calculado bem antes,
+no trecho comentado como *"AtkRate gives a static bonus from (W.ATK + E.ATK)"*:
+
+```c
+wd->percentAtk = (wd->weaponAtk + wd->equipAtk) * sd->bonus.atk_rate / 100;
+```
+
+A arma do Rune Knight era a **Lâmina Sagrada** (`Copy_Gram`, 500009), em +16:
+
+```
+if (BaseLevel>=100) { bonus bAtkRate,10*.@r; }     ->  bAtkRate 160
+```
+
+Ou seja: as quatro parcelas reduzidas iam a **zero**, como a conta de 110%
+mandava — e sobrava `percentAtk`, valendo 1,6× (W.ATK + E.ATK), intocado, para
+o multiplicador da habilidade multiplicar. Com 110% de resistência o alvo ainda
+tomava perto de 60% do dano. **Uma arma com `bAtkRate` alto é um "ignora
+reduções" disfarçado de ATQ%** — e fura resistência a raça, a elemento, a
+tamanho e a classe, todas de uma vez, sem nada no log.
+
+### A correção
+
+`rathena/src/custom/reducao_de_dano.hpp` (nosso) põe o `percentAtk` na mesma
+lista, no mesmo lugar. O enxerto no `battle.cpp` é um include e uma chamada —
+sete linhas, no padrão do `src/custom/refino.hpp`. Entrou na tabela do §2 do
+`CLAUDE.md`.
+
+Usa o `nk` cheio, e não o `ignoreele_nk` do `statusAtk`, porque o `percentAtk`
+nasce de `weaponAtk + equipAtk`, que são parcelas **com** elemento — o
+`battle_attr_fix` já rodou nas duas.
+
+**Por que corrigir a parcela e não mover a redução para o fim:** dá no mesmo.
+Tudo que vem depois da soma é multiplicativo (P.ATK, crítico, curta/longa
+distância e, por último, o multiplicador da habilidade), então reduzir parcela
+a parcela antes da soma é idêntico a reduzir no fim — **desde que toda parcela
+passe pela redução**. Faltava uma.
+
+Fora da correção, de propósito: dano fixo somado depois da conta (a Lâmina de
+Aura e os outros `ATK_ADD` que a habilidade declara como acréscimo fixo)
+continua fora da redução. `NJ_ISSEN` e `GN_FIRE_EXPANSION_ACID` nunca tiveram o
+furo — o rAthena pula a redução do alvo para os dois no bloco de parcelas e a
+aplica mais tarde sobre o `wd.damage` inteiro, que já inclui o `percentAtk`.
+
+Compilado e no ar em 2026-08-09, e **confirmado em jogo pelo dono em
+2026-08-10** — que é o que decide, porque verificação offline que passa não é
+prova de efeito.
+
+O catálogo do que continua fora da redução — habilidades com `IgnoreDefCard`,
+dano fixo declarado, reflexo, dano de status — virou documento próprio,
+`REDUCAO-DE-DANO.md`, com a ordem das etapas da conta e uma receita de cinco
+passos para o próximo "fulano furou minha resistência". O que sobrou em aberto
+não é código, é economia: a soma de 110% agora zera dano de verdade, e decidir o
+teto está em `PENDENCIAS.md` §1h.

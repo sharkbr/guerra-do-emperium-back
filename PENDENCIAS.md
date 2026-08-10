@@ -530,6 +530,35 @@ cliente, não NPC.
 
 ---
 
+## 1h. O teto de resistência a humano — falta decidir a economia
+
+O furo que fazia `bonus bAtkRate` ignorar toda redução de carta foi corrigido em
+2026-08-09 e **confirmado em jogo pelo dono em 2026-08-10**. A história está no
+`HISTORICO.md`, "A resistência a humano que não fechava a conta"; o que entra e
+o que escapa da conta está catalogado em `REDUCAO-DE-DANO.md`.
+
+**O que ficou em aberto é a economia, não o código.** Com o furo fechado, o teto
+volta a valer de verdade — e a conta do Sura de guerra dá **110%**, ou seja,
+dano zero. O bRO resolveu isso segurando a soma em ~97%, ao custo de bloquear
+carta e efeito. Aqui as peças da decisão são:
+
+1. **A Carta Caídos** (`LivingDeath_Card`, 27328) é inocente do bug, mas é ela
+   que empurra a soma de 95 para 110, pelo conjunto com a Carta Guerreiro Orc
+   (`db/re/item_combos.yml:5052`). Bloquear a carta, tirar o conjunto, ou baixar
+   o valor — são três remédios diferentes, com três efeitos colaterais
+   diferentes.
+2. **Levantar quais itens à venda têm `bAtkRate` alto por refino.** A Lâmina
+   Sagrada (`Copy_Gram`, 500009) dá 160 em +16. Agora que esse bônus entra na
+   conta, ele deixou de furar resistência — mas continua sendo ATQ enorme, e
+   vale saber quantos outros existem antes de mexer no teto.
+3. **A `Capa do Comandante` (20925) descreve 5% e entrega 3%** (§5 do
+   `CLAUDE.md`). Ou se corrige o script por override em `db/guerra/item_db.yml`,
+   ou se aceita — mas a divergência tem de ser decisão, não esquecimento.
+
+**Ao atualizar o `rathena/`:** conferir se o enxerto do `battle.cpp` sobreviveu,
+e se a lista de parcelas da linha 5532 ganhou membro novo. Parcela nova que
+ninguém puser no bloco de redução repete o bug de 2026-08-09, calada.
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

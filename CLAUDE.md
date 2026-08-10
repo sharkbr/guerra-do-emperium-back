@@ -48,6 +48,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
+| `src/map/battle.cpp` | um include de `src/custom/` + uma chamada (`reducao_alcanca_percentatk`, no bloco "Card Fix for target"), comentada no arquivo. Põe o `percentAtk` na redução de cartas do alvo — sem ela, `bonus bAtkRate` fura toda resistência (ver `HISTORICO.md`, "A resistência a humano que não fechava a conta") |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -443,6 +444,25 @@ Produziram diagnóstico falso e custaram retrabalho:
   lista de exceção em `-o` (`potato|tomato|…`). Palavra portuguesa que caia num
   desses ramos sai errada na tela e **nada avisa**. Conferir a terminação antes
   de traduzir argumento de `F_InsertPlural`.
+- **A descrição do item na tela discorda do script do servidor — no NÚMERO, não
+  só na presença.** A descrição vem do `itemInfo` do cliente, que é a tradução
+  do kRO de 2021; o efeito vem do `Script:` do `item_db` do nosso rAthena, que é
+  outra revisão. Caso vivo em 2026-08-09: a **Capa do Comandante** (20925) diz
+  na tela *"Resistência as raças Humano e Doram +5%"* e o script dá
+  `bonus2 bSubRace,RC_Player_Human,3` — 3, e nada para Doram. Somar resistência
+  lendo a tela dá um total plausível e errado, e a diferença não aparece em
+  lugar nenhum. **Conta de efeito se fecha no `item_db`.**
+- **Nem toda parcela de dano do renewal passa pela redução de cartas.** O dano
+  físico é montado em `statusAtk`, `weaponAtk`, `equipAtk`, `masteryAtk` e
+  `percentAtk`, e a redução do alvo é aplicada **parcela a parcela, antes da
+  soma** (`battle.cpp`, bloco "Card Fix for target"). Dá no mesmo que reduzir no
+  fim — tudo que vem depois é multiplicativo — **desde que toda parcela entre**.
+  O `percentAtk` não entrava (corrigido por nós; ver §2). Ao mexer em dano,
+  desconfiar sempre: parcela que não está naquele bloco ignora resistência a
+  raça, elemento, tamanho e classe, todas de uma vez, e nada denuncia.
+  **A lista completa do que escapa — habilidades com `IgnoreDefCard`, dano fixo,
+  reflexo, dano de status — está em `REDUCAO-DE-DANO.md`.** Consultar antes de
+  chamar de bug.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
@@ -461,6 +481,7 @@ Produziram diagnóstico falso e custaram retrabalho:
 | `npc/guerra/scripts_guerra.conf` | índice narrado dos nossos NPCs | antes de tocar conteúdo |
 | `ferramentas/LEIAME.md` | uma seção por ferramenta | só a seção da ferramenta |
 | `CUSTOMIZACAO-VISUAL.md` | frente visual (cidade destruída) | só a seção |
+| `REDUCAO-DE-DANO.md` | o que entra e o que escapa da redução de cartas (resistência a humano) | consulta, só a seção — **antes de discutir número de PvP** |
 | `CATALOGO-*.md` | o que está à venda, modelos, retratos | consulta |
 
 **Ordem para uma tarefa nova:** `CLAUDE.md` → `scripts_guerra.conf` (o que já
