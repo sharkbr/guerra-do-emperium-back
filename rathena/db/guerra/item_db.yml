@@ -1660,13 +1660,12 @@ Body:
     # azul de efeito para ele porque MDEF de armadura nunca tem - e o mesmo
     # padrao dos outros itens do arquivo.
     #
-    # O que este override NAO conserta: os tres conjuntos com as botas do
-    # Heroi (22035, 22036, 22037), que no db/re/item_combos.yml dao
-    # `RC_Player_Human,5` e nada para Doram, enquanto a descricao promete os
-    # dois. O valor bate; falta so o Doram. Ficou de fora de proposito - o
-    # pedido era a capa, as tres botas nao estao a venda em loja nossa
-    # nenhuma, e o caminho de conserto e outro (db/guerra/item_combos.yml, do
-    # jeito que a Carta Caidos foi feita).
+    # Os TRES CONJUNTOS desta capa com as botas do Heroi (22035, 22036,
+    # 22037) tinham a mesma divergencia pela metade - `RC_Player_Human,5` e
+    # nada para Doram, contra uma descricao que promete os dois - e foram
+    # corrigidos no mesmo dia, em db/guerra/item_combos.yml. Nao cabiam
+    # aqui: conjunto e outro banco, e a sobrescrita la e por lista de itens,
+    # nao por Id de item.
     AegisName: Commander_manteau_J
     Name: "Capa do Comandante"
     Script: |

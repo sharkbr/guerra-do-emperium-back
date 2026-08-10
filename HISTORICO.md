@@ -4896,15 +4896,40 @@ está no rodapé de status da própria descrição, `DEF: 20 DEFM: 10`, conferid
 `itemInfo.lua` deste cliente. Manter é o que a mesclagem faz de graça, e é o que
 está certo.
 
-### O que este conserto NÃO alcança
+### Os três conjuntos com as botas do Herói, no mesmo dia
 
-Os **três conjuntos com as botas do Herói** (22035, 22036, 22037) prometem, cada
-um, *"Resistência as raças Humano e Doram +5% adicional"*, e no
-`db/re/item_combos.yml` dão `RC_Player_Human,5` e **nada para Doram**. O valor
-bate; falta só a raça. Ficou de fora de propósito: o pedido era a capa, as três
-botas **não estão à venda em loja nossa nenhuma**, e o caminho de conserto é
-outro — `db/guerra/item_combos.yml`, do jeito que a Carta Caídos foi feita na
-seção acima.
+Achados ao conferir a capa, e consertados logo em seguida, a pedido do dono. Os
+**três conjuntos** (22035 Sapatos Relaxantes, 22036 Botas de Couro, 22037 Botas
+de Ungoliant) prometem, cada um, *"Resistência as raças Humano e Doram +5%
+adicional"*, e no `db/re/item_combos.yml` davam `RC_Player_Human,5` e **nada para
+Doram**. Aqui o **valor já batia** — faltava só a raça, e era uma linha por
+conjunto.
+
+Foram para `db/guerra/item_combos.yml`, pelo caminho que a Carta Caídos abriu na
+seção acima. Duas coisas que aquele caso não tinha mostrado, e que valem para
+qualquer conjunto que a gente venha a sobrescrever:
+
+- **A ordem em que se escrevem os itens não importa.** O `parseBodyNode`
+  **ordena** a lista (`std::sort`, `src/map/itemdb.cpp:3940`) antes de guardá-la,
+  e o `find_combo_id` compara vetor com vetor. O comentário do arquivo dizia
+  "lista ordenada" e está certo — mas quem lê pode entender "na mesma ordem que
+  eles escreveram", e não é isso.
+- **Não há mesclagem de linha em conjunto, tampouco.** Conjunto que já existe tem
+  o `combo->script` liberado (`script_free_code`) e substituído pelo nosso. É a
+  mesma regra do `Script:` do item, e pela mesma razão cada bloco repete o script
+  inteiro do rAthena, copiado de lá.
+
+**A promessa mora só na descrição da capa.** As três botas não citam conjunto
+nenhum no `itemInfo.lua` deste cliente — nem a capa, nem a palavra "Humano" —,
+conferido entrada por entrada. É pela capa que o jogador lê o que ganha.
+
+**Ninguém alcança esses conjuntos hoje:** as três botas não estão à venda em loja
+nossa nenhuma (`estado_item.py --id 22035,22036,22037`). Entraram pela mesma
+razão que o resto — a conta de resistência a humano se fecha no `item_db`, não na
+tela —, e se um dia as botas entrarem no mercado já chegam certas.
+
+Os três scripts foram gerados **copiando** os do `db/re/`, e o diff foi conferido
+com `difflib`: **uma linha acrescentada em cada, nada mais.**
 
 ### A conta de resistência a humano, depois disto
 

@@ -575,10 +575,12 @@ Anel de volta, ou `@item` de uma peça de resistência) e conferir que o dano é
   > capa, e a diferença tem de ser de **5** pontos de resistência, não 3. O
   > tooltip não serve de prova — ele já dizia 5% quando o servidor dava 3.
   >
-  > O que continua aberto no mesmo item, e é menor: os **três conjuntos com as
-  > botas do Herói** (22035, 22036, 22037) prometem "+5% Humano e Doram" e o
-  > `db/re/item_combos.yml` só dá o Humano. As três botas não estão à venda em
-  > loja nossa nenhuma, então ninguém alcança esses conjuntos hoje.
+  > Os **três conjuntos dela com as botas do Herói** (22035, 22036, 22037)
+  > tinham a mesma divergência pela metade — o valor batia, faltava o Doram — e
+  > foram junto, em `db/guerra/item_combos.yml`. **Não precisam de prova em
+  > tela:** as três botas não estão à venda em loja nossa nenhuma, então
+  > ninguém alcança esses conjuntos hoje. Ficam certos para o dia em que
+  > entrarem no mercado.
 - **Calibrar resistência a elemento sabendo do teto.** Ele vale para a redução
   de carta inteira, não só para a de raça — combinação de elemento que chegasse
   a 100% agora deixa passar 0,1%. Ver `REDUCAO-DE-DANO.md` §1b.

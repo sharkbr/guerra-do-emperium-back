@@ -165,3 +165,75 @@ Body:
           - Orc_Warrior_Card    # 4066 - Carta Guerreiro Orc
     Script: |
       bonus2 bSubRace,RC_DemiHuman,15;
+
+  # ----- Capa do Comandante + as tres botas do Heroi: falta o Doram ----
+  #
+  # NASCEU EM 2026-08-10, LOGO DEPOIS DO OVERRIDE DA CAPA.
+  #
+  # Mesma divergencia da propria capa (20925), e a mesma correcao: a tela
+  # promete "Resistencia as racas Humano e Doram +5% adicional" nos tres
+  # conjuntos, e o db/re/item_combos.yml da RC_Player_Human,5 e nada para
+  # Doram. Aqui o VALOR ja batia - o que faltava era so a raca.
+  #
+  # A promessa mora so na descricao da CAPA. Os tres calcados (22035,
+  # 22036, 22037) nao citam conjunto nenhum no itemInfo.lua deste
+  # cliente, nem a capa, nem "Humano" - conferido entrada por entrada.
+  # E na capa que o jogador le o que vai ganhar, e e por ela que a conta
+  # se fecha.
+  #
+  # COMO ISTO SUBSTITUI O ORIGINAL: identico a Carta Caidos, logo acima.
+  # O ComboDatabase casa pela lista de itens - e `parseBodyNode` a ORDENA
+  # antes de comparar (`std::sort`, src/map/itemdb.cpp), entao a ordem em
+  # que se escreve aqui nao importa. Conjunto que ja existe tem o
+  # `combo->script` LIBERADO e substituido pelo daqui; nao ha mesclagem
+  # de linha, e por isso cada Script abaixo repete o do rAthena inteiro,
+  # copiado de la, com uma linha a mais.
+  #
+  # Ao atualizar o rathena/, conferir os tres contra o db/re/ - se o
+  # vendor mudar os numeros dele, ESTES AQUI NAO MUDAM SOZINHOS.
+  #
+  # Nota de alcance: as tres botas NAO estao a venda em loja nossa
+  # nenhuma (`estado_item.py --id 22035,22036,22037`), entao hoje isto
+  # nao muda o dano de ninguem. Entrou pela mesma razao que o resto: a
+  # conta de resistencia a humano tem de fechar no item_db, nao na tela.
+  # Se um dia as botas entrarem no mercado, ja chegam certas.
+
+  # ----- Capa do Comandante + Botas de Ungoliant do Heroi -----
+  # Espelha db/re/item_combos.yml, o conjunto Commander_manteau_J + 22037.
+  - Combos:
+      - Combo:
+          - Commander_manteau_J    # 20925 - Capa do Comandante
+          - Vet_Ungo_Boots    # 22037 - Botas de Ungoliant do Heroi
+    Script: |
+      bonus bVit,10;
+      bonus bLuk,10;
+      bonus bHealPower,20;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bUseSPrate,-10;
+
+  # ----- Capa do Comandante + Botas de Couro do Heroi -----
+  # Espelha db/re/item_combos.yml, o conjunto Commander_manteau_J + 22036.
+  - Combos:
+      - Combo:
+          - Commander_manteau_J    # 20925 - Capa do Comandante
+          - Vet_SliverFox_Boots    # 22036 - Botas de Couro do Heroi
+    Script: |
+      bonus bStr,10;
+      bonus bDex,10;
+      bonus bDelayrate,-20;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+
+  # ----- Capa do Comandante + Sapatos Relaxantes do Heroi -----
+  # Espelha db/re/item_combos.yml, o conjunto Commander_manteau_J + 22035.
+  - Combos:
+      - Combo:
+          - Commander_manteau_J    # 20925 - Capa do Comandante
+          - Vet_Nepen_Heel    # 22035 - Sapatos Relaxantes do Heroi
+    Script: |
+      bonus bAgi,10;
+      bonus bInt,10;
+      bonus bVariableCastrate,-10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
