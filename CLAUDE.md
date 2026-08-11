@@ -251,6 +251,24 @@ Produziram diagnóstico falso e custaram retrabalho:
   foram gastas discutindo se a fonte tinha mudado. O que decidiu foi recortar a
   mesma região de dois screenshots e ampliar em nearest-neighbor — aí "idêntico
   ao pixel" ou "mudou" é fato, não impressão.
+- **Um TETO num valor que todo mundo pede não limita exageros: ele apaga a
+  escala inteira.** O `--teto 11` do `ajusta_tamanho_fonte.py` parecia calibrado
+  — cada degrau foi olhado na tela — e na verdade achatava os **oito** corpos do
+  cliente num só. O jogo ficou sem hierarquia tipográfica: nome de mapa do
+  tamanho do chat. **Passou porque cada texto isolado parecia plausível**; o que
+  destoou foi o maior, e o pedido chegou como "o nome do mapa está pequeno", que
+  aponta para o lugar errado. Antes de pôr teto, **medir a distribuição do que é
+  pedido** — se nada cai abaixo dele, não é teto, é achatamento. E há como
+  medir: o cache do stub é indexado pelo tamanho pedido, então lê-lo no processo
+  vivo (`--tabela`, `ReadProcessMemory`) devolve o histograma. Uma leitura
+  respondeu o que dois dias de calibragem a olho não responderam.
+- **Metade de uma seção de PE pode não existir em disco.** A `.xdiff` deste exe
+  tem `VirtualSize` 0x1000 e **`SizeOfRawData` 0x400**: de `0x013B5400` para
+  cima o carregador zera, e byte gravado ali no arquivo **não chega na
+  memória** — fica no fim do `.exe`, fora de qualquer seção mapeada. Rascunho
+  funciona (zero é o estado inicial certo); **tabela de dados não**, e a falha é
+  calada — lê-se zero. Conferir `SizeOfRawData` antes de escolher onde pôr dado
+  em patch de exe.
 - **`source` do mysql.exe quebra com barra invertida** (`\U` = comando
   desconhecido). Usar barras normais no caminho.
 - **Ler tabela grande de bytecode Lua 5.1:** o operando `RK` só endereça

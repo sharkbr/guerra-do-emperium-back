@@ -656,21 +656,36 @@ Para o cliente **desenhar** esses bytes é preciso o `ajusta_charset_fonte.py`
 `--sem-acento` reverte a fase inteira sem tocar em código — mas aí o
 `ajusta_charset_fonte.py --reverter` tem de andar junto.
 
-## `ajusta_tamanho_fonte.py` — aumenta a fonte do jogo
+## `ajusta_tamanho_fonte.py` — o tamanho e o peso da fonte do jogo
 
 ```
-python ajusta_tamanho_fonte.py --verificar   # so relata
-python ajusta_tamanho_fonte.py               # aplica o estado aprovado
-python ajusta_tamanho_fonte.py --bonus 1     # cada letra um pixel maior
-python ajusta_tamanho_fonte.py --teto 12     # afrouxa o teto
-python ajusta_tamanho_fonte.py --face Gulim  # Gulim, Arial, Tahoma, Verdana
-python ajusta_tamanho_fonte.py --fixo 20     # uma altura so, para diagnostico
+python ajusta_tamanho_fonte.py --verificar     # so relata
+python ajusta_tamanho_fonte.py                 # aplica o estado aprovado
+python ajusta_tamanho_fonte.py --mapa          # imprime a tabela de alturas
+python ajusta_tamanho_fonte.py --tabela        # LE o cliente NO AR: o que ele pediu
+python ajusta_tamanho_fonte.py --bonus 1       # cada letra um pixel maior
+python ajusta_tamanho_fonte.py --teto 12       # afrouxa o achatamento
+python ajusta_tamanho_fonte.py --livre 15      # daqui para cima o pedido passa intacto
+python ajusta_tamanho_fonte.py --altura 48=42  # so este pedido, esta altura
+python ajusta_tamanho_fonte.py --negrito 48    # estes pedidos saem em negrito
+python ajusta_tamanho_fonte.py --face Gulim    # Gulim, Arial, Tahoma, Verdana
+python ajusta_tamanho_fonte.py --fixo 20       # uma altura so, para diagnostico
 python ajusta_tamanho_fonte.py --reverter
 ```
 
-A conta e **`altura = min(tamanho pedido, --teto) + --bonus`**, e os padroes ja
-sao os valores aprovados no jogo em 2026-08-09: face **Arial**, **`--bonus 0`**,
-**`--teto 11`**, sem suavizacao. Rodar sem argumento reproduz esse estado.
+A altura de cada tamanho pedido sai de uma **tabela de 64 bytes gravada no
+exe** — o stub le, nao calcula. A tabela e montada nesta ordem:
+
+```
+pedido <  --livre   ->  altura = min(pedido, --teto) + --bonus
+pedido >= --livre   ->  altura = pedido + --bonus      (intacto)
+--altura P=A        ->  sobrepoe o pedido P com a altura A
+--negrito P         ->  o pedido P sai com peso 700 em vez de 400
+```
+
+Os padroes ja sao os valores aprovados no jogo: face **Arial**, **`--bonus 0`**,
+**`--teto 11`**, **`--livre 15`**, **`--altura 48=42`**, **`--negrito 48`**, sem
+suavizacao. Rodar sem argumento reproduz esse estado.
 
 **`--bonus 0` nao e o mesmo que `--reverter`.** A face e nossa, nao a do
 cliente, e duas faces na mesma altura em pixels nao desenham do mesmo tamanho —
@@ -720,7 +735,21 @@ Titulo de janela e botao saem do outro caminho de texto (`TextOutA`, em
 `0x004D83BA`) e ficam do tamanho original. Medido: com o desvio ligado, "Do you
 agree?" cresce e "message"/"OK"/"cancel" nao.
 
-### O teto, e por que ele existe
+### Que tamanhos este cliente pede — medido, nao suposto
+
+Com `--tabela`, andando por Prontera em 2026-08-10. **Sao oito, e so oito:**
+
+| pedido | quem |
+|---|---|
+| 11 | o texto miudo: chat, placas de NPC, nome de personagem |
+| 12, 13, 14 | a janela de informacoes basicas — HP/SP, Base Lv., peso e zeny |
+| 16, 17, 18 | titulos de janela e o subtitulo do mapa ("A Capital de Rune-Midgard") |
+| 48 | **o nome do mapa** — "Prontera", e nada mais no jogo inteiro |
+
+Essa lista e o que torna a calibragem cirurgica: 48 e exclusivo do nome do mapa,
+entao mexer nele nao toca em mais nada. Sem a medicao, seria chute.
+
+### O achatamento, e por que virou faixa
 
 Algumas linhas pedem corpo maior que o resto — na janela de informacoes
 basicas, HP, SP, Base Lv., Job Lv. e a linha de peso e zeny. **Essa hierarquia
@@ -728,22 +757,48 @@ e do proprio cliente e ja existia antes de qualquer patch**, conferido contra
 captura do estado original. So que a nossa face desenha maior na mesma altura
 pedida, e a diferenca, que era discreta, ficou gritante.
 
-O `--teto` limita o tamanho PEDIDO antes de criar a fonte, entao segura esses
-poucos casos e deixa o resto passar intacto. A calibragem, degrau a degrau:
+De 2026-08-09 a 2026-08-10 isso foi um **teto plano** de 11, e a calibragem
+degrau a degrau parecia fechada:
 
 | teto | o que aconteceu |
 |---|---|
 | 14 | **nada** — prova que aquelas linhas pedem 14 ou menos |
 | 12 | a janela encolheu e o resto do jogo ficou igual |
-| 11 | o ponto: aprovado no jogo |
+| 11 | parecia o ponto |
 
 O `14` nao ter feito efeito e o dado mais util da tabela: matou a hipotese de
-que aquelas linhas pediam um corpo muito maior. A diferenca era de poucos
-pixels, amplificada pela face.
+que aquelas linhas pediam um corpo muito maior.
+
+**Mas o teto plano estava errado, e a tabela acima nao denunciava.** Ele nao
+limitava exageros — achatava os oito corpos do cliente **num so**. O jogo
+inteiro saia na mesma altura, sem hierarquia nenhuma: o nome do mapa do tamanho
+do chat. Cada texto isolado parecia plausivel, e por isso demorou. Quem
+denunciou foi o cache, que tinha **uma unica entrada preenchida**, a de indice
+11 — se nada abaixo de 11 e pedido, tudo estava batendo no teto.
+
+A correcao e o `--livre`: as duas pontas nao cabem num numero so, porque a
+janela de informacoes basicas pede ate 14 e precisa ser achatada, enquanto o
+nome do mapa pede 48 e precisa passar. Abaixo de `--livre` vale o `--teto`;
+dali para cima o pedido passa intacto. O corte em 15 e o menor que segura a
+janela sem tocar no resto.
 
 Abaixo de 11 o teto passa a ficar **abaixo** do que a maioria dos textos pede,
 e deixa de ser limite para virar reducao geral. O sintoma e a descricao de item
 e o inventario encolherem junto.
+
+### `--tabela` — ler o cliente vivo
+
+O cache do stub e indexado pelo **tamanho pedido cru**, entao as entradas
+nao-zeradas dizem exatamente quais tamanhos aquele cliente pediu. O `--tabela`
+le isso do processo no ar (`ReadProcessMemory`) e imprime.
+
+**E o unico jeito honesto de calibrar.** Sem ele, escolher onde cortar e chute,
+e chute aqui custa um fechar-e-reabrir por rodada. Foi ele que respondeu numa
+rodada o que a tabela de tetos acima nao respondeu em duas sessoes.
+
+Duas ressalvas: so aparece o que ja foi desenhado — para ver o nome do mapa,
+entrar num mapa antes —, e um cliente patcheado com a versao de ate 2026-08-09
+indexava pelo tamanho **ja achatado**, entao a leitura dele nao vale nada.
 
 ### O que fica de fora, e nao da para consertar por aqui
 
@@ -763,6 +818,42 @@ olhar.
 
 O cache por tamanho (64 entradas em `.xdiff`) **nao e enfeite**: sem ele cada
 pedido criaria um HFONT novo e o processo vazaria handles ate cair.
+
+### Onde cada peca mora no exe — e a metade da secao que nao existe em disco
+
+A `.xdiff` tem `VirtualSize` de 0x1000 e **`SizeOfRawData` de 0x400**. Isso
+parte a secao em duas metades de naturezas diferentes, e confundi-las custa uma
+tarde:
+
+```
+0x013B5000 .. 0x013B5400   vem do ARQUIVO — stub e tabela de alturas moram aqui,
+                           porque dado nosso so existe se for gravado
+0x013B5400 .. 0x013B6000   NAO vem do arquivo — o carregador zera. Serve de
+                           rascunho, e so. Gravar valor aqui no .exe nao chega
+                           na memoria: o byte fica no fim do arquivo, fora de
+                           qualquer secao mapeada
+
+0x013B5320  64 bytes   altura + negrito por tamanho pedido   (arquivo)
+0x013B5390  112 bytes  o stub                                (arquivo)
+0x013B5400  64 dwords  o cache de HFONT                      (rascunho)
+```
+
+O cache funciona por sorte estrutural: zero e justamente o estado inicial certo
+para ele. **Um mapa de alturas ali nao funcionaria** — seria lido como zeros.
+
+Os 64 bytes do mapa sao um vao entre dois stubs do NEMO (um acaba em
+`0x013B531A`, o outro comeca em `0x013B5360`). Antes de ocupar, foi conferido
+que nenhuma constante do exe aponta para la e que **nenhum `e8`/`e9` do `.text`
+aterrissa naquela faixa**.
+
+**O negrito viaja no bit 7 do byte de altura**, nao numa segunda tabela: depois
+do mapa vem stub do NEMO, e o maior vao de zeros que sobra na metade util da
+secao tem 40 bytes. Custa 5 instrucoes e nenhum espaco novo; em troca, a altura
+vai so ate 127 (o maior pedido do cliente e 48).
+
+O stub tem 101 bytes dos 112 que cabem. Para caber, o indice fica em `ebx` por
+cima da chamada em vez de reler `[esp+8]` e relimitar depois — `ebx` e
+salvo-pelo-chamado no Win32, entao a `CreateFontA` devolve ele intacto.
 
 ### A versao anterior nao funcionava — e dizia que sim
 

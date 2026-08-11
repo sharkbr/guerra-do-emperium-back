@@ -676,9 +676,12 @@ alvo já está identificado.
 
 #### Os valores aprovados, e como se chegou neles
 
-O estado no jogo é face **Arial**, **`--bonus 0`**, **`--teto 11`**, sem
-suavização — e são os padrões da ferramenta, então rodá-la sem argumento
-reproduz isso.
+> **O `--teto 11` desta seção durou um dia e estava errado** — não pelo número,
+> pela forma. Ver "A hierarquia tipográfica achatada", logo abaixo. O estado
+> aprovado hoje está lá.
+
+O estado no jogo em 2026-08-09 era face **Arial**, **`--bonus 0`**,
+**`--teto 11`**, sem suavização.
 
 Dois passos da calibragem valem registro porque contrariaram a intuição:
 
@@ -709,6 +712,80 @@ corpo e rodapé. Subir de 4 em 4 e olhar.
 
 O cache por tamanho **não é enfeite**: sem ele cada pedido criaria um HFONT
 novo, e o processo vazaria handles até cair.
+
+### A hierarquia tipográfica achatada — 2026-08-10
+
+O pedido chegou como um detalhe: *"depois que ajeitamos a fonte do jogo,
+acabamos mexendo na fonte que anuncia o nome do mapa — o nome e o subtítulo da
+cidade estão pequenos"*. Não era um detalhe, e não era o banner.
+
+**O `--teto 11` não limitava exageros: ele achatava a tipografia inteira do
+cliente num corpo só.** O jogo tem oito corpos distintos; todos batiam no teto e
+saíam com 11. O nome do mapa ficava do tamanho do chat, os títulos de janela
+também, e cada texto isolado parecia plausível — que é exatamente por que
+passou. A hierarquia sumiu inteira e o sintoma que apareceu foi o do texto que
+mais destoava.
+
+#### O que denunciou, e por que foi rápido
+
+**O cache tinha uma única entrada preenchida.** Ele é indexado por
+`min(pedido, teto)`, então ler a memória dos três clientes no ar e achar só o
+índice 11 prova que *nada* no jogo pede menos de 11 — ou seja, tudo estava
+batendo no teto. Uma leitura, e a hipótese "o banner está pequeno" virou "não
+existe mais hierarquia".
+
+Isso virou o `--tabela`, que lê o cache do processo vivo por
+`ReadProcessMemory`. Com o índice passando a ser o tamanho **cru**, o cache
+deixa de ser só cache e vira **histograma**: as entradas não-zeradas são a
+lista do que o cliente pediu. Medido em Prontera, são oito e só oito —
+`11, 12, 13, 14, 16, 17, 18, 48`, e o **48 é exclusivo do nome do mapa**.
+
+É a mesma lição da subseção anterior, do outro lado: lá, provar que o patch
+chega à tela; aqui, **medir o que o cliente pede antes de escolher o número**.
+Sem a medição, calibrar custa um fechar-e-reabrir por chute.
+
+#### Por que teto virou faixa
+
+As duas pontas não cabem num número só. A janela de informações básicas pede
+até 14 e precisa ser achatada; o nome do mapa pede 48 e precisa passar. Então:
+
+```
+pedido <  15  ->  altura = min(pedido, 11)     a janela, como já estava
+pedido >= 15  ->  altura = pedido              nome do mapa e títulos, intactos
+```
+
+O corte em 15 não é chute: é o menor valor que segura a janela sem tocar no
+resto, e sai direto do `--teto 14` de 2026-08-09 não ter feito efeito nela.
+
+O stub passou a **ler** a altura de uma tabela de 64 bytes no exe em vez de
+calculá-la. Consequência prática: recalibrar deixou de ser patch e virou
+comando — foi assim que o nome do mapa foi de 48 para 46 e depois para 42 sem
+tocar em uma linha de assembly.
+
+#### O estado aprovado hoje
+
+Face **Arial**, **`--bonus 0`**, **`--teto 11`**, **`--livre 15`**,
+**`--altura 48=42`**, **`--negrito 48`**, sem suavização — e são os padrões da
+ferramenta, então rodá-la sem argumento reproduz isso.
+
+O 42 e o negrito são do nome do mapa, pedidos pelo dono do servidor depois de
+ver o corpo natural (48) na tela. Começou como "dois pontos menor"; levantei que
+46 é uma diferença de 4% e sumiria ao lado do negrito, e ele fechou em 42.
+**Número de tipografia se decide na tela, não na aritmética.**
+
+#### O que o exe permitiu, e o que não permitiu
+
+A `.xdiff` tem `VirtualSize` 0x1000 e **`SizeOfRawData` 0x400** — metade da
+seção não existe em disco. O cache sempre morou nessa metade e funciona por
+sorte estrutural: o carregador zera, e zero é o estado inicial certo para ele.
+**A tabela de alturas não podia ir junto** — seria lida como zeros. Foi para um
+vão de 64 bytes entre dois stubs do NEMO, depois de conferir que nenhuma
+constante aponta para lá e que nenhum `e8`/`e9` do `.text` aterrissa na faixa.
+
+O negrito viaja no **bit 7 do byte de altura** pelo mesmo aperto: depois do mapa
+vem stub do NEMO, e o maior vão restante tem 40 bytes. E o stub, com 101 dos 112
+bytes disponíveis, só coube guardando o índice em `ebx` por cima da chamada —
+salvo-pelo-chamado no Win32 — em vez de reler `[esp+8]` e relimitar depois.
 
 ### NPCs nossos hoje
 
