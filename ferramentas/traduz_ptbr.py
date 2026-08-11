@@ -1063,17 +1063,37 @@ def parte_conquistas(verificar):
 # nome que o `map_msg_por.conf` da ao Novice. O bRO chama as abas dele so de
 # "1a"/"2a"/"3a"; aqui ha nove abas, entao o padrao dele foi mantido e o resto
 # qualificado.
+#
+# **TETO DE 7 CARACTERES, e ele e o que faz a janela funcionar.** A aba desta
+# janela e escrita na VERTICAL, uma letra embaixo da outra, numa coluna de
+# ~13px por letra - entao o comprimento do rotulo nao gasta largura, gasta
+# ALTURA, e a altura e dividida entre todas as abas do personagem. Com
+# "Aprendiz-1a" (11) + "2a-Transcend." (13) as duas primeiras abas de um Sura
+# comiam a coluna inteira e a terceira ("3a") ficava cortada ao meio, fora do
+# alcance do clique: a habilidade concedida por equipamento (Protecao Arcana,
+# da Fada do Eden +11) estava la dentro e era **inalcancavel**. Achado em
+# 2026-08-11. O `checa_abas` abaixo faz o teto valer - comentario nao e trava.
+LIMITE_ABA = 7
+
 ABAS = [
-    ('\xb3\xeb\xba\xf1\xbd\xba\xa1\xa41\xc2\xf7\xc1\xf7\xbe\xf7', 'Aprendiz-1a'),
-    ('2\xc2\xf7\xa1\xa4\xc0\xfc\xbd\xc2\xc1\xf7\xbe\xf7', '2a-Transcend.'),
+    ('\xb3\xeb\xba\xf1\xbd\xba\xa1\xa41\xc2\xf7\xc1\xf7\xbe\xf7', 'Apr-1a'),
+    ('2\xc2\xf7\xa1\xa4\xc0\xfc\xbd\xc2\xc1\xf7\xbe\xf7', '2a-Tr.'),
     ('3\xc2\xf7\xc1\xf7\xbe\xf7', '3a'),
     ('4\xc2\xf7\xc1\xf7\xbe\xf7', '4a'),
     ('NV\xa1\xa4EX1', 'NV-EX1'),
     ('\xbb\xf3\xc0\xa7EX1', 'Sup.EX1'),
     ('\xbb\xf3\xc0\xa7EX2', 'Sup.EX2'),
-    ('\xb5\xb5\xb6\xf7\xc1\xb7\xa1\xa4\xbc\xd2\xc8\xaf\xbb\xe7', 'Doram-Invocador'),
-    ('\xc8\xa5\xb7\xc9\xbb\xe7', 'Espiritualista'),
+    ('\xb5\xb5\xb6\xf7\xc1\xb7\xa1\xa4\xbc\xd2\xc8\xaf\xbb\xe7', 'Doram'),
+    ('\xc8\xa5\xb7\xc9\xbb\xe7', 'Espir.'),
 ]
+
+
+def checa_abas():
+    u"""Nenhum rotulo de aba pode passar de LIMITE_ABA caracteres."""
+    longos = [novo for _, novo in ABAS if len(novo) > LIMITE_ABA]
+    if longos:
+        raise Erro('rotulo de aba acima de %d caracteres: %s'
+                   % (LIMITE_ABA, ', '.join(longos)))
 
 SKILLTREEVIEW = os.path.join('data', 'luafiles514', 'lua files', 'skillinfoz',
                              'skilltreeview.lub')
@@ -1098,6 +1118,7 @@ def parte_abas(verificar):
     reaberto pelo leitor de bytecode antes de gravar; se a estrutura nao
     voltar identica, nada e escrito.
     """
+    checa_abas()
     alvo = os.path.join(ptbr.CLIENTE, SKILLTREEVIEW)
     dados = ptbr.do_nosso(r'data\luafiles514\lua files\skillinfoz'
                           r'\skilltreeview.lub')

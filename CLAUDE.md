@@ -320,6 +320,14 @@ Produziram diagnóstico falso e custaram retrabalho:
   exe, ver `PENDENCIAS.md` §4), manto novo entra **reaproveitando** um dos 40
   slots ≤120 que não têm arte neste cliente — `ferramentas/estende_robeid.py`,
   com o de-para no `View:` do `db/guerra/item_db.yml`. Sobram 31.
+- **Rótulo de aba da janela de habilidades é escrito na VERTICAL: o
+  comprimento gasta altura, não largura — e some com as abas de baixo.** As
+  nove abas do `skilltreeview.lub` empilham uma letra por linha (~13px cada) e
+  dividem uma coluna de ~370px. `Aprendiz-1a` + `2a-Transcend.` bastavam para
+  cortar a terceira aba ao meio, **fora do alcance do clique**, escondendo a
+  habilidade que um equipamento concede (achado em 2026-08-11). Teto de **7
+  caracteres**, travado por `LIMITE_ABA` no `traduz_ptbr.py`. Falha calada: a
+  janela abre, funciona, e uma aba inteira do personagem não existe.
 - **Tabela certa + arte certa + arquivo lido pelo cliente ≠ desenha na
   tela.** As três se verificam offline, as três deram OK, e o item continuou
   invisível por um quarto motivo que nenhuma delas alcança. **Verificação

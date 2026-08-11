@@ -379,9 +379,24 @@ trocadas, direto no bytecode — o chunk Lua 5.1 não tem offset absoluto nenhum
 então trocar uma constante por outra de tamanho diferente é seguro (ver
 `ptbr.troca_constante`). O resultado é reaberto pelo leitor antes de gravar.
 
-Os títulos saem em **ASCII de propósito** (`Aprendiz-1a`, `2a-Transcend.`,
-`Doram-Invocador`, `Espiritualista`): nenhum precisa de acento no vocabulário
-do bRO, então eles funcionam mesmo antes do patch de charset.
+Os títulos saem em **ASCII de propósito**: nenhum precisa de acento no
+vocabulário do bRO, então eles funcionam mesmo antes do patch de charset.
+
+**2026-08-11 — os títulos foram encurtados para no máximo 7 caracteres, e o
+motivo não é estética: os longos escondiam abas inteiras.** A aba dessa janela
+é escrita na **vertical**, uma letra embaixo da outra (~13px por letra), então
+o comprimento do rótulo não gasta largura — gasta **altura**, e a altura da
+coluna é dividida entre todas as abas do personagem. Num Sura,
+`Aprendiz-1a` (11) + `2a-Transcend.` (13) consumiam a coluna inteira e a
+terceira aba (`3a`) ficava cortada ao meio, **fora do alcance do clique**. A
+habilidade concedida por equipamento (Proteção Arcana, da Fada do Éden +11)
+estava dentro dela, e o jogador simplesmente não conseguia chegar nela — sem
+erro, sem log, só uma aba que não terminava de desenhar.
+
+Os nove rótulos hoje: `Apr-1a`, `2a-Tr.`, `3a`, `4a`, `NV-EX1`, `Sup.EX1`,
+`Sup.EX2`, `Doram`, `Espir.`. O teto virou trava no código
+(`LIMITE_ABA`/`checa_abas` no `traduz_ptbr.py`), que recusa gerar o arquivo se
+alguém alongar um rótulo — comentário não segura isso sozinho.
 
 **Validar sempre o recorte:** além das entradas de primeiro nível, essas tabelas
 têm referências aninhadas a `SKID` (os pré-requisitos em `_NeedSkillList`). Uma
