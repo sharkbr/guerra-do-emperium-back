@@ -673,6 +673,33 @@ def parte_cartas(verificar):
 
 # ============================================================ mapas (nomes)
 
+# Mapas que NOS rebatizamos, e que o bRO chama de outra coisa.
+#
+# Sem esta tabela nao ha como dar nome proprio a mapa: as duas metades do nome
+# (o `mapnametable.txt` do canto do minimapa e o `mapInfo_*.lub` do letreiro de
+# entrada) sao GERADAS deste modulo a partir do bRO, entao edicao a mao volta
+# ao nome do bRO na proxima rodada, calada. Mesma familia do
+# OngoingQuestInfoList e do CheckAttendance.lub - ver CLAUDE.md secao 9.
+#
+# So entra aqui mapa que MUDOU DE FUNCAO no nosso servidor. Mapa cujo nome do
+# bRO ja serve nao entra: `auction_02` e a Ordem dos Exploradores porque o bRO
+# ja o chama assim, e por isso nao esta nesta tabela.
+NOSSOS_MAPAS = {
+    # O antigo Salao do Leilao de Morroc/Prontera. No bRO e "Centro Comercial";
+    # aqui virou a casa da Ordem em Prontera, alcancada pelo portal da praca
+    # (npc/guerra/centro_da_ordem.txt). Renomeado a pedido em 2026-08-11.
+    #
+    # SO `displayName`: o bloco deste mapa no mapInfo_*.lub do cliente tem esse
+    # campo e mais nenhum, e o `parte_mapinfo` so TROCA campo que ja existe --
+    # nao acrescenta. Por um `mainTitle` aqui nao daria erro nem efeito; ficaria
+    # inerte, que e pior que ausente. Mapa com letreiro de duas linhas (como a
+    # Prontera, que tem subTitle) aceitaria os tres.
+    'auction_01.rsw': {
+        'displayName': u'Centro da Ordem',
+    },
+}
+
+
 def _mapas_do_bro():
     u"""rsw -> {displayName, mainTitle, subTitle} em portugues.
 
@@ -680,6 +707,9 @@ def _mapas_do_bro():
     do GRF esta com o acento ja perdido na origem (335 '?' dentro dele, um por
     caractere acentuado que passou por uma conversao errada la na Gravity). O
     mapInfo esta intacto.
+
+    O `NOSSOS_MAPAS` entra POR CIMA, no fim -- e o unico ponto por onde as duas
+    metades do nome passam, entao sobrescrever aqui pega as duas.
     """
     caminho = os.path.join(ptbr.BRO, 'System', 'mapInfo.lub')
     tabela = ptbr.tabelas_de(caminho).get('mapTbl')
@@ -697,6 +727,14 @@ def _mapas_do_bro():
             'subTitle': placa.get('subTitle') if isinstance(placa, dict)
                         else None,
         }
+
+    for rsw, nosso in NOSSOS_MAPAS.items():
+        # O aviso nao e decoracao: se o bRO deixar de trazer o mapa, o override
+        # continua funcionando (ele nao depende do de la) mas a justificativa
+        # escrita na tabela -- "o bRO chama de X" -- deixou de ser conferivel.
+        if rsw not in saida:
+            print '    AVISO: %s esta em NOSSOS_MAPAS e nao no mapInfo do bRO' % rsw
+        saida[rsw] = dict(nosso)
     return saida
 
 

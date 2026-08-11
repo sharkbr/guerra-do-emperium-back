@@ -51,6 +51,8 @@ OSSADA_04 = u'모로코\\동물뼈04.rsm'          # catálogo nº 119
 ESPINHEIRO = u'나무잡초꽃\\묘르닐_가시덤불.rsm'   # catálogo nº 74
 PAREDE_RUINA = u'중국\\중국-폐가벽03.rsm'     # catálogo nº 39
 
+FONTE = u'oldcastle\\fountain.rsm'
+
 RECEITA = {
     'izlude': {
         'substituir': [
@@ -59,7 +61,40 @@ RECEITA = {
             ([MURO], [PAREDE_RUINA], 0.30),
         ],
         'acrescentar': [
-            # (modelo, célula x, célula y) -- a altura sai do .gat
+            # (modelo, célula x, célula y[, rotação Y[, escala]])
+            # -- a altura sai do .gat
+        ],
+    },
+    # O Centro da Ordem (npc/guerra/centro_da_ordem.txt). O mapa do antigo
+    # leilao virou casa da cidade, e o meio do salao estava vazio: um pedestal
+    # quadrado de 4x4 celulas (x178-181, y70-73), cercado de fosso e com quatro
+    # pontes chegando nele. So faltava o que as pontes vao ver.
+    #
+    # ROTACAO 0, e nao sorteada: as CINCO instancias oficiais deste modelo no
+    # GRF do bRO (1@def02, 1@gl_k, 1@gl_kh, 2@gl_k, 2@gl_kh) estao todas com
+    # rot 0,0,0 e escala 1,0 -- so as de 1@gl_k/kh usam 1,04. Fonte e radial,
+    # entao girar nao acrescenta nada; o que acrescenta e nao inventar numero.
+    #
+    # ESCALA 0,57, e a escala oficial NAO SERVIU AQUI. O modelo tem 35,34
+    # unidades de largura (7,1 celulas) e o pedestal do centro tem 4 celulas,
+    # 20 unidades: a 1,0 ela transbordava sobre o fosso, e em tela ficou grande
+    # (visto pelo dono em 2026-08-11). 20 / 35,34 = 0,566, arredondado para
+    # 0,57 -- 20,1 unidades, o pedestal exato.
+    #
+    # A licao, e ela vale para o proximo modelo: escala oficial e boa PISTA e
+    # nao resposta. A Gravity usa esta fonte em patio de castelo de Glast Heim,
+    # onde ha espaco; aqui o lugar tem 4 celulas. Quem copia a escala oficial
+    # copia junto o tamanho do lugar de origem.
+    #
+    # CELULA 179.5, 71.5 E NAO 180, 72 -- e o pedido era "180,72". O pedestal
+    # ocupa QUATRO celulas (x178-181, y70-73), numero PAR, entao o centro dele
+    # cai na fronteira entre a 179 e a 180: mundo (400, 110). A celula 180 tem
+    # centro em 402.5, meia celula fora. Em tela isso apareceu como a fonte
+    # deslocada para cima e um pouco a direita do tampo (2026-08-11).
+    'auction_01': {
+        'substituir': [],
+        'acrescentar': [
+            (FONTE, 179.5, 71.5, 0.0, 0.57),
         ],
     },
 }
@@ -105,13 +140,38 @@ def aplica(r, g, receita, rnd, relatorio):
                           for k, v in sorted(conta.items()))))
 
     criados = 0
-    for arquivo, cx, cy in receita.get('acrescentar', []):
+    for entrada in receita.get('acrescentar', []):
+        # Os dois ultimos campos sao opcionais: rotacao Y em graus e escala.
+        #
+        # Sem rotacao, sorteia -- que e o certo para destroco espalhado
+        # (variedade de graca) e o errado para peca posta de proposito, onde
+        # numero sorteado e numero inventado.
+        #
+        # Sem escala, 1,0, que e o que a Gravity usa na maioria dos modelos.
+        # A escala escala EM VOLTA DA ORIGEM do modelo, e a origem destes esta
+        # na base: encolher nao tira a peca do chao.
+        arquivo, cx, cy = entrada[0], entrada[1], entrada[2]
+        giro = entrada[3] if len(entrada) > 3 else None
+        esc = entrada[4] if len(entrada) > 4 else 1.0
+
+        # A CELULA PODE SER FRACIONARIA, e para peca centrada isso nao e luxo:
+        # o `mundo()` devolve o CENTRO da celula, entao coordenada inteira so
+        # centraliza em vao de largura IMPAR. Num vao de 4 celulas o centro cai
+        # na FRONTEIRA entre a 2a e a 3a, e a unica forma de acerta-lo e o meio
+        # (ex.: 179.5). Ver a fonte do Centro da Ordem, na receita abaixo.
+        #
+        # A altura sai da celula que CONTEM o ponto -- `altura_media` indexa o
+        # .gat e precisa de inteiro. Num vao plano tanto faz qual das quatro.
         wx, wz = mundo(g, cx, cy)
-        m = Modelo.novo(cp949(arquivo), 'guerra_add_%03d' % criados,
-                        (wx, g.altura_media(cx, cy), wz))
-        m.rot[1] = rnd.uniform(0.0, 360.0)
+        wy = g.altura_media(int(cx), int(cy))
+        m = Modelo.novo(cp949(arquivo), 'guerra_add_%03d' % criados, (wx, wy, wz))
+        m.rot[1] = rnd.uniform(0.0, 360.0) if giro is None else giro
+        m.escala = [esc, esc, esc]
         r.objetos.append(m)
         criados += 1
+        relatorio.append(
+            u'  + %s em %s,%s  mundo(%.2f, %.2f, %.2f)  rot Y %.1f  escala %.2f'
+            % (arquivo, cx, cy, wx, wy, wz, m.rot[1], esc))
     if criados:
         relatorio.append(u'  %d modelos acrescentados' % criados)
 

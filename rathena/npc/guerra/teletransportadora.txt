@@ -1,9 +1,9 @@
 //===== Guerra do Emperium ===================================
 //= Teletransportadora - a nossa copia do Warper do rAthena
 //===== O que este arquivo E =================================
-//= Uma COPIA de npc/custom/warper.txt (Euphy, v1.5a), com uma
-//= mudanca so ate agora: o par de Alberta. Todo o resto e byte
-//= a byte igual ao upstream.
+//= Uma COPIA de npc/custom/warper.txt (Euphy, v1.5a), com DUAS
+//= mudancas ate agora: o par de Alberta e a saida do "Auction
+//= Hall". Todo o resto e byte a byte igual ao upstream.
 //=
 //= A partir de 2026-08-08 e ESTE arquivo que sobe, e nao o do
 //= rAthena - a linha dele no scripts_guerra.conf esta comentada.
@@ -24,7 +24,9 @@
 //= alcance isso de outro arquivo. A posicao do NPC, essa sim
 //= sairia com um `movenpc` - foi so a chegada que obrigou.
 //===== O que mudou de fato ==================================
-//= Tres linhas, todas de Alberta:
+//= CINCO linhas, em duas mudancas independentes.
+//=
+//= 1) ALBERTA (2026-08-08), tres linhas:
 //=
 //=   rotulo T2          chegada  28,234 -> 117,57
 //=   naviregisterwarp   a mesma chegada, na tabela de navegacao
@@ -39,6 +41,18 @@
 //= As duas celulas novas foram conferidas no alberta.gat antes:
 //= tipo 0 (andavel), 117,57 com as nove vizinhas livres e
 //= 105,63 com oito.
+//=
+//= 2) O "AUCTION HALL" (2026-08-10), duas linhas RETIRADAS:
+//=
+//=   menu de Especiais  "Auction Hall",S1, e o rotulo S1 junto
+//=   naviregisterwarp   "Warper > Auction Hall"
+//=
+//= Os dois iam para auction_01 22,68. Aquele mapa virou uma casa
+//= de Prontera (npc/guerra/centro_da_ordem.txt) e o bloco 22,68
+//= ficou SELADO - sem leilao o nome mentia, e o destino passou a
+//= ser um lugar de onde nao se sai. O menu usa ROTULO e nao
+//= indice, entao tirar a entrada nao deslocou as outras nove; a
+//= armadilha do CLAUDE.md secao 4.11 nao alcanca este caso.
 //===== O que continua valendo do original ===================
 //= - O sprite das 45 duplicatas NAO esta aqui: quem troca 811
 //=   (Kafra) por 10007 (portal) e o npc/guerra/
@@ -62,8 +76,8 @@
 //= Este arquivo passa a NAO acompanhar o upstream. Se um dia o
 //= warper.txt do rAthena ganhar mapa novo ou correcao, ela tem
 //= de ser trazida a mao para ca. O diff e barato enquanto a
-//= diferenca forem as tres linhas de Alberta - por isso elas
-//= estao listadas acima, uma a uma.
+//= diferenca forem as cinco linhas listadas acima - por isso elas
+//= estao listadas uma a uma.
 //============================================================
 
 // -------- daqui para baixo e o warper.txt do rAthena --------
@@ -677,11 +691,16 @@ I20: Restrict("RE");
 // --------------------------------------------------
 	Special:
 // --------------------------------------------------
-menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
-		"Eden Group Headquarters",S5, "Kunlun Arena",S6, "Izlude Arena",S7, 
+// "Auction Hall",S1 SAIU DAQUI em 2026-08-10, com o S1 junto. Ia
+// para auction_01 22,68, o bloco oeste do salao do leilao - que o
+// npc/guerra/centro_da_ordem.txt selou ao transformar o mapa numa
+// casa de Prontera. Sem leilao o nome mentia, e o destino passou a
+// ser um bloco de onde nao se sai. O menu usa ROTULO e nao indice,
+// entao tirar a entrada NAO deslocou as outras nove.
+menu	"Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
+		"Eden Group Headquarters",S5, "Kunlun Arena",S6, "Izlude Arena",S7,
 		"Monster Race Arena",S8, "Para Market",S9, "Turbo Track",S10;
 
-S1: Go("auction_01",22,68);
 S2: Go("bat_room",154,150);
 S3: Go("cmd_in02",179,129);
 S4: Restrict("RE");
@@ -1383,7 +1402,8 @@ OnNaviGenerate:
 
 
 	// special
-	naviregisterwarp("Warper > Auction Hall", "auction_01", 22, 68);
+	// "Warper > Auction Hall" saiu junto com a entrada do menu
+	// acima - ver o comentario la.
 	naviregisterwarp("Warper > Battlegrounds", "bat_room", 154, 150);
 	naviregisterwarp("Warper > Casino", "cmd_in02", 179, 129);
 	naviregisterwarp("Warper > Kunlun Arena", "gon_test", 48, 10);

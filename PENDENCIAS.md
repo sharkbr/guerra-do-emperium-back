@@ -718,6 +718,8 @@ primeira explicação a testar quando alguém disser que um Sura mata rápido de
 
 ---
 
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

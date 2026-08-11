@@ -192,17 +192,43 @@ Hoje: exp 10x (base e classe), drop 50x em todas as categorias, sem exceção.
 
 ## 6. Mudar a aparência de um mapa
 
-1. `python catalogo_mapa.py <mapa.rsw> <saida.md>` — ver o que há no mapa.
-2. Conferir **o que cada modelo é de verdade** antes de usar: a tradução literal
+1. **Tirar `<mapa>.rsw` e `<mapa>.gat` do GRF.** Se o nosso responder *"arquivo
+   com DES"* (640 dos 910 `.rsw` respondem), tirar **do GRF do bRO**, onde estão
+   limpos — e então **provar que é a mesma revisão** antes de usar: `csize` e
+   `rsize` iguais nos dois GRFs, mais o `.gat` do bRO célula a célula contra o
+   `map_cache.dat` do nosso servidor. Ver `CUSTOMIZACAO-VISUAL.md`.
+2. `python catalogo_mapa.py <mapa.rsw> <saida.md>` — ver o que há no mapa.
+3. Conferir **o que cada modelo é de verdade** antes de usar: a tradução literal
    do nome coreano engana (um "pilar de madeira" na pasta de *vegetação* virou
    tora gigante deitada na cidade). A pasta categoriza melhor que o nome.
-3. `python destroi_mapa.py <pasta-entrada> <pasta-saida> [mapa]` ou
-   `edita_mapa.py` para trocas pontuais.
-4. Copiar o `.rsw` gerado para `cliente\data\` — ele sombreia o GRF.
-5. Reverter = apagar o arquivo solto.
+4. **Antes de plantar modelo novo, medir duas coisas.** A primeira é o que a
+   Gravity fez com ele: varrer os `.rsw` do GRF do bRO pelo `filename` devolve
+   escala e rotação dos mapas oficiais, e é a calibragem mais barata que
+   existe. A segunda é a **largura do `.rsm` contra o tamanho do lugar** — e é
+   ela que decide. A escala oficial vem do lugar de origem do modelo, que
+   costuma ser maior: a fonte do Centro da Ordem entrou com a escala 1,0 de
+   Glast Heim, ficou grande num pedestal de 4 células, e desceu para 0,57.
+5. **Para centralizar num vão, conferir se ele tem largura par.** O
+   `edita_mapa.py` posiciona por célula e `mundo()` devolve o **centro da
+   célula** — então em vão de largura par (4 células, 6…) nenhum inteiro
+   acerta o centro, que cai na fronteira. Usar célula fracionária
+   (`179.5`). Erro de meia célula não salta aos olhos na planta e aparece
+   na tela.
+6. Escrever a receita em `edita_mapa.py` (`RECEITA[<mapa>]`) e rodar
+   `python edita_mapa.py <pasta-entrada> <pasta-saida> <data.grf> <mapa>` —
+   **o `<data.grf>` aqui é o NOSSO**, é contra ele que os `filename` são
+   conferidos. Para a temática de destruição inteira, `destroi_mapa.py`.
+7. Copiar o `.rsw` gerado para `cliente\data\` — ele sombreia o GRF.
+8. Reverter = apagar o arquivo solto.
+
+**Versiona-se a RECEITA, não o `.rsw`.** O mapa gerado é artefato, e o cliente
+está fora do git: **cliente novo perde o override, calado**. Quem depende de um
+modelo plantado escreve isso no cabeçalho do arquivo que depende dele.
 
 **O `.gat` (colisão) não é tocado** pelo override de `.rsw`: o cenário muda, o
-chão andável não. Um NPC pode acabar nascendo dentro de um escombro.
+chão andável não. Um NPC pode acabar nascendo dentro de um escombro — e um
+modelo pode ser plantado em célula não-andável de propósito, que é o caso comum
+para peça decorativa no meio de uma sala.
 
 ## 7. Código C++ novo
 

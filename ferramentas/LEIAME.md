@@ -1632,6 +1632,74 @@ modelo, e trava quem tiver personagem salvo no mapa.
 Não toca luz, água, chão nem `.gat` — nada aqui atravessa a fronteira do
 servidor.
 
+### `acrescentar` aceita rotação e escala explícitas — 2026-08-11
+
+A tupla é `(modelo, célula x, célula y[, rotação Y em graus[, escala]])`.
+
+**Sem o quarto campo a rotação é sorteada**, que era o comportamento único até
+aqui: certo para destroço espalhado, onde o sorteio dá variedade de graça, e
+errado para peça posta de propósito, onde número sorteado é número inventado.
+
+**Sem o quinto, escala 1,0.** A escala é aplicada em volta da **origem** do
+modelo, que nestes fica na base — encolher não tira a peça do chão. Medido: a
+fonte do Centro da Ordem desceu de 1,0 para 0,57 e continuou apoiada.
+
+### A célula pode ser FRACIONÁRIA, e em vão par ela precisa ser
+
+`mundo()` devolve o **centro da célula**. Então coordenada inteira só centraliza
+em vão de largura **ímpar**: num vão de 4 células o centro cai na **fronteira**
+entre a 2ª e a 3ª, e nenhum inteiro o acerta — o mais perto erra **meia célula**,
+2,5 unidades.
+
+Foi o que aconteceu com a fonte do Centro da Ordem. O pedido dizia `180,72`, o
+pedestal é `x178-181, y70-73`, e o centro dele é mundo `(400, 110)`; a célula
+180,72 tem centro em `(402,5, 112,5)`. Em tela a fonte apareceu deslocada para
+cima e um pouco à direita do tampo. A correção é `179.5, 71.5`.
+
+**Como achar o número certo:** os limites do vão em mundo são
+`(cel_min - largura/2) * 5` e `(cel_max + 1 - largura/2) * 5`; o centro é a média
+dos dois. Vale conferir assim depois de plantar — erro de meia célula é pequeno
+demais para saltar aos olhos numa planta ASCII e grande o bastante para aparecer
+na tela.
+
+A altura continua saindo da célula que **contém** o ponto (`altura_media` indexa
+o `.gat` e quer inteiro). Em vão plano tanto faz qual das quatro.
+
+O relatório agora imprime uma linha por modelo acrescentado, com a coordenada de
+mundo e a rotação — antes dizia só quantos foram.
+
+### Como escolher a escala: procure o modelo nos mapas oficiais
+
+A escala é o número que não dá para adivinhar, e o `Modelo.novo` grava 1,0. O
+jeito barato de calibrar é ver **o que a Gravity fez com o mesmo modelo**:
+varrer os 821 `.rsw` do GRF do bRO procurando o `filename` leva pouco mais de um
+minuto e responde com escala, rotação e em que mapa. Para o
+`oldcastle\fountain.rsm` deu cinco instâncias, todas com rotação `0,0,0` e
+escala 1,0 (duas com 1,04).
+
+**Mas escala oficial é pista, não resposta** — e nesta mesma rodada ela errou. A
+rotação 0 valeu; a escala 1,0 ficou grande em tela e desceu para 0,57. O motivo
+é estrutural: a Gravity usa aquela fonte em pátio de castelo de Glast Heim, onde
+há espaço, e o pedestal do nosso salão tem 4 células. **Quem copia a escala
+oficial copia junto o tamanho do lugar de origem.** A medida que decide é a
+outra, logo abaixo: a largura do `.rsm` contra o tamanho do lugar.
+
+**Use o GRF do bRO para essa varredura, não o nosso:** 640 dos 910 `.rsw` do
+nosso estão com DES e o `grf.py` não os lê. No do bRO estão todos limpos.
+
+### Medir se o modelo cabe: `.rsm` 1.x tem 8 bytes de trailer
+
+Saber a largura do modelo antes de plantar evita a rodada de "ficou gigante". Um
+leitor de caixa envolvente de `.rsm` 1.x é curto — nó a nó, matriz de offset
+aplicada nos vértices —, mas **depois dos nós vêm dois `int32`**
+(`numPosKeyframes` e `numVolumeBoxes`, zero nos modelos vistos). Quem parar nos
+nós sobra 8 bytes e acha que errou o formato.
+
+A trava que vale escrever nesse tipo de leitor é **consumir o arquivo inteiro**:
+sobrar ou faltar byte significa que a suposição de formato estava errada, e o
+número que sai é plausível e falso. Foram esses 8 bytes que separaram "parse
+inválido" de uma medida boa.
+
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 
 ```

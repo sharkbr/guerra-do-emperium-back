@@ -284,6 +284,16 @@ Produziram diagnóstico falso e custaram retrabalho:
   em patch de exe.
 - **`source` do mysql.exe quebra com barra invertida** (`\U` = comando
   desconhecido). Usar barras normais no caminho.
+- **São TRÊS `map_cache.dat`, e a `prontera` não está no grande.** O rAthena
+  abre `db/import/map_cache.dat`, `db/re/map_cache.dat` e `db/map_cache.dat`
+  **nessa ordem** (`map.cpp:3922`), e o primeiro que tiver o mapa vence. O
+  `db/re/` tem oito mapas — `prontera`, `alberta`, `izlude`, `morocc`,
+  `prt_church`, `prt_fild05`, `prt_fild08`, `prt_in` — e são esses que valem.
+  A `prontera` de renewal (312x392) **só existe lá**; o cache grande, de 1288
+  mapas, tem uma `pprontera` do mesmo tamanho, que é outro mapa. Ferramenta
+  que abra só o `db/map_cache.dat` responde *"prontera não está no cache"* —
+  resposta do leitor, não do mapa — ou, pior, entrega a `pprontera` como se
+  fosse a cidade. Conferir célula andável passa pelos três, na ordem.
 - **Ler tabela grande de bytecode Lua 5.1:** o operando `RK` só endereça
   constante até o índice 255; depois disso o compilador emite `LOADK` num
   registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só

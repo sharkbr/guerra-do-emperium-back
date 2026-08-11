@@ -195,6 +195,55 @@ errada.
 
 ---
 
+## O DES nos 640 `.rsw` deixou de ser trava — 2026-08-11
+
+A seção acima fecha dizendo que escolher mapa para trabalhar significa
+**escolher dentro dos 270 sem DES**. Isso deixou de valer, e a saída é a regra 3
+do `CLAUDE.md`: quando falta algo, traz-se do bRO.
+
+**O GRF do bRO tem os mesmos mapas sem DES.** Medido no `auction_01`, que no
+nosso está com `flags=3` (`.rsw`) e `flags=5` (`.gnd`, `.gat`):
+
+```
+                       nosso (csize/rsize/flags)   bRO (csize/rsize/flags)
+data\auction_01.rsw     17411 / 113618 / 3          17411 / 113618 / 1
+data\auction_01.gnd     90305 / 468894 / 5          90305 / 468894 / 1
+data\auction_01.gat      2569 / 400014 / 5           2569 / 400014 / 1
+```
+
+O `.rsw` do bRO abre no `grf.py`, e é a base de trabalho. **O `.rsw` gerado
+continua sendo lido contra o NOSSO GRF** na hora de conferir os `filename` — o
+cliente é o nosso, e é ele que precisa ter cada `.rsm`.
+
+### A prova de que é o mesmo mapa, e ela é barata
+
+Trazer arquivo de outro cliente sem conferir é trocar a revisão do mapa por
+baixo do pano. São três medidas, em ordem de força:
+
+1. **`rsize` igual** nos três arquivos. Necessário, longe de suficiente.
+2. **`csize` igual.** O DES do GRF embaralha blocos de 8 bytes mas **não muda o
+   comprimento do zlib**, então comprimido idêntico é sinal forte de plaintext
+   idêntico. É a medida que quase fecha sozinha.
+3. **O `.gat` do bRO contra o `map_cache.dat` do NOSSO servidor**, célula a
+   célula. É a prova de verdade, e é a que fecha: o `map_cache` foi gerado do
+   **nosso** `.gat`, então comparar os dois é comparar o mapa deles com o nosso
+   sem precisar decifrar nada. No `auction_01` deram **20.000 de 20.000**.
+
+O 3 só existe porque o servidor tem uma cópia do `.gat` em outro formato. Não há
+equivalente para `.rsw` e `.gnd` — para esses o argumento é o `csize`.
+
+### O que isto abre, e o que continua fechado
+
+Abre os **910 mapas**, e não só os 270. O que continua fechado é editar
+geometria de `.rsm` — mas isso nunca foi necessário para trocar, mover, escalar
+ou plantar modelo, que é tudo feito no `.rsw`.
+
+Continua valendo a decisão de sempre: **versionamos a receita, não o mapa
+gerado**. O `.rsw` instalado é artefato; a fonte da verdade é a entrada do
+`RECEITA` no `edita_mapa.py`.
+
+---
+
 ## Armadilha herdada: caminho com coreano
 
 As pastas de conteúdo do GRF têm nome em coreano — a de interface já apareceu na

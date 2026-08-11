@@ -1,0 +1,273 @@
+//===== Guerra do Emperium ===================================
+//= O Centro da Ordem
+//===== Onde =================================================
+//= Duas pontas, e nada mais:
+//=
+//=   prontera    165,168   o portal de entrada, area 1,1
+//=   auction_01  180,52    onde o jogador chega
+//=   auction_01  180,49    o portal de volta, area 1,1
+//=   prontera    162,168   onde o jogador volta
+//=
+//= Nao ha NPC de fala neste arquivo. Sao dois warps e um NPC
+//= flutuante que desliga o leilao do rAthena.
+//===== Descricao ============================================
+//= O CENTRO DA ORDEM: auction_01 vira uma CASA de Prontera, um
+//= salao fechado alcancavel por um portal na praca, com um portal
+//= de volta. Funcionando em jogo desde 2026-08-11 - portal, fonte
+//= e limpeza do leilao, todos conferidos pelo dono.
+//=
+//= E A MESMA ORDEM do resto do servidor: a que recebe o novato no
+//= navio (emissario_da_ordem.txt), a que autoriza a Alleria em
+//= Comodo (flores_da_ordem.txt) e a dos Exploradores em
+//= auction_02 (ordem_dos_exploradores.txt). Este e o pe dela na
+//= capital - e o nome foi dado pelo dono em 2026-08-11, depois de
+//= o salao estar de pe.
+//=
+//= O salao ainda esta VAZIO DE NPC. Este arquivo abre a porta e
+//= limpa o que havia dentro; o conteudo entra depois.
+//===== O NOME DO MAPA E CLIENTE, E E GERADO =================
+//= O que o jogador le no canto do minimapa e no letreiro de
+//= entrada NAO sai daqui e nao e o nome deste arquivo: sao duas
+//= tabelas do cliente,
+//=
+//=   data\mapnametable.txt          o canto do minimapa
+//=   System\mapInfo_true.lub /      o letreiro ao entrar
+//=   System\mapInfo_sak.lub         (o exe le a _sak)
+//=
+//= e as DUAS sao GERADAS por ferramentas/traduz_ptbr.py a partir
+//= do bRO, onde este mapa se chama "Centro Comercial". Editar a
+//= mao volta atras na proxima rodada, calado.
+//=
+//= Por isso o nome mora no `NOSSOS_MAPAS` do traduz_ptbr.py, que
+//= entra por cima do bRO no `_mapas_do_bro()` - o unico ponto por
+//= onde as duas metades passam. Aplicar:
+//=
+//=   python traduz_ptbr.py mapas mapinfo
+//=
+//= e fechar/reabrir o cliente. O auction_02 da Ordem dos
+//= Exploradores NAO precisa disso: o bRO ja o chama assim.
+//===== A FONTE NO MEIO DO SALAO NAO MORA AQUI ===============
+//= Desde 2026-08-11 ha uma fonte no centro (celula 180,72), e ela
+//= NAO e NPC nem esta neste arquivo: e um modelo 3D no cenario,
+//= `data\model\oldcastle\fountain.rsm`, plantado no .rsw do mapa.
+//=
+//= Isso quer dizer que ela vive NO CLIENTE, fora do git:
+//=
+//=   C:\GuerraDoEmperium\cliente\data\auction_01.rsw
+//=
+//= que vence o GRF pelo DataFolderFirst. **Cliente novo perde a
+//= fonte** e o salao volta a ter o meio vazio, sem erro nenhum.
+//= Para repor, a receita esta versionada em
+//= `ferramentas/edita_mapa.py` (entrada `auction_01`):
+//=
+//=   python edita_mapa.py <pasta-ent> <pasta-sai> <data.grf> auction_01
+//=
+//= e a pasta de entrada precisa do auction_01.rsw e .gat -- que
+//= no NOSSO GRF estao com DES e nao se leem. Tiram-se do GRF do
+//= bRO, onde estao limpos e sao a mesma revisao do mapa. O
+//= CUSTOMIZACAO-VISUAL.md tem o passo a passo e a prova.
+//=
+//= Apagar o .rsw solto reverte -- o original nunca saiu do GRF.
+//===== Por que auction_01 ===================================
+//= Mesma jogada do salao da Ordem em auction_02 (ver
+//= ordem_dos_exploradores.txt, secao "Por que o salao do
+//= leilao"), e pelos mesmos dois motivos:
+//=
+//= 1) O MAPA JA EXISTE no data.grf deste cliente - nao ha mapa
+//=    novo, nem risco da armadilha do CLAUDE.md secao 4.6.
+//= 2) O LEILAO ESTA DESLIGADO (`feature.auction: off`, em
+//=    conf/battle/feature.conf). Os quatro saloes de leilao sao
+//=    espaco morto aqui, e os Auction Broker nao fazem nada.
+//=    Reaproveitar um nao tira funcao de ninguem.
+//=
+//= A diferenca para o auction_02 e que la o mapa ja tinha porta
+//= (o portal de Lighthalzen, que virou o de Alberta). Aqui a
+//= metade que usamos tinha SO SAIDA: quem entrava vinha do
+//= "Auction Hall Guide" das Ruinas de Morroc, que este arquivo
+//= desliga. A entrada de Prontera e nova.
+//===== A planta do salao ====================================
+//= auction_01 sao DOIS blocos andaveis sem caminho a pe entre
+//= eles. O nosso e o do LESTE (x164-195); o do oeste (x5-41),
+//= que era a metade de Prontera do leilao, fica selado - ver a
+//= secao seguinte.
+//=
+//= Desenhado do map_cache do rAthena, celula a celula. `.`
+//= anda, `#` nao:
+//=
+//=       x164                           x195
+//=  y87  ........################........
+//=  y85  ................................
+//=  y83  ..........................###...
+//=  y81  ###.##.......................###
+//=  y79  #...........########...........#
+//=  y77  ###.........########........####
+//=  y75  ........###.########.###........
+//=  y73  ........###.########.###........
+//=  y71  ........###.########.###........
+//=  y69  ........###.########.###........
+//=  y67  ....##......................##..
+//=  y65  ###.........########.....##...##
+//=  y63  #..............................#
+//=  y61  ######.......................###
+//=  y59  ................................
+//=  y57  ................................
+//=  y55  ############........############   <- o corredor
+//=  y53  ############...C....############   C = chegada (180,52)
+//=  y51  ############........############
+//=  y49  ############...V....############   V = volta   (180,49)
+//=
+//= O jogador chega no corredor (x176-183, y48-55) e sobe para o
+//= salao. O portal de volta fica TRES CELULAS ao sul da chegada:
+//= com area `1,1` ele pega y48-50, entao sobra uma celula de
+//= folga em y51 e ninguem e sugado de volta ao desembarcar.
+//===== O que este arquivo desliga do rAthena ================
+//= Onze NPCs, todos no OnInit do #centro_ordem_montagem, e todos pela
+//= receita de sempre (disablenpc, sem editar arquivo de
+//= terceiros - CLAUDE.md secao 2). Todos moram em
+//= npc/other/auction.txt, que fica byte a byte igual ao upstream.
+//=
+//=   auction_entrance_moc     o warp 180,49 -> moc_ruins 78,171.
+//=                            E o que este arquivo substitui.
+//=   auction_entrance_prt     o warp 22,37 -> prontera 214,120,
+//=                            no bloco oeste. Ver abaixo.
+//=   Auction Hall Guide#moc   moc_ruins 78,173, e a placa ao lado
+//=   Information Post#moc     em 76,176. A porta que levava para
+//=                            DENTRO deste salao (179,53) - viraria
+//=                            uma segunda entrada, das Ruinas de
+//=                            Morroc, dizendo "Auction Hall".
+//=   Auction Hall Guide#prt   prontera 218,120, e a placa em
+//=   Information Post#prt     216,120. Levavam ao bloco oeste.
+//=   Auction Broker#moc1..4   os quatro deste salao (177/182 x
+//=                            68/75), em cima do bloco central.
+//=   Auction Broker#prt1..3   os tres do bloco oeste.
+//=
+//= O BLOCO OESTE FICA SELADO, e de proposito. Depois destas onze
+//= linhas nada mais leva la: as duas portas de fora estao fora do
+//= ar, o warp de saida tambem, e a entrada do Teletransportador
+//= foi retirada (ver a secao seguinte). Ele vira espaco morto
+//= dentro de um mapa que agora e uma casa - o dia que quisermos
+//= um segundo comodo, ele esta la inteiro.
+//=
+//= Desligar um warp FUNCIONA: o npc_touch_areanpc devolve cedo
+//= quando `is_invisible` (npc.cpp:1900), e o laco de cima continua
+//= procurando - por isso o nosso `centro_ordem_saida` pode ficar na MESMA
+//= celula 180,49 do warp desligado e ainda assim disparar. Mesma
+//= receita do `ordem_saida` em auction_02 43,17.
+//=
+//= As portas de YUNO (Auction Hall Guide#yuno e a placa) NAO sao
+//= tocadas: elas levam a auction_02, outro mapa. As de
+//= LIGHTHALZEN ja estao desligadas pelo ordem_dos_exploradores.txt.
+//===== A quarta porta, que nao mora aqui ====================
+//= O Teletransportador (npc/guerra/teletransportadora.txt) tinha
+//= "Auction Hall" no menu de Areas Especiais, indo para
+//= auction_01 22,68 - o bloco oeste. Essa entrada FOI RETIRADA de
+//= la, junto com o naviregisterwarp do mesmo destino: sem leilao
+//= o nome mentia, e o destino passou a ser um bloco selado, onde
+//= o jogador ficaria preso.
+//=
+//= Foi retirada e nao repontada para ca de proposito: a porta
+//= desta casa e o portal da praca, a pe. Se um dia quisermos o
+//= atalho, e uma linha no menu e uma no OnNaviGenerate.
+//=
+//= O menu de la usa ROTULO (`"Auction Hall",S1`), nao indice,
+//= entao tirar uma entrada nao desloca as outras - a armadilha do
+//= CLAUDE.md secao 4.11 nao alcanca este caso.
+//===== Notas ================================================
+//= A ENTRADA DE PRONTERA E `1,1`, e passou por tres valores em
+//= dois dias. Nasceu `0,0`, uma celula so, pelo raciocinio de que
+//= a praca tem chao andavel dos quatro lados e raio grande suga
+//= quem so esta atravessando o quarteirao. Vista no jogo NAO
+//= FICOU BOA - dava para contornar na diagonal e era dificil de
+//= acertar sem clicar em cima. Foi para `2,2` mais uma celula a
+//= leste, e dai para `1,1`, que e onde parou. Um 3x3 em x164-166,
+//= y167-169:
+//=
+//=       164 165 166
+//=  y169   W   W   W
+//=  y168   W   P   W     P = a celula do NPC (165,168)
+//=  y167   W   W   #     # = parede, ver abaixo
+//=
+//= SAO 8 CELULAS DE GATILHO, e nao 9: o canto 166,167 e a quina de
+//= um bloco solido de 2x2 (x166-167, y166-167, um objeto da
+//= praca). O npc_setcells (npc.cpp:4972) pula celula com
+//= CELL_CHKNOPASS, entao ela simplesmente nao entra - sem erro,
+//= sem aviso. Nada a corrigir; fica aqui para quem contar as
+//= celulas na planta e achar que falta uma.
+//=
+//= A VOLTA CAI EM 162,168, com DUAS CELULAS DE FOLGA: a borda
+//= oeste do portal e x164, entao sobra a 163 entre os dois. Foi
+//= essa folga que decidiu o raio 1 - com `2,2` a borda ia a x163 e
+//= a chegada ficava colada no portal, com o jogador voltando para
+//= dentro ao dar um passo para o leste. Quem mexer no raio de novo
+//= mexe nisto junto: cada ponto de raio come uma celula de folga,
+//= e no 3 a chegada ja esta DENTRO do portal - um ciclo infinito.
+//= Se um dia for preciso raio maior, mover a chegada para o oeste
+//= antes (160,168 anda e esta livre), na linha do `centro_ordem_saida`.
+//=
+//= As celulas de Prontera foram conferidas no map_cache
+//= (db/re/map_cache.dat, que e onde mora a `prontera` de renewal,
+//= 312x392 - a `db/map_cache.dat` NAO a tem): as 8 do quadrado
+//= andam, 162,168 e 163,168 andam, e nenhum NPC ocupa nenhuma
+//= delas.
+//=
+//= O guarda de getnpcid no OnInit nao e decoracao: disablenpc em
+//= nome que nao existe devolve SCRIPT_CMD_FAILURE e ABORTA o
+//= OnInit, o que deixaria os alvos seguintes de pe, calado. Com o
+//= guarda, um nome fora de sincronia vira aviso no console e o
+//= resto roda. Mesma receita do portais_do_navio.txt.
+//=
+//= Comentar a linha deste arquivo no scripts_guerra.conf fecha a
+//= porta de Prontera e devolve o Salao do Leilao inteiro - as
+//= duas portas, os dois warps e os sete Auction Broker. A entrada
+//= do Teletransportador NAO volta: aquela mudanca mora no arquivo
+//= dele.
+//============================================================
+
+// ---------------------------------------------------------------
+// Os dois portais
+// ---------------------------------------------------------------
+prontera,165,168,0	warp	centro_ordem_entrada	1,1,auction_01,180,52
+auction_01,180,49,0	warp	centro_ordem_saida	1,1,prontera,162,168
+
+// ---------------------------------------------------------------
+// A montagem: desliga o leilao que o rAthena deixou no mapa
+// ---------------------------------------------------------------
+// NPC flutuante, sem corpo e sem mapa - existe so pelo OnInit.
+// Ver a secao "O que este arquivo desliga do rAthena", no
+// cabecalho, para o porque de cada um dos onze.
+-	script	#centro_ordem_montagem	-1,{
+	end;
+
+OnInit:
+	setarray .@alvo$[0],
+		// Os dois warps do leilao. O primeiro e substituido pelo
+		// `centro_ordem_saida` acima, na mesma celula; o segundo sela o
+		// bloco oeste.
+		"auction_entrance_moc",  "auction_entrance_prt",
+		// As duas portas de fora que ainda apontavam para ca.
+		"Auction Hall Guide#moc", "Information Post#moc",
+		"Auction Hall Guide#prt", "Information Post#prt",
+		// Os sete corretores. O leilao esta desligado no servidor
+		// (`feature.auction: off`), entao nao fazem nada - so
+		// ocupariam a casa.
+		"Auction Broker#moc1", "Auction Broker#moc2",
+		"Auction Broker#moc3", "Auction Broker#moc4",
+		"Auction Broker#prt1", "Auction Broker#prt2",
+		"Auction Broker#prt3";
+
+	.@sumiram = 0;
+	for (.@i = 0; .@i < getarraysize(.@alvo$); .@i++) {
+		// getnpcid devolve 0 quando o NPC nao existe. Sem este
+		// teste, um nome fora de sincronia abortaria o OnInit e
+		// deixaria os alvos seguintes de pe.
+		if (!getnpcid(0, .@alvo$[.@i])) {
+			.@sumiram++;
+			continue;
+		}
+		disablenpc .@alvo$[.@i];
+	}
+
+	if (.@sumiram)
+		debugmes "CentroDaOrdem: "+.@sumiram+" de "+getarraysize(.@alvo$)+" alvos nao foram encontrados. A lista deste arquivo saiu de sincronia com npc/other/auction.txt - PODE HAVER NPC DE LEILAO DE PE NO SALAO.";
+	end;
+}

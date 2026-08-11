@@ -5473,3 +5473,361 @@ o codepage do banco não estava, e teria devolvido o mesmo pedido com outro
 sintoma. O que fechou a questão foi medir o `INSERT` nas duas codificações
 **antes** de escrever qualquer arquivo: uma rodada de mysql.exe transformou uma
 suposição plausível em fato.
+
+## O Centro da Ordem — auction_01 vira uma casa da cidade (2026-08-10)
+
+Pedido: uma conexão nova entre Prontera e uma casa. `auction_01` tinha portal
+de saída e **nenhum de entrada**; passa a ser um salão de Prontera, alcançável
+por um portal na praça.
+
+- `prontera 165,168` (raio 1, um 3x3) → `auction_01 180,52`
+- `auction_01 180,49` (raio 1) → `prontera 162,168`
+
+O salão entra **vazio**: esta rodada abriu a porta e limpou o que havia
+dentro. O conteúdo vem depois.
+
+Tudo mora em `npc/guerra/centro_da_ordem.txt`, mais uma linha no
+`scripts_guerra.conf` e duas linhas retiradas da Teletransportadora.
+
+### É a segunda vez que um salão de leilão é reaproveitado
+
+A primeira foi `auction_02`, que virou a Ordem dos Exploradores em 2026-08-08.
+A receita é a mesma, e pelos mesmos dois motivos: **o mapa já existe** no
+`data.grf` deste cliente (nenhum mapa novo, nenhum risco da armadilha do
+`CLAUDE.md` §4.6) e **o leilão está desligado** no servidor
+(`feature.auction: off`), o que faz dos quatro salões espaço morto.
+
+A diferença é a porta. O `auction_02` já tinha uma — o portal de Lighthalzen,
+que só precisou ser repontado para Alberta. A metade de `auction_01` que
+usamos **só tinha saída**: quem entrava vinha do `Auction Hall Guide` das
+Ruínas de Morroc. A entrada de Prontera é nova.
+
+### As quatro portas, e por que três tinham de morrer
+
+O que custou raciocínio nesta rodada não foi abrir o portal — foi **contar
+quantas outras portas existiam**. Eram quatro, e três não estavam no arquivo
+do leilão:
+
+| Porta | Onde | Ia parar em |
+|---|---|---|
+| `Auction Hall Guide#moc` | `moc_ruins 78,173` | `auction_01 179,53` — **dentro do nosso salão** |
+| `Auction Hall Guide#prt` | `prontera 218,120` | `auction_01 21,43` — o bloco oeste |
+| warp `auction_entrance_moc` | `auction_01 180,49` | Ruínas de Morroc |
+| **`"Auction Hall"` do Teletransportador** | menu de Áreas Especiais | `auction_01 22,68` — o bloco oeste |
+
+A quarta é a que não aparece em busca nenhuma por `npc/other/auction.txt`: ela
+mora em `npc/guerra/teletransportadora.txt`, que é **cópia nossa** do warper do
+rAthena. Sem tirá-la, o jogador chegaria ao bloco oeste depois de o warp de
+saída dele ter sido desligado — ou seja, **preso**.
+
+### O bloco oeste fica selado, de propósito
+
+`auction_01` são **dois blocos andáveis sem caminho a pé entre eles**: o do
+leste (x164-195), que é o nosso salão, e o do oeste (x5-41), que era a metade
+de Prontera do leilão. Depois desta rodada nada leva ao oeste: as duas portas
+de fora estão fora do ar, o warp de saída também, e a entrada do
+Teletransportador saiu.
+
+Vira espaço morto dentro de um mapa que agora é uma casa — e fica guardado
+inteiro para o dia em que quisermos um segundo cômodo. Selar foi escolha, não
+descuido: com o warp `auction_entrance_prt` de pé, sobraria um portal que sai
+de um lugar onde ninguém entra e desemboca na praça do guia de leilão que
+também não existe mais.
+
+### Onze `disablenpc`, todos de fora
+
+Pela receita de sempre (`CLAUDE.md` §2): `npc/other/auction.txt` fica byte a
+byte igual ao upstream. Os dois warps do mapa, as duas portas de fora com as
+duas placas ao lado, e os **sete** Auction Broker — quatro no nosso salão,
+três no bloco oeste.
+
+O `centro_ordem_saida` fica na **mesma célula** do `auction_entrance_moc` desligado, e
+isso funciona pelo mesmo motivo já registrado no `ordem_dos_exploradores.txt`:
+o `npc_touch_areanpc` devolve cedo quando `is_invisible` (`npc.cpp:1900`) e o
+laço de cima continua procurando.
+
+As portas de **Yuno** não foram tocadas (levam a `auction_02`, outro mapa); as
+de **Lighthalzen** já estavam desligadas desde 2026-08-08.
+
+### O portal da praça passou por três raios em dois dias
+
+**O raciocínio de partida foi este:** as outras portas do projeto usam `1,0` ou
+`1,1`, mas todas ficam em porta de parede ou em corredor. Esta fica **no meio
+da praça de Prontera**, com chão andável dos quatro lados, e raio grande suga
+quem só está atravessando o quarteirão. Foi para uma célula só —
+`npc_setcells` (`npc.cpp:4972`) com `xs=ys=0` marca exatamente uma, conferido
+no código antes de usar.
+
+**Visto no jogo, não ficou bom.** O dono pediu raio 2 e uma célula a leste, e
+no mesmo pedido seguinte corrigiu para raio 1 — parou em `prontera 165,168`
+com `1,1`, um 3x3 em x164-166, y167-169.
+
+O que o raciocínio de partida errou não foi o risco — sugar quem atravessa a
+praça continua sendo real —, foi **o peso relativo dos dois lados**. Uma célula
+única é contornável na diagonal e difícil de acertar sem clicar em cima: a
+porta que não pega é pior que a porta que pega demais, porque a primeira falha
+para quem *quer* entrar. E o custo do erro não é simétrico: entrar sem querer
+resolve-se com um portal de volta a três células; não conseguir entrar não se
+resolve com nada.
+
+**São 8 células de gatilho, e não 9.** O canto `166,167` é a quina de um bloco
+sólido de 2x2 (x166-167, y166-167, um objeto da praça), e o `npc_setcells` pula
+célula com `CELL_CHKNOPASS` — sem erro e sem aviso. Está anotado no cabeçalho
+do arquivo para quem for contar as células na planta e achar que falta uma.
+
+### O raio e a chegada são o mesmo número, e isso não estava óbvio
+
+O raio 2 durou uma rodada, e o que o derrubou foi a **chegada da volta**.
+`162,168` é a coordenada que o dono deu, e a borda oeste do portal anda com o
+raio: em `0,0` era x165 e sobravam duas células de folga; em `2,2` foi a x163 e
+a chegada ficou colada, com o jogador voltando para dentro ao dar um passo
+para o leste. O `1,1` devolve a folga — borda em x164, a 163 livre entre os
+dois.
+
+**Cada ponto de raio come uma célula de folga, e no 3 a chegada está DENTRO do
+portal** — um ciclo infinito, e desses que não dão erro nenhum: o jogador
+simplesmente não consegue sair de casa. Ficou escrito no cabeçalho, porque a
+próxima pessoa a mexer no raio vai olhar para o raio e não para a chegada. Se
+um dia for preciso raio maior, mover a chegada para o oeste **antes**
+(`160,168` anda e está livre).
+
+### A `prontera` não está no `db/map_cache.dat`
+
+Achado ao conferir se as duas células de Prontera são andáveis, e vale para
+qualquer conferência futura de célula: **o rAthena lê três caches, em ordem** —
+`db/import/map_cache.dat`, `db/re/map_cache.dat`, `db/map_cache.dat`
+(`map.cpp:3922`) —, e o primeiro que tiver o mapa vence.
+
+A `prontera` de renewal (312x392) **só existe em `db/re/`**. A grande, de 1288
+mapas, não a tem: tem uma `pprontera` de mesmo tamanho, que é outra coisa. Uma
+ferramenta que abra só a `db/map_cache.dat` responde *"prontera não está no
+cache"* — e a resposta é do leitor, não do mapa. Subiu para `CLAUDE.md` §5.
+
+Conferido assim: as 8 células do portal, a `162,168` e a `163,168` andam,
+`auction_01 180,52` e `180,49` estão os dois no corredor de entrada (x176-183,
+y48-55), e nenhum NPC ocupa nenhuma delas.
+
+### O que se provou, e o que não
+
+**Provado offline:** as quatro células andam e estão livres; o cabeçalho do
+arquivo novo é todo comentário (a armadilha de `CLAUDE.md` §5 — uma linha ruim
+mata o arquivo inteiro); os nomes dos onze alvos batem com `npc/other/auction.txt`
+byte a byte, inclusive a diferença de grafia entre `auction_entrance_moc/prt` e
+`auction_enterance_juno/lhz`; nenhum nome de NPC colide.
+
+**Não provado:** nada em jogo. Falta o `@reloadscript` e a caminhada. Está no
+`PENDENCIAS.md` §1k.
+
+### Uma armadilha de encoding que quase passou
+
+Editar `npc/guerra/teletransportadora.txt` **destruiu os 8 acentos cp1252 do
+arquivo**, transformando cada um em `\xef\xbf\xbd` (U+FFFD) — exatamente o
+estrago calado que o `CLAUDE.md` §5 descreve, e que já tinha acontecido no
+`db/guerra/item_db.yml` em 2026-08-07. A ferramenta de edição grava UTF-8; o
+arquivo é cp1252 (`"Torre do Demônio"` no menu de Instâncias).
+
+Foi pego porque a conferência de encoding foi feita **depois de cada edição, e
+não só nos arquivos criados** — e recuperado porque o `git show HEAD:` ainda
+tinha os 8 bytes originais, na mesma ordem, para reinserir um a um.
+
+**A lição, e ela é geral:** editar arquivo de NPC existente é tão perigoso
+quanto gerar um novo. O arquivo criado nesta rodada saiu limpo (ASCII puro); o
+que quase quebrou foi o que já estava lá. Conferir os arquivos **tocados**, não
+os escritos.
+
+## A fonte no meio do Centro da Ordem (2026-08-11)
+
+Pedido: uma fonte no meio da sala, em `auction_01 180,72`, com o modelo dado —
+`data\model\oldcastle\fountain.rsm`.
+
+Feito, e **é mudança de cliente, não de servidor**: a fonte é um modelo 3D no
+`.rsw` do mapa. Não há NPC, não há linha de script, e o `.gat` não foi tocado.
+O arquivo instalado é `C:\GuerraDoEmperium\cliente\data\auction_01.rsw`, que
+vence o GRF pelo `DataFolderFirst`. A receita — que é o que se versiona — é a
+entrada `auction_01` do `RECEITA` em `ferramentas/edita_mapa.py`.
+
+### O DES bloqueou, e o bRO destravou
+
+`auction_01.rsw` está no nosso GRF com `flags=3`, e o `.gnd`/`.gat` com
+`flags=5`: DES. O `grf.py` não lê nenhum dos três, e sem o `.rsw` de partida não
+há o que editar. A frente visual já sabia disto de 2026-07-31 — **640 dos 910
+`.rsw` estão com DES** — e a conclusão de lá era escolher mapa dentro dos 270
+limpos. Aqui o mapa não era escolha: era o mapa do salão.
+
+A saída foi a regra 3 do `CLAUDE.md`. O GRF do bRO tem os mesmos três arquivos
+com `flags=1`, e abrem. O método e a prova ficaram no `CUSTOMIZACAO-VISUAL.md`;
+o resumo é que **o `csize` idêntico já quase fecha** — o DES embaralha blocos de
+8 bytes e não muda o comprimento do zlib — e o que fecha de verdade é comparar
+o `.gat` do bRO com o `map_cache.dat` do nosso servidor, que foi gerado do nosso
+`.gat`. Deu **20.000 células de 20.000**.
+
+Isto vale muito mais que a fonte: abre os 910 mapas para a frente visual, e não
+só os 270.
+
+### O meio da sala já estava preparado para alguma coisa
+
+Medido antes de plantar, e mudou o que eu esperava encontrar. O centro de
+`auction_01` não é chão liso: é um **pedestal quadrado de 4x4 células**
+(x178-181, y70-73) na altura -5, cercado por um fosso na altura 20, com
+**quatro pontes** (`모로코\성_다리.rsm`) chegando nele pelos quatro lados, a 20-25
+unidades do centro. E vazio — nenhum modelo a menos de 30 unidades.
+
+`180,72` cai no meio desse pedestal. O pedido do dono acertou o centro
+geométrico do salão e o centro do pedestal na mesma coordenada.
+
+A célula é **não-andável**, e isso não é problema: modelo de cenário não precisa
+de chão, e o `.gat` não muda com o override. É o oposto do caso do NPC, onde
+célula bloqueada é decisão a justificar.
+
+### Escala e rotação vieram da Gravity, não de chute
+
+O `Modelo.novo` grava escala 1,0 e o `edita_mapa.py` sorteava a rotação. Sorteio
+é bom para destroço espalhado e ruim para peça posta de propósito: **número
+sorteado é número inventado**.
+
+A calibragem barata foi varrer os 821 `.rsw` do GRF do bRO procurando o
+`filename`. Cinco instâncias oficiais — `1@def02`, `1@gl_k`, `1@gl_kh`,
+`2@gl_k`, `2@gl_kh` —, **todas com rotação `0,0,0`** e escala 1,0 (duas com
+1,04). A rotação 0 ficou; a escala 1,0 não sobreviveu à tela (ver abaixo). O
+`edita_mapa.py` ganhou dois campos opcionais na tupla de `acrescentar`, rotação
+e escala, para poder dizer as duas coisas.
+
+### A tela respondeu no mesmo dia: 1,0 ficou grande, e a escala foi para 0,57
+
+O modelo tem **35,3 unidades de largura — 7,1 células**, medido nos dois
+`.rsm` (o nosso, de 132.287 bytes, e o do bRO, de 79.463; são revisões
+diferentes e a largura é a mesma). O pedestal tem **4 células**.
+
+A 1,0 a fonte **transbordava o pedestal** e avançava sobre o fosso, parando logo
+antes das quatro pontes. Havia um argumento bom para isso estar certo — raio
+17,7 contra pontes a 20 parece encaixe desenhado — e ele **estava errado**: o
+dono olhou e disse que ficou grande. Escala **0,57** (20 / 35,34 = 0,566), que
+dá 20,1 unidades, o pedestal exato.
+
+**A lição é sobre a calibragem por mapa oficial**, que nesta mesma rodada foi
+elogiada acima por ter dado rotação e escala sem chute. Ela acertou a rotação e
+**errou a escala**, e o motivo é estrutural: a Gravity usa esta fonte em pátio
+de castelo de Glast Heim, onde há espaço. **Escala oficial é boa pista e não é
+resposta** — quem copia a escala copia junto o tamanho do lugar de origem. A
+medida que valia era a outra, a largura do `.rsm` contra o tamanho do lugar, e
+ela estava na mão desde o início.
+
+### E a segunda olhada achou meia célula de erro
+
+Com o tamanho certo, o desalinhamento apareceu: a fonte não estava centrada no
+tampo. **A causa é aritmética, não estimativa.** O `mundo()` do
+`catalogo_ingame.py` devolve o **centro da célula** — `(cx - largura/2) * 5 +
+2,5`. O pedestal ocupa **quatro** células (`x178-181, y70-73`), número **par**,
+então o centro dele cai na **fronteira** entre a 179 e a 180: mundo `(400, 110)`.
+A célula 180,72 tem centro em `(402,5, 112,5)`.
+
+**Meia célula em cada eixo, e nenhum inteiro consegue acertar.** O pedido do dono
+dizia `180,72` e estava certo em intenção — é a célula mais próxima do centro —,
+mas em vão de largura par a célula mais próxima do centro nunca é o centro. A
+correção foi célula **fracionária**: `179.5, 71.5`, que dá exatamente
+`(400, 110)`.
+
+Confirmado nos dois caminhos antes de instalar. Pela conta: varrendo o `.gat`
+para achar o retângulo contíguo de altura -5, os limites em mundo dão
+`x 390..410` e `z 100..120`, centro `(400, 110)`, e o modelo ficou com **erro
+0,00 nos dois eixos**. E pelos pixels: recortando o tampo do screenshot e medindo
+os quatro cantos do losango, o centro dava (365, 322) e a fonte estava em
+(380, 288) — deslocada para cima e um pouco à direita, que é exatamente como
+`+2,5 X` mais `+2,5 Z` se projetam nesta câmera.
+
+**A lição é a mesma do teto de refino e do `Level:` 1-based: o erro de meia
+unidade não se denuncia.** A planta ASCII do cabeçalho mostrava o pedestal
+certo, a coordenada parecia o centro, e o número saiu plausível e errado. O que
+o pega é conferir o centro do **vão** contra a posição do **modelo**, e é uma
+linha de conta.
+
+O que se confirmou junto, e sem custo: a **posição e a altura estavam certas**.
+O dono disse "grande" e depois "torta", nunca "enterrada" nem "flutuando" — a
+altura nunca esteve em questão, então a regra de plantar
+na altura do `.gat` da célula, a mesma das quatro pontes, funcionou. E encolher
+não tirou a peça do chão, o que prova que a origem do modelo está na base (a
+caixa envolvente que eu tinha medido sugeria origem no meio, e ela estava errada
+nesse eixo — o transform ignora a hierarquia de nós).
+
+### As travas que rodaram antes de instalar
+
+- **Round-trip do `rsw.py`**: ler e regravar o `.rsw` sem receita devolve os
+  113.618 bytes **idênticos**. Sem isso, toda edição carregaria junto um estrago
+  invisível.
+- **Diff do gerado**: 206 -> 207 objetos, +252 bytes, que é exatamente um
+  registro de modelo (248 + 4). Os **206 objetos originais preservados byte a
+  byte**.
+- **Os 178 `filename` conferidos contra o NOSSO GRF** — não o do bRO. Caminho
+  que não resolve não dá erro em parser nenhum: aparece como um diálogo por
+  modelo no cliente, e prende quem tiver personagem salvo no mapa.
+- **O leitor de `.rsm` só valeu porque consumiu o arquivo inteiro.** A primeira
+  versão parava nos nós e sobravam 8 bytes — `numPosKeyframes` e
+  `numVolumeBoxes`, zero nos dois modelos. Sem a trava de "consumir tudo", a
+  medida de largura teria saído plausível e falsa.
+
+### O que não foi verificado
+
+**A fonte foi vista duas vezes, e só ela.** O dono abriu o salão, reportou o
+tamanho, e na segunda olhada o desalinhamento — então *aparece* e está *na
+altura certa*; tamanho e centro foram corrigidos e **falta a terceira
+olhada**. O
+que ninguém exercitou ainda é o **portal de Prontera**, que nunca foi testado:
+falta o `@reloadscript` e a caminhada de ida e volta. Está no `PENDENCIAS.md`
+§1k, e o item da fonte encolheu para uma linha só — reconferir o tamanho a 0,57.
+
+## O Centro da Ordem — conferido em jogo, e batizado (2026-08-11)
+
+**Tudo funciona.** O dono percorreu o caminho inteiro e confirmou: o portal de
+`prontera 165,168`, a chegada, a volta por `auction_01 180,49`, a limpeza dos
+onze NPCs de leilão e a fonte no meio da sala. Com isso a `PENDENCIAS.md` §1k
+saiu — era a lista de seis conferências abertas desde 2026-08-10.
+
+O que a sessão de testes fechou, item a item: o `3x3` do portal pega sem sugar
+quem atravessa a praça; a volta em `162,168` não devolve o jogador para dentro;
+os onze `disablenpc` pegaram; o menu de Áreas Especiais da Teletransportadora
+perdeu o "Auction Hall" sem deslocar as outras nove; e o bloco oeste está
+selado.
+
+### O nome veio depois do lugar estar de pé
+
+O salão passou a se chamar **Centro da Ordem**, a pedido do dono. Não é uma
+ordem nova: é a **mesma** do Emissário no navio, da Alleria em Comodo e dos
+Exploradores em `auction_02`. Este é o pé dela na capital.
+
+O arquivo virou `npc/guerra/centro_da_ordem.txt`, e com ele os identificadores
+— `centro_ordem_entrada`, `centro_ordem_saida`, `#centro_ordem_montagem` e o
+prefixo do `debugmes`. Os nomes de warp foram escolhidos com o prefixo
+`centro_ordem_` e não `ordem_`, que já é dos Exploradores em `auction_02`.
+
+### O nome do mapa tem duas metades, e as duas são GERADAS
+
+O que o jogador lê não sai do nome do arquivo de NPC. São duas tabelas do
+cliente — `data\mapnametable.txt` (canto do minimapa) e
+`System\mapInfo_true.lub`/`_sak.lub` (o letreiro ao entrar) —, e **as duas são
+geradas** por `traduz_ptbr.py` a partir do `mapInfo.lub` do bRO, onde este mapa
+se chama **"Centro Comercial"**. Editar à mão volta atrás na próxima rodada,
+calado. É a mesma família do `OngoingQuestInfoList` e do `CheckAttendance.lub`
+— `CLAUDE.md` §9.
+
+Por isso o nome entrou como **`NOSSOS_MAPAS`, uma tabela de override no
+`traduz_ptbr.py`**, aplicada no fim do `_mapas_do_bro()` — que é o **único ponto
+por onde as duas metades passam**. Uma entrada conserta as duas, e o
+`traduz_ptbr.py mapas mapinfo` passa a ser idempotente com o nosso nome.
+
+**O `auction_02` não precisou de entrada nenhuma**, e a descoberta explica uma
+escolha antiga: o bRO **já** chama aquele mapa de "Ordem dos Exploradores". A
+sessão de 2026-08-08 não rebatizou nada — pegou o mapa que já tinha o nome
+certo. Só entra no `NOSSOS_MAPAS` mapa que **mudou de função** aqui.
+
+### Um detalhe que a tabela quase escondeu
+
+A primeira versão do override trazia `displayName`, `mainTitle` e `subTitle`.
+Os dois últimos seriam **inertes**: o bloco deste mapa no `mapInfo_*.lub` tem
+só `displayName`, e o `parte_mapinfo` **troca** campo existente, não acrescenta.
+Ficariam na tabela parecendo configuração e sem efeito nenhum — pior que
+ausentes. Ficou só o `displayName`, com o porquê escrito ao lado.
+
+O que provou que a remoção era inerte foi rodar `--verificar` depois dela:
+*"nada mudou (já estava aplicado)"* nos três arquivos. E o que provou que o
+override não arrastou nada junto foi o `--verificar` de antes: **−1 byte** em
+cada arquivo, que é exatamente `Centro Comercial` (16) → `Centro da Ordem` (15).
