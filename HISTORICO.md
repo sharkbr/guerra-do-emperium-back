@@ -5363,3 +5363,113 @@ intuição aqui estava errada em dois dos três pontos. "Dano de status ficou 5x
 relevante" é verdade e **não** implica "dano de status virou alavanca": faltavam o
 teto de 25% e o viés de classe, e nenhum dos dois aparece sem abrir o
 `status_change_timer`.
+
+## Nome de personagem com acento — as duas metades (2026-08-10)
+
+Pedido do dono, com dois screenshots: `Barão de Libra` recusado na criação de
+personagem, com a caixa *"Character Creation is denied."* — a mesma mensagem que
+o char-server devolve para nome duplicado, nome curto e nome proibido. A
+mensagem não distingue, e é por isso que o caminho da apuração foi o código.
+
+### A causa: o filtro é BYTE A BYTE
+
+O `char_check_char_name` (`src/char/char.cpp:1365`) faz
+
+```
+if( strchr(charserv_config.char_config.char_name_letters, name[i]) == nullptr )
+    return -2;
+```
+
+com `char_name_option: 1` ("só as letras da lista") e a lista padrão do rAthena
+contendo **apenas ASCII**. O cliente manda o nome em cp1252, então o `ã` chega
+como o byte `0xE3`, que não está na lista — e o `-2` vira a caixa de erro.
+
+A mesma variável governa **quatro** pontos, não um: personagem
+(`char.cpp:1365`), clã (`int_guild.cpp:1199`), grupo (`int_party.cpp:517`) e
+homúnculo (`int_homun.cpp:302`). Liberar a lista conserta os quatro de uma vez —
+o que também quer dizer que quem mexer nela mexe em mais do que imagina.
+
+### A segunda metade, que não aparece no código do filtro
+
+Liberar as letras **não bastaria**, e essa foi a parte que só a medição
+respondeu. As 105 colunas de texto do banco são `latin1`, mas o
+`character_set_client` deste MariaDB 12.3 é `utf8mb4`, e o
+`default_codepage` do `inter_athena.conf` vinha **comentado** — sem ele o
+rAthena não manda `SET NAMES` nenhum (`inter.cpp:978`, `map.cpp:4416`).
+
+Medido antes de mexer, com o nome do pedido:
+
+| Conexão | Resultado do `INSERT` de `Barão de Libra` |
+|---|---|
+| `utf8mb4` (o que havia) | `ERROR 1366 (22007): Incorrect string value: '\xE3o de ...'` |
+| `latin1` (a correção) | grava e devolve `426172E36F...` — o `0xE3` intacto |
+
+Um byte cp1252 sozinho é UTF-8 inválido, então o MariaDB **recusa a gravação
+inteira**. Se só o filtro tivesse sido liberado, a criação passaria pela
+validação e morreria no SQL — outro sintoma, mesma frustração, e desta vez com
+o erro num log que ninguém abre. Subiu para o `CLAUDE.md` §5.
+
+`latin1` e cp1252 são o mesmo repertório na faixa `0xC0-0xFF`, onde moram todas
+as letras acentuadas do português; divergem só em `0x80-0x9F` (aspas curvas, €,
+™), que a lista de letras não permite. Nenhuma coluna do banco está fora de
+`latin1`, então o `SET NAMES` não perde nada em lugar nenhum — conferido pelo
+`information_schema` antes de aplicar.
+
+### O que foi feito
+
+Dois arquivos nossos, no padrão do `battle_guerra.txt`, e dois `import:` de uma
+linha nos arquivos do rAthena (`CLAUDE.md` §2):
+
+- **`rathena/conf/guerra/char_guerra.txt`** — `char_name_option: 1` mais a lista
+  com as 48 letras acentuadas (24 minúsculas, 24 maiúsculas: as cinco vogais com
+  crase/agudo/circunflexo/til/trema conforme o caso, mais `ç` e `ñ`).
+  **Arquivo cp1252**, e é o ponto frágil: salvo em UTF-8, cada acento vira dois
+  bytes e a lista passa a permitir lixo em vez de permitir "a com til", sem erro
+  nenhum. Por isso é **gerado** por `ferramentas/gera_char_guerra.py`, que
+  escreve os bytes por escape `\xNN` — o gerador é ASCII puro e não há como um
+  editor estragá-lo calado.
+- **`rathena/conf/guerra/inter_guerra.txt`** — `default_codepage: latin1`.
+
+Entraram só **letras**. Hífen e apóstrofo ficaram de fora de propósito: nome é
+chave em comando de GM, em sussurro e na janela de troca, e símbolo ali complica
+sem ganho.
+
+O `login_athena.conf` importa o `inter_athena.conf`, então o login-server
+também lê o `default_codepage` — chave que ele não conhece. Não é problema:
+`login.cpp:732` manda a chave desconhecida para os parsers de conta/ipban/log e
+a ignora em silêncio se ninguém a quiser. O login subiu normal.
+
+Config de servidor só é lida na inicialização: os quatro servidores foram
+reiniciados. **`@reloadbattleconf` não pega nada disto.**
+
+### Confirmado em jogo, no mesmo dia
+
+O dono criou o personagem com acento na tela de criação. Nada ficou pendente.
+
+Guardado aqui porque as duas metades falham com sintomas **diferentes**, e
+saber qual apareceu é o que economiza a próxima apuração:
+
+| Sintoma | Metade que falhou |
+|---|---|
+| *"Character Creation is denied."* | o filtro — `conf/guerra/char_guerra.txt` não foi lido, ou foi salvo em UTF-8 |
+| outro erro, ou o personagem não aparece na lista | o banco — `default_codepage: latin1` não chegou (`conf/guerra/inter_guerra.txt`) |
+| caractere errado no lugar do acento | cp1252 x latin1 — só possível com um byte da faixa `0x80-0x9F` na lista |
+
+E o que decide sem depender do que a tela desenha é
+`SELECT name, HEX(name) FROM \`char\`` — leitura e gravação passam por
+codificações diferentes, então ver o nome certo ao criar não prova que ele
+volta certo depois de sair e entrar.
+
+### O que esta rodada acrescenta ao método
+
+**Mensagem de erro que serve para três causas diferentes não é ponto de
+partida.** *"Character Creation is denied."* é o texto do refuse code, e o
+refuse code é o mesmo para nome duplicado, nome curto e byte proibido. Duas
+consultas ao código custaram menos do que uma rodada de tentativa e erro no
+cliente teria custado.
+
+**Correção de encoding raramente tem uma metade só.** O filtro estava na cara —
+o codepage do banco não estava, e teria devolvido o mesmo pedido com outro
+sintoma. O que fechou a questão foi medir o `INSERT` nas duas codificações
+**antes** de escrever qualquer arquivo: uma rodada de mysql.exe transformou uma
+suposição plausível em fato.

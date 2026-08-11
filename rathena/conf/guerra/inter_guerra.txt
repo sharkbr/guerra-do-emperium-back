@@ -1,0 +1,39 @@
+//--------------------------------------------------------------
+// Guerra do Emperium - configuracao de banco nossa.
+//
+// Este arquivo e VERSIONADO e vale para qualquer clone do repo.
+// E importado por conf/inter_athena.conf, logo antes de
+// conf/import/inter_conf.txt - o conf/import continua podendo
+// sobrescrever qualquer coisa daqui, por maquina.
+//
+// Regra: aqui so entra ajuste que vale para TODO clone. Senha,
+// IP e nome de banco continuam em conf/import/inter_conf.txt,
+// que fica fora do git.
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+// Codificacao da conexao com o MariaDB: latin1.
+//
+// Este servidor fala cp1252 de ponta a ponta - o cliente manda o
+// nome do personagem assim, e o item_db.yml e escrito assim
+// (CLAUDE.md, regra 1). As 105 colunas de texto do banco ja sao
+// latin1, e latin1 e cp1252 sao o MESMO repertorio na faixa
+// 0xC0-0xFF, onde moram todas as letras acentuadas do portugues.
+//
+// Sem esta linha o rAthena nao manda "SET NAMES" nenhum e a
+// conexao nasce no padrao do MariaDB, que aqui e utf8mb4. Um byte
+// acentuado sozinho e UTF-8 invalido, entao o servidor recusa a
+// gravacao inteira:
+//
+//   ERROR 1366 (22007): Incorrect string value: '\xE3o de ...'
+//
+// Medido em 2026-08-10: com utf8mb4 o INSERT de "Barao de Libra"
+// (com til) falha; com latin1 o byte 0xE3 entra e volta intacto.
+// Por isso liberar as letras em conf/guerra/char_guerra.txt sem
+// mexer aqui NAO faz criar personagem com acento funcionar - o
+// filtro passa e o banco recusa depois.
+//
+// Vale para o char-server (inter.cpp:978) e para o map-server
+// (map.cpp:4416), inclusive na conexao de log.
+//--------------------------------------------------------------
+default_codepage: latin1

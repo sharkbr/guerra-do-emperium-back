@@ -2489,3 +2489,49 @@ Mercado Contemporâneo.
 Diferente do Mercado de Visuais, **este arquivo imprime o aviso**
 `npc_parse_shop: Item X discounted buying price`, um por carta. É esperado, e é
 o próprio servidor apontando esses 9 zeny.
+
+## `gera_char_guerra.py` — a lista de letras que o nome de personagem aceita
+
+Gera `rathena/conf/guerra/char_guerra.txt`, o arquivo que diz ao char-server
+quais bytes podem aparecer num nome. Roda sem argumento:
+
+```
+C:\Python27\python.exe ferramentas\gera_char_guerra.py
+```
+
+Depois **reiniciar o char-server** — config só é lida na inicialização, e não há
+comando de recarga para ela.
+
+### Por que isto é um gerador e não um arquivo escrito à mão
+
+Porque o arquivo tem de ser **cp1252** e o estrago de salvá-lo em UTF-8 é
+calado. O filtro do rAthena compara byte a byte
+(`strchr(char_name_letters, name[i])`, `char.cpp:1365`); em UTF-8 cada acento
+vira **dois** bytes, e a lista passa a permitir as duas metades soltas de cada
+acento em vez de permitir a letra. O resultado não é um erro: é uma lista que
+aceita lixo e continua recusando `ã`.
+
+O gerador escreve os acentuados por escape `\xNN`, então ele próprio é ASCII
+puro — não existe editor capaz de estragá-lo sem que se veja. E confere o
+resultado antes de sair: recusa `U+FFFD` no arquivo e relê em cp1252 exigindo
+que as 48 letras tenham voltado.
+
+### O que entra na lista
+
+O ASCII de sempre (letras, dígitos e o espaço) mais 48 acentuadas: as cinco
+vogais com crase, agudo, circunflexo, til e trema conforme o caso, mais `ç` e
+`ñ`, em minúscula e maiúscula.
+
+Só **letras**. Hífen e apóstrofo ficaram de fora de propósito — nome é chave em
+comando de GM, em sussurro e na janela de troca.
+
+### Ele sozinho não resolve
+
+A outra metade é `conf/guerra/inter_guerra.txt` (`default_codepage: latin1`).
+Sem ela o filtro deixa o nome passar e o **banco** o recusa, com
+*"Incorrect string value"* — ver `CLAUDE.md` §5 e a seção de 2026-08-10 do
+`HISTORICO.md`.
+
+E a lista vale para mais do que o nome de personagem: clã
+(`int_guild.cpp:1199`), grupo (`int_party.cpp:517`) e homúnculo
+(`int_homun.cpp:302`) leem a **mesma** variável.

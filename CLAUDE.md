@@ -45,6 +45,8 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `npc/scripts_custom.conf` | uma linha `import: npc/guerra/scripts_guerra.conf` |
 | `npc/barters.yml` | um `- Path: npc/guerra/barters_guerra.yml` no rodapé |
 | `conf/battle_athena.conf` | uma linha `import: conf/guerra/battle_guerra.txt` |
+| `conf/char_athena.conf` | uma linha `import: conf/guerra/char_guerra.txt` (nome de personagem com acento) |
+| `conf/inter_athena.conf` | uma linha `import: conf/guerra/inter_guerra.txt` (`default_codepage: latin1`) |
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
@@ -231,6 +233,17 @@ Produziram diagnóstico falso e custaram retrabalho:
   porque o nome que o jogador lê vem do `itemInfo.lua`, não do servidor.
   O teste, em qualquer arquivo que o jogo leia:
   `python -c "d=open(p,'rb').read(); print '\xef\xbf\xbd' in d"`.
+- **A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela.**
+  As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`
+  padrão deste MariaDB 12.3 é `utf8mb4` — e o rAthena só manda `SET NAMES` se
+  `default_codepage` estiver preenchido (`inter.cpp:978`, `map.cpp:4416`), o que
+  **não era o caso**. Um byte cp1252 sozinho é UTF-8 inválido, então o
+  MariaDB recusa a gravação inteira com *"ERROR 1366 (22007): Incorrect string
+  value"*. Ou seja: **texto acentuado que o servidor tenta gravar no banco não
+  chega lá**, e o caminho de erro é do lado do SQL, longe de onde o texto
+  nasceu. Corrigido em 2026-08-10 por `conf/guerra/inter_guerra.txt`
+  (`default_codepage: latin1`); a armadilha continua valendo para quem
+  desconfiar do `conf/import/` e apagar esse import.
 - **`.lub` do GRF é bytecode** (header `\x1bLua`); os do ROenglishRE são texto
   puro. Comparar tamanho entre os dois não significa nada.
 - **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`
