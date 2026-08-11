@@ -46,17 +46,36 @@
 //=
 //= e fechar/reabrir o cliente. O auction_02 da Ordem dos
 //= Exploradores NAO precisa disso: o bRO ja o chama assim.
-//===== A FONTE NO MEIO DO SALAO NAO MORA AQUI ===============
-//= Desde 2026-08-11 ha uma fonte no centro (celula 180,72), e ela
-//= NAO e NPC nem esta neste arquivo: e um modelo 3D no cenario,
-//= `data\model\oldcastle\fountain.rsm`, plantado no .rsw do mapa.
+//===== A FONTE E A MESA NAO MORAM AQUI ======================
+//= Desde 2026-08-11 o salao tem duas pecas de cenario que NAO sao
+//= NPC e nao estao neste arquivo: sao modelos 3D plantados no
+//= .rsw do mapa.
 //=
-//= Isso quer dizer que ela vive NO CLIENTE, fora do git:
+//=   fonte         celula 179.5,71.5  (centro do pedestal)
+//=                 data\model\oldcastle\fountain.rsm
+//=   escrivaninha  celula 191.5,71.5  (centro do tapete do meio
+//=                 da ala leste)
+//=                 data\model\prontera_re\desk_h_02.rsm
+//=
+//= As duas coordenadas sao FRACIONARIAS de proposito: os dois vaos
+//= tem largura par (4 e 8 celulas) e o centro deles cai na
+//= fronteira entre celulas -- nenhum inteiro o acerta. Ver
+//= CLAUDE.md secao 5.
+//=
+//= MODELO NAO BLOQUEIA PASSAGEM. O override de .rsw nao toca o
+//= .gat, entao as duas pecas sao atravessaveis por natureza. A
+//= fonte esta em celula que ja era nao-andavel e nao precisou de
+//= nada; a mesa esta em chao aberto, e as cinco celulas dela sao
+//= fechadas por `setwall` no OnInit deste arquivo, la embaixo.
+//= As duas metades ficam em lugares diferentes: o desenho e do
+//= cliente, o bloqueio e do servidor.
+//=
+//= Isso quer dizer que elas vivem NO CLIENTE, fora do git:
 //=
 //=   C:\GuerraDoEmperium\cliente\data\auction_01.rsw
 //=
-//= que vence o GRF pelo DataFolderFirst. **Cliente novo perde a
-//= fonte** e o salao volta a ter o meio vazio, sem erro nenhum.
+//= que vence o GRF pelo DataFolderFirst. **Cliente novo perde as
+//= duas** e o salao volta a ter o meio vazio, sem erro nenhum.
 //= Para repor, a receita esta versionada em
 //= `ferramentas/edita_mapa.py` (entrada `auction_01`):
 //=
@@ -269,5 +288,66 @@ OnInit:
 
 	if (.@sumiram)
 		debugmes "CentroDaOrdem: "+.@sumiram+" de "+getarraysize(.@alvo$)+" alvos nao foram encontrados. A lista deste arquivo saiu de sincronia com npc/other/auction.txt - PODE HAVER NPC DE LEILAO DE PE NO SALAO.";
+
+	// -----------------------------------------------------------
+	// As celulas da escrivaninha
+	// -----------------------------------------------------------
+	// O modelo 3D da mesa esta no .rsw (ver o cabecalho), e MODELO
+	// NAO BLOQUEIA PASSAGEM: o override de .rsw nao toca o .gat, e
+	// o jogador atravessa a mesa. Quem fecha as celulas e este
+	// bloco, no servidor.
+	//
+	// As cinco celulas foram DADAS pelo dono, andando em cima da
+	// mesa (2026-08-11). Elas nao sao a pegada geometrica do
+	// modelo, que mede 4,0 x 2,8 celulas e cobre x191-192 em
+	// y70-73 (oito celulas): faltam 192,70, 192,71 e 192,72. Fica
+	// registrado porque a diferenca e visivel em jogo - da para
+	// entrar na metade leste do tampo. Acrescentar e por os tres
+	// pares no array abaixo.
+	//
+	// E SETWALL, NAO SETCELL, e a diferenca importa. O `setcell`
+	// muda a celula so do lado do servidor: o cliente continua
+	// achando que da para andar ali, e o proprio doc do rAthena
+	// avisa que isso "may cause movement problems". O `setwall`
+	// faz a mesma coisa e ainda manda `clif_changemapcell`
+	// (`map.cpp:3509`) - e o `map_iwall_get` reenvia para quem
+	// entrar no mapa depois (`clif.cpp:11098`). As duas metades
+	// ficam de acordo.
+	//
+	// UMA CELULA POR PAREDE, de proposito. O `setwall` aceita
+	// tamanho, mas o `map_iwall_set` PARA na primeira celula ja
+	// bloqueada e grava `iwall->size = i` sem reclamar
+	// (`map.cpp:3503`) - parede mais curta que a pedida, calada.
+	// Com tamanho 1 nao ha o que truncar, e o array vira a unica
+	// fonte tanto do que se fecha quanto do que se confere.
+	//
+	// `shootable` = true: fecha o andar e nao a linha de tiro, que
+	// e o que uma mesa faz. E nao ha combate no salao.
+	setarray .@mesa[0],
+		191,70,  191,71,  191,72,  191,73,  192,73;
+
+	.@abertas = 0;
+	for (.@i = 0; .@i < getarraysize(.@mesa); .@i += 2) {
+		.@nome$ = "centro_ordem_mesa"+(.@i / 2);
+
+		// O `setwall` RECUSA nome que ja existe e devolve falha
+		// calada, entao no @reloadscript o segundo OnInit nao
+		// faria nada. O `delwall` antes torna o bloco idempotente.
+		// Ele devolve a celula para andavel+atiravel sem consultar
+		// o mapa original (`map.cpp:3553`) - aqui isso e inofensivo
+		// porque as cinco sao chao andavel de verdade, mas nao
+		// vale para celula que ja nascesse bloqueada.
+		if (checkwall(.@nome$))
+			delwall .@nome$;
+
+		setwall "auction_01",.@mesa[.@i],.@mesa[.@i+1],1,DIR_NORTH,true,.@nome$;
+
+		// A prova. Sem ela, parede que nao pegou some no silencio.
+		if (!checkcell("auction_01",.@mesa[.@i],.@mesa[.@i+1],CELL_CHKNOPASS))
+			.@abertas++;
+	}
+
+	if (.@abertas)
+		debugmes "CentroDaOrdem: "+.@abertas+" de "+(getarraysize(.@mesa)/2)+" celulas da escrivaninha continuam andaveis depois do setwall - A MESA ESTA ATRAVESSAVEL.";
 	end;
 }

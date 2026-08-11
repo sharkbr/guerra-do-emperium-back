@@ -214,6 +214,12 @@ Hoje: exp 10x (base e classe), drop 50x em todas as categorias, sem exceção.
    acerta o centro, que cai na fronteira. Usar célula fracionária
    (`179.5`). Erro de meia célula não salta aos olhos na planta e aparece
    na tela.
+   **E achar o vão é o passo antes deste.** Ele nem sempre é relevo no `.gat`
+   (o pedestal da fonte era): pode ser um **tapete**, que é chão pintado —
+   e tapete não aparece no `.gat` nem no id de textura do `.gnd`, só nas
+   **coordenadas UV** da superfície de topo, porque o `.bmp` do piso é um
+   atlas. Desenhar as regiões de UV tile a tile antes de escolher a célula
+   custa uma rodada e é o que evita centrar no nada. Ver `CLAUDE.md` §5.
 6. Escrever a receita em `edita_mapa.py` (`RECEITA[<mapa>]`) e rodar
    `python edita_mapa.py <pasta-entrada> <pasta-saida> <data.grf> <mapa>` —
    **o `<data.grf>` aqui é o NOSSO**, é contra ele que os `filename` são

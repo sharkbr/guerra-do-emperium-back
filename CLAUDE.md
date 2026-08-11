@@ -216,6 +216,22 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     dono; a Minorous foi entregue como pedida, com a ressalva por escrito, e
     a mudança de loja veio dele na volta. O que não pode é a divergência
     ficar só na cabeça de quem editou.
+15. **Para fechar célula, `setwall` — nunca `setcell`.** São os dois que
+    parecem servir, e a diferença é o cliente. O `setcell` muda a célula só do
+    lado do servidor: o cliente continua achando que dá para andar ali, e o
+    próprio `doc/script_commands.txt` avisa que *"the wall will not be shown
+    nor known client-side, which may cause movement problems"*. O `setwall`
+    faz o mesmo bloqueio e ainda manda `clif_changemapcell`
+    (`map.cpp:3509`), com o `map_iwall_get` reenviando para quem entrar no
+    mapa depois (`clif.cpp:11098`) — as duas metades ficam de acordo. Ele
+    ainda vem com `delwall` (desfaz exato) e `checkwall` (testa), que são o
+    que torna um `OnInit` idempotente.
+    **Um cuidado ao desfazer:** o `map_iwall_remove` devolve a célula para
+    andável+atirável **sem consultar o mapa original** (`map.cpp:3553`) —
+    `delwall` numa célula que já nascia bloqueada abre buraco no cenário.
+    E lembrar que **modelo de `.rsw` não bloqueia nada sozinho**: o override
+    de mapa não toca o `.gat`, então móvel plantado é atravessável até que
+    alguém escreva o `setwall`. As duas metades estão no `ARQUITETURA.md` §4.
 
 ## 5. Armadilhas deste ambiente
 
@@ -282,6 +298,32 @@ Produziram diagnóstico falso e custaram retrabalho:
   funciona (zero é o estado inicial certo); **tabela de dados não**, e a falha é
   calada — lê-se zero. Conferir `SizeOfRawData` antes de escolher onde pôr dado
   em patch de exe.
+- **O vão que decide onde centrar um modelo pode não estar nem no `.gat` nem
+  no id de textura do `.gnd`.** Tapete, mosaico e faixa de piso costumam ser
+  **outra região do mesmo `.bmp`**, escolhida pelas **coordenadas UV** da
+  superfície — o `.bmp` é um atlas. Então: o `.gat` diz chão liso e andável, o
+  id de textura diz uma textura só para o corredor inteiro, e o tapete que
+  aparece no print não existe em nenhuma das duas leituras. Quem só olha essas
+  duas conclui "aqui não há vão, célula inteira serve" e planta meia célula
+  fora do centro — a mesma armadilha da fonte do Centro da Ordem (vão de
+  largura **par**: nenhum inteiro acerta o centro), só que invisível.
+  O que mostra é ler os **8 floats de UV** da superfície de topo tile a tile
+  (`Gnd.superficie_topo` + os bytes 0..31) e desenhar: o tapete salta como um
+  bloco de UVs distintos. Caso vivo em 2026-08-11: os três tapetes de 8x8
+  células da ala leste de `auction_01`, todos na textura 3.
+- **`setwall` com tamanho maior que 1 pode sair mais curto do que o pedido, e
+  não avisa.** O `map_iwall_set` percorre as células uma a uma e **para na
+  primeira que já esteja bloqueada** (`map.cpp:3503`), gravando
+  `iwall->size = i` — a parede fica com o comprimento que deu, sem erro, sem
+  log, e o `checkwall` depois responde que ela existe. Quem precisa das
+  células exatas usa **tamanho 1 por célula**, que não tem o que truncar, e
+  confere cada uma com `checkcell(..., CELL_CHKNOPASS)` antes de dar por
+  fechado. Ver a escrivaninha em `npc/guerra/centro_da_ordem.txt`.
+- **Caixa envolvente de `.rsm` com vários nós mente se juntar tudo num box
+  só.** O `pos` do nó raiz é offset no espaço do modelo, não dimensão: no
+  `desk_h_02.rsm` (4 nós, raiz em `x = -129,35`) a medida junta dá **148,90 de
+  largura — 29,8 células** em vez de 20,02 (4,0 células). O número é plausível
+  o bastante para condenar um modelo por "não cabe". Medir **nó a nó**.
 - **`source` do mysql.exe quebra com barra invertida** (`\U` = comando
   desconhecido). Usar barras normais no caminho.
 - **São TRÊS `map_cache.dat`, e a `prontera` não está no grande.** O rAthena

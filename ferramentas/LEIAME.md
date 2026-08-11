@@ -1665,6 +1665,15 @@ na tela.
 A altura continua saindo da célula que **contém** o ponto (`altura_media` indexa
 o `.gat` e quer inteiro). Em vão plano tanto faz qual das quatro.
 
+**Achar o vão é o passo anterior, e ele pode ser invisível.** O pedestal da
+fonte estava no `.gat` como um platô de altura −5, e uma varredura de alturas o
+achou. O tapete da escrivaninha (2026-08-11) não estava em lugar nenhum que se
+olhe por reflexo: o `.gat` dá oito células andáveis e planas, e o `.gnd` dá uma
+textura só para o corredor inteiro. Os três tapetes de 8x8 células da ala leste
+de `auction_01` são **regiões de UV** do mesmo `.bmp`. Antes de escolher a
+célula, desenhar as regiões de UV da superfície de topo tile a tile — é o único
+jeito de o tapete aparecer, e é ele que define o centro.
+
 O relatório agora imprime uma linha por modelo acrescentado, com a coordenada de
 mundo e a rotação — antes dizia só quantos foram.
 
@@ -1676,6 +1685,13 @@ varrer os 821 `.rsw` do GRF do bRO procurando o `filename` leva pouco mais de um
 minuto e responde com escala, rotação e em que mapa. Para o
 `oldcastle\fountain.rsm` deu cinco instâncias, todas com rotação `0,0,0` e
 escala 1,0 (duas com 1,04).
+
+**Para modelo que não é radial, a varredura pode não resolver nada.** As três
+instâncias oficiais de `prontera_re\desk_h_02.rsm` no GRF do bRO dão rotação
+**90, 180 e 270**, duas delas espelhadas em X (`escala.x = -1,0`): a Gravity
+usou os quatro lados, e a média disso não é resposta. Aí quem decide é o lugar
+— os quatro sofás de `auction_01` estão todos em 90, e foi de lá que a
+escrivaninha tirou a dela. Escolha, não medida, e anotada como tal na receita.
 
 **Mas escala oficial é pista, não resposta** — e nesta mesma rodada ela errou. A
 rotação 0 valeu; a escala 1,0 ficou grande em tela e desceu para 0,57. O motivo

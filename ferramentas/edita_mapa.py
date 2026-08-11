@@ -52,6 +52,7 @@ ESPINHEIRO = u'나무잡초꽃\\묘르닐_가시덤불.rsm'   # catálogo nº 74
 PAREDE_RUINA = u'중국\\중국-폐가벽03.rsm'     # catálogo nº 39
 
 FONTE = u'oldcastle\\fountain.rsm'
+ESCRIVANINHA = u'prontera_re\\desk_h_02.rsm'
 
 RECEITA = {
     'izlude': {
@@ -91,10 +92,49 @@ RECEITA = {
     # cai na fronteira entre a 179 e a 180: mundo (400, 110). A celula 180 tem
     # centro em 402.5, meia celula fora. Em tela isso apareceu como a fonte
     # deslocada para cima e um pouco a direita do tampo (2026-08-11).
+    #
+    # -- A ESCRIVANINHA DA ALA LESTE (2026-08-11) --
+    #
+    # Pedido: `prontera_re\desk_h_02.rsm` em 191,72. Mesma correcao de meia
+    # celula da fonte, e pela mesma razao -- so que aqui o vao NAO e o chao.
+    #
+    # O CHAO DA ALA LESTE E UNIFORME e os TAPETES SAO UV. O corredor leste
+    # (x188-195) tem a textura 3 (모로코성-바닥3.bmp) do inicio ao fim; ler o id
+    # de textura por tile mostra chao liso e ESCONDE os tres tapetes, que sao
+    # outra regiao do mesmo .bmp escolhida pelas coordenadas UV da superficie.
+    # Mapeando o UV aparecem tres tapetes de 8x8 celulas: x188-195 em y60-67,
+    # y68-75 e y76-83. Os de fora tem sofa; o do meio estava vazio, e e nele
+    # que 191,72 cai.
+    #
+    # CELULA 191.5, 71.5 E NAO 191, 72. O tapete do meio tem OITO celulas de
+    # lado -- par --, entao o centro dele cai na fronteira: mundo (460, 110).
+    # As quatro celulas centrais sao 191/192 x 71/72, e qualquer uma delas erra
+    # o centro por meia celula. `191,72` e onde o personagem estava parado,
+    # que e a leitura certa da intencao e o numero errado para centrar. Mesma
+    # armadilha da fonte, com a diferenca de que o vao aqui e invisivel para
+    # quem olha so o .gat: o chao e liso e andavel nas oito celulas.
+    #
+    # ROTACAO 90, alinhada com a ala e nao com o modelo. Os tres usos oficiais
+    # no GRF do bRO (1@gol1 x2, brz_gld) dao 90, 180 e 270 -- nao decidem nada,
+    # e dois deles ainda vem espelhados em X. Quem decide aqui e a sala: os
+    # QUATRO sofas de auction_01 (x165 e x194, y64 e y80) estao todos em 90, e
+    # 90 poe o lado longo do modelo (20,0 unidades em X a 0 graus) ao longo do
+    # corredor. **Este e o numero para mexer se o dono quiser outra cara** --
+    # 0 ou 180 atravessam a mesa no corredor, 270 e o 90 de costas.
+    #
+    # ESCALA 1,0, e desta vez a oficial serve. O modelo mede 20,02 x 13,84
+    # unidades (4,0 x 2,8 celulas) num tapete de 8x8 -- ocupa metade da largura
+    # dele. A conta e a mesma que rebaixou a fonte para 0,57; aqui ela aprova.
+    #
+    # As TRES TEXTURAS do .rsm (prontera_re\prt_h_14, prontera\prt_h_09,
+    # prontera_re\prt_h_13) foram conferidas a parte no nosso GRF. O
+    # `edita_mapa.py` so confere o caminho do .rsm -- textura que falta nao da
+    # erro de parser, da superficie quebrada na tela.
     'auction_01': {
         'substituir': [],
         'acrescentar': [
             (FONTE, 179.5, 71.5, 0.0, 0.57),
+            (ESCRIVANINHA, 191.5, 71.5, 90.0, 1.0),
         ],
     },
 }

@@ -93,6 +93,22 @@ sem confirmação in-game.
   **Fechar e reabrir o cliente é obrigatório aqui**, e não pelo `itemInfo.lua`:
   o `System\CheckAttendance.lub` também só é lido na inicialização.
 
+- **As células da escrivaninha do Centro da Ordem** (`auction_01`, escritas em
+  2026-08-11). O móvel em si **já foi conferido pelo dono** — posição, tamanho
+  e rotação passaram de primeira. O que falta é o bloqueio, que é a outra
+  metade e mora no servidor: cinco `setwall` no `OnInit` de
+  `npc/guerra/centro_da_ordem.txt`. Pede **`@reloadscript`** (só isso — o
+  `.rsw` já está instalado). O que provar: (1) andar em volta e **não
+  atravessar** `191,70-73` nem `192,73`; (2) **nenhum `debugmes`
+  "A MESA ESTA ATRAVESSAVEL"** no log do map-server — é o aviso que o próprio
+  bloco imprime se alguma célula não pegar; (3) que o caminho **contorna** a
+  mesa em vez de o personagem travar, que é o sintoma de o cliente e o
+  servidor discordarem.
+  **A mesa cobre mais do que as cinco células**: a pegada medida é `x191-192`
+  em `y70-73`, então dá para entrar em `192,70`, `192,71` e `192,72` — a
+  metade leste do tampo. Foi entregue assim porque foi assim que veio o pedido;
+  fechar é acrescentar os três pares ao `setarray` do bloco.
+
 ---
 
 ## 1b. Vence em dezembro de 2027 — os ciclos do Logue e Ganhe

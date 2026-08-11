@@ -5846,3 +5846,172 @@ O que provou que a remoção era inerte foi rodar `--verificar` depois dela:
 *"nada mudou (já estava aplicado)"* nos três arquivos. E o que provou que o
 override não arrastou nada junto foi o `--verificar` de antes: **−1 byte** em
 cada arquivo, que é exatamente `Centro Comercial` (16) → `Centro da Ordem` (15).
+
+## A escrivaninha na ala leste do Centro da Ordem (2026-08-11)
+
+Pedido: uma mesa escrivaninha em `auction_01 191,72`, com o modelo dado —
+`data\model\prontera_re\desk_h_02.rsm`.
+
+Feito, e é a mesma natureza da fonte: **mudança de cliente, não de servidor**.
+Nenhum NPC, nenhuma linha de script, o `.gat` intocado. O arquivo instalado é
+`C:\GuerraDoEmperium\cliente\data\auction_01.rsw` (114.122 bytes, 208 objetos),
+que vence o GRF pelo `DataFolderFirst`; o que se versiona é a receita, a entrada
+`auction_01` do `RECEITA` em `ferramentas/edita_mapa.py`, que hoje tem as duas
+peças — a fonte e a mesa. **Cliente novo perde as duas, calado.**
+
+### O tapete não estava no `.gat` nem no id de textura — é UV
+
+Esta foi a descoberta que mudou a coordenada, e o caminho até ela foi errado
+duas vezes antes de acertar.
+
+`191,72` cai numa ala leste que o `.gat` descreve como oito células andáveis de
+largura (x188-195), todas na altura 4,0, sem degrau, sem plataforma, sem nada
+que marque um lugar. Pelo `.gat`, plantar em `191,72` seria plantar em chão
+liso, e a lição de meia célula da fonte — que nasceu de um **pedestal** de 4x4
+— não teria onde se aplicar.
+
+O `.gnd` também disse que não havia nada: **as 8x8 células da ala inteira usam a
+mesma textura**, a de índice 3 (`모로코내부\모로코성-바닥3.bmp`), do começo ao fim
+do corredor. Mapear id de textura por tile devolve um bloco uniforme.
+
+O que existe, e o print mostrava desde o começo, são **três tapetes**. Eles são
+**outra região do mesmo `.bmp`**, escolhida pelas coordenadas **UV** de cada
+superfície — o `.bmp` é um atlas. Lendo os 8 floats de UV por superfície em vez
+do id de textura, o desenho aparece na hora: três tapetes de **8x8 células** em
+`x188-195`, nos `y60-67`, `y68-75` e `y76-83`. Os de fora têm sofá; o do meio
+estava vazio, e é nele que `191,72` cai.
+
+### E aí a correção de meia célula voltou, pelo mesmo motivo
+
+Tapete de **oito** células de lado é vão de largura **par**: o centro cai na
+fronteira, em mundo `(460, 110)`, e as quatro células centrais são
+`191/192 x 71/72`. Qualquer uma das quatro erra o centro por meia célula em
+cada eixo — que é exatamente o que aconteceu com a fonte, e é a mesma distância.
+
+`191,72` é uma das quatro, e é onde o personagem estava parado no print. A
+intenção estava certa; o número, não. A mesa entrou em **`191.5, 71.5`**, com
+erro medido de **0,00 nos dois eixos** contra o centro do tapete.
+
+**A diferença que vale guardar em relação à fonte:** lá o vão era o pedestal,
+visível no `.gat` como um platô de altura −5, e bastou varrer alturas para
+achá-lo. Aqui o vão é **invisível para quem olha o `.gat`** (chão liso e
+andável nas oito células) **e para quem olha o id de textura do `.gnd`** (uma
+textura só). Só o UV o mostra. Subiu para o `CLAUDE.md` §5.
+
+### Rotação 90, e desta vez quem decidiu foi a sala
+
+Os três usos oficiais do modelo no GRF do bRO — dois em `1@gol1`, um em
+`brz_gld` — dão rotação **90, 180 e 270**, e dois deles ainda vêm espelhados em
+X (`escala.x = -1,0`). Ou seja: a varredura que resolveu a rotação da fonte
+**não resolve nada aqui**, porque o modelo não é radial e a Gravity usou os
+quatro lados.
+
+Quem decidiu foi `auction_01`: os **quatro sofás** do mapa (`x165` e `x194`,
+`y64` e `y80`) estão **todos em rotação 90**, e 90 põe o lado longo do modelo ao
+longo do corredor, em vez de atravessá-lo. É o número menos inventado que havia
+— mas é escolha, não medida, e está anotada como tal na receita: **é o campo
+para mexer se o dono quiser outra cara.**
+
+### Escala 1,0, e desta vez a oficial serviu
+
+Medido com o mesmo leitor de `.rsm` da fonte: **20,02 x 13,84 unidades**
+(4,0 x 2,8 células), 11,18 de altura. Num tapete de 8x8 células isso ocupa
+**metade da largura** — proporção boa, e a mesma conta que derrubou a fonte de
+1,0 para 0,57 aprova o 1,0 aqui.
+
+O leitor precisou de um ajuste para dar esse número. O `mede_rsm.py` junta
+todos os nós numa caixa só, e este modelo tem **quatro** (`desk_02`, `book_02`,
+`ink_01`, `Object052`): ignorando a hierarquia, o `pos` do nó raiz
+(`x = -129,35`) entra na conta como se fosse dimensão e a caixa sai com
+**148,90 de largura — 29,8 células**, número plausível o bastante para alguém
+concluir "não cabe" e trocar de modelo. Medir **nó a nó** desfaz o engano em
+uma rodada. A trava de consumir o arquivo inteiro continuou valendo: 0 bytes
+sobrando.
+
+### As texturas do `.rsm` foram conferidas à parte
+
+O `edita_mapa.py` confere o caminho de todo `.rsm` contra a tabela do nosso GRF
+e **para aí**. Um `.rsm` que resolve com textura que não resolve não dá erro em
+parser nenhum — dá superfície quebrada na tela. Como o modelo vem de
+`prontera_re`, pasta que nada nosso usava até agora, as três
+(`prontera_re\prt_h_14.bmp`, `prontera\prt_h_09.bmp`,
+`prontera_re\prt_h_13.bmp`) foram conferidas uma a uma: as três estão no nosso
+`data.grf`.
+
+### As travas que rodaram antes de instalar
+
+- **Round-trip do `rsw.py` na entrada**: os 113.618 bytes do `.rsw` original
+  (o do GRF do bRO, sem DES) voltam **idênticos**.
+- **Diff contra o override que já estava instalado**, o da fonte: 207 → 208
+  objetos, **+252 bytes**, que é exatamente um registro de modelo (248 + 4). Os
+  **178 modelos anteriores preservados campo a campo** — `filename`, posição,
+  rotação e escala.
+- **A saída reabre** e a quadtree fecha no byte exato.
+- **Os 179 `filename` conferidos contra o NOSSO GRF**: todos resolvem.
+- **Altura**: `.gat` em `191,71` = 4,0, e o modelo gravado em `y = 4,00`.
+
+O arquivo anterior foi para
+`C:\GuerraDoEmperium\backup-registro\auction_01.rsw.20260811-015345` antes da
+gravação.
+
+### Conferida em tela no mesmo dia, de primeira
+
+O dono olhou e disse *"o resto tá perfeito"*: posição, tamanho e **rotação**
+passaram sem correção. Vale registrar porque a fonte, duas seções acima,
+precisou de **duas** rodadas depois de passar nas mesmas travas offline — e
+porque a rotação era a única escolha desta rodada **sem número por trás**,
+tirada dos quatro sofás da sala. Desta vez o palpite estruturado bastou.
+
+### O que faltava era o chão, e ele é a outra metade
+
+Modelo plantado no `.rsw` **não bloqueia passagem**: o override de mapa não
+toca o `.gat`, então o jogador atravessa a mesa. O bloqueio veio a pedido do
+dono, com as **cinco células que ele mediu andando em cima do móvel**:
+`191,70`, `191,71`, `191,72`, `191,73` e `192,73`.
+
+Elas foram fechadas no `OnInit` do `#centro_ordem_montagem`
+(`npc/guerra/centro_da_ordem.txt`), e com isso o móvel passou a viver em **dois
+lugares** — o desenho no cliente, o bloqueio no servidor. O acoplamento subiu
+para o `ARQUITETURA.md` §4.
+
+**`setwall` e não `setcell`.** Os dois fecham a célula no servidor; só o
+`setwall` avisa o cliente (`clif_changemapcell`, `map.cpp:3509`), e o
+`map_iwall_get` reenvia para quem entra no mapa depois (`clif.cpp:11098`). Com
+`setcell` o cliente continuaria achando que dá para andar ali — o próprio
+`doc/script_commands.txt` do rAthena avisa que isso *"may cause movement
+problems"*. Virou regra no `CLAUDE.md` §4.15.
+
+**Uma parede por célula, e não uma de tamanho 4 mais uma de 1.** O
+`map_iwall_set` para na primeira célula já bloqueada e grava
+`iwall->size = i` sem reclamar (`map.cpp:3503`): parede mais curta que a
+pedida, **calada**, e o `checkwall` depois ainda responde que ela existe. Com
+tamanho 1 não há o que truncar. O bloco confere as cinco com
+`checkcell(..., CELL_CHKNOPASS)` e grita por `debugmes` se alguma continuar
+andável — armadilha no `CLAUDE.md` §5.
+
+**`delwall` antes de cada `setwall`, pela idempotência.** O `setwall` recusa
+nome que já existe e devolve falha **calada**, então sem isso o segundo
+`@reloadscript` não faria nada. O `delwall` tem seu próprio senão, anotado no
+código: ele devolve a célula para andável+atirável **sem consultar o mapa
+original** (`map.cpp:3553`) — inofensivo aqui, porque as cinco são chão andável
+de verdade, e perigoso em célula que já nascesse bloqueada.
+
+**`shootable` fica `true`**: fecha o andar e não a linha de tiro, que é o que
+uma mesa faz — e não há combate no salão.
+
+### As cinco células não são a pegada do modelo, e a diferença é visível
+
+A mesa mede 4,0 x 2,8 células e cobre **`x191-192` em `y70-73`** — oito
+células, com sobras de meia célula em `x190` e `x193`. A lista do dono é essa
+menos três: **faltam `192,70`, `192,71` e `192,72`**, e dá para entrar na
+metade leste do tampo.
+
+Entregue como pedido, com a divergência escrita no comentário do bloco e dita
+na entrega — a mesma conduta da Máscara de Minorous (`CLAUDE.md` §4.14):
+diferença entre o pedido e a medida é para levantar, não para resolver
+sozinho. Acrescentar os três é pôr os pares no `setarray`.
+
+### O que falta ver
+
+O bloqueio ainda **não foi exercitado** — falta o `@reloadscript` e andar em
+volta da mesa. Está no `PENDENCIAS.md` §1.

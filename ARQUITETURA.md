@@ -315,6 +315,24 @@ rAthena é o **resultado**, reescrito por `traduz_npcs.py`. Editar o `.txt` à m
 é perder o trabalho na próxima passada. Grupos hoje: `campal`, `cidades`,
 `classe1`, `classe2`, `glossario`, `guerra`, `kafra`, `novico`, `pvp`, `servico`.
 
+### Um móvel de cenário vive em 2 lugares, e um é o cliente e o outro o servidor
+
+Plantar o modelo é metade. O `.rsw` **não toca o `.gat`**, então uma peça posta
+por `edita_mapa.py` é **atravessável**: ela existe no desenho e não existe na
+colisão. As duas metades:
+
+| metade | onde | como se aplica |
+|---|---|---|
+| o desenho | `.rsw` — receita em `ferramentas/edita_mapa.py`, arquivo em `cliente\data\` | entrar no mapa (cliente reaberto) |
+| o bloqueio | `setwall` no `OnInit` do NPC do mapa | `@reloadscript` |
+
+A divergência **não dá erro nenhum** — dá móvel que se atravessa, ou pior, um
+buraco invisível no chão se alguém mexer só na segunda metade. Caso vivo: a
+escrivaninha do Centro da Ordem (`npc/guerra/centro_da_ordem.txt`, 2026-08-11),
+cinco células fechadas para um modelo que o `.rsw` desenha.
+
+**E é `setwall`, não `setcell`** — só ele avisa o cliente. Ver `CLAUDE.md` §4.
+
 ### Uma placa sobre a cabeça de NPC
 
 `src/custom/placa_de_venda.hpp` + duas linhas em `src/map/clif.cpp` + o comando
