@@ -6015,3 +6015,74 @@ sozinho. Acrescentar os três é pôr os pares no `setarray`.
 
 O bloqueio ainda **não foi exercitado** — falta o `@reloadscript` e andar em
 volta da mesa. Está no `PENDENCIAS.md` §1.
+
+## Os oito guardas do Centro da Ordem (2026-08-11)
+
+O salão estava de pé e **vazio de NPC** desde 2026-08-10 — portal, fonte e
+escrivaninha, e mais nada. Os primeiros habitantes vieram a pedido do dono, que
+mandou a lista pronta: oito `Guarda`, sprite 966, com **posição, célula que cada
+um olha e fala**, um por um. Moram em `npc/guerra/guardas_do_centro.txt`, arquivo
+novo — o `centro_da_ordem.txt` continua sendo só a porta e a limpeza do leilão.
+
+São quatro pares simétricos: a boca do corredor de chegada (`175,56` e `184,56`,
+virados um para o outro), o meio do salão (`175,80` e `184,80`), a parede norte
+(`171,86` e `188,86`) e os cantos do fundo (`165,87` e `194,87`). Nenhum faz
+nada além de falar.
+
+### O facing veio como célula alvo, não como ponto cardeal
+
+O pedido dizia *"virado para 176,56"*, e a conversão sai do `dirx`/`diry`
+(`src/map/unit.cpp:70`), a tabela que o `enum directions` de
+`src/map/path.hpp:16` indexa. Ela anda **anti-horária** a partir do norte —
+`0` N, `1` NO, `2` O, `3` SO, `4` S, `5` SE, `6` L, `7` NE —, e ler como se
+fosse a ordem intuitiva (N, NE, L, SE…) erra por dois em quase todo mundo.
+Daí os quatro valores usados: `6` para uma célula a leste, `2` para uma a
+oeste, `4` para uma ao sul.
+
+Isso é o ponto cardeal no mapa, e **não** é o que se vê na tela: com a câmera
+padrão deste cliente as direções caem na diagonal (a tabela medida está no
+`maquina.txt`, seção Notas). Aqui não atrapalha, porque o que o pedido fixou
+foi a célula.
+
+### As dezesseis células, conferidas antes de escrever
+
+As oito dos guardas e as oito que eles olham foram lidas no `map_cache` — as
+dezesseis andam. O `auction_01` está no `db/map_cache.dat`, o grande: **não**
+está no `db/import/` nem no `db/re/`, então a armadilha dos três caches
+(`CLAUDE.md` §5, a da `prontera`) não alcança este mapa. Nenhuma colide com
+NPC: os quatro `Auction Broker` do salão ficavam em `177/182 × 68/75` e estão
+desligados pelo `centro_da_ordem.txt`.
+
+### Duas ressalvas levantadas na entrega
+
+A fala de `184,80` diz **"Crânios Humanos"**, e o item que existe no servidor é
+a **Caveira Humana** (30995, o troféu de PvP do `honra_de_combate.txt`).
+Gravado como o dono escreveu, com a divergência no cabeçalho do arquivo e dita
+na entrega — mesma conduta da Máscara de Minorous (`CLAUDE.md` §4.14). Quem
+procurar "Crânio" no inventário não acha nada.
+
+A fala de `171,86` veio com *"ganahndo"* e foi gravada **"ganhando"**: erro de
+digitação, não gíria.
+
+E a **Face-Sombria**, na fala de `188,86`, é a primeira aparição desse nome em
+todo o servidor — não há item, NPC, mapa nem missão com ele. Nasce como boato
+de guarda; quem for dar corpo a ela depois tem aquela linha como fonte da
+grafia.
+
+### O de sempre, que quase custou de novo
+
+Os oito se chamam `Guarda` na tela e têm sufixo `#co_*` no nome único — nome
+único repetido faz o segundo **não nascer**, calado. Os dois do fundo dizem a
+mesma coisa, e o segundo é `duplicate` do primeiro.
+
+E o arquivo saiu do editor **em UTF-8**, com os nove acentos já convertidos em
+`U+FFFD` — a armadilha do `CLAUDE.md` §5, exatamente como descrita: escrever é
+o passo perigoso, e o estrago é irreversível no próprio byte. Foram repostos
+por escape (`í` e irmãos) e o arquivo regravado em cp1252, com a releitura
+como prova. Vale como lembrete de que a conversão não é opcional nem
+ocasional — é todo arquivo de NPC, toda vez.
+
+### O que falta ver
+
+Os oito ainda **não foram vistos em jogo**: falta o `@reloadscript` e olhar se
+cada um está virado para onde o dono pediu. Está no `PENDENCIAS.md` §1.

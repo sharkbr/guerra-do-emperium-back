@@ -109,6 +109,26 @@ sem confirmação in-game.
   metade leste do tampo. Foi entregue assim porque foi assim que veio o pedido;
   fechar é acrescentar os três pares ao `setarray` do bloco.
 
+- **Os oito guardas do Centro da Ordem** (`npc/guerra/guardas_do_centro.txt`,
+  escritos em 2026-08-11). Pede **`@reloadscript`** — nada de cliente. O que
+  provar: (1) que **nascem os oito**, e não sete: os oito se chamam `Guarda` na
+  tela e se distinguem só pelo sufixo `#co_*` do nome único, e nome único
+  repetido faz o segundo não nascer, calado; (2) que cada um está **virado para
+  a célula que o dono pediu** — o facing foi calculado da tabela do `dirx`/`diry`
+  (`unit.cpp:70`), que anda anti-horária, e com a câmera padrão deste cliente as
+  direções caem na diagonal da tela, então a conferência é olhar **para onde ele
+  aponta no mapa**, não o lado da tela; (3) que os dois de `184,80` e `171,86`
+  passam de tela com o `next` e fecham sem sobra.
+
+  As dezesseis células (as oito deles e as oito que olham) já foram conferidas
+  andáveis no `map_cache`, e nenhuma colide com NPC.
+
+  **Duas coisas ditas ao dono e ainda não decididas por ele**: a fala de
+  `184,80` diz "Crânios Humanos" e o item que existe é a **Caveira Humana**
+  (30995) — quem procurar "Crânio" no inventário não acha nada; e a
+  **Face-Sombria** (fala de `188,86`) não existe em lugar nenhum do servidor,
+  nasce ali como boato.
+
 ---
 
 ## 1b. Vence em dezembro de 2027 — os ciclos do Logue e Ganhe

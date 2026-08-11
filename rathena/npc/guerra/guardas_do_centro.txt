@@ -1,0 +1,189 @@
+//===== Guerra do Emperium ===================================
+//= Os Guardas do Centro da Ordem
+//===== Onde =================================================
+//= Oito NPCs em auction_01, todos chamados "Guarda" na tela e
+//= todos com o sprite 966. As posicoes e as falas foram DADAS
+//= pelo dono em 2026-08-11, celula a celula:
+//=
+//=   175,56   olha  176,56   "Bem vindo!"
+//=   184,56   olha  183,56   "...ao Centro da Ordem!"
+//=   175,80   olha  174,80   o perimetro
+//=   184,80   olha  185,80   as fontes de Moeda Nova   (2 telas)
+//=   171,86   olha  171,85   as parcerias              (2 telas)
+//=   188,86   olha  188,85   a Face-Sombria
+//=   165,87   olha  165,86   "Sem acesso."
+//=   194,87   olha  194,86   "Sem acesso."
+//=
+//= Sao quatro pares simetricos: os dois da boca do corredor de
+//= chegada, os dois do meio do salao, os dois da parede norte e
+//= os dois dos cantos do fundo. Os dois do fundo dizem a mesma
+//= coisa, e por isso o segundo e `duplicate` do primeiro - fala
+//= igual em dois lugares se escreve UMA vez.
+//===== O NUMERO DO FACING, E COMO ELE FOI TIRADO ============
+//= O dono pediu por CELULA ALVO ("virado para 176,56"), nao por
+//= ponto cardeal. A conversao sai do `dirx`/`diry` do rAthena
+//= (`src/map/unit.cpp:70`), que e a mesma tabela que o
+//= `enum directions` de `src/map/path.hpp:16` indexa:
+//=
+//=   0 norte     (y+1)      4 sul       (y-1)
+//=   1 noroeste             5 sudeste
+//=   2 oeste     (x-1)      6 leste     (x+1)
+//=   3 sudoeste             7 nordeste
+//=
+//= Repare que a numeracao anda ANTI-HORARIA a partir do norte -
+//= nao e a ordem intuitiva (N, NE, L, SE...), e ler como se
+//= fosse erra por dois em quase todo mundo.
+//=
+//= Dai os quatro valores usados aqui: 6 para quem olha uma
+//= celula a leste, 2 para uma a oeste, 4 para uma ao sul.
+//=
+//= CUIDADO AO CONFERIR EM JOGO: com a camera padrao deste
+//= cliente as direcoes caem na DIAGONAL da tela, entao o ponto
+//= cardeal nao e o que se ve. A tabela medida esta no
+//= maquina.txt, secao Notas (6/leste desenha virado para a
+//= DIREITA, 4/sul para a ESQUERDA). Aqui isso nao atrapalha: o
+//= que o pedido fixou foi a celula, e a celula esta certa.
+//===== As celulas, conferidas ===============================
+//= As dezesseis celulas - as oito dos guardas e as oito que eles
+//= olham - foram lidas no map_cache do rAthena antes de escrever
+//= este arquivo, e as dezesseis andam.
+//=
+//= O `auction_01` esta no `db/map_cache.dat`, o grande: nao esta
+//= nem no `db/import/` nem no `db/re/`. Isso importa porque a
+//= ordem de leitura e essa (`map.cpp:3922`) e o primeiro que
+//= tiver o mapa vence - a armadilha do CLAUDE.md secao 5, a da
+//= `prontera`, nao alcanca este mapa, mas quem for conferir de
+//= novo passa pelos tres do mesmo jeito.
+//=
+//= Nenhum dos oito colide com NPC: os quatro Auction Broker
+//= deste salao ficavam em 177/182 x 68/75 e estao desligados
+//= pelo centro_da_ordem.txt.
+//=
+//= A planta do salao, celula a celula, esta no cabecalho do
+//= centro_da_ordem.txt - e de la que saem as paredes que os
+//= pares acompanham.
+//===== "Cranios Humanos" nao e o nome do item ===============
+//= A fala de 184,80 diz "Cranios Humanos", e o item que existe
+//= no servidor se chama **Caveira Humana** (30995, o trofeu de
+//= PvP entregue pelo honra_de_combate.txt). Os dois nomes foram
+//= mantidos como o dono escreveu, mas fica o registro: jogador
+//= que ler a fala e procurar "Cranio" no inventario nao acha
+//= nada. Trocar e uma palavra na linha, se ele quiser.
+//=
+//= Mesma natureza da divergencia da Mascara de Minorous
+//= (CLAUDE.md secao 4.14): levanta-se na entrega, nao se
+//= resolve sozinho.
+//=
+//= A fala de 171,86 veio com "ganahndo" e foi gravada
+//= "ganhando" - erro de digitacao, nao gria.
+//===== A Face-Sombria =======================================
+//= A fala de 188,86 e a PRIMEIRA aparicao da Face-Sombria em
+//= todo o servidor: nao ha item, NPC, mapa nem missao com esse
+//= nome. Ela nasce aqui como boato de guarda, e e so isso.
+//= Quem for dar corpo a ela depois tem esta linha como a fonte
+//= do nome - e a grafia com hifen e maiuscula nos dois pedacos
+//= veio assim do dono.
+//===== Notas ================================================
+//= Sprite 966 (4_M_RUSKNIGHT), o MESMO dos dois Guarda da Ordem
+//= de Comodo (flores_da_ordem.txt 221,184 e 224,184). Nao foi
+//= reconferido no npcidentity.lub por isso mesmo: ele esta em
+//= jogo, desenhando, desde que aqueles dois foram postos - a
+//= prova em tela vale mais que a tabela, e e ela que a regra
+//= das duas conferencias procurava.
+//=
+//= NOME REPETIDO PRECISA DE SUFIXO. Os oito se chamam "Guarda"
+//= na tela porque o cliente so mostra o pedaco antes do `#`; o
+//= nome unico e o inteiro. Dois NPCs com o mesmo nome unico
+//= fazem o segundo simplesmente NAO NASCER, e o aviso se perde
+//= no log. Os sufixos dizem onde cada um esta:
+//=
+//=   #co_ent_o / #co_ent_l   entrada, oeste e leste
+//=   #co_sal_o / #co_sal_l   salao
+//=   #co_nor_o / #co_nor_l   parede norte
+//=   #co_can_o / #co_can_l   cantos do fundo
+//=
+//= NENHUM DELES FAZ NADA alem de falar - nao dao item, nao
+//= abrem loja, nao checam nada. Sao ambiente e recado: o
+//= primeiro par recebe quem chega pelo portal da praca, e os
+//= outros seis contam o que a Ordem e, cada um com um pedaco.
+//=
+//= Os dois do fundo dizem "Sem acesso." e nao guardam porta
+//= nenhuma - atras deles e parede. E cenario, e de proposito:
+//= o bloco oeste do mapa continua selado (centro_da_ordem.txt,
+//= secao "O que este arquivo desliga do rAthena").
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+// ---------------------------------------------------------------
+// A boca do corredor de chegada - quem sobe do portal passa entre
+// os dois
+// ---------------------------------------------------------------
+auction_01,175,56,6	script	Guarda#co_ent_o	966,{
+	mes "[Guarda]";
+	mes "Bem vindo!";
+	close;
+}
+
+auction_01,184,56,2	script	Guarda#co_ent_l	966,{
+	mes "[Guarda]";
+	mes "Bem vindo ao Centro da Ordem!";
+	close;
+}
+
+// ---------------------------------------------------------------
+// O meio do salao
+// ---------------------------------------------------------------
+auction_01,175,80,2	script	Guarda#co_sal_o	966,{
+	mes "[Guarda]";
+	mes "O comando anda meio ausente, mas tenho";
+	mes "que manter o perímetro.";
+	close;
+}
+
+auction_01,184,80,6	script	Guarda#co_sal_l	966,{
+	mes "[Guarda]";
+	mes "A Ordem trabalha pra manter as coisas";
+	mes "funcionando.";
+	next;
+	mes "[Guarda]";
+	mes "Atualmente temos diversas fontes de";
+	mes "Moeda Nova. Crânios Humanos é um dos";
+	mes "negócios.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// A parede norte
+// ---------------------------------------------------------------
+auction_01,171,86,4	script	Guarda#co_nor_o	966,{
+	mes "[Guarda]";
+	mes "Assim que a Ordem estabeleceu base aqui";
+	mes "foram feitas as parcerias com os nobres";
+	mes "e com os mercadores.";
+	next;
+	mes "[Guarda]";
+	mes "No final todo mundo sai ganhando.";
+	close;
+}
+
+auction_01,188,86,4	script	Guarda#co_nor_l	966,{
+	mes "[Guarda]";
+	mes "A Face-Sombria é a organização da Ordem";
+	mes "que suja as mãos. Eles são necessários.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// Os cantos do fundo - a mesma fala, escrita uma vez
+// ---------------------------------------------------------------
+auction_01,165,87,4	script	Guarda#co_can_o	966,{
+	mes "[Guarda]";
+	mes "Sem acesso.";
+	close;
+}
+
+auction_01,194,87,4	duplicate(Guarda#co_can_o)	Guarda#co_can_l	966

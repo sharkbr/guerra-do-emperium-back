@@ -9,7 +9,8 @@
 //=   prontera    162,168   onde o jogador volta
 //=
 //= Nao ha NPC de fala neste arquivo. Sao dois warps e um NPC
-//= flutuante que desliga o leilao do rAthena.
+//= flutuante que desliga o leilao do rAthena. Os oito guardas do
+//= salao moram no guardas_do_centro.txt, ao lado.
 //===== Descricao ============================================
 //= O CENTRO DA ORDEM: auction_01 vira uma CASA de Prontera, um
 //= salao fechado alcancavel por um portal na praca, com um portal
@@ -23,8 +24,9 @@
 //= capital - e o nome foi dado pelo dono em 2026-08-11, depois de
 //= o salao estar de pe.
 //=
-//= O salao ainda esta VAZIO DE NPC. Este arquivo abre a porta e
-//= limpa o que havia dentro; o conteudo entra depois.
+//= Este arquivo abre a porta e limpa o que havia dentro; o
+//= conteudo entra por fora. O primeiro a entrar foram os oito
+//= guardas (guardas_do_centro.txt, 2026-08-11).
 //===== O NOME DO MAPA E CLIENTE, E E GERADO =================
 //= O que o jogador le no canto do minimapa e no letreiro de
 //= entrada NAO sai daqui e nao e o nome deste arquivo: sao duas
