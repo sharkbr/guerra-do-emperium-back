@@ -590,6 +590,134 @@ sobreviveram (o `reducao_alcanca_percentatk` e o `reducao_piso`), e se a lista d
 parcelas da linha 5535 ganhou membro novo. Parcela nova que ninguém puser no
 bloco de redução repete o bug de 2026-08-09, calada.
 
+## 1i. A redução geral de 80% — falta a medição em tela
+
+No ar em 2026-08-10: dano final × 0,20 na guerra (`gvg_*_attack_damage_rate: 20`,
+opções do rAthena) e nos mapas `pvp` (`pvp_dano_*: 20`, nossas, via
+`src/custom/reducao_geral.hpp`), mais `reducao_dano_isenta_habilidade: 0` — nenhuma
+habilidade escapa. Ver `HISTORICO.md` e `REDUCAO-DE-DANO.md` §1c.
+
+**O número começou em 70% e subiu para 80% no mesmo dia**, por decisão do dono
+("70 era como o bRO estava, e me parece alto ainda"). Daqui em diante **o servidor
+não segue o bRO neste número** — anotado porque "voltar à referência" viraria uma
+mudança sem que ninguém percebesse que é mudança.
+
+**Compilou, subiu limpo e os onze nomes de opção foram provados aceitos** — a sonda
+do nome falso está descrita no `HISTORICO.md`. O que falta é o efeito na tela.
+
+### A sonda do valor
+
+**É barata e é binária, e não exige calcular dano nenhum:** mesmo personagem,
+mesmo golpe, mesmo alvo, **dentro e fora da arena**. Bater num alvo em Prontera e
+no mesmo alvo em `pvp_n_1-5` tem de dar uma razão de **5x**.
+
+Três coisas que enganam nessa medição:
+
+1. **Não comparar habilidade com ataque normal.** São multiplicadores separados
+   (`arma`/`magia`/`misc` contra `curta`/`longa`), e hoje estão todos em 20 — mas
+   se um dia divergirem, medir um e concluir pelo outro erra.
+2. **A conta de teste (grupo 99) serve aqui**, ao contrário do resto — a redução
+   não é trava de item. Mas o alvo tem de ser **jogador ou monstro comum**, não
+   Emperium: alvo de tipo planta curto-circuita em 1 de dano
+   (`battle_calc_attack_plant`) e a razão sai 1x, o que pareceria falha.
+3. **A resistência de carta multiplica por cima disto** (`REDUCAO-DE-DANO.md`
+   §1c). Alvo com resistência a humano na arena embaralha a leitura — medir com
+   alvo **sem equipamento de resistência**, ou aceitar que não vai dar 5x exato.
+
+E **o piso de 1 de dano** passa a aparecer: com 80% de corte, golpe fraco encosta
+no `i64max(damage, 1)`. Ver "1" na tela num golpe de raspão é o piso agindo, não
+falha.
+
+### A sonda da isenção — é a que ninguém vai pensar em fazer
+
+A parte de "TODOS os danos" não se prova batendo com qualquer habilidade: as duas
+que mudaram de comportamento são **`NJ_ZENYNAGE`** (Chuva de Moedas, Ninja) e
+**`GN_FIRE_EXPANSION_ACID`** (Genético). Antes desta rodada as duas passavam
+inteiras na guerra, por `IgnoreGvgReduction` do rAthena.
+
+**O teste:** Chuva de Moedas na arena e em campo aberto. Tem de dar a **mesma
+razão de 5x** que qualquer outra habilidade. Se a Chuva sair 5x mais forte que as
+vizinhas, o `reducao_dano_isenta_habilidade` não pegou.
+
+**E é o único teste que pega a morte do enxerto mais frágil do projeto:** o do
+`battle_calc_gvg_damage` **substitui** uma linha do rAthena em vez de acrescentar
+uma. Um merge do vendor que traga a linha original de volta compila, sobe e não
+avisa — só a Chuva de Moedas denuncia.
+
+### O que a medição da guerra tem de próprio
+
+Na guerra o antes **não era 100%**: o rAthena já entregava 60 para habilidade e
+80 para ataque normal. Então a razão esperada num castelo é **3x** para
+habilidade e **4x** para ataque normal, e não 5x. Quem medir esperando 5x na
+guerra vai concluir que a mudança não pegou.
+
+### Três decisões que ficaram com o dono
+
+1. **A Batalha Campal continua nos números do rAthena** (`bg_*` em 60 e 80). O
+   pedido falava de guerra e de PvP; campal não é nem um nem outro. Se a ideia é
+   "todo combate entre jogadores corta 80%", faltam as cinco linhas de conf **e**
+   um sexto enxerto no `battle_calc_bg_damage`, para a isenção de habilidade cair
+   lá também — a campal tem a irmã dela (`INF2_IGNOREBGREDUCTION`) de pé. Sem o
+   enxerto, a Chuva de Moedas fica dominante na campal.
+2. **As outras 83 arenas entraram junto**, mais o `pvp_2vs2` e os três
+   `turbo_e_*`. É consequência de ligar pelo mapflag, que é o jeito certo de
+   ligar; se algum dia se quiser arena com dano cheio, o caminho é outro mapflag
+   ou uma lista de exceção no `reducao_geral.hpp`, e nenhum dos dois foi feito.
+3. **O que não é ataque continua fora**, e isto não é ajuste de número: veneno,
+   sangramento, queimadura, `bHPVanishRate` e dano de script saem por
+   `status_fix_damage`, fora do cálculo de batalha, e nenhuma das cinco chamadas
+   os alcança. Com 80% de corte no resto, **o dano de status passa a pesar cinco
+   vezes mais em termos relativos** do que pesava antes desta rodada.
+
+   > **A lista fechada foi levantada em 2026-08-10** — `REDUCAO-DE-DANO.md` §1d,
+   > com fórmula, intervalo, se mata e quem aplica. **São 13 danos contínuos e 4
+   > avulsos**, e a conclusão é que **serve pouco como alavanca**: as três
+   > parcelas mais fortes (Veneno, Veneno Mortal, Bite Scar) **param em 25% de HP
+   > e não matam**, e o ganho é enviesado por classe — Guilhotina Cruzada em
+   > primeiro, depois Cavaleiro Rúnico/Ranger e Ladrão. Nenhum dos números é
+   > configurável: são literais no `status.cpp`, e mexer é `src/custom/` mais
+   > recompilar. **Nada foi mexido**; a seção existe para a decisão ser tomada
+   > com os números na mão.
+
+---
+
+## 1j. A Cotovelada Ascendente escapa da redução de 80% — e é bug
+
+Achado em 2026-08-10, ao levantar o inventário da §1d. **Não foi corrigido**, e
+está separado do §1i porque não é decisão de balanceamento: é furo.
+
+**`SR_CRESCENTELBOW` (Cotovelada Ascendente, Sura)** entrega o dano por
+`battle_fix_damage` (`battle.cpp:5247`), que chama `battle_damage` direto e
+**não passa pelo `battle_calc_damage`** — onde moram três das nossas quatro
+chamadas. Então ela sai sem os 80% na arena e sem os 80% na guerra.
+
+**Metade dela é agravante e metade é atenuante:**
+
+```
+rdamage = battle_calc_base_damage(...) * ratio / 100      <- nasce aqui, NUNCA reduzido
+        + wd->damage * (10 + val1 * 20 / 10) / 10          <- vem do dano ja reduzido
+```
+
+A segunda parcela é proporcional a um dano que já levou o corte; a **primeira
+não**, e o `ratio` dela vai a **5000%** (o teto do próprio rAthena, `HP do alvo /
+100 × nível da habilidade × nível base / 125`).
+
+**As vizinhas de seção estão certas e não devem ser "corrigidas" junto:**
+Instinto de Defesa (`ST_REJECTSWORD`) devolve 50% de um dano já reduzido;
+Reflect Damage, Devoção e Water Screen **redirecionam** o número já reduzido para
+outro alvo. Só a Cotovelada cria valor novo.
+
+**O conserto provável** é uma quinta chamada de `reducao_pvp` sobre o `rdamage`
+antes do `battle_fix_damage` da linha 5247, mais o equivalente para a guerra —
+mas isso precisa ser pensado com a §4d na mão, porque o bloco inteiro é
+contra-ataque e a conta de "de quem é este dano" não é óbvia. **Não fazer no
+susto.**
+
+Enquanto não for feito: Sura com Cotovelada é o furo conhecido da arena, e é a
+primeira explicação a testar quando alguém disser que um Sura mata rápido demais.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

@@ -36,6 +36,7 @@
 #include "./skills/skill_impl.hpp"
 
 #include <custom/reducao_de_dano.hpp>
+#include <custom/reducao_geral.hpp>
 
 using namespace rathena;
 
@@ -1713,6 +1714,11 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 			if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
 				damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
+			// Guerra do Emperium: reducao geral de dano nos mapas `pvp`. Estas
+			// habilidades pulam todo o resto desta funcao, por isso a chamada
+			// esta aqui tambem. Ver src/custom/reducao_geral.hpp.
+			damage = reducao_pvp(*src, *bl, damage, skill_id, flag);
+
 			return damage; //These skills bypass everything else.
 	}
 
@@ -1724,6 +1730,11 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		// Adjust this based on any possible PK damage rates.
 		if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
 			damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+
+		// Guerra do Emperium: reducao geral de dano nos mapas `pvp`. Nova
+		// Explosion tambem pula o resto desta funcao. Ver
+		// src/custom/reducao_geral.hpp.
+		damage = reducao_pvp(*src, *bl, damage, skill_id, flag);
 
 		return damage;
 	}
@@ -2027,6 +2038,13 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 	if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
 		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
+	// Guerra do Emperium: reducao geral de dano nos mapas `pvp` - o caminho
+	// normal, por onde passam arma, magia e misc. Fica ao lado da reducao de PK
+	// do rAthena porque e a mesma ideia; o que ela nao pode e depender do
+	// `pk_mode`, que transforma o servidor inteiro em campo aberto. Ver
+	// src/custom/reducao_geral.hpp.
+	damage = reducao_pvp(*src, *bl, damage, skill_id, flag);
+
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
 		if ((flag&BF_WEAPON && battle_config.skill_min_damage&1)
 			|| (flag&BF_MAGIC && battle_config.skill_min_damage&2)
@@ -2193,7 +2211,13 @@ int64 battle_calc_gvg_damage(block_list *src,block_list *bl,int64 damage,uint16 
 	if (!battle_can_hit_gvg_target(src,bl,skill_id,flag))
 		return 0;
 
-	if (skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)) //Skills with no gvg damage reduction.
+	// Guerra do Emperium: era `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`
+	// direto. Passou a ser o nosso interruptor, que por padrao NAO isenta
+	// ninguem - com a reducao em 80%, a Chuva de Moedas escapando valeria cinco
+	// vezes o dano de qualquer outra habilidade no castelo. A mesma funcao e
+	// usada pela reducao dos mapas `pvp`, para os dois nao divergirem. Ver
+	// src/custom/reducao_geral.hpp.
+	if (reducao_isenta_habilidade(skill_id)) //Skills with no gvg damage reduction.
 		return damage;
 
 	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
@@ -6884,6 +6908,11 @@ int64 battle_calc_return_damage(block_list* tbl, block_list *src, int64 *dmg, in
 		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
 	else if (mapdata->getMapFlag(MF_PVP))
 		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
+
+	// Guerra do Emperium: reducao geral de dano nos mapas `pvp`, no reflexo. O
+	// dano refletido nao passa pelo battle_calc_damage - e por isso que esta
+	// chamada existe separada das outras tres. Ver src/custom/reducao_geral.hpp.
+	rdamage = reducao_pvp(*src, *tbl, rdamage, skill_id, flag);
 
 	// Skill damage adjustment
 	int32 skill_damage = battle_skill_damage(src, tbl, skill_id);

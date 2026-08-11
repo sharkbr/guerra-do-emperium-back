@@ -318,8 +318,37 @@ rAthena é o **resultado**, reescrito por `traduz_npcs.py`. Editar o `.txt` à m
 ### Uma placa sobre a cabeça de NPC
 
 `src/custom/placa_de_venda.hpp` + duas linhas em `src/map/clif.cpp` + o comando
-de script `placadevenda` (`src/custom/script.inc`). **Exige recompilar.** É o
-único caso em que tocamos `src/map/`, e o porquê está no cabeçalho do `.hpp`.
+de script `placadevenda` (`src/custom/script.inc`). **Exige recompilar.** Foi o
+primeiro caso em que tocamos `src/map/`; hoje são quatro (mais o teto de refino
+no `clif.cpp`, e a redução de carta e a de PvP no `battle.cpp` — a lista completa
+dos enxertos está no `CLAUDE.md` §2). O porquê está no cabeçalho do `.hpp`.
+
+### A redução de 80% vive em ONZE linhas, e metade não é nossa
+
+Uma regra só — "dano final cai 80% em combate entre jogadores, sem exceção" —,
+dois mecanismos diferentes, no mesmo arquivo (`conf/guerra/battle_guerra.txt`):
+
+| Metade | Opções | De quem |
+|---|---|---|
+| guerra (`gvg*`) | `gvg_weapon/magic/misc/short/long_attack_damage_rate` | **do rAthena** — `battle_calc_gvg_damage` |
+| mapa `pvp` | `pvp_dano_arma/magia/misc/curta/longa` | **nossas** — `src/custom/reducao_geral.hpp` |
+| as duas | `reducao_dano_isenta_habilidade` | **nossa** — e é o que impede as duas de divergirem |
+
+**Os dez valores andam juntos ou a regra racha, e nada avisa.** São cinco por
+ambiente porque habilidade reduz por TIPO (arma, magia, misc) e ataque normal por
+ALCANCE (curta, longa) — mudar um e esquecer os outros deixa parte dos golpes
+fora, e o sintoma é "tal classe passou a doer mais".
+
+**A décima primeira linha é a que evita a divergência de verdade.** A isenção de
+habilidade (`IgnoreGvgReduction`) existia nos dois caminhos, um do rAthena e um
+nosso; hoje os dois chamam a **mesma função**, então não há como desligar a
+isenção só de um lado. Foi para isso que ela virou função em vez de um `if`.
+
+Mudar **valor** é `@reloadbattleconf`. Mudar **a lógica** exige recompilar — são
+cinco chamadas no `battle.cpp` (`CLAUDE.md` §2). Ver `REDUCAO-DE-DANO.md` §1c.
+
+**A campal (`bg_*`) está fora das duas metades**, e para entrar precisa de conf
+**e** de um sexto enxerto — não só das cinco linhas.
 
 ## 5. O que sobrevive a um clone limpo
 

@@ -48,7 +48,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/mob_db.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
-| `src/map/battle.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto de 99,9%, no lugar do `max(0, …)` que deixa a redução zerar o dano). Ver `REDUCAO-DE-DANO.md` |
+| `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto de 99,9%, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -484,7 +484,7 @@ Produziram diagnóstico falso e custaram retrabalho:
 | `npc/guerra/scripts_guerra.conf` | índice narrado dos nossos NPCs | antes de tocar conteúdo |
 | `ferramentas/LEIAME.md` | uma seção por ferramenta | só a seção da ferramenta |
 | `CUSTOMIZACAO-VISUAL.md` | frente visual (cidade destruída) | só a seção |
-| `REDUCAO-DE-DANO.md` | o que entra e o que escapa da redução de cartas (resistência a humano) | consulta, só a seção — **antes de discutir número de PvP** |
+| `REDUCAO-DE-DANO.md` | o que entra e o que escapa das duas reduções — a de cartas (resistência a humano) e a **geral de 80%** de guerra e PvP; a §1d é o inventário fechado do dano que escapa (veneno, sangramento e irmãos) | consulta, só a seção — **antes de discutir número de PvP** |
 | `CATALOGO-*.md` | o que está à venda, modelos, retratos | consulta |
 
 **Ordem para uma tarefa nova:** `CLAUDE.md` → `scripts_guerra.conf` (o que já

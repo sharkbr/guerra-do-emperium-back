@@ -4944,3 +4944,345 @@ servidor dava 3, é ele o mentiroso. Mesmo agressor, mesmo golpe, com e sem a
 capa, **com o alvo bem abaixo de 100% de resistência somada**: perto do teto o
 piso de 99,9% achata a comparação e 5 pontos parecem 0. Ficou no `PENDENCIAS.md`
 §1h, junto com as outras duas sondas da mesma frente.
+
+---
+
+## A redução geral de 70% — guerra e a arena de Prontera (2026-08-10)
+
+> **SUPERADA NO MESMO DIA.** O 70% virou **80%** e as duas isenções de
+> habilidade caíram — ver "A redução subiu para 80%", mais abaixo. Esta seção fica
+> porque é aqui que está o *como* (o `pk_mode`, as quatro chamadas, a sonda do
+> nome falso), e nada disso mudou. **O que mudou foi o número e a última
+> exceção.** O arquivo também mudou de nome: `reducao_pvp.hpp` →
+> `reducao_geral.hpp`.
+
+Pedido do dono no mesmo dia dos dois trabalhos acima, e é outra camada: aqueles
+mexeram em **quem resiste**; este mexe no **dano final de todo mundo**.
+
+O pedido, na íntegra do que importa: o bRO reduzia **70% do dano final na Guerra
+do Emperium**, decisão tomada com a comunidade tempos atrás, quando os danos
+começaram a ficar altos demais. Essa conta passa a valer para o nosso PvP —
+principalmente a Arena de Combate de Prontera.
+
+**Não é invenção nossa e não é ajuste fino de item:** é um multiplicador de 0,30
+no fim da conta, nos mapas de guerra e nos mapas `pvp`.
+
+### A metade da guerra não custou uma linha de C++
+
+O rAthena já tem isso, e tem completo: `battle_calc_gvg_damage`
+(`src/map/battle.cpp:2188`) multiplica o dano final por cinco taxas em todo mapa
+`mapdata_flag_gvg2`. O padrão dele é **60 para habilidade e 80 para ataque
+normal** (`conf/battle/guild.conf`) — ou seja, a guerra já vinha com 40% e 20% de
+redução, e ninguém tinha reparado.
+
+Os cinco foram para `conf/guerra/battle_guerra.txt` em `30`, que é o arquivo
+importado **depois** do `guild.conf` (`conf/battle_athena.conf`, penúltima linha)
+e portanto vence.
+
+### A metade do PvP custou, e o motivo é uma armadilha inteira
+
+**Não existe equivalente para mapa `pvp` no rAthena.** Existe algo que *parece*
+ser: os cinco `pk_*_attack_damage_rate` (`conf/battle/misc.conf`), aplicados por
+`battle_calc_pk_damage` e checados contra o mapflag `pvp` exatamente como se
+quer:
+
+```
+if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+    damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+```
+
+Três linhas prontas, o nome certo, o mapflag certo. **E não servem**, porque
+estão trancadas atrás do `pk_mode` — que não é uma opção de dano, é o "servidor
+PK inteiro". Ligar o `pk_mode` faz o `src/map/map.cpp:3791` marcar **todo mapa do
+servidor** como `pvp`:
+
+```
+if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) )
+    mapdata->setMapFlag(MF_PVP, true); // make all maps pvp for pk_mode
+```
+
+e arrasta consigo penalidade de morte por jogador (`pc.cpp:10024`), EXP extra por
+diferença de nível (`pc.cpp:8382`), `pk_min_level`, `pk_level_range` e o sumiço
+da UI de PvP (`clif.cpp:10836`). Para reduzir dano numa arena de 40x40 células, o
+rAthena pede que Prontera vire campo aberto.
+
+**A lição que vale para além deste caso:** opção com o nome exato do que se quer
+pode estar amarrada a um modo de servidor inteiro. Ler o `battle_data` e achar o
+nome não é o fim da busca — o fim é achar **o que mais liga naquele `if`**.
+
+Daí o `src/custom/reducao_pvp.hpp` — hoje `reducao_geral.hpp`: os mesmos cinco
+multiplicadores, com nome nosso (`pvp_dano_arma`, `_magia`, `_misc`, `_curta`,
+`_longa`), ligados ao mapflag `pvp` e a nada mais.
+
+### Cópia do GvG, e não do PK — as duas diferenças importam
+
+A promessa do pedido é *"a mesma conta da guerra"*, então a função é cópia fiel do
+`battle_calc_gvg_damage`. Os dois pontos em que ela difere do caminho do
+`pk_mode`, os dois de propósito:
+
+1. **Honra o `IgnoreGvgReduction`.** Duas habilidades do renewal declaram que
+   escapam da redução de guerra — `NJ_ZENYNAGE` (Chuva de Moedas) e
+   `GN_FIRE_EXPANSION_ACID`, as únicas duas no `db/re/skill_db.yml`. O caminho do
+   PK não olha essa flag; o da guerra olha. Golpe que faz dano cheio no castelo
+   tem de fazer dano cheio na arena, senão "a mesma conta" é mentira.
+
+   > **ESTE ITEM CAIU NA MESMA TARDE**, e o argumento acima é o que estava
+   > errado: a 80% de redução a habilidade isenta vale cinco vezes as vizinhas, o
+   > que não é exceção, é dominância. Hoje ninguém escapa — nem na arena, nem na
+   > guerra. Ver "A redução subiu para 80%". O item 2 continua valendo inteiro.
+2. **Não filtra por tipo de atacante.** O `battle_calc_pk_damage` reduz só quando
+   `src` e `bl` são os dois `BL_PC`; o de guerra reduz tudo que acerta alguém no
+   mapa. Aqui reduz tudo — Homúnculo, mercenário, armadilha, invocação
+   pertencem a um jogador, e o furo mais caro deste projeto (2026-08-09) foi
+   justamente uma parcela de dano que ficou fora de uma redução. Deixar tipo de
+   fora é convidar o mesmo bug.
+
+   **Consequência dita em voz alta:** monstro em mapa `pvp` também passa a bater
+   30%. Hoje não alcança nada — os únicos mapas `pvp` são as 84 arenas
+   `pvp_n_*`/`pvp_y_*`, o `pvp_2vs2` e os três `turbo_e_*` do Corrida Turbo
+   (`npc/mapflag/pvp.txt`), e nenhum é mapa de caça.
+
+### Quatro chamadas, e por que não são duas
+
+O enxerto no `battle.cpp` são quatro chamadas, três delas dentro do
+`battle_calc_damage`. A repetição não é descuido — é onde o rAthena já repete a
+dele:
+
+- o **caminho normal** (`battle.cpp:2027`), por onde passam arma, magia e misc;
+- **duas saídas antecipadas**, para habilidade que pula o resto da função:
+  `SP_SOULEXPLOSION` (mais `PA_PRESSURE` e `HW_GRAVITATION` no pre-renewal) e
+  `SJ_NOVAEXPLOSING`. As duas têm `return damage` próprio, e o rAthena põe a
+  chamada de PK nas duas por isso mesmo. Cobrir só o caminho normal deixaria
+  Soul Explosion e Nova Explosion **fora da redução** — e as duas já estão na
+  lista de "ignora resistência de carta" do `REDUCAO-DE-DANO.md` §4a, ou seja
+  seriam o golpe sem contra-medida nenhuma na arena;
+- o **reflexo** (`battle_calc_return_damage`), que não passa pelo
+  `battle_calc_damage`. Mesmo lugar onde o rAthena aplica GvG, campal e PK.
+
+A função sai fora sozinha em mapa de guerra e de campal, então dá para chamá-la
+sem checar mapa. Sem essa guarda, um mapa que tivesse os dois mapflags levaria as
+duas reduções multiplicadas.
+
+### As duas camadas se multiplicam — e é isso que muda a conta de PvP
+
+Isto é o que precisa ser dito para quem for calibrar equipamento daqui em diante:
+a redução de carta (resistência a humano) e a redução de 70% **não se somam**.
+Alvo com 50% de resistência a humano na arena toma `0,50 × 0,30 = 15%` do dano
+bruto.
+
+Na prática o trabalho de ontem e de hoje empurram em direções opostas de
+propósito: o teto de 99,9% garante que **nada é imune**, e o 0,30 garante que
+**nada mata em um golpe**. As duas juntas é o que o bRO tinha.
+
+### O que provou que pegou, e o que não provou
+
+Compilou e subiu limpo: `MSBuild` no `map-server.vcxproj`, map-server parado
+antes de linkar, e o boot sem um `Unknown syntax` e sem um `Unknown setting`.
+
+**"Sem aviso" não vale como prova por si**, e aqui não valeu: um nome de opção que
+o servidor não conhece produz `Unknown setting '%s' in file %s`
+(`battle.cpp:9233`), mas ausência de aviso também é o que se vê quando o canal de
+aviso não está chegando ao log. Então foi feita a sonda: uma linha
+`pvp_dano_sonda_falsa: 30` no `battle_guerra.txt`, reinício do map-server, e o
+aviso apareceu — **só para ela**, e nenhuma das dez linhas de verdade. Isso prova
+as duas coisas de uma vez: o canal funciona, e os dez nomes foram aceitos. A
+sonda saiu do arquivo e o map-server subiu limpo de novo.
+
+**O que continua sem prova é o efeito na tela.** Está no `PENDENCIAS.md` §1i, com
+a medição que decide.
+
+---
+
+## A redução subiu para 80%, e a última isenção caiu (2026-08-10)
+
+Volta do pedido acima, no mesmo dia. Duas frases do dono, e cada uma custou uma
+coisa diferente:
+
+> "70 era como o bRO estava, e me parece alto ainda. Vamos aumentar a redução
+> pra 80%! Lembrando que não quero diferenciar habilidades de ataque, quero que
+> TODOS os danos de pvp entrem nessa categoria."
+
+### O número: os dez valores foram de 30 para 20
+
+Nada além de conf. Mas o registro importa por um motivo: **a partir daqui o
+servidor deixou de seguir o bRO neste número.** A seção anterior justificava o 70%
+dizendo "vem do bRO"; essa justificativa morreu. Está escrito no
+`REDUCAO-DE-DANO.md` §1c e no cabeçalho do `battle_guerra.txt`, porque alguém que
+leia só "o bRO usava 70" um dia vai "corrigir" o 20 para 30 pensando que está
+voltando à referência.
+
+### "Não diferenciar habilidade de ataque" já estava feito — e segue sendo risco de manutenção
+
+Os dez valores já eram iguais. O que a frase mudou foi o **comentário**: o
+`battle_guerra.txt` e o `reducao_geral.hpp` agora dizem que a separação em cinco
+por ambiente é do rAthena, existe porque é por onde a informação chega (o `flag`
+do golpe), e **não se usa**. Mexer em um dos dez é mexer nos dez.
+
+Isto não dá para trancar em código sem inventar uma décima primeira opção que
+governasse as dez, e uma opção que só existe para repetir um número é pior que o
+comentário. Ficou no comentário, de propósito.
+
+### "TODOS os danos" custou um enxerto, e é o enxerto mais frágil do projeto
+
+Aqui estava a dívida de verdade. A primeira versão **respeitava** as duas isenções
+do rAthena — `NJ_ZENYNAGE` (Chuva de Moedas) e `GN_FIRE_EXPANSION_ACID`, as únicas
+duas do renewal com `IgnoreGvgReduction: true`. Eu as respeitei por um argumento
+que era bom no dia anterior e ruim depois: *paridade com a guerra*.
+
+O argumento morre na aritmética. **Com 80% de redução, a habilidade que escapa
+vale cinco vezes o dano de qualquer outra.** Isso não é "uma exceção conhecida", é
+a habilidade dominante do castelo. Uma isenção que custa 40% do dano é detalhe;
+uma que custa 80% é regra nova.
+
+Então a isenção caiu — **e caiu nos dois ambientes**, o que exigiu ir mexer no
+lado que até então não tinha custado nada:
+
+| | antes | agora |
+|---|---|---|
+| mapa `pvp` (nosso) | honrava a flag | `reducao_isenta_habilidade()` |
+| guerra (do rAthena) | honrava a flag | `reducao_isenta_habilidade()` |
+| campal (do rAthena) | honra a irmã (`IGNOREBGREDUCTION`) | **inalterada** |
+
+**A função existe em vez de um `if` justamente para os dois não poderem
+divergir.** Um número, um lugar, dois caminhos — `reducao_dano_isenta_habilidade`
+em `conf/guerra/battle_guerra.txt`, `0` para ninguém escapar e `1` para devolver o
+rAthena, sem recompilar.
+
+### Por que este enxerto é diferente de todos os outros
+
+**É o primeiro que SUBSTITUI uma linha do rAthena em vez de acrescentar uma.**
+Todos os enxertos anteriores — os do `clif.cpp`, os dois do `reducao_de_dano.hpp` —
+são linha nova ao lado do código de terceiros; um merge que os perca deixa um
+buraco visível. Este trocou
+
+```
+if (skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION))
+```
+
+por
+
+```
+if (reducao_isenta_habilidade(skill_id))
+```
+
+dentro do `battle_calc_gvg_damage`. Um merge do vendor que traga a linha original
+de volta **compila, linka, sobe e não avisa** — e a Chuva de Moedas volta a ser
+dominante na guerra, calada. Está no `CLAUDE.md` §2 e no `REDUCAO-DE-DANO.md` §6
+com o que procurar: se `INF2_IGNOREGVGREDUCTION` reaparecer ali, o enxerto morreu.
+
+A alternativa era não tocar o `battle_calc_gvg_damage` e deixar a arena mais
+severa que o castelo em duas habilidades. Divergência silenciosa entre dois mapas
+que deviam ter a mesma regra é exatamente o que este projeto já pagou caro para
+aprender a não fazer.
+
+### O arquivo mudou de nome
+
+`src/custom/reducao_pvp.hpp` virou **`src/custom/reducao_geral.hpp`**. Deixou de
+ser só do PvP no momento em que passou a abrigar a regra que a guerra também usa,
+e nome de arquivo que mente é a primeira coisa que faz alguém procurar no lugar
+errado. Era arquivo do mesmo dia, sem histórico a perder.
+
+### O que se provou, e a sonda que ninguém pensaria em fazer
+
+Compilou, subiu sem `Unknown syntax` e sem `Unknown setting` — e a técnica da
+sonda de nome falso, da seção anterior, continua sendo o que dá valor a essa
+ausência.
+
+**O que NÃO se prova batendo com qualquer habilidade é a parte de "TODOS os
+danos".** As duas habilidades que mudaram de comportamento são a Chuva de Moedas e
+o `GN_FIRE_EXPANSION_ACID`; toda outra já era reduzida antes. Uma medição feita
+com Impacto Flamejante confirma o 20% e **não diz nada** sobre a isenção. A sonda
+certa está no `PENDENCIAS.md` §1i, e ela é também o único teste em jogo que
+denuncia a morte do enxerto frágil acima.
+
+### O que este par de rodadas deixou desequilibrado, e está anotado
+
+Com 80% de corte no dano de golpe, **o dano que não é golpe passou a pesar cinco
+vezes mais em termos relativos**: veneno, sangramento, queimadura,
+`bonus2 bHPVanishRate` e dano de script saem por `status_fix_damage`, fora do
+cálculo de batalha, e nenhuma das cinco chamadas os alcança. Não é bug e não tem
+conserto neste arquivo — é consequência aritmética de reduzir tudo o resto. É o
+candidato mais provável a aparecer no primeiro teste sério de arena, e por isso
+está no `PENDENCIAS.md` §1i como decisão em aberto, e não como surpresa.
+
+---
+
+## O inventário do dano que escapa da redução (2026-08-10)
+
+Terceira volta do mesmo dia, e a pergunta é boa o bastante para ficar registrada
+inteira: se o dano de status ficou relativamente cinco vezes mais forte com o
+corte de 80%, **isso é problema ou é parte do balanceamento que faltava?**
+
+Não dava para responder sem a lista. A lista não existia. Agora existe:
+`REDUCAO-DE-DANO.md` §1d.
+
+### Como foi levantada, para poder ser refeita
+
+O critério é único e mecânico: **todo dano que chega a um jogador sem passar por
+`battle_calc_damage` nem por `battle_calc_return_damage`** — os dois lugares onde
+as nossas chamadas moram. Na prática, os chamadores de `status_zap`,
+`status_percent_damage`, `status_fix_damage` e `status_damage` dentro do
+`status_change_timer` (`status.cpp:14135`), mais os de `battle_fix_damage`.
+
+Deu **13 danos contínuos e 4 avulsos**. Cada um foi resolvido até o `case SC_`
+que o contém, a fórmula, o intervalo (`status_get_sc_interval`, `status.cpp:9571`)
+e a habilidade que o aplica — as últimas cruzando o `Status:` do
+`db/re/skill_db.yml` com o nome da habilidade.
+
+### A resposta: serve pouco, e o motivo não é o tamanho
+
+**Três achados que só aparecem com os números na mão:**
+
+1. **As três parcelas mais fortes não matam.** Veneno (1,5% HP máx/s) e Veneno
+   Mortal (2%/s) param em 25% de HP — `if (status->hp > umax(status->max_hp / 4,
+   damage))`. Bite Scar chama `status_percent_damage` com `kill = false`, que vira
+   o `flag == 2` do `status_percent_change` e grampeia em `hp - 1`. Elas empurram
+   o alvo para a beira e **entregam o golpe final a outra pessoa** — ótimo em
+   arena cheia, quase nada em duelo.
+2. **O dano fixo continua sendo ruído.** Sangramento é `rnd()%600 + 200` a cada
+   dez segundos; Pyrexia é 100 a cada três. Reduzir o dano dos outros em 80% não
+   promove essas duas a nada — o problema delas nunca foi o dano alheio ser alto,
+   era o delas ser baixo em absoluto. **Só o que escala com HP máximo entrou na
+   conversa.**
+3. **O ganho é enviesado por classe**, e é isso que mata a ideia de usar o dano de
+   status como alavanca geral: quem ganha é a **Guilhotina Cruzada** (três venenos
+   pela Arma Envenenada, e o Sanguessuga mata), depois **Cavaleiro Rúnico e
+   Ranger** (Queimadura), **Ladrão e derivados** (Envenenar) e **Doram** (Bite
+   Scar, com 10% de chance). Classe sem status não ganhou nada.
+
+**Nada foi mexido.** Nenhum desses números é configurável — são literais dentro do
+`status_change_timer` —, então ajustar qualquer um é `src/custom/` e recompilar,
+como foi a redução de PvP. A seção existe para a decisão ser tomada com os números
+na mão, não para adiantá-la.
+
+### E o levantamento achou um bug de verdade
+
+**A Cotovelada Ascendente (`SR_CRESCENTELBOW`) escapa da redução de 80%.** Ela
+entrega por `battle_fix_damage` (`battle.cpp:5247`), que chama `battle_damage`
+direto e pula o `battle_calc_damage`.
+
+O que faz dela um furo, e não mais um item da lista, é a composição:
+
+```
+rdamage = battle_calc_base_damage(...) * ratio / 100   <- nasce aqui, nunca reduzido
+        + wd->damage * (10 + val1 * 20 / 10) / 10       <- vem do dano ja reduzido
+```
+
+e o `ratio` vai a **5000%**. A segunda parcela é proporcional a um número que já
+levou o corte; a primeira cria valor novo.
+
+**As vizinhas dela na mesma seção do `battle.cpp` estão certas**, e é a distinção
+que impede um conserto atrapalhado: Instinto de Defesa devolve 50% de um dano já
+reduzido; Reflect Damage, Devoção e Water Screen **redirecionam** o número já
+reduzido para outro alvo. Nenhuma dessas cria valor. Só a Cotovelada.
+
+Ficou no `PENDENCIAS.md` §1j, sem conserto, e com o motivo de não consertar no
+susto: o bloco inteiro é contra-ataque, e "de quem é este dano" não é óbvio ali.
+
+### O que esta rodada acrescenta ao método
+
+**Pergunta de balanceamento se responde com a fonte, não com a intuição** — e a
+intuição aqui estava errada em dois dos três pontos. "Dano de status ficou 5x mais
+relevante" é verdade e **não** implica "dano de status virou alavanca": faltavam o
+teto de 25% e o viés de classe, e nenhum dos dois aparece sem abrir o
+`status_change_timer`.

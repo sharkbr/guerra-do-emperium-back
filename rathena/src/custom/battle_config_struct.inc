@@ -21,3 +21,18 @@ int32 refino_teto;
 // Usado em src/custom/reducao_de_dano.hpp.
 int32 reducao_dano_teto;
 
+// Guerra do Emperium: quanto do dano PASSA nos mapas `pvp`, em PORCENTAGEM -
+// 100 e sem reducao, 20 e reducao de 80%. Mesma semantica dos
+// gvg_*_attack_damage_rate do rAthena. Usados em src/custom/reducao_geral.hpp.
+int32 pvp_dano_arma;   // habilidade de arma
+int32 pvp_dano_magia;  // habilidade de magia
+int32 pvp_dano_misc;   // habilidade "misc"
+int32 pvp_dano_curta;  // ataque normal corpo a corpo
+int32 pvp_dano_longa;  // ataque normal a distancia
+
+// Guerra do Emperium: a reducao geral isenta habilidade com
+// `IgnoreGvgReduction`? 0 = ninguem escapa (nosso), 1 = comportamento do
+// rAthena. Vale para a guerra E para os mapas `pvp` de uma vez.
+// Usado em src/custom/reducao_geral.hpp.
+int32 reducao_dano_isenta_habilidade;
+

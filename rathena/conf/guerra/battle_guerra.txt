@@ -114,3 +114,104 @@ refino_teto: 16
 // motivos - habilidade com IgnoreDefCard, dano fixo, reflexo, dano
 // de status. A lista esta em REDUCAO-DE-DANO.md.
 reducao_dano_teto: 999
+
+//--------------------------------------------------------------
+// REDUCAO GERAL DE DANO - 80% NA GUERRA E NO PVP
+//
+// Pedido em 2026-08-10. Comecou em 70%, que era como o bRO estava
+// - decisao tomada la com a comunidade quando os danos ficaram
+// altos demais -, e no mesmo dia o dono subiu para 80%: "70 era
+// como o bRO estava, e me parece alto ainda". Ou seja, a partir
+// daqui o servidor NAO segue mais o bRO neste numero, de
+// proposito. Vale para a guerra e para os mapas `pvp` - a Arena
+// de Combate de Prontera na frente de todos.
+//
+// OS DEZ VALORES ABAIXO DIZEM QUANTO DO DANO PASSA, e nao quanto
+// ele cai: 100 e sem reducao nenhuma, 20 e reducao de 80%. E a
+// convencao do rAthena, mantida de proposito - ler "20" como
+// "reduz 20%" inverte a conta inteira e o servidor nao reclama.
+//
+// OS DEZ FICAM NO MESMO NUMERO, POR PEDIDO EXPLICITO: "nao quero
+// diferenciar habilidades de ataque". A separacao em cinco por
+// ambiente e do rAthena - habilidade reduz por TIPO (arma, magia,
+// misc) e ataque normal por ALCANCE (corpo a corpo, distancia) -,
+// e ela fica porque e por onde a informacao chega. O que NAO se
+// faz e usa-la. Mexer em um destes dez e mexer nos dez; deixar um
+// atras nao da erro, o sintoma e "tal classe passou a doer mais".
+//
+// A reducao daqui MULTIPLICA com a resistencia de carta, nao soma.
+// Alvo com 50% de resistencia a humano na arena toma 20% de 50%,
+// ou seja 10% do dano bruto. Ver REDUCAO-DE-DANO.md.
+//--------------------------------------------------------------
+
+// Guerra do Emperium (mapas `gvg`, `gvg_castle` e as versoes TE).
+// Estas cinco opcoes SAO DO rATHENA - o padrao dele e 60 para
+// habilidade e 80 para ataque normal (conf/battle/guild.conf), e
+// este arquivo e importado depois, entao sobrescreve.
+gvg_weapon_attack_damage_rate: 20
+gvg_magic_attack_damage_rate: 20
+gvg_misc_attack_damage_rate: 20
+gvg_short_attack_damage_rate: 20
+gvg_long_attack_damage_rate: 20
+
+// Mapas `pvp` - as 84 arenas pvp_n_*/pvp_y_*, o pvp_2vs2 e os
+// tres turbo_e_* (npc/mapflag/pvp.txt). A Arena de Combate de
+// Prontera e o pvp_n_1-5.
+//
+// Estas cinco opcoes NAO existem no rAthena - sao nossas,
+// definidas em src/custom/battle_config_init.inc e usadas por
+// src/custom/reducao_geral.hpp. Alterar aqui exige
+// `@reloadbattleconf`, nao recompilar.
+//
+// O rAthena TEM os cinco pk_*_attack_damage_rate, que fariam
+// exatamente isto, mas estao trancados atras do `pk_mode` - e
+// `pk_mode` marca TODO MAPA do servidor como `pvp` e traz
+// penalidade de morte por jogador junto. Nao serve para reduzir
+// dano numa arena. O cabecalho do reducao_geral.hpp detalha.
+//
+// 100 nos cinco devolve o dano cheio na arena.
+pvp_dano_arma: 20
+pvp_dano_magia: 20
+pvp_dano_misc: 20
+pvp_dano_curta: 20
+pvp_dano_longa: 20
+
+//--------------------------------------------------------------
+// NINGUEM ESCAPA DA REDUCAO GERAL
+//
+// Opcao NOSSA (src/custom/reducao_geral.hpp), e a peca que faz o
+// "TODOS os danos" do pedido ser verdade.
+//
+// O rAthena isenta da reducao de guerra a habilidade que declara
+// `IgnoreGvgReduction: true` no db/re/skill_db.yml. No renewal sao
+// DUAS: NJ_ZENYNAGE (Chuva de Moedas) e GN_FIRE_EXPANSION_ACID.
+//
+// Com reducao de 80%, isencao nao e detalhe: a habilidade que
+// escapa passa a valer CINCO VEZES o dano de qualquer outra. Nao
+// e "uma excecao", e a habilidade dominante da guerra.
+//
+//   0 = ninguem escapa - o nosso
+//   1 = devolve as duas isencoes (comportamento do rAthena)
+//
+// VALE PARA A GUERRA E PARA OS MAPAS `pvp` DE UMA VEZ. O
+// interruptor foi enxertado nos dois caminhos justamente para os
+// dois nao poderem divergir.
+//
+// NAO alcanca a Batalha Campal, que tem a isencao irma dela
+// (INF2_IGNOREBGREDUCTION) e ficou fora deste pedido - ver o
+// bloco no fim deste arquivo.
+reducao_dano_isenta_habilidade: 0
+
+//--------------------------------------------------------------
+// A BATALHA CAMPAL FICOU DE FORA - de proposito, e por ora
+//
+// Os bg_*_attack_damage_rate do rAthena continuam nos 60 e 80
+// dele (conf/battle/battleground.conf). O pedido de 2026-08-10
+// falava de guerra e de PvP; campal nao e nem um nem outro.
+//
+// Se um dia a regra virar "todo combate entre jogadores corta
+// 80%", faltam CINCO linhas aqui - bg_weapon/magic/misc/short/
+// long_attack_damage_rate em 20 - e MAIS um enxerto no
+// battle_calc_bg_damage, para a isencao de habilidade tambem cair
+// la. Sem o enxerto, a Chuva de Moedas fica dominante na campal
+// exatamente como ficaria na guerra.
