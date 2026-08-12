@@ -6902,7 +6902,14 @@ mapflag — o `pvp_nocalcrank` já tinha sido tirado do arquivo e o índice não
 soube. Índice que descreve o que o arquivo não faz mais é pior que índice sem
 descrição: alguém o lê e acredita.
 
-### A Tranqueiras — 26 materiais a 1 zeny, e um buraco de 75.000
+### A Tranqueiras — de 26 materiais a 1 zeny para 55 pelo preço de compra
+
+*A loja nasceu e mudou de preço no mesmo dia. As quatro partes abaixo estão na
+ordem em que aconteceram; quem quiser só o estado final vai para a última.*
+
+> **Atenção a quem ler só a primeira metade:** o Ouro (969) sai da lista na
+> manhã e **volta na tarde**, quando o preço muda. A poda descrita a seguir foi
+> real, e foi desfeita horas depois pela causa que a tinha motivado.
 
 `npc/guerra/tranqueiras.txt`, novo. `prontera 151,131`, o degrau seguinte da
 grade dos mercados, uma fileira abaixo da Carta de Acessório. Três grupos, na
@@ -6960,7 +6967,8 @@ loja para que não sejam "consertados" por engano:
 
 - **A Runa Luxanima não fecha só com a Tranqueiras.** Ela pede 1 Galho Antigo,
   3 Partículas de Luz e **3 Ouros**, e o Ouro saiu. As outras nove receitas
-  fecham inteiras na vitrine.
+  fecham inteiras na vitrine. *(Custo desfeito na mesma tarde: com o preço de
+  compra o Ouro voltou, e as dez fecham.)*
 - **A Boina Alada era peça irmã de um dos três conjuntos espelhados** para o
   19455 em `db/guerra/item_combos.yml`. O espelho **não mudou** — ele vive no
   `item_combos.yml` e não depende de loja nenhuma —, mas a peça deixou de ser
@@ -7010,13 +7018,100 @@ conferido no `npcidentity.lub` deste cliente e com `.spr` e `.act` em
 `data\sprite\npc\`. As duas linhas de `setunitdata` saem junto, porque view id de
 NPC traz a aparência pronta do `npc_viewdb`.
 
+#### A alquimia entrou no mesmo dia, e levou o preço da loja inteira junto
+
+O pedido veio pela **tabela de Preparar Poção do browiki** — 21 receitas, e a
+coluna de ingredientes delas —, com uma exceção nomeada: **o Álcool não se
+vende**. A loja passou de 25 para **55 itens**: 29 vieram da alquimia, e o
+quinquagésimo quinto é o Ouro, que a troca de preço deixou voltar.
+
+Dos ingredientes da tabela, **cinco já estavam na vitrine** pelos grupos de runa
+e veneno — Mel, Garrafa Vazia, Esporo Venenoso, Espinho de Cacto e Gema Vermelha
+—, então entraram **29**. A ordem da linha do `shop` é a da tabela, lida de cima
+para baixo e da esquerda para a direita, e é por isso que a Garrafa de Poção
+abre o grupo: ela é o primeiro ingrediente da primeira receita.
+
+**Medir o preço antes de escrever a linha foi o que salvou a tarefa.** A conta
+de lucro por clique a 1 zeny, feita contra o `item_db` e não a olho, achou três
+itens numa faixa que a loja não tinha — e os três são a mesma linha da tabela, a
+do Embrião:
+
+| item | `Buy` | `Sell` | lucro por clique a 1 zeny |
+|---|---|---|---|
+| **7140 Semente da Vida** | 60.000 | 30.000 | **29.999** |
+| **7141 Orvalho da Yggdrasil** | 20.000 | 10.000 | **9.999** |
+| 7143 Cápsula da Criação | 5.000 | 2.500 | 2.499 |
+| 504 Poção Branca | 1.200 | 600 | 599 |
+| os outros 25 | — | — | de 0 a 419 |
+
+A Semente sozinha é **treze vezes** o pior caso que tinha sobrado da poda da
+manhã (a Poção da Fúria Selvagem, 2.249) e 40% do Ouro que acabara de sair. Pôr
+os 29 a 1 zeny desfaria a decisão daquela manhã em silêncio.
+
+**A decisão do dono não foi tirar os três: foi trocar o preço da loja inteira.**
+A vitrine inteira passou a sair pelo **preço de compra do `item_db`** — e foi
+esse mesmo movimento que deixou o Ouro voltar, logo abaixo.
+
+Na linha do `shop` isso não é número escrito: é **`-1`**, que o
+`npc_parse_shop` troca pelo `Buy` do item ao carregar —
+`if (value < 0) value = id->value_buy;` (`src/map/npc.cpp:4146`). Escrever os
+valores à mão criaria uma segunda fonte para o mesmo preço, e as duas
+divergiriam calado no dia em que alguém pusesse um override em
+`db/guerra/item_db.yml`; com `-1`, a vitrine acompanha o `item_db` sozinha.
+
+**Isso fecha o exploit por inteiro, e dá para provar sem subir o servidor.** O
+teste que dispara o aviso do `npc_parse_shop` (`npc.cpp:4153`) é
+`value*0.75 < value_sell*1.24` — a compra mais barata possível, com Descontar
+10, contra a venda mais cara possível, com Overcharge 10. Com o preço valendo
+`Buy`, vira `0,75·Buy` contra `1,24·Sell`; e como **os 55 itens desta loja têm
+`Sell` exatamente igual a `Buy/2`**, dá `0,75·Buy` contra `0,62·Buy`. **O aviso
+não sai para nenhum dos 55** — conferido um a um contra o `item_db`. A loja que
+imprimia 25 avisos ao carregar passa a imprimir zero.
+
+Consequências que ficaram registradas nos cabeçalhos para não serem
+"consertadas" por engano:
+
+- **Esta é a única loja nossa de Prontera que não cobra 1 zeny.** Os três
+  mercados seguem a convenção de 2026-08-01 e não foram tocados. Pôr a
+  Tranqueiras de volta a 1 zeny reabre o buraco em 55 itens de uma vez.
+- **O Ouro (969) voltou para a lista, e a volta é a mesma decisão.** Ele saíra
+  de manhã por revender 75.000 a 1 zeny; à tarde, com o preço valendo `Buy`,
+  ele passa no teste como qualquer outro item — **112.500 contra 93.000** —, e
+  não dá lucro nenhum. Não é exceção aberta para ele: é a regra dos outros 54.
+  Com isso **a Runa Luxanima voltou a fechar, e as dez receitas de runa fecham
+  inteiras na vitrine**.
+
+  **As duas decisões ficaram amarradas, e é isso que os cabeçalhos precisam
+  dizer:** o Ouro só é seguro aqui *enquanto* o preço for o de compra. Baixar a
+  loja de volta para 1 zeny com ele dentro devolve 74.999 por clique — o buraco
+  original, inteiro. A Boina Alada (5170) **não** voltou: o Chapeleiro continua
+  a 1 zeny, então a conta dela continua sendo a de antes, e repô-la lá é outra
+  decisão, ainda não tomada.
+- **O Tubo de Ensaio (1092) ficou de fora por decisão do dono**, junto com o
+  Álcool. Dos três recipientes da tabela, dois estão à venda — a Garrafa de
+  Poção (1093), que entrou com este grupo, e a Garrafa Vazia (713), que já
+  estava. Sem o Tubo, **quatro das 21 receitas não fecham só com esta vitrine**:
+  o Álcool e as três Poções Compactas. As outras dezessete fecham.
+
+A validação da §4.4 rodou de novo, sobre **30** itens — os 29 que entraram mais
+o Tubo de Ensaio, que passou na conferência e só depois ficou de fora. Todos
+existem no `item_db`, todos têm entrada no `itemInfo.lua` deste cliente **com
+nome em português**, e todos deram "arte 4 de 4 ok": **120 checagens, zero
+quebra**. Nenhum precisou de entrada nova de cliente nem de arte do bRO — a
+segunda lista seguida que não precisou de nada.
+
+A placa acompanhou: `Materiais de runa e veneno` virou
+`Materiais de runa, veneno e alquimia`, 36 dos 79 caracteres do `MESSAGE_SIZE`.
+
 ### O que falta ver no jogo
 
 Nada disto subiu. `@reloadbarterdb` para as duas linhas da Máquina — **não** é
-`@reloadscript` —, `@reloadscript` para a Tranqueiras, a Arena e o Guia. A
-Tranqueiras vai imprimir 25 avisos `npc_parse_shop: ... discounted buying price`
-ao carregar, e eles são esperados: é o servidor apontando o exploit de revenda
-descrito acima, não erro de sintaxe.
+`@reloadscript` —, `@reloadscript` para a Tranqueiras, a Arena e o Guia.
+
+**A Tranqueiras não deve mais imprimir aviso nenhum ao carregar.** Ela imprimia
+25 `npc_parse_shop: ... discounted buying price` enquanto era de 1 zeny; com o
+preço de compra, a conta acima diz que são zero. Se algum aparecer, é item cujo
+`Sell` não é `Buy/2` — e aí o número no aviso diz qual.
 
 O que só se decide na tela: se o Mercador de classe 5 desenha inteiro (corpo
 **e** cabeça), e se a Morte da porta da arena ficou virada para o lado certo.

@@ -43,7 +43,7 @@ sem confirmação in-game.
 | Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
 | Sombrios Gerais — loja, sprite levantado e facing novo | `auction_01 193,58` | 2026-08-11 |
 | 22 itens novos em 7 lojas, e 2 que mudaram de vitrine | `prontera`, y=155 e y=161/173 | 2026-08-12 |
-| Tranqueiras (25 materiais a 1 zeny) — **e o sprite de classe** | `prontera 151,131` | 2026-08-12 |
+| Tranqueiras (55 materiais pelo preço de compra) — **e o sprite de classe** | `prontera 151,131` | 2026-08-12 |
 | Chapeleiro sem a Boina Alada (10 itens, era 11) | `prontera 151,173` | 2026-08-12 |
 | Arena de Combate com a Morte, em lugar novo | `prontera 147,180` | 2026-08-12 |
 | Guia de Prontera de volta ao ar | `prontera 154,187` | 2026-08-12 |
@@ -59,11 +59,18 @@ desenham**. Se não desenharem, a troca já está escolhida no cabeçalho do
 arquivo — sprite **776 (`4_M_TWMIDMAN`)**, e as duas linhas de `setunitdata`
 saem junto.
 
-Os 25 avisos `npc_parse_shop: ... discounted buying price` que ela imprime ao
-carregar **são esperados** e não impedem nada — é o servidor apontando que quem
-compra a 1 zeny revende pelo `Sell` do `item_db`. Os dois casos que moviam a
-economia de verdade já saíram das vitrines (Ouro e Boina Alada, 2026-08-12); o
-maior que ficou é a Poção da Fúria Selvagem, com 2.249 por clique.
+**Ela não deve imprimir aviso nenhum ao carregar**, e isso é a segunda coisa a
+conferir. Enquanto era de 1 zeny, imprimia 25 `npc_parse_shop: ... discounted
+buying price`; desde que passou a cobrar o **preço de compra do `item_db`**
+(`-1` na linha do `shop`, 2026-08-12) a conta do `npc.cpp:4153` dá zero para os
+55, porque todos têm `Sell` igual a `Buy/2`. Aviso que apareça aponta um item
+cujo `Sell` não é `Buy/2` — o número no próprio aviso diz qual.
+
+**O Ouro (969) está de volta na lista, e só é seguro enquanto o preço for o de
+compra.** Ele saiu na manhã de 2026-08-12 e voltou na tarde, junto com a troca
+de preço. Pôr a loja de volta a 1 zeny com ele dentro devolve 74.999 de lucro
+por clique — o maior buraco que o projeto já teve. As duas decisões estão
+amarradas; os cabeçalhos do arquivo e do `scripts_guerra.conf` dizem isso.
 
 **A Sombrios Totais (189,58) está conferida em jogo** — corpo, sorteio e a lista
 de prêmios, esta depois de tirar a indentação que colava as linhas

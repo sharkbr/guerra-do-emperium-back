@@ -18,86 +18,139 @@
 //= db/map_cache.dat responde pela `pprontera`, que e outro mapa.
 //= Ver CLAUDE.md secao 5.
 //===== Descricao ============================================
-//= Loja de MATERIAL BRUTO, 25 itens a 1 zeny. Pedida em 2026-08-12.
-//= Tres grupos, e a ordem da linha do `shop` e a ordem da janela:
+//= Loja de MATERIAL BRUTO, 55 itens, cada um pelo PRECO DE COMPRA do
+//= item_db. Nasceu em 2026-08-12 com 25 itens a 1 zeny; no mesmo dia
+//= ganhou os 29 da alquimia, trocou o preco, e com o preco novo pode
+//= receber de volta o Ouro que a manha tinha tirado. A decisao das
+//= tres coisas esta na secao do preco, logo abaixo.
 //=
-//=   1) 16 das 17 pecas que as dez Runas do Cavaleiro Runico pedem
-//=      (Galho Antigo, Particulas de Luz, e os quatorze que entram
-//=      numa receita so cada um). A 17a, o OURO, foi tirada - ver a
-//=      secao do preco;
+//= Quatro grupos, e a ordem da linha do `shop` e a ordem da janela:
+//=
+//=   1) as 17 pecas que as dez Runas do Cavaleiro Runico pedem - as
+//=      tres da Luxanima (Galho Antigo, Particulas de Luz e Ouro) e
+//=      os quatorze que entram numa receita so cada um. O Ouro esteve
+//=      fora da lista entre a manha e a tarde de 2026-08-12; ver a
+//=      secao do preco, que e onde a ida e a volta estao;
 //=   2) tres avulsos pedidos por nome - Teia de Aranha, Semente de
 //=      Planta Selvagem e Garrafa Vazia;
 //=   3) os 6 do Criar Veneno Mortal que ainda faltavam - a Garrafa
 //=      Vazia daquela receita e a mesma do grupo 2, e por isso nao
-//=      aparece duas vezes.
+//=      aparece duas vezes;
+//=   4) os 29 ingredientes da ALQUIMIA, pedidos em 2026-08-12 pela
+//=      tabela do browiki (/wiki/Preparar_Pocao), na ordem em que
+//=      ela os lista - 21 receitas, lidas de cima para baixo e da
+//=      esquerda para a direita. CINCO ingredientes daquela tabela
+//=      ja estavam nos grupos 1 a 3 - Mel, Garrafa Vazia, Esporo
+//=      Venenoso, Espinho de Cacto e Gema Vermelha -, e por isso nao
+//=      aparecem duas vezes.
 //=
-//= UMA RECEITA NAO FECHA SO COM ESTA LOJA, e e de proposito: a Runa
-//= Luxanima pede 1 Galho Antigo, 3 Particulas de Luz e 3 OUROS, e o
-//= Ouro nao esta a venda aqui. Quem quiser Luxanima caca o Ouro. As
-//= outras nove receitas fecham inteiras nesta vitrine.
+//= O QUE FICOU DE FORA DA ALQUIMIA sao dois itens, os dois por
+//= decisao do dono no dia em que o grupo entrou:
+//=
+//=   - o ALCOOL (970). E ingrediente do Analgesico, do Frasco de Fogo
+//=     Grego e do Frasco de Revestimento, e continua tendo de ser
+//=     fabricado. O Caule (905) e o Esporo Venenoso (7033) que a
+//=     receita dele pede estao a venda aqui;
+//=   - o TUBO DE ENSAIO (1092). E o recipiente das tres Pocoes
+//=     Compactas e do proprio Alcool. Os outros dois recipientes da
+//=     tabela estao a venda: a Garrafa de Pocao (1093), que entrou
+//=     com este grupo, e a Garrafa Vazia (713), que ja estava no
+//=     grupo 2.
+//=
+//= CONSEQUENCIA, e ela e de proposito: das 21 receitas da tabela,
+//= QUATRO nao fecham so com esta vitrine - o Alcool e as tres Pocoes
+//= Compactas, que precisam do Tubo de Ensaio. As outras dezessete
+//= fecham inteiras aqui.
+//=
+//= As tres Pocoes basicas (501, 503 e 504) estao a venda porque sao
+//= ingrediente das Compactas, e e assim que a tabela as lista. Isso
+//= nao abre atalho: elas saem pelo mesmo preco que qualquer NPC de
+//= pocao do jogo cobra, que e o `Buy` delas.
+//=
+//= AS DEZ RECEITAS DE RUNA FECHAM INTEIRAS AQUI, e a decima so voltou
+//= a fechar quando o Ouro voltou: a Runa Luxanima pede 1 Galho
+//= Antigo, 3 Particulas de Luz e 3 OUROS, e o Ouro esteve fora da
+//= vitrine entre a manha e a tarde de 2026-08-12.
 //=
 //= A LOJA NAO VENDE RUNA PRONTA, so o que elas custam. Foi decidido
 //= assim em 2026-08-12: vender a runa feita esvaziaria o forjar do
 //= Cavaleiro Runico, que e onde o Galho Antigo e gasto. Os dez ids
 //= das runas, se um dia a decisao mudar: 12725 a 12733 e 22540.
-//===== O preco, e o que ele abre ============================
-//= 1 ZENY POR ITEM, a convencao dos tres mercados de Prontera desde
-//= 2026-08-01. Vem com a mesma consequencia que o cabecalho do
-//= mercado_contemporaneo.txt registra, e AQUI ELA E MAIOR.
+//===== O preco, e o que ele fecha ===========================
+//= CADA ITEM PELO PRECO DE COMPRA DO item_db, os 55. Isso NAO e um
+//= numero escrito na linha do `shop`: e `-1`, que o npc_parse_shop
+//= troca pelo `Buy` do item ao carregar -
 //=
-//= O rAthena imprime um aviso por item ao carregar:
+//=   if (value < 0) value = id->value_buy;   src/map/npc.cpp:4146
+//=
+//= - e por isso a vitrine acompanha o item_db sozinha, inclusive
+//= override nosso em db/guerra/item_db.yml. Escrever o numero a mao
+//= criaria uma segunda fonte para o mesmo preco, e as duas iam
+//= divergir calado.
+//=
+//= ISSO SUBSTITUIU A CONVENCAO DE 1 ZENY, por decisao do dono em
+//= 2026-08-12. Esta e a UNICA loja nossa de Prontera que nao cobra 1
+//= zeny; os tres mercados (mercado_contemporaneo.txt,
+//= mercado_de_cartas.txt e as doze lojas do quarteirao) seguem a
+//= convencao de 2026-08-01, e continuam como estavam.
+//=
+//= O QUE A TROCA RESOLVEU: o exploit de revenda, por inteiro.
+//=
+//= A 1 zeny, quem comprasse aqui revendia em QUALQUER NPC pelo
+//= `Sell` do item_db - lucro por clique, em laco infinito. Era um
+//= buraco real, e o rAthena avisava dele item a item ao carregar:
 //=
 //=   npc_parse_shop: Item X discounted buying price (1->0) is less
 //=   than overcharged selling price (...)
 //=
-//= Nao e erro de sintaxe e nao impede a loja de subir. E o servidor
-//= avisando de um exploit real (src/map/npc.cpp:4153): quem compra
-//= aqui por 1 zeny revende em QUALQUER NPC pelo `Sell` do item_db.
+//= O teste que dispara esse aviso (src/map/npc.cpp:4153) e
+//= `value*0.75 < value_sell*1.24` - a compra mais barata possivel,
+//= com Descontar nivel 10, contra a venda mais cara possivel, com
+//= Overcharge nivel 10. Com o preco valendo `Buy`, isso vira
+//= `0,75*Buy` contra `1,24*Sell`; e como os 55 itens desta loja tem
+//= `Sell` exatamente igual a `Buy/2`, da `0,75*Buy` contra
+//= `0,62*Buy`. O AVISO NAO SAI PARA NENHUM DOS 55 - conferido um a
+//= um em 2026-08-12, contra o item_db, e nao a olho.
 //=
-//= O OURO (969) FOI TIRADO DESTA LISTA POR ISSO, no mesmo dia em que
-//= ela nasceu. Ele tem `Buy: 150000`, logo `Sell: 75000` - 74.999 de
-//= lucro por clique, em laco infinito, CINCO VEZES o pior caso que o
-//= projeto ja tinha. A decisao foi do dono, com o drop em 50x: sai da
-//= loja, e a Boina Alada (5170) sai do Chapeleiro junto, pela mesma
-//= razao. A saida alternativa era `Sell: 0`/`NoSell` por override em
-//= db/guerra/item_db.yml, e ela foi descartada porque alcancaria TODO
-//= o Ouro do servidor - inclusive o que o jogador cacou.
+//= ENTAO NAO HA MAIS "PIOR CASO" NESTA LOJA. A tabela de lucro por
+//= unidade que este cabecalho carregava ate 2026-08-12 saiu junto
+//= com o 1 zeny: ela media uma coisa que deixou de existir.
 //=
-//= REPOR O OURO AQUI REABRE O BURACO. Nao e "so mais uma linha".
+//= O OURO (969) SAIU E VOLTOU NO MESMO DIA, e a ida e a volta tem a
+//= mesma causa: o preco.
 //=
-//= O que sobrou, medido em 2026-08-12 (lucro por unidade a 1z):
+//= Ele SAIU de manha, com a loja ainda a 1 zeny, porque revendia por
+//= 75.000 - o pior caso que o projeto ja tinha tido, cinco vezes a
+//= Boina Alada. VOLTOU a tarde, junto com a troca de preco, por
+//= decisao do dono: a 150.000 de compra contra 75.000 de venda ele
+//= passa no teste do npc_parse_shop como qualquer outro item da
+//= vitrine - 112.500 contra 93.000 -, e nao da lucro nenhum. NAO E
+//= EXCECAO ABERTA PARA ELE: e a mesma regra dos outros 54.
 //=
-//=   657   Pocao da Furia Selvagem      2.249   <== o maior que ficou
-//=   7939  Galho Antigo                   749
-//=   7938  Particulas de Luz              749
-//=   7069  Armadura Destruida             520
-//=   7123  Pele de Dragao                 511
-//=   7097  Coracao Incandescente          461
-//=   1048  Cabelo Horrendo                399
-//=   7210  Armadura de Dullahan           394
-//=   1096  Casca Arredondada              389
-//=   7099  Pergaminho Antigo              385
-//=   7221  Corrente                       369
-//=   7002  Dente de Ogro                  328
-//=   6210  Semente de Planta Selvagem     299
-//=   518   Mel                            249
-//=   1035  Canino de Dragao               241
-//=   716   Gema Vermelha                  224
-//=   713   Garrafa Vazia                  199
-//=   972   Karvodailnirol                 199
-//=   1034  Cabelo Azul                    170
-//=   7030  Garra de Lobo do Deserto       103
-//=   1025  Teia de Aranha                  91
-//=   937   Canino Venenoso                 73
-//=   7033  Esporo Venenoso                 56
-//=   952   Espinho de Cacto                40
-//=   939   Ferrao de Abelha                15
+//= Com isso a Runa Luxanima voltou a fechar, e as dez receitas de
+//= runa fecham inteiras aqui.
 //=
-//= A POCAO DA FURIA SELVAGEM (657) FICOU, com 2.249 - o maior da
-//= lista agora, e sete vezes o terceiro colocado. Ela nao foi
-//= incluida na poda de 2026-08-12 porque a decisao nomeou dois itens,
-//= e nao uma faixa. Se um dia a conta de zeny apertar, e por ela que
-//= se comeca; do terceiro para baixo (749) nada move a economia.
+//= O QUE ISSO EXIGE DE QUEM FOR MEXER: o Ouro so e seguro nesta loja
+//= ENQUANTO O PRECO FOR O DE COMPRA. Baixar a vitrine de volta para 1
+//= zeny com ele dentro devolve 74.999 de lucro por clique, em laco
+//= infinito - o buraco original, inteiro, e o maior que o projeto ja
+//= teve. AS DUAS DECISOES ESTAO AMARRADAS, e este cabecalho existe
+//= para que uma nao seja desfeita sem a outra.
+//=
+//= (A Boina Alada (5170), que saiu do Chapeleiro de manha no mesmo
+//= movimento e pela mesma conta, NAO voltou. Aquela loja continua a 1
+//= zeny, entao a conta dela continua sendo a de antes: repo-la la
+//= reabriria 14.999 por clique. E outra decisao, e nao esta tomada.)
+//=
+//= O QUE A TROCA CUSTOU: a loja deixou de ser um atalho barato, e e
+//= isso que permitiu os tres itens mais caros da vitrine entrarem. Os
+//= tres sao a linha do Embriao - Semente da Vida (7140) a 60.000,
+//= Orvalho da Yggdrasil (7141) a 20.000 e Capsula da Criacao (7143) a
+//= 5.000. Eram exatamente os tres que NAO PODIAM ter entrado a 1
+//= zeny: a Semente sozinha renderia 29.999 de lucro por clique, treze
+//= vezes o pior caso que a loja tinha naquela manha. Pelo preco de
+//= compra eles entram sem ressalva nenhuma - e foi o mesmo movimento
+//= que deixou o Ouro voltar.
 //=
 //= Ver HISTORICO.md, 2026-08-12.
 //===== O sprite e uma CLASSE DE JOGADOR ======================
@@ -143,11 +196,21 @@
 //= contagem, porque "Tranqueiras" nao diz o que se vende.
 //=
 //= OS ITENS FORAM VALIDADOS UM A UM antes de entrar (CLAUDE.md 4.4),
-//= e foram 26 na conferencia - o Ouro passou por ela e so depois saiu
-//= por decisao de economia. Os 26 existem no item_db do servidor, os
-//= 26 tem entrada no itemInfo.lua deste cliente com NOME EM
-//= PORTUGUES, e os 26 deram "arte 4 de 4 ok" no valida_visual.py.
-//= Nenhum precisou de entrada nova de cliente nem de arte do bRO.
+//= em duas rodadas, as duas em 2026-08-12:
+//=
+//=   - a primeira, dos 25 de runa e veneno, conferiu 26 - o Ouro
+//=     passou por ela, saiu horas depois por economia e voltou na
+//=     mesma tarde, quando o preco mudou. Nunca precisou de segunda
+//=     conferencia: arte 4 de 4, e "Ouro" no itemInfo.lua;
+//=   - a segunda, da alquimia, conferiu 30 - os 29 que entraram mais
+//=     o Tubo de Ensaio (1092), que passou na conferencia e so depois
+//=     ficou de fora, por decisao do dono.
+//=
+//= O resultado foi o mesmo nas duas: todos existem no item_db do
+//= servidor, todos tem entrada no itemInfo.lua DESTE cliente com NOME
+//= EM PORTUGUES, e todos deram "arte 4 de 4 ok" no valida_visual.py -
+//= 120 checagens na segunda rodada, zero quebra. Nenhum precisou de
+//= entrada nova de cliente nem de arte do bRO.
 //=
 //= UMA RESSALVA de nome, e ela nao quebra nada: o 7030 se chama
 //= "Garra de Lobo do Deserto" no servidor e "Garra de Lobo do Deserto "
@@ -177,40 +240,85 @@ OnInit:
 	setunitdata(getnpcid(0), UNPC_HAIRSTYLE, 1);
 
 	// O assunto, e nao a contagem como nas lojas de carta: o nome
-	// "Tranqueiras" nao diz o que esta a venda.
-	placadevenda "Materiais de runa e veneno";
+	// "Tranqueiras" nao diz o que esta a venda. Cresceu junto com a
+	// vitrine em 2026-08-12, quando a alquimia entrou. Teto de 79
+	// caracteres (MESSAGE_SIZE, src/map/map.hpp:273); esta em 36.
+	placadevenda "Materiais de runa, veneno e alquimia";
 	end;
 }
 
+// A ORDEM DESTA LISTA E A ORDEM DA JANELA. O preco na linha do `shop` e
+// `-1` em todos - o npc_parse_shop troca isso pelo `Buy` do item_db ao
+// carregar (src/map/npc.cpp:4146). O numero abaixo e quanto esse `Buy` da
+// HOJE, e esta aqui so para leitura humana: ele NAO esta escrito na linha,
+// e se o item_db mudar a vitrine acompanha sozinha e este comentario nao.
+//
 // ----- Runas - as 17 pecas das dez receitas
-//   7939    Galho Antigo                 revende por 750
-//   7938    Partículas de Luz            revende por 750
-//   1034    Cabelo Azul                  revende por 171
-//   7030    Garra de Lobo do Deserto     revende por 104
-//   7097    Coração Incandescente        revende por 462
-//   7221    Corrente                     revende por 370
-//   1035    Canino de Dragão             revende por 242
-//   1096    Casca Arredondada            revende por 390
-//   7123    Pele de Dragão               revende por 512
-//   7002    Dente de Ogro                revende por 329
-//   1048    Cabelo Horrendo              revende por 400
-//   518     Mel                          revende por 250
-//   716     Gema Vermelha                revende por 225
-//   7069    Armadura Destruída           revende por 521
-//   7099    Pergaminho Antigo            revende por 386
-//   7210    Armadura de Dullahan         revende por 395
+//   7939    Galho Antigo                     1.500 z
+//   7938    Partículas de Luz                1.500 z
+//   969     Ouro                           150.000 z
+//   1034    Cabelo Azul                        342 z
+//   7030    Garra de Lobo do Deserto           208 z
+//   7097    Coração Incandescente              924 z
+//   7221    Corrente                           740 z
+//   1035    Canino de Dragão                   484 z
+//   1096    Casca Arredondada                  780 z
+//   7123    Pele de Dragão                   1.025 z
+//   7002    Dente de Ogro                      658 z
+//   1048    Cabelo Horrendo                    800 z
+//   518     Mel                                500 z
+//   716     Gema Vermelha                      450 z
+//   7069    Armadura Destruída               1.042 z
+//   7099    Pergaminho Antigo                  773 z
+//   7210    Armadura de Dullahan               790 z
 //
 // ----- Avulsos, pedidos por nome
-//   1025    Teia de Aranha               revende por 92
-//   6210    Semente de Planta Selvagem   revende por 300
-//   713     Garrafa Vazia                revende por 200
+//   1025    Teia de Aranha                     184 z
+//   6210    Semente de Planta Selvagem         600 z
+//   713     Garrafa Vazia                      400 z
 //
 // ----- Criar Veneno Mortal - os 6 que faltavam
-//   7033    Esporo Venenoso              revende por 57
-//   937     Canino Venenoso              revende por 74
-//   952     Espinho de Cacto             revende por 41
-//   939     Ferrão de Abelha             revende por 16
-//   972     Karvodailnirol               revende por 200
-//   657     Poção da Fúria Selvagem      revende por 2250
+//   7033    Esporo Venenoso                    114 z
+//   937     Canino Venenoso                    148 z
+//   952     Espinho de Cacto                    82 z
+//   939     Ferrão de Abelha                    32 z
+//   972     Karvodailnirol                     400 z
+//   657     Poção da Fúria Selvagem          4.500 z
 //
--	shop	Tranqueiras#loja	-1,7939:1,7938:1,1034:1,7030:1,7097:1,7221:1,1035:1,1096:1,7123:1,7002:1,1048:1,518:1,716:1,7069:1,7099:1,7210:1,1025:1,6210:1,713:1,7033:1,937:1,952:1,939:1,972:1,657:1
+// ----- Alquimia - os 29 ingredientes da tabela do browiki
+//   Fora, por decisao do dono: Alcool (970) e Tubo de Ensaio (1092).
+//   Ja estavam acima, e por isso nao se repetem: Mel (518), Garrafa Vazia
+//   (713), Esporo Venenoso (7033), Espinho de Cacto (952) e Gema Vermelha
+//   (716).
+//
+//   1093    Garrafa de Poção                    10 z   Poção Vermelha (recipiente das 4 basicas e das 4 antipocoes)
+//   507     Erva Vermelha                       18 z   Poção Vermelha
+//   508     Erva Amarela                        40 z   Poção Amarela, e o Suplemento Alimentar
+//   509     Erva Branca                        120 z   Poção Branca
+//   510     Erva Azul                           60 z   Poção Azul
+//   911     Scell                              120 z   Poção Azul
+//   708     Menta                              500 z   Analgesico
+//   704     Aloés                              500 z   Aloe Vera
+//   7141    Orvalho da Yggdrasil            20.000 z   Embriao
+//   7140    Semente da Vida                 60.000 z   Embriao, e o Suplemento Alimentar
+//   7143    Cápsula da Criação               5.000 z   Embriao
+//   905     Caule                               46 z   Alcool (x5) - o Alcool em si nao esta a venda
+//   1059    Tecido                             306 z   Frasco de Fogo Grego
+//   929     Coração Imortal                    374 z   Frasco de Acido
+//   1032    Flor de Planta Carnívora           196 z   Frasco de Planta (x2)
+//   1050    Tendões                            220 z   Frasco de Esfera Marinha
+//   1051    Neurônio                           450 z   Frasco de Esfera Marinha
+//   950     Coração de Sereia                  264 z   Frasco de Revestimento, e a Pocao Antiagua (x3)
+//   1044    Presa de Zenorc                    264 z   Frasco de Revestimento
+//   501     Poção Vermelha                      10 z   Pocao Vermelha Compacta
+//   503     Poção Amarela                      180 z   Pocao Amarela Compacta
+//   1017    Bigodes de Toupeira                106 z   Pocao Amarela Compacta
+//   504     Poção Branca                     1.200 z   Pocao Branca Compacta
+//   1061    Areia Estelar de Bruxa             484 z   Pocao Branca Compacta
+//   717     Gema Azul                          450 z   Pocao Antiagua, e a Antivento
+//   1057    Pó de Traça                        138 z   Pocao Antivento (x3)
+//   715     Gema Amarela                       450 z   Pocao Antiterra
+//   7126    Jellopy Tamanho Família            840 z   Pocao Antiterra (x2)
+//   1012    Brasão                             250 z   Pocao Antifogo (x2)
+//
+-	shop	Tranqueiras#loja	-1,7939:-1,7938:-1,969:-1,1034:-1,7030:-1,7097:-1,7221:-1,1035:-1,1096:-1,7123:-1,7002:-1,1048:-1,518:-1,716:-1,7069:-1,7099:-1,7210:-1,1025:-1,6210:-1,713:-1,7033:-1,937:-1,952:-1,939:-1,972:-1,657:-1,1093:-1,507:-1,508:-1,509:-1,510:-1,911:-1,708:-1,704:-1,7141:-1,7140:-1,7143:-1,905:-1,1059:-1,929:-1,1032:-1,1050:-1,1051:-1,950:-1,1044:-1,501:-1,503:-1,1017:-1,504:-1,1061:-1,717:-1,1057:-1,715:-1,7126:-1,1012:-1
