@@ -7452,3 +7452,116 @@ pendências.
 
 Nada disto subiu — está tudo em disco, e os comandos estão no `PENDENCIAS.md`
 §1l.
+
+## Trinta e uma peças de cabeça, e o preço deixou de ser 1 zeny (2026-08-12)
+
+Pedido do dono: 31 equipamentos de cabeça para as três lojas da fileira de
+cima do Mercado Contemporâneo — nove no Chapeleiro (topo), quinze no Ocleiro
+(meio), sete no Retoqueiro (baixo). A edição da loja foi meia hora; o resto do
+dia foi o que veio junto.
+
+### A regra que mudou no meio da rodada
+
+O **Elmo de Aegir (18728)** tem `Buy: 200000` no `item_db`. A 1 zeny na
+vitrine, isso é **99.999 de lucro por clique**, em laço — cinco vezes o buraco
+da Boina Alada (5170) e maior que o do Ouro (969), os dois fechados na manhã
+do mesmo dia. Levado ao dono como "tiro da lista ou ponho mesmo assim?", a
+resposta foi uma terceira coisa, e virou regra da casa:
+
+> *"Todo item a partir de agora que tiver valor de venda a gente vende com o
+> valor de compra dele."*
+
+É a saída que a Tranqueiras tinha estreado naquela manhã, agora generalizada:
+em vez de **podar** a peça cara, **cobra-se** por ela o que o `item_db` diz que
+ela vale. A regra está no `CLAUDE.md` §4, regra 16, com a aritmética que a
+torna binária — revenda paga `Buy/2`, então qualquer preço abaixo de `Buy`
+deixa lucro.
+
+Dos 31, **16 têm `Buy`** e entraram por ele (um a 200.000, um a 10, catorze a
+20); os outros 15 não valem nada revendidos e ficaram a 1 zeny. De quebra, os
+16 **não** acrescentam linha de `npc_parse_shop: discounted buying price` na
+subida — o aviso só sai quando o preço com desconto cai abaixo do de venda com
+supervalorização, e no preço de compra isso não acontece.
+
+Não foi aplicada para trás: os `Buy: 20` que já estavam nas nove lojas a 1
+zeny continuam a 1 zeny.
+
+### Três IDs vieram com um dígito a menos
+
+E os três foram achados pelo **nome** na tabela do bRO antes de virar linha de
+loja. Nenhum dos três números errados existia em tabela nenhuma — o
+`estado_item.py` respondeu *"nao esta no rAthena NEM nos 18845 do bRO"* nos
+três —, mas dois tinham vizinho plausível:
+
+| pedido | certo | como se decidiu |
+|---|---|---|
+| `1943` | **19437** Adorno Florido | o 1943 **existe**: é o `Erhu`, uma ARMA de três covas com nome coreano no cliente. Teria entrado numa vitrine de chapéu sem erro nenhum |
+| `41009` | **410097** Lacinhos Yin-Yang | o bRO tem **dois** com esse nome — 410096 sem cova, 410097 com. O `[1]` do pedido decidiu |
+| `42018` | **420180** Espinha de Brinaranha | `Eis_Spinne`; não havia ambiguidade |
+
+O `[1]` do pedido não era enfeite: bateu com o `Slots` do `item_db` nas 31, e
+foi o que desempatou o único caso de nome repetido.
+
+### O que cada peça custou
+
+Dezoito das 31 **não estavam no `itemInfo.lua`** e apareceriam sem nome e sem
+ícone na própria vitrine — a mesma lição do 410125, do 410067/410026 e do
+410010 das rodadas anteriores, agora em escala: a faixa `410xxx` é nova demais
+para o arquivo de 2021. Vieram do bRO pelo `completa_iteminfo.py`, e os `Name`
+do servidor, todos em inglês, foram sincronizados pelo `nomes_pt_item_db.py`
+(17 trocas, exatamente as esperadas — conferidas uma a uma no `git diff`).
+
+**Três precisaram de arte**, e as três pelo par de sempre
+(`estende_accessoryid.py`, porque o View não existia no `accessoryid.lub` de
+2021, e depois `instala_visual.py`): Orelhas Fantasmagóricas (410130, View
+2226), Lapela Sagrada (420187, View 2337) e Touca Exótica (400308, View 2269).
+
+A **Lapela Sagrada foi o caso invertido, e engana**: era a única das sete do
+Retoqueiro **com** nome em português no cliente, e a única das sete **sem**
+arte. Nome no `itemInfo.lua` não diz nada sobre arte — são duas tabelas.
+
+### A Touca Exótica (400308) — a única que não existia
+
+Das 31, foi a única fora de todo `item_db`, nosso e do vendor. Entrou como
+placeholder em `db/guerra/item_db.yml`, e as três frases de bônus da descrição
+do bRO foram **conferidas contra item que o rAthena já tem** antes de virar
+`bonus`, em vez de supostas:
+
+| frase do bRO | `bonus` | quem provou |
+|---|---|---|
+| "Resistência a monstros Normais e Chefes +N%" | `bSubClass,Class_Normal` + `Class_Boss` | 400047 `Runaway_Accelerator`, mesma frase e os dois bônus |
+| "Efetividade de cura +N%" | `bonus bHealPower,N` | Carta Lady Branca (4372): descrição "+30%", script `bHealPower,30` |
+| "Esquiva perfeita +10" | `bonus bFlee2,10` | 1181, frase idêntica |
+
+Dois detalhes que teriam passado calados: **`DEFM` não é campo de `item_db`** —
+o rAthena não tem `MagicDefense` para equipamento, só para elemental, então os
+15 viraram `bonus bMdef,15`, que é como as 1212 peças do `db/re/` fazem —, e
+`Weight: 600` para o "Peso: 60" da tela, o decimal que estragou cinco entradas
+deste arquivo em 2026-08-01.
+
+O conjunto com a Carta Lady Branca (+60% de cura) está em
+`db/guerra/item_combos.yml`. `AegisName` e `View` saíram do **cliente**, não de
+palpite: `ACCESSORY_Exotic_traditional_Hat` / ClassNum 2269.
+
+### Duas coincidências que não são erro
+
+- **Diadema do Orgulho (410009) e Diadema Arco-íris (18894), as duas no
+  Ocleiro, são o mesmo desenho** — View 1019 nas duas, e os `AegisName` só
+  diferem pelo `_` do fim. Não é duplicata: a de 410009 tem cova e pede nível
+  100, a de 18894 não tem cova e pede 70.
+- **Ventinho Bruto (15923) e Gelinho Místico (15922) dividem o View 1262.** É
+  do próprio jogo. Os quatro amuletos de elemento (15920-15923) vieram juntos
+  de propósito, e cada um fecha conjunto com a capa do mesmo nome no
+  `db/re/item_combos.yml` — as capas **não** estão à venda, então quem quiser
+  fechar conjunto caça a capa.
+
+### Uma divergência levantada, não resolvida sozinha
+
+O **Véu das Gemas Sagradas (19106)** é `Head_Low` **e** `Head_Mid` **e**
+`Head_Top` ao mesmo tempo. Foi pedido como topo, equipa como topo, e está no
+Chapeleiro por isso — mas cabe nas outras duas lojas da fileira, e não é
+engano vê-lo ocupar outro slot no jogo. Fica dito (regra 14).
+
+### O que falta ver no jogo
+
+Nada disto subiu. Os comandos estão no `PENDENCIAS.md`.

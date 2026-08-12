@@ -245,6 +245,32 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     E lembrar que **modelo de `.rsw` não bloqueia nada sozinho**: o override
     de mapa não toca o `.gat`, então móvel plantado é atravessável até que
     alguém escreva o `setwall`. As duas metades estão no `ARQUITETURA.md` §4.
+16. **Item com `Buy` no `item_db` entra na loja PELO `Buy`, não a 1 zeny.**
+    Decisão do dono em 2026-08-12: *"todo item a partir de agora que tiver
+    valor de venda a gente vende com o valor de compra dele"*. Sem `Buy`
+    nenhum, 1 zeny como sempre. Não há meio-termo, e o motivo é aritmético:
+    revenda paga `Buy/2`, então **qualquer preço abaixo de `Buy` deixa
+    lucro** — e o lucro é por clique, em laço infinito, num servidor de
+    drop 50x. É a saída que a Tranqueiras estreou na manhã do mesmo dia e
+    que substituiu a anterior (**podar a peça cara da vitrine**, que foi o
+    que aconteceu com a Boina Alada, 5170, e com o Ouro, 969).
+
+    Quem disparou a regra foi o **Elmo de Aegir (18728)**, `Buy: 200000`:
+    a 1 zeny seriam **99.999 de lucro por clique**. Levado ao dono como
+    "tiro ou ponho?", a resposta foi uma terceira coisa — **cobra**.
+
+    Duas consequências práticas:
+    - **`npc_parse_shop` deixa de reclamar.** O aviso `discounted buying
+      price (1->0) is less than overcharged selling price` só sai quando o
+      preço de compra com desconto fica abaixo do de venda com
+      supervalorização, e no preço de compra isso não acontece. Item posto
+      pela regra nova **não** acrescenta linha de aviso na subida — os
+      avisos que sobram são todos de item posto antes dela.
+    - **A regra é "a partir de agora" e não foi aplicada para trás.** Os
+      itens de `Buy: 20` que já estavam nas nove lojas a 1 zeny continuam
+      a 1 zeny (9 zeny de lucro por clique, que o próprio dono chamou de
+      "não move nada"). Preço de peça que já está na mão dos jogadores não
+      se troca sem ele pedir.
 
 ## 5. Armadilhas deste ambiente
 

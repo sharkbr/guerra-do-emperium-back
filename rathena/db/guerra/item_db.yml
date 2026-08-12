@@ -1535,6 +1535,72 @@ Body:
     EquipLevelMin: 1
     View: 1345
 
+  - Id: 400308
+    # Touca Exotica. Entrou no Chapeleiro em 2026-08-12, no mesmo pedido que
+    # trouxe outras trinta pecas de cabeca - e foi a UNICA das trinta e uma
+    # que nao existia em item_db nenhum do nosso vendor. As outras trinta so
+    # precisaram de entrada de cliente e, duas delas, de arte.
+    #
+    # AegisName e View saem do CLIENTE, nao de palpite: a constante do
+    # accessoryid do bRO para o ClassNum 2269 e `ACCESSORY_Exotic_traditional_Hat`,
+    # e o `identifiedResourceName` do iteminfo_new.lub e `Exotic_traditional_Hat`.
+    #
+    # O View 2269 NAO existia no accessoryid.lub do nosso GRF de 2021 (o base
+    # para em 2203), entao esta peca precisou das duas ferramentas, nesta
+    # ordem: estende_accessoryid.py e depois instala_visual.py.
+    #
+    # OS BONUS SAO LEITURA DA DESCRICAO DO bRO, linha a linha, e as tres
+    # traducoes de frase para `bonus` foram CONFERIDAS contra item que o
+    # rAthena ja tem, em vez de supostas:
+    #
+    #   "Resistencia a monstros Normais e Chefes +N%"
+    #        -> bSubClass Class_Normal + Class_Boss, pelo 400047
+    #           (Runaway_Accelerator), que tem a mesma frase e os dois bonus
+    #   "Efetividade de cura +N%"
+    #        -> bonus bHealPower,N, pela Carta Lady Branca (4372), cuja
+    #           descricao no bRO e "Efetividade de cura +30%" e cujo script
+    #           no rAthena e `bonus bHealPower,30`
+    #   "Esquiva perfeita +10"
+    #        -> bonus bFlee2,10, pelo 1181, que traz a frase identica
+    #
+    # DEFM NAO E CAMPO DE item_db - o rAthena nao tem `MagicDefense` para
+    # equipamento (so para elemental). Os 15 de DEFM da descricao viram
+    # `bonus bMdef,15`, que e como as 1212 pecas do db/re/ fazem.
+    #
+    # Peso 600 e nao 60: o `Weight` do item_db e DEZ VEZES o "Peso:" da tela,
+    # e foi esse decimal que estragou cinco entradas deste arquivo em
+    # 2026-08-01 (ver o cabecalho da segunda leva).
+    #
+    # O CONJUNTO com a Carta Lady Branca (4372) esta em
+    # db/guerra/item_combos.yml - conjunto nao mora na entrada do item.
+    AegisName: Exotic_traditional_Hat
+    Name: "Touca Exótica"
+    Type: Armor
+    Weight: 600
+    Defense: 12
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 2269
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus2 bSubClass,Class_Normal,20;
+      bonus2 bSubClass,Class_Boss,20;
+      bonus bHealPower,10;
+      if (.@r>=7) {
+         bonus bFlee2,10;
+         bonus bHealPower,15;
+      }
+      if (.@r>=9) {
+         bonus bHealPower,15;
+         bonus2 bSubRace,RC_Player_Human,13;
+         bonus2 bSubRace,RC_Player_Doram,13;
+      }
+
 # =========================================================================
 # OVERRIDES - 2026-08-02
 # =========================================================================

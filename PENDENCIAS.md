@@ -45,6 +45,7 @@ sem confirmação in-game.
 | 22 itens novos em 7 lojas, e 2 que mudaram de vitrine | `prontera`, y=155 e y=161/173 | 2026-08-12 |
 | Tranqueiras (55 materiais pelo preço de compra) — **e o sprite de classe** | `prontera 151,131` | 2026-08-12 |
 | Chapeleiro sem a Boina Alada (10 itens, era 11) | `prontera 151,173` | 2026-08-12 |
+| **31 peças de cabeça nas três lojas da fileira de cima, e o preço novo** | `prontera`, y=173 | 2026-08-12 |
 | Arena de Combate com a Morte, em lugar novo | `prontera 147,180` | 2026-08-12 |
 | Guia de Prontera de volta ao ar | `prontera 154,187` | 2026-08-12 |
 | Ticket de Inventário e Rédea na Máquina | `prontera 167,199` / `comodo 214,185` | 2026-08-12 |
@@ -71,6 +72,29 @@ compra.** Ele saiu na manhã de 2026-08-12 e voltou na tarde, junto com a troca
 de preço. Pôr a loja de volta a 1 zeny com ele dentro devolve 74.999 de lucro
 por clique — o maior buraco que o projeto já teve. As duas decisões estão
 amarradas; os cabeçalhos do arquivo e do `scripts_guerra.conf` dizem isso.
+
+**As 31 peças de cabeça pedem uma conferência que as outras linhas não pedem:
+o PREÇO na tela.** Foi a rodada que estreou a regra 16 do `CLAUDE.md` — item
+com `Buy` no `item_db` entra pelo `Buy`, não a 1 zeny —, e o que decide é o que
+a janela da loja mostra:
+
+- **Chapeleiro (19 itens):** o **Elmo de Aegir** tem de aparecer a **200.000**.
+  Se aparecer a 1, a linha do `shop` não pegou e o buraco de 99.999 por clique
+  está aberto. Os outros quatro com preço são 5388, 19262, 18508 e 400194, os
+  três primeiros a 20.
+- **Ocleiro (27 itens):** dez com preço — o Fogo Fátuo (19380) a **10**, os
+  outros nove a 20.
+- **Retoqueiro (12 itens):** só a Aura Amaldiçoada (420105) a 20.
+
+**O número de avisos de `discounted buying price` tem de CAIR, não subir.** As
+16 peças com preço de compra não disparam o aviso; as 15 a 1 zeny disparam, e
+só elas. Aviso com item **fora** dessas 15 é engano de preço — o ID sai no
+próprio aviso.
+
+E a **Touca Exótica (400308)** é o único item da rodada que não existe no
+vendor: se ela não aparecer na vitrine, o problema é o `db/guerra/item_db.yml`,
+não a loja. Ela também é a única das 31 com conjunto nosso (Carta Lady Branca,
+`db/guerra/item_combos.yml`).
 
 **A Sombrios Totais (189,58) está conferida em jogo** — corpo, sorteio e a lista
 de prêmios, esta depois de tirar a indentação que colava as linhas

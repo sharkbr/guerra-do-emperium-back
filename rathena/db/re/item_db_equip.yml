@@ -78619,7 +78619,7 @@ Body:
       }
   - Id: 15920
     AegisName: Charm_Of_Flame_Heart_BR
-    Name: Flaming Heart    # !todo check english name
+    Name: "Coraçãozinho Flamejante"
     Type: Armor
     Weight: 200
     Locations:
@@ -78632,7 +78632,7 @@ Body:
       bonus2 bIgnoreDefClassRate,Class_Normal,3*((readparam(bStr)+readparam(bLuk))/15);
   - Id: 15921
     AegisName: Charm_Of_Nature_BR
-    Name: Charm Of Great Nature
+    Name: "Natureza Pequenina"
     Type: Armor
     Weight: 200
     Locations:
@@ -78645,7 +78645,7 @@ Body:
       bonus2 bIgnoreMdefClassRate,Class_Normal,3*((readparam(bInt)+readparam(bDex))/15);
   - Id: 15922
     AegisName: Charm_Of_Frozen_BR
-    Name: Charm Of Mistic Frozen
+    Name: "Gelinho Místico"
     Type: Armor
     Weight: 200
     Locations:
@@ -78658,7 +78658,7 @@ Body:
       bonus bHealPower,(readparam(bAgi)+readparam(bVit))/15;
   - Id: 15923
     AegisName: Charm_Of_Wind_BR
-    Name: Charm of Leafwind
+    Name: "Ventinho Bruto"
     Type: Armor
     Weight: 200
     Locations:
@@ -169561,7 +169561,7 @@ Body:
       NoAuction: true
   - Id: 400307
     AegisName: Ally_of_the_Demons
-    Name: Ally of the Demons
+    Name: "Faixa da Inquisição"
     Type: Armor
     View: 2268
     Weight: 500
@@ -180852,7 +180852,7 @@ Body:
       bonus bMatk,BaseLevel;
   - Id: 410004
     AegisName: Gambler_Seal_
-    Name: Gambler's Seal
+    Name: "Marcas de Comodo"
     Type: Armor
     Buy: 20
     Weight: 500
@@ -180971,7 +180971,7 @@ Body:
       }
   - Id: 410009
     AegisName: Rainbow_Star_
-    Name: Rainbow Star
+    Name: "Diadema do Orgulho"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -181201,7 +181201,7 @@ Body:
       }
   - Id: 410024
     AegisName: Ribbon_Of_Life_J_
-    Name: Twin Ribbon of Gemini
+    Name: "Laçarotes Vitalícios"
     Type: Armor
     View: 575
     Weight: 300
@@ -181307,7 +181307,7 @@ Body:
       }
   - Id: 410028
     AegisName: Wonder_Egg_Basket_
-    Name: Wonder Egg Basket
+    Name: "Cesta das Maravilhas"
     Type: Armor
     Buy: 20
     View: 2055
@@ -181603,7 +181603,7 @@ Body:
       }
   - Id: 410058
     AegisName: YinYang_Earring_Y_
-    Name: Yinyang Earring (Yellow)
+    Name: "Brincos Yin-Yang"
     Type: Armor
     Buy: 20
     Weight: 500
@@ -181693,7 +181693,7 @@ Body:
          bonus bFixedCastrate,-70;
   - Id: 410065
     AegisName: Diving_Goggles_
-    Name: Diving Goggles
+    Name: "Visor de Mergulho"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -181987,7 +181987,7 @@ Body:
       }
   - Id: 410089
     AegisName: Supplement_P_Income_
-    Name: Powered Income
+    Name: "Escuta Avançada"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -182118,7 +182118,7 @@ Body:
          bonus bAspd,2;
   - Id: 410097
     AegisName: Pope_Ribbon_R_
-    Name: Red Pope Ribbon
+    Name: "Lacinhos Yin-Yang"
     Type: Armor
     View: 2152
     Weight: 100
@@ -182283,7 +182283,7 @@ Body:
       }
   - Id: 410110
     AegisName: Fluffy_Lovely_Fox_
-    Name: Fluffy Lovely Fox
+    Name: "Raposa Risonha"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -182996,7 +182996,7 @@ Body:
          bonus bDelayrate,-15;
   - Id: 410186
     AegisName: Rebel_Pocket_Watch_
-    Name: Rebellion Pocket Watch
+    Name: "Relógio de Bolso dos Rebeldes"
     Type: Armor
     View: 2289
     Weight: 100
@@ -186423,7 +186423,7 @@ Body:
     View: 2206
   - Id: 420105
     AegisName: Curse_Eats_the_World
-    Name: World-erosive Curse
+    Name: "Aura Amaldiçoada"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -187152,7 +187152,7 @@ Body:
     View: 8
   - Id: 420180
     AegisName: Eis_Spinne
-    Name: Eispinne
+    Name: "Espinha de Brinaranha"
     Type: Armor
     Weight: 100
     Locations:

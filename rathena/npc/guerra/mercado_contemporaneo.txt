@@ -53,6 +53,43 @@
 //= Traje Protetor (19381) no Retoqueiro, citado logo abaixo.
 //=
 //= ------------------------------------------------------------
+//= 2026-08-12, MESMO DIA, A TARDE: A REGRA MUDOU
+//=
+//= "Todo item a partir de agora que tiver valor de venda a gente
+//= vende com o valor de compra dele" - decisao do dono do
+//= projeto, no meio da rodada de 31 chapeus descrita abaixo.
+//=
+//= E a mesma saida que a Tranqueiras tinha estreado de manha
+//= (npc/guerra/tranqueiras.txt), agora virada regra geral: em
+//= vez de PODAR a peca cara da vitrine, cobra-se por ela o que
+//= o item_db diz que ela custa. Fecha o exploit sem tirar nada
+//= de ninguem, e e por isso que a Boina Alada nao precisaria
+//= ter saido se a regra existisse de manha.
+//=
+//= NA PRATICA, ao por item novo aqui:
+//=
+//=   `Buy` no item_db  ->  o preco da loja e esse `Buy`
+//=   sem `Buy` nenhum  ->  1 zeny, como sempre
+//=
+//= Nao ha meio termo, e o motivo e aritmetico: revenda paga
+//= `Buy/2`, entao qualquer preco ABAIXO de `Buy` deixa lucro.
+//=
+//= De quebra, some o aviso: `npc_parse_shop` so reclama quando
+//= o preco de compra com desconto fica abaixo do de venda com
+//= supervalorizacao, e no preco de compra isso nao acontece.
+//= Item posto pela regra nova NAO acrescenta linha de
+//= `discounted buying price` na subida - os avisos que sobram
+//= sao todos de item posto ANTES dela.
+//=
+//= A REGRA E "A PARTIR DE AGORA" e nao foi aplicada para tras:
+//= os itens de `Buy: 20` que ja estavam nas nove lojas a 1 zeny
+//= continuam a 1 zeny. Sao 9 zeny de lucro por clique, que o
+//= proprio dono ja tinha chamado de "nao move nada". Quem
+//= quiser uniformizar um dia mexe nas linhas antigas; a decisao
+//= de nao mexer agora foi para nao trocar preco de peca que ja
+//= esta na mao dos jogadores sem ele pedir.
+//=
+//= ------------------------------------------------------------
 //= COMO A LISTA FOI RESOLVIDA
 //=
 //= A lista veio em portugues do bRO, que nao e o idioma de
@@ -283,6 +320,59 @@
 // vivem em db/guerra/item_db.yml, na secao OVERRIDES - a versao
 // do db/re/ e a do kRO, com outros efeitos, e nao bate com a
 // descricao que o cliente mostra.
+// RODADA DE 2026-08-12 (tarde): entraram NOVE, e a loja foi de
+// dez para dezenove. Faz parte de um pedido de 31 pecas de
+// cabeca que caiu nas tres lojas desta fileira de uma vez -
+// nove aqui, quinze no Ocleiro, sete no Retoqueiro.
+//   +  18728  Elmo de Aegir           [1]  (View 870)
+//   + 400203  Quepe do Miau-mirante   [1]  (View 2177)
+//   +  19262  Tiara da Bruxa          [1]  (View 1644)
+//   +  19106  Veu das Gemas Sagradas  [1]  (View 1420)
+//   +   5388  Chapeu de Jiboia        [1]  (View 393)
+//   +  18508  Coroa do Garuda         [1]  (View 677)
+//   + 400308  Touca Exotica           [1]  (View 2269)
+//   + 400307  Faixa da Inquisicao     [1]  (View 2268)
+//   + 400194  Enfeite de Cerejeira    [1]  (View 2162)
+//
+// O ELMO DE AEGIR E O CASO QUE MUDOU A REGRA DA CASA. Ele tem
+// `Buy: 200000` no item_db, ou seja revende por 100.000: a 1
+// zeny seriam 99.999 de lucro por clique, em laco - cinco vezes
+// o buraco da Boina Alada, que tinha saido desta mesma loja
+// naquela manha. Levado ao dono do projeto, ele nao pediu a
+// poda: pediu preco. Ver o cabecalho, "A REGRA MUDOU".
+//
+// Por isso a linha do `shop` abaixo NAO e mais toda a 1 zeny.
+// Dos nove, cinco tem `Buy` no item_db e entram por ele:
+//   18728  200000     5388  20     19262  20
+//   18508      20   400194  20
+// Os outros quatro (400203, 19106, 400308, 400307) nao tem
+// `Buy` nenhum, nao valem nada revendidos, e ficam a 1 zeny.
+//
+// A TOUCA EXOTICA (400308) FOI A UNICA DAS 31 QUE NAO EXISTIA.
+// Nem em db/re/ nem no nosso: entrou como placeholder em
+// db/guerra/item_db.yml, com os bonus lidos da descricao do
+// bRO, e com o conjunto da Carta Lady Branca espelhado em
+// db/guerra/item_combos.yml. As tres frases de bonus da
+// descricao foram conferidas contra item que o rAthena ja tem
+// antes de virar `bonus` - o porque de cada uma esta na propria
+// entrada. Foi tambem a unica que precisou das DUAS ferramentas
+// de visual (o View 2269 nao existia no accessoryid de 2021).
+//
+// A FAIXA DA INQUISICAO (400307) repetiu a licao de sempre: o
+// rAthena a tinha, o CLIENTE nao - sem entrada no itemInfo.lua
+// o item aparece sem nome e sem icone na propria vitrine. Veio
+// do bRO pelo completa_iteminfo.py, e o `Name` do servidor, que
+// estava em ingles ("Ally of the Demons"), foi sincronizado
+// pelo nomes_pt_item_db.py.
+//
+// O VEU DAS GEMAS SAGRADAS (19106) e Head_Low E Head_Mid E
+// Head_Top ao mesmo tempo - o item_db marca os tres. Foi pedido
+// como topo, equipa como topo, e esta aqui por isso; so vale
+// saber que ele tambem cabe nas outras duas lojas da fileira, e
+// que nao e engano ve-lo ocupar outro slot no jogo.
+//
+// Os outros seis nao custaram nada: o rAthena tinha, o cliente
+// tinha em portugues, e o valida_visual.py deu 8 de 8 nos seis.
 prontera,151,173,4	script	Chapeleiro	1_M_MERCHANT,{
 	callshop "Chapeleiro#loja",0;
 	end;
@@ -291,7 +381,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1
+-	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:200000,400203:1,19262:20,19106:1,5388:20,18508:20,400308:1,400307:1,400194:20
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -402,6 +492,73 @@ OnInit:
 // Nao custou nada: arte inteira nos GRFs e entrada no itemInfo.lua, 0
 // faltando no valida_visual.py. E nao tem `Buy` no item_db, entao nao
 // ha revenda e ela nao entra no aviso de `discounted buying price`.
+// RODADA DE 2026-08-12 (tarde): entraram QUINZE de uma vez, e a
+// loja foi de doze para vinte e sete - a maior leva que este
+// mercado ja recebeu. Parte do mesmo pedido de 31 pecas de
+// cabeca que encheu as tres lojas desta fileira.
+//   + 410089  Escuta Avancada         [1]  (View 2148)
+//   + 410065  Visor de Mergulho       [1]  (View 2116)
+//   + 410058  Brincos Yin-Yang        [1]  (View 2088)
+//   + 410028  Cesta das Maravilhas    [1]  (View 2055)
+//   + 410024  Lacarotes Vitalicios    [1]  (View 575)
+//   +  19437  Adorno Florido               (View 1830)
+//   +  19380  Fogo Fatuo                   (View 1760)
+//   +  19495  Asinhas Discretas       [1]  (View 680)
+//   + 410186  Relogio de Bolso dos
+//             Rebeldes                [1]  (View 2289)
+//   + 410130  Orelhas Fantasmagoricas [1]  (View 2226)
+//   + 410110  Raposa Risonha          [1]  (View 2178)
+//   + 410097  Lacinhos Yin-Yang       [1]  (View 2152)
+//   + 410009  Diadema do Orgulho      [1]  (View 1019)
+//   + 410004  Marcas de Comodo        [1]  (View 1202)
+//   +  19452  Ornamento Divino        [1]  (View 1093)
+//
+// PRECO PELA REGRA NOVA (ver o cabecalho): dez destes quinze
+// tem `Buy` no item_db e entram por ele, nao por 1 zeny.
+//   19380  10   |  410004  20   410009  20   410028  20
+//                  410058  20   410065  20   410089  20
+//                  410110  20    19452  20    19495  20
+// Os cinco sem `Buy` (410024, 410097, 410130, 410186, 19437)
+// ficam a 1 zeny. Nenhum dos quinze e caro: o maior lucro de
+// revenda possivel na leva inteira seria de 9 zeny, e mesmo
+// esse esta fechado.
+//
+// TRES DOS IDS DO PEDIDO VIERAM COM UM DIGITO A MENOS, e os
+// tres foram achados pelo NOME na tabela do bRO antes de virar
+// linha de loja. Nenhum dos tres numeros errados existia em
+// tabela nenhuma, entao a loja simplesmente nao teria aberto
+// com eles - mas dois dos tres tinham vizinho plausivel:
+//     1943  ->  19437   "Adorno Florido". O 1943 EXISTE: e o
+//                       Erhu, uma ARMA de tres covas com nome
+//                       coreano no cliente. Teria entrado numa
+//                       vitrine de chapeu sem erro nenhum.
+//    41009  ->  410097  "Lacinhos Yin-Yang". O bRO tem DOIS com
+//                       esse nome (410096 sem cova, 410097 com);
+//                       o `[1]` do pedido decidiu.
+//    42018  ->  420180  "Espinha de Brinaranha", que foi para o
+//                       Retoqueiro - ver la.
+//
+// A DIADEMA DO ORGULHO (410009) E A DIADEMA ARCO-IRIS (18894),
+// que ja estava nesta loja, SAO O MESMO DESENHO: as duas usam
+// o View 1019, e os AegisName so diferem pelo `_` do fim
+// (`Rainbow_Star_` e `Rainbow_Star`). Nao e duplicata - a de
+// 410009 tem cova e pede nivel 100, a de 18894 nao tem cova e
+// pede 70. As duas na mesma vitrine sao de proposito.
+//
+// ONZE DOS QUINZE ESTAVAM FORA DO itemInfo.lua e apareceriam
+// sem nome e sem icone na propria vitrine. Vieram do bRO pelo
+// completa_iteminfo.py, e os `Name` do servidor, todos em
+// ingles, foram sincronizados pelo nomes_pt_item_db.py. E a
+// mesma licao do 410125, do 410067/410026 e do 410010 - a
+// faixa 410xxx e nova demais para o itemInfo.lua de 2021, e
+// quase todo item dela vai precisar disso.
+//
+// UM PRECISOU DE ARTE: as Orelhas Fantasmagoricas (410130).
+// Nelas o cliente ja tinha o nome em portugues, o que engana -
+// nome nao e arte. O valida_visual.py acusou 5 de 5 faltando, e
+// a cura foi o par de sempre, nesta ordem: estende_accessoryid.py
+// (o View 2226 nao existia no accessoryid de 2021) e depois
+// instala_visual.py. Os quinze fecham 8 de 8 hoje.
 prontera,155,173,4	script	Ocleiro	1_F_MERCHANT_01,{
 	callshop "Ocleiro#loja",0;
 	end;
@@ -410,7 +567,7 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:20,410065:20,410058:20,410028:20,410024:1,19437:1,19380:10,19495:20,410186:1,410130:1,410110:20,410097:1,410009:20,410004:20,19452:20
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 //
@@ -450,6 +607,54 @@ OnInit:
 // na propria vitrine. Veio do bRO pelo completa_iteminfo.py, e o `Name` do
 // servidor, que estava em ingles ("Guardian Claus"), foi sincronizado pelo
 // nomes_pt_item_db.py. Arte nao faltou: 8 de 8 no valida_visual.py.
+// RODADA DE 2026-08-12 (tarde): entraram SETE, e a fileira foi
+// de cinco para doze. Fecha o pedido de 31 pecas de cabeca que
+// caiu nas tres lojas desta fileira de uma vez.
+//   + 420187  Lapela Sagrada             (View 2337)
+//   + 420180  Espinha de Brinaranha      (View 2317)
+//   + 420105  Aura Amaldicoada           (View 2020)
+//   +  15923  Ventinho Bruto             (View 1262)
+//   +  15922  Gelinho Mistico            (View 1262)
+//   +  15921  Natureza Pequenina         (View 1264)
+//   +  15920  Coracaozinho Flamejante    (View 1261)
+//
+// Nenhum tem cova, e nao e engano de transcricao: o pedido
+// listou os sete sem `[1]` e o item_db concorda com os sete.
+//
+// PRECO PELA REGRA NOVA (ver o cabecalho): so a Aura
+// Amaldicoada tem `Buy` no item_db (20), e entra por ele. Os
+// outros seis nao valem nada revendidos e ficam a 1 zeny.
+//
+// OS QUATRO AMULETOS SAO UMA FAMILIA, e vieram juntos de
+// proposito: 15920/15921/15922/15923 sao os quatro elementos, e
+// cada um fecha conjunto com a capa do mesmo nome no
+// db/re/item_combos.yml do rAthena (Manteau_Of_Flame_Heart,
+// Manteau_Great_Nature, Manteau_Of_Mistic_Froz,
+// Manteau_Of_Leafwind). As capas NAO estao a venda aqui - quem
+// quiser fechar conjunto caca a capa, como acontece com a Boina
+// Alada desde a poda desta manha. O Ventinho e o Gelinho
+// dividem o View 1262, o que e do proprio jogo e nao erro
+// nosso: os dois amuletos desenham igual na cabeca.
+//
+// O ID DA ESPINHA DE BRINARANHA VEIO COM UM DIGITO A MENOS no
+// pedido (42018), e o 42018 nao existe em tabela nenhuma - nem
+// no rAthena, nem nos 18845 do bRO. Achado pelo nome: 420180,
+// `Eis_Spinne`. Ver o Ocleiro, que teve outros dois casos.
+//
+// SEIS DOS SETE ESTAVAM FORA DO itemInfo.lua - so a Lapela
+// Sagrada tinha entrada, e em portugues. Os seis vieram do bRO
+// pelo completa_iteminfo.py, e os `Name` do servidor, todos em
+// ingles ("Eispinne", "World-erosive Curse", "Charm of
+// Leafwind" e os outros tres), foram sincronizados pelo
+// nomes_pt_item_db.py.
+//
+// A LAPELA SAGRADA (420187) FOI O CASO INVERTIDO, e vale
+// registrar porque engana: ela era a UNICA dos sete com nome em
+// portugues no cliente, e a unica dos sete SEM ARTE - 5 de 5
+// faltando no valida_visual.py. Nome no itemInfo.lua nao diz
+// nada sobre arte. Curada pelo par estende_accessoryid.py (o
+// View 2337 nao existia no accessoryid de 2021) mais
+// instala_visual.py. Os sete fecham 8 de 8 hoje.
 prontera,159,173,4	script	Retoqueiro	4_M_HUMERCHANT,{
 	callshop "Retoqueiro#loja",0;
 	end;
@@ -458,7 +663,7 @@ OnInit:
 	placadevenda "Cabeça baixo";
 	end;
 }
--	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:20,15923:1,15922:1,15921:1,15920:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 

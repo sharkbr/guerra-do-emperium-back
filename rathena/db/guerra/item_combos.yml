@@ -237,3 +237,20 @@ Body:
       bonus bVariableCastrate,-10;
       bonus2 bSubRace,RC_Player_Human,5;
       bonus2 bSubRace,RC_Player_Doram,5;
+
+  # ----- Touca Exotica + Carta Lady Branca -----
+  # NAO espelha nada do db/re/: a Touca Exotica (400308) e peca que o nosso
+  # vendor nao tem, criada em db/guerra/item_db.yml em 2026-08-12. O rAthena
+  # nunca ouviu falar dela, entao este conjunto so existe aqui.
+  #
+  # A linha vem da descricao do bRO da propria Touca, que traz o conjunto por
+  # extenso: "^FA4E09[Carta Lady Branca]^000000 / Efetividade de cura +60%
+  # adicional". "Adicional" e o que decide o `bonus` ser somado e nao trocado -
+  # a Touca ja da +10 de base, +15 no +7 e +15 no +9, e a carta sozinha da
+  # outros +30 (db/re/item_db_etc.yml, 4372).
+  - Combos:
+      - Combo:
+          - Exotic_traditional_Hat    # 400308 - Touca Exotica
+          - Bacsojin_Card             # 4372   - Carta Lady Branca
+    Script: |
+      bonus bHealPower,60;
