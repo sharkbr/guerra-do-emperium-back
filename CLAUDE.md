@@ -324,6 +324,48 @@ Produziram diagnóstico falso e custaram retrabalho:
   `desk_h_02.rsm` (4 nós, raiz em `x = -129,35`) a medida junta dá **148,90 de
   largura — 29,8 células** em vez de 20,02 (4,0 células). O número é plausível
   o bastante para condenar um modelo por "não cabe". Medir **nó a nó**.
+  **E medir nó a nó não diz onde é o CENTRO da peça** — para isso é preciso
+  remontar os nós, e a regra é: o vértice do nó **raiz** entra como
+  `vértice − pos_raiz`, e o do **filho** deslocado de `pos_filho − pos_raiz`.
+  Sem isso as caixas não se encontram e a leitura parece corrompida: nas
+  `prn_statue_*` a base dá `X −21,50..−14,45` e a figura `X −5,13..3,91`, uma
+  fora da outra. Quem remonta acha a base em **−3,53..+3,53 nos dois eixos** —
+  um quadrado perfeitamente centrado —, e é essa coincidência que prova a
+  leitura. Consequência prática: **a origem do modelo é o centro da base**, e é
+  ela que o `edita_mapa.py` põe na célula.
+- **No `.rsm`, a ALTURA é o Z e não o Y — a planta de um móvel é X × Y.** Ler
+  X × Z troca profundidade por altura e devolve uma planta plausível e errada,
+  na direção que faz um móvel parecer caber onde não cabe: a escrivaninha do
+  Centro da Ordem é 4,0 × 2,8 células e pelo eixo errado sai 3,9 × 1,5. A prova
+  é barata e não é teórica — medir uma peça alta e fina: a coluna
+  `내부소품\기둥2` dá 6,34 × 6,34 × **30,21** e a estátua `모로코\동상` dá
+  8,57 × 5,43 × **29,25**. O eixo de 30 é o vertical.
+  Isso dá de graça **de que lado é a frente** de um móvel — o encosto é o lado
+  do Y onde o modelo é alto (`+Y` nos dois sofás do salão) — e daí a rotação,
+  que antes era palpite: **`+Y` → (sen θ, cos θ) em (X, Z)**, ou seja em
+  **rot 0 as costas apontam para o norte** e em rot 90 para leste. Consequência
+  que engana sozinha: **rot 0/180 põem a LARGURA no eixo leste-oeste, e 90/270
+  no norte-sul** — o contrário do que a intuição sugere. Tudo isto está medido
+  e conferido contra os 22 usos oficiais do sofá em `prt_cas`; a ferramenta é
+  `ferramentas/mede_rsm.py`, que já imprime os eixos rotulados.
+- **Modelos de uma mesma família numerada NÃO têm a mesma frente, e supor que
+  têm vira metade deles de costas.** As oito `prontera\prn_statue_0*.rsm` são
+  da mesma pasta, do mesmo conjunto e da mesma cara — e pelo menos uma nasceu
+  virada ao contrário: em `prt_lib`, lado a lado na mesma parede sul e olhando
+  as duas para o norte, a `_08` está em **rot 180** e a `_02` em **rot 0**.
+  Calibrar a rotação de uma e reusar o número nas outras sete põe estátua de
+  costas, calado. **Medir por modelo**, e a medida é de graça: varrer os `.rsw`
+  do GRF do bRO pelo `filename` dá as instâncias oficiais, e o `.gat` em volta
+  de cada uma diz para que lado está a parede — estátua encostada em parede
+  olha para fora dela. A convenção de ângulo é a mesma do sofá (**rot 0 olha
+  para o sul, 90 oeste, 180 norte, 270 leste**); o que muda de modelo para
+  modelo é qual ângulo é o "de frente".
+- **`mede_rsm.py` que não sobra 0 byte não vale nada.** Formato de malha é
+  cheio de campo opcional por versão, e um campo lido a menos desalinha tudo o
+  que vem depois **devolvendo números do mesmo jeito**. O `sofa_01.rsm` sobra
+  exatamente 8 bytes se o leitor parar nos nós e não ler o rabicho de quadros
+  de posição e caixas de volume — e as dimensões que ele imprime até ali
+  parecem boas.
 - **`source` do mysql.exe quebra com barra invertida** (`\U` = comando
   desconhecido). Usar barras normais no caminho.
 - **São TRÊS `map_cache.dat`, e a `prontera` não está no grande.** O rAthena

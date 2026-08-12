@@ -1,0 +1,208 @@
+//===== Guerra do Emperium ===================================
+//= Egebreu - o comprador de caveiras
+//===== Onde =================================================
+//= auction_01 192,72   Egebreu, virado para 191,72 (oeste)
+//=
+//= E o Centro da Ordem (npc/guerra/centro_da_ordem.txt), o salao
+//= de Prontera. A celula e a fala foram DADAS pelo dono em
+//= 2026-08-11.
+//=
+//= A CELULA E A DA ESCRIVANINHA, e isso nao e coincidencia. O
+//= movel 3D do salao (data\model\prontera_re\desk_h_02.rsm,
+//= plantado no .rsw) mede 4,0 x 2,8 celulas e cobre x191-192 em
+//= y70-73. O Egebreu fica na quina sudeste desse retangulo,
+//= virado para dentro dele - atende de tras da mesa.
+//=
+//= 192,72 ANDA, e por um motivo que pode mudar: das oito celulas
+//= da pegada da mesa, so CINCO estao fechadas por setwall
+//= (191,70-73 e 192,73). As tres de fora - 192,70, 192,71 e
+//= 192,72 - sao justamente "a metade leste do tampo", e estao
+//= registradas no PENDENCIAS.md secao 1 como possiveis de fechar.
+//=
+//= **SE ALGUEM FECHAR AS TRES, O EGEBREU FICA EM CELULA
+//= BLOQUEADA.** Ele continua clicavel (NPC nao precisa de chao
+//= andavel para ser falado), mas ninguem mais encosta nele, e a
+//= mudanca nao da erro nenhum. Quem for fechar aquelas tres
+//= celulas decide antes o que fazer com esta linha: ou tira
+//= 192,72 do setarray da mesa, ou move o Egebreu para 193,72,
+//= que anda, esta livre e fica UMA celula a leste - de la ele
+//= olha a mesa de fora, com facing 2 igual.
+//=
+//= A celula foi conferida no map_cache do rAthena antes de
+//= escrever: `auction_01` esta no `db/map_cache.dat`, o grande
+//= (nao esta nem no `db/import/` nem no `db/re/`), e la 192,72 e
+//= 191,72 sao tipo 0, andaveis. Nenhum NPC ocupa nenhuma das
+//= duas: os quatro Auction Broker deste salao ficavam em 177/182
+//= x 68/75 e estao desligados pelo centro_da_ordem.txt, e os
+//= oito guardas do guardas_do_centro.txt estao todos longe.
+//===== Descricao ============================================
+//= O DESTINO DA CAVEIRA HUMANA. Ate 2026-08-11 o item 30995 caia
+//= do jogador morto na arena (o OnPCKillEvent do
+//= npc/guerra/honra_de_combate.txt, desde 2026-08-08) e NAO TINHA
+//= ONDE SER GASTO - estava no PENDENCIAS.md secao 4b, e a
+//= descricao da propria Moeda Nova ja prometia esta troca ("em
+//= troca de Caveira Humana", posta pelo instala_item.py). Este
+//= arquivo fecha isso. A promessa deixou de ser promessa.
+//=
+//= Ele e, com isso, a TERCEIRA fonte de Moeda Nova em jogo:
+//=
+//=   Logue e Ganhe   db/guerra/attendance.yml   240 por conta/mes,
+//=                                              de graca
+//=   Alleria         comodo 221,182             1 por Flor
+//=                                              Visionaria
+//=   Egebreu         aqui                       1 por Caveira
+//=                                              Humana
+//=
+//= E a primeira que paga por PvP. As duas de cima sao PvE ou
+//= presenca; esta so enche com jogador matando jogador na arena,
+//= e com as tres condicoes do honra_de_combate.txt cumpridas (os
+//= dois em nivel 200, o morto com 1 ponto de Honra ou mais, e a
+//= morte passando pelo anti-conluio do .Limite).
+//=
+//= NAO HA RISCO DE INFLACAO NOVA AQUI, e vale dizer por que: a
+//= torneira nao e este NPC, e o honra_de_combate.txt. Ele ja
+//= limita quantas caveiras nascem; o Egebreu so da destino as que
+//= nasceram. Se um dia a Moeda inflacionar por este caminho, o
+//= numero a mexer e o `.preco` do OnInit abaixo, ou o anti-conluio
+//= de la - nao os dois ao mesmo tempo.
+//===== Por que dialogo e nao loja de troca ==================
+//= O PENDENCIAS.md secao 4b dizia "quando for escrito, e `barter`
+//= e nao `itemshop`". Continua verdade, e nao se aplica: o pedido
+//= do dono nao e janela de loja nenhuma, e caixa de dialogo com
+//= Sim/Nao - a mesma forma da Alleria em comodo 221,182.
+//=
+//= A armadilha do CLAUDE.md secao 4.10 (o `itemshop` recusa moeda
+//= `NoSell` no `pc_can_sell_item`) so alcanca quem abre loja. Aqui
+//= o pagamento e `getitem` e a cobranca e `delitem`, que nao
+//= passam por checagem de venda nenhuma - a Caveira ser `NoSell`
+//= e a Moeda ser `NoTrade`/`NoDrop`/`NoSell` nao atrapalha em
+//= nada. Mesmo caminho que a Alleria usa desde 2026-08-08.
+//=
+//= De quebra, dialogo poupa a outra metade que loja de troca tem:
+//= o nome do item na janela de barter vem do `itemInfo.lua` do
+//= CLIENTE, nao do servidor (CLAUDE.md secao 4.9). Numa caixa de
+//= `mes` o texto e nosso, e ele esta aqui.
+//===== Ele compra TUDO de uma vez ===========================
+//= "Sim" leva TODAS as caveiras da bolsa - nao uma, nem um numero
+//= digitado. E a mesma decisao da Alleria, e pelo mesmo motivo:
+//= poupa a caixa de `input`, que precisaria de validacao a mao
+//= (negativo, zero, mais do que se tem). O pedido diz "1 pra 1",
+//= que e a TAXA, e a taxa e respeitada seja qual for a
+//= quantidade.
+//=
+//= A ORDEM DAS DUAS LINHAS IMPORTA, e NAO HA checkweight:
+//=
+//=   delitem primeiro   esvazia o slot inteiro da caveira, entao
+//=                      o getitem seguinte tem sempre onde entrar
+//=   peso nao aperta    a Caveira Humana pesa 0 e a Moeda Nova
+//=                      pesa 0 - a troca nao muda o peso em nada
+//=
+//= Um checkweight aqui seria pergunta sem resposta possivel: os
+//= dois itens pesam zero, entao ele nunca recusaria nada. Ver o
+//= cabecalho do flores_da_ordem.txt, que tem a mesma secao por um
+//= motivo parecido mas nao igual (la a flor pesa 10, e a troca
+//= ALIVIA a bolsa).
+//=
+//= E O `getitem` NAO PODE LARGAR NO CHAO aqui, o que costuma ser
+//= a armadilha (CLAUDE.md secao 5): com a mochila cheia o
+//= `buildin_getitem` cai num `map_addflooritem`, mas a Moeda Nova
+//= e `NoDrop` e o `pc_candrop` recusa - a moeda se perde e o
+//= cliente avisa, em vez de aparecer no chao do salao. O delitem
+//= vir antes torna isso quase impossivel de acontecer de todo
+//= jeito: o slot da caveira acabou de vagar.
+//===== As palavras sao do dono, inclusive as duas divergencias ==
+//= A fala foi gravada como veio, sem correcao. Duas coisas nela
+//= nao batem com o servidor, e ficam registradas aqui em vez de
+//= serem consertadas por conta propria - mesma natureza da
+//= Mascara de Minorous (CLAUDE.md secao 4.14) e do "Cranios
+//= Humanos" do guarda de 184,80:
+//=
+//= 1) "Arena de Prontera" na primeira caixa e "Arena de Combate"
+//=    na terceira sao o MESMO lugar, chamado de dois jeitos na
+//=    mesma conversa. O que existe no servidor e a **Arena de
+//=    Combate** (a porta em prontera 154,187,
+//=    npc/guerra/arena_de_combate.txt, que leva a pvp_n_1-5).
+//=    Nao ha nada chamado "Arena de Prontera" - embora ela FIQUE
+//=    em Prontera, entao a frase nao mente, so nao e o nome.
+//=
+//= 2) "24/7" e a unica expressao de fora do mundo do jogo em todo
+//=    o dialogo do servidor. Foi pedida assim.
+//=
+//= As duas se consertam trocando uma palavra na linha, se o dono
+//= quiser. Nenhuma quebra nada.
+//===== Notas ================================================
+//= Sprite 404 (4_M_UNCLEKNIGHT), e as DUAS conferencias foram
+//= feitas, como manda a regra desde a armadilha do 10605:
+//=
+//=   npcidentity.lub do NOSSO cliente   jobtbl[404] =
+//=                                      JT_4_M_UNCLEKNIGHT
+//=   src/map/npc.hpp do rAthena         JT_4_M_UNCLEKNIGHT = 404
+//=                                      (NPC_RANGE2_START = 400,
+//=                                      e ele e o quarto depois)
+//=   data.grf                           data\sprite\npc\
+//=                                      4_M_UNCLEKNIGHT.spr e .act
+//=
+//= As tres batem. O nome do arquivo de sprite nao foi chutado: sai
+//= do `JobNameTable` do `jobname.lub` do proprio cliente, indexado
+//= pela constante do npcidentity - que e como o cliente resolve.
+//=
+//= Facing 2 (oeste), calculado da celula que o dono mandou olhar
+//= pela tabela do dirx/diry (src/map/unit.cpp:70), que anda
+//= ANTI-HORARIA a partir do norte: 0 norte, 2 oeste, 4 sul, 6
+//= leste. De 192,72 para 191,72 e x-1, ou seja oeste, ou seja 2.
+//= Ver guardas_do_centro.txt, que tem a tabela inteira.
+//=
+//= CUIDADO AO CONFERIR EM JOGO: com a camera padrao deste cliente
+//= as direcoes caem na DIAGONAL da tela, entao o ponto cardeal nao
+//= e o que se ve. O que o pedido fixou foi a celula, e a celula
+//= esta certa.
+//=
+//= OS TRES NUMEROS moram no OnInit e nao espalhados pelo corpo,
+//= pelo mesmo motivo do maquina.txt e da Alleria: se um ID ou o
+//= preco mudar, muda-se numa linha so.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+auction_01,192,72,2	script	Egebreu	404,{
+	mes "[Egebreu]";
+	mes "Compro suas caveiras, pagando com";
+	mes "^0000FFMoedas Novas^000000! Mas precisam ser caveiras";
+	mes "humanas, daquelas obtidas na Arena de";
+	mes "Prontera. 1 pra 1. Tem interesse?";
+	next;
+
+	if (select("Sim:Não") == 2) {
+		mes "[Egebreu]";
+		mes "Imaginei...";
+		close;
+	}
+
+	.@qtd = countitem(.caveira);
+	if (.@qtd == 0) {
+		mes "[Egebreu]";
+		mes "Você tem vontade só te falta ação, e uma";
+		mes "^0000FFCaveira Humana^000000! Chama alguem pra Arena de";
+		mes "Combate, e não morra! hahahaha";
+		close;
+	}
+
+	// A ORDEM IMPORTA, e o cabecalho explica por que nao ha
+	// checkweight: os dois itens pesam 0, e o delitem esvazia o
+	// slot da caveira antes de o getitem precisar de lugar.
+	delitem .caveira, .@qtd;
+	getitem .moeda, .@qtd * .preco;
+
+	mes "[Egebreu]";
+	mes "Feito! Estou aqui 24/7 só falar comigo";
+	close;
+
+OnInit:
+	.caveira = 30995;   // Caveira Humana, db/guerra/item_db.yml
+	.moeda   = 30998;   // Moeda Nova, db/guerra/item_db.yml
+	.preco   = 1;       // Moedas Novas por caveira - o "1 pra 1"
+	end;
+}

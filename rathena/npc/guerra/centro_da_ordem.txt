@@ -48,8 +48,8 @@
 //=
 //= e fechar/reabrir o cliente. O auction_02 da Ordem dos
 //= Exploradores NAO precisa disso: o bRO ja o chama assim.
-//===== A FONTE E A MESA NAO MORAM AQUI ======================
-//= Desde 2026-08-11 o salao tem duas pecas de cenario que NAO sao
+//===== A FONTE, A MESA E O SOFA NAO MORAM AQUI ==============
+//= Desde 2026-08-11 o salao tem TRES pecas de cenario que NAO sao
 //= NPC e nao estao neste arquivo: sao modelos 3D plantados no
 //= .rsw do mapa.
 //=
@@ -58,17 +58,25 @@
 //=   escrivaninha  celula 191.5,71.5  (centro do tapete do meio
 //=                 da ala leste)
 //=                 data\model\prontera_re\desk_h_02.rsm
+//=   sofa          celula 179.5,84.0  (eixo da alcova norte),
+//=                 rot 0 = encosto ao norte, olhando para o sul
+//=                 data\model\prontera\sofa_01.rsm
 //=
-//= As duas coordenadas sao FRACIONARIAS de proposito: os dois vaos
-//= tem largura par (4 e 8 celulas) e o centro deles cai na
-//= fronteira entre celulas -- nenhum inteiro o acerta. Ver
-//= CLAUDE.md secao 5.
+//= As tres coordenadas em x sao FRACIONARIAS de proposito: os
+//= vaos tem largura par (4, 8 e 2 celulas) e o centro deles cai
+//= na fronteira entre celulas -- nenhum inteiro o acerta. No sofa
+//= o `84.0` fica inteiro porque em y o vao e de uma celula so.
+//= Ver CLAUDE.md secao 5.
 //=
 //= MODELO NAO BLOQUEIA PASSAGEM. O override de .rsw nao toca o
-//= .gat, entao as duas pecas sao atravessaveis por natureza. A
+//= .gat, entao as tres pecas sao atravessaveis por natureza. A
 //= fonte esta em celula que ja era nao-andavel e nao precisou de
 //= nada; a mesa esta em chao aberto, e as cinco celulas dela sao
 //= fechadas por `setwall` no OnInit deste arquivo, la embaixo.
+//= **O SOFA NAO TEM setwall NENHUM ate agora** - as celulas dele
+//= (x177-182 em y83-85, 5,54 x 2,25 celulas) continuam andaveis,
+//= e da para atravessar o movel. Fechar e acrescentar os pares ao
+//= mesmo `setarray`, ou fazer um segundo bloco ao lado dele.
 //= As duas metades ficam em lugares diferentes: o desenho e do
 //= cliente, o bloqueio e do servidor.
 //=

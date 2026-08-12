@@ -53,6 +53,9 @@ PAREDE_RUINA = u'중국\\중국-폐가벽03.rsm'     # catálogo nº 39
 
 FONTE = u'oldcastle\\fountain.rsm'
 ESCRIVANINHA = u'prontera_re\\desk_h_02.rsm'
+SOFA = u'prontera\\sofa_01.rsm'
+ESTATUA_03 = u'prontera\\prn_statue_03.rsm'
+ESTATUA_08 = u'prontera\\prn_statue_08.rsm'
 
 RECEITA = {
     'izlude': {
@@ -130,11 +133,150 @@ RECEITA = {
     # prontera_re\prt_h_13) foram conferidas a parte no nosso GRF. O
     # `edita_mapa.py` so confere o caminho do .rsm -- textura que falta nao da
     # erro de parser, da superficie quebrada na tela.
+    #
+    # -- O SOFA DA ALCOVA NORTE (2026-08-11) --
+    #
+    # Pedido: `prontera\sofa_01.rsm` "entre as celulas 179,84 e 180,84, virado
+    # para frente, para 180,83". As tres coisas que o pedido fixa - o par de
+    # celulas, o eixo e o lado - caem em (179.5, 84.0) e rotacao 0.
+    #
+    # CELULA 179.5, 84.0. Mesma correcao de meia celula da fonte e da mesa, e
+    # desta vez ela veio JUNTO COM O PEDIDO: o dono pediu duas celulas
+    # (`179,84` e `180,84`), e o centro de um vao de largura 2 cai na fronteira
+    # entre elas -- mundo (400.0, 172.5). O `84.0` fica inteiro porque em Y o
+    # vao e de uma celula so.
+    #
+    # E o 179.5 nao e so aritmetica: e o eixo da ALCOVA NORTE. As tres cortinas
+    # (`커텐01`) do fundo estao em x175.4, **179.4** e 183.4, a renda de cima
+    # (`침대레이스2-1`) em 176.0, **179.5** e 182.9, e o forro de teto
+    # (`천정틀`) em **179.5**, 86.5. O sofa entra no eixo que a sala ja tinha.
+    #
+    # ROTACAO 0, e desta vez ha MEDIDA por tras, nao escolha. Foram tres passos:
+    #
+    #   1) Qual eixo do .rsm e a altura? O **Z**. Medido nos proprios modelos
+    #      deste salao: a coluna `기둥2` da 6,34 x 6,34 x 30,21 e a estatua
+    #      `동상` da 8,57 x 5,43 x 29,25. Logo X = largura, Y = profundidade.
+    #   2) De que lado do Y esta o encosto? **+Y**, nos dois sofas -- e o lado
+    #      onde o modelo e alto (Z 17,60 contra 9,18 do lado do assento).
+    #   3) Para onde aponta o +Y em cada rotacao? Calibrado nos QUATRO sofas
+    #      que o mapa ja tem (`리히타르젠\소파02`, x164,9 e x193,9): os quatro
+    #      estao em rot 90 e o que separa o par leste do oeste e o SINAL da
+    #      terceira escala (+1,50 contra -1,50), que espelha a profundidade.
+    #      O par leste encosta na parede leste, entao em rot 90 o +Y aponta
+    #      para +X. Os 22 usos oficiais em `prt_cas`/`prt_cas_q` fecham a
+    #      conta pelo outro lado: os de rot 270 tem parede colada a oeste.
+    #      Ou seja +Y -> (sin, cos) em (X, Z), e em **rot 0 o encosto aponta
+    #      para +Z, que e o norte** -- o sofa olha para o sul, para 180,83.
+    #
+    # Reparar que rot 0 e rot 180 poem a LARGURA no eixo leste-oeste, e 90/270
+    # a poem no norte-sul. Nao e o contrario, e confundir isso poria o sofa
+    # atravessado. As quatro pontes do fosso (`성_다리`, 58,97 de comprimento)
+    # confirmam: as duas de rot 90 estao nos corredores norte-sul de x175 e
+    # x184, e as duas de rot 180 nos vaos leste-oeste de y67 e y76.
+    #
+    # ESCALA 1,0, e aqui a oficial serve e a sala concorda. Os 22 usos no
+    # castelo de Prontera vao de 0,80 a 1,00, com 1,00 sendo o mais comum. E a
+    # conta que rebaixou a fonte para 0,57 aprova: 27,71 x 11,27 unidades =
+    # **5,54 x 2,25 celulas** numa alcova de ~9 celulas (entre as colunas de
+    # arco de x174,9 e x184,0). Sobra 1,7 celula de cada lado. Em profundidade
+    # o sofa vai de y82,9 a y85,1, parando antes da renda de y85,6.
+    #
+    # As TRES TEXTURAS (prontera\prt_h_04, prt_h_05, prt_h_01) foram conferidas
+    # no nosso GRF pelo `mede_rsm.py`: as tres resolvem. O `edita_mapa.py` so
+    # confere o caminho do .rsm.
+    #
+    # E ELE NAO BLOQUEIA PASSAGEM, como todo modelo de .rsw. Ate 2026-08-11 as
+    # celulas do sofa continuam andaveis; fechar e um `setwall` no
+    # centro_da_ordem.txt, como o da escrivaninha.
+    #
+    # -- AS DUAS ESTATUAS DOS PLINTOS DO SUL (2026-08-11) --
+    #
+    # Pedido: `prn_statue_03` em 183,69 "virado pra esquerda" e `prn_statue_08`
+    # em 177,69 "virado pra frente (177 67 por exemplo)", com a escala ajustada
+    # para encaixar na base disponivel, no centro.
+    #
+    # OS QUATRO PLINTOS DE CANTO SAO DEGRAU NO `.gat`, e desta vez o vao estava
+    # a vista -- diferente do tapete da escrivaninha, que so o UV mostrava.
+    # Varrendo a altura media em volta do fosso aparecem quatro blocos de 2x2
+    # celulas na altura **0,0**, contra 4,0 do piso do salao (no `.gat` o
+    # negativo e para CIMA, entao 0,0 esta 4 unidades ACIMA do chao): x176-177 e
+    # x182-183, nos y68-69 (sul) e y74-75 (norte). O pedestal da fonte, no meio,
+    # esta em -5,0; o fosso em 15/20. Os quatro estavam vazios -- a varredura de
+    # modelos em x172-188, y62-80 devolve so as quatro pontes.
+    #
+    # CELULA 182.5, 68.5 E 176.5, 68.5 -- QUARTA vez que a coordenada e
+    # fracionaria, e pelo mesmo motivo das tres anteriores: plinto de **duas**
+    # celulas de lado e vao de largura PAR, entao o centro cai na fronteira.
+    # `183,69` e `177,69` sao a celula de canto de cada plinto, a mais perto do
+    # meio do salao; centrar nelas erraria meia celula nos dois eixos. Mundo
+    # (415.0, 95.0) e (385.0, 95.0) -- simetricos em volta de 400,0, que e o
+    # eixo do salao (o mesmo da fonte e do sofa, a celula 179,5).
+    #
+    # A ORIGEM DESTES MODELOS E O CENTRO DA BASE, e isso teve de ser provado
+    # porque as duas caixas nao se encontram na leitura crua: no
+    # `prn_statue_03` a base (`Box031`) da X -21,50..-14,45 e a figura
+    # (`Object07`) da X -5,13..3,91 -- uma nao esta em cima da outra. O que
+    # reconcilia e o `pos` do NO RAIZ, que vale exatamente o centro da base
+    # (-17,976 = o centro de -21,50..-14,45): os vertices da raiz sao em espaco
+    # do modelo e entram como `vertice - pos`, e o filho entra deslocado de
+    # `pos_filho - pos_raiz`, que aqui e (0,008; 0,441). Com isso a base cai em
+    # **-3,53..+3,53 nos dois eixos** -- um quadrado de 7,06 perfeitamente
+    # centrado na origem --, e e essa coincidencia que prova a leitura. O
+    # `mede_rsm.py` mede NO A NO e nao aplica esse deslocamento; para decidir
+    # centro de peca, ler a caixa de um no so nao basta.
+    #
+    # ESCALA 1,0 nas duas, e aqui a oficial serve **e a conta aprova**, ao
+    # contrario da fonte. Os usos oficiais sao unanimes: `prt_lib`, `prt_lib_q`
+    # e `prt_cas_q` usam as duas estatuas em 1,00, e os tres sao salao fechado
+    # como o nosso -- e a ressalva que derrubou a fonte para 0,57 (patio de
+    # Glast Heim) nao se aplica. A conta: o plinto tem 10x10 unidades, a
+    # `_08` mede 7,98 de pegada (alcance 4,41 do centro, sobra 0,59) e a `_03`
+    # mede 9,04 (alcance 5,22). **A `_03` passa 0,22 unidade da beirada** -- 4%
+    # do meio-lado, um braco a 3,5 celulas de altura, e nao a base, que e de
+    # 7,06 e sobra 1,47 de cada lado. Nao vale trocar a escala oficial por
+    # 0,96 para corrigir isso. Altura: 25,03 e 23,92 unidades (5,0 e 4,8
+    # celulas), menos que os quatro `모로코\동상` que o salao ja tem em pe
+    # (29,25, escala 1,0) -- nao esbarram em nada.
+    #
+    # ROTACAO 90 e 0, e o "esquerda"/"frente" do pedido sao tela: em RO a
+    # camera padrao poe o norte para cima, entao esquerda = oeste.
+    #   `_03` -> oeste (olha para o meio do salao) -> **rot 90**
+    #   `_08` -> sul   (olha para a entrada, 177,67) -> **rot 0**
+    #
+    # A CONVENCAO E A MESMA DO SOFA, e foi reconfirmada por fora: **rot 0 olha
+    # para o SUL, 90 para oeste, 180 para norte, 270 para leste**. Tres provas
+    # independentes, e a terceira so porque a segunda quase enganou:
+    #   1) Os 22 usos do sofa em `prt_cas` ja tinham fechado `+Y -> (sen, cos)`,
+    #      ou seja costas ao norte em rot 0.
+    #   2) As quatro instancias oficiais destas duas estatuas: em `prt_lib` a
+    #      `_08` esta em rot 180 encostada na parede sul de y29 com o salao
+    #      aberto ao norte, e a `_03` em rot 180 na parede sul da alcova de
+    #      x103-106/y40-41; em `prt_cas_q` a `_08` em rot 0 tem chao ao sul e
+    #      parede ao norte, e a `_03` em rot 90 esta num nicho fechado a leste.
+    #      Nenhuma outra convencao poe as quatro olhando para fora da parede.
+    #   3) A figura pende para +Y nas duas (centro em +0,70 e +0,42 contra a
+    #      base), que e o passo a frente -- e +Y e o sul em rot 0.
+    #
+    # **A FAMILIA NAO TEM FRENTE COMUM, e supor que tem inverte metade dela.**
+    # No mesmo salao do `prt_lib`, lado a lado na mesma parede e olhando as
+    # duas para o norte, a `_08` esta em rot 180 e a `prn_statue_02` em rot 0.
+    # Sao oito modelos numerados, da mesma pasta, com a mesma cara de conjunto,
+    # e pelo menos um deles nasceu virado ao contrario. Calibrar um e usar o
+    # numero nos outros sete poe estatua de costas, calado. Medir POR MODELO.
+    #
+    # As duas texturas de cada uma (`prontera\prt_j_12.bmp` mais `prt_j_25` na
+    # `_03` e `prt_j_30` na `_08`) resolvem no nosso GRF, conferidas pelo
+    # `mede_rsm.py`. E, como todo modelo de .rsw, elas NAO bloqueiam passagem --
+    # so que aqui isso nao custa nada: as celulas dos plintos ja nascem
+    # bloqueadas no `.gat` (tipo 1). Nada de `setwall` desta vez.
     'auction_01': {
         'substituir': [],
         'acrescentar': [
             (FONTE, 179.5, 71.5, 0.0, 0.57),
             (ESCRIVANINHA, 191.5, 71.5, 90.0, 1.0),
+            (SOFA, 179.5, 84.0, 0.0, 1.0),
+            (ESTATUA_03, 182.5, 68.5, 90.0, 1.0),
+            (ESTATUA_08, 176.5, 68.5, 0.0, 1.0),
         ],
     },
 }

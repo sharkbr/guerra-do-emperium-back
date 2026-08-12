@@ -1703,18 +1703,88 @@ outra, logo abaixo: a largura do `.rsm` contra o tamanho do lugar.
 **Use o GRF do bRO para essa varredura, não o nosso:** 640 dos 910 `.rsw` do
 nosso estão com DES e o `grf.py` não os lê. No do bRO estão todos limpos.
 
-### Medir se o modelo cabe: `.rsm` 1.x tem 8 bytes de trailer
+### Medir se o modelo cabe: é o `mede_rsm.py`, logo abaixo
 
-Saber a largura do modelo antes de plantar evita a rodada de "ficou gigante". Um
-leitor de caixa envolvente de `.rsm` 1.x é curto — nó a nó, matriz de offset
-aplicada nos vértices —, mas **depois dos nós vêm dois `int32`**
-(`numPosKeyframes` e `numVolumeBoxes`, zero nos modelos vistos). Quem parar nos
-nós sobra 8 bytes e acha que errou o formato.
+Saber a largura do modelo antes de plantar evita a rodada de "ficou gigante".
+Isso deixou de ser trabalho de rascunho em 2026-08-11: virou ferramenta.
 
-A trava que vale escrever nesse tipo de leitor é **consumir o arquivo inteiro**:
-sobrar ou faltar byte significa que a suposição de formato estava errada, e o
-número que sai é plausível e falso. Foram esses 8 bytes que separaram "parse
-inválido" de uma medida boa.
+## `mede_rsm.py` — o tamanho e a frente de um modelo 3D
+
+```
+python mede_rsm.py <data.grf> prontera/sofa_01.rsm
+```
+
+Imprime, para cada nó do `.rsm`, a caixa envolvente em unidades de mundo (5 por
+célula) e em células; depois o nó de maior planta, de que lado está a parte
+alta, e a lista de **texturas conferidas contra aquele GRF**.
+
+É o passo 4 da receita de "mudar a aparência de um mapa" (`RECEITAS.md` §6), e
+existe porque **escala oficial é pista e não resposta**: ela veio do lugar de
+origem do modelo. A fonte do Centro da Ordem entrou com o 1,0 de Glast Heim e
+ficou grande num pedestal de 4 células.
+
+**A barra pode ser normal** no argumento — o caminho é normalizado dentro do
+script, porque barra invertida no `argv` do console daqui é uma dor.
+
+### As quatro coisas que ele embute, e as quatro custaram caro
+
+1. **`X` = largura, `Y` = profundidade, `Z` = ALTURA.** Ler `X × Z` como planta
+   troca profundidade por altura e devolve número plausível e errado — a
+   escrivaninha do Centro da Ordem é 4,0 × 2,8 células e pelo eixo errado sai
+   3,9 × 1,5, que é a direção que faz um móvel parecer caber onde não cabe. A
+   prova é medir peça alta e fina: a coluna `내부소품\기둥2` dá
+   6,34 × 6,34 × **30,21**.
+2. **Nó a nó.** O `pos` do nó raiz é offset no espaço do modelo, não dimensão.
+   Juntar tudo num box só dá 148,90 de largura (29,8 células) para uma
+   escrivaninha de 4,0.
+3. **A trava dos 0 bytes.** Depois dos nós de um `.rsm` 1.x vêm dois `int32`
+   (`numPosKeyframes` e `numVolumeBoxes`, zero nos modelos vistos). Quem parar
+   nos nós sobra 8 bytes — e as dimensões impressas até ali **parecem boas**.
+   Formato de malha é cheio de campo opcional por versão; sobrar ou faltar byte
+   significa que a suposição estava errada, e aí nada do que sai vale. O script
+   aborta em vez de imprimir.
+4. **As texturas.** O `edita_mapa.py` confere o caminho do `.rsm` e para aí.
+   Textura que não resolve **não dá erro em parser nenhum** — dá superfície
+   quebrada na tela.
+
+### De que lado é a frente, e daí a rotação
+
+A última linha da medida (`parte ALTA em Y médio ... -> lado +Y`) é o que
+resolve rotação de móvel sem chutar: **o encosto é o lado do Y onde o modelo é
+alto**. Nos dois sofás do Centro da Ordem é o `+Y`.
+
+Com isso, e com a calibragem feita nos quatro sofás que o `auction_01` já
+tinha (todos em rot 90, com o par leste e o oeste separados só pelo **sinal da
+terceira escala**, que espelha a profundidade), a regra fechou:
+
+**`+Y` → (sen θ, cos θ) em (X, Z).** Em **rot 0 as costas apontam para o
+norte**; em rot 90, para o leste. E a consequência que engana sozinha:
+**rot 0/180 põem a LARGURA no eixo leste-oeste, e 90/270 no norte-sul** — o
+contrário do que a intuição sugere.
+
+Confirmado pelo outro lado nos 22 usos oficiais do `sofa_01` em `prt_cas` e
+`prt_cas_q`: todas as instâncias de rot 270 têm parede colada a oeste.
+
+Em 2026-08-11 as duas estátuas do Centro da Ordem fecharam a mesma regra por
+fora, e vale escrever o ângulo do jeito que se usa: **rot 0 olha para o sul,
+90 para oeste, 180 para norte, 270 para leste** (é a mesma conta — as costas
+apontam para o lado oposto). Junto veio a ressalva: **qual ângulo é o "de
+frente" muda de modelo para modelo, mesmo dentro de uma família numerada.**
+No `prt_lib`, lado a lado na mesma parede e olhando as duas para o norte, a
+`prn_statue_08` está em rot 180 e a `prn_statue_02` em rot 0.
+
+### O que ele NÃO responde: onde é o centro da peça
+
+Ele mede **nó a nó** de propósito (item 2 acima), e nó a nó não remonta o
+modelo. Nas `prn_statue_*` isso aparece como duas caixas que não se encontram —
+a base em `X −21,50..−14,45` e a figura em `X −5,13..3,91`, uma fora da outra,
+o que parece leitura corrompida e não é.
+
+Quem precisa do centro remonta na mão, e a regra é curta: o vértice do nó
+**raiz** entra como `vértice − pos_raiz`; o do **filho**, deslocado de
+`pos_filho − pos_raiz`. A prova de que está certo é a base cair centrada na
+origem (`−3,53..+3,53` nos dois eixos, nas duas estátuas). Daí sai o que
+interessa ao `edita_mapa.py`: **a origem do modelo é o centro da base**.
 
 ## `luadis.py` — desassemblador de bytecode Lua 5.1
 

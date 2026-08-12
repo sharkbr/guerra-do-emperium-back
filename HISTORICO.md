@@ -6086,3 +6086,406 @@ ocasional — é todo arquivo de NPC, toda vez.
 
 Os oito ainda **não foram vistos em jogo**: falta o `@reloadscript` e olhar se
 cada um está virado para onde o dono pediu. Está no `PENDENCIAS.md` §1.
+
+## O Egebreu, e a Caveira Humana ganha destino (2026-08-11)
+
+`npc/guerra/comprador_de_caveiras.txt`. Um NPC em `auction_01 192,72`, virado
+para `191,72`, sprite **404** (`4_M_UNCLEKNIGHT`): compra Caveira Humana (30995)
+e paga em Moeda Nova (30998), **1 por 1**, levando todas as da bolsa de uma vez.
+A célula, o sprite, o nome e a fala inteira vieram do dono.
+
+**Isso fecha a `PENDENCIAS.md` §4b, que estava aberta desde 2026-08-08.** A
+metade de baixo daquela pendência — a caveira *caindo* do jogador morto na arena
+— tinha sido feita no mesmo dia, pelo `OnPCKillEvent` do
+`npc/guerra/honra_de_combate.txt`. O que faltava era o outro lado: o item entrava
+no inventário e **não saía de lugar nenhum**, embora a descrição da própria Moeda
+Nova (posta pelo `instala_item.py`) já listasse *"em troca de Caveira Humana"*
+como uma das fontes de moeda. A promessa era mais velha que o NPC.
+
+### É a terceira fonte de Moeda Nova, e a primeira que paga por PvP
+
+| fonte | onde | quanto |
+|---|---|---|
+| Logue e Ganhe | `db/guerra/attendance.yml`, sem NPC | 240 por conta/mês, de graça |
+| Alleria | `comodo 221,182` | 1 por Flor Visionária |
+| **Egebreu** | `auction_01 192,72` | **1 por Caveira Humana** |
+
+As duas de cima são presença e PvE. Esta só enche com jogador matando jogador
+na arena — e com as três condições do `honra_de_combate.txt` cumpridas (os dois
+lados em nível 200, o morto com 1 ponto de Honra ou mais, e a morte passando
+pelo anti-colusão do `.Limite`).
+
+**Não abre torneira nova, e vale dizer por quê:** quem limita quantas caveiras
+nascem é o `honra_de_combate.txt`, não este NPC. O Egebreu só dá destino às que
+já nasceram. Se um dia a Moeda inflacionar por este caminho, o número a mexer é
+o `.preco` do `OnInit` **ou** o anti-colusão de lá — não os dois de uma vez.
+
+### Diálogo, e não loja de troca — a regra §4.10 não se aplica aqui
+
+A pendência §4b dizia, com razão, *"quando for escrito, é `barter` e não
+`itemshop`"* — a caveira é `NoSell`, e o `itemshop` passa a moeda pelo
+`pc_can_sell_item`, que recusa item `NoSell`. Continua verdade, e **não alcança
+este NPC**: o pedido não é janela de loja nenhuma, é caixa de diálogo com
+Sim/Não. O pagamento é `getitem` e a cobrança é `delitem`, e nenhum dos dois
+passa por checagem de venda. As travas dos dois itens (a caveira `NoSell`, a
+moeda `NoTrade`/`NoDrop`/`NoSell`) não atrapalham em nada.
+
+É a mesma forma da Alleria, e de quebra poupa a outra metade que loja de troca
+sempre tem: numa janela de barter o nome do item vem do `itemInfo.lua` do
+**cliente** (`CLAUDE.md` §4.9); numa caixa de `mes` o texto é nosso.
+
+E o `getitem` **não pode largar a moeda no chão** aqui, que é a armadilha de
+sempre: com a mochila cheia o `buildin_getitem` cai num `map_addflooritem`, mas
+a Moeda Nova é `NoDrop` e o `pc_candrop` recusa — a moeda se perde e o cliente
+avisa. O `delitem` vir antes torna o caso quase impossível de todo jeito: o slot
+da caveira acabou de vagar. Sem `checkweight`, e desta vez por um motivo novo:
+**os dois itens pesam 0**, então a pergunta não teria resposta possível. (Na
+Alleria não há `checkweight` por outro motivo — lá a flor pesa 10 e a troca
+*alivia* a bolsa.)
+
+### A célula é a da escrivaninha, e isso amarra as duas coisas
+
+`192,72` é a quina sudeste da pegada da escrivaninha (`x191-192` em `y70-73`),
+plantada no `.rsw` cinco dias antes. Ele atende de trás da mesa.
+
+Isso só foi possível porque **das oito células da pegada, só cinco estão
+fechadas** por `setwall` no `centro_da_ordem.txt` (`191,70-73` e `192,73`). As
+três de fora — `192,70`, `192,71` e `192,72` — são a metade leste do tampo, e
+estão registradas na `PENDENCIAS.md` §1 como possíveis de fechar.
+
+**Fechar as três deixou de ser gratuito:** o Egebreu ficaria em célula
+bloqueada. Ele continuaria clicável — NPC não precisa de chão andável para ser
+falado —, mas ninguém mais encostaria nele, e **a mudança não dá erro nenhum**.
+A saída está escrita nos dois lugares: ou `192,72` fica de fora do `setarray`,
+ou o Egebreu vai para `193,72`, que anda, está livre e é uma célula a leste,
+com o mesmo facing.
+
+### O sprite 404, e as três tabelas
+
+Estreia do `4_M_UNCLEKNIGHT` no servidor, então valeram as duas conferências de
+sempre — e uma terceira, que resolveu o número:
+
+| onde | o que diz |
+|---|---|
+| `npcidentity.lub` do **nosso** cliente | `jobtbl[404] = JT_4_M_UNCLEKNIGHT` |
+| `src/map/npc.hpp` do rAthena | `JT_4_M_UNCLEKNIGHT = 404` (`NPC_RANGE2_START = 400`, e ele é o quarto depois) |
+| `data.grf` | `data\sprite\npc\4_M_UNCLEKNIGHT.spr` e `.act`, os dois presentes |
+
+O nome do arquivo de sprite **não foi chutado**: sai do `JobNameTable` do
+`jobname.lub` do próprio cliente, indexado pela constante do `npcidentity` — que
+é exatamente como o cliente resolve. Vale registrar o caminho, porque é reusável:
+`ptbr.tabelas()` lê os dois `.lub` (são bytecode no GRF), e as chaves do
+`JobNameTable` vêm como `Sym('jobtbl.JT_*')`, não como número.
+
+Uma nota para quem for contar à mão no `npc.hpp`: `NPC_RANGE2_START = 400` **é**
+o valor 400, então o primeiro nome depois dela é 401. Ler como se a lista
+começasse em 400 erra por um a faixa inteira — e erraria aqui, dando
+`4_F_VALKYRIE2`.
+
+Facing **2** (oeste), de `192,72` para `191,72` — `x-1`, pela tabela do
+`dirx`/`diry` (`unit.cpp:70`), que anda anti-horária a partir do norte.
+
+### As palavras são do dono, inclusive as duas divergências
+
+A fala foi gravada como veio. Duas coisas nela não batem com o servidor, e
+ficaram registradas em vez de consertadas por conta própria — mesma conduta da
+Máscara de Minorous (`CLAUDE.md` §4.14) e do "Crânios Humanos" do guarda de
+`184,80`, dois dias antes:
+
+1. **"Arena de Prontera"** na primeira caixa e **"Arena de Combate"** na terceira
+   são o mesmo lugar, chamado de dois jeitos na mesma conversa. O que existe no
+   servidor é a **Arena de Combate** (`prontera 154,187`,
+   `npc/guerra/arena_de_combate.txt`, que leva a `pvp_n_1-5`). Não há nada
+   chamado "Arena de Prontera" — embora ela *fique* em Prontera, então a frase
+   não mente, só não é o nome.
+2. **"24/7"** é a única expressão de fora do mundo do jogo em todo o diálogo do
+   servidor. Foi pedida assim.
+
+As duas se consertam trocando uma palavra na linha, se o dono quiser.
+
+### Conferido em jogo no mesmo dia, de primeira
+
+O dono deu `@reloadscript`, falou com ele e trocou — a linha
+*"Você obteve Moeda Nova (4)"* no log do cliente é a troca de quatro caveiras
+acontecendo. Passaram sem correção o sprite **404** (estreia do
+`4_M_UNCLEKNIGHT` no servidor), o enquadramento dele em cima da escrivaninha, a
+troca e a acentuação.
+
+Vale registrar que a estreia de sprite passou de primeira **porque as três
+tabelas foram conferidas antes** (`npcidentity.lub` do cliente, `npc.hpp` do
+rAthena e os `.spr`/`.act` do GRF), e que o nome do arquivo de arte saiu do
+`JobNameTable` do próprio cliente em vez de ser deduzido do nome da constante.
+
+**O que ele não faz, e é de propósito:** as células dele continuam sendo as três
+da metade leste do tampo que o `setwall` da mesa não fecha. Fechar as três agora
+custa mexer nele — está anotado no `PENDENCIAS.md` §1 e no cabeçalho do
+arquivo.
+
+## O sofá da alcova norte do Centro da Ordem (2026-08-11)
+
+`data\model\prontera\sofa_01.rsm` plantado em `auction_01`, célula
+**179.5, 84.0**, rotação **0**, escala **1,0**. Terceira peça de cenário do
+salão, depois da fonte e da escrivaninha, e a primeira em que **rotação foi
+medida em vez de escolhida**.
+
+O pedido do dono trouxe as três coisas que decidem: o par de células
+(`179,84` e `180,84`), o eixo ("como são dois lugares, ideal que fique entre")
+e o lado ("virado para frente, para `180,83`").
+
+### A meia célula veio junto com o pedido, desta vez
+
+Terceira vez que a coordenada é fracionária, e a primeira em que ninguém
+precisou descobrir isso depois: o dono pediu **duas** células, e o centro de um
+vão de largura 2 cai na fronteira entre elas. Mundo (400,0, 172,5).
+
+O `84.0` fica inteiro de propósito — em `y` o vão é de uma célula só, e aí o
+centro da célula É o centro do vão.
+
+E `179.5` não é só aritmética: é **o eixo que a alcova já tinha**. As três
+cortinas (`커텐01`) do fundo estão em `x175.4`, **`179.4`** e `183.4`; a renda
+de cima (`침대레이스2-1`) em `176.0`, **`179.5`** e `182.9`; o forro de teto
+(`천정틀`) em **`179.5`**, `86.5`. O sofá entrou no eixo da sala, não num
+número nosso.
+
+### O eixo vertical do `.rsm` é o Z, e errar isso troca profundidade por altura
+
+Esta é a descoberta da rodada, e ela **muda a leitura de toda medida de modelo
+feita até aqui**. A prova não é teórica — são os próprios modelos deste salão:
+
+| modelo | X | Y | Z |
+|---|---|---|---|
+| `내부소품\기둥2` (coluna) | 6,34 | 6,34 | **30,21** |
+| `모로코\동상` (estátua) | 8,57 | 5,43 | **29,25** |
+| `내부소품\몽크난간02` (balaustrada) | 4,00 | 4,00 | **10,47** |
+
+Coluna, estátua e balaustrada são **altas e finas**. O eixo de 30 é o vertical.
+Logo **X = largura, Y = profundidade, Z = altura**, e a *planta* de um móvel é
+X × Y.
+
+Isso reconcilia a medida já publicada da escrivaninha ("20,02 × 13,84 unidades,
+4,0 × 2,8 células"): aquilo era X × **Y**, e estava certo. Quem repetir a
+medição lendo X × Z acha 3,9 × 1,5 células para a mesma mesa — número plausível
+e errado, na direção que faz um móvel parecer caber onde não cabe.
+
+Com o eixo certo, o sofá mede **27,71 × 11,27 unidades = 5,54 × 2,25 células**,
+com 17,60 de altura (3,52 células). Lido pelo eixo errado ele daria 5,5 × 3,5 —
+55% mais fundo do que é.
+
+### A rotação, em três passos, e nenhum deles é palpite
+
+A da escrivaninha ficou registrada como *"escolha, não medida"*. Esta não:
+
+1. **Qual eixo é a altura** — o Z, pela tabela acima.
+2. **De que lado do Y está o encosto** — o **+Y**, nos dois sofás do salão. É o
+   lado onde o modelo é alto: no `sofa_01`, `Z` chega a 17,60 na faixa
+   `Y 4,13..7,89` e não passa de 9,18 do outro lado, que é o assento com os
+   braços.
+3. **Para onde aponta o +Y em cada rotação** — calibrado nos **quatro sofás que
+   o mapa já tinha** (`리히타르젠\소파02`, em `x164,9` e `x193,9`). Os quatro
+   estão em rotação **90**, e o que separa o par leste do oeste é o **sinal da
+   terceira escala**: `+1,50` contra `-1,50`, que espelha a profundidade. O par
+   leste encosta na parede leste, então **em rot 90 o +Y aponta para +X**.
+
+Os **22 usos oficiais** do `sofa_01` em `prt_cas` e `prt_cas_q` fecham a conta
+pelo outro lado: todas as instâncias de rotação **270** têm parede colada a
+oeste — encosto a oeste, ou seja `+Y → -X`. Bate com o passo 3, 180 graus
+adiante.
+
+Daí a regra, que vale para qualquer móvel: **+Y → (sen θ, cos θ) em (X, Z)**.
+Em **rotação 0 o encosto aponta para +Z, que é o norte** — o sofá olha para o
+sul, para `180,83`, que foi o pedido.
+
+**E rot 0/180 põem a LARGURA no eixo leste-oeste; 90/270 a põem no norte-sul.**
+Não é o contrário, e confundir poria o sofá atravessado na alcova. As quatro
+pontes do fosso confirmam de graça: `모로코\성_다리` tem 58,97 de comprimento em
+X, e as duas de rotação 90 estão nos corredores **norte-sul** de `x175` e
+`x184`, enquanto as de 180 estão nos vãos **leste-oeste** de `y67` e `y76`.
+
+### Escala 1,0 — a oficial serve, e a sala concorda
+
+Os 22 usos no castelo de Prontera vão de **0,80 a 1,00**, com 1,00 o mais
+comum. Isso já é mais forte que de costume: `prt_cas` é salão de castelo, não
+pátio aberto, então o lugar de origem tem o tamanho do nosso — que é a ressalva
+que derrubou a fonte de 1,0 para 0,57.
+
+A conta confirma: 5,54 × 2,25 células numa alcova de ~9 células (entre as
+colunas de arco de `x174,9` e `x184,0`) deixa 1,7 célula de folga de cada lado.
+Em profundidade o sofá vai de `y82,9` a `y85,1`, parando antes da renda de
+`y85,6`.
+
+### A ferramenta que faltava virou `ferramentas/mede_rsm.py`
+
+O leitor de `.rsm` das rodadas anteriores era de rascunho e não sobreviveu.
+Agora está versionado, com as três coisas que custaram caro embutidas: a trava
+dos **0 bytes sobrando** (o `sofa_01` sobra exatamente 8 sem o rabicho de
+quadros/volumes depois dos nós, e um leitor desalinhado devolve números como se
+nada fosse), a medição **nó a nó**, e os rótulos de eixo certos.
+
+Ele ganhou também a conferência que o `edita_mapa.py` não faz: as **texturas**.
+As três do sofá (`prontera\prt_h_04.BMP`, `prt_h_05.bmp`, `prt_h_01.bmp`)
+resolvem no nosso GRF. Textura que falta não dá erro em parser nenhum — dá
+superfície quebrada na tela.
+
+### As travas antes de instalar
+
+- **Round-trip do `rsw.py` na entrada**: os 113.618 bytes do `.rsw` do GRF do
+  bRO voltam **idênticos**.
+- **Diff contra o override instalado**: 208 → 209 objetos, **+252 bytes** —
+  exatamente um registro de modelo (248 + 4), o mesmo delta da escrivaninha. Os
+  **179 modelos anteriores preservados campo a campo e na mesma ordem**.
+- **A saída reabre** e a quadtree fecha no byte exato; os 180 `filename`
+  resolvem no NOSSO GRF.
+- **Altura**: `.gat` em `179,84` e `180,84` = 4,00, e o modelo gravado em
+  `y = 4,00`.
+
+O arquivo anterior foi para
+`C:\GuerraDoEmperium\backup-registro\auction_01.rsw.20260811-025907`.
+
+### O que falta ver, e o que ele não faz
+
+Falta a tela. **Não precisa de `@reloadscript`** — não há script nenhum nesta
+rodada; o que precisa é o cliente **reler o mapa**, ou seja sair e voltar ao
+salão (reabrir o cliente é a garantia).
+
+E ele **não bloqueia passagem**, como todo modelo de `.rsw`: as células do sofá
+(`x177-182` em `y83-85`) continuam andáveis e dá para atravessar o móvel. Foi
+entregue assim porque o pedido foi de cenário, não de colisão — fechar é um
+`setwall` no `centro_da_ordem.txt`, do mesmo jeito que a escrivaninha.
+
+## As duas estátuas dos plintos do sul do Centro da Ordem (2026-08-11)
+
+`data\model\prontera\prn_statue_03.rsm` em `auction_01` **182.5, 68.5**,
+rotação **90**, escala **1,0**; `prn_statue_08.rsm` em **176.5, 68.5**, rotação
+**0**, escala **1,0**. Quarta e quinta peças de cenário do salão, depois da
+fonte, da escrivaninha e do sofá.
+
+Pedido do dono: a `_03` em `183,69` *"virada pra esquerda"*, a `_08` em
+`177,69` *"virada pra frente (177 67 por exemplo)"*, e *"se tiver que ajustar o
+tamanho, ajusta a escala pra estátua ficar bem encaixada na base disponível, no
+centro"*.
+
+Mudança de cliente, não de servidor: nenhum NPC, nenhuma linha de script, o
+`.gat` intocado. O que se versiona é a receita — a entrada `auction_01` do
+`RECEITA` em `ferramentas/edita_mapa.py`, que hoje tem as cinco peças.
+**Cliente novo perde as cinco, calado.**
+
+### O vão estava à vista, desta vez — e é degrau no `.gat`
+
+Depois do pedestal da fonte (platô no `.gat`) e do tapete da escrivaninha (só
+o UV mostrava), este foi o caso fácil: varrer a altura média em volta do fosso
+mostra **quatro blocos de 2×2 células na altura 0,0**, contra 4,0 do piso — e
+no `.gat` o negativo é para **cima**, então 0,0 está 4 unidades *acima* do
+chão. São `x176-177` e `x182-183`, nos `y68-69` (sul) e `y74-75` (norte),
+quatro plintos de canto em volta do pedestal central (que está em −5,0) e do
+fosso (15/20). Os quatro estavam vazios: a varredura de modelos em
+`x172-188, y62-80` devolve só as quatro pontes.
+
+`183,69` e `177,69` são a célula de canto de cada plinto sul, a mais perto do
+meio do salão.
+
+### Quarta meia célula seguida, e o motivo não muda
+
+Plinto de **duas** células de lado é vão de largura **par**: o centro cai na
+fronteira. Centrar em `183,69` ou `177,69` erraria meia célula nos dois eixos.
+As peças entraram em **`182.5, 68.5`** e **`176.5, 68.5`** — mundo
+`(415,0, 95,0)` e `(385,0, 95,0)`, com erro medido de **0,00 nos dois eixos**
+contra o centro geométrico, e simétricos em volta de `400,0`, que é o eixo do
+salão (o mesmo da fonte e do sofá).
+
+### A origem destes modelos é o centro da base — e isso teve de ser provado
+
+As duas caixas não se encontram na leitura crua. No `prn_statue_03` a base
+(`Box031`) dá `X −21,50..−14,45` e a figura (`Object07`) dá `X −5,13..3,91`:
+uma não está em cima da outra, e o `mede_rsm.py`, que mede **nó a nó**, mostra
+as duas assim e não reconcilia.
+
+O que reconcilia é o `pos` do nó raiz, que vale **exatamente o centro dos
+vértices da raiz** (−17,976 é o centro de −21,50..−14,45). Os vértices da raiz
+entram como `vértice − pos`, e o filho entra deslocado de
+`pos_filho − pos_raiz` — aqui `(0,008; 0,441)`, quase nada. Com isso a base cai
+em **−3,53..+3,53 nos dois eixos**, um quadrado de 7,06 perfeitamente centrado
+na origem. **É essa coincidência que prova a leitura**, e ela vale nas duas
+estátuas (a `_08` fecha igual, com `pos.x = 45,269` contra `41,74..48,80`).
+
+Consequência prática: a origem que o `edita_mapa.py` planta na célula é o
+**centro da base**. Subiu para o `CLAUDE.md` §5, junto da entrada que já falava
+do `pos` do nó raiz.
+
+### A escala oficial serve, e desta vez a conta aprova
+
+Ao contrário da fonte — que veio de pátio de Glast Heim e desceu de 1,0 para
+0,57 —, aqui os usos oficiais são **unânimes em 1,00** (`prt_lib`,
+`prt_lib_q`, `prt_cas_q`, três cada), e os três são **salão fechado como o
+nosso**. A ressalva que derrubou a fonte não se aplica.
+
+A conta confirma, com a pegada remontada:
+
+| | pegada | alcance do centro | plinto de 10×10 |
+|---|---|---|---|
+| `prn_statue_08` | 7,98 × 7,98 | 4,41 | sobra 0,59 |
+| `prn_statue_03` | 9,04 × 9,04 | 5,22 | **passa 0,22** |
+
+**A `_03` passa 0,22 unidade da beirada** — 4% do meio-lado, e é um braço a 3,5
+células de altura, não a base, que tem 7,06 e sobra 1,47 de cada lado. Não vale
+trocar a escala oficial por 0,96 para corrigir isso; fica registrado porque é
+o tipo de folga que alguém mede depois e acha que foi descuido.
+
+Altura: 25,03 e 23,92 unidades (5,0 e 4,8 células), **menos que os quatro
+`모로코\동상` que o salão já tem em pé** (29,25, escala 1,0). Não esbarram em
+nada.
+
+### A rotação: a convenção do sofá reconfirmada por fora, e uma armadilha nova
+
+`esquerda` e `frente` do pedido são tela, e em RO a câmera padrão põe o norte
+para cima: esquerda = **oeste**. Daí `_03` → oeste → **rot 90**, e `_08` → sul
+(para `177,67`) → **rot 0**.
+
+A convenção — **rot 0 olha para o sul, 90 oeste, 180 norte, 270 leste** — é a
+mesma que os 22 usos do sofá em `prt_cas` tinham fechado, e ganhou duas provas
+independentes:
+
+1. **As quatro instâncias oficiais destas duas estátuas.** Em `prt_lib` a `_08`
+   está em rot 180 encostada na parede sul de `y29`, com o salão aberto ao
+   norte; a `_03` em rot 180 na parede sul da alcova de `x103-106/y40-41`. Em
+   `prt_cas_q` a `_08` em rot 0 tem chão ao sul e parede ao norte; a `_03` em
+   rot 90 está num nicho fechado a leste. Nenhuma outra convenção põe as quatro
+   olhando para fora da parede.
+2. **A geometria.** A figura pende para `+Y` nas duas (centro em +0,70 e +0,42
+   contra a base) — o passo à frente. E `+Y` é o sul em rot 0.
+
+**A armadilha, e ela quase passou:** no mesmo salão do `prt_lib`, lado a lado
+na mesma parede e olhando as duas para o norte, a `_08` está em **rot 180** e a
+`prn_statue_02` em **rot 0**. São oito modelos numerados, da mesma pasta, com a
+mesma cara de conjunto, e pelo menos um nasceu virado ao contrário. Calibrar um
+e usar o número nos outros sete põe estátua de costas, calado. **Medir por
+modelo.** Subiu para o `CLAUDE.md` §5.
+
+### As travas antes de instalar
+
+- **Round-trip do `rsw.py` na entrada**: os 113.618 bytes do `.rsw` limpo do
+  GRF do bRO voltam **idênticos**.
+- **206 → 211 objetos, +1.260 bytes** = exatamente cinco registros de modelo
+  (252 cada). Os **177 modelos da entrada preservados campo a campo e na mesma
+  ordem**, e as três peças anteriores saem **byte a byte iguais** às do arquivo
+  instalado hoje — a receita é reprodutível.
+- **A saída reabre** e a quadtree fecha no byte exato; os 182 `filename`
+  resolvem no NOSSO GRF.
+- **Texturas** conferidas pelo `mede_rsm.py`: `prontera\prt_j_12.bmp` nas duas,
+  mais `prt_j_25` na `_03` e `prt_j_30` na `_08`. As quatro resolvem.
+- **Altura e centro**: as 4 células de cada plinto na altura 0,0, as vizinhas em
+  −5,0/4,0/20,0 (pedestal, piso, fosso) — o bloco é isolado —, e o modelo
+  gravado em `y = 0,00`.
+
+O arquivo anterior foi para
+`C:\GuerraDoEmperium\backup-registro\auction_01.rsw.20260811-221109`.
+
+### O que falta ver, e o que não precisou de `setwall`
+
+Falta a tela. **Não precisa de `@reloadscript`** — não há script nesta rodada;
+o que precisa é o cliente **reler o mapa**, ou seja sair e voltar ao salão
+(reabrir o cliente é a garantia).
+
+E, pela primeira vez, **a passagem não ficou aberta**: as células dos plintos
+já nascem bloqueadas no `.gat` (tipo 1, e o dono nunca pôde subir nelas). O
+modelo de `.rsw` continua não bloqueando nada — só que aqui o `.gat` já fazia
+o serviço, e não há `setwall` a escrever.

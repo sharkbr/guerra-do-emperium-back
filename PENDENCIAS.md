@@ -108,6 +108,48 @@ sem confirmação in-game.
   em `y70-73`, então dá para entrar em `192,70`, `192,71` e `192,72` — a
   metade leste do tampo. Foi entregue assim porque foi assim que veio o pedido;
   fechar é acrescentar os três pares ao `setarray` do bloco.
+  **Mas fechar deixou de ser gratuito em 2026-08-11:** o Egebreu
+  (`npc/guerra/comprador_de_caveiras.txt`) foi posto em `192,72`, uma das três.
+  Fechá-la o deixa **em célula bloqueada** — ele continua clicável, mas ninguém
+  mais encosta nele, e nada avisa. Quem fechar as três decide antes: ou deixa
+  `192,72` de fora do `setarray`, ou move o Egebreu para `193,72` (anda, está
+  livre, uma célula a leste, mesmo facing).
+
+- **O sofá da alcova norte do Centro da Ordem** (`auction_01 179.5,84.0`,
+  instalado em 2026-08-11). **Não pede `@reloadscript`** — não há script nesta
+  peça; pede o cliente **reler o mapa**, ou seja sair e voltar ao salão
+  (reabrir o cliente é a garantia). O que provar: (1) que ele aparece **entre**
+  as células `179,84` e `180,84`, e não meia célula para o lado; (2) que está
+  **de frente para o sul**, com o encosto na drapeação do fundo — a rotação foi
+  medida e não escolhida (ver `HISTORICO.md`), mas é a primeira vez que essa
+  medição decide alguma coisa, e é a tela que a confirma; (3) o **tamanho**:
+  5,54 × 2,25 células numa alcova de ~9, com 1,7 de folga de cada lado — se
+  ficar grande, o campo é a escala, e os usos oficiais descem até 0,80.
+
+  **Ele não bloqueia passagem**, e isso é o esperado: as células `x177-182` em
+  `y83-85` continuam andáveis e dá para atravessar o móvel. Fechar é um
+  `setwall` no `centro_da_ordem.txt`, como o da escrivaninha — e aí vale a
+  mesma conversa da mesa, sobre o Egebreu e as células dele.
+
+- **As duas estátuas dos plintos do sul do Centro da Ordem**
+  (`auction_01 182.5,68.5` e `176.5,68.5`, instaladas em 2026-08-11). Como o
+  sofá: **não pede `@reloadscript`**, pede o cliente **reler o mapa** — sair e
+  voltar ao salão. O que provar: (1) que cada uma está **centrada no seu
+  plinto de 2×2**, e não meia célula para o lado; (2) o **facing**, que é a
+  parte com risco de verdade — a `prn_statue_03` deve olhar para **oeste**
+  (para o meio do salão) e a `prn_statue_08` para o **sul** (para a entrada,
+  `177,67`). A convenção de ângulo está medida três vezes (ver
+  `HISTORICO.md`), mas nesta família **modelos vizinhos têm frentes
+  opostas** — a `prn_statue_02` está 180° fora da `_08` no `prt_lib` —, então
+  estátua de costas é o defeito plausível aqui, e é mudar um número na receita.
+  (3) O **tamanho**: 5,0 e 4,8 células de altura, contra os 29,25 unidades dos
+  quatro `동상` que o salão já tem em pé. A `_03` passa **0,22 unidade** da
+  beirada do plinto com um braço, a 3,5 células de altura — está previsto e
+  medido; se incomodar na tela, o campo é a escala (0,96 resolve, ao custo de
+  sair do 1,0 oficial).
+
+  **Estas duas não precisam de `setwall`**, e é a primeira peça do salão que
+  não precisa: as células dos plintos já nascem **bloqueadas** no `.gat`.
 
 - **Os oito guardas do Centro da Ordem** (`npc/guerra/guardas_do_centro.txt`,
   escritos em 2026-08-11). Pede **`@reloadscript`** — nada de cliente. O que
@@ -937,19 +979,77 @@ de tela. Item assim não precisa de arte de manto nenhuma, e procurar a arte que
 
 ---
 
-## 4b. A Caveira Humana já cai — falta o NPC que a compra
+## 4b. NPC sentado no sofá — o desenho está pronto, falta uma prova
 
-**A metade de baixo fechou em 2026-08-08**: o `OnPCKillEvent` do
-`npc/guerra/honra_de_combate.txt` entrega a Caveira Humana (30995) no
-inventário do matador. Ver `HISTORICO.md`, seção "A Caveira Humana (30995)".
+Aberto em 2026-08-11, a pedido do dono: pôr personagens sentados no sofá da
+alcova norte do Centro da Ordem (`auction_01 179.5,84.0`). Não é para agora —
+fica registrado para quando for, porque **a parte cara já foi medida**.
 
-**O que sobrou:** a descrição da Moeda Nova (30998) lista "em troca de Caveira
-Humana" como uma das fontes de moeda, e **esse NPC de troca não existe**. Hoje
-a caveira entra e não sai de lugar nenhum.
+### O desenho, e ele é uma divisão limpa entre cliente e servidor
 
-Quando for escrito, é `barter` e não `itemshop` — a caveira é `NoSell`, e o
-`itemshop` passa a moeda por `pc_can_sell_item`, que recusa item `NoSell`. Ver
-`CLAUDE.md` §4.10, que existe exatamente por causa deste caso.
+| metade | onde | o quê |
+|---|---|---|
+| **altura** | override de `.gat` em `cliente\data\` | levanta a célula, e com ela a entidade desenhada nela |
+| **bloqueio** | `setwall` no `centro_da_ordem.txt` | fecha a pegada do móvel do lado do servidor |
+
+**Só as ALTURAS podem entrar no `.gat` do cliente — nunca o tipo da célula.**
+O `.gat` é o arquivo de onde o *cliente* tira as duas coisas, e o servidor lê o
+`map_cache.dat`, que guarda **só o tipo**, não as alturas. Então mexer em altura
+é invisível para o servidor, e mexer em tipo faz as duas metades divergirem em
+silêncio — a mesma razão pela qual bloqueio é `setwall` e não `setcell`
+(`CLAUDE.md` §4.15).
+
+**O NPC não precisa da célula andável.** NPC nasce e é clicável em célula
+bloqueada — então dá para fechar a pegada inteira do sofá e pôr os NPCs em cima
+mesmo assim. Deixar as células de assento andáveis só é preciso se a ideia for
+o **jogador** poder subir no sofá também; aí ele sobe de verdade, porque o
+cliente vai deixar.
+
+### Os números já estão medidos
+
+- O assento (`Object001` do `sofa_01.rsm`) tem o topo a **9,62 unidades** da
+  base do modelo.
+- O chão em `179,84` está em **4,0** no `.gat`.
+- Em RO **mais negativo é mais alto**, então a célula de assento iria para
+  cerca de **−5,6**. Isso é praticamente o pedestal da fonte (−5,0): o valor
+  está no vocabulário do próprio mapa.
+- As células de assento são as **duas que o dono já tinha nomeado**: `179,84` e
+  `180,84` caem no meio do sofá (que cobre `x176,7..182,2`), com os braços em
+  `x177` e `x182`.
+
+### O que falta provar, e a sonda é de graça
+
+**Que o cliente tira a altura da ENTIDADE do `.gat`, e não do `.gnd`.** Offline
+dá para mostrar que são camadas separadas — neste mesmo mapa **277 células têm
+`.gat` e `.gnd` discordando, 132 delas andáveis** —, mas isso não é prova de
+efeito, que é a regra de sempre.
+
+A sonda não custa arquivo nenhum, porque a Gravity já deixou o caso pronto:
+
+```
+@warp auction_01 20,52
+```
+
+Ali o `.gat` diz **−7,1** e o `.gnd` diz **4,0** — 11 unidades, mais de duas
+células, e a célula é plana nos quatro cantos (não é média de rampa). Se o
+personagem aparecer **flutuando acima do piso desenhado**, o cliente usa o
+`.gat` e o desenho acima funciona inteiro. Se ele pisar no chão, a altura vem do
+`.gnd` e o caminho é outro.
+
+A célula fica no **bloco oeste**, que está selado — só se chega por `@warp`, e
+sair é `@warp` de volta. Não há nada a desfazer.
+
+### Duas ressalvas para quando for feito
+
+1. **O sprite vai ficar EM PÉ, não sentado.** Não há sprite de NPC sentado neste
+   cliente — varrido o `npcidentity.lub` inteiro, **zero** entradas com `SIT`,
+   `CHAIR` ou `THRONE`. O efeito é "de pé na altura do assento", que da câmera
+   isométrica costuma ler como sentado se a altura estiver certa; afundar um
+   pouco o valor é o ajuste de sempre, e é ajuste de tela.
+2. **Vira o SEGUNDO arquivo de cliente fora do git** para este mapa (o `.rsw` já
+   é o primeiro). Cliente novo perde os dois, calados. E o `edita_mapa.py` hoje
+   diz por escrito que **não toca o `.gat`** — então isso é capacidade nova na
+   ferramenta, e precisa nascer com receita versionada como o resto.
 
 ---
 
