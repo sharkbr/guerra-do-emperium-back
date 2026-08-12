@@ -564,6 +564,22 @@ Produziram diagnóstico falso e custaram retrabalho:
   `npc/guerra/maquina.txt` traz uma tabela em termos de "direita/esquerda" que
   vale **só para aquele sprite** — reusá-la virou a Máquina de Sombrios Gerais
   para o lado errado em 2026-08-12.
+- **NPC com sprite de CLASSE DE JOGADOR nasce pedindo o penteado 0, e o 0 não
+  existe.** Sprite de NPC normal (`view id` ≥ 44, do `npcidentity.lub`) traz a
+  aparência pronta do `npc_viewdb`; id de **classe** (`JOB_MERCHANT` = 5 e
+  irmãos) cai noutro caminho — o `npcdb_checkid` recusa, e o
+  `status_set_viewdata` (`src/map/status.cpp`, `case BL_NPC`) monta a aparência
+  à mão num `else if (pcdb_checkid(class_))`: `look[LOOK_BASE] = class_` e
+  `look[LOOK_HAIR] = cap_value(0, MIN_HAIR_STYLE, MAX_HAIR_STYLE)`. Com o nosso
+  `min_hair_style: 0` (`conf/battle/client.conf`) isso dá **penteado 0**, e os
+  penteados deste cliente vão de **1 a 42** nos dois sexos — não há
+  `0_<sexo>.spr`. O corpo da classe existe; a cabeça é que não. Remédio, no
+  `OnInit`: `setunitdata(getnpcid(0), UNPC_HAIRSTYLE, 1)` (e `UNPC_SEX`, que
+  também nasce zerado pelo `memset`) — as duas **gravam no `nd->vd` do próprio
+  NPC** (`clif_changelook`, `case LOOK_HAIR`, faz `vd->look[type] = val`), então
+  valem para quem logar depois e não são pacote solto. **Nenhum dos 26 mil
+  `script` do rAthena usa id de classe** — a varredura é barata e a ausência
+  total é o aviso. Caso vivo: a Tranqueiras, `prontera 151,131`, 2026-08-12.
 - **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
   binário aplicado **depois** do parse (`pc_groups.cpp:275`,
   `permissions |= otherGroup->permissions`). Permissão que o pai concede, o

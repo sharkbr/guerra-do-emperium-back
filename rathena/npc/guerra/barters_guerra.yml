@@ -46,6 +46,10 @@
 # com nome em portugues e arte completa; so duas foram feitas por nos
 # (30997 e 30996, em db/guerra/item_db.yml).
 #
+# A trava so aperta em pacote. Item que ja se vende UM a um nao precisa de
+# caixa nenhuma, e por isso os dois Pergaminhos, o Ticket de Expansao de
+# Inventario e a Redea entram avulsos: a 1:1 o barter ja expressa.
+#
 # Mudanca neste arquivo pega com `@reloadbarterdb`.
 #
 ###########################################################################
@@ -80,6 +84,10 @@ Body:
   # A janela de troca nao tem separador, entao a ordem e a unica coisa que
   # agrupa. Nao renumerar por gosto: o indice tambem e a chave do estoque
   # na tabela `barter` do SQL, se um dia alguma linha ganhar `Stock`.
+  #
+  # Em 2026-08-12 entrou um QUARTO grupo no fim - "permanentes", o Ticket
+  # de Expansao de Inventario e a Redea. Item novo entra no fim do grupo
+  # dele, com o Index seguinte; nao se abre buraco no meio.
   - Name: Maquina#loja
     Items:
       # ----- Passes e cupons -----------------------------------------
@@ -272,6 +280,64 @@ Body:
           - Index: 0
             Item: Moeda_Nova
             Amount: 4
+
+      # ----- Permanentes ----------------------------------------------
+      # Os dois de 2026-08-12, e sao de outra natureza que os dezoito
+      # acima: nao se gastam por uso, se gastam por PERSONAGEM. Por isso
+      # ficam no fim e nao dentro de "Consumiveis".
+      #
+      # O Ticket e consumido pela UI DE EXPANSAO DE INVENTARIO DO
+      # CLIENTE, nao por NPC nenhum - procurar o ID em npc/ nao devolve
+      # nada, e a conclusao facil seria que ele nao serve para nada aqui
+      # (a mesma armadilha dos cupons de estilista, quinze linhas acima).
+      # Quem o consome e o `clif_parse_inventory_expansion_request`
+      # (clif.cpp:23086), que le uma tabela FIXA NO C++ de tres IDs -
+      # 25792 e um deles - e da +10 espacos por ticket.
+      #
+      # O TETO E DEZ POR PERSONAGEM, e ele e de compilacao: o inventario
+      # vai de INVENTORY_BASE_SIZE (100) ate MAX_INVENTORY, que e 100 +
+      # INVENTORY_EXPANSION_SIZE (100) = 200 (src/common/mmo.hpp:44). O
+      # decimo primeiro ticket recebe MAXIMUM_REACHED e nao e comido -
+      # mas ele JA FOI COMPRADO, e as 10 Moedas se perderam. O preco de
+      # 10 esta calibrado para isso: 100 Moedas dobram o inventario.
+      #
+      # Exige cliente 2018-12-19 ou mais novo (o `#if PACKETVER_MAIN_NUM
+      # >= 20181219` do mesmo arquivo); o nosso e 20211103.
+      - Index: 18
+        Item: Inventory_Ex_Dis           # 25792 Ticket de Expansao de Inventario
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
+      # A REDEA ETERNA, e "eterna" e o que a distingue das outras quatro
+      # do banco. Existem cinco itens de nome parecido e so este nao tem
+      # prazo:
+      #
+      #   12622  Redea                     ESTE - `NoConsume: true`
+      #   16682  Caixa de Redea            entrega o 12622, por getgroupitem
+      #   16683  Caixa de Redea [30 dias]  entrega o 12622 ALUGADO
+      #   17162  Caixa de Redea [7 dias]   idem
+      #   17176  Caixa de Redea [3 dias]   idem
+      #
+      # O `NoConsume` e o que faz a montaria durar para sempre: o item
+      # roda o `setmounting()` e NAO some da bolsa. Vender a Caixa (16682)
+      # em vez do item daria na mesma e custaria um clique a mais; vender
+      # qualquer uma das outras tres entregaria uma montaria que expira,
+      # e o jogador so descobriria isso dias depois.
+      #
+      # 100 Moedas e o preco mais alto da lista, empatado com o Passe
+      # Antigravitacional. E de proposito: montaria permanente e a compra
+      # que nao se repete.
+      #
+      # Ele e NoTrade/NoDrop/NoSell/NoCart/NoStorage - fica no personagem
+      # que comprou, como o resto desta gaveta.
+      - Index: 19
+        Item: Boarding_Halter             # 12622 Redea (a permanente)
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 100
 
   # =====================================================================
   # A Maquina de Troca da Ordem dos Exploradores

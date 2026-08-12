@@ -6820,3 +6820,203 @@ Nada disto subiu. O roteiro está no `PENDENCIAS.md` §1, e a ordem importa:
 carregar. E **fechar e reabrir o cliente**, por causa da entrada nova do
 `itemInfo.lua` (420112) e da arte nova da Máscara de Loki — os dois só são
 lidos na inicialização.
+
+## A Tranqueiras, a Morte na porta da arena e duas gavetas na Máquina (2026-08-12)
+
+Quatro pedidos numa tacada, no mesmo dia dos dezenove visuais acima. Três são
+de conteúdo e um é de posição; o que custou não foi editar nenhum deles.
+
+### A Máquina ganhou duas linhas, e as duas são de outra natureza
+
+`npc/guerra/barters_guerra.yml`, na loja `Maquina#loja`:
+
+| item | preço | o que é |
+|---|---|---|
+| 25792 Ticket de Expansão de Inventário | 10 Moedas Novas | +10 espaços |
+| 12622 Rédea | 100 Moedas Novas | montaria permanente |
+
+As dezoito de antes eram consumo — caixa que se abre, pergaminho que se gasta.
+Estas duas **se gastam por personagem**, e por isso entraram num quarto grupo
+no fim da lista em vez de dentro de "Consumíveis". O `Index` segue a regra de
+sempre: item novo no fim do grupo dele, sem abrir buraco no meio.
+
+**O Ticket é mais um caso da §4.9** — sistema de UI do cliente cuja metade de
+configuração não está no `db/`. Quem o consome é o
+`clif_parse_inventory_expansion_request` (`clif.cpp:23086`), que lê uma **tabela
+fixa no C++** de três IDs, e 25792 é um deles. `grep` do ID em `npc/` não
+devolve nada, e a conclusão fácil — a mesma armadilha dos cupons de estilista,
+quinze linhas acima na mesma loja — seria que ele não serve para nada aqui.
+
+**O teto é dez por personagem, e é de compilação.** `INVENTORY_BASE_SIZE` é 100
+e `INVENTORY_EXPANSION_SIZE` é 100 (`src/common/mmo.hpp:44`), então o inventário
+vai de 100 a 200 e para. O décimo primeiro ticket recebe `MAXIMUM_REACHED` e
+**não é comido — mas já foi comprado**, e as 10 Moedas se perderam. O preço foi
+calibrado para isso: 100 Moedas dobram o inventário.
+
+**A Rédea é a única das cinco que não expira**, e o nome não separa uma da
+outra:
+
+| id | nome exibido | o que faz |
+|---|---|---|
+| **12622** | Rédea | **`NoConsume: true`** — não sai da bolsa, nunca |
+| 16682 | Caixa de Rédea | entrega a 12622, por `getgroupitem` |
+| 16683 | Caixa de Rédea [30 dias] | entrega a 12622 **alugada** |
+| 17162 | Caixa de Rédea [7 dias] | idem |
+| 17176 | Caixa de Rédea [3 dias] | idem |
+
+Vender qualquer uma das três últimas entregaria uma montaria que expira, e o
+jogador só descobriria dias depois. O `NoConsume` é o que faz a montaria durar
+para sempre: o item roda `setmounting()` e continua na bolsa.
+
+### A Arena de Combate mudou de cara e de esquina — e devolveu o Guia
+
+`npc/guerra/arena_de_combate.txt`: sprite 966 (`4_M_RUSKNIGHT`) → **10028
+(`4_M_DEATH`)**, `prontera 154,187` → **147,180**, facing **6 (leste)**.
+
+As duas conferências que a regra do sprite manda, e as duas passaram:
+`JT_4_M_DEATH = 10028` no `npcidentity.lub` **deste** cliente — não só no
+`npc.hpp` do rAthena, que aceita qualquer número — e `4_m_death.spr` mais o
+`.act` presentes no nosso `data.grf`. Bem abaixo do teto de 10508 medido em
+2026-07-31. A célula de destino foi lida no `prontera.gat` do cliente: tipo 0,
+andável, altura 1,00 nos quatro cantos, e sem NPC nenhum a menos de três
+células.
+
+**A consequência que veio junto foi a que valeu a rodada.** O OnInit daquele
+arquivo carregava um `disablenpc "GuideProntera"` desde 2026-08-08, e ele
+**nunca foi sobre a Arena — era sobre a célula**: 154,187 era do Guia de
+Prontera, e dois NPCs empilhados numa célula não dão erro nenhum, só um NPC
+invisível por cima do outro. Saindo a porta para uma célula vazia, não há mais
+o que desligar: a linha saiu e **o Guia voltou a atender em 154,187**, onde
+estava antes de 2026-08-08.
+
+Isso deixou o arquivo sem nenhuma alteração em código de terceiros — o único
+enxerto que sobra é a linha `pvp_nightmaredrop off`, e ela também é movimento
+de fora.
+
+**Três documentos afirmavam coisas que deixaram de ser verdade**, e os três
+foram corrigidos na mesma passada: o cabeçalho do `porteiro_do_treinamento.txt`
+("quem desliga o Guia agora é o arena_de_combate.txt"), a seção "A volta" do
+próprio arquivo (media a distância até uma porta que mudou de lugar) e o
+parágrafo do `scripts_guerra.conf`, que ainda prometia **duas** linhas de
+mapflag — o `pvp_nocalcrank` já tinha sido tirado do arquivo e o índice não
+soube. Índice que descreve o que o arquivo não faz mais é pior que índice sem
+descrição: alguém o lê e acredita.
+
+### A Tranqueiras — 26 materiais a 1 zeny, e um buraco de 75.000
+
+`npc/guerra/tranqueiras.txt`, novo. `prontera 151,131`, o degrau seguinte da
+grade dos mercados, uma fileira abaixo da Carta de Acessório. Três grupos, na
+ordem em que a janela os desenha: as peças que as dez Runas do Cavaleiro
+Rúnico pedem — **16 das 17**, porque o Ouro saiu (ver abaixo), três avulsos por nome (Teia de Aranha, Semente de Planta
+Selvagem, Garrafa Vazia) e os **6 do Criar Veneno Mortal** que faltavam — a
+Garrafa Vazia daquela receita é a mesma do grupo 2, e não aparece duas vezes.
+
+**A loja não vende runa pronta, só o que elas custam.** Vender a runa feita
+esvaziaria o forjar do Cavaleiro Rúnico, que é onde o Galho Antigo é gasto. Os
+dez IDs ficaram registrados no cabeçalho para o dia em que a decisão mudar.
+
+Os 26 passaram pela validação da §4.4 um a um — o Ouro incluído, e ele
+só saiu depois, por economia: os 26 existem no `item_db` do
+servidor, os 26 têm entrada no `itemInfo.lua` deste cliente **com nome em
+português**, e os 26 deram "arte 4 de 4 ok". Nenhum precisou de entrada nova de
+cliente nem de arte trazida do bRO — é a primeira lista da série que não
+precisou de nada.
+
+#### O preço de 1 zeny abriu um buraco, e ele foi fechado no mesmo dia
+
+A convenção dos três mercados de Prontera é 1 zeny desde 2026-08-01, e o
+cabeçalho do `mercado_contemporaneo.txt` já registrava o que ela abre: quem
+compra por 1 revende em **qualquer** NPC pelo `Sell` do `item_db` — não depende
+do NPC vendedor —, e o servidor avisa disso item a item ao carregar
+(`npc_parse_shop`, `src/map/npc.cpp:4153`). O pior caso conhecido do projeto era
+a Boina Alada do Chapeleiro, 14.999 de lucro por clique, **registrado e aceito**
+desde a abertura do mercado.
+
+A lista da Tranqueiras foi medida antes de o arquivo existir, e trouxe um caso
+de outra ordem de grandeza:
+
+| item | `Buy` | `Sell` | lucro por clique a 1 zeny |
+|---|---|---|---|
+| **969 Ouro** | 150.000 | **75.000** | **74.999** |
+| 657 Poção da Fúria Selvagem | 4.500 | 2.250 | 2.249 |
+| 7939 Galho Antigo / 7938 Partículas de Luz | 1.500 | 750 | 749 |
+| os outros 22 | — | — | de 15 a 521 |
+
+Em laço infinito, o Ouro sozinho tornaria zeny irrelevante — cinco vezes a
+Boina, que já era o teto tolerado.
+
+**A decisão veio do dono na mesma sessão, e com o motivo: o drop está em 50x.**
+Saíram os dois — o **Ouro (969)** da Tranqueiras e a **Boina Alada (5170)** do
+Chapeleiro. Das duas saídas possíveis, foi escolhida a segunda:
+
+1. **`Sell: 0` / `Trade: NoSell` por override** em `db/guerra/item_db.yml`.
+   Fecha de vez — e alcança **todo** o Ouro e toda a Boina do servidor,
+   inclusive o que o jogador caçou. Descartada por isso.
+2. **Tirar as peças das listas.** Uma linha em cada arquivo, não mexe em mais
+   nada, e não toca no que já está na mão de ninguém.
+
+Dois custos foram aceitos junto, e os dois estão escritos no arquivo de cada
+loja para que não sejam "consertados" por engano:
+
+- **A Runa Luxanima não fecha só com a Tranqueiras.** Ela pede 1 Galho Antigo,
+  3 Partículas de Luz e **3 Ouros**, e o Ouro saiu. As outras nove receitas
+  fecham inteiras na vitrine.
+- **A Boina Alada era peça irmã de um dos três conjuntos espelhados** para o
+  19455 em `db/guerra/item_combos.yml`. O espelho **não mudou** — ele vive no
+  `item_combos.yml` e não depende de loja nenhuma —, mas a peça deixou de ser
+  comprável no mercado: quem quiser fechar aquele conjunto agora a caça. Sobrou
+  o Traje Protetor (19381), no Retoqueiro, como única irmã à venda.
+
+**O maior que ficou é a Poção da Fúria Selvagem (657), com 2.249** — sete vezes
+o terceiro colocado. Não entrou na poda porque a decisão nomeou dois itens e não
+uma faixa; se a conta de zeny apertar um dia, é por ela que se começa. Do
+terceiro para baixo (749) nada move a economia.
+
+#### O sprite é uma classe de jogador, e nenhum NPC do rAthena faz isso
+
+Pedido: sprite **5**, `JOB_MERCHANT`. Os 26 mil `script` do vendor usam view id
+de NPC (≥ 44) e **nenhum** usa id de classe — a varredura foi feita antes de
+gravar, justamente porque a ausência total costuma querer dizer alguma coisa.
+
+**Funciona, e o caminho é explícito.** O `status_set_viewdata`
+(`src/map/status.cpp`, `case BL_NPC`) tenta o `npc_get_viewdata` primeiro, que
+devolve nulo para 5 — o `npcdb_checkid` só aceita de 44 para cima —, e cai num
+ramo `else if (pcdb_checkid(class_))` que monta a aparência à mão:
+`look[LOOK_BASE] = 5`. O corpo de Mercador do jogador existe nos dois sexos no
+nosso `data.grf` (conferido; o nome coreano da pasta é `상인`, não `머천트` —
+procurar pelo segundo devolve zero e **parece ausência**).
+
+**Mas aquele ramo deixa a cabeça em zero, e zero não existe.** Ele faz
+`look[LOOK_HAIR] = cap_value(0, MIN_HAIR_STYLE, MAX_HAIR_STYLE)`, e o nosso
+`min_hair_style` (`conf/battle/client.conf`) é **0** — então o NPC nasceria
+pedindo o penteado 0. Os penteados deste cliente vão de **1 a 42**, nos dois
+sexos: não há `0_<sexo>.spr`. Daí as duas linhas de `setunitdata` no OnInit, que
+não são enfeite:
+
+```
+setunitdata(getnpcid(0), UNPC_SEX, SEX_MALE);
+setunitdata(getnpcid(0), UNPC_HAIRSTYLE, 1);
+```
+
+As duas **gravam no `nd->vd` do próprio NPC** e não são um pacote solto: o
+`clif_changelook`, no `case LOOK_HAIR`, faz `vd->look[type] = val`
+(`clif.cpp:4031`), então valem para quem logar depois. Sem essa checagem a falha
+seria da família de sempre — tabela certa, arte certa, e o NPC sem cabeça na
+tela, calado.
+
+A saída, se mesmo assim ele nascer errado, já veio escolhida no pedido e está no
+cabeçalho: trocar por **776 (`4_M_TWMIDMAN`)**, que é sprite de NPC de verdade —
+conferido no `npcidentity.lub` deste cliente e com `.spr` e `.act` em
+`data\sprite\npc\`. As duas linhas de `setunitdata` saem junto, porque view id de
+NPC traz a aparência pronta do `npc_viewdb`.
+
+### O que falta ver no jogo
+
+Nada disto subiu. `@reloadbarterdb` para as duas linhas da Máquina — **não** é
+`@reloadscript` —, `@reloadscript` para a Tranqueiras, a Arena e o Guia. A
+Tranqueiras vai imprimir 25 avisos `npc_parse_shop: ... discounted buying price`
+ao carregar, e eles são esperados: é o servidor apontando o exploit de revenda
+descrito acima, não erro de sintaxe.
+
+O que só se decide na tela: se o Mercador de classe 5 desenha inteiro (corpo
+**e** cabeça), e se a Morte da porta da arena ficou virada para o lado certo.

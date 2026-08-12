@@ -2,8 +2,12 @@
 //= Area de Treinamento
 //===== Onde =================================================
 //= prontera 157,187 - na mesma fileira do Placar da Arena
-//= (152,187) e da porta da arena (154,187). Ali ficava a
+//= (152,187) e do Guia de Prontera (154,187). Ali ficava a
 //= "Smile Assistance".
+//=
+//= A PORTA DA ARENA NAO E MAIS VIZINHA: ela ficou em 154,187 de
+//= 2026-08-08 a 2026-08-12 e de la foi para 147,180, devolvendo
+//= 154,187 ao Guia.
 //=
 //= ATE 2026-08-08 ESTE NPC FICAVA EM 154,187, a celula do
 //= Guia de Prontera, e a Arena de Combate em 157,187. Os dois
@@ -43,8 +47,15 @@
 //= npc_duplicate_sub - e as quatro nascem durante a leitura do
 //= arquivo delas, antes de qualquer OnInit nosso). A "Smile
 //= Assistance#prt" e ELA PROPRIA uma duplicata: desliga-la nao
-//= alcanca ninguem. Quem desliga o Guia agora e o
-//= arena_de_combate.txt, que passou a ocupar a celula dele.
+//= alcanca ninguem.
+//=
+//= O GUIA NAO ESTA MAIS DESLIGADO. De 2026-08-08 a 2026-08-12
+//= quem o desligava era o arena_de_combate.txt, que passara a
+//= ocupar a celula dele; em 2026-08-12 aquela porta mudou para
+//= 147,180, celula vazia, e o `disablenpc` saiu junto. O Guia
+//= atende de novo em 154,187. ESTE arquivo continua desligando
+//= a sua duplicata de Smile - as duas coisas nunca foram a
+//= mesma.
 //=
 //= E COPIA E NAO `duplicate()` porque nao ha o que reaproveitar:
 //= o corpo do guia era o menu de navegacao da cidade inteira,

@@ -1,43 +1,63 @@
 //===== Guerra do Emperium ===================================
 //= Arena de Combate
 //===== Onde =================================================
-//= prontera 154,187 - a esquina do quarteirao a oeste da
-//= praca central, na mesma fileira do Placar da Arena
-//= (152,187) e da porta do campo de treino (157,187). Ali
-//= ficava o Guia de Prontera.
+//= prontera 147,180 - celula VAZIA, sete passos a sudoeste da
+//= fileira do Placar da Arena (152,187) e da porta do campo de
+//= treino (157,187). Conferida no .gat DESTE cliente: tipo 0,
+//= andavel, altura 1,00 nos quatro cantos, e sem NPC nenhum -
+//= do rAthena ou nosso - a menos de tres celulas.
 //=
-//= ATE 2026-08-08 ESTA PORTA FICAVA EM 157,187 e a Area de
-//= Treinamento em 154,187. As duas TROCARAM DE LUGAR, a
-//= pedido, e a troca arrastou junto o `disablenpc` do OnInit:
-//= cada arquivo desliga o NPC do rAthena que ocupa a celula
-//= que ELE passou a ocupar. Sem isso sobrariam dois NPCs
-//= empilhados numa celula e nenhum na outra - e o empilhamento
-//= nao da erro nenhum, so um NPC invisivel por cima do outro.
-//= Aqui o alvo virou "GuideProntera", o Guia; a "Smile
-//= Assistance#prt", que era o alvo daqui, passou a ser
-//= desligada pelo porteiro_do_treinamento.txt.
+//= ELA ANDOU DUAS VEZES, e a segunda desfez a heranca da
+//= primeira:
+//=
+//=   ate 2026-08-08   prontera 157,187
+//=   2026-08-08       prontera 154,187, trocando de lugar com a
+//=                    Area de Treinamento, a pedido. 154,187 era
+//=                    a celula do Guia de Prontera, entao a troca
+//=                    arrastou junto um `disablenpc` no Guia -
+//=                    sem ele sobrariam dois NPCs empilhados numa
+//=                    celula e nenhum na outra, e o empilhamento
+//=                    nao da erro nenhum, so um NPC invisivel por
+//=                    cima do outro.
+//=   2026-08-12       prontera 147,180, a pedido, junto com a
+//=                    troca de sprite. Como a celula de destino e
+//=                    vazia, ESTE NPC NAO DESLIGA MAIS NINGUEM: o
+//=                    `disablenpc` saiu do OnInit e o GUIA DE
+//=                    PRONTERA VOLTOU a 154,187, onde estava
+//=                    antes de 2026-08-08.
+//=
+//= A licao que sobra: `disablenpc` daqui e consequencia da
+//= CELULA, nao deste NPC. Se um dia esta porta voltar a pousar
+//= em cima de NPC do rAthena, o `disablenpc` volta com ela - e
+//= a receita esta preservada no cabecalho do
+//= porteiro_do_treinamento.txt, que ainda a usa.
 //===== Descricao ============================================
 //= A porta da arena de PvP. Faz uma pergunta so e, se a resposta
 //= for sim, leva para pvp_n_1-5.
 //=
 //= Pedido em 2026-08-06.
-//===== Como, e por que assim ================================
-//= O NPC que esta em 154,187 e o "Guide#01prontera", exname
-//= "GuideProntera", de npc/re/guides/guides_prontera.txt.
+//===== Este arquivo nao toca NPC de terceiros ================
+//= De 2026-08-06 a 2026-08-12 o OnInit daqui tinha um
+//= `disablenpc "GuideProntera"` - o Guia de Prontera, de
+//= npc/re/guides/guides_prontera.txt, que ocupava a celula em
+//= que esta porta pousara. Com a mudanca para 147,180, celula
+//= vazia, ELE SAIU: nao ha mais nada a desligar, e o Guia
+//= voltou a atender em 154,187.
 //=
-//= Como no armazem_do_cla, sao dois movimentos DE FORA:
-//=   1) `disablenpc` no original, daqui;
-//=   2) este NPC nosso, na mesma coordenada.
-//= O npc/re/guides/guides_prontera.txt fica byte a byte igual
-//= ao upstream.
+//= Ou seja este arquivo hoje nao altera NADA do rAthena. O
+//= unico enxerto que sobra e a linha de mapflag no fim, e ela
+//= e movimento DE FORA tambem: nao encosta no
+//= npc/mapflag/nightmare.txt.
 //=
-//= DESLIGAR O ORIGINAL NAO DESLIGA AS DUPLICATAS, e por isso
-//= as outras QUATRO de guia de Prontera - 282,208, 29,200,
-//= 160,29 e 159,326 - continuam guiando. Uma duplicata copia o
-//= estado do original UMA vez, na hora em que nasce
-//= (src/map/npc.cpp, npc_duplicate_sub), e as quatro nascem
-//= durante a leitura do arquivo delas, muito antes deste
-//= OnInit. O cabecalho do porteiro_do_treinamento.txt detalha.
+//= Guardado aqui porque a receita se repete e ja custou
+//= retrabalho: DESLIGAR O ORIGINAL NAO DESLIGA AS DUPLICATAS.
+//= As outras QUATRO de guia de Prontera - 282,208, 29,200,
+//= 160,29 e 159,326 - nunca pararam, nem quando o original
+//= estava desligado. Uma duplicata copia o estado do original
+//= UMA vez, na hora em que nasce (src/map/npc.cpp,
+//= npc_duplicate_sub), e as quatro nascem durante a leitura do
+//= arquivo delas, muito antes de qualquer OnInit nosso. O
+//= cabecalho do porteiro_do_treinamento.txt detalha.
 //===== O mapa ===============================================
 //= pvp_n_1-5 e a "Sala Bussola". Ja vem pronta: o
 //= npc/mapflag/pvp.txt liga o `pvp` nela, entao o combate abre
@@ -56,8 +76,14 @@
 //= resnametable.txt ANTES de concluir que o mapa nao existe.
 //===== A volta ==============================================
 //= QUEM MORRE VOLTA PARA PRONTERA 155,183, a mesma celula em que
-//= o Warper desembarca (npc/custom/warper.txt, rotulo `T1`) -
-//= quatro celulas da porta da arena, que fica em 154,187.
+//= o Warper desembarca (npc/custom/warper.txt, rotulo `T1`).
+//=
+//= ELE NAO SEGUE A PORTA. Ate 2026-08-12 os dois eram vizinhos -
+//= a porta em 154,187, o retorno quatro celulas ao sul -, e a
+//= mudanca para 147,180 afastou um do outro (oito celulas a leste
+//= e tres ao norte). Foi mantido de proposito: o ponto de retorno
+//= e onde o Warper desembarca, nao a soleira desta porta, e mudar
+//= um por causa do outro so acoplaria as duas coisas.
 //=
 //= Isso e script nosso, no OnPCDieEvent abaixo, e NAO mapflag: o
 //= `nosave` nao alcanca morte. Quem devolve o morto e o
@@ -165,8 +191,25 @@
 //= e o que o proprio warper de PvP do rAthena faz
 //= (npc/other/pvp.txt, funcao F_PVP_FSRS).
 //=
-//= Sprite 966, o 4_M_RUSKNIGHT - o cavaleiro de Moscovia, que no
-//= rAthena so aparece guardando a entrada do mosk_dun02.
+//= Sprite 10028, o 4_M_DEATH - a Morte encapuzada. Trocado em
+//= 2026-08-12, a pedido; ate ali era o 966 (4_M_RUSKNIGHT), o
+//= cavaleiro de Moscovia que no rAthena so aparece guardando a
+//= entrada do mosk_dun02.
+//=
+//= As DUAS conferencias que a regra manda, e as duas passaram:
+//= JT_4_M_DEATH = 10028 no `npcidentity.lub` DESTE cliente (nao
+//= so no npc.hpp do rAthena, que aceita qualquer numero), e
+//= `data\sprite\npc\4_m_death.spr` mais o `.act` presentes no
+//= nosso data.grf. Sem as duas o NPC nasce INVISIVEL, calado -
+//= a armadilha do 10605 no Mestre de Classe. Ele esta bem abaixo
+//= do teto de 10508 medido em 2026-07-31.
+//=
+//= FACING 6 (leste), pedido como "virada para a direita". Com a
+//= camera padrao do cliente as quatro direcoes caem na diagonal
+//= da tela, entao 6 desenha o NPC olhando para CIMA-DIREITA. A
+//= tabela vale para qualquer sprite e esta no CLAUDE.md 5:
+//= 0 (norte) cima-esquerda, 2 (oeste) baixo-esquerda, 4 (sul)
+//= baixo-direita, 6 (leste) cima-direita.
 //=
 //= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1).
 //= Ver PENDENCIAS.md, secao "Acentuacao no dialogo".
@@ -178,7 +221,7 @@
 //= Mudanca neste arquivo pega com @reloadscript.
 //============================================================
 
-prontera,154,187,4	script	Arena de Combate	966,{
+prontera,147,180,6	script	Arena de Combate	10028,{
 	mes "[Arena de Combate]";
 	mes "Deseja entrar na gloriosa e";
 	mes "eterna arena de combate?";
@@ -203,23 +246,11 @@ OnInit:
 	                        // 1000ms do rAthena de proposito: ver a secao
 	                        // "Por que ele ja esteve desligado".
 
-	// E "GuideProntera" e nao "Guide#01prontera": a linha do rAthena
-	// e `Guide#01prontera::GuideProntera`, e o que vem depois do `::`
-	// e o EXNAME. E por exname que o rAthena indexa NPC (npcname_db,
-	// src/map/npc.cpp), entao e ele que getnpcid e disablenpc
-	// enxergam - "Guide#01prontera" e so o nome que aparece na tela.
-	// As quatro duplicatas tem exname proprio (Guide#02prontera e
-	// irmas) e nao sao alcancadas por esta linha.
-	//
-	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste, um
-	// nome fora de sincronia com o guides_prontera.txt do rAthena
-	// abortaria o OnInit calado - e sobrariam DOIS NPCs na mesma
-	// celula, o guia e este, um por cima do outro.
-	if (!getnpcid(0, "GuideProntera")) {
-		debugmes "ArenaDeCombate: nao achei 'GuideProntera'. O npc/re/guides/guides_prontera.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM prontera 154,187.";
-		end;
-	}
-	disablenpc "GuideProntera";
+	// Nao ha `disablenpc` nenhum aqui desde 2026-08-12, e a ausencia e
+	// deliberada: 147,180 e celula vazia. Ate aquele dia esta porta
+	// ficava em 154,187, em cima do Guia de Prontera, e precisava
+	// desliga-lo. Ver a secao "Este arquivo nao toca NPC de terceiros"
+	// no cabecalho antes de por um de volta.
 	end;
 
 OnPCDieEvent:

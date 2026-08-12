@@ -30,16 +30,27 @@
 //= linha 4153): quem compra aqui por 1 zeny pode revender em
 //= QUALQUER NPC pelo `Sell` do item_db e lucrar a diferenca.
 //=
-//= O pior caso desta lista e a Boina Alada (5170), que tem
+//= O pior caso desta lista ERA a Boina Alada (5170), que tem
 //= `Buy: 30000` no item_db e portanto revende por 15000 - ou
 //= seja, 14999 de lucro por compra, em laco infinito. O resto
 //= da lista tem `Buy: 20`, que da 9 de lucro e nao move nada.
 //=
-//= Se um dia isso incomodar, o remedio NAO e mexer no preco
-//= daqui: revender nao depende deste NPC. E por `Sell: 0` ou
-//= `Trade: NoSell` na entrada do item. Como esses itens sao do
-//= rAthena, isso significa ou sobrepor a entrada em
-//= db/guerra/item_db.yml, ou tirar a Boina da loja.
+//= ELA SAIU DO CHAPELEIRO EM 2026-08-12, e a decisao foi do
+//= dono: com o drop em 50x, item de revenda alta nao fica em
+//= vitrine de 1 zeny. Saiu junto com o Ouro (969) da
+//= Tranqueiras, que era o mesmo problema cinco vezes maior.
+//=
+//= Foram consideradas duas saidas e escolhida a segunda:
+//=   1) `Sell: 0` / `Trade: NoSell` por override em
+//=      db/guerra/item_db.yml. Fecha de vez, mas alcanca TODA a
+//=      Boina do servidor - inclusive a que o jogador cacou.
+//=   2) tirar a peca da loja. Uma linha, nao mexe em mais nada.
+//=
+//= REPOR A BOINA AQUI REABRE O BURACO. Nao e "so mais uma
+//= linha" - o item continua com `Buy: 30000` no item_db.
+//=
+//= Com ela fora, o pior caso do mercado inteiro passou a ser o
+//= Traje Protetor (19381) no Retoqueiro, citado logo abaixo.
 //=
 //= ------------------------------------------------------------
 //= COMO A LISTA FOI RESOLVIDA
@@ -280,7 +291,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,5170:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1
+-	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -333,13 +344,19 @@ OnInit:
 //
 // Com o 19024 nao dava: ele esta em TRES conjuntos do
 // db/re/item_combos.yml e o 19455 nao existe para eles, entao nao ha
-// alternativa listada. Duas das pecas irmas sao vendidas neste mesmo
-// mercado - a Boina Alada (5170) no Chapeleiro e o Traje Protetor (19381)
-// no Retoqueiro -, ou seja a perda seria facil de encontrar e calada:
+// alternativa listada. Uma peca irma e vendida neste mesmo mercado - o
+// Traje Protetor (19381), no Retoqueiro -, ou seja a perda seria facil de
+// encontrar e calada:
 // conjunto que nao fecha nao da erro, so nao acontece, e a versao com
 // cova - que existe para ser MELHOR - daria menos bonus que a sem cova.
 // Os tres foram espelhados para o 19455 em db/guerra/item_combos.yml,
 // arquivo que nasceu por causa disso.
+//
+// A SEGUNDA PECA IRMA ERA A BOINA ALADA (5170), e ela saiu do Chapeleiro
+// em 2026-08-12 (ver o cabecalho). O ESPELHO DE CONJUNTO NAO MUDOU - ele
+// vive no item_combos.yml e nao depende de loja nenhuma -, mas a Boina
+// deixou de ser compravel aqui: quem quiser fechar aquele conjunto agora
+// caca a peca. Foi consequencia aceita da poda, nao descuido.
 //
 // Nada disso pega com @reloadscript sozinho: item novo pede
 // @reloaditemdb, e a entrada de cliente so e lida na inicializacao, ou

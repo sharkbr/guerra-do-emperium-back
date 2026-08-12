@@ -37,12 +37,33 @@ sem confirmação in-game.
 | Manteleiro (13 mantos cosméticos) | `prontera 163,155` | 2026-08-08 |
 | Mister Peso | `prontera 99,64` | 2026-08-08 |
 | Mestre das Montarias (Riding Creature Master em PT) | `prontera 130,213` | 2026-08-08 |
-| Arena e Área de Treinamento trocadas de lugar | `prontera 154/157,187` | 2026-08-08 |
+| Área de Treinamento no lugar novo | `prontera 157,187` | 2026-08-08 |
 | Placar da Arena — modal novo, na coordenada nova | `prontera 152,187` | 2026-08-08 |
 | Caveira Humana caindo de jogador morto | `pvp_n_1-5` | 2026-08-08 |
 | Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
 | Sombrios Gerais — loja, sprite levantado e facing novo | `auction_01 193,58` | 2026-08-11 |
 | 22 itens novos em 7 lojas, e 2 que mudaram de vitrine | `prontera`, y=155 e y=161/173 | 2026-08-12 |
+| Tranqueiras (25 materiais a 1 zeny) — **e o sprite de classe** | `prontera 151,131` | 2026-08-12 |
+| Chapeleiro sem a Boina Alada (10 itens, era 11) | `prontera 151,173` | 2026-08-12 |
+| Arena de Combate com a Morte, em lugar novo | `prontera 147,180` | 2026-08-12 |
+| Guia de Prontera de volta ao ar | `prontera 154,187` | 2026-08-12 |
+| Ticket de Inventário e Rédea na Máquina | `prontera 167,199` / `comodo 214,185` | 2026-08-12 |
+
+**A Tranqueiras é a única da lista que pode falhar por um motivo novo**, e ele
+é do lado do cliente: ela usa **sprite 5 (`JOB_MERCHANT`), uma classe de
+jogador**, e nenhum dos 26 mil NPCs do rAthena faz isso. O ramo do
+`status_set_viewdata` que atende esse caso deixa o penteado em **0**, e este
+cliente só tem de 1 a 42 — as duas linhas de `setunitdata` no `OnInit` existem
+por causa disso. O que a tela decide, e só ela: **se o corpo E a cabeça
+desenham**. Se não desenharem, a troca já está escolhida no cabeçalho do
+arquivo — sprite **776 (`4_M_TWMIDMAN`)**, e as duas linhas de `setunitdata`
+saem junto.
+
+Os 25 avisos `npc_parse_shop: ... discounted buying price` que ela imprime ao
+carregar **são esperados** e não impedem nada — é o servidor apontando que quem
+compra a 1 zeny revende pelo `Sell` do `item_db`. Os dois casos que moviam a
+economia de verdade já saíram das vitrines (Ouro e Boina Alada, 2026-08-12); o
+maior que ficou é a Poção da Fúria Selvagem, com 2.249 por clique.
 
 **A Sombrios Totais (189,58) está conferida em jogo** — corpo, sorteio e a lista
 de prêmios, esta depois de tirar a indentação que colava as linhas
@@ -846,8 +867,6 @@ O Manto do Herói ainda é **equipamento** e não visual (DEF 2, peso 10, nível
 no slot velho, porque `Locations` é OR e não atribuição —, e só depois a linha
 da loja. Mexer só na linha da loja põe a peça numa vitrine em que ela não
 equipa, que é o defeito que a regra existe para evitar.
-
----
 
 ---
 

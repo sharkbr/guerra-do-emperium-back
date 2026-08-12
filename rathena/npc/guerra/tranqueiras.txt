@@ -1,0 +1,216 @@
+//===== Guerra do Emperium ===================================
+//= Tranqueiras
+//===== Onde =================================================
+//= prontera 151,131 - o degrau seguinte da grade dos mercados,
+//= uma fileira abaixo da Carta de Acessorio (151,137):
+//=
+//=            x=151          x=155          x=159
+//=  y=137   Carta Acess.   Carta MVP      Carta Chefe
+//=  y=131   TRANQUEIRAS    --             --
+//=
+//= A celula foi conferida no prontera.gat DESTE cliente antes de
+//= plantar: tipo 0, andavel, altura 1,00 nos quatro cantos. Nao ha
+//= NPC nenhum - do rAthena ou nosso - a menos de tres celulas, entao
+//= este arquivo nao desliga ninguem.
+//=
+//= CUIDADO com o prontera.gat: sao TRES map_cache.dat e a prontera de
+//= renewal (312x392) so existe no db/re/. Ferramenta que abra so o
+//= db/map_cache.dat responde pela `pprontera`, que e outro mapa.
+//= Ver CLAUDE.md secao 5.
+//===== Descricao ============================================
+//= Loja de MATERIAL BRUTO, 25 itens a 1 zeny. Pedida em 2026-08-12.
+//= Tres grupos, e a ordem da linha do `shop` e a ordem da janela:
+//=
+//=   1) 16 das 17 pecas que as dez Runas do Cavaleiro Runico pedem
+//=      (Galho Antigo, Particulas de Luz, e os quatorze que entram
+//=      numa receita so cada um). A 17a, o OURO, foi tirada - ver a
+//=      secao do preco;
+//=   2) tres avulsos pedidos por nome - Teia de Aranha, Semente de
+//=      Planta Selvagem e Garrafa Vazia;
+//=   3) os 6 do Criar Veneno Mortal que ainda faltavam - a Garrafa
+//=      Vazia daquela receita e a mesma do grupo 2, e por isso nao
+//=      aparece duas vezes.
+//=
+//= UMA RECEITA NAO FECHA SO COM ESTA LOJA, e e de proposito: a Runa
+//= Luxanima pede 1 Galho Antigo, 3 Particulas de Luz e 3 OUROS, e o
+//= Ouro nao esta a venda aqui. Quem quiser Luxanima caca o Ouro. As
+//= outras nove receitas fecham inteiras nesta vitrine.
+//=
+//= A LOJA NAO VENDE RUNA PRONTA, so o que elas custam. Foi decidido
+//= assim em 2026-08-12: vender a runa feita esvaziaria o forjar do
+//= Cavaleiro Runico, que e onde o Galho Antigo e gasto. Os dez ids
+//= das runas, se um dia a decisao mudar: 12725 a 12733 e 22540.
+//===== O preco, e o que ele abre ============================
+//= 1 ZENY POR ITEM, a convencao dos tres mercados de Prontera desde
+//= 2026-08-01. Vem com a mesma consequencia que o cabecalho do
+//= mercado_contemporaneo.txt registra, e AQUI ELA E MAIOR.
+//=
+//= O rAthena imprime um aviso por item ao carregar:
+//=
+//=   npc_parse_shop: Item X discounted buying price (1->0) is less
+//=   than overcharged selling price (...)
+//=
+//= Nao e erro de sintaxe e nao impede a loja de subir. E o servidor
+//= avisando de um exploit real (src/map/npc.cpp:4153): quem compra
+//= aqui por 1 zeny revende em QUALQUER NPC pelo `Sell` do item_db.
+//=
+//= O OURO (969) FOI TIRADO DESTA LISTA POR ISSO, no mesmo dia em que
+//= ela nasceu. Ele tem `Buy: 150000`, logo `Sell: 75000` - 74.999 de
+//= lucro por clique, em laco infinito, CINCO VEZES o pior caso que o
+//= projeto ja tinha. A decisao foi do dono, com o drop em 50x: sai da
+//= loja, e a Boina Alada (5170) sai do Chapeleiro junto, pela mesma
+//= razao. A saida alternativa era `Sell: 0`/`NoSell` por override em
+//= db/guerra/item_db.yml, e ela foi descartada porque alcancaria TODO
+//= o Ouro do servidor - inclusive o que o jogador cacou.
+//=
+//= REPOR O OURO AQUI REABRE O BURACO. Nao e "so mais uma linha".
+//=
+//= O que sobrou, medido em 2026-08-12 (lucro por unidade a 1z):
+//=
+//=   657   Pocao da Furia Selvagem      2.249   <== o maior que ficou
+//=   7939  Galho Antigo                   749
+//=   7938  Particulas de Luz              749
+//=   7069  Armadura Destruida             520
+//=   7123  Pele de Dragao                 511
+//=   7097  Coracao Incandescente          461
+//=   1048  Cabelo Horrendo                399
+//=   7210  Armadura de Dullahan           394
+//=   1096  Casca Arredondada              389
+//=   7099  Pergaminho Antigo              385
+//=   7221  Corrente                       369
+//=   7002  Dente de Ogro                  328
+//=   6210  Semente de Planta Selvagem     299
+//=   518   Mel                            249
+//=   1035  Canino de Dragao               241
+//=   716   Gema Vermelha                  224
+//=   713   Garrafa Vazia                  199
+//=   972   Karvodailnirol                 199
+//=   1034  Cabelo Azul                    170
+//=   7030  Garra de Lobo do Deserto       103
+//=   1025  Teia de Aranha                  91
+//=   937   Canino Venenoso                 73
+//=   7033  Esporo Venenoso                 56
+//=   952   Espinho de Cacto                40
+//=   939   Ferrao de Abelha                15
+//=
+//= A POCAO DA FURIA SELVAGEM (657) FICOU, com 2.249 - o maior da
+//= lista agora, e sete vezes o terceiro colocado. Ela nao foi
+//= incluida na poda de 2026-08-12 porque a decisao nomeou dois itens,
+//= e nao uma faixa. Se um dia a conta de zeny apertar, e por ela que
+//= se comeca; do terceiro para baixo (749) nada move a economia.
+//=
+//= Ver HISTORICO.md, 2026-08-12.
+//===== O sprite e uma CLASSE DE JOGADOR ======================
+//= Sprite 5 - `JOB_MERCHANT`, o Mercador -, pedido assim em
+//= 2026-08-12. Isso e incomum e merece as tres linhas abaixo, porque
+//= NENHUM NPC do rAthena inteiro faz isso: os 26 mil `script` do
+//= vendor usam view id de NPC (>= 44), nunca id de classe.
+//=
+//= FUNCIONA, e o caminho e explicito no codigo: o
+//= `status_set_viewdata` (src/map/status.cpp, case BL_NPC) tenta o
+//= `npc_get_viewdata` primeiro, que devolve nulo para 5 - o
+//= `npcdb_checkid` so aceita de 44 para cima -, e cai num ramo
+//= `else if (pcdb_checkid(class_))` que monta a aparencia a mao:
+//= `look[LOOK_BASE] = 5`. Dai o cliente desenha o corpo de Mercador
+//= do jogador, `data\sprite\<coreano>\<corpo>\<sexo>\<mercador>`,
+//= que existe nos dois sexos no nosso data.grf (conferido).
+//=
+//= MAS AQUELE RAMO DEIXA A CABECA EM ZERO, e zero nao existe. Ele faz
+//= `look[LOOK_HAIR] = cap_value(0, MIN_HAIR_STYLE, MAX_HAIR_STYLE)`, e
+//= o nosso `min_hair_style` (conf/battle/client.conf) e 0 - entao o
+//= NPC nasceria pedindo o penteado 0. Os penteados deste cliente vao
+//= de 1 a 42, nos dois sexos: nao ha `0_<sexo>.spr`. Por isso as duas
+//= linhas de `setunitdata` no OnInit, e elas NAO sao enfeite.
+//=
+//= As duas gravam no `nd->vd` do proprio NPC (clif_changelook, case
+//= LOOK_HAIR, faz `vd->look[type] = val`), entao valem para quem logar
+//= depois - nao sao um pacote solto para quem estava por perto.
+//=
+//= SE MESMO ASSIM ELE NASCER INVISIVEL ou sem cabeca, a saida ja esta
+//= escolhida: trocar o `JOB_MERCHANT` da linha do NPC por 776
+//= (`4_M_TWMIDMAN`), que e sprite de NPC de verdade - conferido no
+//= `npcidentity.lub` DESTE cliente e com `.spr` e `.act` em
+//= `data\sprite\npc\`. As duas linhas de `setunitdata` saem junto,
+//= porque view id de NPC traz a aparencia pronta do `npc_viewdb`.
+//===== Notas ================================================
+//= A loja e FLUTUANTE (`-` no lugar do mapa) e o NPC a chama com
+//= `callshop`. E o idioma dos tres mercados, e o motivo e o mesmo: um
+//= `shop` com coordenada seria uma vitrine sem NPC, sem OnInit e sem
+//= placa. Ver npc/guerra/mercado_contemporaneo.txt.
+//=
+//= A PLACA sobre a cabeca e a mesma dos 21 mercados
+//= (src/custom/placa_de_venda). Aqui ela ganha o assunto e nao a
+//= contagem, porque "Tranqueiras" nao diz o que se vende.
+//=
+//= OS ITENS FORAM VALIDADOS UM A UM antes de entrar (CLAUDE.md 4.4),
+//= e foram 26 na conferencia - o Ouro passou por ela e so depois saiu
+//= por decisao de economia. Os 26 existem no item_db do servidor, os
+//= 26 tem entrada no itemInfo.lua deste cliente com NOME EM
+//= PORTUGUES, e os 26 deram "arte 4 de 4 ok" no valida_visual.py.
+//= Nenhum precisou de entrada nova de cliente nem de arte do bRO.
+//=
+//= UMA RESSALVA de nome, e ela nao quebra nada: o 7030 se chama
+//= "Garra de Lobo do Deserto" no servidor e "Garra de Lobo do Deserto "
+//= (com espaco no fim) no itemInfo.lua do cliente. Quem desenha o nome
+//= na janela de loja e o cliente, entao o que o jogador le e o segundo.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo le.
+//= Ver CLAUDE.md secao 4.1. Editar com script que grave em cp1252 - a
+//= ferramenta de edicao do assistente troca TODO byte acentuado do
+//= arquivo por U+FFFD, e sem avisar.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,151,131,4	script	Tranqueiras	JOB_MERCHANT,{
+	callshop "Tranqueiras#loja",0;
+	end;
+
+OnInit:
+	// Aparencia. As duas linhas existem porque o sprite e uma CLASSE de
+	// jogador e nao um view id de NPC - ver a secao "O sprite e uma
+	// CLASSE DE JOGADOR" no cabecalho. O ramo do rAthena que monta essa
+	// aparencia deixa o penteado em ZERO, e este cliente so tem de 1 a
+	// 42: sem a segunda linha o NPC pede um sprite de cabeca que nao
+	// existe. Trocando o sprite por um view id de NPC, as duas saem.
+	setunitdata(getnpcid(0), UNPC_SEX, SEX_MALE);
+	setunitdata(getnpcid(0), UNPC_HAIRSTYLE, 1);
+
+	// O assunto, e nao a contagem como nas lojas de carta: o nome
+	// "Tranqueiras" nao diz o que esta a venda.
+	placadevenda "Materiais de runa e veneno";
+	end;
+}
+
+// ----- Runas - as 17 pecas das dez receitas
+//   7939    Galho Antigo                 revende por 750
+//   7938    Partículas de Luz            revende por 750
+//   1034    Cabelo Azul                  revende por 171
+//   7030    Garra de Lobo do Deserto     revende por 104
+//   7097    Coração Incandescente        revende por 462
+//   7221    Corrente                     revende por 370
+//   1035    Canino de Dragão             revende por 242
+//   1096    Casca Arredondada            revende por 390
+//   7123    Pele de Dragão               revende por 512
+//   7002    Dente de Ogro                revende por 329
+//   1048    Cabelo Horrendo              revende por 400
+//   518     Mel                          revende por 250
+//   716     Gema Vermelha                revende por 225
+//   7069    Armadura Destruída           revende por 521
+//   7099    Pergaminho Antigo            revende por 386
+//   7210    Armadura de Dullahan         revende por 395
+//
+// ----- Avulsos, pedidos por nome
+//   1025    Teia de Aranha               revende por 92
+//   6210    Semente de Planta Selvagem   revende por 300
+//   713     Garrafa Vazia                revende por 200
+//
+// ----- Criar Veneno Mortal - os 6 que faltavam
+//   7033    Esporo Venenoso              revende por 57
+//   937     Canino Venenoso              revende por 74
+//   952     Espinho de Cacto             revende por 41
+//   939     Ferrão de Abelha             revende por 16
+//   972     Karvodailnirol               revende por 200
+//   657     Poção da Fúria Selvagem      revende por 2250
+//
+-	shop	Tranqueiras#loja	-1,7939:1,7938:1,1034:1,7030:1,7097:1,7221:1,1035:1,1096:1,7123:1,7002:1,1048:1,518:1,716:1,7069:1,7099:1,7210:1,1025:1,6210:1,713:1,7033:1,937:1,952:1,939:1,972:1,657:1
