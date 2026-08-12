@@ -413,6 +413,26 @@ OnInit:
 // Acessorista. O db/re/item_combos.yml do rAthena ja casa os tres
 // entre si - tres conjuntos citando a Pena -, entao o jogador que
 // comprar as pecas nas duas lojas fecha conjunto sem nada nosso.
+//
+// RODADA DE 2026-08-12: entrou um, e a fileira foi a cinco.
+//   + 420112  Manto do Heroi   (View 2227, Head_Low, nivel 100)
+//
+// ELE FOI PEDIDO COMO "cabeca meio", E NAO E: o item_db o da como
+// `Head_Low` e a descricao do bRO concorda ("Equip. para Cabeca / Equipa
+// em: Baixo"). No Ocleiro ele nao equiparia no slot da placa, entao esta
+// aqui - CLAUDE.md secao 4, regra 14, o mesmo caminho da Mascara de
+// Minorous em 2026-08-09. Fica dito para o dono do projeto decidir, mas o
+// que mudaria de vitrine e o `Locations:`, nao a linha da loja.
+//
+// E EQUIPAMENTO DE VERDADE, nao visual: DEF 2, peso 10 na tela, nivel 100
+// e um script de HP +15% e resistencia a Humanoide +3%, que bate linha por
+// linha com a descricao do bRO. Por isso vive aqui e nao no Camareiro do
+// mercado_de_visuais.txt.
+//
+// ESTAVA FORA DO itemInfo.lua - o cliente o mostraria sem nome e sem icone
+// na propria vitrine. Veio do bRO pelo completa_iteminfo.py, e o `Name` do
+// servidor, que estava em ingles ("Guardian Claus"), foi sincronizado pelo
+// nomes_pt_item_db.py. Arte nao faltou: 8 de 8 no valida_visual.py.
 prontera,159,173,4	script	Retoqueiro	4_M_HUMERCHANT,{
 	callshop "Retoqueiro#loja",0;
 	end;
@@ -421,7 +441,7 @@ OnInit:
 	placadevenda "Cabeça baixo";
 	end;
 }
--	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 
@@ -560,6 +580,13 @@ OnInit:
 // O 470112 (Botas Decadentes [1]) entrou em 2026-08-07 e nao
 // custou nada - rAthena, cliente e os 4 arquivos de arte ja
 // estavam todos no lugar.
+//
+// O 22071 (Salto Alto Elegante [1]) entrou em 2026-08-12 e tambem nao
+// custou nada - rAthena, cliente e os 4 arquivos de arte ja estavam todos
+// no lugar. Ele e citado por SEIS conjuntos do db/re/item_combos.yml
+// (Tiara e Coroa, cada uma em duas versoes, mais a carta do Amon Ra
+// tambem em duas), e nenhuma das outras pecas desses conjuntos esta a
+// venda neste mercado.
 prontera,155,161,4	script	Sapateiro	1_F_MERCHANT_02,{
 	callshop "Sapateiro#loja",0;
 	end;
@@ -568,7 +595,7 @@ OnInit:
 	placadevenda "Sapatos";
 	end;
 }
--	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1
+-	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
@@ -582,6 +609,11 @@ OnInit:
 // cliente e 4 de 4 de arte). A terceira peca do conjunto, a Pena
 // de Falcao (18985), esta no Retoqueiro - e o unico conjunto
 // deste mercado que atravessa duas lojas.
+//
+// O ANEL DE JASPER (490113) entrou em 2026-08-12 e nao custou nada:
+// Both_Accessory com uma cova, rAthena e cliente ja em portugues, 4 de 4
+// de arte. Ha UM conjunto no db/re/item_combos.yml citando o Jasper_Ring,
+// e a outra metade dele e uma carta (4875), que nao se vende aqui.
 prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
@@ -590,4 +622,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1

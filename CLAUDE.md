@@ -203,6 +203,18 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     cosméticos e três capas com cova, na mesma lista. **Ler a lista e não o
     `Locations:` põe equipamento de status numa vitrine de 1 zeny.**
 
+    **E o `Locations:` do nosso rAthena não é a última palavra: o do bRO
+    é.** São dois desacordos diferentes e o remédio de cada um é outro. Se o
+    pedido discorda do nosso `item_db` mas **concorda com a descrição do
+    bRO** (`estado_item.py --id <n> --descricao`, linha "Equipa em:"), quem
+    está errado é o nosso vendor — corrige-se por override, com `false`
+    explícito no slot velho, e a peça muda de loja. Se o bRO e o nosso
+    `item_db` **concordam entre si** e só o pedido destoa, a peça vai para a
+    loja do `Locations:` e a divergência é levantada por escrito. Em
+    2026-08-12 a mesma lista trouxe os dois casos: Cachecol Glorioso e
+    Coleira do Vassalo eram erro nosso (dois overrides), Gata Branca e Manto
+    do Herói eram engano do pedido (duas ressalvas).
+
     O `estado_item.py --id <n>` responde isso numa linha, e a resposta pode
     contrariar o nome. Os dois casos vivos, os dois na fileira de visual:
     a **Piscadela de Freya** é de meio e o nosso rAthena a dava como baixo
@@ -249,6 +261,20 @@ Produziram diagnóstico falso e custaram retrabalho:
   porque o nome que o jogador lê vem do `itemInfo.lua`, não do servidor.
   O teste, em qualquer arquivo que o jogo leia:
   `python -c "d=open(p,'rb').read(); print '\xef\xbf\xbd' in d"`.
+- **E quem faz isso hoje é a FERRAMENTA DE EDIÇÃO do assistente.** Ela lê e
+  grava como UTF-8: num arquivo cp1252 ela troca **todo** byte acentuado do
+  arquivo por U+FFFD — não só os da linha editada, e sem avisar. Medido em
+  2026-08-12 num arquivo de três linhas com seis acentos: trocar uma linha
+  **sem acento nenhum** destruiu os seis. Vale para `npc/guerra/*.txt`,
+  `db/guerra/item_db.yml`, `.lub`, `itemInfo.lua` — todo texto que o jogo lê.
+  (Os `.md` são UTF-8 e podem ser editados à vontade.)
+  **A saída é gravar por script**: âncora em ASCII, texto novo nascendo
+  `unicode` e um `.encode('cp1252')` num lugar só, mais um `assert` de que a
+  âncora é única e um `decode('cp1252')` de volta antes de valer. E lembrar
+  que **esses arquivos são CRLF**: âncora escrita com `\n` casa zero vezes, e
+  linha remontada sem o `\r` deixa o arquivo com fim de linha misturado.
+  Os dois erros aconteceram nesta ordem em 2026-08-12; os dois foram baratos
+  porque o `assert` da âncora parou o script antes de gravar.
 - **A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela.**
   As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`
   padrão deste MariaDB 12.3 é `utf8mb4` — e o rAthena só manda `SET NAMES` se

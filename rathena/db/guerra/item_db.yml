@@ -1494,6 +1494,47 @@ Body:
          }
       }
 
+
+# -------------------------------------------------------------------------
+# TERCEIRA LEVA DE PLACEHOLDERS - 2026-08-12
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das duas de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no seu ID oficial, com o que a descricao do
+# `iteminfo_new.lub` do bRO traz por extenso.
+
+  - Id: 5983
+    # Mascara de Loki. NAO confundir com os outros dois "Loki" que o nosso
+    # rAthena JA TEM, porque os tres tem nome parecido e sprite diferente:
+    #
+    #    5332  Loki_Mask     View 346   Head_Low/Head_Mid, equipamento
+    #   19615  C_Loki_Mask   View 346   visual, o mesmo desenho do 5332
+    #    5983  este          View 1345  visual, outro desenho
+    #
+    # O nome do recurso deste, em coreano, quer dizer "mascara de assassino
+    # de Loki" - dai o AegisName, que segue a constante do proprio cliente,
+    # `ACCESSORY_Loki_Assassin_Mask`. Trocar este ID por um dos outros dois
+    # entregaria a mascara errada, e sem erro nenhum.
+    #
+    # SEM `bonus`, e nao e lacuna: a descricao do bRO nao tem uma unica linha
+    # azul de efeito - e visual puro, peso 0, nivel 1, todas as classes.
+    #
+    # `Costume_Head_Low` vem da descricao do bRO ("Tipo: Visual / Equipa em:
+    # Baixo"), que e a fonte de onde o item inteiro saiu.
+    #
+    # O View 1345 JA EXISTIA no `accessoryid.lub` do nosso GRF de 2021 -
+    # conferido antes de escrever esta entrada -, entao este item nao
+    # precisou do `estende_accessoryid.py`. So faltava a arte, trazida da
+    # GRF do bRO pelo `instala_visual.py`.
+    AegisName: C_Loki_Assassin_Mask
+    Name: "Máscara de Loki"
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1345
+
 # =========================================================================
 # OVERRIDES - 2026-08-02
 # =========================================================================
@@ -1789,3 +1830,52 @@ Body:
     Name: "Lanca de Valquiria"
     # slot 154 (C_Valkyrie_Spear) -> 29, que era ROBE_2018_RTC_Cape1_TW e nao tem arte aqui
     View: 29
+
+  - Id: 15854
+    # Cachecol Glorioso. O nosso rAthena poe este visual em
+    # `Costume_Head_Top`; o bRO poe em BAIXO - `estado_item.py --id 15854
+    # --descricao` traz a linha por extenso: "Equipa em: ^777777Baixo".
+    #
+    # Quem esta certo e o bRO, pelo mesmo raciocinio da Piscadela de Freya
+    # (410320, mais acima nesta secao): e um cachecol, e o slot de baixo e
+    # o de cachecol e mascara. No slot de topo ele disputava espaco com o
+    # chapeu do jogador.
+    #
+    # `Locations` e OR, nao atribuicao - ver a nota grande no topo desta
+    # secao. Tirar o slot antigo exige o `false` explicito; so acrescentar o
+    # novo deixaria o item ocupando os DOIS.
+    #
+    # Este e o unico campo em que discordamos, e o resto da entrada do
+    # db/re/ fica (View 2079, ArmorLevel 1, sem `Buy` nem `Sell`).
+    #
+    # Na loja ele acompanhou a mudanca: saiu do Costumeiro (visuais de
+    # cabeca topo) e entrou no Camareiro (visuais de cabeca baixo).
+    #
+    # `AegisName` e `Name` sao REDUNDANTES aqui, e estao escritos pelas duas
+    # razoes que o override da Piscadela de Freya anota abaixo.
+    AegisName: C_Phigasia_Scarf_EXE
+    Name: "Cachecol Glorioso"
+    Locations:
+      Costume_Head_Top: false
+      Costume_Head_Low: true
+
+  - Id: 31954
+    # Coleira do Vassalo. Mesmo caso do Cachecol Glorioso logo acima, e
+    # descoberto na mesma rodada: o nosso rAthena poe em `Costume_Head_Mid`,
+    # o bRO poe em BAIXO - "Equipa em: ^777777Baixo" na descricao dele.
+    #
+    # Quem esta certo e o bRO: e uma coleira de pescoco, nao um adorno de
+    # olhos. Este e o TERCEIRO visual desta fileira em que o nosso vendor
+    # discorda do bRO quanto ao slot (Freya, Cachecol Glorioso, este), e nos
+    # tres o bRO ganhou.
+    #
+    # Este e o unico campo em que discordamos; o resto da entrada do db/re/
+    # fica (View 2018, ArmorLevel 1, sem `Buy` nem `Sell`).
+    #
+    # Na loja ele acompanhou a mudanca: saiu do Adereceiro (visuais de
+    # cabeca meio) e entrou no Camareiro (visuais de cabeca baixo).
+    AegisName: C_Vassalage_Necklace
+    Name: "Coleira do Vassalo"
+    Locations:
+      Costume_Head_Mid: false
+      Costume_Head_Low: true

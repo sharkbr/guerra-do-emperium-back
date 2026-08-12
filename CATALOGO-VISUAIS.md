@@ -69,7 +69,39 @@ veio na lista de topo e é `Costume_Head_Low`/`_Mid` no `item_db`, sem
 Freya em 2026-08-07, e a lição está no `CLAUDE.md` §4.14: **quem decide a
 vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 
-## Costumeiro — Costume topo (164 itens)
+**A rodada de 2026-08-12** pôs **19 itens** nas quatro lojas — 11 no
+Costumeiro, 2 no Adereceiro, 5 no Camareiro e 1 no Manteleiro —, todos
+pedidos item por item e nenhum saindo de varredura. (Foram 22 no dia, mas
+três caíram fora deste catálogo: o Manto do Herói foi para o **Retoqueiro**,
+o Salto Alto Elegante para o **Sapateiro** e o Anel de Jasper para o
+**Acessorista**, os três no `mercado_contemporaneo.txt`, porque são
+equipamento de verdade e não visual.)
+
+**Duas peças mudaram de loja, e as duas por erro do nosso vendor — não do
+pedido.** O **Cachecol Glorioso** (15854) saiu do Costumeiro e a **Coleira do
+Vassalo** (31954) saiu do Adereceiro; as duas foram para o **Camareiro**,
+porque o `iteminfo_new.lub` do bRO diz "Equipa em: Baixo" para ambas e o
+nosso `item_db` dizia topo e meio. A correção é um override em
+`db/guerra/item_db.yml`, com o `false` explícito no slot velho — `Locations`
+é OR, não atribuição. São o segundo e o terceiro caso da fileira, depois da
+Piscadela de Freya em 2026-08-07, e nos três o bRO ganhou.
+
+**Uma peça foi criada do zero.** A **Máscara de Loki** (5983) não existia em
+`item_db` nenhum do nosso rAthena — só a arte do bRO e a entrada do cliente.
+Nasceu como placeholder, com `Costume_Head_Low` e `View 1345` lidos da
+descrição do bRO e da tabela de acessórios dele. Não confundir com os dois
+homônimos que já tínhamos: 5332 (`Loki_Mask`, equipamento) e 19615
+(`C_Loki_Mask`, visual) dividem o `View 346` e são outro desenho.
+
+**E uma peça entrou contra o pedido, com a ressalva por escrito.** A **Gata
+Branca** (31452) veio na lista de cabeça baixo e é `Costume_Head_Mid` no
+`item_db` — e a descrição do bRO concorda ("Equipa em: Meio"). Aqui as duas
+fontes dizem o mesmo e é o pedido que destoa, ao contrário das duas de cima.
+Foi para o **Adereceiro**, onde equipa, pelo mesmo caminho da Máscara de
+Minorous em 2026-08-09. **Fica para o dono do projeto decidir**: pôr a peça
+na vitrine de baixo exige mudar o `Locations:`, não a linha da loja.
+
+## Costumeiro — Costume topo (174 itens)
 
 `prontera 151,155` — sprite `1_F_MERCHANT_01`
 
@@ -82,20 +114,29 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 15846 | Selo do Artista de Verdade |
 | 15847 | Boné Alado |
 | 15851 | Coroa Realeza Gelada |
-| 15854 | Cachecol Glorioso |
 | 15875 | Diadema Élfico |
 | 15888 | Garra do Dragão Demoníaco |
 | 15893 | Solarium |
 | 15925 | Boneco de Pouring |
 | 15952 | Naga Tailandesa |
 | 18740 | Cabelo de Super Saiadim |
+| 19288 | Elmo Titânico |
 | 19519 | Nuvem com Raios |
+| 19597 | Chapéu da Ordem Arcana |
 | 19598 | Elmo do Rei do Norte |
 | 19602 | Chapéu Invisível ★ |
 | 19630 | Coroa Valiosa |
 | 19639 | Chapéu Rural |
+| 19659 | Touca com Pompom |
+| 19789 | Chapéu Elegante |
+| 19829 | Chapéu de Vime |
+| 19966 | Chapéu Harmonioso |
 | 19982 | Gorro de Noel |
 | 19996 | Cavalo Rei ★ |
+| 20037 | Chapelão do Duque Coruja |
+| 20038 | Capacete do Alfonso |
+| 20065 | Cocar das Mil Penas |
+| 20106 | Chapéu Dançante |
 | 20135 | Coroa do Segredo |
 | 20180 | Chapéu de Faroeste |
 | 20183 | Presença Misteriosa |
@@ -103,6 +144,7 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 20234 | Máscara de Bafomé ★ |
 | 20244 | Disfarce de Jirtas ★ |
 | 20248 | Peruca de Saiadim |
+| 20300 | Máscara Vento da Colina |
 | 20308 | Costume Koneko Hat |
 | 20309 | Costume Dip Schmidt Helm |
 | 20385 | Elmo do Herói |
@@ -240,7 +282,7 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 440005 | Coroa do Diabo |
 | 440012 | Máscara de Eggman |
 
-## Adereceiro — Costume meio (124 itens)
+## Adereceiro — Costume meio (125 itens)
 
 `prontera 155,155` — sprite `4_M_HUMERCHANT`
 
@@ -254,16 +296,17 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 19603 | Óculos Invisíveis ★ |
 | 19638 | Sr. Sorriso |
 | 19801 | Máscara da ANBU |
+| 20166 | Máscara do Jay Zon |
 | 20286 | Óculos da Persona |
 | 20397 | Máscara de Jakk |
 | 21200 | Lágrimas Masculinas |
 | 21207 | Máscara de Minorous |
 | 31118 | Máscara do Vilão |
+| 31452 | Gata Branca |
 | 31462 | Brincos de Poring Rosa |
 | 31515 | Gatinho Curioso |
 | 31949 | Asas de Diabolus |
 | 31953 | Fone de Ouvido Brilhante |
-| 31954 | Coleira do Vassalo |
 | 400491 | Faixa Brasileira |
 | 410011 | Venda Sombrosa |
 | 410030 | Trancinhas Azuis |
@@ -371,12 +414,14 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 436010 | Cabeça de Tarantuling |
 | 480200 | Asas do Anjo Fiel |
 
-## Camareiro — Costume baixo (123 itens)
+## Camareiro — Costume baixo (128 itens)
 
 `prontera 159,155` — sprite `1_F_MERCHANT_02`
 
 | id | nome |
 |---|---|
+| 5983 | Máscara de Loki |
+| 15854 | Cachecol Glorioso |
 | 15954 | Espaguete & Lasanha |
 | 19604 | Máscara Invisível ★ |
 | 20798 | Traje do Ceifeiro |
@@ -388,11 +433,14 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 31584 | Cachecol de Marin |
 | 31593 | Lenço do Deserto |
 | 31594 | Lápis de Cor Vermelho |
+| 31625 | Cachecol Celestial |
 | 31698 | Chapéuzinho Carmesinho |
 | 31700 | Cachecol dos Corajosos |
 | 31735 | Gargalheira de Yawata |
+| 31844 | Lenço do Disfarce |
 | 31882 | Espetinho de Chocolate |
 | 31932 | Gravata-Paletó |
+| 31954 | Coleira do Vassalo |
 | 400258 | Peruca Ondulada de Jade |
 | 400327 | Peruca Estilosa Rosa |
 | 400425 | Flauta de Falcão |
@@ -501,7 +549,7 @@ vitrine é o `Locations:` do `item_db`, não a lista do pedido.**
 | 420360 | Peruca do Sino Felino |
 | 490242 | Cabelo de Valquíria |
 
-## Manteleiro — Costume capa (24 itens)
+## Manteleiro — Costume capa (25 itens)
 
 `prontera 163,155` — sprite `1_M_MERCHANT`
 
@@ -524,6 +572,7 @@ invertido, o segundo recusa.
 
 | id | nome | slot | arte |
 |---|---|---|---|
+| 20506 | Manto Invisível | — | GRF |
 | 20612 | Escudo de Oridecon | 90 | bRO |
 | 480055 | Asas Encantadas de Rudra | 72 | bRO |
 | 480056 | Asas Amaldiçoadas de Arcanjo | 73 | GRF |

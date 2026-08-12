@@ -6675,3 +6675,148 @@ escolher, em vez de decidir pelo nome); o de `.act` virou peça:
 - **`ferramentas/levanta_sprite_npc.py`** — a ferramenta. Escreve **byte a byte
   no lugar**, não re-serializa: só os `y` mudam, o tamanho não mexe, e campo que
   o leitor não entenda sobrevive. Relê o resultado antes de dar por feito.
+
+## Dezenove visuais, três equipamentos e uma máscara que não existia (2026-08-12)
+
+Um pedido de vinte e dois itens para as lojas de Prontera, em oito grupos.
+Entraram **19 nas quatro lojas de visual** (`mercado_de_visuais.txt`) e
+**3 nas de equipamento** (`mercado_contemporaneo.txt`), e mais duas peças
+**mudaram de vitrine** sem terem sido pedidas para isso.
+
+O saldo por loja:
+
+| loja | antes | depois |
+|---|---|---|
+| Costumeiro (visual topo) | 164 | 174 |
+| Adereceiro (visual meio) | 124 | 125 |
+| Camareiro (visual baixo) | 123 | 128 |
+| Manteleiro (visual capa) | 24 | 25 |
+| Retoqueiro (cabeça baixo) | 4 | 5 |
+| Sapateiro | 9 | 10 |
+| Acessorista | 13 | 14 |
+
+**Dezessete dos vinte e dois não custaram nada** — `item_db`, `itemInfo.lua` e
+arte já estavam os três no lugar, e `valida_visual.py` deu 8 de 8 (ou 4 de 4,
+nos que não são de cabeça) antes de qualquer edição. Os outros cinco são o
+assunto desta seção.
+
+### Quatro divergências de slot, e o remédio de cada uma é outro
+
+O pedido chegou agrupado por slot, e em **quatro** itens o grupo não batia com
+o `Locations:` do `item_db`. A regra §4.14 do `CLAUDE.md` já dizia que quem
+decide a vitrine é o `Locations:`; o que esta rodada acrescentou foi que **o
+`Locations:` do nosso rAthena também pode estar errado**, e que separar um caso
+do outro é uma consulta de um comando:
+
+    python ferramentas/estado_item.py --id <n> --descricao
+
+A linha `Equipa em:` da descrição do bRO é o desempate. Deu dois de cada:
+
+**O vendor errado (dois) — corrigido por override, e a peça mudou de loja.**
+
+- **Cachecol Glorioso (15854)** — nosso `item_db`: `Costume_Head_Top`. bRO:
+  Baixo. Saiu do **Costumeiro** e foi para o **Camareiro**.
+- **Coleira do Vassalo (31954)** — nosso `item_db`: `Costume_Head_Mid`. bRO:
+  Baixo. Saiu do **Adereceiro** e foi para o **Camareiro**.
+
+Nos dois o pedido concordava com o bRO, o que confirma a leitura. É o segundo e
+o terceiro caso da fileira depois da Piscadela de Freya (2026-08-07), e nos três
+o bRO ganhou. Os overrides estão em `db/guerra/item_db.yml`, com `false`
+explícito no slot velho — `Locations` é OR e não atribuição, então omitir o
+slot antigo deixaria a peça ocupando os dois.
+
+**O pedido enganado (dois) — a peça foi para a loja do `Locations:`, com a
+ressalva por escrito no comentário da loja e dita ao dono do projeto.**
+
+- **Gata Branca (31452)** — pedida em cabeça baixo. `item_db` e bRO dizem
+  **Meio**, os dois. Foi para o **Adereceiro**.
+- **Manto do Herói (420112)** — pedido em cabeça meio. `item_db` e bRO dizem
+  **Baixo**, os dois — e é `Head_Low`, equipamento de verdade (DEF 2, peso 10,
+  nível 100, HP +15% e resistência a Humanoide +3%), não visual. Foi para o
+  **Retoqueiro**, no Mercado Contemporâneo.
+
+Mesmo caminho da Máscara de Minorous em 2026-08-09. Nos dois, mudar a vitrine
+depois é mexer no `Locations:`, não na linha da loja — e essa é a decisão que
+ficou com o dono (`PENDENCIAS.md` §1k).
+
+### A Máscara de Loki (5983) não existia, e tem dois homônimos que enganam
+
+Não estava em `item_db` nenhum — nem no `db/re/`, nem no nosso —, e nenhum dos
+4 arquivos de arte estava no cliente. Só o `itemInfo.lua` e o bRO a conheciam.
+
+O risco aqui não era a criação, era **pegar o item errado**: o nosso rAthena já
+tem dois "Loki mask", e os dois dividem o `View 346`.
+
+| id | AegisName | o que é |
+|---|---|---|
+| 5332 | `Loki_Mask` | equipamento, `Head_Low`/`Head_Mid`, View 346 |
+| 19615 | `C_Loki_Mask` | visual, View 346 — o mesmo desenho do 5332 |
+| **5983** | `C_Loki_Assassin_Mask` | visual, **View 1345** — outro desenho |
+
+O que separou os três foi o **nome do recurso** do `itemInfo.lua` do cliente,
+casado contra o `accname.lub` do bRO: ele dá `ACCESSORY_Loki_Assassin_Mask`,
+View 1345. Escolher pelo nome em português teria pegado qualquer um dos três.
+
+**O View 1345 já existia no `accessoryid.lub` do nosso GRF de 2021** — conferido
+antes de escrever a entrada —, então este item não precisou do
+`estende_accessoryid.py`. Faltava só a arte, e os 8 arquivos vieram da GRF do
+bRO pelo `instala_visual.py`. A entrada nasceu como **placeholder** em
+`db/guerra/item_db.yml`: `Costume_Head_Low` e nível 1, sem `bonus` nenhum,
+porque a descrição do bRO não tem uma única linha azul de efeito.
+
+### O Manto Invisível (20506) não gasta slot de manto
+
+É `Costume_Garment` e foi para o **Manteleiro**, mas **não tem `View`** — então
+não passou pela tabela `spriterobeid.lub` nem pelo `instala_manto.py`, e não
+consumiu nenhum dos 31 slots doadores que sobram (`PENDENCIAS.md` §4). É o
+quarto "Invisível" do mercado, e nele o nada é o produto, como nos três de
+2026-08-05. Não confundir com a Aura Nevada, que também não tem `View` mas cujo
+produto é um `hateffect` visível.
+
+### O Manto do Herói estava fora do `itemInfo.lua`
+
+O cliente o mostraria **sem nome e sem ícone na própria vitrine**. Veio do bRO
+pelo `completa_iteminfo.py`, e o `Name` do servidor, que estava em inglês
+("Guardian Claus"), foi sincronizado pelo `nomes_pt_item_db.py`. Arte não
+faltou: 8 de 8. É a quarta vez que esse mesmo trio de passos aparece — 410125,
+410067/410026, 410010, agora este.
+
+**Efeito colateral do sincronizador, e ele é inofensivo:** ao rodar, ele
+devolveu ao inglês o `Name` de **13 itens** no `db/re/item_db_equip.yml`. São
+justamente os que têm override em `db/guerra/item_db.yml`, que o tolera de
+propósito ("fora por nossos") porque o nosso arquivo é lido depois e vence a
+mesclagem. O nome em memória não mudou; o que mudou foi o valor sombreado.
+
+### Quatro avisos novos de `discounted buying price`
+
+Quatro dos onze chapéus de topo têm `Buy` no `item_db` — 19789, 19829, 19966 e
+20038 —, então o mercado de visuais passou de **nove** para **treze** linhas de
+`npc_parse_shop: Item X discounted buying price` na subida. A conta foi refeita
+item a item e a lista no cabeçalho do arquivo foi atualizada, que é o que
+permite ignorar as treze e desconfiar da décima quarta. Revendem por 10 ou por
+5, ou seja 9 e 4 de lucro por compra: não move nada.
+
+### A armadilha que esta rodada pagou, e que subiu para o `CLAUDE.md`
+
+Os arquivos de NPC são **cp1252 e CRLF**. A ferramenta de edição do assistente
+lê e grava como UTF-8: usada num deles, ela troca **todo** byte acentuado do
+arquivo por U+FFFD — não só os da linha editada. Foi medido de propósito, num
+arquivo de rascunho de três linhas com seis acentos, antes de a regra ser
+escrita: trocar uma linha **sem acento nenhum** destruiu os seis. O `CRLF`
+sobrevive.
+
+Por isso as sete linhas de loja e todos os comentários desta rodada foram
+gravados **por script**, com âncora ASCII, `encode('cp1252')` num lugar só,
+`assert` de âncora única e `decode('cp1252')` de volta antes de valer. Dois
+erros apareceram nesse caminho e os dois foram baratos porque o `assert` parou
+antes de gravar: âncora escrita com `\n` num arquivo CRLF casa zero vezes, e a
+primeira versão do script remontou as linhas de loja **sem o `\r`**, deixando
+fim de linha misturado no arquivo. A regra inteira está no `CLAUDE.md` §5.
+
+### O que falta ver no jogo
+
+Nada disto subiu. O roteiro está no `PENDENCIAS.md` §1, e a ordem importa:
+`@reloaditemdb` **antes** de `@reloadscript`, porque a loja valida cada ID ao
+carregar. E **fechar e reabrir o cliente**, por causa da entrada nova do
+`itemInfo.lua` (420112) e da arte nova da Máscara de Loki — os dois só são
+lidos na inicialização.

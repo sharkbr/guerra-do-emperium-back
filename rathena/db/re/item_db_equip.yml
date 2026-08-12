@@ -78062,7 +78062,7 @@ Body:
     View: 887
   - Id: 15854
     AegisName: C_Phigasia_Scarf_EXE
-    Name: "Cachecol Glorioso"
+    Name: Costume Phigasia Scarf
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -115019,7 +115019,7 @@ Body:
       bonus bAddItemHealRate,4*.@r;
   - Id: 20925
     AegisName: Commander_manteau_J
-    Name: "Capa do Comandante"
+    Name: Commander Manteau
     Type: Armor
     Buy: 20
     Weight: 300
@@ -161062,7 +161062,7 @@ Body:
     View: 2017
   - Id: 31954
     AegisName: C_Vassalage_Necklace
-    Name: "Coleira do Vassalo"
+    Name: Costume Vassalage Necklace
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -186502,7 +186502,7 @@ Body:
     View: 2225
   - Id: 420112
     AegisName: Guardian_Claus
-    Name: Guardian Claus
+    Name: "Manto do Herói"
     Type: Armor
     Defense: 2
     Weight: 100
@@ -212862,7 +212862,7 @@ Body:
          bonus2 bIgnoreMdefClassRate,Class_Boss,10;
   - Id: 480155
     AegisName: C_Vietnam_flag_hood
-    Name: "Capa de Herói"
+    Name: Costume National Flag
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -213051,7 +213051,7 @@ Body:
       hateffect HAT_EF_C_MELODY_WING,false;
   - Id: 480169
     AegisName: C_Diabolic_Rock_Guitar
-    Name: "Guitarra de Deviling"
+    Name: Costume Diabolic Rock Guitar
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -213373,7 +213373,7 @@ Body:
     View: 130
   - Id: 480188
     AegisName: Valkyrie_Curse_blight
-    Name: "Asas da Valquíria Caída"
+    Name: Valkyrie Curse Bright
     Type: Armor
     Weight: 400
     Defense: 38
@@ -213403,7 +213403,7 @@ Body:
       }
   - Id: 480189
     AegisName: C_Valkyrie_Curse_blight
-    Name: "Asas Amaldiçoadas de Valquíria"
+    Name: Costume Valkyrie Curse Blight
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -213610,7 +213610,7 @@ Body:
       }
   - Id: 480198
     AegisName: C_20th_Anniversary_Wing
-    Name: "Asas Laureadas"
+    Name: Costume 20th Anniversary Wings
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -213707,7 +213707,7 @@ Body:
          bonus bVariableCastrate,-10;
   - Id: 480207
     AegisName: C_Traveller_Bag
-    Name: "Mochila Multiuso"
+    Name: Costume Traveler Bag
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -213853,7 +213853,7 @@ Body:
     View: 146
   - Id: 480223
     AegisName: C_Muranyasa
-    Name: "Muranyasa"
+    Name: Costume Oriental Sword
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -214160,7 +214160,7 @@ Body:
       }
   - Id: 480235
     AegisName: C_Diabolic_Friend
-    Name: "Tridente com Lacinho"
+    Name: Costume Diabolic Friend
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -214176,7 +214176,7 @@ Body:
     View: 149
   - Id: 480237
     AegisName: C_Katana_TenguMaster
-    Name: "Katanas do Mestre Tengu"
+    Name: Costume Tengu Sword
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -214343,7 +214343,7 @@ Body:
       }
   - Id: 480246
     AegisName: C_Valkyrie_Spear
-    Name: "Lança de Valquíria"
+    Name: Costume Valkyrie Spear
     Type: Armor
     Locations:
       Costume_Garment: true

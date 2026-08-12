@@ -42,6 +42,7 @@ sem confirmação in-game.
 | Caveira Humana caindo de jogador morto | `pvp_n_1-5` | 2026-08-08 |
 | Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
 | Sombrios Gerais — loja, sprite levantado e facing novo | `auction_01 193,58` | 2026-08-11 |
+| 22 itens novos em 7 lojas, e 2 que mudaram de vitrine | `prontera`, y=155 e y=161/173 | 2026-08-12 |
 
 **A Sombrios Totais (189,58) está conferida em jogo** — corpo, sorteio e a lista
 de prêmios, esta depois de tirar a indentação que colava as linhas
@@ -814,6 +815,37 @@ susto.**
 
 Enquanto não for feito: Sura com Cotovelada é o furo conhecido da arena, e é a
 primeira explicação a testar quando alguém disser que um Sura mata rápido demais.
+
+---
+
+## 1k. Duas peças foram para a vitrine que o pedido não pediu
+
+Da rodada de 2026-08-12. **Não é bug e não trava nada** — as duas estão à venda,
+equipam e desenham. É uma decisão de gosto que ficou com o dono do projeto,
+registrada aqui para não morrer no comentário da loja.
+
+O pedido agrupou os itens por slot, e em quatro deles o grupo não batia com o
+`Locations:` do `item_db`. Em **dois** o nosso vendor é que estava errado (o bRO
+concordava com o pedido) e a correção foi um override — Cachecol Glorioso e
+Coleira do Vassalo foram para o Camareiro, e não há nada em aberto neles.
+
+Nos **outros dois**, `item_db` e bRO concordam entre si e é o pedido que destoa:
+
+| item | pedido em | `item_db` e bRO dizem | foi para |
+|---|---|---|---|
+| Gata Branca (31452) | visual cabeça baixo | `Costume_Head_Mid` | **Adereceiro** (meio) |
+| Manto do Herói (420112) | cabeça meio | `Head_Low` | **Retoqueiro** (baixo) |
+
+Foram para a loja do `Locations:` porque na outra elas não equipariam no slot da
+placa — `CLAUDE.md` §4.14, o mesmo caminho da Máscara de Minorous em 2026-08-09.
+O Manto do Herói ainda é **equipamento** e não visual (DEF 2, peso 10, nível
+100), o que o tira de vez das lojas de 1 zeny da fileira de visual.
+
+**Se o dono quiser as peças nas vitrines do pedido**, o que muda de lugar é o
+`Locations:` num override em `db/guerra/item_db.yml` — com o `false` explícito
+no slot velho, porque `Locations` é OR e não atribuição —, e só depois a linha
+da loja. Mexer só na linha da loja põe a peça numa vitrine em que ela não
+equipa, que é o defeito que a regra existe para evitar.
 
 ---
 
