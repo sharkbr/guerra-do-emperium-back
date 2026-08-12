@@ -270,11 +270,15 @@ Produziram diagnóstico falso e custaram retrabalho:
   (Os `.md` são UTF-8 e podem ser editados à vontade.)
   **A saída é gravar por script**: âncora em ASCII, texto novo nascendo
   `unicode` e um `.encode('cp1252')` num lugar só, mais um `assert` de que a
-  âncora é única e um `decode('cp1252')` de volta antes de valer. E lembrar
-  que **esses arquivos são CRLF**: âncora escrita com `\n` casa zero vezes, e
-  linha remontada sem o `\r` deixa o arquivo com fim de linha misturado.
-  Os dois erros aconteceram nesta ordem em 2026-08-12; os dois foram baratos
-  porque o `assert` da âncora parou o script antes de gravar.
+  âncora é única e um `decode('cp1252')` de volta antes de valer. E **medir o
+  fim de linha do arquivo antes de escrever a âncora, nunca supor**: âncora com
+  o `\r\n` errado casa zero vezes, e linha remontada com o outro deixa o
+  arquivo misturado. Não há padrão a decorar — medido em 2026-08-12, dos 44
+  arquivos nossos em `npc/guerra` e `db/guerra` **18 são CRLF e 26 são LF**,
+  nenhum misto, e o `.gitattributes` tem `text=auto` (com `*.yml eol=lf`), ou
+  seja quem decide é o checkout. Os erros aconteceram nesta ordem em
+  2026-08-12; os dois foram baratos porque o `assert` da âncora parou o script
+  antes de gravar.
 - **A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela.**
   As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`
   padrão deste MariaDB 12.3 é `utf8mb4` — e o rAthena só manda `SET NAMES` se
@@ -556,6 +560,19 @@ Produziram diagnóstico falso e custaram retrabalho:
   com **`y = 0` nas oito direções**. A conta que os oficiais seguem é
   `-(altura/2 - 8)`. Ferramenta: `ferramentas/levanta_sprite_npc.py`; o
   override é **cliente, fora do git**, e some em cliente novo.
+- **O NOME do sprite não descreve a arte, e neste cliente NÃO EXISTE aura de
+  chão colorida.** O `4_PURPLE_WARP` (10237) não tem nada de roxo: é um quadro
+  só, 157x84, com **um único índice de paleta usado, o 255, que é preto** — o
+  mesmo desenho do `1_SHADOW_NPC` (723), pixel por pixel. E não há outro:
+  varridos em 2026-08-12 os 1.046 sprites de NPC com arte legível e view id
+  abaixo do teto de 10508, **só esses dois** são decalque chato de quadro
+  único. O arco-íris de sombras coloridas que o rAthena numera de 10554 a
+  10560 (`1_SHADOW_RED` … `1_SHADOW_VIOLET`) é de um kRO posterior: não está no
+  `npcidentity.lub` nem no `jobname.lub` daqui, não tem `.spr` no nosso GRF nem
+  no do bRO, e o número ainda ficaria acima do teto. Pedido de "aura de chão"
+  se responde com óvalo escuro ou com `specialeffect` em laço — o segundo
+  reinicia a animação a cada disparo e some no intervalo. Ver `HISTORICO.md`,
+  "Três ajustes em Comodo".
 - **Facing de NPC se calcula pela CÉLULA de destino, não pelo lado da tela.**
   Tabela do `enum directions` (`src/map/path.hpp:16`) medida em jogo com a
   câmera padrão: **4 (sul) desenha para baixo-direita, 2 (oeste) para

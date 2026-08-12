@@ -83,12 +83,13 @@
 //= mapa nosso: o vis_h01 do Corredor, por exemplo, NAO esta la.
 //===== O balao de MVP =======================================
 //= Ela solta o balao de MVP - o mesmo que sobe quando um chefe
-//= morre - de 4 em 4 segundos, sozinha, sem ninguem clicar.
+//= morre - de 3 em 3 segundos, sozinha, sem ninguem clicar.
+//= Eram 4 em 4 ate 2026-08-12, quando foi encurtado a pedido.
 //=
 //= O par e o mesmo da Alleria (npc/guerra/flores_da_ordem.txt) e
 //= do Edgard de prontera 170,199: `initnpctimer` no OnInit, e um
-//= OnTimer4000 que dispara e rearma. O intervalo e o NOME do
-//= label, nao um argumento - mudar de 4s e RENOMEAR o label, nao
+//= OnTimer3000 que dispara e rearma. O intervalo e o NOME do
+//= label, nao um argumento - mudar de 3s e RENOMEAR o label, nao
 //= mexer no initnpctimer.
 //=
 //= O QUE MUDA EM RELACAO AO EMOTE DA ALLERIA: aquilo e `emotion`
@@ -185,7 +186,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer4000:
+OnTimer3000:
 	// O intervalo e o NOME deste label, nao um argumento.
 	// `specialeffect` sem alvo sai do proprio NPC, para a area
 	// (src/map/script.cpp, BUILDIN_FUNC(specialeffect): cai no

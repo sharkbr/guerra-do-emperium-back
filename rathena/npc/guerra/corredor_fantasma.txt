@@ -233,10 +233,82 @@
 //= deslogando (o `nosave` devolve ao ponto de retorno). Quem
 //= morre volta pelo respawn normal - `nopenalty` tira a perda
 //= de EXP, nao muda para onde o morto vai. Ninguem fica preso.
+//===== A aura aos pes do Espectro ===========================
+//= Um SEGUNDO NPC na mesma celula da porta (comodo 208,187),
+//= sem fala e sem rotulo: so o desenho. Pedido em 2026-08-12
+//= como "uma aura de chao" aos pes do Espectro.
+//=
+//= O PEDIDO ERA O 1_SHADOW_VIOLET, E ELE NAO EXISTE AQUI. E o
+//= ultimo de um arco-iris de sombras coloridas que o rAthena
+//= numera de 10554 a 10560 (RED, ORANGE, YELLOW, GREEN, BLUE,
+//= INDIGO, VIOLET) - kRO bem posterior ao nosso cliente de
+//= 2021-11-03. As conferencias, todas negativas:
+//=
+//=   npcidentity.lub deste cliente    nenhuma chave 1_SHADOW_*
+//=                                    fora a 1_SHADOW_NPC (723)
+//=   jobname.lub, nosso e do bRO      nenhum "violet"
+//=   .spr/.act, nosso GRF e o do bRO  nao existem
+//=
+//= E o 10560 ainda estaria acima do teto de 10508 deste exe.
+//= Usar o numero assim mesmo faz o NPC nascer INVISIVEL, calado
+//= - a armadilha de sempre (CLAUDE.md).
+//=
+//= O QUE ENTROU NO LUGAR: 4_PURPLE_WARP (10237), e o nome
+//= engana - A ARTE NAO E ROXA. Foi aberta antes de ser
+//= escolhida: um quadro so, 157x84, com um unico indice de
+//= paleta usado, o 255, que e preto. E o desenho de sombra de
+//= chao do cliente com outro nome: a varredura dos 1046
+//= sprites de NPC com arte legivel achou exatamente DOIS
+//= decalques chatos de quadro unico, este e o 1_SHADOW_NPC
+//= (723), e os dois sao o mesmo arquivo pixel por pixel. Aura
+//= de chao COLORIDA nao existe neste cliente - nao adianta
+//= procurar de novo.
+//=
+//= Entao o que se ve e um OVALO ESCURO de uns tres tiles de
+//= largura aos pes da Morte. Casa com a personagem, mas nao e
+//= o violeta que foi pedido, e isso foi dito a quem pediu. Se
+//= em jogo parecer um buraco no chao em vez de sombra, o
+//= conserto e comentar o NPC; nada mais depende dele.
+//=
+//= POR QUE UM NPC E NAO UM `specialeffect` EM LACO: efeito
+//= reinicia a animacao a cada disparo e some no intervalo -
+//= sprite fica parado. O preco e um NPC clicavel a mais na
+//= celula, e e por isso que o nome comeca com `#` (nao desenha
+//= rotulo) e o corpo e so um `end;`: clicar nele nao faz nada.
+//= O clique na figura da Morte continua caindo nela, que e
+//= alta e esta por cima do decalque.
+//=
+//= O `.act` foi conferido: ancora (0,0), ou seja o desenho
+//= nasce centrado na celula - que e o certo para um decalque
+//= deitado, e por isso este nao precisa do
+//= ferramentas/levanta_sprite_npc.py.
 //===== Notas ================================================
-//= Sprite 4_M_DEATH, a Morte. Conferido no npcidentity.lub E
-//= com .spr no GRF deste cliente antes de ser escolhido - o
-//= teto de sprite de NPC daqui e real (ver CLAUDE.md).
+//= DOIS SPRITES DA MORTE, um em cada ponta, e nao e descuido:
+//=
+//=   a porta, em comodo   4_M_DEATH2   10092
+//=   a saida, em vis_h01  4_M_DEATH    10028
+//=
+//= A porta era 4_M_DEATH ate 2026-08-12, quando foi trocada a
+//= pedido. O 4_M_DEATH2 e OUTRA ARTE, nao um apelido do mesmo
+//= arquivo: os dois .spr tem o mesmo tamanho no GRF (3.800.782
+//= bytes, mesmas dimensoes e mesmo numero de quadros) e md5
+//= diferente - e um recolorido. A saida ficou como estava,
+//= tambem a pedido; igualar as duas e uma palavra.
+//=
+//= AS DUAS CONFERENCIAS DE SEMPRE, feitas para os dois numeros:
+//= JT_4_M_DEATH2 = 10092 e JT_4_M_DEATH = 10028 no
+//= npcidentity.lub DESTE cliente (nao so no npc.hpp do rAthena,
+//= que aceita qualquer numero), e o .spr mais o .act de cada um
+//= presentes no nosso data.grf. Sem as duas o NPC nasce
+//= INVISIVEL, calado. Os dois estao abaixo do teto de 10508
+//= medido em 2026-07-31.
+//=
+//= FACING DA PORTA: 6 (leste), pedido em 2026-08-12 como "virado
+//= para 211,186". Aquela celula fica tres a leste e uma ao sul
+//= desta, e a conta e sempre a mesma: a direcao e a que leva
+//= DAQUI ate a celula que se quer encarar, nao o lado da tela
+//= (CLAUDE.md secao 5). Com a camera padrao o 6 desenha o NPC
+//= olhando para cima-direita. A saida em vis_h01 continua em 4.
 //=
 //= O cliente ja desenha o nome do mapa em portugues: o
 //= data\mapnametable.txt do override tem "Arena Fantasma (1)",
@@ -294,7 +366,7 @@ OnChefeMorto:
 }
 
 // A PORTA, em Comodo. Mesma celula do bRO.
-comodo,208,187,4	script	Espectro da Morte#porta	4_M_DEATH,{
+comodo,208,187,6	script	Espectro da Morte#porta	4_M_DEATH2,{
 	mes "[Espectro da Morte]";
 	mes "Você ouve? É o Corredor Fantasma, logo ali.";
 	mes "Lá dentro não há pescador, não há areia e não há";
@@ -324,6 +396,14 @@ comodo,208,187,4	script	Espectro da Morte#porta	4_M_DEATH,{
 		mes "O corredor não tem pressa. Nem eu.";
 		close;
 	}
+}
+
+// A aura aos pes do Espectro: so desenho, sem fala e sem rotulo.
+// Mesma celula da porta, de proposito. O cabecalho explica por que
+// nao e o 1_SHADOW_VIOLET que foi pedido - secao "A aura aos pes
+// do Espectro".
+comodo,208,187,4	script	#aura_do_espectro	4_PURPLE_WARP,{
+	end;
 }
 
 // A SAIDA, ao lado de onde o jogador desembarca.

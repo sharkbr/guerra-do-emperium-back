@@ -7115,3 +7115,101 @@ preço de compra, a conta acima diz que são zero. Se algum aparecer, é item cu
 
 O que só se decide na tela: se o Mercador de classe 5 desenha inteiro (corpo
 **e** cabeça), e se a Morte da porta da arena ficou virada para o lado certo.
+
+## Três ajustes em Comodo: o balão, a Morte e a aura que não existe (2026-08-12)
+
+Pedido de três linhas, no mesmo dia da Tranqueiras. Dois foram uma palavra
+cada; o terceiro não tinha como ser feito como pedido, e descobrir isso é o
+que a rodada realmente produziu.
+
+### O balão de MVP da Criança: de 4 em 4 para 3 em 3 segundos
+
+`npc/guerra/crianca_de_comodo.txt`. Uma palavra — e é uma palavra porque **o
+intervalo é o NOME do label**, não um argumento: `OnTimer4000:` virou
+`OnTimer3000:`, e o `initnpctimer` do `OnInit` não se toca. Quem procurar o
+número no `initnpctimer` não o acha.
+
+### O Espectro da porta: sprite novo e facing pelo destino
+
+`npc/guerra/corredor_fantasma.txt`, o de `comodo 208,187`:
+
+| | antes | depois |
+|---|---|---|
+| sprite | `4_M_DEATH` (10028) | `4_M_DEATH2` (10092) |
+| facing | 4 (sul) | 6 (leste) |
+
+**O `4_M_DEATH2` é outra arte, não um apelido**, e isso foi conferido antes de
+trocar: os dois `.spr` têm o mesmo tamanho no GRF (3.800.782 bytes, mesmas
+dimensões e mesmo número de quadros) e md5 diferente — é um recolorido. Fosse
+o mesmo arquivo, a troca seria um diff sem efeito nenhum na tela, e nada
+denunciaria.
+
+As duas conferências de sempre passaram para o número novo: `JT_4_M_DEATH2 =
+10092` no `npcidentity.lub` **deste** cliente, e o `.spr` mais o `.act` no
+nosso `data.grf` — este legível, enquanto o do `4_M_DEATH` está com DES (o
+cliente decifra; a nossa `grf.py` não). Abaixo do teto de 10508.
+
+O facing veio pedido como *"virado para 211 186 (leste)"*, e é assim que a
+conta se faz: **a direção é a que leva DESTA célula até a que se quer
+encarar**. De `208,187` para `211,186` são três a leste e uma ao sul — leste,
+`DIR_EAST = 6` (`src/map/path.hpp:16`).
+
+**O Espectro da saída, em `vis_h01 34,34`, ficou como estava** — perguntado e
+decidido na hora. O mesmo personagem tem duas artes, uma em cada ponta, e o
+cabeçalho do arquivo diz que é decisão e não esquecimento.
+
+### A aura de chão: o `1_SHADOW_VIOLET` não existe neste cliente
+
+O terceiro pedido era pôr o sprite `1_SHADOW_VIOLET` aos pés do Espectro. Ele
+**não existe aqui**, e as quatro conferências foram todas negativas:
+
+| Onde | Resposta |
+|---|---|
+| `src/map/npc.hpp` do rAthena | `JT_1_SHADOW_VIOLET` = **10560** |
+| Teto de sprite deste cliente | **10508** — o número está acima |
+| `npcidentity.lub` do nosso `data.grf` | ausente; das 4.578 chaves, a única `1_SHADOW_*` é a `1_SHADOW_NPC` (723) |
+| `jobname.lub`, nosso e do bRO | nenhuma entrada com "violet" |
+| `.spr`/`.act`, nosso GRF e o do bRO | não existem |
+
+É o último de um arco-íris de sombras coloridas que o rAthena numera de 10554
+a 10560 — RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET —, conjunto de um
+kRO bem posterior ao nosso cliente de 2021-11-03. Escrever o número assim
+mesmo faria o NPC nascer **invisível, calado**, que é a armadilha de sempre.
+
+**E não há substituto colorido.** Isso não foi suposto, foi varrido: dos 1.046
+sprites de NPC com arte legível e view id abaixo do teto, exatamente **dois**
+são decalque chato de quadro único — o `4_PURPLE_WARP` (10237) e o
+`1_SHADOW_NPC` (723) —, e os dois são o mesmo desenho pixel por pixel: 157x84,
+com **um único índice de paleta usado, o 255, que é preto**. O nome
+`4_PURPLE_WARP` engana; a arte não tem nada de roxo. Aura de chão colorida não
+existe neste cliente, e não adianta procurar de novo.
+
+Com isso por escrito, a escolha voltou para quem pediu, e foi o
+`4_PURPLE_WARP`: um óvalo escuro de uns três tiles aos pés da Morte. Um
+**segundo NPC na mesma célula** da porta, `#aura_do_espectro`, sem fala e sem
+rótulo — nome começando em `#` não desenha label, e o corpo é só um `end;`,
+então clicar nele não faz nada. O clique na figura da Morte continua caindo
+nela, que é alta e está por cima do decalque.
+
+Sprite e não `specialeffect` em laço porque **efeito reinicia a animação a cada
+disparo e some no intervalo**; sprite fica parado. O `.act` foi conferido —
+âncora (0,0), o desenho nasce centrado na célula, que é o certo para um
+decalque deitado, e por isso este não precisou do `levanta_sprite_npc.py`.
+
+### A quebra de linha destes arquivos não é a que o `CLAUDE.md` dizia
+
+O §5 mandava escrever âncora com `\r\n` porque *"esses arquivos são CRLF"*. O
+`crianca_de_comodo.txt` e o `corredor_fantasma.txt` são **LF**, as âncoras
+casaram zero vezes, e o `assert` parou o script antes de gravar — de graça,
+como da outra vez. Medido depois: dos 44 arquivos nossos de `npc/guerra` e
+`db/guerra`, **18 são CRLF e 26 são LF**, nenhum misto. O `.gitattributes` tem
+`text=auto` com `*.yml eol=lf`, então quem decide é o checkout. A regra subiu
+corrigida para o `CLAUDE.md`: **medir antes de escrever a âncora**.
+
+### O que falta ver no jogo
+
+Nada disto subiu. `@reloadscript` pega os três.
+
+O que só a tela decide: se o óvalo preto aos pés da Morte lê como sombra ou
+como buraco no chão. Se ficar ruim, o conserto é comentar o
+`#aura_do_espectro` — nada mais depende dele.
