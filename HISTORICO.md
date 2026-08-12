@@ -7213,3 +7213,242 @@ Nada disto subiu. `@reloadscript` pega os três.
 O que só a tela decide: se o óvalo preto aos pés da Morte lê como sombra ou
 como buraco no chão. Se ficar ruim, o conserto é comentar o
 `#aura_do_espectro` — nada mais depende dele.
+
+
+## O Túmulo do Monarca abre todo dia, e o encantamento fala português (2026-08-12)
+
+Pedido do dono: deixar a instância **Túmulo do Monarca** ativa 24/7, e — na
+volta do mesmo pedido — **o encantamento por Pedra Bruta é o ponto**, então a
+NPC dele tinha de vir junto.
+
+A instância já existia e já estava ligada: `npc/re/instances/FridayDungeon.txt`,
+Id 46 do `instance_db`, mapa `1@md_gef`, com o `.rsw`/`.gnd`/`.gat` conferidos
+no nosso `data.grf`. O que ela não era é **alcançável**:
+
+```
+.@day = gettime(DT_DAYOFWEEK);
+if (.@day != FRIDAY) { ...não entra... }
+```
+
+Seis dias em sete, a caçada, os quatro baús, o Monarca Lich, a Pedra Bruta e os
+dois encantamentos simplesmente não existiam.
+
+### As três decisões, e por que a segunda arrastou trabalho
+
+Perguntadas e respondidas antes de escrever:
+
+| | rAthena | bRO | Ficou |
+|---|---|---|---|
+| Espera | 4h corridas | sexta-feira | **nenhuma** (ver abaixo) |
+| Nível de entrada | 130 | 99 | **sem trava** |
+| Interior em português | — | — | **sim, no mesmo trabalho** |
+
+A espera passou por três formas no mesmo dia, e as duas primeiras duraram
+horas: sexta-feira (o bRO) → diária pela quest 12379 → **nenhuma**. O que
+decidiu foi ver as chances de encanto na tela: com 0,54% no topo da tabela de
+acessório comum, uma corrida por dia transformava o encanto bom em algo
+inalcançável.
+
+Sobrou um limite só, e é do próprio sistema de instância: **uma memória aberta
+por party de cada vez**. O `instance_create` devolve **-3** nesse caso
+(`instance.cpp:630`), e como ele virou o único que o jogador encontra, ganhou
+recado próprio em vez de cair no "a reserva falhou" genérico.
+
+O override da 12379 **saiu** do `db/guerra/quest_db.yml` — ele descrevia uma
+regra que não existe mais, e documento errado é pior que documento nenhum. O
+NPC só a **apaga**, para tirar da janela de missões o registro de quem falou
+com a Mariaju nas horas em que a regra valeu; essa limpeza pode sumir quando
+ninguém mais tiver o registro.
+
+"Sem trava" custou mais do que parecia. A trava de nível estava em **dois**
+lugares: na porta e, de novo, no seletor de dificuldade **lá dentro**
+(`if (BaseLevel < 'mob[0])`, com 130 e 200). Tirar só a da porta teria
+entregue o pior resultado possível: o personagem entra, e não consegue começar
+a caçada. Por isso o seletor também virou nosso — e foi ele que revelou a
+armadilha abaixo.
+
+### A armadilha: `disablenpc` não atravessa a clonagem da instância
+
+A receita da §2 do `CLAUDE.md` é sempre a mesma — `disablenpc` no original mais
+duplicata nossa. **Para NPC de dentro de instância ela não vale**, e o modo de
+falhar é calado.
+
+São dois campos, e só um atravessa:
+
+- o `buildin_disablenpc` (`script.cpp:12388`) chama `npc_enable_target`, que
+  mexe em `is_invisible` e `sc.option` e **nunca grava `nd->state`**;
+- e é `state`, e só ele, que o `npc_duplicate_sub` copia para a cópia
+  (`npc.cpp:4655-4657`).
+
+Ou seja: `disablenpc "Marry Jay#0_1"` num `OnInit` esconde o NPC do **mapa-molde
+`1@md_gef`**, onde ninguém entra, e o clone de dentro da instância **nasce
+ligado**. Os dois seletores apareceriam empilhados na mesma célula, e o velho
+voltaria a recusar quem tem menos de 130.
+
+A saída é o `OnInstanceInit` do nosso seletor, e ela é segura por uma razão que
+está escrita no próprio rAthena, com os dois laços um embaixo do outro:
+
+```
+// First add the NPCs               instance.cpp:586
+// Now run their OnInstanceInit     instance.cpp:593
+```
+
+Quando o nosso roda, o clone do velho já existe e já tem nome. A regra subiu
+para o `CLAUDE.md` §5.
+
+### A Colecionadora nasceu `duplicate` e virou cópia no mesmo dia
+
+Enquanto a regra do encantamento não mudava, duplicar era claramente o certo. O
+`Amateur Collector#pa0829` do rAthena já estava em `gef_tower 57,167` — **a
+coordenada exata da Colecionadora do bRO** —, já cobria os dois slots do Anel do
+Monarca e já cobrava as 10 Pedra Bruta + 100.000z certas. Mudava o nome e a
+língua, e nada mais. Uma linha resolvia:
+
+```
+gef_tower,57,167,3	duplicate(Amateur Collector#pa0829)	Colecionadora	1_F_01
+```
+
+**E aí veio o segundo print da bROWiki, e ele derrubou o desenho.** A lista de
+acessórios que a Colecionadora aceita tem duas metades: "Acessórios Comuns" e
+"Acessórios **Especiais**". A do rAthena tem só a primeira — 122 IDs, e
+**nenhum** dos especiais. Faltavam os anéis zodiacais, o Anel de Iansã, o de
+Oxóssi, as Luvas de Thor, o Keraunos, o Paraíso Perdido: 101 nomes.
+
+E essa lista mora **dentro** do script compartilhado, num `switch` de 122
+`case`. Duplicata não estende lista de dentro. Ou se editava o arquivo do
+rAthena — proibido pela §2 —, ou o script virava nosso. Virou nosso:
+`npc/guerra/colecionadora_do_monarca.txt`.
+
+**Mas virou nosso por programa, não à mão.** O arquivo é fatia de bytes do
+FridayDungeon.txt já traduzido: as sete tabelas de encanto, o anti-hack
+(`F_IsEquipIDHack`/`F_IsEquipCardHack`) e o menu de acessório vieram byte a
+byte. Três coisas mudaram, e o gerador tem `assert` para cada uma:
+
+1. o cabeçalho do NPC — nome em português;
+2. o `switch` de 122 `case` virou **`inarray` contra um `.aceitos` de
+   `OnInit`** — lista que cresce é dado, não código (§4.11);
+3. o `OnInit`, com a lista e o `disablenpc` do original.
+
+A prova de que a cópia é fiel não é um limiar inventado: são os **133 encantos
+e os 84 IDs distintos** das sete tabelas, contados dos dois lados e iguais.
+
+### Resolver 101 nomes em IDs, sem inventar nenhum
+
+O print traz nome em português; o script precisa de ID. Como o `item_db` do
+nosso vendor já está traduzido, 80 casaram por nome exato. Os 21 restantes
+foram um a um:
+
+- **13 existiam, com nome em inglês** — o vendor não traduziu tudo. Os cinco
+  anéis zodiacais que faltavam (`Aries_Ring_J`, `Scorpio_Ring_J`,
+  `Gemini_Ring_J`, `Libra_Ring_J`, `Pisces_Ring_J`), mais `Emerald_Ring`,
+  `Pollux_Ring_J`, `Petal_Tail`, `Shinobi_Sash_H_BR`, `Tip_Of_Thief_Vol2`,
+  `Paradise_Lost` e os **dois** `Imperial_Ring` (28372 e 28515, este com sufixo
+  `_BR`). Os dois entraram: aceitar um item a mais não quebra nada, e escolher
+  errado deixaria o anel do jogador de fora sem explicação.
+- **8 não existem no `item_db` inteiro** — não é falta de tradução, é ausência:
+  Anel de Carnium, Brincos de Carnium, Colar de Juperos, Luvas de H. Motto,
+  Luvas de Thor, Anel de Capricórnio, Amuleto Caolho e Broche do Reino. Ficaram
+  de fora, nomeados no cabeçalho do arquivo e no `PENDENCIAS.md`.
+
+**Uma suposição, e está marcada como tal:** "Anel da Colheita" virou o 490272,
+que o nosso vendor chama de "Harvest Festival". É o único acessório de colheita
+do `item_db`, mas o nome não bate — é o único ID da lista que não foi provado.
+
+Total: **216 aceitos**, os 122 do rAthena mais 94. Cada um conferido como
+existente **e** como acessório antes de entrar.
+
+O bRO parte o encantamento em **duas** NPCs (a Colecionadora, para acessório
+comum, e o Homem Suspeito em `gef_tower 36,177`, só para o Anel do Monarca); o
+rAthena junta as duas, com as mesmas tabelas. Ficou junto — duas NPCs a nove
+células uma da outra, com o mesmo preço e o mesmo resultado, só confundiriam.
+
+**Conferido antes de prometer:** o Anel do Monarca (28483) cai a 10% do Monarca
+Lich, então o caminho fecha sozinho, sem precisar de item novo.
+
+### A falha do reset parou de destruir o acessório
+
+Visto em jogo no mesmo dia, e o pedido foi imediato: *"não podemos destruir o
+acessório na falha; coloque para apenas não dar certo, na mesma chance que já
+existe"*.
+
+O rAthena engolia a peça, e a ordem do script é o motivo:
+
+```
+delequip .@slot;                       // tira o item
+if (rand(100) > .@success) {
+        specialeffect2 EF_SUI_EXPLOSION;
+        mes "... o acessório foi destruído.";
+        close;                         // e nunca devolve
+}
+```
+
+O `delequip` vem **antes** do sorteio, e o ramo de falha simplesmente não tem
+`getitem2`. Agora tem, com os **quatro** slots — o item exato que foi tirado,
+inclusive os encantos que se tentou remover. Perde-se só o custo: as 10 Pedra
+Bruta e os 100.000z.
+
+**As chances ficaram como estavam** (80% no Anel do Monarca, 20% no resto). O
+pedido foi tirar a destruição, não facilitar o reset.
+
+Três detalhes que andaram junto:
+
+- **O aviso na tela mudou junto com a regra.** Ele prometia *"Se falhar, o
+  acessório é destruído!"* — texto que teria virado mentira, e mentira em
+  vermelho. Agora diz que se perdem as pedras e o zeny, e o acessório fica.
+- **A explosão saiu.** `EF_SUI_EXPLOSION` é o efeito de coisa destruída; virou
+  `EF_PHARMACY_FAIL`, que é o de operação que não deu certo.
+- **Devolver com `getitem2 ...,1,1,0,0,...` passa refino 0**, o que apagaria o
+  refino de uma peça refinável. Não apaga nada aqui porque **nenhum dos 216
+  aceitos é refinável** — conferido nos 216, não por amostra, e o teste ficou na
+  bateria justamente para o dia em que a lista crescer.
+
+**A mudança foi feita no GERADOR, não no arquivo.** O
+`colecionadora_do_monarca.txt` é gerado; corrigir só o arquivo faria a próxima
+regeneração desfazer tudo, calada. É a quarta troca documentada do gerador, com
+`assert` próprio — se o upstream mudar a forma daquele ramo, ele para em vez de
+gravar meia troca.
+
+### O acoplamento que a bifurcação criou
+
+O texto do arquivo novo é um **instantâneo** da tradução do grupo `monarca` no
+dia em que ele foi gerado. Reaplicar aquele catálogo conserta o
+`FridayDungeon.txt` — que agora está desligado — e **não toca** na cópia. Quem
+melhorar uma fala da Colecionadora no catálogo mexe nos dois lados, ou regera.
+
+Está escrito no cabeçalho do arquivo, no `scripts_guerra.conf` e no
+`ARQUITETURA.md` §4, porque é exatamente o tipo de coisa que falha calada.
+
+### A tradução do miolo
+
+Grupo novo `monarca` no `traduz_npcs.py`, catálogo
+`npc/guerra/traducao/monarca.cat`: 205 textos, **188 aplicados**, 0 recusas.
+
+Os 17 em branco são todos técnicos, e cada um quebraria alguma coisa calada:
+`Friday Dungeon` (chave de instância), `gef_tower` e `1@md_gef` (nomes de mapa),
+`md_gef_mobs_spawn` (nome único de NPC), **`fd_box1`..`fd_box4`** — que o script
+compara contra `strnpcinfo(2)`, e traduzir faria os quatro baús pararem de
+largar Pedra Bruta —, `null` (o que `getitemname()` devolve sem item) e duas
+pontuações soltas.
+
+Um detalhe de português que o inglês não tem: o script monta `"The " + <item> +
+" ..."`, e o artigo teria de concordar com o gênero do item (o Anel, **a**
+Presilha), que vem de `mesitemlink()` e não dá para saber. Virou **`O item `** —
+o núcleo passa a ser "item", masculino, e toda concordância depois dele fecha:
+*"O item Presilha foi encantado."*
+
+### O que ficou de fora, e é de propósito
+
+O miolo da instância continua sendo do rAthena, e foi só **traduzido**, não
+alterado: os 100 monstros e a reposição, os quatro baús, o cadáver do Estranho,
+a Escultura Bizarra e o Monarca Lich.
+
+O Túmulo do Monarca **não** entrou no Teleportador da Ordem (`auction_02
+37,39`), que hoje leva às catorze portas das instâncias da Ordem. Seria uma
+linha em cada array — e a §4.11 do `CLAUDE.md` existe justamente porque mexer
+naqueles arrays já custou os catorze destinos errados uma vez. Fica anotado nas
+pendências.
+
+### O que falta ver no jogo
+
+Nada disto subiu — está tudo em disco, e os comandos estão no `PENDENCIAS.md`
+§1l.

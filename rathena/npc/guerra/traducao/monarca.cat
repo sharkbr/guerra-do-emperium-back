@@ -1,0 +1,627 @@
+# Catalogo de traducao PT-BR - grupo "monarca"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/re/instances/FridayDungeon.txt  (205 textos)
+#: npc/re/instances/FridayDungeon.txt#1 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#2 (mes)
+- "Your base level is too low, come back when you hit level 130."
++ "Seu nível de base é baixo demais. Volte quando chegar ao nível 130."
+#: npc/re/instances/FridayDungeon.txt#3 (mes)
+- "^ff0000If you do any monster processing, such as monster taming within the dungeon, it won't count towards your progress. Please take note.^000000"
++ "^ff0000Bicho domado ou invocado aqui dentro não conta para o seu progresso. Fique atento.^000000"
+#: npc/re/instances/FridayDungeon.txt#4 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#5 (mes)
+- "Oh, a curious onlooker? I'm Marry Jay, the person in charge of Fridays among the days of the week."
++ "Ah, um curioso? Eu sou a Mariaju, a encarregada das sextas-feiras."
+#: npc/re/instances/FridayDungeon.txt#6 (select)
+- "When is the opening time?"
++ "Quando é que abre?"
+#: npc/re/instances/FridayDungeon.txt#7 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#8 (mes)
+- "The dungeon will be open during:"
++ "A masmorra fica aberta:"
+#: npc/re/instances/FridayDungeon.txt#9 (mes)
+- "^0000FFFriday 00:00 ~ Friday 23:59^000000"
++ "^0000FFSexta-feira 00:00 ~ Sexta-feira 23:59^000000"
+#: npc/re/instances/FridayDungeon.txt#10 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#11 (mes)
+- "I hope to see you when Friday arrives~"
++ "Espero você quando a sexta chegar~"
+#: npc/re/instances/FridayDungeon.txt#12 (atrib)
+- "Friday Dungeon"
++ ""
+#: npc/re/instances/FridayDungeon.txt#13 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#14 (mes)
+- "Sorry, but the entry period to the "
++ "Desculpe, mas o prazo de entrada no "
+#: npc/re/instances/FridayDungeon.txt#15 (mes)
+- " has expired."
++ " já passou."
+#: npc/re/instances/FridayDungeon.txt#16 (mes)
+- "Take a rest while waiting for the dungeon to be available again."
++ "Descanse enquanto espera a masmorra abrir de novo."
+#: npc/re/instances/FridayDungeon.txt#17 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#18 (mes)
+- "The cooldown has expired."
++ "A espera acabou."
+#: npc/re/instances/FridayDungeon.txt#19 (mes)
+- "You may re-enter the Memorial Dungeon."
++ "Você já pode entrar na memória de novo."
+#: npc/re/instances/FridayDungeon.txt#20 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#21 (mes)
+- "You came just in time."
++ "Você chegou bem na hora."
+#: npc/re/instances/FridayDungeon.txt#22 (mes)
+- "The memorial dungeon is just ready to be opened."
++ "A memória está pronta para abrir."
+#: npc/re/instances/FridayDungeon.txt#23 (mes)
+- "Would you like to enter now?"
++ "Quer entrar agora?"
+#: npc/re/instances/FridayDungeon.txt#24 (menu)
+- "Prepare Friday Memorial"
++ "Preparar a memória"
+#: npc/re/instances/FridayDungeon.txt#25 (select)
+- "Enter Friday Memorial"
++ "Entrar na memória"
+#: npc/re/instances/FridayDungeon.txt#26 (select)
+- "Cancel"
++ "Agora não"
+#: npc/re/instances/FridayDungeon.txt#27 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#28 (mes)
+- "The Memorial Dungeon has been created."
++ "A memória foi criada."
+#: npc/re/instances/FridayDungeon.txt#29 (mes)
+- "You may now enter."
++ "Já dá para entrar."
+#: npc/re/instances/FridayDungeon.txt#30 (mes)
+- "Only party members can enter this Memorial dungeon."
++ "Só quem está no grupo pode entrar nesta memória."
+#: npc/re/instances/FridayDungeon.txt#31 (mes)
+- "There is no Memorial Dungeon registered."
++ "Não há memória reservada."
+#: npc/re/instances/FridayDungeon.txt#32 (mes)
+- "The Friday Memorial Dungeon does not exist."
++ "A memória não existe."
+#: npc/re/instances/FridayDungeon.txt#33 (mes)
+- "Your party leader has not yet created the Memorial dungeon."
++ "O líder do seu grupo ainda não criou a memória."
+#: npc/re/instances/FridayDungeon.txt#34 (mes)
+- "An unknown error occurred."
++ "Aconteceu um erro que nem eu sei qual é."
+#: npc/re/instances/FridayDungeon.txt#35 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#36 (mes)
+- "Off you go!"
++ "Pode ir!"
+#: npc/re/instances/FridayDungeon.txt#37 (mapannounce)
+- "gef_tower"
++ ""
+#: npc/re/instances/FridayDungeon.txt#39 (mapannounce)
+- " of the party, "
++ ", do grupo "
+#: npc/re/instances/FridayDungeon.txt#40 (mapannounce)
+- ", is entering the "
++ ", está entrando no "
+#: npc/re/instances/FridayDungeon.txt#41 (mapannounce)
+- "."
++ ""
+#: npc/re/instances/FridayDungeon.txt#42 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#43 (mes)
+- "You have not prepared?"
++ "Ainda não se preparou?"
+#: npc/re/instances/FridayDungeon.txt#44 (mes)
+- "Can't really help it I guess"
++ "Fazer o quê, então."
+#: npc/re/instances/FridayDungeon.txt#45 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#46 (mes)
+- "Before we start setting up the environment here, we'll give you the chance to choose an appropriate difficulty level."
++ "Antes de eu preparar o ambiente aqui, você escolhe o nível de dificuldade."
+#: npc/re/instances/FridayDungeon.txt#47 (mes)
+- "I could make my own choice, but each person handles it differently based on their abilities."
++ "Eu até escolheria sozinha, mas cada um se vira de um jeito."
+#: npc/re/instances/FridayDungeon.txt#48 (select)
+- "Cancel"
++ "Agora não"
+#: npc/re/instances/FridayDungeon.txt#49 (select)
+- "LV130 ~ 199"
++ "Nv 130 ~ 199"
+#: npc/re/instances/FridayDungeon.txt#50 (select)
+- "LV200 + "
++ "Nv 200 + "
+#: npc/re/instances/FridayDungeon.txt#51 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#52 (mes)
+- "You can't choose this difficulty, because your base level is below 200."
++ "Você não pode escolher esta dificuldade: seu nível de base está abaixo de 200."
+#: npc/re/instances/FridayDungeon.txt#53 (mes)
+- "[Marry Jay]"
++ "[Mariaju]"
+#: npc/re/instances/FridayDungeon.txt#54 (mes)
+- "Your base level is too low to select this, you need to be level "
++ "Seu nível de base é baixo demais para isto. Você precisa ser nível "
+#: npc/re/instances/FridayDungeon.txt#55 (mes)
+- " or above."
++ " ou mais."
+#: npc/re/instances/FridayDungeon.txt#56 (npctalk)
+- "Now, this place is about to become a hunting ground. I'll get out and close the front door."
++ "Pronto, isto aqui vira campo de caça agora. Eu saio e fecho a porta da frente."
+#: npc/re/instances/FridayDungeon.txt#57 (npctalk)
+- "Good Luck~"
++ "Boa sorte~"
+#: npc/re/instances/FridayDungeon.txt#62 (atrib)
+- "md_gef_mobs_spawn"
++ ""
+#: npc/re/instances/FridayDungeon.txt#83 (atrib)
+- "1@md_gef"
++ ""
+#: npc/re/instances/FridayDungeon.txt#84 (npctalk)
+- "Hello"
++ "Olá"
+#: npc/re/instances/FridayDungeon.txt#85 (mes)
+- "It is a stranger's corpse."
++ "É o corpo de um desconhecido."
+#: npc/re/instances/FridayDungeon.txt#86 (mes)
+- "Perhaps he died while wandering in this place on the search for treasure."
++ "Deve ter morrido vagando por aqui atrás de tesouro."
+#: npc/re/instances/FridayDungeon.txt#87 (select)
+- "Calm down"
++ "Deixar em paz"
+#: npc/re/instances/FridayDungeon.txt#88 (select)
+- "Investigate the body"
++ "Vasculhar o corpo"
+#: npc/re/instances/FridayDungeon.txt#89 (mes)
+- "You respect the dead and decided to leave the body alone."
++ "Você respeitou o morto e decidiu deixar o corpo em paz."
+#: npc/re/instances/FridayDungeon.txt#90 (mes)
+- "Looking at a hastily scribbled note in his pocket, perhaps the adventurer's name was Walter."
++ "Por um bilhete rabiscado às pressas no bolso dele, o nome do aventureiro talvez fosse Walter."
+#: npc/re/instances/FridayDungeon.txt#91 (mes)
+- "[Adventurer's Log]"
++ "[Diário do Aventureiro]"
+#: npc/re/instances/FridayDungeon.txt#92 (mes)
+- "My name is Walter. For the adventurers who will visit this place in the future, I'm leaving this so that you don't make the same mistake again."
++ "Meu nome é Walter. Aos aventureiros que vierem aqui depois, deixo isto para que não cometam o mesmo erro."
+#: npc/re/instances/FridayDungeon.txt#93 (mes)
+- "[Adventurer's Log]"
++ "[Diário do Aventureiro]"
+#: npc/re/instances/FridayDungeon.txt#94 (mes)
+- "On the first day, I curiously put my hand on the slab of a strange Sculpture nearby."
++ "No primeiro dia, por curiosidade, pus a mão na laje de uma escultura estranha aqui perto."
+#: npc/re/instances/FridayDungeon.txt#95 (mes)
+- "...and I awokened something that I should not have."
++ "... e acordei uma coisa que eu não devia ter acordado."
+#: npc/re/instances/FridayDungeon.txt#96 (mes)
+- "[Adventurer's Log]"
++ "[Diário do Aventureiro]"
+#: npc/re/instances/FridayDungeon.txt#97 (mes)
+- "Right now the revived ancient king is wandering in front of me."
++ "Agora o rei antigo que voltou à vida anda na minha frente."
+#: npc/re/instances/FridayDungeon.txt#98 (mes)
+- "Perhaps he has no memories of his previous life."
++ "Acho que ele não tem lembrança nenhuma da vida passada."
+#: npc/re/instances/FridayDungeon.txt#99 (mes)
+- "One thing is certain, he will kill me."
++ "De uma coisa eu tenho certeza: ele vai me matar."
+#: npc/re/instances/FridayDungeon.txt#100 (mes)
+- "[Adventurer's Log]"
++ "[Diário do Aventureiro]"
+#: npc/re/instances/FridayDungeon.txt#101 (mes)
+- "To the adventurers who will visit this place in the future, I hope you do not make the same mistake as me."
++ "Aos aventureiros que vierem aqui depois: espero que não cometam o mesmo erro que eu."
+#: npc/re/instances/FridayDungeon.txt#102 (mes)
+- "If you do see a suspicious slab, do not show any interest and pass by it."
++ "Se virem uma laje suspeita, não demonstrem interesse nenhum e sigam em frente."
+#: npc/re/instances/FridayDungeon.txt#103 (mes)
+- "[Adventurer's Log]"
++ "[Diário do Aventureiro]"
+#: npc/re/instances/FridayDungeon.txt#104 (mes)
+- "Again, never touch the slab. Whatever temptation you may have."
++ "De novo: nunca toquem na laje. Por maior que seja a tentação."
+#: npc/re/instances/FridayDungeon.txt#105 (mes)
+- "Several craft stones fall from his body. They were probably collected while exploring this place."
++ "Várias Pedras Brutas caem do corpo dele. Ele deve ter juntado enquanto explorava isto aqui."
+#: npc/re/instances/FridayDungeon.txt#106 (mes)
+- "It is a strange sculpture with a lot of dust piled up. I don't see anything suspicious."
++ "É uma escultura estranha, com muita poeira acumulada. Não dá para ver nada de suspeito."
+#: npc/re/instances/FridayDungeon.txt#107 (mes)
+- "Craft Stones have been melted by a powerful force into the sockets."
++ "As Pedras Brutas foram derretidas nos encaixes por uma força poderosa."
+#: npc/re/instances/FridayDungeon.txt#108 (mes)
+- "Seems like the sockets can't be used for a while."
++ "Parece que os encaixes não servem por um tempo."
+#: npc/re/instances/FridayDungeon.txt#109 (mes)
+- "At some point, the accumulated dust scatters, and 10 hollow holes are visible on the slab under the sculpture."
++ "A certa altura a poeira se espalha, e aparecem 10 buracos vazios na laje debaixo da escultura."
+#: npc/re/instances/FridayDungeon.txt#110 (mes)
+- "Each of the 10 hollow sockets seem to perfectly fit a craft stone."
++ "Cada um dos 10 buracos parece caber uma Pedra Bruta certinho."
+#: npc/re/instances/FridayDungeon.txt#111 (select)
+- "Ignore"
++ "Ignorar"
+#: npc/re/instances/FridayDungeon.txt#112 (select)
+- "Try inserting craft stones"
++ "Tentar encaixar as Pedras Brutas"
+#: npc/re/instances/FridayDungeon.txt#113 (mes)
+- "Craft Stones have been melted by a powerful force into the sockets."
++ "As Pedras Brutas foram derretidas nos encaixes por uma força poderosa."
+#: npc/re/instances/FridayDungeon.txt#114 (mes)
+- "Seems like the sockets can't be used for a while."
++ "Parece que os encaixes não servem por um tempo."
+#: npc/re/instances/FridayDungeon.txt#115 (mes)
+- "When you insert a craft stone into a hole, it emits a bright light and melts."
++ "Quando você encaixa uma Pedra Bruta num buraco, ela solta uma luz forte e derrete."
+#: npc/re/instances/FridayDungeon.txt#116 (mes)
+- "Something seems to have changed in the air around me."
++ "Alguma coisa mudou no ar em volta."
+#: npc/re/instances/FridayDungeon.txt#120 (mes)
+- "But nothing else happened."
++ "Mas nada mais aconteceu."
+#: npc/re/instances/FridayDungeon.txt#121 (atrib)
+- "fd_box1"
++ ""
+#: npc/re/instances/FridayDungeon.txt#122 (atrib)
+- "fd_box2"
++ ""
+#: npc/re/instances/FridayDungeon.txt#123 (atrib)
+- "fd_box3"
++ ""
+#: npc/re/instances/FridayDungeon.txt#124 (atrib)
+- "fd_box4"
++ ""
+#: npc/re/instances/FridayDungeon.txt#127 (mes)
+- "You have too many kinds of objects. Clear your inventory."
++ "Você está com tipos demais de item. Limpe a bolsa."
+#: npc/re/instances/FridayDungeon.txt#128 (mes)
+- "Can't continue because you have too many heavy objects. Reduce your total weight by clearing your inventory."
++ "Não dá para continuar: você está carregando peso demais. Limpe a bolsa."
+#: npc/re/instances/FridayDungeon.txt#129 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#130 (mes)
+- "If you bring me a "
++ "Se você me trouxer uma "
+#: npc/re/instances/FridayDungeon.txt#131 (mes)
+- ", I can enchant a wonderful effect on your accessory!"
++ ", eu encanto um efeito e tanto no seu acessório!"
+#: npc/re/instances/FridayDungeon.txt#132 (select)
+- "What can you do with the Crafting Stone?"
++ "O que você faz com a Pedra Bruta?"
+#: npc/re/instances/FridayDungeon.txt#133 (select)
+- "Accessory Enchantment"
++ "Encantar acessório"
+#: npc/re/instances/FridayDungeon.txt#134 (select)
+- "Reset Enchant"
++ "Resetar encanto"
+#: npc/re/instances/FridayDungeon.txt#135 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#136 (mes)
+- "I trade expensive stones from the dungeon in exchange for my craftsmanship. I'm still a beginner, but my skills are passable."
++ "Eu troco o meu trabalho pelas pedras caras da masmorra. Ainda sou iniciante, mas dá para o gasto."
+#: npc/re/instances/FridayDungeon.txt#137 (mes)
+- "Please take care of me."
++ "Conto com você."
+#: npc/re/instances/FridayDungeon.txt#138 (select)
+- "I've heard this before."
++ "Já ouvi essa história."
+#: npc/re/instances/FridayDungeon.txt#139 (select)
+- "I'm listening."
++ "Estou ouvindo."
+#: npc/re/instances/FridayDungeon.txt#140 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#141 (mes)
+- "Is that so?"
++ "Ah, é?"
+#: npc/re/instances/FridayDungeon.txt#142 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#143 (mes)
+- "By using the Craft Stone, I can enchant one of your accessories with abilities."
++ "Usando a Pedra Bruta, eu encanto uma habilidade num acessório seu."
+#: npc/re/instances/FridayDungeon.txt#144 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#145 (mes)
+- "I need 10 x "
++ "Eu preciso de 10 "
+#: npc/re/instances/FridayDungeon.txt#146 (mes)
+- " and 100,000 Zeny."
++ " e 100.000 zeny."
+#: npc/re/instances/FridayDungeon.txt#147 (mes)
+- "There is no failure in the enchantment process."
++ "O encanto não falha nunca."
+#: npc/re/instances/FridayDungeon.txt#148 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#149 (mes)
+- "However ^0000FFif the accessory has a random option, the random option will be removed after enchantment.^000000"
++ "^0000FFMas se o acessório tiver atributo aleatório, o atributo some depois do encanto.^000000"
+#: npc/re/instances/FridayDungeon.txt#150 (select)
+- "Anything else?"
++ "Mais alguma coisa?"
+#: npc/re/instances/FridayDungeon.txt#151 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#152 (mes)
+- "Cards slotted to the accessory will remain after the enchantement."
++ "As cartas encaixadas no acessório ficam onde estão depois do encanto."
+#: npc/re/instances/FridayDungeon.txt#153 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#154 (mes)
+- "A reset is possible, but I can't say that I'm experienced."
++ "Dá para resetar, mas eu não diria que tenho experiência nisso."
+#: npc/re/instances/FridayDungeon.txt#155 (mes)
+- "My success rate is:"
++ "A minha taxa de sucesso é:"
+#: npc/re/instances/FridayDungeon.txt#156 (mes)
+- "Royal Ring: 80%"
++ "Anel do Monarca: 80%"
+#: npc/re/instances/FridayDungeon.txt#157 (mes)
+- "Other Accessory: 20%"
++ "Outros acessórios: 20%"
+#: npc/re/instances/FridayDungeon.txt#158 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#159 (mes)
+- "^0000FFIf the accessory has a random option, the random option will be removed after initialization.^000000"
++ "^0000FFSe o acessório tiver atributo aleatório, o atributo some depois de resetar.^000000"
+#: npc/re/instances/FridayDungeon.txt#160 (atrib)
+- "enchant"
++ "encantar"
+#: npc/re/instances/FridayDungeon.txt#161 (atrib)
+- "reset"
++ "resetar"
+#: npc/re/instances/FridayDungeon.txt#162 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#163 (mes)
+- "Please equip your accessory."
++ "Equipe o acessório primeiro."
+#: npc/re/instances/FridayDungeon.txt#164 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#165 (mes)
+- "I cannot "
++ "Eu não consigo "
+#: npc/re/instances/FridayDungeon.txt#166 (mes)
+- " this "
++ " este "
+#: npc/re/instances/FridayDungeon.txt#167 (mes)
+- " accessory."
++ "."
+#: npc/re/instances/FridayDungeon.txt#168 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#169 (mes)
+- "The "
++ "O item "
+#: npc/re/instances/FridayDungeon.txt#170 (mes)
+- " already has maximum enchantment."
++ " já está no encanto máximo."
+#: npc/re/instances/FridayDungeon.txt#171 (mes)
+- "I cannot work on this any further."
++ "Não dá para mexer mais nele."
+#: npc/re/instances/FridayDungeon.txt#172 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#173 (mes)
+- "Please select an enchantment type~"
++ "Escolha o tipo de encanto~"
+#: npc/re/instances/FridayDungeon.txt#174 (select)
+- "Physical"
++ "Físico"
+#: npc/re/instances/FridayDungeon.txt#175 (select)
+- "Magical"
++ "Mágico"
+#: npc/re/instances/FridayDungeon.txt#176 (select)
+- "Ranged"
++ "Distância"
+#: npc/re/instances/FridayDungeon.txt#177 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#178 (mes)
+- "Are you sure to enhance the "
++ "Tem certeza que quer encantar o item "
+#: npc/re/instances/FridayDungeon.txt#179 (mes)
+- "?"
++ ""
+#: npc/re/instances/FridayDungeon.txt#180 (mes)
+- "^0000FFThere is a no chance of failure^000000."
++ "^0000FFNão há chance de falha^000000."
+#: npc/re/instances/FridayDungeon.txt#181 (select)
+- "Yes, please proceed"
++ "Sim, pode fazer"
+#: npc/re/instances/FridayDungeon.txt#182 (select)
+- "Cancel"
++ "Agora não"
+#: npc/re/instances/FridayDungeon.txt#183 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#184 (mes)
+- "Please bring me 10 x "
++ "Me traga 10 "
+#: npc/re/instances/FridayDungeon.txt#185 (mes)
+- "."
++ ""
+#: npc/re/instances/FridayDungeon.txt#186 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#187 (mes)
+- "I need 100,000 zeny!"
++ "Eu preciso de 100.000 zeny!"
+#: npc/re/instances/FridayDungeon.txt#190 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#191 (mes)
+- "The "
++ "O item "
+#: npc/re/instances/FridayDungeon.txt#192 (mes)
+- " has been enchanted!!"
++ " foi encantado!!"
+#: npc/re/instances/FridayDungeon.txt#193 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#194 (mes)
+- "The "
++ "O item "
+#: npc/re/instances/FridayDungeon.txt#195 (mes)
+- " already has an enchant."
++ " já tem um encanto."
+#: npc/re/instances/FridayDungeon.txt#196 (mes)
+- "I cannot work on this any further."
++ "Não dá para mexer mais nele."
+#: npc/re/instances/FridayDungeon.txt#197 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#198 (mes)
+- "Are you sure you want to enhance the "
++ "Tem certeza que quer encantar o item "
+#: npc/re/instances/FridayDungeon.txt#199 (mes)
+- "?"
++ ""
+#: npc/re/instances/FridayDungeon.txt#200 (mes)
+- "^0000FFThere is a no chance of failure^000000."
++ "^0000FFNão há chance de falha^000000."
+#: npc/re/instances/FridayDungeon.txt#201 (select)
+- "Yes, please proceed"
++ "Sim, pode fazer"
+#: npc/re/instances/FridayDungeon.txt#202 (select)
+- "Cancel"
++ "Agora não"
+#: npc/re/instances/FridayDungeon.txt#203 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#204 (mes)
+- "Please bring me 10 x "
++ "Me traga 10 "
+#: npc/re/instances/FridayDungeon.txt#205 (mes)
+- "."
++ ""
+#: npc/re/instances/FridayDungeon.txt#206 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#207 (mes)
+- "I need 100,000 zeny!"
++ "Eu preciso de 100.000 zeny!"
+#: npc/re/instances/FridayDungeon.txt#210 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#211 (mes)
+- "The "
++ "O item "
+#: npc/re/instances/FridayDungeon.txt#212 (mes)
+- " has been enchanted with "
++ " foi encantado com "
+#: npc/re/instances/FridayDungeon.txt#213 (mes)
+- "."
++ ""
+#: npc/re/instances/FridayDungeon.txt#214 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#215 (mes)
+- "The "
++ "O item "
+#: npc/re/instances/FridayDungeon.txt#216 (mes)
+- " is not at its maximum enchantment."
++ " não está no encanto máximo."
+#: npc/re/instances/FridayDungeon.txt#217 (mes)
+- "I cannot reset this accessory."
++ "Não dá para resetar este acessório."
+#: npc/re/instances/FridayDungeon.txt#218 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#219 (mes)
+- "All enchanted effects will be removed from the "
++ "Todos os efeitos encantados vão sair do item "
+#: npc/re/instances/FridayDungeon.txt#220 (mes)
+- "?"
++ ""
+#: npc/re/instances/FridayDungeon.txt#221 (mes)
+- "^FF0000There is a "
++ "^FF0000A chance de sucesso é de "
+#: npc/re/instances/FridayDungeon.txt#222 (mes)
+- "% chance of success. The accessory will be destroyed if the reset fails!^000000"
++ "%. Se falhar, o acessório é destruído!^000000"
+#: npc/re/instances/FridayDungeon.txt#223 (select)
+- "I'll be back later"
++ "Volto depois"
+#: npc/re/instances/FridayDungeon.txt#224 (select)
+- "Please proceed"
++ "Pode fazer"
+#: npc/re/instances/FridayDungeon.txt#225 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#226 (mes)
+- "Please bring me 10 x "
++ "Me traga 10 "
+#: npc/re/instances/FridayDungeon.txt#228 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#229 (mes)
+- "I need 100,000 zeny!"
++ "Eu preciso de 100.000 zeny!"
+#: npc/re/instances/FridayDungeon.txt#232 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#233 (mes)
+- "Darn it..."
++ "Que droga..."
+#: npc/re/instances/FridayDungeon.txt#234 (mes)
+- "I have failed and the accessory has been destroyed. I'm so sorry."
++ "Eu falhei, e o acessório foi destruído. Sinto muito."
+#: npc/re/instances/FridayDungeon.txt#235 (mes)
+- "[Amateur Collector]"
++ "[Colecionadora]"
+#: npc/re/instances/FridayDungeon.txt#236 (mes)
+- "I have succeeded."
++ "Deu certo."
+#: npc/re/instances/FridayDungeon.txt#237 (mes)
+- "The "
++ "O item "
+#: npc/re/instances/FridayDungeon.txt#238 (mes)
+- " has been initialized."
++ " foi resetado."
+#: npc/re/instances/FridayDungeon.txt#239 (atrib)
+- "null"
++ ""
+#: npc/re/instances/FridayDungeon.txt#241 (atrib)
+- "Left Acc - "
++ "Acessório esquerdo - "
+#: npc/re/instances/FridayDungeon.txt#242 (atrib)
+- "null"
++ ""
+#: npc/re/instances/FridayDungeon.txt#244 (atrib)
+- "Right Acc - "
++ "Acessório direito - "

@@ -313,7 +313,36 @@ para a mesma coisa.
 O catálogo (`npc/guerra/traducao/*.cat`) é a **fonte**; o arquivo `.txt` do
 rAthena é o **resultado**, reescrito por `traduz_npcs.py`. Editar o `.txt` à mão
 é perder o trabalho na próxima passada. Grupos hoje: `campal`, `cidades`,
-`classe1`, `classe2`, `glossario`, `guerra`, `kafra`, `novico`, `pvp`, `servico`.
+`classe1`, `classe2`, `glossario`, `guerra`, `kafra`, `novico`, `pvp`, `servico`,
+mais um por instância (`monarca`, `magoas`, `orcs`, `sarah`, …).
+
+### Um NPC do rAthena BIFURCADO vive em 3 lugares, e o terceiro é um instantâneo
+
+Quando a receita da §2 do `CLAUDE.md` não basta — `disablenpc` mais duplicata —
+porque a regra a mudar mora **dentro** do script compartilhado, o jeito é
+copiar o NPC para `npc/guerra/`. A cópia então tem uma **terceira** dependência,
+e é a que não se denuncia:
+
+| # | Onde | O quê |
+|---|---|---|
+| 1 | `npc/guerra/<nosso>.txt` | a cópia, com a regra nova, e o `disablenpc` do original |
+| 2 | `npc/re/…/<upstream>.txt` | o original, agora desligado — mas ainda lido, ainda traduzido |
+| 3 | `npc/guerra/traducao/<grupo>.cat` | a tradução, que continua escrevendo **só em (2)** |
+
+**O texto de (1) é um instantâneo de (3) no dia em que a cópia foi feita.**
+Reaplicar o catálogo conserta (2), que ninguém vê, e deixa (1) como estava —
+quem melhorar uma fala no catálogo a vê mudar no NPC desligado e continuar
+velha no que o jogador lê. Nada erra no log.
+
+Regra prática: **quem mexe na tradução de um NPC bifurcado mexe nos dois lados,
+ou regera a cópia.** Caso vivo: a Colecionadora do Túmulo do Monarca
+(`npc/guerra/colecionadora_do_monarca.txt`, 2026-08-12), copiada porque a lista
+de acessórios aceitos precisava crescer de 122 para 216 e a lista mora dentro
+do `switch` do script do rAthena.
+
+O outro custo é o de sempre: (1) não recebe correção do upstream. Vale a pena
+quando a alternativa é editar código de terceiros — e não vale quando um
+`duplicate` resolve, porque `duplicate` compartilha o script e não cria (3).
 
 ### Um móvel de cenário vive em 2 lugares, e um é o cliente e o outro o servidor
 

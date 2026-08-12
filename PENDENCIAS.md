@@ -877,6 +877,130 @@ equipa, que é o defeito que a regra existe para evitar.
 
 ---
 
+## 1l. O Túmulo do Monarca — falta ver no jogo
+
+Feito em 2026-08-12 (`HISTORICO.md`, "O Túmulo do Monarca abre todo dia").
+**Nada disto subiu.** Tudo conferido em disco; o que só a tela decide está
+embaixo.
+
+### Os comandos, nesta ordem
+
+```
+@reloadinstancedb   # o Id 46 vira "Túmulo do Monarca" (existe, não precisa reiniciar)
+@reloadscript       # os NPCs nossos e a tradução do miolo
+```
+
+O `@reloadinstancedb` **antes** do `@reloadscript`: o nome da instância é chave,
+e o `instance_create` resolve por string contra o que estiver carregado.
+
+Não há mais `@reloadquestdb` a dar: a instância deixou de usar quest, e o
+override da 12379 saiu do `db/guerra/quest_db.yml`.
+
+### O que só a tela decide
+
+1. **Os três NPCs aparecem, e os três do rAthena sumiram.** Mariaju em
+   `gef_tower 56,170`, Colecionadora em `57,167`. A porteira velha ficava em
+   `57,170` — uma célula ao lado da nossa —, então **duas mulheres de avental
+   lado a lado quer dizer que o `disablenpc` não pegou**.
+
+2. **A prova da armadilha, e é a mais importante:** entrar na instância e olhar
+   `1@md_gef 110,129`. Tem de haver **uma** Mariaju, não duas. Duas quer dizer
+   que o `disablenpc instance_npcname("Marry Jay#0_1")` do `OnInstanceInit` não
+   rodou — e aí o seletor velho volta a recusar quem tem menos de nível 130,
+   que é exatamente o que este trabalho existiu para tirar. Ver `CLAUDE.md` §5.
+
+3. **Entrar com personagem abaixo de 130**, que era o ponto do "sem trava":
+   tem de passar pela porta **e** conseguir escolher a dificuldade.
+
+4. **Entrar duas vezes seguidas com o mesmo personagem** — é o que a
+   remoção da espera comprou, e o teste é imediato: terminar (ou deixar
+   fechar) a memória e abrir outra na hora, sem recusa. Se a Mariaju disser
+   que já há uma tumba aberta, é o limite do sistema de instância, não a
+   espera: a memória anterior ainda está de pé.
+
+5. **A Colecionadora encanta.** Com 10 Pedra Bruta e 100.000z, num acessório
+   equipado. É o motivo de a instância ter sido pedida, então é o teste que
+   mais importa. Ela se chama **Colecionadora** e fala português; se aparecer
+   "Amateur Collector", o `disablenpc` do `OnInit` dela não pegou e há duas
+   NPCs empilhadas em `gef_tower 57,167`.
+
+5b. **Um acessório ESPECIAL encanta**, e não só um comum — é o que mudou o
+   desenho da NPC. Um anel zodiacal serve (Anel de Câncer, de Touro, de
+   Virgem…), ou o Anel de Iansã, ou as Luvas Imperiais. Se recusar com "Eu não
+   consigo encantar este…", o `.aceitos` do `OnInit` não carregou.
+
+5c. **O Anel do Monarca ainda encanta DOIS slots**, um de cada vez, com escolha
+   de categoria — é o único item com regra própria, e a troca do `switch` por
+   `inarray` passou perto dele. Reset dele é 80%; dos outros, 20%.
+
+5d. **Falhar um reset NÃO pode mais comer o acessório** — é a única mudança de
+   regra da NPC, e a que mais dói se estiver errada. Num acessório comum a
+   falha vem em 4 de 5 tentativas, então o teste é barato: resetar até falhar e
+   conferir que a peça **volta para a bolsa com o encanto intacto**. O que se
+   perde é só o custo. Conferir também que o aviso vermelho antes de confirmar
+   já não promete destruição.
+
+6. **O cadáver do Estranho** (`1@md_gef 183,222`) larga Pedra Bruta, e **os
+   baús** largam também depois de 100 mortes. Os baús são o teste do
+   `strnpcinfo(2)`: os quatro `fd_box1`..`4` ficaram sem traduzir de propósito,
+   e se algum tiver escapado o baú aparece e **não larga nada**.
+
+### Oito acessórios do bRO ficaram de fora, e não por escolha
+
+A lista de "Acessórios Especiais" da bROWiki tem 101 nomes. **93 entraram**
+(mais o Anel Imperial em duas versões, dando 94 IDs). Estes oito **não existem
+no `item_db` deste rAthena** — não é falta de tradução, é ausência do vendor:
+
+| item do bRO | procurado por |
+|---|---|
+| Anel de Carnium | `carnium` — só existe o minério 6223 |
+| Brincos de Carnium | idem |
+| Colar de Juperos | `juperos` — nada no `item_db` inteiro |
+| Luvas de H. Motto | `motto` — nada |
+| Luvas de Thor | `thor` — só katar e cajado sem relação |
+| Anel de Capricórnio | `capricorn` — os outros onze zodiacais existem |
+| Amuleto Caolho | `oneeye`, `cyclop`, `charm` — nada que sirva |
+| Broche do Reino | `kingdom`, `brooch` — nada que sirva |
+
+**Como entrar com eles, se o dono quiser:** cada um é uma entrada nova em
+`db/guerra/item_db.yml` (nome PT, `Locations: Accessory`, bônus) mais arte, mais
+uma linha no `.aceitos` do `OnInit` da Colecionadora. É o fluxo normal de item
+novo — `ARQUITETURA.md` §4, "Um item novo vive em até 6 lugares". Sem isso, o
+jogador que vier do bRO procurando encantar um Colar de Juperos não vai achar
+o item no servidor, quanto mais o encanto.
+
+### Uma suposição para conferir: o "Anel da Colheita"
+
+Virou o **490272**, que o nosso vendor chama de "Harvest Festival". É o único
+acessório de colheita do `item_db`, mas **o nome não bate** — é o único dos 94
+IDs que não foi provado, os outros 93 saíram de nome exato ou de `AegisName`
+conferido um a um.
+
+Se estiver errado, o estrago é pequeno e do tipo certo: um acessório a mais
+aceito para encanto. A conferência é olhar o 490272 em jogo e ver se é o anel
+que o bRO chama de Anel da Colheita. Se não for, sai uma linha do `.aceitos`.
+
+### O que ficou de fora, de propósito
+
+- **O Túmulo não entrou no Teleportador da Ordem** (`auction_02 37,39`), que
+  hoje leva às catorze portas. Seria uma linha em cada array — mas a §4.11 do
+  `CLAUDE.md` existe porque mexer naqueles arrays já errou os catorze destinos
+  de uma vez. Se for entrar, entra pelo laço que monta o menu a partir do
+  array, nunca pela string do menu.
+- **O Homem Suspeito do bRO** (`gef_tower 36,177`), a segunda NPC de encanto.
+  O NPC do rAthena já faz os dois papéis com as mesmas tabelas; separar seria
+  duas NPCs idênticas a nove células uma da outra.
+- **A lista de "Acessórios Comuns" da bROWiki não foi cruzada com a nossa.** O
+  print que chegou era o dos Especiais; a metade dos Comuns ficou cortada acima.
+  Os 122 do rAthena estão sendo tomados como equivalentes a ela, e é bem
+  possível que sejam — mas não foi provado. Um print daquela metade fecha.
+- **A dificuldade "Nv 200 +" não pede mais nível 200**, porque "sem trava" foi
+  a decisão. Se na prática isso virar problema (grupo de nível baixo abrindo a
+  fila difícil e travando a corrida), a volta é uma linha no `case 3` do
+  seletor em `npc/guerra/tumulo_do_monarca.txt`.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`
@@ -934,6 +1058,13 @@ torta. Uma por vez, cada uma fecha e entra em jogo sozinha.
 `fenda`, `vermes`, `glastheim`, `fenrir`, `demonio`, `charleston` e
 `crescente`. Ver `HISTORICO.md`, "Quatorze instâncias e a Fenda Dimensional em
 português".
+
+**Um décimo-sétimo grupo entrou em 2026-08-12: `monarca`**
+(`npc/re/instances/FridayDungeon.txt`, o Túmulo do Monarca), **fechado e
+aplicado** — 188 de 205, os 17 restantes em branco de propósito, todos
+técnicos. Ele não é uma das dezesseis da Ordem: entrou junto com a abertura da
+instância, e o `--estado` marca **91,7%** porque conta os brancos como não
+feitos. Ver `CLAUDE.md` §4.12, segundo travessão.
 
 **Sobrou uma, a maior, e ela está pela metade:**
 

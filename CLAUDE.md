@@ -95,6 +95,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/guerra/refine.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
+| `db/guerra/instance_db.yml` (nome de instância) | `@reloadinstancedb` — existe, e **não** exige reiniciar. O nome é chave: o `instance_create` resolve por string, então rodar este **antes** do `@reloadscript` quando os dois lados mudaram juntos |
 | `src/` | recompilar (VS 2022 Community, já instalado) |
 | `itemInfo.lua` e afins no cliente | **fechar e reabrir o cliente** — só lido na inicialização |
 | Exe do cliente (fonte, charset) | **fechar o cliente ANTES de gravar** — o exe fica travado enquanto roda, e o que já está aberto segue na cópia em memória |
@@ -614,6 +615,23 @@ Produziram diagnóstico falso e custaram retrabalho:
   inteira dentro de `AREA_SIZE`**. É o que as instâncias do próprio rAthena
   usam. Mesmo quando o global dispara, é para o `first_sd` — o primeiro do
   registro de dano, não o matador.
+- **`disablenpc` NÃO desliga o NPC dentro da instância — a receita de §2 não
+  vale para NPC de mapa de instância.** São dois campos diferentes e só um
+  atravessa a clonagem: o `buildin_disablenpc` (`script.cpp:12388`) chama
+  `npc_enable_target`, que mexe em `is_invisible` e `sc.option` e **nunca
+  grava `nd->state`**; e é justamente `state`, e só ele, que o
+  `npc_duplicate_sub` copia para a cópia (`npc.cpp:4655-4657`). Então
+  `disablenpc "X"` num `OnInit` esconde o NPC do **mapa-molde**, onde ninguém
+  entra, e **o clone de dentro da instância nasce ligado** — empilhado no
+  substituto, com a regra velha de volta. Falha calada: os dois aparecem, o
+  jogador clica no de cima, e qual é o de cima ninguém escolheu. Só o
+  `script(DISABLED)` de tempo de parse propaga (`npc.cpp:3974`), e ele mora no
+  arquivo do rAthena. **A saída é o `OnInstanceInit` do NPC substituto**, e ela
+  é segura porque o `instance_addnpc` cria TODOS os clones antes de rodar
+  qualquer `OnInstanceInit` — os dois laços estão um embaixo do outro em
+  `instance.cpp:586-598`, com os comentários *"First add the NPCs"* e *"Now run
+  their OnInstanceInit"*. Caso vivo: o seletor de dificuldade do Túmulo do
+  Monarca, `npc/guerra/tumulo_do_monarca.txt`, 2026-08-12.
 - **Quest que o cliente não conhece DERRUBA O CLIENTE.** Não é "aparece sem
   título" — é caixa de erro de Lua, uma **por missão e por atualização da
   janela**, até a conexão cair. O `GetOngoingQuestInfoByID`

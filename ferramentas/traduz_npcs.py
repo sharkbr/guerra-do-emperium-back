@@ -192,6 +192,13 @@ for _apelido, _arq in [
         ('polvo',       'npc/re/instances/OctopusCave.txt'),
         ('crescente',   'npc/re/instances/EddaHalfMoonInTheDaylight.txt'),
         ('glastheim',   'npc/re/instances/OldGlastHeim.txt'),
+        # O Tumulo do Monarca. Nao e uma das dezesseis da Ordem: entrou em
+        # 2026-08-12, quando a instancia foi aberta todo dia por
+        # npc/guerra/tumulo_do_monarca.txt. Os NPCs de entrada e de
+        # encantamento sao nossos ou duplicata nossa, mas o miolo - o
+        # cadaver do Estranho, a Escultura Bizarra, os bauis e os avisos
+        # de mapa - continua sendo do rAthena, e e o que este grupo cobre.
+        ('monarca',     'npc/re/instances/FridayDungeon.txt'),
 ]:
     GRUPOS[_apelido] = [_arq]
 

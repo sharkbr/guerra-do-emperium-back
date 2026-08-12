@@ -1,0 +1,310 @@
+//===== Guerra do Emperium ===================================
+//= O Tumulo do Monarca - a porta aberta e o encantamento
+//===== Onde =================================================
+//= gef_tower 56,170  Mariaju, a porteira. Coordenada do bRO.
+//= gef_tower 57,167  Colecionadora, o encantamento. Idem.
+//= 1@md_gef  110,129 Mariaju, a escolha de dificuldade, ja
+//=                   dentro da instancia.
+//=
+//= As tres celulas foram conferidas no db/map_cache.dat: tipo
+//= 0, andaveis. Os sprites 4_F_JOB_BLACKSMITH e 1_F_01 existem
+//= no npcidentity.lub deste cliente.
+//===== Descricao ============================================
+//= ABRE O TUMULO DO MONARCA TODO DIA, e traz o encantamento
+//= por Pedra Bruta com nome em portugues.
+//=
+//= A instancia e do rAthena (npc/re/instances/FridayDungeon.txt,
+//= Id 46 do instance_db, mapa 1@md_gef) e ja estava ligada. O
+//= que ela NAO era e alcancavel: o porteiro dela so atendia
+//= as sextas-feiras.
+//=
+//=     .@day = gettime(DT_DAYOFWEEK);
+//=     if (.@day != FRIDAY) { ...nao entra... }
+//=
+//= Seis dias em sete o conteudo inteiro - a caca, os bauis, o
+//= Monarca Lich, a Pedra Bruta e os dois encantamentos - nao
+//= existia. Este arquivo tira essa trava.
+//===== As tres decisoes de 2026-08-12 =======================
+//= Pedidas e decididas pelo dono do servidor:
+//=
+//=   1. SEM ESPERA NENHUMA. Entra quantas vezes quiser, o
+//=      mesmo personagem, no mesmo dia.
+//=
+//=      Passou por tres formas em 2026-08-12, e as duas
+//=      primeiras duraram horas: sexta-feira (o bRO) ->
+//=      diaria pela quest 12379 -> nenhuma. A quest foi
+//=      abandonada e o override dela saiu do
+//=      db/guerra/quest_db.yml; o NPC so a APAGA, para tirar
+//=      da janela de missoes o registro de quem falou com a
+//=      Mariaju no meio-tempo.
+//=
+//=      O UNICO limite que sobra e o do sistema de instancia:
+//=      uma memoria aberta por party de cada vez. Fechou ou
+//=      expirou, abre outra na hora.
+//=
+//=   2. SEM TRAVA DE NIVEL. O rAthena pedia nivel 130 na porta
+//=      e repetia a trava LA DENTRO, no seletor de
+//=      dificuldade (`if (BaseLevel < 'mob[0])`, com 130 e
+//=      200). Tirar so a da porta nao resolveria nada: o
+//=      personagem entraria e nao conseguiria comecar a caca.
+//=      Por isso o seletor tambem e nosso.
+//=
+//=   3. O ENCANTAMENTO E O PONTO. E o motivo de a instancia ter
+//=      sido pedida, entao a NPC dele ganhou nome portugues.
+//===== A Colecionadora tem arquivo proprio ==================
+//= npc/guerra/colecionadora_do_monarca.txt, gef_tower 57,167.
+//=
+//= Ela nasceu aqui, como `duplicate` do NPC do rAthena, e saiu
+//= no MESMO dia: a lista de acessorios aceitos precisou crescer
+//= dos 122 do rAthena para os 216 do bRO (os Acessorios
+//= Especiais), e essa lista mora DENTRO do script - duplicata
+//= nao estende. Ver o cabecalho de la.
+//=
+//= O bRO parte o encantamento em DUAS NPCs (a Colecionadora,
+//= para acessorio comum, e o Homem Suspeito em gef_tower
+//= 36,177, so para o Anel do Monarca). O rAthena junta os dois
+//= numa NPC so, com as mesmas tabelas. Ficou junto: duas NPCs
+//= a nove celulas uma da outra, com o mesmo preco e o mesmo
+//= resultado, so confundiriam.
+//===== A armadilha que decidiu a forma deste arquivo ========
+//= O seletor de dificuldade mora DENTRO da instancia, e para
+//= aquele nao vale a receita de sempre (`disablenpc` no OnInit
+//= mais duplicata nossa). Medido no codigo em 2026-08-12:
+//=
+//=   - o `disablenpc` de script NAO grava `nd->state`. O
+//=     buildin so chama `npc_enable_target` (script.cpp:12388),
+//=     que mexe em `is_invisible` e `sc.option`;
+//=   - e e `state`, exatamente ele, que o `npc_duplicate_sub`
+//=     copia para o clone da instancia (npc.cpp:4655-4657).
+//=
+//= Ou seja: `disablenpc "Marry Jay#0_1"` no OnInit esconde o
+//= NPC do mapa-molde 1@md_gef, onde ninguem entra, e o clone
+//= de dentro da instancia NASCE LIGADO. Os dois seletores
+//= apareceriam empilhados na mesma celula, e o velho voltaria
+//= a recusar quem tem menos de 130. Falha calada.
+//=
+//= So o `script(DISABLED)` de tempo de parse propaga - e ele
+//= esta no arquivo do rAthena, que nao tocamos.
+//=
+//= A saida e o `OnInstanceInit` do NOSSO seletor, e ela e
+//= segura porque o `instance_addnpc` cria TODOS os clones e so
+//= depois roda qualquer OnInstanceInit:
+//=
+//=     // First add the NPCs        instance.cpp:586
+//=     // Now run their OnInstanceInit   instance.cpp:593
+//=
+//= Quando o nosso roda, o clone do velho ja existe e tem nome.
+//===== O que continua sendo do rAthena ======================
+//= Tudo o que nao esta aqui: o `md_gef_mobs_spawn` (os 100
+//= monstros e a reposicao), o Estranho do cadaver, a Escultura
+//= Bizarra que acorda o Monarca Lich, os quatro bauis e a
+//= Planta Brilhante. O FridayDungeon.txt so foi TRADUZIDO
+//= (catalogo npc/guerra/traducao/monarca.cat); a logica dele
+//= esta intacta.
+//=
+//= Este arquivo desliga DOIS NPCs do rAthena:
+//=   - "Marry Jay"                  gef_tower 57,170 (porteira)
+//=   - "Marry Jay#0_1"              1@md_gef 110,129 (seletor),
+//=     e esse pelo OnInstanceInit, pela razao de cima.
+//=
+//= O terceiro, o "Amateur Collector#pa0829" do encantamento, e
+//= desligado pelo colecionadora_do_monarca.txt.
+//=
+//= Comentar a linha deste arquivo no scripts_guerra.conf
+//= devolve os tres e a trava de sexta-feira junto.
+//===== Notas ================================================
+//= O nome da instancia e CHAVE, nao rotulo: `instance_create`
+//= e `instance_enter` resolvem por string, e ele tem de bater
+//= com o `Name:` do db/guerra/instance_db.yml, onde o Id 46
+//= virou "Tumulo do Monarca". Ver ARQUITETURA.md secao 4.
+//=
+//= As variaveis `'step`, `'hard` e `'mob[]` sao de INSTANCIA e
+//= sao compartilhadas com o md_gef_mobs_spawn do rAthena, que
+//= as zera no OnInstanceInit dele. O `'hard` e quem decide se
+//= o cadaver e o bau largam 5-7 ou 7-9 Pedra Bruta.
+//=
+//= Gravado em cp1252, como todo texto que o jogo le. Mudanca
+//= aqui pega com @reloadscript; a do nome da instancia, com
+//= @reloadinstancedb.
+//============================================================
+
+gef_tower,56,170,3	script	Mariaju	4_F_JOB_BLACKSMITH,{
+	mes "[Mariaju]";
+	mes "Debaixo desta torre tem a tumba de um rei";
+	mes "muito antigo. O problema é que ele não";
+	mes "morreu direito.";
+	next;
+	mes "[Mariaju]";
+	mes "^ff0000Aviso: bicho domado ou invocado lá dentro";
+	mes "não conta para a caçada.^000000";
+	next;
+
+	// NAO HA ESPERA: entra quantas vezes quiser, o mesmo
+	// personagem, no mesmo dia. O unico limite que sobra e o do
+	// proprio sistema de instancia - uma memoria aberta por party
+	// de cada vez -, e ele e tratado no `case 1` abaixo.
+	//
+	// LIMPEZA DE RESTO: a espera diaria existiu por poucas horas
+	// em 2026-08-12, e quem falou com a Mariaju nesse meio-tempo
+	// ficou com a quest 12379 pendurada na janela de missoes.
+	// Ela nao faz mais nada; apagar aqui e o que a tira da tela.
+	// Pode sumir daqui quando ninguem mais tiver o registro.
+	if (checkquest(12379) != -1)
+		erasequest 12379;
+
+	mes "[Mariaju]";
+	mes "A tumba está aberta. Quer descer?";
+	next;
+
+	// Quem nao e lider recebe a primeira opção VAZIA: o select
+	// nao a desenha, mas mantem a numeracao. E o mesmo arranjo
+	// do script do rAthena.
+	if (is_party_leader() == true)
+		.@menu$ = "Preparar o " + .md$;
+
+	switch (select(.@menu$, "Entrar no " + .md$, "Agora não")) {
+	case 1:
+		// O -3 e "esta party ja tem uma memoria aberta"
+		// (instance.cpp:630 e 638). Com a espera diaria fora, ele
+		// virou o UNICO limite que o jogador encontra - entao tem
+		// recado proprio, em vez de cair no "falhou" generico.
+		.@feito = instance_create(.md$);
+		if (.@feito == -3) {
+			mes "[Mariaju]";
+			mes "Vocês já têm uma tumba aberta.";
+			mes "Entrem nela, ou esperem ela fechar sozinha";
+			mes "para eu abrir outra.";
+			close;
+		}
+		if (.@feito < 0) {
+			mes "[Mariaju]";
+			mes "Grupo: " + getpartyname(getcharid(1));
+			mes "Líder: " + strcharinfo(0);
+			mes "A reserva ^FF0000falhou^000000.";
+			close;
+		}
+		mes "[Mariaju]";
+		mes "Reservado. Fale comigo de novo e escolha";
+		mes "^0000FFEntrar no " + .md$ + "^000000 quando estiverem";
+		mes "prontos.";
+		close;
+	case 2:
+		switch (instance_enter(.md$)) {
+		case IE_NOMEMBER:
+			mes "[Mariaju]";
+			mes "Só quem está no grupo pode descer.";
+			close;
+		case IE_NOINSTANCE:
+			mes "[Mariaju]";
+			mes "Não tem tumba aberta agora. O líder do";
+			mes "grupo precisa preparar primeiro.";
+			close;
+		case IE_OTHER:
+			mes "[Mariaju]";
+			mes "Alguma coisa deu errado, e nem eu sei o quê.";
+			close;
+		case IE_OK:
+			mapannounce "gef_tower",
+			            strcharinfo(0) + ", do grupo " +
+			            getpartyname(getcharid(1)) +
+			            ", está descendo no " + .md$ + ".",
+			            bc_map, "0x00ff99";
+			end;
+		}
+		end;
+	case 3:
+		mes "[Mariaju]";
+		mes "Então fica para quando você quiser.";
+		close;
+	}
+	end;
+
+OnInit:
+	// CHAVE, nao rotulo: tem de bater com o `Name:` do Id 46 em
+	// db/guerra/instance_db.yml.
+	.md$ = "Túmulo do Monarca";
+
+	// A porteira velha, com a trava de sexta-feira. Fora de
+	// instancia, entao o disablenpc de OnInit basta.
+	//
+	// A NPC de encantamento e desligada por quem a substitui,
+	// npc/guerra/colecionadora_do_monarca.txt - a regra e que
+	// desliga quem substitui, para os dois lados caminharem
+	// juntos se um dia um deles for comentado.
+	disablenpc "Marry Jay";
+	end;
+}
+
+// O ENCANTAMENTO mora em npc/guerra/colecionadora_do_monarca.txt,
+// e nao aqui: e o arquivo maior dos dois, e tem um acoplamento
+// proprio com o catalogo de traducao. Ver o cabecalho de la.
+
+// A ESCOLHA DE DIFICULDADE, ja dentro da instancia. Nossa
+// porque a do rAthena recusava quem tem menos de 130 - e sem
+// escolher dificuldade a caca nao comeca, entao a trava da
+// porta e a de dentro tinham de cair juntas.
+1@md_gef,110,129,6	script	Mariaju#tumba	4_F_JOB_BLACKSMITH,{
+	if ('step != 0) {
+		mes "[Mariaju]";
+		mes "A caçada já começou. Boa sorte aí dentro.";
+		close;
+	}
+	if (is_party_leader() == false) {
+		mes "[Mariaju]";
+		mes "Só o líder do grupo escolhe a força dos";
+		mes "bichos.";
+		close;
+	}
+	mes "[Mariaju]";
+	mes "Antes de eu acordar o que dorme aqui,";
+	mes "escolha a força deles.";
+	next;
+	mes "[Mariaju]";
+	mes "^ff0000Não há trava de nível aqui: quem escolher";
+	mes "acima do que aguenta só perde a corrida.^000000";
+	next;
+	switch (select("Agora não:Bichos de nível 100:Bichos de nível 160")) {
+	case 1:
+		close;
+	case 2:
+		// [0] sobra do rAthena (era o nivel minimo, hoje sem uso),
+		// [1] Monarca Lich, [2] Pesadelo, [3] Jakk, [4] Carnical,
+		// [5] Sanguessuga. A ordem e a que o md_gef_mobs_spawn do
+		// rAthena le - nao mexer.
+		'hard = 0;
+		setarray 'mob[0],1,3658,3660,3662,3664,3666;
+		break;
+	case 3:
+		// O `'hard` tambem sobe o numero de Pedra Bruta do cadaver
+		// e dos bauis, de 5-7 para 7-9.
+		'hard = 1;
+		setarray 'mob[0],1,3659,3661,3663,3665,3667;
+		break;
+	}
+	close2;
+	npctalk "Pronto. Isto aqui vira campo de caça agora - eu saio e fecho a porta da frente.";
+	sleep 4000;
+	npctalk "Boa sorte~";
+	sleep 3000;
+	if ('step == 0) {
+		'step = 1;
+		donpcevent instance_npcname("md_gef_mobs_spawn") + "::OnStart";
+		disablenpc();
+		enablenpc instance_npcname("The Stranger#cadaver");
+		enablenpc instance_npcname("Bizzare Sculpture#boss");
+	}
+	end;
+
+OnInstanceInit:
+	// Desliga o SELETOR VELHO, o do rAthena, aqui e nao no
+	// OnInit - ver a secao "a armadilha" do cabecalho. Em
+	// resumo: `disablenpc` nao grava `nd->state`, e e `state`
+	// que o clone da instancia herda; feito no OnInit, o clone
+	// nasceria ligado e a trava de nivel 130 voltaria calada.
+	//
+	// Aqui e seguro porque o instance_addnpc cria todos os
+	// clones antes de rodar qualquer OnInstanceInit
+	// (instance.cpp:586-598).
+	disablenpc instance_npcname("Marry Jay#0_1");
+	end;
+}

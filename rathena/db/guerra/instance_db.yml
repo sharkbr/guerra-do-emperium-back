@@ -83,6 +83,11 @@ Body:
   # Half Moon In The Daylight
   - Id: 44
     Name: Edda do Quarto Crescente
+  # Friday Dungeon - o nome do rAthena e o dia da semana em que ela
+  # abria. Aqui ela abre todo dia (npc/guerra/tumulo_do_monarca.txt), e o
+  # nome passou a ser o do bRO, que descreve o lugar em vez do calendario.
+  - Id: 46
+    Name: Túmulo do Monarca
   # Poring Village
   - Id: 47
     Name: Vila dos Porings
