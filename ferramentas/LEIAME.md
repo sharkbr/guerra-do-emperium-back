@@ -2689,3 +2689,66 @@ Sem ela o filtro deixa o nome passar e o **banco** o recusa, com
 E a lista vale para mais do que o nome de personagem: clã
 (`int_guild.cpp:1199`), grupo (`int_party.cpp:517`) e homúnculo
 (`int_homun.cpp:302`) leem a **mesma** variável.
+
+## `act.py` e `levanta_sprite_npc.py` — sprite de NPC que nasce enterrado
+
+O `.spr` guarda os desenhos; o **`.act`** diz, para cada ação e cada quadro,
+onde cada desenho é colado em relação à célula. O par que interessa é o
+`(x, y)` de cada **camada** — o deslocamento do centro do desenho em relação ao
+ponto de ancoragem no chão.
+
+**Com `y` perto de zero o centro do sprite fica na altura do chão**, a metade de
+baixo vai para debaixo do piso, o depth buffer do terreno a corta, e o NPC
+aparece com um **corte reto e horizontal** na base. Parece defeito de célula, de
+altura de mapa ou de modelo — e não é.
+
+### Uso
+
+```
+python levanta_sprite_npc.py --ver <SPRITE>      # mede, não escreve
+python levanta_sprite_npc.py <SPRITE> <y>        # aplica
+```
+
+O `--ver` avisa sozinho quando `y > -20`. Que valor usar: **`-(altura/2 - 8)`**,
+que é a conta que os oficiais deste cliente seguem — o centro sobe meia altura e
+a base afunda uns 8 pixels, para a peça parecer plantada e não flutuando.
+
+| sprite | altura | `y` |
+|---|---|---|
+| `4_vending_machine` | 122 | −53 |
+| `4_VENDING_MACHINE` | 122 | −53 |
+| `2_DROP_MACHINE` | 118 | −44 |
+| `2_VENDING_MACHINE1` | 114 | −40 |
+| `2_COLAVEND` | 123 | **0** — a exceção, corrigida para −53 em 2026-08-12 |
+
+### O que ele grava, e onde isso dói
+
+Em `C:\GuerraDoEmperium\cliente\data\sprite\npc\<SPRITE>.act`, que é **cliente,
+fora do git**, e vence o GRF pelo `DataFolderFirst`. **Cliente novo perde o
+conserto** e a peça volta a afundar, sem erro nenhum. Esta ferramenta é a
+receita versionada para repor; apagar o arquivo solto reverte, porque o original
+nunca saiu do GRF. Override anterior vai para `backup-registro` antes de ser
+sobrescrito.
+
+Depois de rodar: **fechar e reabrir o cliente.** `@reloadscript` não alcança
+sprite.
+
+### Duas ressalvas do leitor
+
+**O `.act` de vários sprites antigos está com DES no nosso `data.grf`** e não se
+lê; nesses casos ele vem do GRF do bRO, que é a mesma revisão oficial. O `--ver`
+diz de onde veio. Foi o caso do `2_COLAVEND`.
+
+**O `act.py` recusa-se a devolver dados se sobrar byte** — a regra do
+`mede_rsm.py`: formato com campo opcional por versão desalinha calado e devolve
+números plausíveis. Há **4 bytes não identificados** entre o fim das ações e o
+vetor de atrasos; sem pulá-los o vetor sai lido como `[0.0, 4.0 ×7]` em vez de
+`[4.0 ×8]`. Ficam pulados e documentados.
+
+O alinhamento dos `(x, y)` foi provado **por fora**, não pelo próprio leitor: no
+`2_DROP_MACHINE` as oito camadas dão todas `(6, −44)`, e o padrão de bytes
+correspondente aparece exatamente **oito** vezes no binário.
+
+A escrita é **byte a byte no lugar** (`Act.desloca_y`), não re-serialização: só
+os `y` mudam, o tamanho não mexe, e qualquer campo que o leitor não entenda
+sobrevive. O `aplica` ainda relê o resultado e confere que só o `y` mudou.

@@ -506,6 +506,38 @@ Produziram diagnóstico falso e custaram retrabalho:
   avisa. Item sem `NoDrop` entregue por script aparece no chão da arena, ao
   alcance de qualquer um, e nada no log denuncia. Caso vivo: a Caveira Humana
   (30995), em `npc/guerra/honra_de_combate.txt`.
+- **`mes` que começa com ESPAÇO não abre linha nova — cola na anterior.** O
+  `clif_scriptmes` (`src/map/clif.cpp:2472`) manda a string **crua**, sem `\n`:
+  quem decide onde quebrar é o cliente, e o critério dele é o primeiro
+  caractere. Visível abre linha; espaço é continuação. Então indentar uma
+  lista com `mes "  item…"` **concatena a lista inteira**, e o que se vê na
+  tela é o resultado da largura da caixa, não do script. Medido em 2026-08-11
+  na Máquina de Sombrios Totais: das quatro linhas de prêmio, três pareciam
+  certas — tinham estourado a largura e quebrado sozinhas — e a quarta apareceu
+  grudada no fim da terceira. **Três das quatro estavam erradas e pareciam
+  certas**, e mexer em qualquer texto (nome de item mais curto, porcentagem com
+  menos dígitos) reorganiza a janela sem erro nenhum. Para recuar, caractere
+  visível (`- `, `. `), nunca espaço.
+- **Sprite de NPC "enterrado no chão" é o `.act`, não o mapa.** O `.act` diz a
+  que altura o desenho é colado em relação à célula; com `y` perto de zero o
+  **centro** do sprite fica na altura do chão, a metade de baixo vai para
+  debaixo do piso, e o depth buffer do terreno a corta — dá um **corte reto e
+  horizontal** na base. Parece problema de célula, de altura de mapa ou de
+  modelo, e não é: em 2026-08-12 a `2_COLAVEND` apareceu cortada em terreno
+  medido como **plano** (4,00 nas duas células e na faixa inteira). As máquinas
+  oficiais deste cliente levantam o desenho — `4_vending_machine` −53,
+  `2_DROP_MACHINE` −44, `2_VENDING_MACHINE1` −40 — e a `2_COLAVEND` é a única
+  com **`y = 0` nas oito direções**. A conta que os oficiais seguem é
+  `-(altura/2 - 8)`. Ferramenta: `ferramentas/levanta_sprite_npc.py`; o
+  override é **cliente, fora do git**, e some em cliente novo.
+- **Facing de NPC se calcula pela CÉLULA de destino, não pelo lado da tela.**
+  Tabela do `enum directions` (`src/map/path.hpp:16`) medida em jogo com a
+  câmera padrão: **4 (sul) desenha para baixo-direita, 2 (oeste) para
+  baixo-esquerda, 0 (norte) para cima-esquerda, 6 (leste) para cima-direita.**
+  A pergunta certa é "que direção me leva daqui até lá". O cabeçalho da
+  `npc/guerra/maquina.txt` traz uma tabela em termos de "direita/esquerda" que
+  vale **só para aquele sprite** — reusá-la virou a Máquina de Sombrios Gerais
+  para o lado errado em 2026-08-12.
 - **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
   binário aplicado **depois** do parse (`pc_groups.cpp:275`,
   `permissions |= otherGroup->permissions`). Permissão que o pai concede, o

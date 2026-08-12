@@ -41,6 +41,27 @@ sem confirmação in-game.
 | Placar da Arena — modal novo, na coordenada nova | `prontera 152,187` | 2026-08-08 |
 | Caveira Humana caindo de jogador morto | `pvp_n_1-5` | 2026-08-08 |
 | Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
+| Sombrios Gerais — loja, sprite levantado e facing novo | `auction_01 193,58` | 2026-08-11 |
+
+**A Sombrios Totais (189,58) está conferida em jogo** — corpo, sorteio e a lista
+de prêmios, esta depois de tirar a indentação que colava as linhas
+(`CLAUDE.md` §5).
+
+Falta a **Gerais**, e ela pede três coisas de uma vez, porque os três defeitos
+eram de camadas diferentes:
+
+1. **`@reloadbarterdb` além do `@reloadscript`** — a mercadoria dela vive no
+   `barters_guerra.yml`, e é o que faz a janela de troca abrir com as quatro
+   linhas e o ícone da Moeda Nova. Nunca foi aberta.
+2. **Fechar e reabrir o cliente** — o sprite dela precisa do override de `.act`
+   (`levanta_sprite_npc.py 2_COLAVEND -53`) para não aparecer enterrado, e
+   sprite só é relido na inicialização.
+3. **Olhar para que lado ela está virada** — nasceu em facing 4 (errado, olhava
+   para o sul) e foi para 2 (oeste, olhando para a Totais).
+
+E ela carrega uma dívida que não é dela: **o override de `.act` está fora do
+git** e some em cliente novo, sem erro nenhum. A receita para repor é uma linha,
+e está em `ferramentas/levanta_sprite_npc.py`.
 
 **O roteiro é o mesmo para todos, e a ordem importa:**
 

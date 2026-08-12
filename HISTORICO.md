@@ -6489,3 +6489,189 @@ E, pela primeira vez, **a passagem não ficou aberta**: as células dos plintos
 já nascem bloqueadas no `.gat` (tipo 1, e o dono nunca pôde subir nelas). O
 modelo de `.rsw` continua não bloqueando nada — só que aqui o `.gat` já fazia
 o serviço, e não há `setwall` a escrever.
+
+## As duas Máquinas de Sombrios, no Centro da Ordem (2026-08-11)
+
+Duas máquinas lado a lado na faixa aberta do salão, `auction_01` **189,58** e
+**193,58**, as duas viradas para a esquerda (facing 4) — a segunda olha para a
+primeira. Vieram no mesmo pedido, e a divisão de trabalho entre elas foi o que
+decidiu a forma de cada uma:
+
+| | Onde | Sprite | O que faz |
+|---|---|---|---|
+| **Sombrios Totais** | 189,58 | 10375 `4_VENDING_MACHINE2` | sorteia, 2 Moedas Novas o giro |
+| **Sombrios Gerais** | 193,58 | 910 `2_COLAVEND` | vende a preço fixo |
+
+A Totais devolve **um** de quatro itens, com peso: Caixa de Sombrios de Atributo
+(14675, 15/34), Martelo de Refino Sombrio (23436, 15/34), Combinador de Atributo
+(23247, 3/34) e Martelo Sombrio +9 (23926, 1/34).
+
+A Gerais vende os três Cubos de Materiais Sombrios (100690, 23335 e 23663) a 2
+Moedas Novas e o Combinador de Sombrios (22529) a 1.
+
+Os oito itens já existiam no rAthena, com nome PT no `itemInfo.lua` e arte 4 de
+4 no `estado_item.py`. **Nada foi criado no `db/`.**
+
+### Por que uma é script e a outra é loja
+
+Não é gosto: **sorteio exige `rand`, e loja de troca não roda script nenhum** —
+o barter entrega exatamente a linha clicada. Por isso a Totais é script puro,
+sem loja. E **preço fixo em ITEM exige barter e não `itemshop`**, porque a Moeda
+Nova é `NoSell` (regra §4.10) — por isso a mercadoria da Gerais vive em
+`npc/guerra/barters_guerra.yml`, na loja flutuante `SombriosGerais#loja`.
+
+A Gerais **não sorteia de propósito**: três dos quatro itens dela são cubos, que
+já são "abre e sai coisa aleatória". O sorteio está dentro do item, e sortear de
+novo do lado de fora seria sortear duas vezes.
+
+Isso deixa as duas em lados opostos da armadilha §4.9: na Totais o nome do item
+sai do `getitemname()`, que lê o **servidor**; na Gerais sai do `itemInfo.lua` do
+**cliente**, porque o pacote do barter leva só o ID.
+
+### O sprite pedido não existe neste cliente
+
+O pedido apontou o `4_GACHA_MACHINE`, que é o certo pelo nome — e este cliente
+não o conhece. Ele é **10545** no `src/map/npc.hpp`, e o `npcidentity.lub` do
+nosso `data.grf` para em **10508** na faixa 10xxx (403 entradas). A string
+`4_GACHA_MACHINE` não aparece nem lá **nem no `npcidentity.lub` do GRF do bRO** —
+não é caso de trazer do bRO, a arte não existe de nenhum lado. Teria dado NPC
+invisível, calado; a mesma armadilha do 10605 no Mestre de Classe.
+
+Os seis sprites de máquina que este cliente tem foram extraídos e **olhados**,
+não só listados — um decodificador de `.spr` de rascunho, porque não havia
+nenhum em `ferramentas/`:
+
+| id | constante | o desenho |
+|---|---|---|
+| 506 | `4_VENDING_MACHINE` | máquina de bebidas alta |
+| 562 | `2_DROP_MACHINE` | máquina de garra, cheia de cápsulas coloridas |
+| 563 | `2_SLOT_MACHINE` | caça-níquel, letreiro JACKPOT |
+| 564 | `2_VENDING_MACHINE1` | bebidas — **já em uso** em três NPCs |
+| 10081 | `4_MACHINE_DEVICE` | aparelho pequeno, 32x29 |
+| 10375 | `4_VENDING_MACHINE2` | cilindro de vidro sobre coluna |
+
+O 562 é o que mais parece uma máquina de cápsula; **o dono escolheu o 10375**,
+que também evita repetir o 564. O 910 (`2_COLAVEND`, a máquina de refrigerante
+vermelha) veio pedido para a segunda e existe, com `.spr`/`.act`.
+
+### O pedido dizia `auction_02`, e a coordenada decidiu sozinha
+
+As duas máquinas foram pedidas em `auction_02`, que é o salão da Ordem dos
+Exploradores — o Centro da Ordem é o `auction_01`. Não foi preciso perguntar: no
+`auction_02` as células **189,58 e 193,58 são tipo 1, rocha**, e o bloco inteiro
+em volta (x183-195, y54-62) também. No `auction_01` as duas são tipo 0, altura
+4,00, na fileira que anda de x186 a x195.
+
+O `.gat` dos dois mapas está com DES no nosso GRF (`flags=5`) e foi lido do GRF
+do bRO, que é a mesma revisão do mapa.
+
+### A prova de que o NPC carregou, e por que ela custou três tentativas
+
+`@reloadscript` não estava disponível (o servidor no ar, e o dono é quem dá o
+comando), então a prova foi por reinício do map-server e leitura do log. Zero
+`Unknown syntax` prova só que nada quebrou — **não prova que o arquivo foi
+lido**. A sonda que provaria foi um `debugmes` no `OnInit`, e ela não apareceu
+por dois motivos empilhados, nenhum deles o esperado:
+
+1. **`console_msg_log: 3`** em `conf/import/map_conf.txt` grava só Warning (1) e
+   Error (2). Debug é o bit **4**, e estava desligado de propósito.
+2. Mesmo com o bit 4 ligado, nada. O que faltava era **esperar**: o log continua
+   sendo escrito depois de a porta 5121 abrir, e a leitura tinha sido feita cedo
+   demais. O `servidor.py subir` volta assim que a porta responde.
+
+A sonda que fechou foi um `errormes` (canal já provado pelos 916 avisos do boot),
+e respondeu de uma vez: `SONDA-A: OnInit comecou` e
+`SONDA-B: n=4 total=34 p0=14675 p3=23926` — arquivo lido, `OnInit` rodando, as
+duas colunas da tabela em sincronia e o total certo. Sondas retiradas e
+`console_msg_log` de volta em 3.
+
+### A armadilha que só a tela mostrou
+
+No primeiro teste em jogo o **Martelo Sombrio +9 apareceu grudado no fim da linha
+do Combinador de Atributo**. A causa é a indentação: a lista de prêmios nascera
+com dois espaços na frente de cada linha, e **`mes` que começa com espaço não
+abre linha nova**. Subiu para o `CLAUDE.md` §5 — o registro completo está lá, e
+o raciocínio, no cabeçalho do NPC.
+
+O que vale guardar aqui é o formato da falha: das quatro linhas, **três pareciam
+certas** porque tinham estourado a largura da caixa e quebrado sozinhas. Só a
+quarta coube e denunciou. E o que decidiu não foi olhar o print inteiro — foi
+recortar a caixa de diálogo e ampliar em nearest-neighbor, aí as seis linhas
+puderam ser medidas uma a uma contra a hipótese.
+
+### O título encurtou depois do teste
+
+Nasceram "Máquina de Sombrios Totais" e "Máquina de Sombrios Gerais", e o dono
+encurtou os dois para **"Sombrios Totais"** e **"Sombrios Gerais"** depois de ver
+em jogo.
+
+### Duas coisas ditas por escrito na entrega
+
+- **A porcentagem do Combinador de Atributo veio 8,24% no pedido, e 3/34 é
+  8,82%.** Os pesos somam 34 exatos e são o que a máquina usa; a tela imprime
+  8,82% porque a conta é feita a partir deles. Se a intenção era 8,24%, o que
+  muda é o peso.
+- **Três dos quatro prêmios da Totais não têm `NoDrop`** (23436, 23247 e 23926 —
+  só a Caixa 14675 tem). Sem `checkweight` eles cairiam no chão do salão com o
+  jogador já cobrado, pela armadilha do `getitem` (§5). Daí a ordem do script:
+  **sorteia → confere o prêmio sorteado → cobra → entrega**. O sorteio vem antes
+  da cobrança porque o `checkweight` precisa saber qual item vai entregar — os
+  quatro pesam 10 e são empilháveis, mas empilhável só dispensa slot livre se o
+  jogador **já** tem aquele item.
+
+### O segundo teste: a Gerais enterrada e virada para o lado errado (2026-08-12)
+
+A Totais passou. A Gerais voltou com dois defeitos, e nenhum dos dois era do
+script.
+
+**Enterrada.** A máquina apareceu com a base cortada por uma linha reta e
+horizontal. A primeira suspeita — degrau no terreno — foi medida e descartada:
+as duas células e a faixa inteira de `y56` a `y60`, de `x186` a `x195`, estão em
+altura **4,00**, plana, com os quatro cantos iguais.
+
+Era o **`.act`**. Ele diz a que altura o desenho é colado em relação à célula, e
+o `2_COLAVEND` vem com `y = 0` nas oito direções — o centro do sprite fica na
+altura do chão e a metade de baixo vai para debaixo do piso, onde o depth buffer
+do terreno a corta. Daí o corte reto, que é o que separa este caso de um
+problema de posicionamento: sprite mal posicionado aparece inteiro e deslocado;
+sprite cortado reto está sob o piso.
+
+A medida que fechou o caso comparou as cinco máquinas do cliente, e a exceção
+salta:
+
+| sprite | altura | `y` |
+|---|---|---|
+| `4_vending_machine` (a Totais) | 122 | −53 |
+| `4_VENDING_MACHINE` | 122 | −53 |
+| `2_DROP_MACHINE` | 118 | −44 |
+| `2_VENDING_MACHINE1` | 114 | −40 |
+| **`2_COLAVEND`** | 123 | **0** |
+
+Corrigido para **−53**, que é `-(altura/2 - 8)` — a conta que os quatro oficiais
+seguem, e a mesma do `4_vending_machine`, de altura praticamente igual. O
+override mora em `cliente\data\sprite\npc\2_COLAVEND.act`, **fora do git**, e a
+receita ficou versionada em `ferramentas/levanta_sprite_npc.py`.
+
+**Virada para o lado errado.** Nasceu em facing 4 por causa da tabela de
+"direita/esquerda na tela" do cabeçalho da `maquina.txt` — que foi escrita para
+*aquele* sprite e não se traduz. O que vale é o ponto cardeal: de `193,58` para
+`189,58` a direção é **oeste**, `DIR_WEST = 2`. A tabela medida em jogo (4 sul →
+baixo-direita, 2 oeste → baixo-esquerda, 0 norte → cima-esquerda, 6 leste →
+cima-direita) subiu para o `CLAUDE.md` §5, junto com a armadilha do `.act`.
+
+### As duas ferramentas que nasceram desta rodada
+
+Não havia leitor de `.spr` nem de `.act` em `ferramentas/`. O de `.spr` ficou
+como rascunho (serviu para **olhar** os seis sprites de máquina antes de
+escolher, em vez de decidir pelo nome); o de `.act` virou peça:
+
+- **`ferramentas/act.py`** — leitor de formato, na mesma prateleira do `gat.py`,
+  `gnd.py` e `rsw.py`. **Recusa-se a devolver dados se sobrar byte**, pela regra
+  do `mede_rsm.py`. Há 4 bytes não identificados entre o fim das ações e o vetor
+  de atrasos; sem pulá-los o vetor sai `[0.0, 4.0 ×7]` em vez de `[4.0 ×8]`.
+  O alinhamento dos `(x,y)` foi provado **por fora**: no `2_DROP_MACHINE` as
+  oito camadas dão todas `(6,−44)` e o padrão de bytes aparece exatamente oito
+  vezes no binário.
+- **`ferramentas/levanta_sprite_npc.py`** — a ferramenta. Escreve **byte a byte
+  no lugar**, não re-serializa: só os `y` mudam, o tamanho não mexe, e campo que
+  o leitor não entenda sobrevive. Relê o resultado antes de dar por feito.

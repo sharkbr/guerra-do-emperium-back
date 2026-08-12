@@ -562,3 +562,69 @@ Body:
           - Index: 0
             Item: Dalcom_Coin
             Amount: 200
+
+  # =====================================================================
+  # A loja da Maquina de Sombrios Gerais - Centro da Ordem, auction_01
+  # =====================================================================
+  #
+  # FLUTUANTE, como as outras tres. Quem esta no mapa e a Maquina de
+  # Sombrios Gerais (npc/guerra/maquina_de_sombrios.txt, auction_01
+  # 193,58), que fala, conta a moeda e so entao chama esta loja com
+  # `callshop "SombriosGerais#loja"`.
+  #
+  # E A SEGUNDA MAQUINA DA DUPLA. A primeira, quatro celulas a oeste, e
+  # a Maquina de Sombrios TOTAIS - aquela e SORTEIO e por isso e script
+  # puro, sem loja nenhuma. Esta e vitrine de preco fixo, e por isso e
+  # barter. As duas cobram a mesma Moeda Nova (30998) e sao a mesma
+  # cena; o que muda e o risco.
+  #
+  # POR QUE BARTER, e nao ha escolha: a Moeda Nova e `NoSell`, e o
+  # `itemshop` a passaria por `pc_can_sell_item`, que recusa item NoSell
+  # enquanto `allow_bound_sell` for 0x0 - a loja abriria e a compra
+  # falharia com a moeda na mao do jogador. O registro completo esta no
+  # cabecalho deste arquivo. Regra 4.10 do CLAUDE.md.
+  #
+  # A TRAVA DA CAIXA NAO APERTA AQUI. Nas outras lojas todo pacote teve
+  # de virar caixa, porque o barter cobra POR UNIDADE. Nesta os quatro
+  # itens JA sao unitarios - tres deles sao cubos, que e exatamente
+  # "uma caixa que entrega coisa aleatoria ao ser usada". O sorteio
+  # destes quatro esta DENTRO do item, nao na loja: por isso a segunda
+  # maquina nao precisa de `rand` nenhum, e foi essa a razao de ela ser
+  # loja e a primeira nao.
+  #
+  # O NOME DE CADA LINHA VEM DO CLIENTE, nao daqui. A janela de troca
+  # recebe so o ID no pacote (clif.cpp:23225) e desenha o que o
+  # itemInfo.lua tiver - CLAUDE.md 4.9. Os quatro foram conferidos no
+  # `estado_item.py`: os quatro tem nome em portugues no itemInfo.lua
+  # deste cliente e arte 4 de 4. Nenhum precisou de entrada nova.
+  #
+  # Mudanca aqui pega com `@reloadbarterdb`, NAO com @reloadscript.
+  - Name: SombriosGerais#loja
+    Items:
+      - Index: 0
+        Item: Material_Shadow_CubeII     # 100690 Cubo de Materiais Sombrios
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova             # 30998, db/guerra/item_db.yml
+            Amount: 2
+      - Index: 1
+        Item: Material_Shadow_Cube       # 23335 Cubo de Materiais Sombrios 2
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+      # AegisName entre aspas porque comeca com digito: `2018_...` sem
+      # aspas depende do leitor de YAML decidir que nao e numero, e nao
+      # ha por que apostar nisso. As outras tres linhas nao precisam.
+      - Index: 2
+        Item: "2018_Material_Cube"       # 23663 Cubo de Materiais Sombrios 3
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+      - Index: 3
+        Item: Shadow_Mix_Recipe          # 22529 Combinador de Sombrios
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1

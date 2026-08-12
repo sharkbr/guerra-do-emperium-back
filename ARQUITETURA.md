@@ -333,6 +333,27 @@ cinco células fechadas para um modelo que o `.rsw` desenha.
 
 **E é `setwall`, não `setcell`** — só ele avisa o cliente. Ver `CLAUDE.md` §4.
 
+### Um NPC com sprite corrigido vive em 2 lugares, e um deles é o cliente
+
+Nem todo sprite oficial está pronto para ser NPC. O `.act` diz a que altura o
+desenho é colado na célula, e alguns vêm com `y = 0` — o centro do sprite fica
+na altura do chão, a metade de baixo some sob o piso e o NPC aparece **cortado
+reto na base**. Então o NPC passa a ter duas metades:
+
+| metade | onde | como se aplica |
+|---|---|---|
+| o NPC | linha em `npc/guerra/` | `@reloadscript` |
+| a altura do desenho | `.act` — receita em `ferramentas/levanta_sprite_npc.py`, arquivo em `cliente\data\sprite\npc\` | **fechar e reabrir o cliente** |
+
+A divergência **não dá erro**: o NPC funciona, fala, abre loja — e aparece
+enterrado. E o `@reloadscript` **não** conserta, porque a metade quebrada é do
+lado de lá; foi assim que a correção do `2_COLAVEND` pareceu não pegar em
+2026-08-12 (o `LastAccessTime` do `.act` provou que o cliente nunca o abriu).
+
+Como todo override de cliente, **some em cliente novo**, calado. Caso vivo: a
+Máquina de Sombrios Gerais (`npc/guerra/maquina_de_sombrios.txt`,
+`auction_01 193,58`, sprite 910).
+
 ### Uma placa sobre a cabeça de NPC
 
 `src/custom/placa_de_venda.hpp` + duas linhas em `src/map/clif.cpp` + o comando

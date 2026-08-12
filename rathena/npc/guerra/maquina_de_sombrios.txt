@@ -1,0 +1,460 @@
+//===== Guerra do Emperium ===================================
+//= As duas Maquinas de Sombrios
+//===== Onde =================================================
+//= SAO DUAS, lado a lado, na faixa aberta do Centro da Ordem
+//= que vai de x164 a x195 entre y56 e y60 - tres celulas ao
+//= norte da parede do corredor de chegada:
+//=
+//=   auction_01 189,58   Sombrios Totais   sprite 10375
+//=   auction_01 193,58   Sombrios Gerais   sprite   910
+//=
+//= O jogador desemboca em 180,52, sobe pelo corredor e encontra
+//= as duas a nove e a treze celulas a leste, logo depois do
+//= Guarda de 184,56.
+//=
+//= FACING: a Totais em 4 (sul) e a Gerais em 2 (oeste), que e o
+//= que faz a segunda olhar para a primeira. Ver a secao "Facing:
+//= a tabela da maquina.txt nao serve aqui", mais abaixo.
+//=
+//= As duas celulas conferidas no .gat DESTE mapa: tipo 0,
+//= andaveis, altura 4,00. A fileira y=58 anda de x=186 a x=195 e
+//= bloqueia em x=196.
+//=
+//= O PEDIDO DIZIA auction_02, E NAO E. O Centro da Ordem e o
+//= auction_01; o auction_02 e o salao da Ordem dos Exploradores
+//= (npc/guerra/ordem_dos_exploradores.txt). A coordenada decidiu
+//= sozinha: 189,58 no auction_02 e tipo 1, rocha, e o bloco
+//= inteiro em volta (x183-195, y54-62) tambem e. NPC ali nao
+//= nasceria em chao nenhum. No auction_01 a mesma celula anda.
+//===== Descricao ============================================
+//= UMA MAQUINA DE SORTEIO, e a primeira do servidor. Custa
+//= 2 Moedas Novas o giro e devolve UM item de uma tabela de
+//= quatro, com peso - tudo do ramo de equipamento Sombrio:
+//=
+//=   14675  Caixa de Sombrios de Atributo   15/34
+//=   23436  Martelo de Refino Sombrio       15/34
+//=   23247  Combinador de Atributo           3/34
+//=   23926  Martelo Sombrio +9               1/34
+//=
+//= Os quatro ja existiam no rAthena, com nome em portugues no
+//= itemInfo.lua deste cliente e arte completa (4 de 4 no
+//= estado_item.py). Nada foi criado no db/ para esta maquina.
+//=
+//= E A TERCEIRA COISA QUE COBRA A MOEDA NOVA (30998), depois da
+//= Maquina de Prontera/Comodo (npc/guerra/maquina.txt) e da
+//= Maquina de Troca do auction_02. A diferenca e o risco: as
+//= outras duas sao vitrine, esta e sorteio.
+//===== A segunda maquina: Sombrios Gerais ===================
+//= auction_01 193,58, sprite 910 (2_COLAVEND) - a maquina de
+//= refrigerante vermelha. Ela NAO SORTEIA NADA, e por isso nao
+//= e script de premio e sim LOJA DE TROCA. Vende quatro itens
+//= por Moeda Nova, a preco fixo:
+//=
+//=   100690  Cubo de Materiais Sombrios     2 moedas
+//=    23335  Cubo de Materiais Sombrios 2   2 moedas
+//=    23663  Cubo de Materiais Sombrios 3   2 moedas
+//=    22529  Combinador de Sombrios         1 moeda
+//=
+//= O SORTEIO DELA ESTA DENTRO DO ITEM. Tres dos quatro sao
+//= cubos, que ja sao "abre e sai coisa aleatoria" - nao ha por
+//= que sortear de novo do lado de fora. Foi essa a razao de a
+//= dupla ser assim: a Totais sorteia e por isso e script puro,
+//= a Gerais nao sorteia e por isso e barter.
+//=
+//= A MERCADORIA NAO ESTA NESTE ARQUIVO. Ela vive em
+//= npc/guerra/barters_guerra.yml, na loja FLUTUANTE
+//= `SombriosGerais#loja` - mesmo desenho da Maquina de Prontera
+//= e da Maquina de Troca. Mudanca de preco ou de item la pega
+//= com @reloadbarterdb, NAO com @reloadscript.
+//=
+//= POR QUE BARTER E NAO `itemshop`: a Moeda Nova e NoSell, e o
+//= itemshop a passaria por `pc_can_sell_item`, que recusa item
+//= NoSell - a loja abriria e a compra falharia com a moeda na
+//= mao do jogador. Regra 4.10; o registro completo esta no
+//= cabecalho do barters_guerra.yml.
+//=
+//= Contrapartida de ser barter, e ela vale saber: o nome de cada
+//= linha da janela vem do itemInfo.lua do CLIENTE, nao do
+//= servidor (CLAUDE.md 4.9). Na Totais e o contrario - la o nome
+//= sai do getitemname(). Nome errado nesta loja nao se conserta
+//= no item_db.
+//===== Por que NAO e uma loja de troca ======================
+//= As outras duas maquinas do servidor sao `barter` - janela
+//= nativa, o jogador escolhe a linha e sabe o que leva. Aqui o
+//= premio e sorteado, e o barter nao roda script nenhum: ele
+//= entrega exatamente a linha clicada. Sorteio exige `rand`, e
+//= `rand` exige NPC de script.
+//=
+//= Consequencia de vir por script, e ela e boa: o nome do item
+//= na tela sai do `getitemname()`, que le o item_db do SERVIDOR.
+//= Na janela de troca o pacote leva so o ID (clif.cpp:23225) e
+//= quem desenha o nome e o itemInfo.lua do cliente - a armadilha
+//= do CLAUDE.md secao 4.9. Aqui ela nao alcanca: nome errado se
+//= conserta no item_db e pega com @reloaditemdb.
+//=
+//= Os quatro nomes sao ASCII puro no item_db do rAthena
+//= ("Caixa de Sombrios de Atributo", "Martelo de Refino
+//= Sombrio", "Combinador de Atributo", "Martelo Sombrio +9"),
+//= entao nao ha acento para se perder no caminho.
+//===== O sprite NAO e o 4_GACHA_MACHINE =====================
+//= O pedido apontou o `4_GACHA_MACHINE`, que e o certo pelo
+//= nome - e ESTE CLIENTE NAO O CONHECE. Ele e 10545 no
+//= src/map/npc.hpp do rAthena, e o npcidentity.lub do nosso
+//= data.grf para em 10508 na faixa 10xxx (403 entradas). A
+//= string `4_GACHA_MACHINE` nao aparece nem la nem no
+//= npcidentity.lub do GRF do bRO. View id que o cliente nao
+//= conhece da NPC INVISIVEL, calado - e a armadilha do 10605 no
+//= Mestre de Classe, CLAUDE.md secao 5.
+//=
+//= Os seis sprites de maquina que ESTE cliente tem, todos com
+//= .spr e .act conferidos em data\sprite\npc\:
+//=
+//=    506  4_VENDING_MACHINE      maquina de bebidas alta
+//=    562  2_DROP_MACHINE         maquina de garra, com capsulas
+//=    563  2_SLOT_MACHINE         caca-niquel, letreiro JACKPOT
+//=    564  2_VENDING_MACHINE1     bebidas - JA EM USO em tres NPCs
+//=  10081  4_MACHINE_DEVICE       aparelho pequeno, 32x29
+//=  10375  4_VENDING_MACHINE2     cilindro de vidro sobre coluna
+//=
+//= Escolhido o 10375 pelo dono. O 562 e o mais parecido com uma
+//= maquina de capsula, mas o 10375 nao repete nenhum dos tres
+//= NPCs que ja usam o 564 - e a maquina do salao se distingue
+//= das outras duas do servidor a primeira vista.
+//=
+//= Facing 4. Pela tabela do cabecalho da maquina.txt, com a
+//= camera padrao o 4 (sul) desenha a maquina virada para a
+//= ESQUERDA - ou seja, de volta para o corredor por onde o
+//= jogador chega. O 6 a viraria para a parede leste.
+//===== A tabela de premios sai de UM lugar so ===============
+//= Os ids e os pesos vivem em dois `setarray` do OnInit, e mais
+//= nada no arquivo repete aqueles numeros. As TRES coisas que
+//= dependem deles saem dali por laco:
+//=
+//=   1) a lista de premios na tela, com o nome de cada item
+//=   2) a PORCENTAGEM ao lado de cada linha, calculada na hora
+//=   3) o sorteio
+//=
+//= Isto e a regra 11 do CLAUDE.md, e ela custou os catorze
+//= destinos errados do Teleportador da Ordem em 2026-08-08. A
+//= porcentagem nao esta escrita em lugar nenhum de proposito:
+//= texto de porcentagem escrito a mao e a primeira coisa a sair
+//= de sincronia quando um peso muda, e a divergencia NAO DA
+//= ERRO - a maquina continua sorteando certo e mentindo na tela.
+//=
+//= O `.total` e a soma dos pesos, feita no OnInit, e o
+//= `getarraysize` compara as duas colunas com `debugmes`. Se as
+//= colunas divergirem, o `.total` fica 0 e o corpo recusa a
+//= abrir - melhor a maquina calada que a maquina sorteando fora
+//= da tabela.
+//=
+//= PARA MEXER NA TABELA: mudar as duas linhas do `setarray`
+//= juntas e mais nada. Premio novo e uma coluna em cada.
+//===== O 8,24% do pedido era 8,82% ==========================
+//= O pedido trouxe os quatro pesos (15, 15, 3 e 1, somando 34)
+//= e as quatro porcentagens ao lado. Tres batem; a do
+//= Combinador de Atributo veio como 8,24% e 3/34 e 8,82%.
+//=
+//= Valem OS PESOS, que sao o que a maquina usa e que somam 34
+//= exatos. A tela imprime 8,82% porque a conta e feita a partir
+//= deles - ver a secao acima. Se a intencao era mesmo 8,24%, o
+//= que muda e o peso, nao o texto.
+//===== Por que checkweight ANTES de cobrar ==================
+//= `getitem` com a mochila cheia LARGA O ITEM NO CHAO: o
+//= buildin_getitem cai num `map_addflooritem` quando o
+//= pc_additem falha (CLAUDE.md secao 5). Quem segura a queda e o
+//= `NoDrop` do item, e AQUI SO UM DOS QUATRO O TEM:
+//=
+//=   14675  Caixa de Sombrios   NoDrop/NoTrade/NoSell - segura
+//=   23436  Martelo de Refino   sem trava nenhuma - CAI
+//=   23247  Combinador          sem trava nenhuma - CAI
+//=   23926  Martelo Sombrio +9  sem trava nenhuma - CAI
+//=
+//= Tres dos quatro premios cairiam no chao do salao, ao alcance
+//= de quem passasse - e o jogador teria pago as duas Moedas.
+//= Por isso o `checkweight` na frente do `delitem`.
+//=
+//= E POR ISSO O SORTEIO VEM ANTES DA COBRANCA. O checkweight
+//= precisa saber QUAL item vai entregar: os quatro pesam 10 e
+//= sao empilhaveis, mas empilhavel so dispensa slot livre se o
+//= jogador JA tem aquele item. Checar um e entregar outro passa
+//= no teste e larga no chao assim mesmo. Entao a ordem e:
+//= sorteia -> confere o premio sorteado -> cobra -> entrega.
+//= Nada e revelado antes de cobrar, entao nao ha o que refazer.
+//===== Facing: a tabela da maquina.txt nao serve aqui =======
+//= O cabecalho da npc/guerra/maquina.txt traz uma tabela de
+//= facing em termos de "direita" e "esquerda" na tela. Ela foi
+//= escrita para AQUELE sprite e NAO se traduz para ca - a
+//= Sombrios Gerais nasceu em 4 por causa dela e apareceu virada
+//= para o lado errado.
+//=
+//= O que vale, medido em jogo em 2026-08-12 com a camera padrao,
+//= e o ponto cardeal do `enum directions` (src/map/path.hpp:16)
+//= lido direto na tela:
+//=
+//=   4  DIR_SOUTH  (y menor)  ->  diagonal para BAIXO-DIREITA
+//=   2  DIR_WEST   (x menor)  ->  diagonal para BAIXO-ESQUERDA
+//=   0  DIR_NORTH  (y maior)  ->  diagonal para CIMA-ESQUERDA
+//=   6  DIR_EAST   (x maior)  ->  diagonal para CIMA-DIREITA
+//=
+//= Ou seja: para virar um NPC para OUTRA CELULA, o que se pergunta
+//= e "que direcao me leva daqui ate la", nao "de que lado da tela
+//= ela esta". A Gerais em 193,58 olha para a Totais em 189,58
+//= indo para o OESTE, entao facing 2.
+//===== O sprite da Gerais nascia ENTERRADO no chao ===========
+//= Em jogo a Sombrios Gerais apareceu com a base cortada por uma
+//= linha reta e horizontal, como se estivesse afundada no piso.
+//= Nao era o mapa: as duas celulas e a faixa inteira de y56 a
+//= y60 estao em altura 4,00, plana, medido no .gat.
+//=
+//= ERA O `.act`. Ele diz a que altura o desenho e colado em
+//= relacao a celula, e o `2_COLAVEND` vem com `y = 0` nas oito
+//= direcoes - o CENTRO do sprite fica na altura do chao e a
+//= metade de baixo vai para debaixo do piso, onde o depth buffer
+//= do terreno a corta. Dai o corte reto.
+//=
+//= As outras maquinas deste cliente levantam o desenho:
+//=
+//=   4_vending_machine   122px   y = -53   (a nossa Totais)
+//=   4_VENDING_MACHINE   122px   y = -53
+//=   2_DROP_MACHINE      118px   y = -44
+//=   2_VENDING_MACHINE1  114px   y = -40
+//=   2_COLAVEND          123px   y =   0   <- a excecao
+//=
+//= Corrigido levando o 2_COLAVEND para -53, o mesmo do
+//= 4_vending_machine, que tem praticamente a mesma altura. A
+//= conta que os quatro oficiais seguem e -(altura/2 - 8): o
+//= centro sobe meia altura e a base afunda uns 8 pixels, para a
+//= peca parecer plantada e nao flutuando.
+//=
+//= O CONSERTO MORA NO CLIENTE, FORA DO GIT:
+//=
+//=   C:\GuerraDoEmperium\cliente\data\sprite\npc\2_COLAVEND.act
+//=
+//= que vence o GRF pelo DataFolderFirst. CLIENTE NOVO PERDE ISSO
+//= e a maquina volta a afundar, sem erro nenhum. A receita esta
+//= versionada em ferramentas/levanta_sprite_npc.py:
+//=
+//=   python levanta_sprite_npc.py 2_COLAVEND -53
+//=
+//= Apagar o arquivo solto reverte - o original nunca saiu do GRF.
+//= E o sprite so e relido ao ABRIR O CLIENTE; @reloadscript nao
+//= alcanca.
+//===== ESPACO NO INICIO DO `mes` COLA A LINHA NA ANTERIOR ===
+//= A lista de premios nasceu com dois espacos de indentacao em
+//= cada linha ("  Caixa de Sombrios..."), e em jogo o Martelo
+//= Sombrio +9 apareceu GRUDADO no fim da linha do Combinador de
+//= Atributo. Nao foi quebra de linha faltando: foi a indentacao.
+//=
+//= O `clif_scriptmes` (src/map/clif.cpp:2472) manda a string
+//= CRUA, sem `\n` nenhum - quem decide onde quebrar e o cliente.
+//= E o criterio dele, medido nas seis linhas desta janela: um
+//= `mes` que comeca com ESPACO e tratado como continuacao da
+//= linha corrente; um que comeca com caractere visivel abre
+//= linha nova. As quatro linhas da lista foram todas coladas
+//= umas nas outras; tres pareceram certas porque estouraram a
+//= largura da caixa e quebraram sozinhas, e a quarta coube.
+//=
+//= Ou seja: TRES DAS QUATRO ESTAVAM ERRADAS E PARECIAM CERTAS.
+//= Mexer no texto de qualquer uma - nome de item mais curto,
+//= porcentagem com menos digitos - muda onde a quebra cai e a
+//= janela se reorganiza sozinha, sem erro nenhum.
+//=
+//= Por isso a linha de premio NAO TEM indentacao. Para recuar
+//= visualmente, usar caractere visivel (`- `, `. `), nunca
+//= espaco. Vale para todo `mes` do projeto.
+//===== Notas ================================================
+//= A conta de saldo e informativa E e trava, ao contrario da
+//= maquina.txt - la a loja de troca recusava sozinha, aqui nao
+//= ha ninguem para recusar. O saldo e conferido duas vezes: uma
+//= para mostrar, e outra colada no `delitem`, porque entre as
+//= duas ha um `select` (o jogador fica preso ao NPC, mas
+//= `delitem` sem saldo aborta o script com erro no console em
+//= vez de falhar limpo).
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+auction_01,189,58,4	script	Sombrios Totais	10375,{
+	// Guarda da tabela: com as colunas fora de sincronia o OnInit
+	// deixa .total em 0, e sortear com ela seria sortear fora da
+	// tabela. Ver a secao "A tabela de premios sai de UM lugar so".
+	if (!.total) {
+		mes "[Sombrios Totais]";
+		mes "O mostrador pisca em vermelho.";
+		mes "A máquina está fora de serviço.";
+		close;
+	}
+
+	mes "[Sombrios Totais]";
+	mes "Um cilindro de vidro sobre uma coluna,";
+	mes "cheio de cápsulas escuras que giram devagar.";
+	mes "A fenda do painel pede ^0000FF" + .preco + " Moedas Novas^000000.";
+	next;
+
+	// A lista e a porcentagem saem dos MESMOS dois arrays do
+	// sorteio, por laco - nenhum numero destes esta escrito no
+	// arquivo. CLAUDE.md secao 4.11.
+	mes "[Sombrios Totais]";
+	mes "O mostrador lista o que a gaveta solta:";
+	for (.@i = 0; .@i < getarraysize(.premio); .@i++) {
+		// Duas casas decimais com aritmetica inteira: o +.total/2
+		// arredonda em vez de truncar (15/34 da 44,12% e nao
+		// 44,11%), e o zero a esquerda entra a mao porque nao ha
+		// formatacao de casa decimal no script do rAthena.
+		.@pct = (.peso[.@i] * 10000 + .total / 2) / .total;
+		.@dec = .@pct % 100;
+		mes "^0000FF" + getitemname(.premio[.@i]) + "^000000  " +
+		    (.@pct / 100) + "," +
+		    ((.@dec < 10) ? "0" + .@dec : "" + .@dec) + "%";
+	}
+	next;
+
+	.@saldo = countitem(.moeda);
+	mes "[Sombrios Totais]";
+	mes "Você tem ^0000FF" + .@saldo + "^000000 " +
+	    ((.@saldo == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+	if (.@saldo < .preco) {
+		mes "Não dá para um giro.";
+		mes "A fenda continua aberta, esperando.";
+		close;
+	}
+	next;
+
+	if (select("Girar por " + .preco + " Moedas Novas",
+	           "Deixa para depois") == 2) {
+		mes "[Sombrios Totais]";
+		mes "As cápsulas param de girar.";
+		close;
+	}
+
+	// SORTEIO ANTES DA COBRANCA, e de proposito - o checkweight
+	// abaixo precisa saber qual item vai entregar. Ver a secao
+	// "Por que checkweight ANTES de cobrar".
+	//
+	// rand(.total) devolve 0..total-1; o laco anda pelos pesos
+	// acumulados ate passar do sorteado. Com 15/15/3/1 as faixas
+	// sao 0-14, 15-29, 30-32 e 33.
+	.@sorte = rand(.total);
+	.@i = 0;
+	.@ate = .peso[0];
+	while (.@sorte >= .@ate) {
+		.@i++;
+		.@ate += .peso[.@i];
+	}
+	.@premio = .premio[.@i];
+
+	if (!checkweight(.@premio, 1)) {
+		mes "[Sombrios Totais]";
+		mes "A gaveta tenta abrir e trava.";
+		mes "Não há espaço na sua mochila,";
+		mes "e a máquina não cobrou nada.";
+		close;
+	}
+
+	// Segunda conferencia de saldo, colada no delitem: `delitem`
+	// sem saldo nao falha limpo, aborta o script com erro no
+	// console. Ver a secao "Notas".
+	if (countitem(.moeda) < .preco) {
+		mes "[Sombrios Totais]";
+		mes "A fenda cospe de volta o que sobrou.";
+		mes "Faltou ^0000FFMoeda Nova^000000.";
+		close;
+	}
+
+	delitem .moeda, .preco;
+	getitem .@premio, 1;
+
+	mes "[Sombrios Totais]";
+	mes "A máquina range, e a gaveta abre com um estalo.";
+	mes "Você recebeu ^0000FF" + getitemname(.@premio) + "^000000.";
+	close;
+
+OnInit:
+	.moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
+	.preco = 2;
+
+	// A TABELA. As duas colunas andam juntas - id em cima, peso
+	// embaixo -, e sao a UNICA fonte da lista na tela, da
+	// porcentagem e do sorteio. Premio novo e uma coluna em cada.
+	//
+	//                       14675  23436  23247  23926
+	setarray .premio[0],     14675, 23436, 23247, 23926;
+	setarray .peso[0],          15,    15,     3,     1;
+
+	.@n = getarraysize(.premio);
+	if (.@n != getarraysize(.peso)) {
+		// .total fica 0 e o corpo recusa a abrir. Melhor a maquina
+		// calada que a maquina sorteando fora da tabela.
+		debugmes "Maquina de Sombrios Totais: .premio (" + .@n +
+		         ") e .peso (" + getarraysize(.peso) +
+		         ") com tamanhos diferentes - SORTEIO DESALINHADO.";
+		end;
+	}
+
+	.total = 0;
+	for (.@i = 0; .@i < .@n; .@i++)
+		.total += .peso[.@i];
+	end;
+}
+
+
+// ---------------------------------------------------------------
+// A segunda: Sombrios Gerais
+// ---------------------------------------------------------------
+// Sprite 910 (2_COLAVEND), conferido no npcidentity.lub deste
+// cliente e com .spr/.act em data\sprite\npc\.
+//
+// FACING 2 (DIR_WEST): de 193,58 o oeste aponta para a Sombrios
+// Totais, quatro celulas adiante. Nasceu em 4 por causa da tabela
+// de "direita/esquerda" do cabecalho da maquina.txt, que e daquele
+// sprite e nao vale aqui - ver as duas secoes de facing e de .act
+// no cabecalho deste arquivo.
+//
+// E O SPRITE DELA PRECISA DE UM OVERRIDE NO CLIENTE para nao
+// aparecer enterrado no chao. Ver a secao "O sprite da Gerais
+// nascia ENTERRADO no chao".
+//
+// NAO E `duplicate` da primeira, e nao poderia ser: aquela sorteia
+// e esta abre loja de troca. Codigo diferente, sprite diferente,
+// mercadoria em outro arquivo. Ver a secao "A segunda maquina" no
+// cabecalho.
+//
+// A mercadoria vive em npc/guerra/barters_guerra.yml
+// (`SombriosGerais#loja`). Mudanca la pega com @reloadbarterdb.
+auction_01,193,58,2	script	Sombrios Gerais	910,{
+	mes "[Sombrios Gerais]";
+	mes "Uma máquina alta e vermelha, de porta de vidro.";
+	mes "Atrás dela, fileiras de cubos escuros,";
+	mes "cada um com alguma coisa fechada dentro.";
+	next;
+
+	.@saldo = countitem(.moeda);
+	mes "[Sombrios Gerais]";
+	if (.@saldo == 0) {
+		mes "Você não tem nenhuma ^0000FFMoeda Nova^000000.";
+		mes "A vitrine acende assim mesmo,";
+		mes "para você saber para o que juntar.";
+	} else {
+		mes "Você tem ^0000FF" + .@saldo + "^000000 " +
+		    ((.@saldo == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+		mes "A vitrine acende.";
+	}
+
+	// `close2` e nao `close`: fecha a caixa de dialogo mas mantem o
+	// jogador preso ao NPC, que e o que permite a janela de troca
+	// abrir em seguida. Com `close` a loja nao abriria. O mesmo
+	// idioma da npc/guerra/maquina.txt e da Maquina de Troca.
+	close2;
+	callshop "SombriosGerais#loja";
+	end;
+
+OnInit:
+	// A conta de saldo aqui e INFORMATIVA, nao e trava: mesmo com
+	// zero moedas a loja abre, para o jogador ver o que ha. Quem
+	// recusa a compra sem saldo e a propria janela de troca.
+	.moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
+	end;
+}
