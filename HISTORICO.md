@@ -8406,3 +8406,73 @@ no `scripts_custom.conf` — não nascem.
 A placa e a porta agora dividem a fileira `y=180`, cinco células uma da outra.
 A frase do ramo "placa limpa", que dizia *"a arena fica duas células a leste
 daqui"*, virou **cinco** — era uma promessa errada desde 2026-08-08.
+
+## O Rolinho de Arroz — o prêmio de guerra que cura tudo (2026-08-13)
+
+Pedido do dono: um item chamado **"Bolinho de Arroz"**, cópia do que o bRO
+tinha — cura 100% de HP e SP, prêmio de guerra, **sem tempo de recarga**. Com
+duas condições ditas junto: se o item do bRO não fosse achado, criar o nosso
+com a arte do **555**; e se o nome já existisse, criar o **"Rolinho de Arroz"**.
+
+As duas condições dispararam, e por motivos independentes.
+
+### O nome estava ocupado três vezes
+
+`Bolinho de Arroz` não é o nome de um item deste cliente — é o nome de **três**:
+o **555** (`Rice_Cake`), o **564** e o **7613** se chamam todos assim no
+`itemInfo.lua`. Um quarto tornaria a busca da bolsa inútil justamente para o
+item que o jogador mais vai procurar no meio da guerra. Valeu a alternativa
+combinada no pedido: **Rolinho de Arroz**, que não aparece em nenhuma das
+26.972 entradas.
+
+### O item do bRO existe, e não é o 555
+
+A busca por `percentheal 100,100` no `db/re/` devolveu 17 consumíveis. O que
+casa com a descrição do pedido — prêmio de guerra, sem recarga — é o **14524**
+(`Superb_Fish_Slice`, que o cliente chama de *"Biscoito de Arroz"*), um dos três
+consumíveis de guerra do bRO: **14522** cura 100% de HP, **14523** cura 100% de
+SP e o **14524** cura os dois. Os três têm peso 10, as mesmas sete travas de
+comércio e **nenhum bloco `Delay:`**.
+
+Ou seja o pedido conflacionava duas coisas: a **mecânica** que ele lembrava é a
+do 14524, e o **nome** que ele lembrava é o do 555 — que cura `rand(105,145)` de
+HP e nada de SP. O item novo copia os números do 14524 e o desenho do 555, que
+é o que o nome pedido descrevia.
+
+### A ausência de `Delay:` é a decisão cara
+
+Os outros três 100/100 alcançáveis no servidor — Fruto de Yggdrasil (607),
+Tônico Dourado (12858) e Sorvete de Melão (23322) — dividem o grupo
+`Reuse_Limit_F`, e são **os únicos quatro itens do jogo inteiro** a usá-lo:
+usar um trava os outros por 5s. O Rolinho fica fora do grupo, a pedido. É cura
+total sem recarga, e vale enquanto durar a pilha — quem for calibrar PvP olha
+aqui primeiro.
+
+### O que ficou de pé
+
+| Camada | Onde |
+|---|---|
+| servidor | `db/guerra/item_db.yml`, **30994** `Rolinho_De_Arroz` |
+| cliente | `itemInfo.lua`, via a tabela `ITENS` do `ferramentas/instala_item.py` |
+| arte | `arte_de: 555` — `estado_item.py --id 30994` dá **"4 de 4 ok"** |
+
+`Type: Healing`, `Weight: 10` (1,0 na tela), sem `Buy`, e as sete travas do
+14524 na ordem dele: `NoDrop`, `NoTrade`, `NoSell`, `NoGuildStorage`, `NoMail`,
+`NoAuction`, `NoCart`. O armazém **pessoal** fica liberado de propósito —
+consumível de guerra tem de caber na Kafra entre uma guerra e outra, ao
+contrário do troféu da arena (30995), que leva `NoStorage` a mais.
+
+O `NoDrop` não é só temático: é ele que impede o `getitem` de largar o prêmio no
+chão da guerra quando a mochila do vencedor estiver cheia (`CLAUDE.md` §5).
+
+**Falta quem o entregue** — nenhum NPC o paga. Está em `PENDENCIAS.md`.
+
+### Um achado de lambuja, e ele é sobre a loja
+
+A mesma varredura mostrou que o **`[MEGA] Elmo de Fafnir` (400177)**, à venda no
+Chapeleiro do Mercado Contemporâneo **a 1 zeny**, traz
+`autobonus3 { percentheal 100,100; … },1000,1000,"RK_REFRESH"` — cura total de
+HP e SP a cada Refresh, para Cavaleiro Rúnico, com recarga de 1s e fora do
+grupo `Reuse_Limit_F`. Era, até hoje, a **única** fonte de cura 100/100
+acessível por loja no servidor. Levantado por escrito, não mexido — é decisão
+do dono, pela regra §4.14.

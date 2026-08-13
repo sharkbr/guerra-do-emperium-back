@@ -1331,6 +1331,58 @@ mais dez linhas comentadas no `scripts_guild.conf` e mais dez blocos no NPC.
 
 ---
 
+## 1p. O Rolinho de Arroz existe, e ninguém o entrega (2026-08-13)
+
+O item **30994 `Rolinho_De_Arroz`** está de pé nas duas metades — servidor
+(`db/guerra/item_db.yml`) e cliente (`itemInfo.lua`, com a arte do 555, "4 de 4
+ok" no `estado_item.py`). Ele cura **100% de HP e SP**, não tem recarga, e não
+se perde: `NoDrop`, `NoTrade`, `NoSell`, `NoGuildStorage`, `NoMail`,
+`NoAuction`, `NoCart` — as sete travas do consumível de guerra do bRO (14524).
+O histórico do porquê de cada número está em `HISTORICO.md`, "O Rolinho de
+Arroz".
+
+**O que falta é a fonte.** Nenhum NPC o paga, nenhum monstro o dropa, nenhuma
+loja o vende. Hoje só se chega nele por `@item 30994`.
+
+### Para ver em jogo, agora
+
+```
+@reloaditemdb          # o servidor
+                       # e FECHAR E REABRIR O CLIENTE - o itemInfo.lua
+                       # so e lido na inicializacao
+@item 30994
+```
+
+O teste tem de ser numa conta **fora do grupo 99**: a de teste ignora as sete
+travas (`CLAUDE.md` §4.7), então conferir "não dá para trocar" nela dá falso
+negativo. O que se olha na tela: nome **Rolinho de Arroz** (não "Bolinho"),
+ícone de bolinho de arroz, peso 1,0, e usar dois seguidos sem esperar — se
+houver espera de 5s, o bloco `Delay:` voltou de algum lugar.
+
+### As três decisões que ficaram com o dono
+
+1. **Quem ganha, e quanto.** O gancho natural é o fim da guerra —
+   `npc/guerra/horario_da_guerra.txt` já tem o `OnAgitEnd`. Dono do castelo?
+   Todo mundo que estava no mapa? Quantos por guerra?
+2. **Se entra em loja.** Se entrar, a regra §4.16 do `CLAUDE.md` não o alcança
+   (ele não tem `Buy`), então o preço seria decisão nova. E prêmio à venda
+   deixa de ser prêmio.
+3. **Se a ausência de recarga sobrevive ao primeiro teste de PvP.** Foi pedida
+   explicitamente, e é o que separa este item dos outros três 100/100 do
+   servidor — que se travam entre si pelo grupo `Reuse_Limit_F`. Pôr recarga
+   depois é uma linha; tirar de quem já se acostumou, não.
+
+### E há uma cura 100/100 a 1 zeny na loja, hoje
+
+O **`[MEGA] Elmo de Fafnir` (400177)**, no Chapeleiro do Mercado Contemporâneo
+(`npc/guerra/mercado_contemporaneo.txt:384`), traz
+`autobonus3 { percentheal 100,100; … },1000,1000,"RK_REFRESH"`: cura total a
+cada Refresh, para Cavaleiro Rúnico, recarga de 1s. Não foi mexido — a §4.14
+manda levantar por escrito e deixar a decisão com o dono. Se o Rolinho for
+calibrado sem contar com isto, a conta sai errada para uma classe.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

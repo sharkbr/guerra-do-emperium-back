@@ -176,6 +176,31 @@ ITENS = [
             u'^0000CCPeso:^000000 0',
         ],
     },
+    # O premio de guerra, 2026-08-13. Como a Caveira acima, ele ainda nao tem
+    # fonte: nada no servidor o entrega. Ver db/guerra/item_db.yml, entrada
+    # 30994, para o porque de cada numero - e para o porque do NOME, que era
+    # para ser "Bolinho de Arroz" e nao pode: 555, 564 e 7613 ja se chamam
+    # assim neste itemInfo.lua.
+    {
+        'id': 30994,
+        'nome': u'Rolinho de Arroz',
+        # O 555 (Rice_Cake), que o cliente chama de "Bolinho de Arroz" e tem
+        # "4 de 4 ok" no estado_item.py. A MECANICA vem do 14524, o
+        # consumivel de guerra do bRO; so o desenho vem daqui, porque era o
+        # bolinho de arroz que o pedido tinha em mente.
+        'arte_de': 555,
+        'descricao': [
+            u'Bolinho de arroz prensado que os cozinheiros da Ordem preparam na véspera da Guerra do Emperium. Só chega às mãos de quem ainda estava de pé no fim dela.',
+            u'_______________________',
+            u'^000088Recupera 100% do HP e do SP.^000000',
+            u'^000088Não tem tempo de recarga.^000000',
+            u'_______________________',
+            u'^FF0000Prêmio de guerra: não pode ser negociado, vendido nem largado no chão.^000000',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Consumível',
+            u'^0000CCPeso:^000000 1',
+        ],
+    },
 ]
 
 

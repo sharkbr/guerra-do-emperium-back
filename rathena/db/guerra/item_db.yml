@@ -261,6 +261,70 @@ Body:
     # (7420, Skull_), que tem os 4 arquivos completos no GRF deste cliente -
     # entao a Caveira Humana nao custa arquivo de arte nenhum.
 
+  # ----- O premio de guerra ---------------------------------------------
+  #
+  # POR QUE "Rolinho" E NAO "Bolinho": o nome pedido em 2026-08-13 foi
+  # "Bolinho de Arroz", e ele JA ESTA OCUPADO TRES VEZES no itemInfo.lua
+  # deste cliente - 555 (Rice_Cake), 564 e 7613 se chamam todos assim.
+  # Nome repetido na bolsa e o que quebra a busca do jogador, entao valeu
+  # a alternativa combinada no mesmo pedido. "Rolinho de Arroz" nao
+  # aparece em nenhuma das 26972 entradas do itemInfo.lua.
+  #
+  # O ORIGINAL DO bRO EXISTE, E NAO E O 555. E o 14524
+  # (Superb_Fish_Slice, que o cliente chama de "Biscoito de Arroz"), um
+  # dos tres consumiveis de guerra do bRO: 14522 cura 100% de HP, 14523
+  # cura 100% de SP e o 14524 cura os dois. Sao esses os numeros que este
+  # item copia - percentheal 100,100, peso 10, sem bloco Delay e preso a
+  # quem ganhou. O 555 entra so como ARTE, porque e ele que desenha o
+  # bolinho de arroz e o nome pedido falava do desenho dele.
+  #
+  # A AUSENCIA DE `Delay:` E DE PROPOSITO, e e a decisao cara deste item.
+  # O Fruto de Yggdrasil (607), o Tonico Dourado (12858) e o Sorvete de
+  # Melao (23322) - os outros tres 100/100 alcancaveis - dividem o grupo
+  # `Reuse_Limit_F` e por isso um trava o outro por 5 segundos. Este fica
+  # FORA do grupo, a pedido: e premio de guerra. Quem for calibrar PvP
+  # olhe aqui primeiro, porque cura total sem recarga vale enquanto durar
+  # a pilha, e nada no jogo denuncia isso alem da pratica.
+  #
+  # O `NoDrop` NAO E SO TEMATICO, pelo mesmo motivo da Caveira Humana
+  # (30995): e ele que impede o `getitem` de largar o premio no chao
+  # quando a mochila do vencedor estiver cheia. Ver CLAUDE.md secao 5.
+  # As travas sao as MESMAS SETE do 14524 - e nao as da Caveira, que tem
+  # `NoStorage` a mais. Consumivel de guerra tem de caber no armazem da
+  # Kafra entre uma guerra e outra; trofeu nao.
+  #
+  # AINDA NAO TEM QUEM O ENTREGUE. O item existe, cura e nao se perde, mas
+  # nenhum NPC o paga: falta o gatilho no fim da guerra
+  # (npc/guerra/horario_da_guerra.txt) ou um NPC de premiacao. Esta em
+  # PENDENCIAS.md.
+  - Id: 30994
+    AegisName: Rolinho_De_Arroz
+    Name: Rolinho de Arroz
+    # Healing, e nao Usable, como o 14524: e comida, e o cliente mostra o
+    # botao de usar que de fato faz alguma coisa.
+    Type: Healing
+    # 10 = 1,0 de peso na tela, a mesma conta da Maca da Inocencia (30999,
+    # Weight 10 e "Peso: 1" na descricao). Copiado do 14524.
+    Weight: 10
+    # Sem `Buy`: a regra 4.16 do CLAUDE.md ("item com Buy entra na loja pelo
+    # Buy") so vale para item de vitrine, e este nao vai para vitrine
+    # nenhuma. Sem preco tambem nao ha revenda a Buy/2 - o `NoSell` abaixo
+    # ja fecharia essa porta de qualquer jeito.
+    #
+    # As sete travas do consumivel de guerra do bRO, na ordem dele: sem
+    # chao, sem troca, sem revenda em NPC, sem armazem de cla, sem RoDEX,
+    # sem leilao e sem carrinho. O armazem PESSOAL fica liberado.
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+    Script: |
+      percentheal 100,100;
+
   # ----- A moeda da Ordem dos Exploradores -------------------------------
   #
   # ATENCAO AO ID: 25737 esta FORA da nossa faixa 30000-30999, e nao e

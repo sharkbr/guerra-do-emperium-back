@@ -310,9 +310,10 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
-A tabela tem cinco itens em 2026-08-08 — 30999 Maçã da Inocência, 30998 Moeda
-Nova, 30997 e 30996 (as duas caixas da Máquina) e 30995 Caveira Humana, que
-copia a arte da Caveira comum (7420).
+A tabela tem seis itens em 2026-08-13 — 30999 Maçã da Inocência, 30998 Moeda
+Nova, 30997 e 30996 (as duas caixas da Máquina), 30995 Caveira Humana, que
+copia a arte da Caveira comum (7420), e 30994 Rolinho de Arroz, o prêmio de
+guerra, que copia a arte do Bolinho de Arroz (555).
 
 Em 2026-08-12 o `arte_de` do **30996** mudou de 22668 (a caixa de 20 do bRO,
 que é a caixa genérica de consumível) para **12710, a própria Poção de Guyak** —
