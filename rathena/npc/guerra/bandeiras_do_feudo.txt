@@ -1,0 +1,457 @@
+//===== Guerra do Emperium ==================================================
+//= Bandeiras do feudo - todas com o emblema de quem tomou o Kriemhild
+//===========================================================================
+//= 279 bandeiras em 27 mapas, ARRANCADAS SEM QUERER em 2026-08-13 e
+//= devolvidas no mesmo dia. Ver "o que aconteceu" logo abaixo.
+//===========================================================================
+//
+//  O QUE ACONTECEU
+//  ===============
+//
+//  Desligar os dezenove castelos em npc/scripts_guild.conf tirou muito mais
+//  que o Emperium: cada arquivo de castelo do rAthena define TAMBEM as
+//  bandeiras dele - quatro do lado de fora, no feudo; doze dentro do castelo;
+//  e uma na cidade correspondente. Dezenove arquivos comentados levaram 279
+//  bandeiras junto, e o dono percebeu na tela antes de qualquer log acusar.
+//
+//  A pergunta que ele fez e a que este arquivo responde: "elas eram atreladas
+//  ao castelo NECESSARIAMENTE?". Nao. O que prende uma bandeira a um castelo e
+//  UMA LINHA - o `FlagEmblem GetCastleData("<mapa>", CD_GUILD_ID)` do rotulo
+//  de atualizacao. O resto e um NPC de sprite 722 parado numa celula. Trocar o
+//  mapa dentro daquele `GetCastleData` e tudo que e preciso para a bandeira
+//  passar a hastear outro cla.
+//
+//  E e o que se faz aqui: as 279 leem `prtg_cas01`, o Kriemhild. Quem toma o
+//  Kriemhild passa a ter o emblema em Al De Baran, Geffen, Payon, Prontera e
+//  nos quatro feudos, de uma vez. Decisao do dono em 2026-08-13.
+//
+//  AS POSICOES NAO FORAM DIGITADAS
+//  ===============================
+//
+//  Sao extraidas dos dezenove arquivos de castelo por
+//  ferramentas/../gera_bandeiras.py (scratchpad), que le as linhas
+//  `duplicate(OutsideFlags*)` e `duplicate(InsideFlags*)` de cada um. As
+//  bandeiras voltam exatamente onde a Gravity as pos, e se o upstream mover
+//  alguma um dia, a diferenca aparece ao regerar.
+//
+//  Uma armadilha ficou registrada dessa extracao: NOME DE NPC PODE TER ESPACO.
+//  Os cinco castelos de Payon chamam as bandeiras de `Bright Arbor#1-2`, com
+//  espaco no meio, e um `\S+` no lugar do nome perde Payon INTEIRO - devolve
+//  219 bandeiras em vez de 279, sem erro, e o numero e plausivel demais para
+//  levantar suspeita. Corta-se por TAB, que e o separador de verdade.
+//
+//  QUEM MANDA ATUALIZAR
+//  ====================
+//
+//  Tres gatilhos, e cada um cobre um buraco do outro:
+//
+//  1. `OnAgitInit` - a subida do servidor, quando o char-server entrega os
+//     dados de castelo.
+//  2. `OnRecvCastlePt01` - o evento que o proprio agit_main.txt dispara para
+//     as bandeiras do Kriemhild quando ele troca de dono. E o mesmo `donpcevent
+//     "::OnRecvCastlePt01"` de sempre, e as nossas so precisam ter o rotulo
+//     para entrar na lista.
+//  3. Um temporizador de dez segundos no `ControleDasBandeiras` la embaixo,
+//     que so dispara quando o dono MUDOU.
+//
+//  O terceiro nao e paranoia: o `OnRecvCastlePt01` do rAthena so e chamado no
+//  ramo do castelo COM DONO (npc/guild/agit_main.txt, o `else` do
+//  `OnRecvCastle`). Quando o cla dono se desfaz, o `OnGuildBreak` poe o
+//  CD_GUILD_ID em 0 e chama o `OnRecvCastle`, que dessa vez cai no ramo do
+//  castelo vazio e NAO avisa bandeira nenhuma. No rAthena puro as bandeiras
+//  ficam com o emblema do cla morto ate o servidor reiniciar; aqui elas se
+//  apagam em dez segundos.
+//
+//  O temporizador e barato de proposito: ele so LE `GetCastleData`, que e
+//  memoria do map-server, e compara com um inteiro. So quando o numero muda e
+//  que ele gasta um `donpcevent` nas 279.
+//
+//  SE UM CASTELO VOLTAR A GUERRA
+//  =============================
+//
+//  Descomentar a linha dele em npc/scripts_guild.conf devolve as bandeiras
+//  ORIGINAIS dele, que leem o proprio castelo - e ai as duas ficam empilhadas
+//  na mesma celula. Ao religar um castelo, tirar as linhas dele daqui. O nome
+//  unico das nossas termina em `#feudo<N>` justamente para nao colidir com o
+//  das originais: sem isso o `npc_parsename` renomearia uma das duas e o
+//  empilhamento seria mais dificil de ver.
+//===========================================================================
+
+// A bandeira. O dialogo conta a mesma coisa que o edito do rAthena, so que
+// sobre o Kriemhild - nao ha mais "este feudo" no plural, ha um so.
+//
+// O que NAO tem, de proposito: o atalho de voltar ao castelo que as bandeiras
+// de fora do rAthena oferecem ao membro do cla dono. Aquilo e uma porta de
+// entrada, e 279 portas para dentro do Kriemhild seria outra coisa. Quem quer
+// o atalho usa as bandeiras do proprio Kriemhild, que continuam de pe.
+-	script	Bandeira do Feudo::BandeiraDoFeudo	722,{
+	.@dono = GetCastleData("prtg_cas01", CD_GUILD_ID);
+
+	if (.@dono == 0) {
+		mes "[ Édito do Divino Reino de Rune-Midgard ]";
+		mes " ";
+		mes "1. Conforme a ordenação do Divino Reino de Rune-Midgard, declaramos que o feudo de Prontera não possui mestre formal.";
+		mes " ";
+		mes "2. Àquele que for capaz de vencer todas as provações e destruir o Emperium do Kriemhild, o rei concederá a posse destas terras - e o direito de hastear seu estandarte em todas elas.";
+		close;
+	}
+
+	mes "[ Édito do Divino Reino de Rune-Midgard ]";
+	mes " ";
+	mes "1. Conforme a ordenação do Divino Reino de Rune-Midgard, reconhecemos que o Kriemhild está em posse exclusiva do clã ^ff0000" + GetGuildName(.@dono) + "^000000, e que este estandarte é o dele.";
+	mes " ";
+	mes "2. O líder do clã ^ff0000" + GetGuildName(.@dono) + "^000000 é ^ff0000" + GetGuildMaster(.@dono) + "^000000.";
+	mes " ";
+	mes "3. Se houver quem se oponha a isto, prove sua força e honra com uma lâmina de aço em punho, na Guerra do Emperium.";
+	close;
+
+// `OnRecvCastlePt01` e o evento do proprio rAthena - basta ter o rotulo para
+// entrar na lista dele. `OnBandeiraAtualiza` e o nosso, do temporizador.
+OnAgitInit:
+OnRecvCastlePt01:
+OnBandeiraAtualiza:
+	FlagEmblem GetCastleData("prtg_cas01", CD_GUILD_ID);
+	end;
+}
+
+// Guarda o dono conhecido e so acorda as 279 quando ele muda - ver o
+// cabecalho, "quem manda atualizar".
+-	script	ControleDasBandeiras	-1,{
+	end;
+
+OnInit:
+	// -1 e nao 0: `0` e um valor legitimo (castelo sem dono), entao comecar
+	// nele faria a primeira conferencia achar que nada mudou e deixar as
+	// bandeiras sem emblema ate a primeira conquista.
+	.dono = -1;
+	initnpctimer;
+	end;
+
+OnAgitInit:
+OnTimer10000:
+	.@dono = GetCastleData("prtg_cas01", CD_GUILD_ID);
+	if (.@dono != .dono) {
+		.dono = .@dono;
+		donpcevent "::OnBandeiraAtualiza";
+	}
+	setnpctimer 0;
+	end;
+}
+
+
+// de npc/guild/aldeg_cas01.txt
+alde_gld,61,87,6	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo1	722
+alde_gld,61,79,6	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo2	722
+alde_gld,45,87,8	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo3	722
+alde_gld,51,87,8	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo4	722
+aldeg_cas01,30,248,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo5	722
+aldeg_cas01,30,248,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo6	722
+aldeg_cas01,37,248,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo7	722
+aldeg_cas01,37,246,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo8	722
+aldeg_cas01,30,246,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo9	722
+aldeg_cas01,95,80,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo10	722
+aldeg_cas01,95,59,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo11	722
+aldeg_cas01,62,75,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo12	722
+aldeg_cas01,66,75,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo13	722
+aldeg_cas01,70,75,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo14	722
+aldeg_cas01,74,75,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo15	722
+aldeg_cas01,62,64,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo16	722
+aldeg_cas01,66,64,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo17	722
+aldeg_cas01,70,64,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo18	722
+aldeg_cas01,74,64,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo19	722
+aldeg_cas01,74,64,2	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo20	722
+aldeg_cas01,203,150,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo21	722
+aldeg_cas01,210,150,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo22	722
+aldebaran,152,97,4	duplicate(BandeiraDoFeudo)	Neuschwanstein#feudo23	722
+
+// de npc/guild/aldeg_cas02.txt
+alde_gld,99,251,4	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo24	722
+alde_gld,99,244,4	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo25	722
+aldeg_cas02,82,71,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo26	722
+aldeg_cas02,67,30,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo27	722
+aldeg_cas02,183,140,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo28	722
+aldeg_cas02,212,152,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo29	722
+aldeg_cas02,108,39,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo30	722
+aldeg_cas02,57,213,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo31	722
+aldeg_cas02,103,53,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo32	722
+aldeg_cas02,73,53,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo33	722
+aldeg_cas02,63,41,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo34	722
+aldeg_cas02,229,6,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo35	722
+aldeg_cas02,230,40,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo36	722
+aldeg_cas02,197,40,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo37	722
+aldeg_cas02,32,213,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo38	722
+aldeg_cas02,121,29,2	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo39	722
+aldebaran,149,97,4	duplicate(BandeiraDoFeudo)	Hohenschwangau#feudo40	722
+
+// de npc/guild/aldeg_cas03.txt
+alde_gld,146,82,8	duplicate(BandeiraDoFeudo)	Nuernberg#feudo41	722
+alde_gld,138,82,8	duplicate(BandeiraDoFeudo)	Nuernberg#feudo42	722
+aldeg_cas03,176,175,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo43	722
+aldeg_cas03,77,115,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo44	722
+aldeg_cas03,77,215,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo45	722
+aldeg_cas03,112,107,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo46	722
+aldeg_cas03,112,117,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo47	722
+aldeg_cas03,69,71,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo48	722
+aldeg_cas03,91,69,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo49	722
+aldeg_cas03,108,60,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo50	722
+aldeg_cas03,121,73,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo51	722
+aldeg_cas03,121,73,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo52	722
+aldeg_cas03,75,102,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo53	722
+aldeg_cas03,199,169,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo54	722
+aldeg_cas03,181,179,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo55	722
+aldeg_cas03,192,44,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo56	722
+aldeg_cas03,208,145,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo57	722
+aldeg_cas03,207,75,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo58	722
+aldeg_cas03,96,62,2	duplicate(BandeiraDoFeudo)	Nuernberg#feudo59	722
+aldebaran,134,97,4	duplicate(BandeiraDoFeudo)	Nuernberg#feudo60	722
+
+// de npc/guild/aldeg_cas04.txt
+alde_gld,239,246,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo61	722
+alde_gld,239,239,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo62	722
+aldeg_cas04,167,61,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo63	722
+aldeg_cas04,164,90,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo64	722
+aldeg_cas04,129,193,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo65	722
+aldeg_cas04,112,206,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo66	722
+aldeg_cas04,113,212,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo67	722
+aldeg_cas04,77,117,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo68	722
+aldeg_cas04,186,42,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo69	722
+aldeg_cas04,30,69,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo70	722
+aldeg_cas04,55,97,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo71	722
+aldeg_cas04,45,98,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo72	722
+aldeg_cas04,33,116,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo73	722
+aldeg_cas04,130,180,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo74	722
+aldeg_cas04,129,193,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo75	722
+aldeg_cas04,33,107,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo76	722
+aldeg_cas04,133,220,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo77	722
+aldeg_cas04,169,22,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo78	722
+aldeg_cas04,169,15,2	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo79	722
+aldebaran,131,97,4	duplicate(BandeiraDoFeudo)	Wuerzburg#feudo80	722
+
+// de npc/guild/aldeg_cas05.txt
+alde_gld,265,93,6	duplicate(BandeiraDoFeudo)	Rothenburg#feudo81	722
+alde_gld,265,87,6	duplicate(BandeiraDoFeudo)	Rothenburg#feudo82	722
+aldeg_cas05,170,85,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo83	722
+aldeg_cas05,142,212,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo84	722
+aldeg_cas05,149,196,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo85	722
+aldeg_cas05,41,180,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo86	722
+aldeg_cas05,38,201,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo87	722
+aldeg_cas05,65,182,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo88	722
+aldeg_cas05,65,205,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo89	722
+aldeg_cas05,10,218,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo90	722
+aldeg_cas05,10,218,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo91	722
+aldeg_cas05,164,201,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo92	722
+aldeg_cas05,14,117,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo93	722
+aldeg_cas05,10,225,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo94	722
+aldeg_cas05,187,59,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo95	722
+aldeg_cas05,154,51,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo96	722
+aldeg_cas05,22,211,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo97	722
+aldeg_cas05,150,202,2	duplicate(BandeiraDoFeudo)	Rothenburg#feudo98	722
+aldebaran,128,97,4	duplicate(BandeiraDoFeudo)	Rothenburg#feudo99	722
+
+// de npc/guild/gefg_cas01.txt
+gef_fild13,148,51,5	duplicate(BandeiraDoFeudo)	Repherion#feudo100	722
+gef_fild13,155,54,5	duplicate(BandeiraDoFeudo)	Repherion#feudo101	722
+gef_fild13,212,79,6	duplicate(BandeiraDoFeudo)	Repherion#feudo102	722
+gef_fild13,211,71,6	duplicate(BandeiraDoFeudo)	Repherion#feudo103	722
+gefg_cas01,28,157,4	duplicate(BandeiraDoFeudo)	Repherion#feudo104	722
+gefg_cas01,22,156,5	duplicate(BandeiraDoFeudo)	Repherion#feudo105	722
+gefg_cas01,68,185,3	duplicate(BandeiraDoFeudo)	Repherion#feudo106	722
+gefg_cas01,17,171,5	duplicate(BandeiraDoFeudo)	Repherion#feudo107	722
+gefg_cas01,59,16,4	duplicate(BandeiraDoFeudo)	Repherion#feudo108	722
+gefg_cas01,64,16,4	duplicate(BandeiraDoFeudo)	Repherion#feudo109	722
+geffen,109,123,2	duplicate(BandeiraDoFeudo)	Repherion#feudo110	722
+
+// de npc/guild/gefg_cas02.txt
+gef_fild13,303,243,4	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo111	722
+gef_fild13,312,243,4	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo112	722
+gef_fild13,290,243,4	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo113	722
+gef_fild13,324,243,4	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo114	722
+gefg_cas02,65,130,5	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo115	722
+gefg_cas02,30,123,5	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo116	722
+gefg_cas02,65,139,6	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo117	722
+gefg_cas02,37,177,6	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo118	722
+gefg_cas02,37,168,6	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo119	722
+gefg_cas02,68,47,2	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo120	722
+gefg_cas02,68,36,2	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo121	722
+geffen,112,129,1	duplicate(BandeiraDoFeudo)	Eeyorbriggar#feudo122	722
+
+// de npc/guild/gefg_cas03.txt
+gef_fild13,78,182,4	duplicate(BandeiraDoFeudo)	Yesnelph#feudo123	722
+gef_fild13,87,182,4	duplicate(BandeiraDoFeudo)	Yesnelph#feudo124	722
+gef_fild13,73,295,7	duplicate(BandeiraDoFeudo)	Yesnelph#feudo125	722
+gef_fild13,113,274,7	duplicate(BandeiraDoFeudo)	Yesnelph#feudo126	722
+gef_fild13,144,235,6	duplicate(BandeiraDoFeudo)	Yesnelph#feudo127	722
+gef_fild13,144,244,6	duplicate(BandeiraDoFeudo)	Yesnelph#feudo128	722
+gefg_cas03,122,220,6	duplicate(BandeiraDoFeudo)	Yesnelph#feudo129	722
+gefg_cas03,122,229,6	duplicate(BandeiraDoFeudo)	Yesnelph#feudo130	722
+gefg_cas03,91,257,7	duplicate(BandeiraDoFeudo)	Yesnelph#feudo131	722
+gefg_cas03,52,276,7	duplicate(BandeiraDoFeudo)	Yesnelph#feudo132	722
+gefg_cas03,56,164,4	duplicate(BandeiraDoFeudo)	Yesnelph#feudo133	722
+gefg_cas03,65,164,4	duplicate(BandeiraDoFeudo)	Yesnelph#feudo134	722
+gefg_cas03,37,214,1	duplicate(BandeiraDoFeudo)	Yesnelph#feudo135	722
+gefg_cas03,34,208,1	duplicate(BandeiraDoFeudo)	Yesnelph#feudo136	722
+geffen,120,132,8	duplicate(BandeiraDoFeudo)	Yesnelph#feudo137	722
+
+// de npc/guild/gefg_cas04.txt
+gef_fild13,190,283,3	duplicate(BandeiraDoFeudo)	Bergel#feudo138	722
+gef_fild13,199,274,3	duplicate(BandeiraDoFeudo)	Bergel#feudo139	722
+gefg_cas04,24,157,4	duplicate(BandeiraDoFeudo)	Bergel#feudo140	722
+gefg_cas04,35,158,4	duplicate(BandeiraDoFeudo)	Bergel#feudo141	722
+gefg_cas04,44,184,4	duplicate(BandeiraDoFeudo)	Bergel#feudo142	722
+gefg_cas04,51,184,4	duplicate(BandeiraDoFeudo)	Bergel#feudo143	722
+gefg_cas04,39,212,7	duplicate(BandeiraDoFeudo)	Bergel#feudo144	722
+gefg_cas04,29,212,1	duplicate(BandeiraDoFeudo)	Bergel#feudo145	722
+gefg_cas04,24,73,1	duplicate(BandeiraDoFeudo)	Bergel#feudo146	722
+gefg_cas04,35,73,4	duplicate(BandeiraDoFeudo)	Bergel#feudo147	722
+geffen,127,130,7	duplicate(BandeiraDoFeudo)	Bergel#feudo148	722
+
+// de npc/guild/gefg_cas05.txt
+gef_fild13,302,87,7	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo149	722
+gef_fild13,313,83,0	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo150	722
+gef_fild13,252,51,2	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo151	722
+gef_fild13,26,147,2	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo152	722
+gefg_cas05,77,185,7	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo153	722
+gefg_cas05,92,181,0	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo154	722
+gefg_cas05,83,158,1	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo155	722
+gefg_cas05,62,144,7	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo156	722
+gefg_cas05,62,66,4	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo157	722
+gefg_cas05,69,66,4	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo158	722
+geffen,131,123,6	duplicate(BandeiraDoFeudo)	Mersetzdeitz#feudo159	722
+
+// de npc/guild/payg_cas01.txt
+pay_gld,125,236,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo160	722
+pay_gld,110,233,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo161	722
+pay_gld,116,233,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo162	722
+pay_gld,91,239,2	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo163	722
+payg_cas01,238,67,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo164	722
+payg_cas01,233,67,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo165	722
+payg_cas01,221,123,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo166	722
+payg_cas01,221,116,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo167	722
+payg_cas01,206,108,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo168	722
+payg_cas01,212,108,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo169	722
+payon,90,322,4	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo170	722
+payon,166,177,3	duplicate(BandeiraDoFeudo)	Bright Arbor#feudo171	722
+
+// de npc/guild/payg_cas02.txt
+pay_gld,292,112,6	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo172	722
+pay_gld,292,120,6	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo173	722
+pay_gld,291,135,6	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo174	722
+pay_gld,271,163,0	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo175	722
+payg_cas02,254,40,6	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo176	722
+payg_cas02,254,48,6	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo177	722
+payg_cas02,202,49,0	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo178	722
+payg_cas02,209,49,0	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo179	722
+payg_cas02,59,282,4	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo180	722
+payg_cas02,70,282,4	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo181	722
+payon,97,322,4	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo182	722
+payon,166,173,3	duplicate(BandeiraDoFeudo)	Scarlet Palace#feudo183	722
+
+// de npc/guild/payg_cas03.txt
+pay_gld,321,298,2	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo184	722
+pay_gld,321,289,2	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo185	722
+pay_gld,327,304,1	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo186	722
+pay_gld,333,254,4	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo187	722
+payg_cas03,236,54,2	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo188	722
+payg_cas03,236,45,2	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo189	722
+payg_cas03,259,66,4	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo190	722
+payg_cas03,266,66,4	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo191	722
+payg_cas03,34,31,4	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo192	722
+payg_cas03,43,31,4	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo193	722
+payon,113,322,4	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo194	722
+payon,166,169,3	duplicate(BandeiraDoFeudo)	Holy Shadow#feudo195	722
+
+// de npc/guild/payg_cas04.txt
+pay_gld,137,160,0	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo196	722
+pay_gld,143,160,0	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo197	722
+pay_gld,133,151,2	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo198	722
+pay_gld,153,166,1	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo199	722
+payg_cas04,255,259,0	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo200	722
+payg_cas04,248,259,0	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo201	722
+payg_cas04,248,168,6	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo202	722
+payg_cas04,248,160,6	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo203	722
+payg_cas04,232,181,4	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo204	722
+payg_cas04,239,181,4	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo205	722
+payon,118,322,4	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo206	722
+payon,166,165,3	duplicate(BandeiraDoFeudo)	Sacred Altar#feudo207	722
+
+// de npc/guild/payg_cas05.txt
+pay_gld,208,268,4	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo208	722
+pay_gld,199,268,4	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo209	722
+pay_gld,190,277,3	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo210	722
+pay_gld,187,294,2	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo211	722
+payg_cas05,32,249,4	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo212	722
+payg_cas05,24,249,4	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo213	722
+payg_cas05,62,271,0	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo214	722
+payg_cas05,57,271,0	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo215	722
+payg_cas05,55,252,2	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo216	722
+payg_cas05,55,260,2	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo217	722
+payon,123,322,4	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo218	722
+payon,166,161,3	duplicate(BandeiraDoFeudo)	Bamboo Grove Hill#feudo219	722
+
+// de npc/guild/prtg_cas02.txt
+prt_gld,244,126,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo220	722
+prt_gld,244,128,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo221	722
+prt_gld,236,126,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo222	722
+prt_gld,236,128,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo223	722
+prtg_cas02,40,227,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo224	722
+prtg_cas02,46,227,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo225	722
+prtg_cas02,11,219,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo226	722
+prtg_cas02,11,214,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo227	722
+prtg_cas02,20,219,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo228	722
+prtg_cas02,20,214,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo229	722
+prtg_cas02,79,227,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo230	722
+prtg_cas02,70,227,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo231	722
+prtg_cas02,38,189,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo232	722
+prtg_cas02,34,189,8	duplicate(BandeiraDoFeudo)	Swanhild#feudo233	722
+prtg_cas02,153,161,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo234	722
+prtg_cas02,162,161,4	duplicate(BandeiraDoFeudo)	Swanhild#feudo235	722
+prontera,146,194,3	duplicate(BandeiraDoFeudo)	Swanhild#feudo236	722
+
+// de npc/guild/prtg_cas03.txt
+prt_gld,147,140,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo237	722
+prt_gld,147,136,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo238	722
+prt_gld,158,140,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo239	722
+prt_gld,158,136,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo240	722
+prtg_cas03,168,28,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo241	722
+prtg_cas03,182,28,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo242	722
+prtg_cas03,43,50,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo243	722
+prtg_cas03,48,50,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo244	722
+prtg_cas03,43,58,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo245	722
+prtg_cas03,48,58,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo246	722
+prtg_cas03,158,210,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo247	722
+prtg_cas03,169,210,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo248	722
+prtg_cas03,162,201,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo249	722
+prtg_cas03,165,201,4	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo250	722
+prontera,143,203,2	duplicate(BandeiraDoFeudo)	Fadhgridh#feudo251	722
+
+// de npc/guild/prtg_cas04.txt
+prt_gld,120,243,6	duplicate(BandeiraDoFeudo)	Skoegul#feudo252	722
+prt_gld,120,236,6	duplicate(BandeiraDoFeudo)	Skoegul#feudo253	722
+prt_gld,122,243,6	duplicate(BandeiraDoFeudo)	Skoegul#feudo254	722
+prt_gld,122,236,6	duplicate(BandeiraDoFeudo)	Skoegul#feudo255	722
+prtg_cas04,82,29,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo256	722
+prtg_cas04,75,29,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo257	722
+prtg_cas04,75,27,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo258	722
+prtg_cas04,82,27,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo259	722
+prtg_cas04,59,29,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo260	722
+prtg_cas04,67,29,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo261	722
+prtg_cas04,258,25,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo262	722
+prtg_cas04,258,20,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo263	722
+prtg_cas04,263,20,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo264	722
+prtg_cas04,263,27,4	duplicate(BandeiraDoFeudo)	Skoegul#feudo265	722
+prontera,167,203,6	duplicate(BandeiraDoFeudo)	Skoegul#feudo266	722
+
+// de npc/guild/prtg_cas05.txt
+prt_gld,199,243,2	duplicate(BandeiraDoFeudo)	Gondul#feudo267	722
+prt_gld,199,236,2	duplicate(BandeiraDoFeudo)	Gondul#feudo268	722
+prt_gld,197,243,2	duplicate(BandeiraDoFeudo)	Gondul#feudo269	722
+prt_gld,197,236,2	duplicate(BandeiraDoFeudo)	Gondul#feudo270	722
+prtg_cas05,19,247,4	duplicate(BandeiraDoFeudo)	Gondul#feudo271	722
+prtg_cas05,19,243,4	duplicate(BandeiraDoFeudo)	Gondul#feudo272	722
+prtg_cas05,26,247,4	duplicate(BandeiraDoFeudo)	Gondul#feudo273	722
+prtg_cas05,26,243,4	duplicate(BandeiraDoFeudo)	Gondul#feudo274	722
+prtg_cas05,249,289,4	duplicate(BandeiraDoFeudo)	Gondul#feudo275	722
+prtg_cas05,256,289,4	duplicate(BandeiraDoFeudo)	Gondul#feudo276	722
+prtg_cas05,253,271,4	duplicate(BandeiraDoFeudo)	Gondul#feudo277	722
+prtg_cas05,273,257,4	duplicate(BandeiraDoFeudo)	Gondul#feudo278	722
+prontera,165,194,5	duplicate(BandeiraDoFeudo)	Gondul#feudo279	722

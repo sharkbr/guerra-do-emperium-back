@@ -8233,3 +8233,58 @@ ficam por cima dos guardiões de verdade.
 
 A Guerra do Emperium 2 (`guild2`) tem o próprio controlador
 (`npc/guild2/agit_start_se.txt`) e continua intocada.
+
+## As bandeiras voltam, e todas hasteiam o emblema do Kriemhild (2026-08-13)
+
+Desligar os dezenove castelos em `npc/scripts_guild.conf` tirou muito mais que o
+Emperium. Cada arquivo de castelo do rAthena define **também as bandeiras dele**
+— quatro do lado de fora no feudo, doze dentro do castelo e uma na cidade
+correspondente. Dezenove arquivos comentados levaram **279 bandeiras** junto, em
+27 mapas, e o dono percebeu na tela antes de qualquer log acusar. Nada no
+servidor reclama de bandeira que some.
+
+A pergunta dele foi a certa: *"elas eram atreladas ao castelo
+necessariamente?"*. **Não.** O que prende uma bandeira a um castelo é **uma
+linha** — o `FlagEmblem GetCastleData("<mapa>", CD_GUILD_ID)` do rótulo de
+atualização. O resto é um NPC de sprite 722 parado numa célula. Trocar o mapa
+dentro daquele `GetCastleData` basta para a bandeira passar a hastear outro clã.
+
+Foi o que se fez em `npc/guerra/bandeiras_do_feudo.txt`: as 279 leem
+`prtg_cas01`. Quem tomar o Kriemhild passa a ter o emblema em Al De Baran,
+Geffen, Payon, Prontera e nos quatro feudos, de uma vez.
+
+**As posições não foram digitadas** — são extraídas dos próprios dezenove
+arquivos do rAthena pelo gerador, então as bandeiras voltaram exatamente onde a
+Gravity as pôs, e uma mudança do upstream aparece ao regerar.
+
+### A armadilha da extração: nome de NPC pode ter espaço
+
+O primeiro regex cortava o nome com `\S+` e devolveu **219 bandeiras em vez de
+279** — sem erro, sem aviso, e com um número plausível demais para levantar
+suspeita. Os cinco castelos de Payon chamam as bandeiras de `Bright Arbor#1-2`,
+com espaço no meio, e sumiram **inteiros**: cinco arquivos zerados numa listagem
+onde todos os outros catorze traziam número. Só a coluna de zeros denunciou.
+Corta-se por TAB, que é o separador de verdade.
+
+### Um bug do rAthena que ficou consertado de lambuja
+
+O `donpcevent "::OnRecvCastlePt01"` — o evento que manda as bandeiras se
+atualizarem — só é chamado no ramo do castelo **com dono** do `OnRecvCastle`
+(`agit_main.txt`). Quando o clã dono se desfaz, o `OnGuildBreak` põe o
+`CD_GUILD_ID` em 0 e chama o `OnRecvCastle`, que dessa vez cai no ramo do
+castelo vazio e **não avisa bandeira nenhuma**. No rAthena puro elas ficam com o
+emblema do clã morto até o servidor reiniciar.
+
+O `ControleDasBandeiras`, um NPC sem mapa no mesmo arquivo, confere o dono a
+cada dez segundos e só acorda as 279 quando o número **muda**. É barato de
+propósito: lê `GetCastleData`, que é memória do map-server, e compara um inteiro
+— só gasta o `donpcevent` quando há o que dizer. O `.dono` começa em `-1` e não
+em `0` porque `0` é um valor legítimo (castelo sem dono), e começar nele faria a
+primeira conferência achar que nada mudou.
+
+### O que as nossas não têm
+
+O atalho de voltar ao castelo que as bandeiras de fora do rAthena oferecem ao
+membro do clã dono. Aquilo é uma porta de entrada, e 279 portas para dentro do
+Kriemhild seria outra coisa. Quem quer o atalho usa as bandeiras do próprio
+Kriemhild, que continuam de pé — `prtg_cas01.txt` nunca foi desligado.

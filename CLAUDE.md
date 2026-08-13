@@ -52,7 +52,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
 | `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto de 99,9%, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
 | `src/map/status.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo, as duas de `guardiao_do_castelo.hpp` (a escala do guardião pela defesa do castelo): `guardiao_tem_escala` num `flag\|=4` **acrescentado** ao lado do `guardup_lv` do rAthena — não substitui nada, e só existe porque sem flag nenhuma o `status_calc_mob_` sai antes, libera o `md->base_status` e passaria a escrever no status **compartilhado** do `mob_db`; e `guardiao_aplica_escala` no fim da mesma função, depois do bloco "Strengthen Guardians" e **antes** do `memcpy` final |
-| `npc/scripts_guild.conf` | duas coisas. **(a)** 19 das 20 linhas de castelo da Guerra do Emperium 1 comentadas — só o `prtg_cas01.txt` (Kriemhild) fica. É o que tira Emperium, Kafra, Gerente e bandeiras dos castelos-museu de uma vez, e é também **o que limita a guerra ao Kriemhild**: sem o arquivo do castelo não há `Agit#<castelo>`, logo não nasce Emperium. Ver `npc/guerra/guardioes_dos_castelos.txt`. **(b)** o `agit_controller.txt` comentado, substituído por `npc/guerra/horario_da_guerra.txt` (quinta 20–22, domingo 18–20, horário de Brasília). Nunca deixar os dois ligados |
+| `npc/scripts_guild.conf` | duas coisas. **(a)** 19 das 20 linhas de castelo da Guerra do Emperium 1 comentadas — só o `prtg_cas01.txt` (Kriemhild) fica. É o que tira Emperium, Kafra, Gerente e bandeiras dos castelos-museu de uma vez, e é também **o que limita a guerra ao Kriemhild**: sem o arquivo do castelo não há `Agit#<castelo>`, logo não nasce Emperium. Ver `npc/guerra/guardioes_dos_castelos.txt`. **Levou 279 bandeiras junto** — devolvidas por `npc/guerra/bandeiras_do_feudo.txt`, todas hasteando o dono do Kriemhild. **(b)** o `agit_controller.txt` comentado, substituído por `npc/guerra/horario_da_guerra.txt` (quinta 20–22, domingo 18–20, horário de Brasília). Nunca deixar os dois ligados |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -842,6 +842,25 @@ Produziram diagnóstico falso e custaram retrabalho:
   sobrevivendo até o próximo `@reloadmobdb`. O `setunitdata` não cai nessa
   armadilha porque aloca o `base_status` próprio antes de escrever
   (`script.cpp:19420`).
+- **Desligar um arquivo de castelo do rAthena leva 17 BANDEIRAS junto, e nada
+  no log diz isso.** Cada `npc/guild/<castelo>.txt` define, além do Emperium e
+  do Gerente, **quatro bandeiras no feudo, doze dentro do castelo e uma na
+  cidade** — nos dezenove que desligamos em 2026-08-13 eram **279 bandeiras em
+  27 mapas**, incluindo Prontera, Geffen, Payon e Al De Baran. Bandeira que
+  some não emite aviso; quem percebeu foi o dono, na tela. **Ao comentar
+  qualquer `npc:` de castelo, contar o que mais estava naquele arquivo.** A
+  boa notícia é que bandeira **não é atrelada ao castelo**: o que a prende é
+  uma linha, o `FlagEmblem GetCastleData("<mapa>", CD_GUILD_ID)`, e trocar o
+  mapa ali faz a bandeira hastear outro clã (ver
+  `npc/guerra/bandeiras_do_feudo.txt`).
+- **Nome de NPC pode ter ESPAÇO, e um `\S+` no lugar dele perde arquivo
+  inteiro.** Os campos de uma linha de NPC são separados por **TAB**; o nome é
+  `[^\t]+`, não `\S+`. As bandeiras dos cinco castelos de Payon se chamam
+  `Bright Arbor#1-2`, e o regex errado devolveu **219 bandeiras em vez de
+  279** — sem erro, com Payon zerado e um total plausível demais para
+  desconfiar. Só uma coluna de zeros numa listagem por arquivo denunciou:
+  **listar por arquivo, e não só o total**, é o que transforma esse tipo de
+  perda silenciosa em algo visível.
 - **No renewal, a chance de acerto é literalmente `hit − esquiva` em pontos
   percentuais — e o piso de 5% esconde o quanto se está longe.** A taxa base do
   renewal é **zero** (no pre-renewal era 80), e a única coisa somada a ela é
