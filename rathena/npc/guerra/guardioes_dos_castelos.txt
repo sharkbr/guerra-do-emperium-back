@@ -1,0 +1,390 @@
+//===== Guerra do Emperium ==================================================
+//= Zelador dos Guardioes - os dezenove castelos-museu
+//===========================================================================
+//= Fica em prt_gld 136,66, no Feudo de Prontera, a poucos passos da entrada
+//= do Kriemhild. Um NPC so cuida dos dezenove: o comando `guardian` recebe o
+//= mapa como argumento, entao nao ha motivo para um NPC por castelo.
+//===========================================================================
+//
+//  O QUE ELE FAZ
+//  =============
+//
+//  Poe a DEFESA dos dezenove castelos que nao sao o Kriemhild em 100 e enche
+//  cada um com os oito guardioes oficiais dele. Com a escala de
+//  src/custom/guardiao_do_castelo.hpp ligada, defesa 100 e o patamar mais
+//  alto: 50 milhoes de HP, 99% de reducao de dano recebido, ASPD 190 e 50.000
+//  de ATQ por guardiao.
+//
+//  Sao campos de treino, nao castelos. O Kriemhild continua sendo o castelo de
+//  verdade - a defesa e a economia dele sao as que a guilda dona investir, e
+//  este arquivo nao encosta nele.
+//
+//  POR QUE PRECISA DE NPC NOSSO
+//  ============================
+//
+//  Porque o rAthena NAO invoca guardiao em castelo sem dono. No `OnAgitInit`
+//  do npc/guild/agit_main.txt, castelo com `CD_GUILD_ID == 0` cai num
+//  `killmonsterall` e ganha Evil Druid, Khalitzburg e companhia; o
+//  `donpcevent "Guardian#...::OnSpawnGuardians"` so existe no ramo do castelo
+//  COM dono. Castelo vazio, no rAthena, e castelo sem guardiao nenhum.
+//
+//  Como os dezenove estao desligados em npc/scripts_guild.conf (sem Emperium,
+//  sem Kafra, sem Gerente, sem os monstros de castelo vazio), aquele ramo nem
+//  roda - e quem enche os mapas e este arquivo.
+//
+//  GUARDIAO TEMPORARIO, E ISSO IMPORTA
+//  ===================================
+//
+//  O `guardian` e chamado SEM o indice do fim, o que produz o que o
+//  doc/script_commands.txt chama de guardiao temporario. Nao e economia de
+//  digitacao; e o que mantem estes guardioes fora da contabilidade do castelo:
+//
+//  - nao ocupam os oito slots `CD_ENABLED_GUARDIAN`, entao o Gerente do
+//    Castelo do Kriemhild continua vendo os slots dele como sempre;
+//  - nao passam pelo `mob_guardian_guildchange` (src/map/mob.cpp), que APAGA
+//    guardiao de castelo sem dono. Aquela funcao so e chamada para guardiao
+//    com `visible` ligado, ou seja para os comprados de verdade. Com indice,
+//    os nossos morreriam na primeira vez que alguem tocasse na dona do
+//    castelo, e o sumico seria calado.
+//
+//  O que se perde e o respawn automatico e o `guardianinfo`. O respawn vem do
+//  temporizador abaixo; o `guardianinfo` nao faz falta aqui.
+//
+//  A REPOSICAO E POR CONFERENCIA, NAO POR EVENTO DE MORTE
+//  ======================================================
+//
+//  A cada minuto o `S_Repoe` percorre os 152 lugares e pergunta `unitexists()`
+//  ao id que guardou. Quem nao existe mais volta.
+//
+//  O caminho obvio seria o rotulo de morte do proprio `guardian`, mas ele
+//  responde "morreu um" sem dizer QUAL - e sao 152. Daria para descobrir pelo
+//  `killedgid`, so que ele e parametro de JOGADOR: guardiao que morresse sem
+//  matador anexado (veneno, `@killmonster`, desconexao no meio) nao voltaria,
+//  e a falha seria calada. A conferencia nao depende disso e ainda conserta
+//  sozinha um `guardian` que tenha falhado no spawn, porque nesse caso o id
+//  guardado e 0 e `unitexists(0)` e falso.
+//
+//  O rotulo `OnGuardiaoMorreu` existe assim mesmo, e nao faz nada: ele e o que
+//  da NOME aos nossos guardioes, para o `killmonster` do `S_Limpa` conseguir
+//  distinguir os nossos de qualquer outro monstro do mapa.
+//
+//  O PORQUE DO `S_Limpa` - DUAS ARMADILHAS QUE ELE RESOLVE
+//  ======================================================
+//
+//  1. `@reloadscript` NAO MATA MONSTRO. O script volta com o `.gid` zerado
+//     enquanto os 152 guardioes continuam de pe no mapa - sem a limpeza, o
+//     `S_Repoe` os veria como ausentes e criaria 152 copias por cima.
+//
+//  2. `OnAgitInit` pode disparar mais de uma vez, e a segunda duplicaria tudo
+//     pelo mesmo motivo. Por isso o S_Limpa vem antes do S_Repoe la tambem.
+//
+//  A ESCALA E RESOLVIDA NO SPAWN, e e por isso que o `OnInit` nao invoca nada
+//  (so limpa). Na primeira subida ele roda ANTES de o char-server entregar os
+//  dados de castelo: a defesa lida seria 0 e os 152 nasceriam no patamar mais
+//  baixo. Corrigir depois nao da - o `guild_castledatasave` do rAthena so manda
+//  recalcular guardiao com `visible` ligado (src/map/guild.cpp, `case
+//  CD_CURRENT_DEFENSE`), e os nossos sao temporarios de proposito.
+//
+//  Medido em 2026-08-13: com o `OnInit` invocando, a subida gerava DUAS rodadas
+//  de 152 e o log passava a mostrar 16 avisos por mapa - o resultado final era
+//  o certo, mas nao havia como provar, de fora do jogo, que a limpeza do meio
+//  tinha funcionado. Com uma rodada so, "152 avisos, 8 por mapa" e prova.
+//
+//  ONDE A ESCALA MORA - E O QUE ELA NAO E
+//  ======================================
+//
+//  Nenhum numero de HP, dano, velocidade ou reducao esta neste arquivo. Eles
+//  vivem em conf/guerra/battle_guerra.txt (bloco "O GUARDIAO CRESCE COM A
+//  DEFESA DO CASTELO") e sao aplicados em C++, no spawn de qualquer guardiao,
+//  venha deste NPC ou do Gerente do Castelo. Este arquivo so decide ONDE ha
+//  guardiao e com QUE defesa.
+//
+//  E a reducao nao e "resistencia a humano": monstro nao tem resistencia por
+//  raca no rAthena. E o `damagetaken`, que corta tudo. O cabecalho de
+//  src/custom/guardiao_do_castelo.hpp explica por que.
+//
+//  O QUE MULTIPLICA, E ENGANA SE FOR LIDO SOZINHO
+//  ==============================================
+//
+//  Mapa de castelo tem o mapflag `gvg_castle` PERMANENTE (npc/mapflag/gvg.txt)
+//  e o `mapdata_flag_gvg2` so olha mapflag - entao os nossos
+//  `gvg_*_attack_damage_rate: 20` valem la dentro 24 horas por dia, com ou sem
+//  Guerra do Emperium aberta, e valem tambem quando o alvo e monstro. O dano
+//  que entra num guardiao de defesa 100 e `bruto x 0,20 x 0,01`, ou seja 0,2%.
+//  Com 50 milhoes de HP sao 25 BILHOES de dano bruto por guardiao, vezes oito.
+//
+//  O lado bom disso e o teste: como o mapflag nao depende da guerra, o numero
+//  medido numa terca a tarde e o mesmo numero da guerra de domingo.
+//
+//  O SPRITE
+//  ========
+//
+//  `EP17_2_GUARDIAN_PARTS` - id 20679. Conferido neste cliente em 2026-08-13,
+//  pela receita de sempre: existe no `npcidentity.lub` do nosso data.grf, o
+//  `jobname.lub` o resolve para `ep17_2_guardian_parts` e o `.spr` e o `.act`
+//  estao no GRF. O id esta ACIMA da faixa de NPC do `npcdb_checkid` (que para
+//  em 19999) e funciona mesmo assim porque 20679 e um monstro do nosso
+//  mob_db: o `npc_parseview` (src/map/npc.cpp) cai no `mobdb_search_aegisname`
+//  quando a constante nao e de NPC, e o `status_set_viewdata` testa
+//  `mobdb_checkid` ANTES de `npcdb_checkid`.
+//===========================================================================
+
+prt_gld,136,66,4	script	Zelador dos Guardiões::ZeladorDosGuardioes	EP17_2_GUARDIAN_PARTS,{
+	mes "[Zelador dos Guardiões]";
+	mes "Estes castelos não têm mais dono, nem Emperium, nem tesouro. Só os guardiões ficaram - e ninguém mandou que parassem.";
+	next;
+	mes "[Zelador dos Guardiões]";
+	mes "Cada um deles está no limite do que a defesa de um castelo pode dar. Se você quer saber o que enfrentaria numa guerra de verdade, e o preço de deixar a guilda inimiga investir, o lugar é aqui.";
+	next;
+	mes "[Zelador dos Guardiões]";
+	mes "A defesa investida decide tudo. A cada dez pontos, o guardião ganha um degrau:";
+	mes "- vida, até cinquenta milhões;";
+	mes "- resistência, até noventa e nove por cento;";
+	mes "- velocidade de ataque;";
+	mes "- e força de golpe.";
+	next;
+	mes "[Zelador dos Guardiões]";
+	mes "Estes daqui estão todos em cem de defesa. Não há degrau acima.";
+	next;
+	callsub S_Relatorio;
+	close;
+
+// Lista os dezenove com a defesa que o castelo tem AGORA e quantos guardioes
+// estao de pe. Serve de sonda: se a defesa aparecer diferente de 100, o
+// `SetCastleData` do OnAgitInit nao pegou, e a escala do guardiao esta saindo
+// no patamar errado sem nada denunciar.
+S_Relatorio:
+	for (.@c = 0; .@c < .castelos; .@c++) {
+		.@vivos = 0;
+		for (.@i = 0; .@i < 8; .@i++)
+			if (unitexists(.gid[.@c * 8 + .@i])) .@vivos++;
+
+		mes "- " + GetCastleName(.mapa$[.@c]) + ": defesa "
+			+ GetCastleData(.mapa$[.@c], CD_CURRENT_DEFENSE)
+			+ ", " + .@vivos + " de 8 de pé.";
+	}
+	return;
+
+OnInit:
+	// Os dezenove castelos-museu, na ordem em que o agit_main.txt os lista.
+	// As quatro linhas de cada bloco saem do `Gld_Guard_Template` de
+	// npc/guild/agit_main.txt sem uma virgula de diferenca - e o mesmo lugar de
+	// onde os guardioes do Kriemhild nascem, e e de proposito: no dia em que o
+	// rAthena mudar uma posicao, a divergencia aparece num diff.
+	//
+	// `.tipo` e 1 = Soldado, 2 = Arqueiro, 3 = Cavaleiro, como no arquivo
+	// original; o de-para para o id do monstro e o `.mob` logo abaixo.
+
+	// aldeg_cas01 - Neuschwanstein
+	setarray .mapa$[0],"aldeg_cas01";
+	setarray .tipo[0],1,2,2,2,2,3,3,3;
+	setarray .px[0],17,39,38,45,21,218,213,73;
+	setarray .py[0],218,208,196,228,194,24,24,70;
+
+	// aldeg_cas02 - Hohenschwangau
+	setarray .mapa$[1],"aldeg_cas02";
+	setarray .tipo[8],3,3,3,1,1,2,2,2;
+	setarray .px[8],27,88,117,60,51,21,36,210;
+	setarray .py[8],184,43,46,202,183,177,183,7;
+
+	// aldeg_cas03 - Nuernberg
+	setarray .mapa$[2],"aldeg_cas03";
+	setarray .tipo[16],3,3,1,1,1,2,2,2;
+	setarray .px[16],90,116,86,116,64,212,195,110;
+	setarray .py[16],112,112,120,76,103,160,151,217;
+
+	// aldeg_cas04 - Wuerzburg
+	setarray .mapa$[3],"aldeg_cas04";
+	setarray .tipo[24],2,2,2,1,1,1,3,3;
+	setarray .px[24],187,192,148,145,169,198,48,55;
+	setarray .py[24],100,42,88,209,53,77,72,88;
+
+	// aldeg_cas05 - Rothenburg
+	setarray .mapa$[4],"aldeg_cas05";
+	setarray .tipo[32],2,2,1,1,3,3,3,3;
+	setarray .px[32],51,188,157,157,27,145,156,41;
+	setarray .py[32],202,79,192,74,221,78,73,112;
+
+	// gefg_cas01 - Repherion
+	setarray .mapa$[5],"gefg_cas01";
+	setarray .tipo[40],1,1,1,2,2,3,3,3;
+	setarray .px[40],67,184,62,36,50,50,189,200;
+	setarray .py[40],179,20,41,186,186,67,41,167;
+
+	// gefg_cas02 - Eeyolbriggar
+	setarray .mapa$[6],"gefg_cas02";
+	setarray .tipo[48],1,1,1,2,2,3,3,3;
+	setarray .px[48],64,56,166,35,20,19,166,159;
+	setarray .py[48],168,41,25,148,150,41,42,188;
+
+	// gefg_cas03 - Yesnelph
+	setarray .mapa$[7],"gefg_cas03";
+	setarray .tipo[56],2,2,1,1,1,3,3,3;
+	setarray .px[56],48,113,48,157,243,157,234,238;
+	setarray .py[56],176,214,207,62,41,45,25,160;
+
+	// gefg_cas04 - Bergel
+	setarray .mapa$[8],"gefg_cas04";
+	setarray .tipo[64],2,2,1,1,1,3,3,3;
+	setarray .px[64],53,31,49,29,147,57,160,148;
+	setarray .py[64],191,178,220,46,65,46,50,189;
+
+	// gefg_cas05 - Mersetzdeitz
+	setarray .mapa$[9],"gefg_cas05";
+	setarray .tipo[72],2,2,1,1,1,3,3,3;
+	setarray .px[72],45,71,72,66,177,66,177,193;
+	setarray .py[72],149,163,142,47,50,17,35,166;
+
+	// payg_cas01 - Bright Arbor
+	setarray .mapa$[10],"payg_cas01";
+	setarray .tipo[80],2,2,2,2,2,2,2,3;
+	setarray .px[80],229,225,222,99,65,36,51,138;
+	setarray .py[80],92,80,111,45,31,127,144,133;
+
+	// payg_cas02 - Scarlet Palace
+	setarray .mapa$[11],"payg_cas02";
+	setarray .tipo[88],2,2,2,2,2,2,2,3;
+	setarray .px[88],237,228,210,57,42,287,264,27;
+	setarray .py[88],54,72,41,241,241,257,272,20;
+
+	// payg_cas03 - Holy Shadow
+	setarray .mapa$[12],"payg_cas03";
+	setarray .tipo[96],2,2,2,2,2,2,2,3;
+	setarray .px[96],245,269,36,41,39,19,37,268;
+	setarray .py[96],37,51,39,39,65,276,277,244;
+
+	// payg_cas04 - Sacred Altar
+	setarray .mapa$[13],"payg_cas04";
+	setarray .tipo[104],2,2,2,2,2,2,2,3;
+	setarray .px[104],251,232,231,32,32,35,36,270;
+	setarray .py[104],212,212,175,287,232,45,17,41;
+
+	// payg_cas05 - Bamboo Grove Hill
+	setarray .mapa$[14],"payg_cas05";
+	setarray .tipo[112],2,2,2,2,2,2,2,3;
+	setarray .px[112],19,33,266,266,263,263,250,36;
+	setarray .py[112],279,260,234,279,37,21,22,36;
+
+	// prtg_cas02 - Swanhild
+	setarray .mapa$[15],"prtg_cas02";
+	setarray .tipo[120],3,3,3,1,1,2,2,2;
+	setarray .px[120],161,153,178,71,49,64,7,75;
+	setarray .py[120],161,161,44,75,28,186,196,175;
+
+	// prtg_cas03 - Fadhgridh
+	setarray .mapa$[16],"prtg_cas03";
+	setarray .tipo[128],3,3,3,1,1,2,2,2;
+	setarray .px[128],191,137,45,50,41,191,179,191;
+	setarray .py[128],190,190,99,87,87,42,43,72;
+
+	// prtg_cas04 - Skoegul
+	setarray .mapa$[17],"prtg_cas04";
+	setarray .tipo[136],3,3,3,1,1,1,2,2;
+	setarray .px[136],276,274,246,38,29,33,78,36;
+	setarray .py[136],14,35,246,240,240,258,48,61;
+
+	// prtg_cas05 - Gondul
+	setarray .mapa$[18],"prtg_cas05";
+	setarray .tipo[144],3,3,3,1,1,1,2,2;
+	setarray .px[144],266,287,245,236,251,278,32,44;
+	setarray .py[144],262,280,250,63,63,253,253,248;
+
+	// De-para do tipo para o id do monstro. Comeca em 1 e nao em 0 porque o
+	// `.tipo` do agit_main.txt comeca em 1 - trocar a base aqui para economizar
+	// uma posicao e o tipo de troca que fura calada.
+	setarray .mob[1],1287,1285,1286;
+
+	// Defesa que os museus recebem. 100 e o teto do investimento e o patamar
+	// mais alto da escala.
+	.defesa = 100;
+
+	.castelos = getarraysize(.mapa$);
+	.total = .castelos * 8;
+
+	// As quatro colunas TEM que ter o mesmo tamanho, e a regra 11 da CLAUDE.md
+	// existe porque a divergencia entre colunas paralelas nao da erro: o NPC
+	// funciona e poe guardiao no lugar errado. Aqui o `getarraysize` e confiavel
+	// porque nenhuma das tres colunas de numero termina em 0 e o `.mapa$`
+	// termina com texto - se um dia terminarem, esta conferencia passa a mentir.
+	if (getarraysize(.tipo) != .total)
+		debugmes "Zelador dos Guardioes: .tipo tem " + getarraysize(.tipo) + " e devia ter " + .total;
+	if (getarraysize(.px) != .total)
+		debugmes "Zelador dos Guardioes: .px tem " + getarraysize(.px) + " e devia ter " + .total;
+	if (getarraysize(.py) != .total)
+		debugmes "Zelador dos Guardioes: .py tem " + getarraysize(.py) + " e devia ter " + .total;
+
+	// O OnInit LIMPA mas NAO invoca, e a diferenca custou uma subida para ficar
+	// clara. Invocar aqui funciona, mas na primeira subida o char-server ainda
+	// nao mandou os dados de castelo: a defesa lida e 0 e os 152 nascem no
+	// patamar mais baixo. O OnAgitInit logo abaixo derruba e refaz, entao o
+	// resultado final e o certo - so que a subida passa a ter DUAS rodadas de
+	// spawn, e ai o log deixa de servir de prova. Com uma rodada so, "152 avisos
+	// de guardiao, 8 por mapa" e uma conferencia de verdade.
+	//
+	// Quem monta e o OnAgitInit (subida) ou o temporizador (depois de um
+	// `@reloadscript`, que nao dispara OnAgitInit). O preco e ate um minuto de
+	// mapa vazio depois de um reloadscript, e so.
+	//
+	// A limpeza fica porque `@reloadscript` NAO mata monstro: os guardioes da
+	// instancia anterior continuam de pe e o `.gid` voltou zerado, entao sem ela
+	// o S_Repoe os veria como ausentes e criaria 152 copias por cima.
+	callsub S_Limpa;
+	initnpctimer;
+	end;
+
+// O char-server acabou de entregar os dados de castelo, e este e o unico
+// momento em que se pode garantir que o `gc->defense` da memoria do map-server
+// e o do banco. O S_Limpa continua aqui por seguranca: OnAgitInit pode ser
+// disparado mais de uma vez, e sem ele a segunda vez duplicaria tudo.
+OnAgitInit:
+	callsub S_Defesa;
+	callsub S_Limpa;
+	callsub S_Repoe;
+	end;
+
+OnTimer60000:
+	callsub S_Defesa;
+	callsub S_Repoe;
+	setnpctimer 0;
+	end;
+
+// Existe para dar nome aos nossos guardioes - ver o cabecalho. Quem repoe e a
+// conferencia do temporizador, entao aqui nao ha nada a fazer.
+OnGuardiaoMorreu:
+	end;
+
+// O `if` nao e economia de linha: sem ele, o temporizador mandaria dezenove
+// gravacoes de dado de castelo ao char-server a cada minuto, para sempre. O
+// `GetCastleData` le a memoria do map-server e nao custa pacote nenhum, entao
+// em regime a funcao passa a ser de graca e so escreve quando algo saiu do
+// lugar.
+S_Defesa:
+	for (.@c = 0; .@c < .castelos; .@c++)
+		if (GetCastleData(.mapa$[.@c], CD_CURRENT_DEFENSE) != .defesa)
+			SetCastleData .mapa$[.@c], CD_CURRENT_DEFENSE, .defesa;
+	return;
+
+// Derruba os NOSSOS guardioes e so os nossos. O `killmonster` sem o terceiro
+// argumento nao dispara o rotulo dos que morrem, que e o que se quer aqui - o
+// terceiro argumento `1` e que FARIA disparar, ao contrario do que o nome
+// sugere (doc/script_commands.txt, `*killmonster`).
+S_Limpa:
+	for (.@c = 0; .@c < .castelos; .@c++)
+		killmonster .mapa$[.@c], "ZeladorDosGuardioes::OnGuardiaoMorreu";
+	deletearray .gid[0], .total;
+	return;
+
+// Repoe quem faltar. Idempotente de proposito: pode ser chamado a qualquer
+// hora, quantas vezes for, e so gasta um `guardian` por lugar vazio.
+S_Repoe:
+	for (.@n = 0; .@n < .total; .@n++) {
+		if (unitexists(.gid[.@n]))
+			continue;
+
+		.@mob = .mob[.tipo[.@n]];
+		.gid[.@n] = guardian(.mapa$[.@n / 8], .px[.@n], .py[.@n],
+			getmonsterinfo(.@mob, MOB_NAME), .@mob,
+			"ZeladorDosGuardioes::OnGuardiaoMorreu");
+	}
+	return;
+}

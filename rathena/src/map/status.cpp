@@ -36,6 +36,8 @@
 #include "pet.hpp"
 #include "script.hpp"
 
+#include <custom/guardiao_do_castelo.hpp>
+
 using namespace rathena;
 
 // Regen related flags.
@@ -2800,6 +2802,16 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
 	if (md->mob_id == MOBID_EMPERIUM)
 		flag|=4;
 
+	// Guerra do Emperium: a nossa escala vale para TODO guardiao, e nao so para
+	// quem tem a Pesquisa de Guardiao da linha acima. A flag e a mesma de
+	// proposito - o que ela liga aqui e o caminho que ALOCA o `md->base_status`
+	// proprio do monstro. Sem nenhuma flag, o `status_calc_mob_` sai umas
+	// linhas abaixo, LIBERA o base_status e passa a usar o status compartilhado
+	// do mob_db; escrever la contaminaria todos os guardioes do servidor de uma
+	// vez. Ver src/custom/guardiao_do_castelo.hpp.
+	if (guardiao_tem_escala(md))
+		flag|=4;
+
 	if (battle_config.slaves_inherit_speed && md->master_id)
 		flag|=8;
 
@@ -3050,6 +3062,15 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
 			status->hp = status->max_hp;
 		}
 	}
+
+	// Guerra do Emperium: HP, ATQ, velocidade de ataque e reducao do guardiao
+	// pela DEFESA investida no castelo. Tem que ser AQUI, no fim: os nossos
+	// valores sao absolutos e o bloco "Strengthen Guardians" do rAthena la em
+	// cima SOMA em cima do que encontrar, alem de o `status_calc_misc`
+	// reescrever `rhw.atk`/`rhw.atk2` a partir do mob_db. E tem que ser ANTES
+	// do memcpy abaixo, senao o status de batalha sai com os numeros velhos.
+	// Ver src/custom/guardiao_do_castelo.hpp.
+	guardiao_aplica_escala(md, status);
 
 	if (opt&SCO_FIRST) // Initial battle status
 		memcpy(&md->status, status, sizeof(struct status_data));

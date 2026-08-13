@@ -42,3 +42,30 @@
 // Ver src/custom/reducao_geral.hpp.
 { "reducao_dano_isenta_habilidade",     &battle_config.reducao_dano_isenta_habilidade,  1,      0,      1,              },
 
+// Guerra do Emperium: escala do guardiao de castelo pela defesa investida. Os
+// valores de verdade estao em conf/guerra/battle_guerra.txt; os padroes daqui
+// sao os de quem clonar o repo sem esse arquivo, e por isso `guardiao_escala`
+// nasce DESLIGADA - esta e regra de jogo nossa, nao comportamento de emulador,
+// e clone sem a nossa conf tem de se comportar como rAthena puro. Os outros
+// catorze valem so quando ela e ligada, e trazem a curva pedida em 2026-08-13
+// para que ligar a chave sozinha ja de o resultado documentado.
+// Ver src/custom/guardiao_do_castelo.hpp.
+{ "guardiao_escala",                    &battle_config.guardiao_escala,                 0,      0,      1,              },
+{ "guardiao_patamar_divisor",           &battle_config.guardiao_patamar_divisor,        10,     1,      INT_MAX,        },
+{ "guardiao_patamar_max",               &battle_config.guardiao_patamar_max,            10,     0,      INT_MAX,        },
+{ "guardiao_hp_base",                   &battle_config.guardiao_hp_base,                5000000, 1,     INT_MAX,        },
+{ "guardiao_hp_passo",                  &battle_config.guardiao_hp_passo,               1000000, 0,     INT_MAX,        },
+{ "guardiao_hp_max",                    &battle_config.guardiao_hp_max,                 15000000, 1,    INT_MAX,        },
+{ "guardiao_atk_base",                  &battle_config.guardiao_atk_base,               5000,   1,      65535,          },
+{ "guardiao_atk_passo",                 &battle_config.guardiao_atk_passo,              5000,   0,      65535,          },
+{ "guardiao_atk_max",                   &battle_config.guardiao_atk_max,                50000,  1,      65535,          },
+{ "guardiao_reducao_base",              &battle_config.guardiao_reducao_base,           5,      0,      99,             },
+{ "guardiao_reducao_passo",             &battle_config.guardiao_reducao_passo,          5,      0,      99,             },
+{ "guardiao_reducao_max",               &battle_config.guardiao_reducao_max,            50,     0,      99,             },
+{ "guardiao_aspd_base",                 &battle_config.guardiao_aspd_base,              168,    0,      190,            },
+{ "guardiao_aspd_passo",                &battle_config.guardiao_aspd_passo,             1,      0,      190,            },
+{ "guardiao_aspd_max",                  &battle_config.guardiao_aspd_max,               178,    0,      190,            },
+{ "guardiao_hit_base",                  &battle_config.guardiao_hit_base,               530,    1,      SHRT_MAX,       },
+{ "guardiao_hit_passo",                 &battle_config.guardiao_hit_passo,              10,     0,      SHRT_MAX,       },
+{ "guardiao_hit_max",                   &battle_config.guardiao_hit_max,                630,    1,      SHRT_MAX,       },
+

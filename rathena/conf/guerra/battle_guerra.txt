@@ -215,3 +215,119 @@ reducao_dano_isenta_habilidade: 0
 // battle_calc_bg_damage, para a isencao de habilidade tambem cair
 // la. Sem o enxerto, a Chuva de Moedas fica dominante na campal
 // exatamente como ficaria na guerra.
+
+//--------------------------------------------------------------
+// O GUARDIAO CRESCE COM A DEFESA DO CASTELO
+//
+// Opcoes NOSSAS (src/custom/guardiao_do_castelo.hpp). Alterar
+// aqui exige `@reloadbattleconf`; HP, ATQ e velocidade so valem
+// no PROXIMO spawn do guardiao, a reducao vale na hora.
+//
+// Vale para os tres guardiaos - Soldado (1287), Arqueiro (1285) e
+// Cavaleiro (1286) -, NAO para o Emperium.
+//
+// A forma e a mesma nos quatro atributos:
+//
+//     valor = base + passo * patamar,  cortado pelo teto
+//     patamar = defesa do castelo / divisor,  de 0 ao patamar_max
+//
+// Com os numeros abaixo, a curva de 2026-08-13, terceira e ultima
+// calibragem da noite:
+//
+//   defesa    HP           reducao   ASPD   ATQ      precisao
+//    0- 9      5.000.000      5%      168    5.000     530
+//   10-19      6.000.000     10%      169   10.000     540
+//   20-29      7.000.000     15%      170   15.000     550
+//   30-39      8.000.000     20%      171   20.000     560
+//   40-49      9.000.000     25%      172   25.000     570
+//   50-59     10.000.000     30%      173   30.000     580
+//   60-69     11.000.000     35%      174   35.000     590
+//   70-79     12.000.000     40%      175   40.000     600
+//   80-89     13.000.000     45%      176   45.000     610
+//   90-99     14.000.000     50%      177   50.000     620
+//     100     15.000.000     50%      178   50.000     630
+//
+// HP, velocidade e precisao chegam ao teto no patamar 10; reducao
+// e ATQ ja tinham chegado no 9.
+//
+// AS DUAS VERSOES ANTERIORES, da mesma noite, foram vistas em jogo
+// e cortadas pelo dono. A primeira ia a 99% de reducao, 50 milhoes
+// de HP e ASPD 190 ("a reducao ficou realmente abissal"); a
+// segunda baixou a reducao para 50% mas manteve o HP em 50 milhoes
+// e a ASPD em 185. As contas de por que estao abaixo.
+//
+// A REDUCAO AQUI MULTIPLICA COM OS gvg_*_attack_damage_rate LA
+// EM CIMA, e essa e a conta que importa. Mapa de castelo tem
+// `gvg_castle` permanente, entao dentro dele ja passa 20% do dano
+// 24 horas por dia - com ou sem guerra aberta. Somando as duas:
+//
+//   patamar  0 -> passa 19% do bruto ->   26 milhoes para matar
+//   patamar  5 -> passa 14% do bruto ->   71 milhoes
+//   patamar 10 -> passa 10% do bruto ->  150 milhoes
+//
+// Nas duas versoes anteriores o topo pedia 25 BILHOES e depois 500
+// milhoes. E sao OITO guardiaos por castelo.
+//
+// PERTO DO TETO, UM PONTO DE REDUCAO VALE MUITO MAIS QUE O HP:
+// sair de 50% para 90% multiplica a durabilidade por CINCO, e de
+// 90% para 99% por mais DEZ; dobrar o HP so dobra. Quem quiser um
+// guardiao mais duro mexe no HP primeiro, e so encosta na reducao
+// sabendo disso.
+guardiao_escala: 1
+
+// Patamar. O divisor 10 com defesa de 0 a 100 da onze patamares.
+guardiao_patamar_divisor: 10
+guardiao_patamar_max: 10
+
+// HP. Um milhao por patamar, teto atingido no patamar 10.
+guardiao_hp_base: 5000000
+guardiao_hp_passo: 1000000
+guardiao_hp_max: 15000000
+
+// ATQ. E a MEDIA: o dano sai entre 80% e 120% deste numero, que e
+// a mesma variacao que o `Attack` do mob_db ganha no
+// status_calc_misc. Teto duro de 65535 - o campo e uint16.
+guardiao_atk_base: 5000
+guardiao_atk_passo: 5000
+guardiao_atk_max: 50000
+
+// Reducao do dano RECEBIDO, em porcentagem - aqui o numero e a
+// reducao mesmo, ao contrario dos gvg_* la em cima. O teto que o
+// campo do emulador (`damagetaken`) expressa e 99, mas o teto de
+// JOGO e o 50 abaixo, por decisao de 2026-08-13: a durabilidade
+// veio para o HP e nao para a reducao, que e o unico dos dois que
+// nao cresce em linha reta.
+guardiao_reducao_base: 5
+guardiao_reducao_passo: 5
+guardiao_reducao_max: 50
+
+// Velocidade, em ASPD de JOGADOR - 168 da 640 ms entre golpes
+// (1,6 por segundo) e 178 da 440 ms (2,3 por segundo). O teto do
+// emulador para monstro e 190 (MAX_ASPD_NOPC) e pedir mais nao
+// acelera nada; o 178 aqui e teto de jogo, nao de emulador.
+guardiao_aspd_base: 168
+guardiao_aspd_passo: 1
+guardiao_aspd_max: 178
+
+// Precisao, ABSOLUTA - esta linha joga fora o `nivel + DEX + 150`
+// que o mob_db daria. No renewal a chance de acerto e literalmente
+// `hit - esquiva do alvo`, em pontos percentuais, travada entre 5
+// e 100 (min_hitrate/max_hitrate em conf/battle/battle.conf).
+// Entao com 530 o guardiao acerta 100% em quem tem esquiva 430,
+// 50% em quem tem 480, e cai no piso de 5% a partir de 525.
+//
+// POR QUE ABSOLUTA e nao somada: as tres bases do mob_db sao 309
+// (Soldado), 386 (Cavaleiro) e 422 (Arqueiro). Somar os mesmos
+// 100 pontos nos tres deixaria o Soldado em 24% e os outros dois
+// em 100% contra o mesmo alvo. Medido em 2026-08-13, quando dois
+// dos tres estavam batendo no PISO de 5% e o dono viu "muito
+// miss".
+//
+// A esquiva de verdade dos jogadores deste servidor NAO foi
+// medida - os 530 saem de 450 mais os 80 que o dono pediu depois
+// de ver em jogo, e nao de conta. Para calibrar de verdade: olhar
+// a Esquiva na janela de status do personagem e somar a chance
+// desejada.
+guardiao_hit_base: 530
+guardiao_hit_passo: 10
+guardiao_hit_max: 630

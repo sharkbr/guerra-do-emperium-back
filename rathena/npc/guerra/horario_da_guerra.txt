@@ -1,0 +1,126 @@
+//===== Guerra do Emperium ==================================================
+//= Horario da Guerra do Emperium 1.0
+//===========================================================================
+//= Substitui o npc/guild/agit_controller.txt do rAthena, que esta comentado
+//= em npc/scripts_guild.conf. NPC sem mapa (`-1`), como o original.
+//===========================================================================
+//
+//  O HORARIO
+//  =========
+//
+//  Decisao do dono em 2026-08-13:
+//
+//      quinta-feira   20:00 -> 22:00
+//      domingo        18:00 -> 20:00
+//
+//  Horario de Brasilia, que e o do relogio desta maquina - o `gettime` le a
+//  hora local do map-server, sem conversao. Se um dia o servidor mudar de
+//  fuso, estes numeros mudam junto e nada avisa.
+//
+//  POR QUE COPIA E NAO EDICAO
+//  ==========================
+//
+//  O agit_controller.txt e arquivo do rAthena e a regra da CLAUDE.md secao 2
+//  vale: nada nosso mora la dentro. A copia aqui e a receita de sempre -
+//  desligar o original (uma linha comentada em npc/scripts_guild.conf) e por
+//  a nossa versao ao lado. Se um dia o horario voltar a ser o do rAthena,
+//  basta trocar as duas linhas de volta.
+//
+//  O QUE MUDA EM RELACAO AO ORIGINAL
+//  =================================
+//
+//  1. Os horarios: o rAthena abria terca e quinta 21-23 e sabado 16-18.
+//  2. Os avisos sao em portugues.
+//  3. O aviso fala SO DO KRIEMHILD. O original percorre os vinte castelos e
+//     anuncia cada um; aqui os outros dezenove sao campo de treino sem
+//     Emperium (ver npc/guerra/guardioes_dos_castelos.txt), entao anunciar
+//     "castelo desocupado" dezenove vezes seria ruido e mentira ao mesmo
+//     tempo - eles nao estao a disputa.
+//  4. Nada de `if` com `||`: a regra da CLAUDE.md secao 4 vale aqui tambem, e
+//     o original usa `||` encadeado.
+//
+//  SO O KRIEMHILD ENTRA EM GUERRA, E ISSO NAO E DECIDIDO AQUI
+//  ==========================================================
+//
+//  O `AgitStart` abaixo e global: ele dispara `OnAgitStart` em todo NPC que
+//  tenha esse rotulo. Quem limita a guerra ao Kriemhild e o
+//  npc/scripts_guild.conf, onde as outras dezenove linhas de castelo estao
+//  comentadas - sem o arquivo do castelo nao ha `Agit#<castelo>`, logo nao ha
+//  `OnAgitStart`, nao nasce Emperium e nao ha o que conquistar.
+//
+//  Ou seja: para por outro castelo em guerra, descomenta-se a linha dele la e
+//  ele passa a responder a este mesmo horario. Nao ha lista de castelos aqui,
+//  de proposito - duas listas divergem, e a divergencia nao daria erro.
+//
+//  A Guerra do Emperium 2 (guild2) tem o proprio controlador
+//  (npc/guild2/agit_start_se.txt) e continua intocada.
+//===========================================================================
+
+-	script	Horario da Guerra::HorarioDaGuerra	-1,{
+	end;
+
+// Os quatro instantes em que algo muda. O 2000 aparece uma vez so, mas vale
+// por dois: e o comeco da quinta E o fim do domingo. Quem separa e o
+// `gettime(DT_DAYOFWEEK)` la embaixo.
+OnClock1800:   // domingo comeca
+OnClock2000:   // quinta comeca, domingo termina
+OnClock2200:   // quinta termina
+
+// Tambem roda quando o map-server sobe, para a guerra continuar de pe se o
+// servidor for reiniciado no meio dela.
+OnAgitInit:
+	.@dia = gettime(DT_DAYOFWEEK);
+	.@hora = gettime(DT_HOUR);
+
+	// --------------------------------------------------------------- comeco
+	if (.@dia == THURSDAY) {
+		if (.@hora >= 20) {
+			if (.@hora < 22) callsub S_Abre;
+		}
+	}
+	if (.@dia == SUNDAY) {
+		if (.@hora >= 18) {
+			if (.@hora < 20) callsub S_Abre;
+		}
+	}
+
+	// ------------------------------------------------------------------ fim
+	// Sem `else`: o `S_Abre` e o `S_Fecha` ja checam o `agitcheck()`, entao
+	// cair nos dois no mesmo minuto nao faz nada duas vezes. E na quinta as
+	// 22h e no domingo as 20h so um dos dois pode valer, por construcao.
+	if (.@dia == THURSDAY) {
+		if (.@hora == 22) callsub S_Fecha;
+	}
+	if (.@dia == SUNDAY) {
+		if (.@hora == 20) callsub S_Fecha;
+	}
+	end;
+
+S_Abre:
+	if (agitcheck())
+		return;   // ja esta aberta - foi o OnAgitInit de um reinicio no meio
+
+	AgitStart;
+	announce "A Guerra do Emperium começou! O Kriemhild está em disputa.", bc_all|bc_woe;
+	callsub S_Dono;
+	return;
+
+S_Fecha:
+	if (!agitcheck())
+		return;
+
+	AgitEnd;
+	announce "A Guerra do Emperium terminou.", bc_all|bc_woe;
+	callsub S_Dono;
+	return;
+
+// So o Kriemhild - ver o cabecalho.
+S_Dono:
+	.@dono = GetCastleData("prtg_cas01", CD_GUILD_ID);
+	if (.@dono == 0) {
+		announce "O castelo [" + GetCastleName("prtg_cas01") + "] está sem dono.", bc_all|bc_woe;
+		return;
+	}
+	announce "O castelo [" + GetCastleName("prtg_cas01") + "] pertence ao clã [" + GetGuildName(.@dono) + "].", bc_all|bc_woe;
+	return;
+}

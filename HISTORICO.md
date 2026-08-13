@@ -7943,3 +7943,293 @@ devolve falha, o `OnInit` morre ali, e tudo que ele ainda ia montar — `.topo$`
 cliente desenha uma caixa de menu **em branco**. Nada na tela liga a caixa vazia
 ao índice `-1`, e o diálogo antes dela funciona perfeitamente, o que empurra o
 diagnóstico para o lado errado. Virou `if` / `else if`.
+
+## Os guardiões crescem com a defesa, e dezenove castelos viram campo de treino (2026-08-13)
+
+Pedido do dono: fazer o Guardião Soldado (1287) melhorar **de forma incremental
+conforme o investimento do castelo** — redução de dano, velocidade de ataque,
+dano e HP. A pergunta que veio junto era se daria para fazer isso com um monstro
+só ou se seria preciso "criar alguns tipos de guardião e atribuir um por faixa".
+
+Dá com um monstro só, e a resposta estava no próprio rAthena: o
+`mob_spawn_guardian` grava `md->guardian_data->castle` (`mob.cpp:907`), então de
+dentro do C++ todo guardião sabe de que castelo é e quanto ele tem de defesa. O
+emulador inclusive **já faz** uma versão embrionária disso — o bloco comentado
+como *"Strengthen Guardians"* (`status.cpp:2895`) escala HP, DEF, ATQ e ASPD
+pela defesa —, só que preso à habilidade de clã Pesquisa de Guardião e com uma
+curva que não é a que se queria.
+
+A primeira análise foi entregue falando em **economia**, porque foi a palavra do
+pedido; o dono corrigiu na volta — *"você tem razão, o correto é por defesa"* —
+e a escala nasceu na defesa.
+
+### A curva, e por que os dois últimos degraus não são iguais
+
+O patamar é `defesa / 10`, de 0 a 10:
+
+| defesa | HP | redução | ASPD | ATQ |
+|---|---|---|---|---|
+| 0–9 | 5.000.000 | 90% | 180 | 5.000 |
+| 10–19 | 10.000.000 | 91% | 181 | 10.000 |
+| … | … | … | … | … |
+| 90–99 | 50.000.000 | 99% | 189 | 50.000 |
+| **100** | 50.000.000 | 99% | **190** | 50.000 |
+
+A defesa 100 rende **só o último ponto de velocidade** porque os outros três já
+bateram no teto no patamar 9. Não é esquecimento: é o que o pedido descrevia
+(*"do 90 não muda pro 100, limite continua 99"*), e foi a leitura que fez os
+seis números dele fecharem ao mesmo tempo. Os quatro atributos seguem a mesma
+forma — `base + passo × patamar`, cortada por um teto —, e são os tetos que
+desenham a curva.
+
+Os quinze valores estão em `conf/guerra/battle_guerra.txt` e pegam com
+`@reloadbattleconf`; HP, ATQ e velocidade só valem no **próximo spawn**, a
+redução vale na hora.
+
+### O que não existia, e o que se usou no lugar
+
+**Não há "redução humano" para monstro.** Foi o achado que mudou o desenho: o
+`bonus2 bSubRace,RC_Player_Human` é bônus de jogador, e o `battle_calc_cardfix`
+não tem ramo para alvo `BL_MOB`. O substituto é o `md->damagetaken`
+(`battle.cpp:2072`), que é geral em vez de por raça — dentro de castelo dá no
+mesmo, porque quem bate em guardião é jogador — e que é **inteiro em
+porcentagem**, o que faz de 99% o teto real. Subiu para o `CLAUDE.md` §5, junto
+com as outras cinco armadilhas desta rodada.
+
+**Velocidade de ataque precisou de conversão.** Monstro não tem ASPD; tem
+`AttackDelay` (1288 ms no Soldado) e `AttackMotion`. A escala fala 180–190
+porque é o número que o jogador conhece, então usou-se a fórmula do próprio
+rAthena: ASPD 180 dá 400 ms entre golpes, ASPD 190 dá 200 ms. E **190 é o teto
+do emulador**, não uma escolha — o `MAX_ASPD_NOPC` trava o `amotion` de
+não-jogador em 100 ms e o `adelay` nunca fica abaixo dele. A escala pedida
+terminou exatamente na parede, por coincidência.
+
+Na primeira análise esses dois números foram entregues **pela metade** (200 ms e
+100 ms), por ter-se esquecido o `AMOTION_DIVIDER_PC` da conta do jogador. O erro
+dobrava o DPS estimado do guardião no topo — 100.000/s em vez de 50.000/s — e
+foi corrigido antes de virar código.
+
+### A conta que decide tudo, e quase passou batida
+
+Mapa de castelo tem o mapflag `gvg_castle` **permanente**, e o
+`mapdata_flag_gvg2` só olha mapflag: os nossos `gvg_*_attack_damage_rate: 20`
+valem lá dentro 24 horas por dia, com ou sem guerra aberta, e valem **também
+quando o alvo é monstro**. Então a redução do guardião não age sozinha:
+
+```
+dano que entra = bruto × 0,20 (guerra) × (1 − redução do guardião)
+```
+
+No patamar 0 isso é 2% do bruto; no patamar 9, 0,2%. Com 5 e 50 milhões de HP,
+são **250 milhões** e **25 bilhões** de dano bruto para derrubar um guardião —
+vezes oito por castelo. Foi levada ao dono como ressalva antes de qualquer
+linha ser escrita: defesa 100 torna um castelo matematicamente inconquistável.
+Ele aceitou justamente por isso, porque os castelos que vão receber defesa 100
+não têm Emperium.
+
+O lado bom da mesma propriedade é o teste: como o mapflag não depende da guerra,
+o número medido numa terça à tarde é o número da guerra de domingo.
+
+### Os dezenove castelos-museu
+
+Decisão do dono: o servidor começa com **um** castelo conquistável, o Kriemhild
+(`prtg_cas01`), cuja defesa e economia continuam sendo as que a guilda dona
+investir — este trabalho não encosta nele. Os outros dezenove da Guerra do
+Emperium 1 viram campo de treino: defesa 100, oito guardiões cada, sem
+Emperium, sem dono, sem nada.
+
+Duas peças, e a primeira foi uma surpresa:
+
+**O rAthena não invoca guardião em castelo sem dono.** No `OnAgitInit` do
+`agit_main.txt`, castelo com `CD_GUILD_ID == 0` cai num `killmonsterall` e ganha
+Evil Druid, Khalitzburg e companhia; o `OnSpawnGuardians` só existe no ramo do
+castelo COM dono. Por isso existe `npc/guerra/guardioes_dos_castelos.txt` — um
+NPC só, em `prt_gld 136,66`, ao lado da entrada do Kriemhild, com o sprite
+`EP17_2_GUARDIAN_PARTS`. Um NPC basta para os dezenove porque o comando
+`guardian` recebe o mapa como argumento.
+
+**Desligar as dezenove linhas em `npc/scripts_guild.conf`** tira Emperium,
+Kafra, Gerente, alavanca, baú e bandeiras de uma vez, porque cada um daqueles
+arquivos é só um punhado de `duplicate` do `agit_main.txt`. Era a condição que o
+dono pôs — *"vamos fazer apenas se for comentar algumas poucas linhas"* —, e é
+exatamente isso. A Guerra do Emperium 2 (os dez castelos de `guild2`) ficou
+intocada: *"vamos começar com a 1.0 primeiro"*.
+
+Os guardiões são invocados **sem índice**, ou seja temporários. Não é economia
+de digitação: com índice eles ocupariam os slots `CD_ENABLED_GUARDIAN` e
+passariam a ser alcançados pelo `mob_guardian_guildchange` (`mob.cpp:3690`), que
+**apaga guardião de castelo sem dono** — o sumiço viria calado na primeira vez
+que alguém tocasse na dona do castelo. O preço é não ter respawn automático, e
+daí o temporizador de um minuto que confere os 152 lugares por `unitexists()`.
+
+O caminho óbvio para a reposição seria o rótulo de morte, e ele foi descartado
+por um motivo concreto: responde "morreu um" sem dizer **qual**, e o `killedgid`
+que resolveria isso é parâmetro de jogador — guardião morto sem matador anexado
+não voltaria, e a falha seria calada.
+
+### A armadilha que o enxerto em C++ quase criou
+
+O `status_calc_mob_` tem uma porta de saída logo no começo: sem nenhuma flag
+ligada ele **libera o `md->base_status`** e passa a apontar para o status
+compartilhado do `mob_db` (`status.cpp:2812`). O bloco `flag&4` do rAthena só
+liga com a habilidade Pesquisa de Guardião, então um guardião comum não teria
+`base_status` próprio — e o nosso ajuste, escrito depois daquela linha, teria
+alterado **todos os guardiões do servidor de uma vez**, calado, e sobreviveria
+até o próximo `@reloadmobdb`.
+
+A saída foi **acrescentar** um `flag|=4` ao lado do do rAthena em vez de mexer
+no que já estava lá; o enxerto é uma adição, não uma substituição, e por isso
+sobrevive a um merge do vendor. As duas chamadas em `status.cpp` estão na tabela
+do `CLAUDE.md` §2.
+
+### A subida, e a rodada dupla que virou uma
+
+O dono fechou o cliente e mandou terminar; o map-server foi linkado
+(`map-server.exe` de 01:55) e os quatro servidores subiram.
+
+A primeira subida acusou uma coisa que não era erro mas atrapalhava: **16 avisos
+de `mob_spawn_guardian` por mapa**, em dois blocos separados por três segundos —
+o `OnInit` montava os 152 e o `OnAgitInit` derrubava e refazia. O resultado
+final estava certo (é para isso que o `OnAgitInit` refaz: no `OnInit` a defesa
+lida ainda é 0, porque o char-server não entregou os dados de castelo), **mas
+não havia como provar de fora do jogo que a limpeza do meio tinha funcionado**.
+Dezesseis avisos por mapa tanto podem ser "montou, limpou, montou" quanto
+"montou duas vezes e empilhou".
+
+O `OnInit` passou a só limpar, e quem monta é o `OnAgitInit` (subida) ou o
+temporizador (depois de um `@reloadscript`, que não dispara `OnAgitInit`). Custa
+até um minuto de mapa vazio depois de um reloadscript, e compra uma conferência
+que se lê no log sem entrar no jogo. Na subida seguinte:
+
+```
+avisos de guardiao: 152    mapas: 19    todos com 8: True
+kriemhild presente? False
+```
+
+Junto vieram `Unknown syntax` zero (o cabeçalho de 100 linhas passou) e nenhum
+`debugmes` da conferência de colunas — ou seja, as dezenove tabelas de posição
+têm as quatro colunas com 152 elementos. Os quatro `[ Error ]` da subida são os
+de sempre, do `item_db.yml` (chicote e instrumento musical), e não têm relação
+com isto.
+
+O `S_Defesa` ganhou um `if` no mesmo passo: sem ele o temporizador mandaria
+dezenove gravações de dado de castelo ao char-server **por minuto, para
+sempre**. O `GetCastleData` lê a memória do map-server e não custa pacote, então
+em regime a função passou a ser de graça.
+
+### A revisão, na mesma noite: o teste em jogo cortou dois dos cinco números
+
+O dono foi ver e voltou com duas frases que valem mais que a análise toda:
+*"a redução ficou realmente abissal"* e *"eles só não ficaram monstros
+aniquiladores pois deram muito miss"*.
+
+Foram **duas revisões**, as duas com ele olhando o resultado em jogo entre uma e
+outra. A escala final:
+
+| | 1ª (tarde) | 2ª | 3ª (final) |
+|---|---|---|---|
+| HP no topo | 50.000.000 | 50.000.000 | **15.000.000** |
+| redução no topo | 99% | 50% | 50% |
+| ASPD | 180→190 | 175→185 | **168→178** |
+| precisão | — | 450→550 | **530→630** |
+| **dano bruto para derrubar um guardião** | **25 bilhões** | 500 milhões | **150 milhões** |
+
+A primeira revisão cortou só a redução (de 90–99% para 5–50%, +5 por patamar) e
+deixou HP e ATQ onde estavam; a segunda trouxe o HP para 5–15 milhões, um por
+patamar, e desceu a velocidade mais um degrau. Do primeiro número ao último, a
+durabilidade caiu **167 vezes** — e ainda são 150 milhões de dano bruto vezes
+oito guardiões por castelo.
+
+**A lição que ficou escrita nos dois arquivos:** a redução é a alavanca
+**não-linear** e o HP é a linear. Sair de 50% para 90% de redução multiplica a
+durabilidade por cinco; de 90% para 99%, por mais dez; triplicar o HP triplica.
+O aviso de que a redução era o eixo errado estava na entrega original e não
+bastou — porque a tabela de 90 a 99 **não parece absurda quando se olha para
+ela**. Só a conta de "quanto dano bruto derruba isto" mostra a ordem de
+grandeza, e é ela que precisa estar na conf, não a tabela de porcentagens.
+
+### O miss não era pouca precisão: era o piso do emulador
+
+Este foi o achado da revisão. No renewal a chance de acerto é literalmente
+`hit − esquiva`, em pontos percentuais, travada entre `min_hitrate` (5) e
+`max_hitrate` (100) — `battle.cpp:3289-3341`, onde a taxa base do renewal é
+**zero** e a única coisa somada é aquela diferença. E o `hit` de monstro é
+`nível + DEX + 150`:
+
+| guardião | hit | contra esquiva ~385 |
+|---|---|---|
+| Soldado (1287) | 309 | −76 → **5%**, o piso |
+| Cavaleiro (1286) | 386 | +1 → **5%**, o piso |
+| Arqueiro (1285) | 422 | +37 → 37% |
+
+Dois dos três estavam batendo no **mínimo absoluto do emulador**. Não era "pouca
+precisão", era o chão — e explica por que o dono nomeou o Soldado.
+
+O pedido foi *"eu chutaria em uns 100 pontos"*, somados. Não serviria como
+somatório: as três bases diferem em 113 pontos, então os mesmos +100 deixariam o
+Soldado em 24% e os outros dois em 100% contra o mesmo alvo. A precisão entrou
+**absoluta**, e a linha joga fora o `nível + DEX + 150` de propósito — os três
+guardiões da mesma escala acertam igual. Ficou em 450→550, e na revisão seguinte
+subiu mais 80, para **530→630**.
+
+**O que não foi medido, e está dito nos dois lugares:** a esquiva de verdade dos
+jogadores deste servidor. Os 530 saem da faixa pedida somada aos 80 que ele
+mandou acrescentar depois de ver em jogo — não de conta. Com a fórmula sendo uma
+subtração travada em 5 e 100, cem pontos cobrem a escala inteira, então este é o
+número da escala com mais chance de ainda estar errado. Calibra-se olhando a
+Esquiva na janela de status e somando a chance desejada, não por tentativa e
+erro.
+
+### O que ainda falta, e só se vê em jogo
+
+O log da subida com a escala revista fechou igual — 152 avisos, 19 mapas, oito em
+cada, Kriemhild fora, zero `Unknown setting` (as dezoito opções foram aceitas).
+Ele **não** prova que a escala pegou, que o sprite do Zelador desenha, nem
+quanto dano um golpe tira. Está no `PENDENCIAS.md` §1o.
+
+## O horário da guerra: quinta e domingo, só o Kriemhild (2026-08-13)
+
+Fechando a rodada dos guardiões, o dono definiu quando a Guerra do Emperium
+abre:
+
+| dia | de | até |
+|---|---|---|
+| quinta-feira | 20:00 | 22:00 |
+| domingo | 18:00 | 20:00 |
+
+Horário de Brasília, que é o do relógio desta máquina — o `gettime` do script lê
+a hora local do map-server, sem conversão. Conferido: `E. South America Standard
+Time`, UTC−03:00.
+
+O `npc/guild/agit_controller.txt` do rAthena (terça e quinta 21–23, sábado
+16–18) foi desligado em `npc/scripts_guild.conf` e substituído por
+`npc/guerra/horario_da_guerra.txt` — a receita de sempre da §2: comentar a linha
+do original e pôr a nossa cópia ao lado.
+
+Três diferenças além do horário:
+
+- **Os avisos são em português**, e falam **só do Kriemhild**. O original
+  percorre os vinte castelos e anuncia cada um; anunciar "castelo desocupado"
+  dezenove vezes seria ruído e mentira ao mesmo tempo — aqueles dezenove são
+  campo de treino sem Emperium, não estão em disputa.
+- **Sem `||` encadeado.** O original monta as condições de dia e hora com `||`,
+  que no script do rAthena não faz curto-circuito (`CLAUDE.md` §5). Aqui são
+  `if` aninhados.
+- O rótulo `OnClock2000` **vale por dois**: é o começo da quinta e o fim do
+  domingo. Quem separa é o `gettime(DT_DAYOFWEEK)`.
+
+**Não há lista de castelos no arquivo de horário, e é de propósito.** O
+`AgitStart` é global — dispara `OnAgitStart` em todo NPC que tenha o rótulo.
+Quem limita a guerra ao Kriemhild é o `npc/scripts_guild.conf`, onde as outras
+dezenove linhas estão comentadas: sem o arquivo do castelo não existe
+`Agit#<castelo>`, logo não nasce Emperium e não há o que conquistar. Uma segunda
+lista aqui divergiria da primeira mais cedo ou mais tarde, e a divergência não
+daria erro — é exatamente o padrão da regra §4.11.
+
+Para pôr outro castelo em guerra, portanto, basta descomentar a linha dele lá;
+ele passa a responder a este mesmo horário sozinho. Convém tirar o mapa do
+`guardioes_dos_castelos.txt` no mesmo passo, senão os guardiões de defesa 100
+ficam por cima dos guardiões de verdade.
+
+A Guerra do Emperium 2 (`guild2`) tem o próprio controlador
+(`npc/guild2/agit_start_se.txt`) e continua intocada.

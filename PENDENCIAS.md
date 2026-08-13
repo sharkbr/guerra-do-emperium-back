@@ -1219,6 +1219,102 @@ trocar a terceira entrada do `.nome$` no `OnInit`.
 
 ---
 
+## 1o. Os guardiões que crescem com a defesa — falta ver no jogo (2026-08-13)
+
+**Está compilado, linkado e no ar.** O map-server foi reconstruído e os quatro
+servidores subiram; o log da subida já confirma o que dá para confirmar de fora
+do jogo:
+
+```
+avisos de mob_spawn_guardian: 152    mapas: 19    todos com 8: True
+kriemhild presente? False            Unknown syntax: 0
+```
+
+Ou seja: os 152 guardiões nasceram, oito em cada um dos dezenove castelos, o
+Kriemhild ficou intocado, o arquivo de NPC foi lido inteiro e as quatro colunas
+de posição batem (nenhum `debugmes` da conferência da regra §4.11).
+
+**O que isso NÃO prova:** que a escala pegou, que o sprite do Zelador desenha, e
+quanto dano um golpe tira. É o que falta, e só se vê em jogo.
+
+**O que entrou:**
+
+| Peça | Onde |
+|---|---|
+| A escala em si | `rathena/src/custom/guardiao_do_castelo.hpp` |
+| Os quinze números | `rathena/conf/guerra/battle_guerra.txt`, bloco final |
+| Os dois enxertos | `rathena/src/map/status.cpp` (`CLAUDE.md` §2) |
+| Os dezenove museus | `rathena/npc/guerra/guardioes_dos_castelos.txt` |
+| Os castelos desligados | `rathena/npc/scripts_guild.conf`, 19 linhas comentadas |
+
+**O que conferir em jogo, e por que cada um:**
+
+- **Se o Zelador aparece em `prt_gld 136,66`, e desenhado por inteiro.** O
+  sprite `EP17_2_GUARDIAN_PARTS` (20679) foi conferido offline pelas três
+  tabelas — `npcidentity.lub`, `jobname.lub` e o `.spr`/`.act` no GRF —, e
+  `CLAUDE.md` §5 é explícito em que **as três darem OK não é prova de que
+  desenha**. Vale olhar também se ele está **enterrado no chão**: é sprite de
+  monstro usado como NPC, e a armadilha do `.act` com `y = 0` mora exatamente
+  aí (`ferramentas/levanta_sprite_npc.py` conserta, e o override é do cliente,
+  fora do git).
+- **Se os 152 guardiões nasceram.** Falar com o Zelador: ele lista os dezenove
+  castelos com a defesa de cada um e quantos guardiões estão de pé. **Se algum
+  aparecer com defesa diferente de 100, o `SetCastleData` não pegou** e a escala
+  saiu no patamar errado sem nada denunciar — é a sonda principal deste NPC.
+- **Se a escala pegou de verdade.** `@mobinfo` num guardião de museu tem de
+  mostrar 15 milhões de HP. Se mostrar 15.670, o enxerto do `status.cpp` não
+  está rodando ou o `guardiao_escala` ficou em 0.
+- **Quanto dano um golpe tira.** Com defesa 100 devem passar **10% do dano
+  bruto** (50% do guardião × os 20% da guerra). Um golpe de 500.000 brutos tem
+  de tirar cerca de **50.000**. É o número que fecha as duas contas de uma vez —
+  se der 250.000, a redução do guardião não está sendo aplicada; se der 500.000,
+  nem ela nem a da guerra. No total, **150 milhões de dano bruto derrubam um
+  guardião do topo** — vezes oito por castelo.
+- **A velocidade de ataque.** ASPD 178 é um golpe a cada 440 ms — pouco mais de
+  dois por segundo.
+- **Se eles acertam agora.** Era o problema da primeira rodada: dois dos três
+  guardiões batiam no piso de 5% do emulador. A precisão passou a ser absoluta,
+  630 no patamar 10. **Este é o número que mais provavelmente vai precisar de
+  ajuste**, porque a esquiva real dos jogadores daqui nunca foi medida — e a
+  fórmula do renewal é uma subtração travada em 5 e 100, então cem pontos cobrem
+  de "nunca acerta" a "nunca erra". Para calibrar: olhar a **Esquiva** na janela
+  de status do personagem e pôr `guardiao_hit_base` em `esquiva + a chance
+  desejada`. Pega com `@reloadbattleconf`, mas só no próximo spawn — matar o
+  guardião ou esperar o Zelador repor.
+- **Se o Kriemhild continua intocado** — com Emperium, Kafra, Gerente e
+  bandeiras, e com a defesa que estiver investida. Ele é a única linha de
+  castelo que ficou de pé no `scripts_guild.conf`.
+- **Se os dezenove mapas estão de fato vazios** de Evil Druid, Khalitzburg e
+  companhia. Aqueles nascem no ramo de "castelo sem dono" do `agit_main.txt`,
+  que deixou de rodar junto com os arquivos desligados.
+
+**As duas linhas do log que já foram conferidas** (ficam registradas para a
+próxima subida, porque é assim que se repete a checagem):
+
+- `Zelador dos Guardioes: .tipo tem N e devia ter 152` (ou `.px`/`.py`) — a
+  conferência de colunas paralelas da regra §4.11. **Não saiu**, que é o certo.
+  Se um dia sair, uma das dezenove tabelas de posição foi digitada errada e
+  **algum guardião está no lugar errado**, sem outro sintoma.
+- `mob_spawn_guardian: Spawning guardian ... on a castle with no guild` — este é
+  **esperado**, e o número dele é a prova: **152, oito por mapa**. Se der 304 /
+  16 por mapa, o `OnInit` voltou a invocar (ele só limpa, de propósito); se der
+  menos de 152, algum `guardian` falhou e aquele posto está vazio até o
+  temporizador passar.
+
+**Uma decisão que fica em aberto para depois do teste:** os três guardiões
+continuam com **nome em inglês** ("Soldier Guardian" e irmãos), porque o
+`db/guerra/mob_db.yml` não os traduz e este NPC lê o mesmo `getmonsterinfo` que
+o `agit_main.txt` — de propósito, para os museus e o Kriemhild não divergirem.
+Traduzir é uma entrada em `db/guerra/mob_db.yml`, que conserta **os dois lados
+de uma vez** (`CLAUDE.md` §4.12).
+
+**E a Guerra do Emperium 2 ficou fora**: os dez castelos de `guild2`
+(Arunafeltz e Schwarzwald) continuam ligados, com Emperium e conquistáveis. Foi
+escolha do dono — *"vamos começar com a 1.0 primeiro"*. Se um dia entrarem, são
+mais dez linhas comentadas no `scripts_guild.conf` e mais dez blocos no NPC.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

@@ -36,3 +36,26 @@ int32 pvp_dano_longa;  // ataque normal a distancia
 // Usado em src/custom/reducao_geral.hpp.
 int32 reducao_dano_isenta_habilidade;
 
+// Guerra do Emperium: a escala do guardiao de castelo pela DEFESA investida.
+// Os quatro atributos seguem a mesma forma - `base + passo * patamar`, cortada
+// por um teto -, e o patamar e `defesa / divisor`. Usados em
+// src/custom/guardiao_do_castelo.hpp.
+int32 guardiao_escala;            // 0 desliga tudo e devolve o rAthena
+int32 guardiao_patamar_divisor;   // defesa / isto = patamar
+int32 guardiao_patamar_max;       // teto do patamar
+int32 guardiao_hp_base;
+int32 guardiao_hp_passo;
+int32 guardiao_hp_max;
+int32 guardiao_atk_base;
+int32 guardiao_atk_passo;
+int32 guardiao_atk_max;
+int32 guardiao_reducao_base;      // reducao do dano RECEBIDO, em porcentagem
+int32 guardiao_reducao_passo;
+int32 guardiao_reducao_max;       // 99 e o maximo que o `damagetaken` expressa
+int32 guardiao_aspd_base;         // ASPD de jogador; 190 e o teto do emulador
+int32 guardiao_aspd_passo;
+int32 guardiao_aspd_max;
+int32 guardiao_hit_base;          // precisao ABSOLUTA; `hit - esquiva` = chance %
+int32 guardiao_hit_passo;
+int32 guardiao_hit_max;
+
