@@ -1111,6 +1111,115 @@ se apurou, e vale para qualquer efeito futuro:
 
 ---
 
+## 1n. Quatro pedidos de 2026-08-12 — falta ver no jogo
+
+### O CTRL+1 ainda NÃO foi aplicado — o cliente estava aberto
+
+`ferramentas/ordena_bandeiras_ctrl.py` está pronto e o `--verificar` roda, mas
+o patch **não foi gravado**: o exe fica travado enquanto o cliente roda, e ele
+estava no ar. O que falta é uma linha, com o jogo fechado:
+
+```
+C:\Python27\python.exe ferramentas/ordena_bandeiras_ctrl.py
+```
+
+Depois, **abrir o jogo e apertar CTRL+1**. Isso não é formalidade: patch de exe
+"aplicado e confirmado" não é patch com efeito, e script que confere o próprio
+trabalho não prova nada (`CLAUDE.md` §5). A ordem esperada, das nove teclas:
+
+| tecla | bandeira | | tecla | bandeira |
+|---|---|---|---|---|
+| CTRL+1 | **Brasil** | | CTRL+6 | Coreia |
+| CTRL+2 | Indonésia | | CTRL+7 | Índia |
+| CTRL+3 | Filipinas | | CTRL+8 | Bandeira 8 |
+| CTRL+4 | Malásia | | CTRL+9 | Bandeira 9 |
+| CTRL+5 | Cingapura | | | |
+
+Se CTRL+1 sair certo e as outras não, o patch pegou e o que falhou é outra
+coisa; se **nenhuma** mudar, o handler encontrado não é o que a tecla usa — e
+aí vale a lição do `ajusta_tamanho_fonte.py`: pôr uma marca que não dependa do
+efeito procurado (apontar um caso para uma emoção óbvia, um dado ou um coração)
+antes de gastar rodada calibrando.
+
+**E fica uma pergunta em aberto que não foi atrás:** o `data\clientinfo.xml`
+diz `<servicetype>brazil</servicetype>` e o jogo se comporta como `korea`. O
+patch é imune a isso de propósito, mas o servicetype gateia mais coisa no
+cliente do que bandeira. Se algum dia aparecer outro recurso "que existe e não
+liga", é o primeiro lugar para olhar — o `clientinfo.xml` do GRF vem com DES e
+não se leu.
+
+### A Máquina — duas linhas novas e uma arte trocada
+
+`@reloadbarterdb` (**não** `@reloadscript`) e o jogo **fechado e reaberto**,
+porque a arte e o nome vêm do `itemInfo.lua`. O que conferir na janela de troca
+das duas Máquinas (prontera 167,199 e comodo 214,185):
+
+- **Amuleto de Ziegfried (5 Moedas) e Goma de Mascar (5 Moedas)** aparecem no
+  fim do grupo de consumíveis, com nome em português e ícone — o nome sai do
+  cliente, não do servidor (§4.9).
+- **Os dois permanentes continuam nos dois últimos lugares.** Eles desceram de
+  `Index` 18/19 para 20/21; se aparecerem fora de ordem, foi a renumeração.
+- **O Amuleto de verdade funciona:** morrer com um na bolsa e levantar no
+  lugar, com HP e SP cheios. Quem o consome é o `pc_dead` no C++, então isto
+  não se testa lendo script nenhum. **Na conta de teste o resultado não vale
+  para restrição de item** (§4.7), mas para este efeito vale.
+- **A Cx. Poção de Guyak (30996) agora tem a cara da Poção**, e não mais a da
+  caixa genérica. Se vier caixa de erro no lugar do ícone, o `resourceName`
+  copiado não resolveu — `estado_item.py --id 12710` dizia "4 de 4 ok".
+
+### O Guia de Prontera — dois bugs consertados, falta o segundo teste
+
+`npc/guerra/guia_de_prontera.txt`, ligado no `scripts_guerra.conf`. Cinco NPCs,
+três categorias, 26 lugares e 30 marcas de mini-mapa.
+
+**O primeiro teste em jogo derrubou dois defeitos, e os dois já estão
+consertados** (o porquê de cada um está no `HISTORICO.md` e a regra geral subiu
+para o `CLAUDE.md` §5):
+
+1. `disablenpc "Guide#01prontera"` errava o nome — o nome único é o de **depois
+   do `::`**, `GuideProntera`. Um Guia em inglês ficava de pé empilhado no
+   nosso, na célula da praça.
+2. `if (.@i == 0 || .dono[.@i - 1] != .@g)` estourava em `.dono[-1]`, porque o
+   `||` do script do rAthena **não faz curto-circuito**. O `OnInit` morria ali
+   e a janela de menu abria em branco.
+
+**Falta rodar `@reloadscript` de novo e conferir**, começando por procurar
+`Unknown syntax`, `index out of range` e `non-existing NPC` no log — o arquivo
+usa construções que nenhum outro NPC nosso usa (`explode`, `atoi`,
+`deletearray`, `select` de string montada em laço), então é o de maior risco da
+leva.
+
+Em ordem de risco:
+
+- **Se o menu de cima abre com cinco linhas** — as três categorias, "Limpar as
+  marcas" e "Sair". Caixa em branco quer dizer `OnInit` morto de novo, e a
+  causa vai estar no log, longe da caixa.
+- **Se os cinco Guides do rAthena sumiram.** Se sobrar um em inglês empilhado
+  no nosso, é nome errado outra vez — são `GuideProntera` mais
+  `Guide#02prontera` a `Guide#05prontera`.
+- **Se cada linha do menu leva ao lugar que promete.** É o risco que a regra
+  §4.11 existe para cobrir, e o `debugmes` do `OnInit` só pega desalinhamento
+  de tamanho, não de conteúdo. Os três de "Serviços Principais" são os que
+  ninguém mais conferiu: Centro da Ordem 165,168, Arena 147,180, Máquina
+  167,199.
+- **Se as trinta marcas cabem.** Trinta é o que o Guia do rAthena já usava,
+  mas ele nunca marcou trinta *de uma vez* numa sessão. Abrir tudo, categoria
+  por categoria, e ver se as últimas ainda pintam — e se "Limpar as marcas"
+  apaga todas.
+- **Se os links de navegação clicam.** O `F_Navi` só devolve link com
+  `PACKETVER >= 20111010`; o nosso é 20211103, então deveria. Os dois `.nav$`
+  (a segunda Biblioteca e o Criador de Pecopeco de Cruzados) são link **sem**
+  marca, de propósito.
+- **Se algum `mes` colou na linha anterior.** Nenhum começa com espaço, mas as
+  notas são longas e quebram sozinhas pela largura da caixa (§5).
+
+**Uma escolha de rótulo ficou por minha conta e pode ser trocada numa linha:**
+o pedido dizia *"Stuffs (Máquina)"* e o menu diz **"Máquina"**, que é o nome que
+o jogador lê sobre a cabeça da NPC. Se a intenção era o rótulo "Stuffs", é
+trocar a terceira entrada do `.nome$` no `OnInit`.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

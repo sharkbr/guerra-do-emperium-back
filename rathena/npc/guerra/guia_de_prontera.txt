@@ -1,0 +1,414 @@
+//===== Guerra do Emperium ===================================
+//= O Guia de Prontera
+//===== Onde =================================================
+//= SAO CINCO, nas mesmas cinco celulas dos cinco Guides do
+//= rAthena - o de 154,187 e o original e os outros quatro sao
+//= `duplicate`:
+//=
+//=   prontera 154,187   a praca central, na fileira do
+//=                      Porteiro do Treinamento
+//=   prontera 282,208   portao leste
+//=   prontera  29,200   portao oeste
+//=   prontera 160, 29   portao sul
+//=   prontera 159,326   portao norte
+//=
+//= Sprite 105 e cutin "prt_soldier", os mesmos do Guia do
+//= rAthena: e a MESMA NPC, so que nossa e em portugues.
+//===== Por que um arquivo nosso, e nao traducao =============
+//= O dialogo do rAthena se traduz por catalogo
+//= (npc/guerra/traducao/*.cat, ferramentas/traduz_npcs.py), e
+//= foi assim com as cidades, a Kafra e o resto. Aqui NAO
+//= serviria: o pedido de 2026-08-12 nao foi traduzir o Guia,
+//= foi MUDAR o que ele diz e ACRESCENTAR uma categoria que o
+//= rAthena nao tem ("Servicos Principais", com o Centro da
+//= Ordem, a Arena e a Maquina). Catalogo troca texto por
+//= texto; nao inventa menu.
+//=
+//= Entao vale a receita de sempre (CLAUDE.md secao 2):
+//= `disablenpc` nos originais mais uma NPC nossa na mesma
+//= celula, com o npc/re/guides/guides_prontera.txt byte a
+//= byte igual ao upstream.
+//=
+//= SAO CINCO disablenpc E NAO UM. Desligar o primeiro nao
+//= alcanca os quatro `duplicate` dele: duplicate que ja nasceu
+//= nao morre com o original - a mesma pegadinha do Mestre das
+//= Montarias.
+//=
+//= E O NOME DO PRIMEIRO NAO E O QUE ESTA ESCRITO NA LINHA DELE.
+//= Num `<Nome>::<Unico>`, o nome que o `disablenpc` aceita e o
+//= de DEPOIS do `::` - o `npc_parsename` (src/map/npc.cpp:3674)
+//= poe a primeira metade em `nd->name`, que e so o que aparece
+//= na tela, e a segunda em `nd->exname`, que e a chave do
+//= `npcname_db`. Entao o `Guide#01prontera::GuideProntera` se
+//= desliga por **GuideProntera**, e nao por `Guide#01prontera`.
+//= Os outros quatro nao tem `::`, e ai o nome unico e o proprio.
+//=
+//= Custou a primeira tentativa desta NPC, em 2026-08-12: os
+//= cinco `disablenpc` erraram o primeiro, o Guia do rAthena
+//= ficou de pe empilhado no nosso, e quem clicava caia no que
+//= estivesse por cima. O log dizia
+//= "Attempted to disablenpc a non-existing NPC".
+//===== O catalogo, e por que ele e uma tabela ===============
+//= AS COLUNAS SAO A UNICA FONTE, e o menu nasce delas num
+//= laco. Isso e a regra 11 do CLAUDE.md, e ela foi escrita
+//= com sangue: em 2026-08-08 o Teleportador da Ordem levou ao
+//= lugar errado nos catorze destinos porque o menu era uma
+//= string escrita a mao e os destinos eram um setarray
+//= escrito a parte. Aqui nao ha string de menu: ha
+//= `.nome$[]`, e o `select` e montado a partir dela.
+//=
+//= As colunas, todas com o MESMO tamanho:
+//=
+//=   .nome$    o rotulo. Vale no menu E no link de navegacao.
+//=   .dono     1, 2 ou 3 - a que categoria a linha pertence.
+//=             Comeca em 1 e nao em 0 de proposito: array de
+//=             inteiro cujo ultimo valor fosse 0 encolheria no
+//=             getarraysize, e a checagem de tamanho abaixo
+//=             passaria a mentir.
+//=   .marcas$  as marcas do mini-mapa, "x y x y ...". A
+//=             PRIMEIRA e tambem o destino do link.
+//=   .nota$    uma linha de explicacao, ou "-" para nenhuma.
+//=   .nav$     um SEGUNDO lugar, clicavel, ou "-".
+//=   .navpos$  "prontera,x,y" do segundo lugar, ou "-".
+//=
+//= O "-" no lugar de "" nao e enfeite: `getarraysize` de um
+//= array de texto para no ultimo elemento NAO vazio, entao
+//= coluna opcional terminada em "" encolhe e a conferencia de
+//= tamanhos do OnInit deixaria de pegar desalinhamento. Com
+//= "-" toda coluna tem o mesmo tamanho sempre, e o
+//= `debugmes` do OnInit grita se um dia nao tiver.
+//===== Trinta marcas, e trinta e o teto seguro ==============
+//= Cada linha do catalogo pinta de 1 a 5 pontos no mini-mapa
+//= (`viewpoint`), e o id de cada ponto e distribuido no
+//= OnInit - dai o `.vp[]` (o primeiro id da linha) e o
+//= `.vpn[]` (quantos). Somam TRINTA, ids 0 a 29.
+//=
+//= Trinta nao e numero solto: e o maior que o rAthena inteiro
+//= usa, e quem o usa e justamente o Guia de Prontera de
+//= npc/re/guides. Nao ha limite do lado do servidor; o limite
+//= e do cliente e nao esta documentado em lugar nenhum, entao
+//= ficar no que ja se sabe que funciona e mais barato que
+//= descobrir onde ele quebra.
+//=
+//= Foi por isso que a Biblioteca e o Criador de Pecopeco
+//= perderam a segunda MARCA e ganharam um segundo LINK
+//= (`.nav$`): o link leva ao mesmo lugar, e clicavel, e nao
+//= gasta id.
+//===== O que mudou em relacao ao Guia do rAthena ============
+//= 1) A CONVERSA DE ABERTURA e outra, pedida em 2026-08-12:
+//=    fala da cidade esvaziada e dos recursos novos.
+//=
+//= 2) AS DUAS CATEGORIAS ANTIGAS mudaram de nome:
+//=    "Main Facilities"    -> "Lugares classicos"
+//=    "Merchants & Helpers" -> "Mercados e Assistencias"
+//=
+//= 3) ENTROU UMA TERCEIRA, no TOPO: "Servicos Principais",
+//=    com as tres portas que sao nossas e nao do rAthena -
+//=    o Centro da Ordem (165,168), a Arena de Combate
+//=    (147,180) e a Maquina (167,199).
+//=
+//= 4) O HIPNOTIZADOR SAIU E A MESMERITA ENTROU no lugar. O
+//=    do rAthena era uma linha de menu que nao marcava nada:
+//=    dizia "mudei para Izlude" e o viewpoint dele ja vinha
+//=    comentado no upstream. Aqui quem reseta habilidade e
+//=    atributo e a Mesmerita, prontera 144,173, de graca -
+//=    ver npc/guerra/mesmerita.txt.
+//=
+//= 5) A TAVERNA DO SUL perdeu a marca. O rAthena marcava as
+//=    duas e dizia, na mesma tela, que so a do norte abre.
+//===== Notas ================================================
+//= Nenhum `mes` comeca com espaco. O clif_scriptmes manda a
+//= string crua e quem decide onde quebrar a linha e o
+//= cliente, pelo primeiro caractere: visivel abre linha,
+//= espaco COLA na anterior (CLAUDE.md secao 5). Por isso o
+//= recuo dos itens e "- " e nao "  ".
+//=
+//= As `.` sao compartilhadas pelas cinco copias: variavel de
+//= escopo `.` mora no script, e o duplicate aponta para o
+//= script do original. Uma linha nova no catalogo vale para
+//= as cinco de uma vez.
+//=
+//= As cores giram de seis em seis pelo indice da linha
+//= (`.@c = .@i % 6`), entao o link e o ponto do mini-mapa
+//= saem sempre da mesma cor sem ninguem escolher.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o
+//= jogo le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+prontera,154,187,4	script	Guia de Prontera#01::GuiaDeProntera	105,{
+	cutin "prt_soldier",2;
+	mes "[Guia de Prontera]";
+	mes "Bem-vindo a Prontera!";
+	mes "Que bom que sobrevivemos!";
+	next;
+	mes "[Guia de Prontera]";
+	mes "As coisas mudaram um pouco:";
+	mes "ficou mais vazio, mas temos";
+	mes "recursos novos!";
+	next;
+	mes "[Guia de Prontera]";
+	mes "Em relação à nossa conversa aqui";
+	mes "nada mudou: você continua clicando";
+	mes "na ^B9062F[localização]^000000 que vai receber o";
+	mes "mais avançado serviço de navegação!";
+	next;
+
+	while (1) {
+		.@g = select(.topo$);
+
+		// As tres ultimas opcoes do menu de cima nao sao
+		// categoria: sao limpar, sair e o proprio fim da lista.
+		if (.@g == .categorias + 1) {
+			mes "[Guia de Prontera]";
+			mes "Pronto, tirei todas as marcas do seu mini-mapa.";
+			mes "Precisa de mais alguma coisa?";
+			for (.@v = 0; .@v < .marcas_total; .@v++)
+				viewpoint 2,1,1,.@v,0xFFFF00;
+			next;
+			continue;
+		}
+		if (.@g > .categorias) {
+			mes "[Guia de Prontera]";
+			mes "Boa estadia!";
+			close2;
+			cutin "prt_soldier",255;
+			end;
+		}
+
+		while (1) {
+			.@k = select(.menu$[.@g]);
+			// A ultima linha de todo submenu e "Voltar".
+			if (.@k > .fim[.@g] - .ini[.@g] + 1)
+				break;
+			callsub L_Mostra, .ini[.@g] + .@k - 1;
+			next;
+		}
+	}
+	end;
+
+// Pinta as marcas de UMA linha do catalogo e imprime os links dela.
+L_Mostra:
+	.@i = getarg(0);
+	.@c = .@i % 6;
+
+	mes "[Guia de Prontera]";
+	mes "Marquei no seu mini-mapa:";
+	mes "- " + F_Navi(.nome$[.@i], .link$[.@i], .cor$[.@c]);
+	if (.nav$[.@i] != "-")
+		mes "- " + F_Navi(.nav$[.@i], .navpos$[.@i], .cor$[.@c]);
+	if (.nota$[.@i] != "-")
+		mes .nota$[.@i];
+
+	// O explode NAO limpa o destino antes de escrever - ele grava a
+	// partir do indice dado (script.cpp:17305) -, entao linha curta
+	// depois de linha longa herdaria o rabo da outra.
+	deletearray .@p$[0];
+	explode(.@p$, .marcas$[.@i], " ");
+	for (.@j = 0; .@j < .vpn[.@i]; .@j++)
+		viewpoint 1, atoi(.@p$[.@j * 2]), atoi(.@p$[.@j * 2 + 1]), .vp[.@i] + .@j, .vpcor[.@c];
+	return;
+
+OnInit:
+	// --- os cinco Guides do rAthena saem do ar --------------
+	// Um por linha: desligar o primeiro nao alcanca os quatro
+	// duplicate dele.
+	//
+	// O PRIMEIRO E `GuideProntera` E NAO `Guide#01prontera`: a
+	// linha dele e `Guide#01prontera::GuideProntera`, e o nome
+	// unico e o de depois do `::` (ver o cabecalho).
+	disablenpc "GuideProntera";
+	disablenpc "Guide#02prontera";
+	disablenpc "Guide#03prontera";
+	disablenpc "Guide#04prontera";
+	disablenpc "Guide#05prontera";
+
+	// --- as seis cores, que giram pelo indice da linha ------
+	setarray .cor$[0],  "^B9062F","^0000FF","^FF5400","^006400","^7F3300","^800080";
+	setarray .vpcor[0], 0xFF0000,0x0A82FF,0xFFB400,0xAAFF00,0xD2691E,0xDA70D6;
+
+	// --- as categorias, na ordem em que aparecem ------------
+	setarray .categoria$[0],
+		"Serviços Principais",
+		"Lugares clássicos",
+		"Mercados e Assistências";
+	.categorias = getarraysize(.categoria$);
+
+	// ========================================================
+	// O CATALOGO. Seis colunas do mesmo tamanho, uma linha por
+	// lugar, agrupadas por `.dono` e JA NA ORDEM das
+	// categorias - o `.ini`/`.fim` abaixo conta com isso.
+	// ========================================================
+	setarray .nome$[0],
+		// --- 1, Servicos Principais -------------------------
+		"Centro da Ordem",
+		"Arena de Combate",
+		"Máquina",
+		// --- 2, Lugares classicos ---------------------------
+		"Loja de Ferramentas",
+		"Loja de Armas e Armaduras",
+		"Ferraria",
+		"Santuário de Prontera",
+		"Ordem dos Cavaleiros",
+		"Estalagem",
+		"Taverna",
+		"Biblioteca",
+		"Castelo de Prontera",
+		"Agência de Empregos",
+		"Prefeitura",
+		// --- 3, Mercados e Assistencias ---------------------
+		"Oficial de Teletransporte do Éden",
+		"Criador de Pecopeco",
+		"Mestre das Montarias",
+		"Mestre dos Equipamentos Mágicos",
+		"Removedor de Pecopeco",
+		"Mercadores",
+		"Guilda dos Mercenários",
+		"Mesmerita",
+		"Funcionárias Kafra",
+		"Leablem",
+		"Aprendiz de Artesão",
+		"Tosador de Mascotes";
+
+	setarray .dono[0],
+		1,1,1,
+		2,2,2,2,2,2,2,2,2,2,2,
+		3,3,3,3,3,3,3,3,3,3,3,3;
+
+	setarray .marcas$[0],
+		"165 168",
+		"147 180",
+		"167 199",
+		"134 221",
+		"175 220",
+		"179 184",
+		"236 316",
+		"46 345",
+		"203 191",
+		"208 154",
+		"120 264",
+		"156 360",
+		"133 183",
+		"75 91",
+		"124 76",
+		"55 350",
+		"130 213",
+		"163 178",
+		"125 208",
+		"178 244",
+		"35 337",
+		"144 173",
+		"152 326 30 207 282 200 151 29 146 89",
+		"244 169",
+		"165 60",
+		"218 211";
+
+	setarray .nota$[0],
+		"A porta do salão da Ordem dos Exploradores: as catorze instâncias, as missões e a troca de moedas.",
+		"PvP livre na Sala Bússola. Quem cai volta para a praça.",
+		"A loja da Moeda Nova. Tem uma irmã em Comodo.",
+		"-",
+		"-",
+		"-",
+		"É onde se muda de classe para Acólito, bem a nordeste.",
+		"Onde se muda de classe para Cavaleiro e onde se pede a expedição ao Esgoto.",
+		"-",
+		"Só a do norte está aberta.",
+		"-",
+		"Ao norte daqui. Os fundos dele dão nos campos do norte.",
+		"-",
+		"Lá tem um cabeleireiro que muda a cor do seu cabelo.",
+		"-",
+		"Este atende Cavaleiros.",
+		"Dá Dragão a Cavaleiro Rúnico e Grifo a Guardião Real.",
+		"Atende Mecânicos.",
+		"Para quando o seu Pecopeco não quiser mais ir embora.",
+		"O Mercador de Runas, o de Amatsu e os outros.",
+		"-",
+		"Reseta habilidades e atributos de graça, sem limite de uso.",
+		"São cinco espalhadas pela cidade.",
+		"Abre covas em armas e armaduras - mas não em qualquer peça.",
+		"-",
+		"-";
+
+	// A segunda porta de algumas linhas. Ela e LINK e nao
+	// marca: link nao gasta id de viewpoint, e sao trinta.
+	setarray .nav$[0],
+		"-","-","-",
+		"-","-","-","-","-","-","-",
+		"a outra, a noroeste",
+		"-","-","-",
+		"-",
+		"o de Cruzados, a nordeste",
+		"-","-","-","-","-","-","-","-","-","-";
+
+	setarray .navpos$[0],
+		"-","-","-",
+		"-","-","-","-","-","-","-",
+		"prontera,192,264",
+		"-","-","-",
+		"-",
+		"prontera,232,310",
+		"-","-","-","-","-","-","-","-","-","-";
+
+	// --- a conferencia das colunas --------------------------
+	// Sem isto, coluna fora de compasso nao da erro nenhum: o
+	// menu funciona, marca o mini-mapa, e marca o lugar errado.
+	.@n = getarraysize(.nome$);
+	if (getarraysize(.dono)    != .@n ||
+	    getarraysize(.marcas$) != .@n ||
+	    getarraysize(.nota$)   != .@n ||
+	    getarraysize(.nav$)    != .@n ||
+	    getarraysize(.navpos$) != .@n)
+		debugmes "Guia de Prontera: as colunas do catalogo tem tamanhos diferentes - o menu vai levar ao lugar errado.";
+
+	// --- o que se deriva do catalogo ------------------------
+	// Primeiro e ultimo indice de cada categoria, o link da
+	// primeira marca, e o id do viewpoint de cada marca.
+	.marcas_total = 0;
+	for (.@i = 0; .@i < .@n; .@i++) {
+		.@g = .dono[.@i];
+		// DOIS `if` e nao um `||`: o `||` do script do rAthena NAO
+		// faz curto-circuito. Ele e o `C_LOR`, um operador de dois
+		// numeros (script.cpp:3840) que so roda depois de os dois
+		// lados ja estarem na pilha - entao `.@i == 0 ||
+		// .dono[.@i - 1] != .@g` avalia `.dono[-1]` na primeira
+		// volta, sempre. Custou a primeira tentativa desta NPC em
+		// 2026-08-12: o log dizia "getelementofarray: index out of
+		// range (-1)" e o OnInit MORRIA ALI, deixando o `.topo$`
+		// vazio - a janela de menu abria em branco.
+		if (.@i == 0)
+			.ini[.@g] = 0;
+		else if (.dono[.@i - 1] != .@g)
+			.ini[.@g] = .@i;
+		.fim[.@g] = .@i;
+
+		deletearray .@p$[0];
+		explode(.@p$, .marcas$[.@i], " ");
+		.vpn[.@i] = getarraysize(.@p$) / 2;
+		.vp[.@i] = .marcas_total;
+		.marcas_total = .marcas_total + .vpn[.@i];
+		.link$[.@i] = "prontera," + .@p$[0] + "," + .@p$[1];
+	}
+
+	// --- os menus, montados A PARTIR do catalogo ------------
+	.topo$ = "";
+	for (.@g = 1; .@g <= .categorias; .@g++) {
+		.topo$ = .topo$ + "[ " + .categoria$[.@g - 1] + " ]:";
+		.@m$ = "";
+		for (.@i = .ini[.@g]; .@i <= .fim[.@g]; .@i++)
+			.@m$ = .@m$ + .nome$[.@i] + ":";
+		.menu$[.@g] = .@m$ + "Voltar";
+	}
+	.topo$ = .topo$ + "Limpar as marcas do mini-mapa:Sair";
+	end;
+}
+
+// As outras quatro, nos quatro portoes. Sao `duplicate` e nao
+// copia: uma fala so, um catalogo so.
+prontera,282,208,2	duplicate(GuiaDeProntera)	Guia de Prontera#02	105
+prontera,29,200,6	duplicate(GuiaDeProntera)	Guia de Prontera#03	105
+prontera,160,29,0	duplicate(GuiaDeProntera)	Guia de Prontera#04	105
+prontera,159,326,4	duplicate(GuiaDeProntera)	Guia de Prontera#05	105

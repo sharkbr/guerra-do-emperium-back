@@ -134,10 +134,18 @@ ITENS = [
     {
         'id': 30996,
         'nome': u'Cx. Poção de Guyak (30)',
-        # A caixa de 20 do bRO (Guyak_Pudding_20_Box). O item dela foi
-        # reprovado por trazer 20 e por ter nome COREANO no itemInfo.lua -
-        # mas a ARTE esta completa, e e so ela que aproveitamos.
-        'arte_de': 22668,
+        # A PROPRIA Poção de Guyak (12710), desde 2026-08-12, a pedido: a
+        # caixa passa a ter a cara do que tem dentro.
+        #
+        # Ate entao era a arte da caixa de 20 do bRO (Guyak_Pudding_20_Box,
+        # 22668) - aquele ITEM foi reprovado por trazer 20 e por ter nome
+        # COREANO no itemInfo.lua, e so a arte tinha sido aproveitada. O
+        # desenho dela e a caixa generica de consumivel, igual a de meia
+        # duzia de irmas da mesma loja, e por isso nao dizia nada.
+        #
+        # As duas fontes tem "4 de 4 ok" no estado_item.py; a troca e de
+        # gosto, nao de disponibilidade.
+        'arte_de': 12710,
         'descricao': [
             u'Uma caixa contendo 30 Poções de Guyak.',
             u'^000088Duplica a velocidade de movimento por 5 minutos.^000000',

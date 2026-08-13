@@ -188,8 +188,16 @@ Body:
     #      e a regra do CLAUDE.md secao 4.2 e clara: so entra na loja
     #      item com nome em portugues.
     #
-    # A segunda sozinha ja bastaria. A arte dela, por outro lado, esta
-    # completa (4 de 4 no estado_item.py) - e e dela que a nossa copia.
+    # A segunda sozinha ja bastaria.
+    #
+    # A ARTE JA FOI DELA E NAO E MAIS. Ate 2026-08-12 a caixa usava o
+    # resourceName da 22668 - a caixa generica de consumivel, igual a
+    # de meia duzia de irmas na mesma vitrine. A pedido, passou a usar
+    # o da PROPRIA Pocao de Guyak (12710): a caixa tem a cara do que
+    # tem dentro. As duas fontes dao "4 de 4 ok" no estado_item.py.
+    #
+    # Isso NAO se ve neste arquivo: resourceName e coisa do cliente, e
+    # quem grava e ferramentas/instala_item.py, na tabela ITENS dele.
     Type: Usable
     Weight: 0
     Trade:

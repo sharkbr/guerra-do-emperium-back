@@ -314,6 +314,12 @@ A tabela tem cinco itens em 2026-08-08 — 30999 Maçã da Inocência, 30998 Moe
 Nova, 30997 e 30996 (as duas caixas da Máquina) e 30995 Caveira Humana, que
 copia a arte da Caveira comum (7420).
 
+Em 2026-08-12 o `arte_de` do **30996** mudou de 22668 (a caixa de 20 do bRO,
+que é a caixa genérica de consumível) para **12710, a própria Poção de Guyak** —
+a pedido: a caixa passa a ter a cara do que tem dentro. É um exemplo do que o
+campo serve: trocar o desenho de um item nosso é uma linha da tabela e uma
+rodada do script, sem tocar em arte nenhuma.
+
 ## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
 
 ```
@@ -2818,3 +2824,67 @@ trabalho e era inócuo.
 
 A semente é fixa por estratégia (`random.seed(20260812)`), então as três veem o
 **mesmo baralho** e a diferença entre elas é a estratégia, não o ruído.
+
+## `ordena_bandeiras_ctrl.py` — qual bandeira cada CTRL+`<n>` solta
+
+```
+python ordena_bandeiras_ctrl.py --verificar   # só relata, não grava
+python ordena_bandeiras_ctrl.py               # aplica (faz backup antes)
+```
+
+Pedido de 2026-08-12: *"CTRL+1 tem que ser bandeira do Brasil"*. Estava em
+CTRL+6, e o CTRL+1 dava a da Coreia.
+
+**O primeiro lugar onde se procura é o errado**, e é o que justifica esta
+seção. O `data\luafiles514\lua files\emotion\emotionlist.lub` define o `enum`
+inteiro das emoções — `ET_FLAG` 13, `ET_BR_FLAG` 51 e as outras sete — e ainda
+um `EMOTION_ORDERLIST`, o que o faz parecer a lista a reordenar. **Não é:**
+aquela lista tem 64 entradas e nenhuma bandeira. Ela é a ordem da *janela* de
+emoções, e bandeira não aparece na janela.
+
+Quem trata a tecla é o **exe**, num `switch` de nove casos:
+
+```
+0x00638950  mov  ecx, [00F3D1D4]        ; o objeto que envia a emocao
+            test ecx, ecx / jz fim
+            mov  eax, [ebp+8]           ; a tecla
+            add  eax, -0D2h             ; 210 -> caso 0
+            cmp  eax, 8 / ja fim
+            jmp  [eax*4 + 00638B1Ch]    ; a tabela de saltos
+```
+
+e **cada caso é uma cadeia de comparações contra o `<servicetype>` do
+`clientinfo.xml`** (o global `[012BF51C]`: `korea`=0 … `brazil`=12, na ordem em
+que os nomes estão no `.rdata`) antes de chegar ao trecho que de fato empurra a
+emoção — `8B 01`, cinco `push`, `FF 50 18`. Ou seja a mesma tecla dá bandeiras
+diferentes conforme o servicetype, e na maioria deles não dá nenhuma: com
+`korea` as nove funcionam, com `brazil` só o CTRL+1, com `america`/`japan`/
+`thai` nenhuma.
+
+**O que a ferramenta faz:** reescreve as nove entradas da tabela de saltos para
+apontarem direto nesses trechos, pulando a cadeia de servicetype inteira. São
+36 bytes, todos de dados. É seguro porque o trecho só precisa do `ecx`, que o
+prólogo carrega **antes** do salto — não há nada na cadeia pulada além das
+comparações. Duas consequências, as duas boas: a ordem passa a ser a da tabela
+`ORDEM` no topo do arquivo, e as nove teclas funcionam em qualquer servicetype.
+
+A ordem entregue é a de `korea` com Brasil e Coreia **trocados** — CTRL+1
+Brasil, CTRL+6 Coreia, o resto onde estava. Trocar em vez de empurrar a fila foi
+escolha: quem já decorou CTRL+3 continua com Filipinas. Mudar isso é reordenar
+a lista `ORDEM`.
+
+**Nada é procurado por endereço fixo.** A tabela é achada pelo padrão do prólogo
+e os nove trechos pelo padrão dos `push`; os endereços acima são documentação.
+Se o exe for repatchado ou trocado, a ferramenta reacha — e recusa (`Exception`)
+se não achar exatamente um `switch` ou se faltar algum trecho.
+
+Dois cuidados que valem para todo patch de exe daqui:
+
+- **Fechar o cliente ANTES.** O exe fica travado enquanto roda, e o que já está
+  aberto segue na cópia em memória.
+- **`--verificar` dizendo "aplicado" não é prova de efeito.** Ver
+  `CLAUDE.md` §5, "Tamanho da fonte": script que confere o próprio trabalho não
+  prova nada. Quem prova é apertar CTRL+1 no jogo.
+
+O backup vai para `GuerraDoEmperium.exe.BACKUP-bandeiras-AAAAMMDD-HHMM`, e a
+gravação recusa qualquer coisa que mude o tamanho do arquivo.

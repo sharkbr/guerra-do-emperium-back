@@ -610,6 +610,57 @@ Produziram diagnóstico falso e custaram retrabalho:
   com **`y = 0` nas oito direções**. A conta que os oficiais seguem é
   `-(altura/2 - 8)`. Ferramenta: `ferramentas/levanta_sprite_npc.py`; o
   override é **cliente, fora do git**, e some em cliente novo.
+- **Bandeira de `CTRL+<n>` não está no `emotionlist.lub`, está no EXE — e o
+  que ela vale depende do `<servicetype>`.** O `emotionlist.lub` define o
+  `enum` inteiro (`ET_FLAG` 13, `ET_BR_FLAG` 51 e as outras sete) e ainda um
+  `EMOTION_ORDERLIST`, o que o faz parecer o lugar certo; mas aquela lista tem
+  **64 entradas e nenhuma bandeira** — é a ordem da *janela* de emoções, e
+  bandeira não aparece na janela. Quem trata a tecla é um `switch` de nove
+  casos no exe (`0x00638950`, tabela de saltos em `0x00638B1C`), e **cada caso
+  é uma cadeia de comparações contra o `<servicetype>` do `clientinfo.xml`**
+  (global `[012BF51C]`; `korea`=0 … `brazil`=12, na ordem dos nomes no
+  `.rdata`) antes do trecho que empurra a emoção. Consequência que engana
+  sozinha: com `korea` as nove teclas funcionam, com `brazil` **só o CTRL+1**,
+  e com `america`/`japan`/`thai` **nenhuma**. Medido em 2026-08-12, quando o
+  `data\clientinfo.xml` dizia `brazil` e o jogo se comportava como `korea`.
+  Ferramenta: `ferramentas/ordena_bandeiras_ctrl.py`, que reaponta a tabela
+  direto para os nove trechos e torna a ordem independente do servicetype.
+- **`||` e `&&` do script do rAthena NÃO fazem curto-circuito.** São o `C_LOR`
+  e o `C_LAND`, operadores de **dois números** (`script.cpp:3839`) resolvidos
+  pelo `op_2num` depois de os dois lados já estarem na pilha — não há salto
+  como em C. Então a guarda mais comum de todas, `if (i == 0 || v[i-1] != x)`,
+  avalia `v[-1]` na primeira volta, **sempre**. O mesmo vale para
+  `if (getarraysize(.a) > 0 && .a[0] == 1)` e para qualquer
+  `if (x != 0 && y/x > 2)`. Falha barulhenta no log (*"getelementofarray:
+  index out of range (-1)"*) e **calada na tela**: o comando devolve falha, o
+  `OnInit` MORRE ALI, e tudo que ele ainda ia montar fica vazio — um menu
+  construído depois abre em branco, sem nenhuma linha de erro que aponte para
+  o menu. Achado em 2026-08-12 no Guia de Prontera. A saída é `if` aninhado ou
+  `if`/`else if`, nunca o operador.
+- **O nome único de um NPC é o que vem DEPOIS do `::`, não a linha inteira.**
+  Em `<Nome na tela>::<Nome único>` o `npc_parsename` (`src/map/npc.cpp:3674`)
+  põe a primeira metade em `nd->name` — que só serve para desenhar — e a
+  segunda em `nd->exname`, que é a chave do `npcname_db` e o que
+  `disablenpc`/`enablenpc`/`donpcevent` aceitam. Ou seja o
+  `Guide#01prontera::GuideProntera` se desliga por **`GuideProntera`**.
+  Confunde porque a metade da esquerda **parece** o nome único (tem `#`, é o
+  que se lê no arquivo) e porque num NPC **sem** `::` as duas são a mesma
+  coisa — inclusive nos `duplicate`, que quase nunca têm `::`. Erra-se num e
+  acerta-se nos outros quatro, e o resultado é NPC velho de pé empilhado no
+  novo: os dois aparecem, o jogador clica no de cima, e qual é o de cima
+  ninguém escolheu. O log traz *"Attempted to disablenpc a non-existing NPC"*.
+- **`explode` NÃO limpa o array de destino.** Ele grava a partir do índice
+  dado (`script.cpp:17305`) e para quando a string acaba — o que sobrou de uma
+  chamada anterior mais longa continua lá. Ler o resultado por
+  `getarraysize()` depois de uma linha curta devolve o tamanho da linha
+  ANTERIOR, e nada denuncia. `deletearray <array>[0];` antes de cada
+  `explode`, sempre.
+- **`getarraysize()` de array de texto para no último elemento NÃO VAZIO.**
+  Então tabela de colunas paralelas em que a última coluna termine em `""`
+  encolhe, e a conferência "todas as colunas têm o mesmo tamanho" — que é o
+  que a regra §4.11 pede — passa a mentir justamente quando deveria pegar o
+  desalinhamento. Usar um marcador visível (`"-"`) no lugar de `""`, e numerar
+  coluna de inteiro a partir de 1 e não de 0, pelo mesmo motivo.
 - **O NOME do sprite não descreve a arte, e neste cliente NÃO EXISTE aura de
   chão colorida.** O `4_PURPLE_WARP` (10237) não tem nada de roxo: é um quadro
   só, 157x84, com **um único índice de paleta usado, o 255, que é preto** — o

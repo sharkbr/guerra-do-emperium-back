@@ -47,8 +47,9 @@
 # (30997 e 30996, em db/guerra/item_db.yml).
 #
 # A trava so aperta em pacote. Item que ja se vende UM a um nao precisa de
-# caixa nenhuma, e por isso os dois Pergaminhos, o Ticket de Expansao de
-# Inventario e a Redea entram avulsos: a 1:1 o barter ja expressa.
+# caixa nenhuma, e por isso os dois Pergaminhos, o Amuleto de Ziegfried, a
+# Goma de Mascar, o Ticket de Expansao de Inventario e a Redea entram
+# avulsos: a 1:1 o barter ja expressa.
 #
 # Mudanca neste arquivo pega com `@reloadbarterdb`.
 #
@@ -88,6 +89,13 @@ Body:
   # Em 2026-08-12 entrou um QUARTO grupo no fim - "permanentes", o Ticket
   # de Expansao de Inventario e a Redea. Item novo entra no fim do grupo
   # dele, com o Index seguinte; nao se abre buraco no meio.
+  #
+  # E QUANDO O GRUPO NAO E O ULTIMO, RENUMERA-SE O QUE VEM DEPOIS. Foi o
+  # que aconteceu ainda em 2026-08-12, quando o Amuleto de Ziegfried e a
+  # Goma de Mascar entraram no fim de "consumiveis": os dois permanentes
+  # desceram de 18/19 para 20/21. Isso e seguro HOJE porque nenhuma linha
+  # tem `Stock` - se um dia alguma tiver, renumerar passa a mexer no
+  # estoque gravado no SQL, e ai o jeito e outro.
   - Name: Maquina#loja
     Items:
       # ----- Passes e cupons -----------------------------------------
@@ -223,7 +231,7 @@ Body:
       # Cinco por Moeda parece barato ao lado dos outros ate se somar
       # quanto custa uma peca de +14.
       #
-      # A UNICA das dezoito sem caixa pronta no bRO: la existem so a de 2
+      # A UNICA CAIXA DA LISTA que o bRO nao tinha pronta: la existem so a de 2
       # e a `Blacksmith_Bless_Box_3` (101047, por getgroupitem). A nossa
       # de 5 e o 30997, em db/guerra/item_db.yml.
       - Index: 12
@@ -281,8 +289,42 @@ Body:
             Item: Moeda_Nova
             Amount: 4
 
+      # OS DOIS DE 2026-08-12, e sao os primeiros consumiveis avulsos da
+      # gaveta - nao vem em caixa, e por isso 5 Moedas compram UM. Os dois
+      # sao NoDrop/NoTrade/NoSell no item_db do vendor, como o resto.
+      #
+      # O AMULETO E `Etc` E MESMO ASSIM SE GASTA, e quem o gasta nao e NPC
+      # nenhum: e o C++, no `pc_dead` (src/map/pc.cpp), que procura o
+      # ITEMID_TOKEN_OF_SIEGFRIED na bolsa quando o personagem morre e o
+      # ressuscita ali mesmo, com HP e SP cheios. Procurar o 7621 em npc/
+      # nao devolve nada, e a conclusao facil - e errada - seria que ele
+      # nao serve para nada aqui. E a mesma armadilha dos cupons de
+      # estilista, do Ticket de Expansao e do CLAUDE.md secao 4.8.
+      #
+      # Vale reparar no que ele NAO faz num servidor de guerra: o
+      # `pc_dead` so chega la depois das saidas de PvP/GvG, entao o
+      # Amuleto nao levanta ninguem dentro de castelo.
+      - Index: 18
+        Item: Token_Of_Siegfried         # 7621 Amuleto de Ziegfried
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 5
+
+      # A Goma dobra a taxa de DROP por 30 minutos (`sc_start
+      # SC_ITEMBOOST,1800000,100`), com 1 minuto de espera entre usos pelo
+      # `Reuse_Limit_D`. Cuidado ao mexer no preco: aqui o efeito monta em
+      # cima de um servidor que ja e 50x, e meia hora dele por 5 Moedas e
+      # a coisa mais barata da lista em valor por minuto.
+      - Index: 19
+        Item: Bubble_Gum                 # 12210 Goma de Mascar
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 5
+
       # ----- Permanentes ----------------------------------------------
-      # Os dois de 2026-08-12, e sao de outra natureza que os dezoito
+      # Os dois de 2026-08-12, e sao de outra natureza que os vinte
       # acima: nao se gastam por uso, se gastam por PERSONAGEM. Por isso
       # ficam no fim e nao dentro de "Consumiveis".
       #
@@ -303,7 +345,7 @@ Body:
       #
       # Exige cliente 2018-12-19 ou mais novo (o `#if PACKETVER_MAIN_NUM
       # >= 20181219` do mesmo arquivo); o nosso e 20211103.
-      - Index: 18
+      - Index: 20
         Item: Inventory_Ex_Dis           # 25792 Ticket de Expansao de Inventario
         RequiredItems:
           - Index: 0
@@ -332,7 +374,7 @@ Body:
       #
       # Ele e NoTrade/NoDrop/NoSell/NoCart/NoStorage - fica no personagem
       # que comprou, como o resto desta gaveta.
-      - Index: 19
+      - Index: 21
         Item: Boarding_Halter             # 12622 Redea (a permanente)
         RequiredItems:
           - Index: 0
@@ -349,7 +391,7 @@ Body:
   # loja com `callshop "Ordem#loja"`.
   #
   # NAO E `duplicate` DA MAQUINA ACIMA, e a diferenca e de mercadoria,
-  # nao de lugar: aquela vende dezoito itens POR Moeda Nova; esta CONVERTE
+  # nao de lugar: aquela vende vinte e dois itens POR Moeda Nova; esta CONVERTE
   # Moeda do Explorador EM Moeda Nova. Duas listas diferentes, duas
   # entradas.
   #

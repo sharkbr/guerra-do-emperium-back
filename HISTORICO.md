@@ -7764,3 +7764,182 @@ Três nomes próprios saíram das tabelas do jogo: o `Sobbing Starlight` do scri
 inteira virou "Luz Estelar" e o pedaço acompanha o item; `Crusader` é
 **Templário** (`map_msg_por.conf:563`); e `Niflheim` é **Nifflheim**, com dois
 F, que é como o `mapnametable.txt` escreve.
+
+## O Guia de Prontera fala português, e a bandeira do Brasil sobe para o CTRL+1 (2026-08-12)
+
+Quatro pedidos na mesma rodada. Três são de conteúdo e um é de patch de exe.
+
+### CTRL+1 passa a ser a bandeira do Brasil
+
+O pedido: *"CTRL + 1 tem que ser bandeira do Brasil, hoje brasil é CTRL + 6, e
+CTRL + 1 é Korea"*.
+
+**O primeiro lugar onde se procura é o errado.** As bandeiras parecem emoção
+como qualquer outra, e emoção mora em `data\luafiles514\lua files\emotion\
+emotionlist.lub` — que define o `enum` inteiro (`ET_FLAG` = 13,
+`ET_BR_FLAG` = 51 e as outras sete) e ainda um `EMOTION_ORDERLIST`. Só que
+aquela lista tem **64 entradas e nenhuma bandeira**: ela é a ordem da *janela*
+de emoções, e bandeira não aparece na janela. Reordená-la não mexeria em nada.
+(O `.lub` do nosso GRF ainda vem com DES e não abre; o do bRO é o mesmo arquivo,
+mesma versão, sem DES — foi de lá que saiu.)
+
+**Quem trata CTRL+`<n>` é o exe**, num `switch` de nove casos em
+`0x00638950`: `add eax,-0D2h`, `cmp eax,8`, `jmp [eax*4 + 00638B1Ch]`. E cada
+caso é uma **cadeia de comparações contra o `<servicetype>` do
+`clientinfo.xml`** (o global `[012BF51C]`; `korea`=0 … `brazil`=12, na ordem em
+que os nomes estão no `.rdata`) antes de chegar ao "rabicho" que empurra a
+emoção. Ou seja a mesma tecla dá bandeiras diferentes conforme o servicetype, e
+na maioria deles não dá bandeira nenhuma:
+
+| servicetype | CTRL+1 | CTRL+6 |
+|---|---|---|
+| `korea` (0) | Coreia | Brasil |
+| `brazil` (12) | Brasil | *nada* |
+| `america`, `japan`, `thai`… | *nada* | *nada* |
+
+**O `data\clientinfo.xml` daqui diz `brazil` e o jogo se comporta como
+`korea`** — o relato do dono bate casa por casa com a linha de cima da tabela.
+Não se foi atrás do porquê: qualquer que seja (o `clientinfo.xml` com DES
+dentro do GRF, ordem de leitura, patch do NEMO), a saída escolhida é imune a
+ele.
+
+**A saída: reapontar a tabela de saltos direto para os rabichos**, pulando a
+cadeia de servicetype inteira. São 36 bytes, todos de dados, nenhum de código,
+e é seguro porque o rabicho só precisa do `ecx` — que o prólogo carrega **antes**
+do salto. Com isso as nove teclas passam a funcionar sempre, e a ordem passa a
+ser nossa: a de `korea`, com Brasil e Coreia **trocados de lugar** (CTRL+1
+Brasil, CTRL+6 Coreia). Trocar em vez de empurrar a fila foi de propósito —
+quem já decorou CTRL+3 continua com Filipinas.
+
+Ferramenta: `ferramentas/ordena_bandeiras_ctrl.py`, com `--verificar`. Ela não
+procura nada por endereço fixo — acha a tabela pelo padrão do prólogo e os nove
+rabichos pelo padrão dos `push`; os endereços acima são só documentação. **E,
+como todo patch de exe deste projeto, `--verificar` dizendo "aplicado" não é
+prova de efeito** (§5, "Tamanho da fonte"): quem prova é apertar CTRL+1 no jogo.
+
+### A Máquina ganha dois consumíveis, e a caixa de Guyak muda de cara
+
+Duas linhas novas em `npc/guerra/barters_guerra.yml`, no fim do grupo
+"consumíveis" — e são os **primeiros consumíveis avulsos** da gaveta, os
+primeiros que não vêm em caixa:
+
+| Item | Preço | O que faz |
+|---|---|---|
+| 7621 Amuleto de Ziegfried | 5 Moedas | ressuscita quem morre, com HP e SP cheios |
+| 12210 Goma de Mascar | 5 Moedas | drop ×2 por 30 minutos |
+
+O Amuleto é `Etc` **e mesmo assim se gasta**: quem o consome é o `pc_dead` no
+C++, que o procura na bolsa quando o personagem morre. É a mesma armadilha dos
+cupons de estilista e do Ticket de Expansão (`CLAUDE.md` §4.8) — procurar o 7621
+em `npc/` não devolve nada, e a conclusão fácil seria que ele não serve para
+nada aqui.
+
+Os dois já tinham nome em português e arte completa no `itemInfo.lua`
+(`estado_item.py`: "4 de 4 ok"), o que importa porque **a janela de troca
+desenha o nome do cliente, não o do servidor** (§4.9).
+
+**Entrar item no meio da lista custou renumerar**: os dois permanentes desceram
+de 18/19 para 20/21. É seguro só enquanto nenhuma linha tiver `Stock` — se um
+dia tiver, o `Index` vira chave de estoque no SQL e renumerar passa a mexer
+nele. Ficou escrito no cabeçalho do YAML.
+
+**E a Cx. Poção de Guyak (30996) trocou de arte**: usava o `resourceName` da
+caixa de 20 do bRO (22668), que é a caixa genérica de consumível — igual a meia
+dúzia de irmãs na mesma vitrine. Passou a usar o da **própria Poção de Guyak
+(12710)**: a caixa tem a cara do que tem dentro. Uma linha na tabela `ITENS` do
+`ferramentas/instala_item.py` (`arte_de`), que é o campo que copia
+`resourceName` de outro item em tempo de execução.
+
+### O Guia de Prontera, em português e com uma categoria nova
+
+`npc/guerra/guia_de_prontera.txt`, cinco NPCs — as mesmas cinco células dos
+cinco `Guide` do rAthena (154,187 na praça e um em cada portão), mesmo sprite
+105, mesmo cutin `prt_soldier`.
+
+**Por que arquivo nosso e não tradução por catálogo.** Diálogo do rAthena se
+traduz em `npc/guerra/traducao/*.cat`, e foi assim com as cidades e a Kafra.
+Aqui não serviria: o pedido não foi traduzir o Guia, foi **mudar** o que ele diz
+e **acrescentar** uma categoria que o rAthena não tem. Catálogo troca texto por
+texto; não inventa menu. Então vale a receita de sempre (§2) — `disablenpc` nos
+originais mais NPC nossa na mesma célula, com o
+`npc/re/guides/guides_prontera.txt` byte a byte igual ao upstream.
+
+**São cinco `disablenpc` e não um.** Desligar o `Guide#01prontera` (que exporta
+`GuideProntera`) não alcança os quatro `duplicate` dele — a mesma pegadinha do
+Mestre das Montarias. Um por linha, no `OnInit`.
+
+As três categorias:
+
+- **Serviços Principais** — nova, e no topo. As três portas que são nossas:
+  Centro da Ordem (165,168), Arena de Combate (147,180) e Máquina (167,199).
+- **Lugares clássicos** — o antigo "Main Facilities", onze lugares.
+- **Mercados e Assistências** — o antigo "Merchants & Helpers", doze. O
+  **Hipnotizador saiu e a Mesmerita entrou**: aquela linha só dizia "mudei para
+  Izlude" e nem marcava o mini-mapa (o `viewpoint` dele já vinha comentado no
+  upstream), enquanto quem reseta habilidade e atributo aqui é a Mesmerita,
+  `prontera 144,173`, de graça.
+
+**O menu nasce do catálogo, num laço** — regra 11, a que o Teleportador da Ordem
+custou em 2026-08-08. Não há string de menu escrita à mão no arquivo: há seis
+colunas paralelas (`.nome$`, `.dono`, `.marcas$`, `.nota$`, `.nav$`,
+`.navpos$`), o `select` é montado a partir da primeira, e o `OnInit` compara os
+seis `getarraysize` e grita com `debugmes` se saírem de compasso.
+
+Dois detalhes que a tabela obrigou:
+
+- **Coluna opcional usa `"-"` e não `""`.** `getarraysize` de array de texto
+  para no último elemento **não vazio**, então coluna terminada em `""`
+  encolheria e a conferência de tamanhos passaria a mentir. Pelo mesmo motivo o
+  `.dono` numera as categorias de 1 a 3, não de 0 a 2.
+- **`.marcas$` é `"x y x y …"`, e o `explode` não limpa o destino** — ele grava
+  a partir do índice dado (`script.cpp:17305`), então linha curta depois de
+  linha longa herdaria o rabo da outra. Daí o `deletearray` antes de cada
+  `explode`.
+
+**Trinta marcas de mini-mapa, ids 0 a 29** — e trinta não é número solto: é o
+maior que o rAthena inteiro usa, e quem o usa é justamente o Guia de Prontera de
+`npc/re/guides`. Não há limite do lado do servidor; o do cliente não está
+documentado em lugar nenhum, então ficou-se no que já se sabe que funciona. Foi
+por isso que a Biblioteca e o Criador de Pecopeco perderam a segunda **marca** e
+ganharam um segundo **link** (`.nav$`) — link leva ao mesmo lugar, é clicável e
+não gasta id. A taverna do sul perdeu a marca de vez: o rAthena marcava as duas
+e dizia, na mesma tela, que só a do norte abre.
+
+**Nenhum `mes` começa com espaço** (§5): o recuo dos itens é `"- "`.
+
+### O Guia quebrou no primeiro `@reloadscript`, e por dois motivos independentes
+
+O primeiro teste em jogo, na mesma noite, deu dois sintomas que pareciam um só:
+o Guia respondia **em inglês** logo depois do `@reloadscript`, e, ao trocar de
+personagem, respondia em português e certo — mas **com a janela de menu em
+branco**, só com OK e cancelar. São dois defeitos sem relação um com o outro, e
+o log do map-server tinha os dois.
+
+**1. `disablenpc` no nome errado.** *"Attempted to disablenpc a non-existing NPC
+'Guide#01prontera'"*. O nome único de um NPC é o que vem **depois** do `::`: o
+`npc_parsename` (`src/map/npc.cpp:3674`) põe a metade da esquerda em `nd->name`,
+que só serve para desenhar, e a da direita em `nd->exname`, que é a chave do
+`npcname_db`. Então o `Guide#01prontera::GuideProntera` se desliga por
+**`GuideProntera`**. Os outros quatro são `duplicate` sem `::`, e aqueles quatro
+tinham acertado — daí o sintoma: **um** Guia em inglês de pé, empilhado no
+nosso, na célula da praça. Quem clicava caía no que estivesse por cima, e por
+isso o resultado mudava entre uma sessão e outra. Subiu para o `CLAUDE.md` §5.
+
+**2. `||` não faz curto-circuito.** *"getelementofarray: index out of range
+(-1)"*, em `.dono`. A linha era a guarda mais comum que existe:
+
+```
+if (.@i == 0 || .dono[.@i - 1] != .@g)
+```
+
+O `||` do script do rAthena é o `C_LOR`, um operador de **dois números**
+(`script.cpp:3840`) resolvido pelo `op_2num` depois de os dois lados já estarem
+na pilha — não há salto como em C. Então `.dono[-1]` é avaliado na primeira
+volta, sempre.
+
+O que faz este valer §5 não é o erro, é o **efeito à distância**: o comando
+devolve falha, o `OnInit` morre ali, e tudo que ele ainda ia montar — `.topo$`,
+`.menu$`, `.ini`, `.fim` — fica vazio. O `select(.topo$)` recebe `""` e o
+cliente desenha uma caixa de menu **em branco**. Nada na tela liga a caixa vazia
+ao índice `-1`, e o diálogo antes dela funciona perfeitamente, o que empurra o
+diagnóstico para o lado errado. Virou `if` / `else if`.
