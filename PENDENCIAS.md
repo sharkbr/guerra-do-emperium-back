@@ -1113,19 +1113,18 @@ se apurou, e vale para qualquer efeito futuro:
 
 ## 1n. Quatro pedidos de 2026-08-12 — falta ver no jogo
 
-### O CTRL+1 ainda NÃO foi aplicado — o cliente estava aberto
+### O CTRL+1 está gravado no exe — falta apertar a tecla
 
-`ferramentas/ordena_bandeiras_ctrl.py` está pronto e o `--verificar` roda, mas
-o patch **não foi gravado**: o exe fica travado enquanto o cliente roda, e ele
-estava no ar. O que falta é uma linha, com o jogo fechado:
+`ferramentas/ordena_bandeiras_ctrl.py` **foi aplicado em 2026-08-12 23:51**,
+com o cliente fechado (o exe fica travado enquanto ele roda). Backup em
+`GuerraDoEmperium.exe.BACKUP-bandeiras-20260812-2351`; reler a tabela do disco
+devolve as nove entradas novas.
 
-```
-C:\Python27\python.exe ferramentas/ordena_bandeiras_ctrl.py
-```
-
-Depois, **abrir o jogo e apertar CTRL+1**. Isso não é formalidade: patch de exe
-"aplicado e confirmado" não é patch com efeito, e script que confere o próprio
-trabalho não prova nada (`CLAUDE.md` §5). A ordem esperada, das nove teclas:
+**Isso não prova nada.** Patch de exe "aplicado e confirmado" não é patch com
+efeito, e script que confere o próprio trabalho não prova nada (`CLAUDE.md`
+§5) — o `ajusta_tamanho_fonte.py` respondia *"8 ja desviadas"* e era inócuo. O
+que falta é **abrir o jogo e apertar CTRL+1**. A ordem esperada, das nove
+teclas:
 
 | tecla | bandeira | | tecla | bandeira |
 |---|---|---|---|---|
