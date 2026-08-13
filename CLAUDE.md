@@ -273,6 +273,27 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
       a 1 zeny (9 zeny de lucro por clique, que o próprio dono chamou de
       "não move nada"). Preço de peça que já está na mão dos jogadores não
       se troca sem ele pedir.
+17. **Antes de mudar uma regra, conferir se ela EXISTE — o cabeçalho pode
+    estar descrevendo uma que nunca foi escrita.** Cabeçalho longo é o que
+    torna este projeto navegável, e é justamente por isso que ele é lido como
+    se fosse o código: quem chega para mexer parte da descrição e edita ao
+    lado dela. Quando os dois divergem, **nada denuncia** — não há teste, não
+    há log, e o NPC funciona.
+
+    Caso vivo, e de graça só porque apareceu na leitura: o
+    `honra_de_combate.txt` prometia desde 2026-08-08 que *"quem cai abaixo de
+    zero para de valer para o matador, mas continua sendo alvo: morrer ainda
+    tira ponto dele"*, e o código tinha um `if (.@pontos_morto < .Piso) end;`
+    que saltava **as duas** pontuações. A regra escrita nunca rodou. Em
+    2026-08-13 o dono pediu exatamente aquele comportamento como novidade — e
+    era, apesar de estar documentado havia cinco dias.
+
+    Na prática: ao receber "mude X para Y", **ler o trecho que implementa X**
+    e não só o parágrafo que o explica. Se os dois discordarem, o pedido
+    provavelmente é sobre o que o código faz, não sobre o que o texto diz — e
+    a divergência entra na entrega, por escrito. É a mesma família da §4.11
+    ("comentário não é trava"), do outro lado: lá o comentário mentia sobre
+    uma ordem, aqui sobre uma regra.
 
 ## 5. Armadilhas deste ambiente
 
@@ -319,6 +340,14 @@ Produziram diagnóstico falso e custaram retrabalho:
   nasceu. Corrigido em 2026-08-10 por `conf/guerra/inter_guerra.txt`
   (`default_codepage: latin1`); a armadilha continua valendo para quem
   desconfiar do `conf/import/` e apagar esse import.
+- **Entrada de GRF marcada como "DES" NÃO é entrada ausente.** O
+  `ferramentas/grf.py` recusa arquivo com o bit de cifra (`flags & 6`) com um
+  *"arquivo com DES: ..."*, e metade dos sprites antigos deste `data.grf` está
+  assim — inclusive `.spr`/`.act` de NPC que desenham perfeitamente em jogo. Ler
+  isso como "o cliente não tem o sprite" **reprova sprite bom**, que é
+  exatamente a conferência que a regra do view id manda fazer. O que prova
+  presença é o **nome estar na tabela** do GRF (`grf.py <grf> find <padrão>`),
+  não o `read` devolver bytes. Medido em 2026-08-13 no `4_ghost_stand`.
 - **`.lub` do GRF é bytecode** (header `\x1bLua`); os do ROenglishRE são texto
   puro. Comparar tamanho entre os dois não significa nada.
 - **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`

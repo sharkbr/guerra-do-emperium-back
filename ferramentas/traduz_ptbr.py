@@ -697,6 +697,26 @@ NOSSOS_MAPAS = {
     'auction_01.rsw': {
         'displayName': u'Centro da Ordem',
     },
+
+    # A arena de PvP, alcancada pela porta de prontera 147,180
+    # (npc/guerra/arena_de_combate.txt). No kRO e uma das cinco "Salas"
+    # numeradas de PvP e se chama "Sala Bussola"; aqui e A arena, a unica que
+    # abrimos, e o nome de origem nao dizia isso a ninguem. Renomeada a pedido
+    # em 2026-08-13.
+    #
+    # SAO DOIS CAMPOS, e os dois precisam estar aqui: o bloco deste mapa no
+    # mapInfo_*.lub tem `displayName` -- o canto do minimapa, que e tambem o
+    # que o mapnametable.txt recebe -- e um `signName.mainTitle`, o letreiro
+    # grande da entrada. Era o letreiro que dizia "PvP Sala Bussola" ao
+    # atravessar a porta. Trocar so um deixa metade do nome velho na tela.
+    #
+    # AS OUTRAS QUATRO SALAS NAO ENTRAM: pvp_n_2-5, _3-5, _4-5 e _5-5 tem o
+    # mesmo nome de origem e continuam "PvP : Sala Bussola". Nenhuma tem porta
+    # em lugar nenhum do servidor, entao ninguem as le.
+    'pvp_n_1-5.rsw': {
+        'displayName': u'Arena de Prontera',
+        'mainTitle': u'Arena de Prontera',
+    },
 }
 
 

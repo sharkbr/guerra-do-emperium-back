@@ -38,7 +38,7 @@ sem confirmação in-game.
 | Mister Peso | `prontera 99,64` | 2026-08-08 |
 | Mestre das Montarias (Riding Creature Master em PT) | `prontera 130,213` | 2026-08-08 |
 | Área de Treinamento no lugar novo | `prontera 157,187` | 2026-08-08 |
-| Placar da Arena — modal novo, na coordenada nova | `prontera 152,187` | 2026-08-08 |
+| Placar da Arena — modal novo, na coordenada nova | `prontera 142,180` | 2026-08-08 |
 | Caveira Humana caindo de jogador morto | `pvp_n_1-5` | 2026-08-08 |
 | Teletransportadora de Alberta — chegada e NPC | `alberta 117,57` / `105,63` | 2026-08-08 |
 | Sombrios Gerais — loja, sprite levantado e facing novo | `auction_01 193,58` | 2026-08-11 |
@@ -46,7 +46,9 @@ sem confirmação in-game.
 | Tranqueiras (55 materiais pelo preço de compra) — **e o sprite de classe** | `prontera 151,131` | 2026-08-12 |
 | Chapeleiro sem a Boina Alada (10 itens, era 11) | `prontera 151,173` | 2026-08-12 |
 | **31 peças de cabeça nas três lojas da fileira de cima, e o preço novo** | `prontera`, y=173 | 2026-08-12 |
-| Arena de Combate com a Morte, em lugar novo | `prontera 147,180` | 2026-08-12 |
+| Arena de Combate com a Morte (`4_M_DEATH`), virada para leste | `prontera 147,180` | 2026-08-12 |
+| Regra nova da arena: sem anti-conluio, com piso de -10 | `pvp_n_1-5` | 2026-08-13 |
+| "Arena de Prontera" no minimapa **e** no letreiro de entrada | cliente, sem NPC | 2026-08-13 |
 | Guia de Prontera de volta ao ar | `prontera 154,187` | 2026-08-12 |
 | Ticket de Inventário e Rédea na Máquina | `prontera 167,199` / `comodo 214,185` | 2026-08-12 |
 
@@ -135,9 +137,20 @@ e está em `ferramentas/levanta_sprite_npc.py`.
   abre com 255 e **não dá erro nenhum** — o sintoma é só a lista curta. Conferir
   contando: `Carta de Arma` tem de mostrar **359**.
 - **Honra de Combate:** exige rodar `sql-files/guerra_arena_pvp.sql` antes de
-  subir, e **reiniciar o map-server** (não basta `@reloadscript`). Sem as
-  tabelas ninguém pontua, mas o anúncio de morte continua saindo — e é esse o
+  subir, e **reiniciar o map-server** (não basta `@reloadscript`). Sem a
+  tabela ninguém pontua, mas o anúncio de morte continua saindo — e é esse o
   sintoma que aparece primeiro.
+
+  **A regra mudou em 2026-08-13** e o roteiro de teste mudou junto. São três
+  coisas para provar, e duas delas só aparecem com um alvo **negativo**:
+  (1) matar quem tem 0 ou mais pontua o matador e derruba o morto em 1;
+  (2) matar quem já está negativo **não** dá ponto a ninguém, mas **continua**
+  derrubando o morto — este é o caso que o código não fazia até agora;
+  (3) o morto para em **-10** e não desce mais, e o número da placa tem de
+  bater com o do modal de reputação (é o mesmo piso escrito em dois lugares —
+  ver `ARQUITETURA.md` §4). Não há mais limite por par de contas nem espera
+  entre uma morte e a seguinte: matar dez vezes seguidas tem de valer dez
+  vezes, enquanto o alvo estiver em 0 ou acima.
 - **Manteleiro:** é a primeira loja de manto cosmético do projeto, e é onde a
   arte nova de 2026-08-08 aparece. O que provar: (1) a loja **abre** — item sem
   os 4 arquivos de item dispara caixa modal ao abrir, não ao equipar; (2)
@@ -148,13 +161,16 @@ e está em `ferramentas/levanta_sprite_npc.py`.
   `python ferramentas/instala_manto.py --ids <id> --aplicar`; (3) a **Aura
   Nevada** (480097) não veste manto nenhum e não é falha: ela é efeito de tela.
 
-- **Arena, Área de Treinamento e Placar:** os três trocaram de célula no mesmo
-  pedido. O que denuncia erro aqui é **NPC empilhado**: se o `disablenpc` de um
-  dos dois arquivos errar o alvo, sobram dois NPCs numa célula e nenhum na
-  outra, e isso **não dá erro no log** — os dois arquivos imprimem um
-  `debugmes` próprio se não acharem o NPC do rAthena, e é esse aviso que se
-  procura. Andar de 152 a 157 em y=187 tem de mostrar, nesta ordem: placa,
-  porta da arena, porta do treino.
+- **Arena, Área de Treinamento e Placar:** os três já trocaram de célula três
+  vezes, e desde 2026-08-13 **não estão mais na mesma fileira**: a placa em
+  `142,180` e a porta da arena em `147,180` dividem o `y=180`, e a porta do
+  treino ficou sozinha em `157,187`. Nenhum dos dois arquivos da arena desliga
+  NPC do rAthena hoje — o `disablenpc` saiu em 2026-08-12 —, então o sintoma
+  antigo (NPC empilhado, sem erro no log) já não se aplica a eles; o do campo
+  de treino ainda usa a receita e ainda imprime `debugmes` se errar o alvo. O
+  que conferir na tela: **a placa aparece** em `142,180` (célula andável, sem
+  vizinho a menos de quatro casas). O sprite da porta voltou ao `4_M_DEATH` no
+  mesmo dia e já foi visto em jogo — esse não está mais em aberto.
 
 - **Logue e Ganhe:** a janela abre sozinha no login e **não tem NPC** — se não
   aparecer, o roteiro acima não ajuda. O que provar, nesta ordem: (1) a janela

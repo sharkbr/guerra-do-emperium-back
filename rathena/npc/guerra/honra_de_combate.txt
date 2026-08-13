@@ -1,13 +1,25 @@
 //===== Guerra do Emperium ===================================
 //= Honra de Combate - a reputação de PvP da Arena de Combate
 //===== Onde =================================================
-//= prontera 152,187 - a placa do placar, a ponta OESTE da
-//= fileira: placa (152), porta da arena (154), porta do campo
-//= de treino (157) e Mestre de UP (160).
+//= prontera 142,180 - a placa do placar, CINCO células a oeste
+//= da porta da arena (147,180) e na mesma fileira que ela.
 //=
-//= ATÉ 2026-08-08 ELA FICAVA EM 163,187, na outra ponta. Veio
-//= para a esquerda no mesmo pedido que fez a Arena de Combate
-//= e a Área de Treinamento trocarem de lugar.
+//= ELA ANDOU DUAS VEZES:
+//=
+//=   até 2026-08-08   prontera 163,187
+//=   2026-08-08       prontera 152,187, a ponta oeste da fileira
+//=                    do porteiro do campo de treino, no mesmo
+//=                    pedido que trocou a arena e o campo de
+//=                    treino de lugar
+//=   2026-08-13       prontera 142,180, a pedido, no mesmo dia
+//=                    em que a pontuação perdeu o anti-conluio
+//=
+//= A célula de hoje foi conferida no .gat DESTE cliente: tipo 0,
+//= andável, e sem NPC ligado a menos de quatro células. O mais
+//= perto é o Clan Helper do rAthena (npc/re/other/clans.txt),
+//= em 138,183. O Lottery e o Stock Market de npc/custom/, que
+//= ficariam em 141,182 e 140,181, estão os dois comentados no
+//= scripts_custom.conf e não nascem.
 //===== Descrição ============================================
 //= Matar na arena dá um ponto, morrer tira um. A conta aparece
 //= no modal de reputação do cliente (Honra de Combate) e o
@@ -59,21 +71,60 @@
 //=    primeira linha.
 //= 2) Matador e morto precisam ser nível .Nivel. Fecha a porta
 //=    para personagem descartável criado só para dar pontos.
-//= 3) Não pontua contra quem está ABAIXO de .Piso. O piso
-//=    passou a ser ZERO em 2026-08-08, a pedido: só vale matar
-//=    quem tem pontuação zero ou positiva. Antes era -10, e a
-//=    faixa negativa ainda valia ponto - o que fazia de quem já
-//=    estava perdendo um alvo bom. Quem cai abaixo de zero para
-//=    de valer para o matador, mas continua sendo alvo: morrer
-//=    ainda tira ponto dele.
-//= 4) Anti-conluio: o saldo de cada PAR DE CONTAS no dia fica
-//=    preso em ±.Limite. Revezamento honesto mantém o saldo
-//=    perto de zero e pontua o dia inteiro; fazenda de um lado
-//=    só trava no terceiro golpe. Ver guerra_arena_pvp.sql.
+//= 3) O MATADOR só pontua se o morto tinha .Piso (zero) ou mais.
+//=    Matar quem já está negativo não rende nada a ninguém.
+//= 4) O MORTO perde um ponto em toda morte válida, tenha ele
+//=    quanto tiver - até .PisoQueda (-10), de onde não desce
+//=    mais.
+//=
+//= (3) E (4) SÃO DUAS DECISÕES SEPARADAS, e até 2026-08-13 não
+//= eram: um `if (.@pontos_morto < .Piso) end;` saltava as duas
+//= pontuações de uma vez, então quem estava negativo também
+//= parava de PERDER ponto. O cabeçalho daquela época dizia o
+//= contrário do que o código fazia ("continua sendo alvo:
+//= morrer ainda tira ponto dele") - a regra nova é a que o
+//= texto já prometia.
+//=
+//= O PISO DE QUEDA NÃO É ESCOLHA DESTE ARQUIVO SOZINHO: o
+//= `Minimum: -10` de db/guerra/reputation.yml já trava o modal
+//= no mesmo número (o set_reputation_points passa por um
+//= cap_value, src/map/script.cpp). Sem o piso aqui, a TABELA
+//= desceria abaixo de -10 e o modal ficaria parado em -10 - as
+//= duas metades da pontuação discordando, caladas, e a placa
+//= mostrando um número que o jogador nunca vê. Mexer num dos
+//= dois exige mexer no outro.
+//===== NÃO HÁ MAIS ANTI-CONLUIO ==============================
+//= Retirado em 2026-08-13, a pedido. Até ali havia um saldo por
+//= PAR DE CONTAS por DIA (tabela guerra_pvp_confronto, preso em
+//= mais ou menos .Limite = 2): revezamento honesto pontuava o
+//= dia inteiro, fazenda de um lado só travava no terceiro
+//= golpe.
+//=
+//= Saiu INTEIRO: não há teto por par, não há janela de 24
+//= horas, não há espera entre uma morte e a seguinte. Toda
+//= morte válida vale, quantas vezes acontecer.
+//=
+//= ISSO ABRE A PORTA PARA CONTA DESCARTÁVEL, e o dono sabe: o
+//= pedido veio com "por enquanto as pessoas podem ficar criando
+//= char ou até conta pra isso, mas vamos observar primeiro". O
+//= nível .Nivel dos dois lados é o único custo que sobrou, e
+//= não é pequeno - mas não é trava.
+//=
+//= O que segura a economia hoje é a própria regra (3): um alvo
+//= só vale ponto enquanto estiver em zero ou acima, e cada
+//= morte o empurra para baixo. Uma conta descartável rende UMA
+//= caveira e UM ponto, e depois só volta a render se alguém lhe
+//= devolver pontuação.
+//=
+//= A tabela guerra_pvp_confronto continua NO BANCO, sem ninguém
+//= escrever nela. Foi tirada do sql-files/guerra_arena_pvp.sql;
+//= quem quiser limpar:
+//=   DROP TABLE guerra_pvp_confronto;
+//= O caminho de volta é o git, que tem as duas metades.
 //=
 //= O ANÚNCIO SAI SEMPRE, mesmo quando a morte não pontua. Foi
-//= pedido assim: o broadcast conta o que aconteceu, não o que
-//= valeu ponto.
+//= pedido assim desde o começo: o broadcast conta o que
+//= aconteceu, não o que valeu ponto.
 //===== O troféu da arena ====================================
 //= A Caveira Humana (30995) vai para o INVENTÁRIO do matador
 //= no instante em que a morte pontua. Ela não cai no chão em
@@ -85,10 +136,10 @@
 //= `NoDrop`. Mochila cheia perde a caveira, e o cliente avisa o
 //= jogador com a mensagem de inventário lotado.
 //=
-//= SÃO TRÊS CONDIÇÕES, e duas delas já eram as da pontuação:
+//= SÃO TRÊS CONDIÇÕES:
 //=   1) matador e morto em nível .Nivel;
-//=   2) a morte precisa PONTUAR - ou seja, passar também pelo
-//=      anti-conluio do .Limite;
+//=   2) a morte precisa PONTUAR para o matador - ou seja, o
+//=      morto em .Piso ou acima;
 //=   3) o morto precisa ter .TrofeuPiso ou mais de Honra de
 //=      Combate ANTES de morrer.
 //=
@@ -99,13 +150,11 @@
 //= estão separados no OnInit de propósito, para que essa
 //= diferença de um seja visível a quem for mexer.
 //=
-//= A (2) NÃO foi pedida, e está aqui por um motivo: a Caveira é
-//= MOEDA - a descrição da Moeda Nova (30998) já promete trocá-la
-//= por moeda. Sem o anti-conluio, duas contas em nível máximo
-//= revezando mortes fabricariam moeda sem teto, e o .Limite
-//= existente sairia de graça. Para soltar a caveira em TODA
-//= morte válida, basta subir o bloco para antes do query_sql do
-//= .Limite - e aí o revezamento volta a pagar.
+//= A (2) TINHA UM TERCEIRO PEDAÇO ATÉ 2026-08-13: passar pelo
+//= anti-conluio. Com ele fora, "pontuar" virou só o .Piso, e a
+//= Caveira - que é MOEDA, a descrição da Moeda Nova (30998)
+//= promete trocá-la - perdeu o teto por par de contas. Ver a
+//= seção acima: quem segura é a regra (3), não mais um limite.
 //=
 //= O número lido é `.@pontos_morto`, colhido ANTES do S_Pontua:
 //= vale a reputação que o morto tinha ao morrer, e não a de
@@ -119,6 +168,13 @@
 //= pet/homúnculo/mercenário para o dono). Por isso não há teste
 //= de "morreu para monstro" aqui - o OnPCDieEvent precisaria
 //= dele, este não.
+//=
+//= O piso de queda é aplicado em SQL, com GREATEST(), e não no
+//= script: o valor novo tem de sair da MESMA expressão que soma
+//= o delta, senão duas mortes simultâneas leriam o mesmo total
+//= antigo e uma sobrescreveria a outra. É o mesmo motivo pelo
+//= qual o total é relido do banco logo depois, e não calculado
+//= aqui.
 //=
 //= O sprite 20269 (JT_GUILD_SKILL_FLAG) existe neste cliente:
 //= está no npcidentity.lub do GRF e a arte
@@ -143,7 +199,7 @@
 //= precisa existir antes: ver sql-files/guerra_arena_pvp.sql.
 //============================================================
 
-prontera,152,187,4	script	Placar da Arena	20269,{
+prontera,142,180,4	script	Placar da Arena	20269,{
 	mes "[Placar da Arena]";
 	mes "^777777TOP " + .Top + " Vencedores:^000000";
 
@@ -162,18 +218,18 @@ prontera,152,187,4	script	Placar da Arena	20269,{
 	}
 	mes " ";
 
-	// As três regras que o jogador precisa saber ANTES de brigar. Os
-	// números vêm do OnInit, e não do texto: mexer em .Limite conserta
-	// a regra e a explicação de uma vez.
-	mes "Duas contas podem se enfrentar valendo ponto, mas a diferença não pode passar de ^0000FF" + .Limite + "^000000 pontos no intervalo de 24 horas, contadas de 00h a 00h.";
+	// As regras que o jogador precisa saber ANTES de brigar. Os números
+	// vêm do OnInit, e não do texto: mexer no piso conserta a regra e a
+	// explicação de uma vez.
+	mes "Só pontua quem luta contra outro nível ^0000FF" + .Nivel + "^000000 - os DOIS lados.";
 	mes " ";
-	mes "Mais que os " + .Limite + " pontos de diferença entre uma conta e outra não entra na conta de ninguém mais.";
+	mes "Quem morre perde ^0000FF1^000000 ponto, até o piso de ^0000FF" + .PisoQueda + "^000000. Daí não desce mais.";
 	mes " ";
-	mes "Pontuação só ocorre se o morto tiver pontuação 0 ou maior e for nível máximo.";
+	mes "Quem mata só pontua se o morto tiver ^0000FF" + .Piso + "^000000 ponto ou mais. Derrubar quem já está negativo não rende nada.";
 	mes " ";
 	mes "Quem vence uma luta que pontua ainda recolhe a ^0000FFCaveira Humana^000000 do perdedor - mas só se ele tiver ^0000FF" + .TrofeuPiso + "^000000 ponto ou mais de Honra de Combate.";
 	mes " ";
-	mes "^777777(O matador também precisa ser nível " + .Nivel + ".)^000000";
+	mes "^777777(Não há limite por dia nem espera entre uma luta e outra. Toda morte na arena vira anúncio, valendo ponto ou não.)^000000";
 	next;
 
 	switch (select("Ranking completo:Minha pontuação:Sair")) {
@@ -183,7 +239,7 @@ prontera,152,187,4	script	Placar da Arena	20269,{
 		if (!.@q) {
 			mes "A placa está limpa. Ninguém pontuou ainda.";
 			mes " ";
-			mes "A arena fica duas células a leste daqui.";
+			mes "A arena fica cinco células a leste daqui.";
 			close;
 		}
 		mes "^777777Ranking completo:^000000";
@@ -214,10 +270,13 @@ OnInit:
 	.Rep = 5;               // o Id: de db/guerra/reputation.yml
 	.Grupo = 4;             // o Id: de db/guerra/reputation_group.yml
 	.Nivel = 200;           // nível de base exigido dos DOIS lados
-	.Piso = 0;              // o morto precisa ter ISTO ou mais para valer
+	.Piso = 0;              // o morto precisa ter ISTO ou mais para o matador pontuar
+	.PisoQueda = -10;       // e ESTE e o fundo do poço de quem morre. Tem de ser
+	                        // igual ao `Minimum:` do Id 5 em
+	                        // db/guerra/reputation.yml, senão a tabela e o modal
+	                        // param em números diferentes. Ver o cabeçalho.
 	.Trofeu = 30995;        // Caveira Humana - o troféu que o matador leva
 	.TrofeuPiso = 1;        // e a reputação MÍNIMA do morto para largá-lo
-	.Limite = 2;            // saldo máximo por par de contas, por dia
 	.Top = 5;               // linhas do quadro de cima
 	.Completo = 15;         // linhas do "Ranking completo"
 	end;
@@ -251,48 +310,36 @@ OnPCKillEvent:
 
 	if (.@nivel_matador < .Nivel || .@nivel_morto < .Nivel)
 		end;
-	if (.@pontos_morto < .Piso)
-		end;
 
-	// O par sempre na mesma ordem (a menor conta primeiro), para o dia ter
-	// UMA linha por par e não duas. O sinal diz de que lado veio o golpe.
-	.@a = .@matador;
-	.@b = .@morto;
-	.@sinal = 1;
-	if (.@a > .@b) {
-		.@a = .@morto;
-		.@b = .@matador;
-		.@sinal = -1;
+	// O GANHO DO MATADOR É CONDICIONAL; A QUEDA DO MORTO, NÃO. Ver "As
+	// regras" no cabeçalho: até 2026-08-13 este `if` era um `end` que
+	// saltava as duas pontuações de uma vez.
+	if (.@pontos_morto >= .Piso) {
+		// O troféu sai ANTES do S_Pontua de propósito: aqui o jogador
+		// anexado ainda é com certeza o matador.
+		if (.@pontos_morto >= .TrofeuPiso) {
+			getitem .Trofeu, 1;
+			dispbottom "Você recolheu a Caveira Humana de " + .@nome_morto$ + ".";
+		}
+		callsub S_Pontua, .@matador, .@cid_matador, .@nome_matador$, 1;
 	}
 
-	.@saldo = 0;
-	query_sql("SELECT saldo FROM guerra_pvp_confronto WHERE dia = CURDATE() AND conta_a = " + .@a + " AND conta_b = " + .@b, .@saldo);
-	.@novo = .@saldo + .@sinal;
-	if (.@novo > .Limite || .@novo < (0 - .Limite))
-		end;
-	query_sql("INSERT INTO guerra_pvp_confronto (dia, conta_a, conta_b, saldo) VALUES (CURDATE(), " + .@a + ", " + .@b + ", " + .@novo + ") ON DUPLICATE KEY UPDATE saldo = " + .@novo);
-
-	// O troféu sai ANTES dos S_Pontua de propósito: aqui o jogador anexado
-	// ainda é com certeza o matador. Ver "O troféu da arena", no cabeçalho.
-	if (.@pontos_morto >= .TrofeuPiso) {
-		getitem .Trofeu, 1;
-		dispbottom "Você recolheu a Caveira Humana de " + .@nome_morto$ + ".";
-	}
-
-	callsub S_Pontua, .@matador, .@cid_matador, .@nome_matador$, 1;
 	callsub S_Pontua, .@morto, .@cid_morto, .@nome_morto$, -1;
 	end;
 
 // (conta, char id, nome, quanto somar) -> grava na tabela e devolve o total
 // para o modal. A tabela é escrita PRIMEIRO e relida depois de propósito: é
 // ela que decide o número, e não a variável de conta que estava em memória.
+//
+// O GREATEST() é o piso de queda, e ele fica aqui e não num `if` do script
+// porque precisa sair da mesma expressão que soma o delta - ver "Notas".
 S_Pontua:
 	.@sp_conta = getarg(0);
 	.@sp_cid = getarg(1);
 	.@sp_nome$ = getarg(2);
 	.@sp_delta = getarg(3);
 
-	query_sql("INSERT INTO guerra_pvp_placar (account_id, nome, pontos, atualizado) VALUES (" + .@sp_conta + ", '" + escape_sql(.@sp_nome$) + "', " + .@sp_delta + ", NOW()) ON DUPLICATE KEY UPDATE pontos = pontos + " + .@sp_delta + ", nome = VALUES(nome), atualizado = NOW()");
+	query_sql("INSERT INTO guerra_pvp_placar (account_id, nome, pontos, atualizado) VALUES (" + .@sp_conta + ", '" + escape_sql(.@sp_nome$) + "', GREATEST(" + .@sp_delta + ", " + .PisoQueda + "), NOW()) ON DUPLICATE KEY UPDATE pontos = GREATEST(pontos + " + .@sp_delta + ", " + .PisoQueda + "), nome = VALUES(nome), atualizado = NOW()");
 	if (query_sql("SELECT pontos FROM guerra_pvp_placar WHERE account_id = " + .@sp_conta, .@sp_pontos))
 		set_reputation_points .Rep, .@sp_pontos, .@sp_cid;
 	return;

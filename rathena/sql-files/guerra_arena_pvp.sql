@@ -1,8 +1,8 @@
 --
 -- Guerra do Emperium - Arena de Combate (Honra de Combate)
 --
--- As duas tabelas de npc/guerra/honra_de_combate.txt. Prefixo `guerra_` para
--- que nenhuma delas se confunda com tabela do rAthena.
+-- A tabela de npc/guerra/honra_de_combate.txt. Prefixo `guerra_` para que ela
+-- nao se confunda com tabela do rAthena.
 --
 -- Aplicar:
 --   mysql -h127.0.0.1 -uragnarok -p<senha> ragnarok < sql-files/guerra_arena_pvp.sql
@@ -10,6 +10,18 @@
 -- MyISAM como o resto do main.sql. Sem transacao, e nao faz falta: os dois
 -- INSERTs de uma morte sao independentes, e o pior caso de uma queda entre
 -- eles e um ponto perdido, nao um placar corrompido.
+--
+-- ERAM DUAS TABELAS ATE 2026-08-13. A segunda, `guerra_pvp_confronto`, era o
+-- livro-caixa do anti-conluio: um saldo assinado por PAR DE CONTAS por DIA,
+-- preso em [-2, +2], que travava revezamento no terceiro golpe do dia. O dono
+-- pediu a retirada da regra inteira ("por enquanto as pessoas podem ficar
+-- criando char ou ate conta pra isso, mas vamos observar primeiro"), entao o
+-- script parou de escrever nela e o CREATE saiu daqui.
+--
+-- A TABELA CONTINUA NO BANCO de quem ja rodou este arquivo, sem ninguem
+-- escrever nela. Nao atrapalha; para limpar:
+--   DROP TABLE guerra_pvp_confronto;
+-- O caminho de volta e o git, que tem o CREATE e o script na mesma revisao.
 --
 
 --
@@ -25,6 +37,12 @@
 -- OnPCLoginEvent a resincroniza a partir daqui - por isso uma queda do
 -- map-server nao desencontra os dois.
 --
+-- `pontos` NAO TEM PISO NA COLUNA, e sim no UPDATE: o script escreve
+-- `GREATEST(pontos + <delta>, -10)`. O -10 tem de ser o mesmo `Minimum:` do
+-- Id 5 em db/guerra/reputation.yml, que e onde o modal trava - sem os dois
+-- iguais, a tabela desce e a tela para, caladas. Nao ha CHECK aqui porque
+-- MyISAM ignora CHECK: quem garante o piso e a expressao do script.
+--
 CREATE TABLE IF NOT EXISTS `guerra_pvp_placar` (
   `account_id` int(11) unsigned NOT NULL,
   `nome` varchar(30) NOT NULL default '',
@@ -32,30 +50,4 @@ CREATE TABLE IF NOT EXISTS `guerra_pvp_placar` (
   `atualizado` datetime NOT NULL,
   PRIMARY KEY (`account_id`),
   KEY `pontos` (`pontos`)
-) ENGINE=MyISAM;
-
---
--- O livro-caixa do anti-conluio: um saldo assinado por PAR DE CONTAS por DIA.
---
--- `conta_a` e SEMPRE a menor das duas, e o saldo e do ponto de vista dela:
--- a matou b soma +1, b matou a soma -1. Assim o par tem uma linha so, e nao
--- duas que precisariam ser somadas.
---
--- Preso em [-2, +2] pelo script. Revezamento honesto (um mata, o outro mata
--- de volta) mantem o saldo perto de zero e continua pontuando o dia inteiro;
--- fazenda de um lado so trava no terceiro golpe.
---
--- `dia` e DATE, entao a virada e a meia-noite do servidor - o que foi pedido,
--- e mais simples que janela deslizante de 24h: nao guarda hora de cada morte.
---
--- Linha antiga nao atrapalha nada (a consulta sempre filtra por CURDATE()),
--- mas cresce. Se um dia incomodar:
---   DELETE FROM guerra_pvp_confronto WHERE dia < CURDATE() - INTERVAL 30 DAY;
---
-CREATE TABLE IF NOT EXISTS `guerra_pvp_confronto` (
-  `dia` date NOT NULL,
-  `conta_a` int(11) unsigned NOT NULL,
-  `conta_b` int(11) unsigned NOT NULL,
-  `saldo` int(11) NOT NULL default '0',
-  PRIMARY KEY (`dia`,`conta_a`,`conta_b`)
 ) ENGINE=MyISAM;

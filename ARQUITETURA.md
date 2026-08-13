@@ -186,9 +186,18 @@ novo com todos os lugares da tabela acima.
 | `npc/guerra/honra_de_combate.txt` | as regras e o placar |
 
 Exige **reiniciar o map-server** (`reputation_db.load()` só roda no `do_init_pc`)
-e as tabelas de `sql-files/guerra_arena_pvp.sql`. Sem as tabelas, o `query_sql`
-falha e ninguém pontua — mas o anúncio de morte continua saindo, e é esse o
-sintoma que aparece primeiro.
+e a tabela de `sql-files/guerra_arena_pvp.sql`. Sem ela, o `query_sql` falha e
+ninguém pontua — mas o anúncio de morte continua saindo, e é esse o sintoma que
+aparece primeiro.
+
+**E o PISO da pontuação está escrito duas vezes**, uma em cada ponta: o
+`Minimum: -10` do `Id 5` em `db/guerra/reputation.yml` (que o
+`set_reputation_points` aplica com `cap_value`, `script.cpp:27229`) e o
+`GREATEST(pontos + <delta>, -10)` do `UPDATE` em `honra_de_combate.txt`
+(`.PisoQueda`). Baixar um sem o outro **não dá erro**: a tabela continua
+descendo e o modal para no `Minimum`, então a placa mostra um número que o
+jogador nunca vê no próprio status. O mesmo vale para o `Maximum: 3000`, que
+hoje não tem par do lado do SQL porque ninguém chegou perto.
 
 ### O Logue e Ganhe vive em 2 lugares, e o servidor não conversa com o outro
 
@@ -382,6 +391,30 @@ lado de lá; foi assim que a correção do `2_COLAVEND` pareceu não pegar em
 Como todo override de cliente, **some em cliente novo**, calado. Caso vivo: a
 Máquina de Sombrios Gerais (`npc/guerra/maquina_de_sombrios.txt`,
 `auction_01 193,58`, sprite 910).
+
+### O nome de um mapa vive em 2 arquivos do cliente e em 1 tabela da ferramenta
+
+O jogador lê o nome de um mapa em **dois lugares distintos**, e um pedido de
+renomear quase sempre quer os dois:
+
+| metade | arquivo | o que é |
+|---|---|---|
+| o canto do minimapa | `cliente\data\mapnametable.txt` | uma linha `<rsw>#<nome>#` |
+| o letreiro de entrada | `cliente\System\mapInfo_true.lub` e `_sak.lub` | `displayName` e `signName.mainTitle` do bloco |
+
+**Nenhum dos dois é fonte.** Os três são **gerados** por
+`ferramentas/traduz_ptbr.py mapas mapinfo` a partir do `mapInfo.lub` do bRO,
+então edição à mão volta ao nome do bRO na próxima rodada, calada — mesma
+família do `CheckAttendance.lub` e do `OngoingQuestInfoList` (`CLAUDE.md` §4.9).
+
+A fonte é a tabela **`NOSSOS_MAPAS`**, dentro da própria ferramenta: só entra
+ali mapa que **mudou de função** no nosso servidor. São dois hoje —
+`auction_01` (Centro da Ordem) e `pvp_n_1-5` (Arena de Prontera, 2026-08-13).
+
+O `parte_mapinfo` **só troca campo que já existe** no bloco: pôr `mainTitle`
+num mapa cujo bloco não tem `signName` não dá erro nem efeito, fica inerte. E
+trocar só o `displayName` deixa **metade do nome velho na tela** — foi o
+letreiro, e não o minimapa, que ainda dizia "PvP Sala Bússola".
 
 ### Uma placa sobre a cabeça de NPC
 

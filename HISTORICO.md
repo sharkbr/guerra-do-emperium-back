@@ -8288,3 +8288,121 @@ O atalho de voltar ao castelo que as bandeiras de fora do rAthena oferecem ao
 membro do clã dono. Aquilo é uma porta de entrada, e 279 portas para dentro do
 Kriemhild seria outra coisa. Quem quer o atalho usa as bandeiras do próprio
 Kriemhild, que continuam de pé — `prtg_cas01.txt` nunca foi desligado.
+
+## A Arena de Prontera perde o anti-conluio, e o placar desce cinco casas (2026-08-13)
+
+Quatro pedidos numa tacada só, todos sobre a arena de PvP: o nome do mapa, a
+regra de pontuação, o sprite da porta e o lugar da placa. **Três vingaram** — o
+sprite foi trocado, visto na tela e devolvido ao que era, no mesmo dia.
+
+### O nome: "PvP Sala Bússola" virou "Arena de Prontera"
+
+O `pvp_n_1-5` é uma das cinco salas numeradas de PvP do kRO, e a que abrimos é
+a única com porta no servidor. O nome de origem não dizia isso a ninguém.
+
+**Não há nada disso no servidor** — o nome é do cliente, e mora em duas metades
+que o jogador lê em momentos diferentes: o `mapnametable.txt` (canto do
+minimapa) e o `signName.mainTitle` do `mapInfo_*.lub` (o letreiro grande da
+entrada). Era **o letreiro** que dizia "PvP Sala Bússola" ao atravessar a
+porta, e trocar só o `displayName` teria deixado metade do nome velho na tela.
+
+As duas metades são **geradas** por `ferramentas/traduz_ptbr.py mapas mapinfo`
+a partir do bRO, então a mudança entrou pela tabela `NOSSOS_MAPAS` de dentro da
+ferramenta — que agora tem dois mapas, o `auction_01` e este. Editar os
+arquivos à mão teria funcionado e voltado ao nome do bRO na rodada seguinte,
+calado. O acoplamento está no `ARQUITETURA.md` §4.
+
+Os `mapInfo_*.lub` gerados passaram pelo `luac.exe -p` do ROenglishRE. Os
+mesmos 215.458 bytes de antes, por coincidência aritmética: o `displayName`
+encolheu um byte e o `mainTitle` cresceu um.
+
+### A regra: o anti-conluio saiu inteiro
+
+Até hoje um saldo por **par de contas por dia** (tabela
+`guerra_pvp_confronto`, preso em ±2) travava revezamento no terceiro golpe.
+Saiu por pedido — *"por enquanto as pessoas podem ficar criando char ou até
+conta pra isso, mas vamos observar primeiro"*. Não há mais teto por par, nem
+janela de 24 horas, nem espera entre uma morte e a seguinte.
+
+O que **ficou**, e é o que o pedido listou:
+
+| regra | como está |
+|---|---|
+| nível máximo dos dois lados | `.Nivel = 200`, sem mudança |
+| o matador só pontua se o morto tinha 0 ou mais | `.Piso = 0`, sem mudança |
+| o morto perde ponto até -10, e daí não desce | **novo**: `.PisoQueda = -10` |
+| toda morte vira anúncio | sem mudança — o `announce` já vinha antes das travas |
+
+**O achado da rodada foi que uma dessas regras já estava escrita e não
+existia.** O cabeçalho de `honra_de_combate.txt` prometia, desde 2026-08-08,
+que *"quem cai abaixo de zero para de valer para o matador, mas continua sendo
+alvo: morrer ainda tira ponto dele"* — e o código fazia outra coisa: um
+`if (.@pontos_morto < .Piso) end;` saltava **as duas** pontuações de uma vez.
+Quem estava negativo parava de perder ponto. Agora o ganho do matador é que é
+condicional, e a queda do morto não.
+
+O piso de -10 **não é escolha nova**: o `Minimum: -10` do `Id 5` em
+`db/guerra/reputation.yml` já travava o modal ali desde sempre (o
+`set_reputation_points` passa por um `cap_value`, `script.cpp:27229`). Sem o
+piso do lado do SQL, a tabela desceria abaixo de -10 e o modal ficaria parado —
+as duas metades da pontuação discordando, caladas, e a placa mostrando um
+número que o jogador nunca vê. Por isso ele foi para o `UPDATE`, e não para um
+`if` do script: o valor novo tem de sair da **mesma expressão** que soma o
+delta, senão duas mortes simultâneas leriam o mesmo total antigo.
+
+A expressão foi conferida no MariaDB de verdade antes de valer, com as seis
+combinações que importam:
+
+```
+GREATEST(5 + 1, -10)   = 6     GREATEST(-9 + -1, -10)  = -10
+GREATEST(0 + -1, -10)  = -1    GREATEST(-10 + -1, -10) = -10
+```
+
+Nenhuma das duas linhas que existem hoje no `guerra_pvp_placar` está fora do
+piso — as duas estão em zero —, então não houve migração de dado.
+
+**A Caveira Humana perdeu o teto junto.** Ela é moeda (a descrição da Moeda
+Nova promete trocá-la), e a condição "a morte precisa pontuar" incluía o
+anti-conluio. Hoje quem segura é só a regra do `.Piso`: um alvo vale caveira
+enquanto estiver em 1 ou mais, e cada morte o empurra para baixo. Uma conta
+descartável rende **uma** caveira e **um** ponto, e só volta a render se
+alguém lhe devolver pontuação. É freio, não é teto — está por escrito no
+cabeçalho e no `scripts_guerra.conf`.
+
+A tabela `guerra_pvp_confronto` saiu do `sql-files/guerra_arena_pvp.sql` e
+continua no banco, sem ninguém escrever nela. O `DROP` está no comentário do
+arquivo para quem quiser limpar.
+
+### O sprite e o lugar
+
+A porta trocou de cara e **voltou atrás no mesmo dia**. Saiu do `10028`
+(`4_M_DEATH`, que era o sprite desde 2026-08-12) para o `10029`
+(`4_GHOST_STAND`), o espectro de pé; foi visto na tela e reprovado — *"ficou
+ruim"* —, e voltou ao `10028` horas depois. O facing nunca se mexeu: **6
+(leste)** desde 2026-08-12.
+
+Não houve defeito técnico nenhum no espectro: as duas conferências da regra
+passaram para ele (`JT_4_GHOST_STAND = 10029` no `npcidentity.lub` **deste**
+cliente, e `4_ghost_stand.spr`/`.act` no `data.grf`) e ele desenhou. Foi gosto.
+A ida e a volta ficaram escritas no cabeçalho do arquivo justamente por isso —
+sem o registro, a próxima pessoa que achar o espectro bonito refaz a rodada
+inteira.
+
+**O que sobrou de aproveitável foi uma armadilha de ferramenta**, e ela subiu
+para o `CLAUDE.md` §5: os dois arquivos de arte do `4_ghost_stand` saem como
+**"DES"** no `ferramentas/grf.py` — o bit de cifra da entrada —, e ler isso
+como "o cliente não tem o sprite" **reprova sprite bom**. A prova de que é
+falso negativo estava na própria tela o tempo todo: o `4_m_death` é DES do
+mesmo jeito e desenha desde 2026-08-12. O que prova presença é o nome estar na
+tabela do GRF (`grf.py <grf> find <padrão>`), não o extrator devolver bytes.
+
+O **Placar da Arena** desceu de `prontera 152,187` para **`142,180`**, a
+terceira casa dele. A célula foi conferida no `.gat` deste cliente (tipo 0,
+andável) e a vizinhança, no `npc/`: o NPC ligado mais próximo é o `Clan Helper`
+do rAthena em `138,183`, quatro células fora. O `Lottery` (141,182) e o `Stock
+Market` (140,181) de `npc/custom/` cairiam em cima, e os dois estão comentados
+no `scripts_custom.conf` — não nascem.
+
+A placa e a porta agora dividem a fileira `y=180`, cinco células uma da outra.
+A frase do ramo "placa limpa", que dizia *"a arena fica duas células a leste
+daqui"*, virou **cinco** — era uma promessa errada desde 2026-08-08.

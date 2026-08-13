@@ -1,11 +1,17 @@
 //===== Guerra do Emperium ===================================
 //= Arena de Combate
 //===== Onde =================================================
-//= prontera 147,180 - celula VAZIA, sete passos a sudoeste da
-//= fileira do Placar da Arena (152,187) e da porta do campo de
-//= treino (157,187). Conferida no .gat DESTE cliente: tipo 0,
-//= andavel, altura 1,00 nos quatro cantos, e sem NPC nenhum -
-//= do rAthena ou nosso - a menos de tres celulas.
+//= prontera 147,180 - celula VAZIA, cinco celulas a leste do
+//= Placar da Arena (142,180) e na MESMA fileira que ele, sete
+//= passos a sudoeste da porta do campo de treino (157,187).
+//= Conferida no .gat DESTE cliente: tipo 0, andavel, altura
+//= 1,00 nos quatro cantos, e sem NPC nenhum - do rAthena ou
+//= nosso - a menos de tres celulas.
+//=
+//= A PLACA E QUE VEIO PARA CA, e nao o contrario: ela estava em
+//= 152,187 e desceu para 142,180 em 2026-08-13, no mesmo pedido
+//= que trocou o sprite desta porta. As duas dividem a fileira
+//= y=180 desde entao.
 //=
 //= ELA ANDOU DUAS VEZES, e a segunda desfez a heranca da
 //= primeira:
@@ -59,9 +65,18 @@
 //= arquivo delas, muito antes de qualquer OnInit nosso. O
 //= cabecalho do porteiro_do_treinamento.txt detalha.
 //===== O mapa ===============================================
-//= pvp_n_1-5 e a "Sala Bussola". Ja vem pronta: o
+//= pvp_n_1-5 e a "Sala Bussola" do kRO. Ja vem pronta: o
 //= npc/mapflag/pvp.txt liga o `pvp` nela, entao o combate abre
 //= sozinho ao entrar - este NPC nao mexe em mapflag nenhum.
+//=
+//= NA TELA ELA SE CHAMA "ARENA DE PRONTERA" desde 2026-08-13, e
+//= o nome NAO ESTA NESTE ARQUIVO nem em lugar nenhum do
+//= servidor: as duas metades dele (o `mapnametable.txt` do canto
+//= do minimapa e o `mapInfo_*.lub` do letreiro de entrada) sao
+//= geradas no CLIENTE por ferramentas/traduz_ptbr.py, a partir
+//= da tabela NOSSOS_MAPAS que fica dentro dela. Editar os dois
+//= arquivos a mao funciona e volta ao nome do bRO na proxima
+//= rodada da ferramenta, calado. Ver CLAUDE.md secao 9.
 //=
 //= ATENCAO, e e por isso que este paragrafo existe: procurar
 //= `pvp_n_1-5.rsw` dentro do data.grf NAO ACHA NADA, e isso NAO
@@ -191,10 +206,23 @@
 //= e o que o proprio warper de PvP do rAthena faz
 //= (npc/other/pvp.txt, funcao F_PVP_FSRS).
 //=
-//= Sprite 10028, o 4_M_DEATH - a Morte encapuzada. Trocado em
-//= 2026-08-12, a pedido; ate ali era o 966 (4_M_RUSKNIGHT), o
-//= cavaleiro de Moscovia que no rAthena so aparece guardando a
-//= entrada do mosk_dun02.
+//= Sprite 10028, o 4_M_DEATH - a Morte encapuzada. ESTE NPC JA
+//= TROCOU DE CARA TRES VEZES, sempre a pedido:
+//=
+//=   ate 2026-08-12   966 (4_M_RUSKNIGHT), o cavaleiro de
+//=                    Moscovia que no rAthena so aparece
+//=                    guardando a entrada do mosk_dun02
+//=   2026-08-12       10028 (4_M_DEATH)
+//=   2026-08-13       10029 (4_GHOST_STAND), o espectro de pe
+//=   2026-08-13       10028 de novo
+//=
+//= O ESPECTRO DUROU HORAS. Foi pedido, entrou, foi visto na tela
+//= e reprovado no mesmo dia - "ficou ruim". Nao ha defeito
+//= tecnico nenhum nele: as duas conferencias da regra passaram
+//= (JT_4_GHOST_STAND = 10029 no npcidentity.lub deste cliente,
+//= e os dois arquivos de arte no data.grf), e ele desenhou. Foi
+//= gosto, e esta escrito aqui para que a proxima pessoa que o
+//= achar bonito saiba que a rodada ja foi feita.
 //=
 //= As DUAS conferencias que a regra manda, e as duas passaram:
 //= JT_4_M_DEATH = 10028 no `npcidentity.lub` DESTE cliente (nao
@@ -203,6 +231,13 @@
 //= nosso data.grf. Sem as duas o NPC nasce INVISIVEL, calado -
 //= a armadilha do 10605 no Mestre de Classe. Ele esta bem abaixo
 //= do teto de 10508 medido em 2026-07-31.
+//=
+//= (Os DOIS arquivos saem como "DES" no leitor de GRF daqui, e
+//= isso NAO e ausencia: e so a entrada estar cifrada, o que vale
+//= para metade dos sprites antigos deste GRF. A prova esta na
+//= propria tela - este sprite desenhou de 2026-08-12 em diante
+//= sendo DES o tempo todo. O que prova presenca e o nome estar
+//= na tabela do GRF, nao o extrator devolver bytes.)
 //=
 //= FACING 6 (leste), pedido como "virada para a direita". Com a
 //= camera padrao do cliente as quatro direcoes caem na diagonal
