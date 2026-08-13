@@ -2752,3 +2752,69 @@ correspondente aparece exatamente **oito** vezes no binário.
 A escrita é **byte a byte no lugar** (`Act.desloca_y`), não re-serialização: só
 os `y` mudam, o tamanho não mexe, e qualquer campo que o leitor não entenda
 sobrevive. O `aplica` ainda relê o resultado e confere que só o `y` mudou.
+
+## `simula_blackjack.py` — o viés das duas mesas do Cassino de Comodo
+
+```
+python simula_blackjack.py                 # as duas mesas como estão hoje
+python simula_blackjack.py --varredura     # a tabela de viés, para calibrar
+python simula_blackjack.py --maos 200000   # mais mãos, menos ruído
+```
+
+Acrescentado em 2026-08-12, com o cassino. As duas mesas de
+`npc/guerra/cassino_de_comodo.txt` são **viciadas de propósito e em direções
+opostas** — no primeiro andar o baralho ajuda o jogador, no segundo ajuda a
+casa — e esta ferramenta é o que decide o quanto.
+
+### Por que não dá para escolher o número a olho
+
+O viés age nos **dois lados da mesa ao mesmo tempo**: favorecer o jogador é
+melhorar a mão dele *e* piorar a do crupiê. O efeito é mais que o dobro do que
+o número sugere, e a diferença é cara. Medido:
+
+| viés a favor do jogador | lucro médio dele |
+|---|---|
+| 0% | −5,4% (o jogo honesto já é da casa) |
+| 5% | **+6,4%** |
+| 10% | +18,1% — faucet de moeda |
+
+**10% parece pouco e é faucet.** Foi por isso que a ferramenta nasceu antes do
+script, e não depois.
+
+### O que está em jogo hoje
+
+| | aposta | 21 natural | viés | ganha | perde | lucro médio |
+|---|---|---|---|---|---|---|
+| 1º andar | 2 | 3:2 | 5% pró-jogador | 46,7% | 44,1% | +0,13 moeda/mão |
+| 2º andar | 10 | 2:1 | 10% pró-casa | 32,3% | 58,9% | −2,31 moeda/mão |
+
+A isca é o próprio pagamento: em cima o 21 natural paga **mais** (2:1 contra
+3:2) e a aposta é cinco vezes maior — e a mesa drena dezoito vezes mais rápido
+do que a de baixo enche.
+
+### As três estratégias, e por que são três
+
+O lucro depende de como o jogador joga, então mede-se `pede até 17` (a que
+quase todo mundo joga), `para sempre` e `pede até 12`. A do meio não é
+curiosidade: é o **contra-jogo**. Um jogador que desconfia da mesa de cima e
+para de comprar precisa continuar perdendo, senão a falcatrua tem saída. Ela
+continua — **−34,5% contra os −23,1%** de quem joga normal, porque metade do
+viés age na mão do *crupiê*, onde a estratégia do jogador não alcança.
+
+Na mesa de baixo vale o contrário, e também por escolha: parar sempre dá
+−5,8%, então a mesa boa só paga para quem realmente joga.
+
+### É um espelho, e espelho quebra calado
+
+O arquivo reimplementa o `S_Compra` do NPC linha a linha — baralho de 52 sem
+reposição, sorteio por **valor** (o naipe só enfeita a tela), Ás que cai de 11
+para 1, "melhor carta" = maior total ≤ 21, "pior" = uma que estoure, crupiê que
+para em todo 17.
+
+**Mexeu no `S_Compra`, mexe aqui.** Se o script mudar e a ferramenta não, ela
+passa a medir um jogo que não existe — e responde com a mesma cara de certeza.
+É a mesma família do `ajusta_tamanho_fonte.py`, que confirmava o próprio
+trabalho e era inócuo.
+
+A semente é fixa por estratégia (`random.seed(20260812)`), então as três veem o
+**mesmo baralho** e a diferença entre elas é a estratégia, não o ruído.

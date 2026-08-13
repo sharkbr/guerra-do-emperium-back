@@ -28,173 +28,173 @@
 //============================================================
 cmd_in02,73,81,4	script	Martine#cmd	48,{
 	mes "[Martine]";
-	mes "Gambling...? The games";
-	mes "provided here in the Comodo";
-	mes "Casino are a higher form of";
-	mes "entertainment than gambling.";
-	mes "Do you know what I mean?";
+	mes "Jogatina...? Os jogos";
+	mes "oferecidos aqui no Cassino de";
+	mes "Comodo são uma forma de";
+	mes "entretenimento mais alta que a jogatina.";
+	mes "Entende o que quero dizer?";
 	next;
 	mes "[Martine]";
-	mes "Granted, I did lose";
-	mes "all of my zeny playing";
-	mes "in this Casino, but I have";
-	mes "no regrets. I'll simply earn";
-	mes "more money, then blow it all";
-	mes "again. Or I just might win big!";
+	mes "Reconheço que perdi";
+	mes "todos os meus zenys jogando";
+	mes "neste Cassino, mas não tenho";
+	mes "arrependimento nenhum. É só ganhar";
+	mes "mais dinheiro e torrar tudo";
+	mes "de novo. Ou quem sabe eu fature alto!";
 	next;
 	mes "[Martine]";
-	mes "Bwahahahaahah~!";
-	mes "Yes, I can only lose so";
-	mes "many times until I hit the";
-	mes "jackpot! You see, you see?";
-	mes "I'm playing the freakin' odds.";
+	mes "Buahahahaah~!";
+	mes "Isso, só posso perder um";
+	mes "tanto de vezes até acertar o";
+	mes "jackpot! Está vendo, está vendo?";
+	mes "Estou jogando com a bendita probabilidade.";
 	close;
 }
 
 cmd_in02,48,55,4	script	Scoursege#cmd	51,{
 	mes "[Scoursege]";
-	mes "Damn it! Where did that";
-	mes "guy go? He promised me that";
-	mes "he'd easily double my money!";
-	mes "Wait. Oh, wait. Oh... Oh no...";
+	mes "Droga! Para onde foi";
+	mes "aquele sujeito? Ele me prometeu que";
+	mes "dobraria o meu dinheiro fácil!";
+	mes "Espera. Ah, espera. Ah... Ah, não...";
 	next;
 	mes "[Scoursege]";
-	mes "Don't tell me that I just got";
-	mes "conned out of my money!";
-	mes "Oh no! Still, I better report";
-	mes "this to the proper authorities,";
-	mes "no matter how ashamed I feel...";
+	mes "Não me diga que acabei de ser";
+	mes "passado para trás!";
+	mes "Ah, não! Mesmo assim, é melhor levar";
+	mes "isso às autoridades competentes,";
+	mes "por mais vergonha que eu sinta...";
 	close;
 }
 
 cmd_in02,64,43,4	script	Roberto#cmd	709,{
 	mes "[Roberto]";
-	mes "Heh heh heh...";
-	mes "Whaaaat a gullible";
-	mes "guy. I took his money";
-	mes "so easily! I mean, I didn't";
-	mes "even come up with that great";
-	mes "of a lie, and he gave it to me!";
+	mes "Rê rê rê...";
+	mes "Quaaaanta ingenuidade";
+	mes "a desse cara. Peguei o dinheiro";
+	mes "dele fácil demais! Nem inventei";
+	mes "uma mentira tão boa assim,";
+	mes "e ele me entregou tudo!";
 	close;
 }
 
 cmd_in02,89,72,4	script	Deniroz#cmd	89,{
 	mes "[Deniroz]";
-	mes "All I need is for this";
-	mes "little steel bead to fall";
-	mes "into the right hole. Then,";
-	mes "I'll win the jackpot. Alright.";
-	mes "Here goes. One last time...";
+	mes "Só preciso que esta";
+	mes "bolinha de aço caia";
+	mes "no buraco certo. Aí";
+	mes "eu levo o jackpot. Isso.";
+	mes "Lá vamos nós. Uma última vez...";
 	next;
 	mes "[Deniroz]";
-	mes "No! No, I was so close!";
-	mes "Alright, next time I should";
-	mes "be even closer, right? Yeah.";
-	mes "Okay, this time will be the";
-	mes "last time. Not again! Alright,";
-	mes "j-just one more t-time...";
+	mes "Não! Não, faltou tão pouco!";
+	mes "Certo, na próxima eu chego";
+	mes "ainda mais perto, né? É.";
+	mes "Beleza, desta vez é que vai";
+	mes "ser a última. De novo não! Certo,";
+	mes "s-só mais uma v-vez...";
 	close;
 }
 
 cmd_in02,178,92,4	script	Shalone#cmd	101,{
 	mes "[Shalone]";
-	mes "Oh, I'm sorry, sir,";
-	mes "but it looks like you";
-	mes "lost again. Maybe you";
-	mes "should quit for now...";
-	mes "You've been having quite";
-	mes "a run of really bad luck...";
+	mes "Ah, sinto muito, senhor,";
+	mes "mas parece que o senhor";
+	mes "perdeu de novo. Talvez seja";
+	mes "melhor parar por hoje...";
+	mes "O senhor está numa maré";
+	mes "de azar e tanto...";
 	close;
 }
 
 cmd_in02,178,86,4	script	Stonae#cmd	98,{
 	mes "[Stonae]";
-	mes "N-no...";
-	mes "I lost again?!";
-	mes "But I can't quit like";
-	mes "this! I'm gonna keep";
-	mes "going, and I'm gonna";
-	mes "leave this place a winner!";
+	mes "N-não...";
+	mes "Perdi de novo?!";
+	mes "Mas eu não posso parar";
+	mes "assim! Vou continuar,";
+	mes "e vou sair daqui";
+	mes "como vencedor!";
 	close;
 }
 
 cmd_in02,172,105,4	script	G . J#cmd	86,{
 	mes "[G . J]";
-	mes "The more I think about it,";
-	mes "it seems easier to become";
-	mes "rich by working, saving, and";
-	mes "making wise investments than";
-	mes "to, you know... Rely on some";
-	mes "kind of huge jackpot prize.";
+	mes "Quanto mais eu penso nisso,";
+	mes "mais fácil parece ficar";
+	mes "rico trabalhando, poupando e";
+	mes "investindo com juízo do que";
+	mes "ficar, sabe... contando com";
+	mes "um prêmio gigante de jackpot.";
 	next;
 	mes "[G . J]";
-	mes "Gambling seems fun, but";
-	mes "it seems smarter to make";
-	mes "money in other ways. Sure,";
-	mes "working hard is no fun, but";
-	mes "there are ways to use your money to make more of it, right?";
+	mes "Jogar parece divertido, mas";
+	mes "parece mais esperto ganhar";
+	mes "dinheiro de outro jeito. Claro,";
+	mes "trabalhar duro não tem graça, mas";
+	mes "há maneiras de usar o seu dinheiro para fazer mais dinheiro, certo?";
 	next;
 	mes "[G . J]";
-	mes "There's also the matter of";
-	mes "being smart and responsible";
-	mes "about your money--I mean, you're more likely to blow all your cash";
-	mes "if you win it, right? Yeah, you";
-	mes "gotta be wise about it all...";
+	mes "E ainda tem a questão de";
+	mes "ser esperto e responsável";
+	mes "com o seu dinheiro... quer dizer, é mais fácil torrar tudo";
+	mes "se você ganhou de sorte, né? É, tem";
+	mes "que ter juízo com essas coisas...";
 	close;
 }
 
 cmd_in02,174,126,4	script	Loyar#cmd	83,{
 	mes "[Loyar]";
-	mes "Comodo Casino's interior";
-	mes "design is so pleasing to the";
-	mes "eyes, so clean and simple.";
-	mes "The atmosphere here is perfect,";
-	mes "and it makes me want to play ";
-	mes "some more. Alright, let's go!";
+	mes "A decoração do Cassino de";
+	mes "Comodo é um agrado para os";
+	mes "olhos, tão limpa e simples.";
+	mes "O clima aqui é perfeito,";
+	mes "e me dá vontade de jogar ";
+	mes "mais um pouco. Certo, vamos lá!";
 	next;
 	switch(rand(1,3)) {
 	case 1:
 		mes "[Loyar]";
-		mes "Hmm... Maybe I better";
-		mes "go home soon. I didn't";
-		mes "spend all the money that";
-		mes "I set aside for gambling";
-		mes "quite yet, but it's not a good";
-		mes "idea to stay out too long.";
+		mes "Hmm... Talvez seja melhor";
+		mes "ir para casa logo. Ainda não";
+		mes "gastei todo o dinheiro que";
+		mes "separei para jogar,";
+		mes "mas não é boa ideia";
+		mes "ficar fora até tarde.";
 		close;
 	case 2:
 		mes "[Loyar]";
-		mes "I have to admit, the";
-		mes "atmosphere of this place";
-		mes "is exciting and addictive.";
-		mes "Even when you're tired, the";
-		mes "energy of this place just";
-		mes "gets into you, you know?";
+		mes "Tenho que admitir, o";
+		mes "clima deste lugar";
+		mes "é empolgante e viciante.";
+		mes "Mesmo cansado, a";
+		mes "energia daqui entra";
+		mes "na gente, sabe?";
 		next;
 		mes "[Loyar]";
-		mes "Although this kind of place";
-		mes "may encourage people with";
-		mes "serious gambling problems,";
-		mes "it's much nicer to gamble";
-		mes "here than in a place that's";
-		mes "dirtier and more questionable.";
+		mes "Embora um lugar assim";
+		mes "possa estimular quem tem";
+		mes "problema sério com jogo,";
+		mes "é bem melhor apostar";
+		mes "aqui do que num lugar";
+		mes "mais sujo e mais duvidoso.";
 		close;
 	case 3:
 		mes "[Loyar]";
-		mes "Whoa whoa whoa...";
-		mes "Why did that guy make";
-		mes "that bet? What an amateur...";
-		mes "Er, I guess you don't know";
-		mes "too much about this game.";
-		mes "As for me, I'm just a fan~";
+		mes "Opa, opa, opa...";
+		mes "Por que aquele cara fez";
+		mes "aquela aposta? Que amador...";
+		mes "Ahn, imagino que você não saiba";
+		mes "muita coisa deste jogo.";
+		mes "Quanto a mim, sou só um fã~";
 		next;
 		mes "[Loyar]";
-		mes "I'm a big fan of a lot";
-		mes "of these games, but I'll";
-		mes "admit that I'm an even bigger";
-		mes "fan of winning! Still, I have";
-		mes "enough sense to stay out of";
-		mes "those high stakes games.";
+		mes "Sou muito fã de vários";
+		mes "destes jogos, mas confesso";
+		mes "que sou fã ainda maior";
+		mes "de ganhar! Ainda assim, tenho";
+		mes "juízo o bastante para ficar longe";
+		mes "das mesas de aposta alta.";
 		close;
 	}
 }
@@ -202,33 +202,33 @@ cmd_in02,174,126,4	script	Loyar#cmd	83,{
 cmd_in02,57,62,4	script	Moo#cmd	109,{
 	mes "[Moo]";
 	if (rand(1,10) == 1) {
-		mes "Those cheating punks!";
-		mes "They'll never show their";
-		mes "faces here again: otherwise";
-		mes "they're gonna hafta get new";
-		mes "ones! Oh--Sorry, I didn't";
-		mes "see you there~ Hahahaha~";
+		mes "Aqueles trapaceiros!";
+		mes "Nunca mais aparecem";
+		mes "por aqui: senão vão";
+		mes "precisar de uma cara";
+		mes "nova! Ah... Desculpe, não tinha";
+		mes "visto você aí~ Hahahaha~";
 		close;
 	}
-	mes "Greetings, I am Moo,";
-	mes "manager of the Comodo";
-	mes "Casino. We pride ourselves in";
-	mes "serving all of our customers'";
-	mes "needs, doing all we can so that your visit here is unforgettable.";
+	mes "Saudações, eu sou o Moo,";
+	mes "gerente do Cassino de";
+	mes "Comodo. Temos orgulho de";
+	mes "atender toda necessidade dos";
+	mes "nossos clientes, fazendo o possível para que a sua visita aqui seja inesquecível.";
 	next;
 	mes "[Moo]";
-	mes "All of our guests can enjoy";
-	mes "our general gaming area, and";
-	mes "we also provide a VIP area";
-	mes "where high rollers can play";
-	mes "exciting high stakes games.";
+	mes "Todos os nossos hóspedes podem usar";
+	mes "a área comum de jogos, e";
+	mes "ainda temos uma área VIP";
+	mes "onde os grandes apostadores jogam";
+	mes "partidas de aposta alta.";
 	next;
 	mes "[Moo]";
-	mes "We always welcome all of";
-	mes "your suggestions, and are";
-	mes "always seeking to improve";
-	mes "your experience here in";
-	mes "the Comodo Casino.";
+	mes "As suas sugestões são sempre";
+	mes "bem-vindas, e estamos";
+	mes "sempre buscando melhorar";
+	mes "a sua experiência aqui no";
+	mes "Cassino de Comodo.";
 	close;
 }
 
@@ -236,115 +236,115 @@ cmd_in02,57,62,4	script	Moo#cmd	109,{
 //============================================================
 cmd_fild04,188,74,4	script	Zyosegirl#cmd	93,{
 	mes "[Zyosegirl]";
-	mes "People call me the";
-	mes "Sea Lady because I'm";
-	mes "always here working,";
-	mes "gathering clams and other";
-	mes "sea creatures to sell. It's";
-	mes "a pretty good living, actually.";
+	mes "As pessoas me chamam de";
+	mes "Dama do Mar porque estou";
+	mes "sempre aqui trabalhando,";
+	mes "juntando mariscos e outros";
+	mes "bichos do mar para vender. Dá";
+	mes "para viver bem disso, na verdade.";
 	next;
 	mes "[Zyosegirl]";
-	mes "It's nice to be able to work";
-	mes "outdoors, but someday, I want";
-	mes "to save enough money and move";
-	mes "to the city. I'm still young, you know, and I've got dreams";
-	mes "that I want to fulfill~";
+	mes "É bom poder trabalhar";
+	mes "ao ar livre, mas um dia quero";
+	mes "juntar dinheiro e me mudar";
+	mes "para a cidade. Ainda sou jovem, sabe, e tenho sonhos";
+	mes "que quero realizar~";
 	close;
 }
 
 cmd_fild04,248,86,4	script	Ziyaol#cmd	709,{
 	mes "[Ziyaol]";
-	mes "Ahhh, it's nice being";
-	mes "a fisherman. You just";
-	mes "relax and let the fish";
-	mes "come to you. Well, it takes";
-	mes "some skill to catch as much";
-	mes "fish as I do with no effort~";
+	mes "Ahhh, é bom ser";
+	mes "pescador. Você só";
+	mes "relaxa e deixa o peixe";
+	mes "vir até você. Bom, precisa";
+	mes "de alguma habilidade para pescar tanto";
+	mes "quanto eu sem esforço nenhum~";
 	next;
 	mes "[Ziyaol]";
-	mes "I like the leisure involved";
-	mes "in my job, but if it's not one";
-	mes "thing, it's another. Yeah, that";
-	mes "daughter of mine over there";
-	mes "won't stop harping about ";
-	mes "moving to the biiig city.";
+	mes "Gosto da calma que o meu";
+	mes "trabalho tem, mas se não é uma";
+	mes "coisa, é outra. Pois é, aquela";
+	mes "minha filha ali";
+	mes "não para de martelar sobre ";
+	mes "se mudar para a cidade graaande.";
 	next;
 	mes "[Ziyaol]";
-	mes "Why does she want to leave";
-	mes "me so badly?! But if I don't";
-	mes "let her go, she'll run away.";
-	mes "What am I going to do with";
-	mes "that girl? Well, I can't really";
-	mes "stop her from dreaming...";
+	mes "Por que ela quer tanto me";
+	mes "deixar?! Mas se eu não";
+	mes "deixar ela ir, ela foge.";
+	mes "O que eu vou fazer com";
+	mes "essa menina? Bom, não dá para";
+	mes "impedir que ela sonhe...";
 	close;
 }
 
 cmd_fild04,267,137,4	script	Daeguro#cmd	703,{
 	mes "[Daeguro]";
-	mes "I love playing in";
-	mes "the sand-- it's so soft";
-	mes "and clean and pretty!";
-	mes "But when I grow up,";
-	mes "I wanna go to Alberta";
-	mes "and see everything I can!";
+	mes "Eu adoro brincar na";
+	mes "areia... ela é tão macia";
+	mes "e limpa e bonita!";
+	mes "Mas quando eu crescer,";
+	mes "quero ir para Alberta";
+	mes "e ver tudo o que der!";
 	close;
 }
 
 cmd_fild07,192,58,4	script	Rahasu#cmd	100,{
 	mes "[Rahasu]";
-	mes "Hey, I'm Rahasu.";
-	mes "If you want to learn";
-	mes "a little more about";
-	mes "Paros Lighthouse, I'll";
-	mes "be happy to tell you.";
+	mes "Olá, eu sou o Rahasu.";
+	mes "Se quiser saber";
+	mes "um pouco mais sobre o";
+	mes "Farol de Pharos, terei";
+	mes "prazer em contar.";
 	next;
-	if (select("Paros Lighthouse?:Cancel") == 1) {
+	if (select("Farol de Pharos?:Cancelar") == 1) {
 		mes "[Rahasu]";
-		mes "For many years, this";
-		mes "lighthouse guided many";
-		mes "ships to shore. That was";
-		mes "a long time ago: now this";
-		mes "lighthouse sits quietly,";
-		mes "unused, but never unloved.";
+		mes "Por muitos anos, este";
+		mes "farol guiou muitos";
+		mes "navios até a costa. Isso foi";
+		mes "há muito tempo: hoje este";
+		mes "farol fica quieto,";
+		mes "sem uso, mas nunca sem carinho.";
 		next;
 		mes "[Rahasu]";
-		mes "Although this place";
-		mes "isn't the center of";
-		mes "trade and commerce that";
-		mes "it used to be, plenty of";
-		mes "people still wander to this";
-		mes "area. I wonder why, exactly...";
+		mes "Embora este lugar";
+		mes "não seja mais o centro";
+		mes "de comércio que";
+		mes "ele já foi, muita";
+		mes "gente ainda passa por";
+		mes "aqui. Fico pensando por quê...";
 		close;
 	}
 	mes "[Rahasu]";
-	mes "Hey, before you leave,";
-	mes "you really ought to check";
-	mes "the view from the lighthouse.";
-	mes "It's... It's breathtaking...";
+	mes "Ei, antes de ir embora,";
+	mes "você precisa mesmo ver";
+	mes "a vista lá do farol.";
+	mes "É... É de tirar o fôlego...";
 	close;
 }
 
 cmd_fild07,52,280,4	script	Hallosu#cmd	100,{
 	mes "[Hallosu]";
-	mes "Hello, this is one of the";
-	mes "lighthouses that make up";
-	mes "Paros Lighthouse. However,";
-	mes "right now it's undergoing";
-	mes "renovation, so it's not";
-	mes "open to the public.";
+	mes "Olá, este é um dos";
+	mes "faróis que formam o";
+	mes "Farol de Pharos. Só que";
+	mes "no momento ele está em";
+	mes "reforma, então não está";
+	mes "aberto ao público.";
 	close;
 }
 
 cmd_fild07,299,83,4	script	Zain#cmd	100,{
 	set .@n$,"["+strnpcinfo(1)+"]";
 	mes .@n$;
-	mes "Would you like to";
-	mes "board a ship on the";
-	mes "Reudelus route? You";
-	mes "can travel on Reudelus";
-	mes "to Alberta or Izlude.";
+	mes "Gostaria de";
+	mes "embarcar num navio da";
+	mes "rota Reudelus? Dá";
+	mes "para viajar pela Reudelus";
+	mes "até Alberta ou Izlude.";
 	next;
-	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancel")) {
+	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancelar")) {
 	case 1:
 		if (Zeny < 600) break;
 		set Zeny, Zeny-600;
@@ -360,17 +360,17 @@ cmd_fild07,299,83,4	script	Zain#cmd	100,{
 		end;
 	case 3:
 		mes .@n$;
-		mes "Travel by ship is";
-		mes "still one of the safest and";
-		mes "dependable methods of";
-		mes "transportation. I invite you";
-		mes "to try Reudelus travel soon~";
+		mes "Viajar de navio ainda";
+		mes "é um dos meios mais seguros";
+		mes "e confiáveis de";
+		mes "transporte. Convido você";
+		mes "a experimentar a Reudelus em breve~";
 		close;
 	}
 	mes .@n$;
-	mes "I'm sorry, but you";
-	mes "don't have enough";
-	mes "zeny for the boarding fare.";
+	mes "Sinto muito, mas você";
+	mes "não tem";
+	mes "zeny suficiente para a passagem.";
 	close;
 }
 cmd_fild07,94,134,4	duplicate(Zain#cmd)	Sarumane#cmd	100
@@ -378,19 +378,19 @@ cmd_fild07,94,134,4	duplicate(Zain#cmd)	Sarumane#cmd	100
 cmd_in02,146,180,4	script	Kafra Employee::kaf_comodo2	721,{
 	cutin "kafra_07",2;
 	mes "[Kafra Misty]";
-	mes "Welcome to the";
-	mes "Kafra Corporation.";
-	mes "You know that our";
-	mes "service is always";
-	mes "on your side~";
+	mes "Bem-vindo à";
+	mes "Corporação Kafra.";
+	mes "Você sabe que o nosso";
+	mes "serviço está sempre";
+	mes "ao seu lado~";
 	next;
 	mes "[Kafra Misty]";
-	mes "The Kafra Corporation";
-	mes "Western Division promises";
-	mes "the best quality service that";
-	mes "emphasizes reliability, and";
-	mes "total consumer satisfaction.";
-	mes "Thank you for your patronage~";
+	mes "A Corporação Kafra";
+	mes "A Divisão Oeste promete";
+	mes "o serviço de melhor qualidade,";
+	mes "com ênfase em confiança e";
+	mes "satisfação total do cliente.";
+	mes "Obrigada pela preferência~";
 	close2;
 	cutin "", 255;
 	end;
@@ -400,68 +400,68 @@ cmd_in02,146,180,4	script	Kafra Employee::kaf_comodo2	721,{
 //============================================================
 moc_fild12,35,303,4	script	Serutero#cmd	59,{
 	mes "[Serutero]";
-	mes "Hello, I'm Serutero,";
-	mes "guardian of the roads that";
-	mes "lead to Sandaruman Fortress.";
-	mes "If you really want to go there,";
-	mes "I'll permit you to continue, but you must beware of its dangers...";
+	mes "Olá, eu sou o Serutero,";
+	mes "guardião das estradas que";
+	mes "levam à Fortaleza de Sanderman.";
+	mes "Se quiser mesmo ir até lá,";
+	mes "eu deixo você seguir, mas tome cuidado com os perigos de lá...";
 	next;
-	switch(select("I'm going there!:Sandaruman Fortress?:Cancel")) {
+	switch(select("Vou até lá!:Fortaleza de Sanderman?:Cancelar")) {
 	case 1:
 		mes "[Serutero]";
-		mes "So you're really going";
-		mes "to go to Sandaruman";
-		mes "Fortress. Alright then,";
-		mes "good luck, and be careful!";
+		mes "Então você vai mesmo";
+		mes "até a Fortaleza de";
+		mes "Sanderman. Pois bem,";
+		mes "boa sorte, e tome cuidado!";
 		close2;
 		warp "cmd_fild08",331,319;
 		end;
 	case 2:
 		mes "[Serutero]";
-		mes "Although Sandaruman";
-		mes "Fortress is infested with";
-		mes "monsters now, it used to be";
-		mes "a province where people lived.";
-		mes "However, they were always";
-		mes "invaded and pillaged...";
+		mes "Embora a Fortaleza de";
+		mes "Sanderman esteja tomada de";
+		mes "monstros hoje, ela já foi";
+		mes "uma província onde vivia gente.";
+		mes "Só que eles eram sempre";
+		mes "invadidos e saqueados...";
 		next;
 		mes "[Serutero]";
-		mes "Sandaruman's inhabitants";
-		mes "eventually adapted to the";
-		mes "invasions, developing smoke";
-		mes "signals and fortifications to";
-		mes "withstand the ravages of war.";
-		mes "Then, Comodo was built...";
+		mes "Os moradores de Sanderman";
+		mes "acabaram se adaptando às";
+		mes "invasões, criando sinais de";
+		mes "fumaça e fortificações para";
+		mes "resistir aos estragos da guerra.";
+		mes "Então Comodo foi construída...";
 		next;
 		mes "[Serutero]";
-		mes "Comodo grew in power and";
-		mes "influence and eventually annexed Sandaruman. More and more people";
-		mes "moved from the fortress to Comodo until Sandaruman fortress was";
-		mes "essentially abandoned.";
+		mes "Comodo cresceu em poder e";
+		mes "influência e acabou anexando Sanderman. Cada vez mais gente";
+		mes "se mudou da fortaleza para Comodo até que a Fortaleza de Sanderman ficou";
+		mes "praticamente abandonada.";
 		next;
 		mes "[Serutero]";
-		mes "There were a few people";
-		mes "remaining in Sandaruman,";
-		mes "but they revolted and some";
-		mes "fledging government came into";
-		mes "power there. The monsters took";
-		mes "the chance to take over...";
+		mes "Restaram algumas pessoas";
+		mes "em Sanderman,";
+		mes "mas elas se revoltaram e um";
+		mes "governo recém-nascido tomou";
+		mes "o poder por lá. Os monstros";
+		mes "aproveitaram e dominaram tudo...";
 		next;
 		mes "[Serutero]";
-		mes "There's nothing around";
-		mes "Sandaruman now. Well, nothing";
-		mes "except maybe Paros Lighthouse,";
-		mes "which is southwest of here. That place might be of interest to";
-		mes "aspiring Rogues, I hear...";
+		mes "Não há mais nada em volta de";
+		mes "Sanderman. Bom, nada";
+		mes "além do Farol de Pharos,";
+		mes "que fica a sudoeste daqui. Dizem que aquele lugar interessa a";
+		mes "quem quer virar Gatuno...";
 		close;
 	case 3:
 		mes "[Serutero]";
-		mes "You know, if you're";
-		mes "tired of traveling, you";
-		mes "can rest in ^3355FFComodo^000000. That";
-		mes "place is a pretty popular";
-		mes "tourist attraction, especially";
-		mes "for you adventurer types.";
+		mes "Sabe, se você estiver";
+		mes "cansado de viajar, dá";
+		mes "para descansar em ^3355FFComodo^000000. Aquele";
+		mes "lugar é um ponto turístico";
+		mes "bem popular, especialmente";
+		mes "para vocês, aventureiros.";
 		close;
 	}
 }

@@ -2711,40 +2711,40 @@ cmd_in02,190,94,3	script	Man#megin	828,{
 		if (god_eremes == 18) {
 			mes "[Royal Myst]";
 			mes "Wha...?";
-			mes "You wanna talk?";
+			mes "Você quer conversar?";
 			next;
 			mes "[Royal Myst]";
-			mes "What am I, your personal psychiatrist?! Lemme alone,";
-			mes "I'm busy here! Awright, now";
-			mes "which one do I bet on...?";
+			mes "O que eu sou, seu psiquiatra particular?! Me deixa em paz,";
+			mes "estou ocupado aqui! Certo, agora";
+			mes "em qual eu aposto...?";
 			next;
-			switch(select("Speak of Rebarev Doug.:Speak of the 1st Squad.:Talk about gambling.:Discuss hobbies.")) {
+			switch(select("Falar de Rebarev Doug.:Falar do 1º Esquadrão.:Falar sobre jogatina.:Conversar sobre passatempos.")) {
 			case 1:
 				mes "[Royal Myst]";
-				mes "Wha--? Him again?! Tell him I'm fine! Dandy, even! Why's he gotta send all these people just to ask";
-				mes "a silly question?";
+				mes "Mas que--? Ele de novo?! Diz para ele que eu estou bem! Ótimo, até! Por que ele tem que mandar toda essa gente só para fazer";
+				mes "uma pergunta boba?";
 				close;
 			case 2:
 				mes "[Royal Myst]";
-				mes "1st Squad? Yeah, I used to be in that. All of us in the squad used to be real good buddies too.";
+				mes "1º Esquadrão? É, eu era daquilo. Todos nós do esquadrão éramos bons camaradas também.";
 				next;
 				mes "[Royal Myst]";
 				mes "Zan.Huadoku, Cuaque Donon,";
-				mes "Jack O, Emma Searth and The Nineball. Yeah... I wonder what they're all up to?";
+				mes "Jack O, Emma Searth e The Nineball. É... Será que eles andam fazendo o quê?";
 				close;
 			case 3:
 				mes "[Royal Myst]";
-				mes "Gambling? I love it, you";
-				mes "know? Eh, I don't win all the time, but I love it the most when I leave with more Zeny than I came in with! Hahaha!";
+				mes "Jogatina? Eu adoro, sabe";
+				mes "como é? Ah, eu não ganho sempre, mas o que eu mais amo é sair daqui com mais Zeny do que entrei! Hahaha!";
 				close;
 			case 4:
 				mes "[Royal Myst]";
-				mes "Hobbies?";
-				mes "What, you comin'";
-				mes "on to me?";
+				mes "Passatempos?";
+				mes "O quê, você está dando";
+				mes "em cima de mim?";
 				next;
 				mes "[Royal Myst]";
-				mes "A man's hobby is drinking, or didn't you know that? I happen to be real good at it too! Mwahahaha!";
+				mes "O passatempo de um homem é beber, ou você não sabia? E acontece que eu sou muito bom nisso também! Muahahaha!";
 				close;
 			}
 		}
@@ -2752,137 +2752,137 @@ cmd_in02,190,94,3	script	Man#megin	828,{
 			if (god_megin_6 == 0 && god_megin_5 > 4 && god_megin_4 > 1 && god_megin_3 > 1 && god_megin_2 > 3 && god_megin_1 > 2) {
 				mes "[Royal Myst]";
 				mes "Wha...?";
-				mes "You wanna talk?";
+				mes "Você quer conversar?";
 				next;
 				mes "[Royal Myst]";
-				mes "What am I, your personal psychiatrist?! Lemme alone,";
-				mes "I'm busy here! Awright, now";
-				mes "which one do I bet on...?";
+				mes "O que eu sou, seu psiquiatra particular?! Me deixa em paz,";
+				mes "estou ocupado aqui! Certo, agora";
+				mes "em qual eu aposto...?";
 				next;
 			}
 			else if (god_megin_6 > 0) {
 				mes "[Royal Myst]";
 				mes "Hmm?";
-				mes "What's up?";
+				mes "O que foi?";
 				next;
 			}
 			else {
 				mes "[Royal Myst]";
 				mes "Wha...?";
-				mes "You wanna talk?";
+				mes "Você quer conversar?";
 				next;
 				mes "[Royal Myst]";
-				mes "What am I, your personal psychiatrist?! Lemme alone,";
-				mes "I'm busy here! Awright, now";
-				mes "which one do I bet on...?";
+				mes "O que eu sou, seu psiquiatra particular?! Me deixa em paz,";
+				mes "estou ocupado aqui! Certo, agora";
+				mes "em qual eu aposto...?";
 				close;
 			}
 			if (god_megin_6 < 16) {
-				switch( select("Speak of Rebarev Doug.", "Speak of the 3rd squad.", "Talk about gambling.", "Discuss hobbies.") ) {
+				switch( select("Falar de Rebarev Doug.", "Falar do 3º esquadrão.", "Falar sobre jogatina.", "Conversar sobre passatempos.") ) {
 				case 1:
 					if (god_megin_6 == 0) {
 						mes "[Royal Myst]";
-						mes "Huh? What's that old geezer want this time? Tell 'em I'm fine, dandy even! Why the hell does he keep sending people...";
+						mes "Hã? O que aquele velhote quer desta vez? Diz para ele que eu estou bem, ótimo até! Por que diabos ele fica mandando gente...";
 						set god_megin_6,1;
 						close;
 					}
 					else if (god_megin_6 > 0 && god_megin_6 < 15) {
 						mes "[Royal Myst]";
-						mes "What the hell!? Stop talking about him! I never wanna see his face again! Tell him to leave me the hell alone!";
+						mes "Mas que diabos!? Pare de falar dele! Eu nunca mais quero ver a cara dele! Diga para ele me deixar em paz!";
 						close;
 					}
 					else if (god_megin_6 > 14) {
 						mes "[Royal Myst]";
-						mes "Damn geezer...";
-						mes "How much is he being paid for studying what we all found?! Eh, somehow, I don't care as long as";
-						mes "he pays me...";
+						mes "Maldito velhote...";
+						mes "Quanto será que estão pagando a ele para estudar o que nós todos achamos?! Ah, de algum jeito eu não ligo, desde que";
+						mes "ele me pague...";
 						next;
 						mes "[Royal Myst]";
-						mes "Yeah...";
-						mes "I just don't";
-						mes "care anymore.";
+						mes "É...";
+						mes "Eu simplesmente";
+						mes "não ligo mais.";
 						close;
 					}
 				case 2:
 					if (god_megin_6 < 15) {
 						mes "[Royal Myst]";
-						mes "1st Squad? Yeah, I used to be in that. All of us in the squad used to be real good buddies too.";
+						mes "1º Esquadrão? É, eu era daquilo. Todos nós do esquadrão éramos bons camaradas também.";
 						next;
 						mes "[Royal Myst]";
 						mes "Zan.Huadoku, Cuaque Donon,";
-						mes "Jack O, Emma Searth and The Nineball. Yeah... I wonder what they're all up to?";
+						mes "Jack O, Emma Searth e The Nineball. É... Será que eles andam fazendo o quê?";
 					}
 					else if (god_megin_6 > 14) {
 						mes "[Royal Myst]";
-						mes "1st Squad?";
-						mes "Don't know, don't care~";
-						mes "Do I look like a stupid Crusader?";
+						mes "1º Esquadrão?";
+						mes "Não sei, não me interessa~";
+						mes "Eu tenho cara de Templário idiota?";
 					}
 					close;
 				case 3:
 					if (god_megin_6 < 15) {
 						mes "[Royal Myst]";
-						mes "Gambling? ! Oh man...";
-						mes "I love gambling, you know!";
-						mes "Heh, but I haven't been lucky enough to win yet. Hahaha~!";
+						mes "Jogatina? ! Ah, cara...";
+						mes "Eu amo jogatina, sabia!";
+						mes "Rá, mas ainda não tive sorte o bastante para ganhar. Hahaha~!";
 						close;
 					}
 					else if (god_megin_6 > 14) {
 						mes "[Royal Myst]";
-						mes "Gambling...!";
-						mes "Heh heh! Some risks you take,";
-						mes "and others you really shouldn't.";
-						mes "I can't help but feel sorry for that guy, E--";
+						mes "Jogatina...!";
+						mes "Rê rê! Tem risco que se corre,";
+						mes "e tem risco que não se devia mesmo.";
+						mes "Não consigo deixar de sentir pena daquele cara, E--";
 						next;
 						mes "[Royal Myst]";
 						mes "Ergh...?";
-						mes "Damn, I can never remember his name. You'd think I wouldn't forget the guy whose rap I'm taking but... Eh, I'll remember once I sober up.";
+						mes "Droga, nunca consigo lembrar o nome dele. Você pensaria que eu não esqueceria o cara cuja culpa eu estou levando mas... Ah, eu lembro quando ficar sóbrio.";
 						next;
 						mes "[Royal Myst]";
-						mes "Hey, what do you think happens to Crusaders when they're framed and killed, huh? Where exactly do they go? Niflheim, Vahalla...?";
+						mes "Ei, o que você acha que acontece com Templários quando são incriminados e mortos, hein? Para onde exatamente eles vão? Nifflheim, Valhalla...?";
 						set god_eremes,20;
 						close;
 					}
 				case 4:
 					if (god_megin_6 == 0) {
-						mes "Hobbies?";
-						mes "What, you comin'";
-						mes "on to me?";
+						mes "Passatempos?";
+						mes "O quê, você está dando";
+						mes "em cima de mim?";
 						next;
 						mes "[Royal Myst]";
-						mes "A man's hobby is drinking, or didn't you know that? I happen to be real good at it too! Mwahahaha!";
+						mes "O passatempo de um homem é beber, ou você não sabia? E acontece que eu sou muito bom nisso também! Muahahaha!";
 						close;
 					}
 					else if (god_megin_6 > 0 && god_megin_6 < 15) {
 						if (countitem(970) > 0) {
 							mes "[Royal Myst]";
-							mes "Speaking of which,";
-							mes "I haven't had a drink";
-							mes "for a looong time. Almost";
-							mes "a couple hours now.";
+							mes "Falando nisso,";
+							mes "eu não tomo um trago";
+							mes "faz um tempããão. Quase";
+							mes "umas duas horas já.";
 							next;
 							mes "[Royal Myst]";
-							mes "Oooh, looks like you've got a tasty beverage I can enjoy. Bwahahaha! Gimmie~!";
+							mes "Oooh, parece que você tem uma bebida gostosa que eu posso aproveitar. Buahahaha! Me dá~!";
 							next;
-							mes "^3355FFBefore you can even think,";
-							mes "Royal Myst dips his hand into your inventory and helps himself to an Alcohol.^000000";
+							mes "^3355FFAntes que você consiga pensar,";
+							mes "Royal Myst enfia a mão no seu inventário e se serve de um Álcool.^000000";
 							delitem 970,1;
 							set god_megin_6,god_megin_6 +2;
 							close;
 						}
 						else {
 							mes "[Royal Myst]";
-							mes "Why mention it? You gonna bring me something I'll like? Cuz I'm more than willing to take it! Bwahahaha!";
+							mes "Por que mencionar? Você vai me trazer algo de que eu goste? Porque eu estou mais do que disposto a aceitar! Buahahaha!";
 							close;
 						}
 					}
 					else if (god_megin_6 > 14) {
 						mes "[Royal Myst]";
-						mes "^333333*Hiccup*^000000 Oh yeah, this is the stuff. Not like that imitation junk they've been serving at the Bars nowadays...";
+						mes "^333333*Soluço*^000000 Ah, é, isso é que é. Nada a ver com aquela imitação porcaria que andam servindo nos Bares hoje em dia...";
 						next;
 						mes "[Royal Myst]";
-						mes "Hey! There anything you wanna";
-						mes "know about me? You did me a favor, so I'll tell you anything! Eeeeeverythiiing~~!!";
+						mes "Ei! Tem alguma coisa que você queira";
+						mes "saber sobre mim? Você me fez um favor, então eu te conto qualquer coisa! Tuuuuudooo~~!!";
 						close;
 					}
 				}
@@ -2890,22 +2890,22 @@ cmd_in02,190,94,3	script	Man#megin	828,{
 		}
 		else {
 			mes "[Royal Myst]";
-			mes "Eh heh heh~";
-			mes "I just know";
-			mes "I'm gonna win";
-			mes "this time!";
+			mes "Rê rê rê~";
+			mes "Eu simplesmente sei";
+			mes "que eu vou ganhar";
+			mes "desta vez!";
 			close;
 		}
 	}
 	else {
 		mes "[Royal Myst]";
 		mes "Wha...?";
-		mes "You wanna talk?";
+		mes "Você quer conversar?";
 		next;
 		mes "[Royal Myst]";
-		mes "What am I, your personal psychiatrist?! Lemme alone,";
-		mes "I'm busy here! Awright, now";
-		mes "which one do I bet on...?";
+		mes "O que eu sou, seu psiquiatra particular?! Me deixa em paz,";
+		mes "estou ocupado aqui! Certo, agora";
+		mes "em qual eu aposto...?";
 		close;
 	}
 }

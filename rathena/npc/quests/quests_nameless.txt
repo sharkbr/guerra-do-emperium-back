@@ -94,40 +94,40 @@ OnInit:
 cmd_in02,174,89,7	script	Ordinary Man#pc1	97,{
 	if (aru_monas < 2) {
 		mes "[Larjes]";
-		mes "Damn it, I lost again!";
-		mes "This game is rigged!";
-		mes "No matter what I try,";
-		mes "I can never seem to win!";
-		mes "But Comodo Hold 'Em";
-		mes "is so... It's so addicting!";
+		mes "Droga, perdi de novo!";
+		mes "Este jogo é viciado!";
+		mes "Não importa o que eu tente,";
+		mes "eu nunca consigo ganhar!";
+		mes "Mas o Comodo Hold 'Em";
+		mes "é tão... É tão viciante!";
 		close;
 	}
 	else if (aru_monas == 2) {
 		mes "[Larjes]";
-		mes "Argh, I lost at this game";
+		mes "Argh, perdi neste jogo";
 		mes "so many times that I've";
-		mes "completely lost track!";
-		mes "I've got to win sometime...";
+		mes "perdi completamente a conta!";
+		mes "Uma hora eu tenho que ganhar...";
 		next;
 		select("Excuse me.");
 		mes "[Larjes]";
-		mes "Oh! Uh... Hmm...";
-		mes "How may I help you?";
+		mes "Oh! Ãh... Hmm...";
+		mes "Em que posso ajudar?";
 		next;
-		select ("^6B8E23Priest Bamph^000000 sent me.");
+		select ("O ^6B8E23Sacerdote Bamph^000000 me mandou.");
 		mes "[Larjes]";
-		mes "Oh, I see. I apologize";
-		mes "if my screaming and yelling";
-		mes "made you a bit uncomfortable.";
-		mes "I'm just here to kill some";
-		mes "time... I now see firsthand";
-		mes "that gambling is truly evil!";
+		mes "Ah, entendo. Peço desculpas";
+		mes "se os meus gritos e berros";
+		mes "deixaram você desconfortável.";
+		mes "Estou aqui só para matar";
+		mes "tempo... Agora vejo com meus";
+		mes "próprios olhos que o jogo é o mal!";
 		next;
 		mes "[Larjes]";
-		mes "Er, would you come";
-		mes "over this way? I don't";
-		mes "want anyone else to";
-		mes "overhear us talking.";
+		mes "Ãh, você poderia vir";
+		mes "até aqui? Eu não";
+		mes "quero que mais ninguém";
+		mes "escute a nossa conversa.";
 		close2;
 		set aru_monas,3;
 		warp "cmd_in02",110,53;
@@ -135,9 +135,9 @@ cmd_in02,174,89,7	script	Ordinary Man#pc1	97,{
 	}
 	else {
 		mes "[Larjes]";
-		mes "What?! I lost again?";
-		mes "How does... How does";
-		mes "this game even work?!";
+		mes "O quê?! Perdi de novo?";
+		mes "Como é que... Como é que";
+		mes "este jogo funciona?!";
 		close;
 	}
 }
@@ -145,61 +145,61 @@ cmd_in02,174,89,7	script	Ordinary Man#pc1	97,{
 cmd_in02,111,52,3	script	Ordinary Man#pc2	97,{
 	if (aru_monas < 3) {
 		mes "[Larjes]";
-		mes "^666666*Sigh...*^000000";
-		mes "This isn't good at all.";
-		mes "I don't know what to do...";
+		mes "^666666*Suspiro...*^000000";
+		mes "Isto não está nada bom.";
+		mes "Não sei o que fazer...";
 		close;
 	}
 	else if (aru_monas == 3) {
 		mes "[Larjes]";
-		mes "Good, no one should be";
-		mes "able to hear us from here.";
-		mes "After I sent a message to";
-		mes "the place, I found some";
-		mes "new information that should";
-		mes "really help my investigation.";
+		mes "Bom, ninguém deve";
+		mes "conseguir nos ouvir daqui.";
+		mes "Depois que mandei uma mensagem";
+		mes "para lá, encontrei uma";
+		mes "informação nova que deve";
+		mes "ajudar muito na investigação.";
 		next;
 		mes "[Larjes]";
-		mes "I learned that two details";
-		mes "about the night when that";
-		mes "high ranking man vanished.";
-		mes "Firstly, he left the guards for";
-		mes "a bit to meet a woman. It's";
-		mes "always a woman, isn't it?";
+		mes "Descobri dois detalhes";
+		mes "sobre a noite em que aquele";
+		mes "homem graduado desapareceu.";
+		mes "Primeiro, ele deixou os guardas";
+		mes "um instante para encontrar uma mulher.";
+		mes "É sempre uma mulher, não é?";
 		next;
 		mes "[Larjes]";
-		mes "Secondly, after he left to";
-		mes "meet that woman, some other";
-		mes "people came in, and then they";
-		mes "carried some really large";
-		mes "baggage with them when";
-		mes "they left to the west.";
+		mes "Segundo, depois que ele saiu para";
+		mes "encontrar essa mulher, outras";
+		mes "pessoas entraram, e então elas";
+		mes "levaram uma bagagem bem";
+		mes "grande quando foram";
+		mes "embora para o oeste.";
 		next;
 		mes "[Larjes]";
-		mes "Those bags were so big,";
-		mes "it's suspicious. It seems";
-		mes "like some organization has";
-		mes "kidnapped him, and wants to";
-		mes "bring him west for some reason.";
+		mes "Aquelas malas eram tão grandes";
+		mes "que chega a ser suspeito. Parece";
+		mes "que alguma organização o";
+		mes "sequestrou, e quer";
+		mes "levá-lo para o oeste por algum motivo.";
 		next;
-		select("Why to the west?");
+		select("Por que para o oeste?");
 		mes "[Larjes]";
-		mes "This is just a guess, but";
-		mes "I think whoever kidnapped";
-		mes "him are from ^2F4F2FArunafeltz^000000.";
-		mes "I'm prohibited from entering";
-		mes "Arunafeltz so I wasn't able";
-		mes "to investigate any further.";
+		mes "Isto é só um palpite, mas";
+		mes "eu acho que quem o sequestrou";
+		mes "é de ^2F4F2FArunafeltz^000000.";
+		mes "Estou proibido de entrar em";
+		mes "Arunafeltz, então não consegui";
+		mes "investigar mais a fundo.";
 		set aru_monas,4;
 		//changequest 17001,17002;
 		close;
 	}
 	else {
 		mes "[Larjes]";
-		mes "I gambled away";
-		mes "this much money?";
-		mes "How am I gonna pay";
-		mes "off all of this debt?!";
+		mes "Eu joguei fora";
+		mes "todo esse dinheiro?";
+		mes "Como é que eu vou pagar";
+		mes "toda essa dívida?!";
 		close;
 	}
 }

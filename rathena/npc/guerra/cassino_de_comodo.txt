@@ -1,0 +1,714 @@
+//===== Guerra do Emperium ===================================
+//= O Cassino de Comodo - a Casa Rosa
+//===== Onde =================================================
+//= cmd_in02, o mapa de interiores de Comodo. O cassino e a
+//= metade dele, e sao DOIS saloes separados:
+//=
+//=   SALAO LESTE  (x140-216, y70-135) - o PRIMEIRO ANDAR
+//=   SALAO OESTE  (x40-110,  y20-90)  - o SEGUNDO ANDAR
+//=
+//= A DIVISAO EM "ANDAR" E NOSSA, e nao do mapa. Os dois saloes
+//= estao lado a lado no mesmo .gat, na mesma altura - as treze
+//= celulas usadas por este arquivo foram medidas e deram todas
+//= tipo 0, andavel, altura -10,00. Quem os liga sao dois warps
+//= do rAthena (npc/warps/cities/comodo.txt):
+//=
+//=   cmd_in02 168,113 -> 63,73    leste -> oeste
+//=   cmd_in02 187,78  -> 84,37    leste -> oeste
+//=
+//= O LESTE E O ANDAR DE CHEGADA, e por isso e o primeiro: e
+//= nele que desembocam a porta principal (comodo 140,111 ->
+//= 178,132), a porta leste (comodo 153,97 -> 212,97) e o
+//= Teleportador da Ordem ("Warper > Casino" -> 179,129).
+//===== Descricao ============================================
+//= UM CASSINO QUE COBRA E PAGA EM MOEDA NOVA (30998), a moeda
+//= do servidor. Tres recepcionistas nas portas, quatro
+//= garconetes que oferecem um drink, e SETE mesas de blackjack.
+//=
+//= A moeda entra e sai pelo mesmo lugar - nao ha zeny em canto
+//= nenhum deste arquivo.
+//===== A FALCATRUA, e ela e o miolo =========================
+//= AS DUAS MESAS NAO SAO IGUAIS, E E DE PROPOSITO. No terreo o
+//= jogador ganha mais do que perde; no segundo andar a casa
+//= leva vantagem, e leva com folga. E o gancho de uma quest
+//= futura, em que se descobre que a Casa Rosa e viciada.
+//=
+//= O mecanismo e UM NUMERO POR MESA, o `vies`. A cada carta
+//= comprada rola-se rand(100); se cair abaixo do vies, a carta
+//= NAO e sorteada: e ESCOLHIDA do que resta do baralho. Escolher
+//= "a melhor" e pegar o rank que leva a mao ao maior total <=
+//= 21; escolher "a pior" e pegar um que a estoure, e se nenhum
+//= estoura, o que a deixa mais baixa.
+//=
+//= Favorecer o jogador = melhorar a mao DELE e piorar a do
+//= crupie. Favorecer a casa = o contrario. E o mesmo numero
+//= agindo nos dois lados da mesa, o que dobra o efeito dele -
+//= por isso 5% e 10% ja bastam.
+//=
+//=   PRIMEIRO ANDAR   aposta  2   21 natural paga 3:2 (+3)
+//=                    vies 5%, a favor do JOGADOR
+//=                    ele ganha 46,7% das maos e perde 44,1%
+//=                    lucro medio +6,4% = +0,13 moeda por mao
+//=
+//=   SEGUNDO ANDAR    aposta 10   21 natural paga 2:1 (+20)
+//=                    vies 10%, a favor da CASA
+//=                    ele ganha 32,3% das maos e perde 58,9%
+//=                    lucro medio -23,1% = -2,31 moeda por mao
+//=
+//= A ISCA E O PROPRIO PAGAMENTO: la em cima o 21 natural paga
+//= MAIS (2:1 contra 3:2) e a aposta e cinco vezes maior. O
+//= jogador sobe atras do premio grande e entra na mesa que
+//= drena dezoito vezes mais rapido do que a de baixo enche.
+//=
+//= A FALCATRUA NAO TEM CONTRA-JOGO, e isso foi medido de
+//= proposito. O jogador que desconfia da mesa de cima e para de
+//= comprar carta sai PIOR, nao melhor: -34,5% contra os -23,1%
+//= de quem joga normal. E porque metade do vies age na mao do
+//= CRUPIE, onde a estrategia do jogador nao alcanca. Na mesa de
+//= baixo vale o contrario e tambem por escolha: parar sempre da
+//= -5,8%, entao a mesa boa so paga para quem realmente joga.
+//=
+//= OS NUMEROS NAO FORAM CHUTADOS. Saem de simulacao de 80.000
+//= maos por ponto, com o MESMO algoritmo que esta aqui embaixo -
+//= ferramentas/simula_blackjack.py, que e um espelho linha a
+//= linha do S_Compra. MEXEU AQUI, MEXE LA: se o S_Compra mudar e
+//= a ferramenta nao, ela passa a medir um jogo que nao existe e
+//= responde com a mesma cara de certeza.
+//=
+//= Rodar de novo antes de mexer em qualquer um dos quatro
+//= valores: baralho de 52 nao tem intuicao, e o efeito do vies e
+//= mais que o dobro do que o numero sugere, porque ele age nos
+//= DOIS lados da mesa ao mesmo tempo. Com vies 10% a favor do
+//= jogador o lucro medio dele ja seria +18%, que e faucet de
+//= moeda - e 10% parece pouco.
+//=
+//= POR QUE O TERREO PODE SER POSITIVO SEM VIRAR FAUCET: 2
+//= Moedas por mao a +6,6% dao +0,13 Moeda por mao, e cada mao
+//= custa varios cliques de dialogo. A mesa de cima tira 2,27
+//= Moedas por mao. Enquanto houver quem suba, o cassino e
+//= sorvedouro. Se um dia a conta virar, o remedio e baixar o
+//= vies do terreo - nao mexer no premio, que e o que sustenta
+//= a historia.
+//===== A regra do jogo ======================================
+//= Blackjack padrao, sem dobrar e sem dividir:
+//=
+//=   - baralho de 52 cartas, sem reposicao dentro da mao;
+//=   - As vale 11 e cai para 1 quando estouraria (so um As
+//=     pode valer 11 de cada vez - e por isso a mao guarda o
+//=     total DURO e a quantidade de ases, e o total mole sai
+//=     de uma soma so);
+//=   - 21 nas duas primeiras cartas e natural e resolve na
+//=     hora, dos dois lados;
+//=   - o crupie pede ate 17 e para em TODO 17, inclusive mole;
+//=   - empate devolve a aposta.
+//=
+//= O ESTADO DA MAO MORA EM VARIAVEL @ (temporaria de
+//= personagem), e nao em .@. Nao e estilo: `callsub` ABRE
+//= ESCOPO NOVO de .@ (src/map/script.cpp:5508, o
+//= `st->stack->scope.vars = i64db_alloc`), entao subrotina
+//= nenhuma enxergaria o baralho se ele fosse .@. Variavel @ e
+//= por personagem, o que tambem resolve dois jogadores na
+//= mesma mesa ao mesmo tempo - variavel . do NPC seria
+//= compartilhada e as duas maos se misturariam, calado.
+//= O fim da funcao apaga os quatro arrays.
+//===== As tres recepcionistas ===============================
+//= UMA POR PORTA, e as tres portas do primeiro andar:
+//=
+//=   211,100  sprite 817 (4_F_CHNDRESS3)  porta leste
+//=   174,131  sprite 816 (4_F_CHNDRESS2)  porta principal
+//=   144,100  sprite 815 (4_F_CHNDRESS1)  porta oeste
+//=
+//= As duas primeiras dizem a mesma coisa e por isso sao um
+//= script so mais uma duplicata. A terceira tem meia frase a
+//= mais no fim e por isso e script proprio.
+//=
+//= AS DE 211,100 E 144,100 SAO SIMETRICAS, e nao por acaso: as
+//= duas ficam TRES CELULAS AO NORTE da chegada da sua porta
+//= (212,97 e 144,97, os warps cmd_casino2-1 e cmd_casino3-1),
+//= cada uma no fundo de um nicho. Por isso as duas olham para o
+//= sul - e a direcao que leva da celula delas ate quem chega.
+//=
+//= A de 174,131 fica num bolsao x170-174 / y130-131, fechado a
+//= leste por parede em x175-176, em que se entra por x170
+//= subindo de y127-129. Ela olha para OESTE, que e por onde se
+//= entra ali. Quem chega pelo warp da porta principal (178,132)
+//= esta do outro lado dessa parede e da a volta.
+//===== As quatro garconetes =================================
+//= 161,99 / 196,99 / 179,114 no primeiro andar, 63,72 no
+//= segundo - esta ultima em cima da chegada do warp de 63,73,
+//= e por isso e a unica com facing 0 (norte, para olhar quem
+//= desembarca).
+//=
+//= Oferecem um drink. Aceitar transforma o jogador em Deviruchi
+//= ou Poring por 20 minutos, meio a meio. Os dois efeitos sao
+//= COPIA DO SCRIPT DOS PROPRIOS ITENS - Disfarce de Deviruchi
+//= (12658) e Disfarce de Poring (12663), em db/re/item_db_usable
+//= .yml, inclusive o bonus de status que cada um carrega e a
+//= duracao de 1.200.000 ms. Nao ha item nenhum envolvido: o
+//= `transform` e chamado direto, entao nada ocupa mochila.
+//=
+//= BEBER DE NOVO TROCA O DISFARCE, e nao precisou de codigo
+//= para isso: o proprio doc/script_commands.txt diz que "using
+//= 'transform' twice will not stack (it will cancel the
+//= previous bonus for the new)". E a trava natural que o pedido
+//= autorizou usar.
+//===== Os sete crupies ======================================
+//= sprite 899 (4_M_HUMAN_02), o mesmo do Mister Peso.
+//=
+//=   PRIMEIRO ANDAR   185,94   170,94   178,92
+//=   SEGUNDO ANDAR     77,84   102,59    92,47   45,59
+//=
+//= Sao dois scripts-base, um por andar, porque os quatro
+//= numeros da mesa entram como argumento do callfunc - e
+//= duplicata nao pode ter argumento proprio. Trocar o vies de
+//= um andar inteiro e trocar UM numero, na linha do callfunc
+//= do script-base daquele andar.
+//=
+//= FACING 4 (sul) em seis dos sete, que e o que os nove NPCs de
+//= ambiente do cassino ja usavam - inclusive o Shalone, que
+//= ficava exatamente em 178,92 e que este arquivo desliga. A
+//= excecao e a de 92,47, em facing 2 (oeste), a pedido.
+//===== A animacao de vitoria ================================
+//= Ao ganhar a mao sai um `specialeffect2` no jogador; o 21
+//= natural ganha um segundo, mais vistoso. Os dois numeros
+//= moram numa linha so, no topo da F_CassinoBlackjack, e trocar
+//= a animacao e trocar um numero.
+//=
+//= O QUE FOI PEDIDO, E O QUE DEU: o pedido apontou o
+//= `data\texture\effect\ui_enchant\ui_enchant_success\
+//= ui_success_y.tga`, do efeito de sucesso da janela de
+//= encantamento. Ele EXISTE no nosso GRF e, melhor que isso, e
+//= um efeito de verdade: ha um `ui_enchant_success.str` na mesma
+//= pasta, e o caminho dele esta na TABELA DE EFEITOS DO EXE,
+//= encostado em entradas de efeito comum como o
+//= `npc_cane_of_evil_eye_hit.str`. Ou seja, ele tem um numero e
+//= o `specialeffect` alcancaria.
+//=
+//= O QUE NAO DEU FOI DESCOBRIR O NUMERO OFFLINE. A tabela e
+//= preenchida por uma corrida de 517 instrucoes de 30 bytes no
+//= .text, cada uma um `push offset "<caminho>.str"` seguido de
+//= um `mov [ebp-4], N`. O N e consecutivo (o do
+//= ui_enchant_success e 1100), mas NAO e o numero do efeito: e o
+//= contador de desmontagem de excecao do compilador. A prova e
+//= barata - cruzando os 517 nomes da corrida com os EF_ do
+//= rAthena naquele mesmo numero, batem ZERO. E as ancoras de
+//= Summoner (freshshrimp, chattering, heat_barrel) caem noutra
+//= corrida, com indices 51 a 73, enquanto o rAthena as numera
+//= 1098 a 1104.
+//=
+//= Tirar o numero dali exigiria rastrear o vetor em que o
+//= construtor escreve - engenharia reversa de outra ordem, e
+//= contra a regra do CLAUDE.md secao 5: verificacao offline que
+//= passa nao e prova de efeito. Quem decide isso e a tela.
+//=
+//= COMO ACHAR, EM UMA RODADA: `@effect <n>` in-game. Se algum
+//= numero devolver o clarao dourado da janela de encantamento, e
+//= so por ele nas duas linhas do topo da funcao.
+//=
+//= E UM TETO QUE VALE SABER: o servidor NAO consegue mandar
+//= efeito acima de 1126. O `buildin_specialeffect`
+//= (src/map/script.cpp:15605) e o `@effect`
+//= (atcommand.cpp:6027) recusam `>= EF_MAX`, e o EF_MAX do nosso
+//= rAthena e 1127 - enquanto o cliente tem cerca de 1460 efeitos
+//= .str. Se o do encantamento estiver acima do teto, alcanca-lo
+//= custa levantar o EF_MAX no src/map/script.hpp e recompilar, o
+//= que e enxerto em arquivo do rAthena e precisa ser decidido.
+//===== O que este arquivo DESLIGA ===========================
+//= `Shalone#cmd`, de npc/cities/comodo.txt, que ocupava a
+//= celula 178,92 pedida para a terceira mesa do terreo. Sai por
+//= disablenpc de fora, pela receita do CLAUDE.md secao 2 - o
+//= comodo.txt continua byte a byte o do rAthena (a menos da
+//= traducao, que e outra coisa e tem .INGLES ao lado).
+//===== O que ainda NAO existe ===============================
+//= A MAQUINA CACA-NIQUEL. Foi pedida junto e ficou para outra
+//= sessao, por decisao do dono. A ideia e reaproveitar a roleta
+//= que o cliente ja desenha (a da captura de pet) em vez de
+//= inventar interface. O sprite existe e esta livre: 563
+//= (2_SLOT_MACHINE), o caca-niquel com letreiro JACKPOT.
+//= Registrado no PENDENCIAS.md.
+//============================================================
+
+//== As tres recepcionistas ==================================
+cmd_in02,211,100,4	script	Recepcionista#cas_leste	817,{
+	mes "[Recepcionista]";
+	mes "Bem-vindo(a) à Casa Rosa!";
+	next;
+	mes "[Recepcionista]";
+	mes "O último paraíso da memória de Valhalla!";
+	mes "Aqui você aposta com suas Moedas Novas,";
+	mes "e ganha Moedas Novas!";
+	next;
+	mes "[Recepcionista]";
+	mes "Primeiro andar: apostas simples.";
+	mes "Segundo andar: apostas grandes!";
+	mes "Aproveita que você tá com sorte!";
+	close;
+}
+
+cmd_in02,174,131,2	duplicate(Recepcionista#cas_leste)	Recepcionista#cas_porta1	816
+
+// A terceira, na porta oeste. Igual as outras duas ate a ultima
+// linha - ver o cabecalho, secao "As tres recepcionistas".
+// Facing 4 (sul), a direcao que leva daqui ate a chegada do warp
+// em 144,97 - o mesmo arranjo da de 211,100.
+cmd_in02,144,100,4	script	Recepcionista#cas_porta2	815,{
+	mes "[Recepcionista]";
+	mes "Bem-vindo(a) à Casa Rosa!";
+	next;
+	mes "[Recepcionista]";
+	mes "O último paraíso da memória de Valhalla!";
+	mes "Aqui você aposta com suas Moedas Novas,";
+	mes "e ganha Moedas Novas!";
+	next;
+	mes "[Recepcionista]";
+	mes "Primeiro andar: apostas simples.";
+	mes "Segundo andar: apostas grandes!";
+	mes "Aproveita que você tá com sorte!";
+	mes "Temos garotas também, caso se interesse.";
+	close;
+}
+
+//== As quatro garconetes ====================================
+cmd_in02,161,99,4	script	Garçonete#cas_g1	80,{
+	mes "[Garçonete]";
+	mes "Olá, docinho! Aceita um drink?";
+	next;
+	if (select("Sim:Não") == 2) {
+		mes "[Garçonete]";
+		mes "Você que sabe! u_u";
+		close;
+	}
+	mes "[Garçonete]";
+	mes "Sabia que você era uma pessoa animada! Toma!";
+	close2;
+
+	// Os dois disfarces sao copia do `Script:` dos itens 12658 e
+	// 12663 (db/re/item_db_usable.yml), com o bonus de status de
+	// cada um e os mesmos 1.200.000 ms - vinte minutos. Beber de
+	// novo troca o disfarce sozinho; ver o cabecalho.
+	if (rand(2))
+		transform 1109,1200000,SC_MTF_ASPD,10,5;      // Deviruchi
+	else
+		transform 1002,1200000,SC_MTF_CRIDAMAGE,5;    // Poring
+	end;
+
+OnInit:
+	// Arma o `/bj2`. Roda em cada duplicata: o npc_duplicate_sub
+	// chama npc_timerevent_export por copia e zera o timerid dela
+	// (src/map/npc.cpp), entao cada garconete tem timer proprio.
+	initnpctimer;
+	end;
+
+OnTimer4000:
+	// O intervalo e o NOME deste label, nao um argumento.
+	//
+	// ET_CHUPCHUP e 31, o segundo emote de beijo - o `/bj2` do
+	// bRO. Conferido, e nao chutado: o emotionlist.lub do GRF do
+	// bRO tem os ET_ na MESMA ordem do enum emotion_type de
+	// src/map/clif.hpp (...ET_KIK, ET_CHUP, ET_CHUPCHUP, ET_HNG...),
+	// e ET_CHUP/ET_CHUPCHUP sao o par /bj e /bj2. Se sair o emote
+	// errado em jogo, e trocar UM nome nesta linha.
+	emotion ET_CHUPCHUP;
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+cmd_in02,196,99,4	duplicate(Garçonete#cas_g1)	Garçonete#cas_g2	80
+cmd_in02,179,114,4	duplicate(Garçonete#cas_g1)	Garçonete#cas_g3	80
+// Facing 0 (norte): esta fica em cima da chegada do warp de
+// 63,73 e olha para quem desembarca.
+cmd_in02,63,72,0	duplicate(Garçonete#cas_g1)	Garçonete#cas_g4	80
+
+//== As mesas do PRIMEIRO ANDAR ==============================
+// aposta 2, 21 natural paga +3 (3:2), vies 5% A FAVOR DO
+// JOGADOR. Os quatro numeros estao explicados no cabecalho e
+// medidos por ferramentas/simula_blackjack.py.
+cmd_in02,185,94,4	script	Crupiê#cas_bj1	899,{
+	callfunc "F_CassinoBlackjack", 2, 3, 5, 1;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	// ET_MONEY e 8, o `/$` - conferido no mesmo emotionlist.lub
+	// citado na garconete.
+	emotion ET_MONEY;
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+cmd_in02,170,94,4	duplicate(Crupiê#cas_bj1)	Crupiê#cas_bj2	899
+// 178,92 e a celula do Shalone#cmd, desligado no fim deste
+// arquivo.
+cmd_in02,178,92,4	duplicate(Crupiê#cas_bj1)	Crupiê#cas_bj3	899
+
+//== As mesas do SEGUNDO ANDAR ===============================
+// aposta 10, 21 natural paga +20 (2:1), vies 10% A FAVOR DA
+// CASA. O premio maior e a isca; ver o cabecalho.
+cmd_in02,77,84,4	script	Crupiê#cas_bj4	899,{
+	callfunc "F_CassinoBlackjack", 10, 20, 10, -1;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	emotion ET_MONEY;
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+cmd_in02,102,59,4	duplicate(Crupiê#cas_bj4)	Crupiê#cas_bj5	899
+// Facing 2 (oeste) - esta e a unica das sete que nao olha para o
+// sul. Ver o cabecalho, secao "Os sete crupies".
+cmd_in02,92,47,2	duplicate(Crupiê#cas_bj4)	Crupiê#cas_bj6	899
+cmd_in02,45,59,4	duplicate(Crupiê#cas_bj4)	Crupiê#cas_bj7	899
+
+//== O jogo ==================================================
+// getarg(0)  aposta, em Moedas Novas
+// getarg(1)  LUCRO do 21 natural, em Moedas Novas
+// getarg(2)  vies, de 0 a 100
+// getarg(3)  +1 a falcatrua favorece o JOGADOR, -1 a CASA
+function	script	F_CassinoBlackjack	{
+	.@aposta = getarg(0);
+	.@bj     = getarg(1);
+	.@vies   = getarg(2);
+	.@lado   = getarg(3);
+
+	.@moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
+	.@eu$   = "[" + strnpcinfo(1) + "]";
+
+	// A ANIMACAO DE VITORIA - as duas unicas linhas a trocar para
+	// mudar o que aparece na tela. Ver o cabecalho, secao "A
+	// animacao de vitoria", que explica por que nao e o efeito da
+	// janela de encantamento e como achar o numero dele.
+	//
+	// O teto do servidor e 1126: acima disso o buildin_specialeffect
+	// recusa (script.cpp:15605) e nada aparece, com uma linha de
+	// erro no log e a mao seguindo normal.
+	.@ef_ganhou = 982;   // EF_THROW_MULTIPLE_COIN, chuva de moedas
+	.@ef_21     = 362;   // EF_LEVEL99_4, o clarao dourado
+
+	mes .@eu$;
+	mes "Boa noite, bom dia, nobre viajante!";
+	mes "Que tal um jogo de blackjack?";
+	mes "O famoso 21, vamos?";
+	next;
+	mes .@eu$;
+	mes "A mão custa ^0000FF" + .@aposta + "^000000 " +
+	    ((.@aposta == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+	mes "Ganhou, leva ^0000FF" + (.@aposta * 2) + "^000000 de volta.";
+	mes "21 nas duas primeiras, ^0000FF" + (.@aposta + .@bj) + "^000000.";
+	next;
+	if (select("Vamos:Agora não") == 2) {
+		mes .@eu$;
+		mes "Se mudar de ideia estarei aqui!";
+		close;
+	}
+	if (countitem(.@moeda) < .@aposta) {
+		mes .@eu$;
+		mes "A casa não fia, viajante.";
+		mes "Volte com " + .@aposta + " Moedas Novas.";
+		close;
+	}
+	delitem .@moeda, .@aposta;
+
+	// O baralho: quantas cartas restam de cada rank (1 = As, 11 a
+	// 13 = J/Q/K) e quais dos 52 pares rank-naipe ainda estao nele.
+	deletearray @bj_resta[0];
+	deletearray @bj_naipe[0];
+	deletearray @bj_jc[0];
+	deletearray @bj_cc[0];
+	for (.@i = 1; .@i <= 13; .@i++)
+		@bj_resta[.@i] = 4;
+	for (.@i = 0; .@i < 52; .@i++)
+		@bj_naipe[.@i] = 1;
+	@bj_n = 52;
+
+	// Cada mao guarda o total DURO (As valendo 1) e quantos ases
+	// tem; o total que vale sai dos dois numa soma so, mais abaixo.
+	@bj_jh = 0; @bj_ja = 0; @bj_jt = 0; @bj_nj = 0;
+	@bj_ch = 0; @bj_ca = 0; @bj_ct = 0; @bj_nc = 0;
+
+	// As quatro cartas de abertura, alternando jogador e crupie.
+	for (.@i = 0; .@i < 4; .@i++) {
+		.@quem = .@i % 2;
+		.@modo = 0;
+		if (rand(100) < .@vies)
+			.@modo = (.@quem == 0) ? .@lado : (.@lado * -1);
+		callsub(S_Compra, .@quem, .@modo);
+	}
+
+	.@ganho  = 0;
+	.@fecho$ = "";
+	// 0 = nao houve vitoria. Empate nao acende nada: devolver a
+	// aposta nao e ganhar.
+	.@efeito = 0;
+
+	if (@bj_jt == 21 || @bj_ct == 21) {
+		// Natural dos dois lados resolve na hora.
+		clear;
+		mes .@eu$;
+		.@mc$ = callsub(S_Mao, 1, @bj_nc);
+		.@mj$ = callsub(S_Mao, 0, @bj_nj);
+		mes "Crupiê: " + .@mc$ + "  (" + @bj_ct + ")";
+		mes "Você: " + .@mj$ + "  (" + @bj_jt + ")";
+		if (@bj_jt == 21 && @bj_ct == 21) {
+			.@ganho  = .@aposta;
+			.@fecho$ = "Vinte e um dos dois lados. Empate, a aposta volta.";
+		} else if (@bj_jt == 21) {
+			.@ganho  = .@aposta + .@bj;
+			.@efeito = .@ef_21;
+			.@fecho$ = "Vinte e um de cara! A casa paga.";
+		} else {
+			.@fecho$ = "Vinte e um da casa. Essa mão é minha.";
+		}
+	} else {
+		// O turno do jogador. A caixa e reescrita a cada rodada
+		// com `clear` - sem ele a janela cresce sem parar.
+		while (1) {
+			clear;
+			mes .@eu$;
+			.@mc$ = callsub(S_Mao, 1, 1);
+			.@mj$ = callsub(S_Mao, 0, @bj_nj);
+			mes "Crupiê: " + .@mc$ + " e uma carta virada.";
+			mes "Você: " + .@mj$ + "  (" + @bj_jt + ")";
+			// 21 ou estouro encerram sozinhos, e o teste vem
+			// DEPOIS do desenho para que a carta que estourou
+			// apareca na tela.
+			if (@bj_jt >= 21)
+				break;
+			if (select("Pedir carta:Parar") == 2)
+				break;
+			.@modo = 0;
+			if (rand(100) < .@vies)
+				.@modo = .@lado;
+			callsub(S_Compra, 0, .@modo);
+		}
+
+		if (@bj_jt > 21) {
+			.@fecho$ = "Estourou, viajante. Vinte e dois não paga.";
+		} else {
+			// O crupie pede ate 17 e para em todo 17.
+			while (@bj_ct < 17) {
+				.@modo = 0;
+				if (rand(100) < .@vies)
+					.@modo = .@lado * -1;
+				callsub(S_Compra, 1, .@modo);
+			}
+			clear;
+			mes .@eu$;
+			.@mc$ = callsub(S_Mao, 1, @bj_nc);
+			.@mj$ = callsub(S_Mao, 0, @bj_nj);
+			mes "Crupiê: " + .@mc$ + "  (" + @bj_ct + ")";
+			mes "Você: " + .@mj$ + "  (" + @bj_jt + ")";
+			if (@bj_ct > 21) {
+				.@ganho  = .@aposta * 2;
+				.@efeito = .@ef_ganhou;
+				.@fecho$ = "A casa estourou. Essa é sua.";
+			} else if (@bj_ct > @bj_jt) {
+				.@fecho$ = "A casa fica com essa.";
+			} else if (@bj_ct < @bj_jt) {
+				.@ganho  = .@aposta * 2;
+				.@efeito = .@ef_ganhou;
+				.@fecho$ = "Sua. A casa paga sem chorar.";
+			} else {
+				.@ganho  = .@aposta;
+				.@fecho$ = "Empate, a aposta volta.";
+			}
+		}
+	}
+
+	mes .@fecho$;
+
+	// A animacao sai no JOGADOR (`specialeffect2` centra no sprite
+	// de quem invocou), com a caixa de dialogo ainda aberta - ela
+	// aparece atras dela, que e o que se quer. Empate nao acende.
+	if (.@efeito)
+		specialeffect2 .@efeito;
+
+	if (.@ganho > 0) {
+		// A Moeda Nova e NoDrop, entao o getitem nunca a larga no
+		// chao do cassino - a armadilha do CLAUDE.md secao 5 nao
+		// alcanca aqui.
+		getitem .@moeda, .@ganho;
+		mes "Recebe ^0000FF" + .@ganho + "^000000 " +
+		    ((.@ganho == 1) ? "Moeda Nova" : "Moedas Novas") + ".";
+	}
+
+	deletearray @bj_resta[0];
+	deletearray @bj_naipe[0];
+	deletearray @bj_jc[0];
+	deletearray @bj_cc[0];
+	close;
+
+// Compra uma carta.
+//   getarg(0)  0 = mao do jogador, 1 = mao do crupie
+//   getarg(1)  0 sorteia limpo, +1 escolhe a MELHOR carta para
+//              essa mao, -1 escolhe a PIOR
+//
+// Os nomes das variaveis daqui levam `k_` na frente de proposito:
+// `callsub` abre escopo novo de .@, mas as duas subrotinas deste
+// arquivo se chamam de dentro de lacos e o prefixo deixa obvio,
+// na leitura, que nada aqui colide com o laco de fora.
+S_Compra:
+	.@k_quem = getarg(0);
+	.@k_modo = getarg(1);
+
+	if (.@k_quem == 0) {
+		.@k_h = @bj_jh;
+		.@k_a = @bj_ja;
+	} else {
+		.@k_h = @bj_ch;
+		.@k_a = @bj_ca;
+	}
+
+	.@k_esc = 0;   // rank escolhido pela falcatrua; 0 = nenhum
+
+	if (.@k_modo > 0) {
+		// A melhor: o maior total que ainda cabe em 21.
+		.@k_alvo = -1;
+		for (.@k_r = 1; .@k_r <= 13; .@k_r++) {
+			if (@bj_resta[.@k_r] <= 0)
+				continue;
+			.@k_nh = .@k_h + ((.@k_r == 1) ? 1 : ((.@k_r > 10) ? 10 : .@k_r));
+			.@k_na = .@k_a + ((.@k_r == 1) ? 1 : 0);
+			.@k_nt = .@k_nh + ((.@k_na > 0 && .@k_nh + 10 <= 21) ? 10 : 0);
+			if (.@k_nt <= 21 && .@k_nt > .@k_alvo) {
+				.@k_alvo = .@k_nt;
+				.@k_esc  = .@k_r;
+			}
+		}
+	} else if (.@k_modo < 0) {
+		// A pior: uma que estoure. Se nenhuma estoura, a que
+		// deixa a mao mais baixa - que obriga a comprar de novo.
+		.@k_alvo = 99;
+		for (.@k_r = 1; .@k_r <= 13; .@k_r++) {
+			if (@bj_resta[.@k_r] <= 0)
+				continue;
+			.@k_nh = .@k_h + ((.@k_r == 1) ? 1 : ((.@k_r > 10) ? 10 : .@k_r));
+			.@k_na = .@k_a + ((.@k_r == 1) ? 1 : 0);
+			.@k_nt = .@k_nh + ((.@k_na > 0 && .@k_nh + 10 <= 21) ? 10 : 0);
+			if (.@k_nt > 21) {
+				.@k_esc = .@k_r;
+				break;
+			}
+			if (.@k_nt < .@k_alvo) {
+				.@k_alvo = .@k_nt;
+				.@k_esc  = .@k_r;
+			}
+		}
+	}
+
+	// Sorteio limpo. E tambem o que socorre a falcatrua quando o
+	// baralho nao tem mais a carta que ela queria - `.@k_esc`
+	// continua 0 e cai aqui.
+	if (.@k_esc == 0) {
+		.@k_i = rand(@bj_n);
+		for (.@k_r = 1; .@k_r <= 13; .@k_r++) {
+			.@k_i = .@k_i - @bj_resta[.@k_r];
+			if (.@k_i < 0) {
+				.@k_esc = .@k_r;
+				break;
+			}
+		}
+	}
+
+	// O naipe sai por sorteio entre os que ainda estao no baralho.
+	// So enfeita a tela - nao entra em conta nenhuma - mas sem ele
+	// a mesma carta apareceria duas vezes na mesma mao.
+	//
+	// O `> 1` NAO E ZELO: `rand(1)` nao devolve 0 neste emulador, ele
+	// MATA O SCRIPT. O buildin_rand faz `maximum -= 1` e depois
+	// recusa `maximum < 1` com "range is too small. No randomness
+	// possible", pondo st->state = END (src/map/script.cpp:5604).
+	// E `@bj_resta` vale 1 toda vez que sai a ultima carta daquele
+	// valor, o que acontece o tempo todo - sem esta linha a mao
+	// morre no meio, com o dialogo aberto e a aposta ja cobrada.
+	.@k_i = 0;
+	if (@bj_resta[.@k_esc] > 1)
+		.@k_i = rand(@bj_resta[.@k_esc]);
+	for (.@k_s = 0; .@k_s < 4; .@k_s++) {
+		if (@bj_naipe[(.@k_esc - 1) * 4 + .@k_s] == 0)
+			continue;
+		if (.@k_i == 0)
+			break;
+		.@k_i--;
+	}
+	// A conta acima nao tem como sair de 0..3 - ha exatamente
+	// `@bj_resta` naipes marcados e `.@k_i` e menor que isso - mas se
+	// um dia sair, escrever em `.@k_s == 4` estragaria o naipe do
+	// valor seguinte em silencio. Melhor gritar.
+	if (.@k_s > 3) {
+		debugmes "F_CassinoBlackjack: naipe fora de faixa no valor " + .@k_esc + " (restam " + @bj_resta[.@k_esc] + "). O baralho e a tabela de naipes sairam de sincronia.";
+		.@k_s = 0;
+	}
+	@bj_naipe[(.@k_esc - 1) * 4 + .@k_s] = 0;
+	@bj_resta[.@k_esc]--;
+	@bj_n--;
+
+	// Fecha a conta da mao com a carta ja escolhida.
+	.@k_nh = .@k_h + ((.@k_esc == 1) ? 1 : ((.@k_esc > 10) ? 10 : .@k_esc));
+	.@k_na = .@k_a + ((.@k_esc == 1) ? 1 : 0);
+	.@k_nt = .@k_nh + ((.@k_na > 0 && .@k_nh + 10 <= 21) ? 10 : 0);
+
+	if (.@k_quem == 0) {
+		@bj_jc[@bj_nj] = (.@k_esc - 1) * 4 + .@k_s;
+		@bj_nj++;
+		@bj_jh = .@k_nh;
+		@bj_ja = .@k_na;
+		@bj_jt = .@k_nt;
+	} else {
+		@bj_cc[@bj_nc] = (.@k_esc - 1) * 4 + .@k_s;
+		@bj_nc++;
+		@bj_ch = .@k_nh;
+		@bj_ca = .@k_na;
+		@bj_ct = .@k_nt;
+	}
+	return;
+
+// O texto de uma mao.
+//   getarg(0)  0 = jogador, 1 = crupie
+//   getarg(1)  quantas cartas mostrar, contadas da primeira
+S_Mao:
+	.@m_quem = getarg(0);
+	.@m_ate  = getarg(1);
+	setarray .@m_r$[0], "A", "2", "3", "4", "5", "6", "7", "8", "9",
+	                    "10", "J", "Q", "K";
+	setarray .@m_s$[0], "Copas", "Ouros", "Espadas", "Paus";
+	.@m_txt$ = "";
+	for (.@m_i = 0; .@m_i < .@m_ate; .@m_i++) {
+		if (.@m_quem == 0)
+			.@m_c = @bj_jc[.@m_i];
+		else
+			.@m_c = @bj_cc[.@m_i];
+		if (.@m_i > 0)
+			.@m_txt$ = .@m_txt$ + ", ";
+		.@m_txt$ = .@m_txt$ + .@m_r$[.@m_c / 4] + " de " + .@m_s$[.@m_c % 4];
+	}
+	return .@m_txt$;
+}
+
+//== O que sai do caminho ====================================
+// Ver o cabecalho, secao "O que este arquivo DESLIGA".
+-	script	CassinoDeComodo	-1,{
+	end;
+
+OnInit:
+	// getnpcid devolve 0 quando o NPC nao existe. Sem este teste,
+	// um nome fora de sincronia com o npc/cities/comodo.txt
+	// abortaria o OnInit - e a mesa de 178,92 nasceria empilhada
+	// em cima do Shalone, calada.
+	if (!getnpcid(0, "Shalone#cmd")) {
+		debugmes "CassinoDeComodo: `Shalone#cmd` nao foi encontrado. O npc/cities/comodo.txt saiu de sincronia com este arquivo - PODE HAVER DOIS NPCs EMPILHADOS EM cmd_in02 178,92.";
+		end;
+	}
+	disablenpc "Shalone#cmd";
+	end;
+}

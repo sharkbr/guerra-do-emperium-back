@@ -7565,3 +7565,202 @@ engano vê-lo ocupar outro slot no jogo. Fica dito (regra 14).
 ### O que falta ver no jogo
 
 Nada disto subiu. Os comandos estão no `PENDENCIAS.md`.
+
+---
+
+## O Cassino de Comodo, e o baralho que mente nos dois sentidos (2026-08-12)
+
+O `cmd_in02` — o mapa de interiores de Comodo — passou a ser um cassino nosso,
+a **Casa Rosa**. Dezesseis NPCs em `npc/guerra/cassino_de_comodo.txt`: três
+recepcionistas nas portas, quatro garçonetes que oferecem um drink e **sete
+mesas de blackjack** que cobram e pagam em Moeda Nova (30998).
+
+### Os dois salões viraram dois andares, e a divisão é nossa
+
+O `cmd_in02` tem dois salões de jogo lado a lado, ligados por dois warps do
+rAthena (`168,113 → 63,73` e `187,78 → 84,37`). No arquivo eles não são
+andares: estão na mesma altura, `-10,00` nas treze células medidas. A divisão
+em "primeiro" e "segundo" é ficção nossa, e o salão **leste** ficou sendo o
+primeiro porque é nele que desembocam a porta principal, a porta leste e o
+Teleportador da Ordem.
+
+O pedido chegou com os dois invertidos e foi corrigido pelo dono na mesma
+conversa. **Valeu ter medido antes**: era o mapa que dizia qual salão é o de
+chegada, e a inversão teria posto o jogador no "segundo andar" ao entrar pela
+porta da frente.
+
+### A falcatrua — e ela é o motivo de tudo
+
+A decisão do dono foi contar uma história: *"no andar de baixo o jogador tinha
+mais chance de ganhar do que o normal, mas os prêmios eram pequenos, o que
+fazia ele querer subir para jogar nas máquinas mais caras de cima, onde a
+chance estava a favor da casa (bem a favor)"*. O cassino é viciado, e uma quest
+futura descobre isso.
+
+O mecanismo é **um número por mesa**. A cada carta comprada rola-se
+`rand(100)`; se cair abaixo do viés, a carta não é sorteada — é **escolhida**
+do que resta do baralho. Favorecer o jogador é melhorar a mão dele *e* piorar
+a do crupiê; favorecer a casa é o contrário.
+
+|  | aposta | 21 natural | viés | ganha | perde | lucro médio |
+|---|---|---|---|---|---|---|
+| 1º andar (leste) | 2 | 3:2 | 5% pró-jogador | 46,7% | 44,1% | +0,13 moeda/mão |
+| 2º andar (oeste) | 10 | 2:1 | 10% pró-casa | 32,3% | 58,9% | −2,31 moeda/mão |
+
+**A isca é o próprio pagamento.** Em cima o 21 natural paga *mais* — 2:1 contra
+3:2 — e a aposta é cinco vezes maior. O jogador sobe atrás do prêmio grande e
+entra na mesa que drena dezoito vezes mais rápido do que a de baixo enche.
+
+### Por que o número foi medido antes de ser escrito
+
+Porque o viés age nos dois lados da mesa, o efeito dele é **mais que o dobro**
+do que o número sugere. Medido: 10% a favor do jogador não dão 10% de vantagem,
+dão **+18% de lucro médio**, que é faucet de moeda num servidor de drop 50x.
+E 10% parece pouco.
+
+Daí a ferramenta, `ferramentas/simula_blackjack.py`, escrita **antes** do
+script e não depois — 80.000 mãos por ponto, espelhando o `S_Compra` linha a
+linha. A regra que fica está no LEIAME: mexeu no `S_Compra`, mexe nela, senão
+ela passa a medir um jogo que não existe e responde com a mesma cara de
+certeza.
+
+Ela também respondeu uma pergunta que não tinha sido feita: **a falcatrua tem
+contra-jogo?** Não. Quem desconfia da mesa de cima e para de comprar carta sai
+*pior* — −34,5% contra −23,1% —, porque metade do viés age na mão do crupiê,
+onde a estratégia do jogador não alcança. Na mesa de baixo vale o contrário, e
+também por escolha: parar sempre dá −5,8%, então a mesa boa só paga para quem
+realmente joga.
+
+### `rand(1)` não devolve 0 — ele mata o script
+
+O defeito mais caro da rodada, achado na revisão e não em jogo. O sorteio de
+naipe chamava `rand(@bj_resta[valor])`, e esse contador vale **1 toda vez que
+sai a última carta daquele valor** — o que acontece o tempo todo. O
+`buildin_rand` de um argumento faz `maximum -= 1` e recusa `maximum < 1` com
+*"range is too small"*, pondo `st->state = END`: a mão morreria no meio, com o
+diálogo aberto e a aposta já cobrada.
+
+Subiu para o `CLAUDE.md` §5. O caso perigoso não é a constante — é a
+**variável que encolhe** e passa por 1 no fim: cartas que restam, itens que
+sobraram, jogadores vivos.
+
+### O estado da mão mora em `@`, e não em `.@`
+
+`callsub` **abre escopo novo de `.@`** — `st->stack->scope.vars =
+i64db_alloc(...)`, em `src/map/script.cpp:5508`. Nenhuma subrotina enxergaria o
+baralho se ele fosse `.@`. Variável `@` (temporária de personagem) resolve isso
+e ainda resolve dois jogadores na mesma mesa ao mesmo tempo — variável `.` do
+NPC seria compartilhada e as duas mãos se misturariam, calado.
+
+### O resto da rodada
+
+- **As três recepcionistas** (211,100 / 174,131 / 173,131, sprites 817/816/815).
+  A terceira foi pedida em 174,131 também, e duas não cabem na mesma célula —
+  foi para a célula ao lado. Fica registrado que o bolsão delas é fechado a
+  leste por parede, e que quem chega pelo warp de 178,132 está do outro lado.
+- **As quatro garçonetes** (1_F_PUBGIRL, 161,99 / 196,99 / 179,114 / 63,72).
+  O drink chama `transform` direto, com os mesmos parâmetros do `Script:` dos
+  itens 12658 e 12663 — nenhum item ocupa mochila. Beber de novo troca o
+  disfarce sem precisar de código: o próprio `doc/script_commands.txt` diz que
+  `transform` duas vezes cancela o bônus anterior. Era a "trava natural" que o
+  pedido autorizou usar.
+- **`Shalone#cmd` foi desligado** — ele ocupava 178,92, célula pedida para a
+  terceira mesa do térreo. Sai por `disablenpc` de fora, com guarda de
+  `getnpcid` e `debugmes`, pela receita da §2: o `comodo.txt` continua o do
+  rAthena.
+- **`npc/cities/comodo.txt` foi traduzido** — grupo `comodo` novo no
+  `traduz_npcs.py`, 258 dos 302 textos. Os 44 em branco são nome próprio de NPC
+  e o `kafra_07`, que é o `.bmp` do cutin. Nenhuma fala ficou em inglês.
+
+Três nomes próprios saíram da tabela que o jogo lê (regra 4.12) e **dois
+contrariaram o script em inglês**: `Paros Lighthouse` é **Farol de Pharos** e
+`Sandaruman Fortress` é **Fortaleza de Sanderman** — com E, é assim que o
+`mapnametable.txt` do cliente escreve. `Rogue` é **Gatuno**
+(`map_msg_por.conf:556`). `Reudelus` ficou em inglês por não estar em tabela
+nenhuma.
+
+### O que ficou de fora
+
+A **máquina caça-níquel**, pedida junto e adiada pelo dono — a ideia é
+reaproveitar a roleta que o cliente já desenha, a da captura de pet. O sprite
+está livre e conferido: 563 (`2_SLOT_MACHINE`). Registrado no `PENDENCIAS.md`
+§1m, junto com os cinco NPCs de cadeia de missão que continuam em inglês.
+
+### O que falta ver no jogo
+
+Nada disto subiu — o servidor não foi recarregado. Os comandos e a lista de
+conferência estão no `PENDENCIAS.md` §1m.
+
+### Os quatro ajustes da volta (2026-08-12)
+
+O cassino voltou do dono com quatro pedidos, e um deles rendeu investigação.
+
+**A terceira recepcionista foi para 144,100**, não para a célula ao lado de
+174,131 onde eu a tinha posto. E o lugar é melhor do que o meu por um motivo
+que só aparece na planta: as três portas do primeiro andar têm chegada de warp
+em 212,97, 178,132 e **144,97** — e 144,100 fica exatamente três células ao
+norte da terceira, o mesmo arranjo da de 211,100. Uma por porta, e as duas de
+nicho simétricas.
+
+**A mesa de 92,47 passou a olhar para oeste** (facing 2), a única das sete que
+não olha para o sul.
+
+**A vitória agora acende uma animação:** `EF_THROW_MULTIPLE_COIN` (982) na
+vitória comum e `EF_LEVEL99_4` (362) no 21 natural, num `specialeffect2` sobre
+o jogador. Empate não acende — devolver a aposta não é ganhar.
+
+#### O efeito que o pedido queria, e até onde deu para ir
+
+O pedido apontou o `ui_success_y.tga` do efeito de sucesso da janela de
+encantamento. O que se apurou:
+
+- **Ele é alcançável em princípio.** Existe um `ui_enchant_success.str` na mesma
+  pasta, e o caminho dele está na tabela de efeitos do exe, encostado em
+  entradas de efeito de mundo comuns como o `npc_cane_of_evil_eye_hit.str`.
+  `.str` é o formato que o `specialeffect` desenha — não é asset de UI preso à
+  janela.
+- **O número não sai offline.** A tabela é preenchida por uma corrida de 517
+  instruções de 30 bytes no `.text`, cada uma um `push offset "<caminho>.str"`
+  seguido de `mov [ebp-4], N`. O `N` é consecutivo e o do nosso alvo é 1100 —
+  mas ele é o contador de desmontagem de exceção do compilador, não o número do
+  efeito. **A prova custou uma rodada e é o que vale guardar:** cruzando os 517
+  nomes da corrida com os `EF_` do rAthena naquele mesmo número, batem **zero**;
+  e as âncoras de Summoner (`freshshrimp`, `chattering`, `heat_barrel`) caem
+  noutra corrida, com índices 51 a 73, enquanto o rAthena as numera 1098 a 1104.
+- **Parou aí de propósito.** Tirar o número dali exigiria rastrear o vetor em
+  que o construtor escreve, e vale a regra do `CLAUDE.md` §5 que o
+  `ajusta_tamanho_fonte.py` ensinou: verificação offline que passa não é prova
+  de efeito. `@effect <n>` in-game responde em uma rodada o que a engenharia
+  reversa não respondeu em várias.
+- **E há um teto que vale saber:** o servidor não manda efeito acima de 1126.
+  `buildin_specialeffect` (`script.cpp:15605`) e `@effect`
+  (`atcommand.cpp:6027`) recusam `>= EF_MAX`, e o `EF_MAX` daqui é 1127 —
+  enquanto o cliente tem ~1460 efeitos `.str`.
+
+#### Os cinco NPCs de cadeia de missão, traduzidos sem tocar nas cadeias
+
+Decisão do dono: *"vamos traduzir só os NPCs, e não os arquivos todos de suas
+missões"*. É a única exceção do acervo à regra de aplicar arquivo inteiro, e o
+mecanismo que a torna possível já existia: no `.cat`, tradução vazia quer dizer
+"deixa em inglês". Grupo `cassino_missoes` novo, com os quatro arquivos e
+**19.625 textos, dos quais 394 traduzidos** — só os de Manzi, dos dois
+`Ordinary Man`, do `Man#megin` e do `Strange Guy`.
+
+**A armadilha que quase entregou o recorte errado, e subiu para o `CLAUDE.md`
+§5:** no `.cat` o `arquivo#N` não é a linha, é a ordem do literal dentro do
+arquivo. O número parece linha e cai na mesma faixa de grandeza, então o
+primeiro recorte — "as falas entre a linha A e a B" — devolveu 444 textos e
+**passou**. O que denunciou foi o `Man#megin` aparecer com zero: um NPC de 203
+linhas mudo não existe. Com a contagem certa deram 353, sendo 59 dele.
+
+**Treze falas curtas ficaram em inglês, e por escolha.** Tradução vale por
+texto e não por ocorrência: `Wha...?`, `Hmm...`, `Excuse me.` e irmãs são
+compartilhadas com o resto das quatro cadeias, e traduzi-las poria português no
+meio de 18 mil falas em inglês. A mais visível é o `Wha...?` na segunda linha
+do `Man#megin`.
+
+Três nomes próprios saíram das tabelas do jogo: o `Sobbing Starlight` do script
+é o item 7177, que o cliente chama **Fragmento de Luz Estelar** — então a pedra
+inteira virou "Luz Estelar" e o pedaço acompanha o item; `Crusader` é
+**Templário** (`map_msg_por.conf:563`); e `Niflheim` é **Nifflheim**, com dois
+F, que é como o `mapnametable.txt` escreve.

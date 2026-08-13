@@ -1025,6 +1025,92 @@ que o bRO chama de Anel da Colheita. Se não for, sai uma linha do `.aceitos`.
 
 ---
 
+## 1m. O Cassino de Comodo — falta ver no jogo (escrito em 2026-08-12)
+
+`npc/guerra/cassino_de_comodo.txt`, ligado no `scripts_guerra.conf`. Dezesseis
+NPCs em `cmd_in02`: três recepcionistas, quatro garçonetes e sete mesas de
+blackjack que cobram e pagam em Moeda Nova (30998). O histórico da rodada está
+no `HISTORICO.md`.
+
+**Nada disto foi visto em jogo ainda — o servidor não foi recarregado.** O
+primeiro passo é `@reloadscript` e ler o log procurando por `Unknown syntax`
+(§5: uma linha ruim mata o arquivo inteiro, e a mensagem fica soterrada sob
+avisos inofensivos dos mercados).
+
+O que conferir, em ordem de risco:
+
+- **A mão inteira de blackjack, das duas mesas.** É o único script do projeto
+  com laço, subrotina e baralho — e o que mais tem como quebrar em silêncio.
+  Jogar até ver: um 21 natural, um estouro do jogador, um estouro do crupiê e
+  um empate. O texto das cartas ("A de Copas, 7 de Paus") sai do `S_Mao`; carta
+  repetida na mesma mão quer dizer que o sorteio de naipe furou.
+- **O `rand(1)` já mordeu uma vez** (§5). Se a mão morrer no meio com o diálogo
+  aberto e a aposta cobrada, é isso — procurar `range is too small` no log.
+- **Se o vies está agindo.** Não se prova numa sessão: 5% e 10% só aparecem em
+  algumas centenas de mãos. O que dá para conferir barato é o extremo — jogar
+  vinte mãos em cada andar e ver se a de cima *parece* pior. Divergência séria
+  entre os dois andares é o sinal de que está funcionando; igualdade é o sinal
+  de que o argumento do `callfunc` não chegou.
+- **Os sete crupiês soltando `/$` de 3 em 3s e as quatro garçonetes soltando
+  `/bj2` de 4 em 4s.** O `ET_CHUPCHUP` foi deduzido da ordem do enum, não visto
+  em tela — se sair o emote errado é trocar um nome no `OnTimer4000`.
+- **O drink.** Aceitar deve virar Deviruchi ou Poring por 20 minutos, e beber de
+  novo deve trocar o disfarce (a trava é do próprio `transform`).
+- **O `Shalone#cmd` sumiu de 178,92** e a mesa nasceu no lugar dele, sozinha.
+  Dois NPCs empilhados ali querem dizer que o `disablenpc` não pegou — e nesse
+  caso há um `debugmes` no log dizendo isso.
+- **As três recepcionistas**, uma por porta: 211,100 (leste), 174,131
+  (principal) e 144,100 (oeste). As de 211,100 e 144,100 ficam três células ao
+  norte da chegada da sua porta, no fundo de um nicho; a de 174,131 fica num
+  bolsão fechado a leste por parede, e **quem chega pelo warp de 178,132 está
+  do outro lado dessa parede**. Vale olhar se ela é vista de fato.
+- **A animação de vitória** — `EF_THROW_MULTIPLE_COIN` (982) na vitória comum e
+  `EF_LEVEL99_4` (362) no 21 natural. Os dois números são palpite informado, não
+  foram vistos em tela: se algum não desenhar nada neste cliente, sai uma linha
+  de erro no log e a mão segue normal. Ver o item logo abaixo.
+
+### A animação que o pedido queria, e por que ela não entrou
+
+O pedido apontou o efeito de sucesso da janela de encantamento
+(`data\texture\effect\ui_enchant\ui_enchant_success\ui_success_y.tga`). O que
+se apurou, e vale para qualquer efeito futuro:
+
+- **Ele é alcançável em princípio.** Há um `ui_enchant_success.str` na mesma
+  pasta, e o caminho dele está na tabela de efeitos do exe, encostado em
+  entradas de efeito de mundo comuns. `.str` é o formato que o `specialeffect`
+  desenha.
+- **O número dele não sai offline.** A tabela é preenchida por uma corrida de
+  517 instruções de 30 bytes no `.text`, cada uma um `push offset "<caminho>"`
+  seguido de `mov [ebp-4], N`. O `N` é consecutivo (1100 para o nosso), mas é o
+  contador de desmontagem de exceção do compilador, **não** o número do efeito:
+  cruzando os 517 nomes da corrida com os `EF_` do rAthena naquele mesmo
+  número, batem **zero**.
+- **Como achar, em uma rodada:** `@effect <n>` in-game. Achou o clarão dourado,
+  é trocar os dois números no topo da `F_CassinoBlackjack`.
+- **E há um teto:** o servidor não manda efeito acima de **1126**. O
+  `buildin_specialeffect` (`script.cpp:15605`) e o `@effect`
+  (`atcommand.cpp:6027`) recusam `>= EF_MAX`, e o `EF_MAX` do nosso rAthena é
+  1127 — enquanto o cliente tem ~1460 efeitos `.str`. Se o do encantamento
+  estiver acima do teto, alcançá-lo custa levantar o `EF_MAX` em
+  `src/map/script.hpp` e recompilar, o que é enxerto em arquivo do rAthena e
+  precisa ser decidido.
+
+### O que ficou de fora, e foi decisão
+
+- **A máquina caça-níquel.** Pedida na mesma rodada e adiada pelo dono: a ideia
+  é reaproveitar a roleta que o cliente já desenha (a da captura de pet) em vez
+  de inventar interface, e isso é uma sessão inteira. O sprite está livre e
+  conferido: **563 (`2_SLOT_MACHINE`)**, o caça-níquel com letreiro JACKPOT.
+  Coordenada não foi escolhida.
+- **Treze falas curtas dos cinco NPCs de missão continuam em inglês** — `Wha...?`,
+  `Hmm...`, `Excuse me.`, `Fine, fine.` e irmãs. Não é descuido: tradução vale
+  por **texto** e não por ocorrência, e essas treze são compartilhadas com o
+  resto das quatro cadeias de missão. Traduzi-las poria português no meio de
+  18 mil falas em inglês. A lista fecha em `Man#megin` com `Wha...?` na segunda
+  linha dele, que é a mais visível das treze.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`
@@ -1381,6 +1467,97 @@ então um bug de SQL injection num script custom não alcança o resto do banco.
 
 Criada para o Marco Zero: senha trivial e `group_id 99`, que é **GM completo**.
 Antes de abrir o servidor: apagar, ou trocar a senha e baixar o `group_id`.
+
+---
+
+## 5b. O instalador do cliente — o que medir antes de empacotar
+
+Aberto em 2026-08-12, quando o dono disse que vai montar um instalador para os
+jogadores. **Nada disto foi feito** — é o levantamento que a pergunta gerou,
+guardado para quando o instalador for puxado de verdade.
+
+### As ferramentas NÃO entram no instalador
+
+Foi a pergunta que abriu o assunto ("o instalador teria que incluir esses
+passos?"), e a resposta é **não**: `completa_iteminfo.py`, `instala_visual.py`,
+`estende_accessoryid.py` e as irmãs são **build**, não instalação. Três motivos,
+e o primeiro sozinho decide:
+
+1. **A fonte delas é a instalação do bRO desta máquina** — `C:\Program Files
+   (x86)\Gravity Interactive, Inc\Ragnarok Brazil\`. O jogador não tem, e não
+   vai ter.
+2. Precisam de Python 2.7.
+3. São determinísticas e idempotentes: rodar aqui uma vez e empacotar a saída é
+   **exatamente equivalente** a rodar na máquina dele.
+
+**Elas produzem arquivos; o instalador entrega os arquivos.**
+
+### As três peças, e a que se esquece
+
+Medido em 2026-08-12: o `C:\GuerraDoEmperium\cliente\` tem **4,9 GB em 20.044
+arquivos**.
+
+| peça | tamanho | o que é |
+|---|---|---|
+| `data.grf` + exe + `BGM\` na raiz | ~3,1 GB | o kRO 2021-11-03 e o exe patchado |
+| **`cliente\data\`** | **720 MB, 19.077 arquivos** | **o override — tudo que é nosso** |
+| `SystemEN\LuaFiles514\itemInfo.lua` | 22,7 MB | nome, descrição e ícone de item |
+
+**A armadilha é que esquecer as duas últimas não quebra nada visível.** O
+`DataFolderFirst` faz o disco vencer o GRF; sem a pasta `data\` o cliente
+**abre, loga e joga** — só que chapéu não desenha, o texto volta ao coreano de
+2021 e item aparece sem nome. Zero erro, zero log. É a mesma falha calada que o
+`CLAUDE.md` §5 e o `ARQUITETURA.md` §4 documentam item por item.
+
+E o `itemInfo.lua` **não está dentro de `data\`** — é outra pasta. Quem
+empacotar "o GRF mais a pasta data" perde ele, e **todo item fica sem nome na
+loja**.
+
+O `cliente\data\` não é de uma rodada só: foi acumulado dia a dia desde
+2026-07-30, com picos em 09-08 (6.154 arquivos), 08-08 (2.929) e 05-08 (2.544).
+Não há como reconstituí-lo "de memória".
+
+### 711 MB do pacote são lixo
+
+**65 arquivos de backup**, deixados pelas próprias ferramentas — e **28 deles
+são cópias do `itemInfo.lua`** em `SystemEN\LuaFiles514\`, 627 MB só nisso.
+Somam-se backups do exe na raiz (58 MB) e do `System\` (21 MB).
+
+Primeiro filtro do instalador, antes de qualquer compressão: excluir `*BACKUP*`,
+`*.ORIGINAL*`, `*.original` e `*.INGLES`. Corta 14% do pacote.
+
+### O problema de verdade que o instalador revela
+
+**Hoje não existe build reproduzível do cliente.** O repositório tem as
+ferramentas, e a documentação repete "cliente novo perde isso, calado" em pelo
+menos oito lugares (`ARQUITETURA.md` §382, `CATALOGO-VISUAIS.md` ×3,
+`CLAUDE.md` §5, `HISTORICO.md` ×3, `RECEITAS.md`, e a §1 deste arquivo) — mas
+**não existe uma lista única** dizendo o que rodar, em que ordem, para sair de
+um kRO limpo e chegar no nosso cliente.
+
+O **exe é o caso extremo**: `GuerraDoEmperium.exe` é o Ragexe desempacotado do
+NEMO, patchado. Sem NEMO e sem a lista de patches aplicados, ele é
+irreproduzível — e é o único arquivo do conjunto do qual não há gerador
+versionado.
+
+**Se o instalador for feito só empacotando a pasta, ele vira a única cópia do
+cliente**, e as ferramentas apodrecem sem ninguém notar — até o dia em que uma
+delas precisar rodar de novo.
+
+### Por onde começar, quando for a hora
+
+1. Escrever a lista do que o cliente é feito — de preferência como
+   `ferramentas/monta_cliente.py`, que rode a sequência inteira do zero, e uma
+   seção nova no `RECEITAS.md` consolidando as oito menções espalhadas. **O
+   instalador passa a ser a SAÍDA desse script**, não um pacote que ninguém
+   sabe refazer.
+2. Resolver o exe: ou registrar a lista de patches do NEMO, ou aceitar por
+   escrito que ele é binário de origem única e fazer cópia fria dele.
+3. Só então empacotar.
+
+**Já existe um `PatchClient\`** na raiz do cliente (30 `.bmp`, 2,5 MB) — é o
+skin do patcher do próprio kRO. Se a ideia for patch incremental depois do
+primeiro install, o esqueleto está lá.
 
 ---
 

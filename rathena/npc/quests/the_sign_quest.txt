@@ -4420,53 +4420,53 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 	callfunc "F_UpdateSignVars";
 	mes "[Dearles]";
 	if (sign_q < 25) {
-		mes "No...! Damn it,";
-		mes "not again! When's";
-		mes "my lucky streak";
-		mes "gonna start?";
+		mes "Não...! Droga,";
+		mes "de novo não! Quando é que";
+		mes "a minha maré de sorte";
+		mes "vai começar?";
 		next;
 		mes "[Dearles]";
-		mes "Hey, you've got that look";
-		mes "like you want something from";
+		mes "Ei, você está com aquela cara";
+		mes "de quem quer alguma coisa de";
 		if (Zeny < 10000) {
-			mes "me. Hah! You are poor!";
+			mes "mim. Rá! Você é pobre!";
 			emotion ET_HNG;
-			mes "It also looks like you're low on cash~! Well, this is what guys like me to do to shameless";
-			mes "moochers like you!";
+			mes "E parece que você também está sem dinheiro~! Bom, é isso que caras como eu fazem com";
+			mes "pilantras como você!";
 			percentheal -10,0;
 			close;
 		}
 		else {
-			mes "me. It also looks like you got zeny to spare! I think I'll help myself and borrow some of your cash!";
-			mes "^FF0000Yoink!^000000";
+			mes "mim. E parece que você tem zeny sobrando! Acho que vou me servir e pegar emprestado um pouco do seu dinheiro!";
+			mes "^FF0000Xabu!^000000";
 			set Zeny, Zeny-10000;
 			specialeffect EF_COIN;
 			close;
 		}
 	}
 	else if (sign_q == 25) {
-		mes "No...! Damn it,";
-		mes "not again! When's";
-		mes "my lucky streak";
-		mes "gonna start?";
+		mes "Não...! Droga,";
+		mes "de novo não! Quando é que";
+		mes "a minha maré de sorte";
+		mes "vai começar?";
 		next;
-		switch(select("Excuse me...:Just pass by.")) {
+		switch(select("Com licença...:Só passar direto.")) {
 		case 1:
 			mes "[Dearles]";
-			mes "What is it?!";
+			mes "O que é?!";
 			mes "I'm not in the mood";
-			mes "for chatting with complete";
-			mes "and total strangers, so";
-			mes "get to the point~!";
+			mes "para bater papo com estranhos";
+			mes "completos e totais, então";
+			mes "vá direto ao ponto~!";
 			next;
-			switch(select("Oh, nothing.:I'm here for Metz...?")) {
+			switch(select("Ah, nada.:Vim por causa do Metz...?")) {
 			case 1:
 				mes "[Dearles]";
-				mes "Wha...? You bother";
-				mes "me and make lose this";
-				mes "game for nothing? For that,";
-				mes "I'll freakin' beat you to near";
-				mes "freakin' death! Bam bam bam!";
+				mes "Que...? Você me";
+				mes "atrapalha e me faz perder";
+				mes "este jogo por nada? Por isso,";
+				mes "eu vou te encher de porrada até";
+				mes "quase morrer! Bam bam bam!";
 				close2;
 				percentheal -100,0;
 				soundeffect "effect\\sign_noise.wav",1;
@@ -4475,51 +4475,51 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 				end;
 			case 2:
 				mes "[Dearles]";
-				mes "Oh. You're here for";
-				mes "the Sobbing Starlight, huh? If you wanna take my test, there's *ahem* a fee of 30,000 zeny. So take it or leave it, capish?";
+				mes "Ah. Você veio por causa da";
+				mes "Luz Estelar, né? Se quiser fazer o meu teste, tem *ahem* uma taxa de 30.000 zeny. Então é pegar ou largar, sacou?";
 				next;
 				mes "[Dearles]";
-				mes "I'll have nothing";
-				mes "to do with you if you";
-				mes "can't pay up. Just think";
-				mes "of the fee as a preliminary";
-				mes "for my test. You know, to";
-				mes "weed out the riffraff.";
+				mes "Eu não quero nada";
+				mes "com você se você não";
+				mes "puder pagar. Pense na";
+				mes "taxa como uma eliminatória";
+				mes "do meu teste. Sabe, para";
+				mes "peneirar a ralé.";
 				set sign_q,26;
 				close;
 			}
 		case 2:
 			mes "[Dearles]";
-			mes "Crap...!";
-			mes "I'm almost broke!";
-			mes "But I gotta win all";
-			mes "my cash back! How can";
-			mes "I raise more money fast";
-			mes "without actually working...";
+			mes "Droga...!";
+			mes "Estou quase quebrado!";
+			mes "Mas eu tenho que ganhar todo";
+			mes "o meu dinheiro de volta! Como é que";
+			mes "eu arranjo mais dinheiro rápido";
+			mes "sem precisar trabalhar...";
 			close;
 		}
 	}
 	else if (sign_q == 26) {
-		mes "Eh heh heh~";
-		mes "Soooooo, did you";
-		mes "bring the money?";
+		mes "Rê rê rê~";
+		mes "Entããão, você";
+		mes "trouxe o dinheiro?";
 		next;
-		switch(select("Here you are...:Not yet...")) {
+		switch(select("Aqui está...:Ainda não...")) {
 		case 1:
 			mes "[Dearles]";
-			mes "Ummm.......";
+			mes "Hummm.......";
 			if (Zeny < 30000) {
-				mes "When I say 30,000 zeny,";
-				mes "I mean 30,000 zeny! I'll let";
-				mes "you off on account of you looking like you're not smart enough to know how to count. But pull this";
-				mes "on me again and I'll...!";
+				mes "Quando eu digo 30.000 zeny,";
+				mes "eu quero dizer 30.000 zeny! Vou deixar";
+				mes "passar porque você tem cara de quem não é esperto o bastante para saber contar. Mas apronte";
+				mes "essa comigo de novo e eu...!";
 			}
 			else {
 				mes "Heh heh~";
-				mes "That's thirty grand,";
-				mes "alright! Okay, come back";
-				mes "to me tomorrow night and";
-				mes "we'll start your test...";
+				mes "São trinta mil,";
+				mes "isso aí! Certo, volte";
+				mes "aqui amanhã à noite e";
+				mes "começamos o seu teste...";
 				set sign_q,27;
 				set Zeny, Zeny-30000;
 			}
@@ -4527,75 +4527,75 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		case 2:
 			mes "[Dearles]";
 			mes "Huh...?";
-			mes "Alright, but you";
-			mes "better hurry. I can";
-			mes "change my mind at";
-			mes "any time, you know!";
+			mes "Beleza, mas é bom";
+			mes "você se apressar. Eu posso";
+			mes "mudar de ideia a";
+			mes "qualquer momento, sabia!";
 			close;
 		}
 	}
 	else if (sign_q == 27) {
 		if ((gettime(DT_HOUR) > 18) && (gettime(DT_HOUR) < 23)) {
-			mes "Nice, you're here";
-			mes "just in time. Well,";
-			mes "all that matters is that";
-			mes "you come during the night.";
+			mes "Boa, você chegou";
+			mes "bem a tempo. Bom,";
+			mes "o que importa é que";
+			mes "você venha durante a noite.";
 			next;
 			mes "[Dearles]";
-			mes "You're wondering how";
-			mes "a guy like me is pals with";
-			mes "Metz, but that's none of your";
-			mes "business. I guess I gotta keep";
-			mes "this promise to him, so when";
-			mes "you're ready, say the word.";
+			mes "Você está se perguntando como";
+			mes "um cara como eu é amigo do";
+			mes "Metz, mas isso não é da sua";
+			mes "conta. Acho que tenho que manter";
+			mes "essa promessa com ele, então quando";
+			mes "você estiver pronto, é só falar.";
 			set sign_q,28;
 			close;
 		}
 		else {
-			mes "Hey... When I say";
-			mes "''tomorrow night,'' I mean,";
-			mes "come and talk to me at nighttime! Don't you know anything about shady dealings?! Pfft! Adventurers...";
+			mes "Ei... Quando eu digo";
+			mes "''amanhã à noite'', eu quero dizer,";
+			mes "venha falar comigo de noite! Você não sabe nada sobre negócio escuso?! Pfff! Aventureiros...";
 			close;
 		}
 	}
 	else if (sign_q== 28) {
-		mes "Alright! I want you to";
-		mes "bring me a bunch of items!";
-		mes "Yeah, I know, you're a real";
-		mes "pro at this, but let me set";
-		mes "you straight before you blow";
-		mes "this off as a piece of cake...";
+		mes "Certo! Eu quero que você";
+		mes "me traga um monte de itens!";
+		mes "É, eu sei, você é um";
+		mes "profissa nisso, mas deixa eu";
+		mes "te explicar direito antes que você";
+		mes "ache que isso é moleza...";
 		next;
 		mes "[Dearles]";
-		mes "I'm not gonna give you an";
-		mes "exact list of items I want. Oh";
-		mes "no, what you gotta do is bring";
-		mes "me artsy crafts. This test is";
-		mes "gonna judge your appreciation";
-		mes "for... Craftsmanship~";
+		mes "Eu não vou te dar uma";
+		mes "lista exata dos itens que eu quero. Ah";
+		mes "não, o que você tem que fazer é me";
+		mes "trazer artesanato. Este teste";
+		mes "vai julgar a sua apreciação";
+		mes "por... Bom acabamento~";
 		next;
 		mes "[Dearles]";
-		mes "Since I'm seeing whether";
-		mes "or not you got good taste,";
-		mes "variety is the important thing";
-		mes "here. So don't bring freakin'";
-		mes "a hundred of the same object.";
-		mes "Just one of each kind'll do.";
+		mes "Já que eu estou vendo se";
+		mes "você tem ou não bom gosto,";
+		mes "variedade é o que importa";
+		mes "aqui. Então não me traga";
+		mes "cem vezes o mesmo objeto.";
+		mes "Um de cada tipo basta.";
 		next;
 		mes "[Dearles]";
 		mes "What are you";
-		mes "standin' around";
-		mes "waiting for? Bring";
-		mes "those collection items!";
+		mes "parado aí";
+		mes "esperando o quê? Traga";
+		mes "aqueles itens de coleção!";
 		set sign_q,29;
 		close;
 	}
 	else if (sign_q < 35) {
 		switch(sign_q) {
 		case 29:
-			mes "Ah, so is this";
-			mes "the stuff you brought?";
-			mes "Lemme take a look-see...";
+			mes "Ah, então é isto";
+			mes "o que você trouxe?";
+			mes "Deixa eu dar uma olhada...";
 			if (countitem(734)) set .@diaris_t,.@diaris_t+1;
 			if (countitem(735)) set .@diaris_t,.@diaris_t+1;
 			if (countitem(736)) set .@diaris_t,.@diaris_t+1;
@@ -4614,17 +4614,17 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			next;
 			if (.@diaris_t > 10) {
 				mes "[Dearles]";
-				mes "Nice, nice~";
-				mes "These'll sell for--";
-				mes "Er, I'm glad to say";
-				mes "that you pass for now.";
+				mes "Bom, bom~";
+				mes "Isto aqui vai vender por--";
+				mes "Ãh, fico feliz de dizer";
+				mes "que você passou, por ora.";
 				next;
 				mes "[Dearles]";
-				mes "I think you're ready";
-				mes "for the next step. Now,";
-				mes "I'm gonna send you to";
-				mes "Lamadin for Part Two";
-				mes "of my test. Yeah, I know...";
+				mes "Acho que você está pronto";
+				mes "para o próximo passo. Agora,";
+				mes "eu vou te mandar para";
+				mes "Lamadin para a Parte Dois";
+				mes "do meu teste. É, eu sei...";
 				if (countitem(734)) delitem 734,1; //Red_Frame
 				if (countitem(735)) delitem 735,1; //Blue_Porcelain
 				if (countitem(736)) delitem 736,1; //White_Platter
@@ -4660,76 +4660,76 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			}
 			else if ((.@diaris_t > 0) && (.@diaris_t < 11)) {
 				mes "[Dearles]";
-				mes "Hmm... Some of this";
-				mes "stuff looks good, but";
-				mes "there isn't enough variety";
-				mes "here that proves your eye for";
-				mes "craftsmanship. Come back";
-				mes "with more stuff, alright?";
+				mes "Hmm... Parte destas";
+				mes "coisas parece boa, mas";
+				mes "não há variedade suficiente";
+				mes "aqui que prove o seu olho para";
+				mes "bom acabamento. Volte";
+				mes "com mais coisas, beleza?";
 				close;
 			}
 			else {
 				mes "[Dearles]";
 				mes "Hmm...";
-				mes "All the stuff you're";
-				mes "carrying? Worthless junk!";
-				mes "Go and find stuff that was";
-				mes "skillfully crafted, okay?";
+				mes "Todas as coisas que você";
+				mes "está carregando? Tralha sem valor!";
+				mes "Vá encontrar coisas que foram";
+				mes "feitas com habilidade, certo?";
 				next;
 				mes "[Dearles]";
-				mes "And by crafts I don't mean";
-				mes "potions, weapons, equipment,";
-				mes "none of that. Just think of, well, stuff you'd show off in your rooom and you'll be on the right track. Remember, variety!";
+				mes "E por artesanato eu não quero dizer";
+				mes "poções, armas, equipamento,";
+				mes "nada disso. Pense em, bom, coisas que você exibiria no seu quarto e você estará no caminho certo. Lembre-se, variedade!";
 				close;
 			}
 		case 30:
 		case 31:
-			mes "Hey, you gotta";
-			mes "finish Part Two of";
-			mes "my test. I'm gonna send";
-			mes "you to Lamadin now...";
+			mes "Ei, você tem que";
+			mes "terminar a Parte Dois do";
+			mes "meu teste. Eu vou te mandar";
+			mes "para Lamadin agora...";
 			close2;
 			warp "cmd_in01",33,29;
 			end;
 		case 32:
-			mes "You failed Part Two,";
-			mes "the rhythm portion of";
-			mes "my freakin' test?! If you";
-			mes "wanna try again, you're";
-			mes "welcome to another chance...";
+			mes "Você reprovou na Parte Dois,";
+			mes "a parte do ritmo do";
+			mes "meu maldito teste?! Se você";
+			mes "quiser tentar de novo, tem";
+			mes "direito a outra chance...";
 			next;
-			switch(select("Yes.:Maybe later.")) {
+			switch(select("Sim.:Talvez depois.")) {
 			case 1:
 				mes "[Dearles]";
-				mes "Okay...";
-				mes "Just keep in mind";
-				mes "that Part Two was ";
-				mes "supposed to be";
-				mes "the easy part...";
+				mes "Certo...";
+				mes "Só tenha em mente";
+				mes "que a Parte Dois era ";
+				mes "para ser";
+				mes "a parte fácil...";
 				close2;
 				warp "cmd_in01",33,29;
 				end;
 			case 2:
 				mes "[Dearles]";
 				mes "What...?";
-				mes "Alright, but you";
-				mes "really shouldn't give";
-				mes "up. I mean, Part Two is";
-				mes "supposed to be ridiculously";
-				mes "easy. I made it that way...";
+				mes "Beleza, mas é bom";
+				mes "não devia mesmo";
+				mes "desistir. Quer dizer, a Parte Dois";
+				mes "é para ser ridiculamente";
+				mes "fácil. Eu a fiz assim...";
 				close;
 			}
 		case 33:
-			mes "Alright, Lamadin";
-			mes "tells me you passed.";
-			mes "Not the best performance,";
-			mes "but it's good enough.";
+			mes "Certo, o Lamadin";
+			mes "me diz que você passou.";
+			mes "Não foi a melhor apresentação,";
+			mes "mas é boa o bastante.";
 			next;
 			mes "[Dearles]";
-			mes "Alright, take this chunk";
-			mes "of Sobbing Starlight and";
-			mes "go find someone named,";
-			mes "um, ''Bakerlan'' in Alberta.";
+			mes "Certo, pegue este pedaço";
+			mes "de Luz Estelar e";
+			mes "vá encontrar alguém chamado,";
+			mes "ãh, ''Bakerlan'' em Alberta.";
 			set sign_q,35;
 			getitem 7177,1; //Part_Of_Star's_Sob
 			if (checkre(3)) {
@@ -4747,26 +4747,26 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			}
 			next;
 			mes "[Dearles]";
-			mes "Well, that's it.";
-			mes "There's no reason";
-			mes "for you to ever see";
-			mes "me again. But yeah,";
-			mes "good luck with that";
-			mes "Sobbing Starlight business.";
+			mes "Bom, é isso.";
+			mes "Não há razão";
+			mes "para você me ver";
+			mes "de novo. Mas é, ";
+			mes "boa sorte com esse";
+			mes "negócio de Luz Estelar.";
 			close;
 		case 34:
-			mes "Lamadin tells me";
-			mes "you passed. Since you";
-			mes "did so good, I'm gonna";
-			mes "give you ^333333some^000000 of your money";
-			mes "back. Not all, but most of it.";
-			mes "Isn't that reward enough?";
+			mes "O Lamadin me diz";
+			mes "que você passou. Já que você";
+			mes "foi tão bem, eu vou te";
+			mes "devolver ^333333parte^000000 do seu";
+			mes "dinheiro. Não tudo, mas quase.";
+			mes "Isso não é recompensa o bastante?";
 			next;
 			mes "[Dearles]";
-			mes "Alright, take this chunk";
-			mes "of Sobbing Starlight and";
-			mes "go find someone named,";
-			mes "um, ''Bakerlan'' in Alberta.";
+			mes "Certo, pegue este pedaço";
+			mes "de Luz Estelar e";
+			mes "vá encontrar alguém chamado,";
+			mes "ãh, ''Bakerlan'' em Alberta.";
 			set sign_q,35;
 			getitem 7177,1; //Part_Of_Star's_Sob
 			set Zeny, Zeny+20000;
@@ -4785,83 +4785,83 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			}
 			next;
 			mes "[Dearles]";
-			mes "Well, that's it.";
-			mes "There's no reason";
-			mes "for you to ever see";
-			mes "me again. But yeah,";
-			mes "good luck with that";
-			mes "Sobbing Starlight business.";
+			mes "Bom, é isso.";
+			mes "Não há razão";
+			mes "para você me ver";
+			mes "de novo. Mas é, ";
+			mes "boa sorte com esse";
+			mes "negócio de Luz Estelar.";
 			close;
 		}
 	}
 	else if (sign_q == 97) {
-		mes "No...! Damn it,";
-		mes "not again! When's";
-		mes "my lucky streak";
-		mes "gonna start?";
+		mes "Não...! Droga,";
+		mes "de novo não! Quando é que";
+		mes "a minha maré de sorte";
+		mes "vai começar?";
 		next;
 		mes "[Dearles]";
-		mes "Hey, you've got that look";
-		mes "like you want something from";
+		mes "Ei, você está com aquela cara";
+		mes "de quem quer alguma coisa de";
 		if (Zeny < 10000) {
-			mes "me. It also looks like you're low on cash~! Well, this is what guys like me to do to shameless";
-			mes "moochers like you!";
+			mes "mim. E parece que você também está sem dinheiro~! Bom, é isso que caras como eu fazem com";
+			mes "pilantras como você!";
 			emotion ET_HNG;
 			percentheal -10,0;
 			close;
 		}
 		else {
-			mes "me. It also looks like you got zeny to spare! I think I'll help myself and borrow some of your cash!";
-			mes "^FF0000Yoink!^000000";
-			mes "Giggle giggle..";
+			mes "mim. E parece que você tem zeny sobrando! Acho que vou me servir e pegar emprestado um pouco do seu dinheiro!";
+			mes "^FF0000Xabu!^000000";
+			mes "Rê rê rê..";
 			set Zeny, Zeny-10000;
 			close;
 		}
 	}
 	else if (sign_q == 98) {
-		mes "Whaaaaaaaaaat are";
-		mes "you doing back here?";
+		mes "O quêêêê é que você";
+		mes "está fazendo aqui de novo?";
 		if (Zeny > 9999) {
-			mes "Fine, since we know each";
-			mes "other, I'm borrowing some";
-			mes "cash. You know, for old";
-			mes "time's sake. ^FF0000Yoink!^000000";
+			mes "Tudo bem, já que a gente se";
+			mes "conhece, eu vou pegar um pouco de";
+			mes "dinheiro emprestado. Sabe, pelos";
+			mes "velhos tempos. ^FF0000Xabu!^000000";
 			emotion ET_KIK;
 			set Zeny, Zeny-10000;
 		}
 		else {
-			mes "I got nothin' for you and";
-			mes "you obviously have nothing";
-			mes "for me! Now lemme gamble!";
+			mes "Eu não tenho nada para você e";
+			mes "você obviamente não tem nada";
+			mes "para mim! Agora me deixa jogar!";
 			emotion ET_HNG;
 		}
 		close;
 	}
 	else {
-		mes "Hey, why are you";
-		mes "still talkin' to me?";
-		mes "You finished my test.";
-		mes "It's over. Not get outta";
-		mes "here before I jack some";
-		mes "more of your cash!";
+		mes "Ei, por que você";
+		mes "ainda está falando comigo?";
+		mes "Você terminou o meu teste.";
+		mes "Acabou. Agora dá o fora";
+		mes "daqui antes que eu roube mais";
+		mes "um pouco do seu dinheiro!";
 		emotion ET_KIK;
 		next;
-		switch(select("Okay.:I want to take Part Two again.")) {
+		switch(select("Certo.:Quero fazer a Parte Dois de novo.")) {
 		case 1:
 			mes "[Dearles]";
 			mes "Fine, fine.";
-			mes "Geez, why do";
-			mes "these guys always";
-			mes "come and bother me?";
+			mes "Nossa, por que";
+			mes "esses caras sempre";
+			mes "vêm me incomodar?";
 			emotion ET_HNG;
 			close;
 		case 2:
 			mes "[Dearles]";
 			mes "Wha...?";
-			mes "Part Two";
-			mes "was really";
-			mes "that fun? Fine,";
-			mes "knock yourself out.";
+			mes "A Parte Dois";
+			mes "foi mesmo";
+			mes "tão divertida? Beleza,";
+			mes "faça bom proveito.";
 			next;
 			warp "cmd_in01",33,29;
 			end;

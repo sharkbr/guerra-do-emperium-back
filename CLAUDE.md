@@ -555,6 +555,29 @@ Produziram diagnóstico falso e custaram retrabalho:
   ruído do `.gat`. Monstro sorteado ali fica inalcançável. Antes de usar `0,0`,
   varrer os pedaços conectados do `.gat` — ou dar coordenada e área, como o
   `corredor_fantasma.txt` faz.
+- **No `.cat` de tradução, o `arquivo#N` NÃO é a linha — é a ordem do literal
+  dentro do arquivo.** Está na docstring do `literais_todos`
+  (`ferramentas/traduz_npcs.py`), e é de propósito: assim o índice não anda
+  quando a lista de contextos muda. A armadilha é que o número **parece** linha
+  e cai na mesma faixa de grandeza dela, então um recorte "só as falas deste
+  NPC, que vai da linha A à B" filtra por engano e **devolve uma lista
+  plausível**. Medido em 2026-08-12 ao recortar os cinco NPCs do Cassino de
+  Comodo: o filtro errado deu 444 textos com o `Man#megin` zerado — e um NPC de
+  203 linhas mudo era a única coisa que denunciava. Com a contagem certa deram
+  353, com 59 dele. Para converter, recontar os literais com o mesmo
+  `RE_LITERAL` guardando a linha de cada um.
+- **`rand(1)` não devolve 0: ele MATA o script.** O `buildin_rand`
+  (`src/map/script.cpp:5604`) na forma de um argumento só faz `maximum -= 1` e
+  então recusa `maximum < 1` com *"range is too small. No randomness
+  possible"*, pondo `st->state = END`. Ou seja **`rand(n)` só é seguro com
+  `n >= 2`** — e o caso perigoso não é a constante, é a **variável**: `rand(.@x)`
+  onde `.@x` é um contador que encolhe (cartas que restam, itens que sobraram,
+  jogadores vivos) passa por 1 no fim, sempre, e aí o script morre no meio com
+  o diálogo aberto e o que já foi cobrado, cobrado. Nada no cliente denuncia; o
+  log traz uma linha longe de onde o número nasceu. Achado em 2026-08-12 no
+  blackjack do Cassino de Comodo, onde `rand(@bj_resta[valor])` valia 1 toda vez
+  que saía a última carta daquele valor. A saída é uma linha:
+  `if (.@x > 1) .@i = rand(.@x);` com `.@i` já em 0.
 - **`getitem` com a mochila cheia LARGA O ITEM NO CHÃO.** O
   `buildin_getitem` (`src/map/script.cpp`) chama `pc_additem`, e no fracasso
   cai num `map_addflooritem` — então "vai direto para o inventário" não é

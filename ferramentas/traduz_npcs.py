@@ -132,6 +132,58 @@ GRUPOS = {
     'cidades': ['npc/cities/prontera.txt',
                 'npc/cities/izlude.txt',
                 'npc/re/cities/izlude.txt'],
+    # COMODO, e o arquivo inteiro da cidade e nao so o cassino.
+    #
+    # Entrou em 2026-08-12, junto com o Cassino de Comodo
+    # (npc/guerra/cassino_de_comodo.txt). Nove dos catorze NPCs de
+    # ambiente do cassino moram aqui - Martine, Scoursege, Roberto,
+    # Deniroz, Shalone, Stonae, G . J, Loyar e Moo -, e a regra de so
+    # aplicar grupo INTEIRO traz a cidade junto. Sao 298 falas, o que
+    # torna o arrasto barato.
+    #
+    # OS OUTROS CINCO NPCs DO CASSINO CONTINUAM EM INGLES, e nao por
+    # descuido: cada um mora numa cadeia de missao grande e a mesma
+    # regra obrigaria a traduzir o arquivo todo -
+    #
+    #   Manzi          189,99   npc/quests/quests_comodo.txt     1.775
+    #   Ordinary Man   174,89   npc/quests/quests_nameless.txt   8.325
+    #   Ordinary Man   111,52   idem
+    #   Man#megin      190,94   npc/quests/seals/megingard_seal  1.914
+    #   Strange Guy     88,51   npc/quests/the_sign_quest.txt    6.839
+    #
+    # 18.853 falas de quatro cadeias inteiras, muito alem do cassino.
+    # Decisao do dono em 2026-08-12: fica para depois.
+    'comodo': ['npc/cities/comodo.txt'],
+    # OS CINCO NPCs DO CASSINO QUE MORAM EM CADEIA DE MISSAO.
+    #
+    # Entrou em 2026-08-12, logo depois do grupo `comodo` acima, por
+    # decisao do dono: *"vamos traduzir so os NPCs, e nao os arquivos
+    # todos de suas missoes"*.
+    #
+    #   Manzi          cmd_in02 189,99   quests_comodo.txt
+    #   Ordinary Man   cmd_in02 174,89   quests_nameless.txt
+    #   Ordinary Man   cmd_in02 111,52   quests_nameless.txt
+    #   Man#megin      cmd_in02 190,94   megingard_seal.txt
+    #   Strange Guy    cmd_in02  88,51   the_sign_quest.txt
+    #
+    # ESTE GRUPO E DE PROPOSITO QUASE TODO EM BRANCO, e e a unica
+    # excecao do acervo. Sao 18.853 falas de quatro cadeias de missao
+    # inteiras, das quais SO as dos cinco NPCs acima estao traduzidas -
+    # o resto fica vazio, que quer dizer "deixa em ingles".
+    #
+    # Consequencia, e ela e a razao de a regra normal existir: quem
+    # seguir a missao do `Ordinary Man` vai ouvi-lo em portugues no
+    # cassino e em ingles no resto da cadeia. Foi aceito para que o
+    # CASSINO ficasse inteiro em portugues, que e a unidade que o
+    # jogador ve de uma vez.
+    #
+    # O `--estado` vai marcar ~2% aqui para sempre. Nao e divida: e o
+    # recorte. Quem for traduzir uma dessas cadeias de verdade deve
+    # fazer um grupo proprio para ela, e nao encher este.
+    'cassino_missoes': ['npc/quests/quests_comodo.txt',
+                        'npc/quests/quests_nameless.txt',
+                        'npc/quests/seals/megingard_seal.txt',
+                        'npc/quests/the_sign_quest.txt'],
     'guerra': None,       # preenchido por glob, abaixo
     'campal': None,
     'pvp': None,
