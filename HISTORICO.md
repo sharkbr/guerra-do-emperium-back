@@ -9103,3 +9103,48 @@ entrar no servidor.
 | `PENDENCIAS.md` | §1h, item 2, atualizado com o valor e a data novos |
 | `PENDENCIAS.md` | seções 1o e 1s atualizadas com os números e a célula novos |
 | `PENDENCIAS.md` | §1s atualizada |
+
+---
+
+## A senha deixa de ser texto puro (2026-08-14)
+
+Etapa 1 do `IMPLANTACAO.md`, feita antes de o servidor Linux existir e pelo
+motivo que o plano dá: senha em texto puro não é só risco de hoje, é risco de
+**todo backup que já tiver sido feito** quando alguém resolver ligar o MD5.
+
+Não houve linha de C++. O rAthena já faz isso — o que faltava era a decisão
+estar **versionada**. Então o de sempre: um arquivo nosso
+(`conf/guerra/login_guerra.txt`, com o cabeçalho explicando o porquê) e uma
+linha de `import:` no `login_athena.conf`, posta **antes** da linha do
+`conf/import/` para o arquivo de máquina continuar com a última palavra.
+
+**O que o dia acrescentou ao que o plano previa:** a conversão das contas que já
+existiam **não era opcional**, como estava escrito lá. A conta com que o
+char-server e o map-server se conectam ao login é uma linha da mesma tabela
+`login` (a de sexo `S`, o `s1` daqui), e ela passa pelo **mesmo** hash
+(`loginclif.cpp:411`). Sem converter, o char-server para de conectar — e o
+sintoma é *"The server communication passwords (default s1/p1) are probably
+invalid"* (`char_logif.cpp:279`), que aponta para a senha do `conf/import/` e
+não para o MD5 recém-ligado. É por isso que o `UPDATE` é **sem `WHERE`**.
+
+As três contas do HML (`s1`, `teste`, `filiponegrao`) foram convertidas com
+`UPDATE login SET user_pass = MD5(user_pass);` e os quatro servidores
+reiniciados. **Roda uma vez só**: rodar de novo hasheia o hash e tranca todo
+mundo para fora, e não há volta ao texto — que é o ponto.
+
+**O que ficou provado, e como:** o `lastlogin` do `s1` foi para `2026-08-14
+20:40:36`, o instante do reinício. Ou seja o char-server autenticou no
+login-server com a senha já hasheada, ponta a ponta. O que **não** está provado
+é o login de um jogador pelo cliente — falta entrar uma vez com a senha de
+sempre. Se aparecer *"rejected from server"*, a causa é uma só e está no
+cabeçalho do `login_guerra.txt`: cliente com `<passwordencrypt>`. O nosso
+`clientinfo.xml` não tem — conferido no mesmo dia.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `rathena/conf/guerra/login_guerra.txt` | **novo** — `use_MD5_passwords: yes` e o porquê |
+| `rathena/conf/login_athena.conf` | uma linha `import:`, antes da do `conf/import/` |
+| `CLAUDE.md` | §2, a linha do enxerto novo |
+| `IMPLANTACAO.md` | Etapa 1: o que entrou, e a correção do "opcional" |

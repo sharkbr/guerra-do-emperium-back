@@ -1,0 +1,48 @@
+//--------------------------------------------------------------
+// Guerra do Emperium - configuracao do login-server nossa.
+//
+// Este arquivo e VERSIONADO e vale para qualquer clone do repo.
+// E importado por conf/login_athena.conf, logo antes de
+// conf/import/login_conf.txt - o conf/import continua podendo
+// sobrescrever qualquer coisa daqui, por maquina.
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+// Senha guardada como hash MD5, nao em texto puro.
+//
+// O padrao do rAthena (login_athena.conf:118) e texto puro: a
+// coluna `user_pass` da tabela `login` guarda a senha como o
+// jogador a digitou. Vazamento de banco - ou um backup que ande
+// pela mao errada - expoe a senha de todo mundo, e gente reusa
+// senha de e-mail.
+//
+// Ligado, o login-server hasheia a senha RECEBIDA antes de
+// comparar com a coluna (loginclif.cpp:279), ou seja o banco
+// passa a guardar so o hash. Os outros caminhos ja acompanham:
+// conta criada pelo console hasheia sozinha (logincnslif.cpp:80)
+// e a conexao do char/map-server, que tambem e uma linha da
+// tabela `login` (a de sexo 'S'), passa pelo mesmo hash
+// (loginclif.cpp:411).
+//
+// A UNICA incompatibilidade e com cliente que usa
+// <passwordencrypt>: nesse caso o servidor RECUSA a conexao com
+// "rejected from server" (loginclif.cpp:312). O nosso
+// clientinfo.xml nao usa - conferido em 2026-08-14. Se essa
+// mensagem aparecer no cliente, e essa a causa e nao outra.
+//
+// MD5 sem salt e fraco pelos padroes de hoje, e e o que o
+// emulador oferece; incomparavelmente melhor que texto puro.
+// Melhorar mexe em src/.
+//
+// CONTA QUE JA EXISTE so volta a entrar depois de a senha dela
+// virar hash no banco, e a conversao e uma linha - a senha em
+// texto puro ainda esta la:
+//
+//     UPDATE login SET user_pass = MD5(user_pass);
+//
+// Sem WHERE de proposito: a conta de sexo 'S' com que char e
+// map-server se conectam tem de ser convertida junto, senao os
+// dois param de conectar no login. De mao unica - depois disso
+// nao ha como voltar ao texto, que e o ponto.
+//--------------------------------------------------------------
+use_MD5_passwords: yes

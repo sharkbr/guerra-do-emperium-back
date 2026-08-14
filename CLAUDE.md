@@ -47,6 +47,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `conf/battle_athena.conf` | uma linha `import: conf/guerra/battle_guerra.txt` |
 | `conf/char_athena.conf` | uma linha `import: conf/guerra/char_guerra.txt` (nome de personagem com acento) |
 | `conf/inter_athena.conf` | uma linha `import: conf/guerra/inter_guerra.txt` (`default_codepage: latin1`) |
+| `conf/login_athena.conf` | uma linha `import: conf/guerra/login_guerra.txt` (`use_MD5_passwords: yes`) |
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um — a única exceção da linha de cima. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |

@@ -111,7 +111,12 @@ reinicia os servidores na ordem certa.
 Estas duas etapas exigem o cliente. **Não são executáveis no Mac.** Se o Mac
 chegar aqui, é o caso do sinal da §1.
 
-### Etapa 1 — MD5 das senhas ⬜
+### Etapa 1 — MD5 das senhas ✅ (2026-08-14)
+
+> Feita no Windows em 2026-08-14, com as três contas do HML convertidas e os
+> quatro servidores reiniciados. Falta só entrar uma vez pelo cliente — o
+> char-server já autenticou com a senha hasheada. Ver `HISTORICO.md`, "A senha
+> deixa de ser texto puro". O texto abaixo fica como o registro do porquê.
 
 **Por que agora e não depois:** o rAthena guarda senha em **texto puro**
 (`login_athena.conf:118`, `use_MD5_passwords: no`, que é o padrão). Vazamento de
@@ -129,27 +134,39 @@ caso o servidor **recusa a conexão** com *"rejected from server"*
 (`loginclif.cpp:312`). O nosso `clientinfo.xml` não usa — conferido. Se aparecer
 essa mensagem no teste, é essa a causa e não outra.
 
-**Onde a opção mora.** Seguindo a lei da §2 do `CLAUDE.md`, a opção é *regra*, e
-regra é versionada — só senha e IP ficam em `conf/import/`. Então:
+**Onde a opção mora — feito em 2026-08-14.** Seguindo a lei da §2 do
+`CLAUDE.md`, a opção é *regra*, e regra é versionada — só senha e IP ficam em
+`conf/import/`. O que entrou:
 
-1. criar `rathena/conf/guerra/login_guerra.txt` com `use_MD5_passwords: yes` e
-   o cabeçalho explicando o porquê;
-2. acrescentar `import: conf/guerra/login_guerra.txt` no `login_athena.conf`,
-   **antes** da linha 194 (`import: conf/import/login_conf.txt`) — o último
-   import vence, e `conf/import/` tem de continuar com a última palavra;
-3. acrescentar a linha na tabela de enxertos do `CLAUDE.md` §2.
+1. `rathena/conf/guerra/login_guerra.txt`, com `use_MD5_passwords: yes` e o
+   cabeçalho explicando o porquê;
+2. `import: conf/guerra/login_guerra.txt` no `login_athena.conf`, **antes** do
+   `import: conf/import/login_conf.txt` — o último import vence, e
+   `conf/import/` tem de continuar com a última palavra;
+3. a linha na tabela de enxertos do `CLAUDE.md` §2.
 
 Assim a decisão viaja no git e não pode ser esquecida no servidor novo.
 
-**Converter as contas que já existem no HML** (opcional, é ambiente de teste) —
-elas não se perdem, e a conversão é uma linha, porque a senha em texto puro
-ainda está lá:
+**Converter as contas que já existem NÃO é opcional, e a razão não é o
+jogador.** A conta com que o char-server e o map-server se conectam ao login é
+uma linha da mesma tabela (a de sexo `S`), e ela passa pelo mesmo hash
+(`loginclif.cpp:411`). Sem converter, **o char-server para de conectar** — e o
+sintoma é *"The server communication passwords (default s1/p1) are probably
+invalid"* (`char_logif.cpp:279`), que aponta para a senha do `conf/import/` e
+não para o MD5. Por isso a conversão é sem `WHERE`:
 
 ```sql
 UPDATE login SET user_pass = MD5(user_pass);
 ```
 
-De mão única: depois disso não há como voltar ao texto. Que é o ponto.
+De mão única: depois disso não há como voltar ao texto. Que é o ponto. E é
+**uma vez só** — rodar de novo hasheia o hash e tranca todo mundo para fora.
+
+Depois da conversão, **reiniciar** (`python ferramentas/servidor.py reiniciar`).
+Quem só quiser derrubar o login-server pode: o `use_MD5_passwords` está **fora**
+do bloco `if (normal)` do `login_config_read` (`login.cpp:606`), então o
+`server:reloadconf` do console do login-server também o relê — mas os dois lados
+têm de mudar juntos, e o banco não avisa qual está valendo.
 
 **Como saber que deu certo:** logar no cliente com a senha de sempre. E conferir
 no banco que a coluna virou 32 caracteres hexadecimais.
