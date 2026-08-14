@@ -8532,6 +8532,37 @@ Fica também o contraste com a porta da Arena de Combate, que está em 6 desde
 2026-08-12 e foi aprovada: lá o NPC é cenário na beira de uma rua, aqui são três
 figuras no fundo de um salão que o jogador atravessa de frente.
 
+### A saída, e o raio que não podia ser 1,1
+
+No mesmo dia o dono pediu a porta de volta: `prt_in 128,103` → **`auction_01
+180,52`**, o Centro da Ordem. O destino tem razão de ser — esta era a sala
+secreta **daquele** salão, então a saída dá lá e não na rua. A célula de chegada
+é a mesma em que o portal da praça de Prontera desembarca, com a folga de uma
+célula em `y51` que impede o jogador de ser sugado de volta para Prontera pelo
+`centro_ordem_saida`.
+
+**A entrada continua não existindo, e é de propósito:** vai ser feita por quest,
+em outra sessão. Até lá o caminho é de mão única — entra-se com `@warp`, sai-se
+pela porta. O que mudou é que **ninguém fica preso**, que era o risco enquanto
+não havia saída nenhuma.
+
+O raio foi a única decisão de verdade. Todas as outras portas do projeto são
+`1,1`, e aqui esse valor seria **defeito**: o nicho do sul é um retângulo de 6×2
+(`x126-131`, `y102-103`) pendurado na beirada do salão, que começa em `y104` —
+com raio 1 na altura, o gatilho pegaria três células do salão e teleportaria
+quem só estivesse passando rente à parede sul.
+
+Ficou **`3,0`**. O `ys = 0` segura o gatilho na fileira do nicho; e o `xs = 3`
+cobre a boca inteira por um efeito de borda que vale registrar: ele pede `x125`
+a `x131`, e o `npc_setcells` (`npc.cpp:4972`) **pula célula com `CELL_CHKNOPASS`
+sem erro e sem aviso** — `x125` é parede. Sobram exatamente as seis células
+andáveis.
+
+É a mesma mecânica que come uma célula do portal da praça de Prontera (o canto
+`166,167`, documentado no `centro_da_ordem.txt`), só que lá ela tira algo que se
+queria e aqui ela apara o que sobrava. **Se a boca do nicho mudar de largura, o
+número muda junto — e a falha seria calada.**
+
 ### O Álbum de Cartas de Tarô não existia em item_db nenhum
 
 Dos cinco prêmios da Roleta, quatro já estavam prontos no vendor — os disfarces

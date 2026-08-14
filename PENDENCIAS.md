@@ -1397,48 +1397,57 @@ calibrado sem contar com isto, a conta sai errada para uma classe.
 
 ---
 
-## 1q. A Sala Secreta da Ordem não tem porta (2026-08-13)
+## 1q. A Sala Secreta da Ordem tem saída, e a entrada é uma quest (2026-08-13)
 
-Os cinco NPCs de `npc/guerra/sala_secreta_da_ordem.txt` estão escritos e
-carregam. **Nenhum jogador os alcança.**
+Os cinco NPCs de `npc/guerra/sala_secreta_da_ordem.txt` estão **vistos em
+jogo** — nascem, o sprite 494 (`4_M_ROKI`) do Guardião desenha, a Roleta abre e
+a Máquina Especial troca.
 
-O conjunto de salas de `prt_in` onde eles moram (salão `x120-139`/`y104-116`,
-mais quatro alcovas em `y117-123`) **não recebe warp de lugar nenhum**. A
-varredura foi por `prt_in,1[0-3][0-9],1[01][0-9]` em `npc/` inteiro, nos dois
-sentidos — quem sai e quem chega — e devolveu **zero linhas**. O beco do sul
-(`x126-131`, `y102-103`) termina em parede no `.gat`: em `y101` a fileira toda
-é bloqueio.
+**A saída entrou no fim do mesmo dia:** `prt_in 128,103` → `auction_01 180,52`,
+o Centro da Ordem. É porque esta era a sala secreta **daquele** salão, então a
+porta devolve para lá e não para a rua. A célula de chegada é a mesma em que o
+portal da praça de Prontera desembarca.
 
-Hoje só se chega com `@warp prt_in 129 114`.
+**O que falta é a ENTRADA, e ela vai ser por quest** — decisão do dono, trabalho
+de outra sessão. Até lá o caminho é de mão única: entra-se com
+`@warp prt_in 129 114`, sai-se pela porta.
 
-**É decisão, não esquecimento** — o dono escolheu "só os NPCs, sem porta" ao ser
-avisado, em 2026-08-13. Fica aqui porque o dia em que a sala for aberta é o dia
-em que ela passa a valer alguma coisa.
+Fica registrado que **ninguém fica preso**, que era o risco enquanto não havia
+saída nenhuma. E que o conjunto de salas (`x120-139`/`y104-116`, mais quatro
+alcovas em `y117-123`) continua sem receber warp de lugar nenhum: a varredura
+por `prt_in,1[0-3][0-9],1[01][0-9]` em `npc/` inteiro devolvia **zero linhas**
+antes desta saída, e o beco do sul termina em parede no `.gat`.
 
-### Quando for abrir
+### Quando a quest for feita
 
-O molde é o do Centro da Ordem (`npc/guerra/centro_da_ordem.txt`): um par de
-`warp` **nosso**, em `npc/guerra/`, nunca editando `npc/warps/cities/prontera.txt`.
-Falta só escolher de onde parte — e o candidato óbvio é a própria Prontera, já
-que `prt_in` é o interior dela.
+A chegada é o que falta escolher. As células foram todas lidas no `map_cache`;
+uma chegada em `129,116` ou perto põe o jogador de frente para o Guardião.
 
-Duas coisas a conferir na hora, e nenhuma é sobre o warp:
+**E o warp de saída já existe** — não repetir. Se a quest levar o jogador de
+Prontera para cá, ele é um caminho só de ida; a volta continua sendo `128,103`.
 
-1. **A célula de chegada.** As quatro alcovas e o salão foram lidos no
-   `map_cache`; as cinco células dos NPCs são tipo 0. Uma chegada em `129,116`
-   ou perto disso põe o jogador de frente para o Guardião.
-2. **O warp de volta não pode cair dentro de si mesmo** — foi a conferência que
-   a Ordem dos Exploradores pediu no §1g, passo 1.
+### O `3,0` do warp de saída, e por que não é `1,1`
 
-### A sala já foi vista em jogo, por `@warp` (2026-08-13)
+O nicho do sul é um retângulo de 6×2 (`x126-131`, `y102-103`) pendurado na
+beirada do salão, que começa em `y104`. Com o raio `1,1` das outras portas do
+projeto, o gatilho pegaria **três células do salão** e teleportaria quem só
+estivesse passando rente à parede sul. Com `ys = 0` ele fica na fileira do
+nicho.
 
-Os cinco NPCs nascem, o sprite **494 (`4_M_ROKI`)** do Guardião desenha, a
-Roleta abre e a Máquina Especial troca. **Só a porta falta.**
+E o `xs = 3` cobre a boca inteira por um efeito de borda: ele pede `x125` a
+`x131`, e o `npc_setcells` (`npc.cpp:4972`) **pula célula com `CELL_CHKNOPASS`
+sem erro e sem aviso** — `x125` é parede. Sobram exatamente as seis células
+andáveis. É a mesma mecânica que come uma célula do portal da praça de Prontera
+(`centro_da_ordem.txt`, seção Notas), só que aqui trabalhando a favor.
 
-Uma coisa mudou nesse teste, e ficou registrada nos cabeçalhos: os três NPCs de
-fala nasceram em **6 (leste)** e apareceram **de costas** para quem chega — o 6
-desenha na diagonal de cima-direita com a câmera padrão. Foram para **4 (sul)**.
-As duas máquinas continuam em 2 (oeste), que já estava certo.
+**Se a boca do nicho mudar de largura**, esse número muda junto — e a falha
+seria calada: o portal continuaria funcionando, só que sem cobrir as pontas.
+
+### O facing, que só a tela reprovou
+
+Os três NPCs de fala nasceram em **6 (leste)** e apareceram **de costas** para
+quem chega — o 6 desenha na diagonal de cima-direita com a câmera padrão. Foram
+para **4 (sul)**. As duas máquinas continuam em 2 (oeste), que já estava certo.
 
 ---
 
