@@ -8535,11 +8535,21 @@ figuras no fundo de um salão que o jogador atravessa de frente.
 ### A saída, e o raio que não podia ser 1,1
 
 No mesmo dia o dono pediu a porta de volta: `prt_in 128,103` → **`auction_01
-180,52`**, o Centro da Ordem. O destino tem razão de ser — esta era a sala
-secreta **daquele** salão, então a saída dá lá e não na rua. A célula de chegada
-é a mesma em que o portal da praça de Prontera desembarca, com a folga de uma
-célula em `y51` que impede o jogador de ser sugado de volta para Prontera pelo
-`centro_ordem_saida`.
+192,85`**, o Centro da Ordem. O destino tem razão de ser — esta era a sala
+secreta **daquele** salão, então a saída dá lá e não na rua.
+
+A célula passou por dois valores. Nasceu em `180,52`, o corredor de chegada, por
+ser o desembarque já provado do portal da praça de Prontera; o dono trocou para
+`192,85` na volta, e é melhor por duas razões que só ficaram visíveis depois:
+`192,85` é a **quina nordeste do salão**, então quem sai da sala secreta aparece
+atrás de todo mundo e não na porta da frente — que é o que uma passagem secreta
+faz; e ela está **longe dos dois únicos warps do mapa**, enquanto `180,52` ficava
+a três células do `centro_ordem_saida` e dependia de uma folga de uma célula em
+`y51` para o jogador não ser sugado de volta para Prontera ao dar um passo.
+
+A célula foi conferida no `map_cache` (`auction_01` mora no `db/map_cache.dat`,
+o grande) e está livre de NPC — os dois mais próximos são Guardas, a quatro
+células a oeste e duas a leste.
 
 **A entrada continua não existindo, e é de propósito:** vai ser feita por quest,
 em outra sessão. Até lá o caminho é de mão única — entra-se com `@warp`, sai-se

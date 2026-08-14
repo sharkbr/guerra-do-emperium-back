@@ -1403,10 +1403,18 @@ Os cinco NPCs de `npc/guerra/sala_secreta_da_ordem.txt` estão **vistos em
 jogo** — nascem, o sprite 494 (`4_M_ROKI`) do Guardião desenha, a Roleta abre e
 a Máquina Especial troca.
 
-**A saída entrou no fim do mesmo dia:** `prt_in 128,103` → `auction_01 180,52`,
+**A saída entrou no fim do mesmo dia:** `prt_in 128,103` → `auction_01 192,85`,
 o Centro da Ordem. É porque esta era a sala secreta **daquele** salão, então a
-porta devolve para lá e não para a rua. A célula de chegada é a mesma em que o
-portal da praça de Prontera desembarca.
+porta devolve para lá e não para a rua.
+
+A célula é a **quina nordeste do salão**, não o corredor de chegada — quem sai
+da sala secreta aparece atrás de todo mundo, e não na porta da frente. E está
+longe dos dois únicos warps do mapa, o que o primeiro destino (`180,52`, a três
+células do que volta para Prontera) não estava: aquele dependia de uma folga de
+uma célula em `y51` para o jogador não ser sugado de volta ao dar um passo.
+
+Conferida no `map_cache` e livre de NPC — os dois mais próximos são Guardas, a
+quatro células a oeste (`188,86`) e duas a leste (`194,87`).
 
 **O que falta é a ENTRADA, e ela vai ser por quest** — decisão do dono, trabalho
 de outra sessão. Até lá o caminho é de mão única: entra-se com
