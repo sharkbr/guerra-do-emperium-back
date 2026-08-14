@@ -1,0 +1,122 @@
+//===== Guerra do Emperium ===================================
+//= A Nobreza do Centro da Ordem
+//===== Onde =================================================
+//= Seis NPCs em auction_01, o mesmo salao do guardas_do_centro.txt e do
+//= centro_da_ordem.txt. Todas as celulas foram dadas pelo dono em
+//= 2026-08-14, uma a uma, e conferidas no map_cache do rAthena
+//= (db/map_cache.dat, o GRANDE - auction_01 nao esta no db/re/, ver
+//= CLAUDE.md secao 5, "TRES map_cache.dat"): tipo 0, andavel, nas seis.
+//=
+//=   Nobre                   166,71  facing 7 (nordeste)
+//=   Nobreza                 168,73  facing 5 (sudeste)
+//=   Jovem Nobre              166,64  facing 7 (nordeste)
+//=   Condessa                 170,81  facing 5 (sudeste)
+//=   Servical                 171,79  facing 1 (noroeste)
+//=   Contadora da Condessa    167,79  facing 7 (nordeste)
+//=
+//= FACING segue a mesma tabela do guardas_do_centro.txt
+//= (src/map/unit.cpp:70 / src/map/path.hpp:16), que anda ANTI-HORARIA a
+//= partir do norte - nao e a ordem intuitiva (N, NE, L, SE...):
+//=
+//=   0 norte     (y+1)      4 sul       (y-1)
+//=   1 noroeste             5 sudeste
+//=   2 oeste     (x-1)      6 leste     (x+1)
+//=   3 sudoeste             7 nordeste
+//===== Servical e Contadora: celula dada, facing deduzido ===
+//= O pedido original tinha as tres (Condessa, Servical, Contadora) na MESMA
+//= celula (170,81) - se sobreporiam na tela, um sprite em cima do outro.
+//= Levado ao dono, a resposta foi separar: Servical foi para 171,79 e
+//= Contadora para 167,79, a Condessa ficou em 170,81 como pedido. Nenhum dos
+//= dois novos veio com facing - foram postos voltados para a Condessa, pelo
+//= mesmo vetor dx/dy da tabela acima, formando uma rodinha de conversa. Se
+//= destoar em jogo, e so trocar o numero.
+//===== Duas falas com erro de digitacao, corrigidas =========
+//= Mesma natureza do "ganahndo" -> "ganhando" do guardas_do_centro.txt:
+//= letra a mais/errada, nao giria - o resto da fala foi mantido como o dono
+//= escreveu.
+//=
+//=   Nobreza:   "aliancca" -> "alianca" (c dobrado)
+//=   Condessa:  "para ro cassino" -> "para o cassino" (letra sobrando)
+//===== Sprites ===============================================
+//= Os seis pedidos por NOME, conferidos no npcidentity.lub (JT_* -> id) e no
+//= data.grf DESTE cliente antes de entrar - .spr e .act presentes nos seis,
+//= nenhum com DES (regra do CLAUDE.md secao 5, "entrada marcada DES"):
+//=
+//=   Nobre                   713    4_M_06
+//=   Nobreza                 763    4_M_JPN
+//=   Jovem Nobre             881    4_M_SITDOWN
+//=   Condessa                10184  4_F_LEEDSH
+//=   Servical                920    4_F_TRAINEE
+//=   Contadora da Condessa   814    4_F_CHNDOCTOR
+//===== Notas ================================================
+//= NENHUM FAZ NADA alem de falar - mesma familia dos guardas do mesmo salao:
+//= ambiente e recado, sem item, sem loja, sem checagem nenhuma.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo le. Ver
+//= CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+auction_01,166,71,7	script	Nobre	713,{
+	mes "[Nobre]";
+	mes "Tempo é dinheiro mas também poder.";
+	mes "Ter tempo pra poder fazer o que";
+	mes "quiser e ter qualidade de vida!";
+	next;
+	mes "[Nobre]";
+	mes "Investimos aqui pra que pudessemos";
+	mes "ter um tempo de qualidade";
+	close;
+}
+
+auction_01,168,73,5	script	Nobreza	763,{
+	mes "[Nobreza]";
+	mes "Fausto bota muita fé nisso daqui.";
+	mes "Foi só uma aliança comercial pra";
+	mes "dispormos de um memorial";
+	close;
+}
+
+auction_01,166,64,7	script	Jovem Nobre	881,{
+	mes "[Jovem Nobre]";
+	mes "Os mercadores não trouxeram todos";
+	mes "os itens! muita coisa ficou de";
+	mes "fora! Não trabalham direito";
+	close;
+}
+
+auction_01,170,81,5	script	Condessa	10184,{
+	mes "[Condessa]";
+	mes "Foram todos para o cassino!";
+	mes "Vagabundos! Deveríamos estar";
+	mes "organizando bailes e eventos,";
+	next;
+	mes "[Condessa]";
+	mes "mas não!! Até minha mãe!";
+	close;
+}
+
+// Facing 1 (noroeste), voltada para a Condessa (170,81) - ver o cabecalho,
+// secao "Servical e Contadora: celula dada, facing deduzido".
+auction_01,171,79,1	script	Serviçal	920,{
+	mes "[Serviçal]";
+	mes "A condessa devia estar em um spá!";
+	mes "Mas estamos aqui nesses sofá";
+	mes "velhos com esses guardas";
+	next;
+	mes "[Serviçal]";
+	mes "brilhosos! Pelo menos a música é";
+	mes "classica";
+	close;
+}
+
+// Facing 7 (nordeste), voltada para a Condessa (170,81) - mesma nota da
+// Servical, acima.
+auction_01,167,79,7	script	Contadora da Condessa	814,{
+	mes "[Contadora da Condessa]";
+	mes "Agora é hora de acompanharmos a";
+	mes "economia. Pra onde vai mais a";
+	mes "energia?";
+	close;
+}

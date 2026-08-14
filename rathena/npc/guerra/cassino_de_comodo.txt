@@ -164,10 +164,14 @@
 //= um andar inteiro e trocar UM numero, na linha do callfunc
 //= do script-base daquele andar.
 //=
-//= FACING 4 (sul) em seis dos sete, que e o que os nove NPCs de
+//= FACING 4 (sul) em cinco dos sete, que e o que os nove NPCs de
 //= ambiente do cassino ja usavam - inclusive o Shalone, que
-//= ficava exatamente em 178,92 e que este arquivo desliga. A
-//= excecao e a de 92,47, em facing 2 (oeste), a pedido.
+//= ficava exatamente em 178,92 e que este arquivo desliga. DUAS
+//= excecoes: a de 92,47, em facing 2 (oeste), a pedido; e a de
+//= 77,84 (Crupie#cas_bj4), em facing 1 (noroeste) desde
+//= 2026-08-14, tambem a pedido - ela passou a olhar para a cena
+//= da plateia_do_cassino.txt e para o Comandante Maram (73,86,
+//= senha_da_sala_secreta.txt).
 //===== A animacao de vitoria ================================
 //= Ao ganhar a mao sai um `specialeffect2` no jogador; o 21
 //= natural ganha um segundo, mais vistoso. Os dois numeros
@@ -349,7 +353,11 @@ cmd_in02,178,92,4	duplicate(Crupiê#cas_bj1)	Crupiê#cas_bj3	899
 //== As mesas do SEGUNDO ANDAR ===============================
 // aposta 10, 21 natural paga +20 (2:1), vies 10% A FAVOR DA
 // CASA. O premio maior e a isca; ver o cabecalho.
-cmd_in02,77,84,4	script	Crupiê#cas_bj4	899,{
+//
+// Facing 1 (noroeste) desde 2026-08-14, a pedido - antes era 4
+// (sul), como os outros cinco. Ver plateia_do_cassino.txt: ela
+// olha para a mesma cena da Cindy e do Comandante Maram.
+cmd_in02,77,84,1	script	Crupiê#cas_bj4	899,{
 	callfunc "F_CassinoBlackjack", 10, 20, 10, -1;
 	end;
 
@@ -365,8 +373,9 @@ OnTimer3000:
 }
 
 cmd_in02,102,59,4	duplicate(Crupiê#cas_bj4)	Crupiê#cas_bj5	899
-// Facing 2 (oeste) - esta e a unica das sete que nao olha para o
-// sul. Ver o cabecalho, secao "Os sete crupies".
+// Facing 2 (oeste) - uma das DUAS que nao olham para o sul (a
+// outra e o Crupie#cas_bj4, 77,84, facing 1/noroeste desde
+// 2026-08-14). Ver o cabecalho, secao "Os sete crupies".
 cmd_in02,92,47,2	duplicate(Crupiê#cas_bj4)	Crupiê#cas_bj6	899
 cmd_in02,45,59,4	duplicate(Crupiê#cas_bj4)	Crupiê#cas_bj7	899
 

@@ -1,0 +1,92 @@
+//===== Guerra do Emperium ===================================
+//= A Plateia do Cassino
+//===== Onde =================================================
+//= cmd_in02, ao redor da mesa de blackjack do segundo andar
+//= (Crupiê#cas_bj4, 77,84 - cassino_de_comodo.txt) e da porta do
+//= Comandante Maram (73,86 - senha_da_sala_secreta.txt). Cinco NPCs,
+//= todos pedidos pelo dono em 2026-08-14, celula a celula - as cinco
+//= foram conferidas no map_cache do rAthena (db/map_cache.dat, o
+//= GRANDE): tipo 0, andavel, nas cinco.
+//=
+//=   Cindy                     74,86  facing 2 (oeste)
+//=   Condessa Imperatriz       76,86  facing 4 (sul)
+//=   Milady Haelena            75,81  facing 1 (noroeste)
+//=   Seguranca da Condessa     78,88  facing 4 (sul)
+//=   Conde de Aldebaran        71,86  facing 4 (sul)
+//=
+//= A CINDY OLHA PARA O COMANDANTE MARAM (73,86), e nao por acaso - a fala
+//= dela ("O Comandante sabe o que faz! ele vai levar!") fala dele. O
+//= facing veio de uma CELULA, nao de ponto cardeal: dx=-1,dy=0, oeste puro.
+//===== O Conde: sudeste ou sul? ==============================
+//= O pedido original dava DUAS informacoes que discordam entre si: "virado
+//= para o sudeste" e uma celula-exemplo (71,81) que fica ao SUL de onde ele
+//= nasce (71,86), nao a sudeste. Levado ao dono, a resposta foi a celula:
+//= facing 4 (sul).
+//===== Facing, a mesma tabela de sempre ======================
+//= src/map/unit.cpp:70 / src/map/path.hpp:16, ANTI-HORARIA a partir do
+//= norte:
+//=
+//=   0 norte     (y+1)      4 sul       (y-1)
+//=   1 noroeste             5 sudeste
+//=   2 oeste     (x-1)      6 leste     (x+1)
+//=   3 sudoeste             7 nordeste
+//===== Sprites ===============================================
+//= Os cinco pedidos por NOME, conferidos no npcidentity.lub (JT_* -> id) e
+//= no data.grf DESTE cliente antes de entrar - .spr e .act presentes nos
+//= cinco, nenhum com DES:
+//=
+//=   Cindy                     646    4_F_IU
+//=   Condessa Imperatriz       10185  4_F_DIENE
+//=   Milady Haelena            10186  4_F_COATNEIS
+//=   Seguranca da Condessa     10183  4_F_ESTLOVELOY
+//=   Conde de Aldebaran        10084  4_M_TATIO
+//===== O Crupie da mesma mesa mudou de facing junto ==========
+//= O mesmo pedido tambem virou o Crupiê#cas_bj4 (77,84) de facing 4
+//= (sul) para 1 (noroeste) - antes ele olhava para o sul, como os outros
+//= cinco crupies do cassino. A mudanca esta no arquivo dele
+//= (cassino_de_comodo.txt, secao "Os sete crupies"), NAO neste arquivo.
+//===== Notas ================================================
+//= NENHUM FAZ NADA alem de falar - ambiente e recado, sem item, sem loja,
+//= mesma familia dos guardas do Centro da Ordem (guardas_do_centro.txt).
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo le. Ver
+//= CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+cmd_in02,74,86,2	script	Cindy	646,{
+	mes "[Cindy]";
+	mes "O Comandante sabe o que faz!";
+	mes "ele vai levar!";
+	close;
+}
+
+cmd_in02,76,86,4	script	Condessa Imperatriz	10185,{
+	mes "[Condessa Imperatriz]";
+	mes "Alguém tem que representar bem a";
+	mes "nobreza nas apostas! rs";
+	close;
+}
+
+cmd_in02,75,81,1	script	Milady Haelena	10186,{
+	mes "[Milady Haelena]";
+	mes "Meu Odin! Se eu perder mais meu";
+	mes "marido chora hahaha me SEGURA!";
+	close;
+}
+
+cmd_in02,78,88,4	script	Segurança da Condessa	10183,{
+	mes "[Segurança da Condessa]";
+	mes "Quem é voce?";
+	close;
+}
+
+// Facing 4 (sul) - a celula-exemplo dada pelo dono, nao a palavra
+// "sudeste" que veio junto. Ver o cabecalho, secao "O Conde: sudeste ou
+// sul?".
+cmd_in02,71,86,4	script	Conde de Aldebaran	10084,{
+	mes "[Conde de Aldebaran]";
+	mes "A próxima é minha";
+	close;
+}
