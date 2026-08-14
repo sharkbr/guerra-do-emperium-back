@@ -12,13 +12,16 @@
 //=   171,86   olha  171,85   as parcerias              (2 telas)
 //=   188,86   olha  188,85   a Face-Sombria
 //=   165,87   olha  165,86   "Sem acesso."
-//=   194,87   olha  194,86   "Sem acesso."
+//=   194,87   olha  194,86   "Sem acesso." (ate a Senha da Sala
+//=                            Secreta - ver o AVISO no fim deste
+//=                            cabecalho)
 //=
 //= Sao quatro pares simetricos: os dois da boca do corredor de
 //= chegada, os dois do meio do salao, os dois da parede norte e
-//= os dois dos cantos do fundo. Os dois do fundo dizem a mesma
-//= coisa, e por isso o segundo e `duplicate` do primeiro - fala
-//= igual em dois lugares se escreve UMA vez.
+//= os dois dos cantos do fundo. ATE 2026-08-14 os dois do fundo
+//= diziam a mesma coisa e o segundo era `duplicate` do primeiro;
+//= o de 194,87 ganhou script proprio nesse dia - ver o AVISO no
+//= fim deste cabecalho. O de 165,87 continua igual.
 //===== O NUMERO DO FACING, E COMO ELE FOI TIRADO ============
 //= O dono pediu por CELULA ALVO ("virado para 176,56"), nao por
 //= ponto cardeal. A conversao sai do `dirx`/`diry` do rAthena
@@ -107,15 +110,44 @@
 //= primeiro par recebe quem chega pelo portal da praca, e os
 //= outros seis contam o que a Ordem e, cada um com um pedaco.
 //=
-//= Os dois do fundo dizem "Sem acesso." e nao guardam porta
-//= nenhuma - atras deles e parede. E cenario, e de proposito:
-//= o bloco oeste do mapa continua selado (centro_da_ordem.txt,
-//= secao "O que este arquivo desliga do rAthena").
+//= O de 165,87 diz "Sem acesso." e nao guarda porta nenhuma -
+//= atras dele e parede. E cenario, e de proposito: o bloco oeste
+//= do mapa continua selado (centro_da_ordem.txt, secao "O que
+//= este arquivo desliga do rAthena").
+//=
+//= O DE 194,87 NAO E MAIS SO CENARIO - ver o AVISO no fim deste
+//= cabecalho.
 //=
 //= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
 //= le. Ver CLAUDE.md secao 4.1.
 //=
 //= Mudanca neste arquivo pega com @reloadscript.
+//===== AVISO (2026-08-14): 194,87 e a porta da Sala Secreta =====
+//= O Guarda do canto leste (194,87) deixou de ser `duplicate` do
+//= de 165,87 e ganhou script proprio: ele e o passo final da
+//= missao do Amuleto (npc/guerra/menino_do_amuleto.txt e
+//= npc/guerra/senha_da_sala_secreta.txt), o mesmo lugar que
+//= PENDENCIAS.md secao 1q chamava de "a entrada vai ser por
+//= quest, em outra sessao".
+//=
+//= A variavel e `SalaSecretaOrdem` (permanente por personagem,
+//= explicada em menino_do_amuleto.txt):
+//=
+//=   < 11   "Sem acesso." - igual ao de sempre, sem quest
+//=            nenhuma ou missao ainda em andamento
+//=   == 11   pede a senha por `input()` ("Audaces Fortuna
+//=            Juvat", dada pelo Comandante Maram) - acerta uma
+//=            vez e vira 12; errar nao penaliza, so repete
+//=            "Sem acesso."
+//=   >= 12   "Entrar na Sala Secreta?" Sim/Nao, sem pedir a
+//=            senha de novo - a entrada ja foi liberada uma vez
+//=
+//= O destino e `prt_in 129,116`, a quina noroeste do salao da
+//= Sala Secreta (sala_secreta_da_ordem.txt) - a mesma celula que
+//= PENDENCIAS.md ja recomendava ("poe o jogador de frente para o
+//= Guardiao"), conferida andavel no prt_in.gat antes de usar.
+//= O warp de SAIDA da sala (128,103 -> auction_01 192,85) nao
+//= muda - so a chegada passou a existir.
 //============================================================
 
 // ---------------------------------------------------------------
@@ -186,4 +218,45 @@ auction_01,165,87,4	script	Guarda#co_can_o	966,{
 	close;
 }
 
-auction_01,194,87,4	duplicate(Guarda#co_can_o)	Guarda#co_can_l	966
+// 2026-08-14: deixou de ser `duplicate` do de 165,87 - e a porta
+// da Sala Secreta agora. Ver o AVISO no cabecalho.
+auction_01,194,87,4	script	Guarda#co_can_l	966,{
+	if (SalaSecretaOrdem < 11) {
+		mes "[Guarda]";
+		mes "Sem acesso.";
+		close;
+	}
+
+	if (SalaSecretaOrdem == 11) {
+		mes "[Guarda]";
+		mes "Voce tem uma senha pra mim?";
+		next;
+		input .@senha$;
+		if (.@senha$ == "Audaces Fortuna Juvat") {
+			mes "[Guarda]";
+			mes "As palavras sao ditas!";
+			next;
+			mes "[Guarda]";
+			mes "Bem vindo, milord!";
+			SalaSecretaOrdem = 12;
+			close2;
+			warp "prt_in",129,116;
+			end;
+		}
+		mes "[Guarda]";
+		mes "Sem acesso.";
+		close;
+	}
+
+	// SalaSecretaOrdem >= 12: acesso ja liberado, sem pedir a
+	// senha de novo.
+	mes "[Guarda]";
+	mes "Entrar na Sala Secreta?";
+	next;
+	if (select("Sim:Nao") == 1) {
+		close2;
+		warp "prt_in",129,116;
+		end;
+	}
+	close;
+}

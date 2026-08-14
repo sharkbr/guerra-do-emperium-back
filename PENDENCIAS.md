@@ -1392,68 +1392,6 @@ calibrado sem contar com isto, a conta sai errada para uma classe.
 
 ---
 
-## 1q. A Sala Secreta da Ordem tem saída, e a entrada é uma quest (2026-08-13)
-
-Os cinco NPCs de `npc/guerra/sala_secreta_da_ordem.txt` estão **vistos em
-jogo** — nascem, o sprite 494 (`4_M_ROKI`) do Guardião desenha, a Roleta abre e
-a Máquina Especial troca.
-
-**A saída entrou no fim do mesmo dia:** `prt_in 128,103` → `auction_01 192,85`,
-o Centro da Ordem. É porque esta era a sala secreta **daquele** salão, então a
-porta devolve para lá e não para a rua.
-
-A célula é a **quina nordeste do salão**, não o corredor de chegada — quem sai
-da sala secreta aparece atrás de todo mundo, e não na porta da frente. E está
-longe dos dois únicos warps do mapa, o que o primeiro destino (`180,52`, a três
-células do que volta para Prontera) não estava: aquele dependia de uma folga de
-uma célula em `y51` para o jogador não ser sugado de volta ao dar um passo.
-
-Conferida no `map_cache` e livre de NPC — os dois mais próximos são Guardas, a
-quatro células a oeste (`188,86`) e duas a leste (`194,87`).
-
-**O que falta é a ENTRADA, e ela vai ser por quest** — decisão do dono, trabalho
-de outra sessão. Até lá o caminho é de mão única: entra-se com
-`@warp prt_in 129 114`, sai-se pela porta.
-
-Fica registrado que **ninguém fica preso**, que era o risco enquanto não havia
-saída nenhuma. E que o conjunto de salas (`x120-139`/`y104-116`, mais quatro
-alcovas em `y117-123`) continua sem receber warp de lugar nenhum: a varredura
-por `prt_in,1[0-3][0-9],1[01][0-9]` em `npc/` inteiro devolvia **zero linhas**
-antes desta saída, e o beco do sul termina em parede no `.gat`.
-
-### Quando a quest for feita
-
-A chegada é o que falta escolher. As células foram todas lidas no `map_cache`;
-uma chegada em `129,116` ou perto põe o jogador de frente para o Guardião.
-
-**E o warp de saída já existe** — não repetir. Se a quest levar o jogador de
-Prontera para cá, ele é um caminho só de ida; a volta continua sendo `128,103`.
-
-### O `3,0` do warp de saída, e por que não é `1,1`
-
-O nicho do sul é um retângulo de 6×2 (`x126-131`, `y102-103`) pendurado na
-beirada do salão, que começa em `y104`. Com o raio `1,1` das outras portas do
-projeto, o gatilho pegaria **três células do salão** e teleportaria quem só
-estivesse passando rente à parede sul. Com `ys = 0` ele fica na fileira do
-nicho.
-
-E o `xs = 3` cobre a boca inteira por um efeito de borda: ele pede `x125` a
-`x131`, e o `npc_setcells` (`npc.cpp:4972`) **pula célula com `CELL_CHKNOPASS`
-sem erro e sem aviso** — `x125` é parede. Sobram exatamente as seis células
-andáveis. É a mesma mecânica que come uma célula do portal da praça de Prontera
-(`centro_da_ordem.txt`, seção Notas), só que aqui trabalhando a favor.
-
-**Se a boca do nicho mudar de largura**, esse número muda junto — e a falha
-seria calada: o portal continuaria funcionando, só que sem cobrir as pontas.
-
-### O facing, que só a tela reprovou
-
-Os três NPCs de fala nasceram em **6 (leste)** e apareceram **de costas** para
-quem chega — o 6 desenha na diagonal de cima-direita com a câmera padrão. Foram
-para **4 (sul)**. As duas máquinas continuam em 2 (oeste), que já estava certo.
-
----
-
 ## 1r. O Álbum de Cartas de Tarô — o que continua com o dono (2026-08-13)
 
 O item **600 `Zilant_Tarot_Deck`** foi criado, a arte veio do GRF do bRO, e a
@@ -1490,6 +1428,49 @@ there is a visible dialog window or menu"*. O caminho, se a vontade voltar, é
 **E a arte mora em `cliente\data\`, fora do git** — cliente novo perde os quatro
 arquivos, calado, e a caixa de erro aparece ao **abrir a lista**, não ao usar.
 Repor: `python ferramentas/instala_visual.py --id 600 --grf "<grf do bRO>"`.
+
+---
+
+## 1s. A missão do Amuleto — a entrada da Sala Secreta, quase pronta (2026-08-15)
+
+`npc/guerra/menino_do_amuleto.txt` e `npc/guerra/senha_da_sala_secreta.txt`,
+ligados no `scripts_guerra.conf`, mais a mudança em
+`npc/guerra/guardas_do_centro.txt` (o Guarda de `auction_01 194,87` deixou de
+ser `duplicate` e passou a aceitar a senha). Fecha a pendência da seção 1q
+antiga: a Sala Secreta da Ordem tinha saída e não tinha entrada — agora tem,
+por uma missão inteiramente narrativa (história 100% inventada, pedida pelo
+dono em 2026-08-14), sete NPCs em três mapas e um teste de guardião.
+
+**O dono já jogou a cadeia inteira uma vez** (2026-08-14/15) e trouxe seis
+correções de texto/posição/facing (ver `HISTORICO.md`, "O que o teste em jogo
+corrigiu") mais um achado sério: **o guardião de teste batia com menos de
+2.000 de dano**, apesar do script pedir 40.000-60.000 por `setunitdata`. Não
+era calibragem — era um bug do engine (`setunitdata` de ATK/HIT/AMOTION/
+ADELAY escreve em `base_status`, o combate lê `status`, e o recálculo que o
+próprio `setunitdata` dispara **exclui de propósito** o flag que copiaria um
+no outro). Corrigido movendo o ATQ para `db/guerra/mob_db_guerra.yml` (novo -
+ver CLAUDE.md §2), que é lido certo no spawn. Números de hoje: HP 50 milhões,
+redução 90%, ATQ ~5.000 de média. Os detalhes completos, inclusive por que
+HIT/velocidade de ataque **não** foram consertados (decisão de escopo), estão
+no cabeçalho do `senha_da_sala_secreta.txt`.
+
+**O que ainda falta conferir:**
+
+- **O teste do guardião, de novo** — é a parte que mudou por último e a
+  única ainda não vista em jogo com os números novos. Descer o
+  `@reloadscript` (que também recarrega o `mob_db_guerra.yml` por ele estar
+  no import do `mob_db.yml` — conferir se pega sem reiniciar, ou se precisa
+  de `@reloadmobdb`/reinício) e medir o dano que o guardião dá: deve rondar
+  5.000 por golpe, não os menos-de-2.000 de antes. E que os 50 milhões de HP
+  com 90% de redução dão um combate longo, não instantâneo nem impossível.
+- **O balão "Quest" sobre a Criança** (`npctalk "Quest"` a cada 5s, pedido em
+  2026-08-15) — nunca visto em jogo. Conferir se aparece e se o intervalo
+  não incomoda.
+- **As quatro coordenadas do Cassino de Comodo (Suad, Assessor, Bolãozão,
+  Maram) continuam sem conferência célula a célula** — o `cmd_in02.gat` tem
+  o bit DES e o `ferramentas/grf.py` não lê esse tipo de entrada (CLAUDE.md
+  §5). O dono já andou por ali no teste e não reportou problema, o que é
+  evidência forte de que estão andáveis, mas não é a mesma coisa que medir.
 
 ---
 

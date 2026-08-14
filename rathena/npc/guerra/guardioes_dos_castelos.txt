@@ -12,8 +12,11 @@
 //  Poe a DEFESA dos dezenove castelos que nao sao o Kriemhild em 100 e enche
 //  cada um com os oito guardioes oficiais dele. Com a escala de
 //  src/custom/guardiao_do_castelo.hpp ligada, defesa 100 e o patamar mais
-//  alto: 50 milhoes de HP, 99% de reducao de dano recebido, ASPD 190 e 50.000
-//  de ATQ por guardiao.
+//  alto: 15 milhoes de HP, 50% de reducao de dano recebido, ASPD 178 e 50.000
+//  de ATQ por guardiao (numeros corrigidos em 2026-08-14 - o cabecalho tinha
+//  ficado com a PRIMEIRA calibragem, descartada na mesma noite em que foi
+//  escrito; ver HISTORICO.md, "a revisao, na mesma noite", e a tabela
+//  completa em conf/guerra/battle_guerra.txt).
 //
 //  Sao campos de treino, nao castelos. O Kriemhild continua sendo o castelo de
 //  verdade - a defesa e a economia dele sao as que a guilda dona investir, e
@@ -110,8 +113,8 @@
 //  e o `mapdata_flag_gvg2` so olha mapflag - entao os nossos
 //  `gvg_*_attack_damage_rate: 20` valem la dentro 24 horas por dia, com ou sem
 //  Guerra do Emperium aberta, e valem tambem quando o alvo e monstro. O dano
-//  que entra num guardiao de defesa 100 e `bruto x 0,20 x 0,01`, ou seja 0,2%.
-//  Com 50 milhoes de HP sao 25 BILHOES de dano bruto por guardiao, vezes oito.
+//  que entra num guardiao de defesa 100 e `bruto x 0,20 x 0,50`, ou seja 10%.
+//  Com 15 milhoes de HP sao 150 MILHOES de dano bruto por guardiao, vezes oito.
 //
 //  O lado bom disso e o teste: como o mapflag nao depende da guerra, o numero
 //  medido numa terca a tarde e o mesmo numero da guerra de domingo.
@@ -138,8 +141,8 @@ prt_gld,136,66,4	script	Zelador dos Guardiões::ZeladorDosGuardioes	EP17_2_GUARDI
 	next;
 	mes "[Zelador dos Guardiões]";
 	mes "A defesa investida decide tudo. A cada dez pontos, o guardião ganha um degrau:";
-	mes "- vida, até cinquenta milhões;";
-	mes "- resistência, até noventa e nove por cento;";
+	mes "- vida, até quinze milhões;";
+	mes "- resistência, até cinquenta por cento;";
 	mes "- velocidade de ataque;";
 	mes "- e força de golpe.";
 	next;

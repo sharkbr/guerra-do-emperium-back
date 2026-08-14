@@ -1,0 +1,302 @@
+//===== Guerra do Emperium ===================================
+//= O Menino do Amuleto - inicio da missao da Sala Secreta
+//===== Onde ==================================================
+//= prontera 142,186     Crianca, sprite 4_M_DST_CHILD
+//= auction_01 192,75    Dario,   sprite 4_M_YOUNGKNIGHT
+//=
+//= 192,75 fica no Centro da Ordem (centro_da_ordem.txt), duas
+//= celulas ao norte do Egebreu (192,72, comprador_de_caveiras.txt)
+//= e fora da area fechada por setwall da escrivaninha
+//= (191,70-73 e 192,73) - anda livre.
+//===== Descricao ==============================================
+//= A PRIMEIRA METADE de uma missao inteiramente narrativa que
+//= termina dando acesso a Sala Secreta da Ordem
+//= (sala_secreta_da_ordem.txt), ate aqui so alcancavel por
+//= @warp - ver PENDENCIAS.md secao 1q, "a entrada vai ser por
+//= quest, em outra sessao". Historia 100% inventada, roteiro
+//= dado pelo dono em 2026-08-14.
+//=
+//= A SEGUNDA METADE mora em npc/guerra/senha_da_sala_secreta.txt
+//= (Suad, o Assessor do Gerente, o Bolaozao e o Comandante
+//= Maram, todos no Cassino de Comodo, mais o teste do guardiao) e
+//= termina em npc/guerra/guardas_do_centro.txt, onde o Guarda do
+//= canto de cima (auction_01 194,87) passa a aceitar a senha.
+//===== Por que variavel, e nao o sistema nativo de quest =======
+//= O CLAUDE.md secao 5 documenta que "quest que o cliente nao
+//= conhece DERRUBA O CLIENTE" - o QuestInfoList precisa de uma
+//= entrada por ID, gerada por ferramentas/monta_missoes_da_ordem.py
+//= e reaberta no cliente. Esta missao e uma cadeia de DIALOGO com
+//= ramos (aceitar/recusar em cada NPC), nao uma cacada com ate 3
+//= alvos - nao cabe no MAX_QUEST_OBJECTIVES (3, src/common/mmo.hpp)
+//= e nao ganha nada da janela nativa.
+//=
+//= Por isso o progresso mora numa variavel PERMANENTE POR
+//= PERSONAGEM comum, `SalaSecretaOrdem` (sem prefixo - nao e `#`
+//= porque nao e por conta, e nao e `@` porque precisa sobreviver
+//= ao logout). Sem risco de derrubar cliente nenhum: NPC comum
+//= nao passa pelo QuestInfoList.
+//===== Os treze estados de SalaSecretaOrdem =====================
+//=    0  nao comecou
+//=    1  aceitou ajudar a Crianca            (alvo: falar com Dario)
+//=    2  Dario pediu a Caveira Humana        (alvo: trazer 30995)
+//=    3  caveira entregue                    (alvo: achar Suad, Comodo)
+//=    4  Suad mandou falar com o Assessor    (alvo: Assessor)
+//=    5  Assessor mandou investigar          (alvo: Bolaozao)
+//=    6  Bolaozao contou o segredo           (alvo: voltar ao Assessor)
+//=    7  Assessor liberado                   (alvo: avisar o Suad de novo)
+//=    8  Suad liberou                        (alvo: falar com o Maram)
+//=    9  Maram propos o teste do guardiao    (alvo: aceitar/tentar)
+//=   10  guardiao derrotado                  (alvo: voltar ao Maram)
+//=   11  Maram deu a senha                   (alvo: falar com o Guarda)
+//=   12  concluido - acesso liberado
+//=
+//= Cada NPC dos dois arquivos so muda a variavel PARA A FRENTE, e
+//= cada estado tem no maximo um NPC que o avanca - dai da para
+//= saber, olhando so o numero, quem falta procurar.
+//===== Os dois sprites, conferidos ==============================
+//= Pela receita de sempre: nome existe no GRF (`data.grf`,
+//= ferramentas/grf.py find) E e exportado como constante de script
+//= (`export_constant_npc` em src/map/script_constants.hpp) - as
+//= duas bateram para os dois:
+//=
+//=   4_M_DST_CHILD      data\sprite\npc\4_m_dst_child.act/.spr
+//=   4_M_YOUNGKNIGHT    data\sprite\npc\4_m_youngknight.act/.spr
+//=
+//= (4_M_YOUNGKNIGHT e o mesmo JT_4_M_YOUNGKNIGHT = 405 que ja
+//= aparece do lado do 404/4_M_UNCLEKNIGHT do Egebreu, no mesmo
+//= bloco do npc.hpp - os dois sao vizinhos de enum.)
+//===== A Caveira Humana e consumida sozinha ======================
+//= O passo 2 nao tem "entregar item" explicito: quando o jogador
+//= fala com Dario ja carregando uma Caveira Humana (30995), o
+//= proprio dialogo consome UMA (`delitem`) e avanca a variavel -
+//= mesma conveniencia do Egebreu (comprador_de_caveiras.txt), so
+//= que aqui NAO paga nada em troca, e a fala cobra isso.
+//===== Gravado em cp1252 =========================================
+//= Como todo texto que o jogo le (CLAUDE.md secao 4.1). Gerado por
+//= ferramentas/ - nao editar com a ferramenta de edicao do
+//= assistente (secao 5, o U+FFFD).
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//==============================================================
+
+prontera,142,186,4	script	Crianca::CriancaDoAmuleto	4_M_DST_CHILD,{
+	if (SalaSecretaOrdem == 0) {
+		mes "[Crianca]";
+		mes "*menino comendo bolinho de arroz*";
+		mes "Olaaa mocoo!!!!!!!";
+		next;
+		switch (select("Nao dar atencao:Perguntar por que da euforia")) {
+		case 1:
+			close;
+		case 2:
+			mes "[Crianca]";
+			mes "Eu to lascado! Meu tio vai brigaaar!!";
+			mes "Voce gosta de bolinho de arroz?";
+			next;
+			mes "[Crianca]";
+			mes "Daquele que da 100% de HP/SP?";
+			next;
+			mes "[Crianca]";
+			mes "Se voce me ajudar te conto aonde tem um";
+			mes "monte! Hehehe.";
+			next;
+			switch (select("Nao, obrigado!:Fala o que voce precisa")) {
+			case 1:
+				close;
+			case 2:
+				mes "[Crianca]";
+				mes "Meu tio tem um amuleto da sorte! E mais";
+				mes "cedo, pra impressionar essa menina, eu";
+				mes "peguei escondido pra fazer um movimento";
+				mes "sensacional com a espada, jogando pra";
+				mes "cima e pegando! Deu certo, hahahaha.";
+				next;
+				mes "[Crianca]";
+				mes "Mas quando eu fui devolver pro meu tio,";
+				mes "escondido, ele ja tinha saido aaaa!";
+				next;
+				mes "[Crianca]";
+				mes "Eu nao posso sair de Prontera, entao";
+				mes "meu plano e: eu dou pra voce, voce";
+				mes "descobre onde ele ta e diz que viu";
+				mes "caindo do bolso dele!!!! PRONTO!";
+				next;
+				switch (select("Muito arriscado!:Posso fazer, mas quem e seu tio?")) {
+				case 1:
+					close;
+				case 2:
+					mes "[Crianca]";
+					mes "Meu tio e o Comandante Maram! Foi ele";
+					mes "que salvou a ultima Emperium de ser";
+					mes "destruida pra sempre, a de Kriemhild!";
+					next;
+					mes "[Crianca]";
+					mes "Ele e o Comandante da Ordem aqui em";
+					mes "Rune Midgard! Mas eu nao sei aonde ele";
+					mes "vai!";
+					next;
+					mes "[Crianca]";
+					mes "Desde que ele entregou tudo que tinha";
+					mes "que entregar ele chega de madrugada e";
+					mes "dorme ate tarde. Deve ta por ai.";
+					next;
+					switch (select("Combinado:Melhor naoooo, deixa pra la!")) {
+					case 1:
+						mes "[Crianca]";
+						mes "Otimo!!! No Centro da Ordem, tem um";
+						mes "cara do lado esquerdo do Egebreu, meu";
+						mes "irmao Dario! Roupa preta.";
+						next;
+						mes "[Crianca]";
+						mes "Ele vai te falar aonde o Comandante";
+						mes "Maram esta se voce perguntar! Mas nao";
+						mes "fala que fui eu, fala que voce precisa";
+						mes "entregar uma mensagem... do povo das";
+						mes "Piramides!!";
+						SalaSecretaOrdem = 1;
+						close;
+					case 2:
+						close;
+					}
+				}
+			}
+		}
+	}
+	else if (SalaSecretaOrdem < 12) {
+		// Repete o recado ate a missao terminar - o mesmo texto que
+		// fecha o primeiro ramo, pedido assim: "toda vez que voce
+		// falar com o npc agora ate terminar a quest ele vai repetir
+		// isso".
+		mes "[Crianca]";
+		mes "Otimo!!! No Centro da Ordem, tem um";
+		mes "cara do lado esquerdo do Egebreu, meu";
+		mes "irmao Dario! Roupa preta.";
+		next;
+		mes "[Crianca]";
+		mes "Ele vai te falar aonde o Comandante";
+		mes "Maram esta se voce perguntar! Mas nao";
+		mes "fala que fui eu, fala que voce precisa";
+		mes "entregar uma mensagem... do povo das";
+		mes "Piramides!!";
+		close;
+	}
+	else {
+		mes "[Crianca]";
+		mes "Valeu pela ajuda! E ingles voce sabe?";
+		mes "Essa menina so fala em ingleeeess :(";
+		close;
+	}
+
+OnInit:
+	// O balao "Quest" sobre a cabeca - so decoracao, pedido em
+	// 2026-08-15. `npctalk` (nao `emotion`): o kRO mostra um
+	// balao de fala com o TEXTO literal, e nao existe icone de "!"
+	// que o script alcance. Mesma receita do balao de MVP da
+	// crianca_de_comodo.txt - initnpctimer no OnInit, um
+	// OnTimer que dispara e rearma.
+	//
+	// NAO E POR JOGADOR: `npctalk` e visto por todo mundo perto,
+	// sem saber se cada um ja aceitou a missao ou nao - mesma
+	// simplificacao da Alleria (/vem) e do Edgard (fome). Se um
+	// dia precisar sumir para quem ja aceitou, precisa de outra
+	// receita (o balao nativo de quest e por jogador, mas exige
+	// registrar no sistema nativo - e o que este arquivo evita
+	// de proposito, ver o cabecalho).
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	npctalk "Quest";
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+auction_01,192,75,4	script	Dario::DarioDoAmuleto	4_M_YOUNGKNIGHT,{
+	if (SalaSecretaOrdem == 0) {
+		// Sem quest: so ambiente, e amarra com a Face-Sombria que os
+		// guardas do salao ja mencionam (guardas_do_centro.txt, o
+		// guarda da parede norte leste).
+		mes "[Dario]";
+		mes "O povo acha que a Face-Sombria e do mal.";
+		mes "A gente so tem esse nome porque a gente";
+		mes "faz o trabalho sujo, que ninguem quer!";
+		close;
+	}
+
+	if (SalaSecretaOrdem >= 12) {
+		mes "[Dario]";
+		mes "Pode ficar a vontade pra ir pra Sala";
+		mes "Secreta! So falar com o guarda mais";
+		mes "perto do canto ali em cima!";
+		close;
+	}
+
+	if (SalaSecretaOrdem == 1) {
+		mes "[Dario]";
+		mes "Mensagem do povo das Piramides???";
+		next;
+		mes "[Dario]";
+		mes "O Comandante Maram nao esta a servico";
+		mes "mais, esta de folga, deixou seu manto";
+		mes "preto aqui na Ordem! Fala a mensagem pra";
+		mes "mim, mais facil.";
+		next;
+		switch (select("Deixa pra la:Insistir que tem que ser entregue a Maram")) {
+		case 1:
+			close;
+		case 2:
+			mes "[Dario]";
+			mes "Ok! Se voce me ajudar com uma coisa eu";
+			mes "te digo, ai voce entrega sua mensagem!";
+			next;
+			mes "[Dario]";
+			mes "Meu pai Egebreu nao quer me dar um dos";
+			mes "Cranios Humanos para que eu possa fazer";
+			mes "alguns dos meus testes! Ele nao acredita";
+			mes "na minha ciencia, acha que e magia.";
+			next;
+			mes "[Dario]";
+			mes "Se voce me trouxer uma ^0000FFCaveira Humana^000000,";
+			mes "daquelas obtidas na Arena de Prontera,";
+			mes "eu te digo!";
+			SalaSecretaOrdem = 2;
+			close;
+		}
+	}
+
+	if (SalaSecretaOrdem == 2) {
+		if (countitem(.caveira) > 0) {
+			delitem .caveira, 1;
+			mes "[Dario]";
+			mes "Perfeito! O Comandante esta em Comodo,";
+			mes "no Cassino Casa Rosa! Muito provavelmente";
+			mes "nao vai querer ser incomodado, entao fale";
+			mes "com o amigo/guardiao dele, Suad!";
+			next;
+			mes "[Dario]";
+			mes "Entao e isso: encontre o Comandante Suad";
+			mes "no Cassino de Comodo!";
+			SalaSecretaOrdem = 3;
+			close;
+		}
+		mes "[Dario]";
+		mes "Cade a Caveira Humana? Tem que ser";
+		mes "daquelas que caem de jogadores na Arena";
+		mes "de Prontera! Tem um espirito preto";
+		mes "grande no centro de Prontera, e ali.";
+		close;
+	}
+
+	// SalaSecretaOrdem 3 a 11: caveira ja entregue, so repete o alvo.
+	mes "[Dario]";
+	mes "Entao e isso: encontre o Comandante Suad";
+	mes "no Cassino de Comodo!";
+	close;
+
+OnInit:
+	// Numero num lugar so - ver o cabecalho do comprador_de_caveiras.txt,
+	// mesma razao.
+	.caveira = 30995; // Caveira Humana
+	end;
+}

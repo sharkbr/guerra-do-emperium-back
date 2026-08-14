@@ -8752,3 +8752,254 @@ prêmio" antecipava.
 
 229 linhas inseridas nos três arquivos que já existiam, **zero removidas** — os
 onze bytes acentuados do `item_db.yml` sobreviveram, conferido antes e depois.
+
+---
+
+## A missão do Amuleto — a Sala Secreta da Ordem ganha entrada (2026-08-14)
+
+A Sala Secreta da Ordem (`sala_secreta_da_ordem.txt`, 2026-08-13) tinha saída
+e não tinha entrada — `PENDENCIAS.md` §1q registrava isso como "vai ser por
+quest, em outra sessão". Esta é aquela sessão: sete NPCs em três mapas, uma
+variável de progresso e um teste de guardião. História 100% inventada, roteiro
+dado pelo dono por inteiro em 2026-08-14.
+
+### Por que variável, e não o sistema nativo de quest
+
+O CLAUDE.md §5 documenta que quest não registrada no `QuestInfoList` do
+cliente **derruba o cliente**, uma caixa de erro por missão. Registrar exigiria
+`ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente — e mesmo assim o
+sistema nativo tem `MAX_QUEST_OBJETIVES` 3 (`src/common/mmo.hpp`), pensado para
+caçada, não para uma cadeia de diálogo com ramo de aceitar/recusar em cada
+NPC. A saída foi uma variável permanente por personagem comum,
+`SalaSecretaOrdem` (0 a 12), sem risco nenhum de derrubar cliente — NPC comum
+não passa pelo `QuestInfoList`.
+
+### Dois erros pegos antes de escrever
+
+O pedido veio com sprites `EP18_NPC_SUAD` e `EP18_NPC_MARAM` — **nenhum dos
+dois existe** em `src/map/npc.hpp`. Os nomes certos, `JT_4_EP18_SUAD` e
+`JT_4_EP18_MARAM` (`4_EP18_SUAD`/`4_EP18_MARAM` sem o prefixo `JT_` no
+script), foram achados comparando com o `npc.hpp` e confirmados no
+`data.grf` (`ferramentas/grf.py find`) antes de qualquer linha ser escrita —
+usar o nome errado teria dado "Unknown syntax" e derrubado o arquivo inteiro
+(CLAUDE.md §5). Os quatro sprites e as três imagens de retrato
+(`ep18_maram_01/02/03.png`) são recursos **oficiais** do rAthena — o
+`npc/re/quests/quests_18.txt` (Episódio 18, já carregado por padrão) usa os
+mesmos, numa história totalmente diferente (a vila do Wolfchev). Só os
+recursos foram reaproveitados.
+
+O segundo achado durante a escrita foi **desfeito no teste em jogo**: a fala
+do Suad dizia "o Daran pegou o amuleto", e isso foi lido como erro de
+digitação de "Dario" — errado. **Daran e Dario são duas pessoas**: Daran é a
+Criança (o sobrinho que pegou o amuleto, nunca nomeado na tela), Dario é o
+irmão dela, o NPC do Centro da Ordem. Corrigido de volta para "Daran" em
+2026-08-15, depois de o dono jogar a cadeia inteira — ver "O que o teste em
+jogo corrigiu", abaixo.
+
+### O guardião de teste: dois números errados discutidos ao vivo
+
+O pedido dizia "guardião 1287... como se estivesse em um castelo com defesa
+100" e citava, de memória, a **primeira** calibragem da escala de
+`src/custom/guardiao_do_castelo.hpp` — 50 milhões de HP, 99% de redução —,
+que tinha sido descartada na mesma noite em que nasceu (2026-08-13, "a
+revisão, na mesma noite", acima). O dono corrigiu ao vivo: a calibragem de
+verdade, em `conf/guerra/battle_guerra.txt` hoje, é a terceira (15 milhões de
+HP, 50% de redução no patamar 10). **O `guardioes_dos_castelos.txt` também
+citava a primeira calibragem, desatualizado desde aquela noite** — corrigido
+na mesma entrega (cabeçalho e a fala do próprio Zelador dos Guardiões).
+
+Mesmo com os números certos, não dá para usar o `guardian()` de verdade: a
+escala só liga com um castelo de guilda por trás (`guardian_data->castle`), e
+o mapa do teste não é castelo. O guardião nasce com `monster()` comum e os
+sete números do patamar 10 são escritos à mão, por `setunitdata`, logo depois
+do spawn — uma cópia estática da fórmula. Sem o multiplicador de guerra
+(`gvg_castle` não está no mapa do teste), o dano bruto para derrubá-lo é 30
+milhões, não os 150 milhões que valeriam dentro de um castelo de verdade — de
+propósito mais fácil aqui, é demonstração, não guerra.
+
+### O mapa que não existe no GRF, e o dono confirmou mesmo assim
+
+O `job3_rune03` pedido para o teste **não existe** no `data.grf` desta
+máquina — só `job3_rune01` e `job3_rune02` (`ferramentas/grf.py find`), e o
+`DATA.INI` do cliente só lista esse GRF. Pela regra do CLAUDE.md §5 ("mapa
+sem `.rsw` no GRF derruba o cliente e prende o personagem") isso deveria
+travar. O dono trouxe uma captura de tela (personagem de pé em
+`job3_rune03 39,44`, cena completa, sem queda, 2026-08-14) e pediu para
+seguir com o mapa mesmo assim. A divergência fica registrada no cabeçalho do
+`senha_da_sala_secreta.txt`, sem explicação — o `grf.py find` continua sem
+achar os três arquivos, e o motivo de funcionar em jogo não foi descoberto.
+
+Nenhum script do rAthena carregado usa `job3_rune03` hoje (só os quatro
+`npc/re/mapflag/*.txt` genéricos de mapa de teste de 3ª classe) — é espaço
+morto, como o `auction_01`/`auction_02` do Centro da Ordem e o `vis_h01` do
+Corredor Fantasma.
+
+### A cadeia, em uma tabela
+
+| `SalaSecretaOrdem` | quem avança | onde |
+|---|---|---|
+| 0 → 1 | Criança | `prontera 142,186` |
+| 1 → 2 | Dario | `auction_01 192,75` |
+| 2 → 3 | Dario (com a Caveira Humana) | idem |
+| 3 → 4 | Suad | `cmd_in02 74,76` |
+| 4 → 5 | Assessor | `cmd_in02 63,66` |
+| 5 → 6 | Bolãozão | `cmd_in02 182,89` |
+| 6 → 7 | Assessor | `cmd_in02 63,66` |
+| 7 → 8 | Suad | `cmd_in02 74,76` |
+| 8 → 9 | Maram | `cmd_in02 73,86` |
+| 9 → 10 | guardião derrotado | `job3_rune03` |
+| 10 → 11 | Maram | `cmd_in02 73,86` |
+| 11 → 12 | Guarda (senha) | `auction_01 194,87` |
+
+O Guarda de `auction_01 194,87` deixou de ser `duplicate` do de `165,87`
+(`guardas_do_centro.txt`) e ganhou script próprio: `< 11` continua "Sem
+acesso.", `== 11` pede a senha por `input()`, `>= 12` vira um Sim/Não sem
+repetir a senha. O destino é `prt_in 129,116`, a célula que o próprio
+`PENDENCIAS.md` §1q já recomendava — conferida andável no `.gat` antes de
+usar. O warp de saída (`128,103` → `auction_01 192,85`) não mudou.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `npc/guerra/menino_do_amuleto.txt` | **novo** — Criança e Dario |
+| `npc/guerra/senha_da_sala_secreta.txt` | **novo** — Suad, Assessor, Bolãozão, Maram, o teste do guardião |
+| `npc/guerra/guardas_do_centro.txt` | o Guarda de `194,87` deixou de ser `duplicate` |
+| `npc/guerra/guardioes_dos_castelos.txt` | cabeçalho e fala corrigidos (99%→50%, 50M→15M HP) |
+| `npc/guerra/scripts_guerra.conf` | as duas entradas narradas |
+| `PENDENCIAS.md` | §1q fechada, §1s aberta ("falta ver no jogo") |
+
+**Nada disto foi visto em jogo ainda** — ver `PENDENCIAS.md` §1s para a lista
+de conferência, em ordem de risco.
+
+### O que o teste em jogo corrigiu (2026-08-15)
+
+O dono jogou a cadeia e trouxe cinco correções:
+
+1. **A célula da Criança estava errada.** `prontera 142,168` não é onde ela
+   fica — é `142,186`. Conferida andável antes de gravar.
+2. **"Daran" não era erro de digitação — é a Criança.** A entrega anterior
+   "corrigiu" a fala do Suad de "Daran" para "Dario", achando que fossem a
+   mesma pessoa. Não são: Daran é o sobrinho que pegou o amuleto (a própria
+   Criança, nunca nomeada na tela), Dario é o irmão dela, o NPC do Centro da
+   Ordem. Desfeito.
+3. **A fala do Bolãozão** ganhou "O Assessor disse" no início: "O Assessor
+   disse o que?!!! HAHAHA Ele teve essa cara de pau?"
+4. **A fala do Assessor**, na volta depois do Bolãozão, mudou para "O quee!!!
+   ELE DISSE ISSO? Como ele.. quem.. hmmmm!!!"
+5. **O Suad decorativo do teste do guardião** (`job3_rune03,42,45`) devia
+   estar olhando para o sul (facing 4), e nasceu olhando para o oeste (2).
+6. **A fala da senha não dizia ONDE o Guarda está**, só "a parede de cima" -
+   ambíguo entre os quatro guardas que ficam nas fileiras de cima do salão
+   (CLAUDE.md §4.11 é sobre isso: instrução sem endereço completo confia na
+   sorte). Nas duas falas do Comandante Maram que citam a senha (a primeira
+   entrega e o lembrete repetido) passou a dizer "a parede de cima direita
+   do Centro da Ordem".
+
+Nenhuma das seis mexeu em `SalaSecretaOrdem` nem na estrutura da cadeia — só
+texto e duas coordenadas.
+
+---
+
+## O guardião de teste batia fraco, e não era calibragem (2026-08-15)
+
+Continuação de "A missão do Amuleto" (acima). O dono testou o teste do
+guardião e reportou: menos de 2.000 de dano por golpe, apesar do script pedir
+40.000–60.000 via `setunitdata(UMOB_ATKMIN/ATKMAX, ...)`. O pedido de ajuste
+veio com o alvo certo (HP 50 milhões, redução 90%, ATQ ~5.000) e uma condição:
+"caso a redução de 80% da guerra não entre na geração dele, precisamos que a
+redução geral seja de 90%" — ele já sabia que `job3_rune03` não tem o
+multiplicador de guerra e pediu a compensação certa de cabeça.
+
+### O bug, achado ao investigar por que o ATQ não pegava
+
+`setunitdata` para `BL_MOB` tem dois comportamentos diferentes, e nada no
+`doc/script_commands.txt` avisa qual é qual:
+
+- `UMOB_HP`/`UMOB_MAXHP` chamam `status_set_hp`/`status_set_maxhp`
+  (`src/map/script.cpp`), que escrevem **direto no status vivo**. Funcionam.
+- `UMOB_DAMAGETAKEN` escreve em `md->damagetaken`, um campo solto no
+  `mob_data`, fora da struct de status — `battle_calc_damage` o lê direto.
+  Funciona.
+- `UMOB_ATKMIN`, `UMOB_ATKMAX`, `UMOB_HIT`, `UMOB_AMOTION`, `UMOB_ADELAY` (e
+  mais uns dez campos) escrevem em `md->base_status` e depois chamam
+  `status_calc_bl_(md, status_db.getSCB_BATTLE())` para "aplicar". O
+  problema: o combate lê `md->status`, não `md->base_status`
+  (`status_get_status_data` devolve `&md->status` para `BL_MOB` —
+  `src/map/status.cpp:9050`). E é `status_calc_mob_` quem copia
+  `base_status` para `status`, só que **só roda se `flag[SCB_BASE]` estiver
+  ligado** (`status_calc_bl_`, guardado atrás de um
+  `if (flag[SCB_BASE]) switch(...)`). E `SCB_BATTLE` — o flag que
+  `setunitdata` usa — **exclui `SCB_BASE` de propósito**:
+  `SCB_BATTLE.set(); SCB_BATTLE.reset(SCB_BASE); SCB_BATTLE.reset(SCB_DYE);`
+  (`src/map/status.hpp:3301-3303`).
+
+Ou seja: as cinco linhas de `setunitdata` escreviam num lugar que o
+recálculo que elas mesmas disparavam **nunca lia**. O guardião lutou o tempo
+todo com o `Attack: 873` original do `mob_db` — daí o dano abaixo de 2.000.
+`status_calc_mob(md, opt)` (o caminho que roda de verdade no spawn, e o que
+`guardiao_do_castelo.hpp` usa) é `getSCB_ALL()`, que **inclui** `SCB_BASE` —
+por isso o `Attack` do `mob_db` sempre esteve certo desde o primeiro spawn, e
+por isso a saída foi mudar o `mob_db`, não o script.
+
+### A saída: um segundo import em `db/re/mob_db.yml`
+
+`db/guerra/mob_db.yml` já existe, mas é **gerado** por
+`ferramentas/traduz_ptbr.py monstros` (só nome em português, reescrito
+inteiro a cada rodada — editar à mão morre calado na próxima). Em vez de
+arriscar isso, `db/re/mob_db.yml` ganhou um **segundo** `- Path:` no rodapé
+(`CLAUDE.md` §2 atualizado — é a única exceção à regra de "um path por
+arquivo"), apontando para `db/guerra/mob_db_guerra.yml`, novo, escrito à mão,
+com uma linha: `Id: 1287, Attack: 5000`. Confirmado no `MobDatabase::
+parseBodyNode` (`src/map/mob.cpp`) que isso é merge por campo, igual
+`item_db.yml` — não redefine o resto do 1287 (nome, sprite, HP-base, etc.).
+
+**Não contamina os guardiões de castelo de verdade**: aqueles escrevem
+`status->rhw.atk`/`atk2` de forma absoluta em
+`guardiao_aplica_escala` (`guardiao_do_castelo.hpp`), a partir de
+`conf/guerra/battle_guerra.txt` — o `Attack` do `mob_db` nunca é consultado
+ali. O override só é lido por quem invoca 1287 fora da escala, hoje só este
+teste.
+
+### O que ficou de fora, de propósito
+
+`Hit`, `AttackMotion` e `AttackDelay` têm o mesmo bug de `setunitdata` e não
+foram corrigidos — o pedido do dono falou só de dano, HP e redução. `Hit` nem
+é campo do `mob_db` (sai de `nível + DEX`, então corrigir exigiria inflar o
+DEX do monstro, efeito colateral não medido); velocidade de ataque ficou no
+padrão do `mob_db` (`AttackDelay: 1288`, ~0,8 golpe/s) porque ninguém
+reclamou de ritmo. As cinco linhas de `setunitdata` que não funcionavam
+foram **removidas** do script, não deixadas mortas.
+
+### Os números de hoje
+
+| | antes (não funcionava) | agora |
+|---|---|---|
+| HP | 15.000.000 | **50.000.000** |
+| redução | 50% (`damagetaken` 50) | **90%** (`damagetaken` 10) |
+| ATQ | 40.000–60.000 (nunca aplicado) | **~5.000** (4.000–6.000, via `mob_db_guerra.yml`) |
+
+Sem o multiplicador de guerra (`job3_rune03` não é `gvg_castle`),
+`damagetaken = 10` já entrega os mesmos 10% finais que um castelo de verdade
+daria com `0,20 (guerra) × 0,50 (guardião)` — foi o próprio dono quem pediu
+essa conta, não uma dedução daqui. Dano bruto pra derrubar: 50.000.000 / 0,10
+= 500 milhões.
+
+### E um balão de quest
+
+A pedido do mesmo teste: a Criança (`menino_do_amuleto.txt`) ganhou um balão
+de fala repetindo "Quest" a cada 5 segundos (`npctalk`, mesma receita do
+balão de MVP em `crianca_de_comodo.txt` — `initnpctimer` + `OnTimer5000`).
+Não é por jogador (`npctalk` é visto por todo mundo perto, sem saber quem já
+aceitou), mesma simplificação da Alleria e do Edgard.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `npc/guerra/menino_do_amuleto.txt` | Criança: célula (142,186), balão "Quest" |
+| `npc/guerra/senha_da_sala_secreta.txt` | "Daran", falas do Bolãozão/Assessor, facing do Suad de teste, local da senha, números do guardião |
+| `db/re/mob_db.yml` | **novo** segundo `- Path:` no rodapé |
+| `db/guerra/mob_db_guerra.yml` | **novo** — `Attack: 5000` no 1287 |
+| `CLAUDE.md` | §2, a exceção do `mob_db.yml` com dois imports |
+| `PENDENCIAS.md` | §1s atualizada |

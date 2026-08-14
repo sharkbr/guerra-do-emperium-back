@@ -1,0 +1,68 @@
+###########################################################################
+# Guerra do Emperium - ajustes pontuais de combate no mob_db
+###########################################################################
+#
+# NAO CONFUNDIR com db/guerra/mob_db.yml, o vizinho: aquele e GERADO por
+# ferramentas/traduz_ptbr.py monstros e reescrito inteiro a cada rodada -
+# so tem JapaneseName. Este aqui e escrito a mao e nunca e tocado por
+# ferramenta nenhuma; existe para o resto do mob_db (ataque, defesa,
+# qualquer campo de combate) quando um NPC nosso precisa mudar um numero
+# sem editar o arquivo do rAthena.
+#
+# Entrou por causa de UM campo: Id 1287 (Soldier Guardian), Attack.
+#
+###### Por que via mob_db, e nao setunitdata no script #####################
+#
+# npc/guerra/senha_da_sala_secreta.txt spawna este guardiao com monster()
+# comum, fora de castelo, e queria ATQ media 5.000 por script, com
+# setunitdata(UMOB_ATKMIN/UMOB_ATKMAX). NAO FUNCIONA, e o motivo esta em
+# src/map/script.cpp: o handler de UMOB_ATKMIN/UMOB_ATKMAX escreve em
+# `md->base_status->rhw.atk` e dispara um recalculo com
+# `status_db.getSCB_BATTLE()` - e SCB_BATTLE EXCLUI SCB_BASE de proposito
+# (`SCB_BATTLE.set(); SCB_BATTLE.reset(SCB_BASE);`, src/map/status.hpp).
+# `status_calc_mob_` - a funcao que copia `base_status` para `status`, o
+# que o combate de fato le (`status_get_status_data` devolve `&md->status`,
+# NAO `&md->base_status`) - so roda `if (flag[SCB_BASE])`. Ou seja o
+# `setunitdata` grava no lugar errado e o recalculo que ele mesmo dispara
+# nunca copia aquilo para onde o dano e calculado. Medido em jogo em
+# 2026-08-15: com ATKMIN/ATKMAX configurados para 40.000-60.000 por
+# script, o guardiao bateu como se nada tivesse mudado (menos de 2.000 de
+# dano, perto do `Attack: 873` original do mob_db).
+#
+# UMOB_HP/UMOB_MAXHP funcionam porque o handler deles chama
+# `status_set_hp`/`status_set_maxhp`, que escrevem direto no status vivo -
+# nao dependem do recalculo. UMOB_DAMAGETAKEN funciona porque
+# `md->damagetaken` e um campo solto no `mob_data`, lido direto pelo
+# `battle_calc_damage` - tambem nao passa por base_status/status. So o ATQ
+# tem esse problema, e so por isso ele saiu do script e veio pra ca: o
+# `Attack` do mob_db E lido corretamente no SPAWN (o `status_calc_mob_`
+# que roda ali usa `status_calc_mob(md, SCO_FIRST)`, que E `getSCB_ALL()`,
+# com SCB_BASE incluido - o caminho normal, nao o do setunitdata).
+#
+###### O numero ##############################################################
+#
+# Pedido do dono, depois de testar em jogo (2026-08-15): "por volta de 5
+# mil de dano". `status_base_atk_min`/`_max` (src/map/status.cpp) tiram
+# min/max de 80%/120% do `Attack` do mob_db - `Attack: 5000` da 4.000 a
+# 6.000, media 5.000.
+#
+###### Isto NAO toca os guardioes de castelo de verdade #####################
+#
+# O Id 1287 tambem e o "Soldado" dos guardioes reais (guardioes_dos_
+# castelos.txt, Gerente do Castelo). Aqueles passam por
+# src/custom/guardiao_do_castelo.hpp, que ESCREVE `status->rhw.atk`/`atk2`
+# a partir de `conf/guerra/battle_guerra.txt` (`guardiao_atk_base`/
+# `_passo`/`_max`), IGNORANDO por completo o `Attack` do mob_db - e essa
+# escrita acontece toda vez que o guardiao nasce, absoluta, nao somada.
+# Mudar o `Attack` daqui nao muda nada la; so importa para quem spawnar
+# 1287 SEM passar pela escala (hoje, so o teste do guardiao).
+#
+###########################################################################
+
+Header:
+  Type: MOB_DB
+  Version: 5
+
+Body:
+  - Id: 1287
+    Attack: 5000
