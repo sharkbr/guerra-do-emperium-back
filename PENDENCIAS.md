@@ -1260,7 +1260,8 @@ quanto dano um golpe tira. É o que falta, e só se vê em jogo.
 
 **O que conferir em jogo, e por que cada um:**
 
-- **Se o Zelador aparece em `prt_gld 136,66`, e desenhado por inteiro.** O
+- **Se o Zelador aparece em `prt_gld 153,133`, e desenhado por inteiro**
+  (movido de 136,66 em 2026-08-14, a pedido do dono). O
   sprite `EP17_2_GUARDIAN_PARTS` (20679) foi conferido offline pelas três
   tabelas — `npcidentity.lub`, `jobname.lub` e o `.spr`/`.act` no GRF —, e
   `CLAUDE.md` §5 é explícito em que **as três darem OK não é prova de que
@@ -1449,10 +1450,16 @@ era calibragem — era um bug do engine (`setunitdata` de ATK/HIT/AMOTION/
 ADELAY escreve em `base_status`, o combate lê `status`, e o recálculo que o
 próprio `setunitdata` dispara **exclui de propósito** o flag que copiaria um
 no outro). Corrigido movendo o ATQ para `db/guerra/mob_db_guerra.yml` (novo -
-ver CLAUDE.md §2), que é lido certo no spawn. Números de hoje: HP 50 milhões,
-redução 90%, ATQ ~5.000 de média. Os detalhes completos, inclusive por que
-HIT/velocidade de ataque **não** foram consertados (decisão de escopo), estão
-no cabeçalho do `senha_da_sala_secreta.txt`.
+ver CLAUDE.md §2), que é lido certo no spawn.
+
+**Revisado em 2026-08-14, contra a tabela real de `guardiao_do_castelo.hpp`**
+(o pedido original de HP era de memória e não batia com o patamar 100 real).
+Números de hoje: HP 15 milhões (não 50), redução 90%, ATQ ~5.000 de média,
+ASPD 178 (AttackDelay 440/AttackMotion 220) e precisão ~575 (Dex 369) — os
+dois últimos deixaram de ser "decisão de escopo": foram consertados na mesma
+rodada, pelo mesmo caminho do ATQ (mover pro `mob_db_guerra.yml`, ver o
+cabeçalho de lá). Os detalhes completos estão no cabeçalho do
+`senha_da_sala_secreta.txt`.
 
 **O que ainda falta conferir:**
 
@@ -1461,8 +1468,10 @@ no cabeçalho do `senha_da_sala_secreta.txt`.
   `@reloadscript` (que também recarrega o `mob_db_guerra.yml` por ele estar
   no import do `mob_db.yml` — conferir se pega sem reiniciar, ou se precisa
   de `@reloadmobdb`/reinício) e medir o dano que o guardião dá: deve rondar
-  5.000 por golpe, não os menos-de-2.000 de antes. E que os 50 milhões de HP
-  com 90% de redução dão um combate longo, não instantâneo nem impossível.
+  5.000 por golpe, não os menos-de-2.000 de antes; que ele bate uns dois
+  golpes por segundo (ASPD 178); que ele acerta com folga (precisão ~575);
+  e que os 15 milhões de HP com 90% de redução dão um combate longo, não
+  instantâneo nem impossível.
 - **O balão "Quest" sobre a Criança** (`npctalk "Quest"` a cada 5s, pedido em
   2026-08-15) — nunca visto em jogo. Conferir se aparece e se o intervalo
   não incomoda.

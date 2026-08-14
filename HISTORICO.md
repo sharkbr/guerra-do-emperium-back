@@ -9002,4 +9002,81 @@ aceitou), mesma simplificação da Alleria e do Edgard.
 | `db/re/mob_db.yml` | **novo** segundo `- Path:` no rodapé |
 | `db/guerra/mob_db_guerra.yml` | **novo** — `Attack: 5000` no 1287 |
 | `CLAUDE.md` | §2, a exceção do `mob_db.yml` com dois imports |
+
+## Três acertos finais: a chegada da Sala Secreta, o guardião revisto e o Zelador mudou de lugar (2026-08-14)
+
+Três pedidos avulsos do dono, "pra deixar pronto pro deploy final".
+
+### 1. A chegada da Sala Secreta, quatro células mais perto do centro
+
+O Guarda de `auction_01 194,87` (`npc/guerra/guardas_do_centro.txt`) levava
+para `prt_in 129,116`; passou a levar para **`prt_in 129,108`**, nos dois
+ramos que fazem o `warp` (senha nova e "Entrar?" de quem já tem acesso). A
+célula foi conferida andável no `prt_in.gat` (extraído do `data.grf` do
+cliente, `ferramentas/grf.py`) antes de trocar.
+
+### 2. O guardião de teste — o HP da seção anterior estava de memória, e não batia
+
+Esta é uma CORREÇÃO da entrada logo acima ("O guardião de teste batia fraco").
+O dono tinha pedido 50 milhões de HP de memória; ao conferir contra a tabela
+real de `src/custom/guardiao_do_castelo.hpp` (a que os guardiões de castelo de
+verdade usam no patamar 100/defesa 100), viu que o número certo é **15
+milhões** — o mesmo teto da escala real. A redução continua em 90% (50% do
+guardião × 80% da guerra, multiplicado e não somado — já estava certo). E dois
+campos que a entrada anterior deixou de fora "por decisão de escopo" (Hit,
+AttackMotion, AttackDelay) ganharam o mesmo tratamento do ATQ: `Dex: 369` e
+`AttackDelay: 440` / `AttackMotion: 220` / `ClientAttackMotion: 220`, os
+quatro em `db/guerra/mob_db_guerra.yml`, ao lado do `Attack: 5000` que já
+estava lá. Resultado, pelas mesmas fórmulas do `.hpp` (ASPD 178 → amotion 220
+→ adelay 440; Hit de monstro = nível + DEX + 150 → 56 + 369 + 150 = 575):
+
+| | seção anterior | agora |
+|---|---|---|
+| HP | 50.000.000 | **15.000.000** |
+| redução | 90% | 90% (sem mudança) |
+| ATQ | ~5.000 | ~5.000 (sem mudança) |
+| ASPD | padrão do mob_db (~0,8 golpe/s) | **178** (~2,3 golpes/s) |
+| precisão | padrão do mob_db (309) | **~575** |
+
+Conferido que subir o `Dex` do 1287 não mexe em mais nada que importe aqui:
+`status.cpp` só usa `Dex` de `BL_MOB` no cálculo do `Hit` (linha 2635); o
+resto das fórmulas que usam `dex` são de `BL_PC`. E nada disto toca os
+guardiões de castelo de verdade — eles passam por
+`guardiao_do_castelo.hpp`, que escreve `amotion`/`adelay`/`hit` de forma
+absoluta, por cima de qualquer coisa que o `mob_db` (ou este arquivo) tenha.
+
+Dano bruto pra derrubar, com o HP novo: 15.000.000 / 0,10 = **150 milhões**
+(não mais 500).
+
+### 3. O Zelador dos Guardiões mudou de `prt_gld 136,66` para `153,133`
+
+Pedido direto do dono, sem explicação adicional — célula conferida andável no
+`map_cache.dat` (`db/map_cache.dat`, o grande; `prt_gld.gat` cru tem o bit DES
+e o `ferramentas/grf.py` não o lê, CLAUDE.md §5) antes de mover. O texto do
+cabeçalho de `guardioes_dos_castelos.txt` que descrevia a posição antiga como
+"a poucos passos da entrada do Kriemhild" foi reescrito — a nova célula não
+está mais perto daquela entrada (`129,65`), e o cabeçalho não deveria
+continuar afirmando isso.
+
+### Uma armadilha pega no processo: o `Edit` corrompeu acentos de verdade
+
+`guardioes_dos_castelos.txt` tem 24 bytes acentuados (cp1252) — ao contrário
+de `mob_db_guerra.yml` e `senha_da_sala_secreta.txt`, que por acaso não têm
+nenhum. Uma primeira tentativa de editar o cabeçalho com a ferramenta de
+edição do assistente trocou os 24 por `\xef\xbf\xbd` (U+FFFD) — exatamente a
+armadilha do CLAUDE.md §5. Pego na hora por medir `non-ascii bytes` antes e
+depois de cada edição (o hábito que a mesma seção recomenda); corrigido com
+`git checkout` do arquivo e reaplicado por script Python com âncora em
+cp1252/CRLF (medido, não suposto — o arquivo é CRLF, ao contrário de
+`senha_da_sala_secreta.txt`, que é LF puro).
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `npc/guerra/guardas_do_centro.txt` | destino do warp da Sala Secreta: 129,116 → 129,108 |
+| `db/guerra/mob_db_guerra.yml` | `Dex`, `AttackDelay`, `AttackMotion`, `ClientAttackMotion` no 1287 |
+| `npc/guerra/senha_da_sala_secreta.txt` | HP do guardião de teste: 50M → 15M; cabeçalho atualizado |
+| `npc/guerra/guardioes_dos_castelos.txt` | Zelador: 136,66 → 153,133; cabeçalho atualizado |
+| `PENDENCIAS.md` | seções 1o e 1s atualizadas com os números e a célula novos |
 | `PENDENCIAS.md` | §1s atualizada |

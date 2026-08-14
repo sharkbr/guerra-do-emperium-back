@@ -9,7 +9,9 @@
 # qualquer campo de combate) quando um NPC nosso precisa mudar um numero
 # sem editar o arquivo do rAthena.
 #
-# Entrou por causa de UM campo: Id 1287 (Soldier Guardian), Attack.
+# Entrou por causa de UM campo: Id 1287 (Soldier Guardian), Attack. Em
+# 2026-08-14 ganhou mais tres (AttackDelay, AttackMotion, ClientAttackMotion) e
+# um quarto emprestado (Dex) - ver a secao "VELOCIDADE E PRECISAO" mais abaixo.
 #
 ###### Por que via mob_db, e nao setunitdata no script #####################
 #
@@ -57,6 +59,43 @@
 # Mudar o `Attack` daqui nao muda nada la; so importa para quem spawnar
 # 1287 SEM passar pela escala (hoje, so o teste do guardiao).
 #
+###### VELOCIDADE E PRECISAO - pedido do dono, 2026-08-14 ##################
+#
+# O guardiao do teste (npc/guerra/senha_da_sala_secreta.txt) tinha HP e
+# reducao certos mas nascia com a velocidade e a precisao PADRAO do mob_db
+# (AttackDelay 1288/AttackMotion 288, uns 0,8 golpe por segundo; Hit
+# 56+103+150 = 309) porque setunitdata(UMOB_HIT/UMOB_AMOTION/UMOB_ADELAY) tem
+# o MESMO bug do ATQ (ver a secao de cima) e Hit nem e campo do mob_db - so
+# sai de nivel+DEX (CLAUDE.md secao 5, "no renewal a chance de acerto..."). O
+# pedido de hoje e casar com o patamar 100 da escala de castelo de verdade
+# (conf/guerra/battle_guerra.txt / src/custom/guardiao_do_castelo.hpp):
+# ASPD 178 e precisao na faixa 550-600. ATQ continua em 5.000 (nao 50.000 -
+# o guardiao de castelo de verdade e mais forte de proposito) e a reducao
+# continua em 90% (o mesmo "50% multiplicado pelos 80% da guerra" que da a
+# escala real, ja implementado abaixo no script).
+#
+# ASPD -> AttackDelay/AttackMotion: MESMA FORMULA do guardiao_do_castelo.hpp
+# (o cabecalho de la explica por extenso). amotion = 2000 - ASPD*10; adelay =
+# amotion*2. ASPD 178 -> amotion 220, adelay 440 - os MESMOS numeros que a
+# escala de castelo usa no patamar 10 (nao e coincidencia, e o mesmo alvo).
+# ClientAttackMotion foi igualado ao AttackMotion pelo mesmo motivo do
+# `status->clientamotion = amotion` do .hpp: o Soldado nasce com 624 no
+# cliente, e deixado assim a animacao ficaria mais lenta que os golpes de
+# verdade.
+#
+# Precisao -> Dex: nao ha campo de Hit no mob_db, so Dex (Hit = nivel + Dex +
+# 150 para BL_MOB, src/map/status.cpp:2635 - conferido, e o mesmo numero que
+# CLAUDE.md secao 5 ja registrava para este monstro, 309, com o Dex original
+# de 103). Dex: 369 da Hit = 56 + 369 + 150 = 575, no meio da faixa pedida.
+# CONFERIDO que Dex de monstro nao entra em outra formula que nos importe
+# aqui (status.cpp: so PC usa dex em mdef2/flee2/critical; BL_MOB usa dex so
+# no Hit da linha 2635) - subir o Dex nao muda mais nada neste guardiao.
+#
+# NADA DISTO TOCA OS GUARDIOES DE CASTELO DE VERDADE, pela mesma razao do
+# Attack: eles passam por guardiao_do_castelo.hpp, que escreve
+# status->amotion/adelay/hit de forma ABSOLUTA a partir da conf, por cima do
+# que quer que o mob_db (ou este arquivo) tenha posto.
+#
 ###########################################################################
 
 Header:
@@ -66,3 +105,7 @@ Header:
 Body:
   - Id: 1287
     Attack: 5000
+    AttackDelay: 440
+    AttackMotion: 220
+    ClientAttackMotion: 220
+    Dex: 369

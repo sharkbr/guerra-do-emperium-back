@@ -1,9 +1,10 @@
 //===== Guerra do Emperium ==================================================
 //= Zelador dos Guardioes - os dezenove castelos-museu
 //===========================================================================
-//= Fica em prt_gld 136,66, no Feudo de Prontera, a poucos passos da entrada
-//= do Kriemhild. Um NPC so cuida dos dezenove: o comando `guardian` recebe o
-//= mapa como argumento, entao nao ha motivo para um NPC por castelo.
+//= Fica em prt_gld 153,133, no Feudo de Prontera (movido de 136,66 em
+//= 2026-08-14, a pedido do dono). Um NPC so cuida dos dezenove: o comando
+//= `guardian` recebe o mapa como argumento, entao nao ha motivo para um NPC
+//= por castelo.
 //===========================================================================
 //
 //  O QUE ELE FAZ
@@ -132,7 +133,7 @@
 //  `mobdb_checkid` ANTES de `npcdb_checkid`.
 //===========================================================================
 
-prt_gld,136,66,4	script	Zelador dos Guardiões::ZeladorDosGuardioes	EP17_2_GUARDIAN_PARTS,{
+prt_gld,153,133,4	script	Zelador dos Guardiões::ZeladorDosGuardioes	EP17_2_GUARDIAN_PARTS,{
 	mes "[Zelador dos Guardiões]";
 	mes "Estes castelos não têm mais dono, nem Emperium, nem tesouro. Só os guardiões ficaram - e ninguém mandou que parassem.";
 	next;

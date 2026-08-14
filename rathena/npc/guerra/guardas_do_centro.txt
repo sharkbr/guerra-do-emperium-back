@@ -142,7 +142,7 @@
 //=   >= 12   "Entrar na Sala Secreta?" Sim/Nao, sem pedir a
 //=            senha de novo - a entrada ja foi liberada uma vez
 //=
-//= O destino e `prt_in 129,116`, a quina noroeste do salao da
+//= O destino e `prt_in 129,108`, no salao da
 //= Sala Secreta (sala_secreta_da_ordem.txt) - a mesma celula que
 //= PENDENCIAS.md ja recomendava ("poe o jogador de frente para o
 //= Guardiao"), conferida andavel no prt_in.gat antes de usar.
@@ -240,7 +240,7 @@ auction_01,194,87,4	script	Guarda#co_can_l	966,{
 			mes "Bem vindo, milord!";
 			SalaSecretaOrdem = 12;
 			close2;
-			warp "prt_in",129,116;
+			warp "prt_in",129,108;
 			end;
 		}
 		mes "[Guarda]";
@@ -255,7 +255,7 @@ auction_01,194,87,4	script	Guarda#co_can_l	966,{
 	next;
 	if (select("Sim:Nao") == 1) {
 		close2;
-		warp "prt_in",129,116;
+		warp "prt_in",129,108;
 		end;
 	}
 	close;
