@@ -371,20 +371,26 @@ quebrado, o personagem volta para lá ao morrer.
 
 ---
 
-## 1e. A Criança de Comodo — duas estreias e uma promessa
+## 1e. A Criança de Comodo — duas estreias
 
 Aberto em 2026-08-08, com a NPC de `comodo 207,148`
 (`npc/guerra/crianca_de_comodo.txt`). A NPC em si está na tabela do §1, com
 todas as outras que faltam ver no jogo. O que fica aqui é o que **não** se
 resolve olhando a NPC aparecer.
 
-**1. O link de navegação é o primeiro do projeto.** A marcação "Fica aqui" da
-segunda caixa é uma etiqueta `<NAVI>` dentro do `mes`, e quem a lê é o
-**cliente**, não o servidor — então nada no log do map-server vai dizer se
-funcionou. O que provar, nesta ordem: (1) o texto sai **azul e sublinhado**, não
-com as etiquetas à mostra — se aparecer `<NAVI>` cru na tela, este cliente não
-tem o recurso e o conserto é tirar a etiqueta; (2) clicar traça o caminho até
-`comodo 208,187` no minimapa.
+**1. Os links de navegação são os primeiros do projeto, e desde 2026-08-13 são
+dois.** "Fica aqui o Corredor" e "Fica aqui" são etiquetas `<NAVI>` dentro do
+`mes`, e quem as lê é o **cliente**, não o servidor — então nada no log do
+map-server vai dizer se funcionou. O que provar, nesta ordem: (1) o texto sai
+**azul e sublinhado**, não com as etiquetas à mostra — se aparecer `<NAVI>` cru
+na tela, este cliente não tem o recurso e o conserto é tirar a etiqueta; (2)
+clicar no primeiro traça o caminho até `comodo 208,187` (o Espectro) e clicar no
+segundo até `comodo 154,98` (a porta leste do Cassino) no minimapa.
+
+Os dois links convivem na mesma janela e apontam para lados opostos da cidade —
+o Espectro fica ao norte, o Cassino a oeste. **Clicar num e depois no outro** é o
+teste que separa "o link funciona" de "o link é decorativo": se o segundo clique
+não redesenhar o caminho, o marcador está preso no primeiro alvo.
 
 Se sair o caminho mas sem marcador, é o campo do ícone (`000`, sem ícone) — o
 cabeçalho do arquivo explica os três números e o que trocar. Se der para clicar
@@ -394,41 +400,30 @@ em `cliente\data\luafiles514\lua files\navigation\` é do ROenglishRE e pode
 estar descasado do GRF de 2021 — a armadilha de sempre.
 
 **2. O balão de MVP nunca foi disparado por NPC nosso.** É `specialeffect
-EF_MVP` (68) num `OnTimer4000`, e o caminho é outro que o do emote da Alleria:
-aquilo é `emotion`, isto é efeito de tela. Deve subir de 4 em 4 segundos sozinho,
+EF_MVP` (68) num `OnTimer3000`, e o caminho é outro que o do emote da Alleria:
+aquilo é `emotion`, isto é efeito de tela. Deve subir de 3 em 3 segundos sozinho,
 sem clicar. **Não confundir com o emote da Alleria**, do outro lado da cidade: o
 dela é um balão de conversa com a mão chamando; o desta é o banner de MVP, o
 mesmo que sobe quando um chefe morre.
 
-**3. A fala já promete o Cassino, que ainda não existe.** A segunda caixa termina
-em "O Cassino também tá funcionando, com Moeda Nova!". Em 2026-08-08 **não há
-cassino nenhum no servidor** — nem NPC, nem script, nem linha no
-`scripts_guerra.conf`.
+**3. O sprite mudou em 2026-08-13**, a pedido do dono: era 944 (`4_M_DST_CHILD`,
+o menino da própria Comodo), passou a **962** (`4_M_RUSCHILD`, o menino de
+Rachel). As duas conferências de sempre foram feitas — `JT_4_M_RUSCHILD = 962` no
+`npcidentity.lub` deste cliente e no `src/map/npc.hpp`, com
+`data\sprite\npc\4_m_ruschild.spr` e `.act` na tabela do `data.grf`. O que falta
+é olhar: **sprite de criança fica enterrado no chão com facilidade** (a
+armadilha do `.act`, `CLAUDE.md` §5), e o 962 nunca foi usado neste servidor.
 
-**Isso é adiantamento deliberado, não erro:** o dono do projeto confirmou no
-mesmo dia que o cassino vem nos próximos dias, e a coordenada da Criança foi
-escolhida em cima disso — `207,148` é o canto de aposta de Comodo. A frase fica.
+**A promessa do Cassino fechou.** A segunda caixa prometia, desde 2026-08-08, um
+cassino que não existia — adiantamento deliberado, e a coordenada da Criança foi
+escolhida em cima disso (`207,148` é o canto de aposta de Comodo). O **Cassino
+Casa Rosa** entrou em 2026-08-12 (`npc/guerra/cassino_de_comodo.txt`, §1m), e em
+2026-08-13 a frase ganhou o nome dele e o link para a porta.
 
-Enquanto o cassino não nasce, a Criança é a única coisa no servidor que fala
-dele. Se o plano mudar, o conserto é apagar **uma linha** — a última da segunda
-caixa do arquivo.
-
-A Moeda Nova citada na frase essa existe, e tem duas fontes (Logue e Ganhe, e a
-Alleria de `comodo 221,182`). É só o cassino que falta.
-
-### O que o canto de aposta já tem, para quem for construir
-
-O rAthena põe em Comodo o par de `npc/other/comodo_gambling.txt`, e ele fica
-exatamente ali: a **Devellin** em `204,148` (três células da Criança), que só
-fala da obsessão da Kachua por diamante, e a **Kachua** em `219,158`, que troca
-Diamante de 3 Quilates por item aleatório. É o que a cidade tem de cassino hoje —
-e está **em inglês**, como todo NPC do rAthena que a frente do §3 ainda não
-alcançou.
-
-Decidir cedo se o Cassino novo convive com esses dois, substitui um deles pela
-receita de sempre (`disablenpc` no original + duplicata nossa em `npc/guerra/`),
-ou ignora os dois. As três saídas são legítimas; o que custa caro é descobrir
-que existiam depois de plantar o NPC novo em cima.
+O par de `npc/other/comodo_gambling.txt` do rAthena continua exatamente ali — a
+**Devellin** de `204,148` (três células da Criança) e a **Kachua** de `219,158`,
+as duas em inglês, à espera da frente de tradução do §3. O Cassino nasceu no
+`cmd_in02` e **convive** com elas; não houve substituição.
 
 ---
 

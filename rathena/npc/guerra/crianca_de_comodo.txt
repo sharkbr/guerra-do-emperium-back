@@ -42,10 +42,16 @@
 //= mesmo jeito que o Saback e a placa que manda ate a Alleria.
 //=
 //= O que ela faz de diferente de toda outra NPC de fala do
-//= projeto e o LINK DE NAVEGACAO: "Fica aqui" e clicavel, e
-//= tracar o caminho ate o Espectro no minimapa e a resposta a
-//= pergunta dela mesma ("Voce nao sabe aonde e?").
-//===== O link de navegacao - o primeiro do projeto ==========
+//= projeto sao os LINKS DE NAVEGACAO: "Fica aqui o Corredor" e
+//= "Fica aqui" sao clicaveis, e tracar o caminho no minimapa e a
+//= resposta a pergunta dela mesma ("Voce nao sabe aonde e?").
+//= O primeiro leva ao Espectro; o segundo, a porta do Cassino.
+//===== Os links de navegacao - os primeiros do projeto ======
+//= SAO DOIS, um por caixa: o da primeira aponta o Espectro da
+//= Morte (comodo 208,187) e o da segunda aponta a porta leste
+//= do Cassino Casa Rosa (comodo 154,98). O segundo entrou em
+//= 2026-08-13, junto com a troca de sprite.
+//=
 //= A sintaxe e uma etiqueta HTML dentro do proprio `mes`, lida
 //= pelo CLIENTE, nao pelo servidor (doc/script_commands.txt,
 //= secao "Navigation", a partir do cliente 2011-10-10a):
@@ -81,6 +87,14 @@
 //= Mapa fora dessa tabela nao tem rota, e a falha seria calada.
 //= Vale a pena lembrar disso no dia de apontar um link para
 //= mapa nosso: o vis_h01 do Corredor, por exemplo, NAO esta la.
+//=
+//= E POR ISSO QUE O LINK DO CASSINO APONTA PARA `comodo`, e nao
+//= para o salao. O cassino mora no cmd_in02, mapa de interior; o
+//= que o jogador precisa achar e a PORTA. O 154,98 e a celula ao
+//= lado do warp cmd_casino2-1 (comodo 153,97 -> cmd_in02 212,97,
+//= npc/warps/cities/comodo.txt), a porta leste - que e a que cai
+//= no salao de chegada, o primeiro andar. Celula conferida no
+//= comodo.gat deste cliente: tipo 0, andavel, altura 7,19.
 //===== O balao de MVP =======================================
 //= Ela solta o balao de MVP - o mesmo que sobe quando um chefe
 //= morre - de 3 em 3 segundos, sozinha, sem ninguem clicar.
@@ -116,42 +130,44 @@
 //=
 //= O timer roda com a praia vazia, e nao custa nada parado: o
 //= efeito so viaja para quem estiver com ela na tela.
-//===== A fala cita um Cassino que ainda nao existe ==========
-//= A segunda caixa termina em "O Cassino tambem ta funcionando,
-//= com Moeda Nova!". Em 2026-08-08, quando esta NPC foi escrita,
-//= NAO HAVIA cassino nenhum no servidor - nem NPC, nem script,
-//= nem entrada no scripts_guerra.conf.
+//===== O Cassino que ela cita ===============================
+//= A segunda caixa termina apontando o Cassino Casa Rosa. Em
+//= 2026-08-08, quando esta NPC foi escrita, NAO HAVIA cassino
+//= nenhum no servidor - a fala entrou adiantada de proposito,
+//= porque o dono confirmou no mesmo dia que ele vinha, e a
+//= coordenada desta NPC foi escolhida em cima disso (ela esta no
+//= canto de aposta de Comodo, tres celulas da Devellin).
 //=
-//= A FRASE FICA DE PROPOSITO: o dono do projeto confirmou no
-//= mesmo dia que o cassino vem nos proximos dias, e a coordenada
-//= desta NPC foi escolhida em cima disso - ela esta no canto de
-//= aposta de Comodo, tres celulas da Devellin. A fala esta
-//= adiantada, nao errada.
-//=
-//= Quem chegar aqui antes do cassino existir e achar que e bug:
-//= nao e, esta no PENDENCIAS.md. Se o cassino for cancelado, o
-//= conserto e apagar UMA linha - a ultima da segunda caixa.
+//= O CASSINO EXISTE DESDE 2026-08-12 (npc/guerra/cassino_de_
+//= comodo.txt), no cmd_in02, e desde 2026-08-13 a frase traz o
+//= nome dele e o link para a porta. A promessa fechou.
 //=
 //= A Moeda Nova (30998) citada na frase ESSA existe, e tem duas
 //= fontes: o Logue e Ganhe (db/guerra/attendance.yml) e a Alleria
 //= de comodo 221,182. Gasta-se na Maquina - inclusive na de
 //= comodo 214,185, a poucos passos do Espectro.
 //===== Notas ================================================
-//= O sprite e 944 (4_M_DST_CHILD), o menino de Comodo - e o
-//= sprite da propria cidade, que e o que faz ela parecer moradora
-//= e nao NPC plantada.
+//= O sprite e 962 (4_M_RUSCHILD), o menino de Rachel. Era 944
+//= (4_M_DST_CHILD), o menino da propria Comodo, ate 2026-08-13,
+//= quando o dono pediu a troca. Perdeu-se com isso o argumento
+//= de "moradora e nao NPC plantada"; ganhou-se uma crianca que
+//= nao se confunde com as outras da praia.
 //=
 //= AS DUAS CONFERENCIAS DE SEMPRE, feitas mesmo com o numero
 //= vindo pronto no pedido (foi assim que o 4_M_JOB_KNIGHT caiu em
 //= 2026-08-05):
 //=
-//=   npcidentity.lub DESTE cliente   JT_4_M_DST_CHILD = 944
-//=   data.grf                        4_m_dst_child.spr e .act
+//=   npcidentity.lub DESTE cliente   JT_4_M_RUSCHILD = 962
+//=   data.grf                        4_m_ruschild.spr e .act
 //=                                   em data\sprite\npc\
 //=
-//= O 944 tambem bate com o JT_4_M_DST_CHILD do src/map/npc.hpp do
-//= rAthena, ancorado no 966 do 4_M_RUSKNIGHT e no 612 do
-//= 4_F_PINKWOMAN, que ja estao em jogo.
+//= (O .act aparece com o bit de DES no grf.py. Isso NAO e ausencia
+//= - o que prova presenca e o nome estar na tabela do GRF. Ver
+//= CLAUDE.md secao 5.)
+//=
+//= O 962 tambem bate com o JT_4_M_RUSCHILD do src/map/npc.hpp do
+//= rAthena, ancorado no 944 do 4_M_DST_CHILD e no 966 do
+//= 4_M_RUSKNIGHT, que ja estao em jogo.
 //=
 //= Facing 4 (sul), como a maioria das NPCs de dialogo do projeto.
 //=
@@ -168,17 +184,18 @@
 //= Mudanca neste arquivo pega com @reloadscript.
 //============================================================
 
-comodo,207,148,4	script	Criança	944,{
+comodo,207,148,4	script	Criança	962,{
 	mes "[Criança]";
-	mes "O Corredor Fantasma fica aberto 24!!";
-	mes "Quando eu pegar level vou ver se meu pai está lá.";
+	mes "O Corredor Fantasma fica aberto 24/7!!";
+	mes "Quando eu for mais velho vou ver se meu pai tá lá!!";
 	next;
 	mes "[Criança]";
-	// O link de navegacao. Os tres numeros do fim estao
+	// Os DOIS links de navegacao. Os tres numeros do fim estao
 	// explicados no cabecalho - o 0 do meio e "sem icone", e o
-	// 0 do fim e "nao abrir a janela grande".
-	mes "Você não sabe aonde é? <NAVI>^4D4DFFFica aqui^000000<INFO>comodo,208,187,0,000,0</INFO></NAVI>.";
-	mes "O Cassino também tá funcionando, com Moeda Nova!";
+	// 0 do fim e "nao abrir a janela grande". O texto de dentro
+	// do link e ASCII puro de proposito, por causa do ^4D4DFF.
+	mes "Você não sabe aonde é? <NAVI>^4D4DFFFica aqui o Corredor^000000<INFO>comodo,208,187,0,000,0</INFO></NAVI>.";
+	mes "O Cassino Casa Rosa também tá funcionando com Moeda Nova! <NAVI>^4D4DFFFica aqui^000000<INFO>comodo,154,98,0,000,0</INFO></NAVI>!";
 	close;
 
 OnInit:

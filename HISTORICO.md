@@ -3409,6 +3409,60 @@ Escrita, registrada no `scripts_guerra.conf` e conferida offline. **Nunca subiu
 em jogo** — está no `PENDENCIAS.md` §1, e as duas estreias (o link de navegação e
 o balão de MVP) têm roteiro próprio no §1e.
 
+### 2026-08-13 — sprite novo, e a promessa do Cassino fechada
+
+Quatro mudanças pedidas de uma vez, todas no mesmo arquivo.
+
+**O sprite passou de 944 (`4_M_DST_CHILD`) para 962 (`4_M_RUSCHILD`)**, o menino
+de Rachel. O pedido veio com o nome do sprite e a ressalva de que ele já tinha
+sido conferido; as duas conferências de sempre foram refeitas assim mesmo, e
+custaram uma rodada cada:
+
+- `npcidentity.lub` **deste cliente** (extraído do `data.grf`, desmontado com o
+  `luadis.py`): `JT_4_M_RUSCHILD = 962`.
+- `data.grf`: `data\sprite\npc\4_m_ruschild.spr` e `.act` estão na tabela. O
+  `.act` vem com o bit de DES, o que **não** é ausência — o que prova presença é
+  o nome estar na tabela (`CLAUDE.md` §5).
+- `src/map/npc.hpp` bate: o `JT_4_M_RUSCHILD` cai 18 posições depois do
+  `JT_4_M_DST_CHILD` (944) e 4 antes do `JT_4_M_RUSKNIGHT` (966), que já está em
+  jogo. 944 + 18 = 962.
+
+Perdeu-se com a troca o argumento que justificava o 944 — "é o sprite da própria
+cidade, e é o que faz ela parecer moradora e não NPC plantada". Ganhou-se uma
+criança que não se confunde com as outras da praia. A decisão foi do dono.
+
+**A fala mudou nas duas caixas.** "24!!" virou "24/7!!", que é como se diz; e
+"Quando eu pegar level" virou "Quando eu for mais velho", que é o que uma criança
+diria — a fala de criança é de propósito, e o troco não mexeu nisso.
+
+**O link do Corredor ganhou a palavra que faltava.** Era "Fica aqui"; passou a
+"Fica aqui o Corredor". Sem ela a segunda caixa tinha dois "Fica aqui" e nada
+dizia qual levava aonde.
+
+**E entrou o SEGUNDO link de navegação do projeto**, o do Cassino — que é o que
+fecha a promessa de 2026-08-08 registrada logo acima. A frase passou a "O Cassino
+Casa Rosa também tá funcionando com Moeda Nova! Fica aqui!", com o nome do
+cassino que nasceu em 2026-08-12 e a marcação clicável.
+
+O alvo é `comodo 154,98`, e o **por quê** é o que interessa a quem for repetir: o
+Cassino mora no `cmd_in02`, mapa de interior, e o que o jogador precisa achar é a
+**porta**. O `154,98` é a célula ao lado do warp `cmd_casino2-1`
+(`comodo 153,97` → `cmd_in02 212,97`, `npc/warps/cities/comodo.txt`), a porta
+leste — a que cai no salão de chegada, o primeiro andar. Célula conferida no
+`comodo.gat` deste cliente: tipo 0, andável, altura 7,19.
+
+**Apontar o link para dentro do `cmd_in02` seria o erro barato de cometer**: o
+`<NAVI>` depende da tabela `navi_map` do cliente, e mapa fora dela não tem rota —
+com falha calada. O `comodo` está lá; interior de cidade é outra conversa, e não
+precisou ser respondida porque a porta resolve.
+
+O arquivo é cp1252/LF: a edição foi por script, com âncora única e `assert`, como
+manda o `CLAUDE.md` §5. Conferido depois de gravar — nenhum U+FFFD, LF
+preservado, acentos íntegros, e toda linha de cabeçalho ainda começando com `//`.
+
+**Falta ver em jogo**, inclusive o sprite: criança se enterra no chão com
+facilidade (a armadilha do `.act`), e o 962 nunca foi usado neste servidor.
+
 ---
 
 ## A rodada de 2026-08-08 — dez pedidos numa tacada
