@@ -168,7 +168,25 @@ nesta máquina, e some em cliente novo.
 
 ## 5. Fase B — provisionar o servidor (do Mac)
 
-### Etapa 3 — a máquina ⬜
+### Etapa 3 — a máquina ✅ (2026-08-14)
+
+**Feito:** droplet DigitalOcean `libraro-server`, **138.197.155.31**, Ubuntu
+24.04.4 LTS, **x86_64** (atende a regra abaixo). 1 vCPU `DO-Regular`
+compartilhada, 961 MB de RAM, 24 GB de disco.
+
+É menor do que o recomendado, **de propósito**: a decisão do dono em 2026-08-14
+foi abrir como servidor de teste, com ~20 jogadores simultâneos, e escalar
+depois se crescer. A conta que sustentou isso: 20 jogadores custam ~4 MB de RAM
+(a `map_session_data` dá 100–200 KB por personagem) e quase nada de CPU — o
+map-server gasta CPU com IA de monstro, e o rAthena só roda a IA cara
+(`mob_ai_sub_hard`) para monstro **perto de jogador**. O que pesaria de verdade
+é a Guerra do Emperium, e a nossa é de **um castelo só**.
+
+O aperto real é a **compilação**, não a operação: `g++ -O2` numa unidade grande
+do map-server chega perto de 1 GB sozinho. Resolvido com **2 GB de swap**
+(Etapa 4). Medir o consumo real depois de os quatro servidores subirem.
+
+
 
 **x86_64, não ARM.** Em ARM (Graviton, Ampere) o `char` é *unsigned* por
 padrão, e isso é fonte real de bug silencioso em código C++ com a idade do
@@ -178,7 +196,44 @@ Debian 12 ou Ubuntu LTS. Dimensionar depois de medir — servidor de RO é mais
 sensível a CPU de núcleo único (o map-server é essencialmente uma thread) do que
 a quantidade de núcleos.
 
-### Etapa 4 — SO base e segurança ⬜
+### Etapa 4 — SO base e segurança ✅ (2026-08-14)
+
+**Automatizada em `ferramentas/provisiona.sh`**, idempotente, rodada do Mac com
+`ssh libraro 'bash -s' < ferramentas/provisiona.sh`.
+
+Feito: swap de 2 GB (+ `vm.swappiness=10`), usuário de serviço **`ragnarok`**
+sem sudo dono de `/opt/guerra-do-emperium`, chave SSH copiada do root, `ufw`
+ativo abrindo só SSH/6900/6121/5121/80/443, e o endurecimento do SSH
+(`ssh libraro 'bash -s -- endurece' < ferramentas/provisiona.sh`).
+
+**Quem é quem, e por quê** — decisão do dono, 2026-08-14, e ela desvia da letra
+desta etapa de propósito:
+
+| Usuário | Papel | Privilégio |
+|---|---|---|
+| `root` | administra: scripts de atualização, `systemctl`, `apt` | entra **só por chave** (`prohibit-password`) |
+| `ragnarok` | roda os quatro servidores | **nenhum**, sem sudo |
+
+A etapa pedia "root login desabilitado". Não foi o que se fez, e a razão é que
+os dois argumentos clássicos contra o root **não se aplicam aqui**: força bruta
+morre com `PasswordAuthentication no` (não se adivinha chave ed25519), e rastro
+de auditoria não tem a quem servir com **um** operador. O que um usuário com
+`sudo` daria a mais seria o quebra-molas de digitar `sudo` — ergonomia, não
+segurança, ainda mais com o sudo sem senha que a conta teria.
+
+**A separação que importa foi mantida inteira:** o `ragnarok` não tem sudo. O
+map-server processa pacote de gente anônima e o web-server recebe upload de
+arquivo; são eles que um dia levam um estouro. O atacante cai no usuário do
+processo e **ali fica**, em arquivos que voltam com um `git pull`.
+
+Consequência prática para o `atualiza_servidor.sh`: rodando como root, ele
+**não pode** fazer `git pull` direto no repositório do `ragnarok` — os arquivos
+nasceriam `root:root` e o git ainda recusa com *"dubious ownership"*. A parte do
+jogo vai com `runuser -u ragnarok`, só o `systemctl` fica como root.
+
+**O perímetro inteiro é a chave privada do Mac** (`~/.ssh/ssh-libraro-key`), que
+não tem passphrase — de propósito, para o deploy ser automatizável. Backup dela,
+quando houver, criptografado.
 
 Antes de qualquer coisa do rAthena:
 
@@ -192,7 +247,12 @@ Antes de qualquer coisa do rAthena:
 - **`8888` (web-server) também não é exposta direta** — vai atrás do nginx na
   Etapa 8. Ele recebe upload de arquivo de usuário anônimo num HTTP embutido.
 
-### Etapa 5 — dependências e a primeira compilação ⬜
+### Etapa 5 — dependências e a primeira compilação 🟡 (2026-08-14, falta compilar)
+
+**Dependências instaladas** pelo `ferramentas/provisiona.sh`: `build-essential`
+(GCC 13.3), `zlib1g-dev`, `libmariadb-dev`, `libpcre3-dev`, `git`, `make`,
+`pkg-config`, mais `mariadb-server`, `nginx` e `ufw`. **A compilação ainda não
+foi feita** — é o `ferramentas/atualiza_servidor.sh`.
 
 **É o marco de risco do plano.** É aqui que se descobre se o código custom passa
 pelo GCC — e, pela §2, o esperado é que passe.
@@ -220,7 +280,21 @@ rAthena, parar e pensar — a lei da §2 vale aqui também.
 **Como saber que deu certo:** os quatro binários existem
 (`login-server`, `char-server`, `map-server`, `web-server`).
 
-### Etapa 6 — banco ⬜
+### Etapa 6 — banco 🟡 (2026-08-14, falta rodar os `.sql`)
+
+**Feito pelo `ferramentas/provisiona.sh`:** MariaDB 10.11.14 escutando só em
+`127.0.0.1`, banco `guerra` e usuário `guerra`@localhost com senha de 32
+caracteres em `/root/senha-banco.txt` (modo 600, fora do git).
+
+Charset fixado **antes** de qualquer tabela nascer, que é o ponto do passo 2
+abaixo. Conferido com o teste que a etapa pede, e com bytes de verdade: um
+`x'4D61E7E3'` ("Maçã" em cp1252) gravado e lido de volta **byte por byte**,
+`CHARSET(t) = latin1`. Duas afinações para a máquina de 1 GB:
+`performance_schema = OFF` (devolve 100–200 MB) e `innodb_buffer_pool_size`
+fixo em 96 MB.
+
+**Falta rodar os quatro `.sql`** do passo 4 — dependem do repositório estar
+clonado.
 
 **Nasce vazio.** Não há migração de HML — ver §2.
 

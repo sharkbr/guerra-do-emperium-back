@@ -938,6 +938,34 @@ Produziram diagnóstico falso e custaram retrabalho:
   (`char name[12]; int16 xs; int16 ys; int32 len;`) tem 20 e esse não tem
   surpresa. Ver §5, entrada dos TRÊS `map_cache.dat`, para saber em qual deles
   procurar.
+- **No `sshd_config` o PRIMEIRO valor vence, não o último — e isso inverte o
+  sentido do número no nome do arquivo em `sshd_config.d/`.** É o contrário do
+  `nginx`, do `sysctl` e de praticamente tudo que usa pasta `.d`, onde o último
+  a falar ganha. O glob carrega em ordem alfabética, e a imagem Ubuntu da
+  DigitalOcean já traz `50-cloud-init.conf` e `60-cloudimg-settings.conf`: um
+  drop-in nosso chamado `99-` **perderia para os dois, calado** — o arquivo
+  existe, o `sshd -t` aprova, e a diretiva simplesmente não vale. Por isso o
+  nosso é `10-guerra.conf`. Entre o drop-in e o `sshd_config` principal não há
+  disputa: o `Include` está na linha 12 e vence o que vier depois. Medido em
+  2026-08-14. **A conferência que decide é `sshd -T`**, que imprime a
+  configuração efetiva — ler o arquivo não prova nada. Cuidado com um
+  sinônimo que engana na saída: `prohibit-password` é reimpresso como
+  `without-password`.
+- **Sessão SSH já aberta não prova endurecimento nenhum.** Ela foi autenticada
+  antes da mudança e continua viva de propósito — é o que impede o tiro no pé.
+  Testar sempre em **conexão nova**, e testar também o que deve FALHAR
+  (`ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no`), não
+  só o que deve funcionar.
+- **`tr -dc … | head -c N` mata o script inteiro sob `set -o pipefail`.** O
+  `head` fecha o cano ao completar os N bytes, o `tr` morre de **SIGPIPE**
+  (exit 141), o `pipefail` propaga e o `set -e` encerra tudo — **sem imprimir
+  uma linha**, porque SIGPIPE é silencioso. Parece que o script "terminou" no
+  meio. Para gerar senha, `openssl rand -hex 16`, que não usa cano. Custou duas
+  rodadas em 2026-08-14 no `provisiona.sh`.
+- **O `needrestart` do Ubuntu 24.04 reinicia serviço sozinho durante o `apt`, e
+  o `ssh.service` está na lista dele.** Script de provisionamento rodado *por*
+  SSH pode ter a própria conexão derrubada no meio da instalação. Exportar
+  `NEEDRESTART_SUSPEND=1` antes do `apt`.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
