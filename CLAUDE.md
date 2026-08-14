@@ -957,6 +957,7 @@ Produziram diagnóstico falso e custaram retrabalho:
 | `ferramentas/LEIAME.md` | uma seção por ferramenta | só a seção da ferramenta |
 | `CUSTOMIZACAO-VISUAL.md` | frente visual (cidade destruída) | só a seção |
 | `REDUCAO-DE-DANO.md` | o que entra e o que escapa das duas reduções — a de cartas (resistência a humano) e a **geral de 80%** de guerra e PvP; a §1d é o inventário fechado do dano que escapa (veneno, sangramento e irmãos) | consulta, só a seção — **antes de discutir número de PvP** |
+| `IMPLANTACAO.md` | o plano de subir para o servidor Linux — etapas, o que roda em qual máquina, e a regra de escopo do Mac | **§1 inteira antes de qualquer sessão no Mac**; depois só a etapa |
 | `CATALOGO-*.md` | o que está à venda, modelos, retratos | consulta |
 
 **Ordem para uma tarefa nova:** `CLAUDE.md` → `scripts_guerra.conf` (o que já
@@ -1003,3 +1004,31 @@ natureza do que se escreve, não por quando:
   projeto e o que o faz navegável.
 - Datas sempre **absolutas** (`2026-08-07`), nunca "ontem" ou "semana passada".
 - Nunca colar senha real em arquivo versionado. Senhas vivem em `conf/import/`.
+
+## 9. Se esta sessão está rodando no Mac
+
+**Desde 2026-08-14 o projeto trabalha em três máquinas**, com papéis que não se
+sobrepõem: o **Windows** faz tudo que o jogo lê e tudo que precisa do cliente; o
+**Mac** faz infra (deploy, systemd, nginx, banco, scripts, site, documentação);
+o **servidor Linux** só recebe `git pull` e nunca é editado à mão.
+
+**No Mac só entra trabalho que não precisa do jogo para ser conferido.** Ficam
+de fora: editar `npc/guerra/*.txt` e `db/guerra/*.yml` (são cp1252, e a
+conferência é em jogo), qualquer coisa do cliente (GRF, `itemInfo.lua`, sprite,
+patch de exe), compilar para Windows, e calibrar número de jogo.
+
+**Ao esbarrar no limite, parar e sinalizar** — não adivinhar o resultado, não
+editar arquivo de jogo "só para destravar", não abortar a etapa inteira:
+
+> ⚠️ **Fora do escopo do Mac.** Isto exige `<o que exige>`. Anotei em
+> `IMPLANTACAO.md` §9 para a próxima sessão no Windows. Sigo com o resto.
+
+E então acrescentar a linha na §9 do `IMPLANTACAO.md` e continuar o que dá.
+
+**A armadilha que o Mac introduz:** o APFS é *case-insensitive* por padrão, e
+esconde exatamente o defeito que o Linux pune — um `import:` com maiúscula
+errada funciona no Mac, funciona no Windows, e morre calado no Linux. É por isso
+que a varredura de case roda **no deploy**, e não uma vez só.
+
+O plano inteiro, com as etapas e o que já está apurado, está no
+`IMPLANTACAO.md`.
