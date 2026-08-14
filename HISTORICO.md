@@ -9078,5 +9078,28 @@ cp1252/CRLF (medido, não suposto — o arquivo é CRLF, ao contrário de
 | `db/guerra/mob_db_guerra.yml` | `Dex`, `AttackDelay`, `AttackMotion`, `ClientAttackMotion` no 1287 |
 | `npc/guerra/senha_da_sala_secreta.txt` | HP do guardião de teste: 50M → 15M; cabeçalho atualizado |
 | `npc/guerra/guardioes_dos_castelos.txt` | Zelador: 136,66 → 153,133; cabeçalho atualizado |
+
+---
+
+## O teto de redução baixou para 99% — por enquanto, sem classe 4 (2026-08-14)
+
+Detalhe que faltou na calibragem do teto de redução de carta (ver "O teto de
+99,9%" acima, 2026-08-10): o dono pediu **99%, não 99,9%**, enquanto o
+servidor não tiver classe 4. `reducao_dano_teto` foi de `999` para `990` em
+`conf/guerra/battle_guerra.txt`; muda com `@reloadbattleconf`, sem reiniciar.
+
+A diferença é pequena em número (0,9 ponto) mas grande no que passa: no piso
+de 99,9% um jogador com resistência somada acima de 100% ainda toma 0,1% do
+dano bruto; a 99% ele toma dez vezes mais — 1%. Revisitar quando a classe 4
+entrar no servidor.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `conf/guerra/battle_guerra.txt` | `reducao_dano_teto: 999` → `990`, comentário explica o "por enquanto" |
+| `REDUCAO-DE-DANO.md` | §1b: título e tabela refletem 990/99% como o valor atual |
+| `CLAUDE.md` | linha do enxerto de `reducao_piso` deixou de citar 99,9% fixo |
+| `PENDENCIAS.md` | §1h, item 2, atualizado com o valor e a data novos |
 | `PENDENCIAS.md` | seções 1o e 1s atualizadas com os números e a célula novos |
 | `PENDENCIAS.md` | §1s atualizada |

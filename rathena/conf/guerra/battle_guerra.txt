@@ -102,7 +102,7 @@ refino_teto: 16
 // - imunidade completa a tudo que passa por carta.
 //
 //   999  = 99,9% de reducao no maximo (sempre passa 1 milesimo)
-//   990  = 99%
+//   990  = 99% (o nosso, por enquanto)
 //   1000 = desliga a trava e devolve o comportamento do rAthena
 //
 // ATENCAO: o teto vale para a reducao de carta INTEIRA, nao so
@@ -113,7 +113,11 @@ refino_teto: 16
 // Nao alcanca o que ja escapava da reducao de carta por outros
 // motivos - habilidade com IgnoreDefCard, dano fixo, reflexo, dano
 // de status. A lista esta em REDUCAO-DE-DANO.md.
-reducao_dano_teto: 999
+//
+// 990 (99%) e o valor combinado em 2026-08-14, POR ENQUANTO - sem
+// classe 4 no servidor. 999 (99,9%) foi o original; revisitar
+// quando a classe 4 entrar.
+reducao_dano_teto: 990
 
 //--------------------------------------------------------------
 // REDUCAO GERAL DE DANO - 80% NA GUERRA E NO PVP

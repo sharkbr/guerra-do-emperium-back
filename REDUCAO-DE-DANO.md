@@ -31,9 +31,9 @@ sobre esta, e é a §1c.
 
 ---
 
-## 1b. O teto de 99,9% — nada é imune
+## 1b. O teto de 99% — nada é imune
 
-**`conf/guerra/battle_guerra.txt` → `reducao_dano_teto: 999`** (milésimos).
+**`conf/guerra/battle_guerra.txt` → `reducao_dano_teto: 990`** (milésimos).
 
 No rAthena puro o `APPLY_CARDFIX` usa `max(0, fix)`: somando **100% de
 resistência, o dano vira zero**. Não é um teto de 99% que ninguém percebeu — é
@@ -45,8 +45,8 @@ Desde 2026-08-10 o `0` virou um piso configurável
 
 | Valor | Efeito |
 |---|---|
-| `999` | **o nosso** — no máximo 99,9% de redução; sempre passa 1 milésimo |
-| `990` | no máximo 99% |
+| `999` | no máximo 99,9% de redução; sempre passa 1 milésimo — o original |
+| `990` | **o nosso, por enquanto** — no máximo 99% de redução, sem classe 4 no servidor (2026-08-14) |
 | `1000` | desliga a trava e devolve o comportamento do rAthena |
 
 Muda com **`@reloadbattleconf`**, sem recompilar.

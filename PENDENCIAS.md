@@ -701,8 +701,9 @@ Feito e no ar em 2026-08-10, **falta a prova em tela das duas**:
    Guerreiro Orc perdeu o `bonus2 bSubRace,RC_Player_Human,15`; o
    `RC_DemiHuman,15` ficou (vale contra monstro, não vale em PvP). Está em
    `db/guerra/item_combos.yml`, sobrescrevendo o conjunto do `db/re/`.
-2. **Teto de 99,9% na redução de carta.** `reducao_dano_teto: 999` em
-   `conf/guerra/battle_guerra.txt`. Nada é imune.
+2. **Teto na redução de carta.** `reducao_dano_teto: 990` (99%) em
+   `conf/guerra/battle_guerra.txt` desde 2026-08-14 — por enquanto, sem
+   classe 4 no servidor; era `999` (99,9%) antes. Nada é imune.
 
 ### A sonda de cada uma
 
