@@ -8476,3 +8476,184 @@ HP e SP a cada Refresh, para Cavaleiro Rúnico, com recarga de 1s e fora do
 grupo `Reuse_Limit_F`. Era, até hoje, a **única** fonte de cura 100/100
 acessível por loja no servidor. Levantado por escrito, não mexido — é decisão
 do dono, pela regra §4.14.
+
+## A Sala Secreta da Ordem, e o Álbum que não existia (2026-08-13)
+
+Pedido de cinco NPCs num canto de `prt_in`: dois guardas dizendo "Fechado", um
+Guardião da Sala, uma **Roleta Mágica** que sorteia por 10 Moedas e uma
+**Máquina Especial** que troca sete consumíveis por Moeda Nova.
+
+Quatro coisas do pedido não fechavam sozinhas, e três viraram pergunta ao dono
+antes de qualquer linha ser escrita.
+
+### As células, e a que não existe
+
+As quatro coordenadas do pedido foram lidas no `map_cache` — as quatro são tipo
+0, andáveis. `prt_in` está no **`db/re/map_cache.dat`**, o do meio dos três, e
+não no grande (`CLAUDE.md` §5).
+
+A leitura da região inteira mostrou o desenho: um salão de `x120-139` entre
+`y104` e `y116`, com **quatro alcovas** em cima (`y117-123`) e um beco ao sul
+que termina em parede. Os dois guardas ficam no fundo da segunda e da terceira
+alcova; o Guardião e as máquinas, no salão.
+
+**E mostrou que o lugar não tem entrada.** Nenhum warp e nenhum NPC de todo o
+`rathena/` aponta para lá — varredura por `prt_in,1[0-3][0-9],1[01][0-9]`, nos
+dois sentidos, zero linhas. Levado ao dono, a resposta foi "só os NPCs, sem
+porta". Está em `PENDENCIAS.md` §1q.
+
+### As duas máquinas estavam na mesma célula
+
+O pedido pôs a Roleta **e** a Máquina Especial em `136,114`. O rAthena aceita
+dois NPCs na mesma célula — não dá erro nenhum —, mas os sprites empilham e o
+clique pega um dos dois sem que ninguém escolha qual. A Máquina Especial foi
+para **`137,108`**, escolhido pelo dono.
+
+Na mesma volta ele corrigiu o facing das máquinas: **oeste** (2), não leste. Os
+três NPCs de fala ficaram em leste (6), como pedido — e **isso não sobreviveu ao
+primeiro teste em jogo**, ver abaixo.
+
+### O facing que só a tela reprovou
+
+Subiu tudo, funcionou, e a única correção que voltou foi de olhar: os dois
+Guardas e o Guardião da Sala apareceram **de costas** para quem chega. O dono
+descreveu exatamente o que a tabela do projeto promete — *"hoje eles estão para
+a diagonal nordeste"* — e pediu **sul**. Os três foram de **6** para **4**.
+
+Não foi defeito do facing: `6` (DIR_EAST) desenha para **cima-direita** com a
+câmera padrão, e a tabela medida no cabeçalho do `maquina_de_sombrios.txt` já
+dizia isso. O que o episódio ensina é outra coisa, e vale para todo NPC de fala:
+**ponto cardeal do enum e direção na tela são coisas diferentes, e para quem
+conversa com o jogador o que importa é a segunda.** As duas máquinas não
+mudaram — elas já tinham sido corrigidas para 2 (oeste) antes de subir, e em 2
+estavam certas.
+
+Fica também o contraste com a porta da Arena de Combate, que está em 6 desde
+2026-08-12 e foi aprovada: lá o NPC é cenário na beira de uma rua, aqui são três
+figuras no fundo de um salão que o jogador atravessa de frente.
+
+### O Álbum de Cartas de Tarô não existia em item_db nenhum
+
+Dos cinco prêmios da Roleta, quatro já estavam prontos no vendor — os disfarces
+de Deviruchi, Poring, Mavka e Kobold Arqueiro, todos com nome PT no
+`itemInfo.lua` e arte 4 de 4. O **600** não estava em lugar nenhum: varredura
+por `tarot`, `taro` e `zilant` nos três `item_db` do `db/re/` devolveu nada.
+Quem o conhecia era só o `itemInfo.lua` deste cliente e o `iteminfo_new.lub` do
+bRO — e a arte faltava **inteira**, 4 de 4.
+
+Ele foi criado no **ID oficial**, não num 30xxx nosso: mesmo critério da Moeda
+do Explorador (25737). O `AegisName` (`Zilant_Tarot_Deck`) foi derivado do
+`identifiedResourceName` do cliente, e é o único campo da entrada que é palpite
+— todos os outros saem da descrição do bRO. A arte veio do GRF do bRO pelo
+`instala_visual.py`, e mora em `cliente\data\`, **fora do git**.
+
+### A regra do Tarô, e as duas habilidades que o palpite teria errado
+
+O dono passou a regra e a tabela do browiki: soma os seis atributos **base**,
+acha o maior divisor, e a tabela de catorze linhas diz qual habilidade sai. Se
+a soma for prima, quem decide é o atributo em 125 ou mais.
+
+A tabela vem com o **nome PT** da habilidade, não com o ID. O de-para foi feito
+contra o `skillinfolist.lub` do **GRF do bRO** — a tabela de que a página fala,
+regra §4.12 — e conferido **nos dois sentidos**. Duas teriam sido erradas:
+
+- **"Dedicação" é `LK_CONCENTRATION`**, e não o `CR_DEVOTION` que o nome
+  sugere: no bRO o `CR_DEVOTION` se chama **"Redenção"**.
+- **"Ruído Estridente" é `WM_METALICSOUND`.** Ler o pool de constantes do
+  `.lub` por **proximidade** devolvia `SA_GRAVITY` — plausível e errado. O que
+  resolveu foi parsear o bytecode pela **estrutura** (`[SKID.X] = { SkillName =
+  "Y" }`) em vez de pela vizinhança das strings.
+
+Os catorze níveis foram conferidos contra o `MaxLevel` do `skill_db.yml`, e os
+catorze cabem.
+
+**O 5 não tem linha na tabela**, e isso é do bRO, não erro de transcrição. Soma
+cujo único fator seja 5 cai no "Múltiplo de 1", ou seja Curar. Simulado sobre
+todas as 775 somas possíveis: 5, 25, 115 e 125 caem em Curar; 35, 55, 65, 85,
+95 e 175 são pegos antes por 7, 11, 13, 17 e 19.
+
+O algoritmo foi rodado contra o exemplo da própria página — **374 = 2×11×17 →
+17 → Chamas de Hela Nv. 3** — e bate.
+
+### Os 5% de SP saem da descrição, não da página
+
+A descrição do item começa com *"Drena 5% de SP para conjurar uma habilidade…"*,
+e a página do browiki não cita isso. As duas não se contradizem — o dreno é
+custo do Álbum, os requisitos são da habilidade —, mas o dreno entrou por
+leitura da descrição. É `percentheal 0,-5`, e tirar é apagar uma linha.
+
+`percentheal` com taxa negativa é o idioma certo, e não `heal`: o
+`pc_percentheal` (`pc.cpp:10792`) manda taxa negativa para o
+`status_percent_damage`, cujo comentário diz *"negative rates indicate % of max
+rather than current"* — 5% do SP **máximo**, que é o que a descrição promete. E
+só mata em -100.
+
+### `DelayConsume` + `NoConsume`, e o `mes` que quebra tudo
+
+Os dois campos são obrigatórios e nenhum é escolha: o `itemskill` **só funciona
+em `DelayConsume`** (`doc/script_commands.txt`), e é o `NoConsume`
+(`DELAYCONSUME_NOCONSUME`) que segura o `pc_delitem` no fim
+(`skill.cpp:8310`). Precedente vivo no vendor: os dez Grimórios do Bruxo
+(100065 a 100074).
+
+E há uma armadilha que o mesmo parágrafo do doc entrega: **um `mes` dentro
+daquela função quebra a conjuração** — *"It will not work properly if there is a
+visible dialog window or menu"*. Mostrar qual carta saiu é a primeira coisa que
+dá vontade de acrescentar, e é justamente o que não pode.
+
+### Dois dos cinco prêmios cairiam no chão
+
+O `getitem` com a mochila cheia larga o item no chão (`CLAUDE.md` §5), e quem
+segura é o `NoDrop`. Aqui **dois dos cinco não o têm**: o Kobold Arqueiro
+(22753), que já vinha assim do vendor, e o próprio Álbum — criado **sem
+`Trade:` nenhum**, porque a descrição do bRO não traz a linha "Intransferível"
+que a Moeda Nova e a Caveira Humana trazem. Pôr trava seria inventar (§4.3).
+
+Então o que impede a queda é o **`checkweight` antes do `delitem`**, e só ele —
+mesma forma da Sombrios Totais, com o sorteio antes da cobrança para o
+`checkweight` saber qual item vai entregar.
+
+### O anúncio é coluna, não `if`
+
+Só o Álbum anuncia para o servidor. Escrever `if (.@premio == 600) announce …`
+seria a divergência da §4.11 nascendo — no dia em que o prêmio raro mudasse de
+ID, o `if` ficaria apontando para o item velho, calado. O anúncio é a **quarta
+coluna** da mesma tabela do sorteio.
+
+Ela é **numerada a partir de 1** (1 = calado, 2 = anuncia): em array de inteiro
+do rAthena gravar 0 **remove** o elemento, e o `getarraysize` passaria a
+devolver um tamanho menor que o das outras três — a conferência que existe para
+pegar desalinhamento inventaria um.
+
+### Os pesos, e por que são em décimos de milésimo
+
+`0,2 + 24,95 × 4` fecha em 100,0 exatos. Com denominador **10000** (20 e quatro
+de 2495) as cinco porcentagens saem sem arredondar nada, e a impressa na tela é
+calculada dos mesmos pesos — não há número escrito à mão.
+
+### O Rolinho de Arroz virou mercadoria
+
+A Máquina Especial vende sete consumíveis a 1 Moeda Nova: seis pratos do bRO
+que já existiam no vendor (12429 a 12434) e o **Rolinho de Arroz (30994)**, que
+era nosso e que até a manhã do mesmo dia não tinha **quem o entregasse** — o
+`PENDENCIAS.md` §1p dizia isso por escrito.
+
+Ele foi feito como **prêmio de guerra** (cura 100% de HP e SP, sete travas) e
+passou a ser comprado pelo mesmo preço de um prato comum. Foi o que o dono
+pediu; o registro fica dos dois lados, e a decisão 2 daquela seção está
+respondida — no sentido oposto ao que a frase "prêmio à venda deixa de ser
+prêmio" antecipava.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `npc/guerra/sala_secreta_da_ordem.txt` | **novo** — os cinco NPCs |
+| `npc/guerra/album_de_cartas_de_taro.txt` | **novo** — a `function F_AlbumDeTaro` |
+| `db/guerra/item_db.yml` | o item **600** |
+| `npc/guerra/barters_guerra.yml` | a loja `MaquinaEspecial#loja`, 7 linhas |
+| `npc/guerra/scripts_guerra.conf` | as duas entradas narradas |
+| `cliente\data\` | 4 arquivos de arte do 600, **fora do git** |
+
+229 linhas inseridas nos três arquivos que já existiam, **zero removidas** — os
+onze bytes acentuados do `item_db.yml` sobreviveram, conferido antes e depois.

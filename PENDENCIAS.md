@@ -1331,7 +1331,7 @@ mais dez linhas comentadas no `scripts_guild.conf` e mais dez blocos no NPC.
 
 ---
 
-## 1p. O Rolinho de Arroz existe, e ninguém o entrega (2026-08-13)
+## 1p. O Rolinho de Arroz — ganhou fonte, e ela é uma máquina (2026-08-13)
 
 O item **30994 `Rolinho_De_Arroz`** está de pé nas duas metades — servidor
 (`db/guerra/item_db.yml`) e cliente (`itemInfo.lua`, com a arte do 555, "4 de 4
@@ -1341,8 +1341,21 @@ se perde: `NoDrop`, `NoTrade`, `NoSell`, `NoGuildStorage`, `NoMail`,
 O histórico do porquê de cada número está em `HISTORICO.md`, "O Rolinho de
 Arroz".
 
-**O que falta é a fonte.** Nenhum NPC o paga, nenhum monstro o dropa, nenhuma
-loja o vende. Hoje só se chega nele por `@item 30994`.
+**A fonte apareceu no fim do mesmo dia, e não é a que este texto previa.** A
+**Máquina Especial** da Sala Secreta da Ordem (`prt_in 137,108`,
+`npc/guerra/sala_secreta_da_ordem.txt`) o **vende a 1 Moeda Nova**, ao lado dos
+seis pratos comuns do bRO. Não é o `OnAgitEnd` do fim da guerra que o parágrafo
+das decisões apontava como gancho natural: é vitrine.
+
+Isso **responde a decisão 2 abaixo** e a responde no sentido oposto ao que a
+frase "prêmio à venda deixa de ser prêmio" antecipava — o dono pediu assim, e o
+registro fica dos dois lados (aqui e no cabeçalho da loja em
+`barters_guerra.yml`). **As decisões 1 e 3 continuam abertas**, e a 1 mudou de
+natureza: com o item comprável, "quem ganha no fim da guerra" deixou de ser a
+única forma de tê-lo e passou a ser uma segunda.
+
+Continua valendo que **nenhum monstro o dropa e nenhum NPC o paga** — a máquina
+é a única saída, e ela cobra.
 
 ### Para ver em jogo, agora
 
@@ -1364,9 +1377,10 @@ houver espera de 5s, o bloco `Delay:` voltou de algum lugar.
 1. **Quem ganha, e quanto.** O gancho natural é o fim da guerra —
    `npc/guerra/horario_da_guerra.txt` já tem o `OnAgitEnd`. Dono do castelo?
    Todo mundo que estava no mapa? Quantos por guerra?
-2. **Se entra em loja.** Se entrar, a regra §4.16 do `CLAUDE.md` não o alcança
-   (ele não tem `Buy`), então o preço seria decisão nova. E prêmio à venda
-   deixa de ser prêmio.
+2. ~~**Se entra em loja.**~~ **Respondida em 2026-08-13: entra, a 1 Moeda
+   Nova**, na Máquina Especial. A regra §4.16 do `CLAUDE.md` de fato não o
+   alcança (ele não tem `Buy`), então o preço foi decisão nova — e a decisão
+   foi 1 Moeda, o mesmo dos seis pratos ao lado.
 3. **Se a ausência de recarga sobrevive ao primeiro teste de PvP.** Foi pedida
    explicitamente, e é o que separa este item dos outros três 100/100 do
    servidor — que se travam entre si pelo grupo `Reuse_Limit_F`. Pôr recarga
@@ -1380,6 +1394,90 @@ O **`[MEGA] Elmo de Fafnir` (400177)**, no Chapeleiro do Mercado Contemporâneo
 cada Refresh, para Cavaleiro Rúnico, recarga de 1s. Não foi mexido — a §4.14
 manda levantar por escrito e deixar a decisão com o dono. Se o Rolinho for
 calibrado sem contar com isto, a conta sai errada para uma classe.
+
+---
+
+## 1q. A Sala Secreta da Ordem não tem porta (2026-08-13)
+
+Os cinco NPCs de `npc/guerra/sala_secreta_da_ordem.txt` estão escritos e
+carregam. **Nenhum jogador os alcança.**
+
+O conjunto de salas de `prt_in` onde eles moram (salão `x120-139`/`y104-116`,
+mais quatro alcovas em `y117-123`) **não recebe warp de lugar nenhum**. A
+varredura foi por `prt_in,1[0-3][0-9],1[01][0-9]` em `npc/` inteiro, nos dois
+sentidos — quem sai e quem chega — e devolveu **zero linhas**. O beco do sul
+(`x126-131`, `y102-103`) termina em parede no `.gat`: em `y101` a fileira toda
+é bloqueio.
+
+Hoje só se chega com `@warp prt_in 129 114`.
+
+**É decisão, não esquecimento** — o dono escolheu "só os NPCs, sem porta" ao ser
+avisado, em 2026-08-13. Fica aqui porque o dia em que a sala for aberta é o dia
+em que ela passa a valer alguma coisa.
+
+### Quando for abrir
+
+O molde é o do Centro da Ordem (`npc/guerra/centro_da_ordem.txt`): um par de
+`warp` **nosso**, em `npc/guerra/`, nunca editando `npc/warps/cities/prontera.txt`.
+Falta só escolher de onde parte — e o candidato óbvio é a própria Prontera, já
+que `prt_in` é o interior dela.
+
+Duas coisas a conferir na hora, e nenhuma é sobre o warp:
+
+1. **A célula de chegada.** As quatro alcovas e o salão foram lidos no
+   `map_cache`; as cinco células dos NPCs são tipo 0. Uma chegada em `129,116`
+   ou perto disso põe o jogador de frente para o Guardião.
+2. **O warp de volta não pode cair dentro de si mesmo** — foi a conferência que
+   a Ordem dos Exploradores pediu no §1g, passo 1.
+
+### A sala já foi vista em jogo, por `@warp` (2026-08-13)
+
+Os cinco NPCs nascem, o sprite **494 (`4_M_ROKI`)** do Guardião desenha, a
+Roleta abre e a Máquina Especial troca. **Só a porta falta.**
+
+Uma coisa mudou nesse teste, e ficou registrada nos cabeçalhos: os três NPCs de
+fala nasceram em **6 (leste)** e apareceram **de costas** para quem chega — o 6
+desenha na diagonal de cima-direita com a câmera padrão. Foram para **4 (sul)**.
+As duas máquinas continuam em 2 (oeste), que já estava certo.
+
+---
+
+## 1r. O Álbum de Cartas de Tarô — o que continua com o dono (2026-08-13)
+
+O item **600 `Zilant_Tarot_Deck`** foi criado, a arte veio do GRF do bRO, e a
+regra que ele conjura está em `npc/guerra/album_de_cartas_de_taro.txt`. **Visto
+em jogo no mesmo dia**, com a sala inteira. O que sobra aqui não é bug nem
+conferência que falte — são leituras que podem ser revistas.
+
+1. **O `AegisName` é palpite.** `Zilant_Tarot_Deck` foi derivado do
+   `identifiedResourceName` do cliente, porque o AegisName oficial não está em
+   tabela nenhuma que alcançamos. É o **único** campo da entrada que não vem da
+   descrição do bRO.
+2. **Os 5% de SP saem da DESCRIÇÃO, não da página do browiki**, que não os
+   cita. As duas não se contradizem — o dreno é custo do Álbum, os requisitos
+   são da habilidade —, mas entrou por leitura. Tirar é apagar uma linha
+   (`percentheal 0, -5;` na função).
+3. **O empate entre atributos segue a ordem da página** (SOR, VIT, FOR, INT,
+   DES, AGI), e a página não diz qual vence quando dois passam de 125 com soma
+   prima. É leitura, não medição.
+4. **As catorze cartas nunca foram percorridas uma a uma.** O algoritmo foi
+   simulado sobre as 775 somas possíveis e bate com o exemplo da própria página
+   (374 → 17 → Chamas de Hela), mas em jogo só se viu a carta da soma que o
+   personagem de teste tinha. Se um dia houver dúvida, o teste barato é
+   distribuir para uma soma conhecida: **38** tem de dar Dedicação, **25** tem
+   de dar Curar (o 5 não tem linha na tabela).
+
+### E uma armadilha para quem for mexer na função
+
+**Nenhum `mes` ali dentro.** Se alguém acrescentar um para dizer qual carta
+saiu — que é a primeira coisa que dá vontade de fazer —, o `itemskill` **para de
+funcionar**: está no `doc/script_commands.txt`, *"will not work properly if
+there is a visible dialog window or menu"*. O caminho, se a vontade voltar, é
+`showscript` ou `specialeffect`.
+
+**E a arte mora em `cliente\data\`, fora do git** — cliente novo perde os quatro
+arquivos, calado, e a caixa de erro aparece ao **abrir a lista**, não ao usar.
+Repor: `python ferramentas/instala_visual.py --id 600 --grf "<grf do bRO>"`.
 
 ---
 

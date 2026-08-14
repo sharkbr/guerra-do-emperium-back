@@ -713,6 +713,15 @@ Produziram diagnóstico falso e custaram retrabalho:
   `npc/guerra/maquina.txt` traz uma tabela em termos de "direita/esquerda" que
   vale **só para aquele sprite** — reusá-la virou a Máquina de Sombrios Gerais
   para o lado errado em 2026-08-12.
+  **E há um caso em que o ponto cardeal pedido é a resposta errada: NPC de
+  FALA.** Quando o pedido diz "virado para leste" e o NPC fica de frente para o
+  jogador, ótimo; quando fica **de costas**, não houve erro de conversão — foi o
+  `6` fazendo o que a tabela promete. Para quem conversa, o que importa é a
+  direção **na tela**, e com a câmera padrão quem olha para o jogador que sobe o
+  salão é **4** ou **2**, nunca 6 ou 0. Custou uma rodada nos três NPCs de fala
+  da Sala Secreta da Ordem em 2026-08-13, todos pedidos em "leste" e todos
+  entregues de costas. Ao receber ponto cardeal para NPC que dialoga,
+  **perguntar para onde ele deve OLHAR na tela**, não só que célula encarar.
 - **NPC com sprite de CLASSE DE JOGADOR nasce pedindo o penteado 0, e o 0 não
   existe.** Sprite de NPC normal (`view id` ≥ 44, do `npcidentity.lub`) traz a
   aparência pronta do `npc_viewdb`; id de **classe** (`JOB_MERCHANT` = 5 e

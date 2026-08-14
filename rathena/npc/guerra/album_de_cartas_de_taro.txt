@@ -1,0 +1,354 @@
+//===== Guerra do Emperium ===================================
+//= O Album de Cartas de Taro (600) - a habilidade que ele conjura
+//===== Onde =================================================
+//= NAO E NPC e nao ocupa celula nenhuma. Este arquivo tem UMA
+//= `function script`, a F_AlbumDeTaro, e quem a chama e o
+//= `Script:` do item 600, em db/guerra/item_db.yml:
+//=
+//=     Script: |
+//=       callfunc "F_AlbumDeTaro";
+//=
+//= O ITEM SO SAI DE UM LUGAR no servidor inteiro: a Roleta Magica
+//= da Sala Secreta da Ordem (npc/guerra/sala_secreta_da_ordem.txt,
+//= prt_in 136,114), a 0,2% por giro. Comentar aquela linha do
+//= scripts_guerra.conf fecha a unica fonte do item.
+//===== Descricao ============================================
+//= O item NAO E CONSUMIDO ao ser usado, e conjura UMA habilidade
+//= escolhida a partir da soma dos SEIS atributos BASE de quem o
+//= usa. Se a habilidade tiver requisito (item, esfera espiritual,
+//= SP), o requisito E COBRADO - e o terceiro argumento `true` do
+//= `itemskill`, e nao o padrao dele.
+//=
+//= A regra e do bRO. Ela e a tabela abaixo vieram do dono em
+//= 2026-08-13, da pagina do browiki
+//= "Desafio_dos_Castelos#Album_de_Cartas_de_Taro":
+//=
+//=   1) some os seis atributos BASE;
+//=   2) descubra os divisores dessa soma;
+//=   3) o MAIOR divisor da tabela e o que decide - o exemplo da
+//=      propria pagina e 374 = 2 x 11 x 17, que da 17;
+//=   4) se a soma for um numero PRIMO, quem decide e o atributo
+//=      que estiver em 125 ou mais;
+//=   5) sem nada disso, Curar Nv. 10 ("Multiplo de 1").
+//=
+//= A TABELA, NA ORDEM EM QUE E CONSULTADA:
+//=
+//=   divisor  habilidade                            Nv  carta
+//=   -------  ------------------------------------  --  -----------------
+//=      19    Dedicacao          LK_CONCENTRATION    5  O Sol
+//=      17    Chamas de Hela     WL_HELLINFERNO      3  A Estrela
+//=      13    Bomba Napalm       GN_DEMONIC_FIRE     3  A Torre
+//=      11    Graffiti           RG_GRAFFITI         1  O Diabo
+//=       7    Remover Armadilha  HT_REMOVETRAP       1  A Temperanca
+//=       3    Antidoto           GC_ANTIDOTE         1  A Morte
+//=       2    Crux Magnum        CR_GRANDCROSS      10  O Enforcado
+//=
+//=   soma PRIMA, e o atributo BASE em 125 ou mais:
+//=     SOR   Chute Aereo        TK_JUMPKICK         7  A Roda da Fortuna
+//=     VIT   Passo Etereo       MO_BODYRELOCATION   1  Os Enamorados
+//=     FOR   Erupcao de Magma   NC_MAGMA_ERUPTION   3  A Forca
+//=     INT   Ruido Estridente   WM_METALICSOUND     3  O Carro
+//=     DES   Judex              AB_JUDEX            3  A Papisa
+//=     AGI   Onda Psiquica      SO_PSYCHIC_WAVE     3  O Mago
+//=
+//=   nada acima  Curar          AL_HEAL            10  O Louco
+//=
+//= Os catorze niveis foram conferidos contra o `MaxLevel` do
+//= db/re/skill_db.yml e os catorze cabem. Quatro pedem o maximo da
+//= habilidade (Dedicacao 5, Graffiti 1, Crux Magnum 10, Curar 10);
+//= os outros dez pedem menos do que o teto.
+//===== O 5 NAO TEM LINHA, e nao e esquecimento ==============
+//= A tabela do bRO tem 19, 17, 13, 11, 7, 3 e 2 - pula o 5. Entao
+//= soma cujo maior divisor primo seja 5 NAO casa com linha nenhuma
+//= de divisor e cai no "Multiplo de 1", ou seja Curar.
+//=
+//= Simulado sobre TODA soma possivel (de 6, o minimo, a 780, que e
+//= 6 x 130), os multiplos de 5 se separam em dois grupos:
+//=
+//=   os que TEM outro fator na tabela, e ela pega primeiro:
+//=      35 = 5x7   -> Remover Armadilha    55 = 5x11 -> Graffiti
+//=      65 = 5x13  -> Bomba Napalm         85 = 5x17 -> Chamas de Hela
+//=      95 = 5x19  -> Dedicacao           175 = 5x5x7 -> Remover Armadilha
+//=
+//=   os que NAO tem, e caem em Curar:
+//=       5,  25 (5x5),  115 (5x23),  125 (5x5x5)
+//=
+//= A distribuicao sobre as 775 somas possiveis ficou: Crux Magnum
+//= 21,5%, Curar 21,4%, Antidoto 21,2%, Remover Armadilha 10,6%,
+//= Graffiti 7,5%, Bomba Napalm 7,0%, Chamas de Hela 5,5% e
+//= Dedicacao 5,3%. As seis cartas de atributo nao aparecem nessa
+//= conta porque dependem de o jogador ter 125 em alguma coisa.
+//=
+//= POR ISSO O LACO E "primeiro divisor da lista que couber", e nao
+//= "maior fator primo". Os dois dao a MESMA resposta em toda soma
+//= que tenha linha; a diferenca esta so nas que nao tem, e ali o
+//= "maior fator primo" nao teria para onde apontar. A ordem da
+//= lista - do 19 para o 2 - e o que faz os dois coincidirem.
+//===== De onde saiu cada ID de habilidade ===================
+//= A tabela do dono traz o nome PT da habilidade, nao o ID. O
+//= de-para foi feito contra o `skillinfolist.lub` do GRF DO bRO,
+//= que e a tabela da qual aquela pagina fala (regra 4.12 do
+//= CLAUDE.md: nome de habilidade sai da tabela que o JOGO le), e
+//= conferido nos DOIS SENTIDOS - do nome para o SKID e do SKID de
+//= volta para o nome.
+//=
+//= DUAS TERIAM SIDO ERRADAS pelo palpite obvio, e as duas custaram
+//= a conferencia de volta:
+//=
+//=   "Dedicacao" e LK_CONCENTRATION, e NAO o CR_DEVOTION que o
+//=   nome sugere - no bRO o CR_DEVOTION se chama "Redencao".
+//=
+//=   "Ruido Estridente" e WM_METALICSOUND. Ler o pool de
+//=   constantes do .lub por PROXIMIDADE devolvia SA_GRAVITY, que e
+//=   plausivel e errado; o que resolveu foi parsear o bytecode
+//=   pela estrutura ([SKID.X] = { SkillName = "Y" }) em vez de
+//=   pela vizinhanca das strings.
+//=
+//= DOIS NOMES NAO EXISTEM EM PORTUGUES NO NOSSO CLIENTE: o
+//= `CR_GRANDCROSS` aparece como "Grand Cross" e o
+//= `NC_MAGMA_ERUPTION` como "Magma Eruption" - o bRO os traduziu e
+//= este kRO de 2021 nao. Nao ha nada a consertar aqui: quem
+//= escreve o nome na tela e a janela de habilidades do cliente,
+//= nao este arquivo.
+//===== OS 5% DE SP saem da DESCRICAO, nao do browiki =========
+//= A descricao do proprio item, no itemInfo.lua deste cliente e no
+//= iteminfo_new.lub do bRO, comeca assim:
+//=
+//=   "Drena 5% de SP para conjurar uma habilidade de acordo com a
+//=    soma dos atributos base."
+//=
+//= A pagina do browiki que o dono passou NAO cita esses 5% - ela
+//= so fala dos requisitos da habilidade conjurada. As duas nao se
+//= contradizem (o dreno e custo do ALBUM, os requisitos sao da
+//= HABILIDADE), mas o dreno entrou por leitura da descricao, e nao
+//= por pedido explicito. Fica dito.
+//=
+//= E `percentheal 0,-5`, cobrado UMA vez, DEPOIS de a carta estar
+//= escolhida e ANTES do `itemskill`. A ordem importa: se as
+//= tabelas estiverem desalinhadas a funcao sai antes disso e nao
+//= cobra nada.
+//=
+//= `percentheal` com taxa NEGATIVA e o idioma certo aqui, e nao
+//= `heal`: o pc_percentheal (pc.cpp:10792) manda taxa negativa
+//= para o `status_percent_damage`, cujo proprio comentario diz
+//= *"negative rates indicate % of max rather than current"* - ou
+//= seja 5% do SP MAXIMO, que e o que a descricao promete, e nao 5%
+//= do que sobrou. E so mata em -100, entao nao ha risco de o Album
+//= matar ninguem.
+//=
+//= NAO HA TRAVA DE SP MINIMO. Quem tiver menos de 5% simplesmente
+//= zera o SP e conjura assim mesmo - a habilidade e que vai
+//= recusar por falta de SP, porque os requisitos dela sao
+//= cobrados. Por-la seria inventar regra que a descricao nao tem.
+//=
+//= Isto e a armadilha do CLAUDE.md secao 5 ("a descricao do item na
+//= tela discorda do script do servidor") sendo evitada de
+//= proposito: aqui o script foi escrito para dar razao a descricao,
+//= em vez de deixar as duas divergirem caladas. Tirar o dreno e
+//= apagar UMA linha.
+//===== Por que uma funcao, e nao o `Script:` do item ========
+//= A logica tem uns quarenta comandos, tres tabelas e um teste de
+//= primalidade. Dentro do `Script: |` do db/guerra/item_db.yml ela
+//= ficaria num bloco de YAML indentado, sem cabecalho, num arquivo
+//= que e cp1252 e que ninguem le procurando codigo.
+//=
+//= `callfunc` a partir de script de item e idioma do proprio
+//= rAthena - o db/re/item_db_usable.yml chama F_Cat_Hard_Biscuit e
+//= irmaos do mesmo jeito. E o `itemskill` nao depende de contexto
+//= de item nenhum: o buildin so grava `sd->skillitem` e manda o
+//= pacote (script.cpp:11043), entao atravessa o callfunc inteiro.
+//===== NENHUM `mes` NESTA FUNCAO, e isso e trava =============
+//= O doc/script_commands.txt diz do `itemskill`, por extenso:
+//= *"It will not work properly if there is a visible dialog window
+//= or menu"*. Um `mes` dizendo qual carta saiu - que e a primeira
+//= coisa que da vontade de acrescentar - QUEBRA a conjuracao.
+//=
+//= Se um dia se quiser mostrar a carta, o caminho nao e `mes`: e
+//= `showscript` ou `specialeffect`, que nao abrem janela.
+//===== Por que `DelayConsume` + `NoConsume` =================
+//= Sao os dois campos que fazem "conjura e nao se gasta", e nenhum
+//= dos dois e opcional:
+//=
+//=   Type: DelayConsume    o `itemskill` so funciona neste tipo
+//=                         (doc/script_commands.txt, *itemskill).
+//=                         Ele poe DELAYCONSUME_TEMP no
+//=                         `flag.delay_consume` (itemdb.cpp:1124),
+//=                         e e esse flag que faz o pc_useitem NAO
+//=                         apagar o item na hora do duplo-clique.
+//=   Flags: NoConsume      poe DELAYCONSUME_NOCONSUME (0x2), e e
+//=                         ele que segura o `pc_delitem` la no fim
+//=                         (skill.cpp:8310) - sem esta linha o
+//=                         Album sumiria depois da conjuracao.
+//=
+//= O par tem precedente vivo no vendor: os dez Grimorios do Bruxo
+//= (100065 a 100074, db/re/item_db_usable.yml) sao exatamente
+//= `DelayConsume` + `NoConsume` + `itemskill`.
+//=
+//= CONSEQUENCIA QUE VEM DE GRACA E NAO FOI ESCOLHIDA: item de
+//= consumo atrasado nao funciona SENTADO nem MONTADO - o
+//= pc_useitem (pc.cpp:6493) recusa os dois casos antes de rodar o
+//= script. Vale para todo pergaminho de habilidade do jogo, e nao
+//= so para este.
+//===== `readparam(bStr)` e o atributo BASE ==================
+//= A regra diz "atributos BASE", e e isso que o `readparam`
+//= devolve: o `pc_readparam` responde `sd->status.str`
+//= (pc.cpp:10234), que e o ponto gasto no atributo. O valor COM
+//= bonus de equipamento mora no `battle_status`, e nao passa por
+//= aqui.
+//=
+//= Isso importa: com bonus, quase todo personagem de nivel alto
+//= passaria de 125 em algum atributo e a soma andaria a cada troca
+//= de equipamento. Do jeito certo a carta so muda quando o jogador
+//= distribui ponto.
+//===== O empate entre atributos e a ORDEM DA TABELA =========
+//= Dois atributos em 125 ou mais, com soma prima, e caso possivel
+//= - e a pagina do browiki NAO diz qual vence. Aqui vale a ordem
+//= em que ela lista as seis linhas:
+//=
+//=     SOR, VIT, FOR, INT, DES, AGI
+//=
+//= E leitura, nao medicao. Fica dito para o dia em que alguem
+//= reclamar de ter tirado Chute Aereo esperando Judex.
+//===== A tabela sai de UM lugar so ==========================
+//= Cada bloco tem TRES colunas que andam juntas (divisor/atributo,
+//= habilidade e nivel) e nada no arquivo repete aqueles valores -
+//= regra 11 do CLAUDE.md, a que os catorze destinos errados do
+//= Teleportador da Ordem custaram em 2026-08-08.
+//=
+//= As colunas sao conferidas com `getarraysize` antes de servirem
+//= para alguma coisa, e se divergirem a funcao GRITA com
+//= `debugmes` e sai sem conjurar nada. Melhor o Album calado que o
+//= Album conjurando fora da tabela.
+//=
+//= As colunas de NIVEL nao tem nenhum zero, e as de habilidade
+//= nenhuma string vazia - as duas coisas sao necessarias para o
+//= `getarraysize` contar certo (CLAUDE.md secao 5).
+//===== Notas ================================================
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo le.
+//= Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript. Mudanca no ITEM
+//= (db/guerra/item_db.yml) pega com @reloaditemdb.
+//============================================================
+
+function	script	F_AlbumDeTaro	{
+	// A soma dos SEIS atributos BASE. `readparam` devolve
+	// `sd->status.<atributo>`, que e o ponto gasto - sem bonus de
+	// equipamento. Ver a secao "readparam(bStr) e o atributo BASE".
+	.@soma = readparam(bStr) + readparam(bAgi) + readparam(bVit)
+	       + readparam(bInt) + readparam(bDex) + readparam(bLuk);
+
+	// -------------------------------------------------------------
+	// 1) O maior divisor da tabela
+	// -------------------------------------------------------------
+	// As tres colunas andam juntas e sao a UNICA fonte desta metade
+	// da regra. A ordem - do 19 para o 2 - E A REGRA: o primeiro que
+	// couber vence, e e isso que reproduz o "maior valor divisivel"
+	// do bRO. Reordenar aqui muda o resultado, calado.
+	setarray .@div[0],       19,                 17,
+	                         13,                 11,
+	                          7,                  3,
+	                          2;
+	setarray .@div_hab$[0],  "LK_CONCENTRATION", "WL_HELLINFERNO",
+	                         "GN_DEMONIC_FIRE",  "RG_GRAFFITI",
+	                         "HT_REMOVETRAP",    "GC_ANTIDOTE",
+	                         "CR_GRANDCROSS";
+	setarray .@div_nv[0],     5,                  3,
+	                          3,                  1,
+	                          1,                  1,
+	                         10;
+
+	.@n = getarraysize(.@div);
+	if (.@n != getarraysize(.@div_hab$)) .@n = 0;
+	if (.@n != getarraysize(.@div_nv))   .@n = 0;
+	if (.@n == 0) {
+		debugmes "F_AlbumDeTaro: as tres colunas de DIVISOR estao com tamanhos diferentes - tabela desalinhada, nada foi conjurado.";
+		return;
+	}
+
+	// A carta escolhida vive em .@hab$/.@nv, e SO E CONJURADA no fim
+	// da funcao - ha um unico `itemskill` no arquivo. E o que permite
+	// cobrar os 5% de SP uma vez so, depois de a escolha estar feita.
+	.@hab$ = "";
+	for (.@i = 0; .@i < .@n; .@i++) {
+		if (.@soma % .@div[.@i] == 0) {
+			.@hab$ = .@div_hab$[.@i];
+			.@nv   = .@div_nv[.@i];
+			break;
+		}
+	}
+
+	// -------------------------------------------------------------
+	// 2) Soma PRIMA, com um atributo em 125 ou mais
+	// -------------------------------------------------------------
+	// So se chega aqui com uma soma que nao e divisivel por 2, 3, 7,
+	// 11, 13, 17 nem 19 - entao o unico divisor pequeno que ainda
+	// pode aparecer e o 5. A divisao por tentativa cobre tudo, e a
+	// soma nao passa de umas centenas: sao ~28 voltas no pior caso.
+	.@primo = 0;
+	if (.@hab$ == "") {
+		.@primo = 1;
+		if (.@soma < 2) .@primo = 0;
+		for (.@d = 2; .@d * .@d <= .@soma; .@d++) {
+			if (.@soma % .@d == 0) {
+				.@primo = 0;
+				break;
+			}
+		}
+	}
+
+	if (.@primo) {
+		// Mesma disciplina de tres colunas. A ORDEM aqui e a da
+		// pagina do bRO (SOR, VIT, FOR, INT, DES, AGI) e e ela que
+		// desempata quando dois atributos passam de 125 - ver a
+		// secao "O empate entre atributos".
+		setarray .@atr[0],       bLuk,                bVit,
+		                         bStr,                bInt,
+		                         bDex,                bAgi;
+		setarray .@atr_hab$[0],  "TK_JUMPKICK",       "MO_BODYRELOCATION",
+		                         "NC_MAGMA_ERUPTION", "WM_METALICSOUND",
+		                         "AB_JUDEX",          "SO_PSYCHIC_WAVE";
+		setarray .@atr_nv[0],     7,                   1,
+		                          3,                   3,
+		                          3,                   3;
+
+		.@m = getarraysize(.@atr);
+		if (.@m != getarraysize(.@atr_hab$)) .@m = 0;
+		if (.@m != getarraysize(.@atr_nv))   .@m = 0;
+		if (.@m == 0) {
+			debugmes "F_AlbumDeTaro: as tres colunas de ATRIBUTO estao com tamanhos diferentes - tabela desalinhada, nada foi conjurado.";
+			return;
+		}
+
+		for (.@i = 0; .@i < .@m; .@i++) {
+			if (readparam(.@atr[.@i]) >= 125) {
+				.@hab$ = .@atr_hab$[.@i];
+				.@nv   = .@atr_nv[.@i];
+				break;
+			}
+		}
+	}
+
+	// -------------------------------------------------------------
+	// 3) "Multiplo de 1" - todo numero cai aqui se nada acima pegou
+	// -------------------------------------------------------------
+	if (.@hab$ == "") {
+		.@hab$ = "AL_HEAL";
+		.@nv   = 10;
+	}
+
+	// -------------------------------------------------------------
+	// 4) O custo do Album, e a conjuracao
+	// -------------------------------------------------------------
+	// Os 5% saem da descricao do item, nao do browiki - ver a secao
+	// "OS 5% DE SP". Cobrados depois de a carta estar escolhida e
+	// antes de conjurar: se as tabelas estivessem desalinhadas a
+	// funcao ja teria saido la em cima, sem cobrar nada.
+	percentheal 0, -5;
+
+	// O `true` e o terceiro argumento: COBRA os requisitos da
+	// habilidade (item, esfera espiritual, SP). O padrao do
+	// `itemskill` e o contrario - ignorar tudo.
+	itemskill .@hab$, .@nv, true;
+	return;
+}

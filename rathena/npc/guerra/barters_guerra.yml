@@ -736,3 +736,98 @@ Body:
           - Index: 0
             Item: Moeda_Nova
             Amount: 1
+
+  # =====================================================================
+  # A loja da Maquina Especial - Sala Secreta da Ordem, prt_in
+  # =====================================================================
+  #
+  # FLUTUANTE, como as outras quatro. Quem esta no mapa e a Maquina
+  # Especial (npc/guerra/sala_secreta_da_ordem.txt, prt_in 137,108), que
+  # fala, conta a moeda e so entao chama esta loja com
+  # `callshop "MaquinaEspecial#loja"`.
+  #
+  # E A SEGUNDA MAQUINA DA SALA, e a divisao entre as duas e a mesma da
+  # dupla de Sombrios do Centro da Ordem: a Roleta Magica (136,114)
+  # SORTEIA e por isso e script puro, sem loja nenhuma; esta e vitrine de
+  # preco fixo, e por isso e barter. As duas cobram a mesma Moeda Nova
+  # (30998) - o que muda e o risco.
+  #
+  # POR QUE BARTER, e nao ha escolha: a Moeda Nova e `NoSell`, e o
+  # `itemshop` a passaria por `pc_can_sell_item`, que recusa item NoSell
+  # enquanto `allow_bound_sell` for 0x0 - a loja abriria e a compra
+  # falharia com a moeda na mao do jogador. Regra 4.10 do CLAUDE.md; o
+  # registro completo esta no cabecalho deste arquivo.
+  #
+  # A TRAVA DA CAIXA NAO APERTA AQUI. Nas outras lojas todo pacote teve de
+  # virar caixa, porque o barter cobra POR UNIDADE. Aqui os sete itens ja
+  # sao unitarios e o pedido foi de UM de cada por moeda - nao ha pacote
+  # para embrulhar.
+  #
+  # SETE CONSUMIVEIS, TODOS A 1 MOEDA NOVA. Seis sao pratos do bRO que ja
+  # existiam no vendor com nome PT no itemInfo.lua e arte 4 de 4 (12429 a
+  # 12434); o setimo e NOSSO, o Rolinho de Arroz (30994).
+  #
+  # O ROLINHO GANHOU AQUI A PRIMEIRA E UNICA FONTE DELE. Ate 2026-08-13 o
+  # cabecalho dele em db/guerra/item_db.yml dizia "AINDA NAO TEM QUEM O
+  # ENTREGUE": ele foi feito como PREMIO DE GUERRA - cura 100% de HP e SP,
+  # com as sete travas do consumivel de guerra do bRO - e passou a ser
+  # comprado a 1 Moeda Nova, o mesmo preco dos seis pratos comuns ao lado.
+  # Foi o que o dono pediu, e fica o registro de que o premio de guerra e
+  # hoje mercadoria de maquina de venda.
+  #
+  # A ORDEM DAS LINHAS E A DO PEDIDO, e o `Index` a segue - nao e
+  # alfabetica nem por ID. O Rolinho abre a lista porque foi assim que ele
+  # foi pedido. Item novo entra no fim, com o Index seguinte; e seguro
+  # renumerar so enquanto nenhuma linha tiver `Stock`.
+  #
+  # O NOME DE CADA LINHA VEM DO CLIENTE, nao daqui: a janela de troca
+  # recebe so o ID no pacote (clif.cpp:23225) e desenha o que o
+  # itemInfo.lua tiver - CLAUDE.md 4.9. Os sete foram conferidos um a um
+  # no `estado_item.py`: os sete existem no item_db do servidor, os sete
+  # tem nome em portugues neste cliente e os sete deram arte 4 de 4.
+  #
+  # Mudanca aqui pega com `@reloadbarterdb`, NAO com @reloadscript.
+  - Name: MaquinaEspecial#loja
+    Items:
+      - Index: 0
+        Item: Rolinho_De_Arroz         # 30994 Rolinho de Arroz (db/guerra/item_db.yml)
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova             # 30998, db/guerra/item_db.yml
+            Amount: 1
+      - Index: 1
+        Item: Wug_Blood_Cocktail       # 12430 Coquetel Uivante
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+      - Index: 2
+        Item: Minor_Brisket            # 12431 Carne ao Vinho
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+      - Index: 3
+        Item: Siroma_Icetea            # 12432 Cha Gelado de Siroma
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+      - Index: 4
+        Item: Drocera_Herb_Stew        # 12433 Cozido de Drosera
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+      - Index: 5
+        Item: Petti_Tail_Noodle        # 12434 Macarrao com Petite
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+      - Index: 6
+        Item: Savage_BBQ               # 12429 Churrasco de Selvagem
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1

@@ -2017,3 +2017,75 @@ Body:
     Locations:
       Costume_Head_Mid: false
       Costume_Head_Low: true
+
+  # ----- O premio raro da Roleta Magica - 2026-08-13 ---------------------
+  #
+  # ATENCAO AO ID: 600 esta FORA da nossa faixa 30000-30999, e nao e
+  # descuido. E o mesmo criterio da Moeda do Explorador (25737), mais
+  # acima neste arquivo: este item NAO e nosso - e um item real do bRO que
+  # o nosso rAthena vendorizado nao conhece, e por isso entra no ID
+  # oficial dele. Inventar um 30xxx faria a NOSSA entrada vencer calada no
+  # dia em que o rAthena trouxer a dele.
+  #
+  # NENHUM item do rAthena bate com ele: a varredura por AegisName
+  # ("tarot", "taro", "zilant") nos tres item_db do db/re/ nao devolveu
+  # nada. Quem o conhecia era so o itemInfo.lua DESTE cliente e o
+  # iteminfo_new.lub do bRO (ferramentas/estado_item.py --id 600).
+  #
+  # O `AegisName` E O UNICO CAMPO DESTA ENTRADA QUE E PALPITE. Ele foi
+  # derivado do `identifiedResourceName` do cliente (`zilant_tarot_deck`),
+  # porque o AegisName oficial nao esta em tabela nenhuma que alcancamos -
+  # o itemInfo.lua guarda nome, descricao e recurso, nunca AegisName.
+  # Todos os outros campos saem da descricao do bRO, por extenso
+  # (`estado_item.py --id 600 --descricao`).
+  #
+  # ONDE SE GANHA: so na Roleta Magica da Sala Secreta da Ordem
+  # (npc/guerra/sala_secreta_da_ordem.txt, prt_in 136,114), a 0,2% por
+  # giro de 10 Moedas Novas. E o unico lugar do servidor inteiro.
+  #
+  # SEM `Trade:` NENHUM, e isso e leitura e nao esquecimento: a descricao
+  # do bRO nao traz a linha "Intransferivel" que a Moeda Nova e a Caveira
+  # Humana trazem, e por-la seria inventar (regra 4.3). CONSEQUENCIA
+  # PRATICA: com a mochila cheia o `getitem` da Roleta largaria o premio
+  # NO CHAO (CLAUDE.md secao 5) - quem impede isso e o `checkweight` que a
+  # Roleta faz antes de cobrar, e SO ELE. Pondo `NoDrop` aqui um dia,
+  # troca-se a fonte por gosto; e decisao legitima, mas e decisao.
+  #
+  # A ARTE VEIO DO GRF DO bRO nesta mesma rodada - os quatro recursos de
+  # `zilant_tarot_deck` (.spr, .act, icone e icone grande) faltavam
+  # INTEIROS neste cliente. Cliente novo perde os quatro, calado, e a
+  # caixa de erro aparece ao ABRIR a lista, nao ao usar. Repor com:
+  #     python ferramentas/instala_visual.py --id 600 --grf "<grf do bRO>"
+  #
+  # A REGRA DA HABILIDADE CONJURADA NAO ESTA AQUI. Sao tres tabelas e um
+  # teste de primalidade, e moram em npc/guerra/album_de_cartas_de_taro.txt
+  # - o cabecalho de la traz a tabela inteira do browiki, o de-para de cada
+  # habilidade e o porque de cada campo desta entrada.
+  - Id: 600
+    AegisName: Zilant_Tarot_Deck
+    Name: "Álbum de Cartas de Tarô"
+    # DelayConsume e EXIGENCIA do `itemskill`, nao gosto: o buildin so
+    # funciona neste tipo (doc/script_commands.txt, *itemskill). Ele poe
+    # DELAYCONSUME_TEMP no flag.delay_consume (itemdb.cpp:1124), que e o
+    # que impede o pc_useitem de apagar o item no duplo-clique.
+    Type: DelayConsume
+    # 220 = "Peso: 22" na tela - cada 10 e 1 de peso, a mesma conta do
+    # Rolinho de Arroz mais acima. O 22 e o da descricao do bRO.
+    Weight: 220
+    # "Nivel necessario: 100", da mesma descricao.
+    EquipLevelMin: 100
+    # "Recarga: 1 segundo". O campo e em MILISSEGUNDOS, apesar de o
+    # comentario do db/re/item_db.yml dizer "in seconds": o
+    # `item->delay.duration` e somado a um tick de gettick(), que e ms.
+    # Sem `Status:` de proposito - a recarga e so deste item, e nao de um
+    # grupo compartilhado como o `Reuse_Limit_Mtf` dos quatro disfarces
+    # que a mesma Roleta entrega.
+    Delay:
+      Duration: 1000
+    # A outra metade do par. Sem esta linha o Album sumiria depois da
+    # primeira conjuracao: e o DELAYCONSUME_NOCONSUME que segura o
+    # pc_delitem la no fim (skill.cpp:8310).
+    Flags:
+      NoConsume: true
+    Script: |
+      callfunc "F_AlbumDeTaro";
