@@ -192,8 +192,11 @@ Duas coisas que a etapa deixou em aberto, as duas registradas:
 
 - o `<address>` está com o **IP**; o domínio serve (`EnableDnsSupport` está no
   perfil do NEMO) e é mais robusto, mas não se mexeu no que acabou de funcionar;
-- o **emblema de clã ainda aponta para `127.0.0.1:8888`** e a porta está fechada
-  na produção — `PENDENCIAS.md` §5c, e o primeiro passo é de infra, no Linux.
+- **o quarto servidor não está fechando o circuito**: o web (8888) não é
+  alcançável de fora, e os quatro `ExternalSettings_*.lub` do cliente ainda
+  dizem `127.0.0.1:8888`. Login, char e map estão provados; este não.
+  `PENDENCIAS.md` §5c tem o placar e a ordem — e o primeiro passo é de infra,
+  no Linux.
 
 Lembrar que o cliente inteiro está **fora do git**: essa alteração só existe
 nesta máquina, some em cliente novo, e por isso o instalador tem de levar os
@@ -694,8 +697,11 @@ de uma sessão no Windows.
 **1. ~~Apontar o cliente para o servidor (Etapa 2).~~ RESOLVIDO em 2026-08-14**,
 com login de verdade. O que o Windows descobriu e o Mac precisa saber: o arquivo
 é o **`sclientinfo.xml`**, não o `clientinfo.xml`. No lugar dele entra um item
-novo, que volta para o Mac: **expor o `web-server` (8888) na produção** — sem
-isso o emblema de clã não sobe, e a falha é calada (`PENDENCIAS.md` §5c).
+novo, que volta para o Mac: **os quatro servidores têm de estar no ar E
+alcançáveis de fora** — hoje login, char e map estão (provado pela captura do
+primeiro login), e o **web (8888) não**. Sem ele o emblema de clã não sobe, e a
+falha é calada. O inventário completo dos apontamentos do cliente, com a ordem
+de execução e o que precisa voltar do Mac para cá, está no `PENDENCIAS.md` §5c.
 
 **2. A conta interserver do HML continua `s1`/`p1`.** No Linux ela foi trocada
 por credencial própria em 2026-08-15 (`PENDENCIAS.md` §5, item 1). No HML é

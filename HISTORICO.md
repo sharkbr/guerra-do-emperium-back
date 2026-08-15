@@ -9290,4 +9290,4 @@ e `AlwaysAscii` é o que desenha o byte acentuado (regra §4.1).
 | `IMPLANTACAO.md` | Etapa 2 fechada; §9 item 1 resolvido |
 | `PENDENCIAS.md` | §5b: a lista do NEMO deixou de ser dívida |
 | `SESSAO-WINDOWS.md` | **apagado** — era entregável de sessão, e a Etapa 2 fechou |
-| `PENDENCIAS.md` | §5c **nova** — o emblema de clã ainda fala com `127.0.0.1:8888` |
+| `PENDENCIAS.md` | §5c **nova** — os quatro servidores na produção e os apontamentos do cliente que sobraram (o web, em `127.0.0.1:8888`) |

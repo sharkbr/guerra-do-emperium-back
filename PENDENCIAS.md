@@ -2010,23 +2010,57 @@ primeiro install, o esqueleto está lá.
 
 ---
 
-## 5c. O emblema de clã ainda fala com `127.0.0.1` (2026-08-14)
+## 5c. Os QUATRO servidores na produção — e os apontamentos que sobraram (2026-08-14)
 
-Achado ao capturar as conexões do cliente durante o **primeiro login na
-produção** (Etapa 2, `HISTORICO.md`). No meio da sequência que deu certo —
-login `6900`, char `6121`, map `5121`, todos em `138.197.155.31` — apareceu
-esta linha:
+**São quatro servidores, não três** (`CLAUDE.md` §3), e a produção só está
+inteira quando os quatro estão no ar **e alcançáveis de fora**. Hoje três estão;
+o quarto não. E o cliente aponta para o servidor a partir de **mais de um
+arquivo** — o login foi só o primeiro.
+
+### O placar, medido de fora em 2026-08-14
+
+| peça | porta | quem aponta | estado |
+|---|---|---|---|
+| login | 6900 | **cliente**: `data\sclientinfo.xml` (e o `clientinfo.xml` junto) | ✅ apontado e conectando |
+| char | 6121 | **servidor** anuncia (`char_ip`) | ✅ provado na captura — nada a fazer no cliente |
+| map | 5121 | **servidor** anuncia (`map_ip`) | ✅ provado na captura |
+| **web** | **8888** | **cliente**: `ExternalSettings_*.lub` | ❌ **porta fechada na produção, e o `.lub` ainda diz `127.0.0.1`** |
+
+As três primeiras foram confirmadas pela captura de conexões do primeiro login
+(`HISTORICO.md`, Etapa 2). A quarta apareceu na mesma captura, do lado errado:
 
 ```
 127.0.0.1:8888  SynSent
 ```
 
-É o `AssistAddr`, e ele não vem de nenhum dos dois XML: mora em
-`cliente\data\luafiles514\lua files\service_brazil\ExternalSettings_br.lub`
-**e na gêmea `ExternalSettings_br_s.lub`** (a sakray — o mesmo par do
-`sclientinfo.xml`; as duas dizem `AssistAddr = "127.0.0.1:8888"` na linha 27,
-e são texto puro, não bytecode). Dele saem `/emblem/upload`,
-`/emblem/download`, `/userconfig/*` e `/twitter/*`.
+E `connect` para `138.197.155.31:8888`, de fora, **estoura o tempo** — a porta
+não está exposta. Não dá para saber daqui se o processo está de pé no Linux
+(esta máquina não tem chave SSH do servidor); o que está medido é que **de fora
+não se alcança**.
+
+### De onde o cliente tira esse endereço
+
+Chama-se `AssistAddr`, e **não vem de nenhum dos dois XML** — apontar o
+`sclientinfo.xml` para a produção não o arrasta junto. Dele saem
+`/emblem/upload`, `/emblem/download`, `/userconfig/*` e `/twitter/*`.
+
+**São QUATRO arquivos, não um** — varridos em 2026-08-14, todos texto puro (não
+bytecode), todos com `AssistAddr = "127.0.0.1:8888"` na linha 27:
+
+```
+data\luafiles514\lua files\service_brazil\ExternalSettings_br.lub
+data\luafiles514\lua files\service_brazil\ExternalSettings_br_s.lub
+data\luafiles514\lua files\service_korea\ExternalSettings_kr.lub
+data\luafiles514\lua files\service_korea\ExternalSettings_kr_sak.lub
+```
+
+Duas divisões, e **nenhuma das duas está resolvida**: `_s`/`_sak` é a gêmea
+sakray — e é justamente a gêmea sakray que venceu no caso do `sclientinfo.xml`
+(`CLAUDE.md` §5) —; e `service_brazil` / `service_korea` é escolhido pelo
+`<servicetype>`, que tem **pergunta aberta neste projeto**: o XML diz `brazil` e
+o jogo se comporta como `korea` (§4 desta lista, na seção das bandeiras de
+`CTRL+<n>`). Como hoje os quatro dizem a mesma coisa, a captura não desempata.
+**Trocar os quatro** é mais barato que descobrir qual vale.
 
 **Consequência:** contra a produção, o emblema de clã e a configuração de
 usuário salva no servidor **não funcionam** — e a falha é a mais calada que
@@ -2040,12 +2074,33 @@ um endereço que não responde só troca uma falha calada por outra mais lenta.
 
 **A ordem certa, e ela começa no Linux:**
 
-1. Decidir como o `web-server` é exposto — abrir a 8888, ou (melhor) pô-lo
-   atrás do Apache que já está de pé, sob HTTPS no mesmo domínio. É trabalho
-   de infra, **sessão do Mac**.
-2. Só então trocar o `AssistAddr` **nos dois `.lub`**, aqui no Windows.
-3. Conferir em jogo criando um clã e subindo um emblema — é o único teste que
+1. **Sessão do Mac.** Garantir que o `web-server` está no ar (é um dos quatro do
+   `SERVER_DEPENDS`, e o `systemd` tem de subi-lo junto com os outros três) e
+   decidir como ele é **exposto**: abrir a 8888, ou — melhor — pô-lo atrás do
+   Apache que já está de pé, sob HTTPS no mesmo domínio. Estar rodando não
+   basta: o cliente fala com ele **de fora**.
+2. Dizer para cá **qual endereço** ficou valendo (IP com porta, ou o domínio),
+   porque o `AssistAddr` é uma string `host:porta` e a forma muda conforme a
+   escolha do passo 1.
+3. **Sessão do Windows.** Trocar o `AssistAddr` **nos quatro `.lub`**, com o
+   cuidado de sempre (cp1252, por script, âncora com `assert`) — e lembrar que
+   isso é **cliente, fora do git**: some em cliente novo, e o instalador tem de
+   levar os quatro já apontados, junto com os dois XML (§5b).
+4. Conferir em jogo criando um clã e subindo um emblema — é o único teste que
    fecha, porque o caminho inteiro é silencioso.
+
+### Dois apontamentos menores, achados na mesma varredura
+
+Não quebram jogo, mas apontam para a máquina errada e são de graça quando
+alguém estiver ali:
+
+| arquivo | o que diz | efeito |
+|---|---|---|
+| `System\itemInfo_true.lub` e `SystemEN\itemInfo.lua`, linha 86 | `URL = "http://127.0.0.1/?module=item&action=view&id="` | é o link "ver este item na web" do menu do item — abre página morta |
+| `data\msgstringtable.txt`, linha 456 | a string `127.0.0.1` crua | texto padrão de UI; conferir onde aparece antes de mexer |
+
+O `itemInfo.lua` é **gerado** por ferramenta (§ do `ferramentas/LEIAME.md`), então
+a troca tem de entrar no gerador, não no arquivo — senão volta na próxima rodada.
 
 ---
 
