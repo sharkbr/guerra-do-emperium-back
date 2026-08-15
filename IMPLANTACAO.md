@@ -689,6 +689,26 @@ de implantação; calibragem de jogo continua no `PENDENCIAS.md`.
 
 ---
 
+## 8b. O estado da produção em 2026-08-15
+
+Varrido de fora nesta data. Serve de linha de base: se algum destes mudar sem
+alguém ter mexido, é defeito.
+
+| | |
+|---|---|
+| Site | `https://libraro.filiponegrao.com.br` — HTTP redireciona |
+| Botão Baixar | pasta do Google Drive (`SITE_DOWNLOAD_URL` em `/etc/guerra/site.env`) |
+| Portas do jogo | 6900, 6121, 5121 abertas |
+| 8888 | **fechada**, e o web-server responde pelo Apache na 80 e na 443 |
+| Serviços | os quatro do jogo + site + Apache + MariaDB, todos `active` |
+| Backup | três temporizadores armados; horário já rodando sozinho |
+| Memória | 763 MB de 961 usados, 198 disponíveis |
+
+**O `SITE_DOWNLOAD_URL` mora fora do git** (`/etc/guerra/site.env`) e sobrevive a
+reexecuções do `configura_web.sh`, que preserva o arquivo. Mas **máquina nova
+nasce sem ele** — e aí o botão aparece desligado dizendo "Em breve", que é o
+comportamento certo, e não um botão quebrado.
+
 ## 9. Achados do Mac que precisam do Windows
 
 Lista alimentada durante a execução, pelo sinal da §1. Cada linha vira trabalho
