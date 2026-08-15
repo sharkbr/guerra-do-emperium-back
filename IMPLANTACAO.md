@@ -401,7 +401,46 @@ Vale criar, junto, um `conf/import-exemplo/` **versionado**, com as chaves e sem
 os valores. Hoje o conteúdo dessa pasta só existe como conhecimento desta
 máquina.
 
-### Etapa 8 — nginx ⬜
+### Etapa 8 — Apache (era nginx) ✅ (2026-08-15)
+
+**Trocado para Apache por decisão do dono**, em 2026-08-15. Custou uma
+desinstalação: o `provisiona.sh` instalava nginx, mas nada nosso chegara a ser
+configurado nele — servia a página padrão do Ubuntu. Automatizado em
+`ferramentas/configura_web.sh`.
+
+O que ficou de pé:
+
+- **`https://libraro.filiponegrao.com.br`** com certificado Let's Encrypt e
+  redirecionamento de HTTP, renovação automática pelo certbot
+- **proxy do web-server** (8888, fechada no `ufw`) para os cinco caminhos que
+  ele atende. **`/MerchantStore/` tem maiúscula e o `ProxyPass` diferencia
+  caixa** — escrever minúsculo ali faz a loja de mercador falhar sem erro
+- **`/patch/`** servindo `/var/www/patch`, que é o gancho do instalador
+- **o site** (`guerra-site.service`), compilado no próprio servidor: Go leva
+  segundos, ao contrário dos 67 minutos do C++
+
+**Uma linha que não é óbvia e cuja falta é calada:**
+`RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}`. O `mod_proxy_http`
+manda `X-Forwarded-For` e `-Host` sozinho, mas **não o `-Proto`** — sem ela o
+site nunca sabe que a conexão veio por HTTPS e o cookie de sessão deixa de sair
+como `Secure`. Tudo continua funcionando; só o cookie passa a poder viajar em
+claro. Conferido no cabeçalho: `HttpOnly; Secure; SameSite=Lax`.
+
+**Os segredos do site moram em `/etc/guerra/site.env`**, fora do repositório de
+propósito — assim nenhum comando de git alcança o arquivo.
+
+#### A medição que muda a recomendação de tamanho
+
+Depois do `apt` e da compilação do Go, o `map-server` apareceu com **28 MB de
+RSS** — ele tem 437. Os ~400 MB de diferença **foram para o swap**: uma operação
+de manutenção rotineira expulsou o servidor de jogo da memória.
+
+Não é fatal — as páginas voltam —, mas o custo aparece como engasgo de latência
+justo enquanto alguém joga. **Isto deixou de ser estimativa: 1 GB é apertado
+demais para conviver com manutenção.** A recomendação de subir para 2 GB agora
+tem evidência.
+
+### Etapa 8 — o registro original
 
 Duas funções:
 
