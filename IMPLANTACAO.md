@@ -171,20 +171,33 @@ têm de mudar juntos, e o banco não avisa qual está valendo.
 **Como saber que deu certo:** logar no cliente com a senha de sempre. E conferir
 no banco que a coluna virou 32 caracteres hexadecimais.
 
-### Etapa 2 — apontar o cliente para o servidor ✅ (2026-08-15)
+### Etapa 2 — apontar o cliente para o servidor ✅ (2026-08-14)
 
-**Feita no Windows e confirmada pelo dono: o cliente conecta no servidor Linux e
-o jogo funciona.** O briefing que orientou aquela sessão está em
-`SESSAO-WINDOWS.md` — apague-o quando o resultado estiver no `HISTORICO.md`, é
-entregável de sessão e não documentação permanente.
+**Feito, e confirmado pelo dono com login de verdade na produção**: conta criada
+pelo site, cliente desta máquina, login → char → map, os três em
+`138.197.155.31`. O relato completo está no `HISTORICO.md`, "O cliente aponta
+para a produção — e o arquivo era o outro". (A sessão do Mac datou o mesmo
+trabalho de 2026-08-15; é a mesma virada de noite, não duas datas.)
 
-O `data\clientinfo.xml` tem `<address>127.0.0.1</address>`. Vai ter que apontar
-para o IP (ou domínio) do servidor. **Fica para depois de a Fase B estar de pé**,
-e é o que amarra este plano ao do instalador do patch — que é trabalho separado
-e não está aqui.
+**A correção que esta etapa deixa para o plano:** o arquivo não era o
+`data\clientinfo.xml`, como estava escrito aqui e no `SESSAO-WINDOWS.md`. Este
+exe é `<servertype>sakray</servertype>` e quem vale é o **`data\sclientinfo.xml`**
+— trocar só o primeiro não muda nada, e o sintoma é o cliente insistindo em
+`127.0.0.1`. Os dois ficaram com o mesmo endereço; a regra subiu para o
+`CLAUDE.md` §5.
+
+O `SESSAO-WINDOWS.md` foi apagado, como ele próprio mandava.
+
+Duas coisas que a etapa deixou em aberto, as duas registradas:
+
+- o `<address>` está com o **IP**; o domínio serve (`EnableDnsSupport` está no
+  perfil do NEMO) e é mais robusto, mas não se mexeu no que acabou de funcionar;
+- o **emblema de clã ainda aponta para `127.0.0.1:8888`** e a porta está fechada
+  na produção — `PENDENCIAS.md` §5c, e o primeiro passo é de infra, no Linux.
 
 Lembrar que o cliente inteiro está **fora do git**: essa alteração só existe
-nesta máquina, e some em cliente novo.
+nesta máquina, some em cliente novo, e por isso o instalador tem de levar os
+**dois** XML já apontados.
 
 ---
 
@@ -678,8 +691,11 @@ de implantação; calibragem de jogo continua no `PENDENCIAS.md`.
 Lista alimentada durante a execução, pelo sinal da §1. Cada linha vira trabalho
 de uma sessão no Windows.
 
-**1. Apontar o cliente para o servidor (Etapa 2).** É o único item que
-bloqueia o beta. Briefing completo em `SESSAO-WINDOWS.md`.
+**1. ~~Apontar o cliente para o servidor (Etapa 2).~~ RESOLVIDO em 2026-08-14**,
+com login de verdade. O que o Windows descobriu e o Mac precisa saber: o arquivo
+é o **`sclientinfo.xml`**, não o `clientinfo.xml`. No lugar dele entra um item
+novo, que volta para o Mac: **expor o `web-server` (8888) na produção** — sem
+isso o emblema de clã não sobe, e a falha é calada (`PENDENCIAS.md` §5c).
 
 **2. A conta interserver do HML continua `s1`/`p1`.** No Linux ela foi trocada
 por credencial própria em 2026-08-15 (`PENDENCIAS.md` §5, item 1). No HML é
@@ -688,5 +704,7 @@ parecer esquecimento.
 
 **3. O instalador do cliente.** Levantamento em `PENDENCIAS.md` §5b. O servidor
 já tem onde hospedar: `https://libraro.filiponegrao.com.br/patch/`, servindo
-`/var/www/patch`. Antes de empacotar, **anotar a lista de patches do NEMO** — o
-exe é o único arquivo do conjunto sem gerador versionado.
+`/var/www/patch`. ~~Antes de empacotar, **anotar a lista de patches do NEMO**~~
+— **feito em 2026-08-14**: o `.epi` ao lado do exe traz os nomes, e a lista está
+no `REFERENCIA.md`. O exe continua sendo o único arquivo do conjunto sem gerador
+versionado, então a cópia fria dele continua obrigatória.

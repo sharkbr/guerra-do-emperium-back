@@ -9202,3 +9202,92 @@ que custou uma desinstalação porque nada nosso chegara a ser configurado nele.
 não é verificado (falta plugar o Penelope, que é uma linha de configuração), e o
 roadmap de segurança do beta.
 
+---
+
+## O cliente aponta para a produção — e o arquivo era o outro (2026-08-14)
+
+Etapa 2 do `IMPLANTACAO.md`, fechada com **login de verdade no servidor Linux**:
+conta `filiponegrao`, criada pelo site, entrando pelo cliente desta máquina. O
+trabalho previsto era trocar um endereço num XML. O que custou a sessão foi
+descobrir **qual XML**.
+
+(O relógio desta máquina marcava 2026-08-14; a sessão do Mac datou o próprio
+trabalho de 2026-08-15. É a mesma virada de noite, não duas datas.)
+
+### O que o briefing mandava, e por que não bastou
+
+O `SESSAO-WINDOWS.md` mandava trocar o `<address>` do `data\clientinfo.xml` de
+`127.0.0.1` para o servidor. Feito com todo o cuidado que o arquivo pede — cp1252,
+gravado por script, âncora única com `assert`, fim de linha medido antes (era LF),
+relido em cp1252, e a conferência de que **só** o `<address>` mudou. O arquivo
+ficou perfeito. E o cliente continuou falando com `127.0.0.1`.
+
+**Quem manda é o `data\sclientinfo.xml`.** Este exe é
+`<servertype>sakray</servertype>`, e o par sakray é o `sclientinfo.xml` — que
+estava ali, na mesma pasta, com `<address>127.0.0.1</address>` e
+`<display>Local</display>`, intocado desde 2026-08-03. Trocado ele, o login
+aconteceu na primeira tentativa.
+
+Por que engana: os dois arquivos existem, os dois têm `<address>`, o exe carrega
+as duas strings sobrepostas (`sclientinfo.xml` em `0x9f707c`, `clientinfo.xml`
+um byte adiante) e o `.epi` lista o patch `CallKoreaClientInfo`, que aponta para
+o lado errado. **O mecanismo exato não foi perseguido** — o que existe é a prova
+empírica, que é o que valia. Os dois arquivos ficaram com o mesmo endereço, de
+modo que a pergunta não precise ser respondida de novo.
+
+### Os três becos, e o que decidiu
+
+Nenhum dos três era bobo, e os três estavam errados:
+
+| hipótese | como caiu |
+|---|---|
+| O cliente não resolve nome de domínio (`inet_addr`) | trocado o domínio por `138.197.155.31`, o sintoma **não** mudou. E o `.epi` traz `EnableDnsSupport`: o domínio funcionaria |
+| Firewall bloqueando o exe | `Get-NetFirewallApplicationFilter` não achou regra nenhuma para ele, e a saída padrão dos três perfis é permitir |
+| "Demorou muito, logo não é o loopback" | falso. O SYN para `127.0.0.1:6900` sem nada escutando ficou em **`SynSent`** até estourar o tempo, em vez da recusa imediata que se espera |
+
+Havia ainda uma quarta pista, que mentiu: o `LastAccessTime` do `clientinfo.xml`
+não andou depois de o cliente subir, o que parecia provar que ele não lera o
+arquivo. **O NTFS só atualiza esse carimbo quando o valor guardado tem mais de
+uma hora** — a minha própria conferência, cinco minutos antes, o havia
+congelado. A ressalva subiu para o `CLAUDE.md` §5, ao lado da regra que ela
+corrige.
+
+**O que decidiu foi olhar para onde o pacote ia**: um laço de
+`Get-NetTCPConnection -OwningProcess <pid>` a cada 300 ms, gravando em arquivo,
+enquanto o dono apertava Login. Saiu `127.0.0.1:6900 SynSent` — fato, não
+impressão, e o diagnóstico inteiro em uma tentativa. Vale como técnica para
+qualquer "o cliente não conecta".
+
+### De quebra: a lista de patches do NEMO
+
+O `GuerraDoEmperium.epi`, ao lado do exe, é o perfil do NEMO e **traz os nomes
+dos patches aplicados em texto legível**. Isso é justamente o levantamento que o
+`PENDENCIAS.md` §5b pedia "antes de empacotar, enquanto ainda se lembra" — o exe
+é a única peça do conjunto sem gerador versionado. A lista foi para o
+`REFERENCIA.md`.
+
+Três entradas dela já pagaram o custo nesta sessão: `EnableDnsSupport` matou a
+hipótese do domínio, `DataFolderFirst` confirmou que a pasta `data\` vence o GRF,
+e `AlwaysAscii` é o que desenha o byte acentuado (regra §4.1).
+
+### O que fica em aberto
+
+- O `<address>` está com o **IP**, não com o domínio. Funciona e está provado;
+  o domínio é mais robusto se o droplet mudar de IP, e o `EnableDnsSupport` diz
+  que ele serve. Trocar é uma linha nos dois arquivos, e não foi feito para não
+  mexer no que acabou de funcionar.
+- A alteração **não está no git** — o cliente inteiro está fora. Ela some em
+  cliente novo, e o instalador tem de levar os **dois** XML já apontados.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `cliente\data\sclientinfo.xml` | **fora do git** — `<address>` para `138.197.155.31` e `<display>` de `Local` para `Guerra do Emperium` |
+| `cliente\data\clientinfo.xml` | **fora do git** — mesmo `<address>`, para os dois não divergirem |
+| `CLAUDE.md` | §5: a entrada do `sclientinfo.xml` e a ressalva de uma hora no `LastAccessTime` |
+| `REFERENCIA.md` | endereço da produção e a lista de patches do NEMO |
+| `IMPLANTACAO.md` | Etapa 2 fechada; §9 item 1 resolvido |
+| `PENDENCIAS.md` | §5b: a lista do NEMO deixou de ser dívida |
+| `SESSAO-WINDOWS.md` | **apagado** — era entregável de sessão, e a Etapa 2 fechou |
+| `PENDENCIAS.md` | §5c **nova** — o emblema de clã ainda fala com `127.0.0.1:8888` |

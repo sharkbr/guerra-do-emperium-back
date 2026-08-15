@@ -517,6 +517,35 @@ Produziram diagnóstico falso e custaram retrabalho:
   que cada `.lub` foi aberto — e compará-lo com a hora em que o cliente subiu
   separa "o override não chega" de "o override chega e não basta" sem entrar
   no jogo. Funciona mesmo com `DisableLastAccess = 2` neste Windows.
+  **Mas o carimbo só anda de hora em hora, e isso inverte a resposta.** O NTFS
+  só reescreve o `LastAccessTime` quando o valor guardado tem **mais de uma
+  hora**; leitura dentro da mesma hora não mexe nele. Então qualquer coisa que
+  tenha tocado o arquivo há pouco — inclusive a sua própria conferência depois
+  de gravar — congela o carimbo, e a sonda responde *"o cliente não leu"* sobre
+  um arquivo que ele leu. Medido em 2026-08-14, e custou uma hipótese inteira.
+  Só vale como prova quando o último acesso é **anterior em mais de uma hora**
+  ao instante em que o cliente subiu.
+- **O endereço do servidor mora no `sclientinfo.xml`, não no `clientinfo.xml`.**
+  Este exe é `<servertype>sakray</servertype>`, e o par sakray é o
+  `cliente\data\sclientinfo.xml` — provado em 2026-08-14, quando trocar só o
+  `clientinfo.xml` deixou o cliente indo em `127.0.0.1` e trocar o
+  `sclientinfo.xml` fez o login na produção acontecer. Engana porque os **dois**
+  existem em `cliente\data\`, os dois têm `<address>`, o exe carrega as duas
+  strings sobrepostas (`sclientinfo.xml` em `0x9f707c`, `clientinfo.xml` um byte
+  adiante) e o `.epi` ainda lista o patch `CallKoreaClientInfo`, que sugere o
+  contrário. **Manter os dois com o mesmo endereço** é o que evita a próxima
+  hora perdida. Vale para o instalador também: quem empacotar o cliente leva os
+  dois.
+  Três becos sem saída do mesmo dia, para não se repetirem: o cliente **resolve
+  nome de domínio** (`EnableDnsSupport` está no `.epi`, então o `<address>` pode
+  ser o domínio); **não há regra de firewall** para o exe e a saída é liberada; e
+  **demora não descarta o loopback** — o SYN para `127.0.0.1:6900` com nada
+  escutando ficou em `SynSent` até estourar o tempo, em vez da recusa imediata
+  que a intuição promete. O que decide de verdade é olhar **para onde o pacote
+  vai**: um laço de `Get-NetTCPConnection -OwningProcess <pid>` gravando o que
+  aparece enquanto o jogador aperta Login responde numa tentativa o que três
+  hipóteses plausíveis não responderam. Mesma família do `ajusta_tamanho_fonte.py`
+  — marca que não depende do efeito procurado.
 - **Ferramenta que consulta tabela do cliente tem de ler `cliente\data\`
   ANTES do GRF.** O `DataFolderFirst` faz o disco vencer, então depois de
   qualquer `estende_*.py` gravar o override é ele que o cliente lê. Uma

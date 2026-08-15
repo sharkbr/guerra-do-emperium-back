@@ -1994,13 +1994,58 @@ delas precisar rodar de novo.
    seção nova no `RECEITAS.md` consolidando as oito menções espalhadas. **O
    instalador passa a ser a SAÍDA desse script**, não um pacote que ninguém
    sabe refazer.
-2. Resolver o exe: ou registrar a lista de patches do NEMO, ou aceitar por
-   escrito que ele é binário de origem única e fazer cópia fria dele.
-3. Só então empacotar.
+2. ~~Resolver o exe: ou registrar a lista de patches do NEMO, ou aceitar por
+   escrito que ele é binário de origem única e fazer cópia fria dele.~~
+   **FEITO em 2026-08-14:** o `GuerraDoEmperium.epi`, ao lado do exe, é o perfil
+   do NEMO e traz os nomes dos patches em texto legível. A lista está no
+   `REFERENCIA.md`. Continua valendo a cópia fria do binário — a lista diz
+   **quais** patches, não com que parâmetros cada um foi aplicado.
+3. Só então empacotar. **E o pacote leva o `data\sclientinfo.xml` e o
+   `data\clientinfo.xml` já apontados para a produção** — os dois, pelo motivo
+   do `CLAUDE.md` §5.
 
 **Já existe um `PatchClient\`** na raiz do cliente (30 `.bmp`, 2,5 MB) — é o
 skin do patcher do próprio kRO. Se a ideia for patch incremental depois do
 primeiro install, o esqueleto está lá.
+
+---
+
+## 5c. O emblema de clã ainda fala com `127.0.0.1` (2026-08-14)
+
+Achado ao capturar as conexões do cliente durante o **primeiro login na
+produção** (Etapa 2, `HISTORICO.md`). No meio da sequência que deu certo —
+login `6900`, char `6121`, map `5121`, todos em `138.197.155.31` — apareceu
+esta linha:
+
+```
+127.0.0.1:8888  SynSent
+```
+
+É o `AssistAddr`, e ele não vem de nenhum dos dois XML: mora em
+`cliente\data\luafiles514\lua files\service_brazil\ExternalSettings_br.lub`
+**e na gêmea `ExternalSettings_br_s.lub`** (a sakray — o mesmo par do
+`sclientinfo.xml`; as duas dizem `AssistAddr = "127.0.0.1:8888"` na linha 27,
+e são texto puro, não bytecode). Dele saem `/emblem/upload`,
+`/emblem/download`, `/userconfig/*` e `/twitter/*`.
+
+**Consequência:** contra a produção, o emblema de clã e a configuração de
+usuário salva no servidor **não funcionam** — e a falha é a mais calada que
+existe (`HISTORICO.md`, "O quarto servidor"): o `POST` morre, o cliente não
+mostra caixa de erro e o map-server não registra nada. Ninguém vai relatar
+isso como erro; vão dizer "escolhi o emblema e não aconteceu nada".
+
+**Por que não foi trocado junto:** a porta **8888 está fechada na produção** —
+medido no mesmo dia, `connect` estoura o tempo de fora. Apontar o cliente para
+um endereço que não responde só troca uma falha calada por outra mais lenta.
+
+**A ordem certa, e ela começa no Linux:**
+
+1. Decidir como o `web-server` é exposto — abrir a 8888, ou (melhor) pô-lo
+   atrás do Apache que já está de pé, sob HTTPS no mesmo domínio. É trabalho
+   de infra, **sessão do Mac**.
+2. Só então trocar o `AssistAddr` **nos dois `.lub`**, aqui no Windows.
+3. Conferir em jogo criando um clã e subindo um emblema — é o único teste que
+   fecha, porque o caminho inteiro é silencioso.
 
 ---
 
