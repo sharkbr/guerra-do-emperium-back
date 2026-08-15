@@ -9291,3 +9291,65 @@ e `AlwaysAscii` é o que desenha o byte acentuado (regra §4.1).
 | `PENDENCIAS.md` | §5b: a lista do NEMO deixou de ser dívida |
 | `SESSAO-WINDOWS.md` | **apagado** — era entregável de sessão, e a Etapa 2 fechou |
 | `PENDENCIAS.md` | §5c **nova** — os quatro servidores na produção e os apontamentos do cliente que sobraram (o web, em `127.0.0.1:8888`) |
+
+## O homúnculo e a pasta que o exe procura (2026-08-15)
+
+Ao clicar em **Criar Homunculus**, o cliente devolveu uma caixa `AI.lua error`:
+
+```
+cannot open .\AI_sakray\AI.lua: No such file or directory
+```
+
+O embrião foi consumido e o item criado — o chat mostra as duas linhas —, então
+o lado servidor fez a parte dele. O que faltou é do cliente, e não é nem IA
+quebrada nem sprite ausente.
+
+### Não era sprite
+
+Primeira hipótese descartada de graça: os quatro homúnculos estão inteiros no
+`data.grf`, com evolução e as duas variantes de sexo — `lif`, `amistr`, `filir`,
+`vanilmirth`, cada um com `_h`, `2` e `_h2` — mais os cinco homunculus S
+(`mer_bayeri`, `mer_dieter`, `mer_eira`, `mer_eleanor`, `mer_sera`). Vinte e um
+`.spr`, todos presentes.
+
+### Era o nome da pasta
+
+Este exe é `sakray` (o mesmo `<servertype>` que já tinha decidido, em
+2026-08-14, que o endereço mora no `sclientinfo.xml`). As **cinco** strings de
+caminho de IA no `GuerraDoEmperium.exe` são todas da variante sakray, e não há
+nenhuma da pasta normal:
+
+| endereço | string |
+|---|---|
+| `0x9ede48` | `.\AI_sakray\USER_AI` |
+| `0x9ede5c` | `.\AI_sakray\USER_AI\AI.lua` |
+| `0x9ede78` | `.\AI_sakray\AI.lua` |
+| `0x9ede8c` | `.\AI_sakray\USER_AI\AI_M.lua` |
+| `0x9edeac` | `.\AI_sakray\AI_M.lua` |
+
+E a pasta que o cliente tem, desde a instalação de 2021-11-05, chama-se `AI`.
+Ou seja: os arquivos sempre estiveram lá, com o nome errado para este exe. O
+`AI_M.lua` é a IA do **mercenário** — o mesmo buraco o esperava.
+
+Conserto: `AI_sakray` como cópia de `AI`, com a subpasta `USER_AI` junto (é a
+IA customizada, que o exe procura primeiro).
+
+Os `require` de dentro **não** precisaram mudar. Eles dizem `require "AI\Const"`
+e `require "AI\Util"` — com o nome da própria pasta no caminho, o que prova que
+a resolução é relativa à **raiz do cliente** e não à pasta do script; se fosse à
+pasta do script, o `AI\AI.lua` original nunca teria funcionado em cliente
+nenhum. Como a pasta `AI` continua existindo, os dois lados acham o que
+carregar.
+
+### O que fica em aberto
+
+A pasta nova **não está no git** — o cliente inteiro está fora. Ela some em
+cliente novo, e o instalador tem de levá-la, do mesmo jeito que os dois XML de
+`clientinfo`.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `cliente\AI_sakray\` | **fora do git** — cópia de `cliente\AI\`, com `USER_AI` |
+| `CLAUDE.md` | §5: a entrada da pasta de IA |

@@ -546,6 +546,21 @@ Produziram diagnóstico falso e custaram retrabalho:
   aparece enquanto o jogador aperta Login responde numa tentativa o que três
   hipóteses plausíveis não responderam. Mesma família do `ajusta_tamanho_fonte.py`
   — marca que não depende do efeito procurado.
+- **A IA do homúnculo e a do mercenário moram em `cliente\AI_sakray\`, não em
+  `cliente\AI\` — e a pasta errada não dá erro até alguém invocar o bicho.**
+  Pelo mesmo `<servertype>sakray</servertype>` da entrada acima, as **cinco**
+  strings de caminho de IA deste exe são todas da variante sakray
+  (`.\AI_sakray\AI.lua`, `.\AI_sakray\AI_M.lua` e as duas de
+  `USER_AI\`, mais a pasta) e **não existe nenhuma da pasta normal** — a
+  instalação de 2021-11-05, porém, traz a pasta chamada `AI`. Resultado:
+  clicar em Criar Homunculus devolve uma caixa `AI.lua error — cannot open
+  .\AI_sakray\AI.lua`, com o embrião já consumido, e a suspeita cai em sprite
+  ou IA quebrada — as duas erradas (os 21 `.spr` de homúnculo estão inteiros
+  no GRF). A saída é copiar `AI` para `AI_sakray`, com o `USER_AI` junto. Os
+  `require "AI\\Const"` de dentro **não** se mudam: o caminho traz o nome da
+  própria pasta, ou seja a resolução é relativa à raiz do cliente. Medido em
+  2026-08-15. **Fora do git** — some em cliente novo, e o instalador tem de
+  levá-la.
 - **Ferramenta que consulta tabela do cliente tem de ler `cliente\data\`
   ANTES do GRF.** O `DataFolderFirst` faz o disco vencer, então depois de
   qualquer `estende_*.py` gravar o override é ele que o cliente lê. Uma

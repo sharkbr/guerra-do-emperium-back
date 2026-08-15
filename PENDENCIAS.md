@@ -2003,6 +2003,10 @@ delas precisar rodar de novo.
 3. Só então empacotar. **E o pacote leva o `data\sclientinfo.xml` e o
    `data\clientinfo.xml` já apontados para a produção** — os dois, pelo motivo
    do `CLAUDE.md` §5.
+4. **O pacote leva também a pasta `AI_sakray\`**, criada em 2026-08-15 como
+   cópia de `AI\` (com o `USER_AI` dentro). Sem ela, criar homúnculo ou
+   mercenário devolve caixa de erro de Lua — ver `CLAUDE.md` §5. É pasta fora
+   do git, como o resto do cliente: quem empacotar tem de lembrar dela.
 
 **Já existe um `PatchClient\`** na raiz do cliente (30 `.bmp`, 2,5 MB) — é o
 skin do patcher do próprio kRO. Se a ideia for patch incremental depois do
