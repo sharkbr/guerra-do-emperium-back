@@ -168,7 +168,44 @@ if [ "$COMPILAR" = "1" ]; then
 fi
 
 # =====================================================================
-# 4. Reiniciar
+# 4. Site
+# =====================================================================
+passo "Site"
+# O site e' Go: recompilar custa segundos, entao a decisao aqui e' mais
+# frouxa que a do emulador - qualquer mudanca em site/ ja' vale um build.
+if [ ! -x "$RAIZ/site/site" ] || [ -z "$ANTES" ] || \
+   ! como_jogo git -C "$RAIZ" diff --quiet "$ANTES" "$DEPOIS" -- site 2>/dev/null; then
+    if ( cd "$RAIZ/site" && como_jogo env HOME=/tmp GOCACHE=/tmp/gocache \
+            GOPATH=/tmp/gopath GOFLAGS=-mod=mod go build -o site . ) 2>/tmp/site-build.log; then
+        ok "recompilado"
+        systemctl restart guerra-site 2>/dev/null && ok "guerra-site reiniciado" || true
+    else
+        tail -20 /tmp/site-build.log
+        erro "o site nao compilou"
+    fi
+else
+    pula "site/ nao mudou"
+fi
+
+# =====================================================================
+# 5. Pre-voo (Etapa 11)
+# =====================================================================
+passo "Pre-voo"
+# ANTES de reiniciar, e ABORTANDO se falhar. E' a rede de protecao das tres
+# falhas que so' aparecem no Linux - caixa de caminho, \r sobrando e U+FFFD.
+# Rodar depois do restart seria inutil: o estrago ja' estaria no ar.
+if [ -x "$RAIZ/ferramentas/prevoo.sh" ]; then
+    if como_jogo "$RAIZ/ferramentas/prevoo.sh" "$RAIZ"; then
+        ok "aprovado"
+    else
+        erro "pre-voo reprovado - NADA foi reiniciado"
+    fi
+else
+    aviso "prevoo.sh nao encontrado - seguindo sem a rede de protecao"
+fi
+
+# =====================================================================
+# 6. Reiniciar
 # =====================================================================
 passo "Servicos"
 # As units sao a Etapa 9 e ainda nao existem. Enquanto nao existirem, este
