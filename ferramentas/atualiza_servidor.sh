@@ -208,14 +208,41 @@ fi
 # 6. Reiniciar
 # =====================================================================
 passo "Servicos"
-# As units sao a Etapa 9 e ainda nao existem. Enquanto nao existirem, este
-# passo avisa em vez de fingir que reiniciou - silencio aqui viraria
-# "o deploy passou e o servidor continua com o binario velho".
-if systemctl list-unit-files 'guerra-*.service' --no-legend 2>/dev/null | grep -q .; then
+
+# REINICIAR O JOGO E' A OPERACAO MAIS CARA DESTE SCRIPT: derruba TODO MUNDO
+# que estiver jogando, na hora, com um "Erro desconhecido" na tela deles.
+#
+# Entao nao se faz por reflexo. So' se algo que o EMULADOR le' mudou - ou
+# seja, algo dentro de rathena/ - ou se o binario acabou de ser recompilado.
+# Mudanca de site, de documentacao ou de ferramenta nao encosta no jogo.
+#
+# Custou uma vez, em 2026-08-15: um deploy de CSS derrubou o dono do jogo, e
+# a Etapa 12 do IMPLANTACAO.md ja' avisava exatamente isso por escrito.
+REINICIAR_JOGO=0
+if [ "$COMPILAR" = "1" ]; then
+    REINICIAR_JOGO=1
+    MOTIVO="o binario foi recompilado"
+elif [ -z "$ANTES" ]; then
+    REINICIAR_JOGO=1
+    MOTIVO="primeiro clone"
+elif ! como_jogo git -C "$RAIZ" diff --quiet "$ANTES" "$DEPOIS" -- rathena 2>/dev/null; then
+    REINICIAR_JOGO=1
+    MOTIVO="rathena/ mudou"
+fi
+
+if [ "$REINICIAR_JOGO" = "0" ]; then
+    pula "nada do jogo mudou - os quatro seguem no ar, ninguem foi derrubado"
+elif systemctl list-unit-files 'guerra-*.service' --no-legend 2>/dev/null | grep -q "guerra-map"; then
+    aviso "reiniciando o jogo ($MOTIVO) - quem estiver jogando CAI agora"
     for s in guerra-login guerra-char guerra-web guerra-map; do
         systemctl restart "$s"
         ok "$s reiniciado"
     done
+
+    # Mudanca so' de npc/ ou db/ nem precisaria de restart - pediria
+    # @reloadscript e irmaos (CLAUDE.md secao 3). Distinguir isso exige
+    # mandar comando para o console do map-server, que sob systemd nao tem
+    # terminal; fica como melhoria, e esta' registrado como tal na Etapa 12.
 else
     aviso "units guerra-*.service ainda nao existem (Etapa 9) - nada reiniciado"
 fi

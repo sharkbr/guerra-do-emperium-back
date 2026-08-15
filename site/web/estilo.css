@@ -20,6 +20,13 @@
   --tinta-fraca: #a8a294;
   --ouro:        #d9b45c;   /* o acento; e' o Emperium */
   --ouro-forte:  #f0cf82;
+
+  /* A cor de acao, pedida pelo dono em 2026-08-15. Vale para TODO botao
+     principal (Conta, Entrar, Criar conta, Baixar) e nao so' para o da
+     tela inicial: cor de acao que muda de tela em tela deixa de ensinar
+     "isto e' o que se clica". */
+  --rubro:       #b82e3e;
+  --rubro-forte: #d2404f;
   --breu:        #0a0c11;
   --carvao:      #14171f;
   --perigo:      #e07a5f;
@@ -136,15 +143,23 @@ body {
   .tela { animation: none; }
 }
 
-/* ---------- marca ---------- */
+/* ---------- marca ----------
+ * Tudo aqui existe para o texto sobreviver A' ARTE, que e' clara, saturada
+ * e cheia de detalhe justamente atras do titulo. Fonte fina sobre isso
+ * simplesmente some - e sumia (2026-08-15).
+ */
 .marca { text-align: center; margin-bottom: 44px; }
 
 .sobretitulo {
   margin: 0 0 14px;
   font-size: .72rem;
+  font-weight: 700;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--tinta-fraca);
+  /* Sobe de --tinta-fraca para o branco quente: o cinza era pensado para
+     fundo chapado, e sobre a ilustracao ele desaparece. */
+  color: #f0e9dc;
+  text-shadow: 0 1px 10px rgba(0,0,0,.9), 0 0 3px rgba(0,0,0,.8);
 }
 
 .marca h1 {
@@ -155,6 +170,14 @@ body {
   line-height: 1.05;
   margin: 0;
   letter-spacing: -.01em;
+
+  /* O contorno de 1px pedido pelo dono. O paint-order manda o traco ser
+     desenhado ATRAS do preenchimento - sem ele o traco come metade da
+     haste da letra por dentro, e uma serifa fina fica raquitica. A sombra
+     larga por baixo separa o titulo do que estiver atras dele. */
+  -webkit-text-stroke: 1px rgba(0,0,0,.7);
+  paint-order: stroke fill;
+  text-shadow: 0 3px 24px rgba(0,0,0,.85), 0 1px 4px rgba(0,0,0,.6);
 }
 .marca h1 span {
   display: block;
@@ -162,7 +185,13 @@ body {
   font-style: italic;
 }
 
-.lema { margin: 16px 0 0; color: var(--tinta-fraca); font-size: .95rem; }
+.lema {
+  margin: 16px 0 0;
+  color: #efe7d9;
+  font-size: .95rem;
+  font-weight: 700;
+  text-shadow: 0 1px 10px rgba(0,0,0,.9), 0 0 3px rgba(0,0,0,.8);
+}
 
 /* ---------- botoes ---------- */
 .portoes { display: grid; gap: 14px; }
@@ -172,16 +201,16 @@ body {
   padding: 16px 22px;
   border: 1px solid transparent;
   border-radius: var(--curva);
-  background: var(--ouro);
-  color: #211a08;
+  background: var(--rubro);
+  color: #fff5f2;
   font: inherit; font-weight: 600;
   text-align: center; text-decoration: none;
   cursor: pointer;
   transition: transform .12s ease, background .2s ease, border-color .2s ease;
 }
-.botao:hover { background: var(--ouro-forte); transform: translateY(-1px); }
+.botao:hover { background: var(--rubro-forte); transform: translateY(-1px); }
 .botao:active { transform: none; }
-.botao:focus-visible { outline: 2px solid var(--ouro-forte); outline-offset: 3px; }
+.botao:focus-visible { outline: 2px solid var(--rubro-forte); outline-offset: 3px; }
 .botao[disabled] { opacity: .55; cursor: progress; transform: none; }
 
 .botao.fantasma {
