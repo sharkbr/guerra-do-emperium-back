@@ -42,6 +42,12 @@ type Config struct {
 	ModoVerificacao string
 	PenelopeURL     string
 	PenelopeToken   string
+
+	// Para onde o botao Baixar aponta. Fica em configuracao, e nao no
+	// HTML, para trocar o endereco nao exigir recompilar nem mexer em
+	// arquivo do site - e' o tipo de coisa que muda a cada versao do
+	// cliente. Vazio = o botao aparece desligado, dizendo "em breve".
+	DownloadURL string
 }
 
 func leConfig() Config {
@@ -53,6 +59,7 @@ func leConfig() Config {
 		ModoVerificacao: valor("SITE_VERIFICACAO", "nenhuma"),
 		PenelopeURL:     valor("SITE_PENELOPE_URL", ""),
 		PenelopeToken:   valor("SITE_PENELOPE_TOKEN", ""),
+		DownloadURL:     valor("SITE_DOWNLOAD_URL", ""),
 	}
 	if len(c.Segredo) < 32 {
 		log.Fatal("SITE_SEGREDO precisa de pelo menos 32 caracteres - " +
@@ -123,6 +130,7 @@ func main() {
 	mux.HandleFunc("POST /api/conta/confirma", s.contaConfirma)
 	mux.HandleFunc("POST /api/sessao", s.sessaoAbre)
 	mux.HandleFunc("POST /api/sessao/sair", s.sessaoFecha)
+	mux.HandleFunc("GET /api/config", s.config)
 	mux.HandleFunc("GET /api/painel", s.painel)
 	mux.HandleFunc("POST /api/painel/senha", s.trocaSenha)
 	mux.HandleFunc("POST /api/painel/pin", s.recuperaPin)

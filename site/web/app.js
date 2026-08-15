@@ -215,6 +215,35 @@ $("#botao-sair").onclick = async () => {
   vaiPara("inicio");
 };
 
+/* ---------- endereco do download ----------
+ * O cliente completo mora fora daqui (Google Drive, decisao de
+ * 2026-08-15): sao ~4,2 GB, que num disco de 24 GB seria um sexto do
+ * servidor, e a banda sairia da franquia a cada download. Os patches
+ * incrementais, esses sim, ficam no /patch/ do proprio servidor - sao
+ * pequenos e o patcher precisa de HTTP simples.
+ */
+(async function download() {
+  const botao = $("[data-download]");
+  try {
+    const d = await chama("/api/config", null, "GET");
+    if (d.download) {
+      botao.href = d.download;
+      botao.target = "_blank";
+      botao.rel = "noopener";
+      return;
+    }
+  } catch (_) { /* cai no estado desligado abaixo */ }
+
+  // Sem endereco configurado, o botao NAO leva a lugar nenhum - e diz
+  // isso. Um botao que parece funcionar e nao funciona e' pior que um
+  // botao desligado.
+  botao.classList.add("fantasma");
+  botao.style.pointerEvents = "none";
+  botao.style.opacity = ".55";
+  $(".rotulo", botao).textContent = "Em breve";
+  $("[data-tamanho]").textContent = "o instalador esta sendo preparado";
+})();
+
 /* ---------- entrada ---------- */
 // Se ja' ha' sessao valida, o painel e' a tela util; senao fica no inicio.
 (async function inicia() {

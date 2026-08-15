@@ -269,6 +269,13 @@ func (s *Servidor) exigeSessao(w http.ResponseWriter, r *http.Request) (*Conta, 
 	return c, true
 }
 
+// config e' o que o front precisa saber antes de desenhar. Publico de
+// proposito - nao ha' segredo aqui, e uma chamada a menos no caminho de
+// quem so' quer baixar o jogo.
+func (s *Servidor) config(w http.ResponseWriter, r *http.Request) {
+	devolve(w, http.StatusOK, resposta{"download": s.cfg.DownloadURL})
+}
+
 func (s *Servidor) painel(w http.ResponseWriter, r *http.Request) {
 	c, ok := s.exigeSessao(w, r)
 	if !ok {
