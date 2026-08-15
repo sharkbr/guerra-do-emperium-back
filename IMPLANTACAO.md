@@ -171,7 +171,12 @@ têm de mudar juntos, e o banco não avisa qual está valendo.
 **Como saber que deu certo:** logar no cliente com a senha de sempre. E conferir
 no banco que a coluna virou 32 caracteres hexadecimais.
 
-### Etapa 2 — apontar o cliente para o servidor ⬜
+### Etapa 2 — apontar o cliente para o servidor ⬜ (briefing pronto)
+
+**O servidor está esperando desde 2026-08-15.** O briefing completo para a
+sessão do Windows está em **`SESSAO-WINDOWS.md`**, na raiz — com o que já está
+de pé, o cuidado de cp1252, o roteiro do primeiro login e a tabela de "que falha
+significa o quê".
 
 O `data\clientinfo.xml` tem `<address>127.0.0.1</address>`. Vai ter que apontar
 para o IP (ou domínio) do servidor. **Fica para depois de a Fase B estar de pé**,
@@ -605,4 +610,15 @@ de implantação; calibragem de jogo continua no `PENDENCIAS.md`.
 Lista alimentada durante a execução, pelo sinal da §1. Cada linha vira trabalho
 de uma sessão no Windows.
 
-*(vazia — nada encontrado ainda)*
+**1. Apontar o cliente para o servidor (Etapa 2).** É o único item que
+bloqueia o beta. Briefing completo em `SESSAO-WINDOWS.md`.
+
+**2. A conta interserver do HML continua `s1`/`p1`.** No Linux ela foi trocada
+por credencial própria em 2026-08-15 (`PENDENCIAS.md` §5, item 1). No HML é
+opcional — ambiente de teste, atrás de NAT — mas fica registrado para não
+parecer esquecimento.
+
+**3. O instalador do cliente.** Levantamento em `PENDENCIAS.md` §5b. O servidor
+já tem onde hospedar: `https://libraro.filiponegrao.com.br/patch/`, servindo
+`/var/www/patch`. Antes de empacotar, **anotar a lista de patches do NEMO** — o
+exe é o único arquivo do conjunto sem gerador versionado.
