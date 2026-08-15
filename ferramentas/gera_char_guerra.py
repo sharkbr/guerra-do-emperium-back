@@ -22,6 +22,11 @@ MAIUSCULAS = ('\xc0\xc1\xc2\xc3\xc4'
 
 ASCII = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
+# Simbolos liberados a pedido do dono em 2026-08-15. A lista e lida byte a
+# byte por strchr, nao e regex: o '-' aqui nao tem sentido de intervalo e
+# pode ficar em qualquer posicao.
+SIMBOLOS = '*-'
+
 CABECALHO = """\
 //--------------------------------------------------------------
 // Guerra do Emperium - configuracao do char-server nossa.
@@ -51,9 +56,13 @@ CABECALHO = """\
 // quatro pontos de checagem (char.cpp, int_guild.cpp,
 // int_party.cpp, int_homun.cpp) leem esta mesma variavel.
 //
-// Entram so LETRAS. Hifen, apostrofo e pontuacao ficaram de
-// fora de proposito: nome e usado como chave em comando de GM,
-// em sussurro e no barter, e simbolo ali complica sem ganho.
+// Alem das letras entram DOIS simbolos, '*' e '-', liberados a
+// pedido do dono em 2026-08-15. A demais pontuacao continua de
+// fora de proposito: nome e usado como chave em comando de GM e
+// em sussurro, e simbolo ali complica sem ganho. O '#' segue
+// barrado pelo proprio rAthena (char.cpp:1358, primeira letra),
+// que o reserva para o simbolo de canal - por a-lo na lista nao
+// adianta.
 //
 // A outra metade da correcao mora em conf/guerra/inter_guerra.txt
 // (default_codepage). Sem ela o filtro deixa passar e o INSERT
@@ -63,7 +72,7 @@ CABECALHO = """\
 char_name_option: 1
 """
 
-linha = 'char_name_letters: ' + ASCII + MINUSCULAS + MAIUSCULAS
+linha = 'char_name_letters: ' + ASCII + SIMBOLOS + MINUSCULAS + MAIUSCULAS
 
 destino = r'C:\Users\User\projects\guerra-do-emperium-back\rathena\conf\guerra\char_guerra.txt'
 f = open(destino, 'wb')
@@ -75,7 +84,8 @@ f.close()
 dados = open(destino, 'rb').read()
 assert '\xef\xbf\xbd' not in dados, 'U+FFFD no arquivo - foi gravado em UTF-8'
 texto = dados.decode('cp1252')
-for b in MINUSCULAS + MAIUSCULAS:
+for b in MINUSCULAS + MAIUSCULAS + SIMBOLOS:
     assert b.decode('cp1252') in texto, 'byte %r sumiu' % b
-print 'OK: %d bytes, %d letras acentuadas' % (len(dados), len(MINUSCULAS + MAIUSCULAS))
+print 'OK: %d bytes, %d letras acentuadas, simbolos %r' % (
+    len(dados), len(MINUSCULAS + MAIUSCULAS), SIMBOLOS)
 print repr(linha[-52:])

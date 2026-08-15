@@ -5543,6 +5543,35 @@ sintoma. O que fechou a questão foi medir o `INSERT` nas duas codificações
 **antes** de escrever qualquer arquivo: uma rodada de mysql.exe transformou uma
 suposição plausível em fato.
 
+### Emenda: `*` e `-` liberados (2026-08-15)
+
+Pedido do dono: *"hoje a criação de personagem não permite `*` e `-`. Deixa
+permitir por favor"*. É a decisão de 2026-08-10 revista — aquela rodada tinha
+deixado símbolo de fora **de propósito**, com o argumento de que nome é chave
+em comando de GM e em sussurro. O dono quis os dois; entraram os dois, e só
+eles.
+
+Uma constante nova (`SIMBOLOS`) no `ferramentas/gera_char_guerra.py`, com o
+cabeçalho gerado ajustado, e o `conf/guerra/char_guerra.txt` regerado. **Nada
+de editar o `.txt` à mão** — é cp1252, e é exatamente para isso que o gerador
+existe.
+
+Três coisas apuradas no caminho, que evitam a próxima dúvida:
+
+- **A lista é lida por `strchr`, não é regex.** O `-` não tem sentido de
+  intervalo ali e pode ficar em qualquer posição da string.
+- **O `#` não seria liberável pela lista.** O `char_check_char_name` recusa
+  antes, no `char.cpp:1358`, qualquer nome cuja **primeira** letra seja `#` —
+  o rAthena reserva o símbolo para canal. Pô-lo na lista não adiantaria, e o
+  sintoma seria a mesma caixa de sempre.
+- **Os quatro pontos de checagem seguem juntos**: personagem, clã, grupo e
+  homúnculo passam a aceitar `*` e `-` na mesma tacada, como toda mudança
+  nessa variável.
+
+Config só é lida na inicialização, e **não existe recarregador para
+`char_name_letters`**: exige reiniciar o char-server — que derruba quem está
+jogando, porque o map-server perde a ligação com ele.
+
 ## O Centro da Ordem — auction_01 vira uma casa da cidade (2026-08-10)
 
 Pedido: uma conexão nova entre Prontera e uma casa. `auction_01` tinha portal

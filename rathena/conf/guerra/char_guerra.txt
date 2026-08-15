@@ -26,9 +26,13 @@
 // quatro pontos de checagem (char.cpp, int_guild.cpp,
 // int_party.cpp, int_homun.cpp) leem esta mesma variavel.
 //
-// Entram so LETRAS. Hifen, apostrofo e pontuacao ficaram de
-// fora de proposito: nome e usado como chave em comando de GM,
-// em sussurro e no barter, e simbolo ali complica sem ganho.
+// Alem das letras entram DOIS simbolos, '*' e '-', liberados a
+// pedido do dono em 2026-08-15. A demais pontuacao continua de
+// fora de proposito: nome e usado como chave em comando de GM e
+// em sussurro, e simbolo ali complica sem ganho. O '#' segue
+// barrado pelo proprio rAthena (char.cpp:1358, primeira letra),
+// que o reserva para o simbolo de canal - por a-lo na lista nao
+// adianta.
 //
 // A outra metade da correcao mora em conf/guerra/inter_guerra.txt
 // (default_codepage). Sem ela o filtro deixa passar e o INSERT
@@ -36,4 +40,4 @@
 // so aqui NAO resolve.
 //--------------------------------------------------------------
 char_name_option: 1
-char_name_letters: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890àáâãäçèéêëìíîïñòóôõöùúûüÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜ
+char_name_letters: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890*-àáâãäçèéêëìíîïñòóôõöùúûüÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜ
