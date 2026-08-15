@@ -9148,3 +9148,57 @@ cabeçalho do `login_guerra.txt`: cliente com `<passwordencrypt>`. O nosso
 | `rathena/conf/login_athena.conf` | uma linha `import:`, antes da do `conf/import/` |
 | `CLAUDE.md` | §2, a linha do enxerto novo |
 | `IMPLANTACAO.md` | Etapa 1: o que entrou, e a correção do "opcional" |
+
+---
+
+## A implantação no servidor Linux (2026-08-14 e 15)
+
+Em dois dias o projeto saiu de "roda no Windows de casa" para **um servidor
+público com os quatro servidores sob systemd, site de criação de conta, HTTPS e
+backup automático** — e com um comando só para atualizar tudo. O plano inteiro,
+etapa por etapa, está no `IMPLANTACAO.md`; aqui fica o que se aprendeu.
+
+**Tudo por script, e idempotente.** Quatro na `ferramentas/`: `provisiona.sh`
+(máquina), `configura_servidor.sh` (conf/import + systemd), `configura_web.sh`
+(Apache + site), `configura_backup.sh` (temporizadores), mais o par
+`implanta.sh` / `atualiza_servidor.sh` do deploy e o `prevoo.sh` da varredura.
+A idempotência não foi capricho: o primeiro `provisiona.sh` morreu no meio duas
+vezes, e rodar de novo foi o que permitiu continuar de onde parou.
+
+**A previsão de portabilidade se confirmou.** O C++ de `src/custom/` compilou no
+GCC sem um ajuste — era o marco de risco do plano, e caiu em 67 minutos. O que
+quase matou o build foi **memória**: o `skill.cpp` sozinho pediu 947 MB de RAM
+*mais* 1,8 GB de swap.
+
+**Cinco armadilhas novas foram para o `CLAUDE.md` §5**, e todas têm a mesma
+assinatura — falham caladas, ou apontam para o lugar errado:
+
+1. **No `sshd_config` o primeiro valor vence**, não o último — inverso do nginx
+   e do sysctl. Um drop-in `99-` perde para o `50-cloud-init` da DigitalOcean.
+2. **`tr -dc … | head -c N` mata o script sob `pipefail`**, por SIGPIPE, sem
+   imprimir uma linha.
+3. **O bit de execução do `rathena/` não está no git** (vendor feito no
+   Windows): `./configure` responde *"Permission denied"*, que parece problema
+   de dono.
+4. **`libmariadb-dev` não basta** — falta o `-compat`, e o erro é *"MySQL not
+   found or incompatible"* com o MariaDB instalado e no ar.
+5. **A senha da conta de comunicação entre servidores tem teto de 23
+   caracteres** (`char_logif.cpp:826` copia 24 bytes e trunca), e o erro que sai
+   manda conferir `s1`/`p1`, que já estava certo.
+
+**Um furo foi fechado antes de existir.** O site criava a conta e depois gravava
+o documento — mas a `login` é MyISAM e ignora transação, então uma falha no
+segundo passo deixaria conta **jogável e sem documento**: o furo no limite de
+uma conta por pessoa, aberto justamente por quem tentasse burlá-lo. A ordem foi
+invertida — reserva o documento, cria a conta, completa a reserva.
+
+**Duas decisões do dono desviaram do plano escrito, e as duas com razão.** O
+root continua entrando por SSH (só por chave): com um operador, os dois
+argumentos clássicos contra ele não se aplicam, e a separação que importa — o
+usuário do jogo sem sudo — ficou inteira. E o Apache entrou no lugar do nginx,
+que custou uma desinstalação porque nada nosso chegara a ser configurado nele.
+
+**O que ficou aberto** está no `PENDENCIAS.md` §5: o documento do cadastro ainda
+não é verificado (falta plugar o Penelope, que é uma linha de configuração), e o
+roadmap de segurança do beta.
+

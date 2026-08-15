@@ -171,12 +171,12 @@ têm de mudar juntos, e o banco não avisa qual está valendo.
 **Como saber que deu certo:** logar no cliente com a senha de sempre. E conferir
 no banco que a coluna virou 32 caracteres hexadecimais.
 
-### Etapa 2 — apontar o cliente para o servidor ⬜ (briefing pronto)
+### Etapa 2 — apontar o cliente para o servidor ✅ (2026-08-15)
 
-**O servidor está esperando desde 2026-08-15.** O briefing completo para a
-sessão do Windows está em **`SESSAO-WINDOWS.md`**, na raiz — com o que já está
-de pé, o cuidado de cp1252, o roteiro do primeiro login e a tabela de "que falha
-significa o quê".
+**Feita no Windows e confirmada pelo dono: o cliente conecta no servidor Linux e
+o jogo funciona.** O briefing que orientou aquela sessão está em
+`SESSAO-WINDOWS.md` — apague-o quando o resultado estiver no `HISTORICO.md`, é
+entregável de sessão e não documentação permanente.
 
 O `data\clientinfo.xml` tem `<address>127.0.0.1</address>`. Vai ter que apontar
 para o IP (ou domínio) do servidor. **Fica para depois de a Fase B estar de pé**,
@@ -490,7 +490,42 @@ aquele script em 2026-08-04.
 Vale que as units façam o que o `servidor.py status` faz: dizer **o que quebra**
 quando cada peça está fora.
 
-### Etapa 10 — backup ⬜
+### Etapa 10 — backup ✅ (2026-08-15)
+
+`ferramentas/backup.sh` + `ferramentas/configura_backup.sh`. **Dois pacotes
+separados por natureza, não por tamanho:**
+
+- **jogo** — conta, personagem, inventário, armazém, clã, variáveis dos nossos
+  NPCs, placar da Honra de Combate. Pequeno.
+- **logs** — as dez tabelas de `logs.sql`. Não são estado: se sumirem, ninguém
+  perde item. Mas crescem muito mais rápido (a `picklog` grava uma linha por
+  item que troca de mão, e o servidor é drop 50x).
+
+Separar é o que deixa a rotina do jogo pequena a ponto de ser **horária**.
+Ritmos: **48 horárias** (perda máxima de uma hora), **30 diárias**, **12
+semanais**. São megabytes — ser generoso cobre o caso que motivou o desenho:
+perceber o problema só no segundo dia, quando o backup de ontem já está ruim.
+
+**`--lock-tables`, e não `--single-transaction`:** quase tudo do rAthena é
+MyISAM, que não tem transação — o `--single-transaction` daria dump
+inconsistente **sem reclamar de nada**.
+
+**A restauração foi testada** (2026-08-15), que é o que separa backup de
+esperança: um `0x4D6167E3` plantado no banco atravessou dump → gzip → restauro
+**byte por byte**, ainda em `latin1`, e as 62 tabelas do pacote do jogo voltaram
+(72 do banco menos as 10 de log).
+
+**O alerta que mais importa é o de ausência, e ele não pode morar aqui.** Se o
+droplet parar, nada dispara, e o silêncio é idêntico a "está tudo bem". Por isso
+cada execução bem-sucedida manda um **pulso**; quem alerta é o serviço do outro
+lado, ao deixar de receber. Falta preencher `ALERTA_URL` e `PULSO_URL` em
+`/etc/guerra/backup.env`.
+
+**A cópia externa é PUXADA, não empurrada** — e é decisão de segurança. Servidor
+com credencial de escrita no destino do backup é servidor que, invadido, apaga
+os próprios backups. A tarefa é do Windows, com `scp`.
+
+### Etapa 10 — o registro original
 
 **A medida mais valiosa do plano.** Em servidor de jogo, perda de dados acontece
 muito mais que invasão, e o efeito é o mesmo: jogador perde item e vai embora.
@@ -507,7 +542,20 @@ existe.
 
 ## 6. Fase C — o deploy
 
-### Etapa 11 — a varredura de pré-voo ⬜
+### Etapa 11 — a varredura de pré-voo ✅ (2026-08-15)
+
+`ferramentas/prevoo.sh`, rodando no Mac e no servidor, e chamada pelo deploy
+**antes de reiniciar** — abortando se reprovar. Rodar depois seria inútil: o
+estrago já estaria no ar.
+
+Primeira execução: **1136 caminhos** conferidos, todos com a caixa exata.
+
+**Ela reprovou 11 falsos positivos de saída** — os `db/import/*.yml`, que nascem
+ausentes de propósito (são as pastas de sobrescrita do próprio rAthena, no
+`.gitignore` dele). Passaram a ser ignorados, e o motivo está no código:
+varredura que grita à toa é varredura que ninguém lê.
+
+### Etapa 11 — o registro original
 
 Três conferências que rodam **antes** de qualquer subida, e que existem porque
 as três falham caladas no Linux e não falham no Mac nem no Windows:
@@ -523,7 +571,27 @@ as três falham caladas no Linux e não falham no Mac nem no Windows:
 
 Roda no Mac, roda no deploy, e é rápida. **É a rede de proteção da §1.**
 
-### Etapa 12 — `ferramentas/implanta.sh` ⬜
+### Etapa 12 — `ferramentas/implanta.sh` ✅ (2026-08-15)
+
+```
+ferramentas/implanta.sh
+```
+
+Roda no Mac, e é o wrapper fino que a §3 prometia. **Manda o
+`atualiza_servidor.sh` pelo stdin do `ssh`** — assim o que roda é sempre a
+versão deste diretório, e nenhuma cópia velha sobrevive no servidor para
+atrapalhar. Resolve o ovo e a galinha sem truque.
+
+Cumpre os cinco requisitos: idempotente, não recompila se `src/` não mudou
+(o build custa ~67 min), nunca toca `conf/import/`, roda o pré-voo antes de
+reiniciar, e diz o que fez. Avisa também do que está **sem commit ou sem push**
+— deploy do que não está no git é a origem clássica do "funciona aqui e não lá".
+
+**O buraco que ele fecha apareceu na prática em 2026-08-15:** o
+`configura_web.sh` recompilou código velho porque não fazia `git pull`, e o
+`/api/config` nasceu 404. Agora há um caminho só.
+
+### Etapa 12 — o registro original
 
 Roda **no Mac**. Faz, por SSH:
 
