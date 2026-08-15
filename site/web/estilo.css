@@ -34,10 +34,24 @@
 
 * { box-sizing: border-box; }
 
+/* O fundo mora SO' no html.
+ *
+ * Tinha `html, body { background: ... }`, e isso escondia a arte: quando o
+ * html ja' tem fundo proprio, o do body NAO propaga para a tela - ele vira
+ * uma caixa opaca, e na ordem de pintura do CSS ela vem DEPOIS dos
+ * elementos de z-index negativo. Ou seja, o .fundo era coberto pelo body.
+ *
+ * Passou despercebido de 2026-08-14 a 15 porque os dois eram quase pretos:
+ * o gradiente de reserva do .fundo tambem nunca apareceu. So' foi visto
+ * quando entrou uma imagem de verdade e ela nao apareceu tambem.
+ */
+html {
+  background: var(--breu);
+}
+
 html, body {
   margin: 0;
   min-height: 100%;
-  background: var(--breu);
   color: var(--tinta);
   font-family: var(--sans);
   font-size: 16px;
@@ -51,7 +65,7 @@ html, body {
  * num retangulo branco - ele cai num fundo escuro plausivel.
  */
 .fundo {
-  position: fixed; inset: 0; z-index: -2;
+  position: fixed; inset: 0; z-index: 0;
   background-color: #0a0c11;
   background-image: url("/img/fundo.jpg");
   background-size: cover;
@@ -74,7 +88,7 @@ html, body {
  * puxam a atencao para fora do centro.
  */
 .veu {
-  position: fixed; inset: 0; z-index: -1;
+  position: fixed; inset: 0; z-index: 1;
   background:
     radial-gradient(ellipse at 50% 38%, transparent 30%, rgba(6,8,12,.55) 100%),
     linear-gradient(to bottom,
@@ -100,6 +114,10 @@ body {
 }
 
 .palco {
+  /* z-index acima do veu: sem isto o conteudo ficaria ATRAS dele agora que
+     .fundo e .veu deixaram de usar z-index negativo. */
+  position: relative;
+  z-index: 2;
   flex: 1;
   display: grid;
   place-items: center;
@@ -270,6 +288,8 @@ small { display: block; margin-top: 5px; font-size: .74rem; color: #7d786c; }
  * preso ao pe' da janela comeria a tela do celular.
  */
 .rodape {
+  position: relative;
+  z-index: 2;
   padding: 0 24px 26px;
   margin: 0 auto;
   max-width: 620px;
