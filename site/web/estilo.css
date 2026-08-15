@@ -46,38 +46,64 @@ html, body {
 }
 
 /* ---------- fundo ----------
- * TROCAR A ARTE E' SO' AQUI. Enquanto nao houver imagem, o gradiente abaixo
- * segura o layout sozinho — o site nasce apresentavel sem depender de um
- * arquivo que ainda nao existe.
+ * TROCAR A ARTE E' SO' AQUI.
+ * O gradiente fica como reserva: se o .jpg faltar, o layout nao desaba
+ * num retangulo branco - ele cai num fundo escuro plausivel.
  */
 .fundo {
   position: fixed; inset: 0; z-index: -2;
-  background-image:
-    radial-gradient(1200px 700px at 70% 15%, #1d2740 0%, transparent 60%),
-    radial-gradient(900px 600px at 20% 80%, #2a1f2e 0%, transparent 65%),
-    linear-gradient(160deg, #0d1017 0%, #0a0c11 100%);
-  /* Com arte:  background-image: url("/img/fundo.jpg"); */
+  background-color: #0a0c11;
+  background-image: url("/img/fundo.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center 42%;   /* o cristal dourado fica no eixo do titulo */
+  background-repeat: no-repeat;
 }
 
-/* O veu e' o que torna texto legivel sobre QUALQUER imagem. Sem ele, a
- * legibilidade passa a depender da arte que alguem trocar depois — e a
- * troca quebraria o texto sem quebrar nada visivelmente errado. */
+/* O VEU - duas camadas, e cada uma resolve um problema diferente.
+ *
+ * 1. Um preto CHAPADO de opacidade baixa, que baixa a arte inteira alguns
+ *    tons sem apaga-la. E' o que impede a ilustracao de brigar com o texto:
+ *    ela e' muito saturada, e sobre laranja e dourado nenhuma cor de fonte
+ *    se le' bem.
+ * 2. Um DEGRADE de cima para baixo, terminando quase preto no pe'. Isso da'
+ *    peso a' base da tela, ancora o rodape e deixa o olho subir para o
+ *    titulo - e' o que faz a coisa parecer composta, e nao um papel de
+ *    parede com texto por cima.
+ *
+ * A vinheta radial fecha os cantos, que numa ilustracao cheia como esta
+ * puxam a atencao para fora do centro.
+ */
 .veu {
   position: fixed; inset: 0; z-index: -1;
   background:
-    linear-gradient(to bottom, rgba(6,8,12,.35) 0%, rgba(6,8,12,.72) 65%, rgba(6,8,12,.92) 100%),
-    radial-gradient(circle at 50% 40%, transparent 25%, rgba(6,8,12,.5) 100%);
+    radial-gradient(ellipse at 50% 38%, transparent 30%, rgba(6,8,12,.55) 100%),
+    linear-gradient(to bottom,
+      rgba(0,0,0,.30) 0%,
+      rgba(0,0,0,.45) 35%,
+      rgba(6,8,12,.82) 72%,
+      rgba(6,8,12,.96) 100%);
 }
 
-/* ---------- palco ---------- */
-.palco {
+/* ---------- palco ----------
+ * O corpo e' uma coluna de altura de tela: assim o rodape fica DENTRO da
+ * primeira dobra em telas grandes, em vez de exigir rolagem para aparecer.
+ *
+ * E o padding-bottom maior que o de cima e' de proposito: com o conteudo
+ * centrado, sobra de baixo empurra tudo para CIMA. E' o ajuste de 2026-08-15,
+ * quando o topo estava vazio demais numa tela grande.
+ */
+body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   min-height: 100dvh;      /* dvh: no celular a barra do navegador some e volta */
+}
+
+.palco {
+  flex: 1;
   display: grid;
   place-items: center;
-  padding: 32px 20px 72px;
+  padding: 28px 20px clamp(60px, 12vh, 130px);
 }
 
 .tela { display: none; width: 100%; max-width: 460px; animation: entra .35s ease both; }
@@ -244,8 +270,8 @@ small { display: block; margin-top: 5px; font-size: .74rem; color: #7d786c; }
  * preso ao pe' da janela comeria a tela do celular.
  */
 .rodape {
-  padding: 0 24px 40px;
-  margin: -40px auto 0;
+  padding: 0 24px 26px;
+  margin: 0 auto;
   max-width: 620px;
   text-align: center;
 }
