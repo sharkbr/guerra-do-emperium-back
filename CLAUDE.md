@@ -967,6 +967,21 @@ Produziram diagnóstico falso e custaram retrabalho:
   o `ssh.service` está na lista dele.** Script de provisionamento rodado *por*
   SSH pode ter a própria conexão derrubada no meio da instalação. Exportar
   `NEEDRESTART_SUSPEND=1` antes do `apt`.
+- **O bit de execução do `rathena/` NÃO está no git, e no Linux isso vira
+  `Permission denied`.** O vendor foi feito no Windows, onde o git não registra
+  esse bit: o `rathena/configure` está no repositório como **`100644`**, e no
+  Linux `./configure` responde *"Permission denied"* — mensagem que parece
+  problema de dono, de `runuser` ou de montagem, e não é. A saída **não** é
+  `chmod` (o próximo `git reset --hard` do deploy o desfaz) nem mexer no modo
+  do arquivo de terceiro: é chamar o interpretador direto, `sh configure`.
+  Vale para qualquer `.sh` que venha do vendor. Medido em 2026-08-14.
+- **`libmariadb-dev` não basta para compilar o rAthena — falta o
+  `libmariadb-dev-compat`.** O `configure` procura os nomes do **MySQL**
+  (`mysql_config`, `mysql.h`, `-lmysqlclient`) e o pacote do Ubuntu instala tudo
+  com nome MariaDB (`mariadb_config`, `/usr/include/mariadb/`). O resultado é
+  `configure: error: MySQL not found or incompatible` **com o MariaDB
+  instalado, no ar e aceitando conexão** — o que manda procurar defeito no
+  banco, que está perfeito. O `-compat` existe só para fazer essa ponte.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

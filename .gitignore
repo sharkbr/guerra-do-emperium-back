@@ -79,3 +79,7 @@ desktop.ini
 # e versionar a copia dobraria a arvore npc/ inteira sem acrescentar nada.
 # Quem manda e o catalogo em rathena/npc/guerra/traducao/, esse sim versionado.
 *.INGLES
+
+# Configuracao do site: senha do banco e segredo (CLAUDE.md secao 8)
+site/config.env
+site/site

@@ -1810,21 +1810,16 @@ banimento por conta.
 **Como resolver:** trocar para `no` assim que existir um caminho próprio de
 registro — provavelmente o backend em Go.
 
-### 3. Senhas de jogador estão em texto puro
+### 3. Senhas de jogador — RESOLVIDO em 2026-08-14
 
-**Onde:** `rathena/conf/login_athena.conf` → `use_MD5_passwords: no` (padrão do
-rAthena).
+Ligado o `use_MD5_passwords: yes` por `conf/guerra/login_guerra.txt`, e as
+contas existentes convertidas. Ver `HISTORICO.md`, "A senha deixa de ser texto
+puro", e `IMPLANTACAO.md` Etapa 1.
 
-**O que é:** a coluna `user_pass` da tabela `login` guarda a senha legível. Quem
-ler o banco lê todas as senhas.
-
-**Risco:** vazamento do banco vira vazamento de senhas. E como muita gente
-reusa senha, o dano passa do seu servidor.
-
-**Ressalva importante:** MD5 também é fraco por padrões de hoje — não é a
-solução ideal, é só melhor que texto puro. Existe `sql-files/tools/convert_passwords.sql`
-para converter as senhas existentes. Decidir isso junto com o backend em Go, que
-é quem deveria tratar autenticação de verdade.
+**O que continua em aberto:** MD5 é sem salt e fraco pelos padrões de hoje —
+incomparavelmente melhor que texto puro, e é o que o emulador oferece.
+Melhorar mexe em `src/` e é decisão para junto do backend em Go, que é quem
+deveria tratar autenticação de verdade.
 
 ### 4. Pôr senha no `root` do MariaDB
 
@@ -1840,6 +1835,35 @@ então um bug de SQL injection num script custom não alcança o resto do banco.
 
 Criada para o Marco Zero: senha trivial e `group_id 99`, que é **GM completo**.
 Antes de abrir o servidor: apagar, ou trocar a senha e baixar o `group_id`.
+
+### 6. O roadmap de segurança do beta — anotado, sem banda por enquanto
+
+Levantado pelo dono em **2026-08-14**, ao desenhar o backup. **Nenhum destes
+bloqueia o beta**; estão aqui para não serem redescobertos, e a ordem abaixo é
+de dano esperado, não de dificuldade.
+
+**Duplicação de item por sessão concorrente.** É o desastre nº 1 de servidor de
+RO, e o mecanismo é sempre o mesmo: duas sessões do mesmo personagem vivas ao
+mesmo tempo, com o char-server gravando o inventário de uma por cima da outra.
+Costuma ser explorado por desconexão forçada no instante certo (troca,
+armazém, carrinho). Vale ler o que o rAthena já oferece antes de escrever
+qualquer coisa. **É este o item que justifica a retenção longa de `picklog`**:
+quando acontece, o conserto certo é cirúrgico — desfazer o que a log mostra —,
+e não restaurar o banco inteiro, que puniria quem não teve culpa.
+
+**Força bruta na tela de login.** Hoje não há limite de tentativa por IP. Com o
+MD5 ligado (Etapa 1 da implantação) o vazamento do banco ficou menos grave, mas
+a porta 6900 continua aceitando tentativa ilimitada.
+
+**Verificador e assinatura de pacote, contra bot.** O `PACKET_OBFUSCATION` está
+ligado, mas com as **chaves padrão do rAthena, que são públicas** — ou seja, não
+atrapalha ninguém que queira escrever bot (ver `IMPLANTACAO.md` §8). Trocar as
+chaves exige que cliente e servidor combinem, isto é, mexer no exe: é trabalho
+de verdade e entra junto com o instalador do patch.
+
+**DDoS.** Sem resposta hoje, e é o único da lista que **não se resolve dentro da
+máquina** — depende de quem está na frente dela (proxy, provedor). Entender as
+alternativas mais para frente.
 
 ---
 

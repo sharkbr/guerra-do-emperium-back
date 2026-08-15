@@ -1,0 +1,267 @@
+/* Guerra do Emperium — folha unica.
+ *
+ * A DIRECAO: o site fica na frente de um jogo de 2002 que a gente reformou.
+ * Entao nem pastiche medieval (pergaminho, madeira, fonte gotica), que
+ * envelheceu mal, nem SaaS branco, que nao tem nada a ver. O caminho e' o
+ * do meio: escuro, imagem grande mandando na tela, tipografia com serifa
+ * so' no titulo, e o ouro do Emperium como unico acento. Tudo o mais sai
+ * da frente da arte.
+ *
+ * TEMA UNICO, ESCURO, de proposito: e' site de jogo, visto quase sempre a'
+ * noite, e a imagem de fundo e' o assunto. Modo claro brigaria com ela.
+ *
+ * SEM FONTE EXTERNA: nada de Google Fonts. Uma requisicao a menos, nenhum
+ * terceiro vendo quem visitou, e nada de texto invisivel enquanto a fonte
+ * baixa. A pilha abaixo cai numa serifa boa em qualquer sistema.
+ */
+
+:root {
+  --tinta:       #f4efe4;   /* texto sobre escuro */
+  --tinta-fraca: #a8a294;
+  --ouro:        #d9b45c;   /* o acento; e' o Emperium */
+  --ouro-forte:  #f0cf82;
+  --breu:        #0a0c11;
+  --carvao:      #14171f;
+  --perigo:      #e07a5f;
+
+  --serifa: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+            Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  --curva: 10px;
+  --sombra: 0 18px 50px rgba(0,0,0,.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--breu);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- fundo ----------
+ * TROCAR A ARTE E' SO' AQUI. Enquanto nao houver imagem, o gradiente abaixo
+ * segura o layout sozinho — o site nasce apresentavel sem depender de um
+ * arquivo que ainda nao existe.
+ */
+.fundo {
+  position: fixed; inset: 0; z-index: -2;
+  background-image:
+    radial-gradient(1200px 700px at 70% 15%, #1d2740 0%, transparent 60%),
+    radial-gradient(900px 600px at 20% 80%, #2a1f2e 0%, transparent 65%),
+    linear-gradient(160deg, #0d1017 0%, #0a0c11 100%);
+  /* Com arte:  background-image: url("/img/fundo.jpg"); */
+  background-size: cover;
+  background-position: center;
+}
+
+/* O veu e' o que torna texto legivel sobre QUALQUER imagem. Sem ele, a
+ * legibilidade passa a depender da arte que alguem trocar depois — e a
+ * troca quebraria o texto sem quebrar nada visivelmente errado. */
+.veu {
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to bottom, rgba(6,8,12,.35) 0%, rgba(6,8,12,.72) 65%, rgba(6,8,12,.92) 100%),
+    radial-gradient(circle at 50% 40%, transparent 25%, rgba(6,8,12,.5) 100%);
+}
+
+/* ---------- palco ---------- */
+.palco {
+  min-height: 100vh;
+  min-height: 100dvh;      /* dvh: no celular a barra do navegador some e volta */
+  display: grid;
+  place-items: center;
+  padding: 32px 20px 72px;
+}
+
+.tela { display: none; width: 100%; max-width: 460px; animation: entra .35s ease both; }
+.tela.ativa { display: block; }
+.tela#tela-download.ativa { max-width: 860px; }
+
+@keyframes entra {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tela { animation: none; }
+}
+
+/* ---------- marca ---------- */
+.marca { text-align: center; margin-bottom: 44px; }
+
+.sobretitulo {
+  margin: 0 0 14px;
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tinta-fraca);
+}
+
+.marca h1 {
+  font-family: var(--serifa);
+  font-weight: 400;
+  /* clamp: cabe no celular e ganha presenca no desktop sem media query */
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -.01em;
+}
+.marca h1 span {
+  display: block;
+  color: var(--ouro);
+  font-style: italic;
+}
+
+.lema { margin: 16px 0 0; color: var(--tinta-fraca); font-size: .95rem; }
+
+/* ---------- botoes ---------- */
+.portoes { display: grid; gap: 14px; }
+
+.botao {
+  display: block; width: 100%;
+  padding: 16px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--curva);
+  background: var(--ouro);
+  color: #211a08;
+  font: inherit; font-weight: 600;
+  text-align: center; text-decoration: none;
+  cursor: pointer;
+  transition: transform .12s ease, background .2s ease, border-color .2s ease;
+}
+.botao:hover { background: var(--ouro-forte); transform: translateY(-1px); }
+.botao:active { transform: none; }
+.botao:focus-visible { outline: 2px solid var(--ouro-forte); outline-offset: 3px; }
+.botao[disabled] { opacity: .55; cursor: progress; transform: none; }
+
+.botao.fantasma {
+  background: rgba(255,255,255,.04);
+  color: var(--tinta);
+  border-color: rgba(217,180,92,.35);
+  backdrop-filter: blur(6px);
+}
+.botao.fantasma:hover { background: rgba(255,255,255,.09); border-color: var(--ouro); }
+.botao.fantasma.perigo { color: var(--perigo); border-color: rgba(224,122,95,.35); }
+
+.botao.grande { padding: 20px 22px; }
+.botao .rotulo { display: block; font-size: 1.05rem; letter-spacing: .04em; }
+.botao .ajuda  { display: block; font-size: .78rem; font-weight: 400; opacity: .7; margin-top: 3px; }
+
+/* ---------- cartao ---------- */
+.cartao {
+  position: relative;
+  background: rgba(20,23,31,.82);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  box-shadow: var(--sombra);
+  padding: 30px 26px 26px;
+}
+.cartao h2 { font-family: var(--serifa); font-weight: 400; margin: 0 0 6px; font-size: 1.6rem; }
+
+.voltar {
+  background: none; border: 0; color: var(--tinta-fraca);
+  font: inherit; font-size: .85rem; cursor: pointer;
+  padding: 0; margin-bottom: 18px;
+}
+.voltar:hover { color: var(--ouro); }
+
+/* ---------- abas ---------- */
+.abas { display: flex; gap: 4px; margin-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.aba {
+  flex: 1; padding: 10px 8px; background: none; border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--tinta-fraca); font: inherit; cursor: pointer;
+}
+.aba.ativa { color: var(--ouro); border-bottom-color: var(--ouro); }
+
+.painel-aba { display: none; }
+.painel-aba.ativa { display: block; }
+
+/* ---------- formulario ---------- */
+label { display: block; margin-bottom: 15px; font-size: .85rem; color: var(--tinta-fraca); }
+
+input[type="text"], input[type="password"], input[type="email"], input:not([type]) {
+  display: block; width: 100%; margin-top: 6px;
+  padding: 11px 13px;
+  background: rgba(0,0,0,.32);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  color: var(--tinta);
+  font: inherit;
+  /* 16px evita o zoom automatico do Safari no iPhone ao focar o campo */
+  font-size: 16px;
+}
+input:focus { outline: none; border-color: var(--ouro); background: rgba(0,0,0,.45); }
+
+small { display: block; margin-top: 5px; font-size: .74rem; color: #7d786c; }
+
+.escolha { border: 0; padding: 0; margin: 0 0 15px; }
+.escolha legend { font-size: .85rem; color: var(--tinta-fraca); padding: 0; margin-bottom: 8px; }
+.radio { display: inline-flex; align-items: center; gap: 7px; margin: 0 18px 0 0; color: var(--tinta); }
+.radio input { width: auto; margin: 0; }
+
+.nota {
+  margin: 10px 0 0; padding: 10px 12px;
+  background: rgba(217,180,92,.07);
+  border-left: 2px solid rgba(217,180,92,.4);
+  border-radius: 0 6px 6px 0;
+  font-size: .78rem; color: var(--tinta-fraca);
+}
+
+.recado { min-height: 1.2em; margin: 4px 0 14px; font-size: .85rem; }
+.recado.erro { color: var(--perigo); }
+.recado.certo { color: #86c98a; }
+
+.escondido { display: none; }
+
+/* ---------- download: texto e alvo ---------- */
+.duas-colunas { display: grid; grid-template-columns: 1.3fr 1fr; gap: 34px; align-items: center; }
+@media (max-width: 720px) {
+  .duas-colunas { grid-template-columns: 1fr; gap: 24px; }
+}
+.coluna.alvo { display: grid; place-items: center; }
+.coluna.alvo .botao { max-width: 260px; padding: 26px 22px; }
+.botao.download .rotulo { font-size: 1.2rem; }
+
+.lista { padding-left: 18px; color: var(--tinta-fraca); font-size: .9rem; }
+.lista li { margin-bottom: 5px; }
+.miudo { font-size: .82rem; color: var(--tinta-fraca); }
+
+/* ---------- painel ---------- */
+.acoes { display: grid; gap: 10px; margin: 22px 0 0; }
+.dobra { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); }
+.dobra.escondido { display: none; }
+
+/* ---------- rodape ----------
+ * Sai do fluxo fixo que estava aqui antes: o texto cresceu e um rodape
+ * preso ao pe' da janela comeria a tela do celular.
+ */
+.rodape {
+  padding: 0 24px 40px;
+  margin: -40px auto 0;
+  max-width: 620px;
+  text-align: center;
+}
+
+/* O compromisso de nao cobrar nada e' a coisa mais importante escrita neste
+ * site depois do formulario. Fica legivel, e nao em letra de contrato. */
+.credo {
+  margin: 0 0 10px;
+  font-size: .84rem;
+  line-height: 1.65;
+  color: var(--tinta-fraca);
+}
+.credo strong { color: var(--ouro); font-weight: 600; }
+
+.assinatura {
+  margin: 0;
+  font-size: .7rem;
+  color: #56534c;
+}

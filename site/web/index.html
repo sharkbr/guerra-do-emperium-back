@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guerra do Emperium</title>
+<meta name="description" content="Servidor privado de Ragnarok Online em portugues.">
+<link rel="stylesheet" href="/estilo.css">
+</head>
+<body>
+
+<!-- A imagem de fundo e' UM lugar so' no CSS: .fundo { background-image }.
+     Trocar a arte nao pede mexer aqui. -->
+<div class="fundo" aria-hidden="true"></div>
+<div class="veu" aria-hidden="true"></div>
+
+<main class="palco">
+
+  <!-- ============ 1. INICIO ============ -->
+  <section class="tela ativa" id="tela-inicio">
+    <header class="marca">
+      <p class="sobretitulo">Servidor privado de Ragnarok Online</p>
+      <h1>Guerra do <span>Emperium</span></h1>
+      <p class="lema">Traduzido para portugues. Renovado. Seu.</p>
+    </header>
+
+    <nav class="portoes">
+      <button class="botao grande" data-ir="conta">
+        <span class="rotulo">Conta</span>
+        <span class="ajuda">Criar ou entrar</span>
+      </button>
+      <button class="botao grande fantasma" data-ir="download">
+        <span class="rotulo">Download</span>
+        <span class="ajuda">Baixar o jogo</span>
+      </button>
+    </nav>
+  </section>
+
+  <!-- ============ 2. CONTA ============ -->
+  <section class="tela" id="tela-conta">
+    <div class="cartao">
+      <button class="voltar" data-ir="inicio">&larr; Voltar</button>
+
+      <div class="abas" role="tablist">
+        <button class="aba ativa" data-aba="entrar" role="tab">Entrar</button>
+        <button class="aba" data-aba="criar" role="tab">Criar conta</button>
+      </div>
+
+      <!-- ---- entrar ---- -->
+      <form class="painel-aba ativa" id="form-entrar" novalidate>
+        <label>Usuario
+          <input name="usuario" autocomplete="username" required>
+        </label>
+        <label>Senha
+          <input name="senha" type="password" autocomplete="current-password" required>
+        </label>
+        <p class="recado" data-recado></p>
+        <button class="botao" type="submit">Entrar</button>
+      </form>
+
+      <!-- ---- criar ---- -->
+      <form class="painel-aba" id="form-criar" novalidate>
+        <label>Usuario
+          <input name="usuario" minlength="4" maxlength="23" autocomplete="username" required>
+          <small>4 a 23 caracteres. Letras, numeros e _</small>
+        </label>
+        <label>Senha
+          <input name="senha" type="password" minlength="6" maxlength="32"
+                 autocomplete="new-password" required>
+        </label>
+        <label>E-mail
+          <input name="email" type="email" maxlength="39" autocomplete="email" required>
+          <small>Ate 39 caracteres — limite do servidor de Ragnarok</small>
+        </label>
+
+        <fieldset class="escolha">
+          <legend>Sexo da conta</legend>
+          <label class="radio"><input type="radio" name="sexo" value="M" checked> Masculino</label>
+          <label class="radio"><input type="radio" name="sexo" value="F"> Feminino</label>
+        </fieldset>
+
+        <fieldset class="escolha">
+          <legend>Como voce se identifica</legend>
+          <label class="radio"><input type="radio" name="tipo" value="celular" checked> Celular</label>
+          <label class="radio"><input type="radio" name="tipo" value="cpf"> CPF</label>
+          <p class="nota">
+            Uma conta por pessoa. O jogo da vantagens diarias por conta —
+            sem esse limite, quem criasse varias teria vantagem sobre quem joga
+            com uma so.
+          </p>
+        </fieldset>
+
+        <label>
+          <span data-rotulo-doc>Celular</span>
+          <input name="documento" inputmode="numeric" required>
+          <small data-ajuda-doc>Com DDD. Ex: (11) 91234-5678</small>
+        </label>
+
+        <!-- So aparece quando o servidor pede codigo (modo Penelope) -->
+        <label class="escondido" id="campo-codigo">Codigo recebido
+          <input name="codigo" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+          <small>Seis digitos, valido por 10 minutos</small>
+        </label>
+
+        <p class="recado" data-recado></p>
+        <button class="botao" type="submit">Criar minha conta</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ 3. DOWNLOAD ============ -->
+  <section class="tela" id="tela-download">
+    <div class="cartao largo">
+      <button class="voltar" data-ir="inicio">&larr; Voltar</button>
+
+      <div class="duas-colunas">
+        <div class="coluna texto">
+          <h2>Baixe o jogo</h2>
+          <p>
+            O cliente ja vem com tudo: o Ragnarok traduzido para portugues,
+            os itens, os mapas e as alteracoes do nosso servidor.
+          </p>
+          <ul class="lista">
+            <li>Windows 7 ou mais novo</li>
+            <li>Cerca de 4 GB livres</li>
+            <li>Nao precisa ter o Ragnarok instalado</li>
+          </ul>
+          <p class="miudo">
+            Depois de instalar, entre com a conta que voce criou aqui.
+          </p>
+        </div>
+
+        <div class="coluna alvo">
+          <a class="botao download" href="#" data-download>
+            <span class="rotulo">Baixar</span>
+            <span class="ajuda" data-tamanho>versao mais recente</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. PAINEL ============ -->
+  <section class="tela" id="tela-painel">
+    <div class="cartao">
+      <h2>Ola, <span data-nome>jogador</span></h2>
+      <p class="miudo" data-email></p>
+
+      <div class="acoes">
+        <button class="botao fantasma" data-abre="senha">Alterar senha</button>
+        <button class="botao fantasma" data-abre="pin">Recuperar PIN</button>
+        <button class="botao fantasma perigo" id="botao-sair">Sair</button>
+      </div>
+
+      <form class="dobra escondido" id="form-senha">
+        <label>Senha atual
+          <input name="atual" type="password" autocomplete="current-password" required>
+        </label>
+        <label>Senha nova
+          <input name="nova" type="password" minlength="6" maxlength="32"
+                 autocomplete="new-password" required>
+        </label>
+        <button class="botao" type="submit">Trocar</button>
+      </form>
+
+      <form class="dobra escondido" id="form-pin">
+        <p class="nota">
+          O PIN sera <strong>apagado</strong>, e nao mostrado. No proximo login
+          o jogo pede que voce escolha um novo — e assim ele nao fica no
+          historico do navegador nem em print de tela.
+        </p>
+        <label>Confirme sua senha
+          <input name="senha" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="botao" type="submit">Apagar meu PIN</button>
+      </form>
+
+      <p class="recado" data-recado></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p class="credo">
+    Feito por gosto, e de graça. A Guerra do Emperium é um projeto pessoal,
+    <strong>sem fins lucrativos</strong>: não há loja, não há doação, não há
+    assinatura — e não há vantagem que se compre. O que se conquista aqui,
+    conquista-se jogando.
+  </p>
+  <p class="assinatura">
+    Ragnarok Online é marca da Gravity Co., Ltd. Este é um servidor de fãs,
+    sem vínculo com a empresa.
+  </p>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

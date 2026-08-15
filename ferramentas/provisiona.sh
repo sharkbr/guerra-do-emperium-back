@@ -89,7 +89,11 @@ BANCO="guerra"
 BANCO_USUARIO="guerra"
 ARQUIVO_SENHA="/root/senha-banco.txt"
 SWAP="/swapfile"
-SWAP_TAMANHO="2G"
+# 4G, e nao 2G: medido em 2026-08-14 nesta maquina de 961 MB, o skill.cpp
+# do map-server sozinho levou a RAM a 947 MB E o swap a 1,8 GB - sobravam
+# 245 MB quando o cc1plus ainda estava subindo. Com 2G o build morre de OOM
+# no meio, depois de vinte minutos de trabalho. Ver IMPLANTACAO.md Etapa 5.
+SWAP_TAMANHO="4G"
 
 # Portas que o mundo pode alcancar. A 8888 (web-server) NAO esta aqui de
 # proposito: ela recebe upload de arquivo de usuario anonimo num HTTP
@@ -208,8 +212,15 @@ export NEEDRESTART_MODE=l
 # Lista lida do tools/docker/Dockerfile do proprio rAthena, traduzida de
 # Alpine para Debian. O libpcre3-dev e' opcional (habilita comando de NPC
 # com regex); o configure so' avisa se faltar.
-PACOTES=(build-essential zlib1g-dev libmariadb-dev libpcre3-dev
-         mariadb-server nginx git make pkg-config ufw
+#
+# O libmariadb-dev-compat NAO e' redundante com o libmariadb-dev, e sem ele
+# o configure para com "MySQL not found or incompatible" - com o MariaDB
+# instalado e no ar. O motivo: o configure do rAthena procura os nomes do
+# MySQL (mysql_config, mysql.h, -lmysqlclient), e o libmariadb-dev instala
+# tudo com nome MariaDB (mariadb_config, /usr/include/mariadb/). O -compat
+# e' o pacote que existe so' para fazer essa ponte. Medido em 2026-08-14.
+PACOTES=(build-essential zlib1g-dev libmariadb-dev libmariadb-dev-compat
+         libpcre3-dev mariadb-server nginx git make pkg-config ufw
          ca-certificates curl)
 
 FALTANDO=()
