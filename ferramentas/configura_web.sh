@@ -178,34 +178,56 @@ ok "guerra-site.service"
 passo "Apache"
 install -d -m 755 -o "$USUARIO" -g "$USUARIO" /var/www/patch
 
-cat > /etc/apache2/sites-available/guerra.conf <<FIM
-# GERADO por ferramentas/configura_web.sh.
+# ---------------------------------------------------------------------
+# DOIS VHOSTS, GERADOS PELOS DOIS AQUI - e nao um deles pelo certbot.
+#
+# O certbot cria o guerra-le-ssl.conf copiando o guerra.conf do momento em
+# que roda, e acrescenta o redirecionamento HTTP->HTTPS no de porta 80.
+# Isso quebra na segunda vez que ESTE script roda: ele reescreve o
+# guerra.conf, o redirecionamento some, e o vhost de 443 fica congelado na
+# versao antiga. Aconteceu em 2026-08-15 e nao quebrou nada visivelmente -
+# o site respondia nas duas portas -, o que e' exatamente o problema.
+#
+# Entao o script gera os dois, e o certbot so' cuida do certificado.
+#
+# ---------------------------------------------------------------------
+# POR QUE A PORTA 80 NAO REDIRECIONA TUDO
+#
+# O cliente de Ragnarok fala HTTP PURO com o web-server (o AssistAddr dos
+# ExternalSettings_*.lub e' uma string "host:porta", sem esquema). Se a
+# porta 80 respondesse 301 para tudo, o POST do emblema morreria no
+# redirecionamento - e a falha e' a mais calada que existe: o cliente nao
+# mostra caixa de erro e o map-server nao registra nada. Ninguem relata
+# isso como erro; dizem "escolhi o emblema e nao aconteceu nada".
+#
+# Entao: os cinco caminhos do web-server passam em HTTP; TODO o resto -
+# site, cadastro, painel - e' redirecionado para HTTPS.
+#
+# O preco, registrado: nesses cinco caminhos o token de autenticacao do
+# cliente viaja em claro. Se o cliente aceitar HTTPS no AssistAddr, e' so'
+# apontar para 443 e apagar a excecao daqui.
 
-<VirtualHost *:80>
-    ServerName $DOMINIO
+CAMINHOS_WEB='(emblem|charconfig|userconfig|party|MerchantStore|twitter)'
 
+corpo_proxy() {
+    cat <<FIM
     ProxyPreserveHost On
     ProxyTimeout 30
 
     # O mod_proxy_http manda X-Forwarded-For e -Host sozinho, mas NAO o
     # -Proto. Sem esta linha o site nunca sabe que a conexao veio por HTTPS,
-    # e o cookie de sessao deixa de ser marcado como Secure (sessao.go) -
-    # falha calada: tudo funciona, so' que o cookie passa a poder viajar em
-    # claro. A forma com expr= vale nos dois vhosts, inclusive no que o
-    # certbot gerar depois.
+    # e o cookie de sessao deixa de ser marcado como Secure (sessao.go).
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
-    # ---- web-server do rAthena (emblema de cla, party, loja de mercador)
-    # Vem ANTES do '/', senao o site engoliria estes caminhos.
-    # O /MerchantStore/ tem maiuscula, e o ProxyPass DIFERENCIA CAIXA -
-    # escrever minusculo aqui faz a loja falhar sem erro nenhum.
-    <LocationMatch "^/(emblem|charconfig|userconfig|party|MerchantStore)/">
-        # O emblema e' um .bmp pequeno; qualquer coisa maior que isto e'
-        # tentativa de encher o disco de um servidor de 24 GB. O upload vem
-        # de usuario anonimo.
+    # O emblema e' um .bmp pequeno; qualquer coisa maior e' tentativa de
+    # encher o disco de um servidor de 24 GB, e o upload vem de usuario
+    # anonimo.
+    <LocationMatch "^/$CAMINHOS_WEB/">
         LimitRequestBody 2097152
     </LocationMatch>
 
+    # O /MerchantStore/ tem maiuscula, e o ProxyPass DIFERENCIA CAIXA -
+    # escrever minusculo aqui faz a loja falhar sem erro nenhum.
     ProxyPass        /emblem/        http://127.0.0.1:8888/emblem/
     ProxyPassReverse /emblem/        http://127.0.0.1:8888/emblem/
     ProxyPass        /charconfig/    http://127.0.0.1:8888/charconfig/
@@ -214,10 +236,11 @@ cat > /etc/apache2/sites-available/guerra.conf <<FIM
     ProxyPassReverse /userconfig/    http://127.0.0.1:8888/userconfig/
     ProxyPass        /party/         http://127.0.0.1:8888/party/
     ProxyPassReverse /party/         http://127.0.0.1:8888/party/
+    ProxyPass        /twitter/       http://127.0.0.1:8888/twitter/
+    ProxyPassReverse /twitter/       http://127.0.0.1:8888/twitter/
     ProxyPass        /MerchantStore/ http://127.0.0.1:8888/MerchantStore/
     ProxyPassReverse /MerchantStore/ http://127.0.0.1:8888/MerchantStore/
 
-    # ---- arquivos do patch (o gancho do instalador do cliente)
     Alias /patch /var/www/patch
     <Directory /var/www/patch>
         Options -Indexes +FollowSymLinks
@@ -225,18 +248,57 @@ cat > /etc/apache2/sites-available/guerra.conf <<FIM
     </Directory>
     ProxyPass /patch !
 
-    # ---- o site
     ProxyPass        / http://127.0.0.1:8080/
     ProxyPassReverse / http://127.0.0.1:8080/
 
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-    ErrorLog  \${APACHE_LOG_DIR}/guerra-erro.log
-    CustomLog \${APACHE_LOG_DIR}/guerra-acesso.log combined
-</VirtualHost>
 FIM
+}
+
+{
+    echo "# GERADO por ferramentas/configura_web.sh."
+    echo "<VirtualHost *:80>"
+    echo "    ServerName $DOMINIO"
+    echo
+    echo "    # Tudo para HTTPS, MENOS os caminhos do web-server - ver o"
+    echo "    # cabecalho deste bloco no script."
+    echo "    RewriteEngine On"
+    echo "    RewriteCond %{REQUEST_URI} !^/$CAMINHOS_WEB/"
+    echo "    RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]"
+    echo
+    corpo_proxy
+    echo "    ErrorLog  \${APACHE_LOG_DIR}/guerra-erro.log"
+    echo "    CustomLog \${APACHE_LOG_DIR}/guerra-acesso.log combined"
+    echo "</VirtualHost>"
+} > /etc/apache2/sites-available/guerra.conf
+
+CERT="/etc/letsencrypt/live/$DOMINIO/fullchain.pem"
+if [ -f "$CERT" ]; then
+    {
+        echo "# GERADO por ferramentas/configura_web.sh."
+        echo "<IfModule mod_ssl.c>"
+        echo "<VirtualHost *:443>"
+        echo "    ServerName $DOMINIO"
+        echo
+        corpo_proxy
+        echo "    SSLEngine on"
+        echo "    SSLCertificateFile    $CERT"
+        echo "    SSLCertificateKeyFile /etc/letsencrypt/live/$DOMINIO/privkey.pem"
+        echo "    Include /etc/letsencrypt/options-ssl-apache.conf"
+        echo
+        echo "    ErrorLog  \${APACHE_LOG_DIR}/guerra-erro.log"
+        echo "    CustomLog \${APACHE_LOG_DIR}/guerra-acesso.log combined"
+        echo "</VirtualHost>"
+        echo "</IfModule>"
+    } > /etc/apache2/sites-available/guerra-le-ssl.conf
+    a2enmod ssl >/dev/null 2>&1
+    a2ensite guerra-le-ssl >/dev/null 2>&1
+    ok "vhost 443 (certificado presente)"
+else
+    ok "sem certificado ainda - so' o vhost 80. Rode o certbot e este script de novo."
+fi
 
 a2dissite 000-default >/dev/null 2>&1 || true
 a2ensite guerra >/dev/null 2>&1

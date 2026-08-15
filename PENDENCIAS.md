@@ -2072,7 +2072,51 @@ isso como erro; vão dizer "escolhi o emblema e não aconteceu nada".
 medido no mesmo dia, `connect` estoura o tempo de fora. Apontar o cliente para
 um endereço que não responde só troca uma falha calada por outra mais lenta.
 
-**A ordem certa, e ela começa no Linux:**
+### ✅ PASSOS 1 E 2 FEITOS NO MAC (2026-08-15) — o endereço é este
+
+**`AssistAddr = "libraro.filiponegrao.com.br:80"`**
+
+Se o cliente não resolver o nome, a forma equivalente por IP é
+`138.197.155.31:80`. **Não use `:8888`** — aquela porta continua fechada, e de
+propósito.
+
+**O web-server sempre esteve no ar.** O `guerra-web.service` sobe junto dos
+outros três desde 2026-08-15 e escuta em `0.0.0.0:8888`. O que a medição do
+Windows pegou — `connect` estourando o tempo na 8888 — está certo, e é
+deliberado: aquela porta é um HTTP embutido que recebe **upload de arquivo de
+usuário anônimo**, e expô-la crua era o que a Etapa 8 queria evitar. Quem fala
+com ela é o Apache.
+
+**Por que a porta 80 e não a 443.** O `AssistAddr` é `host:porta`, sem esquema —
+o cliente monta `http://`. O certbot tinha posto redirecionamento HTTP→HTTPS
+para tudo, e um `POST` que morre num 301 seria trocar uma falha calada por
+outra. Agora o vhost de porta 80 **atende em HTTP os seis caminhos do
+web-server** (`/emblem/`, `/charconfig/`, `/userconfig/`, `/party/`,
+`/twitter/`, `/MerchantStore/`) e **redireciona todo o resto** para HTTPS.
+
+*Se* o cliente aceitar HTTPS no `AssistAddr`, `:443` é melhor e já funciona —
+vale testar, porque nesses seis caminhos o token de autenticação viaja em claro
+hoje. Mas não vale travar o beta por isso.
+
+**A prova, e ela é do lado de dentro.** Requisições feitas da internet
+apareceram uma a uma no log do próprio web-server:
+
+```
+web-server: [Info]: 127.0.0.1 [POST /emblem/upload]      400
+web-server: [Info]: 127.0.0.1 [POST /userconfig/load]    400
+web-server: [Info]: 127.0.0.1 [POST /MerchantStore/load] 400
+```
+
+O `400` é o rAthena recusando corpo malformado (os endpoints querem
+`multipart/form-data`) — ou seja, **está processando**. O que faltava provar era
+o caminho, e ele está provado.
+
+**Falta só o passo 3 e o 4**, no Windows: trocar o `AssistAddr` nos quatro
+`.lub` e conferir em jogo subindo um emblema.
+
+---
+
+**A ordem original, para registro:**
 
 1. **Sessão do Mac.** Garantir que o `web-server` está no ar (é um dos quatro do
    `SERVER_DEPENDS`, e o `systemd` tem de subi-lo junto com os outros três) e
