@@ -1847,7 +1847,42 @@ então um bug de SQL injection num script custom não alcança o resto do banco.
 Criada para o Marco Zero: senha trivial e `group_id 99`, que é **GM completo**.
 Antes de abrir o servidor: apagar, ou trocar a senha e baixar o `group_id`.
 
-### 6. O roadmap de segurança do beta — anotado, sem banda por enquanto
+### 6. O documento do cadastro NÃO é verificado — aberto em 2026-08-15
+
+**Estado de hoje: o site aceita qualquer CPF válido em formato e qualquer
+celular bem formado, sem provar que pertencem a quem se cadastrou.** O modo é
+`SITE_VERIFICACAO=nenhuma` (`/etc/guerra/site.env`), escolhido de propósito para
+o beta subir no mesmo dia.
+
+**O que já funciona apesar disso:** o hash do documento é gravado desde o
+primeiro cadastro, então cada documento só serve uma vez, e o limite vale
+retroativamente quando a verificação for ligada. Há também teto de 10 tentativas
+por hora por IP.
+
+**O que não funciona:** nada impede a mesma pessoa de usar dez CPFs gerados. O
+dígito verificador é conta pública e gerador de CPF válido se acha em qualquer
+lugar — como barreira, ele segura engano de digitação e mais nada. Quem barra é
+o celular, porque número custa dinheiro.
+
+**Como fechar** — é uma linha de configuração, não um trabalho:
+
+```
+SITE_VERIFICACAO=penelope
+SITE_PENELOPE_URL=<endpoint>
+SITE_PENELOPE_TOKEN=<token>
+```
+
+O endpoint recebe `POST {"destino": "5511912345678", "mensagem": "..."}`. O
+código de 6 dígitos, o prazo de 10 minutos e o teto de 5 tentativas já estão
+escritos (`site/verificacao.go`). Falta só o endereço do serviço, que é o
+Penelope Chatbot do dono — decidido em 2026-08-14 por ser custo marginal zero e
+entregar melhor que SMS no Brasil (não há SMS gratuito confiável).
+
+**Uma alternativa mais barata se o beta crescer antes disso:** um código de
+convite compartilhado com os testadores fecha a porta para a internet inteira e
+custa ~20 linhas. Não substitui a verificação — é gambiarra de janela.
+
+### 7. O roadmap de segurança do beta — anotado, sem banda por enquanto
 
 Levantado pelo dono em **2026-08-14**, ao desenhar o backup. **Nenhum destes
 bloqueia o beta**; estão aqui para não serem redescobertos, e a ordem abaixo é
