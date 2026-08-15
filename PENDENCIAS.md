@@ -1772,7 +1772,18 @@ dois não podem subir juntos, porque os nomes de NPC batem.
 
 ## 5. Antes de expor o servidor à rede
 
-### 1. Trocar a conta interserver `s1` / `p1`
+### 1. Conta interserver `s1` / `p1` — RESOLVIDO no Linux em 2026-08-15
+
+O `ferramentas/configura_servidor.sh` gera credencial própria e grava nos dois
+lados (banco com a senha hasheada, `conf/import/` com ela em claro). Duas coisas
+que o caminho ensinou e que estão no `CLAUDE.md` §5: a senha tem **teto de 23
+caracteres** (`char_logif.cpp:826` copia 24 bytes e trunca calado), e com MD5
+ligado ela precisa ir **hasheada** para o banco.
+
+**Continua valendo para o HML (Windows)**, que ainda usa `s1`/`p1`. O texto
+abaixo é o registro do porquê.
+
+### 1b. O registro original
 
 **O que é:** é com essa conta que o char-server e o map-server se autenticam no
 login-server. Não é conta de jogador — é credencial de serviço. Está no padrão

@@ -357,7 +357,32 @@ mas o anúncio de morte continua saindo (`PENDENCIAS.md` §1).
 **Como saber que deu certo:** gravar e ler de volta uma string acentuada numa
 coluna de texto. É o teste que pega o charset errado antes de ele custar caro.
 
-### Etapa 7 — `conf/import/` na máquina alvo ⬜
+### Etapa 7 — `conf/import/` na máquina alvo ✅ (2026-08-15)
+
+**Automatizada em `ferramentas/configura_servidor.sh`** (que faz também a
+Etapa 9), rodado do Mac com `ssh libraro 'bash -s' < …`. Escreve
+`inter_conf.txt` (credenciais do banco, que servem aos quatro — o web-server
+carrega `conf/inter_athena.conf` na subida, `src/web/web.cpp:463`),
+`login_conf.txt`, `char_conf.txt` e `map_conf.txt`.
+
+**O medo desta etapa não se confirmou:** `conf/import/` está no `.gitignore` do
+próprio rAthena (`/conf/import`), então o `git reset --hard` do
+`atualiza_servidor.sh` **não a alcança**. Conferido, não suposto.
+
+**A conta de comunicação `s1`/`p1` foi trocada aqui** — fechando o item 1 da §5
+do `PENDENCIAS.md`. Duas coisas que ela exige e que custaram uma rodada:
+
+1. **A senha vai hasheada para o banco.** Com `use_MD5_passwords: yes` a conta
+   de sexo `S` passa pelo mesmo hash das dos jogadores. Sem converter, o
+   char-server não conecta.
+2. **A senha tem teto de 23 caracteres** — `char_logif.cpp:826` copia 24 bytes
+   e trunca o resto, calado. Ver `CLAUDE.md` §5.
+
+**`new_account: no` foi fixado explicitamente**, e não herdado do padrão: com
+`yes`, digitar `nome_M` na tela de login cria conta na hora — e o limite de uma
+conta por pessoa do site viraria decoração, porque bastaria criar pelo cliente.
+
+### Etapa 7 — o registro original
 
 **Sim, é criado à mão no servidor, e é a única configuração que não vem do git.**
 É de propósito: ali moram senha do banco e IP, que não podem ser versionados.
@@ -386,7 +411,32 @@ Duas funções:
 2. **servir os arquivos de patch** por HTTP estático, que é o gancho para o
    instalador do patch (trabalho separado, fora deste plano).
 
-### Etapa 9 — systemd ⬜
+### Etapa 9 — systemd ✅ (2026-08-15)
+
+**As quatro units instaladas e habilitadas no boot**, por
+`ferramentas/configura_servidor.sh`: `guerra-login`, `guerra-char`,
+`guerra-web`, `guerra-map`, com `After=` na ordem **login → char → web → map**.
+Cada uma roda como `ragnarok`, com `NoNewPrivileges`, `PrivateTmp`,
+`ProtectSystem=full` e `ProtectHome`.
+
+**Subiram, e a cadeia inteira fechou:** *Authentication accepted* no
+login-server, char-server aceito, e **Map-Server conectado com 1258 mapas**.
+Zero `Unknown syntax` no log — os 19.622 scripts dos nossos NPCs carregaram no
+Linux sem um erro.
+
+**A medição de memória com os quatro no ar** (2026-08-15), que a Etapa 3 pediu:
+
+| | RSS |
+|---|---|
+| `map-server` | **437 MB** |
+| `char-server` / `web-server` / `login-server` | 11 / 10 / 9 MB |
+| **Total da máquina, com MariaDB e sistema** | **727 MB de 961 — 233 disponíveis** |
+
+A estimativa de 250–400 MB para o map-server ficou curta. Funciona, e ainda cabe
+o site (~20 MB) e o nginx (~10 MB), mas a folga real é de ~200 MB. Subir para
+2 GB é decisão com número, não mais com estimativa.
+
+### Etapa 9 — o registro original
 
 Quatro units, uma por servidor, com `After=` expressando a ordem que o
 `ferramentas/servidor.py` já conhece: **login → char → web → map**. O `web`

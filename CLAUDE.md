@@ -982,6 +982,17 @@ Produziram diagnóstico falso e custaram retrabalho:
   `configure: error: MySQL not found or incompatible` **com o MariaDB
   instalado, no ar e aceitando conexão** — o que manda procurar defeito no
   banco, que está perfeito. O `-compat` existe só para fazer essa ponte.
+- **A senha da conta de comunicação entre servidores tem teto de 23
+  caracteres, e passar disso falha CALADO — apontando para o lugar errado.**
+  O `char_logif.cpp:826` monta o pacote de conexão com
+  `memcpy(WFIFOP(login_fd,26), charserv_config.passwd, 24)`: vinte e quatro
+  bytes, ponto, **ainda que o `PASSWD_LENGTH` do banco seja 33**. Senha maior é
+  truncada ali: o `conf/import/char_conf.txt` aceita, o banco guarda o hash da
+  senha inteira, e o login-server hasheia os 23 primeiros e recusa. A mensagem
+  que sai é *"The server communication passwords (default s1/p1) are probably
+  invalid"* — que manda conferir `s1`/`p1` e o sexo `S` da conta, tudo já
+  correto. Medido em 2026-08-15 com uma senha de 32 caracteres. O
+  `ferramentas/configura_servidor.sh` gera 20.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
