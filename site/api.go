@@ -149,9 +149,10 @@ func (s *Servidor) contaInicia(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if n >= s.cfg.MaxContas {
-		falha(w, http.StatusConflict,
-			"esse documento ja tem conta. O jogo da vantagens diarias por conta, "+
-				"entao cada pessoa joga com uma so.")
+		// Curto de proposito: dizer POR QUE o limite existe entrega o
+		// roteiro a quem ainda nao tinha pensado em burla-lo. Mesma razao
+		// do texto do formulario (web/index.html).
+		falha(w, http.StatusConflict, "esse documento ja tem uma conta")
 		return
 	}
 
