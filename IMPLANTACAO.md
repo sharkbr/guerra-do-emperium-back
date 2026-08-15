@@ -728,7 +728,22 @@ por credencial própria em 2026-08-15 (`PENDENCIAS.md` §5, item 1). No HML é
 opcional — ambiente de teste, atrás de NAT — mas fica registrado para não
 parecer esquecimento.
 
-**3. O instalador do cliente.** Levantamento em `PENDENCIAS.md` §5b. O servidor
+**3. A roupa de GM não aparece na conta de produção** (2026-08-15). A conta
+`librasupremo` foi criada no Linux com `group_id 99` (grupo `Admin`) e **os
+comandos funcionam** — quem os autoriza é o servidor, e isso está certo. O que
+não aparece é a **aparência** de GM, e ela é do **cliente**: vem da lista
+`<aid><admin>…</admin></aid>` dentro do `clientinfo.xml`, que enumera
+`account_id`. No HML funciona porque a conta de teste de lá está nessa lista.
+
+**O `account_id` da conta nova é `2000004`.** Falta acrescentá-lo — e
+provavelmente nos **dois** XML, com o cuidado de sempre (cp1252, por script,
+âncora com `assert`), lembrando que o que venceu no apontamento do servidor foi
+o `sclientinfo.xml` e não o `clientinfo.xml`.
+
+É mais um caso da §4.9 do `CLAUDE.md`: as duas metades — quem autoriza e quem
+desenha — são independentes, e a divergência não dá erro.
+
+**4. O instalador do cliente.** Levantamento em `PENDENCIAS.md` §5b. O servidor
 já tem onde hospedar: `https://libraro.filiponegrao.com.br/patch/`, servindo
 `/var/www/patch`. ~~Antes de empacotar, **anotar a lista de patches do NEMO**~~
 — **feito em 2026-08-14**: o `.epi` ao lado do exe traz os nomes, e a lista está
