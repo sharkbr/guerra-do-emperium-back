@@ -264,14 +264,32 @@ Antes de qualquer coisa do rAthena:
 - **`8888` (web-server) também não é exposta direta** — vai atrás do nginx na
   Etapa 8. Ele recebe upload de arquivo de usuário anônimo num HTTP embutido.
 
-### Etapa 5 — dependências e a primeira compilação 🟡 (2026-08-14, falta compilar)
+### Etapa 5 — dependências e a primeira compilação ✅ (2026-08-15)
 
-**Dependências instaladas** pelo `ferramentas/provisiona.sh`: `build-essential`
-(GCC 13.3), `zlib1g-dev`, `libmariadb-dev`, `libpcre3-dev`, `git`, `make`,
-`pkg-config`, mais `mariadb-server`, `nginx` e `ufw`. **A compilação ainda não
-foi feita** — é o `ferramentas/atualiza_servidor.sh`.
+**O marco de risco caiu, e a §2 estava certa: o código custom passa pelo GCC.**
 
-**É o marco de risco do plano.** É aqui que se descobre se o código custom passa
+Compilado em **67 minutos** (`make server -j1`, 1 vCPU) pelo
+`ferramentas/atualiza_servidor.sh`. Os quatro binários existem, são ELF x86-64,
+e os 17 pontos de enxerto de `src/custom/` sobreviveram ao clone — o
+`battle.cpp` chama `reducao_pvp` nas quatro posições previstas.
+
+**Ressalva sobre os "zero avisos":** o rAthena **não liga `-Wall`** — a linha de
+compilação traz só `-Wformat` e `-Wformat-security`, que vêm do Ubuntu. Zero
+avisos aqui não atesta a saúde do nosso C++; atesta que compila. Para valer como
+revisão, seria preciso recompilar `battle.cpp`, `status.cpp` e `clif.cpp` com
+`-Wall -Wextra` e olhar só o que mencione `src/custom/`.
+
+**O que quase matou o build foi memória, não código.** O `skill.cpp` sozinho
+levou a RAM a 947 MB **e** o swap a 1,8 GB; foi preciso acrescentar swap duas
+vezes durante a compilação, chegando a 7 GB. O `provisiona.sh` já nasce com 4 GB
+por isso. **Compilar nesta máquina não é rotina de deploy sustentável** — se
+cada mudança em `src/` custar uma hora de *thrashing*, a saída é compilar fora
+(Mac num container Ubuntu) e enviar só os binários.
+
+Dependências instaladas: `build-essential` (GCC 13.3), `zlib1g-dev`,
+`libmariadb-dev`, **`libmariadb-dev-compat`**, `libpcre3-dev`, `git`, `make`,
+`pkg-config`, `mariadb-server`, `nginx`, `ufw`. As duas armadilhas do caminho
+(bit de execução do `configure` e o `-compat` que falta) estão no `CLAUDE.md` §5. É aqui que se descobre se o código custom passa
 pelo GCC — e, pela §2, o esperado é que passe.
 
 Dependências, lidas do `tools/docker/Dockerfile` do próprio rAthena (que usa
@@ -297,7 +315,11 @@ rAthena, parar e pensar — a lei da §2 vale aqui também.
 **Como saber que deu certo:** os quatro binários existem
 (`login-server`, `char-server`, `map-server`, `web-server`).
 
-### Etapa 6 — banco 🟡 (2026-08-14, falta rodar os `.sql`)
+### Etapa 6 — banco ✅ (2026-08-15)
+
+**Os quatro `.sql` rodaram** (`main.sql`, `logs.sql`, `web.sql` e o nosso
+`guerra_arena_pvp.sql`): 72 tabelas, todas em `latin1_swedish_ci`, conferidas
+uma a uma. Mais a `guerra_site_cadastro`, do site (`site/sql/site.sql`).
 
 **Feito pelo `ferramentas/provisiona.sh`:** MariaDB 10.11.14 escutando só em
 `127.0.0.1`, banco `guerra` e usuário `guerra`@localhost com senha de 32
