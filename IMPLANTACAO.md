@@ -597,7 +597,25 @@ Roda no Mac, roda no deploy, e é rápida. **É a rede de proteção da §1.**
 > abaixo, e não foi seguido.
 >
 > Agora o jogo só reinicia se algo dentro de `rathena/` mudou ou se o binário
-> foi recompilado. Site, documentação e ferramenta não encostam nele. O que
+> foi recompilado.
+
+#### Quanto tempo o jogador fica fora — 28 segundos, medidos
+
+O deploy inteiro roda com o jogo **no ar**: o `git pull` e a compilação (até 67
+min) acontecem enquanto os quatro servidores seguem servindo o binário antigo. A
+única janela de queda é o restart do fim, e ela foi medida em **28 segundos**
+(2026-08-16), do `systemctl restart` até o `Map-Server 0 connected: 1258 maps` —
+que é o marco certo, porque "o processo subiu" não quer dizer "dá para jogar".
+
+**E o build não pode mais falhar no último minuto.** O kernel **recusa
+sobrescrever executável em uso** (`Text file busy`, medido nesta máquina), então
+um `make` que chegasse à linkagem com o map-server no ar poderia morrer *depois*
+de uma hora de trabalho. Os binários passam a ser renomeados para `*.anterior`
+antes do build: o processo em execução guarda o **inode**, não o nome, e segue
+rodando sem sentir nada.
+
+Isso deu de graça a **volta atrás**: build que falha devolve os binários antigos
+sozinho, e build que passa deixa os anteriores em disco para reverter à mão. Site, documentação e ferramenta não encostam nele. O que
 > continua sendo melhoria de verdade é trocar o restart por `@reloadscript`
 > quando só `npc/` ou `db/` mudarem — e isso exige mandar comando ao console do
 > map-server, que sob `systemd` não tem terminal.

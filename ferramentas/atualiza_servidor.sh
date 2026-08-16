@@ -137,6 +137,33 @@ if [ "$COMPILAR" = "1" ]; then
         pula "Makefile ja' existe"
     fi
 
+    # O PASSO QUE EVITA PERDER UMA HORA DE COMPILACAO NO ULTIMO MINUTO.
+    #
+    # O kernel RECUSA sobrescrever um executavel em uso - "Text file busy"
+    # (medido nesta maquina em 2026-08-16). Se o map-server estiver no ar
+    # quando o make chegar na linkagem, ela pode falhar DEPOIS de 60 minutos
+    # de trabalho. Renomear resolve: o processo em execucao guarda o inode,
+    # nao o nome, entao ele continua rodando sem sentir nada, e o linker
+    # encontra o caminho livre.
+    #
+    # E o .anterior nao e' so' para isso: ele e' a VOLTA. Build que falha no
+    # meio nao pode deixar a maquina sem binario para reiniciar, e build que
+    # passa mas se revela ruim tem para onde voltar.
+    DESVIADOS=()
+    for b in "${BINARIOS[@]}"; do
+        if [ -f "$EMULADOR/$b" ]; then
+            mv -f "$EMULADOR/$b" "$EMULADOR/$b.anterior"
+            DESVIADOS+=("$b")
+        fi
+    done
+    [ ${#DESVIADOS[@]} -gt 0 ] && ok "${#DESVIADOS[@]} binario(s) guardados como .anterior (o jogo segue no ar)"
+
+    devolve_binarios() {
+        for b in "${DESVIADOS[@]}"; do
+            [ -f "$EMULADOR/$b.anterior" ] && mv -f "$EMULADOR/$b.anterior" "$EMULADOR/$b"
+        done
+    }
+
     # -j1 de proposito: 1 vCPU e 961 MB de RAM. Paralelismo aqui nao
     # ganharia tempo (nao ha' outro nucleo) e multiplicaria o pico de
     # memoria do g++, que ja' e' o aperto desta maquina - ver a Etapa 3.
@@ -146,14 +173,19 @@ if [ "$COMPILAR" = "1" ]; then
         echo
         aviso "ultimas 40 linhas do log:"
         tail -40 /tmp/build.log
+        devolve_binarios
+        aviso "binarios anteriores devolvidos - o servidor continua utilizavel"
         erro "compilacao falhou - log completo em /tmp/build.log"
     fi
     ok "compilado em $(( (SECONDS - INICIO) / 60 ))min $(( (SECONDS - INICIO) % 60 ))s"
 
     for b in "${BINARIOS[@]}"; do
-        [ -x "$EMULADOR/$b" ] || erro "make terminou mas $b nao existe"
+        if [ ! -x "$EMULADOR/$b" ]; then
+            devolve_binarios
+            erro "make terminou mas $b nao existe - binarios anteriores devolvidos"
+        fi
     done
-    ok "os quatro binarios existem"
+    ok "os quatro binarios existem (os antigos ficam em *.anterior, para voltar)"
 
     # O que o GCC reclamou. Nao aborta - o rAthena compila com muitos
     # avisos proprios -, mas fica visivel: aviso em src/custom/ e' NOSSO,
