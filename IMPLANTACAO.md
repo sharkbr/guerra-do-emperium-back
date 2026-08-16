@@ -826,17 +826,43 @@ Tudo isto saiu do `ferramentas/configura_web.sh` na Etapa 8, e está no ar:
 
 ### 10.3 O que falta — o checklist da sessão paralela
 
-**1. Autorizar a chave do Windows.** É o que trava a publicação hoje. Os zips
-nascem em `C:\GuerraDoEmperium\cliente`, que só existe no Windows, então quem
-publica é o Windows — e essa máquina nunca teve chave no servidor (o deploy
-sempre foi do Mac). A chave foi gerada lá em 2026-08-15:
+**1. Autorizar a chave do Windows — na conta `ragnarok`, não na do root.** É o
+que trava a publicação hoje. Os zips nascem em `C:\GuerraDoEmperium\cliente`,
+que só existe no Windows, então quem publica é o Windows — e essa máquina nunca
+teve chave no servidor (o deploy sempre foi do Mac). A chave foi gerada lá em
+2026-08-15.
 
+**Por que `ragnarok`** (decisão do dono, 2026-08-16): esta chave só precisa
+copiar arquivo para `/var/www/patch`, e a pasta já pertence a ele — o
+`configura_web.sh` a cria com `install -o ragnarok`. Uma chave de root faria
+muito mais do que o trabalho pede, e ficaria numa máquina de desktop. Ele tem
+`/bin/bash` (`provisiona.sh:250`, shell que o deploy exige para o `git pull`),
+então `scp` funciona; conta com `nologin` não serviria.
+
+Rodado do Mac, que entra como root:
+
+```bash
+ssh libraro '
+  install -d -m 700 -o ragnarok -g ragnarok /home/ragnarok/.ssh
+  echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtTGgt4TsS2WSkrn3avQ4/ID63TsIBTtDWCREZiUK74 guerra-windows-patch" \
+    >> /home/ragnarok/.ssh/authorized_keys
+  chown ragnarok:ragnarok /home/ragnarok/.ssh/authorized_keys
+  chmod 600 /home/ragnarok/.ssh/authorized_keys
+'
 ```
-ssh libraro 'echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtTGgt4TsS2WSkrn3avQ4/ID63TsIBTtDWCREZiUK74 guerra-windows-patch" >> ~/.ssh/authorized_keys'
-```
+
+Os dois últimos comandos não são zelo: **o `sshd` recusa `authorized_keys` que
+não pertença ao dono da conta ou que esteja com permissão frouxa**, e recusa
+*calado* — do lado do cliente sai o mesmo `Permission denied (publickey)` de
+quando a chave não existe. Se a autorização "não pegar", é o primeiro lugar a
+olhar (`/var/log/auth.log` diz o motivo real).
 
 Conferir depois com `ssh -o BatchMode=yes libraro true` **do Windows** — do Mac
-não prova nada.
+não prova nada, porque lá a chave é outra.
+
+Apertar mais, se um dia fizer sentido: `restrict,command="…"` na frente da
+chave no `authorized_keys` limita o que ela pode fazer a um comando só. Não é
+necessário agora — a conta já não é privilegiada.
 
 *Alternativa, se preferir não dar acesso ao Windows:* o publicador aceita
 `SERVIDOR=` e `DESTINO=` por variável de ambiente, então os zips podem ir para o

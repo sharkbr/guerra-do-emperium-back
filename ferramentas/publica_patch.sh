@@ -25,6 +25,9 @@
 #
 set -euo pipefail
 
+# O `libraro` do Windows entra como `ragnarok`, e nao como root: a pasta de
+# destino pertence a ele, e uma chave de root numa maquina de desktop faria
+# muito mais do que copiar arquivo. Ver IMPLANTACAO.md secao 10.3.
 SERVIDOR="${SERVIDOR:-libraro}"
 DESTINO="${DESTINO:-/var/www/patch}"
 PATCHES="${PATCHES:-/c/GuerraDoEmperium/patches}"
@@ -68,7 +71,12 @@ publica_patches() {
 
     azul "== A lista, por ultimo =="
     scp "$REGISTRO" "$SERVIDOR:$DESTINO/lista.txt"
-    ssh "$SERVIDOR" "chmod 644 $DESTINO/* && ls -la $DESTINO"
+
+    # O chmod nao pode derrubar a publicacao: os arquivos ja subiram e a lista
+    # ja esta no ar. Ele so' conserta umask estranho, e falha se algum arquivo
+    # da pasta tiver sido posto ali por outro usuario - o que nao e' problema
+    # nosso para resolver aqui.
+    ssh "$SERVIDOR" "chmod 644 $DESTINO/* 2>/dev/null; ls -la $DESTINO" || true
     printf '\n\033[1;32m%d zip(s) enviado(s); a lista esta no ar.\033[0m\n' "$enviados"
 }
 
