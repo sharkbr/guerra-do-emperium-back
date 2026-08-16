@@ -28,7 +28,9 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | **Servidor de produção** | `138.197.155.31` = `libraro.filiponegrao.com.br` (login 6900, char 6121, map 5121) |
 | **Site de contas** | https://libraro.filiponegrao.com.br — é por ele que o jogador se cadastra (`new_account: no`) |
 | **Endereço do servidor no cliente** | `cliente\data\sclientinfo.xml` — **é este que vale**, não o `clientinfo.xml`; manter os dois iguais (`CLAUDE.md` §5) |
-| **Atualizador (patcher)** | `cliente\Atualizador.exe` — é o que o jogador clica; código em `patcher/`, doc em `patcher/LEIAME.md` |
+| **Atualizador (patcher)** | `cliente\Jogar.exe` — é o que o jogador clica (o jogo, `GuerraDoEmperium.exe`, quem abre é ele); código em `patcher/`, doc em `patcher/LEIAME.md` |
+| Executáveis do kRO que não se clica | `cliente\_extras\` — movidos para lá em 2026-08-16 por `ferramentas/limpa_cliente.py` |
+| Backups que as ferramentas deixam | `C:\GuerraDoEmperium\_backups_removidos\` — inclui as duas cópias do exe **antes** dos nossos patches |
 | **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, os `.zip`, `patcher.txt`) |
 | Montar / publicar patch | `python ferramentas/monta_patch.py --nome "..." <caminhos>` e `ferramentas/publica_patch.sh` (`RECEITAS.md` §11) |
 | Estado do patch na máquina do jogador | `cliente\patch\aplicados.txt` e `cliente\patch\atualizador.log` |

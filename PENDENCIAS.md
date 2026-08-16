@@ -1920,13 +1920,13 @@ jogadores. **Nada disto foi feito** — é o levantamento que a pergunta gerou,
 guardado para quando o instalador for puxado de verdade.
 
 > **O PATCH, que era a outra metade disto, FOI FEITO em 2026-08-15.** O
-> `Atualizador.exe` (`patcher/`), o gerador (`ferramentas/monta_patch.py`) e o
+> `Jogar.exe` (`patcher/`), o gerador (`ferramentas/monta_patch.py`) e o
 > publicador (`ferramentas/publica_patch.sh`) estão de pé e testados ponta a
 > ponta; o ciclo está em `RECEITAS.md` §11. O que segue aberto aqui é só o
 > **primeiro download**: empacotar os 4,9 GB de um jeito reproduzível.
 > Duas consequências para quem for empacotar:
 >
-> - o pacote leva o `Atualizador.exe` e o `Atualizador.ini` na raiz, e o atalho
+> - o pacote leva o `Jogar.exe` e o `Jogar.ini` na raiz, e o atalho
 >   do jogador aponta para o Atualizador — não para o `GuerraDoEmperium.exe`;
 > - **o pacote não precisa mais ser refeito a cada mudança.** Ele pode ficar
 >   parado numa versão conhecida: quem baixar hoje recebe todos os patches

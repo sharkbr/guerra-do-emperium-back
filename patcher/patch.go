@@ -122,13 +122,13 @@ func marcaAplicado(trabalho string, p patch) error {
 // aplica baixa, confere e extrai um patch. O zip vai para disco antes de ser
 // aberto — patch de arte passa dos 200 MB, e segurar isso em memória numa
 // máquina de jogador é pedir para o Atualizador morrer justo no fim.
-func aplica(j *janela, raiz, trabalho, url string, p patch, rotulo string) error {
+func aplica(j *Janela, raiz, trabalho, url string, p patch, rotulo string) error {
 	zipado := filepath.Join(trabalho, p.Arquivo)
 
 	// Um zip já em disco com o sha certo é download interrompido que chegou
 	// inteiro, ou reaplicação — nos dois casos, não se baixa de novo.
 	if soma, err := somaArquivo(zipado); err != nil || soma != p.SHA {
-		j.status(rotulo + " — baixando…")
+		j.Status(rotulo + " — baixando…")
 		if err := baixa(j, url+p.Arquivo, zipado, p.Bytes, rotulo); err != nil {
 			return err
 		}
@@ -144,7 +144,7 @@ func aplica(j *janela, raiz, trabalho, url string, p patch, rotulo string) error
 		}
 	}
 
-	j.status(rotulo + " — aplicando…")
+	j.Status(rotulo + " — aplicando…")
 	if err := extrai(j, zipado, raiz, rotulo); err != nil {
 		return err
 	}
@@ -155,7 +155,7 @@ func aplica(j *janela, raiz, trabalho, url string, p patch, rotulo string) error
 	return nil
 }
 
-func baixa(j *janela, url, destino string, tamanho int64, rotulo string) error {
+func baixa(j *Janela, url, destino string, tamanho int64, rotulo string) error {
 	resp, err := cliente.Get(url)
 	if err != nil {
 		return err
@@ -186,8 +186,8 @@ func baixa(j *janela, url, destino string, tamanho int64, rotulo string) error {
 			// processando mensagem de janela no lugar de baixar.
 			if tamanho > 0 && time.Since(ultimo) > 100*time.Millisecond {
 				ultimo = time.Now()
-				j.progresso(int(lidos * 100 / tamanho))
-				j.status(fmt.Sprintf("%s — baixando %.1f de %.1f MB",
+				j.Progresso(int(lidos * 100 / tamanho))
+				j.Status(fmt.Sprintf("%s — baixando %.1f de %.1f MB",
 					rotulo, float64(lidos)/1048576, float64(tamanho)/1048576))
 			}
 		}
@@ -205,7 +205,7 @@ func baixa(j *janela, url, destino string, tamanho int64, rotulo string) error {
 	return os.Rename(parcial, destino)
 }
 
-func extrai(j *janela, zipado, raiz, rotulo string) error {
+func extrai(j *Janela, zipado, raiz, rotulo string) error {
 	r, err := zip.OpenReader(zipado)
 	if err != nil {
 		return err
@@ -245,8 +245,8 @@ func extrai(j *janela, zipado, raiz, rotulo string) error {
 			return err
 		}
 		if i%20 == 0 {
-			j.progresso(i * 100 / total)
-			j.status(fmt.Sprintf("%s — aplicando %d de %d", rotulo, i+1, total))
+			j.Progresso(i * 100 / total)
+			j.Status(fmt.Sprintf("%s — aplicando %d de %d", rotulo, i+1, total))
 		}
 	}
 

@@ -1071,14 +1071,22 @@ Produziram diagnóstico falso e custaram retrabalho:
   'replace')`. Sem `sys.stdout.encoding` (saída redirecionada) o Python 2
   devolve `None`, então o `or` não é enfeite. Medido em 2026-08-15 no
   `monta_patch.py`.
-- **`StretchDIBits` com `HALFTONE` falha de vez em quando, e mente no
-  `GetLastError`.** Duas execuções do mesmo binário devolveram 630 linhas
-  (sucesso) e a terceira devolveu **0** — com o erro do sistema dizendo
-  *"operação concluída com êxito"*. O sintoma foi a janela do Atualizador
-  nascer com o retângulo da arte preto, sem nada no log. Quem depende de
-  imagem redimensionada faz a redução **em código** e deixa para o GDI só a
-  cópia 1:1; o custo é ~30 linhas de média de caixa e o ganho é a janela nunca
-  nascer preta. Ver `patcher/janela.go`, função `reduz`.
+- **`StretchDIBits` falha de vez em quando, e mente no `GetLastError`.** Duas
+  execuções do mesmo binário devolveram 630 linhas (sucesso) e a terceira
+  devolveu **0** — com o erro do sistema dizendo *"operação concluída com
+  êxito"*. O sintoma é a janela do Atualizador nascer com o retângulo da arte
+  preto, sem nada além do log dizer o que houve.
+  **A primeira suspeita foi o modo `HALFTONE`, e estava errada:** tirar o
+  HALFTONE e tirar a escala (cópia 1:1) não consertou — voltou a falhar na
+  primeira execução seguinte. É a função, não o modo. Vale como lembrete de que
+  "mexi e parou de acontecer" não é diagnóstico quando o defeito é
+  intermitente: a versão sem HALFTONE rodou três vezes seguidas antes de
+  falhar.
+  **A saída é não usar aquele caminho:** `CreateDIBSection` devolve um ponteiro
+  para os bits do bitmap, e os pixels são **copiados** para lá — sem conversão,
+  sem escala, sem chamada que possa falhar por motivo obscuro. A redução de
+  tamanho, quando precisa, se faz em código antes. Ver `patcher/janela.go`,
+  `preparaArte` e `reduz`.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

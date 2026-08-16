@@ -10,11 +10,18 @@ atalho do jogo. Ao abrir, ele confere o servidor, aplica o que falta e mostra o
 botão JOGAR.
 
 ```
-Atualizador.exe        o que o jogador clica
-Atualizador.ini        url do servidor e nome do exe do jogo (opcional)
+Jogar.exe              o que o jogador clica
+Jogar.ini              url do servidor e nome do exe do jogo (opcional)
 patch\aplicados.txt    o que este cliente já tem
 patch\atualizador.log  a última rodada, para quando algo der errado
 ```
+
+**O arquivo se chama `Jogar.exe` desde 2026-08-16** — antes era
+`Atualizador.exe`, e o dono trocou pelo motivo certo: o nome tem de dizer o que
+fazer, não o que o programa é. O código **não depende do nome**: ele procura
+`<nome do exe>.ini` e cai para `Atualizador.ini` se não achar, e os arquivos da
+auto-atualização saem do nome do próprio exe. Trocar de novo é renomear e
+pronto.
 
 ---
 
@@ -60,8 +67,8 @@ extrair.
 
 Quem baixou o cliente antes de 2026-08-15 não tem o Atualizador — e é
 justamente esse pessoal que precisa dos patches. Para eles existe
-`C:\GuerraDoEmperium\patches\Atualizador-Guerra-do-Emperium.zip` (5,2 MB):
-`Atualizador.exe`, `Atualizador.ini` e um `LEIA-ME.txt` em cp1252, para
+`C:\GuerraDoEmperium\patches\Jogar-Guerra-do-Emperium.zip` (5,2 MB):
+`Jogar.exe`, `Jogar.ini` e um `LEIA-ME.txt` em cp1252, para
 extrair na pasta do jogo. Depois disso, tudo é automático — inclusive as
 versões seguintes do próprio Atualizador (§3).
 
@@ -95,31 +102,31 @@ dos outros, e travar ali é pior do que não atualizar.
 **O Atualizador não entra em patch comum.** Windows não deixa um programa
 gravar por cima do próprio exe em execução — mas deixa **renomear**. O canal
 próprio (`patcher.txt` no servidor) se apoia nisso: baixa, confere o sha,
-renomeia a si mesmo para `patch\Atualizador.velho`, põe o novo no lugar, lança
-e morre; o novo apaga o velho ao subir. O `monta_patch.py` recusa pôr o
-`Atualizador.exe` num zip, para ninguém tentar o caminho que não funciona.
+renomeia a si mesmo para `patch\Jogar.velho`, põe o novo no lugar, lança e
+morre; o novo apaga o velho ao subir. O `monta_patch.py` recusa pôr o
+`Jogar.exe` num zip, para ninguém tentar o caminho que não funciona.
 
 ## 4. O Atualizador em si
 
 Go, sem uma única dependência externa: o Win32 é chamado por
-`syscall.NewLazyDLL` contra user32, gdi32 e comctl32. O binário que vai para a
+`syscall.NewLazyDLL` contra user32, gdi32 e kernel32. O binário que vai para a
 máquina dos jogadores não tem código de terceiro nenhum além da biblioteca
 padrão do Go.
 
 ```
-main.go      o fluxo e o Atualizador.ini
+main.go      o fluxo e o Jogar.ini
 patch.go     lista, download, sha256, extração
 auto.go      a troca do próprio exe
 janela.go    a janela, em Win32 puro
 registro.go  patch\atualizador.log
-recursos/    a arte (a mesma do site)
+recursos/    a arte da capa
 ```
 
 Compilar:
 
 ```bash
 cd patcher
-go build -ldflags -H=windowsgui -o Atualizador.exe .
+go build -ldflags -H=windowsgui -o Jogar.exe .
 ```
 
 O `-H=windowsgui` é o que impede a janela preta de console de abrir junto.
@@ -128,17 +135,40 @@ O `-H=windowsgui` é o que impede a janela preta de console de abrir junto.
 `ferramentas/publica_patch.sh --atualizador`. Quem tem a antiga troca sozinho na
 próxima abertura.
 
-**A armadilha que custou uma rodada:** a arte é preparada **antes** de a janela
-ser criada. Decodificar o JPEG leva ~100 ms, e um `WM_PAINT` que chegue nesse
-intervalo pinta o retângulo de cima vazio; como daí em diante só a faixa de
-baixo é invalidada (para o progresso não fazer a arte piscar), aquele preto
-ficaria na tela até algo passar por cima da janela.
+## 4b. A janela — por que ela é desenhada à mão
+
+A primeira versão usava a moldura do Windows com um botão e uma barra de
+progresso nativos dentro. Funcionava, e **parecia um utilitário** — o dono
+comparou lado a lado com o patcher do bRO e o veredito foi imediato. Um servidor
+que vende nostalgia não abre com uma caixa de diálogo cinza.
+
+A de hoje (2026-08-16) segue o formato que o jogador de RO reconhece: moldura
+própria em vez da barra do Windows, arte ocupando quase tudo, e um rodapé com o
+estado, a barra larga e o **JOGAR** grande à direita. Nada disso é controle
+nativo — são ~600 linhas de GDI.
+
+Três armadilhas que apareceram desenhando isso, e as três falham **calado**:
+
+- **A arte tem de ser preparada ANTES de a janela existir.** Decodificar o JPEG
+  leva ~100 ms, e um `WM_PAINT` que chegue nesse intervalo pinta o retângulo
+  vazio — que fica assim até algo passar por cima da janela.
+- **`StretchDIBits` falha de vez em quando e mente no `GetLastError`**
+  (`CLAUDE.md` §5). A arte entra por `CreateDIBSection`, copiando os pixels na
+  memória do bitmap: sem conversão, sem escala, sem chamada que possa falhar.
+- **Interpolar cor em tipo sem sinal.** O gradiente que escurece (240 → 200) faz
+  `r2-r1` dar −40 num `uintptr`, que vira um número astronômico e a cor sai
+  aleatória. O sintoma foi o botão verde nascer **ciano** e a barra dourada
+  nascer **invisível**, as duas de uma vez — a conta é a mesma.
+
+E uma que não é armadilha, é regra do Win32: sem barra de título do Windows,
+quem torna a janela arrastável é o `WM_NCHITTEST` devolvendo `HTCAPTION` na
+faixa de cima. Os dois botões dela precisam devolver `HTCLIENT`, senão o clique
+vira arrasto e eles nunca recebem `WM_LBUTTONDOWN`.
 
 ## 5. O que falta
 
-- **Ícone e manifest.** O exe usa o ícone padrão do Windows e a barra de
-  progresso sai no estilo clássico, por falta de um `.syso` de recursos.
-  Nenhum dos dois muda o que o programa faz.
+- **Ícone do exe.** Ele usa o ícone padrão do Windows, por falta de um `.syso`
+  de recursos. É o que mais destoa hoje, e não muda o que o programa faz.
 - **Assinatura dos patches.** Hoje a garantia é o sha256 do registro servido
   por HTTPS — quem controlasse o servidor poderia trocar os dois. Assinar com
   chave nossa e conferir no Atualizador é o próximo degrau.

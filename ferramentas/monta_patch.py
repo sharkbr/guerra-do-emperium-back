@@ -69,7 +69,7 @@ LIXO = ('BACKUP', '.ORIGINAL', '.original', '.INGLES', '.KOREA', '.KOR',
 # O Atualizador nao entra em patch comum: ele nao consegue sobrescrever a si
 # mesmo enquanto roda. Quem o troca e o canal proprio (`patcher.txt`), que
 # renomeia o exe em execucao antes de gravar o novo - ver `patcher/LEIAME.md`.
-FORA_DO_PATCH = ('atualizador.exe', 'atualizador.ini')
+FORA_DO_PATCH = ('jogar.exe', 'jogar.ini', 'atualizador.exe', 'atualizador.ini')
 
 
 def morre(msg):

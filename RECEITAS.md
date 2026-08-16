@@ -320,7 +320,7 @@ corrige com patch novo por cima.
 4. `git add patcher/patches.txt` e commitar: o registro é a fonte da
    `lista.txt` que o servidor serve.
 
-O jogador não faz nada: o `Atualizador.exe`, que é o que ele clica para jogar,
+O jogador não faz nada: o `Jogar.exe`, que é o que ele clica para jogar,
 aplica sozinho na próxima abertura.
 
 **Para apagar arquivo do cliente do jogador:** `--apagar data/algum.lub`.

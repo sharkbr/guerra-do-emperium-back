@@ -30,17 +30,26 @@ import (
 	"time"
 )
 
+// Os nomes dos arquivos da troca saem do nome do próprio exe (`Jogar.novo`,
+// `Jogar.velho`), e não de uma constante: assim renomear o executável não
+// deixa para trás um `.velho` que ninguém mais apaga.
+func nomeDaTroca(trabalho, exe, sufixo string) string {
+	base := strings.TrimSuffix(filepath.Base(exe), filepath.Ext(exe))
+	return filepath.Join(trabalho, base+sufixo)
+}
+
 // limpaVelho apaga a cópia deixada pela troca anterior. Roda em toda subida
 // porque a única hora em que aquele arquivo pode ser apagado é quando ele já
 // não está em execução — ou seja, na execução seguinte.
-func limpaVelho(trabalho string) {
-	os.Remove(filepath.Join(trabalho, "Atualizador.velho"))
+func limpaVelho(trabalho, exe string) {
+	os.Remove(nomeDaTroca(trabalho, exe, ".velho"))
+	os.Remove(filepath.Join(trabalho, "Atualizador.velho")) // do nome antigo
 }
 
 // autoAtualiza devolve `true` quando o exe novo foi lançado — nesse caso quem
 // chamou deve voltar sem fazer mais nada, porque a rodada continua no outro
 // processo.
-func autoAtualiza(j *janela, raiz, trabalho string, cfg config) (bool, error) {
+func autoAtualiza(j *Janela, raiz, trabalho string, cfg config) (bool, error) {
 	versao, arquivo, soma, err := leCanal(cfg.url)
 	if err != nil {
 		return false, err
@@ -49,8 +58,13 @@ func autoAtualiza(j *janela, raiz, trabalho string, cfg config) (bool, error) {
 		return false, nil
 	}
 
-	j.status(fmt.Sprintf("Atualizando o próprio atualizador (versão %d)…", versao))
-	novo := filepath.Join(trabalho, "Atualizador.novo")
+	eu, err := os.Executable()
+	if err != nil {
+		return false, err
+	}
+
+	j.Status(fmt.Sprintf("Atualizando o próprio atualizador (versão %d)…", versao))
+	novo := nomeDaTroca(trabalho, eu, ".novo")
 	os.Remove(novo)
 	if err := baixa(j, cfg.url+arquivo, novo, 0, "atualizador"); err != nil {
 		return false, err
@@ -64,11 +78,7 @@ func autoAtualiza(j *janela, raiz, trabalho string, cfg config) (bool, error) {
 		return false, fmt.Errorf("o atualizador baixado não confere (sha256)")
 	}
 
-	eu, err := os.Executable()
-	if err != nil {
-		return false, err
-	}
-	velho := filepath.Join(trabalho, "Atualizador.velho")
+	velho := nomeDaTroca(trabalho, eu, ".velho")
 	os.Remove(velho)
 	if err := os.Rename(eu, velho); err != nil {
 		return false, err
@@ -86,7 +96,7 @@ func autoAtualiza(j *janela, raiz, trabalho string, cfg config) (bool, error) {
 	// Uma respiração para o processo novo aparecer na tela antes de este sumir;
 	// sem ela a janela pisca e parece que o programa fechou sozinho.
 	time.Sleep(300 * time.Millisecond)
-	j.fecha()
+	j.Fecha()
 	os.Exit(0)
 	return true, nil
 }

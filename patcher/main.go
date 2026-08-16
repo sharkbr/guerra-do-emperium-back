@@ -14,7 +14,7 @@
 //
 // Compilar (a partir desta pasta):
 //
-//	go build -ldflags -H=windowsgui -o Atualizador.exe .
+//	go build -ldflags -H=windowsgui -o Jogar.exe .
 //
 // O `-H=windowsgui` é o que impede a janela preta de console de abrir junto.
 package main
@@ -39,17 +39,35 @@ const (
 	jogoPadrao = "GuerraDoEmperium.exe"
 )
 
-// config é o `Atualizador.ini`, ao lado do exe. Formato chave=valor, uma por
-// linha, `#` comenta. Não é INI de seção — a simplicidade aqui vale mais que a
-// convenção, porque este arquivo pode acabar sendo editado por um jogador.
+// config é o `.ini` ao lado do exe. Formato chave=valor, uma por linha, `#`
+// comenta. Não é INI de seção — a simplicidade aqui vale mais que a convenção,
+// porque este arquivo pode acabar sendo editado por um jogador.
 type config struct {
 	url  string
 	jogo string
 }
 
-func leConfig(raiz string) config {
+// leConfig procura `<nome do exe>.ini` e, se não achar, `Atualizador.ini`.
+//
+// Os dois nomes existem porque o exe já mudou de nome uma vez — nasceu
+// `Atualizador.exe` e virou `Jogar.exe` em 2026-08-16, para o jogador não ter
+// dúvida sobre onde clicar. Amarrar a configuração ao nome do arquivo faria a
+// próxima troca quebrar a instalação de todo mundo em silêncio: sem ini, o exe
+// cai nos valores embutidos e continua funcionando — e é justamente por isso
+// que a falha não apareceria.
+func leConfig(exe string) config {
 	c := config{url: urlPadrao, jogo: jogoPadrao}
-	dados, err := os.ReadFile(filepath.Join(raiz, "Atualizador.ini"))
+
+	raiz := filepath.Dir(exe)
+	semExtensao := strings.TrimSuffix(filepath.Base(exe), filepath.Ext(exe))
+	var dados []byte
+	var err error
+	for _, nome := range []string{semExtensao + ".ini", "Atualizador.ini"} {
+		dados, err = os.ReadFile(filepath.Join(raiz, nome))
+		if err == nil {
+			break
+		}
+	}
 	if err != nil {
 		return c
 	}
@@ -86,7 +104,7 @@ func main() {
 		exe = os.Args[0]
 	}
 	raiz := filepath.Dir(exe)
-	cfg := leConfig(raiz)
+	cfg := leConfig(exe)
 
 	// A pasta de trabalho do Atualizador: estado, downloads e a cópia velha de
 	// si mesmo. Fica dentro do cliente para o jogador poder apagar a pasta
@@ -94,32 +112,33 @@ func main() {
 	trabalho := filepath.Join(raiz, "patch")
 	os.MkdirAll(trabalho, 0o755)
 	abreRegistro(trabalho)
-	limpaVelho(trabalho)
+	limpaVelho(trabalho, exe)
 
-	j := abreJanela(raiz, cfg.jogo)
+	j := Abre("Guerra do Emperium")
+	j.Jogar = func() error { return jogar(raiz, cfg.jogo) }
 	go trabalha(j, raiz, trabalho, cfg)
-	j.laco()
+	j.Laco()
 }
 
 // trabalha é a rodada inteira, numa goroutine — a janela precisa da thread
 // principal para o laço de mensagens, senão ela congela enquanto baixa.
-func trabalha(j *janela, raiz, trabalho string, cfg config) {
+func trabalha(j *Janela, raiz, trabalho string, cfg config) {
 	defer func() {
 		// Pânico aqui viraria uma janela morta sem explicação. O jogador
 		// merece o botão Jogar mesmo quando o Atualizador se atrapalha.
 		if r := recover(); r != nil {
-			j.status(fmt.Sprintf("Falha no atualizador: %v", r))
-			j.libera()
+			j.Status(fmt.Sprintf("Falha no atualizador: %v", r))
+			j.Libera()
 		}
 	}()
 
-	j.status("Procurando atualizações…")
+	j.Status("Procurando atualizações…")
 
 	// A auto-atualização vem primeiro: um Atualizador novo pode saber aplicar
 	// algo que este não sabe, então ele tem de estar em pé antes dos patches.
 	if trocou, err := autoAtualiza(j, raiz, trabalho, cfg); err != nil {
 		// Falhar aqui não impede nada — segue com o Atualizador atual.
-		j.status("Não foi possível conferir o atualizador: " + resumo(err))
+		j.Status("Não foi possível conferir o atualizador: " + resumo(err))
 		time.Sleep(2 * time.Second)
 	} else if trocou {
 		return // o exe novo já foi lançado; este morre em silêncio
@@ -130,8 +149,8 @@ func trabalha(j *janela, raiz, trabalho string, cfg config) {
 		// Sem "sem conexão": pode ser a lista ausente, o servidor em manutenção
 		// ou a internet do jogador. Dizer qual das três é o que o log faz.
 		anota("lista: %v", err)
-		j.status("Não consegui conferir as atualizações. Você pode jogar assim mesmo.")
-		j.libera()
+		j.Status("Não consegui conferir as atualizações. Você pode jogar assim mesmo.")
+		j.Libera()
 		return
 	}
 
@@ -144,25 +163,28 @@ func trabalha(j *janela, raiz, trabalho string, cfg config) {
 	}
 
 	if len(faltam) == 0 {
-		j.status(fmt.Sprintf("Cliente atualizado — %s.", plural(len(lista),
+		// Barra cheia, e não vazia: quem abre o Atualizador e vê a barra zerada
+		// entende "não fez nada" — que é o contrário do que aconteceu.
+		j.Progresso(100)
+		j.Status(fmt.Sprintf("Cliente atualizado — %s.", plural(len(lista),
 			"1 atualização instalada", "%d atualizações instaladas")))
-		j.libera()
+		j.Libera()
 		return
 	}
 
 	for i, p := range faltam {
 		rotulo := fmt.Sprintf("[%d/%d] %s", i+1, len(faltam), p.Nome)
 		if err := aplica(j, raiz, trabalho, cfg.url, p, rotulo); err != nil {
-			j.status("Falhou em " + p.Nome + ": " + resumo(err))
-			j.libera()
+			j.Status("Falhou em " + p.Nome + ": " + resumo(err))
+			j.Libera()
 			return
 		}
 	}
 
-	j.progresso(100)
-	j.status("Pronto — " + plural(len(faltam),
+	j.Progresso(100)
+	j.Status("Pronto — " + plural(len(faltam),
 		"1 atualização aplicada", "%d atualizações aplicadas") + ".")
-	j.libera()
+	j.Libera()
 }
 
 // plural existe porque "1 atualização(ões) aplicada(s)" é o tipo de texto que

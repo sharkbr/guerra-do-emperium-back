@@ -2913,7 +2913,7 @@ antes de gravar existe para isso ser visto.
 cópias de 22 MB do `itemInfo.lua`: sem o filtro, um `--desde` manda tudo isso
 para o jogador.
 
-**Recusa o `Atualizador.exe`**, que tem canal próprio pelo motivo do
+**Recusa o `Jogar.exe`**, que tem canal próprio pelo motivo do
 `patcher/LEIAME.md` §3.
 
 Duas armadilhas do Python 2 que ele resolve e que valem para qualquer
@@ -2931,7 +2931,7 @@ ferramenta que ande pela pasta do cliente:
 
 ```
 ferramentas/publica_patch.sh                # os patches que faltam
-ferramentas/publica_patch.sh --atualizador  # o Atualizador.exe novo
+ferramentas/publica_patch.sh --atualizador  # o Jogar.exe novo
 ferramentas/publica_patch.sh --confere      # o placar, local e remoto
 ```
 

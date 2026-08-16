@@ -3,7 +3,7 @@
 # publica_patch.sh - poe os patches no ar.
 #
 #     ferramentas/publica_patch.sh                # os patches que faltam
-#     ferramentas/publica_patch.sh --atualizador  # o Atualizador.exe novo
+#     ferramentas/publica_patch.sh --atualizador  # o Jogar.exe novo
 #     ferramentas/publica_patch.sh --confere      # so mostra o placar
 #
 # RODA NO WINDOWS (Git Bash), e nao no Mac: os .zip nascem de
@@ -90,13 +90,13 @@ publica_atualizador() {
     [ -n "$versao" ] || erro "nao achei o const VERSAO em patcher/main.go"
 
     azul "== Compilando o Atualizador versao $versao =="
-    (cd "$RAIZ/patcher" && go build -ldflags -H=windowsgui -o Atualizador.exe .)
+    (cd "$RAIZ/patcher" && go build -ldflags -H=windowsgui -o Jogar.exe .)
 
-    local nome="Atualizador-$versao.exe"
-    local sha; sha="$(sha256sum "$RAIZ/patcher/Atualizador.exe" | cut -d' ' -f1)"
+    local nome="Jogar-$versao.exe"
+    local sha; sha="$(sha256sum "$RAIZ/patcher/Jogar.exe" | cut -d' ' -f1)"
 
     azul "== Enviando =="
-    scp "$RAIZ/patcher/Atualizador.exe" "$SERVIDOR:$DESTINO/$nome"
+    scp "$RAIZ/patcher/Jogar.exe" "$SERVIDOR:$DESTINO/$nome"
 
     # O patcher.txt sobe DEPOIS do exe, pelo motivo da ordem la em cima.
     printf '# Canal de auto-atualizacao do Atualizador. Gerado por publica_patch.sh.\nversao=%s\narquivo=%s\nsha256=%s\n' \

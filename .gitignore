@@ -90,4 +90,4 @@ site/site
 # encheria a arvore sem acrescentar nada que o codigo nao diga. O registro dos
 # patches (patcher/patches.txt) esse SIM e' versionado: e' a fonte da lista.txt
 # que o servidor serve, e o git e' o historico do que foi ao ar.
-patcher/Atualizador.exe
+patcher/Jogar.exe

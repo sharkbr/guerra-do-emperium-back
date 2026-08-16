@@ -969,7 +969,7 @@ curl -sI $BASE/patcher.txt | head -1
 
 ### 10.6 Migrar para outro host, um dia
 
-A URL base mora no `Atualizador.ini` do jogador, então trocá-la só vale para
+A URL base mora no `Jogar.ini` do jogador, então trocá-la só vale para
 quem instalar depois. Para os que já têm, o caminho é manter o `/patch`
 respondendo com **301** para o novo endereço — o Atualizador segue redirect.
 

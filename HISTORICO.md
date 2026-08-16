@@ -9490,11 +9490,11 @@ assinatura dos patches e o painel de notícias estão em `patcher/LEIAME.md` §5
 
 | arquivo | o quê |
 |---|---|
-| `patcher/` | o Atualizador: `main.go`, `patch.go`, `auto.go`, `janela.go`, `registro.go`, `recursos/fundo.jpg`, `Atualizador.ini`, `LEIAME.md` |
+| `patcher/` | o Atualizador: `main.go`, `patch.go`, `auto.go`, `janela.go`, `registro.go`, `recursos/fundo.jpg`, `Jogar.ini`, `LEIAME.md` |
 | `patcher/patches.txt` | o registro dos patches — **é** a `lista.txt` que o servidor serve |
 | `ferramentas/monta_patch.py` | o gerador do zip |
 | `ferramentas/publica_patch.sh` | o publicador (roda no Windows) |
-| `cliente\Atualizador.exe`, `.ini` | **fora do git** — instalados no cliente desta máquina |
+| `cliente\Jogar.exe`, `.ini` | **fora do git** — instalados no cliente desta máquina |
 | `CLAUDE.md` | §1 (o mapa), §4.18 (a regra nova), §5 (as duas armadilhas), §6 (leitura) |
 | `ARQUITETURA.md` | §4: o acoplamento entre máquinas |
 | `RECEITAS.md` | §11: o ciclo de um patch |
@@ -9533,7 +9533,7 @@ cinco campos separados por TAB, o sha256 do zip bate com o do registro, e o
 `patcher.txt` responde 404 — que é a resposta certa enquanto não há Atualizador
 novo.
 
-Depois, o teste que importa: uma pasta limpa, com o `Atualizador.ini` apontando
+Depois, o teste que importa: uma pasta limpa, com o `Jogar.ini` apontando
 para a produção. Ele baixou, conferiu, extraiu os nove arquivos (**inclusive o
 de nome coreano**), escreveu o `aplicados.txt` e liberou o botão com *"Pronto —
 1 atualização aplicada."*
@@ -9544,8 +9544,85 @@ o caminho inteiro foi validado com a produção real, sem risco de entregar cois
 indesejada, e num dia em que descobrir um problema custa uma tarde em vez de
 custar a véspera do lançamento.
 
-Conferido também que os três `Atualizador.exe` que existem hoje são **o mesmo
+Conferido também que os três `Jogar.exe` que existem hoje são **o mesmo
 binário** (`2292a556…`): o do repositório, o instalado no cliente desta máquina
-e o que está dentro do `Atualizador-Guerra-do-Emperium.zip` de distribuição. É o
+e o que está dentro do `Jogar-Guerra-do-Emperium.zip` de distribuição. É o
 tipo de coisa que diverge calada e só aparece quando alguém relata um defeito
 que "aqui não acontece".
+
+### A janela ganha cara de Ragnarok, e a pasta do cliente fica limpa (2026-08-16)
+
+Três pedidos do dono depois do primeiro patch funcionar em jogo, e os três eram
+sobre a mesma coisa: o que o jogador vê ao abrir a pasta e ao abrir o programa.
+
+**1. O nome do que se clica.** `Atualizador.exe` virou **`Jogar.exe`** — o nome
+tem de dizer o que fazer, não o que o programa é. O `GuerraDoEmperium.exe`
+continua sendo o jogo, e o Atualizador é quem o abre.
+
+O código deixou de depender do próprio nome: o `.ini` procurado é
+`<nome do exe>.ini` (com `Atualizador.ini` como reserva), e os arquivos da
+auto-atualização saem do nome do exe. Se o nome mudar de novo, é só renomear —
+o que interessa é que uma troca de nome **não** deixe instalação quebrada em
+silêncio na máquina dos outros.
+
+**2. A faxina da pasta.** `ferramentas/limpa_cliente.py`, versionado porque as
+ferramentas vão continuar deixando backup:
+
+| o quê | quanto | para onde |
+|---|---|---|
+| backups das ferramentas | 79 arquivos, **768 MB** | `C:\GuerraDoEmperium\_backups_removidos\` |
+| executáveis do kRO | 6 arquivos, 20 MB | `cliente\_extras\` |
+
+Os dois **movem**, não apagam, e o motivo é específico: entre os backups estão
+as duas únicas cópias do exe **antes** dos nossos patches, e o exe é o único
+arquivo do cliente sem gerador versionado. Apagar sairia de graça hoje e caro
+no dia em que alguém precisasse refazer um patch de exe. Na raiz ficaram três
+coisas: `Jogar.exe`, `GuerraDoEmperium.exe` e o `Setup.exe` — o único do kRO
+que o jogador tem motivo para abrir.
+
+**3. A janela.** O dono pôs lado a lado um print do patcher do bRO e o nosso, e
+o veredito foi imediato: a nossa funcionava e **parecia um utilitário**. Um
+servidor que vende nostalgia não abre com caixa de diálogo cinza.
+
+A janela foi refeita no formato que o jogador de RO reconhece — moldura própria
+no lugar da barra do Windows, arte ocupando quase tudo, rodapé com o estado, a
+barra larga e o JOGAR grande à direita —, com arte nova mandada por ele (o
+cavaleiro diante do Emperium, na cidade em ruínas). Nada é controle nativo:
+some junto a barra de progresso em estilo clássico, que era uma pendência.
+
+O layout tem 760x674, e a altura foi escolhida contra a **tela do jogador**, não
+contra a arte: em 1366x768 sobram ~728 px depois da barra de tarefas, e uma
+janela cortada embaixo esconderia justamente o botão JOGAR. Como a arte é 4:3 e
+a moldura é mais larga, ela entra cobrindo e o recorte tira faixas iguais de
+cima e de baixo — esticar deformaria o cavaleiro.
+
+### As três armadilhas do desenho, e a que estava diagnosticada errada
+
+- **`StretchDIBits` não falha por causa do `HALFTONE`.** Ontem o diagnóstico foi
+  esse, e estava errado: tirar o HALFTONE **e** a escala não consertou — a
+  versão "corrigida" rodou três vezes seguidas e falhou na quarta, devolvendo 0
+  com o erro do sistema dizendo *"operação concluída com êxito"*. É a função. A
+  saída foi trocá-la por `CreateDIBSection`, que devolve o ponteiro dos bits
+  para nós escrevermos. Fica o lembrete: **"mexi e parou de acontecer" não é
+  diagnóstico quando o defeito é intermitente.** O `CLAUDE.md` §5 foi corrigido.
+- **Interpolar cor em tipo sem sinal.** Num gradiente que escurece (240 → 200),
+  `r2-r1` dá −40 num `uintptr` e vira um número astronômico. O botão verde
+  nasceu **ciano** e a barra dourada nasceu **invisível** — as duas ao mesmo
+  tempo, porque a conta é a mesma.
+- **`DrawTextW` come o `&`.** Sem `DT_NOPREFIX`, o `&` do crédito "Gravity Corp.
+  & Lee Myoungjin" é lido como marca de tecla de atalho: o caractere some e a
+  letra seguinte sai sublinhada.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `patcher/janela.go` | reescrita: moldura própria, arte, rodapé, botão e barra desenhados |
+| `patcher/recursos/fundo.jpg` | a arte nova da capa |
+| `patcher/main.go`, `auto.go` | independência do nome do exe; barra cheia quando não há o que aplicar |
+| `patcher/Jogar.ini` | renomeado de `Atualizador.ini` |
+| `ferramentas/limpa_cliente.py` | **novo** — a faxina do cliente |
+| `ferramentas/monta_patch.py`, `publica_patch.sh` | o nome novo do exe |
+| `CLAUDE.md` §5 | a armadilha do `StretchDIBits`, agora com a causa certa |
+| `patcher/LEIAME.md` | §4b, a janela; e o que sobrou de pendência |
+| `REFERENCIA.md` | `Jogar.exe`, `_extras\`, `_backups_removidos\` |
