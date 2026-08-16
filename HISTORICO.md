@@ -9519,3 +9519,33 @@ existia por escrito e não foi seguido:**
   também nunca apareceu, e ninguém percebeu porque os dois eram quase pretos.
   Duas coisas erradas que se pareciam com uma certa.
 
+### O primeiro patch no ar (2026-08-16)
+
+A chave do Windows foi autorizada na conta **`ragnarok`** — decisão do dono no
+mesmo dia, no lugar do root: a chave só precisa copiar arquivo para
+`/var/www/patch`, que já pertence a ele.
+
+Com isso o único trecho do sistema que nunca tinha sido exercitado contra o
+servidor de verdade — `scp` → Apache → download por HTTPS — passou a estar
+provado. Publicado o **patch 0001** (`AI_sakray`, 42.236 bytes), e conferido de
+fora, na ordem: a lista responde 200 e é texto (não o HTML do site), tem os
+cinco campos separados por TAB, o sha256 do zip bate com o do registro, e o
+`patcher.txt` responde 404 — que é a resposta certa enquanto não há Atualizador
+novo.
+
+Depois, o teste que importa: uma pasta limpa, com o `Atualizador.ini` apontando
+para a produção. Ele baixou, conferiu, extraiu os nove arquivos (**inclusive o
+de nome coreano**), escreveu o `aplicados.txt` e liberou o botão com *"Pronto —
+1 atualização aplicada."*
+
+**Publicar agora não entrega nada a ninguém, e foi por isso que valeu a pena.**
+Nenhum jogador tem o Atualizador — o pacote do Drive é anterior a ele. Ou seja,
+o caminho inteiro foi validado com a produção real, sem risco de entregar coisa
+indesejada, e num dia em que descobrir um problema custa uma tarde em vez de
+custar a véspera do lançamento.
+
+Conferido também que os três `Atualizador.exe` que existem hoje são **o mesmo
+binário** (`2292a556…`): o do repositório, o instalado no cliente desta máquina
+e o que está dentro do `Atualizador-Guerra-do-Emperium.zip` de distribuição. É o
+tipo de coisa que diverge calada e só aparece quando alguém relata um defeito
+que "aqui não acontece".

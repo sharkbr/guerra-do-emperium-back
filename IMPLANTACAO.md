@@ -857,8 +857,13 @@ Tudo isto saiu do `ferramentas/configura_web.sh` na Etapa 8, e está no ar:
 
 ### 10.3 O que falta — o checklist da sessão paralela
 
-**1. Autorizar a chave do Windows — na conta `ragnarok`, não na do root.** É o
-que trava a publicação hoje. Os zips nascem em `C:\GuerraDoEmperium\cliente`,
+**1. ~~Autorizar a chave do Windows~~ ✅ FEITO em 2026-08-16** — na conta
+`ragnarok`, e provado do Windows: conecta, `/var/www/patch` é gravável, e o
+patch 0001 foi publicado e baixado por HTTPS numa pasta limpa. O texto abaixo
+fica como o registro do porquê.
+
+**Autorizar a chave do Windows — na conta `ragnarok`, não na do root.** Era o
+que travava a publicação. Os zips nascem em `C:\GuerraDoEmperium\cliente`,
 que só existe no Windows, então quem publica é o Windows — e essa máquina nunca
 teve chave no servidor (o deploy sempre foi do Mac). A chave foi gerada lá em
 2026-08-15.
