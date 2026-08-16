@@ -589,6 +589,19 @@ Roda no Mac, roda no deploy, e é rápida. **É a rede de proteção da §1.**
 
 ### Etapa 12 — `ferramentas/implanta.sh` ✅ (2026-08-15)
 
+> **A "otimização" virou requisito no mesmo dia.** O texto original desta etapa
+> dizia que distinguir "mudou só `db/`" de "mudou `src/`" era *"otimização, não
+> requisito da primeira versão"*. Errado: em 2026-08-15 um deploy de **CSS**
+> reiniciou os quatro servidores e derrubou o dono do jogo, com *"Erro
+> desconhecido"* na tela. O aviso estava escrito nesta mesma seção, duas linhas
+> abaixo, e não foi seguido.
+>
+> Agora o jogo só reinicia se algo dentro de `rathena/` mudou ou se o binário
+> foi recompilado. Site, documentação e ferramenta não encostam nele. O que
+> continua sendo melhoria de verdade é trocar o restart por `@reloadscript`
+> quando só `npc/` ou `db/` mudarem — e isso exige mandar comando ao console do
+> map-server, que sob `systemd` não tem terminal.
+
 ```
 ferramentas/implanta.sh
 ```

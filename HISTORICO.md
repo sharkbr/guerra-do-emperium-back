@@ -9500,3 +9500,22 @@ assinatura dos patches e o painel de notícias estão em `patcher/LEIAME.md` §5
 | `RECEITAS.md` | §11: o ciclo de um patch |
 | `REFERENCIA.md` | caminhos, URL do patch, Go instalado |
 | `PENDENCIAS.md`, `IMPLANTACAO.md` | §5b e §9: o que o patch fechou e o que sobrou |
+
+### O fecho da v0 (2026-08-15)
+
+O servidor abriu. Cliente conectando, site publicado com a arte do dono, conta
+de GM, backup rodando sozinho e um comando de deploy.
+
+**As duas últimas lições vieram no fim, e as duas foram do mesmo tipo — o aviso
+existia por escrito e não foi seguido:**
+
+- O `implanta.sh` reiniciava o jogo **toda vez**. Um deploy de CSS derrubou o
+  dono do jogo com *"Erro desconhecido"*, e a Etapa 12 do `IMPLANTACAO.md`
+  descrevia esse cenário palavra por palavra. É a §4.17 do `CLAUDE.md` de novo,
+  do outro lado: lá o comentário mentia sobre o código; aqui o código não fazia
+  o que o próprio plano mandava.
+- A arte de fundo não aparecia porque o `body` tinha fundo opaco cobrindo-a — e
+  **o defeito era mais velho que a imagem**: o gradiente que estava lá antes
+  também nunca apareceu, e ninguém percebeu porque os dois eram quase pretos.
+  Duas coisas erradas que se pareciam com uma certa.
+

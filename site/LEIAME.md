@@ -85,3 +85,20 @@ Um lugar só: `web/estilo.css`, `.fundo { background-image }`. Enquanto não hou
 arte, um gradiente segura o layout — o site nasce apresentável sem depender de
 arquivo que ainda não existe. O `.veu` por cima é o que mantém o texto legível
 sobre **qualquer** imagem que entre ali depois.
+
+## Duas armadilhas que este site já cobrou
+
+**O fundo do `body` cobre camada de `z-index` negativo.** Havia
+`html, body { background: … }`, e isso escondeu a arte de fundo por completo.
+Quando o `html` já tem fundo próprio, o do `body` **não propaga** para a tela —
+vira uma caixa opaca, e na ordem de pintura do CSS ela vem *depois* dos
+elementos de `z-index` negativo. Passou despercebido de 2026-08-14 a 15 porque
+os dois eram quase pretos: o gradiente de reserva também nunca apareceu. Só foi
+visto quando entrou uma imagem de verdade e ela também não apareceu. **A saída
+não é ajustar o negativo, é não usar negativo:** fundo `0`, véu `1`, conteúdo
+`2`, e o fundo morando só no `html`.
+
+**`og:image` precisa de endereço absoluto.** Caminho relativo funciona no
+navegador e **não** funciona ali — o robô que lê a página não tem base para
+resolver. E falha calado: o cartão aparece, só que sem imagem.
+
