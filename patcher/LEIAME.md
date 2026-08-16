@@ -129,6 +129,31 @@ irreversível o bastante para merecer uma pergunta:
   isso vale: sem cliente em disco, um botão aceso levaria a um segundo erro,
   mais confuso que o primeiro.
 
+### Copiar a pasta do jogo NÃO basta — o registro é a outra metade
+
+Descoberto no primeiro teste em outra máquina (2026-08-16), com os 4,2 GB
+corretos em disco e o jogo sem abrir. O cliente escolhe o dispositivo Direct3D
+lendo `HKLM\SOFTWARE\Gravity Soft\Ragnarok`, chave que só o **`Setup.exe`**
+escreve. Sem ela: `Cannot init d3d OR grf file has problem` — que manda
+conferir o GRF, e o GRF está perfeito.
+
+E como a chave mora em `HKEY_LOCAL_MACHINE`, **é por isso que o cliente pede
+elevação**. Os dois sintomas do primeiro teste eram a mesma causa.
+
+Por isso a instalação faz três coisas que não são óbvias:
+
+1. lança o jogo por **`ShellExecuteW`**, não por `exec.Command` — o
+   `CreateProcess` do Go não sabe elevar, devolve `ERROR_ELEVATION_REQUIRED`;
+2. cria o atalho com **`SLDF_RUNAS_USER`**, e o jogo herda o token elevado do
+   Atualizador — um UAC só, na abertura;
+3. roda o **`Setup.exe` no fim da instalação e espera ele fechar**, porque o
+   cliente lê a chave na inicialização.
+
+Detalhe da leitura: o Atualizador é 64-bit e o cliente é 32-bit, então a mesma
+chave tem dois nomes. O `video.go` tenta `KEY_WOW64_32KEY` e o caminho
+`WOW6432Node` explícito, e **na dúvida responde "configurado"** — abrir o Setup
+para quem não precisa é pior do que deixar o jogo tentar.
+
 ## 3. As decisões que não são óbvias
 
 **O patch é um zip extraído por cima, sem diff binário e sem GRF.** O cliente

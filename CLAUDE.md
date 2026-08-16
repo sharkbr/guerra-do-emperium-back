@@ -1090,6 +1090,27 @@ Produziram diagnóstico falso e custaram retrabalho:
   sem escala, sem chamada que possa falhar por motivo obscuro. A redução de
   tamanho, quando precisa, se faz em código antes. Ver `patcher/janela.go`,
   `preparaArte` e `reduz`.
+- **Metade da configuração do cliente está no REGISTRO DO WINDOWS, e não no
+  cliente.** É a §4.9 um degrau adiante: lá as duas metades divergiam entre
+  arquivos, aqui uma delas não é arquivo nenhum. O `GuerraDoEmperium.exe`
+  escolhe em qual placa criar o dispositivo Direct3D lendo
+  `HKLM\SOFTWARE\Gravity Soft\Ragnarok` (`DEVICENAME`, `GUIDDEVICE`,
+  `GUIDDRIVER`, `SOUNDMODE`…), que quem escreve é o **`Setup.exe`** da raiz do
+  cliente. Numa máquina onde ele nunca rodou a chave não existe, e o jogo morre
+  na abertura com **`Cannot init d3d OR grf file has problem`** — mensagem que
+  junta dois casos opostos com um `OR` e manda todo mundo conferir o GRF, que
+  está perfeito. Medido em 2026-08-16, no primeiro teste do instalador em outra
+  máquina: 4,2 GB corretos em disco, sha256 de cada pedaço fechando, e o jogo
+  sem abrir.
+  Duas consequências que andam juntas: **é por isso que o cliente pede
+  elevação** (`HKEY_LOCAL_MACHINE` não se escreve sem privilégio), e um
+  `exec.Command` do Go **não sabe elevar** — o `CreateProcess` devolve
+  `ERROR_ELEVATION_REQUIRED` em vez de mostrar o UAC, e o jogador lê
+  *"fork/exec …: The requested operation requires elevation"*. Quem eleva é o
+  `ShellExecuteW`. Os dois sintomas eram a mesma causa vista de dois ângulos.
+  **Consequência para qualquer cliente novo:** copiar a pasta do jogo NÃO
+  basta. O `Setup.exe` tem de rodar uma vez por máquina, e o atalho precisa do
+  bit `SLDF_RUNAS_USER`. O instalador faz os dois (`patcher/video.go`).
 - **`nslookup` sai com código 0 mesmo quando o domínio NÃO existe.** Uma sonda
   `nslookup $host && echo "resolve"` imprime *"resolve"* para NXDOMAIN, e em
   2026-08-16 isso deu por propagado um endereço de CDN que não existia — a

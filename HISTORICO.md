@@ -9823,3 +9823,50 @@ empacota o cliente que está nesta máquina. A dívida continua aberta — o exe
 segue sendo binário de origem única (com o `.epi` do NEMO ao lado), e o
 `cliente\data\` continua sem gerador. O instalador tornou isso menos urgente,
 não resolvido.
+
+### O primeiro teste em outra máquina, e a casa que faltava
+
+Os 4,2 GB desceram certos, o sha256 de cada pedaço fechou, o atalho apareceu —
+**e o jogo não abriu**. Dois sintomas, que pareciam dois problemas:
+
+```
+sem admin:  fork/exec C:\GuerraDoEmperium\GuerraDoEmperium.exe:
+            The requested operation requires elevation
+com admin:  Cannot init d3d OR grf file has problem
+```
+
+Eram **o mesmo problema**. O cliente escolhe o dispositivo Direct3D lendo
+`HKLM\SOFTWARE\Gravity Soft\Ragnarok` — `DEVICENAME`, `GUIDDEVICE`,
+`GUIDDRIVER`, mais som —, chave que quem escreve é o **`Setup.exe`**. Nesta
+máquina ela existe desde sempre (`DEVICENAME: NVIDIA GeForce GTX 1650
+Ragnarok`); numa máquina nova, não. E como ela mora em `HKEY_LOCAL_MACHINE`,
+escrevê-la exige privilégio — daí o exe pedir elevação, e daí o `exec.Command`
+do Go falhar, porque o `CreateProcess` **não sabe elevar**.
+
+O que denunciou não foi o log: foi comparar o registro desta máquina com o que
+uma máquina nova teria. A mensagem do cliente junta dois casos opostos num
+`OR` e manda conferir o GRF, que estava perfeito.
+
+**O instalador entregava o cliente inteiro e parava uma casa antes do fim.**
+É a `CLAUDE.md` §4.9 um degrau adiante: lá as duas metades da configuração
+divergiam entre arquivos, aqui uma delas não é arquivo nenhum.
+
+Três consertos, e o segundo veio do dono:
+
+| o quê | onde |
+|---|---|
+| `ShellExecuteW` no lugar de `exec.Command` — ele consulta o manifesto e levanta o UAC | `patcher/executa.go` |
+| **o atalho nasce marcado como "Executar como administrador"** (`SLDF_RUNAS_USER` via `IShellLinkDataList`), e o jogo herda o token — um UAC só, na abertura | `patcher/atalho.go` |
+| o `Setup.exe` roda sozinho no fim da instalação, **e a instalação espera ele fechar** — o cliente lê a chave na inicialização, então abrir os dois juntos leria o registro que o Setup ainda não escreveu | `patcher/video.go`, `instala.go` |
+
+A detecção lê a chave pelos **dois** nomes possíveis (`KEY_WOW64_32KEY` e o
+caminho `WOW6432Node` explícito), porque o Atualizador é 64-bit e o cliente é
+32-bit: a mesma chave tem nome diferente dependendo de quem pergunta. E na
+dúvida ela responde **"configurado"** — um falso negativo abriria o Setup para
+quem não precisa, um falso positivo só deixa o jogo falhar como falharia de
+qualquer jeito.
+
+Os dois testes novos cobrem exatamente o que não se vê daqui: que o bit
+`RunAsUser` chega ao **arquivo** `.lnk` (byte 21, `0x20`) e não apenas à chamada
+COM, e que a leitura do registro acerta o caminho numa máquina onde o jogo
+comprovadamente roda.

@@ -22,7 +22,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -298,15 +297,14 @@ func resumo(err error) string {
 	return msg
 }
 
-// jogar troca o Atualizador pelo jogo. O `Dir` é obrigatório: o cliente resolve
-// `data\`, `System\` e o GRF a partir da pasta de trabalho, e um atalho lançado
-// de outro lugar faz o jogo abrir sem nada do que é nosso.
+// jogar troca o Atualizador pelo jogo.
+//
+// O diretório é obrigatório: o cliente resolve `data\`, `System\` e o GRF a
+// partir da pasta de trabalho, e um jogo lançado de outro lugar abre sem nada
+// do que é nosso.
+//
+// Vai pelo `ShellExecuteW` e não por `exec.Command` porque o cliente pede
+// elevação — ver o cabeçalho do `executa.go`.
 func jogar(raiz, jogo string) error {
-	caminho := filepath.Join(raiz, jogo)
-	if _, err := os.Stat(caminho); err != nil {
-		return fmt.Errorf("não encontrei %s", jogo)
-	}
-	cmd := exec.Command(caminho)
-	cmd.Dir = raiz
-	return cmd.Start()
+	return Executa(filepath.Join(raiz, jogo), raiz)
 }

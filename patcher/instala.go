@@ -37,6 +37,9 @@ const (
 	nomeDoAtalho   = "Guerra do Emperium"
 	descricaoAlvo  = "Jogar Guerra do Emperium"
 	arquivoIniBase = "Jogar.ini"
+	// O configurador de vídeo e som que vem com o cliente do kRO. É ele que
+	// escreve a chave de registro sem a qual o jogo não inicia — ver video.go.
+	arquivoSetup = "Setup.exe"
 )
 
 // pedaco é uma linha da `base.txt`. São SEIS campos, contra os cinco de um
@@ -273,7 +276,46 @@ func Instala(j *Janela, destino string, cfg config, comAtalho bool, exeAtual str
 			j.Status("Instalado (não consegui criar o atalho)")
 		}
 	}
+
+	configuraVideo(j, destino)
 	return nil
+}
+
+// configuraVideo roda o `Setup.exe` na primeira instalação desta máquina.
+//
+// Sem isto o cliente abre e morre com `Cannot init d3d OR grf file has
+// problem` — ele lê o dispositivo Direct3D do registro, e numa máquina onde o
+// Setup nunca rodou aquela chave não existe (ver `video.go`). Foi o que
+// aconteceu no primeiro teste em outra máquina, em 2026-08-16: 4,2 GB corretos
+// em disco, sha256 de cada pedaço fechando, e o jogo sem abrir.
+//
+// **Espera o Setup fechar**, e a ordem não é negociável: o cliente lê a chave
+// na inicialização, então abrir os dois juntos leria o registro que o Setup
+// ainda não escreveu.
+//
+// Nada aqui interrompe a instalação. Setup ausente, jogador que fecha a janela
+// no X, placa que o Setup não reconhece — em todos os casos o jogo está em
+// disco, e o pior que acontece é ele ter de rodar o Setup à mão, que é
+// exatamente a situação de quem não tem esta função.
+func configuraVideo(j *Janela, destino string) {
+	if VideoConfigurado() {
+		return
+	}
+	setup := filepath.Join(destino, arquivoSetup)
+	if _, err := os.Stat(setup); err != nil {
+		anota("Setup.exe não encontrado em %s", destino)
+		return
+	}
+	j.Status("Configurando vídeo e som — confirme na janela que abriu…")
+	if err := ExecutaEEspera(setup, destino); err != nil {
+		anota("Setup.exe: %v", err)
+		return
+	}
+	if !VideoConfigurado() {
+		// O jogador fechou no X, ou o Setup não gravou. Dizer isso agora é
+		// muito melhor do que ele descobrir com `Cannot init d3d`.
+		j.Status("Configuração de vídeo não concluída — rode o Setup.exe se o jogo não abrir")
+	}
 }
 
 // instalaASiMesmo copia o exe e escreve o `.ini` ao lado dele.

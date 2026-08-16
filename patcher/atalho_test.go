@@ -62,6 +62,45 @@ func TestCriaAtalho(t *testing.T) {
 	}
 }
 
+// O bit "Executar como administrador" precisa chegar ao ARQUIVO, e não só à
+// chamada COM que diz tê-lo posto. Sem ele o jogo abre sem privilégio e morre
+// ao gravar a configuração de vídeo em HKEY_LOCAL_MACHINE — falha que só
+// aparece na máquina de quem instalou, nunca aqui.
+//
+// No formato MS-SHLLINK os LinkFlags são o DWORD no offset 20, e
+// SLDF_RUNAS_USER é 0x00002000 — ou seja o bit 0x20 do byte 21.
+func TestAtalhoPedeAdministrador(t *testing.T) {
+	alvo, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	destino := filepath.Join(t.TempDir(), "admin.lnk")
+	if err := CriaAtalho(destino, alvo, filepath.Dir(alvo), "teste"); err != nil {
+		t.Fatalf("CriaAtalho: %v", err)
+	}
+	dados, err := os.ReadFile(destino)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(dados) < 24 {
+		t.Fatalf("atalho com %d bytes", len(dados))
+	}
+	if dados[21]&0x20 == 0 {
+		t.Errorf("o bit RunAsUser não está no arquivo (LinkFlags = % x)", dados[20:24])
+	}
+}
+
+func TestVideoConfigurado(t *testing.T) {
+	// Nesta máquina o jogo roda, logo o Setup.exe já rodou algum dia e a chave
+	// existe. Se este teste falhar AQUI, a detecção está lendo o lugar errado —
+	// e um falso negativo faria o instalador abrir o Setup para quem não
+	// precisa.
+	if !VideoConfigurado() {
+		t.Error("VideoConfigurado() disse não numa máquina onde o jogo roda — " +
+			"o caminho ou a flag WOW64 estão errados")
+	}
+}
+
 func TestAreaDeTrabalhoExiste(t *testing.T) {
 	// Se esta pasta não for encontrada, o atalho iria para um caminho vazio e a
 	// instalação terminaria dizendo que criou um atalho que não existe.

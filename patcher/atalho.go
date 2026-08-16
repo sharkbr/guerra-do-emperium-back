@@ -52,7 +52,18 @@ var (
 	clsidShellLink  = guid{0x00021401, 0, 0, [8]byte{0xC0, 0, 0, 0, 0, 0, 0, 0x46}}
 	iidIShellLinkW  = guid{0x000214F9, 0, 0, [8]byte{0xC0, 0, 0, 0, 0, 0, 0, 0x46}}
 	iidIPersistFile = guid{0x0000010B, 0, 0, [8]byte{0xC0, 0, 0, 0, 0, 0, 0, 0x46}}
+	// A terceira interface do mesmo objeto, e a única que sabe marcar um
+	// atalho como "Executar como administrador".
+	iidIShellLinkDataList = guid{0x45E2B4AE, 0xB1C3, 0x11D0,
+		[8]byte{0xB9, 0x2F, 0x00, 0xA0, 0xC9, 0x03, 0x12, 0xE1}}
 )
+
+// SLDF_RUNAS_USER é o bit de "Executar como administrador" na caixa de
+// propriedades do atalho. Ele importa aqui porque o cliente de Ragnarok
+// escreve a configuração de vídeo em `HKEY_LOCAL_MACHINE`, que não aceita
+// escrita sem privilégio — ver `video.go`. Sem o bit, o jogador teria de
+// lembrar de clicar com o botão direito toda vez.
+const sldfRunAsUser = 0x00002000
 
 // Toda interface COM começa pelos três do IUnknown, nesta ordem. A ORDEM é o
 // contrato — ela vem do cabeçalho C e não pode ser reorganizada por gosto.
@@ -98,6 +109,17 @@ type iPersistFileVtbl struct {
 
 type iPersistFile struct{ vtbl *iPersistFileVtbl }
 
+type iShellLinkDataListVtbl struct {
+	iUnknownVtbl
+	AddDataBlock    uintptr
+	CopyDataBlock   uintptr
+	RemoveDataBlock uintptr
+	GetFlags        uintptr
+	SetFlags        uintptr
+}
+
+type iShellLinkDataList struct{ vtbl *iShellLinkDataListVtbl }
+
 // chama é a mecânica de toda chamada COM: o primeiro argumento é sempre o
 // próprio objeto (o `this` do C++).
 func chama(fn uintptr, obj unsafe.Pointer, args ...uintptr) uintptr {
@@ -134,6 +156,32 @@ func (o *iShellLinkW) QueryPersistFile() (*iPersistFile, uintptr) {
 		uintptr(unsafe.Pointer(&iidIPersistFile)),
 		uintptr(unsafe.Pointer(&ppf)))
 	return ppf, r
+}
+
+// QueryDataList pede a interface que sabe ler e escrever os bits do atalho.
+func (o *iShellLinkW) QueryDataList() (*iShellLinkDataList, uintptr) {
+	var pdl *iShellLinkDataList
+	r := chama(o.vtbl.QueryInterface, unsafe.Pointer(o),
+		uintptr(unsafe.Pointer(&iidIShellLinkDataList)),
+		uintptr(unsafe.Pointer(&pdl)))
+	return pdl, r
+}
+
+func (o *iShellLinkDataList) Release() {
+	chama(o.vtbl.Release, unsafe.Pointer(o))
+}
+
+// MarcaComoAdministrador liga o SLDF_RUNAS_USER preservando o que já estava
+// ligado. Sobrescrever os flags em vez de acrescentar apagaria o que o
+// IShellLink montou até aqui — e isso não daria erro, só produziria um atalho
+// pela metade.
+func (o *iShellLinkDataList) MarcaComoAdministrador() uintptr {
+	var flags uint32
+	if r := chama(o.vtbl.GetFlags, unsafe.Pointer(o),
+		uintptr(unsafe.Pointer(&flags))); falhou(r) {
+		return r
+	}
+	return chama(o.vtbl.SetFlags, unsafe.Pointer(o), uintptr(flags|sldfRunAsUser))
 }
 
 func (o *iPersistFile) Release() {
@@ -239,6 +287,19 @@ func CriaAtalho(destino, alvo, diretorio, descricao string) error {
 	// é motivo para desistir do atalho, então o retorno não é conferido.
 	psl.SetDescription(desc16)
 	psl.SetIconLocation(alvo16, 0)
+
+	// O atalho pede elevação, e isso vale para o Atualizador inteiro: o jogo
+	// que ele lança HERDA o token elevado, então o jogador vê um UAC só, ao
+	// abrir, em vez de um segundo no meio do caminho quando clica em JOGAR.
+	//
+	// Falhar aqui não invalida o atalho — ele continua abrindo o jogo, só sem
+	// privilégio, que é exatamente a situação de quem não tem esta linha.
+	if pdl, hr := psl.QueryDataList(); !falhou(hr) && pdl != nil {
+		if hr := pdl.MarcaComoAdministrador(); falhou(hr) {
+			anota("atalho: não consegui marcar como administrador (0x%x)", hr)
+		}
+		pdl.Release()
+	}
 
 	ppf, hr := psl.QueryPersistFile()
 	if falhou(hr) || ppf == nil {
