@@ -143,6 +143,17 @@ var (
 	areaStatus = rect{24, alturaBarra + alturaArte + 16, larguraJanela - 232,
 		alturaBarra + alturaArte + 50}
 	areaCredito = rect{24, alturaJanela - 26, larguraJanela - 24, alturaJanela - 6}
+
+	// Só existem no modo instalação, e ocupam o lugar do estado e da barra de
+	// progresso — que naquele momento não têm o que mostrar. Terminada a
+	// pergunta, o rodapé volta a ser o de sempre.
+	areaPasta  = rect{24, alturaBarra + alturaArte + 14, larguraJanela - 336, alturaBarra + alturaArte + 42}
+	areaMudar  = rect{larguraJanela - 330, alturaBarra + alturaArte + 14, larguraJanela - 232, alturaBarra + alturaArte + 42}
+	areaAtalho = rect{24, alturaBarra + alturaArte + 50, 24 + 330, alturaBarra + alturaArte + 78}
+	// O quadradinho do checkbox, dentro da área clicável — que é maior de
+	// propósito: acertar 16 pixels com o mouse é pior que ler o rótulo inteiro
+	// como parte do botão.
+	areaMarca = rect{26, alturaBarra + alturaArte + 56, 26 + 16, alturaBarra + alturaArte + 72}
 )
 
 type rect struct{ esquerda, topo, direita, base int32 }
@@ -231,11 +242,54 @@ type Janela struct {
 	// aberta com a mensagem na tela — é o que acontece se o exe do jogo sumir.
 	Jogar func() error
 
+	// Instalar é chamado no lugar do Jogar enquanto a janela está no modo
+	// pergunta. Recebe o que o jogador escolheu; não devolve erro porque o
+	// trabalho segue numa goroutine e o que der errado aparece no estado.
+	Instalar func(destino string, atalho bool)
+
 	mu     sync.Mutex
 	texto  string
 	pct    int
 	pronto bool
-	sobre  int // 0 nenhum, 1 jogar, 2 minimizar, 3 fechar
+	sobre  int // 0 nenhum, 1 botão principal, 2 minimizar, 3 fechar, 4 mudar, 5 atalho
+
+	// O modo instalação. `pergunta` liga a tela de escolha; os outros dois são
+	// o que ela coleta. Ficam sob o mesmo mutex do resto porque são lidos pelo
+	// WM_PAINT, que roda na thread da janela, e escritos pelo clique.
+	pergunta bool
+	destino  string
+	atalho   bool
+}
+
+// Pergunta põe a janela no modo instalação, com a pasta sugerida e o atalho já
+// marcado. Chamada antes do `Laco()`, da mesma thread.
+func (j *Janela) Pergunta(destino string, atalho bool) {
+	j.mu.Lock()
+	j.pergunta, j.destino, j.atalho = true, destino, atalho
+	j.texto = ""
+	j.mu.Unlock()
+}
+
+// Escolhas devolve o que o jogador marcou.
+func (j *Janela) Escolhas() (string, bool) {
+	j.mu.Lock()
+	defer j.mu.Unlock()
+	return j.destino, j.atalho
+}
+
+// noModoPergunta responde se a tela de escolha está no ar.
+func (j *Janela) noModoPergunta() bool {
+	j.mu.Lock()
+	defer j.mu.Unlock()
+	return j.pergunta
+}
+
+// botaoAceso diz se o botão principal aceita clique. No modo pergunta ele está
+// sempre aceso — o que ele começa é a instalação, e não há nada a esperar.
+func (j *Janela) botaoAceso() bool {
+	j.mu.Lock()
+	defer j.mu.Unlock()
+	return j.pergunta || j.pronto
 }
 
 var jan *Janela
@@ -509,13 +563,18 @@ func processa(hwnd uintptr, msg uint32, wParam, lParam uintptr) uintptr {
 	case 0x0200: // WM_MOUSEMOVE
 		anterior := j.ondeEstou()
 		agora := 0
+		perguntando := j.noModoPergunta()
 		switch {
-		case areaJogar.contem(x, y) && j.estaPronto():
+		case areaJogar.contem(x, y) && j.botaoAceso():
 			agora = 1
 		case areaMinimiza.contem(x, y):
 			agora = 2
 		case areaFechar.contem(x, y):
 			agora = 3
+		case perguntando && areaMudar.contem(x, y):
+			agora = 4
+		case perguntando && areaAtalho.contem(x, y):
+			agora = 5
 		}
 		if agora != anterior {
 			j.mu.Lock()
@@ -549,7 +608,37 @@ func processa(hwnd uintptr, msg uint32, wParam, lParam uintptr) uintptr {
 			pDestroyWindow.Call(hwnd)
 		case areaMinimiza.contem(x, y):
 			pShowWindow.Call(hwnd, 6) // SW_MINIMIZE
-		case areaJogar.contem(x, y) && j.estaPronto():
+		case j.noModoPergunta() && areaMudar.contem(x, y):
+			if escolhida, ok := EscolhePasta(hwnd, "Onde instalar a Guerra do Emperium?"); ok {
+				j.mu.Lock()
+				j.destino = escolhida
+				j.mu.Unlock()
+				j.repinta()
+			}
+
+		case j.noModoPergunta() && areaAtalho.contem(x, y):
+			j.mu.Lock()
+			j.atalho = !j.atalho
+			j.mu.Unlock()
+			j.repinta()
+
+		case areaJogar.contem(x, y) && j.botaoAceso():
+			// No modo pergunta o botão começa a instalação: a tela de escolha
+			// sai do ar e o rodapé volta a ser estado e progresso. A janela NÃO
+			// se fecha — é o contrário do JOGAR.
+			if j.noModoPergunta() {
+				destino, atalho := j.Escolhas()
+				j.mu.Lock()
+				j.pergunta = false
+				j.texto = "Preparando…"
+				j.sobre = 0
+				j.mu.Unlock()
+				j.repinta()
+				if j.Instalar != nil {
+					j.Instalar(destino, atalho)
+				}
+				return 0
+			}
 			if j.Jogar != nil {
 				if err := j.Jogar(); err != nil {
 					j.Status(err.Error())
@@ -611,6 +700,7 @@ func (j *Janela) pinta(hdc uintptr) {
 
 	j.mu.Lock()
 	texto, pct, pronto, sobre := j.texto, j.pct, j.pronto, j.sobre
+	pergunta, destino, atalho := j.pergunta, j.destino, j.atalho
 	j.mu.Unlock()
 
 	// 1. a arte
@@ -641,33 +731,69 @@ func (j *Janela) pinta(hdc uintptr) {
 	// 3. o rodapé
 	preenche(b, areaRodape, corFundo)
 	preenche(b, rect{0, areaRodape.topo, larguraJanela, areaRodape.topo + 1}, corLinha)
-	escreve(b, areaStatus, texto, j.fonte, corTexto, dtEsquerda|dtQuebra)
 	escreve(b, areaCredito, "Ragnarok Online © Gravity Corp. & Lee Myoungjin",
 		j.fonteMin, corApagado, dtCentro)
 
-	// 4. a barra de progresso
-	preenche(b, areaBarraProg, corTrilho)
-	moldura(b, areaBarraProg, corLinha)
-	largura := (areaBarraProg.direita - areaBarraProg.esquerda - 4) * int32(pct) / 100
-	if largura > 0 {
-		gradiente(b, rect{areaBarraProg.esquerda + 2, areaBarraProg.topo + 2,
-			areaBarraProg.esquerda + 2 + largura, areaBarraProg.base - 2},
-			corBrilho, corDourado)
+	if pergunta {
+		// 3a. a tela de escolha, no lugar do estado e da barra: a instalação
+		// ainda não começou, então não há progresso a mostrar.
+		escreve(b, rect{areaPasta.esquerda, areaPasta.topo, areaPasta.direita, areaPasta.topo + 13},
+			"INSTALAR EM", j.fonteMin, corApagado, dtEsquerda)
+		escreve(b, rect{areaPasta.esquerda, areaPasta.topo + 12, areaPasta.direita, areaPasta.base},
+			destino, j.fonte, corTexto, dtEsquerda|dtCaminho)
+
+		corMudar := corDourado
+		if sobre == 4 {
+			corMudar = corBrilho
+		}
+		moldura(b, areaMudar, corMudar)
+		escreve(b, areaMudar, "Mudar…", j.fonte, corMudar, dtCentro)
+
+		// O checkbox. A marca é um "✓" desenhado com a fonte do botão, e não um
+		// controle nativo — o resto da janela também não é.
+		corMarca := corDourado
+		if sobre == 5 {
+			corMarca = corBrilho
+		}
+		preenche(b, areaMarca, corTrilho)
+		moldura(b, areaMarca, corMarca)
+		if atalho {
+			escreve(b, areaMarca, "✓", j.fonte, corMarca, dtCentro)
+		}
+		escreve(b, rect{areaMarca.direita + 10, areaAtalho.topo, areaAtalho.direita, areaAtalho.base},
+			"Criar atalho na Área de Trabalho", j.fonte, corTexto, dtEsquerda)
+	} else {
+		escreve(b, areaStatus, texto, j.fonte, corTexto, dtEsquerda|dtQuebra)
+
+		// 4. a barra de progresso
+		preenche(b, areaBarraProg, corTrilho)
+		moldura(b, areaBarraProg, corLinha)
+		largura := (areaBarraProg.direita - areaBarraProg.esquerda - 4) * int32(pct) / 100
+		if largura > 0 {
+			gradiente(b, rect{areaBarraProg.esquerda + 2, areaBarraProg.topo + 2,
+				areaBarraProg.esquerda + 2 + largura, areaBarraProg.base - 2},
+				corBrilho, corDourado)
+		}
 	}
 
-	// 5. o botão JOGAR — apagado enquanto o trabalho não termina
-	if pronto {
+	// 5. o botão principal — apagado enquanto o trabalho não termina. No modo
+	// pergunta ele está sempre aceso, e diz INSTALAR: não há o que esperar.
+	rotulo := "JOGAR"
+	if pergunta {
+		rotulo = "INSTALAR"
+	}
+	if pronto || pergunta {
 		alto, baixo := corVerdeAlt, corVerde
 		if sobre == 1 {
 			alto, baixo = rgb(104, 200, 138), corVerdeAlt
 		}
 		gradiente(b, areaJogar, alto, baixo)
 		moldura(b, areaJogar, corDourado)
-		escreve(b, areaJogar, "JOGAR", j.fonteBot, rgb(255, 252, 240), dtCentro)
+		escreve(b, areaJogar, rotulo, j.fonteBot, rgb(255, 252, 240), dtCentro)
 	} else {
 		preenche(b, areaJogar, rgb(38, 32, 26))
 		moldura(b, areaJogar, rgb(70, 60, 44))
-		escreve(b, areaJogar, "JOGAR", j.fonteBot, rgb(96, 86, 68), dtCentro)
+		escreve(b, areaJogar, rotulo, j.fonteBot, rgb(96, 86, 68), dtCentro)
 	}
 
 	// 6. a moldura da janela inteira, por último, para nada passar por cima
@@ -721,6 +847,10 @@ const (
 	dtCentro   = 0x0001 | 0x0004 | 0x0020 | 0x0800 // CENTER|VCENTER|SINGLELINE|NOPREFIX
 	dtEsquerda = 0x0000 | 0x0004 | 0x0020 | 0x0800 // LEFT|VCENTER|SINGLELINE|NOPREFIX
 	dtQuebra   = 0x8000                            // END_ELLIPSIS
+	// PATH_ELLIPSIS corta caminho pelo MEIO (`C:\Jogos\…\Emperium`), preservando
+	// as duas pontas. Num caminho, o fim é o que identifica a pasta — cortá-lo
+	// com reticências no final mostraria três caminhos diferentes iguais.
+	dtCaminho = 0x4000
 )
 
 func escreve(hdc uintptr, r rect, texto string, fonte, cor uintptr, bandeiras uintptr) {

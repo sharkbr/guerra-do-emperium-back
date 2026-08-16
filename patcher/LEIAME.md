@@ -72,8 +72,62 @@ justamente esse pessoal que precisa dos patches. Para eles existe
 extrair na pasta do jogo. Depois disso, tudo é automático — inclusive as
 versões seguintes do próprio Atualizador (§3).
 
-O zip é gerado à mão quando o exe muda; o pacote do primeiro download, quando
-existir, leva os dois arquivos já dentro (`PENDENCIAS.md` §5b).
+O zip é gerado à mão quando o exe muda. Quem baixa hoje pelo instalador não
+precisa dele: o `Jogar.exe` se copia para a pasta do jogo sozinho (§2c).
+
+## 2c. A instalação — o mesmo exe, do outro lado
+
+**Desde 2026-08-16 este exe também é o instalador**, e não há um segundo
+programa. Quem decide o que ele é hoje é a pasta em que ele está: com
+`data.grf` ao lado, atualiza; sem, instala.
+
+```
+o jogador baixa Jogar.exe (9 MB)  ->  abre numa pasta vazia
+  -> escolhe onde instalar, com o atalho já marcado
+  -> baixa a base (3,4 GB) de cdn.filiponegrao.com.br
+  -> copia a si mesmo para lá, escreve o Jogar.ini, cria o atalho
+  -> emenda nos patches publicados desde que a base foi montada
+  -> JOGAR
+```
+
+A base é a `base.txt` (`patcher/base.txt`, gerada por
+`ferramentas/monta_cliente.py`), e ela tem **seis** campos contra os cinco de um
+patch. O campo a mais é o tipo:
+
+| tipo | o que é |
+|---|---|
+| `zip` | extraído por cima da raiz — exatamente como um patch |
+| `bruto` | gravado direto no caminho que está no campo `arquivo` |
+
+**O `bruto` existe por causa do `data.grf`**, que tem 2,95 GB num arquivo só.
+Não há como fatiá-lo por arquivo, zipá-lo não ganha nada (já é comprimido por
+dentro) e o zip custaria o dobro de disco no jogador. Então ele desce direto
+para o destino, com retomada e conferido pelo sha no fim.
+
+**As duas URLs são separadas** (`url` para patches, `base` para a instalação) e
+isso não é detalhe: os patches saem do nosso droplet, que já os serve e são
+pequenos; a base sai de um bucket com CDN, porque são 3,4 GB **por jogador** e
+servi-los do droplet passaria isso pela mesma placa de rede que atende o
+map-server. Ver `RECEITAS.md` §12.
+
+**A retomada é obrigatória aqui, e não era antes.** Num patch de 40 KB uma
+queda de conexão não custa nada; nos 2,95 GB do `data.grf` ela custa a
+instalação inteira. O `baixa()` manda `Range: bytes=N-` e trata as duas
+respostas possíveis — 206 continua, **200 recomeça**. O 200 é o caso que
+engana: tratá-lo como continuação grudaria o arquivo inteiro no fim do pedaço
+já baixado, e o sha só falharia no fim, depois de o jogador baixar tudo de novo.
+
+Três decisões da tela, todas do mesmo princípio de que a instalação é
+irreversível o bastante para merecer uma pergunta:
+
+- **Pergunta antes de baixar.** Nenhum programa deve despejar 3,4 GB no disco
+  de alguém sem dizer onde.
+- **O padrão é `C:\GuerraDoEmperium`, não Arquivos de Programas.** O cliente
+  escreve na própria pasta (screenshot, replay, `savedata`, o `patch\` daqui), e
+  sob `Program Files` isso cai no Virtual Store ou pede elevação toda vez.
+- **Instalação que falha não acende o JOGAR.** É a única tela do programa em que
+  isso vale: sem cliente em disco, um botão aceso levaria a um segundo erro,
+  mais confuso que o primeiro.
 
 ## 3. As decisões que não são óbvias
 
@@ -114,12 +168,30 @@ máquina dos jogadores não tem código de terceiro nenhum além da biblioteca
 padrão do Go.
 
 ```
-main.go      o fluxo e o Jogar.ini
-patch.go     lista, download, sha256, extração
+main.go      o fluxo, o Jogar.ini e o desvio instalar/atualizar
+patch.go     lista, download com retomada, sha256, extração
+instala.go   o primeiro download: base.txt, disco, a cópia de si mesmo
+atalho.go    o .lnk da Área de Trabalho, por COM
+pasta.go     a caixa nativa de escolher pasta
 auto.go      a troca do próprio exe
 janela.go    a janela, em Win32 puro
 registro.go  patch\atualizador.log
 recursos/    a arte da capa
+
+atalho_test.go   o .lnk é mesmo um .lnk, e aponta para onde devia
+instala_test.go  a base do servidor de verdade, e a RETOMADA
+```
+
+**Os testes existem porque duas coisas aqui não se provam clicando.** O
+`atalho.go` chama COM percorrendo vtable, e ali um índice errado **trava o
+processo** em vez de devolver erro, com a pilha dentro do shell do Windows. E a
+retomada só se manifesta quando a conexão cai no meio de 2,95 GB — que ninguém
+provoca de propósito na hora de testar, e que falharia **depois** de o jogador
+baixar tudo.
+
+```
+go test ./...          roda tudo (o de retomada fala com o CDN de verdade)
+go test -short ./...   só o que roda sem rede
 ```
 
 Compilar:

@@ -27,6 +27,9 @@ lidos **por seção**, nunca inteiros.
 | **O Atualizador** (patcher, em Go) | `patcher/` | sim |
 | Registro dos patches publicados | `patcher/patches.txt` | sim |
 | Os `.zip` de patch | `C:\GuerraDoEmperium\patches\` | **não** |
+| Registro da BASE (primeiro download) | `patcher/base.txt` | sim |
+| Os pedaços da base | `C:\GuerraDoEmperium\instalador\` | **não** |
+| A chave do bucket | `C:\GuerraDoEmperium\spaces.env` | **não** |
 
 **O cliente inteiro está fora do git.** Toda alteração nele (arte, `itemInfo.lua`,
 `.lub`, `.bson`, mapas) é irreproduzível a partir do repositório — só existe nesta
@@ -1087,6 +1090,32 @@ Produziram diagnóstico falso e custaram retrabalho:
   sem escala, sem chamada que possa falhar por motivo obscuro. A redução de
   tamanho, quando precisa, se faz em código antes. Ver `patcher/janela.go`,
   `preparaArte` e `reduz`.
+- **`nslookup` sai com código 0 mesmo quando o domínio NÃO existe.** Uma sonda
+  `nslookup $host && echo "resolve"` imprime *"resolve"* para NXDOMAIN, e em
+  2026-08-16 isso deu por propagado um endereço de CDN que não existia — a
+  conclusão errada durou até alguém tentar baixar. Quem decide é `curl`, que
+  falha de verdade (`Could not resolve host`). Da mesma família: **cache DNS
+  negativo local**, que faz o `curl` continuar recusando um host que já
+  propagou; o `ipconfig /flushdns` limpa, e enquanto não limpar as duas sondas
+  discordam sem que nenhuma esteja mentindo.
+- **Chave do DigitalOcean Spaces pode ser somente-leitura, e a listagem
+  funciona igual.** As chaves têm escopo (Read Only, ou acesso limitado por
+  bucket), e com uma de leitura o `rclone lsf` responde normalmente enquanto
+  **toda escrita volta `403 AccessDenied`**. Pior quando o script silencia o
+  erro: `lsf … 2>/dev/null || true` transforma "não consigo falar com o bucket"
+  em *"(vazio)"*, que é indistinguível de um bucket recém-criado — e aí a
+  publicação tenta subir 3,4 GB para falhar no primeiro pedaço. O que separa os
+  dois em um comando é um `PutObject` de 14 bytes. E o campo que engana no
+  painel: o valor curto que a DigitalOcean mostra como nome da credencial
+  (`key-1786915948100`) **não é** o Access Key — esse tem ~20 caracteres e
+  começa com `DO00`.
+- **O rclone chama `CreateBucket` antes de subir arquivo grande.** Para usar
+  cópia multi-thread (o que ele faz sozinho a partir de algumas centenas de MB)
+  ele garante que o destino existe — e uma chave com acesso ao CONTEÚDO do
+  bucket mas sem permissão de criar bucket recebe `403` ali, antes de um byte
+  sair. A mensagem fala em `CreateBucket` e manda procurar defeito na
+  credencial, que está certa. A saída é `--s3-no-check-bucket` (ou
+  `RCLONE_CONFIG_<remoto>_NO_CHECK_BUCKET=true`).
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

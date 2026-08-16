@@ -2946,3 +2946,61 @@ patch 0001 amanhã.
 Confere o sha256 de cada zip contra o registro antes de enviar. Divergência aí é
 zip remontado com o mesmo nome e conteúdo diferente — o jeito silencioso de o
 Atualizador do jogador recusar tudo depois.
+
+## `monta_cliente.py` — empacota o PRIMEIRO download
+
+```
+python ferramentas/monta_cliente.py            # monta tudo, do zero
+python ferramentas/monta_cliente.py --lista    # o que já foi montado
+python ferramentas/monta_cliente.py --confere  # o registro descreve o que há em disco?
+python ferramentas/monta_cliente.py --so nosso # remonta só um grupo
+```
+
+O irmão do `monta_patch.py`, e a diferença é o público: o patch fala com quem
+já tem o cliente, este fala com quem não tem nada. Escreve `patcher/base.txt`
+(versionado) e os pedaços em `C:\GuerraDoEmperium\instalador\`.
+
+Quatro grupos, na ordem em que o jogador os vê descer: **o mundo** (o
+`data.grf`), **as músicas**, **a Guerra do Emperium** (tudo que é nosso) e **o
+motor do jogo** (o que sobrou). O último é definido por exclusão de propósito —
+arquivo novo na raiz do cliente entra sozinho, em vez de ser esquecido calado.
+
+**O `data.grf` não vira zip.** São 2,95 GB num arquivo só: não há como fatiá-lo
+por arquivo, zipá-lo não ganha nada (já é comprimido) e custaria o dobro de
+disco no jogador. Ele entra no registro como tipo `bruto` e é publicado **direto
+de `cliente\`**, sem cópia — daí o registro ter seis campos e não cinco.
+
+O que **não** entra: `savedata\`, `patch\`, `Emblem\`, `_tmpEmblem\`,
+`ScreenShot\`, `Replay\`, `memo\` (estado local, nasce sozinho), `_extras\` (os
+exes originais, material nosso) e o próprio `Jogar.exe`/`.ini` — o jogador já os
+tem na mão, e um exe não se sobrescreve rodando.
+
+Números de 2026-08-16: **19.866 arquivos empacotados de 19.904**, 4,07 GB
+brutos, **3.499 MB para o jogador baixar**. A nossa parte comprime a 17% (765,6
+→ 134,4 MB), o que faz refazer só ela custar 134 MB.
+
+## `publica_cliente.sh` — põe a base no ar
+
+```
+ferramentas/publica_cliente.sh            # sobe o que falta
+ferramentas/publica_cliente.sh --confere  # o placar, local e no bucket
+ferramentas/publica_cliente.sh --tudo     # reenvia tudo
+```
+
+Destino é o bucket `ftn` da DigitalOcean Spaces, servido por
+`cdn.filiponegrao.com.br`. Usa o `rclone` (`C:\GuerraDoEmperium\bin\`) e lê a
+chave de `C:\GuerraDoEmperium\spaces.env`, **fora do git**.
+
+**Os pedaços sobem antes da `base.txt`**, pela mesma razão do publicador de
+patch. Confere o sha de cada um antes de enviar — no `data.grf` isso lê 2,95 GB
+e leva algumas dezenas de segundos, e vale: é o que separa "o registro está
+certo" de "o registro descreve o que vai subir".
+
+O rclone é configurado por **variável de ambiente**, não por `rclone.conf`: um
+arquivo de config guardaria a chave secreta num segundo lugar, fora do alcance
+do `.gitignore` e da nossa atenção. Assim o segredo vive num lugar só e some
+quando o processo morre.
+
+Duas armadilhas que custaram rodadas e estão no `CLAUDE.md` §5: **chave do
+Spaces só-leitura** (lista bem, não escreve) e o **`CreateBucket` do rclone**
+(daí o `NO_CHECK_BUCKET`).

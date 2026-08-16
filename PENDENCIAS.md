@@ -1913,11 +1913,22 @@ alternativas mais para frente.
 
 ---
 
-## 5b. O instalador do cliente — o que medir antes de empacotar
+## 5b. O cliente não tem build reproduzível
 
-Aberto em 2026-08-12, quando o dono disse que vai montar um instalador para os
-jogadores. **Nada disto foi feito** — é o levantamento que a pergunta gerou,
-guardado para quando o instalador for puxado de verdade.
+> **O INSTALADOR FOI FEITO em 2026-08-16** — `ferramentas/monta_cliente.py`,
+> `ferramentas/publica_cliente.sh` e o modo de instalação do `Jogar.exe`, com a
+> base hospedada em `cdn.filiponegrao.com.br` (DigitalOcean Spaces). A receita
+> está no `RECEITAS.md` §12 e o porquê no `HISTORICO.md`. O que **continua
+> aberto** é o item 1 da lista do fim desta seção: o empacotador embala o
+> cliente **desta máquina**, e não sabe reconstruí-lo do zero.
+>
+> Três coisas que a seção pedia e que foram atendidas: o pacote leva os dois
+> XML apontados para produção, leva a `AI_sakray\`, e leva o `itemInfo.lua`
+> (que não está dentro de `data\`). A varredura fechou em 19.866 de 19.904
+> arquivos, com os 38 restantes classificados um a um.
+
+O que segue é o levantamento original de 2026-08-12, mantido porque a medição
+e o raciocínio continuam valendo para quem for mexer no pacote.
 
 > **O PATCH, que era a outra metade disto, FOI FEITO em 2026-08-15.** O
 > `Jogar.exe` (`patcher/`), o gerador (`ferramentas/monta_patch.py`) e o

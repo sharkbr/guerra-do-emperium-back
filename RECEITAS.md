@@ -328,3 +328,56 @@ aplica sozinho na próxima abertura.
 **O Atualizador não vai por patch.** Ele não consegue se sobrescrever enquanto
 roda; tem canal próprio — subir o `const VERSAO` em `patcher/main.go` e rodar
 `ferramentas/publica_patch.sh --atualizador`. Detalhes em `patcher/LEIAME.md`.
+
+---
+
+## 12. Refazer o PRIMEIRO DOWNLOAD (a base do cliente)
+
+Isto é o irmão da §11, e a diferença é o público: o patch fala com quem já tem
+o cliente, a base fala com quem não tem nada. São 3,4 GB e vão para o bucket
+(`cdn.filiponegrao.com.br`), não para o droplet.
+
+**Na maioria das vezes você NÃO precisa disto.** Quem instala hoje recebe a base
+desta versão mais todos os patches publicados desde então, na primeira abertura.
+A base só se refaz quando o acúmulo de patches ficar grande a ponto de a
+primeira abertura demorar demais — ou quando algo entrar no cliente que não dá
+para entregar por patch.
+
+```bash
+# 1. o cliente desta máquina já está como se quer, testado em jogo
+python ferramentas/monta_cliente.py            # ~10 min: sha de 3 GB + compressão
+python ferramentas/monta_cliente.py --confere  # o registro descreve o que há em disco?
+
+# 2. publica: os pedaços primeiro, a base.txt por último
+ferramentas/publica_cliente.sh
+
+# 3. commita o registro
+git add patcher/base.txt && git commit
+```
+
+**Só a nossa parte mudou?** `--so nosso` remonta apenas os pedaços `nosso-*` e
+mantém os outros três — e o publicador pula o que já está no bucket com o mesmo
+nome. Na prática são **134 MB** em vez de 3,4 GB, porque o `data.grf` e as
+músicas não mudam nunca.
+
+**Conferir sem publicar:** `ferramentas/publica_cliente.sh --confere` mostra o
+registro, o que já está no bucket e se o CDN responde.
+
+### O que quebra se for feito errado
+
+- **A ordem.** Os pedaços sobem antes da `base.txt`. Na ordem inversa, quem
+  abrisse o instalador naquele intervalo pediria arquivo que ainda não existe.
+- **Trocar pedaço sem trocar o número.** Os zips têm o número no nome, então
+  isso não acontece com eles. O `data.grf` é a exceção: nome fixo, e o CDN tem
+  cache — substituí-lo exige **purgar o cache** no painel do Spaces.
+- **Chave sem escrita.** O publicador morre com o erro do rclone na tela; ver
+  `CLAUDE.md` §5.
+
+### Testar o instalador antes de anunciar
+
+Pasta nova e vazia, `Jogar.exe` dentro, abrir. Ele detecta que não há cliente
+(procura o `data.grf`), pergunta onde instalar e baixa. **Fechar e reabrir no
+meio** é o teste que importa: tem de retomar de onde parou.
+
+E **conferir o atalho** — se o "Iniciar em" não for a pasta do jogo, o cliente
+abre sem `data\`, sem `System\` e sem nada do que é nosso, sem erro nenhum.

@@ -9667,3 +9667,159 @@ O `Jogar-Guerra-do-Emperium.zip` foi refeito com o exe que tem ícone.
 | `patcher/recursos/icone-origem.png`, `icone.ico` | a fonte e o ícone |
 | `patcher/janela.go` | `LoadIconW` na classe da janela |
 | `patcher/LEIAME.md` | §4c, o ícone; a pendência saiu da §5 |
+
+---
+
+## O instalador: o primeiro download deixa de ser uma pasta do Drive (2026-08-16)
+
+O Atualizador resolveu a segunda vez em diante; **a primeira continuava sendo
+um link do Google Drive com 4,9 GB**. O dono trouxe o pedido já com um desenho:
+a parte imutável do kRO ficaria no Drive, a nossa no droplet, e um instalador
+baixaria as duas e criaria o atalho.
+
+Duas metades desse desenho não sobreviveram ao exame, e as duas por motivo
+técnico — não por gosto.
+
+### Por que o Google Drive não serve, e por que o droplet também não
+
+**O Drive não entrega arquivo grande por URL.** Acima de ~100 MB ele devolve
+uma página HTML de aviso de vírus em vez do arquivo; existe o truque do
+`confirm=t`, que já mudou várias vezes. O instalador gravaria HTML dentro do
+zip e o sha256 falharia **para todo mundo ao mesmo tempo**. Pior, há cota de
+download por arquivo público: 3,4 GB vezes algumas dezenas de jogadores estoura,
+e a resposta vira erro por 24 h — sem nada que possamos fazer.
+
+**E o droplet não tem banda sobrando para isso.** São 3,4 GB **por jogador**,
+saindo pela mesma placa de rede que atende o map-server. Dez instalações
+simultâneas e o jogo engasga. O `libraro` continua servindo os patches, que são
+pequenos; o primeiro download é outro problema.
+
+### Cloudflare R2 foi a primeira escolha, e caiu por uma linha da documentação
+
+O R2 tem **egress zero** — a taxa que normalmente mata esse caso de uso — e os
+3,9 GB caberiam no free tier. A objeção veio do dono, e era de arquitetura, não
+de preço: usar domínio próprio no R2 exige a zona inteira na Cloudflare, e ele
+não queria a administração do `filiponegrao.com.br` sob o guarda-chuva deles.
+
+Procurou-se o meio-termo, e **ele não existe no plano gratuito**. Três caminhos,
+os três fechados pela documentação oficial:
+
+- domínio próprio no R2 exige o domínio como zona na conta (*"must have been
+  added as a zone in the same account"*);
+- **delegar só o `cdn.`** por NS, mantendo o resto na DigitalOcean, é
+  **Enterprise** — a tabela de disponibilidade é `Free: No / Pro: No /
+  Business: No / Enterprise: Yes`;
+- apontar um CNAME para o `r2.dev` é **listado como caminho não suportado**, e
+  o próprio `r2.dev` é documentado como *"rate-limited… only for development"*,
+  com o limite **não publicado**.
+
+### DigitalOcean Spaces, que era a resposta melhor
+
+$5/mês, **250 GiB de armazenamento e 1 TiB de saída**, CDN incluído. Resolve a
+objeção do dono melhor que qualquer alternativa: **não acrescenta fornecedor
+nenhum** — conta que ele já tem, DNS que já está lá, e o subdomínio próprio sai
+com um CNAME dentro da zona que ele já administra.
+
+Bucket `ftn` em `tor1`, servido por **`cdn.filiponegrao.com.br`**. O subdomínio
+próprio resolveu de graça um problema que estava em aberto: o endereço fica
+congelado dentro do exe que o jogador baixou, e trocar de provedor um dia é
+mudar um CNAME em vez de republicar o instalador de todo mundo.
+
+A instalação mede **3.499 MB**, o que dá ~299 por mês dentro da mensalidade.
+
+### O empacotamento, e o número que mudou a economia
+
+`ferramentas/monta_cliente.py` divide o cliente em cinco pedaços e escreve
+`patcher/base.txt` — o irmão do `patches.txt`, com **seis** campos em vez de
+cinco. O campo a mais é o tipo, e ele existe porque o `data.grf` não é um zip:
+
+| pedaço | bruto | baixado |
+|---|---|---|
+| `data.grf` | 3.021 MB | 3.021 MB — vai **bruto** |
+| `0002-musicas.zip` | 323,6 MB | 318,1 MB |
+| `0003/0004-nosso-*.zip` | 765,6 MB | **134,4 MB** |
+| `0005-resto.zip` | 58,7 MB | 26,1 MB |
+
+**A nossa parte inteira comprime a 17%.** Os 800 MB de `data\` que pareciam o
+peso do pacote são 134 MB na rede — são sprite, `.lua` e texto. O que pesa é o
+GRF do kRO, que nunca muda. Consequência prática: **refazer a base quando o
+nosso conteúdo mudar custa 134 MB**, e os outros três pedaços continuam com o
+mesmo sha no bucket. O `--so nosso` existe para isso.
+
+O `data.grf` vai bruto porque zipá-lo não ganha nada — já é comprimido por
+dentro — e custaria o dobro de disco no jogador. E ele é publicado **direto de
+`cliente\`**, sem cópia: copiar 3 GB para depois subir seria meia hora de disco
+à toa.
+
+A contabilidade da varredura fechou em **19.904 arquivos no cliente, 19.866
+empacotados, 36 de estado local e 2 de propósito** (o `Jogar.exe` e o `.ini`,
+que o jogador já tem na mão). Era o risco do §5b: esquecer o `itemInfo.lua` e
+descobrir com todo item sem nome na loja.
+
+### O instalador é o mesmo exe
+
+**Não há um segundo programa.** O `Jogar.exe` decide o que é pela pasta em que
+está: com `data.grf` ao lado, atualiza; sem, instala. O jogador baixa 9 MB, abre
+numa pasta qualquer, escolhe onde instalar, e recebe os 3,4 GB — e ao terminar a
+base o fluxo emenda nos patches publicados desde que o pacote foi montado.
+
+O que foi escrito para isso:
+
+| arquivo | o quê |
+|---|---|
+| `ferramentas/monta_cliente.py` | **novo** — o empacotador, com `--confere` e `--so` |
+| `ferramentas/publica_cliente.sh` | **novo** — sobe ao bucket, pedaços antes da lista |
+| `patcher/base.txt` | **novo**, versionado — o registro dos cinco pedaços |
+| `patcher/instala.go` | **novo** — a base, o disco, a cópia de si mesmo, o `.ini` |
+| `patcher/atalho.go` | **novo** — o `.lnk` por COM, com vtable tipada |
+| `patcher/pasta.go` | **novo** — a caixa nativa de escolher pasta |
+| `patcher/atalho_test.go`, `instala_test.go` | **novos** — os primeiros testes do projeto |
+| `patcher/patch.go` | retomada por `Range`; `baixaTexto` extraída |
+| `patcher/janela.go` | a tela de escolha: pasta, `Mudar…`, checkbox, `INSTALAR` |
+| `patcher/main.go` | o desvio instalar/atualizar; `url` e `base` separadas |
+
+**As duas URLs são separadas de propósito** (`url` = patches no droplet,
+`base` = instalação no CDN). Foi um erro real: a primeira versão usava uma só,
+e o instalador teria procurado a `base.txt` no droplet. Apareceu ao testar o
+CDN, não ao compilar.
+
+### Por que este é o primeiro código do projeto com teste automatizado
+
+Duas coisas aqui não se provam clicando. O `atalho.go` chama COM percorrendo
+vtable, onde um índice errado **trava o processo** em vez de devolver erro, com
+a pilha dentro do shell do Windows. E a retomada só se manifesta quando a
+conexão cai no meio de 2,95 GB — que ninguém consegue provocar de propósito na
+hora de testar, e que falharia **depois** de o jogador baixar tudo.
+
+O `TestRetomada` grava um `.parte` pela metade, chama o mesmo `baixa()` do
+instalador contra o CDN de verdade, e confere o sha256 do resultado. Passou
+retomando de 13.671.718 bytes e fechando o sha dos 27.343.437.
+
+As vtables viraram **struct** em vez de índice numérico depois que o `go vet`
+acusou a aritmética sobre `unsafe.Pointer`. Custou vinte linhas e pagou duas
+vezes: o aviso sumiu e cada método passou a ter nome.
+
+### Três armadilhas, todas subidas para o `CLAUDE.md` §5
+
+**A chave do Spaces era somente-leitura, e o publicador dizia "(vazio)".** A
+primeira versão do `remotos()` era `lsf … 2>/dev/null || true`, e "o bucket está
+vazio" e "eu não consigo falar com o bucket" saíam idênticos na tela. Um
+`PutObject` de **14 bytes** separou os dois em um comando.
+
+**O rclone chama `CreateBucket` antes de subir arquivo grande**, e a chave tem
+acesso ao conteúdo mas não permissão de criar bucket. A mensagem fala em
+`CreateBucket` e manda procurar defeito na chave, que está certa. Resolve com
+`--s3-no-check-bucket`.
+
+**`nslookup` sai com código 0 mesmo em NXDOMAIN.** Uma sonda `nslookup … && echo
+"resolve"` imprimiu "resolve" para um host que não existia, e deu o CDN por
+propagado quando ele não estava. O que decidiu foi `curl`, que falha de verdade.
+
+### O que ficou de fora
+
+O `PENDENCIAS.md` §5b pedia um `monta_cliente.py` que reconstruísse o cliente
+**do zero**, a partir de um kRO limpo. Não é o que foi feito: o que existe
+empacota o cliente que está nesta máquina. A dívida continua aberta — o exe
+segue sendo binário de origem única (com o `.epi` do NEMO ao lado), e o
+`cliente\data\` continua sem gerador. O instalador tornou isso menos urgente,
+não resolvido.

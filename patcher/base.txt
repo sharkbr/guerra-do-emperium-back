@@ -1,0 +1,24 @@
+# Guerra do Emperium - a BASE do cliente, para o primeiro download.
+#
+# GERADO por ferramentas/monta_cliente.py. Este arquivo E a lista que
+# o instalador baixa: o publica_cliente.sh o envia ao bucket como
+# base.txt, sem traducao.
+#
+# Uma linha por pedaco, campos separados por TAB:
+#     numero  arquivo  sha256  bytes  tipo  descricao
+#
+# tipo `zip`   extrai por cima da raiz do cliente
+# tipo `bruto` grava no caminho que esta no proprio campo `arquivo`
+#
+# Ao contrario do patches.txt, este arquivo E REESCRITO INTEIRO a cada
+# montagem, e os numeros podem mudar. Pode, porque ninguem guarda
+# "base aplicada": quem instalou ja instalou, e daqui para a frente so
+# ve patches. O que NAO pode e trocar os arquivos no bucket enquanto
+# alguem esta baixando - por isso o publicador sobe os pedacos antes
+# da lista, como o de patch faz.
+
+0001	data.grf	6dcae744fb8e5fc1fcafbe8cfb3f5392e9d89b431e56811c3618462d5de2d53a	3167729595	bruto	O mundo
+0002	0002-musicas.zip	ddbebeaa2a7478a96188a91d25df5f6902df951a41228d2c0123b1ac6c1841de	333557681	zip	As musicas
+0003	0003-nosso-1.zip	2d7c9102d4bae0c2ce2bd919079109783f462b818d49c825a8e4f366e505444c	72018196	zip	A Guerra do Emperium (1 de 2)
+0004	0004-nosso-2.zip	1d57df90b88a6314e132a15c34dd6a11bcdc62c194de18ba3e7b3c2ebf66607b	68844046	zip	A Guerra do Emperium (2 de 2)
+0005	0005-resto.zip	6a02f3c90dc5f1471be3c5c2911cefb80d74950506f2d7aff88ee436e721c3e7	27343437	zip	O motor do jogo

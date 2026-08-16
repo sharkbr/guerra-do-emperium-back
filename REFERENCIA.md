@@ -33,6 +33,11 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | Backups que as ferramentas deixam | `C:\GuerraDoEmperium\_backups_removidos\` — inclui as duas cópias do exe **antes** dos nossos patches |
 | **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, os `.zip`, `patcher.txt`) |
 | Montar / publicar patch | `python ferramentas/monta_patch.py --nome "..." <caminhos>` e `ferramentas/publica_patch.sh` (`RECEITAS.md` §11) |
+| **Primeiro download (a base)** | `https://cdn.filiponegrao.com.br/` → bucket **`ftn`**, região **`tor1`** (Toronto), DigitalOcean Spaces com CDN. Serve `base.txt`, o `data.grf` e os `.zip` da base |
+| Chave do bucket | `C:\GuerraDoEmperium\spaces.env` — **fora do git**. Precisa de escopo de **escrita** no `ftn`; chave só-leitura lista e não sobe (`CLAUDE.md` §5) |
+| Uploader | `C:\GuerraDoEmperium\bin\rclone.exe` — binário único, sem instalação |
+| Montar / publicar a base | `python ferramentas/monta_cliente.py` e `ferramentas/publica_cliente.sh` (`RECEITAS.md` §12) |
+| Tamanho da instalação | **3.499 MB** em 5 pedaços (4,07 GB brutos) — ~299 instalações/mês dentro do $5 do Spaces |
 | Estado do patch na máquina do jogador | `cliente\patch\aplicados.txt` e `cliente\patch\atualizador.log` |
 | Patches do NEMO no exe | `cliente\GuerraDoEmperium.epi` — lista na seção abaixo |
 | Conta de teste | `teste` / `teste123`, `group_id 99`, `account_id 2000000` |

@@ -44,22 +44,36 @@ var cliente = &http.Client{Timeout: 30 * time.Minute}
 //
 // Linha malformada é ERRO e não linha pulada, de propósito: pular deixaria o
 // cliente do jogador em um estado que ninguém consegue reproduzir aqui.
-func baixaLista(url string) ([]patch, error) {
-	resp, err := cliente.Get(url + "lista.txt")
+// baixaTexto pega um arquivo pequeno de texto do servidor: a lista de patches
+// ou a base da instalação.
+//
+// O `LimitReader` não é paranoia: sem ele, um servidor mal configurado
+// devolvendo o corpo errado — uma página de erro de 400 MB, um arquivo trocado
+// — seria lido inteiro para a memória de uma máquina de jogador.
+func baixaTexto(url string) (string, error) {
+	resp, err := cliente.Get(url)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("lista.txt respondeu %s", resp.Status)
+		return "", fmt.Errorf("%s respondeu %s", path.Base(url), resp.Status)
 	}
 	dados, err := io.ReadAll(io.LimitReader(resp.Body, 4<<20))
+	if err != nil {
+		return "", err
+	}
+	return string(dados), nil
+}
+
+func baixaLista(url string) ([]patch, error) {
+	dados, err := baixaTexto(url + "lista.txt")
 	if err != nil {
 		return nil, err
 	}
 
 	var lista []patch
-	for n, linha := range strings.Split(string(dados), "\n") {
+	for n, linha := range strings.Split(dados, "\n") {
 		linha = strings.TrimRight(linha, "\r")
 		if strings.TrimSpace(linha) == "" || strings.HasPrefix(strings.TrimSpace(linha), "#") {
 			continue
@@ -155,24 +169,70 @@ func aplica(j *Janela, raiz, trabalho, url string, p patch, rotulo string) error
 	return nil
 }
 
+// baixa grava a URL em `destino`, RETOMANDO de onde parou se houver um
+// download interrompido em disco.
+//
+// A retomada não é luxo: o `data.grf` da instalação tem 2,95 GB, e sem ela uma
+// queda de conexão aos 90% joga fora quase três gigabytes. Num patch de 40 KB
+// isso não faria diferença nenhuma; foi o instalador que trouxe a necessidade.
+//
+// A mecânica é o cabeçalho `Range: bytes=N-`, e o cuidado está na resposta:
+//
+//	206 Partial Content  o servidor honrou — o corpo continua de onde parou
+//	200 OK               o servidor IGNOROU — está mandando o arquivo inteiro
+//
+// O 200 é o caso que engana. Tratá-lo como continuação grudaria o arquivo
+// inteiro no fim do pedaço já baixado: sairia um arquivo maior que o original,
+// com o sha errado, e a falha só apareceria no FIM — depois de o jogador
+// baixar tudo de novo. Por isso o 200 descarta o que havia e recomeça.
 func baixa(j *Janela, url, destino string, tamanho int64, rotulo string) error {
-	resp, err := cliente.Get(url)
+	parcial := destino + ".parte"
+
+	var jaTem int64
+	if fi, err := os.Stat(parcial); err == nil {
+		jaTem = fi.Size()
+	}
+	// Parcial do tamanho final ou maior é resto de uma rodada anterior, ou de
+	// um arquivo que mudou no servidor. Não há o que retomar — e quem decide se
+	// o resultado presta é o sha256, mais adiante.
+	if tamanho > 0 && jaTem >= tamanho {
+		jaTem = 0
+	}
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return err
+	}
+	if jaTem > 0 {
+		req.Header.Set("Range", fmt.Sprintf("bytes=%d-", jaTem))
+	}
+
+	resp, err := cliente.Do(req)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
+	switch resp.StatusCode {
+	case http.StatusPartialContent: // 206: continua de onde parou
+	case http.StatusOK: // 200: veio inteiro, o que já tínhamos não serve
+		jaTem = 0
+	default:
 		return fmt.Errorf("%s respondeu %s", path.Base(url), resp.Status)
 	}
 
-	parcial := destino + ".parte"
-	f, err := os.Create(parcial)
+	// O modo de abertura segue a resposta, e não o pedido: APPEND quando o
+	// servidor confirmou a continuação, truncar quando não.
+	modo := os.O_CREATE | os.O_WRONLY | os.O_TRUNC
+	if jaTem > 0 {
+		modo = os.O_CREATE | os.O_WRONLY | os.O_APPEND
+	}
+	f, err := os.OpenFile(parcial, modo, 0o644)
 	if err != nil {
 		return err
 	}
 
 	buf := make([]byte, 256<<10)
-	var lidos int64
+	lidos := jaTem
 	ultimo := time.Now()
 	for {
 		n, err := resp.Body.Read(buf)
