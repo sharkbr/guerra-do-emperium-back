@@ -94,6 +94,7 @@ var (
 	pGetSystemMetrics   = user32.NewProc("GetSystemMetrics")
 	pSetProcessDPIAware = user32.NewProc("SetProcessDPIAware")
 	pLoadCursorW        = user32.NewProc("LoadCursorW")
+	pLoadIconW          = user32.NewProc("LoadIconW")
 	pSetCursor          = user32.NewProc("SetCursor")
 	pGetDC              = user32.NewProc("GetDC")
 	pReleaseDC          = user32.NewProc("ReleaseDC")
@@ -258,12 +259,26 @@ func Abre(titulo string) *Janela {
 	j.preparaArte()
 
 	cursor, _, _ := pLoadCursorW.Call(0, 32512) // IDC_ARROW
+
+	// O ícone vem do recurso embutido pelo `icone_windows_amd64.syso`, e o `1`
+	// é o id do grupo que o `go run ./icone` escreve. Ter o recurso no exe faz
+	// o Explorer desenhar o ícone do arquivo; para ele aparecer na BARRA DE
+	// TAREFAS e no Alt+Tab é preciso pô-lo na classe da janela — são duas
+	// coisas separadas, e é comum acertar a primeira e achar que a segunda veio
+	// junto.
+	icone, _, _ := pLoadIconW.Call(instancia, 1)
+	if icone == 0 {
+		anota("icone: LoadIconW devolveu 0 — o exe foi compilado sem o .syso?")
+	}
+
 	wc := wndClassExW{
-		tamanho:   uint32(unsafe.Sizeof(wndClassExW{})),
-		proc:      syscall.NewCallback(processa),
-		instancia: instancia,
-		cursor:    cursor,
-		classe:    nomeClasse,
+		tamanho:      uint32(unsafe.Sizeof(wndClassExW{})),
+		proc:         syscall.NewCallback(processa),
+		instancia:    instancia,
+		cursor:       cursor,
+		classe:       nomeClasse,
+		icone:        icone,
+		iconePequeno: icone,
 	}
 	pRegisterClassExW.Call(uintptr(unsafe.Pointer(&wc)))
 

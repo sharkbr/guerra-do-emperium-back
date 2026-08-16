@@ -165,10 +165,41 @@ quem torna a janela arrastável é o `WM_NCHITTEST` devolvendo `HTCAPTION` na
 faixa de cima. Os dois botões dela precisam devolver `HTCLIENT`, senão o clique
 vira arrasto e eles nunca recebem `WM_LBUTTONDOWN`.
 
+## 4c. O ícone
+
+```bash
+cd patcher && go run ./icone recursos/icone-origem.png
+```
+
+Sai daí o `recursos/icone.ico` (para atalho, site, instalador) e o
+`icone_windows_amd64.syso` — o arquivo-objeto COFF que o `go build` embute
+sozinho, e que é o único jeito de um programa Go ter ícone. **O `.syso` é
+versionado**, e o gerador roda só quando o desenho mudar.
+
+A ferramenta conhecida para isso é o `rsrc`, de terceiro. O nosso existe pelo
+mesmo motivo do resto do Atualizador: o que vai para a máquina dos jogadores não
+deve depender de binário que ninguém neste projeto leu. São ~200 linhas, e o
+formato não muda desde 1993.
+
+Três coisas que fazem o ícone sair errado, e todas falham calado:
+
+- **Ícone no exe e ícone na JANELA são coisas separadas.** O recurso faz o
+  Explorer desenhar o arquivo; para aparecer na barra de tarefas e no Alt+Tab é
+  preciso pôr o `hIcon` na classe da janela. É comum acertar o primeiro e achar
+  que o segundo veio junto.
+- **Cada folha da árvore de recursos precisa de uma relocação.** Sem elas o
+  ícone aponta para o lugar errado dentro do exe, e o Windows mostra o ícone
+  padrão — indistinguível de "não pus ícone nenhum".
+- **Reduzir sem ponderar pelo alfa deixa auréola escura.** O preto transparente
+  das bordas entra na média e suja o contorno. O gerador pondera.
+
+Nos tamanhos até 64 o ícone vai como BMP, e o 256 vai como PNG: PNG dentro de
+ícone só é entendido a partir do Vista, e ainda há jogador de servidor privado
+no 7 — mas nenhum Windows mostra 256x256 num contexto que não entenda PNG, e o
+BMP daquele tamanho custaria 256 KB contra 13 do PNG.
+
 ## 5. O que falta
 
-- **Ícone do exe.** Ele usa o ícone padrão do Windows, por falta de um `.syso`
-  de recursos. É o que mais destoa hoje, e não muda o que o programa faz.
 - **Assinatura dos patches.** Hoje a garantia é o sha256 do registro servido
   por HTTPS — quem controlasse o servidor poderia trocar os dois. Assinar com
   chave nossa e conferir no Atualizador é o próximo degrau.

@@ -9626,3 +9626,44 @@ cima e de baixo — esticar deformaria o cavaleiro.
 | `CLAUDE.md` §5 | a armadilha do `StretchDIBits`, agora com a causa certa |
 | `patcher/LEIAME.md` | §4b, a janela; e o que sobrou de pendência |
 | `REFERENCIA.md` | `Jogar.exe`, `_extras\`, `_backups_removidos\` |
+
+### O ícone do Jogar.exe, e um gerador de recurso COFF (2026-08-16)
+
+Última pendência visível do Atualizador: o exe usava o ícone padrão do Windows.
+O dono mandou o desenho (um meteoro, que é o que cai no céu da capa) e ele
+virou ícone de sete tamanhos, de 16 a 256.
+
+**O gerador é nosso** (`patcher/icone/`, em Go, ~200 linhas). A ferramenta
+conhecida para pôr ícone em programa Go é o `rsrc`, de terceiro; escrever o
+nosso segue o mesmo critério do resto do Atualizador — o que vai para a máquina
+dos jogadores não depende de binário que ninguém neste projeto leu. O formato
+COFF de recurso não muda desde 1993, então é código que se escreve uma vez.
+
+Saem dele o `recursos/icone.ico` (atalho, site, instalador) e o
+`icone_windows_amd64.syso`, **versionado**, que o `go build` embute sozinho.
+
+### As três armadilhas do ícone, e todas falham calado
+
+- **Ícone no exe e ícone na JANELA são coisas separadas.** O recurso faz o
+  Explorer desenhar o arquivo; a barra de tarefas e o Alt+Tab leem o `hIcon` da
+  **classe da janela**. Acertar o primeiro e achar que o segundo veio junto é o
+  erro natural — foi preciso um `LoadIconW` no `WNDCLASSEX` para fechar.
+- **Cada folha da árvore de recursos precisa de uma relocação** no objeto COFF.
+  Sem elas o `OffsetToData` aponta para o lugar errado dentro do exe e o Windows
+  cai no ícone padrão: exatamente o que se vê quando não há ícone nenhum.
+- **Reduzir sem ponderar pelo alfa deixa auréola escura** no contorno, porque o
+  preto transparente das bordas entra na média.
+
+Conferido nos dois lados: o `ExtractAssociatedIcon` tira do exe um 32x32 com a
+transparência certa, e o `GetClassLongPtr(GCLP_HICON)` devolve handle não nulo
+na janela em execução.
+
+O `Jogar-Guerra-do-Emperium.zip` foi refeito com o exe que tem ícone.
+
+| arquivo | o quê |
+|---|---|
+| `patcher/icone/main.go` | **novo** — o gerador de `.ico` e `.syso` |
+| `patcher/icone_windows_amd64.syso` | o recurso embutido, versionado |
+| `patcher/recursos/icone-origem.png`, `icone.ico` | a fonte e o ícone |
+| `patcher/janela.go` | `LoadIconW` na classe da janela |
+| `patcher/LEIAME.md` | §4c, o ícone; a pendência saiu da §5 |
