@@ -451,6 +451,31 @@ cinco chamadas no `battle.cpp` (`CLAUDE.md` §2). Ver `REDUCAO-DE-DANO.md` §1c.
 **A campal (`bg_*`) está fora das duas metades**, e para entrar precisa de conf
 **e** de um sexto enxerto — não só das cinco linhas.
 
+### Uma mudança de cliente vive em 3 lugares, e o terceiro é a máquina do jogador
+
+Este é o acoplamento **entre máquinas**, e por isso o mais fácil de esquecer: os
+outros todos se resolvem com arquivos que estão aqui.
+
+| Onde | O quê | Quem escreve |
+|---|---|---|
+| `C:\GuerraDoEmperium\cliente\` | o arquivo mudado — arte, `.lub`, `itemInfo.lua`, sprite, exe | as ferramentas, aqui |
+| `patcher/patches.txt` + `C:\GuerraDoEmperium\patches\*.zip` | o patch: o registro versionado e o zip | `ferramentas/monta_patch.py` |
+| `libraro:/var/www/patch/` | `lista.txt` + os zips, servidos pelo Apache | `ferramentas/publica_patch.sh` |
+
+A quarta ponta é o `patch\aplicados.txt` **no computador de cada jogador**, que
+o Atualizador escreve. É o único estado do sistema que não está sob o nosso
+alcance — e é por isso que o formato é extração de zip por cima, idempotente:
+com ele, "apagar o `aplicados.txt`" é um conserto completo que o jogador
+consegue executar sozinho pelo Discord.
+
+**O deploy e o patch são caminhos independentes e não se cruzam.** Mudança que
+tem as duas metades — item novo, por exemplo: o `item_db` do servidor e o
+`itemInfo.lua` do cliente — precisa dos dois, e esquecer o patch entrega ao
+jogador um item **sem nome**, sem erro em lugar nenhum (`CLAUDE.md` §4.18).
+
+Formato, ordem de publicação e o canal separado do próprio Atualizador estão em
+`patcher/LEIAME.md`; o passo a passo, em `RECEITAS.md` §11.
+
 ## 5. O que sobrevive a um clone limpo
 
 | Sobrevive | Não sobrevive |

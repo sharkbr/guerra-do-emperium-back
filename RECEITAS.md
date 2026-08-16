@@ -293,3 +293,38 @@ dois **não dá erro**: a janela promete um item e o RoDEX entrega outro.
 
 **Ciclo já vencido some calado.** Quando o `ULTIMO` passar, não há janela e não
 há erro. Adiantar antes: hoje o último é 2027-12-31.
+
+## 11. Entregar uma mudança de CLIENTE aos jogadores (patch)
+
+**Mudança de servidor** (NPC, `db/`, `conf/`, `src/`) chega pelo deploy —
+`ferramentas/implanta.sh`, e ninguém baixa nada. **Mudança de cliente** (`data\`,
+`itemInfo.lua`, sprite, `.lub`, exe, `AI_sakray\`) só chega pelo patch: o
+cliente do jogador é uma cópia congelada do dia em que ele baixou.
+
+A regra que evita retrabalho: **testar em jogo primeiro, montar o patch
+depois.** O número de um patch nunca se reaproveita, então patch errado se
+corrige com patch novo por cima.
+
+1. Fazer e testar a mudança no cliente desta máquina, como sempre.
+2. Montar o patch com os caminhos **relativos à raiz do cliente**:
+
+   ```
+   python ferramentas/monta_patch.py --nome "IA do homunculo" AI_sakray
+   python ferramentas/monta_patch.py --nome "Arte da Ordem" data/sprite/...
+   ```
+
+   Sai a lista do que entrou no zip. **É aqui que se percebe engano** — o
+   `--desde 2026-08-14`, que varre o cliente por data, costuma trazer junto o
+   que foi tocado por acidente.
+3. `ferramentas/publica_patch.sh` — envia os zips e, **por último**, a lista.
+4. `git add patcher/patches.txt` e commitar: o registro é a fonte da
+   `lista.txt` que o servidor serve.
+
+O jogador não faz nada: o `Atualizador.exe`, que é o que ele clica para jogar,
+aplica sozinho na próxima abertura.
+
+**Para apagar arquivo do cliente do jogador:** `--apagar data/algum.lub`.
+
+**O Atualizador não vai por patch.** Ele não consegue se sobrescrever enquanto
+roda; tem canal próprio — subir o `const VERSAO` em `patcher/main.go` e rodar
+`ferramentas/publica_patch.sh --atualizador`. Detalhes em `patcher/LEIAME.md`.

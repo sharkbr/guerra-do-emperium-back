@@ -13,3 +13,10 @@
 *.sql  text eol=lf
 *.yml  text eol=lf
 *.go   text eol=lf
+
+# O registro dos patches NAO e' so' um arquivo do repositorio: e' o proprio
+# `lista.txt` que o servidor serve, enviado sem traducao pelo publica_patch.sh.
+# Em LF ele chega ao cliente byte a byte igual ao que esta aqui. (O Atualizador
+# tolera CRLF, mas um arquivo que atravessa tres maquinas nao deve depender
+# disso.)
+patcher/patches.txt text eol=lf

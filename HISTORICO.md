@@ -9382,3 +9382,121 @@ cliente novo, e o instalador tem de levá-la, do mesmo jeito que os dois XML de
 |---|---|
 | `cliente\AI_sakray\` | **fora do git** — cópia de `cliente\AI\`, com `USER_AI` |
 | `CLAUDE.md` | §5: a entrada da pasta de IA |
+
+## O Atualizador: o cliente passa a receber melhoria sem baixar 4,9 GB (2026-08-15)
+
+O pedido veio da falta que ele fazia. O dono tinha acabado de corrigir a
+`AI_sakray` (seção acima) — 40 KB de arquivo dentro do cliente, sem os quais
+criar homúnculo devolve caixa de erro — e **não havia caminho nenhum** para
+entregar aquilo a quem já tinha baixado. O cliente sai por uma pasta do Google
+Drive, e a alternativa era pedir a todo mundo que baixasse 4,9 GB de novo.
+
+### As duas metades que o projeto já tinha, e a que faltava
+
+O servidor já sabia entregar mudança sozinho: `implanta.sh`, `git pull`, quatro
+serviços reiniciados, ninguém baixa nada. O cliente é o oposto — cada jogador
+tem uma cópia congelada do dia em que instalou, e nada nossa alcança ela.
+
+O gancho de infraestrutura já estava pronto desde 2026-08-15 de manhã, sem uso:
+o Apache serve `/patch/` de `/var/www/patch` (Etapa 8 da implantação), e o
+levantamento do que faltava estava escrito em `PENDENCIAS.md` §5b.
+
+### A escolha: patcher nosso em Go, e não o Thor
+
+Levado ao dono como decisão, com o Thor Patcher (o padrão da comunidade de RO)
+do outro lado. O que pesou contra o Thor foi ele repetir o problema que este
+projeto já tem uma vez: um binário fechado, sem gerador versionado, exatamente
+como o `GuerraDoEmperium.exe` do NEMO. O que pesou a favor do nosso foi o
+servidor já servir HTTP estático e o site já ser Go.
+
+**Zero dependências externas** — o Win32 é chamado por `syscall.NewLazyDLL`
+contra user32, gdi32 e comctl32. O binário que vai para o computador dos
+jogadores não tem código de terceiro nenhum além da biblioteca padrão do Go.
+
+Escopo da v1, também decidido pelo dono: baixar/aplicar, botão Jogar e
+**auto-atualização do próprio Atualizador**. Painel de notícias ficou de fora.
+
+### O formato: zip extraído por cima, e por quê
+
+Sem diff binário e sem GRF. O cliente tem `DataFolderFirst`, então arquivo solto
+em `data\` vence o `data.grf` — é assim que todo o nosso conteúdo já chega, e um
+zip extraído por cima é a mesma coisa.
+
+A propriedade que isso compra é **idempotência**: aplicar duas vezes não muda
+nada, e apagar o `patch\aplicados.txt` refaz tudo do zero. É o que torna o
+suporte barato — "apaga esse arquivo e abre de novo" é um conserto completo que
+o jogador executa sozinho pelo Discord. Um formato com diff economizaria banda e
+custaria justamente isso.
+
+Três regras de ordem, todas com o mesmo motivo — não deixar o cliente do jogador
+num estado que ninguém consegue reproduzir aqui:
+
+- **o zip sobe antes da lista.** Na ordem inversa, quem abrisse o Atualizador
+  no intervalo pediria arquivo que ainda não existe;
+- **zip antigo não se apaga do servidor.** Quem instalou o cliente ontem ainda
+  vai baixar o patch 0001 amanhã;
+- **o número só cresce.** Corrigir patch publicado é patch novo por cima.
+
+### O que foi medido, e as duas armadilhas que apareceram
+
+**Nome de arquivo coreano dentro do cliente quebra o Python 2 de duas
+maneiras.** A `AI_sakray` traz o manual da IA do kRO. Na leitura, `os.walk` com
+caminho `str` usa a API ANSI, devolve `????` e o `os.stat` seguinte estoura com
+*"A sintaxe do nome do arquivo... está incorreta"* — mensagem que aponta para o
+arquivo quando o defeito é do leitor. E na **escrita da tela**: o `print` do
+mesmo nome derruba a ferramenta com `UnicodeEncodeError`, depois de o zip já
+estar gravado. As duas foram para o `CLAUDE.md` §5.
+
+**`StretchDIBits` com `HALFTONE` falha de vez em quando e mente no
+`GetLastError`.** Duas execuções do mesmo binário devolveram 630 linhas
+(sucesso); a terceira devolveu **0**, com o erro do sistema dizendo *"operação
+concluída com êxito"*. O sintoma era a janela nascer com o retângulo da arte
+preto. A saída foi tirar o GDI da conta: a redução de 1200x630 para 560x294 é
+feita **em Go**, por média de caixa, e o GDI só faz a cópia 1:1. Trinta linhas
+em troca de a janela nunca mais nascer preta.
+
+Antes disso houve um erro mais simples, e vale registrar porque é do tipo que se
+repete: a arte era preparada **depois** de a janela ser criada. Decodificar o
+JPEG leva ~100 ms, e um `WM_PAINT` que chegasse nesse intervalo pintava o
+retângulo de cima vazio — e como daí em diante só a faixa de baixo é invalidada
+(para o progresso não fazer a arte piscar), o preto ficava até algo passar por
+cima da janela.
+
+### O teste
+
+Ponta a ponta, com um `SimpleHTTPServer` local no lugar da produção: montou o
+patch 0001 (a `AI_sakray`, 9 arquivos, 40 KB no zip), baixou, conferiu o sha256,
+extraiu — **inclusive o arquivo de nome coreano, com o nome intacto** —,
+escreveu o `aplicados.txt`, liberou o botão e abriu o jogo. Depois, três
+execuções seguidas medindo o brilho médio da área da arte: 76,7 nas três, contra
+~0 de uma janela preta.
+
+Contra a produção, que ainda não tem lista publicada, o caminho de falha também
+foi conferido: `404`, mensagem em português e botão liberado. **Nada pode
+impedir o jogador de jogar** — é a única peça do projeto que roda na máquina dos
+outros, e travar ali é pior do que não atualizar.
+
+### O que fica em aberto
+
+**Publicar exige SSH ao servidor a partir do Windows**, que é onde os zips
+nascem, e esta máquina não tem chave autorizada — o deploy sempre foi do Mac.
+É uma linha no `authorized_keys`, e é o que falta para o ciclo fechar sem
+intermediário. Anotado em `IMPLANTACAO.md` §9.
+
+Ícone e manifest do exe (a barra de progresso sai no estilo clássico),
+assinatura dos patches e o painel de notícias estão em `patcher/LEIAME.md` §5.
+
+### O que foi tocado
+
+| arquivo | o quê |
+|---|---|
+| `patcher/` | o Atualizador: `main.go`, `patch.go`, `auto.go`, `janela.go`, `registro.go`, `recursos/fundo.jpg`, `Atualizador.ini`, `LEIAME.md` |
+| `patcher/patches.txt` | o registro dos patches — **é** a `lista.txt` que o servidor serve |
+| `ferramentas/monta_patch.py` | o gerador do zip |
+| `ferramentas/publica_patch.sh` | o publicador (roda no Windows) |
+| `cliente\Atualizador.exe`, `.ini` | **fora do git** — instalados no cliente desta máquina |
+| `CLAUDE.md` | §1 (o mapa), §4.18 (a regra nova), §5 (as duas armadilhas), §6 (leitura) |
+| `ARQUITETURA.md` | §4: o acoplamento entre máquinas |
+| `RECEITAS.md` | §11: o ciclo de um patch |
+| `REFERENCIA.md` | caminhos, URL do patch, Go instalado |
+| `PENDENCIAS.md`, `IMPLANTACAO.md` | §5b e §9: o que o patch fechou e o que sobrou |

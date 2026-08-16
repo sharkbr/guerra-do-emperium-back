@@ -745,7 +745,171 @@ desenha — são independentes, e a divergência não dá erro.
 
 **4. O instalador do cliente.** Levantamento em `PENDENCIAS.md` §5b. O servidor
 já tem onde hospedar: `https://libraro.filiponegrao.com.br/patch/`, servindo
-`/var/www/patch`. ~~Antes de empacotar, **anotar a lista de patches do NEMO**~~
+`/var/www/patch`. **O gancho passou a ser usado em 2026-08-15**: o Atualizador
+(`patcher/`) já publica e aplica patch incremental por ali — falta só o primeiro
+download. *Uma dívida que volta para o Mac:* publicar patch exige SSH ao
+servidor **a partir do Windows**, que é onde os zips nascem, e esta máquina não
+tem chave autorizada (o deploy sempre foi do Mac). Autorizar a chave do Windows
+no `authorized_keys` do servidor é trabalho de uma linha, e é o que falta para o
+ciclo fechar sem intermediário. ~~Antes de empacotar, **anotar a lista de patches do NEMO**~~
 — **feito em 2026-08-14**: o `.epi` ao lado do exe traz os nomes, e a lista está
 no `REFERENCIA.md`. O exe continua sendo o único arquivo do conjunto sem gerador
 versionado, então a cópia fria dele continua obrigatória.
+
+---
+
+## 10. O servidor de patches — a especificação do lado de lá
+
+Escrita em 2026-08-15, quando o Atualizador ficou pronto do lado do cliente
+(`patcher/LEIAME.md`). **Esta seção é autocontida de propósito:** dá para
+executá-la numa sessão do Mac sem ler o resto do plano, e sem o cliente.
+
+O resumo em uma frase: **o servidor não roda nada — ele serve três arquivos
+estáticos.** Não há processo, não há banco, não há repositório sendo lido. O
+`ferramentas/publica_patch.sh` deposita arquivos em `/var/www/patch/` por `scp`,
+e o Apache os entrega. Toda a inteligência está no cliente.
+
+### 10.1 O contrato HTTP — três recursos, e nada mais
+
+Base: `https://libraro.filiponegrao.com.br/patch/`
+
+| recurso | o quê | ausência (404) |
+|---|---|---|
+| `lista.txt` | o índice dos patches | o Atualizador avisa e **libera o botão Jogar** |
+| `<numero>-<apelido>.zip` | um patch | falha aquele patch; os anteriores continuam válidos |
+| `patcher.txt` | canal de auto-atualização do próprio Atualizador | **normal** — é o estado enquanto não há versão nova |
+
+**`lista.txt`** — UTF-8, uma linha por patch, **cinco campos separados por
+TAB**, `#` comenta, linha vazia é ignorada:
+
+```
+0001<TAB>0001-ia-do-homunculo.zip<TAB><sha256><TAB>42236<TAB>IA do homunculo
+```
+
+Ele **não é escrito no servidor**: é o `patcher/patches.txt` do repositório,
+enviado sem tradução nenhuma. Editar a cópia do servidor à mão funciona até a
+próxima publicação, que sobrescreve — e aí a divergência aparece como patch que
+"voltou".
+
+Linha malformada é **erro fatal** para o Atualizador, e isso é de propósito:
+pular linha ruim deixaria o cliente do jogador num estado que ninguém consegue
+reproduzir aqui.
+
+**`patcher.txt`** — chave=valor, `#` comenta:
+
+```
+versao=2
+arquivo=Atualizador-2.exe
+sha256=<64 hex>
+```
+
+**Códigos esperados: 200 e 404.** Qualquer outra coisa — 403, 500, redirect
+para página de erro em HTML — vira mensagem de falha na tela do jogador. O
+Atualizador segue redirect (até 10), o que é o que permite migrar de host sem
+quebrar quem tem o `.ini` antigo (§10.6).
+
+**Sem autenticação e sem cookie.** Patch não é segredo: quem tiver o link baixa.
+A garantia de integridade é o sha256 do registro, servido por HTTPS.
+
+### 10.2 O que já está pronto — não refazer
+
+Tudo isto saiu do `ferramentas/configura_web.sh` na Etapa 8, e está no ar:
+
+- `/var/www/patch`, dono `ragnarok`, modo 755
+- no vhost de 443: `Alias /patch /var/www/patch`, com
+  `Options -Indexes +FollowSymLinks` e `Require all granted`
+- **`ProxyPass /patch !`** — a linha que impede o `ProxyPass /` do site de
+  engolir o caminho. É a mais fácil de perder ao mexer no vhost, e a falha dela
+  é traiçoeira: o Atualizador receberia **200 com o HTML do site** no lugar da
+  lista, e o erro que apareceria na tela seria "lista.txt linha 12: 1 campos"
+- HTTPS com Let's Encrypt e renovação automática
+
+### 10.3 O que falta — o checklist da sessão paralela
+
+**1. Autorizar a chave do Windows.** É o que trava a publicação hoje. Os zips
+nascem em `C:\GuerraDoEmperium\cliente`, que só existe no Windows, então quem
+publica é o Windows — e essa máquina nunca teve chave no servidor (o deploy
+sempre foi do Mac). A chave foi gerada lá em 2026-08-15:
+
+```
+ssh libraro 'echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtTGgt4TsS2WSkrn3avQ4/ID63TsIBTtDWCREZiUK74 guerra-windows-patch" >> ~/.ssh/authorized_keys'
+```
+
+Conferir depois com `ssh -o BatchMode=yes libraro true` **do Windows** — do Mac
+não prova nada.
+
+*Alternativa, se preferir não dar acesso ao Windows:* o publicador aceita
+`SERVIDOR=` e `DESTINO=` por variável de ambiente, então os zips podem ir para o
+Mac por outro caminho e serem publicados de lá. Custa um passo manual em toda
+publicação; a chave custa uma linha, uma vez.
+
+**2. Cabeçalhos de cache.** Não é urgente — hoje não há CDN e o cliente Go não
+cacheia. Vira urgente no dia em que entrar um proxy na frente, e aí o sintoma é
+"publiquei e ninguém recebeu". A regra é oposta para os dois tipos de arquivo,
+porque um muda e o outro nunca:
+
+```apache
+<Directory /var/www/patch>
+    <FilesMatch "\.(txt)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+    <FilesMatch "\.(zip|exe)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</Directory>
+```
+
+O `immutable` é honesto aqui: zip publicado **nunca** muda de conteúdo — o
+número não se reaproveita, e correção é patch novo.
+
+**3. Disco e retenção.** Os zips só acumulam: **zip publicado não se apaga**,
+porque quem instalou o cliente há seis meses ainda vai baixar o patch 0001. O
+que decide quando o acúmulo incomoda é refazer o pacote de instalação (que já
+nasce com tudo aplicado) e só então avaliar. Enquanto o total estiver na casa
+das centenas de MB, não há o que fazer — mas convém saber o número: incluir
+`du -sh /var/www/patch` na sonda da Etapa 13.
+
+### 10.4 Como testar sem o cliente
+
+Prova o contrato inteiro por fora, e roda de qualquer máquina:
+
+```bash
+BASE=https://libraro.filiponegrao.com.br/patch
+
+# 1. a lista existe, é 200 e é texto (e NÃO o HTML do site)
+curl -sI $BASE/lista.txt | head -3
+curl -s  $BASE/lista.txt | head -20
+
+# 2. os campos estão separados por TAB, e não por espaço
+curl -s $BASE/lista.txt | grep -v '^#' | grep -P '\t.*\t.*\t.*\t' | wc -l
+
+# 3. cada zip existe e confere com o sha da lista
+curl -s $BASE/lista.txt | grep -v '^#' | while IFS=$'\t' read -r n a s b d; do
+    curl -s "$BASE/$a" | sha256sum | grep -q "$s" && echo "$n ok" || echo "$n FALHOU"
+done
+
+# 4. o canal do Atualizador: 404 é resposta certa enquanto não há versão nova
+curl -sI $BASE/patcher.txt | head -1
+```
+
+### 10.5 O que quebra calado
+
+- **`ProxyPass /patch !` removido** — 200 com HTML do site (§10.2).
+- **`lista.txt` com espaços no lugar de TAB** — o editor que "arruma" o arquivo
+  no servidor quebra todo mundo de uma vez. Não editar lá; publicar de novo.
+- **zip apagado do servidor mas mantido na lista** — só falha para quem ainda
+  não o aplicou, ou seja, para o jogador novo. Ninguém percebe do lado de cá.
+- **`Options +Indexes`** — expõe a lista de arquivos. Não quebra o patch, mas
+  não há motivo para ligar.
+- **certificado vencido** — o Go recusa e o jogador vê "não consegui conferir as
+  atualizações". A renovação é automática, mas é o primeiro lugar a olhar se um
+  dia todos falharem no mesmo dia.
+
+### 10.6 Migrar para outro host, um dia
+
+A URL base mora no `Atualizador.ini` do jogador, então trocá-la só vale para
+quem instalar depois. Para os que já têm, o caminho é manter o `/patch`
+respondendo com **301** para o novo endereço — o Atualizador segue redirect.
+
+Isso importa se o pacote de instalação (4 GB) sair do Drive para object storage:
+os patches podem ir junto sem que ninguém precise reinstalar nada.

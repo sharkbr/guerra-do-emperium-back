@@ -1,0 +1,15 @@
+# Guerra do Emperium - os patches do cliente, em ordem.
+#
+# GERADO por ferramentas/monta_patch.py. Este arquivo E a lista que
+# o Atualizador baixa: o publica_patch.sh o envia ao servidor como
+# https://libraro.filiponegrao.com.br/patch/lista.txt, sem traducao.
+#
+# Uma linha por patch, campos separados por TAB:
+#     numero  arquivo  sha256  bytes  descricao
+#
+# O numero so cresce e nunca se reaproveita: e ele que o cliente
+# guarda em patch\aplicados.txt para saber o que ja tem. Corrigir um
+# patch publicado se faz com um patch NOVO por cima, nunca editando
+# ou removendo a linha de um antigo - quem ja aplicou nao voltaria.
+
+0001	0001-ia-do-homunculo-e-do-mercenario.zip	921fabb6266404b3b994218b306dd09edc347448faf3a8bc38d9573a349c574c	42236	IA do homunculo e do mercenario

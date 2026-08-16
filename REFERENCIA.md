@@ -28,6 +28,10 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | **Servidor de produção** | `138.197.155.31` = `libraro.filiponegrao.com.br` (login 6900, char 6121, map 5121) |
 | **Site de contas** | https://libraro.filiponegrao.com.br — é por ele que o jogador se cadastra (`new_account: no`) |
 | **Endereço do servidor no cliente** | `cliente\data\sclientinfo.xml` — **é este que vale**, não o `clientinfo.xml`; manter os dois iguais (`CLAUDE.md` §5) |
+| **Atualizador (patcher)** | `cliente\Atualizador.exe` — é o que o jogador clica; código em `patcher/`, doc em `patcher/LEIAME.md` |
+| **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, os `.zip`, `patcher.txt`) |
+| Montar / publicar patch | `python ferramentas/monta_patch.py --nome "..." <caminhos>` e `ferramentas/publica_patch.sh` (`RECEITAS.md` §11) |
+| Estado do patch na máquina do jogador | `cliente\patch\aplicados.txt` e `cliente\patch\atualizador.log` |
 | Patches do NEMO no exe | `cliente\GuerraDoEmperium.epi` — lista na seção abaixo |
 | Conta de teste | `teste` / `teste123`, `group_id 99`, `account_id 2000000` |
 | Personagem da v1 | `Abernus` — hoje Swordman, Base 99 |
@@ -56,6 +60,8 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 ## Ambiente instalado nesta máquina
 
 - Visual Studio 2022 Community 17.14.37 (workload C++)
+- Go 1.26.5 em `C:\Program Files\Go` — instalado em 2026-08-15 para compilar o
+  Atualizador (`patcher/`). O site também é Go, mas compila no servidor.
 - Python 2.7.18 em `C:\Python27` — para o `get4.py` do NEMO e para o
   `ferramentas/` deste repo
 - WARP 1.5.3 em `C:\Users\User\Downloads\WARP-rock_win32`

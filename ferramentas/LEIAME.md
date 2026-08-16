@@ -2889,3 +2889,60 @@ Dois cuidados que valem para todo patch de exe daqui:
 
 O backup vai para `GuerraDoEmperium.exe.BACKUP-bandeiras-AAAAMMDD-HHMM`, e a
 gravação recusa qualquer coisa que mude o tamanho do arquivo.
+
+## `monta_patch.py` — o zip que leva a mudança do cliente até o jogador
+
+```
+python monta_patch.py --nome "IA do homunculo" AI_sakray data/sclientinfo.xml
+python monta_patch.py --nome "Arte nova" --desde 2026-08-14
+python monta_patch.py --lista      # o que já foi montado
+python monta_patch.py --confere    # o registro contra os .zip desta máquina
+```
+
+Monta `C:\GuerraDoEmperium\patches\NNNN-apelido.zip` com os arquivos indicados,
+**relativos à raiz do cliente**, e acrescenta a linha em `patcher/patches.txt` —
+que é o registro versionado e, sem tradução nenhuma, a `lista.txt` que o
+servidor serve. Publicar é outro passo (`publica_patch.sh`).
+
+**O `--desde` é a via preguiçosa e a mais perigosa.** Ele varre o cliente por
+data de modificação e traz junto o que foi tocado por acidente; a lista impressa
+antes de gravar existe para isso ser visto.
+
+**Filtra o lixo que as próprias ferramentas deixam** — `*BACKUP*`, `.ORIGINAL`,
+`.INGLES`, `.KOREA`. São 65 arquivos e 711 MB no cliente desta máquina, 28 deles
+cópias de 22 MB do `itemInfo.lua`: sem o filtro, um `--desde` manda tudo isso
+para o jogador.
+
+**Recusa o `Atualizador.exe`**, que tem canal próprio pelo motivo do
+`patcher/LEIAME.md` §3.
+
+Duas armadilhas do Python 2 que ele resolve e que valem para qualquer
+ferramenta que ande pela pasta do cliente:
+
+- **os caminhos nascem `unicode`.** A `AI_sakray\` tem arquivo de nome coreano;
+  com caminho `str` o `os.walk` usa a API ANSI, devolve `????` e o primeiro
+  `os.stat` estoura com *"A sintaxe do nome do arquivo está incorreta"* — erro
+  que parece do arquivo e é do leitor.
+- **e o `print` também quebra.** Nome que o console não representa derruba a
+  ferramenta com `UnicodeEncodeError` **depois** de o zip já estar escrito. A
+  saída passa por um `codecs.getwriter(..., 'replace')` no topo do arquivo.
+
+## `publica_patch.sh` — põe os patches no ar
+
+```
+ferramentas/publica_patch.sh                # os patches que faltam
+ferramentas/publica_patch.sh --atualizador  # o Atualizador.exe novo
+ferramentas/publica_patch.sh --confere      # o placar, local e remoto
+```
+
+**Roda no Windows**, e não no Mac: os zips saem de `C:\GuerraDoEmperium\cliente`,
+que só existe aqui. Precisa de acesso SSH ao servidor (`SERVIDOR=libraro`).
+
+**O zip sobe antes da lista**, sempre — na ordem inversa, quem abrisse o
+Atualizador no intervalo pediria um arquivo que ainda não existe. E **zip antigo
+não se apaga do servidor**: quem instalou o cliente ontem ainda vai baixar o
+patch 0001 amanhã.
+
+Confere o sha256 de cada zip contra o registro antes de enviar. Divergência aí é
+zip remontado com o mesmo nome e conteúdo diferente — o jeito silencioso de o
+Atualizador do jogador recusar tudo depois.

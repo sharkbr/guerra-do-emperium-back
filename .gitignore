@@ -83,3 +83,11 @@ desktop.ini
 # Configuracao do site: senha do banco e segredo (CLAUDE.md secao 8)
 site/config.env
 site/site
+
+# --- O Atualizador: o binario e derivado, o codigo e' que e' versionado ---
+#
+# `go build` refaz o exe em segundos, e ele tem 9 MB - versionar um por versao
+# encheria a arvore sem acrescentar nada que o codigo nao diga. O registro dos
+# patches (patcher/patches.txt) esse SIM e' versionado: e' a fonte da lista.txt
+# que o servidor serve, e o git e' o historico do que foi ao ar.
+patcher/Atualizador.exe

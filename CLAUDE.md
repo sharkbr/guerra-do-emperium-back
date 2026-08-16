@@ -24,6 +24,9 @@ lidos **por seção**, nunca inteiros.
 | Ferramentas (Python 2.7) | `ferramentas/` | sim |
 | **Cliente** | `C:\GuerraDoEmperium\cliente\` | **não** |
 | Override do cliente | `C:\GuerraDoEmperium\cliente\data\` | **não** |
+| **O Atualizador** (patcher, em Go) | `patcher/` | sim |
+| Registro dos patches publicados | `patcher/patches.txt` | sim |
+| Os `.zip` de patch | `C:\GuerraDoEmperium\patches\` | **não** |
 
 **O cliente inteiro está fora do git.** Toda alteração nele (arte, `itemInfo.lua`,
 `.lub`, `.bson`, mapas) é irreproduzível a partir do repositório — só existe nesta
@@ -296,6 +299,23 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     a divergência entra na entrega, por escrito. É a mesma família da §4.11
     ("comentário não é trava"), do outro lado: lá o comentário mentia sobre
     uma ordem, aqui sobre uma regra.
+18. **Mudança de CLIENTE não chega ao jogador pelo deploy — precisa de
+    patch.** O `implanta.sh` leva servidor: NPC, `db/`, `conf/`, `src/`. Tudo
+    que mora em `C:\GuerraDoEmperium\cliente\` (arte, `.lub`, `itemInfo.lua`,
+    sprite, exe, `AI_sakray\`) está numa cópia congelada na máquina de cada
+    jogador, do dia em que ele baixou o cliente, e **só se move por
+    `ferramentas/monta_patch.py` + `publica_patch.sh`** (`RECEITAS.md` §11).
+
+    Falha calada e assimétrica: aqui funciona, e para o jogador não existe.
+    Pior quando as duas metades andam juntas — item novo cujo nome vive no
+    `itemInfo.lua` do cliente e cuja entrega vive no `item_db` do servidor
+    aparece **sem nome** para quem não recebeu o patch, sem erro nenhum. É a
+    §4.9 ("metade da configuração no cliente") um degrau acima: lá as duas
+    metades divergem entre arquivos, aqui divergem entre máquinas.
+
+    Na prática: ao terminar qualquer trabalho, perguntar **onde o arquivo
+    mora**. Se o caminho começa em `C:\GuerraDoEmperium\cliente\`, o trabalho
+    não acabou no `git commit`.
 
 ## 5. Armadilhas deste ambiente
 
@@ -1037,6 +1057,28 @@ Produziram diagnóstico falso e custaram retrabalho:
   invalid"* — que manda conferir `s1`/`p1` e o sexo `S` da conta, tudo já
   correto. Medido em 2026-08-15 com uma senha de 32 caracteres. O
   `ferramentas/configura_servidor.sh` gera 20.
+- **Há arquivo de nome COREANO dentro do cliente, e ele quebra o Python 2 de
+  duas maneiras diferentes.** A `AI_sakray\` traz o manual da IA do kRO
+  (`호문클루스…htm`), e provavelmente não é o único. **Na leitura:** `os.walk`
+  com caminho `str` usa a API ANSI, devolve o nome como `????` e o primeiro
+  `os.stat` estoura com *"A sintaxe do nome do arquivo... está incorreta"* —
+  mensagem que aponta para o arquivo, quando o defeito é do leitor. A saída é
+  o caminho nascer `unicode` (`ur'C:\...'`), que faz o Python usar a API W.
+  **Na escrita da tela:** um `print` daquele nome derruba a ferramenta com
+  `UnicodeEncodeError` — e derruba **depois** de o trabalho já ter sido feito,
+  deixando saída pela metade. A saída é uma linha no topo do arquivo:
+  `sys.stdout = codecs.getwriter(sys.stdout.encoding or 'cp1252')(sys.stdout,
+  'replace')`. Sem `sys.stdout.encoding` (saída redirecionada) o Python 2
+  devolve `None`, então o `or` não é enfeite. Medido em 2026-08-15 no
+  `monta_patch.py`.
+- **`StretchDIBits` com `HALFTONE` falha de vez em quando, e mente no
+  `GetLastError`.** Duas execuções do mesmo binário devolveram 630 linhas
+  (sucesso) e a terceira devolveu **0** — com o erro do sistema dizendo
+  *"operação concluída com êxito"*. O sintoma foi a janela do Atualizador
+  nascer com o retângulo da arte preto, sem nada no log. Quem depende de
+  imagem redimensionada faz a redução **em código** e deixa para o GDI só a
+  cópia 1:1; o custo é ~30 linhas de média de caixa e o ganho é a janela nunca
+  nascer preta. Ver `patcher/janela.go`, função `reduz`.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
@@ -1057,6 +1099,7 @@ Produziram diagnóstico falso e custaram retrabalho:
 | `CUSTOMIZACAO-VISUAL.md` | frente visual (cidade destruída) | só a seção |
 | `REDUCAO-DE-DANO.md` | o que entra e o que escapa das duas reduções — a de cartas (resistência a humano) e a **geral de 80%** de guerra e PvP; a §1d é o inventário fechado do dano que escapa (veneno, sangramento e irmãos) | consulta, só a seção — **antes de discutir número de PvP** |
 | `IMPLANTACAO.md` | o plano de subir para o servidor Linux — etapas, o que roda em qual máquina, e a regra de escopo do Mac | **§1 inteira antes de qualquer sessão no Mac**; depois só a etapa |
+| `patcher/LEIAME.md` | como a mudança de cliente chega ao jogador: o Atualizador, o formato do patch e o ciclo de publicação | antes de mexer no patcher ou publicar patch |
 | `CATALOGO-*.md` | o que está à venda, modelos, retratos | consulta |
 
 **Ordem para uma tarefa nova:** `CLAUDE.md` → `scripts_guerra.conf` (o que já

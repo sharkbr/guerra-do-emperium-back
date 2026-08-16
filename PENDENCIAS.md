@@ -1919,6 +1919,21 @@ Aberto em 2026-08-12, quando o dono disse que vai montar um instalador para os
 jogadores. **Nada disto foi feito** — é o levantamento que a pergunta gerou,
 guardado para quando o instalador for puxado de verdade.
 
+> **O PATCH, que era a outra metade disto, FOI FEITO em 2026-08-15.** O
+> `Atualizador.exe` (`patcher/`), o gerador (`ferramentas/monta_patch.py`) e o
+> publicador (`ferramentas/publica_patch.sh`) estão de pé e testados ponta a
+> ponta; o ciclo está em `RECEITAS.md` §11. O que segue aberto aqui é só o
+> **primeiro download**: empacotar os 4,9 GB de um jeito reproduzível.
+> Duas consequências para quem for empacotar:
+>
+> - o pacote leva o `Atualizador.exe` e o `Atualizador.ini` na raiz, e o atalho
+>   do jogador aponta para o Atualizador — não para o `GuerraDoEmperium.exe`;
+> - **o pacote não precisa mais ser refeito a cada mudança.** Ele pode ficar
+>   parado numa versão conhecida: quem baixar hoje recebe todos os patches
+>   publicados desde então, na primeira abertura. Isso muda a economia do
+>   problema — o que era "reempacotar 4,9 GB toda semana" virou "reempacotar
+>   quando o acúmulo de patches ficar grande demais".
+
 ### As ferramentas NÃO entram no instalador
 
 Foi a pergunta que abriu o assunto ("o instalador teria que incluir esses
@@ -2009,8 +2024,10 @@ delas precisar rodar de novo.
    do git, como o resto do cliente: quem empacotar tem de lembrar dela.
 
 **Já existe um `PatchClient\`** na raiz do cliente (30 `.bmp`, 2,5 MB) — é o
-skin do patcher do próprio kRO. Se a ideia for patch incremental depois do
-primeiro install, o esqueleto está lá.
+skin do patcher do próprio kRO. ~~Se a ideia for patch incremental depois do
+primeiro install, o esqueleto está lá.~~ **O patch incremental foi feito em
+2026-08-15 sem usar esse skin** — o Atualizador desenha a própria janela, com a
+arte do site. Os `.bmp` continuam lá se um dia entrar o painel de notícias.
 
 ---
 
