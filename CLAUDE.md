@@ -1272,6 +1272,54 @@ Produziram diagnóstico falso e custaram retrabalho:
   três jogadores; a dívida está na `PENDENCIAS.md` §0. **Ao pular etapa do
   deploy por causa de jogador online, anotar o que ficou por carregar** — o
   próprio deploy já não lembra.
+- **"Unknown Item" com sprite de maçã NUNCA é problema de servidor — e a
+  pergunta que resolve é *quais* itens, não *por que aquele item*.** O nome do
+  item não trafega na rede: o servidor manda o ID e quem desenha é o
+  `itemInfo.lua` do cliente (§4.9). Nenhum reinício, `@reloaditemdb` ou deploy
+  muda uma letra daquela janela. O que a falta de carga no servidor produz é o
+  sintoma **oposto**: o item **some da lista**, sem virar "Unknown".
+  O que engana é a falha ser **seletiva** — numa vitrine de 23 linhas os itens
+  antigos aparecem certos e só os novos caem no *fallback*, o que parece "cinco
+  itens quebrados" e não "cliente com a tabela velha". O diagnóstico é uma
+  medição só: **listar os IDs que falham e comparar com a lista dos que mudaram
+  de tabela**. Em 2026-08-17 os 11 que falhavam eram exatamente as 11 entradas
+  novas do `itemInfo.lua`, e a lista saiu de graça do backup que a ferramenta
+  deixa ao lado (`itemInfo.lua.BACKUP-<data>`). Se bater, a causa é uma das
+  duas: cliente aberto **antes** de o arquivo mudar (§3 — só se lê na
+  inicialização), ou o patch não chegou à máquina do jogador (§4.18).
+- **O registro de patch do jogador é indexado por número, e DUAS contagens
+  diferentes começam em 0001.** O `patch\aplicados.txt` é o diário dos patches
+  (`patcher/patches.txt`), mas o instalador numera os pedaços da BASE
+  (`patcher/base.txt`) do 0001 também — e enquanto o `marcaAplicado` morou
+  dentro do `aplica`, o instalador anotava os pedaços ali. Resultado medido em
+  2026-08-17: todo cliente instalado tinha `0002 As musicas` e `0003 A Guerra
+  do Emperium (1 de 2)` no diário, e o Atualizador **pulou os patches 0002 e
+  0003 para sempre**, dizendo *"Cliente atualizado"* com a barra cheia. Os
+  números 0004 e 0005 ficaram queimados para os dois patches seguintes.
+  A trava é comparar **número E sha256** (`leAplicados` devolve o sha), e ela
+  ainda **repara sozinha** quem já instalou. A regra geral: **número não
+  identifica artefato entre duas contagens independentes** — quem decide é o
+  conteúdo. E o sintoma aparece a três passos dali, na janela de loja, sem
+  nada apontar para o registro.
+- **`@reloadscript` sem `@reloaditemdb` FAZ O ITEM NOVO SUMIR DA VITRINE.** O
+  `npc_parse_shop` descarta todo item que não está no `item_db` em memória
+  (`npc.cpp:4142`, *"Invalid sell item ... (id 'N')"*) — então recarregar o
+  script de uma loja que ganhou item novo **antes** de recarregar o `item_db`
+  publica a vitrine sem ele. A linha de aviso existe, e some sob centenas de
+  `[Warning]` inofensivos dos mercados. **Item novo em loja: `@reloaditemdb`
+  primeiro, `@reloadscript` depois.** Num boot completo o problema não existe
+  (o `item_db` carrega antes dos NPCs), o que o torna exclusivo do
+  recarregamento parcial — e faz o mesmo servidor se comportar de dois jeitos.
+  Medido em 2026-08-17 com dois placeholders novos.
+- **`go build` sem `GOOS`/`GOARCH` explícitos num script que PUBLICA binário é
+  uma bomba de fuso horário de máquina.** O `-o Jogar.exe` decide só o nome:
+  rodado do Mac, o mesmo comando produz um **Mach-O chamado `Jogar.exe`**, com
+  sha256 correto, que sobe para o canal de auto-atualização de todos os
+  jogadores e não abre em máquina nenhuma. Nada mais no caminho olha para o
+  formato do arquivo — nem o `scp`, nem o `patcher.txt`, nem o Atualizador que
+  o baixa. O `publica_patch.sh` fixa `GOOS=windows GOARCH=amd64` e confere a
+  assinatura `MZ` depois de compilar; achado em 2026-08-17, ao rever o caminho
+  antes de publicar do Mac.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

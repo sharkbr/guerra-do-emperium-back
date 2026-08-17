@@ -1590,6 +1590,12 @@ servidor e o dono quis subi-los junto com um anúncio.
   (`damn`, `ass`, `sex`) **depois** de o Atualizador ter baixado o patch
   `0002`. Antes do patch, o cliente desta máquina já responde certo — o que
   não prova nada sobre o do jogador.
+  **A pré-condição só foi cumprida em 2026-08-17**: o patch `0002` estava
+  publicado desde 16/08 e **nunca chegava** — o Atualizador o pulava por causa
+  do registro (`HISTORICO.md`, "O 'Unknown Item' que não era do servidor").
+  O `data\manner.txt` só apareceu no cliente instalado às 11:54 daquele dia.
+  Ou seja: até ali, qualquer teste desta linha teria reprovado pelo motivo
+  errado.
 - **O horário da guerra em si.** Com o fuso certo, a próxima quinta 20:00 e o
   próximo domingo 18:00 são a conferência de verdade do
   `npc/guerra/horario_da_guerra.txt`, que nunca rodou numa quinta com o
@@ -1597,14 +1603,30 @@ servidor e o dono quis subi-los junto com um anúncio.
 
 ---
 
-## 1u. O Atualizador 2 no ar — falta a conferência na TELA (2026-08-16)
+## 1u. O Atualizador 3 — o CDN ficou no 2, e falta uma conferência na TELA
 
-**Publicado em 2026-08-16, nos dois canais**, e os dois servem o mesmo binário
-(sha256 `38c454c2ae1bc8…`, conferido contra o que o CDN devolve). O registro
-está no `HISTORICO.md`, "O instalador que virou atualizador na pasta errada".
+**Os dois canais estão servindo binários DIFERENTES**, medido em 2026-08-17:
 
-**O que sobra é o único pedaço que sonda nenhuma responde:** baixar do site
-numa pasta que já tenha um `data.grf` dentro (uma instalação de RO antiga
+| destino | versão | sha256 | alcança |
+|---|---|---|---|
+| canal (`libraro:/var/www/patch/patcher.txt`) | **3** | `0106ae7f90e1…` | quem já instalou |
+| bucket / CDN (`cdn.filiponegrao.com.br/Jogar.exe`) | **2** | `38c454c2ae1bc8…` | quem baixa do site |
+
+O 3 é o que conserta o registro de patches (`HISTORICO.md`, "O 'Unknown Item'
+que não era do servidor"), e no canal ele já está — foi assim que todo cliente
+instalado se reparou sozinho. **Falta o passo 3 da `RECEITAS.md` §11b**, o
+`rclone` para o bucket, que só roda desta máquina (o `spaces.env` mora aqui e
+não é versionado).
+
+**Enquanto o bucket ficar no 2**, quem baixa do site instala com o defeito: a
+instalação **não** passa pela auto-atualização (o `aplicaPatches` é chamado
+direto, ver o comentário dele), então a primeira sessão do jogador novo sai sem
+os patches 0002 e 0003 — sem os nomes dos itens novos e com a censura ligada.
+Só na **segunda** abertura o `trabalha` roda o `autoAtualiza`, troca para o 3 e
+repara. Ou seja: não é perda permanente, é uma primeira impressão ruim.
+
+**O que sobra além disso é o pedaço que sonda nenhuma responde:** baixar do
+site numa pasta que já tenha um `data.grf` dentro (uma instalação de RO antiga
 serve) e abrir. Tem de aparecer a tela de escolher onde instalar, e não o botão
 JOGAR.
 

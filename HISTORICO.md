@@ -10533,3 +10533,172 @@ Duas ressalvas registradas: o **teto de refino do servidor é +16**
 tier **Etel** (`Armor` 2, `Weapon` 5), que o browiki não tem coluna para,
 recebeu as colunas `Armadura` e `Arma nv. 4` — 1.066 itens do `item_db` estão
 nele.
+
+## O "Unknown Item" que não era do servidor: dois patches calados por um número (2026-08-17)
+
+O relato chegou como defeito de item: **"diversos itens dos requisitados
+recentemente (52) tiveram itens não identificados, sprite de maçã, unknown
+item"**, com dois screenshots do Acessorista e do Capeiro. O que se via era
+"Unknown Item" com o desenho de uma maçã e `Item ID: 0`, no meio de itens que
+apareciam com o nome certo.
+
+Terminou três camadas abaixo, num arquivo de seis linhas na máquina do
+jogador — e o caminho até lá passou por **dois diagnósticos errados meus**,
+que ficam registrados porque cada um é uma lição desta casa em ação.
+
+### O que os "Unknown" eram, e a primeira medição que fechou
+
+O nome de item **não trafega na rede** (§4.9): o servidor manda o ID, e quem
+desenha o nome é o `itemInfo.lua` do cliente. Então "Unknown Item" é sempre
+cliente, nunca servidor — e a pergunta certa não é *por que aquele item*, é
+*quais* itens.
+
+Eram **exatamente as 11 entradas escritas no `itemInfo.lua` em 16/08 às
+22:50**. A prova saiu de graça porque a ferramenta deixa cópia ao lado do
+arquivo: comparar `itemInfo.lua` com `itemInfo.lua.BACKUP-20260816-2250` dá a
+lista fechada, e ela bate item a item com o que a tela mostrava.
+
+| loja | as que apareciam como *Unknown* |
+|---|---|
+| Capeiro | Manto Abstrato (20986), Manto Maligno (480085), Relíquia Divina (480319), Som do Luar (480446), Asas de Garuda (480278) |
+| Acessorista | Anel da Colheita (490272), Núcleo de Verus (490336), Luvas de Somatologia (490497) |
+| Senhor das Armas | Lacma (28739) |
+| Lorde das Armaduras | Quatrenhum (450226) |
+| Escudeiro | Símbolo do Éden (460050) |
+
+**O sintoma é seletivo, e é isso que engana:** os itens antigos da mesma
+vitrine desenham o nome certo, só os novos caem no *fallback*. Uma vitrine de
+23 linhas onde 5 falham não parece "cliente desatualizado" — parece cinco
+itens quebrados.
+
+### O primeiro engano: o cliente de dev, que era mesmo cliente velho
+
+Na máquina de desenvolvimento havia **dois clientes vivos**, um aberto às
+22:23 e outro às 01:06, e o `itemInfo.lua` fora gravado às 22:50, entre os
+dois. O cliente só lê aquele arquivo na inicialização (§3), então o de 22:23
+tinha a tabela velha em memória. Diagnóstico correto **para aquela tela**, e a
+correção era fechar e reabrir.
+
+Ainda no mesmo exame apareceu um segundo defeito, esse do servidor e de outra
+natureza: **duas peças não estavam na vitrine, nem como "Unknown"**. Ampliando
+a lista em *nearest-neighbor* — a lição de 2026-08-11 sobre não comparar tela a
+olho —, entre "Luvas de Proteção" e "Palheta de Elunium" havia **uma** linha
+onde deviam existir duas. O log explicou:
+
+```
+(08/17/2026 01:10:10) [Warning] npc_parse_shop: Invalid sell item ... (id '490497').
+(08/17/2026 01:10:10) [Warning] npc_parse_shop: Invalid sell item ... (id '28739').
+```
+
+Foi `@reloadscript` **sem** `@reloaditemdb`: os dois placeholders novos ainda
+não existiam em memória, e o `npc_parse_shop` descarta da loja todo item que
+não está no `item_db` — com uma linha de aviso que fica soterrada. Virou regra
+no `CLAUDE.md` §5. Num boot completo isso não acontece, porque o `item_db`
+carrega antes dos NPCs; é falha exclusiva do recarregamento parcial.
+
+### O segundo engano, e o que o desfez
+
+Fechado o caso da máquina de dev, veio a frase que mudou tudo: **"mas isso
+também aconteceu em PRD, então esse restart também faltou em prd. Esse é meu
+ponto."**
+
+A resposta que dei foi metade certa e serve de aviso: conferi a produção —
+`git` em dia, os quatro serviços reiniciados às 02:11:34, patch 0003 publicado
+com o sha256 batendo — e concluí que, como "Unknown Item" é cliente, o jogador
+devia ter aberto o jogo por fora do Atualizador. **Descartei a única hipótese
+que sobrava sem medir a única coisa que faltava medir: o cliente instalado.**
+
+O que desfez foi o dono mandar o caminho do print: `C:\Program Files
+(x86)\GuerraDoEmperium\ScreenShot\`. Aquele é o cliente que o instalador
+montou e o Atualizador mantém — e ele mostrava o mesmo defeito.
+
+### A causa raiz: duas contagens que começam em 0001
+
+O `patch\aplicados.txt` daquele cliente estava assim:
+
+```
+0002  ddbebeaa…  As musicas
+0003  2d7c9102…  A Guerra do Emperium (1 de 2)
+0004  1d57df90…  A Guerra do Emperium (2 de 2)
+0005  6a02f3c9…  O motor do jogo
+0001  921fabb6…  IA do homunculo e do mercenario
+```
+
+As quatro primeiras linhas **são os pedaços da base** — nome, número e sha256
+idênticos aos do `patcher/base.txt`. O instalador estava anotando o primeiro
+download no diário dos **patches**, e as duas contagens começam em 0001. O
+Atualizador comparava só o número: viu 0002 e 0003, deu por aplicados, e
+mostrou *"Cliente atualizado"* com a barra cheia.
+
+Ou seja: **os patches 0002 (censura) e 0003 (itens novos das lojas de
+Prontera) nunca chegaram a ninguém**, e os números 0004 e 0005 estavam
+queimados para os dois patches seguintes.
+
+A conferência independente, no disco daquele cliente, fechou sem margem: o
+`itemInfo.lua` instalado tinha **23.829.419 bytes — byte a byte a versão de
+antes das 11 entradas**, o `data\manner.txt` do patch 0002 não existia, e
+nenhum arquivo de arte do 0003 estava lá.
+
+**Por que passou tanto tempo parecendo saudável:** o pedaço 0001 da base é o
+`data.grf`, do tipo `bruto`, que sai por outro ramo do `aplicaPedaco` e **não**
+anota. Isso deixou o número 0001 livre, o patch 0001 foi aplicado de verdade, e
+o conjunto se comportou como um sistema que funciona.
+
+**E o comentário do `Instala` já dizia que isso não podia acontecer:**
+
+> *Ela NÃO grava `aplicados.txt` para os pedaços da base: aquele arquivo é o
+> registro dos PATCHES, e misturar os dois faria o Atualizador achar que já
+> aplicou patches que nunca viu.*
+
+Era verdade sobre o `Instala` e falsa sobre o programa — o `aplicaPedaco`
+reusava o `aplica`, e o `marcaAplicado` morava lá dentro. É a §4.17 no
+Atualizador: **o cabeçalho descrevia uma trava que o código não tinha.**
+
+### O conserto, e por que ele repara sozinho
+
+1. **`aplica` não anota mais.** Quem anota é o laço de patches, o único dos
+   dois chamadores que tem o que registrar. O instalador não encosta no
+   diário — agora de fato, e não só no comentário.
+2. **O registro passa a ser conferido por número E sha256.** Esta metade é a
+   que **conserta quem já instalou**: o `0002` gravado tem o sha da base, não
+   bate com o do patch, e o patch é reaplicado na abertura seguinte. Nenhum
+   jogador precisou reinstalar nem apagar arquivo — que era a saída de suporte
+   prevista no `ARQUITETURA.md`, e que não foi preciso usar.
+
+Três testes offline em `patcher/patch_test.go`, um deles com o conteúdo
+**literal** do registro quebrado. `VERSAO` subiu para 3.
+
+**O reparo foi medido no disco**, às 11:54 de 2026-08-17: o `itemInfo.lua` do
+cliente instalado passou a 23.848.327 bytes com as 11 entradas, o `manner.txt`
+apareceu, e o `aplicados.txt` ganhou duas linhas novas — `0002` e `0003` com os
+shas dos patches de verdade, por cima das linhas da base, que ficam ali como
+história inofensiva.
+
+### O terceiro defeito, achado ao rever o caminho da publicação
+
+O `publica_patch.sh --atualizador` chamava `go build` **sem fixar
+`GOOS`/`GOARCH`**. Rodado do Mac — que é de onde sai o deploy —, produziria um
+binário **Mach-O chamado `Jogar.exe`**, com sha256 correto, subindo para o
+canal de auto-atualização de todos os jogadores e não abrindo em máquina
+nenhuma. O `-o` só decide o nome do arquivo. Agora é explícito
+(`GOOS=windows GOARCH=amd64`), com uma conferência de assinatura `MZ` atrás,
+que pega qualquer outro jeito de o build sair errado.
+
+### O que este caso ensina
+
+- **"Unknown Item" é sempre cliente.** O nome do item não trafega na rede, e
+  nenhum reinício de servidor muda uma letra do que a janela de loja escreve. O
+  que a falta de restart produz é o sintoma **oposto**: o item some da lista.
+- **A pergunta que resolveu foi *quais* itens.** A lista dos que falhavam bateu
+  com uma lista que existia em outro lugar — as 11 entradas novas do
+  `itemInfo.lua` —, e foi essa coincidência, e não o exame de nenhum item, que
+  apontou a causa. Vale para toda falha seletiva.
+- **Duas medições certas não fecham uma terceira.** Patch publicado com sha
+  correto e servidor no ar são fatos, e eu tratei os dois como se
+  respondessem "o jogador recebeu". Quem respondia era o disco do jogador — e
+  ele estava a um `ls` de distância o tempo todo. Mesma família do
+  `ajusta_tamanho_fonte.py`: verificação que passa não é prova de efeito.
+- **O dono insistiu, e estava certo.** O primeiro diagnóstico explicava a tela
+  que ele mandou e não explicava a produção; ele apontou isso, e a resposta foi
+  mais uma explicação plausível em vez de mais uma medição. O que abriu o caso
+  foi um caminho de arquivo.

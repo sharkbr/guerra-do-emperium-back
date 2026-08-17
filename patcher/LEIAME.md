@@ -176,6 +176,20 @@ faz com um patch NOVO por cima. Editar a linha de um antigo não alcança quem
 já o aplicou — e remover a linha faz o zip sumir do ar para quem ainda não
 baixou.
 
+**Mas o número sozinho NÃO identifica um patch, e o `aplicados.txt` é
+conferido por número E sha256.** Não é zelo: a BASE tem numeração própria, que
+também começa em 0001, e enquanto o registro morou dentro do `aplica` o
+instalador anotava os pedaços do primeiro download no diário dos patches. Todo
+cliente instalado até 2026-08-17 tinha `0002 As musicas` e `0003 A Guerra do
+Emperium (1 de 2)` ali dentro — pedaços da base ocupando o número de dois
+patches, que o Atualizador então pulava para sempre, com a barra cheia e a
+mensagem *"Cliente atualizado"*. O sha faz o conteúdo ser a palavra final, e é
+ele que **repara sozinho** um registro sujo: sha que não bate é patch que falta.
+Por isso `leAplicados` devolve `map[int]string`, e por isso `aplica` não
+escreve no diário — quem escreve é o laço de patches, o único dos dois
+chamadores que tem o que registrar. Ver `HISTORICO.md`, "O 'Unknown Item' que
+não era do servidor".
+
 **O zip sobe antes da lista.** Na ordem inversa, todo cliente que abrisse o
 Atualizador naquele intervalo pediria um arquivo que ainda não existe. Pelo
 mesmo motivo, zip antigo **não se apaga** do servidor: quem instalou o cliente
