@@ -1603,29 +1603,28 @@ servidor e o dono quis subi-los junto com um anúncio.
 
 ---
 
-## 1u. O Atualizador 3 — o CDN ficou no 2, e falta uma conferência na TELA
+## 1u. O Atualizador 3 no ar — falta a conferência na TELA
 
-**Os dois canais estão servindo binários DIFERENTES**, medido em 2026-08-17:
+**Publicado nos dois destinos em 2026-08-17**, e os três lugares servem o mesmo
+byte (sha256 `0106ae7f90e1…`): o canal
+(`libraro:/var/www/patch/patcher.txt` → `Jogar-3.exe`), o bucket/CDN
+(`cdn.filiponegrao.com.br/Jogar.exe`) e o exe que está na instalação de
+produção desta máquina. O 3 é o que conserta o registro de patches
+(`HISTORICO.md`, "O 'Unknown Item' que não era do servidor").
 
-| destino | versão | sha256 | alcança |
-|---|---|---|---|
-| canal (`libraro:/var/www/patch/patcher.txt`) | **3** | `0106ae7f90e1…` | quem já instalou |
-| bucket / CDN (`cdn.filiponegrao.com.br/Jogar.exe`) | **2** | `38c454c2ae1bc8…` | quem baixa do site |
+**O binário que subiu ao bucket foi o do canal, e não um build novo** — é o
+mesmo que já se auto-atualizou e aplicou os patches 0002 e 0003 numa
+instalação de verdade, ou seja está provado em campo. Recompilar daria outro
+sha para o mesmo código-fonte e deixaria os dois destinos divergentes sem
+motivo.
 
-O 3 é o que conserta o registro de patches (`HISTORICO.md`, "O 'Unknown Item'
-que não era do servidor"), e no canal ele já está — foi assim que todo cliente
-instalado se reparou sozinho. **Falta o passo 3 da `RECEITAS.md` §11b**, o
-`rclone` para o bucket, que só roda desta máquina (o `spaces.env` mora aqui e
-não é versionado).
+Uma nota para a próxima vez: o `Jogar.exe` do bucket tem **nome fixo**, e a
+`RECEITAS.md` §12 avisa que nome fixo no CDN pode exigir **purgar o cache** no
+painel do Spaces (é o caso do `data.grf`). Desta vez não foi preciso — o CDN
+devolveu o sha novo na primeira consulta —, mas se um dia a conferência do
+passo 4 insistir no sha antigo, é aí que se olha.
 
-**Enquanto o bucket ficar no 2**, quem baixa do site instala com o defeito: a
-instalação **não** passa pela auto-atualização (o `aplicaPatches` é chamado
-direto, ver o comentário dele), então a primeira sessão do jogador novo sai sem
-os patches 0002 e 0003 — sem os nomes dos itens novos e com a censura ligada.
-Só na **segunda** abertura o `trabalha` roda o `autoAtualiza`, troca para o 3 e
-repara. Ou seja: não é perda permanente, é uma primeira impressão ruim.
-
-**O que sobra além disso é o pedaço que sonda nenhuma responde:** baixar do
+**O que sobra é o pedaço que sonda nenhuma responde:** baixar do
 site numa pasta que já tenha um `data.grf` dentro (uma instalação de RO antiga
 serve) e abrir. Tem de aparecer a tela de escolher onde instalar, e não o botão
 JOGAR.
