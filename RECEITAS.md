@@ -360,8 +360,68 @@ aplica sozinho na próxima abertura.
 **Para apagar arquivo do cliente do jogador:** `--apagar data/algum.lub`.
 
 **O Atualizador não vai por patch.** Ele não consegue se sobrescrever enquanto
-roda; tem canal próprio — subir o `const VERSAO` em `patcher/main.go` e rodar
-`ferramentas/publica_patch.sh --atualizador`. Detalhes em `patcher/LEIAME.md`.
+roda; tem canal próprio. Detalhes em `patcher/LEIAME.md`, e a receita é a §11b
+logo abaixo — que são **dois** lugares, não um.
+
+---
+
+## 11b. Publicar um `Jogar.exe` novo (o Atualizador)
+
+**São dois destinos, e um só não basta** — a diferença é com quem cada um fala:
+
+| destino | alcança | se faltar |
+|---|---|---|
+| canal de auto-atualização | quem **já instalou** | jogador antigo fica na versão velha |
+| bucket / CDN | quem vai **baixar do site** | jogador novo baixa o exe com o defeito |
+
+Publicar só o canal conserta exatamente quem não precisava do conserto: quem
+está com problema de *instalação* não tem instalação nossa, logo nunca passa
+pelo canal.
+
+1. Subir o `const VERSAO` em `patcher/main.go`. É ele que o canal compara.
+2. **O canal** — o script recompila antes de enviar, então não há como publicar
+   binário velho por engano:
+
+   ```bash
+   export PATH="/c/Program Files/Go/bin:$PATH"
+   ferramentas/publica_patch.sh --atualizador
+   ```
+
+3. **O bucket**, de onde o site serve o botão Baixar
+   (`SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe`):
+
+   ```bash
+   set -a; . /c/GuerraDoEmperium/spaces.env; set +a
+   export RCLONE_CONFIG="" RCLONE_CONFIG_SPACES_TYPE=s3 \
+          RCLONE_CONFIG_SPACES_PROVIDER=DigitalOcean \
+          RCLONE_CONFIG_SPACES_ACCESS_KEY_ID="$SPACES_KEY" \
+          RCLONE_CONFIG_SPACES_SECRET_ACCESS_KEY="$SPACES_SECRET" \
+          RCLONE_CONFIG_SPACES_ENDPOINT="$SPACES_REGIAO.digitaloceanspaces.com" \
+          RCLONE_CONFIG_SPACES_ACL=public-read \
+          RCLONE_CONFIG_SPACES_NO_CHECK_BUCKET=true
+   /c/GuerraDoEmperium/bin/rclone.exe copyto patcher/Jogar.exe \
+       "spaces:$SPACES_BUCKET/Jogar.exe"
+   ```
+
+   O `public-read` e o `NO_CHECK_BUCKET` não são enfeite: sem o primeiro o
+   download dá 403, e sem o segundo o rclone tenta `CreateBucket` e leva 403
+   antes de subir um byte (`CLAUDE.md` §5).
+
+4. **Conferir que os dois ficaram de acordo**, comparando o sha256 dos três:
+
+   ```bash
+   curl -s https://libraro.filiponegrao.com.br/patch/patcher.txt   # o do canal
+   curl -sL https://cdn.filiponegrao.com.br/Jogar.exe | sha256sum  # o do CDN
+   sha256sum patcher/Jogar.exe                                     # o local
+   ```
+
+   Divergência aí é um canal servindo uma versão e o outro servindo outra — e
+   nada mais no caminho olha para isso.
+5. `git add patcher/main.go` e commitar.
+
+**O que nenhuma sonda responde** é se o exe faz na tela o que se espera. Toda
+publicação de Atualizador termina com um teste manual, e ele vale mais que os
+quatro passos acima.
 
 ---
 

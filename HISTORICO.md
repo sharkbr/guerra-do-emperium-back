@@ -10141,8 +10141,28 @@ regra é a do `CLAUDE.md` §5, um degrau acima: *sonda que responde pela pergunt
 errada*. "Tem `data.grf`?" não é "tem o jogo instalado?", do mesmo jeito que
 "o patch foi aplicado?" não era "o patch teve efeito na tela?".
 
-O `VERSAO` subiu para **2**, e o `Jogar.exe` foi recompilado. Falta publicar —
-ver `PENDENCIAS.md` §1u.
+O `VERSAO` subiu para **2**, e o `Jogar.exe` foi recompilado.
+
+### Publicado em 2026-08-16, nos DOIS lugares
+
+Um só não bastava, e o que decide qual importa é **quem tem o problema**:
+
+- **`publica_patch.sh --atualizador`** — o canal de auto-atualização, que
+  alcança quem **já instalou**. `Jogar-2.exe` no ar, com o `patcher.txt`
+  apontando para ele (o script recompila antes de enviar, então não há como
+  publicar binário velho por engano).
+- **O bucket** (`cdn.filiponegrao.com.br/Jogar.exe`), que é de onde o **site**
+  serve o botão Baixar. **Este é o que resolve o caso do relato**: quem caiu
+  nele não tem instalação nossa, logo não passa pelo canal de auto-atualização
+  nunca. Publicar só o canal consertaria exatamente quem não precisava.
+
+A conferência que fechou: o sha256 do que o CDN devolve
+(`38c454c2ae1bc8…`) é **byte a byte** o do `patcher.txt` e o do binário local —
+os dois canais servem o mesmo exe, e não uma versão cada.
+
+**Falta o teste na tela**, que nenhuma sonda offline substitui: baixar do site
+numa pasta que já tenha um `data.grf` e abrir. Tem de aparecer a tela de
+escolher onde instalar, e não o botão JOGAR.
 
 ## 48 itens nas lojas de Prontera e 5 na Máquina de Sombrios (2026-08-16)
 

@@ -34,6 +34,8 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | Backups que as ferramentas deixam | `C:\GuerraDoEmperium\_backups_removidos\` — inclui as duas cópias do exe **antes** dos nossos patches |
 | **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, os `.zip`, `patcher.txt`) |
 | Montar / publicar patch | `python ferramentas/monta_patch.py --nome "..." <caminhos>` e `ferramentas/publica_patch.sh` (`RECEITAS.md` §11) |
+| Publicar um `Jogar.exe` novo | **dois destinos, e um só não basta**: `publica_patch.sh --atualizador` (alcança quem já instalou) **e** o `rclone` para o bucket (de onde o site serve o botão Baixar). Passo a passo e a conferência de sha256 em `RECEITAS.md` §11b |
+| Site: URL do botão Baixar | `SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe` — o mesmo bucket da base, arquivo na raiz |
 | **Primeiro download (a base)** | `https://cdn.filiponegrao.com.br/` → bucket **`ftn`**, região **`tor1`** (Toronto), DigitalOcean Spaces com CDN. Serve `base.txt`, o `data.grf` e os `.zip` da base |
 | Chave do bucket | `C:\GuerraDoEmperium\spaces.env` — **fora do git**. Precisa de escopo de **escrita** no `ftn`; chave só-leitura lista e não sobe (`CLAUDE.md` §5) |
 | Uploader | `C:\GuerraDoEmperium\bin\rclone.exe` — binário único, sem instalação |

@@ -1534,47 +1534,26 @@ servidor e o dono quis subi-los junto com um anúncio.
 
 ---
 
-## 1u. O Atualizador 2 está compilado e NÃO está publicado (2026-08-16)
+## 1u. O Atualizador 2 no ar — falta a conferência na TELA (2026-08-16)
 
-O conserto do instalador que virava atualizador na pasta errada
-(`HISTORICO.md`, "O instalador que virou atualizador na pasta errada") está no
-código, testado e compilado — `patcher/Jogar.exe`, `VERSAO = 2`. **Enquanto
-não for publicado, o jogador continua baixando o exe com o defeito.**
+**Publicado em 2026-08-16, nos dois canais**, e os dois servem o mesmo binário
+(sha256 `38c454c2ae1bc8…`, conferido contra o que o CDN devolve). O registro
+está no `HISTORICO.md`, "O instalador que virou atualizador na pasta errada".
 
-São **dois** lugares, e um só não basta:
+**O que sobra é o único pedaço que sonda nenhuma responde:** baixar do site
+numa pasta que já tenha um `data.grf` dentro (uma instalação de RO antiga
+serve) e abrir. Tem de aparecer a tela de escolher onde instalar, e não o botão
+JOGAR.
 
-```bash
-# 1. o canal de auto-atualização — alcança quem JÁ instalou
-ferramentas/publica_patch.sh --atualizador
+O `TestPrecisaInstalar` cobre as quatro combinações e passa — mas ele testa a
+função, não o caminho até a tela, e a lição desta casa é que **verificação
+offline que passa não é prova de efeito** (`CLAUDE.md` §5).
 
-# 2. o bucket, que é de onde o SITE serve o botão Baixar
-#    (SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe)
-set -a; . /c/GuerraDoEmperium/spaces.env; set +a
-export RCLONE_CONFIG="" RCLONE_CONFIG_SPACES_TYPE=s3 \
-       RCLONE_CONFIG_SPACES_PROVIDER=DigitalOcean \
-       RCLONE_CONFIG_SPACES_ACCESS_KEY_ID="$SPACES_KEY" \
-       RCLONE_CONFIG_SPACES_SECRET_ACCESS_KEY="$SPACES_SECRET" \
-       RCLONE_CONFIG_SPACES_ENDPOINT="$SPACES_REGIAO.digitaloceanspaces.com" \
-       RCLONE_CONFIG_SPACES_ACL=public-read \
-       RCLONE_CONFIG_SPACES_NO_CHECK_BUCKET=true
-/c/GuerraDoEmperium/bin/rclone.exe copyto patcher/Jogar.exe \
-    "spaces:$SPACES_BUCKET/Jogar.exe"
-```
+**A saída para quem estiver travado enquanto isso:** mover o `Jogar.exe` para
+uma pasta **vazia** (a de Downloads serve) e abrir de lá.
 
-O `public-read` e o `NO_CHECK_BUCKET` não são enfeite — sem o primeiro o
-instalador baixa 403, e sem o segundo o rclone tenta `CreateBucket` e leva 403
-antes de subir um byte (`CLAUDE.md` §5).
-
-O passo 2 é o que resolve o caso do relato: quem está com o problema **não
-tem instalação nossa**, logo não passa pelo canal de auto-atualização nunca.
-Publicar só o canal conserta exatamente quem não precisava do conserto.
-
-**A conferência que decide** é baixar do site numa pasta de RO antiga (ou
-qualquer pasta com um `data.grf` dentro) e abrir: tem de aparecer a tela de
-escolher onde instalar, e não o botão JOGAR.
-
-**A saída para quem estiver travado agora**, sem esperar a publicação: mover o
-`Jogar.exe` para uma pasta **vazia** (a de Downloads serve) e abrir de lá.
+**Como se publica um Atualizador** — os dois destinos, os comandos e a
+conferência de sha256 — virou receita: `RECEITAS.md` §11b.
 
 ---
 
