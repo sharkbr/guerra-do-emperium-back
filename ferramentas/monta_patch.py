@@ -71,6 +71,14 @@ LIXO = ('BACKUP', '.ORIGINAL', '.original', '.INGLES', '.KOREA', '.KOR',
 # renomeia o exe em execucao antes de gravar o novo - ver `patcher/LEIAME.md`.
 FORA_DO_PATCH = ('jogar.exe', 'jogar.ini', 'atualizador.exe', 'atualizador.ini')
 
+# Os dois arquivos que dizem ao cliente ONDE E O SERVIDOR. Desde 2026-08-16
+# esta maquina e dev/hml e o cliente daqui aponta para 127.0.0.1 a maior parte
+# do tempo - mandar um deles em patch nesse estado desconecta TODO jogador que
+# ja tem o cliente, e o unico sintoma e "nao consigo entrar". Por isso o patch
+# so os aceita depois de conferir o endereco (ver `confere_apontamento`).
+APONTAMENTOS = ('data/clientinfo.xml', 'data/sclientinfo.xml')
+ENDERECOS_LOCAIS = ('127.0.0.1', 'localhost', '0.0.0.0', '::1', '')
+
 
 def morre(msg):
     print u'ERRO: %s' % msg
@@ -93,6 +101,24 @@ def apelido(nome):
 def e_lixo(caminho):
     nome = os.path.basename(caminho)
     return any(marca in nome for marca in LIXO)
+
+
+def confere_apontamento(interno, cheio):
+    u"""Recusa mandar ao jogador um clientinfo apontado para a maquina local.
+
+    So roda quando um dos dois xml esta NO PATCH - patch que nao os inclui
+    nao mexe no apontamento de ninguem e passa direto."""
+    achado = re.search(r'<address>([^<]*)</address>', open(cheio, 'rb').read())
+    if not achado:
+        morre(u'%s nao tem <address> - conferir a mao antes de publicar'
+              % interno)
+    endereco = achado.group(1).decode('cp1252').strip()
+    if endereco in ENDERECOS_LOCAIS:
+        morre(u'%s aponta para "%s" (a maquina local).\n'
+              u'       Esta maquina e dev/hml. Mandar isso em patch tira TODO\n'
+              u'       jogador do ar, e o sintoma dele e so "nao consigo entrar".\n'
+              u'       Aponte os DOIS xml para a producao antes de montar.'
+              % (interno, endereco))
 
 
 def le_registro():
@@ -235,6 +261,10 @@ def monta(nome, alvos, apagar):
         if interno.lower() in FORA_DO_PATCH:
             morre(u'%s nao entra em patch comum - ele se atualiza pelo canal '
                   u'proprio (patcher/LEIAME.md)' % interno)
+
+    for interno, cheio in arquivos:
+        if interno.lower().replace('\\', '/') in APONTAMENTOS:
+            confere_apontamento(interno, cheio)
 
     if not arquivos and not apagar:
         morre(u'nada a empacotar')

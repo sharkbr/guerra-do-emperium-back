@@ -50,6 +50,7 @@ import codecs
 import hashlib
 import io
 import os
+import re
 import sys
 import zipfile
 
@@ -134,6 +135,46 @@ def texto(caminho):
     if isinstance(caminho, str):
         return caminho.decode('mbcs')
     return caminho
+
+
+# ---------------------------------------------------------------------------
+# A trava do apontamento (2026-08-16)
+#
+# Desde que esta maquina virou DEV/HML - producao passou a ser uma instalacao
+# separada, feita pelo instalador -, o cliente de `C:\GuerraDoEmperium` aponta
+# para 127.0.0.1 na maior parte do tempo. Empacotar a base nesse estado publica
+# um cliente que manda todo jogador novo tentar logar na PROPRIA maquina dele:
+# 3,4 GB corretos, sha256 fechando, e ninguem entra.
+#
+# A falha e' calada de duas maneiras que se somam: o `<address>` esta' num
+# arquivo de configuracao que ninguem revisa antes de publicar, e SAO DOIS
+# ARQUIVOS (o exe e' <servertype>sakray</servertype>, entao quem vale e' o
+# `sclientinfo.xml` - CLAUDE.md secao 5). Por isso a conferencia olha os dois:
+# um apontando para casa ja' e' motivo de parar.
+ENDERECOS_LOCAIS = (u'127.0.0.1', u'localhost', u'0.0.0.0', u'::1', u'')
+APONTAMENTOS = (u'clientinfo.xml', u'sclientinfo.xml')
+
+
+def confere_apontamento(escape=u'--permite-local'):
+    """Recusa empacotar cliente apontado para a maquina local."""
+    for nome in APONTAMENTOS:
+        cam = os.path.join(CLIENTE, u'data', nome)
+        if not os.path.isfile(cam):
+            continue
+        achado = re.search(r'<address>([^<]*)</address>',
+                           open(cam, 'rb').read())
+        if not achado:
+            morre(u'%s nao tem <address> - conferir a mao antes de publicar'
+                  % nome)
+        endereco = achado.group(1).decode('cp1252').strip()
+        if endereco in ENDERECOS_LOCAIS:
+            morre(u'data\\%s aponta para "%s" (a maquina local).\n'
+                  u'       Esta maquina e dev/hml; empacotar assim publica um\n'
+                  u'       cliente que nunca vai achar o servidor.\n'
+                  u'       Aponte os DOIS xml para a producao e rode de novo\n'
+                  u'       (ou passe %s, se for de proposito).'
+                  % (nome, endereco, escape))
+    return True
 
 
 def e_lixo(caminho):
@@ -447,6 +488,10 @@ def main():
                   % (so, u', '.join(g[0] for g in GRUPOS)))
     if not os.path.isdir(CLIENTE):
         morre(u'cliente nao encontrado: %s' % CLIENTE)
+    # Antes de qualquer sha256 de 3 GB: o apontamento e' a unica coisa que faz
+    # um pacote inteiro e correto nao servir para nada.
+    if u'--permite-local' not in args:
+        confere_apontamento()
     monta(so)
 
 

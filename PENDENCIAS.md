@@ -1473,14 +1473,64 @@ cabeçalho de lá). Os detalhes completos estão no cabeçalho do
   golpes por segundo (ASPD 178); que ele acerta com folga (precisão ~575);
   e que os 15 milhões de HP com 90% de redução dão um combate longo, não
   instantâneo nem impossível.
-- **O balão "Quest" sobre a Criança** (`npctalk "Quest"` a cada 5s, pedido em
-  2026-08-15) — nunca visto em jogo. Conferir se aparece e se o intervalo
-  não incomoda.
+- **O balão sobre a Criança** — nunca visto em jogo, e mudou de natureza em
+  2026-08-16: era `npctalk "Quest"` a cada 5s (a palavra escrita num balão de
+  fala, para todo mundo) e virou o ícone "!" nativo, por `questinfo`, só para
+  quem ainda não aceitou. Conferir que aparece, que **some ao aceitar** e que
+  quem já concluiu não vê nada. Depois de `@reloadscript` é preciso sair e
+  voltar ao mapa — ver o `OnInit` do arquivo.
 - **As quatro coordenadas do Cassino de Comodo (Suad, Assessor, Bolãozão,
   Maram) continuam sem conferência célula a célula** — o `cmd_in02.gat` tem
   o bit DES e o `ferramentas/grf.py` não lê esse tipo de entrada (CLAUDE.md
   §5). O dono já andou por ali no teste e não reportou problema, o que é
   evidência forte de que estão andáveis, mas não é a mesma coisa que medir.
+
+---
+
+## 1t. Os quatro pedidos de 2026-08-16 — três esperam o deploy
+
+O que foi feito e por quê está no `HISTORICO.md`, "Quatro pedidos da primeira
+semana com gente do outro lado". Aqui fica **só o que falta**.
+
+**Um dos quatro já está no ar:** a censura foi publicada como patch `0002` e
+chega ao jogador na próxima abertura do `Jogar.exe`. Os outros três são
+servidor e o dono quis subi-los junto com um anúncio.
+
+### O que falta, na ordem
+
+1. **`ferramentas/implanta.sh`** (do Mac) — leva os três: o NPC da Criança, o
+   `conf/guerra/groups_guerra.yml` e a linha nova no rodapé do
+   `conf/groups.yml`.
+2. **O fuso, que o deploy NÃO faz** — é do sistema, não do repositório:
+
+   ```bash
+   ssh libraro timedatectl set-timezone America/Sao_Paulo
+   ssh libraro date          # tem de bater com o relógio de Brasília
+   ```
+
+   Ou, do jeito idempotente e que deixa rastro,
+   `ssh libraro 'bash -s' < ferramentas/provisiona.sh` — o fuso virou o passo
+   0 de lá, e os outros passos pulam sozinhos o que já está feito.
+3. **Reiniciar os quatro servidores** — processo já no ar mantém o fuso
+   antigo, e sem isso a mudança do item 2 não vale para o jogo.
+4. `@reloadatcommand` **não é necessário** se os servidores forem reiniciados
+   no item 3; se um dia o autoloot for mexido sem reinício, é esse o comando
+   (e não `@reloadscript`).
+
+### O que só a tela decide
+
+- **`@autoloot 100` funciona numa conta de jogador comum?** A conta de teste
+  é grupo 99 e responde por outro caminho — testar nela dá falso positivo,
+  pelo mesmo motivo da §4.7 do `CLAUDE.md` valer para `NoDrop`. O teste
+  honesto é numa conta nova.
+- **A censura sumiu mesmo?** Digitar em jogo uma das 25 palavras da lista
+  (`damn`, `ass`, `sex`) **depois** de o Atualizador ter baixado o patch
+  `0002`. Antes do patch, o cliente desta máquina já responde certo — o que
+  não prova nada sobre o do jogador.
+- **O horário da guerra em si.** Com o fuso certo, a próxima quinta 20:00 e o
+  próximo domingo 18:00 são a conferência de verdade do
+  `npc/guerra/horario_da_guerra.txt`, que nunca rodou numa quinta com o
+  relógio certo.
 
 ---
 

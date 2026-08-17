@@ -34,7 +34,7 @@ lidos **por seção**, nunca inteiros.
 | **Nossa regra de jogo** (taxas) | `rathena/conf/guerra/` | sim |
 | Config de máquina (senha, IP) | `rathena/conf/import/` | **não** |
 | Ferramentas (Python 2.7) | `ferramentas/` | sim |
-| **Cliente** | `C:\GuerraDoEmperium\cliente\` | **não** |
+| **Cliente (DEV/HML)** | `C:\GuerraDoEmperium\cliente\` | **não** |
 | Override do cliente | `C:\GuerraDoEmperium\cliente\data\` | **não** |
 | **O Atualizador** (patcher, em Go) | `patcher/` | sim |
 | Registro dos patches publicados | `patcher/patches.txt` | sim |
@@ -46,6 +46,16 @@ lidos **por seção**, nunca inteiros.
 **O cliente inteiro está fora do git.** Toda alteração nele (arte, `itemInfo.lua`,
 `.lub`, `.bson`, mapas) é irreproduzível a partir do repositório — só existe nesta
 máquina. Fazer backup antes de sobrescrever, sempre.
+
+**E desde 2026-08-16 esse cliente é o de DEV/HML:** os dois `clientinfo` dele
+apontam para `127.0.0.1`, o servidor local desta máquina. **Produção se testa
+noutra pasta**, instalada pelo instalador como um jogador faria — decisão do
+dono, e é o que separa "funciona aqui" de "funciona para quem baixou". Trocar de
+lado é editar o `<address>` dos **dois** xml (`data\clientinfo.xml` e
+`data\sclientinfo.xml`, este último é o que vale — §5); o endereço de produção
+está no backup ao lado de cada um. As duas ferramentas de empacotamento
+**recusam** cliente apontado para local, e é a única coisa que impede um pacote
+inteiro, correto e inútil.
 
 ## 2. A lei da customização
 
@@ -66,6 +76,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `conf/char_athena.conf` | uma linha `import: conf/guerra/char_guerra.txt` (nome de personagem com acento) |
 | `conf/inter_athena.conf` | uma linha `import: conf/guerra/inter_guerra.txt` (`default_codepage: latin1`) |
 | `conf/login_athena.conf` | uma linha `import: conf/guerra/login_guerra.txt` (`use_MD5_passwords: yes`) |
+| `conf/groups.yml` | um `- Path: conf/guerra/groups_guerra.yml` no rodapé, **antes** do `conf/import/groups.yml` que já estava lá (permissão de comando por grupo — hoje o `@autoloot` e irmãos para o grupo 0). Funciona por merge: o `parseBodyNode` procura o `Id` antes de criar (`src/map/pc_groups.cpp:74`), e grupo que já existe recebe os campos por cima — por isso o nosso arquivo não repete `Name` nem `Level` |
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um — a única exceção da linha de cima. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
@@ -113,6 +124,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/` (item, conjunto) | `@reloaditemdb` — pega item **e** conjunto |
 | `npc/guerra/barters_guerra.yml` (loja de troca) | `@reloadbarterdb` — **não** é `@reloadscript` |
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
+| `conf/guerra/groups_guerra.yml` (permissão de comando) | `@reloadatcommand` — chama `pc_groups_reload()` (`src/map/atcommand.cpp:4422`). **Não** é `@reloadbattleconf` nem `@reloadscript` |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
 | `db/guerra/refine.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
@@ -585,6 +597,13 @@ Produziram diagnóstico falso e custaram retrabalho:
   aparece enquanto o jogador aperta Login responde numa tentativa o que três
   hipóteses plausíveis não responderam. Mesma família do `ajusta_tamanho_fonte.py`
   — marca que não depende do efeito procurado.
+  **Desde 2026-08-16 isso ganhou um segundo gume:** este cliente é o de dev e
+  aponta para `127.0.0.1`, então **empacotar a base ou mandar um dos dois xml
+  em patch publica um cliente que ninguém consegue usar** — 3,4 GB corretos,
+  sha256 fechando, e todo mundo tentando logar na própria máquina. O
+  `monta_patch.py` e o `monta_cliente.py` passaram a recusar endereço local
+  (`confere_apontamento`), e é bom que recusem: nada mais nesse caminho olha
+  para esse campo.
 - **A IA do homúnculo e a do mercenário moram em `cliente\AI_sakray\`, não em
   `cliente\AI\` — e a pasta errada não dá erro até alguém invocar o bicho.**
   Pelo mesmo `<servertype>sakray</servertype>` da entrada acima, as **cinco**
@@ -1127,6 +1146,30 @@ Produziram diagnóstico falso e custaram retrabalho:
   **Consequência para qualquer cliente novo:** copiar a pasta do jogo NÃO
   basta. O `Setup.exe` tem de rodar uma vez por máquina, e o atalho precisa do
   bit `SLDF_RUNAS_USER`. O instalador faz os dois (`patcher/video.go`).
+- **O servidor de jogo NÃO tem relógio próprio: `gettime` e `OnClock` leem a
+  hora LOCAL da máquina — e a máquina de produção nasce em UTC.** A imagem
+  Ubuntu da DigitalOcean vem em `Etc/UTC`, três horas à frente do Brasil, e
+  nada no rAthena converte nada: o `gettime(DT_HOUR)` de script e os rótulos
+  `OnClock<hhmm>` saem do `localtime` do processo. Consequência medida em
+  2026-08-16: a Guerra do Emperium de quinta às 20h
+  (`npc/guerra/horario_da_guerra.txt`, horário de Brasília) abriria às **17h**
+  do Brasil — e a falha é completamente calada, porque o script roda, o anúncio
+  sai e o Emperium nasce, só que na hora errada. O `ferramentas/provisiona.sh`
+  passou a fazer `timedatectl set-timezone America/Sao_Paulo` como passo 0
+  (`America/Sao_Paulo` e não `-03`: se o horário de verão voltar, quem resolve é
+  o `tzdata`). **Processo já no ar mantém o fuso antigo** — reiniciar os quatro
+  servidores depois. E a sonda que decide é `ssh <servidor> date`, nunca o
+  relógio de quem está olhando.
+- **A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt`
+  dentro do GRF — não no rAthena e não no exe.** Procurar `fuck`/`swear`/
+  `badword` no `GuerraDoEmperium.exe` devolve zero e leva a concluir que o
+  filtro não existe; procurar no `rathena/` também, porque o emulador não
+  filtra palavra nenhuma. O arquivo tem 1409 linhas (uma palavra por linha,
+  CP949, CRLF) e **25 delas são inglês** (`fuck`, `sex`, `shit`, `ass`,
+  `damn`…), nenhuma em português — daí o sintoma parecer "censura de inglês".
+  Desligar é um override em `cliente\data\manner.txt` (o `DataFolderFirst` faz
+  o disco vencer o GRF), com uma palavra inócua dentro em vez de vazio, e vai
+  ao jogador **por patch** — é cliente, ver §4.18.
 - **`nslookup` sai com código 0 mesmo quando o domínio NÃO existe.** Uma sonda
   `nslookup $host && echo "resolve"` imprime *"resolve"* para NXDOMAIN, e em
   2026-08-16 isso deu por propagado um endereço de CDN que não existia — a

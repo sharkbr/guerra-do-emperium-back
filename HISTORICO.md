@@ -9900,3 +9900,176 @@ dar qualquer coisa por entregue.
 O passo que falta é de infra e ficou preparado em `IMPLANTACAO.md` §9b — a
 variável no `/etc/guerra/site.env`, que o deploy **não** sobrescreve, porque o
 `configura_web.sh` preserva o arquivo onde mora o `SITE_SEGREDO`.
+
+---
+
+## Quatro pedidos da primeira semana com gente do outro lado (2026-08-16)
+
+Os quatro chegaram juntos, e o que os separa não é o assunto — é **o destino**
+(`RECEITAS.md` §0). Três são servidor e ficaram prontos esperando o deploy, que
+o dono queria fazer junto com um anúncio; um é cliente, e por isso **já está no
+ar** como patch `0002`.
+
+### 1. O servidor está três horas à frente do Brasil
+
+O dono viu **00:50** no servidor com 21:50 em Brasília. Não é o rAthena: a
+imagem da DigitalOcean nasce em `Etc/UTC` e nada no provisionamento mexia nisso.
+
+Importa porque **o servidor de jogo não tem relógio próprio**. O `gettime` de
+script e os rótulos `OnClock<hhmm>` leem a hora **local** da máquina, sem
+conversão — e a Guerra do Emperium está escrita em horário de Brasília
+(`npc/guerra/horario_da_guerra.txt`, quinta 20–22 e domingo 18–20). Em UTC, a
+guerra de quinta abriria às **17h** do Brasil. Falha calada e completa: o script
+roda, o anúncio sai, o Emperium nasce — na hora errada. O cabeçalho daquele
+arquivo já avisava, em 2026-08-13: *"se um dia o servidor mudar de fuso, estes
+números mudam junto e nada avisa"*. Não era um "se": nunca tinha sido conferido.
+
+A correção é uma linha, e ela entrou no `ferramentas/provisiona.sh` como **passo
+0** — antes do swap, porque é o único passo que muda a hora de tudo que roda
+depois, inclusive o carimbo dos logs que o MariaDB cria nos passos abaixo:
+
+```bash
+timedatectl set-timezone America/Sao_Paulo
+```
+
+`America/Sao_Paulo`, e não `-03`: o Brasil não tem horário de verão desde 2019,
+mas se voltar a ter quem resolve é o `tzdata` num `apt upgrade`. Fuso fixo teria
+de ser lembrado por alguém.
+
+**Processo que já está no ar mantém o fuso antigo** — os quatro servidores
+precisam ser reiniciados depois, e é isso que o passo avisa na tela.
+
+### 2. Autoloot não existia, e a pista era enganosa
+
+O `@autoloot` estava no grupo **1** (`Super Player`), que nenhuma conta de
+jogador tem. O grupo **0** (`Player`, o de toda conta nova) só tinha `changedress`
+e `resurrect`. Na prática o recurso não existia no servidor, e a única pista era
+o *"Unknown Command"* na tela — que **não** quer dizer falta de permissão
+(`CLAUDE.md` §3), então quem testasse concluiria que o comando não foi compilado.
+
+Entraram os **três** comandos da mesma família, porque são três formas do mesmo
+recurso e o rAthena as trata em separado: `@autoloot <0-100>` (tudo), `@alootid`
+(um item) e `@autoloottype` (uma categoria).
+
+**Nenhum deles vem ligado**, e foi decisão do dono: o jogador digita quando
+quiser e o estado vale até o logout. Ligar sozinho exigiria um `OnPCLoginEvent`
+com `atcommand`, e aí quem desligasse voltaria a ter ligado no login seguinte.
+
+Pela lei da customização (§2), nada disso foi escrito no arquivo do rAthena: o
+ajuste mora em `conf/guerra/groups_guerra.yml` e o `conf/groups.yml` ganhou **uma
+linha** no rodapé, antes do `conf/import/groups.yml` — que continua podendo
+sobrescrever, por máquina.
+
+Isso funciona por uma propriedade do leitor que vale a pena registrar: o
+`PlayerGroupDatabase::parseBodyNode` (`src/map/pc_groups.cpp:74`) procura o `Id`
+antes de criar, e **grupo que já existe não é recriado** — os campos do import
+são aplicados por cima. Por isso o arquivo novo não repete `Name` nem `Level`:
+ele é só a diferença.
+
+Recarrega com **`@reloadatcommand`**, que chama o `pc_groups_reload`
+(`src/map/atcommand.cpp:4422`). Não é `@reloadscript` nem `@reloadbattleconf` —
+e errar aqui faz a mudança parecer que não pegou.
+
+### 3. A censura era do cliente, e estava num arquivo do GRF
+
+O pedido: *"temos uma censura de inglês; palavra em português passa, em inglês
+não. Quero tirar tudo."*
+
+Não havia nada disso no rAthena — o emulador não filtra palavra nenhuma —, e o
+exe também não: `fuck`, `shit`, `swear`, `badword` e irmãos **não aparecem no
+binário**. A censura mora em **`data\manner.txt`**, dentro do `data.grf`: 1409
+linhas, uma palavra por linha, quase tudo coreano em CP949, e no meio delas
+**25 em inglês** — `fuck`, `sex`, `shit`, `bitch`, `suck`, `pussy`, `ass`, `cum`,
+`damn`, `penis`, `vulva` e variações com espaço (`F U C K`, `S E X`). Nenhuma
+palavra em português na lista, o que explica exatamente o sintoma descrito.
+
+O remédio é um override em `cliente\data\manner.txt`, que o `DataFolderFirst`
+(patch do exe) faz vencer o GRF. **Ele não ficou vazio de propósito**: leva uma
+única palavra que ninguém digita (`zzguerradoemperiumzz`), o que preserva o
+formato do arquivo sem censurar nada de verdade. Arquivo de zero byte seria uma
+aposta no leitor do cliente, e não há por que apostar.
+
+Como é cliente, foi por **patch** — `0002-sem-censura-de-palavras.zip`, montado e
+publicado no mesmo dia. O jogador recebe na próxima vez que abrir o `Jogar.exe`.
+
+### 4. A Criança de Prontera ganhou o balão de verdade
+
+Desde 2026-08-15 a Criança do Amuleto (`prontera 142,186`) dizia a **palavra**
+"Quest" num balão de fala, de 5 em 5 segundos, por `npctalk`. O comentário do
+arquivo justificava assim: *"não existe ícone de '!' que o script alcance"*.
+Existe — e é o `questinfo`.
+
+A confusão era com o **`showevent`**, que de fato não serve aqui: ele exige
+jogador anexado, e o `OnInit` roda na subida do servidor, sem ninguém. O
+`questinfo` registra a condição no mapa e quem reavalia é o servidor, sozinho, a
+cada ação do jogador (entrar no mapa, mudar de nível, ganhar item, mexer em
+quest) — `pc_show_questinfo`, `src/map/pc.cpp`.
+
+O ganho não é só estético: o balão novo é **por jogador**. Aparece só para quem
+ainda não aceitou (`SalaSecretaOrdem == 0`) e some no instante em que aceita —
+quem faz sumir na hora é um `questinfo_refresh` logo depois do
+`SalaSecretaOrdem = 1`. Sem ele o ícone ficaria até a próxima ação que o
+servidor reavalia por conta própria, o que engana justamente quem acabou de
+falar com ela.
+
+**E não corre o risco da §5 do `CLAUDE.md`** — "quest que o cliente não conhece
+derruba o cliente". Quem derruba é a **janela** de missões, que lê o
+`QuestInfoList` por ID. O balão é o pacote `0x446` (`clif_quest_show_event`), que
+só desenha um ícone sobre um NPC e não carrega ID de quest nenhum. A missão do
+Amuleto continua fora do sistema nativo, como o cabeçalho do arquivo explica.
+
+Uma consequência operacional que engana: **depois de um `@reloadscript` o balão
+só aparece para quem sair e voltar ao mapa.** O `pc_show_questinfo` desiste
+enquanto a lista do jogador tiver tamanho diferente da lista do mapa (*"init was
+not called yet"*), e quem redimensiona é a entrada no mapa. Não é defeito.
+
+De quebra, o índice narrado tinha a Criança em `prontera 142,168`; o NPC nasce em
+`142,186`. Corrigido.
+
+---
+
+## Esta máquina virou dev, e o apontamento ganhou uma trava (2026-08-16)
+
+Com os quatro pedidos acima prontos e o servidor de produção no ar, o dono
+separou os dois mundos: **`C:\GuerraDoEmperium\cliente` passa a ser o cliente de
+dev/hml**, apontado para `127.0.0.1`, e produção se testa de **outra pasta**,
+instalada pelo instalador como um jogador faria. É a separação que impede
+"funciona aqui" de passar por "funciona para quem baixou".
+
+Trocar o apontamento é editar o `<address>` — mas **dos dois** arquivos, e é a
+mesma armadilha de 2026-08-14: este exe é `<servertype>sakray</servertype>`,
+então quem vale é o `data\sclientinfo.xml`; o `clientinfo.xml` fica igual porque
+há caminho de código que lê o outro. O endereço de produção ficou no backup ao
+lado de cada um (`.BACKUP-138.197.155.31`), e o sufixo tem `BACKUP` no nome de
+propósito: é o padrão que as duas ferramentas de empacotamento filtram, então
+ele nunca vai parar no jogador.
+
+### A trava, e por que ela precisava existir
+
+Essa mudança criou um jeito novo de estragar tudo em silêncio, e ele é caro nos
+dois caminhos de entrega:
+
+- **base** montada com o cliente apontado para casa → 3,4 GB corretos, sha256 de
+  cada pedaço fechando, CDN servindo — e **todo jogador novo tentando logar na
+  própria máquina**;
+- **patch** que inclua um dos dois xml → **tira do ar quem já tem o cliente**, e
+  o que chega de volta é "não consigo entrar".
+
+Nada no caminho olhava para esse campo, e ele mora num arquivo que ninguém
+revisa antes de publicar. Então `monta_cliente.py` e `monta_patch.py` passaram a
+recusar endereço local (`127.0.0.1`, `localhost`, `0.0.0.0`, `::1`, vazio) —
+o primeiro **antes** do sha256 de 3 GB, o segundo só quando um dos dois xml está
+de fato no patch. `--permite-local` passa por cima na base, para quando for de
+propósito. As duas foram exercitadas com o cliente já apontado para local, e as
+duas recusaram.
+
+### E o servidor local subiu junto
+
+Os quatro servidores locais voltaram ao ar para o teste, e a subida serviu de
+conferência de sintaxe das mudanças do dia: **nenhum erro novo no
+`log/map-msg_log.log`** — nem do `questinfo` da Criança, nem do
+`conf/guerra/groups_guerra.yml`. Este último é a prova que interessa: import
+que não abre gera um `Failed to open` do `YamlDatabase::load`
+(`src/common/database.cpp:96`), e comando inexistente em grupo gera aviso do
+`parseCommands`. Não houve nenhum dos dois. Os avisos que restam são os de
+sempre — preço de 1 zeny nas lojas e guardião em castelo sem dono.

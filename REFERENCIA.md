@@ -23,11 +23,12 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | Usuário do banco | `ragnarok` — sem acesso fora desses dois schemas |
 | Portas | 6900 login, 6121 char, 5121 map, **8888 web**, 3306 banco |
 | Versão de cliente alvo | kRO 2021-11-03 (`PACKETVER` padrão do rAthena) |
-| Pasta do cliente | `C:\GuerraDoEmperium\cliente` (fora do git) |
+| Pasta do cliente | `C:\GuerraDoEmperium\cliente` (fora do git) — **é o cliente de DEV/HML desde 2026-08-16**, apontado para `127.0.0.1`. Produção se testa noutra pasta, instalada pelo instalador |
 | Executável do cliente | `GuerraDoEmperium.exe` |
 | **Servidor de produção** | `138.197.155.31` = `libraro.filiponegrao.com.br` (login 6900, char 6121, map 5121) |
 | **Site de contas** | https://libraro.filiponegrao.com.br — é por ele que o jogador se cadastra (`new_account: no`) |
-| **Endereço do servidor no cliente** | `cliente\data\sclientinfo.xml` — **é este que vale**, não o `clientinfo.xml`; manter os dois iguais (`CLAUDE.md` §5) |
+| **Endereço do servidor no cliente** | `cliente\data\sclientinfo.xml` — **é este que vale**, não o `clientinfo.xml`; manter os dois iguais (`CLAUDE.md` §5). Hoje os dois estão em `127.0.0.1`; o endereço de produção ficou no backup ao lado (`.BACKUP-138.197.155.31`) |
+| Trocar o apontamento do cliente | editar o `<address>` dos **dois** xml. `monta_patch.py` e `monta_cliente.py` **recusam** empacotar com endereço local (trava de 2026-08-16) |
 | **Atualizador (patcher)** | `cliente\Jogar.exe` — é o que o jogador clica (o jogo, `GuerraDoEmperium.exe`, quem abre é ele); código em `patcher/`, doc em `patcher/LEIAME.md` |
 | Executáveis do kRO que não se clica | `cliente\_extras\` — movidos para lá em 2026-08-16 por `ferramentas/limpa_cliente.py` |
 | Backups que as ferramentas deixam | `C:\GuerraDoEmperium\_backups_removidos\` — inclui as duas cópias do exe **antes** dos nossos patches |

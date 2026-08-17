@@ -2916,6 +2916,13 @@ para o jogador.
 **Recusa o `Jogar.exe`**, que tem canal próprio pelo motivo do
 `patcher/LEIAME.md` §3.
 
+**E recusa `clientinfo.xml`/`sclientinfo.xml` apontados para a máquina local**
+(`127.0.0.1`, `localhost`, `0.0.0.0`, vazio). Desde 2026-08-16 o cliente desta
+máquina é o de dev e aponta para o servidor local: um patch com esse arquivo
+dentro **tira do ar todo jogador que já tem o cliente**, e o sintoma que chega é
+só "não consigo entrar". A conferência só roda quando um dos dois xml está no
+patch — patch que não os inclui passa direto.
+
 Duas armadilhas do Python 2 que ele resolve e que valem para qualquer
 ferramenta que ande pela pasta do cliente:
 
@@ -2978,6 +2985,12 @@ tem na mão, e um exe não se sobrescreve rodando.
 Números de 2026-08-16: **19.866 arquivos empacotados de 19.904**, 4,07 GB
 brutos, **3.499 MB para o jogador baixar**. A nossa parte comprime a 17% (765,6
 → 134,4 MB), o que faz refazer só ela custar 134 MB.
+
+**Antes de qualquer sha256 ele confere o apontamento** e para se um dos dois
+`clientinfo` estiver em `127.0.0.1` — desde 2026-08-16 esta máquina é dev, e um
+pacote montado assim manda todo jogador novo logar na própria máquina: 3,4 GB
+corretos, sha fechando, ninguém entra. `--permite-local` passa por cima, para
+quando for de propósito.
 
 ## `publica_cliente.sh` — põe a base no ar
 
