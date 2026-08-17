@@ -216,11 +216,16 @@ $("#botao-sair").onclick = async () => {
 };
 
 /* ---------- endereco do download ----------
- * O cliente completo mora fora daqui (Google Drive, decisao de
- * 2026-08-15): sao ~4,2 GB, que num disco de 24 GB seria um sexto do
- * servidor, e a banda sairia da franquia a cada download. Os patches
- * incrementais, esses sim, ficam no /patch/ do proprio servidor - sao
- * pequenos e o patcher precisa de HTTP simples.
+ * O botao entrega o INSTALADOR, que tem 9 MB - e nao o jogo, que tem
+ * 3,4 GB. Quem baixa os 3,4 GB e' o proprio instalador, direto do
+ * bucket (cdn.filiponegrao.com.br), com retomada se a conexao cair.
+ *
+ * Nada disso passa pelo nosso servidor, e o motivo e' de tamanho: sao
+ * 3,4 GB POR JOGADOR, que sairiam pela mesma placa de rede que atende o
+ * map-server. Os patches incrementais, esses sim, ficam no /patch/ do
+ * proprio servidor - sao pequenos e o Atualizador precisa de HTTP
+ * simples. (Ate 2026-08-16 o cliente saia de uma pasta do Google Drive;
+ * ver HISTORICO.md.)
  */
 (async function download() {
   const botao = $("[data-download]");

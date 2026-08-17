@@ -10,6 +10,39 @@ Comandos rodam de `ferramentas/` com Python 2.7. Toda ferramenta que grava tem
 
 ---
 
+## 0. ONDE ISTO VAI PARAR? — a pergunta antes de qualquer entrega
+
+**Terminar de editar não é terminar de entregar.** São quatro destinos, com
+caminhos que não se cruzam, e escolher o errado falha **em silêncio**: aqui
+funciona, e para o jogador não existe.
+
+A pergunta que decide é **onde o arquivo mora**:
+
+| o arquivo mora em… | vai por | como | quando o jogador recebe |
+|---|---|---|---|
+| `rathena/npc/`, `db/`, `conf/`, `src/` | **deploy** | `ferramentas/implanta.sh` | na hora — ninguém baixa nada |
+| `C:\GuerraDoEmperium\cliente\` | **patch** | `monta_patch.py` + `publica_patch.sh` (§11) | na próxima vez que abrir o `Jogar.exe` |
+| idem, mas mudou **muita** coisa | **base** | `monta_cliente.py` + `publica_cliente.sh` (§12) | só quem instalar do zero |
+| `site/` | **deploy do site** | ver `site/LEIAME.md` | na hora, ao recarregar a página |
+
+Três consequências que já custaram retrabalho:
+
+- **`git commit` não entrega nada de cliente.** O `implanta.sh` leva servidor. Se
+  o caminho do que você mexeu começa em `C:\GuerraDoEmperium\cliente\`, o
+  trabalho não acabou no commit — é `CLAUDE.md` §4.18.
+- **Item novo costuma ser as DUAS coisas.** O nome vive no `itemInfo.lua`
+  (cliente → patch) e a entrega vive no `item_db` (servidor → deploy). Só uma
+  metade e o item aparece **sem nome**, sem erro nenhum.
+- **A base quase nunca precisa ser refeita.** Quem instala hoje recebe a base
+  parada mais todos os patches desde então. Refazer é para quando o acúmulo
+  ficar grande demais — e mesmo aí, se só a nossa parte mudou, são 134 MB
+  (`--so nosso`), não 3,4 GB.
+
+**Nada disso vale para o `Jogar.exe`**, que tem canal próprio: ele não consegue
+se sobrescrever rodando. Ver `patcher/LEIAME.md` §3.
+
+---
+
 ## 1. NPC novo
 
 1. Escrever `rathena/npc/guerra/<nome>.txt`, com **cabeçalho explicando o porquê**

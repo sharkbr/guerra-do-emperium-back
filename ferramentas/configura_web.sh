@@ -120,6 +120,11 @@ SITE_MAX_CONTAS=1
 SITE_VERIFICACAO=nenhuma
 SITE_PENELOPE_URL=
 SITE_PENELOPE_TOKEN=
+
+# Para onde o botao Baixar aponta: o INSTALADOR (9 MB), nao o jogo. Quem baixa
+# os 3,4 GB e' o proprio instalador, direto do bucket - nada disso passa por
+# esta maquina. Vazio = o botao aparece desligado, dizendo "em breve".
+SITE_DOWNLOAD_URL=https://cdn.filiponegrao.com.br/Jogar.exe
 FIM
     chmod 640 "$AMBIENTE"
     chown root:"$USUARIO" "$AMBIENTE"

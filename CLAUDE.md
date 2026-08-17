@@ -1,7 +1,19 @@
 # Guerra do Emperium — guia de trabalho
 
 Servidor privado de Ragnarok Online: rAthena vendorizado + cliente kRO
-2021-11-03 traduzido para PT-BR. **A v1 está de pé** — dá para logar e jogar.
+2021-11-03 traduzido para PT-BR.
+
+**FASE 1 desde 2026-08-16: o caminho até o jogador está inteiro.** A fase 0 era
+o servidor de pé sem como chegar nele; agora as três pontes existem e são
+nossas — o **site** entrega o instalador, o **instalador** entrega o jogo
+(3,4 GB de um bucket com CDN), e o **Atualizador** entrega toda melhoria
+seguinte. Nada mais depende de pasta do Google Drive, e nenhuma correção de
+cliente fica presa nesta máquina.
+
+O que muda no dia a dia: **agora existe gente do outro lado.** Toda entrega
+passa a ter um destino, e escolher o errado falha em silêncio — a tabela que
+decide está em `RECEITAS.md` §0, e é a primeira coisa a ler antes de entregar
+qualquer coisa.
 
 Este arquivo é o ponto de partida de toda sessão. Ele não conta história: diz
 onde as coisas estão, o que não se pode fazer, e **qual documento ler** para a
@@ -319,6 +331,10 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     Na prática: ao terminar qualquer trabalho, perguntar **onde o arquivo
     mora**. Se o caminho começa em `C:\GuerraDoEmperium\cliente\`, o trabalho
     não acabou no `git commit`.
+
+    **A tabela dos quatro destinos — servidor, patch, base e site — está em
+    `RECEITAS.md` §0.** Desde a fase 1 (2026-08-16) ela é a primeira coisa a
+    consultar antes de dar qualquer trabalho por entregue.
 
 ## 5. Armadilhas deste ambiente
 

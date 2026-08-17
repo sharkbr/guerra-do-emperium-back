@@ -9870,3 +9870,33 @@ Os dois testes novos cobrem exatamente o que não se vê daqui: que o bit
 `RunAsUser` chega ao **arquivo** `.lnk` (byte 21, `0x20`) e não apenas à chamada
 COM, e que a leitura do registro acerta o caminho numa máquina onde o jogo
 comprovadamente roda.
+
+### A fase 1 (2026-08-16)
+
+Com o instalador testado em outra máquina e funcionando, o dono decidiu **não
+publicar o Atualizador pelo canal de auto-atualização**: quem já tem cliente
+vai rebaixar o instalador novo, e este passa a ser o definitivo. Menos uma
+versão em circulação.
+
+O `Jogar.exe` foi para o bucket — **`https://cdn.filiponegrao.com.br/Jogar.exe`**,
+9.570.816 bytes — e o site já sabia consumi-lo: o `SITE_DOWNLOAD_URL` e a rota
+`/api/config` existiam desde 2026-08-15, esperando um endereço. O que mudou no
+site foi o **texto**, que ainda prometia 4,2 GB de download: agora diz que o
+download é um instalador de 9 MB, que o jogo tem 3,4 GB e que ele continua de
+onde parou se a conexão cair.
+
+**Isto fecha a fase 0.** O que existia era um servidor de pé sem como chegar
+nele; o que existe agora são três pontes, e as três são nossas — o site entrega
+o instalador, o instalador entrega o jogo, o Atualizador entrega toda melhoria
+seguinte. Nenhuma delas depende do Google Drive, e nenhuma correção de cliente
+fica presa na máquina de quem a fez.
+
+E isso muda a natureza do trabalho: **agora existe gente do outro lado.** Toda
+entrega passa a ter um destino — servidor, patch, base ou site —, e escolher o
+errado falha em silêncio. Daí a tabela nova em `RECEITAS.md` §0, apontada do
+cabeçalho do `CLAUDE.md` e da §4.18: é a primeira coisa a consultar antes de
+dar qualquer coisa por entregue.
+
+O passo que falta é de infra e ficou preparado em `IMPLANTACAO.md` §9b — a
+variável no `/etc/guerra/site.env`, que o deploy **não** sobrescreve, porque o
+`configura_web.sh` preserva o arquivo onde mora o `SITE_SEGREDO`.

@@ -728,7 +728,7 @@ alguém ter mexido, é defeito.
 | | |
 |---|---|
 | Site | `https://libraro.filiponegrao.com.br` — HTTP redireciona |
-| Botão Baixar | pasta do Google Drive (`SITE_DOWNLOAD_URL` em `/etc/guerra/site.env`) |
+| Botão Baixar | ~~pasta do Google Drive~~ → **o instalador**, `https://cdn.filiponegrao.com.br/Jogar.exe` desde 2026-08-16 (`SITE_DOWNLOAD_URL` em `/etc/guerra/site.env`; ver §9b, ainda por aplicar) |
 | Portas do jogo | 6900, 6121, 5121 abertas |
 | 8888 | **fechada**, e o web-server responde pelo Apache na 80 e na 443 |
 | Serviços | os quatro do jogo + site + Apache + MariaDB, todos `active` |
@@ -786,6 +786,51 @@ ciclo fechar sem intermediário. ~~Antes de empacotar, **anotar a lista de patch
 — **feito em 2026-08-14**: o `.epi` ao lado do exe traz os nomes, e a lista está
 no `REFERENCIA.md`. O exe continua sendo o único arquivo do conjunto sem gerador
 versionado, então a cópia fria dele continua obrigatória.
+
+---
+
+## 9b. Preparado no Windows, à espera do Mac
+
+O inverso da §9: trabalho que já está pronto e commitado, e que só falta um
+comando do lado da infra. **Ao concluir uma linha aqui, apague-a** e registre no
+`HISTORICO.md`, como manda o `CLAUDE.md` §7.
+
+### 1. Ligar o botão Baixar do site ao instalador (2026-08-16) — PENDENTE
+
+O instalador está no bucket e o site já sabe usá-lo; falta só a variável de
+ambiente no servidor, que **o deploy não sobrescreve** (o `configura_web.sh`
+preserva um `/etc/guerra/site.env` que já exista — de propósito, é lá que mora
+o `SITE_SEGREDO`).
+
+**A URL:** `https://cdn.filiponegrao.com.br/Jogar.exe` — 9.570.816 bytes,
+sha256 `c8c328bee5e687a1f0e2209cee22129d3c7ca45cbdc0a156d9c851e1fc231f4f`.
+
+```bash
+# 1. do Mac, com o repositório atualizado
+git pull
+
+# 2. o deploy leva o site novo (index.html e app.js mudaram) e recompila
+ferramentas/implanta.sh
+
+# 3. a variável, que o deploy NÃO põe sozinho num servidor já configurado
+ssh libraro '
+  grep -q "^SITE_DOWNLOAD_URL=" /etc/guerra/site.env \
+    && sed -i "s|^SITE_DOWNLOAD_URL=.*|SITE_DOWNLOAD_URL=https://cdn.filiponegrao.com.br/Jogar.exe|" /etc/guerra/site.env \
+    || echo "SITE_DOWNLOAD_URL=https://cdn.filiponegrao.com.br/Jogar.exe" >> /etc/guerra/site.env
+  systemctl restart guerra-site
+  systemctl is-active guerra-site
+'
+
+# 4. a conferência que decide — o site tem de devolver a URL, não vazio
+curl -sS https://libraro.filiponegrao.com.br/api/config
+```
+
+O passo 4 é o que separa "configurei" de "funciona": com a variável vazia o
+botão **não** quebra, ele aparece desligado dizendo *"Em breve"* — que é o
+comportamento certo e também o sintoma de ter esquecido este passo.
+
+E abrir o site de fato, para ver o botão apontando para o CDN. O `curl` prova o
+back-end; o botão prova o caminho inteiro.
 
 ---
 
