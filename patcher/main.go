@@ -29,7 +29,7 @@ import (
 
 // VERSAO é o número que o canal de auto-atualização compara. Sobe de um a cada
 // Atualizador novo publicado — ver auto.go e `patcher/LEIAME.md`.
-const VERSAO = 2
+const VERSAO = 3
 
 // Os valores padrão existem para o caso de o `Atualizador.ini` não vir no
 // pacote ou ser apagado: sem ini, o Atualizador ainda funciona na produção.
@@ -243,10 +243,12 @@ func aplicaPatches(j *Janela, raiz, trabalho string, cfg config) {
 		return
 	}
 
+	// Um patch só conta como aplicado quando o NÚMERO e o SHA batem. O número
+	// sozinho não identifica nada — ver `leAplicados`, que conta o caso vivo.
 	aplicados := leAplicados(trabalho)
 	var faltam []patch
 	for _, p := range lista {
-		if !aplicados[p.Numero] {
+		if aplicados[p.Numero] != p.SHA {
 			faltam = append(faltam, p)
 		}
 	}
@@ -267,6 +269,13 @@ func aplicaPatches(j *Janela, raiz, trabalho string, cfg config) {
 			j.Status("Falhou em " + p.Nome + ": " + resumo(err))
 			j.Libera()
 			return
+		}
+		// O registro é DESTE laço, e não do `aplica` — o instalador chama a
+		// mesma função e não tem o que anotar aqui. Anotar depois de extrair
+		// erra para o lado certo: falha ao gravar faz o próximo início
+		// reaplicar, o que é barato (o patch é idempotente por construção).
+		if err := marcaAplicado(trabalho, p); err != nil {
+			anota("marcaAplicado %04d: %v", p.Numero, err)
 		}
 	}
 

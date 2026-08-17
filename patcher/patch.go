@@ -95,11 +95,23 @@ func baixaLista(url string) ([]patch, error) {
 	return lista, nil
 }
 
-// leAplicados devolve os números que este cliente já tem. Arquivo ausente ou
-// ilegível quer dizer "nenhum" — e isso está certo: reaplicar é barato e correto,
-// enquanto adivinhar que já foi aplicado deixaria o jogador sem o conteúdo.
-func leAplicados(trabalho string) map[int]bool {
-	feitos := map[int]bool{}
+// leAplicados devolve, por número, o sha256 do que este cliente já aplicou.
+// Arquivo ausente ou ilegível quer dizer "nenhum" — e isso está certo:
+// reaplicar é barato e correto, enquanto adivinhar que já foi aplicado deixaria
+// o jogador sem o conteúdo.
+//
+// O SHA VEM JUNTO DE PROPÓSITO, e não é enfeite: o número sozinho não
+// identifica um patch. Em 2026-08-17 o registro de todo cliente instalado
+// amanheceu com os PEDAÇOS DA BASE ocupando os números 0002 a 0005 (ver
+// `aplicaPedaco`), e o `0002` de lá — "As musicas" — calou o patch 0002 e o
+// 0003 para sempre: o Atualizador dizia "cliente atualizado" com a barra cheia
+// e o jogador não tinha os itens novos das lojas. Comparar o sha faz o número
+// deixar de ser palavra final, e é o que REPARA sozinho quem já instalou.
+//
+// Linha repetida é normal — o arquivo é um diário, escrito por acréscimo — e
+// quem vale é a ÚLTIMA, que é o que este laço faz ao sobrescrever a chave.
+func leAplicados(trabalho string) map[int]string {
+	feitos := map[int]string{}
 	dados, err := os.ReadFile(filepath.Join(trabalho, "aplicados.txt"))
 	if err != nil {
 		return feitos
@@ -109,8 +121,12 @@ func leAplicados(trabalho string) map[int]bool {
 		if linha == "" || strings.HasPrefix(linha, "#") {
 			continue
 		}
-		if numero, err := strconv.Atoi(strings.Split(linha, "\t")[0]); err == nil {
-			feitos[numero] = true
+		campos := strings.Split(linha, "\t")
+		if len(campos) < 2 {
+			continue
+		}
+		if numero, err := strconv.Atoi(campos[0]); err == nil {
+			feitos[numero] = strings.TrimSpace(campos[1])
 		}
 	}
 	return feitos
@@ -136,6 +152,14 @@ func marcaAplicado(trabalho string, p patch) error {
 // aplica baixa, confere e extrai um patch. O zip vai para disco antes de ser
 // aberto — patch de arte passa dos 200 MB, e segurar isso em memória numa
 // máquina de jogador é pedir para o Atualizador morrer justo no fim.
+//
+// ELA NÃO ESCREVE NO `aplicados.txt`: quem aplicou é que anota, com o
+// `marcaAplicado`. A separação existe porque esta função tem DOIS chamadores —
+// o laço de patches e o `aplicaPedaco` do instalador — e só um deles tem o que
+// registrar. Enquanto o registro morava aqui, o instalador anotava os pedaços
+// da base no diário dos patches e queimava os números 0002 a 0005 (ver
+// `leAplicados`). O comentário do `Instala` já dizia que isso não podia
+// acontecer; o código é que não dizia.
 func aplica(j *Janela, raiz, trabalho, url string, p patch, rotulo string) error {
 	zipado := filepath.Join(trabalho, p.Arquivo)
 
@@ -160,9 +184,6 @@ func aplica(j *Janela, raiz, trabalho, url string, p patch, rotulo string) error
 
 	j.Status(rotulo + " — aplicando…")
 	if err := extrai(j, zipado, raiz, rotulo); err != nil {
-		return err
-	}
-	if err := marcaAplicado(trabalho, p); err != nil {
 		return err
 	}
 	os.Remove(zipado) // o zip já cumpriu o papel; não ocupa disco do jogador

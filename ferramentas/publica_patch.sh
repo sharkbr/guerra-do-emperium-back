@@ -89,8 +89,18 @@ publica_atualizador() {
     versao="$(grep -oE 'VERSAO = [0-9]+' "$RAIZ/patcher/main.go" | grep -oE '[0-9]+')"
     [ -n "$versao" ] || erro "nao achei o const VERSAO em patcher/main.go"
 
-    azul "== Compilando o Atualizador versao $versao =="
-    (cd "$RAIZ/patcher" && go build -ldflags -H=windowsgui -o Jogar.exe .)
+    # GOOS/GOARCH EXPLICITOS, e nao os do ambiente. Rodar isto no Mac com o
+    # `go build` cru produz um binario Mach-O CHAMADO Jogar.exe, com sha256
+    # certinho, que sobe para o canal e nao abre na maquina de ninguem - o
+    # jogador leva "este aplicativo nao pode ser executado no seu PC" e nada
+    # no caminho olha para o formato do arquivo. O `-o` so decide o NOME.
+    azul "== Compilando o Atualizador versao $versao (windows/amd64) =="
+    (cd "$RAIZ/patcher" && GOOS=windows GOARCH=amd64 go build -ldflags -H=windowsgui -o Jogar.exe .)
+
+    # Cinto e suspensorio: se o build sair de outro sistema por qualquer outro
+    # motivo, o exe tem de comecar com "MZ". Barato, e pega o caso acima.
+    [ "$(head -c 2 "$RAIZ/patcher/Jogar.exe")" = "MZ" ] || \
+        erro "o Jogar.exe compilado nao e' um executavel do Windows"
 
     local nome="Jogar-$versao.exe"
     local sha; sha="$(sha256sum "$RAIZ/patcher/Jogar.exe" | cut -d' ' -f1)"
