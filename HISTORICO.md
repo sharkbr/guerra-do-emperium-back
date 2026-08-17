@@ -9478,10 +9478,9 @@ outros, e travar ali é pior do que não atualizar.
 
 ### O que fica em aberto
 
-**Publicar exige SSH ao servidor a partir do Windows**, que é onde os zips
-nascem, e esta máquina não tem chave autorizada — o deploy sempre foi do Mac.
-É uma linha no `authorized_keys`, e é o que falta para o ciclo fechar sem
-intermediário. Anotado em `IMPLANTACAO.md` §9.
+~~**Publicar exige SSH ao servidor a partir do Windows**, que é onde os zips
+nascem, e esta máquina não tem chave autorizada — o deploy sempre foi do Mac.~~
+**Resolvido em 2026-08-16** — ver a seção "O primeiro patch no ar", abaixo.
 
 Ícone e manifest do exe (a barra de progresso sai no estilo clássico),
 assinatura dos patches e o painel de notícias estão em `patcher/LEIAME.md` §5.
@@ -10294,3 +10293,49 @@ cliente (`savedata\`, `patch\`, `ScreenShot\`, `_tmpEmblem\`, a raiz e a
 lojas, a loja de troca, as quatro entradas novas de `db/guerra/item_db.yml` e
 os sete `Name` que o `nomes_pt_item_db.py` sincronizou. O dono vai anunciar e
 subir tudo do Mac.
+
+---
+
+## O botão Baixar deixa o Drive, e o jogo não cai junto (2026-08-16)
+
+O passo de infra que a §9b esperava. O instalador já estava no bucket e o site
+já sabia consumi-lo desde 2026-08-15; faltava a variável no servidor, que **o
+deploy não põe sozinho** — o `configura_web.sh` preserva um
+`/etc/guerra/site.env` que já exista, de propósito, porque é lá que mora o
+`SITE_SEGREDO`.
+
+Agora `https://libraro.filiponegrao.com.br/api/config` responde
+`https://cdn.filiponegrao.com.br/Jogar.exe`, e a página serve o texto novo: um
+instalador de 9 MB, o jogo com 3,4 GB, e a promessa de continuar de onde parou.
+**Nenhum caminho até o jogador passa mais pelo Google Drive.**
+
+O que foi conferido, e não só configurado:
+
+| conferência | resultado |
+|---|---|
+| o `/api/config` devolve a URL, não vazio | ✅ — vazio não quebra o botão, ele aparece *"Em breve"*, e é assim que se esquece este passo sem perceber |
+| os bytes que o CDN entrega são os do registro | ✅ 9.570.816 bytes, sha256 `c8c328be…31f4f`, igual ao anotado na §9b |
+| o `Range` responde **206** | ✅ — é o que sustenta "continua de onde parou", e é a única frase do site que promete algo sobre a rede |
+| `Content-Type: application/x-msdownload` | ✅ — o navegador baixa em vez de desenhar |
+| o texto velho sumiu da página | ✅ zero ocorrências de "4,2 GB" e de `drive.google` |
+
+### O deploy que não se rodou, e por quê
+
+**Havia três jogadores online** (Prontera e Comodo, nenhum deles o dono), e
+entre o commit do servidor e o `origin/main` vinha o
+`rathena/conf/guerra/char_guerra.txt` — o `*` e o `-` no nome de personagem. O
+`atualiza_servidor.sh` reinicia o jogo sempre que `rathena/` muda, e reiniciar
+derruba todo mundo com *"Erro desconhecido"*. O dono decidiu: **só o site.**
+
+Então rodou-se o subconjunto que não encosta no jogo — `git pull`, a variável,
+`systemctl restart guerra-site` —, e os quatro servidores seguiram de pé desde
+as 17:40 UTC, sem ninguém cair. Deu para fazer porque o front é **servido do
+disco** (`http.FileServer(http.Dir("web"))`) e nenhum `.go` tinha mudado: o
+`git pull` já publica o `index.html` e o `app.js` novos, e o restart do site
+existiu só para reler a variável de ambiente.
+
+**Isso deixou uma dívida com armadilha, e ela está na `PENDENCIAS.md` §0.** O
+`ANTES`/`DEPOIS` do deploy é o commit de antes do pull comparado ao de depois —
+com o pull já feito, o próximo `implanta.sh` vai concluir que `rathena/` não
+mudou e **não** vai reiniciar o jogo. A mudança de nome ficaria no disco para
+sempre, sem entrar em vigor e sem nada avisar.

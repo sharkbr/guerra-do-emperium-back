@@ -1216,6 +1216,18 @@ Produziram diagnóstico falso e custaram retrabalho:
   dele seriam pulados, calados.
   A leitura certa é **mesclar**, com o campo que o override declarou vencendo e
   o resto vindo do rAthena; ver `instala_manto.item_de`. Ver `PENDENCIAS.md` §1v.
+- **Deploy parcial feito à mão desarma o gatilho de restart do deploy seguinte,
+  e a perda é calada.** O `atualiza_servidor.sh` decide reiniciar o jogo
+  comparando o commit de **antes** do `git pull` com o de depois (`ANTES`
+  contra `DEPOIS`, linha 260) — quem faz o `git pull` por fora, para publicar
+  só o site sem derrubar jogador, **consome esse gatilho**: o próximo
+  `implanta.sh` acha `rathena/` sem mudança e não reinicia. O que ficou no
+  disco continua no disco, o processo vivo segue com a configuração velha, e
+  nada no log denuncia — o deploy até diz *"nada do jogo mudou, ninguém foi
+  derrubado"*, que é a frase de sucesso. Feito em 2026-08-16 para não derrubar
+  três jogadores; a dívida está na `PENDENCIAS.md` §0. **Ao pular etapa do
+  deploy por causa de jogador online, anotar o que ficou por carregar** — o
+  próprio deploy já não lembra.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
