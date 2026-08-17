@@ -1,0 +1,3256 @@
+###########################################################################
+# Guerra do Emperium - AS LOJAS DE PRONTERA VALEM 1 ZENY
+#
+# ARQUIVO GERADO por ferramentas/zera_revenda_das_lojas.py. Editar a mao
+# funciona ate a proxima geracao, que apaga tudo. Item novo numa vitrine
+# entra rodando o script de novo.
+#
+# Este arquivo e VERSIONADO e vale para qualquer clone do repo. Ele e
+# importado por db/re/item_db.yml, DEPOIS de db/guerra/item_db.yml (para
+# vencer qualquer preco escrito la) e ANTES de db/import/item_db.yml.
+#
+# ------------------------------------------------------------- o que ele e
+#
+# `Buy: 1` em todo item vendido nas tres lojas de vitrine a 1 zeny de
+# Prontera - o Mercado Contemporaneo, o Mercado de Cartas e o Mercado de
+# Visuais. Decisao do dono em 2026-08-17: "itens que sao vendidos nas lojas
+# de Prontera devem ter valor 1 zeny pra evitar criacao de dinheiro
+# infinito".
+#
+# A TRANQUEIRAS NAO ESTA AQUI, de proposito. Ela vende a `-1`, ou seja pelo
+# `Buy` do item, e ja tinha lucro por clique zero - ver o cabecalho de
+# npc/guerra/tranqueiras.txt.
+#
+# ---------------------------------------------------- por que so o `Buy`
+#
+# Porque o `Sell` cai junto. O leitor do item_db guarda por item se aquele
+# bloco trouxe `Buy` e se trouxe `Sell`, e a ultima palavra e de quem falar
+# por ultimo - este arquivo. Com `has_buy` e sem `has_sell`, o rAthena faz
+# `value_sell = value_buy / 2` no fim do carregamento, o que da 0.
+#
+# Escrever `Sell: 0` aqui seria a mesma coisa com um campo a mais para
+# divergir.
+#
+# ---------------------------------------------------------- o que alcanca
+#
+# TODA COPIA DO ITEM NO SERVIDOR, nao so a que saiu da loja - valor de item
+# mora no item_db, nao na instancia. Carta cacada por jogador tambem passa a
+# revender por 0. E o preco da decisao, e ele foi tomado sabendo disso.
+#
+# --------------------------------------------------------- como recarregar
+#
+# `@reloaditemdb` em jogo, ou reiniciar o map-server. As linhas do `shop`
+# nao mudam com isso: elas ja estao todas a 1 zeny.
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 1132
+    Buy: 1                # Edge
+  - Id: 1328
+    Buy: 1                # Blut_Axe
+  - Id: 2185
+    Buy: 1                # Magic_Reflector
+  - Id: 2198
+    Buy: 1                # Lapine_Shield
+  - Id: 2204
+    Buy: 1                # Glasses_
+  - Id: 2289
+    Buy: 1                # Poo_Poo_Hat
+  - Id: 2423
+    Buy: 1                # Variant_Shoes
+  - Id: 2936
+    Buy: 1                # Recovery_Ring
+  - Id: 2980
+    Buy: 1                # Evilspirit_Gloves
+  - Id: 4001
+    Buy: 1                # Poring_Card
+  - Id: 4002
+    Buy: 1                # Fabre_Card
+  - Id: 4003
+    Buy: 1                # Pupa_Card
+  - Id: 4004
+    Buy: 1                # Drops_Card
+  - Id: 4005
+    Buy: 1                # Poring__Card
+  - Id: 4006
+    Buy: 1                # Lunatic_Card
+  - Id: 4007
+    Buy: 1                # Pecopeco_Egg_Card
+  - Id: 4008
+    Buy: 1                # Picky_Card
+  - Id: 4009
+    Buy: 1                # Chonchon_Card
+  - Id: 4010
+    Buy: 1                # Wilow_Card
+  - Id: 4011
+    Buy: 1                # Picky__Card
+  - Id: 4012
+    Buy: 1                # Thief_Bug_Egg_Card
+  - Id: 4013
+    Buy: 1                # Andre_Egg_Card
+  - Id: 4014
+    Buy: 1                # Roda_Frog_Card
+  - Id: 4015
+    Buy: 1                # Condor_Card
+  - Id: 4016
+    Buy: 1                # Thief_Bug_Card
+  - Id: 4017
+    Buy: 1                # Savage_Babe_Card
+  - Id: 4018
+    Buy: 1                # Andre_Larva_Card
+  - Id: 4019
+    Buy: 1                # Hornet_Card
+  - Id: 4020
+    Buy: 1                # Farmiliar_Card
+  - Id: 4021
+    Buy: 1                # Rocker_Card
+  - Id: 4022
+    Buy: 1                # Spore_Card
+  - Id: 4023
+    Buy: 1                # Desert_Wolf_Babe_Card
+  - Id: 4024
+    Buy: 1                # Plankton_Card
+  - Id: 4025
+    Buy: 1                # Skeleton_Card
+  - Id: 4026
+    Buy: 1                # Thief_Bug_Female_Card
+  - Id: 4027
+    Buy: 1                # Kukre_Card
+  - Id: 4028
+    Buy: 1                # Tarou_Card
+  - Id: 4029
+    Buy: 1                # Wolf_Card
+  - Id: 4030
+    Buy: 1                # Mandragora_Card
+  - Id: 4031
+    Buy: 1                # Pecopeco_Card
+  - Id: 4032
+    Buy: 1                # Ambernite_Card
+  - Id: 4033
+    Buy: 1                # Poporing_Card
+  - Id: 4034
+    Buy: 1                # Worm_Tail_Card
+  - Id: 4035
+    Buy: 1                # Hydra_Card
+  - Id: 4036
+    Buy: 1                # Muka_Card
+  - Id: 4037
+    Buy: 1                # Snake_Card
+  - Id: 4038
+    Buy: 1                # Zombie_Card
+  - Id: 4039
+    Buy: 1                # Stainer_Card
+  - Id: 4040
+    Buy: 1                # Creamy_Card
+  - Id: 4041
+    Buy: 1                # Coco_Card
+  - Id: 4042
+    Buy: 1                # Steel_Chonchon_Card
+  - Id: 4043
+    Buy: 1                # Andre_Card
+  - Id: 4044
+    Buy: 1                # Smokie_Card
+  - Id: 4045
+    Buy: 1                # Horn_Card
+  - Id: 4046
+    Buy: 1                # Martin_Card
+  - Id: 4047
+    Buy: 1                # Ghostring_Card
+  - Id: 4048
+    Buy: 1                # Poison_Spore_Card
+  - Id: 4049
+    Buy: 1                # Vadon_Card
+  - Id: 4050
+    Buy: 1                # Thief_Bug_Male_Card
+  - Id: 4051
+    Buy: 1                # Yoyo_Card
+  - Id: 4052
+    Buy: 1                # Elder_Wilow_Card
+  - Id: 4053
+    Buy: 1                # Vitata_Card
+  - Id: 4054
+    Buy: 1                # Angeling_Card
+  - Id: 4055
+    Buy: 1                # Marina_Card
+  - Id: 4056
+    Buy: 1                # Dustiness_Card
+  - Id: 4057
+    Buy: 1                # Metaller_Card
+  - Id: 4058
+    Buy: 1                # Thara_Frog_Card
+  - Id: 4059
+    Buy: 1                # Soldier_Andre_Card
+  - Id: 4060
+    Buy: 1                # Goblin_Card
+  - Id: 4061
+    Buy: 1                # Cornutus_Card
+  - Id: 4062
+    Buy: 1                # Anacondaq_Card
+  - Id: 4063
+    Buy: 1                # Caramel_Card
+  - Id: 4064
+    Buy: 1                # Zerom_Card
+  - Id: 4065
+    Buy: 1                # Kaho_Card
+  - Id: 4066
+    Buy: 1                # Orc_Warrior_Card
+  - Id: 4067
+    Buy: 1                # Megalodon_Card
+  - Id: 4068
+    Buy: 1                # Scorpion_Card
+  - Id: 4069
+    Buy: 1                # Drainliar_Card
+  - Id: 4070
+    Buy: 1                # Eggyra_Card
+  - Id: 4071
+    Buy: 1                # Orc_Zombie_Card
+  - Id: 4072
+    Buy: 1                # Golem_Card
+  - Id: 4073
+    Buy: 1                # Pirate_Skel_Card
+  - Id: 4074
+    Buy: 1                # BigFoot_Card
+  - Id: 4075
+    Buy: 1                # Argos_Card
+  - Id: 4076
+    Buy: 1                # Magnolia_Card
+  - Id: 4077
+    Buy: 1                # Phen_Card
+  - Id: 4078
+    Buy: 1                # Savage_Card
+  - Id: 4079
+    Buy: 1                # Mantis_Card
+  - Id: 4080
+    Buy: 1                # Flora_Card
+  - Id: 4081
+    Buy: 1                # Hode_Card
+  - Id: 4082
+    Buy: 1                # Desert_Wolf_Card
+  - Id: 4083
+    Buy: 1                # Rafflesia_Card
+  - Id: 4084
+    Buy: 1                # Marine_Sphere_Card
+  - Id: 4085
+    Buy: 1                # Orc_Skeleton_Card
+  - Id: 4086
+    Buy: 1                # Soldier_Skeleton_Card
+  - Id: 4087
+    Buy: 1                # Giearth_Card
+  - Id: 4088
+    Buy: 1                # Frilldora_Card
+  - Id: 4089
+    Buy: 1                # Sword_Fish_Card
+  - Id: 4090
+    Buy: 1                # Munak_Card
+  - Id: 4091
+    Buy: 1                # Kobold_Card
+  - Id: 4092
+    Buy: 1                # Skel_Worker_Card
+  - Id: 4093
+    Buy: 1                # Obeaune_Card
+  - Id: 4094
+    Buy: 1                # Archer_Skeleton_Card
+  - Id: 4095
+    Buy: 1                # Marse_Card
+  - Id: 4096
+    Buy: 1                # Zenorc_Card
+  - Id: 4097
+    Buy: 1                # Matyr_Card
+  - Id: 4098
+    Buy: 1                # Dokebi_Card
+  - Id: 4099
+    Buy: 1                # Pasana_Card
+  - Id: 4100
+    Buy: 1                # Sohee_Card
+  - Id: 4101
+    Buy: 1                # Sand_Man_Card
+  - Id: 4102
+    Buy: 1                # Whisper_Card
+  - Id: 4103
+    Buy: 1                # Horong_Card
+  - Id: 4104
+    Buy: 1                # Requiem_Card
+  - Id: 4105
+    Buy: 1                # Marc_Card
+  - Id: 4106
+    Buy: 1                # Mummy_Card
+  - Id: 4107
+    Buy: 1                # Verit_Card
+  - Id: 4108
+    Buy: 1                # Myst_Card
+  - Id: 4109
+    Buy: 1                # Jakk_Card
+  - Id: 4110
+    Buy: 1                # Ghoul_Card
+  - Id: 4111
+    Buy: 1                # Strouf_Card
+  - Id: 4112
+    Buy: 1                # Marduk_Card
+  - Id: 4113
+    Buy: 1                # Marionette_Card
+  - Id: 4114
+    Buy: 1                # Argiope_Card
+  - Id: 4115
+    Buy: 1                # Hunter_Fly_Card
+  - Id: 4116
+    Buy: 1                # Isis_Card
+  - Id: 4117
+    Buy: 1                # Side_Winder_Card
+  - Id: 4118
+    Buy: 1                # Petit_Card
+  - Id: 4119
+    Buy: 1                # Bathory_Card
+  - Id: 4120
+    Buy: 1                # Petit__Card
+  - Id: 4121
+    Buy: 1                # Phreeoni_Card
+  - Id: 4122
+    Buy: 1                # Deviruchi_Card
+  - Id: 4123
+    Buy: 1                # Eddga_Card
+  - Id: 4124
+    Buy: 1                # Medusa_Card
+  - Id: 4125
+    Buy: 1                # Deviace_Card
+  - Id: 4126
+    Buy: 1                # Minorous_Card
+  - Id: 4127
+    Buy: 1                # Nightmare_Card
+  - Id: 4128
+    Buy: 1                # Golden_Bug_Card
+  - Id: 4129
+    Buy: 1                # Baphomet__Card
+  - Id: 4130
+    Buy: 1                # Scorpion_King_Card
+  - Id: 4131
+    Buy: 1                # Moonlight_Flower_Card
+  - Id: 4132
+    Buy: 1                # Mistress_Card
+  - Id: 4133
+    Buy: 1                # Daydric_Card
+  - Id: 4134
+    Buy: 1                # Dracula_Card
+  - Id: 4135
+    Buy: 1                # Orc_Load_Card
+  - Id: 4136
+    Buy: 1                # Khalitzburg_Card
+  - Id: 4137
+    Buy: 1                # Drake_Card
+  - Id: 4138
+    Buy: 1                # Anubis_Card
+  - Id: 4139
+    Buy: 1                # Joker_Card
+  - Id: 4140
+    Buy: 1                # Knight_Of_Abyss_Card
+  - Id: 4141
+    Buy: 1                # Evil_Druid_Card
+  - Id: 4142
+    Buy: 1                # Doppelganger_Card
+  - Id: 4143
+    Buy: 1                # Orc_Hero_Card
+  - Id: 4144
+    Buy: 1                # Osiris_Card
+  - Id: 4145
+    Buy: 1                # Berzebub_Card
+  - Id: 4146
+    Buy: 1                # Maya_Card
+  - Id: 4147
+    Buy: 1                # Baphomet_Card
+  - Id: 4148
+    Buy: 1                # Pharaoh_Card
+  - Id: 4149
+    Buy: 1                # Gargoyle_Card
+  - Id: 4150
+    Buy: 1                # Goat_Card
+  - Id: 4151
+    Buy: 1                # Gajomart_Card
+  - Id: 4152
+    Buy: 1                # Galapago_Card
+  - Id: 4153
+    Buy: 1                # Crab_Card
+  - Id: 4154
+    Buy: 1                # Rice_Cake_Boy_Card
+  - Id: 4155
+    Buy: 1                # Goblin_Leader_Card
+  - Id: 4156
+    Buy: 1                # Steam_Goblin_Card
+  - Id: 4157
+    Buy: 1                # Goblin_Archer_Card
+  - Id: 4158
+    Buy: 1                # Flying_Deleter_Card
+  - Id: 4159
+    Buy: 1                # Nine_Tail_Card
+  - Id: 4160
+    Buy: 1                # Antique_Firelock_Card
+  - Id: 4161
+    Buy: 1                # Grand_Peco_Card
+  - Id: 4162
+    Buy: 1                # Grizzly_Card
+  - Id: 4163
+    Buy: 1                # Gryphon_Card
+  - Id: 4164
+    Buy: 1                # Gullinbursti_Card
+  - Id: 4165
+    Buy: 1                # Gig_Card
+  - Id: 4166
+    Buy: 1                # Nightmare_Terror_Card
+  - Id: 4167
+    Buy: 1                # Neraid_Card
+  - Id: 4168
+    Buy: 1                # Dark_Lord_Card
+  - Id: 4169
+    Buy: 1                # Dark_Illusion_Card
+  - Id: 4170
+    Buy: 1                # Dark_Frame_Card
+  - Id: 4171
+    Buy: 1                # Dark_Priest_Card
+  - Id: 4172
+    Buy: 1                # The_Paper_Card
+  - Id: 4173
+    Buy: 1                # Demon_Pungus_Card
+  - Id: 4174
+    Buy: 1                # Deviling_Card
+  - Id: 4175
+    Buy: 1                # Poison_Toad_Card
+  - Id: 4176
+    Buy: 1                # Dullahan_Card
+  - Id: 4177
+    Buy: 1                # Dryad_Card
+  - Id: 4178
+    Buy: 1                # Dragon_Tail_Card
+  - Id: 4179
+    Buy: 1                # Dragon_Fly_Card
+  - Id: 4180
+    Buy: 1                # Driller_Card
+  - Id: 4181
+    Buy: 1                # Disguise_Card
+  - Id: 4182
+    Buy: 1                # Diabolic_Card
+  - Id: 4183
+    Buy: 1                # Vagabond_Wolf_Card
+  - Id: 4184
+    Buy: 1                # Lava_Golem_Card
+  - Id: 4185
+    Buy: 1                # Rideword_Card
+  - Id: 4186
+    Buy: 1                # Raggler_Card
+  - Id: 4187
+    Buy: 1                # Raydric_Archer_Card
+  - Id: 4188
+    Buy: 1                # Leib_Olmai_Card
+  - Id: 4189
+    Buy: 1                # Wraith_Dead_Card
+  - Id: 4190
+    Buy: 1                # Wraith_Card
+  - Id: 4191
+    Buy: 1                # Loli_Ruri_Card
+  - Id: 4192
+    Buy: 1                # Rotar_Zairo_Card
+  - Id: 4193
+    Buy: 1                # Lude_Card
+  - Id: 4194
+    Buy: 1                # Rybio_Card
+  - Id: 4195
+    Buy: 1                # Leaf_Cat_Card
+  - Id: 4196
+    Buy: 1                # Marin_Card
+  - Id: 4197
+    Buy: 1                # Mastering_Card
+  - Id: 4198
+    Buy: 1                # Maya_Puple_Card
+  - Id: 4199
+    Buy: 1                # Merman_Card
+  - Id: 4200
+    Buy: 1                # Megalith_Card
+  - Id: 4201
+    Buy: 1                # Majoruros_Card
+  - Id: 4202
+    Buy: 1                # Civil_Servant_Card
+  - Id: 4203
+    Buy: 1                # Mutant_Dragon_Card
+  - Id: 4204
+    Buy: 1                # Mini_Demon_Card
+  - Id: 4205
+    Buy: 1                # Mimic_Card
+  - Id: 4206
+    Buy: 1                # Mystcase_Card
+  - Id: 4207
+    Buy: 1                # Mysteltainn_Card
+  - Id: 4208
+    Buy: 1                # Miyabi_Ningyo_Card
+  - Id: 4209
+    Buy: 1                # Violy_Card
+  - Id: 4210
+    Buy: 1                # Wander_Man_Card
+  - Id: 4211
+    Buy: 1                # Vocal_Card
+  - Id: 4212
+    Buy: 1                # Bon_Gun_Card
+  - Id: 4213
+    Buy: 1                # Brilight_Card
+  - Id: 4214
+    Buy: 1                # Bloody_Murderer_Card
+  - Id: 4215
+    Buy: 1                # Blazzer_Card
+  - Id: 4216
+    Buy: 1                # Sasquatch_Card
+  - Id: 4217
+    Buy: 1                # Live_Peach_Tree_Card
+  - Id: 4218
+    Buy: 1                # Succubus_Card
+  - Id: 4219
+    Buy: 1                # Sageworm_Card
+  - Id: 4220
+    Buy: 1                # Solider_Card
+  - Id: 4221
+    Buy: 1                # Skeleton_General_Card
+  - Id: 4222
+    Buy: 1                # Skel_Prisoner_Card
+  - Id: 4223
+    Buy: 1                # Stalactic_Golem_Card
+  - Id: 4224
+    Buy: 1                # Stem_Worm_Card
+  - Id: 4225
+    Buy: 1                # Stone_Shooter_Card
+  - Id: 4226
+    Buy: 1                # Sting_Card
+  - Id: 4227
+    Buy: 1                # Spring_Rabbit_Card
+  - Id: 4228
+    Buy: 1                # Sleeper_Card
+  - Id: 4229
+    Buy: 1                # C_Tower_Manager_Card
+  - Id: 4230
+    Buy: 1                # Shinobi_Card
+  - Id: 4231
+    Buy: 1                # Increase_Soil_Card
+  - Id: 4232
+    Buy: 1                # Wild_Ginseng_Card
+  - Id: 4233
+    Buy: 1                # Baby_Leopard_Card
+  - Id: 4234
+    Buy: 1                # Anolian_Card
+  - Id: 4235
+    Buy: 1                # Cookie_XMAS_Card
+  - Id: 4236
+    Buy: 1                # Amon_Ra_Card
+  - Id: 4237
+    Buy: 1                # Owl_Duke_Card
+  - Id: 4238
+    Buy: 1                # Owl_Baron_Card
+  - Id: 4239
+    Buy: 1                # Iron_Fist_Card
+  - Id: 4240
+    Buy: 1                # Arclouse_Card
+  - Id: 4241
+    Buy: 1                # Archangeling_Card
+  - Id: 4242
+    Buy: 1                # Apocalips_Card
+  - Id: 4243
+    Buy: 1                # Antonio_Card
+  - Id: 4244
+    Buy: 1                # Alarm_Card
+  - Id: 4245
+    Buy: 1                # Am_Mut_Card
+  - Id: 4246
+    Buy: 1                # Assulter_Card
+  - Id: 4247
+    Buy: 1                # Aster_Card
+  - Id: 4248
+    Buy: 1                # Ancient_Mummy_Card
+  - Id: 4249
+    Buy: 1                # Ancient_Worm_Card
+  - Id: 4250
+    Buy: 1                # Executioner_Card
+  - Id: 4251
+    Buy: 1                # Elder_Card
+  - Id: 4252
+    Buy: 1                # Alligator_Card
+  - Id: 4253
+    Buy: 1                # Alice_Card
+  - Id: 4254
+    Buy: 1                # Tirfing_Card
+  - Id: 4255
+    Buy: 1                # Orc_Lady_Card
+  - Id: 4256
+    Buy: 1                # Orc_Archer_Card
+  - Id: 4257
+    Buy: 1                # Wild_Rose_Card
+  - Id: 4258
+    Buy: 1                # Wicked_Nymph_Card
+  - Id: 4259
+    Buy: 1                # Wooden_Golem_Card
+  - Id: 4260
+    Buy: 1                # Wootan_Shooter_Card
+  - Id: 4261
+    Buy: 1                # Wootan_Fighter_Card
+  - Id: 4262
+    Buy: 1                # Evil_Cloud_Hermit_Card
+  - Id: 4263
+    Buy: 1                # Incant_Samurai_Card
+  - Id: 4264
+    Buy: 1                # Wind_Ghost_Card
+  - Id: 4265
+    Buy: 1                # Li_Me_Mang_Ryang_Card
+  - Id: 4266
+    Buy: 1                # Eclipse_Card
+  - Id: 4267
+    Buy: 1                # Explosion_Card
+  - Id: 4268
+    Buy: 1                # Injustice_Card
+  - Id: 4269
+    Buy: 1                # Incubus_Card
+  - Id: 4270
+    Buy: 1                # Giant_Spider_Card
+  - Id: 4271
+    Buy: 1                # Giant_Honet_Card
+  - Id: 4272
+    Buy: 1                # Dancing_Dragon_Card
+  - Id: 4273
+    Buy: 1                # Shellfish_Card
+  - Id: 4274
+    Buy: 1                # Zombie_Master_Card
+  - Id: 4275
+    Buy: 1                # Zombie_Prisoner_Card
+  - Id: 4276
+    Buy: 1                # Lord_Of_Death_Card
+  - Id: 4277
+    Buy: 1                # Zherlthsh_Card
+  - Id: 4278
+    Buy: 1                # Gibbet_Card
+  - Id: 4279
+    Buy: 1                # Deleter_Card
+  - Id: 4280
+    Buy: 1                # Geographer_Card
+  - Id: 4281
+    Buy: 1                # Zipper_Bear_Card
+  - Id: 4282
+    Buy: 1                # Tengu_Card
+  - Id: 4283
+    Buy: 1                # Greatest_General_Card
+  - Id: 4284
+    Buy: 1                # Chepet_Card
+  - Id: 4285
+    Buy: 1                # Choco_Card
+  - Id: 4286
+    Buy: 1                # Karakasa_Card
+  - Id: 4287
+    Buy: 1                # Kapha_Card
+  - Id: 4288
+    Buy: 1                # Carat_Card
+  - Id: 4289
+    Buy: 1                # Caterpillar_Card
+  - Id: 4290
+    Buy: 1                # Cat_O_Nine_Tail_Card
+  - Id: 4291
+    Buy: 1                # Kobold_Leader_Card
+  - Id: 4292
+    Buy: 1                # Kobold_Archer_Card
+  - Id: 4293
+    Buy: 1                # Cookie_Card
+  - Id: 4294
+    Buy: 1                # Quve_Card
+  - Id: 4295
+    Buy: 1                # Kraben_Card
+  - Id: 4296
+    Buy: 1                # Cramp_Card
+  - Id: 4297
+    Buy: 1                # Cruiser_Card
+  - Id: 4298
+    Buy: 1                # Cremy_Fear_Card
+  - Id: 4299
+    Buy: 1                # Clock_Card
+  - Id: 4300
+    Buy: 1                # Chimera_Card
+  - Id: 4301
+    Buy: 1                # Killer_Mantis_Card
+  - Id: 4302
+    Buy: 1                # Tao_Gunka_Card
+  - Id: 4303
+    Buy: 1                # Whisper_Boss_Card
+  - Id: 4304
+    Buy: 1                # Tamruan_Card
+  - Id: 4305
+    Buy: 1                # Turtle_General_Card
+  - Id: 4306
+    Buy: 1                # Toad_Card
+  - Id: 4307
+    Buy: 1                # Kind_Of_Beetle_Card
+  - Id: 4308
+    Buy: 1                # Tri_Joint_Card
+  - Id: 4309
+    Buy: 1                # Parasite_Card
+  - Id: 4310
+    Buy: 1                # Panzer_Goblin_Card
+  - Id: 4311
+    Buy: 1                # Permeter_Card
+  - Id: 4312
+    Buy: 1                # Fur_Seal_Card
+  - Id: 4313
+    Buy: 1                # Punk_Card
+  - Id: 4314
+    Buy: 1                # Penomena_Card
+  - Id: 4315
+    Buy: 1                # Pest_Card
+  - Id: 4316
+    Buy: 1                # Fake_Angel_Card
+  - Id: 4317
+    Buy: 1                # Mobster_Card
+  - Id: 4318
+    Buy: 1                # Knight_Windstorm_Card
+  - Id: 4319
+    Buy: 1                # Freezer_Card
+  - Id: 4320
+    Buy: 1                # Bloody_Knight_Card
+  - Id: 4321
+    Buy: 1                # Hylozoist_Card
+  - Id: 4322
+    Buy: 1                # High_Orc_Card
+  - Id: 4323
+    Buy: 1                # Garm_Baby_Card
+  - Id: 4324
+    Buy: 1                # Garm_Card
+  - Id: 4325
+    Buy: 1                # Harpy_Card
+  - Id: 4326
+    Buy: 1                # See_Otter_Card
+  - Id: 4327
+    Buy: 1                # Blood_Butterfly_Card
+  - Id: 4328
+    Buy: 1                # Hyegun_Card
+  - Id: 4329
+    Buy: 1                # Phendark_Card
+  - Id: 4330
+    Buy: 1                # Dark_Snake_Lord_Card
+  - Id: 4331
+    Buy: 1                # Heater_Card
+  - Id: 4332
+    Buy: 1                # Waste_Stove_Card
+  - Id: 4333
+    Buy: 1                # Venomous_Card
+  - Id: 4334
+    Buy: 1                # Noxious_Card
+  - Id: 4335
+    Buy: 1                # Pitman_Card
+  - Id: 4336
+    Buy: 1                # Ungoliant_Card
+  - Id: 4337
+    Buy: 1                # Porcellio_Card
+  - Id: 4338
+    Buy: 1                # Obsidian_Card
+  - Id: 4339
+    Buy: 1                # Mineral_Card
+  - Id: 4340
+    Buy: 1                # Teddy_Bear_Card
+  - Id: 4341
+    Buy: 1                # Metaling_Card
+  - Id: 4342
+    Buy: 1                # Rsx_0806_Card
+  - Id: 4343
+    Buy: 1                # Mole_Card
+  - Id: 4344
+    Buy: 1                # Anopheles_Card
+  - Id: 4345
+    Buy: 1                # Hill_Wind_Card
+  - Id: 4346
+    Buy: 1                # Ygnizem_Card
+  - Id: 4347
+    Buy: 1                # Armaia_Card
+  - Id: 4348
+    Buy: 1                # Whikebain_Card
+  - Id: 4349
+    Buy: 1                # Erend_Card
+  - Id: 4350
+    Buy: 1                # Rawrel_Card
+  - Id: 4351
+    Buy: 1                # Kavac_Card
+  - Id: 4352
+    Buy: 1                # B_Ygnizem_Card
+  - Id: 4353
+    Buy: 1                # Removal_Card
+  - Id: 4354
+    Buy: 1                # Gemini_Card
+  - Id: 4355
+    Buy: 1                # Gremlin_Card
+  - Id: 4356
+    Buy: 1                # Beholder_Card
+  - Id: 4357
+    Buy: 1                # B_Seyren_Card
+  - Id: 4358
+    Buy: 1                # Seyren_Card
+  - Id: 4359
+    Buy: 1                # B_Eremes_Card
+  - Id: 4360
+    Buy: 1                # Eremes_Card
+  - Id: 4361
+    Buy: 1                # B_Harword_Card
+  - Id: 4362
+    Buy: 1                # Harword_Card
+  - Id: 4363
+    Buy: 1                # B_Magaleta_Card
+  - Id: 4364
+    Buy: 1                # Magaleta_Card
+  - Id: 4365
+    Buy: 1                # B_Katrinn_Card
+  - Id: 4366
+    Buy: 1                # Katrinn_Card
+  - Id: 4367
+    Buy: 1                # B_Shecil_Card
+  - Id: 4368
+    Buy: 1                # Shecil_Card
+  - Id: 4369
+    Buy: 1                # Venatu_Card
+  - Id: 4370
+    Buy: 1                # Dimik_Card
+  - Id: 4371
+    Buy: 1                # Archdam_Card
+  - Id: 4372
+    Buy: 1                # Bacsojin_Card
+  - Id: 4373
+    Buy: 1                # Chung_E_Card
+  - Id: 4374
+    Buy: 1                # Apocalips_H_Card
+  - Id: 4375
+    Buy: 1                # Orc_Baby_Card_Card
+  - Id: 4376
+    Buy: 1                # Lady_Tanee_Card
+  - Id: 4377
+    Buy: 1                # Green_Iguana_Card
+  - Id: 4378
+    Buy: 1                # Acidus_Card
+  - Id: 4379
+    Buy: 1                # Acidus__Card
+  - Id: 4380
+    Buy: 1                # Ferus_Card
+  - Id: 4381
+    Buy: 1                # Ferus__Card
+  - Id: 4382
+    Buy: 1                # Novus__Card
+  - Id: 4383
+    Buy: 1                # Novus_Card
+  - Id: 4384
+    Buy: 1                # Hydro_Card
+  - Id: 4385
+    Buy: 1                # Dragon_Egg_Card
+  - Id: 4386
+    Buy: 1                # Detale_Card
+  - Id: 4387
+    Buy: 1                # Ancient_Mimic_Card
+  - Id: 4388
+    Buy: 1                # Deathword_Card
+  - Id: 4389
+    Buy: 1                # Plasma_Card
+  - Id: 4390
+    Buy: 1                # Breeze_Card
+  - Id: 4391
+    Buy: 1                # Retribution_Card
+  - Id: 4392
+    Buy: 1                # Observation_Card
+  - Id: 4393
+    Buy: 1                # Shelter_Card
+  - Id: 4394
+    Buy: 1                # Solace_Card
+  - Id: 4395
+    Buy: 1                # Tha_Maero_Card
+  - Id: 4396
+    Buy: 1                # Tha_Odium_Card
+  - Id: 4397
+    Buy: 1                # Tha_Despero_Card
+  - Id: 4398
+    Buy: 1                # Tha_Dolor_Card
+  - Id: 4399
+    Buy: 1                # Thanatos_Card
+  - Id: 4400
+    Buy: 1                # Aliza_Card
+  - Id: 4401
+    Buy: 1                # Alicel_Card
+  - Id: 4402
+    Buy: 1                # Aliot_Card
+  - Id: 4403
+    Buy: 1                # Kiel_Card
+  - Id: 4404
+    Buy: 1                # Skogul_Card
+  - Id: 4405
+    Buy: 1                # Frus_Card
+  - Id: 4406
+    Buy: 1                # Skeggiold_Card
+  - Id: 4407
+    Buy: 1                # Randgris_Card
+  - Id: 4408
+    Buy: 1                # Gloom_Under_Night_Card
+  - Id: 4409
+    Buy: 1                # Agav_Card
+  - Id: 4410
+    Buy: 1                # Echio_Card
+  - Id: 4411
+    Buy: 1                # Vanberk_Card
+  - Id: 4412
+    Buy: 1                # Isilla_Card
+  - Id: 4413
+    Buy: 1                # Hodremlin_Card
+  - Id: 4414
+    Buy: 1                # Seeker_Card
+  - Id: 4415
+    Buy: 1                # Snowier_Card
+  - Id: 4416
+    Buy: 1                # Siroma_Card
+  - Id: 4417
+    Buy: 1                # Ice_Titan_Card
+  - Id: 4418
+    Buy: 1                # Gazeti_Card
+  - Id: 4419
+    Buy: 1                # Ktullanux_Card
+  - Id: 4420
+    Buy: 1                # Muscipular_Card
+  - Id: 4421
+    Buy: 1                # Drosera_Card
+  - Id: 4422
+    Buy: 1                # Roween_Card
+  - Id: 4423
+    Buy: 1                # Galion_Card
+  - Id: 4424
+    Buy: 1                # Stapo_Card
+  - Id: 4425
+    Buy: 1                # Atroce_Card
+  - Id: 4426
+    Buy: 1                # Byorgue_Card
+  - Id: 4427
+    Buy: 1                # Sword_Guardian_Card
+  - Id: 4428
+    Buy: 1                # Bow_Guardian_Card
+  - Id: 4429
+    Buy: 1                # Salamander_Card
+  - Id: 4430
+    Buy: 1                # Ifrit_Card
+  - Id: 4431
+    Buy: 1                # Kasa_Card
+  - Id: 4432
+    Buy: 1                # Magmaring_Card
+  - Id: 4433
+    Buy: 1                # Imp_Card
+  - Id: 4434
+    Buy: 1                # Knocker_Card
+  - Id: 4435
+    Buy: 1                # Zombie_Slaughter_Card
+  - Id: 4436
+    Buy: 1                # Ragged_Zombie_Card
+  - Id: 4437
+    Buy: 1                # Hell_Poodle_Card
+  - Id: 4438
+    Buy: 1                # Banshee_Card
+  - Id: 4439
+    Buy: 1                # Flame_Skull_Card
+  - Id: 4440
+    Buy: 1                # Necromancer_Card
+  - Id: 4441
+    Buy: 1                # Fallen_Bishop_Card
+  - Id: 4442
+    Buy: 1                # Tatacho_Card
+  - Id: 4443
+    Buy: 1                # Aqua_Elemental_Card
+  - Id: 4444
+    Buy: 1                # Draco_Card
+  - Id: 4445
+    Buy: 1                # Luciola_Vespa_Card
+  - Id: 4446
+    Buy: 1                # P_Skeleton_Card
+  - Id: 4447
+    Buy: 1                # Centipede_Card
+  - Id: 4448
+    Buy: 1                # Cornus_Card
+  - Id: 4449
+    Buy: 1                # Dark_Shadow_Card
+  - Id: 4450
+    Buy: 1                # Banshee_Master_Card
+  - Id: 4451
+    Buy: 1                # Ant_Buyanne_Card
+  - Id: 4452
+    Buy: 1                # Centipede_Larva_Card
+  - Id: 4453
+    Buy: 1                # Hilsrion_Card
+  - Id: 4454
+    Buy: 1                # Light_Up_Card1
+  - Id: 4455
+    Buy: 1                # Light_Up_Card2
+  - Id: 4456
+    Buy: 1                # Nidhogg_Shadow_Card
+  - Id: 4457
+    Buy: 1                # Nahtzigger_Card
+  - Id: 4458
+    Buy: 1                # Duneirre_Card
+  - Id: 4459
+    Buy: 1                # Lata_Card
+  - Id: 4460
+    Buy: 1                # Ringco_Card
+  - Id: 4461
+    Buy: 1                # Pillar_Card
+  - Id: 4462
+    Buy: 1                # Hardrock_Mommos_Card
+  - Id: 4463
+    Buy: 1                # Tendrilion_Card
+  - Id: 4464
+    Buy: 1                # Aunoe_Card
+  - Id: 4465
+    Buy: 1                # Panat_Card
+  - Id: 4466
+    Buy: 1                # Beholder_Master_Card
+  - Id: 4467
+    Buy: 1                # Heavy_Metaling_Card
+  - Id: 4468
+    Buy: 1                # Pinguicula_Dark_Card
+  - Id: 4469
+    Buy: 1                # Naga_Card
+  - Id: 4470
+    Buy: 1                # Nepenthes_Card
+  - Id: 4471
+    Buy: 1                # Egg_Of_Draco_Card
+  - Id: 4472
+    Buy: 1                # Bradium_Goram_Card
+  - Id: 4473
+    Buy: 1                # Ancient_Tree_Card
+  - Id: 4474
+    Buy: 1                # Jakudam_Card
+  - Id: 4475
+    Buy: 1                # Cobalt_Mineral_Card
+  - Id: 4476
+    Buy: 1                # Pinguicula_Card
+  - Id: 4477
+    Buy: 1                # Hell_Apocalips_Card
+  - Id: 4478
+    Buy: 1                # Light_Up_Card3
+  - Id: 4479
+    Buy: 1                # Light_Up_Card4
+  - Id: 4480
+    Buy: 1                # Sealed_Kiel_Card
+  - Id: 4481
+    Buy: 1                # Sealed_Ktullanux_Card
+  - Id: 4482
+    Buy: 1                # Sealed_B_Ygnizem_Card
+  - Id: 4483
+    Buy: 1                # Sealed_Dracula_Card
+  - Id: 4484
+    Buy: 1                # Sealed_Mistress_Card
+  - Id: 4485
+    Buy: 1                # Sealed_Gloom_Card
+  - Id: 4486
+    Buy: 1                # Sealed_Berz_Card
+  - Id: 4487
+    Buy: 1                # Sealed_Ifrit_Card
+  - Id: 4488
+    Buy: 1                # Sealed_D_Lord_Card
+  - Id: 4489
+    Buy: 1                # Sealed_Pharaoh_Card
+  - Id: 4490
+    Buy: 1                # Sealed_M_Flower_Card
+  - Id: 4491
+    Buy: 1                # Sealed_B_Shecil_Card
+  - Id: 4492
+    Buy: 1                # Sealed_Orc_Hero_Card
+  - Id: 4494
+    Buy: 1                # Sealed_TurtleG_Card
+  - Id: 4495
+    Buy: 1                # Sealed_Amon_Ra_Card
+  - Id: 4497
+    Buy: 1                # Sealed_Knight_WS_Card
+  - Id: 4498
+    Buy: 1                # Sealed_Lady_Tanee_Card
+  - Id: 4499
+    Buy: 1                # Sealed_Samurai_Card
+  - Id: 4500
+    Buy: 1                # Sealed_Orc_Load_Card
+  - Id: 4501
+    Buy: 1                # Sealed_B_Magaleta_Card
+  - Id: 4502
+    Buy: 1                # Sealed_B_Harword_Card
+  - Id: 4503
+    Buy: 1                # Sealed_Apocalips_H_Card
+  - Id: 4504
+    Buy: 1                # Sealed_Eddga_Card
+  - Id: 4505
+    Buy: 1                # Scaraba_Card
+  - Id: 4506
+    Buy: 1                # Dolomedes_Card
+  - Id: 4507
+    Buy: 1                # Q_Scaraba_Card
+  - Id: 4508
+    Buy: 1                # Gold_Scaraba_Card
+  - Id: 4509
+    Buy: 1                # Gold_Q_Scaraba_Card
+  - Id: 4510
+    Buy: 1                # Miming_Card
+  - Id: 4511
+    Buy: 1                # Little_Fatum_Card
+  - Id: 4512
+    Buy: 1                # Parus_Card
+  - Id: 4513
+    Buy: 1                # Angra_Mantis_Card
+  - Id: 4514
+    Buy: 1                # Pom_Spider_Card
+  - Id: 4515
+    Buy: 1                # Alnoldi_Card
+  - Id: 4516
+    Buy: 1                # Comodo_Card
+  - Id: 4517
+    Buy: 1                # Cendrawasih_Card
+  - Id: 4518
+    Buy: 1                # Banaspaty_Card
+  - Id: 4519
+    Buy: 1                # Butoijo_Card
+  - Id: 4520
+    Buy: 1                # Leak_Card
+  - Id: 4521
+    Buy: 1                # Sedora_Card
+  - Id: 4522
+    Buy: 1                # Sropho_Card
+  - Id: 4523
+    Buy: 1                # Pot_Dofle_Card
+  - Id: 4524
+    Buy: 1                # King_Dramoh_Card
+  - Id: 4525
+    Buy: 1                # Kraken_Card
+  - Id: 4526
+    Buy: 1                # Odd_Coelacanth_Card
+  - Id: 4527
+    Buy: 1                # Black_Coelacanth_Card
+  - Id: 4528
+    Buy: 1                # Mutant_Coelacanth_Card
+  - Id: 4529
+    Buy: 1                # Cruel_Coelacanth_Card
+  - Id: 4530
+    Buy: 1                # Siorava_Card
+  - Id: 4531
+    Buy: 1                # Red_Eruma_Card
+  - Id: 4532
+    Buy: 1                # Wild_Rider_Card
+  - Id: 4533
+    Buy: 1                # Mini_Octopus_Card
+  - Id: 4534
+    Buy: 1                # Giant_Octopus_Card
+  - Id: 4538
+    Buy: 1                # Sealed_Bacsojin_Card
+  - Id: 4539
+    Buy: 1                # Sealed_F_Bishop_Card
+  - Id: 4545
+    Buy: 1                # Novice_Poring_Card
+  - Id: 4556
+    Buy: 1                # Fenrir_Card
+  - Id: 4557
+    Buy: 1                # Fenrir_Card_
+  - Id: 4559
+    Buy: 1                # M_Morocc_Card
+  - Id: 4560
+    Buy: 1                # Clown_Card
+  - Id: 4561
+    Buy: 1                # Professor_Card
+  - Id: 4562
+    Buy: 1                # Champion_Card
+  - Id: 4563
+    Buy: 1                # Creator_Card
+  - Id: 4564
+    Buy: 1                # Stalker_Card
+  - Id: 4565
+    Buy: 1                # Paladin_Card
+  - Id: 4566
+    Buy: 1                # Gypsy_Card
+  - Id: 4567
+    Buy: 1                # Alphoccio_Card
+  - Id: 4568
+    Buy: 1                # Ceila_Card
+  - Id: 4569
+    Buy: 1                # Chen_Card
+  - Id: 4570
+    Buy: 1                # Flamel_Card
+  - Id: 4571
+    Buy: 1                # Gertie_Card
+  - Id: 4572
+    Buy: 1                # Randel_Card
+  - Id: 4573
+    Buy: 1                # Trentini_Card
+  - Id: 4574
+    Buy: 1                # Daehyon_Card
+  - Id: 4575
+    Buy: 1                # Soheon_Card
+  - Id: 4576
+    Buy: 1                # Gioia_Card
+  - Id: 4577
+    Buy: 1                # Elvira_Card
+  - Id: 4578
+    Buy: 1                # Pyuriel_Card
+  - Id: 4579
+    Buy: 1                # Lora_Card
+  - Id: 4580
+    Buy: 1                # Kades_Card
+  - Id: 4581
+    Buy: 1                # Rudo_Card
+  - Id: 4582
+    Buy: 1                # Bungisngis_Card
+  - Id: 4583
+    Buy: 1                # Engkanto_Card
+  - Id: 4584
+    Buy: 1                # Manananggal_Card
+  - Id: 4585
+    Buy: 1                # Mangkukulam_Card
+  - Id: 4586
+    Buy: 1                # Tikbalang_Card
+  - Id: 4587
+    Buy: 1                # Tiyanak_Card
+  - Id: 4588
+    Buy: 1                # Wakwak_Card
+  - Id: 4589
+    Buy: 1                # Jejeling_Card
+  - Id: 4590
+    Buy: 1                # Bangungot_Card
+  - Id: 4591
+    Buy: 1                # Bakonawa_Card
+  - Id: 4592
+    Buy: 1                # Buwaya_Card
+  - Id: 4593
+    Buy: 1                # Menblatt_Card
+  - Id: 4594
+    Buy: 1                # Petal_Card
+  - Id: 4595
+    Buy: 1                # Cenere_Card
+  - Id: 4596
+    Buy: 1                # AntiqueBook_Card
+  - Id: 4597
+    Buy: 1                # LichternB_Card
+  - Id: 4598
+    Buy: 1                # LichternY_Card
+  - Id: 4599
+    Buy: 1                # LichternR_Card
+  - Id: 4600
+    Buy: 1                # LichternG_Card
+  - Id: 4601
+    Buy: 1                # Amdarais_Card
+  - Id: 4602
+    Buy: 1                # AmdaraisH_Card
+  - Id: 4603
+    Buy: 1                # CorruptionRoot_Card
+  - Id: 4604
+    Buy: 1                # CorruptionRootH_Card
+  - Id: 4605
+    Buy: 1                # UndeadKnightM_Card
+  - Id: 4606
+    Buy: 1                # UndeadKnightF_Card
+  - Id: 4608
+    Buy: 1                # White_Knightage_Card
+  - Id: 4609
+    Buy: 1                # Khaliz_Knightage_Card
+  - Id: 4610
+    Buy: 1                # Sarah_Card
+  - Id: 4625
+    Buy: 1                # Timeholder_Card
+  - Id: 4626
+    Buy: 1                # Big_Ben_Card
+  - Id: 4627
+    Buy: 1                # Big_Bell_Card
+  - Id: 4628
+    Buy: 1                # Neo_Punk_Card
+  - Id: 4629
+    Buy: 1                # Arc_Elder_Card
+  - Id: 4630
+    Buy: 1                # Time_Keeper_Card
+  - Id: 4631
+    Buy: 1                # Owl_Viscount_Card
+  - Id: 4632
+    Buy: 1                # Owl_Marquees_Card
+  - Id: 4633
+    Buy: 1                # P_Archer_Skeleton_Card
+  - Id: 4634
+    Buy: 1                # P_Soldier_Skeleton_Card
+  - Id: 4635
+    Buy: 1                # P_Amdarais_Card
+  - Id: 4636
+    Buy: 1                # Bijou_Card
+  - Id: 4637
+    Buy: 1                # Immotal_Corps_Card
+  - Id: 4638
+    Buy: 1                # Watcher_Card
+  - Id: 4639
+    Buy: 1                # Tappy_Card
+  - Id: 4640
+    Buy: 1                # Frozenwolf_Card
+  - Id: 4641
+    Buy: 1                # Zombie_Guard_Card
+  - Id: 4642
+    Buy: 1                # IFN_Toad_Card
+  - Id: 4643
+    Buy: 1                # IFN_V_Wolf_Card
+  - Id: 4644
+    Buy: 1                # IFN_Vocal_Card
+  - Id: 4645
+    Buy: 1                # IFN_Eclipse_Card
+  - Id: 4646
+    Buy: 1                # IFN_Chimera_Card
+  - Id: 4647
+    Buy: 1                # IFN_Osiris_Card
+  - Id: 4648
+    Buy: 1                # IFN_Eddga_Card
+  - Id: 4649
+    Buy: 1                # IFN_Phreeoni_Card
+  - Id: 4650
+    Buy: 1                # IFN_OrcHero_Card
+  - Id: 4651
+    Buy: 1                # IFN_Tao_Gunka_Card
+  - Id: 4652
+    Buy: 1                # Grave_Amon_Ra_Card
+  - Id: 4653
+    Buy: 1                # Grave_Arclouse_Card
+  - Id: 4654
+    Buy: 1                # Grave_Mimic_Card
+  - Id: 4655
+    Buy: 1                # Grave_Minorous_Card
+  - Id: 4656
+    Buy: 1                # Grave_Mummy_Card
+  - Id: 4657
+    Buy: 1                # Grave_A_Mummy_Card
+  - Id: 4658
+    Buy: 1                # Grave_Verit_Card
+  - Id: 4659
+    Buy: 1                # Eggring_Card
+  - Id: 4660
+    Buy: 1                # Basilisk1_Card
+  - Id: 4661
+    Buy: 1                # Basilisk2_Card
+  - Id: 4662
+    Buy: 1                # Big_Eggring_Card
+  - Id: 4663
+    Buy: 1                # Leaf_Lunatic_Card
+  - Id: 4664
+    Buy: 1                # Grass_Fabre_Card
+  - Id: 4665
+    Buy: 1                # Wild_Honet_Card
+  - Id: 4666
+    Buy: 1                # Sw_Roda_Frog_Card
+  - Id: 4667
+    Buy: 1                # Hunter_Wolf_Card
+  - Id: 4668
+    Buy: 1                # Trance_Spore_Card
+  - Id: 4669
+    Buy: 1                # Ju_Mandragora_Card
+  - Id: 4670
+    Buy: 1                # Fru_Pom_Spider_Card
+  - Id: 4671
+    Buy: 1                # Sorcerer_Card
+  - Id: 4672
+    Buy: 1                # Sura_Card
+  - Id: 4673
+    Buy: 1                # Minstrel_Card
+  - Id: 4674
+    Buy: 1                # GuillotineCross_Card
+  - Id: 4675
+    Buy: 1                # Archbishop_Card
+  - Id: 4676
+    Buy: 1                # Ranger_Card
+  - Id: 4677
+    Buy: 1                # Mechanic_Card
+  - Id: 4678
+    Buy: 1                # Warlock_Card
+  - Id: 4679
+    Buy: 1                # RuneKnight_Card
+  - Id: 4680
+    Buy: 1                # RoyalGuard_Card
+  - Id: 4681
+    Buy: 1                # Genetic_Card
+  - Id: 4682
+    Buy: 1                # ShadowChaser_Card
+  - Id: 4683
+    Buy: 1                # Wanderer_Card
+  - Id: 4684
+    Buy: 1                # Real_Eremes_Card
+  - Id: 4685
+    Buy: 1                # Real_Magaleta_Card
+  - Id: 4686
+    Buy: 1                # Real_Katrinn_Card
+  - Id: 4687
+    Buy: 1                # Real_Shecil_Card
+  - Id: 4688
+    Buy: 1                # Real_Harword_Card
+  - Id: 4689
+    Buy: 1                # Real_Seyren_Card
+  - Id: 4690
+    Buy: 1                # Real_Randel_Card
+  - Id: 4691
+    Buy: 1                # Real_Flamel_Card
+  - Id: 4692
+    Buy: 1                # Real_Ceila_Card
+  - Id: 4693
+    Buy: 1                # Real_Chen_Card
+  - Id: 4694
+    Buy: 1                # Real_Gertie_Card
+  - Id: 4695
+    Buy: 1                # Real_Trentini_Card
+  - Id: 4696
+    Buy: 1                # Real_Alphoccio_Card
+  - Id: 4697
+    Buy: 1                # Charleston_Card
+  - Id: 4698
+    Buy: 1                # Step_Card
+  - Id: 4699
+    Buy: 1                # Rock_Step_Card
+  - Id: 4908
+    Buy: 1                # Force1
+  - Id: 4909
+    Buy: 1                # Force2
+  - Id: 4910
+    Buy: 1                # Force3
+  - Id: 4911
+    Buy: 1                # Intellect1
+  - Id: 4912
+    Buy: 1                # Intellect2
+  - Id: 4913
+    Buy: 1                # Intellect3
+  - Id: 4914
+    Buy: 1                # Swiftness1
+  - Id: 4915
+    Buy: 1                # Swiftness2
+  - Id: 4916
+    Buy: 1                # Swiftness3
+  - Id: 4917
+    Buy: 1                # Tough1
+  - Id: 4918
+    Buy: 1                # Tough2
+  - Id: 4919
+    Buy: 1                # Tough3
+  - Id: 4920
+    Buy: 1                # Artful1
+  - Id: 4921
+    Buy: 1                # Artful2
+  - Id: 4922
+    Buy: 1                # Artful3
+  - Id: 4923
+    Buy: 1                # Fortune1
+  - Id: 4924
+    Buy: 1                # Fortune2
+  - Id: 4925
+    Buy: 1                # Fortune3
+  - Id: 5388
+    Buy: 1                # Snake_Head
+  - Id: 5592
+    Buy: 1                # Sigrun's_Wing
+  - Id: 5983
+    Buy: 1                # C_Loki_Assassin_Mask
+  - Id: 5985
+    Buy: 1                # Noble_Mask
+  - Id: 13092
+    Buy: 1                # RWC_Memory_Knife
+  - Id: 13147
+    Buy: 1                # Blut_Revolver
+  - Id: 13342
+    Buy: 1                # Blut_Huuma
+  - Id: 15371
+    Buy: 1                # Antonio_Christmas_Suit
+  - Id: 15405
+    Buy: 1                # Fafnir_Scale_J
+  - Id: 15825
+    Buy: 1                # C_Black_Musang_J
+  - Id: 15838
+    Buy: 1                # C_VesperHeadGear_J
+  - Id: 15840
+    Buy: 1                # C_Bio_Protector
+  - Id: 15841
+    Buy: 1                # C_Hat_of_Goggle
+  - Id: 15842
+    Buy: 1                # C_Disapear_Time_J
+  - Id: 15846
+    Buy: 1                # C_Artist_Silk_Hat
+  - Id: 15847
+    Buy: 1                # C_EXE_Wing_Cap_TH
+  - Id: 15851
+    Buy: 1                # C_Freyja_Crown_J
+  - Id: 15854
+    Buy: 1                # C_Phigasia_Scarf_EXE
+  - Id: 15875
+    Buy: 1                # C_King_Of_Spirit_Circle
+  - Id: 15888
+    Buy: 1                # C_Hand_Of_Devil
+  - Id: 15893
+    Buy: 1                # C_Helm_Of_Sun_V
+  - Id: 15920
+    Buy: 1                # Charm_Of_Flame_Heart_BR
+  - Id: 15921
+    Buy: 1                # Charm_Of_Nature_BR
+  - Id: 15922
+    Buy: 1                # Charm_Of_Frozen_BR
+  - Id: 15923
+    Buy: 1                # Charm_Of_Wind_BR
+  - Id: 15925
+    Buy: 1                # C_Splash_Hat
+  - Id: 15952
+    Buy: 1                # C_15th_Nov_Helmet
+  - Id: 15953
+    Buy: 1                # C_Somtam
+  - Id: 15954
+    Buy: 1                # C_Wichienmaat_Bangkaew
+  - Id: 16082
+    Buy: 1                # Blut_Mace
+  - Id: 18171
+    Buy: 1                # Blut_Bow
+  - Id: 18508
+    Buy: 1                # Garuda_Hat
+  - Id: 18728
+    Buy: 1                # Egir_Helm
+  - Id: 18740
+    Buy: 1                # C_Hair_Of_The_Strong
+  - Id: 18742
+    Buy: 1                # C_MoonStar_Accessory
+  - Id: 18849
+    Buy: 1                # Celines_Ribbon
+  - Id: 18878
+    Buy: 1                # Palace_Guard_Cap
+  - Id: 18894
+    Buy: 1                # Rainbow_Star
+  - Id: 18985
+    Buy: 1                # Falconer_Flute
+  - Id: 19085
+    Buy: 1                # Sigrun's_Wing_
+  - Id: 19106
+    Buy: 1                # Magicstone_Of_Grace
+  - Id: 19262
+    Buy: 1                # Jirant_Circlet
+  - Id: 19288
+    Buy: 1                # C_Gigant_Helm
+  - Id: 19380
+    Buy: 1                # Floating_Ball
+  - Id: 19381
+    Buy: 1                # Protect_cloth
+  - Id: 19437
+    Buy: 1                # LittleGarden
+  - Id: 19444
+    Buy: 1                # Star_Eyepatch_JP_
+  - Id: 19446
+    Buy: 1                # Injured_Eyepatch_JP_
+  - Id: 19452
+    Buy: 1                # Heavenly_Order_
+  - Id: 19455
+    Buy: 1                # Protect_Feathers_
+  - Id: 19495
+    Buy: 1                # Diabolus_Wing
+  - Id: 19519
+    Buy: 1                # Lightning_Cloud
+  - Id: 19551
+    Buy: 1                # C_Elven_Ears
+  - Id: 19554
+    Buy: 1                # C_Hahoe_Mask
+  - Id: 19597
+    Buy: 1                # C_Magic_Eyes_J
+  - Id: 19598
+    Buy: 1                # C_Wondering_Wolf_Helm
+  - Id: 19602
+    Buy: 1                # C_Invisible_Cap
+  - Id: 19603
+    Buy: 1                # C_Invisible_Sunglasses
+  - Id: 19604
+    Buy: 1                # C_Invisible_Mask
+  - Id: 19630
+    Buy: 1                # C_Crown
+  - Id: 19638
+    Buy: 1                # C_Mr_Smile
+  - Id: 19639
+    Buy: 1                # C_Sahkkat
+  - Id: 19659
+    Buy: 1                # C_Gray_Fur_Hat
+  - Id: 19789
+    Buy: 1                # C_Sweet_Gents
+  - Id: 19801
+    Buy: 1                # C_Fox_Hat_J
+  - Id: 19829
+    Buy: 1                # C_Straw_Hat
+  - Id: 19966
+    Buy: 1                # C_Minstrel_Song_Hat
+  - Id: 19982
+    Buy: 1                # C_Santa's_Hat
+  - Id: 19996
+    Buy: 1                # Horse_King
+  - Id: 20037
+    Buy: 1                # C_Owlduke_Silk_Hat
+  - Id: 20038
+    Buy: 1                # Alphonse_Helmet
+  - Id: 20065
+    Buy: 1                # C_Hairband_Of_Grandpeco
+  - Id: 20106
+    Buy: 1                # C_Classic_Hat
+  - Id: 20135
+    Buy: 1                # C12th_Crown
+  - Id: 20166
+    Buy: 1                # C_Hockey_Mask
+  - Id: 20180
+    Buy: 1                # C_Westren_Grace
+  - Id: 20183
+    Buy: 1                # C_There_Is_Something
+  - Id: 20194
+    Buy: 1                # C_Lion_Mask
+  - Id: 20234
+    Buy: 1                # C_Baphomet_Hat
+  - Id: 20244
+    Buy: 1                # C_Zherlthsh_Mask
+  - Id: 20248
+    Buy: 1                # C_Black_Strong_Hair
+  - Id: 20286
+    Buy: 1                # C_Under_Rim_Glasses_Red
+  - Id: 20300
+    Buy: 1                # C_Hill_Wind_Mask
+  - Id: 20308
+    Buy: 1                # C_Koneko_Hat
+  - Id: 20309
+    Buy: 1                # C_Dip_Schmitz
+  - Id: 20385
+    Buy: 1                # C_Orc_Hero_Helm
+  - Id: 20397
+    Buy: 1                # C_Jakk
+  - Id: 20506
+    Buy: 1                # C_Invisible_Manteau
+  - Id: 20612
+    Buy: 1                # C_Ten_G_Shield_TW
+  - Id: 20734
+    Buy: 1                # Manteau_Of_Leafwind
+  - Id: 20735
+    Buy: 1                # Manteau_Of_Flame_Heart
+  - Id: 20745
+    Buy: 1                # Manteau_Of_Mistic_Froz
+  - Id: 20798
+    Buy: 1                # GrimReaper_Protection
+  - Id: 20925
+    Buy: 1                # Commander_manteau_J
+  - Id: 20952
+    Buy: 1                # Anony_As_Muffler
+  - Id: 20986
+    Buy: 1                # Scientist_Mantle
+  - Id: 20991
+    Buy: 1                # Fairy_Of_Eden
+  - Id: 21051
+    Buy: 1                # Volar
+  - Id: 21053
+    Buy: 1                # FullForce
+  - Id: 21200
+    Buy: 1                # C_Tear_Drop
+  - Id: 21207
+    Buy: 1                # C_bullhead
+  - Id: 21300
+    Buy: 1                # C_Guardian_Lion_Mask
+  - Id: 21400
+    Buy: 1                # C_Bluedragon
+  - Id: 22014
+    Buy: 1                # Enhanced_Variant_Shoes
+  - Id: 22071
+    Buy: 1                # Applause_Sandal_
+  - Id: 22203
+    Buy: 1                # Space_shoes_JP
+  - Id: 26141
+    Buy: 1                # Blut_Staff
+  - Id: 26206
+    Buy: 1                # Blut_Whip
+  - Id: 27012
+    Buy: 1                # Kick_Step_Card
+  - Id: 27013
+    Buy: 1                # KickAndKick_Card
+  - Id: 27014
+    Buy: 1                # GreenCenere_Card
+  - Id: 27015
+    Buy: 1                # RepairRobot_T_Card
+  - Id: 27016
+    Buy: 1                # ExplorationRover_T_Card
+  - Id: 27017
+    Buy: 1                # Scr_MT_Robots_Card
+  - Id: 27018
+    Buy: 1                # GC109_Card
+  - Id: 27019
+    Buy: 1                # DR815_Card
+  - Id: 27020
+    Buy: 1                # T_W_O_Card
+  - Id: 27025
+    Buy: 1                # Lich_Lord_Card
+  - Id: 27026
+    Buy: 1                # Fire_Condor_Card
+  - Id: 27027
+    Buy: 1                # Fire_Sand_Man_Card
+  - Id: 27028
+    Buy: 1                # Fire_Frilldora_Card
+  - Id: 27029
+    Buy: 1                # Fire_Golem_Card
+  - Id: 27030
+    Buy: 1                # Fulbuk_Card
+  - Id: 27081
+    Buy: 1                # AngerMoonlight_Card
+  - Id: 27082
+    Buy: 1                # AngerNineTail_Card
+  - Id: 27083
+    Buy: 1                # BitterBonGun_Card
+  - Id: 27084
+    Buy: 1                # BitterSohee_Card
+  - Id: 27085
+    Buy: 1                # BitterMunak_Card
+  - Id: 27086
+    Buy: 1                # BitterArcherSk_Card
+  - Id: 27087
+    Buy: 1                # WizardOfVeritas_Card
+  - Id: 27088
+    Buy: 1                # FuryHero_Card
+  - Id: 27101
+    Buy: 1                # SweetNightM_Card
+  - Id: 27102
+    Buy: 1                # MattDrainliar_Card
+  - Id: 27103
+    Buy: 1                # LivingDead_Card
+  - Id: 27104
+    Buy: 1                # Ill_Dracula_Card
+  - Id: 27105
+    Buy: 1                # Bomi_Card
+  - Id: 27106
+    Buy: 1                # Grand_Pere_Card
+  - Id: 27107
+    Buy: 1                # PlayingPere_Card
+  - Id: 27108
+    Buy: 1                # SingingPere_Card
+  - Id: 27109
+    Buy: 1                # JitterbugCard
+  - Id: 27110
+    Buy: 1                # AngerGazeti_Card
+  - Id: 27111
+    Buy: 1                # AngerSnowier_Card
+  - Id: 27112
+    Buy: 1                # AngerIceTitan_Card
+  - Id: 27113
+    Buy: 1                # AwakenKtullanux_Card
+  - Id: 27114
+    Buy: 1                # OminousSolider_Card
+  - Id: 27115
+    Buy: 1                # OminousPermeter_Card
+  - Id: 27116
+    Buy: 1                # OminousHeater_Card
+  - Id: 27117
+    Buy: 1                # OminousAssulter_Card
+  - Id: 27118
+    Buy: 1                # OminousFreezer_Card
+  - Id: 27119
+    Buy: 1                # OminousTurtleG_Card
+  - Id: 27120
+    Buy: 1                # Iara_Card
+  - Id: 27121
+    Buy: 1                # Piranha_Card
+  - Id: 27122
+    Buy: 1                # Curupira_Card
+  - Id: 27123
+    Buy: 1                # Toucan_Card
+  - Id: 27124
+    Buy: 1                # Jaguar_Card
+  - Id: 27125
+    Buy: 1                # Headless_Mule_Card
+  - Id: 27126
+    Buy: 1                # Boitata_Card
+  - Id: 27147
+    Buy: 1                # Human_Kimera_Card
+  - Id: 27148
+    Buy: 1                # Matter_Kimera_Card
+  - Id: 27149
+    Buy: 1                # Heart_Hunter_Card
+  - Id: 27150
+    Buy: 1                # Venom_Kimera_Card
+  - Id: 27151
+    Buy: 1                # Evil_Card
+  - Id: 27152
+    Buy: 1                # Cutie_Card
+  - Id: 27157
+    Buy: 1                # Wood_Goblin_Card
+  - Id: 27158
+    Buy: 1                # Les_Card
+  - Id: 27159
+    Buy: 1                # Uzhas_Card
+  - Id: 27160
+    Buy: 1                # Vavayaga_Card
+  - Id: 27161
+    Buy: 1                # Mavka_Card
+  - Id: 27162
+    Buy: 1                # Gopinich_Card
+  - Id: 27163
+    Buy: 1                # Faceworm_Card
+  - Id: 27164
+    Buy: 1                # Faceworm_Q_Card
+  - Id: 27165
+    Buy: 1                # Faceworm_D_Card
+  - Id: 27166
+    Buy: 1                # Faceworm_Egg_Card
+  - Id: 27167
+    Buy: 1                # Faceworm_L_Card
+  - Id: 27168
+    Buy: 1                # Irene_Elder_Card
+  - Id: 27169
+    Buy: 1                # Payon_Soldier_Card
+  - Id: 27170
+    Buy: 1                # Cowraiders1_Card
+  - Id: 27171
+    Buy: 1                # Cowraiders2_Card
+  - Id: 27172
+    Buy: 1                # Cowraiders3_Card
+  - Id: 27173
+    Buy: 1                # E_Cowraiders1_Card
+  - Id: 27174
+    Buy: 1                # E_Cowraiders2_Card
+  - Id: 27175
+    Buy: 1                # E_Cowraiders3_Card
+  - Id: 27176
+    Buy: 1                # Rr_Cramp_Card
+  - Id: 27177
+    Buy: 1                # Rr_Arclouse_Card
+  - Id: 27178
+    Buy: 1                # Gaster_Card
+  - Id: 27179
+    Buy: 1                # Coyote_Card
+  - Id: 27180
+    Buy: 1                # Mechaspider_Card
+  - Id: 27181
+    Buy: 1                # AirShip_Raid_Card
+  - Id: 27182
+    Buy: 1                # Felock_Card
+  - Id: 27183
+    Buy: 1                # Gigantes_Card
+  - Id: 27184
+    Buy: 1                # Knight_Sakray_Card
+  - Id: 27196
+    Buy: 1                # S_Nihil_Card
+  - Id: 27197
+    Buy: 1                # S_Agnes_Card
+  - Id: 27198
+    Buy: 1                # S_Jurgen_Card
+  - Id: 27199
+    Buy: 1                # S_Spica_Card
+  - Id: 27200
+    Buy: 1                # Nihil_Card
+  - Id: 27201
+    Buy: 1                # Agnes_Card
+  - Id: 27202
+    Buy: 1                # Jurgen_Card
+  - Id: 27203
+    Buy: 1                # Spica_Card
+  - Id: 27209
+    Buy: 1                # SLD_Q_Scaraba_Card
+  - Id: 27210
+    Buy: 1                # SLD_Thanatos_Card
+  - Id: 27211
+    Buy: 1                # SLD_Baphomet_Card
+  - Id: 27212
+    Buy: 1                # SLD_Maya_Card
+  - Id: 27213
+    Buy: 1                # SLD_Clown_Card
+  - Id: 27214
+    Buy: 1                # SLD_Professor_Card
+  - Id: 27215
+    Buy: 1                # SLD_Champion_Card
+  - Id: 27216
+    Buy: 1                # SLD_Creator_Card
+  - Id: 27217
+    Buy: 1                # SLD_Stalker_Card
+  - Id: 27218
+    Buy: 1                # SLD_Paladin_Card
+  - Id: 27219
+    Buy: 1                # SLD_Gypsy_Card
+  - Id: 27220
+    Buy: 1                # SLD_Daehyon_Card
+  - Id: 27221
+    Buy: 1                # SLD_Gioia_Card
+  - Id: 27222
+    Buy: 1                # SLD_Pyuriel_Card
+  - Id: 27224
+    Buy: 1                # SLD_Kades_Card
+  - Id: 27225
+    Buy: 1                # SLD_Timeholder_Card
+  - Id: 27249
+    Buy: 1                # Archi_Card
+  - Id: 27250
+    Buy: 1                # Dio_Anemos_Card
+  - Id: 27251
+    Buy: 1                # Geffen_Gang_Card
+  - Id: 27252
+    Buy: 1                # Geffen_Thug_Card
+  - Id: 27253
+    Buy: 1                # Geffen_Thief_Card
+  - Id: 27254
+    Buy: 1                # Pa_Monk_Card
+  - Id: 27255
+    Buy: 1                # Ordre_Card
+  - Id: 27256
+    Buy: 1                # Blut_Hase_Card
+  - Id: 27257
+    Buy: 1                # Kuro_Akuma_Card
+  - Id: 27258
+    Buy: 1                # Hyper_Death_Card
+  - Id: 27259
+    Buy: 1                # Rechenier_Card
+  - Id: 27260
+    Buy: 1                # Odorico_Card
+  - Id: 27261
+    Buy: 1                # Jew_Card
+  - Id: 27262
+    Buy: 1                # Dy_Card
+  - Id: 27263
+    Buy: 1                # Fei_Kanabian_Card
+  - Id: 27264
+    Buy: 1                # Evil_Shadow_Card
+  - Id: 27265
+    Buy: 1                # Evil_Fanatics_Card
+  - Id: 27286
+    Buy: 1                # Colorful_T_Bear_Card
+  - Id: 27287
+    Buy: 1                # Shining_T_Bear_Card
+  - Id: 27288
+    Buy: 1                # Pitman_Worker_Card
+  - Id: 27289
+    Buy: 1                # Fragment_Of_Soul_Card
+  - Id: 27290
+    Buy: 1                # Sinister_Obsidian_Card
+  - Id: 27291
+    Buy: 1                # Ancient_Trijoint_Card
+  - Id: 27292
+    Buy: 1                # Ancient_Sta_Golem_Card
+  - Id: 27293
+    Buy: 1                # Ancient_Megalith_Card
+  - Id: 27294
+    Buy: 1                # Ancient_Tao_Gunka_Card
+  - Id: 27295
+    Buy: 1                # Ancient_S_Shooter_Card
+  - Id: 27296
+    Buy: 1                # Ancient_W_Shooter_Card
+  - Id: 27297
+    Buy: 1                # Ancient_W_Fighter_Card
+  - Id: 27298
+    Buy: 1                # Ancient_W_Deffend_Card
+  - Id: 27304
+    Buy: 1                # E_EA2S_Card
+  - Id: 27305
+    Buy: 1                # EL_A17T_Card
+  - Id: 27306
+    Buy: 1                # Bellare_Card
+  - Id: 27307
+    Buy: 1                # High_Bellare_Card
+  - Id: 27308
+    Buy: 1                # Sanare_Card
+  - Id: 27309
+    Buy: 1                # High_Sanare_Card
+  - Id: 27310
+    Buy: 1                # Plaga_Card
+  - Id: 27311
+    Buy: 1                # Mutant_Plaga_Card
+  - Id: 27312
+    Buy: 1                # Dolor_Card
+  - Id: 27313
+    Buy: 1                # Mt_Dolor_Card
+  - Id: 27314
+    Buy: 1                # Venenum_Card
+  - Id: 27315
+    Buy: 1                # Mt_Venenum_Card
+  - Id: 27316
+    Buy: 1                # Caput_Card
+  - Id: 27317
+    Buy: 1                # Mt_Caput_Card
+  - Id: 27318
+    Buy: 1                # Miguel_Card
+  - Id: 27319
+    Buy: 1                # R48_85_Bestia_Card
+  - Id: 27320
+    Buy: 1                # E_EA1L_Card
+  - Id: 27321
+    Buy: 1                # DespairGodMorocc_Card
+  - Id: 27322
+    Buy: 1                # Ahat_Card
+  - Id: 27323
+    Buy: 1                # Shnaim_Card
+  - Id: 27324
+    Buy: 1                # Brinaranea_Card
+  - Id: 27325
+    Buy: 1                # Muspellskoll_Card
+  - Id: 27326
+    Buy: 1                # MinionOfMorocc_Card
+  - Id: 27327
+    Buy: 1                # ReaperAnkou_Card
+  - Id: 27328
+    Buy: 1                # LivingDeath_Card
+  - Id: 27330
+    Buy: 1                # Kronecker_Card
+  - Id: 27331
+    Buy: 1                # S_Kronecker_Card
+  - Id: 27332
+    Buy: 1                # Skia_Card
+  - Id: 27333
+    Buy: 1                # S_Skia_Card
+  - Id: 27334
+    Buy: 1                # Chaos_Baphomet_Card
+  - Id: 27335
+    Buy: 1                # Chaos_Ba_Jr_Card
+  - Id: 27336
+    Buy: 1                # Chaos_S_Winder_Card
+  - Id: 27337
+    Buy: 1                # Chaos_H_Fly_Card
+  - Id: 27338
+    Buy: 1                # Chaos_Mantis_Card
+  - Id: 27339
+    Buy: 1                # Chaos_Goring_Card
+  - Id: 27340
+    Buy: 1                # Chaos_K_Mantis_Card
+  - Id: 27341
+    Buy: 1                # Chaos_Poporing_Card
+  - Id: 27342
+    Buy: 1                # Chaos_Stem_W_Card
+  - Id: 27343
+    Buy: 1                # Chaos_Acolyte_Card
+  - Id: 27346
+    Buy: 1                # Firm_Muspell_Card
+  - Id: 27347
+    Buy: 1                # Firm_Kaho_Card
+  - Id: 27348
+    Buy: 1                # Firm_Lava_G_Card
+  - Id: 27349
+    Buy: 1                # Firm_Explosion_Card
+  - Id: 27350
+    Buy: 1                # Firm_Deleter1_Card
+  - Id: 27351
+    Buy: 1                # Firm_Deleter2_Card
+  - Id: 27352
+    Buy: 1                # Firm_Nightmare_T_Card
+  - Id: 27353
+    Buy: 1                # Firm_Blazzer_Card
+  - Id: 27354
+    Buy: 1                # Polluted_Raydric_Card
+  - Id: 27355
+    Buy: 1                # Polluted_Ray_A_Card
+  - Id: 27356
+    Buy: 1                # Frozen_Gargoyle_Card
+  - Id: 27357
+    Buy: 1                # Polluted_Sting_Card
+  - Id: 27358
+    Buy: 1                # Prison_Breaker_Card
+  - Id: 27359
+    Buy: 1                # Ice_Ghost_Card
+  - Id: 27360
+    Buy: 1                # Flame_Ghost_Card
+  - Id: 27361
+    Buy: 1                # Polluted_W_Man_Card
+  - Id: 27362
+    Buy: 1                # Polluted_Spi_Q_Card
+  - Id: 27363
+    Buy: 1                # Polluted_Dark_L_Card
+  - Id: 27389
+    Buy: 1                # Wolf_Card_EV
+  - Id: 27390
+    Buy: 1                # S_Wolf_Card_E
+  - Id: 27392
+    Buy: 1                # S_Poe_Card_E
+  - Id: 27393
+    Buy: 1                # Kathryn_Card
+  - Id: 27394
+    Buy: 1                # S_Kathryn_Card
+  - Id: 27395
+    Buy: 1                # Isaac_Card
+  - Id: 27396
+    Buy: 1                # S_Issac_Card
+  - Id: 28033
+    Buy: 1                # Blut_Katar
+  - Id: 28245
+    Buy: 1                # Blut_Rifle
+  - Id: 28246
+    Buy: 1                # Blut_Gatling
+  - Id: 28247
+    Buy: 1                # Blut_Shotgun
+  - Id: 28248
+    Buy: 1                # Blut_Grenade_Launcher
+  - Id: 28321
+    Buy: 1                # Falconer_Claw
+  - Id: 28322
+    Buy: 1                # Falconer_Glove
+  - Id: 28379
+    Buy: 1                # Shadow_Ring
+  - Id: 28394
+    Buy: 1                # King_of_Spirit_Ring
+  - Id: 28430
+    Buy: 1                # Archpriest_Ring
+  - Id: 28433
+    Buy: 1                # Luminous_Blue_Stone
+  - Id: 28437
+    Buy: 1                # ArchPriest_Glove
+  - Id: 28438
+    Buy: 1                # Fairy_Leaf_Powder
+  - Id: 28491
+    Buy: 1                # Matagi_Swordaxe
+  - Id: 28517
+    Buy: 1                # Ring_Of_The_Abyss_King
+  - Id: 28531
+    Buy: 1                # Glove_Of_Smith
+  - Id: 28533
+    Buy: 1                # ChemicalGlove
+  - Id: 28564
+    Buy: 1                # Valkyrie_Drop
+  - Id: 28572
+    Buy: 1                # Celine_Brooch_BR
+  - Id: 28598
+    Buy: 1                # Supplement_Part_Chip
+  - Id: 28739
+    Buy: 1                # Lacma_R
+  - Id: 28746
+    Buy: 1                # Blut_Gladius
+  - Id: 28901
+    Buy: 1                # Mad_Bunny_K
+  - Id: 28910
+    Buy: 1                # Imuke_Upper_Shield
+  - Id: 28962
+    Buy: 1                # Haurvatat
+  - Id: 29148
+    Buy: 1                # AngelPoring_Purple
+  - Id: 29149
+    Buy: 1                # AngelPoring_SkyBlue
+  - Id: 29150
+    Buy: 1                # AngelPoring_Green
+  - Id: 29151
+    Buy: 1                # AngelPoring_Pink
+  - Id: 29152
+    Buy: 1                # AngelPoring_DeepRed
+  - Id: 29153
+    Buy: 1                # AngelPoring_Clear
+  - Id: 31016
+    Buy: 1                # XM_Tree_Card
+  - Id: 31017
+    Buy: 1                # XM_Cookie_Card
+  - Id: 31018
+    Buy: 1                # XM_Mystcase_Card
+  - Id: 31019
+    Buy: 1                # XM_Lude_Card
+  - Id: 31020
+    Buy: 1                # XM_Hylozoist_Card
+  - Id: 31021
+    Buy: 1                # XM_Marionette_Card
+  - Id: 31022
+    Buy: 1                # XM_Teddy_Bear_Card
+  - Id: 31023
+    Buy: 1                # XM_Celine_Kimi_Card
+  - Id: 31024
+    Buy: 1                # As_Bdy_Knight_Card
+  - Id: 31025
+    Buy: 1                # As_Wind_Ghost_Card
+  - Id: 31026
+    Buy: 1                # As_Ragged_Golem_Card
+  - Id: 31108
+    Buy: 1                # C_Free_Hug_BR
+  - Id: 31109
+    Buy: 1                # C_Guildsman_Recruit_BR
+  - Id: 31110
+    Buy: 1                # C_Party_Seeker_BR
+  - Id: 31111
+    Buy: 1                # C_Party_Mem_Recruit_BR
+  - Id: 31112
+    Buy: 1                # C_Begging_Board_BR
+  - Id: 31118
+    Buy: 1                # C_Assassin_Skull_Mask
+  - Id: 31156
+    Buy: 1                # C_Fruit_Shell
+  - Id: 31159
+    Buy: 1                # C_Jormungandr_Hat
+  - Id: 31172
+    Buy: 1                # C_Roast_Memory
+  - Id: 31177
+    Buy: 1                # C_Tail_Hat
+  - Id: 31180
+    Buy: 1                # C_Shura_King_Pledge
+  - Id: 31305
+    Buy: 1                # C_TW_1th_Balloon
+  - Id: 31324
+    Buy: 1                # C_DJ_Kitty
+  - Id: 31386
+    Buy: 1                # C_SurviveOrb
+  - Id: 31396
+    Buy: 1                # C_Sorcerer_Hood
+  - Id: 31409
+    Buy: 1                # C_Barrel_Helm
+  - Id: 31414
+    Buy: 1                # C_Cancer_Diadem
+  - Id: 31419
+    Buy: 1                # C_Angel_Of_Happiness
+  - Id: 31452
+    Buy: 1                # C_White_Cat
+  - Id: 31462
+    Buy: 1                # C_Female_Poring_Earmuff
+  - Id: 31490
+    Buy: 1                # C_Poring_Muffler
+  - Id: 31500
+    Buy: 1                # C_Sparkler_Stick_TH
+  - Id: 31501
+    Buy: 1                # C_Sparkler_Fountain_TH
+  - Id: 31503
+    Buy: 1                # C_TW_2th_Balloon
+  - Id: 31515
+    Buy: 1                # C_Leopard_Cat
+  - Id: 31535
+    Buy: 1                # C_Old_Pink_Poo_Hat
+  - Id: 31536
+    Buy: 1                # C_Chibi_Beelzebub_Hat
+  - Id: 31539
+    Buy: 1                # C_Bulgogi_TW
+  - Id: 31557
+    Buy: 1                # C_Hoplite_Helmet_Silver
+  - Id: 31558
+    Buy: 1                # C_Hoplite_Helmet_Black
+  - Id: 31584
+    Buy: 1                # C_Marin_Muffler
+  - Id: 31587
+    Buy: 1                # C_NationalDay_helmet_TW
+  - Id: 31593
+    Buy: 1                # C_Yellow_Scarf
+  - Id: 31594
+    Buy: 1                # C_Red_Pencil_Mouth
+  - Id: 31595
+    Buy: 1                # C_Book_of_Soyga
+  - Id: 31596
+    Buy: 1                # C_Spider_Temp_TW
+  - Id: 31597
+    Buy: 1                # C_GoldFish_Hat
+  - Id: 31613
+    Buy: 1                # C_Blue_Strong_Hair
+  - Id: 31625
+    Buy: 1                # C_Protect_Cloth
+  - Id: 31665
+    Buy: 1                # C_GoldPoring_Hat_TW
+  - Id: 31666
+    Buy: 1                # C_Crown_of_Unity
+  - Id: 31698
+    Buy: 1                # C_Pigtail_Red_Hood
+  - Id: 31700
+    Buy: 1                # C_ScarfOfHero_TW
+  - Id: 31702
+    Buy: 1                # C_Moon_Cat_Fighter
+  - Id: 31722
+    Buy: 1                # C_Sedora_Hat
+  - Id: 31735
+    Buy: 1                # C_FortunetellinSealed
+  - Id: 31821
+    Buy: 1                # C_Jeje_Cap
+  - Id: 31844
+    Buy: 1                # C_Mob_Scarf
+  - Id: 31882
+    Buy: 1                # C_Choco_Stick_In_Mouth
+  - Id: 31890
+    Buy: 1                # C_Sagittarius_Diadem
+  - Id: 31897
+    Buy: 1                # C_Pisces_Crown
+  - Id: 31932
+    Buy: 1                # C_Suit_Sollar
+  - Id: 31935
+    Buy: 1                # C_Baby_Dragon_Hat
+  - Id: 31949
+    Buy: 1                # C_Diabolus_Wing
+  - Id: 31950
+    Buy: 1                # C_Nut_Cracker_JP
+  - Id: 31952
+    Buy: 1                # C_GatesofNetherWorld
+  - Id: 31953
+    Buy: 1                # C_Cor_Core_Headset
+  - Id: 31954
+    Buy: 1                # C_Vassalage_Necklace
+  - Id: 32014
+    Buy: 1                # Blut_Spear
+  - Id: 32100
+    Buy: 1                # Blut_Guitar
+  - Id: 32206
+    Buy: 1                # Prta_Mil_Glove
+  - Id: 32258
+    Buy: 1                # RingofJupiter
+  - Id: 32262
+    Buy: 1                # Ball_Of_RasenHuuma
+  - Id: 32263
+    Buy: 1                # Shield_Ring
+  - Id: 32295
+    Buy: 1                # Crystal_Blade_Necklace
+  - Id: 300001
+    Buy: 1                # Poisonous_Card
+  - Id: 300002
+    Buy: 1                # Toxious_Card
+  - Id: 300003
+    Buy: 1                # Porcellio_W_Card
+  - Id: 300004
+    Buy: 1                # Neo_Mineral_Card
+  - Id: 300005
+    Buy: 1                # Abyss_Man_Card
+  - Id: 300006
+    Buy: 1                # Jeweliant_Card
+  - Id: 300007
+    Buy: 1                # Jungoliant_Card
+  - Id: 300008
+    Buy: 1                # Angelgolt_Card
+  - Id: 300009
+    Buy: 1                # Plasma_Spt_Card
+  - Id: 300010
+    Buy: 1                # Plasma_Arch_Card
+  - Id: 300011
+    Buy: 1                # Holy_Frus_Card
+  - Id: 300012
+    Buy: 1                # Holy_Skogul_Card
+  - Id: 300013
+    Buy: 1                # Reginleif_Card
+  - Id: 300014
+    Buy: 1                # Ingrid_Card
+  - Id: 300015
+    Buy: 1                # Ferus_P_Card
+  - Id: 300016
+    Buy: 1                # Treasure_Mimic_Card
+  - Id: 300017
+    Buy: 1                # Acidus_B_Card
+  - Id: 300018
+    Buy: 1                # Acidus_S_Card
+  - Id: 300019
+    Buy: 1                # Bone_Ferus_Card
+  - Id: 300020
+    Buy: 1                # Bone_Acidus_Card
+  - Id: 300021
+    Buy: 1                # Bone_Detale_Card
+  - Id: 300127
+    Buy: 1                # Wolf_Card_E
+  - Id: 300128
+    Buy: 1                # S_Wolf_Card
+  - Id: 300129
+    Buy: 1                # Poe_Card
+  - Id: 300130
+    Buy: 1                # S_Poe_Card
+  - Id: 300140
+    Buy: 1                # ILL_Sropho_Card
+  - Id: 300141
+    Buy: 1                # ILL_Obeaune_Card
+  - Id: 300142
+    Buy: 1                # ILL_Deviace_Card
+  - Id: 300143
+    Buy: 1                # ILL_Marse_Card
+  - Id: 300144
+    Buy: 1                # ILL_Merman_Card
+  - Id: 300145
+    Buy: 1                # ILL_Abysmal_Witch_Card
+  - Id: 300146
+    Buy: 1                # ILL_Sedora_Card
+  - Id: 300147
+    Buy: 1                # ILL_Sword_Fish_Card
+  - Id: 300148
+    Buy: 1                # ILL_Strouf_Card
+  - Id: 300149
+    Buy: 1                # ILL_Phen_Card
+  - Id: 300150
+    Buy: 1                # ILL_King_Dramoh_Card
+  - Id: 300151
+    Buy: 1                # ILL_Kraken_Card
+  - Id: 300195
+    Buy: 1                # SLD_Boitata_Card
+  - Id: 300201
+    Buy: 1                # SLD_P_Spi_Q_Card
+  - Id: 300203
+    Buy: 1                # SLD_F_Muspell_Card
+  - Id: 300209
+    Buy: 1                # SLD_Grave_Amon_Ra_Card
+  - Id: 300230
+    Buy: 1                # ILL_Andre_Card
+  - Id: 300231
+    Buy: 1                # ILL_Andre_soldier_Card
+  - Id: 300232
+    Buy: 1                # ILL_Andre_larva_Card
+  - Id: 300233
+    Buy: 1                # ILL_Deniro_Card
+  - Id: 300234
+    Buy: 1                # ILL_Piere_Card
+  - Id: 300235
+    Buy: 1                # ILL_Ant_egg_Card
+  - Id: 300236
+    Buy: 1                # ILL_Giearth_Card
+  - Id: 300237
+    Buy: 1                # ILL_Farmiliar_Card
+  - Id: 300238
+    Buy: 1                # ILL_Vitata_Card
+  - Id: 300239
+    Buy: 1                # ILL_Maya_Card
+  - Id: 300307
+    Buy: 1                # Meyer_Card
+  - Id: 300308
+    Buy: 1                # S_Meyer_Card
+  - Id: 300309
+    Buy: 1                # Helmut_Card
+  - Id: 300310
+    Buy: 1                # S_Helmut_Card
+  - Id: 300421
+    Buy: 1                # Catherine_Card
+  - Id: 300422
+    Buy: 1                # S_Catherine_Card
+  - Id: 300423
+    Buy: 1                # Friedrich_Card
+  - Id: 300424
+    Buy: 1                # S_Friedrich_Card
+  - Id: 300425
+    Buy: 1                # Crux_Card
+  - Id: 300426
+    Buy: 1                # S_Crux_Card
+  - Id: 300547
+    Buy: 1                # CLB_SS_DF_Card
+  - Id: 300550
+    Buy: 1                # CLB_SS_EA_Card
+  - Id: 300551
+    Buy: 1                # CLB_SS_LL_Card
+  - Id: 300552
+    Buy: 1                # CLB_SS_LT_Card
+  - Id: 400006
+    Buy: 1                # Orcsuccessionhelm_TW
+  - Id: 400080
+    Buy: 1                # C_Kriemhild_Crown_TW
+  - Id: 400091
+    Buy: 1                # C_Gray_Helmet
+  - Id: 400092
+    Buy: 1                # C_L_Magestic_Goat2
+  - Id: 400093
+    Buy: 1                # C_18y_Hat_TW
+  - Id: 400131
+    Buy: 1                # C_Diadem_Of_Bruenhild
+  - Id: 400133
+    Buy: 1                # C_Para_Team_Hat160
+  - Id: 400136
+    Buy: 1                # C_Ancient_Gold_Deco_TW
+  - Id: 400143
+    Buy: 1                # C_Asgard_Circlet_TW
+  - Id: 400158
+    Buy: 1                # C_Demon_Crown
+  - Id: 400166
+    Buy: 1                # C_Egir_Helm
+  - Id: 400167
+    Buy: 1                # C_Mosquito_Coil
+  - Id: 400168
+    Buy: 1                # C_Souvenirs_Of_Izlude
+  - Id: 400175
+    Buy: 1                # C_Campfire_Hat
+  - Id: 400177
+    Buy: 1                # Fafnir_Helm
+  - Id: 400194
+    Buy: 1                # NostalgiaCherryBlossom
+  - Id: 400195
+    Buy: 1                # C_Pizza_Hat_J
+  - Id: 400203
+    Buy: 1                # Wolf_Officer_Hat
+  - Id: 400205
+    Buy: 1                # C_Bun_Twin_Tail_BU
+  - Id: 400206
+    Buy: 1                # C_Bun_Twin_Tail_RD
+  - Id: 400207
+    Buy: 1                # C_Bun_Twin_Tail_YL
+  - Id: 400208
+    Buy: 1                # C_Bun_Twin_Tail_GN
+  - Id: 400209
+    Buy: 1                # C_Bun_Twin_Tail_BL
+  - Id: 400210
+    Buy: 1                # C_Bun_Twin_Tail_WH
+  - Id: 400211
+    Buy: 1                # C_Bun_Twin_Tail_OM
+  - Id: 400212
+    Buy: 1                # C_Bun_Twin_Tail_PP
+  - Id: 400213
+    Buy: 1                # Faith_Of_Yggdrasil
+  - Id: 400221
+    Buy: 1                # C_Jasper_Crest
+  - Id: 400224
+    Buy: 1                # C_Navy_Beret
+  - Id: 400225
+    Buy: 1                # C_Fluffy_Rabbit_Cape
+  - Id: 400232
+    Buy: 1                # C_Crushed_Snow_Man
+  - Id: 400253
+    Buy: 1                # C_Macaron_Bunny_Head
+  - Id: 400258
+    Buy: 1                # C_Wanderer_Curl
+  - Id: 400271
+    Buy: 1                # C_Shovel_Hat
+  - Id: 400272
+    Buy: 1                # C_Many_Flowers_Prayer
+  - Id: 400277
+    Buy: 1                # C_Felock_Cap_
+  - Id: 400278
+    Buy: 1                # C_Drooping_Omega
+  - Id: 400287
+    Buy: 1                # Legacy_of_Wise_One_J
+  - Id: 400290
+    Buy: 1                # C_Pink_Angel_Hairband
+  - Id: 400307
+    Buy: 1                # Ally_of_the_Demons
+  - Id: 400308
+    Buy: 1                # Exotic_traditional_Hat
+  - Id: 400309
+    Buy: 1                # C_20th_Anniversary_Hat
+  - Id: 400310
+    Buy: 1                # C_Indomitable_Crown
+  - Id: 400311
+    Buy: 1                # C_Reliance_Crown
+  - Id: 400313
+    Buy: 1                # C_Galaxy_Circlet
+  - Id: 400314
+    Buy: 1                # C_Northern_Cross
+  - Id: 400321
+    Buy: 1                # C_Academy_Freshman_Hat
+  - Id: 400327
+    Buy: 1                # C_RA_Hair_PK
+  - Id: 400343
+    Buy: 1                # C_Fox_Bamboo_Hat
+  - Id: 400351
+    Buy: 1                # C_20Y_Anniv_Helmet
+  - Id: 400354
+    Buy: 1                # C_Vanargandr_Helm_GL
+  - Id: 400355
+    Buy: 1                # C_Balloon_Hat_Classical
+  - Id: 400356
+    Buy: 1                # C_Ignis_Cap_BU
+  - Id: 400357
+    Buy: 1                # C_Dragonhelm_Gold
+  - Id: 400358
+    Buy: 1                # C_Dragonhelm_Silver
+  - Id: 400370
+    Buy: 1                # C_PU_EarWitchHat
+  - Id: 400396
+    Buy: 1                # Ghost_Whisper
+  - Id: 400398
+    Buy: 1                # C_Feather_Beret_WH
+  - Id: 400402
+    Buy: 1                # C_1st_Evt_Hat_MSP
+  - Id: 400405
+    Buy: 1                # C_Ribbon_Magic_Hat
+  - Id: 400406
+    Buy: 1                # C_Sweets_Captive
+  - Id: 400407
+    Buy: 1                # C_Black_Rabbit_Ear
+  - Id: 400424
+    Buy: 1                # C_Owlviscount_Silk_Hat
+  - Id: 400425
+    Buy: 1                # C_Falconer_Flute
+  - Id: 400426
+    Buy: 1                # C_Smoky_TransformHat
+  - Id: 400427
+    Buy: 1                # C_Demi_Freyja_Hair
+  - Id: 400428
+    Buy: 1                # C_Rabbit_Egg
+  - Id: 400429
+    Buy: 1                # C_Mountain_Helmet
+  - Id: 400430
+    Buy: 1                # C_Br_Beret
+  - Id: 400431
+    Buy: 1                # C_Sakura_Witch_Hat
+  - Id: 400432
+    Buy: 1                # C_Heart_Chiffon_Rabbit
+  - Id: 400435
+    Buy: 1                # C_Mad_Hatter_Hat
+  - Id: 400436
+    Buy: 1                # C_Over_Piamette_Hood
+  - Id: 400439
+    Buy: 1                # C_Kiss_Of_Angel
+  - Id: 400448
+    Buy: 1                # C_Juan_Hat_MSP
+  - Id: 400450
+    Buy: 1                # C_Lion_Crown
+  - Id: 400458
+    Buy: 1                # C_Ally_of_the_Demons
+  - Id: 400460
+    Buy: 1                # C_Burst_Flame
+  - Id: 400462
+    Buy: 1                # C_Sailor_Cap
+  - Id: 400466
+    Buy: 1                # C_Rainbow_Popcorn
+  - Id: 400480
+    Buy: 1                # C_Cat_Straw_Hat
+  - Id: 400491
+    Buy: 1                # C_Faixa_Brasileira
+  - Id: 400496
+    Buy: 1                # C_Horo_Ears_WH
+  - Id: 400497
+    Buy: 1                # C_A_Graduating_Cap
+  - Id: 400502
+    Buy: 1                # C_Sonic_Ring
+  - Id: 400517
+    Buy: 1                # C_Fairy_Poison_Apple
+  - Id: 400567
+    Buy: 1                # C_Awaking_Bloom
+  - Id: 400585
+    Buy: 1                # C_SnowmanHat
+  - Id: 400588
+    Buy: 1                # C_Lucky_Purse
+  - Id: 400594
+    Buy: 1                # C_Clockwise
+  - Id: 400596
+    Buy: 1                # C_Petit_Choco_Hat
+  - Id: 400597
+    Buy: 1                # Kiwawa_Cowboy_BR
+  - Id: 400604
+    Buy: 1                # C_Ribbon_Beret_B
+  - Id: 400633
+    Buy: 1                # C_Chic_Peony
+  - Id: 400634
+    Buy: 1                # C_Ghost_Whisper
+  - Id: 400635
+    Buy: 1                # C_Flower_S_Knit_Hat
+  - Id: 400656
+    Buy: 1                # C_Khalitzburg_KN_Helm_W
+  - Id: 400664
+    Buy: 1                # C_CLB_SS_DF
+  - Id: 400671
+    Buy: 1                # C_Broken_Egg
+  - Id: 400684
+    Buy: 1                # C_Jerboa_Headband
+  - Id: 400687
+    Buy: 1                # Devil_Claw_Guerra
+  - Id: 400692
+    Buy: 1                # C_Gold_Paeonia
+  - Id: 400693
+    Buy: 1                # C_Red_Paeonia
+  - Id: 400703
+    Buy: 1                # C_Altair_Hat
+  - Id: 400708
+    Buy: 1                # C_Wolf_Officer_Hat
+  - Id: 410004
+    Buy: 1                # Gambler_Seal_
+  - Id: 410009
+    Buy: 1                # Rainbow_Star_
+  - Id: 410010
+    Buy: 1                # Eyes_Of_Illusion_
+  - Id: 410011
+    Buy: 1                # C_Dark_Blindfold
+  - Id: 410024
+    Buy: 1                # Ribbon_Of_Life_J_
+  - Id: 410026
+    Buy: 1                # Magic_Heir_J_
+  - Id: 410028
+    Buy: 1                # Wonder_Egg_Basket_
+  - Id: 410030
+    Buy: 1                # C_Country_Tail_BU
+  - Id: 410031
+    Buy: 1                # C_Country_Tail_RD
+  - Id: 410032
+    Buy: 1                # C_Country_Tail_YL
+  - Id: 410033
+    Buy: 1                # C_Country_Tail_GN
+  - Id: 410034
+    Buy: 1                # C_Country_Tail_BL
+  - Id: 410035
+    Buy: 1                # C_Country_Tail_WH
+  - Id: 410036
+    Buy: 1                # C_Country_Tail_OM
+  - Id: 410037
+    Buy: 1                # C_Country_Tail_PP
+  - Id: 410038
+    Buy: 1                # C_Braid_Half_Up_BU
+  - Id: 410039
+    Buy: 1                # C_Braid_Half_Up_RD
+  - Id: 410040
+    Buy: 1                # C_Braid_Half_Up_YL
+  - Id: 410041
+    Buy: 1                # C_Braid_Half_Up_GN
+  - Id: 410042
+    Buy: 1                # C_Braid_Half_Up_BL
+  - Id: 410043
+    Buy: 1                # C_Braid_Half_Up_WH
+  - Id: 410044
+    Buy: 1                # C_Braid_Half_Up_OM
+  - Id: 410045
+    Buy: 1                # C_Braid_Half_Up_PP
+  - Id: 410047
+    Buy: 1                # C_Mask_of_Hero
+  - Id: 410053
+    Buy: 1                # C_Exosrcist_Glass
+  - Id: 410058
+    Buy: 1                # YinYang_Earring_Y_
+  - Id: 410059
+    Buy: 1                # C_ZoMask_Green_TW
+  - Id: 410060
+    Buy: 1                # C_Ghost_Bat_TW
+  - Id: 410065
+    Buy: 1                # Diving_Goggles_
+  - Id: 410067
+    Buy: 1                # Professor_MiniGlass_
+  - Id: 410072
+    Buy: 1                # C_Demons_Familiar
+  - Id: 410074
+    Buy: 1                # C_Gravekeeper_Blinker
+  - Id: 410089
+    Buy: 1                # Supplement_P_Income_
+  - Id: 410097
+    Buy: 1                # Pope_Ribbon_R_
+  - Id: 410098
+    Buy: 1                # C_Nero_Mask
+  - Id: 410110
+    Buy: 1                # Fluffy_Lovely_Fox_
+  - Id: 410111
+    Buy: 1                # C_Intake_BU
+  - Id: 410112
+    Buy: 1                # C_Intake_RD
+  - Id: 410113
+    Buy: 1                # C_Intake_YL
+  - Id: 410114
+    Buy: 1                # C_Intake_GN
+  - Id: 410115
+    Buy: 1                # C_Intake_BL
+  - Id: 410116
+    Buy: 1                # C_Intake_WH
+  - Id: 410117
+    Buy: 1                # C_Intake_OM
+  - Id: 410118
+    Buy: 1                # C_Intake_PP
+  - Id: 410121
+    Buy: 1                # C_Guardian_Helm
+  - Id: 410125
+    Buy: 1                # Grisly_Soul_
+  - Id: 410128
+    Buy: 1                # C_Supplement_P_Income
+  - Id: 410130
+    Buy: 1                # Phantom_Ear_
+  - Id: 410131
+    Buy: 1                # C_Tiger_WH
+  - Id: 410132
+    Buy: 1                # C_Tiger_BL
+  - Id: 410133
+    Buy: 1                # C_Belka_Strelka
+  - Id: 410140
+    Buy: 1                # Hairband_Of_Asmodeus_
+  - Id: 410142
+    Buy: 1                # GorgonCoronet_
+  - Id: 410144
+    Buy: 1                # C_Omega_Golf_Bag
+  - Id: 410156
+    Buy: 1                # C_Bouquet_Valletta
+  - Id: 410157
+    Buy: 1                # C_Happening_Clover
+  - Id: 410160
+    Buy: 1                # C_Magic_Celestial_Globe
+  - Id: 410178
+    Buy: 1                # C_Princess_Headphone
+  - Id: 410179
+    Buy: 1                # C_Queen_Headphone
+  - Id: 410182
+    Buy: 1                # C_Traveller_Oil_Lantern
+  - Id: 410186
+    Buy: 1                # Rebel_Pocket_Watch_
+  - Id: 410196
+    Buy: 1                # C_YinYang_Earring_Y
+  - Id: 410198
+    Buy: 1                # C_2022Cosutama_Imp_JP
+  - Id: 410199
+    Buy: 1                # C_Midnight_Candle
+  - Id: 410200
+    Buy: 1                # C_Serving_Rabbit
+  - Id: 410201
+    Buy: 1                # C_Spinning_Skulls
+  - Id: 410202
+    Buy: 1                # C_ROROGO
+  - Id: 410212
+    Buy: 1                # C_Little_Abyss_Dragon
+  - Id: 410217
+    Buy: 1                # C_Yesterday_Once_More_K
+  - Id: 410218
+    Buy: 1                # C_Soccer_Ball
+  - Id: 410219
+    Buy: 1                # C_Jumbo_Rabbit
+  - Id: 410220
+    Buy: 1                # C_Blink_Eyes_Frozen
+  - Id: 410224
+    Buy: 1                # C_Pope_Ribbon_R
+  - Id: 410226
+    Buy: 1                # C_Black_Rabbit
+  - Id: 410234
+    Buy: 1                # C_Rebel_Pocket_Watch
+  - Id: 410236
+    Buy: 1                # C_Bird_Cage_Candle_Hold
+  - Id: 410240
+    Buy: 1                # C_Gods_Rabbit_Pet
+  - Id: 410242
+    Buy: 1                # C_Wanderer_Grim_Reaper
+  - Id: 410245
+    Buy: 1                # C_Brother_Keen_Eye
+  - Id: 410248
+    Buy: 1                # C_Tuktuk
+  - Id: 410251
+    Buy: 1                # C_Alien_Sunglass_BU
+  - Id: 410252
+    Buy: 1                # C_Alien_Sunglass_RD
+  - Id: 410253
+    Buy: 1                # C_Alien_Sunglass_GN
+  - Id: 410261
+    Buy: 1                # C_King_Headphone
+  - Id: 410262
+    Buy: 1                # C_Sonic_Mini
+  - Id: 410263
+    Buy: 1                # C_Super_Sonic_Mini
+  - Id: 410264
+    Buy: 1                # C_Tails_Mini
+  - Id: 410265
+    Buy: 1                # C_S_Attack_Ring
+  - Id: 410277
+    Buy: 1                # C_Ragdoll
+  - Id: 410278
+    Buy: 1                # C_Blink_Eyes_Bloody
+  - Id: 410286
+    Buy: 1                # C_EvilEye_of_FalseGods
+  - Id: 410289
+    Buy: 1                # C_Baby_Gloom
+  - Id: 410290
+    Buy: 1                # C_Jellyfish
+  - Id: 410296
+    Buy: 1                # C_One_Sho_Bottle
+  - Id: 410297
+    Buy: 1                # C_Blink_Eyes_A_Dragon
+  - Id: 410311
+    Buy: 1                # C_GorgonCoronet
+  - Id: 410316
+    Buy: 1                # Bear_Candy_Cart
+  - Id: 410317
+    Buy: 1                # C_Eye_Mask
+  - Id: 410320
+    Buy: 1                # C_Blink_Eyes_D_Freyja
+  - Id: 410326
+    Buy: 1                # C_CLB_SS_EA
+  - Id: 410328
+    Buy: 1                # C_Fluffy_Bakery
+  - Id: 410329
+    Buy: 1                # C_Dragon_Green_Aura
+  - Id: 410330
+    Buy: 1                # C_Dragon_Red_Aura
+  - Id: 410331
+    Buy: 1                # C_Dragon_Yellow_Aura
+  - Id: 410338
+    Buy: 1                # C_Helm_Of_Ra_KR
+  - Id: 410351
+    Buy: 1                # C_Buoyant_Parasol_B
+  - Id: 410352
+    Buy: 1                # C_Buoyant_Parasol_R
+  - Id: 410353
+    Buy: 1                # C_Eyes_Phen
+  - Id: 410357
+    Buy: 1                # C_Lightning_Savage
+  - Id: 410359
+    Buy: 1                # C_Great_Pyrenees
+  - Id: 410361
+    Buy: 1                # C_Injured_Eyepatch
+  - Id: 410364
+    Buy: 1                # C_Wisdom_Core_Headphone
+  - Id: 420014
+    Buy: 1                # C_Japanes_Hair
+  - Id: 420026
+    Buy: 1                # C_Ribbon_Piamat_J
+  - Id: 420029
+    Buy: 1                # C_Imperial_Glory
+  - Id: 420044
+    Buy: 1                # C_Sailor_Collar_WH
+  - Id: 420046
+    Buy: 1                # C_Royal_Mantle
+  - Id: 420047
+    Buy: 1                # C_H_Knight_Cloak
+  - Id: 420054
+    Buy: 1                # C_Smokie_Muffler
+  - Id: 420070
+    Buy: 1                # C_Cap_Of_Blindness_V
+  - Id: 420071
+    Buy: 1                # C_Feather_Stola
+  - Id: 420083
+    Buy: 1                # C_L_Ribbon_M_WH
+  - Id: 420085
+    Buy: 1                # C_Kururinpa_Hair_BD
+  - Id: 420086
+    Buy: 1                # C_Long_Wave_LBW
+  - Id: 420091
+    Buy: 1                # C_Silky_Long_BD
+  - Id: 420104
+    Buy: 1                # C_SR_Hair_SV
+  - Id: 420105
+    Buy: 1                # Curse_Eats_the_World
+  - Id: 420107
+    Buy: 1                # C_Twinkle_Twin
+  - Id: 420110
+    Buy: 1                # ScarfOfHero_J
+  - Id: 420112
+    Buy: 1                # Guardian_Claus
+  - Id: 420113
+    Buy: 1                # C_WL_Hair_BL
+  - Id: 420114
+    Buy: 1                # C_WL_Hair_GN
+  - Id: 420115
+    Buy: 1                # C_WL_Hair_OM
+  - Id: 420116
+    Buy: 1                # C_WL_Hair_PK
+  - Id: 420117
+    Buy: 1                # C_WL_Hair_PP
+  - Id: 420118
+    Buy: 1                # C_WL_Hair_RD
+  - Id: 420119
+    Buy: 1                # C_WL_Hair_WH
+  - Id: 420120
+    Buy: 1                # C_WL_Hair_YL
+  - Id: 420121
+    Buy: 1                # C_SR_Hair_BL
+  - Id: 420122
+    Buy: 1                # C_SR_Hair_GN
+  - Id: 420123
+    Buy: 1                # C_SR_Hair_OM
+  - Id: 420124
+    Buy: 1                # C_SR_Hair_PK
+  - Id: 420125
+    Buy: 1                # C_SR_Hair_PP
+  - Id: 420126
+    Buy: 1                # C_SR_Hair_RD
+  - Id: 420127
+    Buy: 1                # C_SR_Hair_WH
+  - Id: 420128
+    Buy: 1                # C_SR_Hair_YL
+  - Id: 420132
+    Buy: 1                # C_Charm_Of_Great_Nature
+  - Id: 420133
+    Buy: 1                # C_Dreaming_Rose_Long
+  - Id: 420140
+    Buy: 1                # C_Alpha_Long_Pony
+  - Id: 420150
+    Buy: 1                # C_Twinkle_Twin_B
+  - Id: 420151
+    Buy: 1                # C_Cons_Of_Light_Dark_
+  - Id: 420152
+    Buy: 1                # C_Cons_Of_Light_Dark
+  - Id: 420156
+    Buy: 1                # C_Flower_L_Knitting
+  - Id: 420161
+    Buy: 1                # C_Starry_Long_Wave
+  - Id: 420162
+    Buy: 1                # C_Starry_Ribbon_Twin
+  - Id: 420163
+    Buy: 1                # C_Protect_Cloth_B
+  - Id: 420165
+    Buy: 1                # C_Tent
+  - Id: 420170
+    Buy: 1                # C_Silky_Long_BL
+  - Id: 420172
+    Buy: 1                # C_Braid_Ring
+  - Id: 420180
+    Buy: 1                # Eis_Spinne
+  - Id: 420181
+    Buy: 1                # C_Eis_Spinne
+  - Id: 420187
+    Buy: 1                # Sacred_Lapel
+  - Id: 420191
+    Buy: 1                # C_Snow_Rabbit_Wig
+  - Id: 420192
+    Buy: 1                # C_Friendly_White_Fox
+  - Id: 420193
+    Buy: 1                # C_L_Ribbon_M_BU
+  - Id: 420197
+    Buy: 1                # C_Twinkle_Wave
+  - Id: 420207
+    Buy: 1                # C_Eternal_Rose
+  - Id: 420208
+    Buy: 1                # C_Chocolat_Rabbit_Hair
+  - Id: 420209
+    Buy: 1                # C_Cookie_PinkRibbon
+  - Id: 420211
+    Buy: 1                # C_Sleep_RedSheep
+  - Id: 420212
+    Buy: 1                # C_Guardian_Claus
+  - Id: 420218
+    Buy: 1                # C_Wanderer_Curl_WH
+  - Id: 420219
+    Buy: 1                # C_Come_On_Melon
+  - Id: 420221
+    Buy: 1                # C_Skia_Two_Side_Up
+  - Id: 420232
+    Buy: 1                # C_Cheesy_Snack_In_Mouth
+  - Id: 420233
+    Buy: 1                # C_TV_Hair_PK
+  - Id: 420236
+    Buy: 1                # Moroc_Slave_TW
+  - Id: 420237
+    Buy: 1                # C_Tiger_Muffler_MSP
+  - Id: 420241
+    Buy: 1                # C_Temari_Candy_Hair
+  - Id: 420254
+    Buy: 1                # C_Bushy_Moustache
+  - Id: 420255
+    Buy: 1                # C_GC_Hair_OM
+  - Id: 420264
+    Buy: 1                # C_Cat_Straight_Long_WH
+  - Id: 420273
+    Buy: 1                # C_Rose_Wave_BD
+  - Id: 420274
+    Buy: 1                # C_Rose_Wave_BDP
+  - Id: 420275
+    Buy: 1                # C_Rose_Wave_SV
+  - Id: 420276
+    Buy: 1                # C_Rose_Wave_SVB
+  - Id: 420277
+    Buy: 1                # C_GCM_Hair_BG
+  - Id: 420278
+    Buy: 1                # C_GCM_Hair_YL
+  - Id: 420279
+    Buy: 1                # C_GCM_Hair_CB
+  - Id: 420280
+    Buy: 1                # C_GCM_Hair_LB
+  - Id: 420281
+    Buy: 1                # C_GCM_Hair_LPP
+  - Id: 420282
+    Buy: 1                # C_GCM_Hair_JBL
+  - Id: 420283
+    Buy: 1                # C_GCM_Hair_WH
+  - Id: 420284
+    Buy: 1                # C_GCM_Hair_OM
+  - Id: 420285
+    Buy: 1                # C_MN_Hair_BG
+  - Id: 420286
+    Buy: 1                # C_MN_Hair_YL
+  - Id: 420287
+    Buy: 1                # C_MN_Hair_CB
+  - Id: 420288
+    Buy: 1                # C_MN_Hair_LB
+  - Id: 420289
+    Buy: 1                # C_MN_Hair_LPP
+  - Id: 420290
+    Buy: 1                # C_MN_Hair_JBL
+  - Id: 420291
+    Buy: 1                # C_MN_Hair_WH
+  - Id: 420292
+    Buy: 1                # C_MN_Hair_OM
+  - Id: 420293
+    Buy: 1                # C_RA_Hair_BG
+  - Id: 420294
+    Buy: 1                # C_RA_Hair_YL
+  - Id: 420295
+    Buy: 1                # C_RA_Hair_CB
+  - Id: 420296
+    Buy: 1                # C_RA_Hair_LB
+  - Id: 420297
+    Buy: 1                # C_RA_Hair_LPP
+  - Id: 420298
+    Buy: 1                # C_RA_Hair_JBL
+  - Id: 420299
+    Buy: 1                # C_RA_Hair_WH
+  - Id: 420300
+    Buy: 1                # C_RA_Hair_OM
+  - Id: 420303
+    Buy: 1                # C_Chaos_Emerald
+  - Id: 420305
+    Buy: 1                # C_Octopus_Leg_In_Mouth
+  - Id: 420307
+    Buy: 1                # C_Meer_Hair
+  - Id: 420317
+    Buy: 1                # C_White_Rabbit_Hair
+  - Id: 420320
+    Buy: 1                # C_Charm_Of_Rough_Wind
+  - Id: 420321
+    Buy: 1                # C_Neon_Half_Long
+  - Id: 420340
+    Buy: 1                # C_Kitchen_Car
+  - Id: 420341
+    Buy: 1                # C_Signon_Loop
+  - Id: 420344
+    Buy: 1                # C_Book_of_Sorcery
+  - Id: 420345
+    Buy: 1                # C_Ribbon_Braid_Hair
+  - Id: 420347
+    Buy: 1                # C_Undead_Seal_Rose
+  - Id: 420349
+    Buy: 1                # C_Blue_Sunbed
+  - Id: 420350
+    Buy: 1                # C_Green_Sunbed
+  - Id: 420353
+    Buy: 1                # C_Cha_Ex_Twin
+  - Id: 420357
+    Buy: 1                # C_Baby_Seal
+  - Id: 420359
+    Buy: 1                # C_Sound_of_Catbell
+  - Id: 420360
+    Buy: 1                # C_Bell_Cat_Hair
+  - Id: 430001
+    Buy: 1                # C_Helm_Of_Ra
+  - Id: 430005
+    Buy: 1                # C_White_Tiger_Glass
+  - Id: 436008
+    Buy: 1                # C_HwaHoJumJung
+  - Id: 436010
+    Buy: 1                # C_spiding
+  - Id: 440001
+    Buy: 1                # C_Wunderkammer
+  - Id: 440004
+    Buy: 1                # C_Close_Helmet
+  - Id: 440005
+    Buy: 1                # C_Diabolus_Helmet
+  - Id: 440012
+    Buy: 1                # C_Dr_Eggman_Mask
+  - Id: 450120
+    Buy: 1                # Sturdy_Armor_Guerra
+  - Id: 450179
+    Buy: 1                # Celine_Dress
+  - Id: 450216
+    Buy: 1                # Twinhead_dragon_Mail_J
+  - Id: 450222
+    Buy: 1                # Requiescat_in_Pace
+  - Id: 450226
+    Buy: 1                # Four_of_a_kind
+  - Id: 450257
+    Buy: 1                # Platinum_Arbitrator
+  - Id: 450338
+    Buy: 1                # Screaming_Ghoost_Party
+  - Id: 460023
+    Buy: 1                # Shield_Of_Phoenix
+  - Id: 460025
+    Buy: 1                # Spenta_Mainyu
+  - Id: 460046
+    Buy: 1                # Black_Mithril_Guard
+  - Id: 460050
+    Buy: 1                # Symbol_Of_Eden
+  - Id: 460052
+    Buy: 1                # Striking_Armguard
+  - Id: 460074
+    Buy: 1                # Glacies_Aranea
+  - Id: 470112
+    Buy: 1                # Moaning_of_EvilSpirits
+  - Id: 470130
+    Buy: 1                # End_of_the_World
+  - Id: 470180
+    Buy: 1                # Starry_Sky_Twin_Prime
+  - Id: 470206
+    Buy: 1                # Prana_Boots
+  - Id: 470274
+    Buy: 1                # Twinhead_dragon_Boots
+  - Id: 470293
+    Buy: 1                # Virtue_Shoes_BR
+  - Id: 480045
+    Buy: 1                # Guardian_Soul
+  - Id: 480055
+    Buy: 1                # C_Wing_Of_Angel_Move_RD
+  - Id: 480056
+    Buy: 1                # C_Wing_Of_Angel_Move_BK
+  - Id: 480058
+    Buy: 1                # C_Wing_Of_Angel_Move_GD
+  - Id: 480064
+    Buy: 1                # Storm_Muffler
+  - Id: 480069
+    Buy: 1                # C_Wing_Of_Angel_Move
+  - Id: 480071
+    Buy: 1                # Calabash
+  - Id: 480075
+    Buy: 1                # Baby_Boar_Bib
+  - Id: 480077
+    Buy: 1                # Magma_Manteau
+  - Id: 480081
+    Buy: 1                # Glotoneria
+  - Id: 480084
+    Buy: 1                # Fafnir_Manteau
+  - Id: 480085
+    Buy: 1                # Devil_Manteau_JP
+  - Id: 480094
+    Buy: 1                # ErymanthianSkin
+  - Id: 480096
+    Buy: 1                # C_Put_On_Coat
+  - Id: 480097
+    Buy: 1                # C_Snow_Powder
+  - Id: 480107
+    Buy: 1                # C_Kings_Twin_Sword
+  - Id: 480110
+    Buy: 1                # C_Adventure_Cat_Bag
+  - Id: 480114
+    Buy: 1                # Striking_Mikoshi
+  - Id: 480117
+    Buy: 1                # C_Elec_Guitar_Of_Phen
+  - Id: 480118
+    Buy: 1                # C_G_DaeHyon_Sword_TW
+  - Id: 480121
+    Buy: 1                # C_Striking_Mikoshi
+  - Id: 480122
+    Buy: 1                # C_Samba_Carnival
+  - Id: 480127
+    Buy: 1                # C_Hooked_Straw_Hat
+  - Id: 480155
+    Buy: 1                # C_Vietnam_flag_hood
+  - Id: 480169
+    Buy: 1                # C_Diabolic_Rock_Guitar
+  - Id: 480188
+    Buy: 1                # Valkyrie_Curse_blight
+  - Id: 480189
+    Buy: 1                # C_Valkyrie_Curse_blight
+  - Id: 480198
+    Buy: 1                # C_20th_Anniversary_Wing
+  - Id: 480200
+    Buy: 1                # C_Guardian_Wing
+  - Id: 480207
+    Buy: 1                # C_Traveller_Bag
+  - Id: 480220
+    Buy: 1                # Whale_Shark_Float
+  - Id: 480223
+    Buy: 1                # C_Muranyasa
+  - Id: 480228
+    Buy: 1                # Day_of_the_Dead
+  - Id: 480235
+    Buy: 1                # C_Diabolic_Friend
+  - Id: 480237
+    Buy: 1                # C_Katana_TenguMaster
+  - Id: 480246
+    Buy: 1                # C_Valkyrie_Spear
+  - Id: 480251
+    Buy: 1                # Mystical_Wing
+  - Id: 480278
+    Buy: 1                # Huse_Luk_R_Wing
+  - Id: 480319
+    Buy: 1                # Divine_Phoenix
+  - Id: 480446
+    Buy: 1                # Moonlight_Bell_TH
+  - Id: 490013
+    Buy: 1                # Devil_Ring
+  - Id: 490037
+    Buy: 1                # Dark_Ring
+  - Id: 490043
+    Buy: 1                # HalfBlood_Princess_Ring
+  - Id: 490068
+    Buy: 1                # RingofVenus
+  - Id: 490079
+    Buy: 1                # SoulExpansionRing
+  - Id: 490083
+    Buy: 1                # Themis_Balance
+  - Id: 490096
+    Buy: 1                # Ring_Of_Hunter
+  - Id: 490102
+    Buy: 1                # Skull_Ring
+  - Id: 490104
+    Buy: 1                # Ring_Of_Phoenix
+  - Id: 490110
+    Buy: 1                # Anulus_Ira
+  - Id: 490113
+    Buy: 1                # Jasper_Ring
+  - Id: 490118
+    Buy: 1                # RingOfAdoramus
+  - Id: 490141
+    Buy: 1                # Metal_Pick
+  - Id: 490145
+    Buy: 1                # Ring_Of_Ceryneian
+  - Id: 490146
+    Buy: 1                # Paracelsus_Glove
+  - Id: 490159
+    Buy: 1                # Rough_Core
+  - Id: 490183
+    Buy: 1                # Military_Glove
+  - Id: 490193
+    Buy: 1                # Traveler_Ring
+  - Id: 490242
+    Buy: 1                # C_Valkyrie_Hair
+  - Id: 490243
+    Buy: 1                # Ring_of_SilverClaw
+  - Id: 490272
+    Buy: 1                # Harvest_Festival
+  - Id: 490290
+    Buy: 1                # Ameretat
+  - Id: 490319
+    Buy: 1                # YSF01_Ring
+  - Id: 490336
+    Buy: 1                # Dimension_L_Stone
+  - Id: 490337
+    Buy: 1                # Amulet_of_GenesisStone
+  - Id: 490367
+    Buy: 1                # Ullr_Bracelet
+  - Id: 490427
+    Buy: 1                # Ring_Of_Storm
+  - Id: 490497
+    Buy: 1                # Somatology_Glove
+  - Id: 500009
+    Buy: 1                # Copy_Gram
+  - Id: 510146
+    Buy: 1                # Jurupari
+  - Id: 510147
+    Buy: 1                # Orc_Dagger_BR
+  - Id: 510155
+    Buy: 1                # Ceuci
+  - Id: 550021
+    Buy: 1                # Deus_Ex_Machina_JP

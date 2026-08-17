@@ -126,7 +126,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
 | `conf/guerra/groups_guerra.yml` (permissão de comando) | `@reloadatcommand` — chama `pc_groups_reload()` (`src/map/atcommand.cpp:4422`). **Não** é `@reloadbattleconf` nem `@reloadscript` |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
-| `db/guerra/refine.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb` |
+| `db/guerra/refine.yml`, `db/guerra/refine_evento.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb`. Vale também para ligar/desligar o Evento de Refino, que é comentar a linha `- Path: db/guerra/refine_evento.yml` no rodapé de `db/refine.yml` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
 | `db/guerra/instance_db.yml` (nome de instância) | `@reloadinstancedb` — existe, e **não** exige reiniciar. O nome é chave: o `instance_create` resolve por string, então rodar este **antes** do `@reloadscript` quando os dois lados mudaram juntos |
@@ -279,32 +279,52 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     E lembrar que **modelo de `.rsw` não bloqueia nada sozinho**: o override
     de mapa não toca o `.gat`, então móvel plantado é atravessável até que
     alguém escreva o `setwall`. As duas metades estão no `ARQUITETURA.md` §4.
-16. **Item com `Buy` no `item_db` entra na loja PELO `Buy`, não a 1 zeny.**
-    Decisão do dono em 2026-08-12: *"todo item a partir de agora que tiver
-    valor de venda a gente vende com o valor de compra dele"*. Sem `Buy`
-    nenhum, 1 zeny como sempre. Não há meio-termo, e o motivo é aritmético:
-    revenda paga `Buy/2`, então **qualquer preço abaixo de `Buy` deixa
-    lucro** — e o lucro é por clique, em laço infinito, num servidor de
-    drop 50x. É a saída que a Tranqueiras estreou na manhã do mesmo dia e
-    que substituiu a anterior (**podar a peça cara da vitrine**, que foi o
-    que aconteceu com a Boina Alada, 5170, e com o Ouro, 969).
+16. **Item vendido em loja de Prontera vale 1 zeny nas DUAS pontas — na
+    vitrine e na revenda.** Decisão do dono em 2026-08-17: *"itens que são
+    vendidos nas lojas de Prontera devem ter valor 1 zeny pra evitar
+    criação de dinheiro infinito"*. A vitrine já estava a 1; o que faltava
+    era a outra ponta, e é ela que gera dinheiro.
 
-    Quem disparou a regra foi o **Elmo de Aegir (18728)**, `Buy: 200000`:
-    a 1 zeny seriam **99.999 de lucro por clique**. Levado ao dono como
-    "tiro ou ponho?", a resposta foi uma terceira coisa — **cobra**.
+    **O dinheiro infinito nunca esteve no preço da prateleira — está na
+    REVENDA.** Comprar por 1 zeny e revender em **qualquer** NPC pelo
+    `Sell` do `item_db` (que vale `Buy/2` quando o item não declara o
+    campo) rende a diferença, por clique, em laço. Medido em 2026-08-17:
+    **918 dos 1603 itens** das 22 lojas dos três mercados davam lucro, e
+    três não eram de 9 zeny — Tapa-Olho Ferido (19446) a **999.999 por
+    clique**, Cópia de Gram (500009) a 249.999, Óculos_ (2204) a 1.999.
 
-    Duas consequências práticas:
+    **A trava é `Buy: 1` por override**, em `db/guerra/item_db_lojas.yml`,
+    **gerado por `ferramentas/zera_revenda_das_lojas.py`**. Com `Buy`
+    declarado e `Sell` não, o rAthena faz `value_sell = value_buy / 2` no
+    fim do carregamento (`itemdb.cpp:1188`) — ou seja **zero**. Não se
+    escreve `Sell: 0`: seria um segundo campo para divergir.
+
+    **Ao pôr item novo em qualquer vitrine de Prontera, rodar o script** —
+    sem ele o item nasce com o `Buy` do `item_db` e reabre o buraco,
+    calado. O `--conferir` do mesmo script mede o lucro por clique loja a
+    loja e é a trava de verdade.
+
+    **Isso alcança TODA cópia do item no servidor, não só a que saiu da
+    loja** — valor de item mora no `item_db`, não na instância. Carta que
+    o jogador caçou também deixa de valer zeny no NPC. Era a saída
+    considerada e **recusada** em 2026-08-12 por esse motivo; em
+    2026-08-17 a decisão foi a contrária, com o número dos 918 na mão.
+
+    Três consequências:
+    - **A regra de 2026-08-12 está REVOGADA.** Ela dizia *"todo item que
+      tiver valor de venda a gente vende com o valor de compra dele"*, e
+      pôs seis peças fora do 1 zeny — o **Elmo de Aegir (18728)** a
+      200.000 na frente delas. Viveu cinco dias. As seis voltaram para 1
+      zeny. Não procurar por ela nos cabeçalhos: eles foram acertados.
+    - **A Tranqueiras é a exceção, e continua sendo.** Ela vende a `-1`
+      (o `Buy` do item, `npc.cpp:4146`), tem lucro por clique **zero**
+      medido nos 55, e ficou de fora por decisão do dono no mesmo dia:
+      `Buy: 1` nela derrubaria o Ouro (969) de 150.000 para 1 e daria a
+      alquimia e as dez receitas de Runa de graça.
     - **`npc_parse_shop` deixa de reclamar.** O aviso `discounted buying
-      price (1->0) is less than overcharged selling price` só sai quando o
-      preço de compra com desconto fica abaixo do de venda com
-      supervalorização, e no preço de compra isso não acontece. Item posto
-      pela regra nova **não** acrescenta linha de aviso na subida — os
-      avisos que sobram são todos de item posto antes dela.
-    - **A regra é "a partir de agora" e não foi aplicada para trás.** Os
-      itens de `Buy: 20` que já estavam nas nove lojas a 1 zeny continuam
-      a 1 zeny (9 zeny de lucro por clique, que o próprio dono chamou de
-      "não move nada"). Preço de peça que já está na mão dos jogadores não
-      se troca sem ele pedir.
+      price (1->0) is less than overcharged selling price` testa
+      `value*0.75 < value_sell*1.24` (`npc.cpp:4153`); com a revenda em 0
+      o lado direito zera e o aviso não sai para nenhuma das 22 lojas.
 17. **Antes de mudar uma regra, conferir se ela EXISTE — o cabeçalho pode
     estar descrevendo uma que nunca foi escrita.** Cabeçalho longo é o que
     torna este projeto navegável, e é justamente por isso que ele é lido como
@@ -382,6 +402,21 @@ Produziram diagnóstico falso e custaram retrabalho:
   seja quem decide é o checkout. Os erros aconteceram nesta ordem em
   2026-08-12; os dois foram baratos porque o `assert` da âncora parou o script
   antes de gravar.
+- **E o `$` de um regex com `re.M` NÃO casa antes do `\r` — ele casa DEPOIS,
+  deixando o `\r` dentro do grupo capturado.** Em arquivo CRLF, um
+  `re.compile(r'^(.*)$', re.M)` devolve a linha **com o carriage return
+  colado no fim**; reescrever a linha a partir daí grava só `\n`, e o
+  arquivo fica com fins de linha misturados. Falha calada: o rAthena lê
+  os dois, o `git diff` mostra a linha inteira como trocada e nada acusa.
+  Medido em 2026-08-17 ao pôr as vitrines de Prontera a 1 zeny — as 9
+  linhas de `shop` do `mercado_contemporaneo.txt` perderam o `\r`, e quem
+  denunciou foi um contador que achou **41 preços trocados onde a medição
+  anterior dizia 36**: as 5 linhas de sobra eram justamente as que já
+  terminavam em `:1` e "mudaram" só por causa do `\r`. **Número que não
+  bate com a medição anterior é o aviso** — sem ele o estrago passa.
+  A saída é `(?=\r?$)` na âncora, ou partir por `\n` e tratar o `\r` na
+  mão. Da mesma família da regra de medir o fim de linha antes de
+  escrever, logo acima.
 - **A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela.**
   As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`
   padrão deste MariaDB 12.3 é `utf8mb4` — e o rAthena só manda `SET NAMES` se

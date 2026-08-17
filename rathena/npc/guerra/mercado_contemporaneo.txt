@@ -16,78 +16,72 @@
 //===== Descricao ============================================
 //= Nove lojas de equipamento, uma por slot. Tudo a 1 zeny.
 //===== Notas ================================================
-//= PRECO: 1 zeny por item, decidido em 2026-08-01. E de
-//= proposito, mas tem uma consequencia que vale saber de olho
-//= aberto.
+//= PRECO: 1 ZENY POR ITEM, NOS 187, SEM EXCECAO. Decisao do
+//= dono em 2026-08-17 - "itens que sao vendidos nas lojas de
+//= Prontera devem ter valor 1 zeny pra evitar criacao de
+//= dinheiro infinito".
 //=
-//= O rAthena vai imprimir um aviso por item ao carregar:
+//= ISSO REVOGOU A REGRA DE 2026-08-12 ("todo item que tiver
+//= valor de venda a gente vende com o valor de compra dele"),
+//= que viveu cinco dias e tinha posto seis pecas desta loja
+//= fora do 1 zeny - o Elmo de Aegir (18728) a 200.000 na
+//= frente delas. As seis voltaram para 1 zeny com o resto.
+//=
+//= ONDE O DINHEIRO INFINITO ESTAVA DE VERDADE: nao na vitrine,
+//= na REVENDA. Comprar por 1 zeny e revender em QUALQUER NPC
+//= pelo `Sell` do item_db - que vale `Buy/2` quando o item nao
+//= declara o campo - rende a diferenca, por clique, em laco.
+//= Medido em 2026-08-17 nas vinte e duas lojas dos tres
+//= mercados: 918 dos 1603 itens davam lucro, e tres nao eram
+//= de 9 zeny -
+//=
+//=   19446   Tapa-Olho Ferido  vitrine 1 z, revenda 1.000.000 z
+//=   500009  Copia de Gram     vitrine 1 z, revenda   250.000 z
+//=   2204    Oculos_           vitrine 1 z, revenda     2.000 z
+//=
+//= O TAPA-OLHO ESTAVA NO OCLEIRO, DESTE MERCADO, e valia um
+//= milhao de zeny por clique. Nenhuma das duas regras
+//= anteriores o pegou: a de 2026-08-12 so olhava para item
+//= ENTRANDO, e ele ja estava aqui.
+//=
+//= COMO FICOU FECHADO: `Buy: 1` por override em
+//= db/guerra/item_db_lojas.yml, para os 1603 itens dos tres
+//= mercados. Com `Buy` declarado e `Sell` nao, o rAthena faz
+//= `value_sell = value_buy / 2` no fim do carregamento, o que
+//= da ZERO. Vitrine 1 zeny, revenda 0 zeny, lucro 0.
+//=
+//= AQUELE ARQUIVO E GERADO por
+//= ferramentas/zera_revenda_das_lojas.py, que le as linhas de
+//= `shop` destes tres arquivos. AO POR ITEM NOVO EM QUALQUER
+//= UMA DAS NOVE LOJAS ABAIXO, RODAR O SCRIPT - sem ele o item
+//= nasce com o `Buy` do item_db e reabre o buraco, calado. O
+//= `--conferir` do mesmo script diz se falta rodar.
+//=
+//= O QUE ISSO ALCANCA, e foi decidido sabendo: TODA COPIA DO
+//= ITEM NO SERVIDOR, nao so a que saiu da loja. Valor de item
+//= mora no item_db, nao na instancia - peca que o jogador
+//= cacou tambem deixa de valer zeny no NPC. Era a saida numero
+//= 1 que este mesmo cabecalho tinha CONSIDERADO E RECUSADO em
+//= 2026-08-12, por esse motivo; em 2026-08-17 a decisao foi a
+//= contraria, com o numero dos 918 na mao.
+//=
+//= SOME O AVISO DA SUBIDA. O `npc_parse_shop` reclamava item a
+//= item -
 //=
 //=   npc_parse_shop: Item X discounted buying price (1->0) is
 //=   less than overcharged selling price (...)
 //=
-//= NAO e erro de sintaxe e nao impede a loja de subir. E o
-//= proprio servidor avisando de um exploit real (src/map/npc.cpp,
-//= linha 4153): quem compra aqui por 1 zeny pode revender em
-//= QUALQUER NPC pelo `Sell` do item_db e lucrar a diferenca.
+//= - e o teste dele (src/map/npc.cpp linha 4153) e
+//= `value*0.75 < value_sell*1.24`. Com `value_sell` em 0 o
+//= lado direito zera e o aviso nao sai para item nenhum destas
+//= nove lojas.
 //=
-//= O pior caso desta lista ERA a Boina Alada (5170), que tem
-//= `Buy: 30000` no item_db e portanto revende por 15000 - ou
-//= seja, 14999 de lucro por compra, em laco infinito. O resto
-//= da lista tem `Buy: 20`, que da 9 de lucro e nao move nada.
-//=
-//= ELA SAIU DO CHAPELEIRO EM 2026-08-12, e a decisao foi do
-//= dono: com o drop em 50x, item de revenda alta nao fica em
-//= vitrine de 1 zeny. Saiu junto com o Ouro (969) da
-//= Tranqueiras, que era o mesmo problema cinco vezes maior.
-//=
-//= Foram consideradas duas saidas e escolhida a segunda:
-//=   1) `Sell: 0` / `Trade: NoSell` por override em
-//=      db/guerra/item_db.yml. Fecha de vez, mas alcanca TODA a
-//=      Boina do servidor - inclusive a que o jogador cacou.
-//=   2) tirar a peca da loja. Uma linha, nao mexe em mais nada.
-//=
-//= REPOR A BOINA AQUI REABRE O BURACO. Nao e "so mais uma
-//= linha" - o item continua com `Buy: 30000` no item_db.
-//=
-//= Com ela fora, o pior caso do mercado inteiro passou a ser o
-//= Traje Protetor (19381) no Retoqueiro, citado logo abaixo.
-//=
-//= ------------------------------------------------------------
-//= 2026-08-12, MESMO DIA, A TARDE: A REGRA MUDOU
-//=
-//= "Todo item a partir de agora que tiver valor de venda a gente
-//= vende com o valor de compra dele" - decisao do dono do
-//= projeto, no meio da rodada de 31 chapeus descrita abaixo.
-//=
-//= E a mesma saida que a Tranqueiras tinha estreado de manha
-//= (npc/guerra/tranqueiras.txt), agora virada regra geral: em
-//= vez de PODAR a peca cara da vitrine, cobra-se por ela o que
-//= o item_db diz que ela custa. Fecha o exploit sem tirar nada
-//= de ninguem, e e por isso que a Boina Alada nao precisaria
-//= ter saido se a regra existisse de manha.
-//=
-//= NA PRATICA, ao por item novo aqui:
-//=
-//=   `Buy` no item_db  ->  o preco da loja e esse `Buy`
-//=   sem `Buy` nenhum  ->  1 zeny, como sempre
-//=
-//= Nao ha meio termo, e o motivo e aritmetico: revenda paga
-//= `Buy/2`, entao qualquer preco ABAIXO de `Buy` deixa lucro.
-//=
-//= De quebra, some o aviso: `npc_parse_shop` so reclama quando
-//= o preco de compra com desconto fica abaixo do de venda com
-//= supervalorizacao, e no preco de compra isso nao acontece.
-//= Item posto pela regra nova NAO acrescenta linha de
-//= `discounted buying price` na subida - os avisos que sobram
-//= sao todos de item posto ANTES dela.
-//=
-//= A REGRA E "A PARTIR DE AGORA" e nao foi aplicada para tras:
-//= os itens de `Buy: 20` que ja estavam nas nove lojas a 1 zeny
-//= continuam a 1 zeny. Sao 9 zeny de lucro por clique, que o
-//= proprio dono ja tinha chamado de "nao move nada". Quem
-//= quiser uniformizar um dia mexe nas linhas antigas; a decisao
-//= de nao mexer agora foi para nao trocar preco de peca que ja
-//= esta na mao dos jogadores sem ele pedir.
+//= A BOINA ALADA (5170) PODE VOLTAR, se um dia for pedida. Ela
+//= saiu daqui em 2026-08-12 por ter `Buy: 30000` e revender
+//= por 15.000; com a regra de 2026-08-17 isso deixou de ser
+//= motivo - o que a poda resolvia, o `Buy: 1` resolve sem
+//= tirar nada de ninguem. Nao voltou sozinha porque repor peca
+//= na vitrine e decisao do dono, nao consequencia de regra.
 //=
 //= ------------------------------------------------------------
 //= COMO A LISTA FOI RESOLVIDA
@@ -373,19 +367,21 @@
 //   + 400307  Faixa da Inquisicao     [1]  (View 2268)
 //   + 400194  Enfeite de Cerejeira    [1]  (View 2162)
 //
-// O ELMO DE AEGIR E O CASO QUE MUDOU A REGRA DA CASA. Ele tem
-// `Buy: 200000` no item_db, ou seja revende por 100.000: a 1
-// zeny seriam 99.999 de lucro por clique, em laco - cinco vezes
+// O ELMO DE AEGIR MUDOU A REGRA DA CASA DUAS VEZES. Ele tem
+// `Buy: 200000` no item_db, ou seja revendia por 100.000: a 1
+// zeny eram 99.999 de lucro por clique, em laco - cinco vezes
 // o buraco da Boina Alada, que tinha saido desta mesma loja
-// naquela manha. Levado ao dono do projeto, ele nao pediu a
-// poda: pediu preco. Ver o cabecalho, "A REGRA MUDOU".
+// naquela manha. Levado ao dono em 2026-08-12, ele nao pediu a
+// poda: pediu preco, e o Aegir passou a custar 200.000 aqui.
 //
-// Por isso a linha do `shop` abaixo NAO e mais toda a 1 zeny.
-// Dos nove, cinco tem `Buy` no item_db e entram por ele:
-//   18728  200000     5388  20     19262  20
-//   18508      20   400194  20
-// Os outros quatro (400203, 19106, 400308, 400307) nao tem
-// `Buy` nenhum, nao valem nada revendidos, e ficam a 1 zeny.
+// EM 2026-08-17 ELE VOLTOU PARA 1 ZENY com todo o resto, e o
+// buraco fechou pelo outro lado: `Buy: 1` por override em
+// db/guerra/item_db_lojas.yml deixa a revenda dele em ZERO.
+// Ver o cabecalho.
+//
+// A LINHA DO `shop` ABAIXO VOLTOU A SER TODA A 1 ZENY, nos
+// dezenove. As cinco que estavam fora - 18728, 5388, 19262,
+// 18508 e 400194 - voltaram junto.
 //
 // A TOUCA EXOTICA (400308) FOI A UNICA DAS 31 QUE NAO EXISTIA.
 // Nem em db/re/ nem no nosso: entrou como placeholder em
@@ -420,7 +416,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:200000,400203:1,19262:20,19106:1,5388:20,18508:20,400308:1,400307:1,400194:20
+-	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -519,11 +515,11 @@ OnInit:
 // ingles ("Eyes of Illusion"), foi sincronizado pelo
 // nomes_pt_item_db.py. Arte nao faltou: 8 de 8 no valida_visual.py.
 //
-// Ele TEM `Buy: 20` no item_db - o unico desta loja que tem. Vendido
-// a 1 zeny, revende por 10, ou seja 9 de lucro por compra. Nao move
-// nada, mas e por causa dele que este arquivo faz o rAthena imprimir
-// mais uma linha de `npc_parse_shop: Item X discounted buying price`
-// na subida.
+// Ele TINHA `Buy: 20` no item_db - o unico desta loja que tinha -,
+// e a 1 zeny revendia por 10: 9 de lucro por compra. Desde
+// 2026-08-17 o `Buy` dele e 1 por override, a revenda e 0, e a
+// linha de `npc_parse_shop: Item X discounted buying price` que ele
+// acrescentava na subida deixou de sair. Ver o cabecalho.
 //
 // OITAVO ITEM em 2026-08-05: a Diadema Arco-iris (18894, View 1019).
 // Foi pedida "no Chapeleiro" e veio parar aqui porque o item_db a da
@@ -552,15 +548,12 @@ OnInit:
 //   + 410004  Marcas de Comodo        [1]  (View 1202)
 //   +  19452  Ornamento Divino        [1]  (View 1093)
 //
-// PRECO PELA REGRA NOVA (ver o cabecalho): dez destes quinze
-// tem `Buy` no item_db e entram por ele, nao por 1 zeny.
-//   19380  10   |  410004  20   410009  20   410028  20
-//                  410058  20   410065  20   410089  20
-//                  410110  20    19452  20    19495  20
-// Os cinco sem `Buy` (410024, 410097, 410130, 410186, 19437)
-// ficam a 1 zeny. Nenhum dos quinze e caro: o maior lucro de
-// revenda possivel na leva inteira seria de 9 zeny, e mesmo
-// esse esta fechado.
+// PRECO: os quinze a 1 zeny, como o resto da loja. Dez deles
+// tinham `Buy` no item_db e por isso chegaram a entrar a 10 ou
+// 20 zeny em 2026-08-12 - o 19380 a 10, e 410004, 410009,
+// 410028, 410058, 410065, 410089, 410110, 19452 e 19495 a 20.
+// Em 2026-08-17 os dez voltaram para 1 zeny e ganharam
+// `Buy: 1` por override, entao revendem por 0. Ver o cabecalho.
 //
 // TRES DOS IDS DO PEDIDO VIERAM COM UM DIGITO A MENOS, e os
 // tres foram achados pelo NOME na tabela do bRO antes de virar
@@ -616,7 +609,7 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:20,410065:20,410058:20,410028:20,410024:1,19437:1,19380:10,19495:20,410186:1,410130:1,410110:20,410097:1,410009:20,410004:20,19452:20,5592:20,19085:20
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:1,410065:1,410058:1,410028:1,410024:1,19437:1,19380:1,19495:1,410186:1,410130:1,410110:1,410097:1,410009:1,410004:1,19452:1,5592:1,19085:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 //
@@ -670,9 +663,10 @@ OnInit:
 // Nenhum tem cova, e nao e engano de transcricao: o pedido
 // listou os sete sem `[1]` e o item_db concorda com os sete.
 //
-// PRECO PELA REGRA NOVA (ver o cabecalho): so a Aura
-// Amaldicoada tem `Buy` no item_db (20), e entra por ele. Os
-// outros seis nao valem nada revendidos e ficam a 1 zeny.
+// PRECO: os sete a 1 zeny. So a Aura Amaldicoada (420105) tinha
+// `Buy` no item_db (20) e chegou a entrar por ele em 2026-08-12;
+// desde 2026-08-17 o `Buy` dela e 1 por override e ela voltou
+// para a vitrine de 1 zeny, como as outras seis.
 //
 // OS QUATRO AMULETOS SAO UMA FAMILIA, e vieram juntos de
 // proposito: 15920/15921/15922/15923 sao os quatro elementos, e
@@ -712,7 +706,7 @@ OnInit:
 	placadevenda "Cabeça baixo";
 	end;
 }
--	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:20,15923:1,15922:1,15921:1,15920:1
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:1,15923:1,15922:1,15921:1,15920:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 
@@ -756,7 +750,7 @@ OnInit:
 	placadevenda "Armas";
 	end;
 }
--	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:20,28739:20
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -966,10 +960,12 @@ OnInit:
 // a resistencia a "Cobaias", que e o grupo `RC2_BIOLAB` e nao uma raca. O
 // cabecalho da entrada de la mostra a conferencia.
 //
-// O PRECO SEGUE A REGRA 4.16 e nao e uniforme: 19 entraram a 1 zeny (sem
-// `Buy` no item_db) e 16 entraram a 20 zeny (`Buy: 20`). Nenhum dos 35
-// acrescenta linha de `discounted buying price` na subida - item posto pelo
-// preco de compra nao dispara aquele aviso.
+// O PRECO VOLTOU A SER UNIFORME EM 2026-08-17: os 35 a 1 zeny. Dezesseis
+// deles tinham `Buy: 20` e tinham entrado a 20 zeny pela regra 4.16, que
+// valeu de 2026-08-12 a 2026-08-17. Com o `Buy: 1` por override a revenda
+// dos dezesseis zerou e o preco voltou para 1. Nenhum dos 35 acrescenta
+// linha de `discounted buying price` na subida - agora porque a revenda e
+// 0, e nao porque o preco e alto.
 //
 // CONJUNTOS: dez dos 35 sao citados por algum `- Combos:` do
 // db/re/item_combos.yml (Release_Of_Magic aparece tres vezes, o Punhal de
@@ -982,4 +978,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:20,28517:20,490043:20,2936:20,28379:20,28433:20,28598:20,28564:20,28533:20,28437:20,28531:20,490183:20,32262:20,28438:20,28491:20,32263:20
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1

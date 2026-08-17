@@ -51,8 +51,16 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/refine.yml
     Mode: Renewal
-  # Guerra do Emperium: unica linha nossa neste arquivo do rAthena. Vem
+  # Guerra do Emperium: as duas linhas nossas neste arquivo do rAthena. Vem
   # DEPOIS do db/re para sobrescrever, e ANTES do db/import para o import da
-  # maquina (taxa de evento) continuar tendo a ultima palavra.
+  # maquina continuar tendo a ultima palavra.
+  #
+  # A primeira e a Bencao do Ferreiro (quantos Aben cada nivel pede).
   - Path: db/guerra/refine.yml
+  # A segunda e o EVENTO DE REFINO, ligado em 2026-08-17. COMENTAR ESTA LINHA
+  # E REINICIAR O MAP-SERVER DESLIGA O EVENTO e devolve as chances "fora do
+  # Evento", que sao as que o db/re/refine.yml ja traz. Nao ha
+  # `@reloadrefinedb`: o refine_db so e lido no boot, entao ligar e desligar
+  # custa um reinicio dos dois lados.
+  - Path: db/guerra/refine_evento.yml
   - Path: db/import/refine.yml

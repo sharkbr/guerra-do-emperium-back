@@ -53,6 +53,9 @@ sem confirmação in-game.
 | Ticket de Inventário e Rédea na Máquina | `prontera 167,199` / `comodo 214,185` | 2026-08-12 |
 | `*` e `-` aceitos no nome de personagem (`char_name_option: 1`) | tela de criação | 2026-08-16 |
 | 53 itens novos, as 6 lojas e o `@autoloot` do grupo 0 — **agora na produção** | `prontera` | 2026-08-16 |
+| **As 22 lojas de Prontera todas a 1 zeny, e a revenda em 0** | `prontera`, os três mercados | 2026-08-17 |
+| **Amanhece às 08:00, anoitece às 20:00** | mundo inteiro, sem NPC visível | 2026-08-17 |
+| **O Evento de Refino ligado** | janela de refino | 2026-08-17 |
 
 **A Tranqueiras é a única da lista que pode falhar por um motivo novo**, e ele
 é do lado do cliente: ela usa **sprite 5 (`JOB_MERCHANT`), uma classe de
@@ -264,6 +267,64 @@ e está em `ferramentas/levanta_sprite_npc.py`.
   nasce ali como boato.
 
 ---
+
+## 1a2. Os três pedidos de 2026-08-17 — as sondas de cada um
+
+Os três estão escritos, conferidos offline e registrados. **Nenhum subiu.** O
+que decide cada um, e é diferente em cada:
+
+### O zeny infinito das lojas
+
+Comandos: `@reloaditemdb` (pega o `db/guerra/item_db_lojas.yml`) e
+`@reloadscript` (pega as linhas de `shop` que voltaram a 1 zeny).
+
+A sonda é uma só, e **não** é abrir a loja: comprar qualquer coisa no Ocleiro e
+tentar vender ao próprio NPC. Tem que aparecer **0 zeny**. O item que responde
+mais rápido é o **Tapa-Olho Ferido (19446)**, que valia 1.000.000 antes.
+
+**Cuidado com a conta de teste:** grupo 99 não ajuda nem atrapalha aqui — preço
+não passa pelas travas do §4.7 —, mas o `Descontar`/`Overcharge` de Mercador
+**muda os dois lados**, então medir com um Mercador de nível alto dá outro
+número. A sonda offline equivalente, e que não precisa de jogo, é
+`python ferramentas/zera_revenda_das_lojas.py --conferir`.
+
+**O que também precisa ser olhado:** o Elmo de Aegir (18728) voltou de 200.000
+para 1 zeny na vitrine do Chapeleiro. Ele é a peça mais visível da mudança de
+regra, e se alguém já comprou por 200.000 vai notar.
+
+### O ciclo do dia
+
+Comando: `@reloadscript`.
+
+Não há o que clicar. A sonda barata: `@time` para ver a hora do servidor e
+esperar as 08:00 ou as 20:00 — ou, sem esperar, `@day` e `@night` na mão para
+conferir que o efeito de escurecer chega. **Prontera tem o mapflag
+`nightenabled`**, então serve de mapa de teste; masmorra e instância não
+escurecem, e isso não é defeito.
+
+O `OnInit` acerta o estado na subida: se o `@reloadscript` for dado depois das
+20:00, o servidor deve **anoitecer na hora**, com a mensagem "Está
+anoitecendo." na caixa de chat. Se não anoitecer, o suspeito é o relógio da
+máquina, não o script — a sonda é `ssh <servidor> date`.
+
+### O Evento de Refino
+
+**Não tem comando `@`** — é reiniciar o map-server. Login e char podem ficar
+de pé.
+
+A sonda que decide é a **janela de refino**, não o log: pôr um equipamento no
++10 e olhar a chance que ela mostra do +10 para o +11. Com o evento ligado deve
+ser **40%** numa arma nível 1 ou 2 (era 18%) e **20%** numa armadura (era 8%).
+
+Duas coisas que podem enganar:
+- **o teto de refino é +16**, então não há o que ver de +17 para cima;
+- **a janela não mostra minério que o jogador não tem**. Para conferir o HD é
+  preciso ter HD Bradium/Carnium na mochila, senão a linha simplesmente não
+  aparece e a leitura vira "o evento não pegou".
+
+**Se ficar caro demais**, desligar é uma linha: comentar
+`- Path: db/guerra/refine_evento.yml` no rodapé de `rathena/db/refine.yml` e
+reiniciar o map-server de novo.
 
 ## 1b. Vence em dezembro de 2027 — os ciclos do Logue e Ganhe
 

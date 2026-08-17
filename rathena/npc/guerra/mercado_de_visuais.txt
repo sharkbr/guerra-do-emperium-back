@@ -139,11 +139,11 @@
 //= ------------------------------------------------------------
 //= PREÇO: 1 zeny, como o Mercado Contemporâneo.
 //=
-//= Aqui a revenda NÃO é problema, e isso foi medido antes de
-//= escolher o preço: em 2026-08-09, 439 dos 452 não têm `Buy` nem
-//= `Sell` no item_db, então revendem por 0 em qualquer NPC. As TREZE
-//= exceções revendem por 10 (`Buy: 20`) ou por 5 (`Buy: 10`) - 9 e
-//= 4 de lucro por compra, que não move nada:
+//= E A REVENDA É ZERO desde 2026-08-17. Aqui ela quase não era
+//= problema, e isso tinha sido medido em 2026-08-09: 439 dos 452
+//= não têm `Buy` nem `Sell` no item_db e já revendiam por 0. As
+//= TREZE exceções revendiam por 10 (`Buy: 20`) ou por 5
+//= (`Buy: 10`) - 9 e 4 de lucro por clique:
 //=
 //=   18740 Cabelo de Super Saiadim   18742 Luar de Cristal
 //=   19551 Símbolo Élfico            19554 Máscara Tradicional
@@ -153,18 +153,26 @@
 //=   19966 Chapéu Harmonioso         19996 Cavalo Rei
 //=   20038 Capacete do Alfonso
 //=
-//= ESTE ARQUIVO FAZ, SIM, o rAthena imprimir o aviso
-//= `npc_parse_shop: Item X discounted buying price` - treze vezes,
-//= uma por item da lista acima. Até 2026-08-09 eram duas, e o
-//= cabeçalho dizia que ele não devia aparecer; sete dos itens
-//= daquela rodada trouxeram as outras sete, e a conta foi refeita
-//= item a item antes de a frase mudar. Em 2026-08-12 vieram as
-//= quatro últimas, com os onze chapéus de topo daquela rodada.
+//= AS TREZE FORAM FECHADAS junto com as outras duas lojas de
+//= Prontera: `Buy: 1` por override em
+//= db/guerra/item_db_lojas.yml, gerado por
+//= ferramentas/zera_revenda_das_lojas.py. Os 452 desta loja
+//= estão lá, não só as treze - assim item novo não depende de
+//= alguém lembrar de conferir o `Buy` dele.
 //=
-//= A conferência continua valendo, e é ela que importa: aviso com
-//= item que NÃO esteja nesta lista é item novo com preço, e aí é
-//= preciso olhar quanto ele revende antes de deixar passar. O que a
-//= lista compra é saber quais treze ignorar.
+//= AO ACRESCENTAR ITEM AQUI, RODAR O SCRIPT (o passo 5 da receita
+//= abaixo). O `--conferir` dele diz se falta.
+//=
+//= O AVISO `npc_parse_shop: Item X discounted buying price`
+//= DEIXOU DE SAIR. Eram treze na subida - duas até 2026-08-09,
+//= sete a mais naquela rodada e quatro em 2026-08-12, contadas
+//= item a item. Com a revenda em 0, o teste do aviso
+//= (`value*0.75 < value_sell*1.24`) nunca mais bate.
+//=
+//= A CONFERÊNCIA MUDOU DE LUGAR: não é mais "aviso com item fora
+//= da lista das treze", que era o que esta seção comprava, e sim
+//= o `--conferir` do zera_revenda_das_lojas.py, que mede o lucro
+//= por clique loja a loja.
 //=
 //= ------------------------------------------------------------
 //= COMO ACRESCENTAR ITEM
@@ -176,6 +184,9 @@
 //=        instala_visual.py     --id <n> --grf "<grf do bRO>"
 //=   3) python ferramentas/valida_visual.py --id <n>   <- tem que dar 0
 //=   4) só então acrescentar o id na linha da loja do slot
+//=   5) python ferramentas/zera_revenda_das_lojas.py   <- põe o
+//=      `Buy: 1` do item novo; sem isso ele revende pelo preço do
+//=      item_db e reabre o dinheiro infinito, calado
 //=
 //= A ordem do passo 2 não é preferência: o instala_visual só
 //= descobre o nome das 4 sprites de cabeça depois que o
@@ -261,9 +272,11 @@
 // do Bafome e do Cavalo Rei no cabecalho: po-la nas tres lojas mostraria a
 // mesma peca tres vezes no mercado.
 //
-// QUATRO DOS ONZE TEM `Buy` no item_db - 19789, 19829, 19966 e 20038 -, e
-// sao eles que levaram de nove para treze o numero de avisos de
-// `discounted buying price` na subida. A conta esta no cabecalho.
+// QUATRO DOS ONZE TINHAM `Buy` no item_db - 19789, 19829, 19966 e
+// 20038 -, e foram eles que levaram de nove para treze o numero de
+// avisos de `discounted buying price` na subida. Desde 2026-08-17 os
+// quatro tem `Buy: 1` por override, a revenda deles e 0 e nenhum dos
+// treze avisos sai mais. Ver o cabecalho.
 //
 // O CACHECOL GLORIOSO (15854) SAIU DAQUI no mesmo dia, e nao por gosto: o
 // nosso rAthena o dava como `Costume_Head_Top` e o bRO o da como BAIXO.

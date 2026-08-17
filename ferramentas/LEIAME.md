@@ -2692,6 +2692,58 @@ Diferente do Mercado de Visuais, **este arquivo imprime o aviso**
 `npc_parse_shop: Item X discounted buying price`, um por carta. É esperado, e é
 o próprio servidor apontando esses 9 zeny.
 
+## `zera_revenda_das_lojas.py` — fecha o dinheiro infinito das lojas de Prontera
+
+```
+python zera_revenda_das_lojas.py             # gera db/guerra/item_db_lojas.yml
+python zera_revenda_das_lojas.py --conferir  # só relata; sai 1 se achar lucro
+```
+
+**O dinheiro infinito nunca esteve na vitrine — está na revenda.** As lojas de
+Prontera vendem a 1 zeny; quem compra revende em **qualquer** NPC pelo `Sell`
+do `item_db`, que vale `Buy/2` quando o item não declara o campo. A diferença é
+lucro por clique, em laço, num servidor de drop 50x.
+
+Medido em 2026-08-17, antes desta ferramenta existir: **918 dos 1603 itens** das
+22 lojas davam lucro. Quase todos 9 zeny (carta de `Buy: 20`), e três não:
+
+| id | item | vitrine | revenda |
+|---|---|---|---|
+| 19446 | Tapa-Olho Ferido (Ocleiro) | 1 z | **1.000.000 z** |
+| 500009 | Cópia de Gram (Senhor das Armas) | 1 z | 250.000 z |
+| 2204 | Óculos_ (Ocleiro) | 1 z | 2.000 z |
+
+**O que ele escreve é um override com só o `Buy: 1`.** O `Sell` cai junto sem
+ser escrito, e isso é consequência do leitor, não sorte: o
+`ItemDatabase::parseBodyNode` guarda **por item** se o bloco trouxe `Buy` e se
+trouxe `Sell` (`hasPriceValue[item->nameid] = { has_buy, has_sell };`), e essa
+linha é uma **atribuição** — o último arquivo a falar do item vence. Como o
+nosso é o último, o item fica com `has_buy` e sem `has_sell` ainda que o
+`db/re/` tenha declarado `Sell` explícito, e no fim do carregamento o rAthena
+faz `value_sell = value_buy / 2`, que dá **0**.
+
+Escrever `Sell: 0` seria a mesma coisa com um campo a mais para divergir.
+
+**Que lojas entram:** as três de vitrine a 1 zeny —
+`mercado_contemporaneo.txt` (9 lojas), `mercado_de_cartas.txt` (9) e
+`mercado_de_visuais.txt` (4). **A Tranqueiras fica de fora**, por decisão do
+dono no mesmo dia: ela vende a `-1` (o `Buy` do item) e já tinha lucro **zero**
+medido nos 55; `Buy: 1` nela derrubaria o Ouro (969) de 150.000 para 1 zeny e
+daria a alquimia e as dez receitas de Runa de graça.
+
+**Rodar depois de mexer em qualquer uma das 22 lojas.** Item novo posto numa
+vitrine sem passar por aqui nasce com o `Buy` do `item_db` e reabre o buraco —
+calado, porque a loja sobe, vende e o log não reclama. O `--conferir` compara
+preço de vitrine com revenda loja a loja e diz se falta rodar; é ele a trava, e
+não o comentário no cabeçalho da loja.
+
+**O que isso alcança, e a decisão foi tomada sabendo:** toda cópia do item no
+servidor, não só a que saiu da loja — valor de item mora no `item_db`, não na
+instância. Carta que o jogador caçou também deixa de valer zeny no NPC.
+
+Recarregar: `@reloaditemdb` em jogo, ou reiniciar o map-server. As linhas de
+`shop` não mudam com isso — elas já estão todas a 1 zeny.
+
 ## `gera_char_guerra.py` — a lista de letras que o nome de personagem aceita
 
 Gera `rathena/conf/guerra/char_guerra.txt`, o arquivo que diz ao char-server

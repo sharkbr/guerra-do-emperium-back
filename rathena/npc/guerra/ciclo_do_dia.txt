@@ -1,0 +1,93 @@
+//===== Guerra do Emperium ===================================
+//= Ciclo do dia e da noite
+//===== Onde =================================================
+//= Em lugar nenhum: NPC flutuante (mapa `-`, sprite -1). Nao ha
+//= o que clicar, so os rotulos de horario.
+//===== Descricao ============================================
+//= AMANHECE AS 08:00 E ANOITECE AS 20:00, horario de Brasilia.
+//= Pedido do dono em 2026-08-17. A primeira versao do pedido era
+//= 06:00 e 18:00; ele alongou o dia para 08-20 no mesmo dia,
+//= antes de qualquer linha ser escrita.
+//=
+//= Sao doze horas de dia e doze de noite, coladas no relogio do
+//= mundo real - nao um ciclo curto que gira varias vezes por
+//= sessao, que e o que o rAthena faz por padrao.
+//===== Por que um NPC, e nao configuracao ===================
+//= O rAthena so sabe fazer ciclo por DURACAO, nao por hora:
+//= `day_duration` e `night_duration` (conf/battle/misc.conf) sao
+//= milissegundos, e o relogio deles comeca a contar quando o
+//= map-server sobe. Servidor reiniciado as 14:37 amanheceria as
+//= 14:37 + a sobra do ciclo, todo dia num horario diferente.
+//=
+//= As duas ficam em 0, que e como ja estavam - o proprio arquivo
+//= do rAthena diz "Set to 0 to disable night cycle (but not
+//= @night GM command)". Com elas em 0 o `pc_init` (src/map/pc.cpp
+//= linha 16149) nao registra temporizador nenhum, entao este NPC
+//= e o UNICO que troca o estado. Ligar as duas coisas ao mesmo
+//= tempo faria os dois relogios brigarem, e o sintoma seria
+//= "amanheceu na hora errada", sem erro em lugar nenhum.
+//=
+//= Os comandos `day` e `night` de script (doc/script_commands.txt)
+//= chamam `map_day_timer`/`map_night_timer` com `data = 1`, que e
+//= o caminho de GM/script - e esse caminho NAO passa pelo
+//= `if (data == 0 && battle_config.day_duration <= 0) return`.
+//= Ou seja: eles funcionam justamente com as duracoes zeradas.
+//= Os dois tambem sao idempotentes (saem cedo se o estado ja e o
+//= pedido), entao chamar `day` de dia nao anuncia nada.
+//===== O relogio e o do SERVIDOR ============================
+//= `OnClock<hhmm>` le a hora LOCAL da maquina do map-server, sem
+//= conversao nenhuma - o mesmo relogio de que o
+//= npc/guerra/horario_da_guerra.txt depende. A maquina de
+//= producao roda em America/Sao_Paulo desde 2026-08-16
+//= (ferramentas/provisiona.sh, passo 0); numa maquina em UTC
+//= amanheceria as 05:00 do Brasil, e a falha seria calada.
+//= A sonda que decide e `ssh <servidor> date`.
+//===== O que o jogador ve ===================================
+//= A tela escurece so nos 277 mapas com o mapflag `nightenabled`
+//= (npc/mapflag/night.txt) - cidades e campos abertos, incluindo
+//= Prontera. Mapa fechado, masmorra e instancia nao escurecem, e
+//= isso e do rAthena, nao daqui: o `pc_daynight_timer_sub`
+//= (src/map/pc.cpp linha 13045) so manda o efeito EFST_SKE para
+//= quem esta num mapa com a flag.
+//=
+//= O anuncio na caixa de chat vem das mensagens 59 e 60 do
+//= map_msg, que em portugues (conf/msg_conf/map_msg_por.conf, via
+//= conf/guerra/map_msg_guerra.conf) sao "Esta anoitecendo." e
+//= "Esta amanhecendo." - e nao as 502/503, que sao as do ciclo
+//= automatico. Quem escolhe qual par sai e o mesmo `data = 1` da
+//= secao acima.
+//===== Ao subir o servidor ==================================
+//= `night_at_start: no` faz todo boot comecar de dia. O `OnInit`
+//= abaixo corrige isso: se o servidor subir as 23h, anoitece na
+//= hora, sem esperar as 20:00 do dia seguinte.
+//===== Como recarregar ======================================
+//= `@reloadscript`. O estado atual (dia ou noite) NAO se perde no
+//= reload - ele mora em `night_flag`, uma variavel do map-server,
+//= e o `OnInit` reavalia a hora e o repoe.
+//============================================================
+
+-	script	Ciclo do Dia::CicloDoDia	-1,{
+OnClock0800:
+	day;
+	end;
+
+OnClock2000:
+	night;
+	end;
+
+// Acerta o estado na subida do servidor e a cada @reloadscript.
+// Dois `if` aninhados em vez de `>= 8 && < 20` de proposito: o
+// `&&` do script do rAthena NAO faz curto-circuito (e o C_LAND,
+// operador de dois numeros), e a casa evita o operador por regra
+// - ver CLAUDE.md secao 5.
+OnInit:
+	.@hora = gettime(DT_HOUR);
+	if (.@hora >= 8) {
+		if (.@hora < 20) {
+			day;
+			end;
+		}
+	}
+	night;
+	end;
+}

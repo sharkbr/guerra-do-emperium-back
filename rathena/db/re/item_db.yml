@@ -93,7 +93,12 @@ Footer:
   - Path: db/re/item_db_usable.yml
   - Path: db/re/item_db_equip.yml
   - Path: db/re/item_db_etc.yml
-  # Guerra do Emperium: unica linha nossa neste arquivo do rAthena. Os
+  # Guerra do Emperium: as duas linhas nossas neste arquivo do rAthena. Os
   # itens proprios ficam todos em db/guerra/item_db.yml - nao em
   # db/import/, que o .gitignore do rAthena ignora.
   - Path: db/guerra/item_db.yml
+  # A segunda poe `Buy: 1` em todo item das lojas de Prontera, para que
+  # revender nao gere zeny (decisao de 2026-08-17). Vem DEPOIS da linha
+  # acima de proposito: preco de item de vitrine e decidido aqui, nao la.
+  # ARQUIVO GERADO - ferramentas/zera_revenda_das_lojas.py.
+  - Path: db/guerra/item_db_lojas.yml

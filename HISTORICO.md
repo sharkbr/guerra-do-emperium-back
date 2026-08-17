@@ -10398,3 +10398,138 @@ deploy com alguém online"*. Os quatro serviços reiniciaram entre 00:59:39 e
 O `char_name_option: 1` estar lido é o que fecha a dívida do lado do servidor;
 **a outra metade é de tela** e foi para a `PENDENCIAS.md` §1 — criar um
 personagem com `*` ou `-` no nome e ver o servidor aceitar.
+
+---
+
+## Três pedidos: o zeny infinito, o relógio do mundo e o Evento de Refino (2026-08-17)
+
+Três pedidos numa mensagem só, e nenhum deles onde parecia estar. Os três são
+**servidor** — `npc/`, `db/` e nada de cliente —, então vão inteiros pelo
+`implanta.sh` (`RECEITAS.md` §0).
+
+### 1. "Itens das lojas de Prontera devem ter valor 1 zeny"
+
+O pedido veio com a justificativa junto: *"pra evitar criação de dinheiro
+infinito"*. **E as lojas já estavam a 1 zeny** — o pedido, lido ao pé da letra,
+era um não-fazer-nada que não resolveria o que ele queria resolver.
+
+O que a medição mostrou é que **o dinheiro infinito nunca esteve na vitrine**.
+Está na revenda: comprar por 1 zeny e revender em **qualquer** NPC pelo `Sell`
+do `item_db`, que vale `Buy/2` quando o item não declara o campo. Varridas as
+22 lojas dos três mercados, **918 dos 1603 itens davam lucro por clique**, e
+três não eram os 9 zeny de sempre:
+
+| id | item | loja | vitrine | revenda | lucro/clique |
+|---|---|---|---|---|---|
+| 19446 | Tapa-Olho Ferido | Ocleiro | 1 z | 1.000.000 z | **999.999** |
+| 500009 | Cópia de Gram | Senhor das Armas | 1 z | 250.000 z | 249.999 |
+| 2204 | Óculos_ | Ocleiro | 1 z | 2.000 z | 1.999 |
+
+O Tapa-Olho estava no ar desde que entrou. **A regra 4.16 de 2026-08-12 não o
+tinha pego porque ela só olhava para item ENTRANDO** — "todo item *a partir de
+agora* que tiver valor de venda". Ele já estava dentro.
+
+Com o número na mão, a decisão do dono foi `Buy: 1` por override — a saída que
+o cabeçalho do `mercado_contemporaneo.txt` tinha **considerado e recusado** cinco
+dias antes, porque ela alcança toda cópia do item no servidor, inclusive a que o
+jogador caçou. Em 2026-08-17 a resposta foi a contrária, e a §4.16 do
+`CLAUDE.md` foi reescrita: **a regra do "vende pelo `Buy`" está revogada**, e o
+Elmo de Aegir (18728) voltou de 200.000 para 1 zeny com as outras cinco peças
+que estavam fora.
+
+**Só o `Buy` é declarado, e o `Sell` cai junto** — não por sorte, por causa de
+uma atribuição: o `hasPriceValue[item->nameid] = { has_buy, has_sell }` do
+`ItemDatabase::parseBodyNode` é sobrescrito por quem falar por último, então o
+nosso arquivo apaga o `Sell` explícito que o `db/re/` tenha declarado, e o
+`value_sell = value_buy / 2` do fim do carregamento dá **0**.
+
+**A Tranqueiras ficou de fora, e foi a segunda coisa que a medição mudou.** Ela
+tinha sido incluída no escopo e a medição a tirou: é a única das 22 lojas com
+lucro por clique **zero**, justamente porque vende a `-1` (o `Buy` do item) — a
+saída que ela mesma estreou em 2026-08-12. `Buy: 1` nela não fecharia buraco
+nenhum e abriria outro: o **Ouro (969) cairia de 150.000 para 1 zeny**, e com
+ele as dez receitas de Runa e os 29 ingredientes da alquimia. Levado ao dono
+com os números, ele a tirou do escopo.
+
+A trava é `ferramentas/zera_revenda_das_lojas.py`, que gera
+`db/guerra/item_db_lojas.yml` a partir das próprias linhas de `shop` — e cujo
+`--conferir` mede o lucro loja a loja. **Não é o cabeçalho que garante isso**
+(§4.11: comentário não é trava). O acoplamento está no `ARQUITETURA.md` §4.
+
+De quebra, **os avisos de `discounted buying price` sumiram da subida**. Eram
+um por item nas cartas e treze nos visuais; o teste é
+`value*0.75 < value_sell*1.24`, e com a revenda em 0 o lado direito zera.
+
+### 2. Amanhece às 08:00, anoitece às 20:00
+
+Pedido como 06/18 e alongado para 08/20 pelo dono antes de qualquer linha ser
+escrita — doze horas de cada.
+
+**Não dá para fazer por configuração.** O `day_duration`/`night_duration` do
+rAthena é ciclo por **duração em milissegundos**, contado a partir do boot:
+servidor reiniciado às 14:37 amanheceria às 14:37 mais a sobra do ciclo, num
+horário diferente a cada reinício. Os dois já estavam em 0, e ficaram — com
+eles em 0 o `pc_init` não registra temporizador nenhum, e o NPC vira a única
+fonte do estado. Ligar as duas coisas junto faria dois relógios brigarem, com
+o sintoma "amanheceu na hora errada" e nada no log.
+
+`npc/guerra/ciclo_do_dia.txt`, NPC flutuante com `OnClock0800`/`OnClock2000` e
+um `OnInit` que acerta o estado na subida (`night_at_start: no` faz todo boot
+começar de dia). Os comandos `day`/`night` de script chamam
+`map_day_timer`/`map_night_timer` com `data = 1`, que é o caminho de GM — e
+esse caminho **não** passa pelo `if (data == 0 && duration <= 0) return`, ou
+seja funcionam justamente com as durações zeradas.
+
+Duas coisas que caíram de graça: o anúncio sai pelas mensagens **59/60** do
+`map_msg` (o par de GM), que em português já eram *"Está anoitecendo."* e
+*"Está amanhecendo."* — melhores para um ciclo agendado que as 502/503 do
+ciclo automático; e escurece só os **277 mapas** com o mapflag `nightenabled`,
+cidade e campo aberto, Prontera inclusa.
+
+**Depende do relógio da máquina**, como o `horario_da_guerra.txt` — a de
+produção roda em `America/Sao_Paulo` desde 2026-08-16.
+
+### 3. O Evento de Refino
+
+O pedido veio com duas capturas do browiki
+(`arquivo.browiki.org/wiki/Refinamento#Evento_de_Refino`, servidor Valhalla),
+cada uma com as tabelas "fora do Evento" e "dentro do Evento".
+
+**A primeira descoberta é que o `db/re/refine.yml` do rAthena JÁ É a tabela
+"fora do Evento"** — conferido coluna a coluna, e bate em `Arma nv. 1` a
+`nv. 4`, `Armadura` e `E. Sombrio`, com um ponto percentual de diferença só no
++10 (o rAthena é 9%/19% onde o browiki arredonda para 10%/20%). Isso resolveu o
+mapeamento sozinho:
+
+| coluna do browiki | rAthena |
+|---|---|
+| Arma nv. 1 a 4 | `Weapon` níveis 1 a 4 |
+| Armadura | `Armor` nível 1 |
+| E. Sombrio | `Shadow_Armor` e `Shadow_Weapon` |
+| Minérios Comuns | `Type: Normal` |
+| Minérios Especiais até +10 | `Type: Enriched` (o Refinado) |
+| Minérios Especiais acima de +10 | `Type: HD` |
+
+A última linha é a única que exigiu decisão: acima do +10 **não existe minério
+Refinado**, então a coluna "especiais" só pode ser o HD — e o próprio rAthena já
+o trata assim no tier Etel (`Armor` nível 2 e `Weapon` nível 5), onde o HD tem
+taxa melhor que o comum. **O HD até o +10 ficou de fora de propósito:** dar a
+ele a coluna dos especiais o deixaria idêntico ao Refinado em taxa e melhor em
+penalidade (HD não quebra, só cai um nível), o que apagaria o Refinado do jogo.
+
+`db/guerra/refine_evento.yml`, gerado, **176 taxas subiram** em 9 combinações
+grupo/nível. O gerador aborta se alguma taxa do evento for **menor** que a de
+hoje — nenhuma era. Só a taxa é tocada: preço, minério, chance de quebrar e
+níveis perdidos vêm mesclados campo a campo do arquivo original
+(`RefineDatabase::parseBodyNode`).
+
+**Ligar e desligar custa um reinício**, e é uma linha: o
+`- Path: db/guerra/refine_evento.yml` no rodapé de `db/refine.yml`. Não há
+`@reloadrefinedb` — o `refine_db` só é lido no boot.
+
+Duas ressalvas registradas: o **teto de refino do servidor é +16**
+(`refino_teto` em `conf/guerra/battle_guerra.txt`), então as linhas de +17 a
++20 estão escritas por inteireza da tabela e hoje não são alcançáveis; e o
+tier **Etel** (`Armor` 2, `Weapon` 5), que o browiki não tem coluna para,
+recebeu as colunas `Armadura` e `Arma nv. 4` — 1.066 itens do `item_db` estão
+nele.

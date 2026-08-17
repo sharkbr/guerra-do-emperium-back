@@ -15,8 +15,9 @@
 # `Chances` preserva as chances do arquivo original, inteiras.
 #
 # Por isso nao ha uma linha de taxa aqui, e nao deve haver: taxa de refino se
-# mexe em db/re/refine.yml ou em db/import/refine.yml, nunca neste arquivo,
-# que existe para um assunto so.
+# mexe em db/guerra/refine_evento.yml (o Evento de Refino, ligado em
+# 2026-08-17), em db/re/refine.yml ou em db/import/refine.yml, nunca neste
+# arquivo, que existe para um assunto so.
 #
 # ------------------------------------------------------------------ por que
 #

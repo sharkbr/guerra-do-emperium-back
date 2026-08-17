@@ -1,0 +1,717 @@
+###########################################################################
+# Guerra do Emperium - EVENTO DE REFINO
+#
+# Este arquivo e VERSIONADO e vale para qualquer clone do repo. Ele e
+# importado por db/refine.yml, depois de db/guerra/refine.yml e antes de
+# db/import/refine.yml.
+#
+# ------------------------------------------------------------- o que ele e
+#
+# As chances "dentro do Evento" do Evento de Refino, pedidas pelo dono em
+# 2026-08-17 a partir das tabelas do browiki
+# (arquivo.browiki.org/wiki/Refinamento#Evento_de_Refino, servidor
+# Valhalla), enviadas em dois screenshots.
+#
+# ARQUIVO GERADO. Editar a mao funciona, mas a proxima geracao apaga - a
+# tabela de origem esta no cabecalho abaixo, em porcentagem.
+#
+# ---------------------------------------------------------- COMO DESLIGAR
+#
+# Comentar a linha `- Path: db/guerra/refine_evento.yml` no rodape de
+# db/refine.yml e REINICIAR o map-server. Nao ha `@reloadrefinedb`: o
+# refine_db so e lido no boot.
+#
+# Enquanto a linha estiver la, o evento esta LIGADO o tempo todo. Nao ha
+# horario nem interruptor em jogo - o rAthena nao tem conceito de "evento"
+# no refino, a tabela e uma so e vale para sempre.
+#
+# ------------------------------------------------ o que muda, e o que nao
+#
+# O db/re/refine.yml do rAthena e, tirando um ponto percentual aqui e ali
+# no +10, EXATAMENTE a tabela "fora do Evento" do browiki - conferido
+# coluna a coluna em 2026-08-17. Por isso este arquivo so precisa escrever
+# a DIFERENCA entre as duas tabelas:
+#
+#   MINERIO COMUM  (Type: Normal)    - so +11 a +20 mudam. De +1 a +10 as
+#                                      duas tabelas do browiki sao iguais.
+#   MINERIO ESPECIAL ate +10         - o Refinado (Type: Enriched), +5 a
+#                                      +10.
+#   MINERIO ESPECIAL acima de +10    - o HD (Type: HD), +11 a +20. Acima
+#                                      do +10 nao existe minerio Refinado,
+#                                      entao a coluna "especiais" do
+#                                      browiki so pode ser o HD - e o
+#                                      proprio rAthena ja o trata assim no
+#                                      tier Etel, onde o HD tem taxa
+#                                      melhor que o comum.
+#
+# O QUE FICOU DE FORA, e de proposito: o HD ate +10. No rAthena ele repete
+# a taxa do minerio comum, e o browiki nao tem coluna que separe os dois
+# ali. Mudar isso deixaria o HD identico ao Refinado em taxa e melhor em
+# penalidade (o HD nao quebra, so cai um nivel), o que apagaria o Refinado
+# do jogo. Se um dia a decisao mudar, e uma linha no gerador.
+#
+# NADA ALEM DA TAXA E TOCADO. O leitor de YAML do rAthena mescla campo a
+# campo dentro de cada `Chances` (RefineDatabase::parseBodyNode,
+# src/map/status.cpp): omitir `Price`, `Material`, `BreakingRate` e
+# `DowngradeAmount` preserva os do arquivo original, inteiros. Preco,
+# minerio, chance de quebrar e quantos niveis se perde continuam os
+# mesmos - o evento so mexe em acertar.
+#
+# ------------------------------------------------------ o teto de refino
+#
+# `refino_teto: 16` em conf/guerra/battle_guerra.txt: a janela de refino
+# nao passa do +16. As linhas de +17 a +20 abaixo estao escritas por
+# inteireza da tabela, e hoje nao sao alcancaveis por jogador.
+#
+# ------------------------------------------ o Aben (Bencao do Ferreiro)
+#
+# O `BlacksmithBlessingAmount` NAO esta aqui - ele mora em
+# db/guerra/refine.yml, que existe para aquele assunto so. O evento nao
+# muda quantas bencaos cada nivel pede.
+#
+# --------------------------------------------------- COMO RECARREGAR
+#
+# Nao tem comando @. REINICIAR O MAP-SERVER; login e char podem ficar de
+# pe.
+###########################################################################
+#
+# A TABELA DE ORIGEM, em porcentagem (browiki, "dentro do Evento"):
+#
+#   MINERIOS COMUNS            MINERIOS ESPECIAIS
+#   ref  A1  A2  A3  A4 Arm    ref  A1  A2  A3  A4 Arm  Somb
+#   +5     -   -   -   -   -   +5   100 100 100  95  95  95
+#   +6     -   -   -   -   -   +6   100 100  95  80  80  80
+#   +7     -   -   -   -   -   +7   100  95  90  80  80  80
+#   +8     -   -   -   -   -   +8    95  85  70  60  60  60
+#   +9     -   -   -   -   -   +9    85  60  60  50  50  50
+#   +10    -   -   -   -   -   +10   55  45  45  35  35  35
+#   +11   40  40  35  20  20   +11   40  40  40  20  20   -
+#   +12   40  40  35  20  20   +12   40  40  40  20  20   -
+#   +13   35  35  30  16  16   +13   35  35  35  16  16   -
+#   +14   35  35  30  16  16   +14   35  35  35  16  16   -
+#   +15   30  30  25  15  15   +15   30  30  30  15  15   -
+#   +16   30  30  25  15  15   +16   30  30  30  15  15   -
+#   +17   20  20  20  14  14   +17   20  20  20  14  14   -
+#   +18   20  20  20  14  14   +18   20  20  20  14  14   -
+#   +19   15  15  15  10  10   +19   15  15  15  10  10   -
+#   +20   15  15  15  10  10   +20   15  15  15  10  10   -
+#
+###########################################################################
+
+Header:
+  Type: REFINE_DB
+  Version: 2
+
+Body:
+  - Group: Weapon
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 8500
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 5500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 4000
+              - Type: HD
+                Rate: 4000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 4000
+              - Type: HD
+                Rate: 4000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 3500
+              - Type: HD
+                Rate: 3500
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 3500
+              - Type: HD
+                Rate: 3500
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 3000
+              - Type: HD
+                Rate: 3000
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 3000
+              - Type: HD
+                Rate: 3000
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+  - Group: Weapon
+    Levels:
+      - Level: 2
+        RefineLevels:
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 8500
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 4500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 4000
+              - Type: HD
+                Rate: 4000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 4000
+              - Type: HD
+                Rate: 4000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 3500
+              - Type: HD
+                Rate: 3500
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 3500
+              - Type: HD
+                Rate: 3500
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 3000
+              - Type: HD
+                Rate: 3000
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 3000
+              - Type: HD
+                Rate: 3000
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+  - Group: Weapon
+    Levels:
+      - Level: 3
+        RefineLevels:
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 9000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 7000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 4500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 3500
+              - Type: HD
+                Rate: 4000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 3500
+              - Type: HD
+                Rate: 4000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 3000
+              - Type: HD
+                Rate: 3500
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 3000
+              - Type: HD
+                Rate: 3500
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 2500
+              - Type: HD
+                Rate: 3000
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 2500
+              - Type: HD
+                Rate: 3000
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+  - Group: Weapon
+    Levels:
+      - Level: 4
+        RefineLevels:
+          - Level: 5
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 5000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 3500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 19
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+          - Level: 20
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+  - Group: Weapon
+    Levels:
+      - Level: 5
+        RefineLevels:
+          - Level: 5
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 5000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 3500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 19
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+          - Level: 20
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+  - Group: Armor
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 5
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 5000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 3500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 19
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+          - Level: 20
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+  - Group: Armor
+    Levels:
+      - Level: 2
+        RefineLevels:
+          - Level: 5
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 5000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 3500
+          - Level: 11
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 12
+            Chances:
+              - Type: Normal
+                Rate: 2000
+              - Type: HD
+                Rate: 2000
+          - Level: 13
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 14
+            Chances:
+              - Type: Normal
+                Rate: 1600
+              - Type: HD
+                Rate: 1600
+          - Level: 15
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 16
+            Chances:
+              - Type: Normal
+                Rate: 1500
+              - Type: HD
+                Rate: 1500
+          - Level: 17
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 18
+            Chances:
+              - Type: Normal
+                Rate: 1400
+              - Type: HD
+                Rate: 1400
+          - Level: 19
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+          - Level: 20
+            Chances:
+              - Type: Normal
+                Rate: 1000
+              - Type: HD
+                Rate: 1000
+  - Group: Shadow_Armor
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 5
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 5000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 3500
+  - Group: Shadow_Weapon
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 5
+            Chances:
+              - Type: Enriched
+                Rate: 9500
+          - Level: 6
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 7
+            Chances:
+              - Type: Enriched
+                Rate: 8000
+          - Level: 8
+            Chances:
+              - Type: Enriched
+                Rate: 6000
+          - Level: 9
+            Chances:
+              - Type: Enriched
+                Rate: 5000
+          - Level: 10
+            Chances:
+              - Type: Enriched
+                Rate: 3500

@@ -77,6 +77,17 @@ Exemplos prontos: `armazem_do_cla.txt` (move e renomeia), `portais_do_navio.txt`
 
 Mais a entrada em `db/guerra/item_db.yml` (à mão) e a linha na loja.
 
+**E, se a linha for numa loja de Prontera, um oitavo passo:**
+
+```
+8. python zera_revenda_das_lojas.py            # põe o `Buy: 1` do item novo
+   python zera_revenda_das_lojas.py --conferir # tem que dizer OK
+```
+
+Sem ele o item nasce com o `Buy` do `item_db` e passa a render `Buy/2` por
+clique em qualquer NPC do mundo — **calado**: a loja sobe, vende, e o log não
+reclama. Ver `CLAUDE.md` §4.16.
+
 **Por que a ordem:**
 - **1-2 antes de 3-5** — o validador lê o `identifiedResourceName` do
   `itemInfo.lua`. Sem entrada ele nem sabe que arquivo procurar e responde "não

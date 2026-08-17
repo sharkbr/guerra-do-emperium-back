@@ -116,6 +116,7 @@ outras **quebra calado**.
 | 4 | `accessoryid.lub` + `accname.lub` | o slot de visual, **se for de cabeça e novo** | `estende_accessoryid.py` |
 | 4b | `spriterobeid.lub` + `spriterobename.lub` | o slot de manto — **reaproveitando** um dos 40 slots ≤120 sem arte; o cliente ignora acima disso | `estende_robeid.py` |
 | 5 | `npc/guerra/mercado_*.txt` | a loja que vende | à mão / gerador |
+| 5b | `db/guerra/item_db_lojas.yml` | o `Buy: 1` que zera a revenda, **se entrou numa vitrine de Prontera** | `zera_revenda_das_lojas.py` |
 | 6 | `db/guerra/item_combos.yml` | o conjunto, se fizer parte de um | à mão |
 
 **A ordem entre 2, 3 e 4 não é intuitiva e erra em silêncio** — ver `RECEITAS.md`.
@@ -154,6 +155,31 @@ que pasta copiar depois que a tabela conhece o slot.
 
 **Nem todo `Costume_Garment` usa 3b:** peça sem `View` (a Aura Nevada, 480097) é
 só um `hateffect` no `Script` do item — efeito de tela, sem desenho vestido.
+
+### Um item numa vitrine de Prontera vive em 2 lugares, e o segundo é gerado
+
+| # | Onde | O que decide |
+|---|---|---|
+| 1 | a linha `-\tshop\t…` em `npc/guerra/mercado_*.txt` | quanto ele **custa** — 1 zeny |
+| 2 | `db/guerra/item_db_lojas.yml` | quanto ele **rende revendido** — `Buy: 1`, logo 0 |
+
+As duas metades são o mesmo preço visto de lados opostos, e **só a primeira é
+escrita à mão**. A segunda é gerada por `ferramentas/zera_revenda_das_lojas.py`,
+que lê exatamente as linhas de `shop` dos três mercados.
+
+**Pôr o item na loja e não rodar o script falha em silêncio, e o sintoma é
+econômico, não técnico:** a loja sobe, vende, o log não reclama, e o item passa
+a render `Buy/2` a cada clique em qualquer NPC do mundo. Foi assim que o
+Tapa-Olho Ferido (19446) ficou valendo **999.999 zeny por clique** desde que
+entrou no Ocleiro até 2026-08-17, quando a varredura o encontrou.
+
+`zera_revenda_das_lojas.py --conferir` compara as duas metades e sai com erro
+se alguma discordar. É a trava — não o comentário no cabeçalho da loja
+(`CLAUDE.md` §4.11).
+
+**A Tranqueiras não entra nisto.** Ela vende a `-1`, ou seja pelo `Buy` do
+próprio `item_db`, e é por isso que as duas metades dela nunca podem divergir:
+são o mesmo número. Ver `CLAUDE.md` §4.16.
 
 ### Uma loja de troca (`barter`) vive em 3 lugares, e o cliente é um deles
 
