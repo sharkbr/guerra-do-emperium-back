@@ -1673,6 +1673,151 @@ Body:
          bonus2 bSubRace,RC_Player_Doram,13;
       }
 
+# -------------------------------------------------------------------------
+# QUARTA LEVA DE PLACEHOLDERS - 2026-08-16
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das tres de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub` (`estado_item.py --id <n> --descricao`).
+#
+# Os dois vieram do pedido de 2026-08-16 para as lojas de Prontera. Dos 48
+# itens daquela lista estes foram os UNICOS dois que faltavam no servidor -
+# os outros 46 o vendor ja tinha, e o trabalho neles foi so de cliente.
+
+  - Id: 490497
+    # Luvas de Somatologia. Acessorio ESQUERDO e SEM COVA - o pedido as
+    # listou sem "[1]" e a descricao do bRO confirma as duas coisas
+    # ("Tipo: Aces. Esquerdo", e nenhuma cova no iteminfo).
+    #
+    # O `AegisName` E O UNICO CAMPO DESTA ENTRADA QUE E PALPITE, pelo mesmo
+    # motivo do Album de Cartas de Taro (600, mais abaixo): o AegisName
+    # oficial nao esta em tabela nenhuma que alcancamos - o itemInfo.lua
+    # guarda nome, descricao e recurso, nunca AegisName. Este foi derivado do
+    # nome do item. Todo o resto sai da descricao do bRO, por extenso.
+    AegisName: Somatology_Glove
+    Name: "Luvas de Somatologia"
+    Type: Armor
+    # "Peso: 20" na tela. O campo e em decimos - a mesma conta do Album de
+    # Cartas de Taro e do Rolinho de Arroz.
+    Weight: 200
+    # Sem `Defense:` de proposito: a descricao diz "DEF: 0 DEFM: 0", que e o
+    # padrao do campo. Escrever 0 nao muda nada e sugere que houve escolha.
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    # "Classes: Todas" - sem `Jobs:`, que ja e o padrao.
+    #
+    # AS TRES LINHAS DE COBAIA SAO O `RC2_BIOLAB`, e isso foi conferido e nao
+    # suposto. A descricao lista as 20 cobaias por nome ("Wickebine Tres,
+    # Errende Ebecee, Laurell Weinder... Trentini e Celia Alde Alfa"), e o
+    # grupo `Biolab` do db/re/mob_db.yml tem exatamente esses 51 monstros
+    # (as tres versoes de cada um dos Lordes, mais a turma do Bio5). Nao ha
+    # raca "Cobaia" no rAthena; o que existe e o RC2, que e grupo de monstro,
+    # e e ele que a descricao esta descrevendo.
+    #
+    # "Dano fisico E magico contra Cobaias +20%" sao DOIS bonus, nao um: o
+    # `bAddRace2` so alcanca o fisico. Quem esquece o `bMagicAddRace2` entrega
+    # metade do efeito, calado.
+    #
+    # [Para Lighthalzen] e a `ALL_LIGHTHALZEN_RECALL` ("Return To Lighthalzen",
+    # skill_db.yml). Nenhum item do rAthena a concede - a forma abaixo e a que
+    # os itens dele usam para AL_TELEPORT e ALL_ODINS_POWER.
+    Script: |
+      skill "ALL_LIGHTHALZEN_RECALL",1;
+      bonus2 bSubRace2,RC2_BIOLAB,30;
+      bonus2 bAddRace2,RC2_BIOLAB,20;
+      bonus2 bMagicAddRace2,RC2_BIOLAB,20;
+    # TODO os OITO conjuntos. A descricao do bRO traz [Garra Celeste]+[Garra
+    #      Escarlate], [Sectora Final], [Cruz Sangrenta], [Lanca Canhao],
+    #      [Livro de Feiticos do Frio], [Lanca Gigante] e [Bata de Operacao
+    #      Verde]. Nenhuma dessas pecas esta em loja nossa, e conjunto pela
+    #      metade da bonus fantasma - a mesma razao das outras tres levas.
+
+  - Id: 28739
+    # Lacma. ATENCAO: ESTE ITEM JA EXISTE NO NOSSO rAthena, com OUTRO ID -
+    # e o 13049, `AegisName: Lacma`, com script escrito por eles e os mesmos
+    # ATQ 45 / peso 650 / nivel de arma 3 / uma cova.
+    #
+    # E ainda assim quem entra na loja e ESTE, e a razao e a regra 4.2: o
+    # 13049 aparece no itemInfo.lua deste cliente com o nome COREANO
+    # (a entrada dele no bRO tambem, e sem descricao nenhuma). O 28739 e a
+    # reedicao traduzida - "Lacma", com a descricao inteira em portugues.
+    # Item sem nome em portugues nao entra em loja, e o 13049 nao tem.
+    #
+    # ONDE OS DOIS DISCORDAM, e vale saber antes de trocar um pelo outro: o
+    # script do 13049 da o bonus de tamanho no FISICO E NO MAGICO (8% e 20%)
+    # e sorteia o NoSizeFix por `autobonus` a 1%; a descricao do 28739 diz
+    # so fisico (10% e mais 20%) e 2% de chance. Seguimos a descricao, que e
+    # a fonte destas levas - e a mesma decisao de sempre: o numero vem do bRO.
+    AegisName: Lacma_R
+    Name: "Lacma"
+    Type: Weapon
+    SubType: Dagger
+    # `Buy: 20` copiado do 13049, e nao inventado. Pela regra 4.16 e ele que
+    # decide o preco na vitrine: o Senhor das Armas cobra 20 zeny por esta
+    # adaga, nao 1.
+    Buy: 20
+    Weight: 650
+    Attack: 45
+    Range: 1
+    Slots: 1
+    # A mesma lista do 13049, que e a leitura do rAthena para "Aprendizes,
+    # Espadachins, Arqueiros, Gatunos, Mercadores, Ninjas, Magos,
+    # Espiritualistas e evolucoes" da descricao.
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 1
+    Refineable: true
+    # Tambem do 13049. A descricao do 28739 nao traz a linha "Intransferivel"
+    # que a Moeda Nova e a Caveira Humana trazem, mas aqui nao se esta lendo
+    # so a descricao: o proprio rAthena ja decidiu isso para este item, e
+    # afrouxar seria a decisao, nao manter.
+    Trade:
+      NoDrop: true
+    Script: |
+      .@r = getrefine();
+      bonus bSPDrainValue,2;
+      bonus bBaseAtk,(.@r/3)*40;
+      bonus bMatk,(.@r/3)*40;
+      if (.@r>=6)
+         bonus2 bAddSize,Size_Medium,10;
+      if (.@r>=9)
+         bonus2 bAddSize,Size_Medium,20;
+      if (.@r>=12)
+         bonus bNoSizeFix;
+    # TODO efeito nao implementado: "Refino +6 ou mais: ao realizar ataques
+    #      fisicos, 2% de chance de [Anular a penalidade de tamanho da arma]
+    #      por 5 segundos." O 13049 resolve isso com
+    #      `autobonus "{ bonus bNoSizeFix; }",10,5000;` - 1%, nao 2%. Copiar
+    #      trocando 10 por 20 fecharia o buraco; ficou de fora porque o
+    #      `autobonus` sobre um bonus permanente que a MESMA arma ja concede
+    #      a partir do +12 precisa de conferencia em jogo, e chutar aqui e o
+    #      que a regra 4.17 manda nao fazer.
+
 # =========================================================================
 # OVERRIDES - 2026-08-02
 # =========================================================================
@@ -1968,6 +2113,28 @@ Body:
     Name: "Lanca de Valquiria"
     # slot 154 (C_Valkyrie_Spear) -> 29, que era ROBE_2018_RTC_Cape1_TW e nao tem arte aqui
     View: 29
+
+  # AS DUAS DE 2026-08-16 SAO CAPA DE STATUS, e nao cosmetico - as primeiras
+  # desta lista que nao vem do Manteleiro. Elas entraram no CAPEIRO do
+  # mercado contemporaneo, porque o `Locations:` delas e `Garment` com cova,
+  # Defense, peso e refino (regra 4.14). O teto de 120 nao pergunta se a capa
+  # e de visual ou de status: as duas nasceram com slot acima dele e as duas
+  # precisaram de doador, pelo mesmo caminho das dez de cima.
+  #
+  # Os doadores sao os dois menores slots livres que sobravam (dos 39 sem arte
+  # neste cliente, 9 ja estavam reaproveitados). Depois destas duas sobram 28.
+
+  - Id: 480278
+    AegisName: Huse_Luk_R_Wing
+    Name: "Asas de Garuda"
+    # slot 160 (Huse_Luk_R_Wing) -> 11, que era ROBE_MechanicWing e nao tem arte aqui
+    View: 11
+
+  - Id: 480446
+    AegisName: Moonlight_Bell_TH
+    Name: "Som do Luar"
+    # slot 165 (C_Moonlight_Bell) -> 15, que era ROBE_Cupid_Wing_Skyblue e nao tem arte aqui
+    View: 15
 
   - Id: 15854
     # Cachecol Glorioso. O nosso rAthena poe este visual em

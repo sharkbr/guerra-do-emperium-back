@@ -475,7 +475,12 @@ OnInit:
 // cliente aceita, 40 nao tem arte nenhuma aqui e ja nao desenhavam
 // coisa alguma. O de-para esta no `View:` do db/guerra/item_db.yml,
 // e so la: o ferramentas/estende_robeid.py LE de la e escreve a
-// tabela do cliente para combinar. Sobram 31 doadores.
+// tabela do cliente para combinar. Sobravam 31 doadores depois
+// desta rodada; hoje sobram 28. Os outros dois foram gastos em
+// 2026-08-16 por duas capas de STATUS do Capeiro (Som do Luar e
+// Asas de Garuda, mercado_contemporaneo.txt) - o teto de 120 nao
+// pergunta se a capa e cosmetica, entao a reserva de doadores e
+// COMPARTILHADA entre as duas lojas.
 //
 //   Capa de Heroi            slot 122 -> 41
 //   Guitarra de Deviling         125 -> 49

@@ -544,7 +544,10 @@ Produziram diagnóstico falso e custaram retrabalho:
   leu, e nada mudou. É teto do exe. Enquanto ele não for levantado (patch de
   exe, ver `PENDENCIAS.md` §4), manto novo entra **reaproveitando** um dos 40
   slots ≤120 que não têm arte neste cliente — `ferramentas/estende_robeid.py`,
-  com o de-para no `View:` do `db/guerra/item_db.yml`. Sobram 31.
+  com o de-para no `View:` do `db/guerra/item_db.yml`. Sobram 28.
+  **E não é só manto cosmético:** capa de STATUS (`Garment`) com `View` cai no
+  mesmo teto e gasta doador igual — foi o que a Som do Luar e as Asas de Garuda
+  mostraram em 2026-08-16, no Capeiro.
 - **Rótulo de aba da janela de habilidades é escrito na VERTICAL: o
   comprimento gasta altura, não largura — e some com as abas de baixo.** As
   nove abas do `skilltreeview.lub` empilham uma letra por linha (~13px cada) e
@@ -1196,6 +1199,23 @@ Produziram diagnóstico falso e custaram retrabalho:
   sair. A mensagem fala em `CreateBucket` e manda procurar defeito na
   credencial, que está certa. A saída é `--s3-no-check-bucket` (ou
   `RCLONE_CONFIG_<remoto>_NO_CHECK_BUCKET=true`).
+- **`valida_visual.le_item_db` devolve uma LISTA CHATA com o item DUAS vezes**,
+  uma por arquivo — e nem a primeira nem a última é a resposta certa. Ele recebe
+  os dois `item_db` (o `db/re/` e o nosso `db/guerra/`) e emite um registro por
+  bloco; **a primeira é a do rAthena** (o `View` original, o `Type`, os
+  `Locations` completos) e **a última é o nosso override** (que, sendo bloco
+  parcial de YAML, só tem os campos que a gente declarou). Quem pega a primeira
+  ignora a decisão que o servidor de fato usa — o `Footer: Imports:` faz o nosso
+  arquivo vencer; quem pega a última perde tudo o que o override não repetiu.
+  As duas leituras erradas estão em uso hoje: `instala_manto.py` pegava a
+  primeira (corrigido em 2026-08-16, com mescla campo a campo) e
+  `instala_visual.py` e `estende_accessoryid.py` montam um `dict` por
+  compreensão, que fica com a última. São **16 itens** hoje, medidos: com o
+  `dict`, o Cachecol Glorioso (15854) perde o `Type` e o `View: 2079` do
+  `db/re/` e passa a **não parecer chapéu** — os 4 arquivos de arte de cabeça
+  dele seriam pulados, calados.
+  A leitura certa é **mesclar**, com o campo que o override declarou vencendo e
+  o resto vindo do rAthena; ver `instala_manto.item_de`. Ver `PENDENCIAS.md` §1v.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

@@ -737,6 +737,59 @@ Body:
             Item: Moeda_Nova
             Amount: 1
 
+      # ----- OS CINCO DE 2026-08-16 -----------------------------------
+      #
+      # A loja foi de quatro para nove, e a divisao de preco que ja
+      # existia foi mantida a pedido do dono: CUBO custa 2 Moedas Novas,
+      # COMBINADOR custa 1. Nao e arbitrario - o cubo e que carrega o
+      # sorteio (ver o cabecalho da maquina), e o combinador e insumo.
+      #
+      # Os cinco foram conferidos no `estado_item.py` antes de entrarem:
+      # os cinco existem no db/re/item_db_usable.yml, os cinco tem nome
+      # em portugues no itemInfo.lua DESTE cliente e os cinco tem arte
+      # 4 de 4. Nada foi criado no db/ nem copiado para o cliente.
+      #
+      # A conferencia do itemInfo.lua nao e zelo: o pacote do barter leva
+      # so o ID (clif.cpp:23225), entao quem desenha o nome de cada linha
+      # da janela e o CLIENTE. Nome errado aqui nao se conserta no
+      # item_db - regra 4.9, e o contrario do que vale na maquina irma.
+      #
+      # O pedido trazia um SEXTO item, o Anel do Viajante [1] (490193),
+      # que saiu daqui por decisao do dono em 2026-08-16: e acessorio de
+      # equipar, nao peca Sombria, e teria sido a unica coisa vestivel
+      # entre nove consumiveis. Ele entrou no Acessorista do mercado
+      # contemporaneo, a 1 zeny, e so la.
+      - Index: 4
+        Item: S_Temp2_Cube               # 101046 Cubo Sombrio da Tempeste
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+      - Index: 5
+        Item: S_Pene2_Cube               # 101044 Cubo Sombrio da Penetracao
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+      - Index: 6
+        Item: Class_Shadow_Cube          # 23115 Cubo Sombrio de Classe
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 2
+      - Index: 7
+        Item: FullTempShadow_Mix         # 100596 Combinador Tempestivo
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+      - Index: 8
+        Item: FullPeneShadow_Mix         # 100572 Combinador Penetrante
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
   # =====================================================================
   # A loja da Maquina Especial - Sala Secreta da Ordem, prt_in
   # =====================================================================

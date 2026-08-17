@@ -59,8 +59,10 @@ A saída foi **reaproveitar slot morto**. Dos 120 que o cliente aceita, 40 não
 têm arte nenhuma aqui e já não desenhavam nada; nove deles receberam a arte
 dos nove mantos novos. A coluna `slot` da lista do Manteleiro diz qual peça
 usa qual, e o de-para mora num lugar só: o `View:` do
-`db/guerra/item_db.yml`. **Sobram 31** — depois disso, ou sai um patch de exe
-(`PENDENCIAS.md` §4), ou não entra manto novo.
+`db/guerra/item_db.yml`. Sobravam 31 depois daquele dia; **hoje sobram 28** —
+duas capas de status gastaram um doador cada em 2026-08-16 (elas não estão
+neste catálogo, ver a rodada daquele dia mais abaixo). Depois disso, ou sai um
+patch de exe (`PENDENCIAS.md` §4), ou não entra manto novo.
 
 **Uma peça mudou de loja no mesmo dia.** A Máscara de Minorous (21207)
 veio na lista de topo e é `Costume_Head_Low`/`_Mid` no `item_db`, sem
@@ -100,6 +102,15 @@ fontes dizem o mesmo e é o pedido que destoa, ao contrário das duas de cima.
 Foi para o **Adereceiro**, onde equipa, pelo mesmo caminho da Máscara de
 Minorous em 2026-08-09. **Fica para o dono do projeto decidir**: pôr a peça
 na vitrine de baixo exige mudar o `Locations:`, não a linha da loja.
+
+**A rodada de 2026-08-16 não pôs nada nestas quatro lojas — e mesmo assim
+gastou dois doadores de manto.** Foram 48 itens no `mercado_contemporaneo.txt`,
+todos equipamento; duas deles são **capa de status** com `View` (Som do Luar,
+480446, e Asas de Garuda, 480278) e caíram no mesmo teto de 120 que o
+Manteleiro já conhecia. Vale registrar aqui porque o número de doadores é
+compartilhado: **quem gasta slot não é o Manteleiro, é o `View`** — e o Capeiro,
+que vende capa de verdade, disputa a mesma reserva. Ver `HISTORICO.md`, "48
+itens nas lojas de Prontera".
 
 ## Costumeiro — Costume topo (174 itens)
 

@@ -147,7 +147,7 @@ Depois, e é o que manda: **a camada 4 estende, a 4b não.** O
 de 120** — medido em tela em 2026-08-09, com a tabela contígua até 158. Então a
 4b não é "acrescentar", é **trocar**: o `estende_robeid.py` reaponta um dos 40
 slots ≤120 sem arte, e quem decide qual é o `View:` do
-`db/guerra/item_db.yml`. Sobram 31; depois disso, só patch de exe.
+`db/guerra/item_db.yml`. Sobram 28; depois disso, só patch de exe.
 
 **A ordem entre 4b e 3b continua obrigatória:** o `instala_manto.py` só sabe em
 que pasta copiar depois que a tabela conhece o slot.

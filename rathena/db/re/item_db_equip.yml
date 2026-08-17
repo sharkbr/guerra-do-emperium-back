@@ -116191,7 +116191,7 @@ Body:
     View: 82
   - Id: 20986
     AegisName: Scientist_Mantle
-    Name: Scientists Mantle
+    Name: "Manto Abstrato"
     Type: Armor
     Weight: 300
     Defense: 25
@@ -196565,7 +196565,7 @@ Body:
       /*Todo When Using Elvira Candy Activates Masquerade Ignorance*/
   - Id: 450226
     AegisName: Four_of_a_kind
-    Name: Four of a Kind
+    Name: "Quatrenhum"
     Type: Armor
     Weight: 1000
     Defense: 100
@@ -201334,7 +201334,7 @@ Body:
     View: 1
   - Id: 460050
     AegisName: Symbol_Of_Eden
-    Name: Symbol of Eden
+    Name: "Símbolo do Éden"
     Type: Armor
     Weight: 400
     Defense: 60
@@ -211835,7 +211835,7 @@ Body:
       }
   - Id: 480085
     AegisName: Devil_Manteau_JP
-    Name: Devils Garment
+    Name: "Manto Maligno"
     Type: Armor
     Weight: 300
     Defense: 25
@@ -215462,7 +215462,7 @@ Body:
     View: 178
   - Id: 480319
     AegisName: Divine_Phoenix
-    Name: Divine Phoenix
+    Name: "Relíquia Divina"
     Type: Armor
     Weight: 400
     Defense: 38
@@ -223934,7 +223934,7 @@ Body:
       bonus bMatkRate,6;
   - Id: 490272
     AegisName: Harvest_Festival
-    Name: Harvest Festival
+    Name: "Anel da Colheita"
     Type: Armor
     Weight: 100
     Slots: 1
@@ -224745,7 +224745,7 @@ Body:
       bonus bMatk,10*(getskilllv("AL_HEAL")/2);
   - Id: 490336
     AegisName: Dimension_L_Stone
-    Name: Dimension Linkage Stone
+    Name: "Núcleo de Verus"
     Type: Armor
     Weight: 100
     Slots: 1

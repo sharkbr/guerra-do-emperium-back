@@ -286,6 +286,45 @@
 //= ATENCAO: `placadevenda` e comando compilado, nao script. Pega
 //= com @reloadscript, mas so depois de o map-server ter sido
 //= recompilado com src/custom/ - num binario antigo a linha da
+//=
+//= ------------------------------------------------------------
+//= RODADA DE 2026-08-16: 48 ITENS EM SEIS DAS NOVE LOJAS
+//=
+//= A maior leva que este mercado ja recebeu, e a primeira depois
+//= de a FASE 1 abrir - ou seja, a primeira em que o que entra
+//= aqui alcanca jogador de verdade. Onde caiu cada peca:
+//=
+//=   Acessorista            +35   aneis, luvas e afins
+//=   Capeiro                 +5   capas de status, 2 com View
+//=   Escudeiro               +3
+//=   Ocleiro                 +2   o par de Sigrun
+//=   Senhor das Armas        +2   duas adagas
+//=   Lorde das Armaduras     +1
+//=
+//= QUEM DECIDIU A LOJA DE CADA UMA FOI O `Locations:`, e nao o
+//= nome nem a ordem do pedido (regra 4.14). O pedido chegou como
+//= uma lista so, com aneis e capas misturados, e tres pecas
+//= cairiam na loja errada por leitura de nome: as "asas" e a
+//= "penugem" de Sigrun sao `Head_Mid` e nao capa, e o "Punhal de
+//= Matagi" e ACESSORIO e nao arma.
+//=
+//= O QUE CUSTOU TRABALHO foram doze pecas, nao 48:
+//=
+//=   9 estavam fora do itemInfo.lua      -> completa_iteminfo.py
+//=   7 estavam sem os 4 arquivos de arte -> instala_visual.py
+//=   2 sao capa com View acima do teto   -> estende_robeid.py +
+//=                                          instala_manto.py
+//=   2 nao existiam no servidor          -> db/guerra/item_db.yml
+//=
+//= As duas que nao existiam sao as Luvas de Somatologia (490497)
+//= e a Lacma (28739), e as duas viraram entrada nossa na QUARTA
+//= LEVA DE PLACEHOLDERS do db/guerra/item_db.yml.
+//=
+//= METADE DISTO E CLIENTE E NAO VAI PELO DEPLOY (regra 4.18):
+//= itemInfo.lua, arte de item, tabela de manto e sprite de manto
+//= moram em C:\GuerraDoEmperium\cliente\ e so chegam ao jogador
+//= por PATCH. So a linha da loja e o item_db andam pelo git.
+//=
 //= erro de comando desconhecido e a loja nao sobe.
 //=
 //============================================================
@@ -559,6 +598,16 @@ OnInit:
 // a cura foi o par de sempre, nesta ordem: estende_accessoryid.py
 // (o View 2226 nao existia no accessoryid de 2021) e depois
 // instala_visual.py. Os quinze fecham 8 de 8 hoje.
+// RODADA DE 2026-08-16: entraram DOIS, e a loja foi a 29. Sao o par de
+// Sigrun, a mesma arte (View 568) em duas versoes - o 5592 sem cova e o
+// 19085 com uma. O pedido os chamou de "asas de singrum" e "penugem de
+// singrum"; quem manda no nome e o itemInfo.lua, que diz "Asas de Sigrun"
+// e "Penugens de Sigrun".
+//   +   5592  Asas de Sigrun               (Buy 20 -> 20 zeny)
+//   +  19085  Penugens de Sigrun      [1]  (Buy 20 -> 20 zeny)
+// Os dois estao aqui e nao no Chapeleiro porque o `Locations:` deles e
+// `Head_Mid` (regra 4.14). Nenhum custou nada: rAthena, itemInfo.lua em
+// portugues e 8 de 8 de arte antes de entrarem.
 prontera,155,173,4	script	Ocleiro	1_F_MERCHANT_01,{
 	callshop "Ocleiro#loja",0;
 	end;
@@ -567,7 +616,7 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:20,410065:20,410058:20,410028:20,410024:1,19437:1,19380:10,19495:20,410186:1,410130:1,410110:20,410097:1,410009:20,410004:20,19452:20
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:20,410065:20,410058:20,410028:20,410024:1,19437:1,19380:10,19495:20,410186:1,410130:1,410110:20,410097:1,410009:20,410004:20,19452:20,5592:20,19085:20
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 //
@@ -684,6 +733,21 @@ OnInit:
 //   510147  Adaga dos Orcs [2]  placeholder; a arte veio da GRF
 //                               do bRO. E a unica arma da loja
 //                               que pede nivel 1 e nao 99/100.
+// RODADA DE 2026-08-16: entraram DUAS adagas, e a loja foi a 25.
+//   +  13092  Adaga do RWC            [1]  (Buy 20 -> 20 zeny)
+//   +  28739  Lacma                   [1]  (Buy 20 -> 20 zeny)
+//
+// A Adaga do RWC nao custou nada e e citada por SEIS conjuntos do
+// db/re/item_combos.yml (os aneis e pingentes RWC 2012), nenhum deles a
+// venda aqui.
+//
+// A LACMA TEM DOIS IDs, e escolher o errado poe na vitrine um item de nome
+// coreano. O nosso rAthena ja tem uma Lacma - o 13049, com script proprio e
+// os mesmos numeros -, mas o itemInfo.lua deste cliente mostra o 13049 com
+// o nome COREANO, e item sem nome em portugues nao entra em loja (regra
+// 4.2). O 28739 e a reedicao traduzida, e foi criado por nos em
+// db/guerra/item_db.yml (QUARTA LEVA DE PLACEHOLDERS) porque o vendor nao o
+// tem. O cabecalho da entrada de la registra onde os dois discordam.
 prontera,151,167,4	script	Senhor das Armas	1_F_MERCHANT_02,{
 	callshop "Senhor das Armas#loja",0;
 	end;
@@ -692,7 +756,7 @@ OnInit:
 	placadevenda "Armas";
 	end;
 }
--	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:20,28739:20
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -701,6 +765,13 @@ OnInit:
 // 15371 (Roupa de Natal do Antonio) tambem e placeholder. NAO
 // confundir com o 15249 (Antonio's Coat), que o vendor ja tem:
 // sao dois itens diferentes.
+// RODADA DE 2026-08-16: entrou UMA, e a loja foi a nove.
+//   + 450226  Quatrenhum              [1]
+// O rAthena ja a tinha (como "Four of a Kind"), mas ela estava FORA do
+// itemInfo.lua e dos 4 arquivos de arte - apareceria sem nome, sem icone e
+// com caixa modal. As duas metades vieram do bRO na mesma rodada
+// (completa_iteminfo.py + instala_visual.py), e o `Name` do servidor foi
+// sincronizado depois pelo nomes_pt_item_db.py.
 prontera,155,167,4	script	Lorde das Armaduras	1_M_MERCHANT,{
 	callshop "Lorde das Armaduras#loja",0;
 	end;
@@ -709,11 +780,24 @@ OnInit:
 	placadevenda "Armaduras";
 	end;
 }
--	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1
+-	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1
 
 // Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
 // proximo e o 2185 (Refletor Magico / Magic Reflect), que e
 // escudo de verdade e nao so nome parecido.
+// RODADA DE 2026-08-16: entraram TRES, e a loja foi a onze.
+//   +   2198  Escudo dos Esplendidos  [1]
+//   + 460052  Protetor Sagrado        [1]
+//   + 460050  Simbolo do Eden         [1]
+// Os tres sao `Left_Hand` no item_db, que e o que decide (regra 4.14). O
+// Simbolo do Eden estava fora do itemInfo.lua e sem os 4 arquivos de arte;
+// os outros dois ja estavam inteiros.
+//
+// O Escudo dos Esplendidos e citado por SETE conjuntos do
+// db/re/item_combos.yml (Cajado Rafini, Brinco Kardui, Tiara do Renascer,
+// Sapatos da Prece Lapine e a carta do Bispo Caido) e o Protetor Sagrado
+// por CINCO - nenhuma das outras pecas desses conjuntos esta a venda neste
+// mercado, entao ninguem fecha conjunto so comprando aqui.
 prontera,159,167,4	script	Escudeiro	1_F_MERCHANT_01,{
 	callshop "Escudeiro#loja",0;
 	end;
@@ -722,7 +806,7 @@ OnInit:
 	placadevenda "Escudos";
 	end;
 }
--	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1
+-	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
@@ -781,6 +865,34 @@ OnInit:
 // Manteleiro) - entao a entrada de tabela do estende_robeid.py e a
 // pasta de sprite copiada pelo instala_manto.py servem as duas, e
 // nao houve nada a fazer por ela em separado.
+// RODADA DE 2026-08-16: entraram CINCO, e a loja foi a 23.
+//   +  20986  Manto Abstrato          [1]
+//   + 480085  Manto Maligno           [1]
+//   + 480319  Reliquia Divina         [1]
+//   + 480446  Som do Luar             [1]   View 165 -> slot 15
+//   + 480278  Asas de Garuda          [1]   View 160 -> slot 11
+//
+// AS CINCO ESTAVAM FORA DO itemInfo.lua - o proprio pedido ja avisava disso
+// numa delas ("Reliquia divina - nao tem no nosso mapping de itens"), e na
+// verdade eram as cinco. As entradas vieram do bRO pelo completa_iteminfo.py
+// e o `Name` do servidor foi sincronizado pelo nomes_pt_item_db.py (o
+// item_db as chamava de "Scientists Mantle", "Devils Garment",
+// "Divine Phoenix", "Moonlight Bell" e "Garuda Wings").
+//
+// AS DUAS ULTIMAS TEM `View`, e foram as PRIMEIRAS capas de STATUS desta
+// loja a precisar da tabela de manto por conta propria. A 480188, que era a
+// unica com View ate aqui, andou de carona na versao cosmetica dela
+// (480189, no Manteleiro); estas duas nao tem gemea cosmetica nenhuma.
+//
+// As duas nasceram com slot ACIMA de 120, que e o teto que este cliente
+// desenha, entao as duas gastaram um doador cada em db/guerra/item_db.yml
+// (secao "OS DEZ MANTOS DE SLOT REAPROVEITADO", que agora sao doze). Dos 39
+// slots sem arte deste cliente sobram 28 livres. A arte - 2046 arquivos -
+// veio da GRF do bRO pelo instala_manto.py.
+//
+// TUDO ISSO E CLIENTE, e nao vai ao jogador pelo deploy (regra 4.18): as
+// entradas de itemInfo.lua, os 4 arquivos de arte de cada uma, a tabela de
+// manto e os 2046 arquivos de sprite so chegam por PATCH.
 prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
@@ -789,7 +901,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
@@ -836,6 +948,32 @@ OnInit:
 // Both_Accessory com uma cova, rAthena e cliente ja em portugues, 4 de 4
 // de arte. Ha UM conjunto no db/re/item_combos.yml citando o Jasper_Ring,
 // e a outra metade dele e uma carta (4875), que nao se vende aqui.
+// RODADA DE 2026-08-16: ENTRARAM 35, e a loja foi de catorze para 49 - de
+// longe a maior leva que este mercado ja recebeu de uma vez.
+//
+// Sao os aneis, luvas e bugigangas do pedido daquele dia. Trinta e um
+// estavam inteiros (rAthena, itemInfo.lua em portugues e 4 de 4 de arte) e
+// nao custaram nada; os quatro que custaram:
+//
+//   490336  Nucleo de Verus         [1]  fora do itemInfo.lua e sem arte
+//   490272  Anel da Colheita        [1]  fora do itemInfo.lua e sem arte
+//   490497  Luvas de Somatologia         nao existia NO SERVIDOR
+//   28598   Fragmento de Chip       [1]  nome do servidor sem sincronizar
+//
+// AS LUVAS DE SOMATOLOGIA sao a unica peca desta leva que o nosso rAthena
+// nao tinha em ID nenhum. Foram criadas em db/guerra/item_db.yml (QUARTA
+// LEVA DE PLACEHOLDERS), com os bonus lidos da descricao do bRO - inclusive
+// a resistencia a "Cobaias", que e o grupo `RC2_BIOLAB` e nao uma raca. O
+// cabecalho da entrada de la mostra a conferencia.
+//
+// O PRECO SEGUE A REGRA 4.16 e nao e uniforme: 19 entraram a 1 zeny (sem
+// `Buy` no item_db) e 16 entraram a 20 zeny (`Buy: 20`). Nenhum dos 35
+// acrescenta linha de `discounted buying price` na subida - item posto pelo
+// preco de compra nao dispara aquele aviso.
+//
+// CONJUNTOS: dez dos 35 sao citados por algum `- Combos:` do
+// db/re/item_combos.yml (Release_Of_Magic aparece tres vezes, o Punhal de
+// Matagi quatro), e em nenhum caso a outra peca esta a venda neste mercado.
 prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
@@ -844,4 +982,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:20,28517:20,490043:20,2936:20,28379:20,28433:20,28598:20,28564:20,28533:20,28437:20,28531:20,490183:20,32262:20,28438:20,28491:20,32263:20

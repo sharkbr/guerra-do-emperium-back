@@ -10073,3 +10073,204 @@ que não abre gera um `Failed to open` do `YamlDatabase::load`
 (`src/common/database.cpp:96`), e comando inexistente em grupo gera aviso do
 `parseCommands`. Não houve nenhum dos dois. Os avisos que restam são os de
 sempre — preço de 1 zeny nas lojas e guardião em castelo sem dono.
+
+## O instalador que virou atualizador na pasta errada (2026-08-16)
+
+O primeiro relato de fora: um amigo baixou o `Jogar.exe`, abriu, e **antes de
+baixar coisa nenhuma** levou a mensagem **"não encontrei
+GuerraDoEmperium.exe"** — texto de atualizador na cara de quem estava
+instalando, e sem nenhuma saída na tela.
+
+A causa está inteira em uma linha. O mesmo exe é o instalador e o atualizador,
+e quem decidia qual dos dois ele era hoje era o `PrecisaInstalar`, que olhava
+**só o `data.grf`**:
+
+```go
+func PrecisaInstalar(raiz string) bool {
+	_, err := os.Stat(filepath.Join(raiz, "data.grf"))
+	return err != nil
+}
+```
+
+O comentário defendia a escolha — o `data.grf` tem 2,95 GB e nunca é criado por
+acidente —, e ela erra num caso que o autor não considerou: **`data.grf` existe
+em QUALQUER instalação de Ragnarok**, inclusive na de outro servidor privado e
+na do bRO. O amigo tinha um cliente antigo e pôs o `Jogar.exe` dentro daquela
+pasta. O programa concluiu "já instalado", entrou no modo atualizador, conferiu
+a lista de patches (nenhum faltava — ele não tinha `aplicados.txt`… e também não
+tinha o nosso cliente), acendeu o **JOGAR**, e o clique caiu no `Executa`, que
+não achou o exe do jogo porque ele nunca esteve ali.
+
+**O erro estava certo; a pergunta é que estava errada.** A mensagem descreve
+com precisão o que aconteceu no fim do caminho, e o caminho inteiro não deveria
+ter sido tomado.
+
+### O conserto
+
+`PrecisaInstalar` passou a exigir **as duas metades** — o `data.grf` e o exe do
+jogo (`cfg.jogo`, para não repetir o nome em dois lugares):
+
+```go
+func PrecisaInstalar(raiz, jogo string) bool {
+	for _, nome := range []string{"data.grf", jogo} {
+		if _, err := os.Stat(filepath.Join(raiz, nome)); err != nil {
+			return true
+		}
+	}
+	return false
+}
+```
+
+Olhar só o exe seria o erro simétrico (pasta com um exe velho e sem `data.grf`
+se calaria diante de uma instalação que não existe), e é por isso que os dois
+são exigidos, e não um ou outro. Instalar por cima é barato: `aplicaPedaco`
+pula o pedaço cujo sha256 já bate em disco — quem tiver por acaso o **nosso**
+`data.grf` não rebaixa 3 GB, e quem tiver o de outro servidor rebaixa, que é o
+certo.
+
+O caso virou o primeiro teste **offline** do Atualizador
+(`TestPrecisaInstalar`, quatro combinações), e é o teste que mais importa do
+lote: é a única porta entre as duas metades do programa, roda sem rede e por
+isso é sempre exercitado.
+
+### O que isto ensina, e vale para o instalador inteiro
+
+Toda mensagem do modo atualizador é, para quem está instalando, uma **falha sem
+saída** — não há botão que leve de volta à tela de escolher pasta. Então a
+regra é a do `CLAUDE.md` §5, um degrau acima: *sonda que responde pela pergunta
+errada*. "Tem `data.grf`?" não é "tem o jogo instalado?", do mesmo jeito que
+"o patch foi aplicado?" não era "o patch teve efeito na tela?".
+
+O `VERSAO` subiu para **2**, e o `Jogar.exe` foi recompilado. Falta publicar —
+ver `PENDENCIAS.md` §1u.
+
+## 48 itens nas lojas de Prontera e 5 na Máquina de Sombrios (2026-08-16)
+
+A maior leva que o Mercado Contemporâneo já recebeu de uma vez, e a primeira
+depois de a fase 1 abrir — ou seja, a primeira em que o que entra na vitrine
+alcança jogador de verdade, e por isso a primeira em que a §0 do `RECEITAS.md`
+teve de ser respondida item a item: **metade deste trabalho não vai pelo
+deploy.**
+
+O pedido chegou como duas listas. A primeira, 48 itens "para as lojas de
+Prontera", sem dizer quais lojas; a segunda, 6 itens para a Máquina de
+Sombrios Gerais.
+
+### Onde caiu cada peça, e quem decidiu
+
+Quem decidiu foi o `Locations:` do `item_db`, e não o nome nem a ordem do
+pedido (regra 4.14) — a lista vinha misturada, com anéis, capas e escudos numa
+coluna só:
+
+| loja | entraram | ficou com |
+|---|---|---|
+| Acessorista | 35 | 49 |
+| Capeiro | 5 | 23 |
+| Escudeiro | 3 | 11 |
+| Ocleiro | 2 | 29 |
+| Senhor das Armas | 2 | 25 |
+| Lorde das Armaduras | 1 | 9 |
+
+**Três peças cairiam na loja errada por leitura de nome.** As "asas de
+singrum" e a "penugem de singrum" são `Head_Mid` e foram para o Ocleiro, não
+para o Capeiro; e o **Punhal de Matagi**, que o nome entrega como arma, é
+`Both_Accessory` e foi para o Acessorista.
+
+O preço saiu da regra 4.16, e por isso não é uniforme: **19 acessórios entraram
+a 1 zeny** (sem `Buy` no `item_db`) e **16 a 20 zeny** (`Buy: 20`), e o mesmo
+vale nas outras lojas. Nenhum dos 48 acrescenta linha de `discounted buying
+price` na subida — item posto pelo preço de compra não dispara aquele aviso.
+
+### O trabalho não estava nos 48, estava em doze
+
+Quarenta e seis dos 48 já existiam no servidor. O que custou:
+
+| o que faltava | quantos | por onde |
+|---|---|---|
+| entrada no `itemInfo.lua` | 9 | `completa_iteminfo.py` |
+| os 4 arquivos de arte | 7 | `instala_visual.py` |
+| capa com `View` acima do teto | 2 | `estende_robeid.py` + `instala_manto.py` |
+| não existia no servidor | 2 | `db/guerra/item_db.yml` |
+
+**Os dois que não existiam** viraram a QUARTA LEVA DE PLACEHOLDERS:
+
+- **Luvas de Somatologia (490497).** A resistência que a descrição do bRO chama
+  de "Cobaias" não é raça nenhuma — é o grupo `RC2_BIOLAB`, e isso foi
+  conferido e não suposto: a descrição lista as vinte cobaias por nome, e o
+  grupo `Biolab` do `mob_db` tem exatamente esses 51 monstros. Também são
+  **dois** bônus e não um: `bAddRace2` só alcança o físico, e "dano físico e
+  mágico" exige o `bMagicAddRace2` ao lado.
+- **Lacma (28739).** E aqui a armadilha: **este item já existe no nosso
+  rAthena, no ID 13049**, com script próprio e os mesmos números. Ainda assim
+  quem entrou foi o 28739, porque o `itemInfo.lua` deste cliente mostra o 13049
+  com o nome **coreano** — e item sem nome em português não entra em loja
+  (regra 4.2). O 28739 é a reedição traduzida. Onde os dois discordam está
+  anotado na entrada.
+
+### As duas capas com `View` acharam um erro de ferramenta
+
+A Som do Luar (480446, View 165) e as Asas de Garuda (480278, View 160) são as
+primeiras capas de **status** desta loja a precisar da tabela de manto por
+conta própria — a 480188, que era a única com `View` até aqui, andava de carona
+na versão cosmética dela. As duas nasceram acima do teto de 120 e gastaram um
+slot doador cada; dos 39 sem arte, sobram 28 livres.
+
+E o caminho estava quebrado em dois pontos, os dois no `instala_manto.py`:
+
+1. **A trava de tipo era `Costume_Garment` e só.** Ela nasceu estreita em
+   2026-08-08, quando o Manteleiro era a única frente de manto, e ficou errada
+   no dia em que uma capa de status precisou de arte. O cliente não pergunta em
+   que slot a peça se equipa: quem manda o sprite desenhar é o `View`. Eram
+   **duas definições da mesma coisa** — o `estende_robeid.manto()` já lia os
+   dois locais — e só uma estava certa.
+2. **O `item_de` devolvia a entrada do rAthena, não a nossa.** O
+   `vv.le_item_db` recebe os dois arquivos e devolve uma lista chata, com uma
+   entrada por bloco; a primeira é a do `db/re/`, que traz o `View` **original**
+   (160, 165). O script então não achava aquele número na tabela do cliente —
+   que para em 120 de propósito — e respondia *"view X só existe no spriterobeid
+   do bRO, rode antes o estende_robeid.py"*. Alto, e pelo motivo errado.
+
+O segundo é o mais interessante porque **não era regressão desta rodada**: os
+dez mantos já instalados eram recusados exatamente do mesmo jeito. Eles só
+tinham escapado porque a arte deles foi copiada em 2026-08-09, **antes** de o
+`View` ser reapontado — a arte vai para uma pasta cujo nome não depende do slot,
+então ela sobreviveu à troca e ninguém rodou a ferramenta de novo para
+descobrir. Devolver a última entrada também não serve (o bloco de override só
+tem `Id`, `AegisName`, `Name` e `View`, e `locais` viria vazio), então a
+correção é **mesclar campo a campo**, com o que o override declarou vencendo.
+
+O que provou a correção não foi o item novo: foram os **dois antigos**. Rodar
+com 480155 e 480188 na mesma linha e ver *"já completo neste cliente"* é uma
+marca que não depende do efeito procurado — a mesma lição do
+`ajusta_tamanho_fonte.py`.
+
+### A Máquina de Sombrios Gerais, e o item que saiu da lista
+
+A loja de troca foi de quatro para nove, e a divisão de preço que já existia
+virou a regra da vitrine, a pedido do dono: **cubo 2 Moedas Novas, combinador
+1**. Não é arbitrário — o cubo é que carrega o sorteio, e o combinador é insumo.
+Os cinco já existiam inteiros, então esta metade do pedido é **só deploy**: não
+há patch a montar por causa dela.
+
+O pedido trazia um sexto, o **Anel do Viajante [1] (490193)**, e ele saiu daqui
+por decisão do dono no mesmo dia: é acessório de equipar, não peça Sombria, e
+teria sido a única coisa vestível entre nove consumíveis. Ele aparecia nas
+**duas** listas, e era cópia acidental de uma para a outra. Entrou no
+Acessorista, a 1 zeny, e só lá.
+
+### O que já está no ar e o que não está
+
+O **patch 0003** ("Itens novos das lojas de Prontera") foi montado, publicado e
+conferido no ar: 2077 arquivos, 79,45 MB crus em 11,18 MB de zip — o
+`itemInfo.lua`, as duas tabelas de manto, os 28 arquivos de arte de item e os
+2046 de sprite de manto. Quem abrir o `Jogar.exe` já recebe.
+
+A lista foi montada **à mão, arquivo a arquivo, e não por `--desde`**: a
+varredura por data trazia 2099 arquivos, e 53 deles eram lixo de execução do
+cliente (`savedata\`, `patch\`, `ScreenShot\`, `_tmpEmblem\`, a raiz e a
+`AI_sakray\`, que já foi ao jogador no patch 0001).
+
+**O lado servidor está pronto e não foi implantado** — as linhas das seis
+lojas, a loja de troca, as quatro entradas novas de `db/guerra/item_db.yml` e
+os sete `Name` que o `nomes_pt_item_db.py` sincronizou. O dono vai anunciar e
+subir tudo do Mac.

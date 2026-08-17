@@ -2131,6 +2131,47 @@ procurar. O conserto é pôr um `View:` reaproveitado no `db/guerra/item_db.yml`
 e rodar o `estende_robeid.py` — aí a pasta passa a existir para o script, e ele
 copia.
 
+### Duas correções de 2026-08-16, as duas achadas pela mesma capa
+
+As duas apareceram ao pôr a Som do Luar (480446) e as Asas de Garuda (480278)
+no Capeiro — as primeiras capas de **status** a precisar de arte de manto por
+conta própria. A 480188, que era a única com `View` até então, andava de carona
+na versão cosmética dela (480189), e foi essa carona que escondeu as duas por
+uma semana.
+
+**A trava de tipo era `Costume_Garment` e só.** Ela nasceu assim em 2026-08-08,
+quando o Manteleiro era a única frente de manto — e ficou errada no dia em que
+uma capa de status apareceu. O cliente não pergunta em que slot a peça se
+equipa: quem manda o sprite desenhar é o `View`, e o caminho da arte é o mesmo
+nos dois casos. Eram **duas definições da mesma coisa** (o
+`estende_robeid.manto()` já lia os dois locais) e só uma estava certa; agora as
+duas leem `Garment` **ou** `Costume_Garment`.
+
+**O `item_de` devolvia a entrada do rAthena, não a nossa** — e esta não era
+regressão: os dez mantos já instalados eram recusados exatamente do mesmo
+jeito. O `vv.le_item_db` recebe os dois `item_db` e devolve uma **lista chata**,
+com um registro por bloco; pegar o primeiro é pegar o do `db/re/`, com o `View`
+**original**. O script então procurava 122, 131, 160 ou 165 na tabela do
+cliente — que para em 120 de propósito — e respondia *"view X só existe no
+spriterobeid do bRO, rode antes o `estende_robeid.py`"* sobre itens cujo
+`estende_robeid.py` já tinha rodado. Alto, e pelo motivo errado.
+
+Pegar o **último** também não serve: o bloco de override é YAML parcial, só tem
+`Id`, `AegisName`, `Name` e `View`, e `locais` viria vazio — aí a trava de capa
+recusaria a peça. Por isso é **mescla campo a campo**, com o que o override
+declarou vencendo e o resto vindo do rAthena.
+
+Os dez antigos escaparam por acidente: a arte deles foi copiada em 2026-08-09,
+**antes** de o `View` ser reapontado, e ela vai para uma pasta cujo nome não
+depende do slot — sobreviveu à troca, e ninguém rodou a ferramenta de novo para
+descobrir. **Foi por eles que a correção se provou:** rodar com 480155 e 480188
+na mesma linha e ver *"já completo neste cliente"* é uma marca que não depende
+do efeito procurado, a mesma lição do `ajusta_tamanho_fonte.py`.
+
+**As outras duas ferramentas que leem o `le_item_db` ainda erram**, do outro
+lado — elas montam `dict` por compreensão e ficam com a última. Está no
+`CLAUDE.md` §5 e em `PENDENCIAS.md` §1v, com a medição.
+
 ### Duas correções de 2026-08-09, as duas vindas do `estende_robeid.py`
 
 **Disco primeiro, quando o GRF é o nosso.** O `tabelas_robe` lia só o GRF, e o

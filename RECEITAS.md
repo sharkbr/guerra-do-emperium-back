@@ -101,8 +101,9 @@ vender, equipar — e só então dar `Cannot find File`.
 **E o slot não se acrescenta — se troca.** Este cliente ignora slot de manto
 acima de **120**, e a tabela não muda isso (medido em tela em 2026-08-09, com a
 tabela contígua até 158). Manto novo tem de **reaproveitar** um dos 40 slots
-≤120 que não têm arte aqui. Sobram 31 — depois disso, só patch de exe
-(`PENDENCIAS.md` §4).
+≤120 que não têm arte aqui. Sobram 28 — depois disso, só patch de exe
+(`PENDENCIAS.md` §4). Vale para capa de **status** também, e não só para a
+cosmética: quem manda o desenho é o `View`, não o slot de equipar.
 
 ```
 1. python completa_iteminfo.py --id <lista>       # se o cliente não o conhece

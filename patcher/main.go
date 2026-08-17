@@ -29,7 +29,7 @@ import (
 
 // VERSAO é o número que o canal de auto-atualização compara. Sobe de um a cada
 // Atualizador novo publicado — ver auto.go e `patcher/LEIAME.md`.
-const VERSAO = 1
+const VERSAO = 2
 
 // Os valores padrão existem para o caso de o `Atualizador.ini` não vir no
 // pacote ou ser apagado: sem ini, o Atualizador ainda funciona na produção.
@@ -130,8 +130,10 @@ func main() {
 
 	// O mesmo exe é o instalador e o atualizador, e quem decide é a pasta em
 	// que ele está. Sem cliente ao lado, ele é o primeiro download de alguém
-	// que acabou de baixar 9 MB e não tem mais nada.
-	if PrecisaInstalar(raiz) {
+	// que acabou de baixar 9 MB e não tem mais nada. "Cliente ao lado" são o
+	// `data.grf` E o exe do jogo — pasta com um só dos dois é instalação
+	// alheia ou pela metade, e cai no instalador (ver `PrecisaInstalar`).
+	if PrecisaInstalar(raiz, cfg.jogo) {
 		instalacao(exe, cfg)
 		return
 	}

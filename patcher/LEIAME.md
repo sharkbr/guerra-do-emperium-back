@@ -78,8 +78,16 @@ precisa dele: o `Jogar.exe` se copia para a pasta do jogo sozinho (§2c).
 ## 2c. A instalação — o mesmo exe, do outro lado
 
 **Desde 2026-08-16 este exe também é o instalador**, e não há um segundo
-programa. Quem decide o que ele é hoje é a pasta em que ele está: com
-`data.grf` ao lado, atualiza; sem, instala.
+programa. Quem decide o que ele é hoje é a pasta em que ele está: com um
+cliente nosso ao lado, atualiza; sem, instala.
+
+**"Cliente nosso" são DOIS arquivos — o `data.grf` e o `GuerraDoEmperium.exe`
+—, e a pergunta se faz com os dois.** Olhar só o `data.grf` foi o primeiro bug
+relatado de fora: ele existe em qualquer instalação de Ragnarok, então quem
+copiou o `Jogar.exe` para dentro de uma pasta de RO antiga foi tratado como
+"já instalado", não baixou nada, e recebeu **"não encontrei
+GuerraDoEmperium.exe"** ao clicar em JOGAR. Ver `PrecisaInstalar` no
+`instala.go`, o `TestPrecisaInstalar`, e a seção do `HISTORICO.md`.
 
 ```
 o jogador baixa Jogar.exe (9 MB)  ->  abre numa pasta vazia

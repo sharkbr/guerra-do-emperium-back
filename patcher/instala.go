@@ -59,16 +59,37 @@ const (
 	tipoBruto = "bruto"
 )
 
-// PrecisaInstalar diz se esta pasta ainda não tem um cliente.
+// PrecisaInstalar diz se esta pasta ainda não tem um cliente NOSSO.
 //
-// O teste é o `data.grf`: ele é o único arquivo sem o qual não existe jogo
-// nenhum, tem 2,95 GB e nunca é criado por acidente. Testar pelo exe do jogo
-// seria pior — o jogador pode ter baixado o `Jogar.exe` para a mesma pasta em
-// que guardou um exe antigo, e aí o instalador se calaria diante de uma
-// instalação que não existe.
-func PrecisaInstalar(raiz string) bool {
-	_, err := os.Stat(filepath.Join(raiz, "data.grf"))
-	return err != nil
+// São DOIS arquivos, e nenhum dos dois basta sozinho — a pergunta é "há aqui
+// uma instalação que o botão JOGAR consegue abrir?", e ela só tem resposta
+// afirmativa quando as duas metades estão presentes:
+//
+//	data.grf   o mundo. Sem ele não existe jogo nenhum, tem 2,95 GB e nunca é
+//	           criado por acidente — mas EXISTE em qualquer instalação de
+//	           Ragnarok, inclusive na de outro servidor ou na do bRO.
+//	<jogo>     o exe do cliente. É o que o JOGAR abre; sem ele o Atualizador
+//	           não tem o que lançar.
+//
+// Olhar só o `data.grf` foi o que quebrou em 2026-08-16: um jogador copiou o
+// `Jogar.exe` para dentro da pasta de uma instalação antiga de RO, que tinha
+// `data.grf` e não tinha o nosso exe. O programa concluiu "já instalado",
+// entrou no modo atualizador, não baixou nada, acendeu o JOGAR — e o clique
+// devolveu **"não encontrei GuerraDoEmperium.exe"**, uma mensagem de
+// atualizador na cara de quem estava tentando INSTALAR, sem nenhum caminho de
+// saída na tela.
+//
+// Olhar só o exe seria o erro simétrico (uma pasta com um exe velho e sem
+// `data.grf` se calaria diante de uma instalação que não existe), e é por isso
+// que os dois são exigidos e não um ou outro. Instalar por cima é barato: os
+// pedaços que já estiverem em disco com o sha certo são pulados.
+func PrecisaInstalar(raiz, jogo string) bool {
+	for _, nome := range []string{"data.grf", jogo} {
+		if _, err := os.Stat(filepath.Join(raiz, nome)); err != nil {
+			return true
+		}
+	}
+	return false
 }
 
 // baixaBase lê a `base.txt` do servidor. Linha malformada é ERRO e não linha

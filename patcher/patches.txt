@@ -14,3 +14,4 @@
 
 0001	0001-ia-do-homunculo-e-do-mercenario.zip	921fabb6266404b3b994218b306dd09edc347448faf3a8bc38d9573a349c574c	42236	IA do homunculo e do mercenario
 0002	0002-sem-censura-de-palavras.zip	23777341be82b71e266b8b07ee3bf235c740a6bcb19af54e65fbe4b876dc937b	152	Sem censura de palavras
+0003	0003-itens-novos-das-lojas-de-prontera.zip	10f0b929998901562b9edf94a0a884c5b2689782b326c966e276560c3a0d1282	11719527	Itens novos das lojas de Prontera

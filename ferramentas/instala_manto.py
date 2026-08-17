@@ -112,10 +112,38 @@ def recurso_do_view(por_view, nomes, view):
 
 
 def item_de(itens, iid):
-    for it in itens:
-        if it['id'] == iid:
-            return it
-    raise Erro('item %d nao esta em item_db nenhum' % iid)
+    u"""O item, com o `db/guerra/item_db.yml` VENCENDO o `db/re/`.
+
+    O `vv.le_item_db` recebe os dois arquivos e devolve uma LISTA CHATA, com
+    uma entrada por bloco - entao um item que tenha override aparece DUAS
+    vezes. Devolver a primeira e devolver a do rAthena, que e justamente a que
+    o servidor NAO usa: o `Footer: Imports:` faz o nosso arquivo ser lido
+    depois, e o `View:` de la e a fonte da verdade do de-para de manto (ver o
+    bloco "OS DEZ MANTOS DE SLOT REAPROVEITADO" no item_db.yml).
+
+    A consequencia da versao antiga era uma recusa com o motivo invertido:
+    para os DEZ mantos ja instalados, e para os dois de 2026-08-16, ele lia o
+    View original (122, 131, 160, 165), nao o achava na tabela do cliente - que
+    para em 120 de proposito - e respondia *"view X so existe no spriterobeid
+    do bRO, rode antes o estende_robeid.py"* sobre itens cujo estende_robeid ja
+    tinha rodado. Alto, e pelo motivo errado.
+
+    Devolver a ULTIMA tambem nao serve: o bloco de override so tem Id,
+    AegisName, Name e View - `locais` viria vazio e a trava de capa recusaria
+    a peca. Por isso e MESCLA, campo a campo, com o que o override declarou
+    vencendo e o resto vindo do rAthena.
+    """
+    achados = [it for it in itens if it['id'] == iid]
+    if not achados:
+        raise Erro('item %d nao esta em item_db nenhum' % iid)
+    junto = dict(achados[0])
+    for it in achados[1:]:
+        for campo, valor in it.items():
+            # "Declarou" = trouxe conteudo. Campo ausente num bloco parcial de
+            # YAML nasce vazio aqui (None, '', set()), e vazio nao e decisao.
+            if valor not in (None, '', 0) and valor != set():
+                junto[campo] = valor
+    return junto
 
 
 def alvos(origem, res):
@@ -132,9 +160,17 @@ def alvos(origem, res):
 def resolve(iid, itens, cli, por_view, nomes, bro_view, bro_nomes, origem):
     u"""(recurso, [caminhos que faltam]) - ou levanta Erro dizendo por que nao."""
     item = item_de(itens, iid)
-    if 'Costume_Garment' not in item['locais']:
-        raise Erro('%d (%s) nao e Costume_Garment - use o instala_visual.py'
-                   % (iid, item['nome']))
+    # `Garment` TAMBEM, e nao so `Costume_Garment`. A trava nasceu estreita em
+    # 2026-08-08, quando o Manteleiro era a unica frente de manto e todo item
+    # que passava por aqui era cosmetico - e ficou errada no dia em que uma capa
+    # de STATUS com `View` precisou de arte (480278 e 480446, 2026-08-16, no
+    # Capeiro). O cliente nao pergunta em que slot a peca se equipa: quem manda
+    # o sprite desenhar e o `View`, e o caminho da arte e o mesmo nos dois casos.
+    # Mesmo criterio do `estende_robeid.manto()`, que ja lia os dois locais -
+    # eram DUAS definicoes da mesma coisa, e so uma estava certa.
+    if not (item['locais'] & set(['Garment', 'Costume_Garment'])):
+        raise Erro('%d (%s) nao e capa (Garment/Costume_Garment) - use o '
+                   'instala_visual.py' % (iid, item['nome']))
     view = item['view']
     if view is None:
         raise Erro('%d (%s) nao tem View: ele nao desenha manto nenhum, so o '

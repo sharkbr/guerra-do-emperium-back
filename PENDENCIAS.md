@@ -1534,6 +1534,85 @@ servidor e o dono quis subi-los junto com um anúncio.
 
 ---
 
+## 1u. O Atualizador 2 está compilado e NÃO está publicado (2026-08-16)
+
+O conserto do instalador que virava atualizador na pasta errada
+(`HISTORICO.md`, "O instalador que virou atualizador na pasta errada") está no
+código, testado e compilado — `patcher/Jogar.exe`, `VERSAO = 2`. **Enquanto
+não for publicado, o jogador continua baixando o exe com o defeito.**
+
+São **dois** lugares, e um só não basta:
+
+```bash
+# 1. o canal de auto-atualização — alcança quem JÁ instalou
+ferramentas/publica_patch.sh --atualizador
+
+# 2. o bucket, que é de onde o SITE serve o botão Baixar
+#    (SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe)
+set -a; . /c/GuerraDoEmperium/spaces.env; set +a
+export RCLONE_CONFIG="" RCLONE_CONFIG_SPACES_TYPE=s3 \
+       RCLONE_CONFIG_SPACES_PROVIDER=DigitalOcean \
+       RCLONE_CONFIG_SPACES_ACCESS_KEY_ID="$SPACES_KEY" \
+       RCLONE_CONFIG_SPACES_SECRET_ACCESS_KEY="$SPACES_SECRET" \
+       RCLONE_CONFIG_SPACES_ENDPOINT="$SPACES_REGIAO.digitaloceanspaces.com" \
+       RCLONE_CONFIG_SPACES_ACL=public-read \
+       RCLONE_CONFIG_SPACES_NO_CHECK_BUCKET=true
+/c/GuerraDoEmperium/bin/rclone.exe copyto patcher/Jogar.exe \
+    "spaces:$SPACES_BUCKET/Jogar.exe"
+```
+
+O `public-read` e o `NO_CHECK_BUCKET` não são enfeite — sem o primeiro o
+instalador baixa 403, e sem o segundo o rclone tenta `CreateBucket` e leva 403
+antes de subir um byte (`CLAUDE.md` §5).
+
+O passo 2 é o que resolve o caso do relato: quem está com o problema **não
+tem instalação nossa**, logo não passa pelo canal de auto-atualização nunca.
+Publicar só o canal conserta exatamente quem não precisava do conserto.
+
+**A conferência que decide** é baixar do site numa pasta de RO antiga (ou
+qualquer pasta com um `data.grf` dentro) e abrir: tem de aparecer a tela de
+escolher onde instalar, e não o botão JOGAR.
+
+**A saída para quem estiver travado agora**, sem esperar a publicação: mover o
+`Jogar.exe` para uma pasta **vazia** (a de Downloads serve) e abrir de lá.
+
+---
+
+## 1v. Duas ferramentas ainda leem o `item_db` errado (2026-08-16)
+
+O `vv.le_item_db` devolve o item **duas vezes** — uma por arquivo —, e nem a
+primeira nem a última entrada é a resposta certa: a primeira é a do `db/re/`
+(campos completos, `View` antigo) e a última é o nosso override (bloco parcial,
+só o que declaramos). A leitura correta é mesclar. Está no `CLAUDE.md` §5, com
+a medição.
+
+O `instala_manto.py` foi corrigido na rodada de 2026-08-16 (`item_de`, mescla
+campo a campo) porque era ele que bloqueava o trabalho. **Faltam dois**, e os
+dois montam um `dict` por compreensão, que fica com a última:
+
+| arquivo | linha | o que perde |
+|---|---|---|
+| `instala_visual.py` | 180 | `Type` e `View` de item que tenha override |
+| `estende_accessoryid.py` | 207 | idem |
+
+**Sintoma medido**, e é calado: com o `dict`, o Cachecol Glorioso (15854) fica
+sem `Type` e sem o `View: 2079` do `db/re/` — ou seja deixa de parecer chapéu, e
+os 4 arquivos de arte de cabeça dele seriam **pulados sem aviso**. Hoje isso não
+machuca ninguém porque a arte dele já está no lugar; machuca no dia em que
+alguém repuser arte num cliente novo, que é exatamente quando ninguém está
+olhando.
+
+Alcança **16 itens** hoje, medidos: todos os que têm override no
+`db/guerra/item_db.yml` e também entrada no `db/re/`. Treze perdem `Locations`
+(os doze mantos de slot reaproveitado mais a Capa do Comandante, 20925) e
+**três perdem o `View` de cabeça** — Cachecol Glorioso (15854), Coleira do
+Vassalo (31954) e Piscadela de Freya (410320). São esses três que o
+`instala_visual.py` deixaria de tratar como chapéu.
+
+Consertar é copiar o `item_de` do `instala_manto.py`.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`
@@ -1688,7 +1767,8 @@ acesso do `.lub`) e nada mudou. As outras explicações caíram uma a uma —
 
 A saída de hoje é **reaproveitar slot morto**: dos 120 que o cliente aceita, 40
 não têm arte nenhuma neste cliente e já não desenhavam nada. Nove foram usados
-em 2026-08-09. **Sobram 31.**
+em 2026-08-09 e mais dois em 2026-08-16 (as duas capas de **status** do
+Capeiro — o teto não pergunta se a capa é cosmética). **Sobram 28.**
 
 **O conserto de verdade é patch de exe**, e não foi feito. A busca pela
 constante foi tentada e abandonada: sem desmontador, varredura de bytes em

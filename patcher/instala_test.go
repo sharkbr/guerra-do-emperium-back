@@ -149,3 +149,36 @@ func baixaFaixa(url, destino string, quantos int64) error {
 	}
 	return os.WriteFile(destino, dados[:lidos], 0o644)
 }
+
+// TestPrecisaInstalar trava a pergunta que decide se este exe é o instalador
+// ou o atualizador — a que errou em 2026-08-16, quando um jogador pôs o
+// `Jogar.exe` dentro de uma pasta de RO antiga: `data.grf` sozinho fez o
+// programa se dar por instalado, e o JOGAR devolveu "não encontrei
+// GuerraDoEmperium.exe" a quem estava tentando instalar.
+//
+// Roda offline de propósito: é a única porta entre as duas metades do
+// programa, e um teste que dependesse de rede não seria rodado.
+func TestPrecisaInstalar(t *testing.T) {
+	const jogo = "GuerraDoEmperium.exe"
+	casos := []struct {
+		nome     string
+		arquivos []string
+		precisa  bool
+	}{
+		{"pasta vazia (o jogador que acabou de baixar)", nil, true},
+		{"instalação alheia: grf sem o nosso exe", []string{"data.grf"}, true},
+		{"exe solto, sem o mundo", []string{jogo}, true},
+		{"instalação nossa, inteira", []string{"data.grf", jogo}, false},
+	}
+	for _, c := range casos {
+		raiz := t.TempDir()
+		for _, nome := range c.arquivos {
+			if err := os.WriteFile(filepath.Join(raiz, nome), []byte("x"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if veio := PrecisaInstalar(raiz, jogo); veio != c.precisa {
+			t.Errorf("%s: PrecisaInstalar = %v, esperava %v", c.nome, veio, c.precisa)
+		}
+	}
+}
