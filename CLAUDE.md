@@ -1163,6 +1163,15 @@ Produziram diagnóstico falso e custaram retrabalho:
   o `tzdata`). **Processo já no ar mantém o fuso antigo** — reiniciar os quatro
   servidores depois. E a sonda que decide é `ssh <servidor> date`, nunca o
   relógio de quem está olhando.
+  **E arrumar o `provisiona.sh` NÃO arruma a máquina que já está de pé:** o
+  `implanta.sh` faz `git pull`, compila e reinicia — ele **não** roda o
+  provisionamento. Um passo novo acrescentado lá só vale para a próxima
+  máquina, e nada avisa que a atual ficou de fora. Medido em 2026-08-17:
+  vinte e quatro horas depois de o passo 0 entrar no script, a produção ainda
+  estava em `Etc/UTC` — corrigida à mão, com o `timedatectl` antes do deploy
+  para o restart dele pegar o fuso novo de carona. **Passo novo de
+  `provisiona.sh` é para aplicar à mão na produção no mesmo dia**, ou fica
+  valendo só no papel.
 - **A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt`
   dentro do GRF — não no rAthena e não no exe.** Procurar `fuck`/`swear`/
   `badword` no `GuerraDoEmperium.exe` devolve zero e leva a concluir que o

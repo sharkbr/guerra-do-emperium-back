@@ -10339,3 +10339,62 @@ existiu só para reler a variável de ambiente.
 com o pull já feito, o próximo `implanta.sh` vai concluir que `rathena/` não
 mudou e **não** vai reiniciar o jogo. A mudança de nome ficaria no disco para
 sempre, sem entrar em vigor e sem nada avisar.
+
+---
+
+## O primeiro deploy completo, e o fuso que ainda estava em UTC (2026-08-17)
+
+O `implanta.sh` já existia desde 2026-08-14, mas até aqui só tinha rodado
+levando o servidor de um estado vazio ao ar. **Esta foi a primeira vez que ele
+levou trabalho de conteúdo a uma produção com gente dentro** — e a primeira em
+que alguém foi derrubado de propósito.
+
+A produção estava no `9649cee` e o `origin/main` no `be300c0`: quatro commits,
+nenhum deles tocando `src/` (build de 67 minutos dispensado) nem `site/`.
+Subiram as 6 lojas novas, os 53 itens, o `groups_guerra.yml` com o `@autoloot`
+para o grupo 0, o `barters_guerra.yml` com 5 entradas — e, de carona, o
+`char_guerra.txt` da dívida da `PENDENCIAS.md` §0, que sozinho nunca teria
+entrado em vigor.
+
+### O fuso, que o deploy não teria arrumado
+
+A conferência de antes do deploy pegou o que ninguém procurava: `ssh libraro
+date` respondeu **`Mon Aug 17 03:56 UTC`** — a máquina ainda em `Etc/UTC`,
+vinte e quatro horas depois de o `provisiona.sh` ganhar o `timedatectl` como
+passo 0. **O passo novo nunca chegou à máquina que já estava de pé**, porque o
+deploy não roda o provisionamento; ele faz `git pull`, compila e reinicia.
+
+Sem isso, a Guerra do Emperium de quinta às 20h teria aberto às **17h** do
+Brasil, calada — o script roda, o anúncio sai, o Emperium nasce, na hora
+errada. O conserto foi uma linha, e a **ordem** é que importou: o
+`timedatectl set-timezone America/Sao_Paulo` **antes** do `implanta.sh`, para
+que o restart do deploy fosse também o restart que faz os quatro processos
+lerem o fuso novo. Duas coisas por um preço só.
+
+A regra que saiu daí está no `CLAUDE.md` §5, na entrada do fuso: passo novo de
+`provisiona.sh` se aplica à mão na produção no mesmo dia, senão vale só no
+papel.
+
+### O jogador que caiu era o dono
+
+Havia **um** personagem online — `Abemus`, em `prt_in`, com conexão viva de
+verdade no map-server (o `ss -tn` mostrando o IP; a coluna `online` da tabela
+`char` sozinha não prova nada, porque fica presa depois de queda). Era o
+próprio dono, que pediu para tocar assim mesmo: *"quero ver como seria tocar o
+deploy com alguém online"*. Os quatro serviços reiniciaram entre 00:59:39 e
+00:59:42, já no horário de Brasília.
+
+### O que a subida disse do lado do servidor
+
+| conferência | resultado |
+|---|---|
+| pré-voo local e no servidor (caixa de caminho, `\r`, U+FFFD) | ✅ 1136 caminhos, os dois lados aprovados |
+| `Unknown syntax` no map-server | ✅ nenhum |
+| `[Error]` no carregamento | 4, todos do parser do `item_db` sobre gênero de chicote e instrumento — inerentes, não são nossos |
+| `npc/guerra/barters_guerra.yml` | ✅ 5 entradas lidas |
+| `conf/guerra/char_guerra.txt` | ✅ *"Done reading"* no char-server, às 00:59:39 |
+| os quatro serviços + site + apache + mariadb | ✅ `active` |
+
+O `char_name_option: 1` estar lido é o que fecha a dívida do lado do servidor;
+**a outra metade é de tela** e foi para a `PENDENCIAS.md` §1 — criar um
+personagem com `*` ou `-` no nome e ver o servidor aceitar.

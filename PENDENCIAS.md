@@ -15,53 +15,6 @@ Estado em 2026-08-08.
 
 ---
 
-## 0. O jogo na produção está atrás do disco — falta um restart (2026-08-16)
-
-**Curto, operacional, e a armadilha é calada.** Em 2026-08-16 o botão Baixar
-foi ligado ao instalador **sem rodar o `implanta.sh`**: havia três jogadores
-online, e o deploy reinicia o jogo sempre que `rathena/` muda. O que se fez foi
-o subconjunto que só toca o site — `git pull` no servidor, a variável
-`SITE_DOWNLOAD_URL` e `systemctl restart guerra-site`.
-
-Consequência: `/opt/guerra-do-emperium` está no `9649cee`, mas os quatro
-servidores do jogo continuam de pé **desde 2026-08-16 17:40 UTC**, rodando a
-configuração anterior. O que está no disco e **não** está em memória:
-
-| o quê | onde |
-|---|---|
-| `*` e `-` no nome de personagem | `rathena/conf/guerra/char_guerra.txt` (commit `2feb54c`) |
-
-**A armadilha:** o `atualiza_servidor.sh` decide reiniciar comparando o commit
-**antes** do `git pull` com o de depois (`ANTES`/`DEPOIS`, linha 260). Como o
-pull já aconteceu, o `9649cee` deixou de ser um motivo de restart — sozinho,
-esse `char_guerra.txt` **nunca** entraria em vigor, e nada avisaria. É a mesma
-família da §4.17 do `CLAUDE.md`: o arquivo diz uma coisa, o processo vivo faz
-outra. A armadilha em si está no `CLAUDE.md` §5, porque vale para todo deploy
-parcial, não só para este.
-
-**O que resolve, e por sorte:** os quatro commits que a sessão do Windows subiu
-depois (até `7a54c63` — as seis lojas, os 53 itens, o `groups_guerra.yml`)
-tocam `rathena/` de novo. Então o **próximo `implanta.sh` reinicia o jogo por
-conta própria**, e o `char_guerra.txt` sobe de carona. Não é preciso restart à
-mão — é preciso **não deixar o próximo deploy ser outro deploy parcial**.
-
-Ao rodar esse deploy, conferir em jogo que um nome com `*` ou `-` é aceito na
-criação — o que prova que o `char_guerra.txt` novo foi lido, e é o que fecha
-este item.
-
-**Se, por qualquer motivo, o próximo deploy também pular o jogo**, o restart à
-mão é este, numa hora sem ninguém online (`SELECT COUNT(*) FROM char WHERE
-online=1`):
-
-```bash
-ssh libraro 'for s in guerra-login guerra-char guerra-web guerra-map; do
-    systemctl restart $s; done; sleep 3
-  for s in guerra-login guerra-char guerra-web guerra-map; do
-    printf "  %-14s %s\n" "$s" "$(systemctl is-active $s)"; done'
-```
-
----
-
 ## 1. Falta ver no jogo
 
 Tudo abaixo está **escrito, registrado no `scripts_guerra.conf` e conferido
@@ -98,6 +51,8 @@ sem confirmação in-game.
 | "Arena de Prontera" no minimapa **e** no letreiro de entrada | cliente, sem NPC | 2026-08-13 |
 | Guia de Prontera de volta ao ar | `prontera 154,187` | 2026-08-12 |
 | Ticket de Inventário e Rédea na Máquina | `prontera 167,199` / `comodo 214,185` | 2026-08-12 |
+| `*` e `-` aceitos no nome de personagem (`char_name_option: 1`) | tela de criação | 2026-08-16 |
+| 53 itens novos, as 6 lojas e o `@autoloot` do grupo 0 — **agora na produção** | `prontera` | 2026-08-16 |
 
 **A Tranqueiras é a única da lista que pode falhar por um motivo novo**, e ele
 é do lado do cliente: ela usa **sprite 5 (`JOB_MERCHANT`), uma classe de
