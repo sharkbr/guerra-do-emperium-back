@@ -154,6 +154,9 @@ prontera,142,186,4	script	Crianca::CriancaDoAmuleto	4_M_DST_CHILD,{
 						mes "entregar uma mensagem... do povo das";
 						mes "Piramides!!";
 						SalaSecretaOrdem = 1;
+						// Tira o balao "!" da cabeca dela agora, e nao na
+						// proxima acao que o servidor reavalia - ver o OnInit.
+						questinfo_refresh;
 						close;
 					case 2:
 						close;
@@ -188,27 +191,41 @@ prontera,142,186,4	script	Crianca::CriancaDoAmuleto	4_M_DST_CHILD,{
 	}
 
 OnInit:
-	// O balao "Quest" sobre a cabeca - so decoracao, pedido em
-	// 2026-08-15. `npctalk` (nao `emotion`): o kRO mostra um
-	// balao de fala com o TEXTO literal, e nao existe icone de "!"
-	// que o script alcance. Mesma receita do balao de MVP da
-	// crianca_de_comodo.txt - initnpctimer no OnInit, um
-	// OnTimer que dispara e rearma.
+	// O BALAO "!" DE MISSAO sobre a cabeca, desde 2026-08-16. Ate
+	// entao era um `npctalk "Quest"` de 5 em 5 segundos, que
+	// escrevia a palavra num balao de fala - o dono pediu o balao
+	// de verdade no lugar.
 	//
-	// NAO E POR JOGADOR: `npctalk` e visto por todo mundo perto,
-	// sem saber se cada um ja aceitou a missao ou nao - mesma
-	// simplificacao da Alleria (/vem) e do Edgard (fome). Se um
-	// dia precisar sumir para quem ja aceitou, precisa de outra
-	// receita (o balao nativo de quest e por jogador, mas exige
-	// registrar no sistema nativo - e o que este arquivo evita
-	// de proposito, ver o cabecalho).
-	initnpctimer;
-	end;
-
-OnTimer5000:
-	npctalk "Quest";
-	stopnpctimer;
-	initnpctimer;
+	// `questinfo` e nao `showevent`: os dois desenham o mesmo
+	// icone, mas o `showevent` exige jogador anexado e aqui nao ha
+	// nenhum - o OnInit roda na subida do servidor. O `questinfo`
+	// registra a condicao no mapa e quem reavalia e' o servidor,
+	// sozinho, a cada acao do jogador (entrar no mapa, mudar de
+	// nivel, ganhar ou perder item, mexer em quest) - o
+	// `pc_show_questinfo`, src/map/pc.cpp.
+	//
+	// E POR JOGADOR, ao contrario do npctalk de antes: o balao so
+	// aparece para quem ainda NAO aceitou (SalaSecretaOrdem == 0) e
+	// some no instante em que aceita. Quem faz sumir na hora e' o
+	// `questinfo_refresh` la em cima, logo depois do
+	// `SalaSecretaOrdem = 1` - sem ele o balao ficaria ate a
+	// proxima acao que o servidor reavalia por conta propria, o que
+	// engana quem acabou de aceitar.
+	//
+	// NAO PRECISA DE ENTRADA NO QuestInfoList DO CLIENTE, e por
+	// isso nao vale aqui a armadilha do CLAUDE.md secao 5 ("quest
+	// que o cliente nao conhece derruba o cliente"): quem derruba e'
+	// a JANELA de missoes, que le o QuestInfoList por ID. Este e' o
+	// pacote 0x446 (clif_quest_show_event), que so' desenha um
+	// icone sobre um NPC e nao carrega ID de quest nenhum. A missao
+	// continua fora do sistema nativo, como o cabecalho explica.
+	//
+	// DEPOIS DE UM @reloadscript o balao so aparece para quem sair
+	// e voltar ao mapa: o `pc_show_questinfo` desiste enquanto a
+	// lista do jogador tiver tamanho diferente da lista do mapa
+	// (src/map/pc.cpp, "init was not called yet"), e quem redimensiona
+	// e' a entrada no mapa. Nao e' defeito.
+	questinfo( QTYPE_QUEST, QMARK_NONE, "SalaSecretaOrdem == 0" );
 	end;
 }
 

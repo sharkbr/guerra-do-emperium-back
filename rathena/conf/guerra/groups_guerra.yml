@@ -1,0 +1,53 @@
+###########################################################################
+# Guerra do Emperium - ajustes nossos nos grupos de jogador.
+#
+# Este arquivo e VERSIONADO e vale para qualquer clone do repo. Ele e
+# importado pelo rodape de conf/groups.yml, ANTES de conf/import/groups.yml
+# - ou seja, o conf/import continua podendo sobrescrever qualquer coisa
+# daqui, por maquina.
+#
+# COMO O MERGE FUNCIONA: o leitor de grupos procura o Id antes de criar
+# (PlayerGroupDatabase::parseBodyNode, src/map/pc_groups.cpp:74). Se o
+# grupo ja existe - e o Id 0 existe, vem do conf/groups.yml - ele NAO e
+# recriado: os campos deste arquivo sao aplicados por cima. Por isso aqui
+# nao ha Name nem Level, e o que esta escrito e so a diferenca.
+#
+# ATENCAO A UMA ARMADILHA DO ARQUIVO ORIGINAL (CLAUDE.md secao 5):
+# em conf/groups.yml, `false` NAO desliga nada que venha por HERANCA - a
+# heranca e um OU binario aplicado depois do parse. Tirar comando so
+# funciona no grupo que o concede.
+#
+# Recarrega com @reloadatcommand (que chama pc_groups_reload,
+# src/map/atcommand.cpp:4422). NAO e @reloadscript nem @reloadbattleconf.
+###########################################################################
+
+Header:
+  Type: PLAYER_GROUP_DB
+  Version: 1
+
+Body:
+  # ---------------------------------------------------------------------
+  # Id 0 - "Player", o grupo de TODA conta nova.
+  #
+  # AUTOLOOT PARA TODOS, decisao do dono em 2026-08-16. Ate aqui os tres
+  # comandos so existiam no grupo 1 ("Super Player"), que nenhuma conta de
+  # jogador tem - na pratica o autoloot nao existia neste servidor, e a
+  # unica pista era o "Unknown Command" na tela, que nao diz falta de
+  # permissao (CLAUDE.md secao 3).
+  #
+  # Sao TRES comandos porque sao tres formas do mesmo recurso, e o rAthena
+  # as trata separadamente:
+  #
+  #   @autoloot <0-100>   tudo que cair, ate a porcentagem dada
+  #   @alootid <item>     so um item, por nome ou ID (ate 10 na lista)
+  #   @autoloottype <tp>  so uma categoria (cartas, curas, ...)
+  #
+  # Nenhum deles vem LIGADO: o jogador digita quando quiser e o estado vale
+  # ate o logout. Ligar sozinho no login exigiria um OnPCLoginEvent com
+  # atcommand, e nao foi o pedido - quem quiser autoloot, pede.
+  # ---------------------------------------------------------------------
+  - Id: 0
+    Commands:
+      autoloot: true
+      alootid: true
+      autoloottype: true

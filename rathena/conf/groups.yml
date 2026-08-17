@@ -245,4 +245,5 @@ Body:
 
 Footer:
   Imports:
+  - Path: conf/guerra/groups_guerra.yml
   - Path: conf/import/groups.yml

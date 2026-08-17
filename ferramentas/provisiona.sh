@@ -169,6 +169,34 @@ FIM
 fi
 
 # =====================================================================
+# 0. Fuso horario
+# =====================================================================
+# ZERO e nao SEIS de proposito: e' o passo mais barato do script e o unico
+# que muda a hora de tudo que roda depois - inclusive a hora que o MariaDB
+# carimba nos logs criados nos passos abaixo.
+#
+# A imagem da DigitalOcean nasce em UTC, e o servidor de jogo nao tem
+# relogio proprio: o `gettime` do script de NPC le' a hora LOCAL da maquina
+# (localtime), e os `OnClock<hhmm>` do rAthena tambem. Em UTC a Guerra do
+# Emperium das quintas 20h (npc/guerra/horario_da_guerra.txt, horario de
+# Brasilia) abriria as 17h do Brasil, e nada avisaria: o script roda, o
+# anuncio sai, so' que na hora errada. Medido em 2026-08-16, quando o dono
+# viu "00:50" no servidor com 21:50 em Brasilia.
+#
+# America/Sao_Paulo e nao "-03": o Brasil nao tem horario de verao desde
+# 2019, mas se voltar a ter e' o tzdata que resolve, sozinho, num apt
+# upgrade. Fuso fixo teria de ser lembrado por alguem.
+FUSO="America/Sao_Paulo"
+passo "Fuso horario"
+if [ "$(timedatectl show -p Timezone --value 2>/dev/null)" = "$FUSO" ]; then
+    pula "ja' em $FUSO ($(date '+%Y-%m-%d %H:%M'))"
+else
+    timedatectl set-timezone "$FUSO"
+    ok "$FUSO - agora sao $(date '+%Y-%m-%d %H:%M')"
+    aviso "processo ja' no ar mantem o fuso antigo: reinicie os servidores"
+fi
+
+# =====================================================================
 # 1. Swap
 # =====================================================================
 passo "Swap"
