@@ -64,6 +64,8 @@
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
 
+#include <custom/estilo_de_corpo.hpp>
+
 using namespace rathena;
 
 JobDatabase job_db;
@@ -11163,6 +11165,13 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
 		sd->setlook_robe = val;
 		break;
 	case LOOK_BODY2:
+		// Guerra do Emperium: o db/re/stylist.yml ainda manda o valor
+		// LEGADO (0/1) do tempo em que estilo de corpo era uma bandeira;
+		// hoje este campo guarda o ID do TRABALHO do visual alternativo.
+		// Sem esta linha a UI de estilista COME o Cupom de Roupa e nao
+		// muda nada, calada. Ver src/custom/estilo_de_corpo.hpp.
+		estilo_de_corpo_resolve( sd, &val );
+
 		if( !job_db.exists( val ) ){
 			return;
 		}

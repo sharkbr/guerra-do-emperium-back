@@ -15,6 +15,92 @@ Estado em 2026-08-08.
 
 ---
 
+## 0b. Os três relatos de 2026-08-17 — estilista, carta e janela de missões
+
+Três coisas relatadas pelo dono depois de jogar. **Uma está diagnosticada e
+corrigida em código** (falta linkar e ver em jogo); as outras duas continuam
+abertas por falta de uma observação que só o jogo dá.
+
+### a) Cupom de Roupa comido sem trocar o visual — CORRIGIDO, falta linkar
+
+O `Stylist#prontera` (`prt_in 243,168`, arquivo do rAthena) aceita o Cupom de
+Roupa (6959), **consome** o cupom e o personagem não muda.
+
+**Causa, achada em 2026-08-17:** o `db/re/stylist.yml` ainda traz o valor
+legado 0/1 no `Look: Body2`, e neste rAthena aquele campo passou a guardar o
+**Id do trabalho** do visual alternativo (`Rune_Knight_2nd` e irmãos, faixa
+4332..4349). O `pc_delitem` roda **antes** de o visual mudar, então o cupom some
+e o `clif_changelook` manda `body = 0`. A armadilha inteira está no
+`CLAUDE.md` §5, e o raciocínio em `src/custom/estilo_de_corpo.hpp`.
+
+**O que foi feito:** `src/custom/estilo_de_corpo.hpp` novo, mais um include e
+uma chamada acrescentada no `case LOOK_BODY2:` do `pc_changelook`
+(`src/map/pc.cpp`) — as duas são ACRÉSCIMO, não substituição. **Compila
+limpo**; o `LNK1104` do build de 2026-08-17 foi só o map-server no ar.
+
+**O que falta:**
+
+1. parar o map-server, linkar e subir de novo:
+   ```
+   python ferramentas/servidor.py parar
+   MSBuild.exe src/map/map-server.vcxproj -p:Configuration=Release      -p:Platform=x64 "-p:SolutionDir=<raiz>/rathena/"
+   python ferramentas/servidor.py subir
+   ```
+2. num personagem de **3ª classe** (só eles chegam a essa parte da janela),
+   comprar um Cupom de Roupa na Máquina, abrir o estilista e trocar o estilo de
+   corpo. A arte existe no GRF (`costume_1\`, 127 sprites, conferido).
+3. conferir também o caminho de volta (Index 1 = visual padrão), que **também
+   cobra um cupom** — é o que o `db/re/stylist.yml` diz, e não foi mexido.
+
+### b) Carta Senhor das Trevas (4168) não abre a janela de encaixe — ABERTO
+
+O que já está apurado, e o que ainda falta:
+
+- **O `Locations: Shoes` está certo.** O nosso `item_db` e a descrição do bRO
+  (`estado_item.py --id 4168 --descricao` → *"Equipa em: Calçado"*) concordam.
+  Não é o caso da §4.14 — quem espera armadura está lembrando de outro servidor.
+- **A janela só lista equipamento NÃO EQUIPADO.** O `clif_use_card`
+  (`src/map/clif.cpp`) pula o que já está no corpo
+  (`if( sd->inventory.u.items_inventory[i].equip > 0 ) continue;`), pula o não
+  identificado e pula o que não tem cova livre. **Sem nenhum candidato o
+  servidor não manda pacote nenhum** (`if( !c ) return;`) — nada acontece na
+  tela, sem erro e sem linha de log.
+- **No banco não há uma Carta Senhor das Trevas** em inventário, carrinho nem
+  armazém de personagem nenhum (medido em 2026-08-17). O Abemus tinha, no
+  último save, **três calçados com cova livre e fora do corpo** (22203, 470112,
+  470204) — com a carta na bolsa a janela teria aberto.
+
+**Falta saber:** em que personagem, com que carta na mão e com quais calçados
+na bolsa o teste foi feito. Se havia calçado com cova **fora do corpo** e a
+janela não abriu, aí sim há bug, e o próximo passo é sondar o `clif_use_card`.
+
+### c) A janela de missões não mostra as quests ativas — ABERTO
+
+**Os dois lados foram conferidos em 2026-08-17 e os dois estão certos**, o que
+deixa o defeito num lugar que só o jogo mostra:
+
+- **Servidor.** O `quest_db` carrega inteiro (4821 do rAthena + 19 nossos, sem
+  aviso no console do map-server) e o Abemus tem **16 missões ativas** gravadas
+  na tabela `quest`. Nenhum *"quest N not found in DB"* no console, ou seja
+  nenhuma foi descartada no `intif_parse_questlog`.
+- **Cliente.** As 17 ids do Abemus **todas** têm entrada em
+  `System\OngoingQuestInfoList_Sakray.lub`, com `Title`, `Description` e
+  `Summary`. O arquivo passa no `luac -p`, tem 11.701 entradas, nenhum byte de
+  controle, e a forma é a mesma do arquivo oficial do ROenglishRE.
+
+**Uma parte do relato NÃO é bug:** a missão da **Sala Secreta da Ordem** nunca
+apareceu nessa janela e não vai aparecer — ela é uma cadeia de diálogo guardada
+na variável `SalaSecretaOrdem`, de propósito (ver o cabeçalho de
+`npc/guerra/menino_do_amuleto.txt`). Não passa pelo sistema nativo de quest.
+
+**O teste que decide, e é uma reabertura de cliente só:** trocar
+`System\OngoingQuestInfoList_Sakray.lub` pelo `.COREANO` ao lado e abrir o
+jogo. Se as missões aparecerem **em coreano**, o problema é o arquivo gerado;
+se continuarem sumidas, o problema está no pacote ou na janela, e aí a próxima
+sonda é ler o 0x09F8 saindo do servidor.
+
+---
+
 ## 1. Falta ver no jogo
 
 Tudo abaixo está **escrito, registrado no `scripts_guerra.conf` e conferido

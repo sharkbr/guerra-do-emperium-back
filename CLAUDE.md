@@ -84,6 +84,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto configurável, 99% hoje, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
 | `src/map/status.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo, as duas de `guardiao_do_castelo.hpp` (a escala do guardião pela defesa do castelo): `guardiao_tem_escala` num `flag\|=4` **acrescentado** ao lado do `guardup_lv` do rAthena — não substitui nada, e só existe porque sem flag nenhuma o `status_calc_mob_` sai antes, libera o `md->base_status` e passaria a escrever no status **compartilhado** do `mob_db`; e `guardiao_aplica_escala` no fim da mesma função, depois do bloco "Strengthen Guardians" e **antes** do `memcpy` final |
 | `npc/scripts_guild.conf` | duas coisas. **(a)** 19 das 20 linhas de castelo da Guerra do Emperium 1 comentadas — só o `prtg_cas01.txt` (Kriemhild) fica. É o que tira Emperium, Kafra, Gerente e bandeiras dos castelos-museu de uma vez, e é também **o que limita a guerra ao Kriemhild**: sem o arquivo do castelo não há `Agit#<castelo>`, logo não nasce Emperium. Ver `npc/guerra/guardioes_dos_castelos.txt`. **Levou 279 bandeiras junto** — devolvidas por `npc/guerra/bandeiras_do_feudo.txt`, todas hasteando o dono do Kriemhild. **(b)** o `agit_controller.txt` comentado, substituído por `npc/guerra/horario_da_guerra.txt` (quinta 20–22, domingo 18–20, horário de Brasília). Nunca deixar os dois ligados |
+| `src/map/pc.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `estilo_de_corpo_resolve` no topo do `case LOOK_BODY2:` do `pc_changelook`, **antes** do `job_db.exists`. Acréscimo, não substituição. Traduz o valor legado 0/1 que o `db/re/stylist.yml` ainda manda para o Id do trabalho do visual alternativo — sem ela a UI de estilista come o Cupom de Roupa e não muda nada (`src/custom/estilo_de_corpo.hpp`) |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -1373,6 +1374,40 @@ Produziram diagnóstico falso e custaram retrabalho:
   o baixa. O `publica_patch.sh` fixa `GOOS=windows GOARCH=amd64` e confere a
   assinatura `MZ` depois de compilar; achado em 2026-08-17, ao rever o caminho
   antes de publicar do Mac.
+- **`LOOK_BODY2` não é mais uma bandeira 0/1: guarda o Id do TRABALHO do visual
+  alternativo — e o `db/re/stylist.yml` do vendor não foi atualizado.** O
+  arquivo ainda traz `Look: Body2` com `Value: 0` e `Value: 1`, do tempo em que
+  estilo de corpo era liga/desliga; hoje o valor certo é `Rune_Knight_2nd` e
+  irmãos, a faixa **4332..4349** (`JOB_SECOND_JOB_START = 4331`,
+  `src/common/mmo.hpp`), listados por trabalho em `db/re/job_outfits.yml`. O
+  próprio rAthena sabe do desencontro e não conserta: a validação de faixa do
+  Body2 no `StylistDatabase::parseBodyNode` (`src/map/npc.cpp`) está dentro de um
+  `#if 0` com o comentário *"TODO: Unsupported for now => This is job specific
+  now"*.
+  **A falha é calada e cobra:** o `clif_parse_stylist_buy_sub`
+  (`src/map/clif.cpp`) chama `pc_delitem` **antes** do `switch` que muda o
+  visual, então o Cupom de Roupa some; o `pc_changelook` aceita 0 e 1 porque
+  `job_db.exists()` os conhece (Aprendiz e Espadachim); e o pacote de aparência
+  reduz tudo a `p.body = (look > 4331 && < 4350) ? 1 : 0`, ou seja **0**. O
+  servidor responde sucesso, o cliente não erra, e o único rastro é um cupom a
+  menos. Consertado em 2026-08-17 por `src/custom/estilo_de_corpo.hpp` (§2).
+  Duas consequências que valem para o resto: **valor de `db/` do vendor pode
+  estar semanticamente vencido sem dar aviso** — o `#if 0` é o sinal a procurar
+  —, e **override de `stylist.yml` não resolveria**, porque a tabela tem um valor
+  por índice e o certo depende do trabalho de quem clicou (o `parseBodyNode`
+  mescla por `Look`+`Index` e não sabe remover entrada nem zerar custo já
+  existente).
+- **A janela de encaixe de carta não abre quando o único equipamento compatível
+  está EQUIPADO — e o servidor não manda pacote nenhum.** O `clif_use_card`
+  (`src/map/clif.cpp`) monta a lista pulando o que já está no corpo
+  (`if( sd->inventory.u.items_inventory[i].equip > 0 ) continue;`), o não
+  identificado, o `itemdb_isspecial` e o que não tem cova livre; se sobrar zero
+  ele faz `if( !c ) return;`. Não há erro, não há log, não há janela — o duplo
+  clique na carta simplesmente não faz nada, o que parece carta quebrada.
+  Some-se a isso que o `Locations:` de uma carta pode não ser o que o jogador
+  lembra de outro servidor: a **Carta Senhor das Trevas (4168) é de CALÇADO**
+  aqui, e o nosso `item_db` e a descrição do bRO concordam nisso (medido em
+  2026-08-17).
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
