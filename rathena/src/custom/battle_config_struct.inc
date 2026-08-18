@@ -59,3 +59,8 @@ int32 guardiao_hit_base;          // precisao ABSOLUTA; `hit - esquiva` = chance
 int32 guardiao_hit_passo;
 int32 guardiao_hit_max;
 
+// Guerra do Emperium: o pilar de luz (e o som) que a CARTA faz ao cair de um
+// monstro. E o `dropeffectmode` do pacote de queda de item: 0 desliga, 4 e o
+// roxo do bRO. Usado em src/custom/brilho_da_carta.hpp.
+int32 brilho_da_carta;
+

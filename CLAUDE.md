@@ -80,7 +80,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um — a única exceção da linha de cima. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
-| `src/map/clif.cpp` | dois includes de `src/custom/` + três chamadas (`placa_de_venda_mostra`, e o teto de refino nas duas pontas da janela de refino), comentadas no arquivo |
+| `src/map/clif.cpp` | **três** includes de `src/custom/` + **quatro** chamadas, comentadas no arquivo: `placa_de_venda_mostra`, o teto de refino nas duas pontas da janela de refino, e `brilho_da_carta` no `clif_dropflooritem` (o pilar de luz e o som quando cai carta — `src/custom/brilho_da_carta.hpp`) |
 | `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto configurável, 99% hoje, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
 | `src/map/status.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo, as duas de `guardiao_do_castelo.hpp` (a escala do guardião pela defesa do castelo): `guardiao_tem_escala` num `flag\|=4` **acrescentado** ao lado do `guardup_lv` do rAthena — não substitui nada, e só existe porque sem flag nenhuma o `status_calc_mob_` sai antes, libera o `md->base_status` e passaria a escrever no status **compartilhado** do `mob_db`; e `guardiao_aplica_escala` no fim da mesma função, depois do bloco "Strengthen Guardians" e **antes** do `memcpy` final |
 | `npc/scripts_guild.conf` | duas coisas. **(a)** 19 das 20 linhas de castelo da Guerra do Emperium 1 comentadas — só o `prtg_cas01.txt` (Kriemhild) fica. É o que tira Emperium, Kafra, Gerente e bandeiras dos castelos-museu de uma vez, e é também **o que limita a guerra ao Kriemhild**: sem o arquivo do castelo não há `Agit#<castelo>`, logo não nasce Emperium. Ver `npc/guerra/guardioes_dos_castelos.txt`. **Levou 279 bandeiras junto** — devolvidas por `npc/guerra/bandeiras_do_feudo.txt`, todas hasteando o dono do Kriemhild. **(b)** o `agit_controller.txt` comentado, substituído por `npc/guerra/horario_da_guerra.txt` (quinta 20–22, domingo 18–20, horário de Brasília). Nunca deixar os dois ligados |
@@ -1301,6 +1301,59 @@ Produziram diagnóstico falso e custaram retrabalho:
   identifica artefato entre duas contagens independentes** — quem decide é o
   conteúdo. E o sintoma aparece a três passos dali, na janela de loja, sem
   nada apontar para o registro.
+- **`DropEffect: CLIENT` no `item_db` NÃO é "sem efeito" nem "o padrão" — é
+  uma escolha que este cliente resolve desenhando NADA, e ela já está em 1882
+  itens do vendor.** O campo tem sete valores, e o 1 (`CLIENT`) quer dizer
+  literalmente *"decide voce, cliente"*; os outros nomeiam um pilar de cor.
+  O `db/re/` do nosso rAthena declara `DropEffect: CLIENT` em 1882 itens —
+  **quase toda carta entre eles** —, e o cliente de 2021-11-03 decide não
+  desenhar. Consequência que engana sozinha: código que trate "campo diferente
+  de `NONE`" como "o item já escolheu" desliga a própria regra em silêncio,
+  para exatamente os itens que mais importam. A guarda certa é
+  `> DROPEFFECT_CLIENT`, nunca `!= DROPEFFECT_NONE`. Custou três hipóteses
+  erradas em 2026-08-17 (`src/custom/brilho_da_carta.hpp`).
+- **`ShowInfo` NÃO chega ao `log/map-msg_log.log`.** O `console_msg_log` deste
+  servidor é **3** (`conf/import/map_conf.txt`), e a escala é 1 = Warning,
+  2 = Error/SQL, 4 = Debug — **informação não tem bit**, em nenhum valor. Ou
+  seja: sonda escrita com `ShowInfo` imprime só na **janela** do map-server, e
+  quem for ler o arquivo conclui que a sonda não rodou — diagnóstico invertido
+  sobre código que está funcionando. Sonda que precise ir para o arquivo usa
+  `ShowWarning`.
+  **E dá para ler a janela sem pedir print:** `AttachConsole(<pid do
+  map-server>)` mais `ReadConsoleOutputCharacterW` sobre o `CONOUT$` devolve o
+  buffer de tela inteiro. Foi o que fechou o caso do brilho de carta em
+  2026-08-17, depois de o arquivo de log ter vindo vazio duas vezes.
+- **Trocar `Locations` de um item com o servidor NO AR deixa o item
+  INEQUIPÁVEL até o jogador relogar — e a mensagem culpa o item.** O cliente
+  guarda o `location` de cada item do inventário de quando a lista lhe foi
+  enviada (`clif_inventorylist` manda `pc_equippoint`, `clif.cpp:3092`), e ao
+  equipar ele **manda essa posição de volta** (`clif_parse_EquipItem` repassa o
+  `p->position` cru). O `pc_equipitem` então testa `!(pos & req_pos)`
+  (`pc.cpp:12064`): com o servidor já dizendo `Acc. Direito` e o cliente ainda
+  pedindo `Acc. Esquerdo`, a conta dá zero e sai *"You can't put this item
+  on."*, uma por clique. **O `@reloaditemdb` não desfaz isso**: o
+  `itemdb_reload` chama `pc_setinventorydata`, não `clif_inventorylist`
+  (`itemdb.cpp:4992`). Quem reenvia a lista é o `clif_parse_LoadEndAck`
+  (`clif.cpp:10795`) — ou seja **login ou troca de mapa**, e só isso.
+  Duas consequências: em DEV, depois de mexer em `Locations`, **relogar antes
+  de testar** — senão a própria conferência acusa um defeito que não existe;
+  e em PRODUÇÃO o problema não aparece, porque o deploy reinicia o map-server e
+  todo mundo reconecta. Isto vale para o item na MOCHILA; o que já está
+  equipado tem o mesmo gatilho, e ali o `pc_checkitem` desequipa sozinho
+  (`pc.cpp:12623`).
+- **As duas caixas de acessório da janela de equipamentos NÃO estão
+  invertidas — a etiqueta só parece trocada porque o personagem está de
+  frente.** `Acc. Right` fica à **nossa esquerda** e `Acc. Left` à nossa
+  direita, que é o correto: a direita do personagem é a nossa esquerda. Então
+  "acessório direito caindo na caixa escrita Left" **não** é defeito de
+  cliente, de etiqueta nem de pacote — é o `Locations:` do nosso vendor
+  discordando da descrição que o jogador lê, que vem do `itemInfo.lua`, ou
+  seja do bRO (a mesma família da §4.14). A leitura errada é cara: leva a
+  inverter `EQP_ACC_R`/`EQP_ACC_L` no `mmo.hpp`, o que mudaria **todo** item
+  do servidor para consertar três. **A medição que decide é a população**, e
+  ela é barata: cruzar todo acessório de lado único do `item_db` com a linha
+  `Tipo: Aces. Direito/Esquerdo` da descrição do bRO. Em 2026-08-17 deu 76
+  acordos contra 3 divergências — inversão geral daria 79 a 0.
 - **`@reloadscript` sem `@reloaditemdb` FAZ O ITEM NOVO SUMIR DA VITRINE.** O
   `npc_parse_shop` descarta todo item que não está no `item_db` em memória
   (`npc.cpp:4142`, *"Invalid sell item ... (id 'N')"*) — então recarregar o

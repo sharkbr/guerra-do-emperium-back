@@ -4,10 +4,13 @@
 //= Em lugar nenhum: NPC flutuante (mapa `-`, sprite -1). Nao ha
 //= o que clicar, so os rotulos de horario.
 //===== Descricao ============================================
-//= AMANHECE AS 08:00 E ANOITECE AS 20:00, horario de Brasilia.
-//= Pedido do dono em 2026-08-17. A primeira versao do pedido era
-//= 06:00 e 18:00; ele alongou o dia para 08-20 no mesmo dia,
-//= antes de qualquer linha ser escrita.
+//= AMANHECE AS 06:00 E ANOITECE AS 18:00, horario de Brasilia.
+//= Pedido do dono em 2026-08-17, e o horario ANDOU DUAS VEZES no
+//= mesmo dia: o pedido original era 06-18, virou 08-20 antes de
+//= qualquer linha ser escrita, e voltou para 06-18 depois de o
+//= ciclo estar no ar. Quem for mexer aqui de novo troca QUATRO
+//= lugares - os dois rotulos OnClock, os dois numeros do OnInit -
+//= e este paragrafo. Nao ha configuracao unica a mudar.
 //=
 //= Sao doze horas de dia e doze de noite, coladas no relogio do
 //= mundo real - nao um ciclo curto que gira varias vezes por
@@ -59,7 +62,7 @@
 //===== Ao subir o servidor ==================================
 //= `night_at_start: no` faz todo boot comecar de dia. O `OnInit`
 //= abaixo corrige isso: se o servidor subir as 23h, anoitece na
-//= hora, sem esperar as 20:00 do dia seguinte.
+//= hora, sem esperar as 18:00 do dia seguinte.
 //===== Como recarregar ======================================
 //= `@reloadscript`. O estado atual (dia ou noite) NAO se perde no
 //= reload - ele mora em `night_flag`, uma variavel do map-server,
@@ -67,23 +70,23 @@
 //============================================================
 
 -	script	Ciclo do Dia::CicloDoDia	-1,{
-OnClock0800:
+OnClock0600:
 	day;
 	end;
 
-OnClock2000:
+OnClock1800:
 	night;
 	end;
 
 // Acerta o estado na subida do servidor e a cada @reloadscript.
-// Dois `if` aninhados em vez de `>= 8 && < 20` de proposito: o
+// Dois `if` aninhados em vez de `>= 6 && < 18` de proposito: o
 // `&&` do script do rAthena NAO faz curto-circuito (e o C_LAND,
 // operador de dois numeros), e a casa evita o operador por regra
 // - ver CLAUDE.md secao 5.
 OnInit:
 	.@hora = gettime(DT_HOUR);
-	if (.@hora >= 8) {
-		if (.@hora < 20) {
+	if (.@hora >= 6) {
+		if (.@hora < 18) {
 			day;
 			end;
 		}

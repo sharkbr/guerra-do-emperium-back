@@ -10460,10 +10460,13 @@ De quebra, **os avisos de `discounted buying price` sumiram da subida**. Eram
 um por item nas cartas e treze nos visuais; o teste é
 `value*0.75 < value_sell*1.24`, e com a revenda em 0 o lado direito zera.
 
-### 2. Amanhece às 08:00, anoitece às 20:00
+### 2. Amanhece às 06:00, anoitece às 18:00
 
-Pedido como 06/18 e alongado para 08/20 pelo dono antes de qualquer linha ser
-escrita — doze horas de cada.
+Doze horas de cada. **O horário andou duas vezes no mesmo dia**: pedido como
+06/18, alongado para 08/20 pelo dono antes de qualquer linha ser escrita, e
+devolvido para 06/18 depois de o ciclo já estar no ar. Quem mexer nele de novo
+troca **quatro lugares** — os dois rótulos `OnClock`, os dois números do
+`OnInit` — mais o parágrafo do cabeçalho: não há configuração única a mudar.
 
 **Não dá para fazer por configuração.** O `day_duration`/`night_duration` do
 rAthena é ciclo por **duração em milissegundos**, contado a partir do boot:
@@ -10473,7 +10476,7 @@ eles em 0 o `pc_init` não registra temporizador nenhum, e o NPC vira a única
 fonte do estado. Ligar as duas coisas junto faria dois relógios brigarem, com
 o sintoma "amanheceu na hora errada" e nada no log.
 
-`npc/guerra/ciclo_do_dia.txt`, NPC flutuante com `OnClock0800`/`OnClock2000` e
+`npc/guerra/ciclo_do_dia.txt`, NPC flutuante com `OnClock0600`/`OnClock1800` e
 um `OnInit` que acerta o estado na subida (`night_at_start: no` faz todo boot
 começar de dia). Os comandos `day`/`night` de script chamam
 `map_day_timer`/`map_night_timer` com `data = 1`, que é o caminho de GM — e
@@ -10702,3 +10705,202 @@ que pega qualquer outro jeito de o build sair errado.
   que ele mandou e não explicava a produção; ele apontou isso, e a resposta foi
   mais uma explicação plausível em vez de mais uma medição. O que abriu o caso
   foi um caminho de arquivo.
+
+## O brilho da carta e os três acessórios de lado trocado (2026-08-17)
+
+Quatro pedidos na mesma rodada. O primeiro — devolver o ciclo do dia para
+06/18 — está registrado na seção "Três pedidos", §2, que foi corrigida no
+lugar. Os outros três estão aqui; o quarto (visual de GM) ficou em aberto e
+está no `PENDENCIAS.md`.
+
+### 1. O brilho (e o som) quando cai uma carta
+
+> *"No bRO quando uma carta era dropada ela fazia um barulho e um sprite de
+> brilho era carregado junto."*
+
+O pedido veio com o caminho da arte dentro do GRF, e a primeira coisa que a
+varredura mostrou é que **não há nada a trazer**: os cinco pilares já estão no
+nosso `data.grf` de 2021-11-03, cada um com o `.wav` ao lado —
+`data	exture\effect
+ew_dropitem\dropitem_purple\...\dropitem_purple.str` e
+`data\wav\effect\drop_purple.wav`, mais os irmãos azul, verde, rosa e vermelho.
+Ou seja: **nada disto precisa de patch de cliente** (§4.18), e vale para quem
+já instalou o jogo.
+
+Quem liga o efeito é um campo do pacote de queda de item, o
+`ZC_ITEM_FALL_ENTRY5` (0x0ADD): `showdropeffect` e `dropeffectmode`
+(`clif.cpp:890`). O servidor manda o número, o cliente acha o efeito **e o wav**
+sozinho.
+
+**O rAthena já sabe fazer isso por item** — `Flags: DropEffect:` no `item_db`
+(`itemdb.cpp:729`). Esse caminho existe e funciona, e mesmo assim o trabalho
+foi para `src/custom/brilho_da_carta.hpp`, por dois motivos:
+
+1. São **mais de cinco mil cartas**. O override teria uma entrada para cada, e
+   seria o maior arquivo de `db/guerra` por uma ordem de grandeza.
+2. Ele nasceria desatualizado. Carta que entre depois — do upstream, de um
+   evento, de um item nosso — ficaria sem brilho, **calada**, até alguém
+   lembrar de rodar o gerador de novo. A regra é "toda carta", e "toda carta"
+   se escreve uma vez.
+
+A regra escrita é o **tipo** do item (`IT_CARD`), então carta nova já nasce
+brilhando. A cor é `brilho_da_carta` no `conf/guerra/battle_guerra.txt` (4 =
+roxo, o do bRO; 0 desliga), pelo mesmo motivo do `refino_teto`: trocar com
+`@reloadbattleconf` em vez de recompilar. **O número é o do `DropEffect` do
+`item_db`, não o do pacote** — o pacote leva ele menos um —, e a escala **muda
+com o PACKETVER**: o branco saiu e o laranja virou verde em 2020-03-04
+(`itemdb.hpp:3262`). Por isso o teto no `battle_config_init.inc` é o literal
+`6` e não uma constante do `enum`: aquele arquivo é incluído em `battle.cpp`,
+que não inclui o `itemdb.hpp`.
+
+**O que não alcança**, e é do rAthena: só queda de **monstro**. O
+`canShowEffect` do `map_addflooritem` nasce `false` (`map.hpp:1178`) e o mob
+passa `!loot` (`mob.cpp:2540`) — item que o monstro pegou do chão e devolveu na
+morte não brilha, nem item largado por jogador. É o que se quer.
+
+#### A primeira versão não funcionava, e a causa era uma linha de guarda
+
+Compilou, subiu sem aviso nenhum, e **nenhuma carta brilhou**. O código estava
+escrito assim:
+
+```cpp
+// O item mandou: nao ha o que decidir.
+if (efeito_do_item != DROPEFFECT_NONE)
+    return efeito_do_item;
+```
+
+A intenção era boa — item com cor própria no `item_db` continua mandando. O
+erro é que **`DROPEFFECT_CLIENT` (o valor 1) não é uma cor**: quer dizer
+literalmente *"decide você, cliente"*, e o cliente de 2021-11-03 decide não
+desenhar nada. E o `db/re/` do nosso vendor traz `DropEffect: CLIENT` em
+**1882 itens**, com quase toda carta entre eles. Ou seja: a guarda desligava a
+regra inteira, em silêncio, justamente para os itens que o pedido nomeava.
+
+A guarda certa é `> DROPEFFECT_CLIENT`, não `!= DROPEFFECT_NONE`.
+
+#### O que custou caro foi CHEGAR na linha, não consertá-la
+
+Três hipóteses plausíveis vieram antes, e todas foram descartadas por medição:
+
+1. **`@autoloot`** — com ele ligado a carta nunca vira item de chão
+   (`mob.cpp:2600` faz `return` antes do `push_back`), logo não há pacote de
+   queda. Estava desligado.
+2. **O valor da configuração não chegou** — descartado: a sonda imprimiu
+   `config=4`.
+3. **A checagem de `IT_CARD`** — descartada: a sonda imprimiu `type=6`, que é
+   `IT_CARD`.
+
+O que separou os quatro suspeitos foi **pintar cada caminho de uma cor**: Gosma
+azul e Carta de Poring vermelha pelo caminho do `item_db` do rAthena, e o nosso
+caminho em roxo. Aí a observação do dono — *"o brilho aparece na posição em que
+o monstro morreu, e não na da carta"* — deixou de ser um mistério e virou um
+fato: o pilar era o da **Gosma**, que cai na célula da morte (`DIR_CENTER`,
+`mob.cpp:2530`), e a carta, que cai numa célula vizinha, nunca teve pilar
+nenhum. Uma única cor teria escondido isso.
+
+E o que fechou o caso foi uma sonda `ShowInfo` **antes de qualquer `return`**,
+lida direto do buffer de tela do map-server — porque o `log/map-msg_log.log`
+veio vazio duas vezes, e não por falta de sonda: `console_msg_log: 3` grava só
+Warning e Error, e **informação não tem bit nessa escala**. Ler o arquivo e
+concluir "a função não foi chamada" era o diagnóstico invertido que quase
+custou uma quarta hipótese. As duas armadilhas estão no `CLAUDE.md` §5.
+
+### 2. Os três acessórios de lado trocado — e a inversão que não existia
+
+> *"Acessórios estão trocados. O que é direito aparece no esquerdo, e o que é
+> esquerdo aparece no direito."*
+
+A leitura natural é "o cliente inverte os dois lados", e ela é **errada**. O
+print que veio junto já trazia a resposta, e ela é do lado do servidor.
+
+Na janela de equipamentos as duas caixas dizem `Acc. Right` (à **nossa**
+esquerda) e `Acc. Left` (à nossa direita) — e isso está certo: o personagem
+está de frente, então a direita dele é a nossa esquerda. O Amuleto Mitológico
+(490337) tem na descrição `Tipo: Aces. Direito` e entrava na caixa `Acc. Left`.
+
+**Quem discordava era o `Locations:` do nosso vendor.** A medição fechou o
+assunto numa rodada: dos **79** acessórios que cravam um lado só *e* que têm
+lado declarado na descrição do bRO, **76 concordam e três divergem** — e
+nenhum diz "os dois" onde o bRO crava um lado. Não havia inversão geral a
+corrigir; havia três itens errados.
+
+| ID | item | nosso vendor | bRO |
+|---|---|---|---|
+| 490290 | Anel de Ameretat | Direito | **Esquerdo** |
+| 490336 | Núcleo de Verus | Esquerdo | **Direito** |
+| 490337 | Amuleto Mitológico | Esquerdo | **Direito** |
+
+Quem vence é o bRO, pela §4.14 e pelo mesmo raciocínio da Piscadela de Freya: a
+descrição que o jogador lê vem do `itemInfo.lua`, ou seja do bRO — deixar o
+servidor discordando dela faz a tela mentir, e o servidor é o lado barato de
+trocar. Três overrides em `db/guerra/item_db.yml`, com o `false` explícito no
+lado velho (`Locations` é OR, não atribuição).
+
+Uma armadilha de nome, e ela quase custou o item do meio: o `_L_` de
+`Dimension_L_Stone` **não é "left"**. A família `Dimension_*` usa a letra para
+a classe (`_B_Greave`, `_H_Boots`, `_S_Shoes`, `_M_Shoes`), e não existe
+nenhum `Dimension_R_Stone` — é o único `Dimension_*_Stone` do `item_db`
+inteiro.
+
+**Depois do `@reloaditemdb`, relogar antes de testar** — e essa parte custou
+uma rodada, porque a instrução que dei estava pela metade. Eu avisei do item
+já **equipado**, que não se move: o lado fica gravado na coluna `equip` do
+inventário, e o `itemdb_reload` chama `pc_check_available_item`, não
+`pc_checkitem` (`itemdb.cpp:4992`).
+
+Faltou o outro lado, e é o que o dono viu: **o item na mochila também não
+equipa**, e a mensagem culpa o item — *"You can't put this item on."*, uma por
+clique. O cliente guarda o `location` de cada item de quando a lista de
+inventário lhe foi enviada (`clif_inventorylist` manda `pc_equippoint`,
+`clif.cpp:3092`) e **manda essa posição de volta** ao equipar
+(`clif_parse_EquipItem` repassa o `p->position` cru). O `pc_equipitem` testa
+`!(pos & req_pos)` (`pc.cpp:12064`): servidor dizendo `Acc. Direito`, cliente
+ainda pedindo `Acc. Esquerdo`, a conta dá zero, recusa.
+
+Quem conserta os dois é o reenvio da lista de inventário, que só acontece no
+login ou na troca de mapa (`clif_parse_LoadEndAck`, `clif.cpp:10795`). Aí o
+`pc_checkitem` desequipa o antigo sozinho (`pc.cpp:12623`) e reequipar põe na
+caixa certa.
+
+**Na produção isso não aparece**: o deploy reinicia o map-server e todo mundo
+reconecta. É um sintoma exclusivo do recarregamento parcial em DEV — o mesmo
+padrão do `@reloadscript` sem `@reloaditemdb`, que faz o mesmo servidor se
+comportar de dois jeitos. Está no `CLAUDE.md` §5.
+
+De quebra, a mesma varredura anotou uma divergência que **não** foi mexida por
+estar fora do pedido: o bRO dá `DEF: 12` ao Núcleo de Verus e o nosso vendor
+não lhe dá `Defense` nenhum.
+
+### 3. O visual de GM na produção — uma conta que não existia lá
+
+O cliente só dá o tratamento de GM para os `account_id` listados no
+`<aid><admin>` dos dois `clientinfo` (`data\clientinfo.xml` e
+`data\sclientinfo.xml` — os dois, pela §5), e lá estava **só o 2000000**, a
+conta de DEV desta máquina. É por isso que funcionava no HML e não na
+produção: o `group_id 99` do banco dá os **comandos**, o `<aid>` dá o
+**visual**, e as duas metades são independentes — nenhuma delas reclama da
+outra.
+
+O número veio do dono (2000004) e foi conferido no banco da produção antes de
+empacotar, porque **número de patch nunca se reaproveita** e publicar o id
+errado gastaria um. A consulta fechou melhor do que o esperado: a única conta
+com `group_id 99` é a 2000004 (`librasupremo`), e **o 2000000 nem existe na
+produção** — a numeração de lá começa em 2000001. Por isso o arquivo publicado
+leva **só** o 2000004: manter o 2000000 seria dar o visual de GM a quem viesse
+a ter aquele número, e ele não serve para nada lá.
+
+Virou o **patch 0004**, de 850 bytes — e a montagem dele tem um degrau que vale
+registrar: o `monta_patch.py` empacota os arquivos **como eles estão** em
+`C:\GuerraDoEmperium\cliente`, e este cliente aponta para `127.0.0.1` desde
+2026-08-16. Então a montagem foi um sanduíche — trocar os dois xml pela versão
+de produção, montar, devolver o dev —, com o `confere_apontamento` do próprio
+`monta_patch.py` como rede de segurança no meio e uma conferência no fim de que
+o cliente voltou ao `127.0.0.1`. Os dois `.BACKUP-138.197.155.31` que ficam ao
+lado passaram a guardar a versão de produção **de verdade** (endereço + conta
+de GM), que é o que se restaura ao voltar para lá.
+
+**Publicado no mesmo dia.** A conferência não parou no "enviei": o zip foi
+baixado de volta da CDN e conferido — 850 bytes, sha256 batendo com o
+`patcher/patches.txt`, e os dois xml com o endereço de produção e o
+`<admin>2000004</admin>` dentro. Falta a tela do outro lado (`PENDENCIAS.md`
+§1w).

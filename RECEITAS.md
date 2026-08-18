@@ -370,6 +370,16 @@ aplica sozinho na próxima abertura.
 
 **Para apagar arquivo do cliente do jogador:** `--apagar data/algum.lub`.
 
+**Patch que leve um dos dois `clientinfo` é um sanduíche.** O
+`monta_patch.py` empacota os arquivos **como eles estão** no cliente desta
+máquina, e este cliente aponta para `127.0.0.1` desde 2026-08-16 — mandar
+assim tira todo jogador do ar, com o único sintoma sendo "não consigo entrar".
+Então: pôr os **dois** xml na versão de produção (está nos
+`.BACKUP-138.197.155.31` ao lado), montar, e devolver o par de dev — conferindo
+no fim que o `<address>` voltou. O `confere_apontamento` recusa a montagem se o
+endereço for local, e é a única coisa nesse caminho que olha para esse campo.
+Foi assim que o patch 0004 (visual de GM) foi montado em 2026-08-17.
+
 **O Atualizador não vai por patch.** Ele não consegue se sobrescrever enquanto
 roda; tem canal próprio. Detalhes em `patcher/LEIAME.md`, e a receita é a §11b
 logo abaixo — que são **dois** lugares, não um.

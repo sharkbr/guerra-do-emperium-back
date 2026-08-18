@@ -2185,6 +2185,88 @@ Body:
       Costume_Head_Mid: false
       Costume_Head_Low: true
 
+  # ----- OS TRES ACESSORIOS DE LADO TROCADO - 2026-08-17 ----------------
+  #
+  # O dono viu, na janela de equipamentos, um acessorio cuja descricao diz
+  # "Tipo: Aces. Direito" entrar na caixa escrita "Acc. Left" - e o
+  # contrario tambem. A leitura natural e "o cliente troca os dois lados",
+  # e ela e ERRADA: o cliente esta certo e as etiquetas tambem. A caixa
+  # "Acc. Right" fica a NOSSA esquerda porque o personagem esta de frente,
+  # e a direita dele e a nossa esquerda.
+  #
+  # Quem discorda e o `Locations:` do NOSSO vendor. Medido em 2026-08-17
+  # no item_db inteiro: dos 79 acessorios que cravam um lado so E que tem
+  # lado declarado na descricao do bRO, 76 concordam e SO ESTES TRES
+  # divergem - e nenhum diz "os dois" onde o bRO crava um. Nao ha inversao
+  # geral a corrigir; ha tres itens errados.
+  #
+  # Quem vence e o bRO, pela regra 4.14 do CLAUDE.md e pelo mesmo
+  # raciocinio da Piscadela de Freya: a descricao que o jogador le vem do
+  # `itemInfo.lua`, ou seja do bRO. Deixar o servidor discordando dela faz
+  # a tela mentir, e o servidor e o lado barato de trocar.
+  #
+  # `Locations` e OR, nao atribuicao - ver a nota grande no topo desta
+  # secao. Tirar o lado antigo exige o `false` explicito; so acrescentar o
+  # novo deixaria o acessorio ocupando OS DOIS, e ai ele cairia em
+  # qualquer caixa vaga - pior que o problema original.
+  #
+  # `AegisName` e `Name` sao redundantes aqui, pelas duas razoes que o
+  # override da Piscadela de Freya anota mais acima.
+  #
+  # DEPOIS DO `@reloaditemdb`, RELOGAR ANTES DE TESTAR. Sao dois efeitos do
+  # mesmo atraso, e o segundo parece defeito do item:
+  #
+  #   - o que ESTA EQUIPADO nao se move: o lado fica gravado na coluna
+  #     `equip` do inventario, e o `itemdb_reload` nao mexe nela
+  #     (itemdb.cpp:4992 chama `pc_check_available_item`, nao
+  #     `pc_checkitem`);
+  #   - o que esta na MOCHILA nao equipa: sai "You can't put this item on."
+  #     a cada clique. O cliente guarda o `location` de quando a lista de
+  #     inventario lhe foi enviada e manda essa posicao de volta ao equipar;
+  #     o `pc_equipitem` testa `!(pos & req_pos)` (pc.cpp:12064) e recusa,
+  #     porque o servidor ja diz um lado e o cliente ainda pede o outro.
+  #
+  # Quem conserta os dois e o reenvio da lista de inventario, que so acontece
+  # no login ou na troca de mapa (clif_parse_LoadEndAck, clif.cpp:10795). Ai
+  # o `pc_checkitem` desequipa o antigo sozinho (pc.cpp:12623) e reequipar
+  # poe na caixa certa. Medido em 2026-08-17, e a mensagem enganou primeiro.
+  #
+  # Na PRODUCAO isto nao aparece: o deploy reinicia o map-server e todo mundo
+  # reconecta. E' um problema exclusivo do recarregamento parcial em DEV.
+
+  - Id: 490290
+    # Anel de Ameretat. O vendor diz `Right_Accessory`; a descricao do bRO
+    # diz "Tipo: Aces. Esquerdo".
+    AegisName: Ameretat
+    Name: "Anel de Ameretat"
+    Locations:
+      Right_Accessory: false
+      Left_Accessory: true
+
+  - Id: 490336
+    # Nucleo de Verus. O vendor diz `Left_Accessory`; a descricao do bRO
+    # diz "Tipo: Aces. Direito".
+    #
+    # O `_L_` do AegisName NAO e "left", e foi conferido: a familia
+    # `Dimension_*` usa a letra para a classe (`_B_Greave`, `_H_Boots`,
+    # `_S_Shoes`, `_M_Shoes`), e nao existe nenhum `Dimension_R_Stone` do
+    # outro lado - este e o unico `Dimension_*_Stone` do item_db inteiro.
+    AegisName: Dimension_L_Stone
+    Name: "Núcleo de Verus"
+    Locations:
+      Left_Accessory: false
+      Right_Accessory: true
+
+  - Id: 490337
+    # Amuleto Mitologico - o item do print de 2026-08-17, o que abriu o
+    # assunto. O vendor diz `Left_Accessory`; a descricao do bRO diz
+    # "Tipo: Aces. Direito".
+    AegisName: Amulet_of_GenesisStone
+    Name: "Amuleto Mitológico"
+    Locations:
+      Left_Accessory: false
+      Right_Accessory: true
+
   # ----- O premio raro da Roleta Magica - 2026-08-13 ---------------------
   #
   # ATENCAO AO ID: 600 esta FORA da nossa faixa 30000-30999, e nao e
@@ -2256,3 +2338,4 @@ Body:
       NoConsume: true
     Script: |
       callfunc "F_AlbumDeTaro";
+

@@ -60,6 +60,7 @@
 #include "vending.hpp"
 
 // Guerra do Emperium: nosso codigo vive em src/custom; aqui so o ponteiro.
+#include <custom/brilho_da_carta.hpp>
 #include <custom/placa_de_venda.hpp>
 #include <custom/refino.hpp>
 
@@ -890,6 +891,11 @@ void clif_dropflooritem( const flooritem_data* fitem, bool canShowEffect ){
 #if defined(PACKETVER_ZERO) || PACKETVER >= 20180418
 	if( canShowEffect ){
 		uint8 dropEffect = itemdb_dropeffect( fitem->item.nameid );
+
+		// Guerra do Emperium: o pilar de luz e o som quando cai uma CARTA
+		// (src/custom/brilho_da_carta.hpp). Item com DropEffect proprio no
+		// item_db continua mandando - a funcao so preenche o vazio.
+		dropEffect = brilho_da_carta( fitem->item.nameid, dropEffect );
 
 		if( dropEffect > 0 ){
 			p.showdropeffect = 1;

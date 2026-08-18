@@ -69,3 +69,14 @@
 { "guardiao_hit_passo",                 &battle_config.guardiao_hit_passo,              10,     0,      SHRT_MAX,       },
 { "guardiao_hit_max",                   &battle_config.guardiao_hit_max,                630,    1,      SHRT_MAX,       },
 
+// Guerra do Emperium: cor do brilho de carta caindo. O valor de verdade esta em
+// conf/guerra/battle_guerra.txt; o 0 aqui e o padrao de quem clonar o repo sem
+// esse arquivo, ou seja DESLIGADO - esta e regra de jogo nossa, e clone sem a
+// nossa conf tem de se comportar como rAthena puro.
+// O teto e 6 e nao uma constante do `e_item_drop_effect` de proposito: aquele
+// enum MUDA DE VALOR conforme o PACKETVER (src/map/itemdb.hpp:3262 - o branco
+// saiu e o laranja virou verde em 2020-03-04), e este arquivo e incluido em
+// battle.cpp, que nao inclui o itemdb.hpp. O 6 e o vermelho no nosso 20211103.
+// Ver src/custom/brilho_da_carta.hpp.
+{ "brilho_da_carta",                    &battle_config.brilho_da_carta,                 0,      0,      6,              },
+

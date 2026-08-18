@@ -335,3 +335,33 @@ guardiao_aspd_max: 178
 guardiao_hit_base: 530
 guardiao_hit_passo: 10
 guardiao_hit_max: 630
+
+// ---------------------------------------------------------------
+// O BRILHO DE CARTA CAINDO
+// ---------------------------------------------------------------
+//
+// Pedido do dono em 2026-08-17: "no bRO quando uma carta era
+// dropada ela fazia um barulho e um sprite de brilho era carregado
+// junto". Sao as duas coisas de uma vez - o cliente acha o wav
+// sozinho ao desenhar o pilar.
+//
+// O numero e o mesmo do `Flags: DropEffect:` do item_db (o pacote
+// leva ele menos um), e a escala MUDA CONFORME O PACKETVER - o
+// branco saiu e o laranja virou verde em 2020-03-04. No nosso
+// 20211103:
+//
+//   0  desligado (comportamento do rAthena)
+//   1  o cliente escolhe
+//   2  pilar azul
+//   3  pilar amarelo
+//   4  pilar ROXO   <- o do bRO, e o pedido
+//   5  pilar verde
+//   6  pilar vermelho
+//
+// Vale para TODA carta, pelo tipo do item - nao ha lista a manter.
+//
+// Carta que peca um PILAR no item_db vence este numero. `DropEffect:
+// CLIENT` NAO conta como pedido: e "decide voce, cliente", e este
+// cliente decide nao desenhar nada - o vendor traz isso em 1882
+// itens, quase toda carta inclusive. Ver src/custom/brilho_da_carta.hpp.
+brilho_da_carta: 4

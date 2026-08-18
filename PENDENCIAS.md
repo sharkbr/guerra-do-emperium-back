@@ -54,8 +54,10 @@ sem confirmação in-game.
 | `*` e `-` aceitos no nome de personagem (`char_name_option: 1`) | tela de criação | 2026-08-16 |
 | 53 itens novos, as 6 lojas e o `@autoloot` do grupo 0 — **agora na produção** | `prontera` | 2026-08-16 |
 | **As 22 lojas de Prontera todas a 1 zeny, e a revenda em 0** | `prontera`, os três mercados | 2026-08-17 |
-| **Amanhece às 08:00, anoitece às 20:00** | mundo inteiro, sem NPC visível | 2026-08-17 |
+| **Amanhece às 06:00, anoitece às 18:00** | mundo inteiro, sem NPC visível | 2026-08-17 |
 | **O Evento de Refino ligado** | janela de refino | 2026-08-17 |
+| **O pilar roxo e o som quando cai carta** | qualquer monstro que solte carta | 2026-08-17 |
+| **Os três acessórios de lado trocado** (490290, 490336, 490337) | janela de equipamentos | 2026-08-17 |
 
 **A Tranqueiras é a única da lista que pode falhar por um motivo novo**, e ele
 é do lado do cliente: ela usa **sprite 5 (`JOB_MERCHANT`), uma classe de
@@ -1673,6 +1675,39 @@ Vassalo (31954) e Piscadela de Freya (410320). São esses três que o
 `instala_visual.py` deixaria de tratar como chapéu.
 
 Consertar é copiar o `item_de` do `instala_manto.py`.
+
+---
+
+## 1w. O visual de GM da produção — publicado, falta ver na tela (2026-08-17)
+
+Diagnóstico fechado, patch **0004 publicado** em 2026-08-17. Falta só a
+conferência do outro lado.
+
+**A causa era o `<aid>`, e ele é do CLIENTE.** O `group_id 99` do banco dá os
+*comandos*; quem dá o *visual* é a lista de contas administradoras dentro dos
+dois `clientinfo`. Lá estava só o `2000000` — a conta de DEV desta máquina —, e
+na produção esse `account_id` **nem existe**: conferido no banco de lá, a única
+conta com `group_id 99` é a **2000004** (`librasupremo`), e a numeração começa
+em 2000001. Por isso o sintoma era exatamente "funciona aqui, não funciona lá",
+sem nada no log dos dois lados.
+
+O patch leva `data/clientinfo.xml` e `data/sclientinfo.xml` com o endereço de
+produção e `<admin>2000004</admin>`. Conferido depois de publicado: baixado da
+CDN, 850 bytes, sha256 batendo com o `patcher/patches.txt`, e os dois xml com o
+endereço e a conta certos.
+
+**O que falta:** abrir o `Jogar.exe` da instalação de produção
+(`C:\Program Files (x86)\GuerraDoEmperium`), deixar o Atualizador aplicar, e
+entrar com a `librasupremo` para ver o visual.
+
+### Duas coisas anotadas, para não serem redescobertas
+
+- **O `2000000` ficou fora da lista publicada, de propósito.** Ele é o GM
+  daqui, não o de lá. O cliente de DEV desta máquina continua com o 2000000 e
+  segue funcionando.
+- **Conta de GM nova exige patch novo.** A lista é estática dentro do cliente:
+  não há como o servidor promover ninguém ao visual. A tag aceita vários
+  `<admin>`, um por linha.
 
 ---
 
