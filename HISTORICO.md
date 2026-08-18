@@ -11050,3 +11050,81 @@ Nada foi visto em jogo ainda — o servidor está no ar e o recarregamento é do
 dono. A ordem importa: **`@reloadbarterdb` primeiro** (a Fruta na Máquina),
 **`@reloadscript` depois** (os dois NPCs). O roteiro de teste está em
 `PENDENCIAS.md`.
+
+## O cliente de dev estava apontado para a produção, e quem o virou foi o Atualizador (2026-08-18)
+
+O dono foi testar a separação de cartas no servidor local e reparou que o
+cliente de `C:\GuerraDoEmperium\cliente` estava indo para a produção. Estava
+mesmo — e os **quatro** arquivos concordavam nisso: os dois `clientinfo` vivos e
+os dois `.BACKUP-138.197.155.31` ao lado, byte a byte idênticos, todos em
+`138.197.155.31` com `<admin>2000004</admin>`.
+
+### A suspeita óbvia estava errada
+
+O primeiro palpite foi o **sanduíche** da `RECEITAS.md` §11: montar o patch 0004
+(visual de GM) em 2026-08-17 exigiu apontar os dois xml para produção, e o passo
+de volta poderia ter sido esquecido. Plausível, e falso.
+
+O que decidiu foi o `patch\aplicados.txt` do próprio cliente de dev:
+
+```
+0004  f11c5f27…  2026-08-18 01:50  Visual de GM na producao
+```
+
+**Alguém rodou o `Jogar.exe` dentro da pasta de dev**, e o Atualizador fez
+exatamente o que existe para fazer: aplicou o patch 0004, que leva os dois
+`clientinfo` com o endereço de produção. O carimbo de 01:50 bate com o dos dois
+xml vivos. Não foi descuido de receita — foi o caminho normal do produto,
+rodando no lugar errado.
+
+### A assimetria que ninguém tinha visto
+
+O `monta_patch.py` e o `monta_cliente.py` protegem a **saída**: o
+`confere_apontamento` recusa publicar um cliente apontado para `127.0.0.1`, e
+foi essa trava que evitou publicar 3,4 GB inúteis em 2026-08-16. **Nada
+protegia a entrada.** E a falha de entrada é pior de descobrir, porque não tem
+sintoma: o jogo abre, loga, joga — no servidor errado. Quem estivesse "testando
+local" estaria testando produção, e a única pista seria um personagem que não
+existe.
+
+Isso volta a acontecer em **todo patch futuro que leve os xml**, enquanto houver
+um `Jogar.exe` naquela pasta.
+
+### O segundo buraco: o backup era de um lado só
+
+O nome `.BACKUP-138.197.155.31` diz o que ele guarda — a produção. Não havia
+`.BACKUP-127.0.0.1`. Então, quando o lado de dev foi sobrescrito, **não havia de
+onde restaurar**: o `127.0.0.1` teve de ser reconstruído à mão. A receita já
+dizia "devolver o par de dev" e presumia um par de dev que nunca existiu como
+arquivo.
+
+E o `<admin>` mostrou que não bastava trocar o endereço: o `group_id 99` do
+banco dá os *comandos*, mas quem dá o **visual** de GM é a lista dentro do
+cliente. Local é `2000000` (`teste`, a única conta com group 99 neste banco);
+produção é `2000004` (`librasupremo`), que aqui nem existe. Dois campos, dois
+arquivos.
+
+### O conserto virou uma ferramenta
+
+`ferramentas/aponta_cliente.py`, com três modos:
+
+```
+python ferramentas/aponta_cliente.py              # só relata
+python ferramentas/aponta_cliente.py --dev
+python ferramentas/aponta_cliente.py --producao
+```
+
+Ele mexe no `<address>` **e** no `<admin>` dos **dois** xml, grava o lado de
+onde saiu antes de trocar (agora há `.BACKUP-` dos dois lados), e avisa quando
+os dois arquivos discordam entre si. O sanduíche da §11 passou a ser três
+comandos sem nenhum passo à mão.
+
+**Conferido, e a conferência é o que dá confiança nele:** a ida e a volta
+devolvem os arquivos **byte a byte idênticos**, e o `--producao` reproduz
+exatamente o `.BACKUP-138.197.155.31` de 2026-08-17 — ou seja o script chega ao
+mesmo lugar em que a montagem manual do patch 0004 tinha chegado. Depois de
+apontar para dev, o `confere_apontamento` foi chamado nos dois arquivos e
+recusou os dois, que é a trava de saída rearmada.
+
+O cliente ficou em `127.0.0.1` / `2000000`. **Para jogar no local, abrir pelo
+`GuerraDoEmperium.exe`** — o `Jogar.exe` daquela pasta reaponta tudo de volta.

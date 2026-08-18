@@ -374,11 +374,26 @@ aplica sozinho na próxima abertura.
 `monta_patch.py` empacota os arquivos **como eles estão** no cliente desta
 máquina, e este cliente aponta para `127.0.0.1` desde 2026-08-16 — mandar
 assim tira todo jogador do ar, com o único sintoma sendo "não consigo entrar".
-Então: pôr os **dois** xml na versão de produção (está nos
-`.BACKUP-138.197.155.31` ao lado), montar, e devolver o par de dev — conferindo
-no fim que o `<address>` voltou. O `confere_apontamento` recusa a montagem se o
-endereço for local, e é a única coisa nesse caminho que olha para esse campo.
-Foi assim que o patch 0004 (visual de GM) foi montado em 2026-08-17.
+Desde 2026-08-18 são três comandos, e nenhum passo à mão:
+
+```
+python ferramentas/aponta_cliente.py --producao
+python ferramentas/monta_patch.py --nome "..." data/clientinfo.xml data/sclientinfo.xml
+python ferramentas/aponta_cliente.py --dev        # NUNCA esquecer este
+```
+
+Ele mexe no `<address>` **e** no `<admin>` dos dois xml — trocar só o endereço
+manda o patch com a conta de GM errada. O `confere_apontamento` recusa a
+montagem se o endereço for local, e é a única coisa nesse caminho que olha para
+esse campo. Foi assim que o patch 0004 (visual de GM) foi montado em 2026-08-17,
+ainda à mão — e o passo de volta se perdeu, o que deixou o cliente de dev
+apontado para produção até 2026-08-18.
+
+**E cuidado com o caminho de volta que ninguém pediu:** rodar o `Jogar.exe`
+dentro da pasta de dev reaplica os patches, inclusive o que leva os
+`clientinfo` — o cliente de dev vira cliente de produção sozinho. Para jogar no
+local, abrir pelo `GuerraDoEmperium.exe`; se já rodou o Atualizador ali, é
+`aponta_cliente.py --dev` de novo. Ver `CLAUDE.md` §5.
 
 **O Atualizador não vai por patch.** Ele não consegue se sobrescrever enquanto
 roda; tem canal próprio. Detalhes em `patcher/LEIAME.md`, e a receita é a §11b

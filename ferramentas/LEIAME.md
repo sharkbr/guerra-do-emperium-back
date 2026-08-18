@@ -2983,6 +2983,46 @@ Dois cuidados que valem para todo patch de exe daqui:
 O backup vai para `GuerraDoEmperium.exe.BACKUP-bandeiras-AAAAMMDD-HHMM`, e a
 gravação recusa qualquer coisa que mude o tamanho do arquivo.
 
+## `aponta_cliente.py` — para onde o cliente desta máquina aponta
+
+```
+python aponta_cliente.py                # só relata, não grava
+python aponta_cliente.py --dev          # 127.0.0.1 (o servidor desta máquina)
+python aponta_cliente.py --producao     # o servidor de verdade
+```
+
+O cliente de `C:\GuerraDoEmperium\cliente` é o de **DEV/HML** desde 2026-08-16;
+produção se testa noutra pasta, instalada pelo instalador como um jogador faria
+(`CLAUDE.md` §1). Este script existe porque manter esse combinado à mão já
+falhou duas vezes.
+
+**São dois arquivos e dois campos, e cada par tem uma armadilha própria.** Os
+dois xml são `data\clientinfo.xml` e `data\sclientinfo.xml`, e **quem vale é o
+segundo** — este exe é `<servertype>sakray</servertype>`, e trocar só o primeiro
+deixa o cliente indo para o lugar antigo (uma hora perdida em 2026-08-14). Os
+dois campos são o `<address>` e o `<admin>`: o `group_id 99` do banco dá os
+*comandos*, mas quem dá o **visual** de GM é a lista dentro do cliente — 2000000
+aqui (`teste`), 2000004 lá (`librasupremo`), que nem existe neste banco. Trocar
+só o endereço deixa o GM sem visual do outro lado, e foi o que custou o patch
+0004.
+
+**O que desaponta o cliente sozinho é o Atualizador.** Há um `Jogar.exe` dentro
+da pasta de dev, e o patch 0004 leva os dois `clientinfo` com o endereço de
+produção: rodá-lo ali reaponta tudo, sem perguntar. O `monta_patch.py` protege a
+*saída* (`confere_apontamento` recusa publicar cliente apontado para local);
+nada protegia a *entrada*, e a falha é calada da pior maneira — o jogo abre,
+loga e joga, só que no servidor errado. Para jogar no local, abrir pelo
+`GuerraDoEmperium.exe`.
+
+**Os backups são dos dois lados**, e não eram: até 2026-08-18 só existia
+`.BACKUP-138.197.155.31`, então quando o lado de dev foi sobrescrito não havia
+de onde restaurar. O script grava o lado de onde saiu **antes** de trocar. Os
+dois pacotadores ignoram nome com `BACKUP` (o `LIXO` deles), então esses
+arquivos não vão para patch nem para a base.
+
+Conferido em 2026-08-18: a ida e a volta são idênticas byte a byte, e o
+`--producao` reproduz exatamente o backup de produção de 2026-08-17.
+
 ## `monta_patch.py` — o zip que leva a mudança do cliente até o jogador
 
 ```

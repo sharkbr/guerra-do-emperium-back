@@ -50,12 +50,20 @@ máquina. Fazer backup antes de sobrescrever, sempre.
 **E desde 2026-08-16 esse cliente é o de DEV/HML:** os dois `clientinfo` dele
 apontam para `127.0.0.1`, o servidor local desta máquina. **Produção se testa
 noutra pasta**, instalada pelo instalador como um jogador faria — decisão do
-dono, e é o que separa "funciona aqui" de "funciona para quem baixou". Trocar de
-lado é editar o `<address>` dos **dois** xml (`data\clientinfo.xml` e
-`data\sclientinfo.xml`, este último é o que vale — §5); o endereço de produção
-está no backup ao lado de cada um. As duas ferramentas de empacotamento
-**recusam** cliente apontado para local, e é a única coisa que impede um pacote
-inteiro, correto e inútil.
+dono, e é o que separa "funciona aqui" de "funciona para quem baixou".
+
+**Trocar de lado é `python ferramentas/aponta_cliente.py --dev` (ou
+`--producao`); sem argumento ele só diz para onde os dois apontam hoje.** São
+dois xml (`data\clientinfo.xml` e `data\sclientinfo.xml`, este último é o que
+vale — §5) e **dois campos em cada**: o `<address>` e o `<admin>`, que é a conta
+que ganha o visual de GM (2000000 aqui, 2000004 lá). Trocar só o endereço deixa
+o GM sem visual do outro lado. As duas ferramentas de empacotamento **recusam**
+cliente apontado para local, e é a única coisa que impede um pacote inteiro,
+correto e inútil.
+
+**O que desaponta esse cliente sozinho é o Atualizador** — há um `Jogar.exe`
+naquela pasta, e patch que leve os `clientinfo` reaponta tudo para produção sem
+avisar. Ver §5. Para jogar no local, abrir pelo `GuerraDoEmperium.exe`.
 
 ## 2. A lei da customização
 
@@ -643,6 +651,20 @@ Produziram diagnóstico falso e custaram retrabalho:
   `monta_patch.py` e o `monta_cliente.py` passaram a recusar endereço local
   (`confere_apontamento`), e é bom que recusem: nada mais nesse caminho olha
   para esse campo.
+  **E há o gume de VOLTA, que só apareceu em 2026-08-18: rodar o Atualizador
+  dentro da pasta de dev transforma o cliente de dev em cliente de PRODUÇÃO.**
+  Existe um `Jogar.exe` em `C:\GuerraDoEmperium\cliente`, e o patch 0004 leva
+  os dois `clientinfo` com o endereço de produção — aplicá-lo ali reaponta o
+  cliente sem perguntar nada. Os dois pacotadores protegem a **saída**; nada
+  protegia a **entrada**, e essa falha é calada da pior maneira: o jogo abre,
+  loga e joga, só que no servidor errado — quem estiver "testando local" está
+  testando produção, e nada na tela diz isso. Vai voltar a acontecer em todo
+  patch que leve os xml. O conserto é um comando, `ferramentas/aponta_cliente.py
+  --dev`, e sem argumento ele só relata para onde os dois apontam.
+  **E os backups eram de um lado só.** Existia `.BACKUP-138.197.155.31` e mais
+  nada, então quando o de dev foi sobrescrito não havia de onde restaurar — o
+  `127.0.0.1` teve de ser reconstruído à mão. Agora há `.BACKUP-` dos **dois**
+  lados, e o `aponta_cliente.py` grava o lado de onde saiu antes de trocar.
 - **A IA do homúnculo e a do mercenário moram em `cliente\AI_sakray\`, não em
   `cliente\AI\` — e a pasta errada não dá erro até alguém invocar o bicho.**
   Pelo mesmo `<servertype>sakray</servertype>` da entrada acima, as **cinco**

@@ -27,8 +27,9 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | Executável do cliente | `GuerraDoEmperium.exe` |
 | **Servidor de produção** | `138.197.155.31` = `libraro.filiponegrao.com.br` (login 6900, char 6121, map 5121) |
 | **Site de contas** | https://libraro.filiponegrao.com.br — é por ele que o jogador se cadastra (`new_account: no`) |
-| **Endereço do servidor no cliente** | `cliente\data\sclientinfo.xml` — **é este que vale**, não o `clientinfo.xml`; manter os dois iguais (`CLAUDE.md` §5). Hoje os dois estão em `127.0.0.1`; o endereço de produção ficou no backup ao lado (`.BACKUP-138.197.155.31`) |
-| Trocar o apontamento do cliente | editar o `<address>` dos **dois** xml. `monta_patch.py` e `monta_cliente.py` **recusam** empacotar com endereço local (trava de 2026-08-16) |
+| **Endereço do servidor no cliente** | `cliente\data\sclientinfo.xml` — **é este que vale**, não o `clientinfo.xml`; manter os dois iguais (`CLAUDE.md` §5). Hoje os dois estão em `127.0.0.1` com `<admin>2000000</admin>`; cada um tem `.BACKUP-127.0.0.1` e `.BACKUP-138.197.155.31` ao lado, um por lado |
+| Trocar o apontamento do cliente | `python ferramentas/aponta_cliente.py --dev` / `--producao`; sem argumento só relata. Mexe no `<address>` **e** no `<admin>` dos **dois** xml. `monta_patch.py` e `monta_cliente.py` **recusam** empacotar com endereço local (trava de 2026-08-16) |
+| **Conta de GM** | local `2000000` (`teste`); produção `2000004` (`librasupremo`). O `group_id 99` do banco dá os comandos; o **visual** vem do `<admin>` dentro do cliente |
 | **Atualizador (patcher)** | `cliente\Jogar.exe` — é o que o jogador clica (o jogo, `GuerraDoEmperium.exe`, quem abre é ele); código em `patcher/`, doc em `patcher/LEIAME.md` |
 | Executáveis do kRO que não se clica | `cliente\_extras\` — movidos para lá em 2026-08-16 por `ferramentas/limpa_cliente.py` |
 | Backups que as ferramentas deixam | `C:\GuerraDoEmperium\_backups_removidos\` — inclui as duas cópias do exe **antes** dos nossos patches |
