@@ -1755,9 +1755,14 @@ Body:
     Name: "Lacma"
     Type: Weapon
     SubType: Dagger
-    # `Buy: 20` copiado do 13049, e nao inventado. Pela regra 4.16 e ele que
-    # decide o preco na vitrine: o Senhor das Armas cobra 20 zeny por esta
-    # adaga, nao 1.
+    # `Buy: 20` copiado do 13049, e nao inventado.
+    #
+    # ATENCAO: ate 2026-08-18 estas linhas diziam que a regra 4.16 fazia
+    # esta adaga custar 20 zeny na vitrine. NAO FAZ MAIS, e provavelmente
+    # nunca fez - a linha do Senhor das Armas sempre disse `28739:1`, e
+    # desde 2026-08-17 o db/guerra/item_db_lojas.yml (gerado) importa
+    # DEPOIS deste arquivo e poe `Buy: 1` em cima. O que o `Buy: 20` daqui
+    # decide hoje e so o valor do item FORA das lojas de Prontera.
     Buy: 20
     Weight: 650
     Attack: 45
@@ -2338,4 +2343,220 @@ Body:
       NoConsume: true
     Script: |
       callfunc "F_AlbumDeTaro";
+
+# -------------------------------------------------------------------------
+# QUINTA LEVA DE PLACEHOLDERS - 2026-08-18
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das quatro de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub` (`estado_item.py --id <n> --descricao`).
+#
+# Os quatro vieram do pedido de 2026-08-18 para as lojas de Prontera. Dos 34
+# itens daquela lista estes foram os UNICOS quatro que faltavam no servidor.
+#
+# DOIS SAO A VERSAO COM COVA DE UM ITEM QUE JA TEMOS, e isso foi conferido e
+# nao suposto - e o caso da Diadema do Paraiso (19024 -> 19455, mais acima),
+# repetido duas vezes:
+#
+#   470004  Botas Imperiais [1]   o vendor tem o 22207, `Imperial_Boots`,
+#                                 mesma ficha e mesmo script, SEM cova
+#   22224   Sapatos Fofinhos [1]  o vendor tem o 22210,
+#                                 `Fluffy_FishShoes_J`, idem
+#
+# Os dois pares existem no bRO como dois itens de verdade - o 22207 e o
+# 22210 estao la SEM cova, e o 470004 e o 22224 COM. O pedido veio pelo ID
+# com cova, entao e esse que entra. O script de cada um foi copiado do irmao
+# sem cova, campo por campo; a unica diferenca e o `Slots: 1`.
+#
+# NENHUM DOS QUATRO ESTA EM CONJUNTO. Conferido em `db/re/item_combos.yml`
+# pelos quatro AegisName do vendor - nao ha o que espelhar, e nao ha o que
+# derrubar. (Os DOIS ARCOS trazem conjunto na descricao do bRO, mas com
+# pecas que nao existem em loja nossa: ficaram como TODO, pelo mesmo motivo
+# das outras levas - conjunto pela metade da bonus fantasma.)
+#
+# OS DOIS `AegisName` DOS ARCOS SAO PALPITE, como o das Luvas de Somatologia
+# mais acima: o oficial nao esta em tabela nenhuma que alcancamos. O dos
+# calcados nao e - o `_` no fim e a convencao do proprio rAthena para versao
+# com cova, e `Fluffy_FishShoes` e o `identifiedResourceName` do 22224 no
+# bRO. Os quatro foram conferidos como livres no item_db antes de usar.
+#
+# ATENCAO AO NOME DO RECURSO DOS ARCOS, que engana: o
+# `identifiedResourceName` do 700102 no bRO e `Local02_Bow` e o do 700080 e
+# `Hs_Rg_Bow`, e o nosso vendor TEM os dois nomes - no 18173 ("Yinyang Bow")
+# e no 700061 ("Herosria Rogue Bow"). NAO sao os mesmos itens: as fichas nao
+# batem em nada (ATQ 130 / 2 covas / nivel 70 contra ATQ 180 / 2 covas /
+# nivel 105, e ATQ 200 / sem cova / nivel 200 contra ATQ 130 / 3 covas /
+# nivel 100). Nome de recurso e so o DESENHO, e desenho de arco e
+# reaproveitado - ele nao serve de prova de identidade, ao contrario do que
+# serviu nos dois calcados, onde a ficha inteira bateu.
+
+  - Id: 470004
+    AegisName: Imperial_Boots_
+    Name: "Botas Imperiais"
+    # Copiado inteiro do 22207 do vendor. `Buy: 20` vem de la tambem - quem
+    # decide o preco na vitrine e o db/guerra/item_db_lojas.yml, que importa
+    # depois deste arquivo e poe `Buy: 1` (regra 4.16).
+    Type: Armor
+    Buy: 20
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "AL_INCAGI",1;
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",10*getskilllv("LG_CANNONSPEAR");
+      bonus2 bAddClass,Class_All,4*getskilllv("CR_DEVOTION");
+      if (getskilllv("LG_INSPIRATION")>=5)
+         bonus2 bSkillCooldown,"LG_SHIELDSPELL",-2000;
+      bonus2 bIgnoreDefRaceRate,RC_All,20*getskilllv("LG_PINPOINTATTACK");
+      if (.@r>=5) {
+         bonus bMaxSPrate,7;
+         bonus bMaxHPrate,7;
+         bonus bLongAtkRate,5;
+      }
+      if (.@r>=7) {
+         bonus bMaxSPrate,10;
+         bonus bMaxHPrate,10;
+         bonus bLongAtkRate,5;
+      }
+
+  - Id: 22224
+    AegisName: Fluffy_FishShoes
+    Name: "Sapatos Fofinhos"
+    # Copiado inteiro do 22210 do vendor, mesma observacao do 470004.
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@hpsp = 3;
+      .@val = -10 * getskilllv("SU_SHRIMPARTY");
+      if (.@r>=5) {
+         .@hpsp += 7;
+         .@delay = -10;
+         if (.@r>=7) {
+            .@hpsp += 10;
+            .@delay -= 10;
+         }
+         bonus bDelayrate,.@delay;
+      }
+      if (getskilllv("SU_SPIRITOFSEA") == 1) {
+         autobonus3 "{ bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Stone,10000; }",1000,30000,"SU_GROOMING","{ specialeffect2 777; specialeffect2 826; }";
+      }
+      if (getskilllv("SU_GROOMING") == 5) {
+         bonus bFixedCastrate,-50;
+         bonus bNoKnockback;
+      }
+      bonus bMaxHPrate,.@hpsp;
+      bonus bMaxSPrate,.@hpsp;
+      bonus bMdef,10;
+      bonus2 bVariableCastrate,"SU_FRESHSHRIMP",.@val;
+      bonus2 bVariableCastrate,"SU_BUNCHOFSHRIMP",.@val;
+      bonus2 bVariableCastrate,"SU_TUNABELLY",.@val;
+      bonus2 bVariableCastrate,"SU_TUNAPARTY",.@val;
+      bonus2 bVariableCastrate,"SU_SHRIMPARTY",.@val;
+      bonus bHealPower,10*getskilllv("SU_PURRING");
+
+  - Id: 700102
+    AegisName: Experiment_Bow
+    Name: "Arco Experimental"
+    Type: Weapon
+    SubType: Bow
+    # "Peso: 150" na tela ja e o valor do campo aqui - arma nao e em decimos
+    # como armadura. Conferido contra os arcos vizinhos do vendor: o 700066
+    # tem `Weight: 1500` e a tela dele diz 1500.
+    Weight: 150
+    Attack: 180
+    Range: 5
+    Slots: 2
+    # "Classes: Sentinelas". Sentinela e a terceira classe do ramo do
+    # Arqueiro/Cacador, e o rAthena nao tem `Ranger:` em `Jobs:` - o ramo e
+    # `Hunter` e o degrau e `Classes:`. `All_Third` cobre Sentinela,
+    # Sentinela T e a versao bebe, que e o que "Sentinelas" quer dizer.
+    Jobs:
+      Hunter: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 105
+    Refineable: true
+    # SEM `Script:` de proposito, e nao por esquecimento: a descricao do bRO
+    # nao da UM bonus proprio a este arco. Tudo que ela lista e conjunto -
+    # ver o TODO abaixo. Arco de ATQ 180 e cova dupla, e so.
+    #
+    # TODO os CINCO conjuntos. A descricao traz: [Flecha Luminosa] ou
+    #      [Flecha Amaldicoada] ou [Flecha Emudecedora] ou [Flecha Sonifera]
+    #      -> dano fisico +70%; e mais quatro, cada um casando uma dessas
+    #      flechas com a [Carta Alma de Cecil] -> por refino, +2% de dano de
+    #      [Bomba Relogio] e +2% contra uma raca (Planta, Humanoide+Humano,
+    #      Bruto, Inseto). Nenhuma dessas pecas esta em loja nossa, e
+    #      conjunto pela metade da bonus fantasma - mesma razao das outras
+    #      levas.
+
+  - Id: 700080
+    AegisName: Magic_Bow
+    Name: "Arco Mágico"
+    Type: Weapon
+    SubType: Bow
+    Weight: 160
+    Attack: 130
+    Range: 5
+    Slots: 3
+    # "Classes: Renegados e evolucoes". Renegado e a terceira classe do ramo
+    # do Gatuno pelo lado do Arruaceiro, e no rAthena esse ramo e `Rogue` -
+    # e o mesmo `Jobs:` que o vendor da aos outros arcos de Renegado
+    # (700061, 700066, 700069). Sem `Classes:`: o `EquipLevelMin: 100` ja e
+    # a trava, e apertar mais faria o arco recusar quem a descricao aceita.
+    Jobs:
+      Rogue: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    # As tres contas por refino da descricao sao DIVISAO INTEIRA de proposito
+    # ("a cada 2 refinos", "a cada 3 refinos"): em +7 sao tres degraus de 2 e
+    # dois de 3, e nao 3,5 e 2,33.
+    #
+    # "Dano magico +5%" virou `bMatkRate` e nao um segundo `bMagicAtkEle`:
+    # somar Ele_All duas vezes empilharia com a linha por refino acima e
+    # daria numero que a descricao nao promete.
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20*(.@r/2);
+      bonus bAspdRate,2*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/3);
+      if (.@r>=7) {
+         bonus2 bMagicAddSize,Size_All,7;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAddEle,Ele_All,10;
+      }
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+         bonus2 bIgnoreMdefRaceRate,RC_All,15;
+      }
+    # TODO os SETE conjuntos, todos com carta: [Lichtern Anzus], [Lichtern
+    #      Inguz], [Lichtern Kenaz], [Lichtern Laguz], [Tikbalang], [Plaga] e
+    #      [Sanare Mutante]. Cada um da +10% de dano numa habilidade e 10% de
+    #      chance de autoconjura-la nv.3 no ataque fisico a distancia.
+    #      Nenhuma dessas cartas esta em loja nossa - mesmo motivo do 700102.
 

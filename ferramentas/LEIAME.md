@@ -310,10 +310,34 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
-A tabela tem seis itens em 2026-08-13 — 30999 Maçã da Inocência, 30998 Moeda
+A tabela tem sete itens em 2026-08-18 — 30999 Maçã da Inocência, 30998 Moeda
 Nova, 30997 e 30996 (as duas caixas da Máquina), 30995 Caveira Humana, que
 copia a arte da Caveira comum (7420), e 30994 Rolinho de Arroz, o prêmio de
 guerra, que copia a arte do Bolinho de Arroz (555).
+
+**Em 2026-08-18 a tabela ganhou `covas` e `visual`, e a sétima entrada.** Os
+dois campos são opcionais e valem zero quando faltam — as seis receitas antigas
+não mudaram de comportamento. Eles existem porque o script gravava
+`slotCount = 0` e `ClassNum = 0` **literais** desde que nasceu, e por seis itens
+seguidos isso esteve certo: nenhum dos nossos tinha cova nem visual de cabeça.
+
+A sétima é o **Chapéu do Éden (19272)**, que tem os dois — e é também a
+primeira entrada da tabela que **não é de um item nosso**. Ele existe inteiro no
+rAthena; o que faltava era o nome, porque o `itemInfo.lua` deste cliente o traz
+em **coreano**. O `completa_iteminfo.py` não resolve (o bRO também o tem em
+coreano, e o script se recusa a reescrever bloco alheio, de propósito), e a
+receita da Lacma — criar o ID traduzido — derrubaria três conjuntos. Sobrou
+este script, que é o único que **substitui bloco existente**. O texto veio do
+19315 do bRO, que é o mesmo item com outro número.
+
+Com `slotCount` zerado o nome sairia sem o `[1]` e a janela de encaixe de carta
+não enxergaria a cova; com `ClassNum` zerado a peça perderia o id de visual. Os
+três seriam falhas **caladas**, e o `--verificar` não as pega: ele compara com o
+que o próprio gerador produziria. A lição geral subiu para o `CLAUDE.md` §5.
+
+**Os dois campos têm de bater com o `item_db`** — `covas` com o `Slots:` e
+`visual` com o `View:`. O servidor manda o número, o cliente desenha o que
+estiver escrito aqui, e divergir não dá erro nenhum.
 
 Em 2026-08-12 o `arte_de` do **30996** mudou de 22668 (a caixa de 20 do bRO,
 que é a caixa genérica de consumível) para **12710, a própria Poção de Guyak** —

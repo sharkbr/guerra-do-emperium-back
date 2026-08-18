@@ -1488,6 +1488,43 @@ Produziram diagnóstico falso e custaram retrabalho:
   três `command not found` no meio de um "ok" final. A saída é a mesma da
   armadilha do heredoc: **gerar texto por arquivo de script**, escrito com a
   ferramenta de escrita, e não por `-c` de uma linha.
+- **O `identifiedResourceName` do bRO é o DESENHO, não a identidade do item —
+  e dois itens diferentes o compartilham.** É a ponte que resolve o caso em que
+  o mesmo item tem número diferente aqui e lá (o bRO renumerou muita coisa), e
+  por isso é tentador tratá-lo como chave. Não é: nome de recurso é só o
+  caminho de um `.spr`, e sprite de arco, de bota e de capa é reaproveitado à
+  vontade. Medido em 2026-08-18, nos quatro itens de um pedido que o nosso
+  vendor não tinha, e **deu os dois resultados**:
+
+  | pedido | recurso | quem mais usa | é o mesmo item? |
+  |---|---|---|---|
+  | 470004 Botas Imperiais | `Imperial_Boots` | 22207 | **sim** |
+  | 22224 Sapatos Fofinhos | `Fluffy_FishShoes` | 22210 (`_J`) | **sim** |
+  | 700102 Arco Experimental | `Local02_Bow` | 18173 Yinyang Bow | **não** |
+  | 700080 Arco Mágico | `Hs_Rg_Bow` | 700061 Herosria Rogue Bow | **não** |
+
+  Nos dois calçados a **ficha inteira** batia — peso, DEF, nível, e o `Script:`
+  linha por linha —, e eram de fato o mesmo item, na versão sem cova. Nos dois
+  arcos não batia **nada**: ATQ 130/nível 70 contra ATQ 180/nível 105, e ATQ
+  200/sem cova/nível 200 contra ATQ 130/três covas/nível 100. Quem parasse no
+  nome do recurso teria posto na loja o arco errado, com o nome certo e o
+  desenho certo — falha calada e difícil de ver, porque a vitrine fica
+  plausível. **O que decide é a ficha do `estado_item.py --id <n> --descricao`
+  comparada campo a campo, nunca o recurso sozinho.**
+  Da mesma família da §4.14 (o `Locations:` decide, não o nome) e da regra 3
+  (traz-se do bRO, não se inventa): o recurso *sugere* de onde trazer, a ficha
+  é que *prova*.
+- **Gerador de entrada de cliente pode ter campo ZERO FIXO, e por seis itens
+  seguidos isso pode estar certo.** O `instala_item.py` escrevia
+  `slotCount = 0` e `ClassNum = 0` literais desde 2026-07-31, e nenhum dos
+  seis itens nossos até 2026-08-18 tinha cova ou visual de cabeça — então o
+  valor errado nunca apareceu. O primeiro item com os dois (o Chapéu do Éden,
+  19272) sairia sem o `[1]` no nome, sem a cova na janela de encaixe de carta
+  e sem o id de visual, **os três calados**. Os dois campos viraram
+  `covas`/`visual`, opcionais, com zero por padrão. A lição não é sobre esse
+  script: **campo constante num gerador é uma suposição sobre todos os casos
+  já vistos**, e o `--verificar` não a denuncia porque ele compara com o que o
+  próprio gerador produziria.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

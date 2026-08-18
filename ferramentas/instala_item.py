@@ -55,6 +55,15 @@ ITEMINFO = os.path.join(r'C:\GuerraDoEmperium\cliente',
 #             convencao manual velha do kRO, nao um teto do cliente.
 #             "____..." e a regua separadora que o proprio arquivo usa, e
 #             `^RRGGBB` troca a cor.
+#   covas     quantas covas de carta o item tem. OPCIONAL, zero se faltar.
+#             E o que poe o "[1]" no fim do nome e o que faz a janela
+#             de encaixe de carta enxergar a cova. TEM que bater com o
+#             `Slots:` do item_db - o servidor manda o numero, o
+#             cliente desenha o que estiver escrito aqui, e divergir
+#             nao da erro nenhum.
+#   visual    o id de visual (o `View:` do item_db). OPCIONAL, zero se
+#             faltar. So peca de cabeca e de manto usa; para o resto
+#             zero e o valor certo.
 #   arte_de   ID de outro item de quem copiamos o `resourceName`, BYTE A BYTE.
 #             O `resourceName` e so um nome de recurso: nada impede dois IDs
 #             apontarem para o mesmo desenho, e assim nao precisamos criar
@@ -201,6 +210,60 @@ ITENS = [
             u'^0000CCPeso:^000000 1',
         ],
     },
+    # O CHAPEU DO EDEN (19272), 2026-08-18. Nao e item nosso: o rAthena o tem
+    # inteiro (Garden_Of_Eden, View 1653, Head_Top, 1 cova). O que faltava era
+    # o NOME - o itemInfo.lua deste cliente traz o 19272 com o nome COREANO, e
+    # item sem nome em portugues nao entra em loja (regra 4.2).
+    #
+    # POR QUE NAO FOI PELO completa_iteminfo.py: o bRO tambem tem o 19272 em
+    # coreano. Quem tem o nome em portugues la e o 19315, que e o MESMO item
+    # com outro numero - mesmo `identifiedResourceName` (Garden_Of_Eden),
+    # mesmo ClassNum 1653, mesma cova, e a mesma ficha (DEF 5, peso 40,
+    # nivel 90/100). O texto abaixo e o do 19315, palavra por palavra.
+    #
+    # POR QUE NAO SE CRIOU O 19315 AQUI, que foi a receita da Lacma (13049 ->
+    # 28739, ver o cabecalho de mercado_contemporaneo.txt): o 19272 e citado
+    # por TRES conjuntos do db/re/item_combos.yml, e dois dos parceiros ja
+    # estao a venda no quarteirao - a Fada do Eden (20991) no Capeiro e o
+    # Simbolo do Eden (460050) no Escudeiro. Conjunto e casado por AegisName,
+    # entao trocar o ID derrubaria os tres, calado. Aqui sai mais barato
+    # traduzir a entrada do que renumerar o item.
+    #
+    # RESSALVA REGISTRADA: a descricao do bRO promete "Dano magico de todas as
+    # propriedades +15%" e o `Script:` do nosso vendor da `bMagicAtkEle,10`.
+    # E a armadilha de sempre (CLAUDE.md 5, "a descricao discorda do script")
+    # - o vendor e de outra revisao. Nao mexi no numero: mudar bonus e decisao
+    # do dono, nao consequencia de por o item na vitrine.
+    {
+        'id': 19272,
+        'nome': u'Chapéu do Éden',
+        'arte_de': 19272,               # a propria arte, que ja esta no GRF
+        # Os dois campos que a entrada coreana ja trazia, e que sao a
+        # razao de `covas`/`visual` existirem: sem eles o nome sairia
+        # sem o "[1]" e a peca perderia o id de visual. Batem com o
+        # `Slots: 1` e o `View: 1653` do 19272 em db/re/item_db_equip.yml.
+        'covas': 1,
+        'visual': 1653,
+        'descricao': [
+            u'Este extravagante chapéu adorna sua cabeça com um pedaço do Paraíso. Encantado com a dádiva dos mais altos anjos, este chapéu é um verdadeiro presente do paraíso.',
+            u'^0000ffINT +5. DES +5.^000000',
+            u'^0000ffDano mágico de todas as propriedades +15%.^000000',
+            u'Refino +8 ou mais:',
+            u'^0000ffConjuração variável -15%.^000000',
+            u'Refino +11 ou mais:',
+            u'^0000ffDano mágico de todas as propriedades +20% adicional.^000000',
+            u'^FA4E09Conjunto^000000',
+            u'^FA4E09[Carta Arquimaga Kathryne]^000000',
+            u'^0000ffTempo de recarga de [Telecinesia] -120 segundos.^000000',
+            u'^0000ffDesequipar o item remove a [Telecinesia] ativada.^000000',
+            u'Tipo: ^777777Equip. para Cabeça^000000',
+            u'Equipa em: ^777777Topo^000000',
+            u'DEF: ^7777775^000000 DEFM: ^7777770^000000',
+            u'Peso: ^77777740^000000',
+            u'Nível necessário: ^77777790^000000',
+            u'Classes: ^777777Todas^000000',
+        ],
+    },
 ]
 
 
@@ -299,8 +362,17 @@ def monta(item, arte):
         virgula = '' if i == len(descricao) - 1 else ','
         a('\t\t\t"%s"%s' % (linha, virgula))
     a('\t\t},')
-    a('\t\tslotCount = 0,')
-    a('\t\tClassNum = 0,')
+    # `slotCount` e `ClassNum` nasceram zero fixo, e por seis itens
+    # seguidos isso esteve certo: os nossos nao tinham cova nem
+    # visual de cabeca. O Chapeu do Eden (19272) e o primeiro que
+    # tem os dois, e zerar qualquer um dos dois falha CALADO - o
+    # nome sai sem o "[1]" e a janela de encaixe de carta nao
+    # sabe da cova, e o ClassNum e o id de visual que o cliente usa
+    # para desenhar a peca na cabeca. Continuam OPCIONAIS: quem nao
+    # declarar segue com zero, que e o que os seis anteriores
+    # querem.
+    a('\t\tslotCount = %d,' % item.get('covas', 0))
+    a('\t\tClassNum = %d,' % item.get('visual', 0))
     a('\t\tcostume = false')
     a('\t},')
     return '\r\n'.join(linhas)

@@ -52,6 +52,10 @@ Body:
     Buy: 1                # Edge
   - Id: 1328
     Buy: 1                # Blut_Axe
+  - Id: 1940
+    Buy: 1                # Trumpet_Shell
+  - Id: 1993
+    Buy: 1                # Concertina_Wire
   - Id: 2185
     Buy: 1                # Magic_Reflector
   - Id: 2198
@@ -1444,8 +1448,12 @@ Body:
     Buy: 1                # Blut_Huuma
   - Id: 15371
     Buy: 1                # Antonio_Christmas_Suit
+  - Id: 15383
+    Buy: 1                # Time_Overload_Robe
   - Id: 15405
     Buy: 1                # Fafnir_Scale_J
+  - Id: 15421
+    Buy: 1                # Triad_God_Mail_J_
   - Id: 15825
     Buy: 1                # C_Black_Musang_J
   - Id: 15838
@@ -1510,14 +1518,20 @@ Body:
     Buy: 1                # Sigrun's_Wing_
   - Id: 19106
     Buy: 1                # Magicstone_Of_Grace
+  - Id: 19118
+    Buy: 1                # Poring_Sunglasses_K_
   - Id: 19262
     Buy: 1                # Jirant_Circlet
+  - Id: 19272
+    Buy: 1                # Garden_Of_Eden
   - Id: 19288
     Buy: 1                # C_Gigant_Helm
   - Id: 19380
     Buy: 1                # Floating_Ball
   - Id: 19381
     Buy: 1                # Protect_cloth
+  - Id: 19426
+    Buy: 1                # King_Of_Spirit_Circlet
   - Id: 19437
     Buy: 1                # LittleGarden
   - Id: 19444
@@ -1638,8 +1652,18 @@ Body:
     Buy: 1                # Enhanced_Variant_Shoes
   - Id: 22071
     Buy: 1                # Applause_Sandal_
+  - Id: 22134
+    Buy: 1                # Enforcer_Shoes
+  - Id: 22178
+    Buy: 1                # Anony_Sm_Shoes
+  - Id: 22191
+    Buy: 1                # Nergal_Shoes_TW
   - Id: 22203
     Buy: 1                # Space_shoes_JP
+  - Id: 22224
+    Buy: 1                # Fluffy_FishShoes
+  - Id: 22225
+    Buy: 1                # Shoes_Of_Punishment_
   - Id: 26141
     Buy: 1                # Blut_Staff
   - Id: 26206
@@ -2152,6 +2176,8 @@ Body:
     Buy: 1                # C_Tail_Hat
   - Id: 31180
     Buy: 1                # C_Shura_King_Pledge
+  - Id: 31260
+    Buy: 1                # C_Observer_J
   - Id: 31305
     Buy: 1                # C_TW_1th_Balloon
   - Id: 31324
@@ -3078,10 +3104,18 @@ Body:
     Buy: 1                # Twinhead_dragon_Mail_J
   - Id: 450222
     Buy: 1                # Requiescat_in_Pace
+  - Id: 450224
+    Buy: 1                # Ruler_Robe_J_
   - Id: 450226
     Buy: 1                # Four_of_a_kind
+  - Id: 450251
+    Buy: 1                # Assault_Suit
+  - Id: 450252
+    Buy: 1                # Death_Bringer
   - Id: 450257
     Buy: 1                # Platinum_Arbitrator
+  - Id: 450287
+    Buy: 1                # Robe_of_Devotee
   - Id: 450338
     Buy: 1                # Screaming_Ghoost_Party
   - Id: 460023
@@ -3096,6 +3130,24 @@ Body:
     Buy: 1                # Striking_Armguard
   - Id: 460074
     Buy: 1                # Glacies_Aranea
+  - Id: 470004
+    Buy: 1                # Imperial_Boots_
+  - Id: 470007
+    Buy: 1                # Sniping_Shoes_J_
+  - Id: 470026
+    Buy: 1                # Pretty_PigShoes_
+  - Id: 470028
+    Buy: 1                # Juggernaut_
+  - Id: 470033
+    Buy: 1                # Elemental_BootsK
+  - Id: 470037
+    Buy: 1                # Military_Boots_IL_
+  - Id: 470057
+    Buy: 1                # Chaser_Shoes_
+  - Id: 470061
+    Buy: 1                # Cylinder_Boots_
+  - Id: 470106
+    Buy: 1                # Shoes_Of_Judex_
   - Id: 470112
     Buy: 1                # Moaning_of_EvilSpirits
   - Id: 470130
@@ -3108,6 +3160,8 @@ Body:
     Buy: 1                # Twinhead_dragon_Boots
   - Id: 470293
     Buy: 1                # Virtue_Shoes_BR
+  - Id: 480023
+    Buy: 1                # Arabian_Manteau
   - Id: 480045
     Buy: 1                # Guardian_Soul
   - Id: 480055
@@ -3192,6 +3246,8 @@ Body:
     Buy: 1                # Devil_Ring
   - Id: 490037
     Buy: 1                # Dark_Ring
+  - Id: 490038
+    Buy: 1                # Sixth_Sense_Ring
   - Id: 490043
     Buy: 1                # HalfBlood_Princess_Ring
   - Id: 490068
@@ -3252,5 +3308,15 @@ Body:
     Buy: 1                # Orc_Dagger_BR
   - Id: 510155
     Buy: 1                # Ceuci
+  - Id: 550018
+    Buy: 1                # Phoenix_Foxtail
   - Id: 550021
     Buy: 1                # Deus_Ex_Machina_JP
+  - Id: 570070
+    Buy: 1                # Erhu_BR
+  - Id: 700069
+    Buy: 1                # Triangle_Disaster
+  - Id: 700080
+    Buy: 1                # Magic_Bow
+  - Id: 700102
+    Buy: 1                # Experiment_Bow

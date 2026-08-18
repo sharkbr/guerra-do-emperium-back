@@ -16,3 +16,4 @@
 0002	0002-sem-censura-de-palavras.zip	23777341be82b71e266b8b07ee3bf235c740a6bcb19af54e65fbe4b876dc937b	152	Sem censura de palavras
 0003	0003-itens-novos-das-lojas-de-prontera.zip	10f0b929998901562b9edf94a0a884c5b2689782b326c966e276560c3a0d1282	11719527	Itens novos das lojas de Prontera
 0004	0004-visual-de-gm-na-producao.zip	f11c5f276295c58935993ff856eafe6ff25c5cab28db9d1c694fce3c9be2e07d	850	Visual de GM na producao
+0005	0005-trinta-e-tres-itens-nas-lojas-de-pronter.zip	90ca76d512cc0e8d2d77357526cec9f71a197ba6218528c0011a4fc0959bb933	2644214	Trinta e tres itens nas lojas de Prontera

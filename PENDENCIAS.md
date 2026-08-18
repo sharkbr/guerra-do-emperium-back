@@ -1945,6 +1945,91 @@ estão em `.chance_*` no `OnInit` do Richard, num lugar só.
 
 ---
 
+## 1y. Os 33 itens de 2026-08-18 nas lojas de Prontera — falta ver em jogo
+
+O que foi feito e por quê está no `HISTORICO.md`, "Trinta e três itens em oito
+vitrines". Aqui fica **só o que falta**.
+
+### O que falta, na ordem
+
+1. **Recarregar, e a ordem importa** — `@reloaditemdb` **antes** do
+   `@reloadscript`. Invertido, o `npc_parse_shop` descarta os quatro itens
+   novos por não existirem ainda no `item_db` em memória e publica as vitrines
+   sem eles, com o aviso soterrado sob centenas de `[Warning]` (`CLAUDE.md`
+   §5). Os quatro são 470004, 22224, 700102 e 700080.
+2. **Fechar e reabrir o cliente.** O `itemInfo.lua` só é lido na inicialização,
+   e 17 das entradas mudaram — sem isso os itens novos aparecem como
+   *Unknown Item* com sprite de maçã, que é o sintoma da tabela velha e **não**
+   de falta de carga no servidor.
+3. **Ver as oito vitrines em jogo**, item a item: nome em português, ícone
+   presente, e equipar sem caixa modal. O `valida_visual.py` deu 8/8 e 4/4 nos
+   34, mas verificação offline que passa não é prova de efeito (`CLAUDE.md`
+   §5).
+4. **Só depois: o patch.** Metade disto é cliente e não vai pelo deploy (regra
+   4.18) — 25 arquivos, o `itemInfo.lua` mais 24 de arte. A receita manda
+   testar em jogo primeiro, porque número de patch não se reaproveita:
+
+   ```
+   python ferramentas/monta_patch.py --nome "Trinta e tres itens nas lojas" \
+       SystemEN/LuaFiles514/itemInfo.lua \
+       "data/sprite/<pasta de item>" "data/texture/<ui>/item" \
+       "data/texture/<ui>/collection"
+   ferramentas/publica_patch.sh
+   ```
+
+   Os três caminhos com `<...>` têm nome **coreano** — copiar da saída de
+   `valida_visual.py --id 450252`, não digitar.
+5. **`ferramentas/implanta.sh`** leva a metade de servidor: as duas linhas de
+   `shop`, o `db/guerra/item_db.yml`, o `db/guerra/item_db_lojas.yml` e os três
+   `db/re/item_db_*.yml` que o `nomes_pt_item_db.py` reescreveu.
+
+### O que só a tela decide
+
+- **O Chapéu do Éden (19272) desenha na cabeça?** É o único da leva cuja
+  entrada de cliente foi **escrita por nós** e não importada do bRO, e é
+  também o único com `ClassNum` diferente de zero — o campo acabou de deixar
+  de ser zero fixo no `instala_item.py`, e nada offline prova que o cliente o
+  usa como esperado. O sinal de que deu errado é a peça sumir da cabeça
+  mantendo o nome certo.
+- **O nome sai com o `[1]`?** Mesma entrada, mesmo motivo: o `slotCount`
+  também acabou de virar campo. E a janela de encaixe de carta tem de abrir
+  com ele — se não abrir, ver a armadilha do `clif_use_card` no `CLAUDE.md`
+  §5 antes de suspeitar da tabela (equipamento já **vestido** não entra na
+  lista).
+- **Os dois arcos placeholder acertaram a classe?** O Arco Experimental
+  (700102) ficou `Hunter` + `All_Third` a partir de *"Classes: Sentinelas"*, e
+  o Arco Mágico (700080) ficou `Rogue` a partir de *"Renegados e evoluções"*.
+  As duas leituras são de nome de classe em português para a tabela do
+  rAthena, e nenhuma tem conferência offline. Errar aqui não dá erro: o arco
+  simplesmente recusa quem deveria aceitar.
+- **O Sobretudo do Senhor do Tempo (15383) é vinculado.** `NoDrop`, `NoTrade`,
+  `NoStorage`, `NoCart`, `NoGuildStorage`, `NoMail` e `NoAuction`, tudo do
+  vendor. Vende e equipa normalmente, mas não sai do personagem que comprou.
+  **Não testar na conta de teste**: grupo 99 ignora as sete travas (regra
+  4.7), então lá o comportamento é o oposto do que o jogador vê. Foi deixado
+  como está de propósito — afrouxar trava de item do rAthena é decisão do
+  dono.
+
+### Uma decisão que ficou com o dono
+
+**A Caixa do ArchAngeling (23073) não entrou.** Ela é `Type: Usable` /
+`Container` e não tem `Locations:` nenhum; as treze lojas do quarteirão são
+todas por slot, então nenhuma serve. Decisão de 2026-08-18 foi deixá-la de
+fora e decidir depois.
+
+Duas coisas para quando a decisão vier, as duas medidas:
+
+- **O que ela entrega** é 1x Botas do ArchAngeling (22101) **garantido**, mais
+  um visual sorteado entre seis (`IG_ANGELPORING_BOX`,
+  `db/re/item_group_db.yml`). A 1 zeny numa vitrine, isso é fonte infinita das
+  botas.
+- **As botas existem inteiras e caberiam hoje**: 22101, `Shoes`, uma cova,
+  nome em português no cliente, arte 4/4. Elas são o par de conjunto do Super
+  Óculos Poring (19118), que entrou nesta mesma leva no Ocleiro — ou seja o
+  conjunto Poring está a meio caminho, e é a caixa (ou as botas) que o fecha.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

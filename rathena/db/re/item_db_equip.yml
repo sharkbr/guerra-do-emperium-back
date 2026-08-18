@@ -75671,7 +75671,7 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Doram,.@a;
   - Id: 15421
     AegisName: Triad_God_Mail_J_
-    Name: Kuraokami's Feather Robe
+    Name: "Robe da Graça Divina"
     Type: Armor
     Weight: 900
     Defense: 90
@@ -96845,7 +96845,7 @@ Body:
       bonus3 bAddMonsterIdDropItem,1061,1179,50;
   - Id: 19272
     AegisName: Garden_Of_Eden
-    Name: Garden of Eden
+    Name: "Chapéu do Éden"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -121501,7 +121501,7 @@ Body:
       bonus bAspdRate,.@r;
   - Id: 22191
     AegisName: Nergal_Shoes_TW
-    Name: Fire Thunder Great Boots
+    Name: "Sapato Infernal"
     Type: Armor
     Weight: 1000
     Defense: 18
@@ -122173,7 +122173,7 @@ Body:
       bonus2 bMagicAddRace,RC_Undead,10;
   - Id: 22225
     AegisName: Shoes_Of_Punishment_
-    Name: Shoes of Punishment
+    Name: "Sapatos da Penitência"
     Type: Armor
     Buy: 20
     Weight: 500
@@ -196522,7 +196522,7 @@ Body:
          bonus bSpeedRate,25;
   - Id: 450224
     AegisName: Ruler_Robe_J_
-    Name: Robe of Dominator
+    Name: "Robe do Governante"
     Type: Armor
     Weight: 900
     Slots: 1
@@ -196991,7 +196991,7 @@ Body:
       }
   - Id: 450252
     AegisName: Death_Bringer
-    Name: Death Bringer
+    Name: "Mensageiro da Morte"
     Type: Armor
     Weight: 1000
     Defense: 100
@@ -198102,7 +198102,7 @@ Body:
       }
   - Id: 450287
     AegisName: Robe_of_Devotee
-    Name: Robe of Worshiper
+    Name: "Vestes de Bispo"
     Type: Armor
     Weight: 900
     Defense: 120
@@ -202428,7 +202428,7 @@ Body:
       }
   - Id: 470007
     AegisName: Sniping_Shoes_J_
-    Name: Sniping Shoes
+    Name: "Botas do Caçador"
     Type: Armor
     Weight: 200
     Slots: 1
@@ -203068,7 +203068,7 @@ Body:
       }
   - Id: 470028
     AegisName: Juggernaut_
-    Name: Juggernaut
+    Name: "Botas Robustas"
     Type: Armor
     Weight: 400
     Defense: 12
@@ -203300,7 +203300,7 @@ Body:
       }
   - Id: 470037
     AegisName: Military_Boots_IL_
-    Name: Illusion Military Boots
+    Name: "Botas Camufladas"
     Type: Armor
     Weight: 400
     Defense: 12
@@ -224268,7 +224268,7 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-10*(getskilllv("MG_SAFETYWALL")/2);
   - Id: 490290
     AegisName: Ameretat
-    Name: "Anel de Ameretat"
+    Name: Ameretat
     Type: Armor
     Weight: 100
     Slots: 1
@@ -224745,7 +224745,7 @@ Body:
       bonus bMatk,10*(getskilllv("AL_HEAL")/2);
   - Id: 490336
     AegisName: Dimension_L_Stone
-    Name: "Núcleo de Verus"
+    Name: Dimension Linkage Stone
     Type: Armor
     Weight: 100
     Slots: 1
@@ -224771,7 +224771,7 @@ Body:
       bonus2 bSkillAtk,"NC_FLAMELAUNCHER",2*(BaseLevel/3);
   - Id: 490337
     AegisName: Amulet_of_GenesisStone
-    Name: "Amuleto Mitológico"
+    Name: Amulet of Genesis Stone
     Type: Armor
     Weight: 100
     Slots: 1
@@ -242442,7 +242442,7 @@ Body:
       bonus bAspdRate,2*.@r;
   - Id: 550018
     AegisName: Phoenix_Foxtail
-    Name: Phoenix Foxtail
+    Name: "Pluma de Fênix"
     Type: Weapon
     SubType: Staff
     Buy: 20
@@ -265617,7 +265617,7 @@ Body:
       }
   - Id: 700069
     AegisName: Triangle_Disaster
-    Name: Triangle Disaster
+    Name: "Arco Moderno"
     Type: Weapon
     SubType: Bow
     Weight: 900

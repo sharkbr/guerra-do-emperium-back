@@ -11274,3 +11274,207 @@ lubrificante (`delitem .@paga, 1`), e a Fruta aparece só na Máquina Especial,
 como preço de compra do lubrificante. O que estava errado era a **tabela do
 relatório de entrega**, que pôs as duas coisas na mesma coluna sob o título
 "custa" — e uma tabela ambígua num relatório custa a mesma rodada que um bug.
+
+## Trinta e três itens em oito vitrines de Prontera (2026-08-18)
+
+O pedido chegou como uma lista só, 35 números com o nome ao lado, sem dizer
+quais lojas. Entraram **33** em oito das treze vitrines do quarteirão; um já
+estava à venda e um ficou de fora por decisão do dono. É a segunda maior leva
+que o Mercado Contemporâneo recebeu, atrás só da de 2026-08-16.
+
+### Onde caiu cada peça, e quem decidiu
+
+De novo foi o `Locations:` do `item_db`, e não o nome (regra 4.14):
+
+| loja | entraram | ficou com |
+|---|---|---|
+| Sapateiro | 14 | 24 |
+| Senhor das Armas | 7 | 32 |
+| Lorde das Armaduras | 6 | 15 |
+| Chapeleiro | 2 | 21 |
+| Ocleiro | 1 | 30 |
+| Capeiro | 1 | 24 |
+| Acessorista | 1 | 50 |
+| Adereceiro (visuais) | 1 | 126 |
+
+**Cinco peças teriam ido para a loja errada por leitura de nome**, e desta vez
+o engano seria sempre o mesmo: o nome descreve o *aspecto*, o `Locations:`
+descreve o *slot*.
+
+| id | nome | o que parece | o que é |
+|---|---|---|---|
+| 480023 | Sobretudo do Mestre | armadura | **capa** → Capeiro |
+| 15383 | Sobretudo do Senhor do Tempo | capa | **armadura** → Armaduras |
+| 450252 | Mensageiro da Morte | arma | **armadura** |
+| 550018 | Pluma de Fênix | arco | **cajado** |
+| 19118 | Super Óculos Poring | chapéu | `Head_Mid` → Ocleiro |
+
+Os dois "Sobretudos" da mesma lista terminaram em lojas diferentes, e é o
+exemplo mais limpo que este mercado já produziu de por que a regra existe.
+
+**Nenhum override foi preciso.** Os cinco foram conferidos contra a linha
+`Tipo:`/`Equipa em:` da descrição do bRO (`estado_item.py --id <n>
+--descricao`), e nos cinco o bRO e o nosso `item_db` concordaram — o desacordo
+que a regra 4.14 prevê simplesmente não apareceu nesta leva.
+
+### Dois números do pedido não existiam, e os dois eram um dígito a menos
+
+O `estado_item.py` respondeu *"não está no rAthena NEM nos 18845 do bRO"* para
+dois IDs. Nos dois casos o vizinho de cinco dígitos tinha o **nome exato** que
+o pedido pedia, o que fecha a identificação sem chute:
+
+- `47007` → **470007** Botas do Caçador
+- `170106` → **470106** Sapatos da Persistência
+
+### O trabalho não estava nos 33, estava em 21
+
+Treze das 33 peças não custaram nada: o rAthena tinha, o cliente tinha em
+português, e o `valida_visual.py` aprovou antes de entrarem. O que custou:
+
+| o que faltava | quantos | por onde |
+|---|---|---|
+| entrada no `itemInfo.lua` | 16 | `completa_iteminfo.py` |
+| os 4 arquivos de arte | 6 | `instala_visual.py` |
+| não existia no servidor | 4 | `db/guerra/item_db.yml` |
+| estava no `itemInfo.lua` **em coreano** | 1 | `instala_item.py` |
+
+### O Chapéu do Éden, e por que a receita da Lacma não serviu
+
+O 19272 existe inteiro no nosso rAthena — `Garden_Of_Eden`, `Head_Top`, uma
+cova, `View 1653`, arte 8 de 8. O que faltava era o **nome**: o `itemInfo.lua`
+deste cliente o traz em coreano, e item sem nome em português não entra em loja
+(regra 4.2).
+
+O remédio de sempre não serviu, porque **o bRO também tem o 19272 em coreano**.
+Quem tem o nome em português lá é o **19315** — que é o mesmo item com outro
+número, e isso não é palpite: mesmo `identifiedResourceName` (`Garden_Of_Eden`),
+mesmo `ClassNum` 1653, mesma cova, e a mesma ficha (DEF 5, peso 40, INT+5
+DEX+5).
+
+A receita registrada para esse caso é a da **Lacma** (13049 → 28739, 2026-08-16):
+criar aqui o ID traduzido e pôr esse na vitrine. **Não foi o que se fez, e a
+razão é combo.** O 19272 é citado por três conjuntos do `db/re/item_combos.yml`
+— `B_Katrinn_Card`, `Fairy_Of_Eden` e `Symbol_Of_Eden` — e **dois dos parceiros
+já estão à venda no mesmo quarteirão**: a Fada do Éden (20991) no Capeiro e o
+Símbolo do Éden (460050) no Escudeiro. Conjunto é casado por AegisName, então
+renumerar derrubaria os três, calado, e o jogador não veria bônus faltando —
+veria um número menor.
+
+Saiu mais barato traduzir a entrada de cliente: uma receita nova no
+`instala_item.py`, com o texto do 19315 palavra por palavra. O ID pedido fica,
+os três conjuntos ficam.
+
+**Uma ressalva ficou por escrito**, na própria receita: a descrição do bRO
+promete *"Dano mágico de todas as propriedades +15%"* e o `Script:` do nosso
+vendor dá `bMagicAtkEle,10`. É a armadilha de sempre (§5, "a descrição discorda
+do script") — o vendor é de outra revisão. O número não foi mexido: mudar bônus
+é decisão do dono, não consequência de pôr a peça na vitrine.
+
+### O campo que era zero fixo havia dezoito dias
+
+Escrever aquela entrada esbarrou num defeito do `instala_item.py` que nunca
+tinha tido como aparecer: ele gravava `slotCount = 0` e `ClassNum = 0`
+**literais**, desde 2026-07-31.
+
+Por seis itens seguidos isso esteve certo — nenhum dos nossos tinha cova nem
+visual de cabeça. O Chapéu do Éden é o primeiro com os dois, e teria saído sem
+o `[1]` no nome, sem a cova na janela de encaixe de carta e sem o id de visual,
+**os três calados**. Os campos viraram `covas` e `visual`, opcionais, com zero
+por padrão — as seis receitas antigas não mudaram de comportamento. A lição
+subiu para o `CLAUDE.md` §5, junto com a outra desta rodada.
+
+### A quinta leva de placeholders, e o recurso que não é identidade
+
+Quatro itens não existiam no servidor e viraram entrada nossa. Ao procurar de
+onde copiar a ficha de cada um, o `identifiedResourceName` do bRO apontou para
+um item que o nosso vendor **já tem** nos quatro casos — e em dois deles isso
+teria posto na loja o item errado:
+
+| pedido | recurso | quem mais usa | é o mesmo? |
+|---|---|---|---|
+| 470004 Botas Imperiais [1] | `Imperial_Boots` | 22207 | **sim**, versão sem cova |
+| 22224 Sapatos Fofinhos [1] | `Fluffy_FishShoes` | 22210 | **sim**, versão sem cova |
+| 700102 Arco Experimental [2] | `Local02_Bow` | 18173 Yinyang Bow | **não** |
+| 700080 Arco Mágico [3] | `Hs_Rg_Bow` | 700061 Herosria Rogue Bow | **não** |
+
+Nos dois calçados a ficha inteira batia — peso, DEF, nível e o `Script:` linha
+por linha —, e é o caso da Diadema do Paraíso (19024 → 19455) repetido: são
+dois itens de verdade, a versão com cova e a sem, os dois presentes no bRO. O
+pedido veio pelo ID **com** cova, então é esse que entrou, com o script copiado
+do irmão e um `Slots: 1`.
+
+Nos dois arcos não batia nada: ATQ 130 / nível 70 contra ATQ 180 / nível 105, e
+ATQ 200 / sem cova / nível 200 contra ATQ 130 / três covas / nível 100. Nome de
+recurso é o **desenho**, e sprite de arco é reaproveitado. Quem parasse ali
+teria posto o arco errado na vitrine, com o nome certo e o desenho certo — e a
+loja ficaria plausível. Virou armadilha no `CLAUDE.md` §5.
+
+Os dois arcos entraram com a ficha do bRO e os conjuntos como `# TODO`, pelo
+motivo das outras levas: as peças que os fecham (as quatro flechas, a Carta
+Alma de Cecil, as sete cartas de Lichtern e irmãs) não estão em loja nossa, e
+conjunto pela metade dá bônus fantasma.
+
+### A revenda, que a regra 4.16 manda fechar e que quase escapou
+
+Rodar `zera_revenda_das_lojas.py --conferir` **depois** de mexer nas vitrines
+apontou **dez itens com lucro de 9 zeny por clique** — os dez que trazem
+`Buy: 20` do vendor. Regenerado o `db/guerra/item_db_lojas.yml`, os 1636 itens
+das 22 lojas voltaram a revender por zero.
+
+O número é a própria conferência: a medição de 2026-08-17 dizia **1603**, e
+1603 + 33 = **1636**. Bater com a medição anterior é o que separa "entrou o que
+eu pus" de "entrou o que eu pus mais alguma coisa".
+
+### O que ficou de fora, e por quê
+
+**A Caixa do ArchAngeling (23073).** É `Type: Usable` / `Container` e não tem
+`Locations:` nenhum; as treze lojas do quarteirão são todas por slot, então
+nenhuma serve. E ela é caixa de sorteio: entrega 1x Botas do ArchAngeling
+(22101) garantido mais um visual entre seis, o que a 1 zeny numa vitrine é
+fonte infinita das botas. Levado ao dono no mesmo dia, a decisão foi deixá-la
+fora e decidir depois — está na `PENDENCIAS.md` §1y, com as duas medições
+prontas para quando a decisão vier.
+
+Vale notar que o conjunto está a meio caminho sem ninguém ter pedido: as botas
+que a caixa entrega são o par do **Super Óculos Poring (19118)**, que entrou
+nesta mesma leva, no Ocleiro.
+
+### Três nomes que o diff mostra indo do português para o inglês
+
+O `nomes_pt_item_db.py` roda como parte desta receita, e desta vez o diff dele
+tem uma linha que assusta: **três itens perderam o nome em português** no
+`db/re/item_db_equip.yml`.
+
+| id | antes, no `db/re/` | depois |
+|---|---|---|
+| 490290 | Anel de Ameretat | `Ameretat` |
+| 490336 | Núcleo de Verus | `Dimension Linkage Stone` |
+| 490337 | Amuleto Mitológico | `Amulet of Genesis Stone` |
+
+**Não é regressão, e o jogo não muda.** Os três viraram itens NOSSOS em
+2026-08-17 (os acessórios de lado trocado), e ganharam `Name:` em português no
+`db/guerra/item_db.yml` — que é importado **depois** e vence. O nome efetivo do
+servidor continua o português, e o cliente já mostrava português.
+
+O que aconteceu é uma consequência de como a ferramenta funciona: ela
+**reconstrói a partir do `.INGLES`** e **pula os itens nossos**. Pular, num
+script que reconstrói, quer dizer *devolver o original do vendor*. As linhas em
+português que estavam ali eram sobra de uma passada anterior a esses três serem
+nossos. Ou seja o arquivo do vendor voltou ao estado canônico e a duplicata de
+tradução sumiu — é limpeza, não perda.
+
+**A leitura errada é cara**, e por isso fica registrada: quem vir esse diff e
+"consertar" à mão devolve a duplicata, e aí passa a haver dois lugares dizendo o
+nome do mesmo item, com o `db/re/` perdendo sempre. A conferência que decide é
+`estado_item.py --id 490290,490336,490337`, que mostra de qual arquivo o nome
+efetivo sai.
+
+### Um comentário vencido, corrigido de passagem
+
+A entrada da Lacma no `db/guerra/item_db.yml` afirmava desde 2026-08-16 que a
+regra 4.16 fazia aquela adaga custar **20 zeny** na vitrine. A linha do Senhor
+das Armas sempre disse `28739:1`, e desde 2026-08-17 o `item_db_lojas.yml` põe
+`Buy: 1` por cima — ou seja o comentário descrevia uma regra que não roda. É a
+regra 4.17 na variante "deixou de valer", e foi encontrada só porque a mesma
+frase seria copiada para as entradas novas.
+
