@@ -1525,6 +1525,26 @@ Produziram diagnóstico falso e custaram retrabalho:
   script: **campo constante num gerador é uma suposição sobre todos os casos
   já vistos**, e o `--verificar` não a denuncia porque ele compara com o que o
   próprio gerador produziria.
+- **O deploy NÃO sai do Windows, e o pré-voo reprova aqui por um motivo que
+  não existe no servidor.** Duas coisas separadas, e as duas dão a impressão de
+  que algo quebrou quando nada quebrou:
+  1. **A chave desta máquina é `ragnarok`, não `root`** — decisão do dono em
+     2026-08-16, e está escrita no `~/.ssh/config` daqui: ela existe só para o
+     `publica_patch.sh` copiar zip para `/var/www/patch`. O
+     `atualiza_servidor.sh` responde *"precisa rodar como root"* e `sudo -n`
+     pede senha. **Publicar patch daqui: sim. Deploy daqui: não** — o deploy
+     sai do Mac, com a chave de lá.
+  2. **A conferência de fim de linha do `prevoo.sh` é falso positivo no
+     Windows.** Ela mede o *diretório de trabalho*, e com `* text=auto` no
+     `.gitattributes` o checkout do Windows entrega CRLF de propósito — em
+     2026-08-18 ela reprovou 25 arquivos e abortou o deploy antes de tocar no
+     servidor. O que importa é o **índice**, que é LF, e é ele que o Linux
+     recebe. A sonda que decide é `git ls-files --eol <caminho>`: a coluna
+     `i/` é a que vale, a `w/` é a da máquina. Cuidado com `git show HEAD:<f>`
+     nessa conferência — no Git for Windows ele aplica o filtro de checkout e
+     **devolve CRLF de um blob que é LF**, confirmando o diagnóstico errado.
+  É o espelho exato da armadilha do Mac (§9): lá o APFS esconde o defeito que o
+  Linux pune; aqui o checkout do Windows inventa um defeito que o Linux não tem.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

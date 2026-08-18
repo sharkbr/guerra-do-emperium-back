@@ -1979,9 +1979,37 @@ vitrines". Aqui fica **só o que falta**.
 
    Os três caminhos com `<...>` têm nome **coreano** — copiar da saída de
    `valida_visual.py --id 450252`, não digitar.
-5. **`ferramentas/implanta.sh`** leva a metade de servidor: as duas linhas de
-   `shop`, o `db/guerra/item_db.yml`, o `db/guerra/item_db_lojas.yml` e os três
-   `db/re/item_db_*.yml` que o `nomes_pt_item_db.py` reescreveu.
+5. **`ferramentas/implanta.sh`, E TEM DE SER DO MAC** — é o único passo que
+   falta, e é o que está bloqueando. Leva a metade de servidor: as duas linhas
+   de `shop`, o `db/guerra/item_db.yml`, o `db/guerra/item_db_lojas.yml` e os
+   três `db/re/item_db_*.yml` que o `nomes_pt_item_db.py` reescreveu.
+
+### Estado em 2026-08-18, depois do teste em jogo
+
+| | |
+|---|---|
+| patch **0005** | **no ar** — publicado e conferido por HTTP, sha `90ca76d5…` |
+| commit `7b27280` | **no GitHub** |
+| deploy | **FALTA** — servidor parado em `7cecebf` |
+
+O deploy não saiu porque **não sai desta máquina**: a chave do Windows é
+`ragnarok` e o `atualiza_servidor.sh` exige root (`CLAUDE.md` §5). É um comando
+no Mac, sem nada a preparar:
+
+```
+ferramentas/implanta.sh
+```
+
+**A ordem em que ficou é a segura, e não por acaso.** O cliente tem as 17
+entradas novas de `itemInfo.lua` e o servidor ainda não vende os itens — ou
+seja o jogador tem nome e ícone para peças que ainda não existem na vitrine, o
+que não aparece em lugar nenhum. A ordem inversa é que machuca: loja
+entregando item que o cliente não conhece dá *Unknown Item* com sprite de maçã
+(`CLAUDE.md` §5).
+
+**Um detalhe do `prevoo.sh` para quem for rodar:** ele reprova no Windows por
+fim de linha, e é falso positivo — o índice é LF nos 98 arquivos nossos. No Mac
+a conferência passa. Não "consertar" os CRLF do diretório de trabalho.
 
 ### O que só a tela decide
 
