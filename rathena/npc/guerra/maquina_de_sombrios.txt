@@ -28,13 +28,18 @@
 //= nasceria em chao nenhum. No auction_01 a mesma celula anda.
 //===== Descricao ============================================
 //= UMA MAQUINA DE SORTEIO, e a primeira do servidor. Custa
-//= 2 Moedas Novas o giro e devolve UM item de uma tabela de
+//= 2 Moedas Novas o giro e devolve UM PREMIO de uma tabela de
 //= quatro, com peso - tudo do ramo de equipamento Sombrio:
 //=
-//=   14675  Caixa de Sombrios de Atributo   15/34
-//=   23436  Martelo de Refino Sombrio       15/34
-//=   23247  Combinador de Atributo           3/34
-//=   23926  Martelo Sombrio +9               1/34
+//=   14675  Caixa de Sombrios de Atributo   15/34   1 un.
+//=   23436  Martelo de Refino Sombrio       15/34   5 un.
+//=   23247  Combinador de Atributo           3/34   1 un.
+//=   23926  Martelo Sombrio +9               1/34   1 un.
+//=
+//= A QUANTIDADE E COLUNA DA TABELA desde 2026-08-18, e nao um
+//= numero solto no `getitem`: o Martelo de Refino Sombrio passou
+//= a sair de cinco em cinco por decisao do dono, e os outros tres
+//= continuam em um. Ver a secao "Cinco martelos por giro".
 //=
 //= Os quatro ja existiam no rAthena, com nome em portugues no
 //= itemInfo.lua deste cliente e arte completa (4 de 4 no
@@ -194,12 +199,41 @@
 //= Por isso o `checkweight` na frente do `delitem`.
 //=
 //= E POR ISSO O SORTEIO VEM ANTES DA COBRANCA. O checkweight
-//= precisa saber QUAL item vai entregar: os quatro pesam 10 e
-//= sao empilhaveis, mas empilhavel so dispensa slot livre se o
-//= jogador JA tem aquele item. Checar um e entregar outro passa
-//= no teste e larga no chao assim mesmo. Entao a ordem e:
+//= precisa saber QUAL item vai entregar E QUANTOS: os quatro
+//= pesam 10 cada e sao empilhaveis, mas empilhavel so dispensa
+//= slot livre se o jogador JA tem aquele item, e o Martelo de
+//= Refino sai de cinco em cinco (50 de peso). Checar um e
+//= entregar outro - ou checar um e entregar cinco - passa no
+//= teste e larga no chao assim mesmo. Entao a ordem e:
 //= sorteia -> confere o premio sorteado -> cobra -> entrega.
 //= Nada e revelado antes de cobrar, entao nao ha o que refazer.
+//===== Cinco martelos por giro ==============================
+//= O Martelo de Refino Sombrio (23436) sai 5 por giro desde
+//= 2026-08-18. Ele e o consumivel de refinar equipamento Sombrio:
+//= um por tentativa, e a tentativa falha - a 15/34 de chance de
+//= sair, um martelo por giro fazia o jogador gastar duas Moedas
+//= Novas para uma tentativa de refino.
+//=
+//= A QUANTIDADE E A TERCEIRA COLUNA DA TABELA, `.qtd`, e nao um
+//= numero escrito no `getitem`. E a regra 11 do CLAUDE.md pela
+//= terceira vez neste arquivo: quem le a lista na tela, quem
+//= confere o peso da mochila e quem entrega leem TODOS o mesmo
+//= array. Numero escrito no `getitem` sairia de sincronia com o
+//= texto da tela no dia em que alguem mudasse um dos dois, e a
+//= divergencia nao daria erro - a maquina anunciaria cinco e
+//= entregaria um.
+//=
+//= O `getarraysize` confere as TRES colunas no OnInit, e com isso
+//= a guarda ficou mais forte do que era: coluna a menos em
+//= qualquer uma delas deixa `.total` em 0 e a maquina recusa
+//= abrir. Nenhuma quantidade pode ser 0 - alem de nao fazer
+//= sentido, zero em variavel de `.` APAGA a entrada do array
+//= (CLAUDE.md secao 5) e a coluna encolheria calada.
+//=
+//= E o `checkweight` passou a receber a quantidade. Cinco
+//= martelos pesam 50, nao 10, e conferir 1 para entregar 5 e
+//= exatamente o buraco que a secao "Por que checkweight ANTES de
+//= cobrar" existe para fechar.
 //===== Facing: a tabela da maquina.txt nao serve aqui =======
 //= O cabecalho da npc/guerra/maquina.txt traz uma tabela de
 //= facing em termos de "direita" e "esquerda" na tela. Ela foi
@@ -314,9 +348,9 @@ auction_01,189,58,4	script	Sombrios Totais	10375,{
 	mes "A fenda do painel pede ^0000FF" + .preco + " Moedas Novas^000000.";
 	next;
 
-	// A lista e a porcentagem saem dos MESMOS dois arrays do
-	// sorteio, por laco - nenhum numero destes esta escrito no
-	// arquivo. CLAUDE.md secao 4.11.
+	// A lista, a porcentagem e a quantidade saem dos MESMOS tres
+	// arrays do sorteio, por laco - nenhum numero destes esta
+	// escrito no arquivo. CLAUDE.md secao 4.11.
 	mes "[Sombrios Totais]";
 	mes "O mostrador lista o que a gaveta solta:";
 	for (.@i = 0; .@i < getarraysize(.premio); .@i++) {
@@ -326,7 +360,10 @@ auction_01,189,58,4	script	Sombrios Totais	10375,{
 		// formatacao de casa decimal no script do rAthena.
 		.@pct = (.peso[.@i] * 10000 + .total / 2) / .total;
 		.@dec = .@pct % 100;
-		mes "^0000FF" + getitemname(.premio[.@i]) + "^000000  " +
+		// A quantidade so entra na linha quando passa de 1: premio
+		// de um continua escrito como sempre foi.
+		mes "^0000FF" + getitemname(.premio[.@i]) +
+		    ((.qtd[.@i] > 1) ? " x" + .qtd[.@i] : "") + "^000000  " +
 		    (.@pct / 100) + "," +
 		    ((.@dec < 10) ? "0" + .@dec : "" + .@dec) + "%";
 	}
@@ -365,8 +402,12 @@ auction_01,189,58,4	script	Sombrios Totais	10375,{
 		.@ate += .peso[.@i];
 	}
 	.@premio = .premio[.@i];
+	.@qtd = .qtd[.@i];
 
-	if (!checkweight(.@premio, 1)) {
+	// checkweight com a QUANTIDADE sorteada, nao com 1: cinco
+	// martelos pesam cinco vezes mais, e o que tem de caber e o que
+	// vai sair da gaveta.
+	if (!checkweight(.@premio, .@qtd)) {
 		mes "[Sombrios Totais]";
 		mes "A gaveta tenta abrir e trava.";
 		mes "Não há espaço na sua mochila,";
@@ -385,31 +426,46 @@ auction_01,189,58,4	script	Sombrios Totais	10375,{
 	}
 
 	delitem .moeda, .preco;
-	getitem .@premio, 1;
+	getitem .@premio, .@qtd;
 
 	mes "[Sombrios Totais]";
 	mes "A máquina range, e a gaveta abre com um estalo.";
-	mes "Você recebeu ^0000FF" + getitemname(.@premio) + "^000000.";
+	mes "Você recebeu ^0000FF" + getitemname(.@premio) +
+	    ((.@qtd > 1) ? " x" + .@qtd : "") + "^000000.";
 	close;
 
 OnInit:
 	.moeda = 30998;   // Moeda Nova, db/guerra/item_db.yml
 	.preco = 2;
 
-	// A TABELA. As duas colunas andam juntas - id em cima, peso
-	// embaixo -, e sao a UNICA fonte da lista na tela, da
-	// porcentagem e do sorteio. Premio novo e uma coluna em cada.
+	// A TABELA. As tres colunas andam juntas - id em cima, peso no
+	// meio, quantidade embaixo -, e sao a UNICA fonte da lista na
+	// tela, da porcentagem, do sorteio e do que sai da gaveta.
+	// Premio novo e uma coluna em cada uma das tres.
+	//
+	// Quantidade nunca e 0: zero em variavel de `.` apaga a entrada
+	// e a coluna encolheria calada (CLAUDE.md secao 5).
 	//
 	//                       14675  23436  23247  23926
 	setarray .premio[0],     14675, 23436, 23247, 23926;
 	setarray .peso[0],          15,    15,     3,     1;
+	setarray .qtd[0],            1,     5,     1,     1;
 
 	.@n = getarraysize(.premio);
-	if (.@n != getarraysize(.peso)) {
+	.@np = getarraysize(.peso);
+	.@nq = getarraysize(.qtd);
+
+	// Dois `if` e nao um `||`: os operadores logicos do rAthena nao
+	// fazem curto-circuito (CLAUDE.md secao 5), e assim a mensagem
+	// ainda diz qual coluna destoou.
+	.@desalinhado = 0;
+	if (.@n != .@np) .@desalinhado = 1;
+	if (.@n != .@nq) .@desalinhado = 1;
+	if (.@desalinhado) {
 		// .total fica 0 e o corpo recusa a abrir. Melhor a maquina
 		// calada que a maquina sorteando fora da tabela.
 		debugmes "Maquina de Sombrios Totais: .premio (" + .@n +
-		         ") e .peso (" + getarraysize(.peso) +
+		         "), .peso (" + .@np + ") e .qtd (" + .@nq +
 		         ") com tamanhos diferentes - SORTEIO DESALINHADO.";
 		end;
 	}

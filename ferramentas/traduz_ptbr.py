@@ -23,6 +23,7 @@ bRO e a fonte de referencia: nada aqui e traduzido por nos, tudo e importado.
     mapas        nome do mapa na minimapa          System\\mapInfo.lub
     mapinfo      o letreiro ao entrar no mapa      System\\mapInfo.lub
     cartas       o prefixo que a carta poe no nome data\\cardprefixnametable.txt
+    encantamen.  o efeito do encantamento no item  addrandomoptionnametable.lub
 
 **Toda parte e idempotente**: rodar duas vezes nao muda nada na segunda. O que
 manda no destino e sempre o arquivo que o cliente ja usa - o do ROenglishRE -, e
@@ -544,7 +545,8 @@ def _gera_quests(global_lua, rotulo, base, bro, en, campos, campos_texto,
 # passaram batido pelo caso da quebra de linha dentro da string. Se o repositorio
 # do ROenglishRE nao estiver nesta maquina a conferencia e pulada com aviso - ela
 # nao e requisito para gerar, so para ter certeza.
-LUAC = r'C:\Users\User\Downloads\ROenglishRE\Tools\luac.exe'
+ROENGLISH = r'C:\Users\User\Downloads\ROenglishRE'
+LUAC = os.path.join(ROENGLISH, 'Tools', 'luac.exe')
 
 
 def _confere_luac(texto, rotulo):
@@ -1282,6 +1284,140 @@ def parte_monstros(verificar):
 
 # ==================================================================== driver
 
+# ============================================ encantamentos (opcao aleatoria)
+
+# O destino e um arquivo que NAO existe em `cliente\\data` - ele mora so dentro
+# do GRF. Criar o solto e o que faz o DataFolderFirst preferi-lo.
+ENC_ALVO = os.path.join('data', 'luafiles514', 'lua files', 'datainfo',
+                        'addrandomoptionnametable.lub')
+ENC_NO_GRF = ('data\\luafiles514\\lua files\\datainfo'
+              '\\addrandomoptionnametable.lub')
+ENC_EN = os.path.join(ROENGLISH, 'Translation', 'Renewal', 'data',
+                      'luafiles514', 'lua files', 'datainfo',
+                      'addrandomoptionnametable.lub')
+
+# `[EnumVAR.VAR_MAXHPAMOUNT[1]] = "MaxHP +%d"` - a forma do arquivo do
+# ROenglishRE, que e texto puro. O VALOR respeita escapada, pelo mesmo motivo
+# de sempre.
+RE_ENC = re.compile(r'\[(EnumVAR\.[A-Za-z0-9_]+\[1\])\]\s*=\s*"(' + VALOR + ')"')
+
+CABECA_ENC = '''\
+-- Guerra do Emperium - o efeito do encantamento em portugues
+--
+-- GERADO por ferramentas/traduz_ptbr.py encantamentos. Nao editar a mao: a
+-- proxima rodada reescreve o arquivo inteiro.
+--
+-- Este arquivo NAO existe solto no cliente de fabrica - ele vive dentro do
+-- data.grf, em coreano. O que o faz valer e o DataFolderFirst, que deixa o
+-- disco vencer o GRF.
+--
+-- As CHAVES sao as do NOSSO GRF (Gravity, 2021-11-03) e nao as do bRO nem as
+-- do ROenglishRE, e isso e a trava: `EnumVAR.<X>` que este exe nao conhecesse
+-- viraria `nil`, e indexar `nil[1]` derruba a tabela INTEIRA - a janela de
+-- item voltaria a nao mostrar encantamento nenhum.
+--
+-- O TEXTO vem do bRO onde ele tem (%(pt)d de %(total)d) e do ROenglishRE no
+-- resto (%(en)d) - as siglas de 4a classe (POW, SPL, STA, WIS, CON, CRT,
+-- P.ATK, S.MATK, RES, MRES, H.PLUS, C.RATE), que sao iguais nos dois idiomas
+-- porque o bRO daquela epoca ainda nao tinha 4a classe.
+--
+-- Gravado em cp1252, como todo texto que o jogo le. O cliente so le isto na
+-- INICIALIZACAO: depois de gerar, fechar e reabrir.
+
+NameTable_VAR = {
+'''
+
+
+def _enc_do_grf(caminho, rotulo):
+    u"""GRF -> {'EnumVAR.X[1]': bytes do texto}."""
+    import grf as _grf
+    if not os.path.exists(caminho):
+        raise Erro('nao achei o GRF em %s' % caminho)
+    dados = _grf.Grf(caminho).read(ENC_NO_GRF)
+    tabela = ptbr.tabelas(dados).get('NameTable_VAR')
+    if not tabela:
+        raise Erro('%s nao definiu NameTable_VAR' % rotulo)
+    # A chave e um Sym: `EnumVAR.VAR_MAXHPAMOUNT[1]`. Sem o ramo de Sym
+    # indexado por numero no ptbr._interpreta a tabela inteira colapsaria numa
+    # entrada so, com chave None - e sem dar erro nenhum.
+    return dict((k.nome, v) for k, v in tabela.items()
+                if isinstance(k, ptbr.Sym))
+
+
+def parte_encantamentos(verificar):
+    u"""O texto do encantamento (opcao aleatoria) na janela do item.
+
+    E o que aparece nas duas linhas abaixo da descricao de uma arma ilusional,
+    e vinha em COREANO: o `addrandomoptionnametable.lub` deste cliente e o
+    original da Gravity, e nunca houve arquivo solto para vencê-lo.
+
+    As tres fontes, e a ordem entre elas:
+
+      1. o NOSSO GRF da as CHAVES - e so ele pode dar. A chave e
+         `EnumVAR.<X>[1]`, resolvida em tempo de execucao contra o
+         `enumvar.lub` deste exe; chave que ele nao conhecesse seria `nil`, e
+         `nil[1]` derruba a tabela toda, calado.
+      2. o bRO da o TEXTO em portugues, casado por chave (regra 4.5).
+      3. o ROenglishRE preenche o que o bRO nao tem - as siglas de 4a classe.
+
+    Nada fica em coreano: 239 + 13 = 252, medido em 2026-08-18.
+    """
+    nosso = _enc_do_grf(ptbr.NOSSO_GRF, 'nosso GRF')
+    bro = _enc_do_grf(ptbr.BRO_GRF, 'GRF do bRO')
+
+    ingles = {}
+    if os.path.exists(ENC_EN):
+        for m in RE_ENC.finditer(le(ENC_EN)):
+            ingles[m.group(1)] = m.group(2)
+    else:
+        print '    AVISO: ROenglishRE ausente; o que o bRO nao tiver fica em coreano'
+
+    print '    nosso GRF: %d chaves | bRO: %d | ROenglishRE: %d' % (
+        len(nosso), len(bro), len(ingles))
+
+    linhas = []
+    de_pt = de_en = de_kr = 0
+    for chave in sorted(nosso):
+        if chave in bro:
+            valor = ptbr.pt(bro[chave])
+            de_pt += 1
+        elif chave in ingles:
+            valor = ingles[chave]
+            de_en += 1
+        else:
+            # Sem fonte: fica como esta hoje, que e o coreano do nosso GRF.
+            valor = nosso[chave]
+            de_kr += 1
+        linhas.append('\t[%s] = "%s",' % (chave, aspas(valor)))
+
+    print '    %d do bRO, %d do ROenglishRE, %d sem fonte (coreano)' % (
+        de_pt, de_en, de_kr)
+
+    # A ultima linha nao leva virgula: Lua aceita, mas o arquivo do
+    # ROenglishRE tambem nao leva, e o diff com ele fica legivel.
+    linhas[-1] = linhas[-1].rstrip(',')
+    texto = (CABECA_ENC % {'pt': de_pt, 'en': de_en,
+                           'total': len(nosso)}
+             + '\n'.join(linhas) + '\n}\n')
+
+    _confere_luac(texto, 'addrandomoptionnametable.lub')
+
+    alvo = os.path.join(ptbr.CLIENTE, ENC_ALVO)
+    if not os.path.exists(alvo):
+        if verificar:
+            print '    --verificar: criaria %s (%d bytes)' % (alvo, len(texto))
+            return 0
+        pasta = os.path.dirname(alvo)
+        if not os.path.isdir(pasta):
+            os.makedirs(pasta)
+        fh = open(alvo, 'wb')
+        fh.write(texto)
+        fh.close()
+        print '    criado: %s' % os.path.basename(alvo)
+        return 1
+    return grava(alvo, texto, verificar, 'encantamentos')
+
+
 PARTES = [
     ('msgstrid',   parte_msgstrid,   'rotulos de janela e de botao'),
     ('msgtable',   parte_msgtable,   'mensagens de sistema e de erro'),
@@ -1296,6 +1432,8 @@ PARTES = [
     ('cartas',     parte_cartas,     'o prefixo que a carta poe no nome'),
     ('abas',       parte_abas,       'as abas da janela de habilidades'),
     ('monstros',   parte_monstros,   'o nome que flutua sobre o monstro'),
+    ('encantamentos', parte_encantamentos,
+     'o efeito do encantamento na janela do item'),
 ]
 
 

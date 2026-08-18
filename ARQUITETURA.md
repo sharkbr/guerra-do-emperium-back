@@ -181,6 +181,33 @@ se alguma discordar. É a trava — não o comentário no cabeçalho da loja
 próprio `item_db`, e é por isso que as duas metades dela nunca podem divergir:
 são o mesmo número. Ver `CLAUDE.md` §4.16.
 
+### Um drop de MAPA vive em 2 lugares, e o segundo é gerado do primeiro
+
+| # | Onde | O que decide |
+|---|---|---|
+| 1 | `db/re/map_drops.yml` (rAthena) | **quais** itens caem de qual monstro em qual mapa, com que opção aleatória |
+| 2 | `db/guerra/map_drops.yml` | **a taxa** — a do vendor multiplicada por 50 |
+
+Este é o único acoplamento em que o vendor é a fonte e o nosso arquivo é
+derivado: o segundo é **gerado** por `ferramentas/escala_drops_de_mapa.py` a
+partir do primeiro, e o rAthena os mescla por **(Mapa, Monstro, Index)** — o
+`parseBodyNode` procura o mapa antes de criar e o `parseDrop` procura o Index
+dentro do monstro, então campo que o nosso arquivo não declara fica como
+estava.
+
+**Existe porque drop de mapa não passa pela taxa do servidor.** Os
+`item_rate_*: 5000` não alcançam aquele arquivo (`CLAUDE.md` §5), então sem o
+segundo lugar o ramo ilusional inteiro roda a 1x num servidor de 50x.
+
+**O que muda junto: atualizar o `rathena/`.** Mapa novo, monstro novo ou Index
+reordenado no vendor não chega ao nosso arquivo sozinho — e o pior caso é o
+Index reordenado, porque a mescla é por número: a taxa de um item passaria para
+a linha de outro, calada. `escala_drops_de_mapa.py --conferir` compara os pares
+`Index → Item` dos dois lados e sai com erro se algum tiver andado.
+
+Recarrega com **`@reloadmobdb`**, e só com ele — é quem refaz o `map_drop_db`
+(`src/map/mob.cpp:7216`).
+
 ### Uma loja de troca (`barter`) vive em 3 lugares, e o cliente é um deles
 
 | Onde | O que | Recarrega com |

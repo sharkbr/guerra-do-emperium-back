@@ -11478,3 +11478,154 @@ das Armas sempre disse `28739:1`, e desde 2026-08-17 o `item_db_lojas.yml` põe
 regra 4.17 na variante "deixou de valer", e foi encontrada só porque a mesma
 frase seria copiada para as entradas novas.
 
+
+## Cinco martelos por giro, e o drop de mapa que rodava a 1x (2026-08-18)
+
+Dois pedidos do dono no mesmo dia, sem relação entre si — mas o segundo virou o
+achado da semana.
+
+### A Sombrios Totais entrega cinco Martelos de Refino por giro
+
+A máquina de sorteio do Centro da Ordem (`npc/guerra/maquina_de_sombrios.txt`,
+`auction_01 189,58`) cobrava 2 Moedas Novas e devolvia **um** item de uma tabela
+de quatro. O Martelo de Refino Sombrio (23436) é o consumível de refinar
+equipamento Sombrio — um por tentativa, e a tentativa falha. A 15/34 de chance
+de sair, o jogador pagava duas Moedas por *uma* tentativa de refino.
+
+Passou a sair **5 por giro**. Os outros três prêmios continuam em 1.
+
+**A quantidade virou a terceira coluna da tabela, e não um número no
+`getitem`.** É a regra 4.11 pela terceira vez neste arquivo: a lista na tela, a
+porcentagem, o `checkweight` e a entrega leem todos os mesmos arrays do
+`OnInit`. Número escrito no `getitem` sairia de sincronia com o texto da janela
+no dia em que alguém mudasse um dos dois, e a divergência **não daria erro** — a
+máquina anunciaria cinco e entregaria um.
+
+Três consequências que vieram junto:
+
+- **O `checkweight` passou a receber a quantidade.** Cinco martelos pesam 50,
+  não 10. Conferir 1 para entregar 5 é exatamente o buraco que a seção "Por que
+  checkweight ANTES de cobrar" existe para fechar — e o Martelo de Refino é um
+  dos três prêmios **sem `NoDrop`**, ou seja o que não cabe na mochila cai no
+  chão do salão com o jogador já cobrado.
+- **A guarda do `OnInit` ficou mais forte**: compara as três colunas, não duas,
+  e a mensagem de `debugmes` diz qual delas destoou. Feita com dois `if` e não
+  com um `||`, porque os operadores lógicos do rAthena não fazem curto-circuito.
+- **Nenhuma quantidade pode ser 0** — além de não fazer sentido, zero em
+  variável de `.` apaga a entrada do array e a coluna encolheria calada.
+
+A quantidade só aparece na tela quando passa de 1 (`Martelo de Refino Sombrio
+x5`), então as outras três linhas continuam como sempre foram.
+
+### Os equipamentos ilusionais não caíam, e o motivo não estava no script
+
+O pedido chegou assim: *"Equips ilusionais não estão caindo dos mapas
+ilusionais. Exemplo: Ilusão da Tartaruga, o monstro Congelador Ominoso deveria
+dropar Espada Ilusional 13469, que existe no game. As outras instâncias
+Ilusionais também não."*
+
+**E ele realmente não dropava.** A espada não está no `Drops:` do Congelador
+Ominoso (3801, `ILL_FREEZER`) em `db/re/mob_db.yml` — procurar ali devolve
+zero, o que parece item que não cai de nada. Equipamento ilusional é **drop de
+mapa**: vive em `db/re/map_drops.yml`, um banco separado, indexado por mapa e
+processado no fim do `mob_dead` (`src/map/mob.cpp:3372`, "Process map specific
+drops"). Para monstro dentro de instância a busca é pelo `instance_src_map`.
+
+Até aí, tudo montado e funcionando. **O problema é que drop de mapa não passa
+pela taxa do servidor.** O `mob_getdroprate` chamado ali (`mob.cpp:3388`) só
+aplica bônus de LUK e de equipamento do jogador; os `item_rate_*: 5000` de
+`conf/guerra/battle_guerra.txt` não alcançam campo nenhum daquele arquivo. O
+cabeçalho do próprio `map_drops.yml` do rAthena avisa, numa linha em inglês no
+meio da documentação de campos: *"These drops are unaffected by server drop rate
+and cannot be stolen."*
+
+Ou seja: **num servidor de 50x, o ramo ilusional inteiro rodava a 1x.**
+
+| item | `Rate` | chance por morte |
+|---|---|---|
+| Espada Ilusional (13469) | 25 | **0,025%** |
+| Pedra da Ilusão | 10 | **0,010%** |
+| Caixa da Ilha da Tartaruga | 5 | 0,005% |
+
+O Congelador Ominoso tem **549.071 de HP**. A 0,025% são ~2.800 mortes para
+meio a meio — e essa é a espada, o item barato do mapa. A troca de
+`barter_ill_turtle` (`npc/re/merchants/barters/enchan_illusion_dungeons.yml`)
+pede **100 Pedras da Ilusão** a 0,010% cada. Nada estava quebrado, e por isso
+nada aparecia no log: o sintoma é indistinguível de azar.
+
+**O conserto é um override gerado**, `db/guerra/map_drops.yml`, por
+`ferramentas/escala_drops_de_mapa.py`, com o `Footer: Imports:` acrescentado ao
+rodapé de `db/re/map_drops.yml` — que também não tinha rodapé nenhum, pelo mesmo
+caminho do `quest_db.yml` de 2026-08-08. Decisão do dono: **fator 50**, o mesmo
+`item_rate_equip: 5000`, e nos **18 mapas** do arquivo e não só nos dez
+ilusionais. A espada passou a 1,25%, a pedra a 0,5%, as caixas a 0,25%.
+
+Três coisas que o caminho ensinou, e que estão no `CLAUDE.md` §5:
+
+- **O teto de `Rate` não é cortado, é recusado.** Acima de 100000 o `parseDrop`
+  devolve `false` e o `parseBodyNode` descarta o **mapa inteiro**
+  (`mob.cpp:7072`) — com os drops já lidos daquele mapa aplicados, ou seja um
+  override pela metade e calado. O `min()` mora no gerador por isso. **117 dos
+  687** batem no teto e ficam em 100%, todos de chefe: não é exagero da
+  ferramenta, é o mesmo que já acontece com todo drop normal deste servidor,
+  onde `item_rate_equip: 5000` com `item_drop_equip_max: 10000` já torna
+  garantido qualquer drop de 2% ou mais.
+- **A mescla é por `(Mapa, Monstro, Index)`, não por item.** Por isso o gerador
+  escreve o `Item:` em cada linha ainda que o leitor não precise dele: se o
+  vendor reordenar um Index numa atualização, o nosso arquivo escreveria a taxa
+  de um item na linha de outro, calado. O `--conferir` compara os pares e
+  denuncia.
+- **Recarrega com `@reloadmobdb`**, e só com ele: é quem chama `mob_reload()`,
+  que refaz o `map_drop_db` (`mob.cpp:7216`). `@reloaditemdb` e `@reloadscript`
+  não pegam.
+
+### E os encantamentos vinham em coreano
+
+Com a espada caindo, apareceu o que estava atrás dela: as duas linhas de
+**opção aleatória** na janela do item — o encantamento — vinham em coreano.
+
+Não era erro de tradução, era um arquivo que nunca teve como ser traduzido. O
+`data\luafiles514\lua files\datainfo\addrandomoptionnametable.lub` **não existe
+solto em `cliente\data`**: o cliente lia o do `data.grf`, que é o original da
+Gravity de 2021-11-03. As doze partes do `traduz_ptbr.py` nunca o tocaram
+porque nenhuma delas tinha destino ali.
+
+Virou a **décima terceira parte**, `encantamentos`. O que a torna diferente das
+outras doze é de onde vem a **chave**:
+
+| | fonte | por quê |
+|---|---|---|
+| chave | **o nosso GRF** (Gravity, 2021-11-03) | é `EnumVAR.<X>[1]`, resolvida em tempo de execução contra o `enumvar.lub` deste exe |
+| texto | bRO, 239 de 252 | o acordo de 2026-08-02 |
+| resto | ROenglishRE, 13 | as siglas de 4ª classe |
+
+**A chave não podia sair do ROenglishRE**, que é de 2025 e traz opção que este
+cliente não conhece — `EnumVAR.<X>` desconhecido vira `nil`, e `nil[1]` derruba
+a tabela inteira: o efeito sumiria da janela em vez de aparecer sem nome. É a
+mesma razão pela qual o `skilltreeview.lub` e a janela de missões partem do
+coreano de 2021.
+
+Os 13 que o bRO não tem são POW, SPL, STA, WIS, CON, CRT, P.ATK, S.MATK, RES,
+MRES, H.PLUS e C.RATE, mais um de reflexão — as siglas de 4ª classe, iguais nos
+dois idiomas, porque o bRO daquela época ainda não as tinha. **Nada ficou em
+coreano:** 239 + 13 = 252.
+
+### A armadilha do leitor, que quase escondeu o arquivo inteiro
+
+O `ptbr.tabelas` respondeu, na primeira leitura, que aquela tabela tinha **uma**
+entrada. Não era arquivo vazio nem leitura corrompida: o `_interpreta` sabia
+resolver símbolo indexado por *string* (`SKID.NV_BASIC`) e devolvia `None` para
+qualquer outro caso — e a chave desta tabela é símbolo indexado por **número**,
+`EnumVAR.VAR_MAXHPAMOUNT[1]`. Com todas as chaves em `None`, o `dict` fica com a
+última e o leitor responde "1", sem erro nenhum.
+
+Um ramo novo no `GETTABLE` resolveu, e a regra ficou no `CLAUDE.md` §5:
+**tamanho de tabela igual a 1 é sintoma de chave não resolvida.** O ramo é
+acréscimo — só alcança o caso que antes virava `None` — e as sete outras partes
+que usam o mesmo leitor continuam idênticas.
+
+**Isto é cliente, e cliente não vai pelo deploy** (regra 4.18): o arquivo está
+gerado em `C:\GuerraDoEmperium\cliente\`, e foi ao jogador como **patch 0006**,
+publicado no mesmo dia - um arquivo só, 3.454 bytes no zip. A metade de
+servidor (os cinco martelos e o `map_drops.yml`) continua dependendo do
+`implanta.sh`, que sai do Mac.

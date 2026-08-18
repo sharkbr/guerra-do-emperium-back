@@ -588,7 +588,7 @@ python traduz_ptbr.py itens skills         # só essas partes
 python traduz_ptbr.py tudo --sem-acento    # a saída de emergência
 ```
 
-Doze partes, doze fontes diferentes dentro da instalação do Ragnarok Brazil.
+Treze partes, treze fontes diferentes dentro da instalação do Ragnarok Brazil.
 Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 2026-08-02 (`PENDENCIAS.md`).
 
@@ -606,6 +606,7 @@ Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 | `mapinfo` | o letreiro ao entrar no mapa | `System\mapInfo.lub` |
 | `cartas` | o prefixo que a carta põe no nome | `data\cardprefixnametable.txt` |
 | `monstros` | o nome que flutua sobre o monstro | `navi_mob_br.lub` |
+| `encantamentos` | o efeito do encantamento na janela do item | `addrandomoptionnametable.lub` |
 
 Toda parte é **idempotente** e faz backup antes de gravar.
 
@@ -644,6 +645,38 @@ A única troca de arquivo é `conquistas`, e ela se justifica: o
 inglês a preservar, e ele é **código, não tabela de texto** (cada conquista
 carrega a função que monta o progresso). O do bRO tem 349 das nossas 361; as 12
 que faltam passam de coreano para vazio.
+
+### `encantamentos` — a única parte cujas CHAVES saem do nosso GRF
+
+As duas linhas abaixo da descrição de uma arma ilusional — o efeito da opção
+aleatória — vinham em **coreano**, e não por engano de tradução: o
+`addrandomoptionnametable.lub` não existe solto em `cliente\data`, então o
+cliente lia o do `data.grf`, que é o original da Gravity. Nunca houve arquivo
+para vencê-lo.
+
+O que torna esta parte diferente das outras doze é de onde vem a **chave**. Nas
+outras, o destino é o arquivo do ROenglishRE e o bRO só preenche o texto; aqui
+o destino não existia, e a chave não é um número — é `EnumVAR.<X>[1]`,
+resolvida em tempo de execução contra o `enumvar.lub` **deste exe**. Chave que
+ele não conheça vira `nil`, e `nil[1]` é erro de Lua que derruba a tabela
+inteira: a janela voltaria a não mostrar encantamento nenhum. Por isso as
+chaves saem do **nosso GRF** (Gravity, 2021-11-03), que compilou contra esse
+mesmo `enumvar`, e não do bRO nem do ROenglishRE — que é de 2025 e conhece
+opção que este cliente não tem.
+
+O texto vem, em ordem: **bRO** onde ele tem (239 de 252), **ROenglishRE** no
+resto (13). Nada fica em coreano. Os 13 são as siglas de 4ª classe — POW, SPL,
+STA, WIS, CON, CRT, P.ATK, S.MATK, RES, MRES, H.PLUS, C.RATE — que são iguais
+nos dois idiomas, porque o bRO daquela época ainda não tinha 4ª classe.
+
+**Isto é cliente, e cliente não vai pelo deploy** (`CLAUDE.md` §4.18): depois
+de gerar, fechar e reabrir o cliente para ver, e mandar por patch para chegar
+ao jogador.
+
+Uma armadilha do leitor de bytecode ficou registrada no `CLAUDE.md` §5: a chave
+desta tabela é um símbolo **indexado por número**, e um leitor que só saiba
+tratar símbolo indexado por string devolve `None` para todas — a tabela de 252
+entradas colapsa numa só, sem erro nenhum, e o número que ele imprime é 1.
 
 ### O `msgstringtable.txt` é o único sem chave, e por isso o único com risco
 
@@ -2767,6 +2800,66 @@ instância. Carta que o jogador caçou também deixa de valer zeny no NPC.
 
 Recarregar: `@reloaditemdb` em jogo, ou reiniciar o map-server. As linhas de
 `shop` não mudam com isso — elas já estão todas a 1 zeny.
+
+## `escala_drops_de_mapa.py` — põe o drop de mapa na taxa do servidor
+
+```
+python escala_drops_de_mapa.py             # gera db/guerra/map_drops.yml
+python escala_drops_de_mapa.py --fator 50  # o padrão
+python escala_drops_de_mapa.py --conferir  # só relata; sai 1 se divergir
+```
+
+**Equipamento ilusional não cai, e não é bug de script.** O pedido chega como
+"o Congelador Ominoso deveria dropar a Espada Ilusional (13469) e não dropa" —
+e ele realmente não dropa: a espada **não está** no `Drops:` do monstro em
+`db/re/mob_db.yml`. Ela é **drop de mapa**, um banco separado
+(`db/re/map_drops.yml`) indexado por mapa e processado no fim do `mob_dead`
+(`src/map/mob.cpp:3372`).
+
+**E drop de mapa não passa pela taxa do servidor.** O `mob_getdroprate` chamado
+ali (`mob.cpp:3388`) só aplica bônus de LUK e de equipamento do jogador; os
+nossos `item_rate_*: 5000` não alcançam campo nenhum daquele arquivo. O
+cabeçalho do próprio `map_drops.yml` do rAthena diz isso numa linha em inglês:
+*"These drops are unaffected by server drop rate and cannot be stolen."*
+
+Medido em 2026-08-18, antes desta ferramenta existir — num servidor de 50x, o
+ramo ilusional inteiro rodava a **1x**:
+
+| item | `Rate` | chance | onde |
+|---|---|---|---|
+| Espada Ilusional (13469) | 25 | **0,025%** | Congelador Ominoso, 549.071 de HP |
+| Pedra da Ilusão | 10 | **0,010%** | e a troca oficial pede **100** |
+| Caixa da Ilha da Tartaruga | 5 | 0,005% | — |
+
+Nada estava quebrado, e por isso nada aparecia no log: o sintoma é
+indistinguível de azar.
+
+**O que ele escreve** é um override que redeclara cada drop com a taxa
+multiplicada pelo fator, com teto de 100000. A mescla é do rAthena e é por
+**(Mapa, Monstro, Index)** — o `parseBodyNode` procura o mapa antes de criar e o
+`parseDrop` procura o Index dentro do monstro. Campo não declarado fica como
+estava, e é por isso que o arquivo **não** escreve `RandomOptionGroup`: as
+opções aleatórias do vendor continuam valendo.
+
+**O teto não é cortado, é recusado.** `Rate` acima de 100000 faz o `parseDrop`
+devolver `false` e o `parseBodyNode` descartar o **mapa inteiro**
+(`mob.cpp:7072`) — com os drops já lidos daquele mapa aplicados, ou seja um
+override pela metade, calado. O `min()` mora no gerador por isso.
+
+**117 dos 687 batem no teto e ficam em 100%**, todos de chefe (taxa base ≥ 2%).
+Não é exagero da ferramenta: é o mesmo que já acontece com todo drop normal
+deste servidor, onde `item_rate_equip: 5000` com `item_drop_equip_max: 10000`
+já torna garantido qualquer drop de 2% ou mais.
+
+**O `Item:` é escrito em cada linha ainda que o leitor não precise dele.** A
+mescla é por `Index`; se o vendor reordenar os Index de um monstro numa
+atualização, o nosso arquivo passaria a escrever a taxa de um item na linha de
+outro — calado. O `--conferir` compara os pares e denuncia três coisas: taxa
+fora do fator, `Index → Item` que mudou de lado no vendor, e drop que existe no
+vendor e não aqui. **Rodar depois de atualizar o `rathena/`.**
+
+Recarregar: **`@reloadmobdb`** — é ele que chama `mob_reload()`, que refaz o
+`map_drop_db` (`mob.cpp:7216`). `@reloaditemdb` e `@reloadscript` não pegam.
 
 ## `gera_char_guerra.py` — a lista de letras que o nome de personagem aceita
 

@@ -304,6 +304,13 @@ def _interpreta(f, globais):
                 reg[A] = base.get(chave)
             elif isinstance(base, Sym) and isinstance(chave, str):
                 reg[A] = Sym('%s.%s' % (base.nome, chave))
+            elif isinstance(base, Sym) and isinstance(chave, float):
+                # `EnumVAR.VAR_MAXHPAMOUNT[1]`, a chave da tabela de
+                # encantamento: o simbolo continua sendo indexado, agora por
+                # numero. Sem este ramo a chave vira None e a tabela INTEIRA
+                # colapsa numa entrada so - o que nao da erro nenhum, só
+                # devolve uma tabela de tamanho 1.
+                reg[A] = Sym('%s[%d]' % (base.nome, int(chave)))
             else:
                 reg[A] = None
         elif op == 7:                                 # SETGLOBAL

@@ -88,6 +88,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
 | `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um — a única exceção da linha de cima. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
+| `db/re/map_drops.yml` | o **`Footer: Imports:` inteiro**, pelo mesmo caminho do `quest_db.yml` acima — aquele arquivo também não tinha rodapé. Aponta para `db/guerra/map_drops.yml`, **gerado** por `ferramentas/escala_drops_de_mapa.py` (drop de mapa não passa pela taxa do servidor — ver §5) |
 | `src/map/clif.cpp` | **três** includes de `src/custom/` + **quatro** chamadas, comentadas no arquivo: `placa_de_venda_mostra`, o teto de refino nas duas pontas da janela de refino, e `brilho_da_carta` no `clif_dropflooritem` (o pilar de luz e o som quando cai carta — `src/custom/brilho_da_carta.hpp`) |
 | `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto configurável, 99% hoje, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
 | `src/map/status.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo, as duas de `guardiao_do_castelo.hpp` (a escala do guardião pela defesa do castelo): `guardiao_tem_escala` num `flag\|=4` **acrescentado** ao lado do `guardup_lv` do rAthena — não substitui nada, e só existe porque sem flag nenhuma o `status_calc_mob_` sai antes, libera o `md->base_status` e passaria a escrever no status **compartilhado** do `mob_db`; e `guardiao_aplica_escala` no fim da mesma função, depois do bloco "Strengthen Guardians" e **antes** do `memcpy` final |
@@ -138,6 +139,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/guerra/refine.yml`, `db/guerra/refine_evento.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb`. Vale também para ligar/desligar o Evento de Refino, que é comentar a linha `- Path: db/guerra/refine_evento.yml` no rodapé de `db/refine.yml` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
+| `db/guerra/map_drops.yml` (drop de mapa) | `@reloadmobdb` — é ele que chama `mob_reload()`, que refaz o `map_drop_db` (`src/map/mob.cpp:7216`). **Não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/instance_db.yml` (nome de instância) | `@reloadinstancedb` — existe, e **não** exige reiniciar. O nome é chave: o `instance_create` resolve por string, então rodar este **antes** do `@reloadscript` quando os dois lados mudaram juntos |
 | `src/` | recompilar (VS 2022 Community, já instalado) |
 | `itemInfo.lua` e afins no cliente | **fechar e reabrir o cliente** — só lido na inicialização |
@@ -568,6 +570,22 @@ Produziram diagnóstico falso e custaram retrabalho:
   registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só
   `SETTABLE ... ; B="NOME" C=<valor>` captura as ~127 primeiras entradas e
   devolve um número **plausível e errado**.
+- **Chave de tabela que é SÍMBOLO INDEXADO POR NÚMERO colapsa a tabela inteira
+  numa entrada só, sem erro nenhum.** O `ptbr._interpreta` sabia resolver
+  `SKID.NV_BASIC` (símbolo indexado por *string*) e devolvia `None` para
+  qualquer outro caso — inclusive `EnumVAR.VAR_MAXHPAMOUNT[1]`, que é a chave
+  do `addrandomoptionnametable.lub`. Como todas as chaves viram `None`, o
+  `dict` fica com **uma** entrada, a última: o leitor responde *"tabela com 1
+  entrada"* sobre um arquivo de 252, e nada quebra. Corrigido em 2026-08-18
+  com um ramo de `Sym` indexado por número. A regra que sobra: **tamanho de
+  tabela igual a 1 é sintoma de chave não resolvida**, não de arquivo vazio.
+- **Tabela do cliente cujas chaves são `EnumVAR.<X>`, `SKID.<X>` e afins tem de
+  ter as CHAVES tiradas do NOSSO GRF — nunca do ROenglishRE nem do bRO.** A
+  chave não é constante: é resolvida em tempo de execução contra o `enumvar.lub`
+  (ou equivalente) **deste exe**. Chave que ele não conheça vira `nil`, e
+  indexar `nil[1]` é erro de Lua que derruba a tabela inteira — o efeito some da
+  janela, não fica "sem nome". É a mesma família da armadilha do `skilltreeview`
+  e da janela de missões; o texto pode vir de qualquer fonte, a chave não.
 - **Um `.lub` pode definir MAIS DE UMA tabela, e ler tudo numa lista só
   colapsa uma na outra.** O `valida_visual.tabela_lua` devolve os pares de
   todas as tabelas do arquivo achatados; um `dict()` por cima fica com a
@@ -961,6 +979,29 @@ Produziram diagnóstico falso e custaram retrabalho:
   vezes mais — a recompensa de NPC vale **um décimo** do que o número sugere,
   em relação ao resto. Ler "somos 10x" e supor que o script acompanha erra a
   economia inteira, e nada denuncia.
+- **Equipamento ilusional não está no `Drops:` do monstro: é DROP DE MAPA — e
+  drop de mapa NÃO passa pela taxa do servidor.** São dois enganos em fila, e o
+  segundo é o caro. O primeiro: procurar a Espada Ilusional (13469) no
+  `mob_db` do Congelador Ominoso devolve **zero**, o que parece item que não
+  cai de nada; ela mora em `db/re/map_drops.yml`, um banco separado, indexado
+  por **mapa** e processado no fim do `mob_dead` (`mob.cpp:3372`, "Process map
+  specific drops") — e para monstro dentro de instância a busca é pelo
+  `instance_src_map`, o mapa-molde. O segundo: o `mob_getdroprate` chamado ali
+  (`mob.cpp:3388`) só aplica bônus de LUK e de equipamento do jogador. Os
+  `item_rate_*: 5000` de `conf/guerra/battle_guerra.txt` **não alcançam campo
+  nenhum daquele arquivo**, e o cabeçalho do próprio `map_drops.yml` diz isso
+  numa linha em inglês: *"These drops are unaffected by server drop rate"*.
+  Consequência medida em 2026-08-18: num servidor de 50x, o ramo ilusional
+  inteiro rodava a **1x** — a espada a 0,025% por Congelador Ominoso (549.071
+  de HP) e a Pedra da Ilusão a 0,010%, com a troca oficial pedindo **cem**
+  pedras. Nada estava quebrado, então nada aparecia no log; o sintoma é
+  indistinguível de azar. Corrigido por `db/guerra/map_drops.yml`, gerado por
+  `ferramentas/escala_drops_de_mapa.py`.
+  **E o teto de `Rate` não é cortado, é recusado:** acima de 100000 o
+  `parseDrop` devolve `false` e o `parseBodyNode` descarta o **mapa inteiro**
+  (`mob.cpp:7072`) — com os drops já lidos daquele mapa aplicados, ou seja um
+  override pela metade. Quem multiplicar taxa daquele arquivo põe o `min()` no
+  gerador.
 - **Em `TimeLimit` de quest, o `+` é o que decide o significado.** `+3h` é
   intervalo (três horas a partir de agora); `6h`, sem o sinal, é **hora
   exata** — o `quest_time()` (`quest.cpp:554`) devolve o próximo 06:00, hoje

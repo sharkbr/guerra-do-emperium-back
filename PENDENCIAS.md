@@ -2058,6 +2058,70 @@ Duas coisas para quando a decisão vier, as duas medidas:
 
 ---
 
+## 1z. Os cinco martelos, o drop de mapa e o encantamento (2026-08-18)
+
+O que foi feito e por quê está no `HISTORICO.md`, "Cinco martelos por giro, e o
+drop de mapa que rodava a 1x". Aqui fica **só o que falta**.
+
+### Já visto em jogo em 2026-08-18
+
+**O drop de mapa está provado.** O dono confirmou a queda no chefe (`3804`,
+Ominoso General Tartaruga, agora a 100%) **e** no Congelador Ominoso (`3801`, a
+1,25%) — ou seja o `@reloadmobdb` pegou, o `map_drop_db` recarregou e as duas
+pontas da tabela funcionam, a de chefe e a normal.
+
+### O que falta, na ordem
+
+1. **`@reloadscript`** — a Sombrios Totais (`auction_01 189,58`). Girar e
+   conferir três coisas na tela: a lista de prêmios agora diz
+   `Martelo de Refino Sombrio x5`, o giro que sai martelo entrega **5**, e os
+   outros três prêmios continuam entregando 1.
+2. **Fechar e reabrir o cliente**, e ver o **encantamento em português** na
+   janela de uma arma ilusional (as duas linhas abaixo da descrição). O
+   `data\luafiles514\lua files\datainfo\addrandomoptionnametable.lub` foi
+   gerado em `C:\GuerraDoEmperium\cliente\` por
+   `traduz_ptbr.py encantamentos`; ele só é lido na **inicialização**, e nenhum
+   `@reload` do servidor o alcança.
+
+   Se continuar em coreano, a sonda que decide **não** é reler o arquivo: é o
+   `LastAccessTime` dele comparado com a hora em que o cliente subiu — e só
+   vale se o último acesso for anterior em **mais de uma hora** (`CLAUDE.md`
+   §5, o carimbo que só anda de hora em hora).
+3. ~~O patch~~ — **feito: patch 0006 publicado em 2026-08-18**, um arquivo só
+   (`addrandomoptionnametable.lub`, 3.454 bytes no zip, sha256
+   `a9ac2ef5…`). Quem já tem o jogo recebe na próxima vez que abrir o
+   `Jogar.exe`. O que **falta** é a confirmação na tela de uma máquina que
+   não seja esta.
+4. **A mochila.** Cinco martelos pesam 50: o `checkweight` já recebe a
+   quantidade, mas vale ver com a mochila quase cheia que a máquina **recusa e
+   não cobra**, em vez de largar os martelos no chão do salão (o 23436 não tem
+   `NoDrop`).
+5. **`ferramentas/implanta.sh`, E TEM DE SER DO MAC.** A metade de servidor —
+   `npc/guerra/maquina_de_sombrios.txt`, `db/guerra/map_drops.yml` e o rodapé de
+   `db/re/map_drops.yml`. O encantamento **não** vai por aqui: é cliente, e vai
+   pelo patch do item 3.
+
+### Duas decisões do dono, para não serem redescobertas
+
+- **Fator 50 e não outro** — o mesmo `item_rate_equip: 5000`. Os **117 drops de
+  chefe** que batem no teto ficam em 100%, o que é o mesmo que já acontece com
+  todo drop normal de 2% ou mais neste servidor.
+- **Os 18 mapas do arquivo, e não só os dez ilusionais.** Amicitia, Niflheim,
+  Rudus, Fazenda Perdida, `1@advs` e `1@xm_d` sofriam do mesmo problema e
+  entraram junto.
+
+### E uma que fica em aberto
+
+**A troca oficial continua cara.** O `barter_ill_turtle` pede **100 Pedras da
+Ilusão** mais uma Immaterial_Sword +9 e 50 Diários de Bordo. A 0,5% por morte,
+é **uma pedra a cada 200 mortes**, ou seja ~20.000 mortes de Congelador
+Ominoso só para juntar as cem. Se o dono quiser o caminho
+da troca viável, o que muda não é este arquivo: é a própria receita do barter
+(`npc/re/merchants/barters/enchan_illusion_dungeons.yml`), que é do rAthena e
+exigiria duplicata nossa.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`
