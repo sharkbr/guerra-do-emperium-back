@@ -1,19 +1,15 @@
 //===== Guerra do Emperium ===================================
 //= Separacao de Cartas - o modelo NOVO
 //===== Onde =================================================
-//= Richard           malangdo 208,166  sprite 559
+//= Richard           malangdo 220,160  sprite 559
 //= Maquina Especial  malangdo 218,165  sprite 562
 //=
-//= As duas coordenadas NAO foram escolhidas por nos: sao as
-//= que o rAthena ja usava, e sao tambem as que a descricao dos
-//= tres lubrificantes no itemInfo.lua DESTE cliente aponta
-//= (`<NAVI>[Richard]<INFO>malangdo,208,166`). As duas celulas
-//= foram conferidas no malangdo.gat deste cliente: tipo 0,
-//= andavel.
+//= As duas celulas foram conferidas no malangdo.gat deste
+//= cliente: tipo 0, andavel.
 //=
-//= A imagem de referencia do pedido diz "malangdo 220,160"
-//= para o Richard. FICOU EM 208,166 de proposito - ver
-//= "A divergencia dos 220,160", la embaixo.
+//= A do Richard e a do PRINT que veio no pedido - 220,160 -, e
+//= nao a que o rAthena usava (208,166). Ver "A coordenada" la
+//= embaixo: ela muda, e o link de navegacao do cliente nao.
 //===== Descricao ============================================
 //= Tira UMA carta de UMA cova de um equipamento VESTIDO. O que
 //= muda em relacao ao modelo velho do rAthena e a regra de
@@ -105,16 +101,20 @@
 //=    Desligar o original sem trazer os seis junto fecharia as
 //=    duas instancias, calado.
 //=
-//= A DIVERGENCIA DOS 220,160: a imagem poe o Richard em
-//= malangdo 220,160; o itemInfo.lua deste cliente poe em
-//= 208,166, nos TRES lubrificantes, e e de la que sai o link de
-//= navegacao que o jogador clica na descricao do item. Manter
-//= 208,166 faz as tres pontas concordarem - imagem a parte - e
-//= nao custa patch de cliente nenhum (CLAUDE.md secao 4.18);
-//= mudar para 220,160 exigiria reescrever a descricao dos tres
-//= itens e publicar patch, para que o link nao apontasse para
-//= um lugar vazio. Se o dono preferir os 220,160, sao as duas
-//= coisas juntas, nunca so a coordenada daqui.
+//= A COORDENADA E 220,160, e ela foi PEDIDA - esta no print que
+//= veio junto com as dez regras. O rAthena punha o Richard em
+//= 208,166, e a primeira versao deste arquivo ficou la por um
+//= argumento que nao era do dono: o itemInfo.lua deste cliente
+//= aponta 208,166 no `<NAVI>` dos tres lubrificantes, que e o
+//= link de navegacao da descricao do item. Corrigido em
+//= 2026-08-18, a pedido.
+//=
+//= FICA UMA PONTA SOLTA, e ela e do CLIENTE: aquele `<NAVI>`
+//= continua mandando o jogador para 208,166, treze celulas ao
+//= lado. Nao da erro e nao impede nada - o Richard esta a
+//= poucos passos -, mas so se conserta reescrevendo a descricao
+//= dos tres itens e publicando patch (CLAUDE.md secao 4.18).
+//= Anotado na PENDENCIAS.md.
 //===== A moeda, e a fonte dela ==============================
 //= O lubrificante se compra com FRUTA DOS GATOS (6417), como no
 //= bRO. E ela NAO TINHA FONTE NENHUMA neste servidor - so
@@ -226,7 +226,7 @@
 //=    argumento e sempre a constante 100.
 //============================================================
 
-malangdo,208,166,6	script	Richard#guerra	559,{
+malangdo,220,160,6	script	Richard#guerra	559,{
 	disable_items;
 
 	if (checkweight(1201,3) == 0) {
@@ -254,6 +254,17 @@ malangdo,208,166,6	script	Richard#guerra	559,{
 	// o menu abaixo e montado num laco a partir daqui, e nao escrito a
 	// mao ao lado. A terceira coluna e o bit de posicao, e ela existe
 	// porque o `getinventorylist` responde por EQP_*, nao por EQI_*.
+	//
+	// O -1 NO FIM DAS DUAS COLUNAS DE INTEIRO NAO E ENFEITE: EQI_ACC_L
+	// vale ZERO, e zero em array de `.@` APAGA a entrada (o `set_reg_num`
+	// tem um ramo so para isso - CLAUDE.md secao 5). Sem a sentinela,
+	// `getarraysize(.@slot)` devolve NOVE para dez colunas, a guarda
+	// abaixo dispara e o NPC recusa atender - foi o que aconteceu em
+	// 2026-08-18, no primeiro teste em jogo. Com ela, o ultimo elemento
+	// e sempre diferente de zero, e a conferencia passa a provar tambem
+	// que nenhuma coluna do meio ficou faltando: `setarray` grava por
+	// posicao, entao um valor a menos desloca a sentinela e o tamanho
+	// nao bate.
 	setarray .@rotulo$[0],
 		"Chapéu (topo)","Chapéu (meio)","Chapéu (baixo)","Armadura",
 		"Mão direita","Mão esquerda","Capa","Sapato",
@@ -261,21 +272,37 @@ malangdo,208,166,6	script	Richard#guerra	559,{
 	setarray .@slot[0],
 		EQI_HEAD_TOP,EQI_HEAD_MID,EQI_HEAD_LOW,EQI_ARMOR,
 		EQI_HAND_R,EQI_HAND_L,EQI_GARMENT,EQI_SHOES,
-		EQI_ACC_R,EQI_ACC_L;
+		EQI_ACC_R,EQI_ACC_L,
+		-1;
 	setarray .@bit[0],
 		EQP_HEAD_TOP,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_ARMOR,
 		EQP_HAND_R,EQP_HAND_L,EQP_GARMENT,EQP_SHOES,
-		EQP_ACC_R,EQP_ACC_L;
+		EQP_ACC_R,EQP_ACC_L,
+		-1;
 
-	.@n = getarraysize(.@slot);
-	if (getarraysize(.@rotulo$) != .@n) {
-		debugmes "Richard#guerra: rotulo e slot com tamanhos diferentes.";
+	// O tamanho sai da coluna de TEXTO, que nao tem elemento vazio e por
+	// isso e a unica das tres que `getarraysize` mede sem susto.
+	.@n = getarraysize(.@rotulo$);
+	if (getarraysize(.@slot) != .@n + 1) {
+		debugmes "Richard#guerra: a coluna de EQI nao tem " + .@n + " valores mais a sentinela.";
 		mes "[Richard]";
 		mes "Minha bancada está desarrumada hoje. Volte depois.";
 		close;
 	}
-	if (getarraysize(.@bit) != .@n) {
-		debugmes "Richard#guerra: bit e slot com tamanhos diferentes.";
+	if (getarraysize(.@bit) != .@n + 1) {
+		debugmes "Richard#guerra: a coluna de EQP nao tem " + .@n + " valores mais a sentinela.";
+		mes "[Richard]";
+		mes "Minha bancada está desarrumada hoje. Volte depois.";
+		close;
+	}
+	if (.@slot[.@n] != -1) {
+		debugmes "Richard#guerra: sentinela da coluna de EQI fora de lugar.";
+		mes "[Richard]";
+		mes "Minha bancada está desarrumada hoje. Volte depois.";
+		close;
+	}
+	if (.@bit[.@n] != -1) {
+		debugmes "Richard#guerra: sentinela da coluna de EQP fora de lugar.";
 		mes "[Richard]";
 		mes "Minha bancada está desarrumada hoje. Volte depois.";
 		close;

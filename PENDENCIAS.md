@@ -1909,11 +1909,13 @@ jeito de chegar ao caso 4 sem caçar.
 
 ### Duas coisas que dependem do dono, e não de teste
 
-- **A coordenada.** O Richard ficou em **208,166**, e não nos 220,160 da imagem
-  — porque é 208,166 que a descrição dos três lubrificantes aponta no `<NAVI>`
-  deste cliente, e mudar isso exigiria reescrever a descrição dos três itens
-  **e** publicar patch, senão o link de navegação levaria a um lugar vazio. Se o
-  dono preferir os 220,160, são as duas coisas juntas.
+- **A coordenada já foi decidida: 220,160**, a do print. A primeira versão ficou
+  em 208,166 (onde o rAthena punha o Richard) por um argumento que não era do
+  dono, e foi corrigida em 2026-08-18 a pedido. **Fica uma ponta solta, e ela é
+  do cliente:** o `<NAVI>` da descrição dos três lubrificantes continua mandando
+  o jogador para 208,166, treze células ao lado. Não dá erro e não impede nada,
+  mas só se conserta reescrevendo a descrição dos três itens e publicando patch
+  (`CLAUDE.md` §4.18). **Decisão do dono se vale o patch.**
 - **O preço da Fruta.** 1 Moeda Nova cada, o que faz o Óleo custar 192 Moedas —
   a coisa mais cara da Máquina hoje (o Passe e a Rédea custam 100). O número
   mantém a proporção do bRO legível, e é o único botão da economia inteira:

@@ -1456,6 +1456,18 @@ Produziram diagnóstico falso e custaram retrabalho:
   posições" depois de um `setarray` de zeros é contar com o que não está lá.
   Vale também para `@` (o `pc_setreg` faz o mesmo), e é por isso que
   `@inventorylist_equip[]` de item não equipado simplesmente não existe.
+  **E o caso que morde de verdade é a TABELA DE CONSTANTES, não o array de
+  zeros escrito à mão.** `EQI_ACC_L` vale **0**; num `setarray .@slot[0],
+  EQI_HEAD_TOP,…,EQI_ACC_L;` de dez colunas, o zero é o último, some, e
+  `getarraysize` devolve **nove**. Quem usa isso para conferir se as colunas
+  paralelas da §4.11 batem recebe um desalinhamento que não existe — foi assim
+  que o Richard da separação de cartas recusou atender no primeiro teste em
+  jogo, em 2026-08-18, com a própria guarda de integridade se autobloqueando.
+  A saída é **sentinela `-1` no fim de toda coluna de inteiro**, e ela deixa a
+  conferência mais forte: o último elemento nunca é zero, e como o `setarray`
+  grava por posição, uma coluna com um valor a menos desloca a sentinela e o
+  tamanho não bate. O tamanho de referência sai da coluna de **texto**, que não
+  tem elemento vazio.
 - **Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está
   entre elas.** Aspas duplas não protegem crase — o shell faz substituição de
   comando antes de o Python ver a linha, e o texto some ou vira saída de outro

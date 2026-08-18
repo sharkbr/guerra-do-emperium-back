@@ -11128,3 +11128,60 @@ recusou os dois, que é a trava de saída rearmada.
 
 O cliente ficou em `127.0.0.1` / `2000000`. **Para jogar no local, abrir pelo
 `GuerraDoEmperium.exe`** — o `Jogar.exe` daquela pasta reaponta tudo de volta.
+
+## O primeiro teste do Richard: a coordenada errada e a guarda que se autobloqueou (2026-08-18)
+
+Duas correções no mesmo dia, as duas de responsabilidade da entrega anterior.
+
+### A coordenada era 220,160, e estava no print
+
+O pedido veio com a página do bRO em imagem, dizendo `malangdo 220, 160`. A
+entrega pôs o Richard em **208,166** — onde o rAthena já o punha — com o
+argumento de que é essa a coordenada que o `<NAVI>` da descrição dos três
+lubrificantes aponta neste cliente, e que mudar exigiria patch. O argumento é
+verdadeiro e **não era do dono**: ele tinha dito a coordenada, por escrito, no
+próprio pedido. Corrigido para 220,160.
+
+A ponta solta do `<NAVI>` continua existindo: o link da descrição do item manda
+o jogador treze células ao lado. Não dá erro, e consertar é patch de cliente —
+ficou registrado na `PENDENCIAS.md` §1x como decisão do dono.
+
+**A lição, e ela é sobre a entrega e não sobre o código:** quando o pedido traz
+um número explícito, ele não é um palpite a ser conferido contra outra fonte. Se
+outra fonte discorda, isso se **relata**; não se troca o número por conta
+própria. É a mesma família da §4.14 do `CLAUDE.md` ("divergência entre o pedido e
+o `item_db` é para levantar na entrega, não para resolver sozinho"), e desta vez
+foi o contrário do que aquela regra manda.
+
+### "Minha bancada está desarrumada hoje" — a guarda pisou na própria armadilha
+
+No primeiro clique em jogo o NPC recusou atender. A causa é de uma ironia útil:
+a mensagem vem da guarda de §4.11 que confere se as três colunas da tabela de
+slots têm o mesmo tamanho, e ela media `getarraysize(.@slot)`.
+
+**`EQI_ACC_L` vale ZERO**, e é o último elemento daquela coluna. Zero em array
+de `.` ou `.@` **apaga a entrada** (o `set_reg_num` tem um ramo só para isso),
+então o array de dez colunas media **nove**, a guarda via desalinhamento onde
+não havia e fechava o atendimento.
+
+Essa armadilha tinha subido para o `CLAUDE.md` §5 **dois commits antes**, escrita
+a propósito deste mesmo trabalho — e ainda assim foi pisada, porque lá ela estava
+descrita no contexto dos arrays de opção aleatória do `getitem4`, não no de uma
+tabela de constantes. Vale como lembrete de que armadilha registrada só protege
+quem a procura no lugar certo.
+
+**A saída é uma sentinela `-1` no fim das duas colunas de inteiro**, e ela deixa
+a guarda mais forte do que era: com o último elemento sempre diferente de zero,
+`getarraysize` volta a medir, e como o `setarray` grava por posição, uma coluna
+com um valor a menos desloca a sentinela e o tamanho não bate. A coluna que dá o
+tamanho passou a ser a de **texto**, que não tem elemento vazio e é a única das
+três que `getarraysize` mede sem susto.
+
+### E uma dúvida que o dono levantou, que o código já respondia
+
+Ele perguntou se a coluna de Fruta dos Gatos da imagem tinha sido lida como
+**custo do serviço**. Não foi: o serviço cobra `1.000.000 de zeny` **ou** um
+lubrificante (`delitem .@paga, 1`), e a Fruta aparece só na Máquina Especial,
+como preço de compra do lubrificante. O que estava errado era a **tabela do
+relatório de entrega**, que pôs as duas coisas na mesma coluna sob o título
+"custa" — e uma tabela ambígua num relatório custa a mesma rodada que um bug.
