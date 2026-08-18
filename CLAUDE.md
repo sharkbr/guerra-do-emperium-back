@@ -1138,6 +1138,16 @@ Produziram diagnóstico falso e custaram retrabalho:
   `chmod` (o próximo `git reset --hard` do deploy o desfaz) nem mexer no modo
   do arquivo de terceiro: é chamar o interpretador direto, `sh configure`.
   Vale para qualquer `.sh` que venha do vendor. Medido em 2026-08-14.
+  **E o mesmo vale para ferramenta NOSSA escrita no Windows, onde o remédio é
+  o oposto.** Em 2026-08-17 o `ferramentas/publica_patch.sh` recusou rodar no
+  Mac (*"permission denied"*) porque estava no git como `100644` — o
+  `publica_cliente.sh` também, e os dois são justamente os que nasceram do lado
+  Windows. Os oito `.sh` restantes de `ferramentas/` estão `100755`, então a
+  divergência não salta aos olhos: só se descobre ao rodar o script pela
+  primeira vez de outra máquina. Como o arquivo é **nosso**, aqui a saída não é
+  chamar `bash <script>` para sempre: é consertar o modo no índice,
+  `git update-index --chmod=+x <arquivo>`, e commitar. Fica valendo para as
+  três máquinas. Conferência: `git ls-files -s ferramentas/*.sh`.
 - **`libmariadb-dev` não basta para compilar o rAthena — falta o
   `libmariadb-dev-compat`.** O `configure` procura os nomes do **MySQL**
   (`mysql_config`, `mysql.h`, `-lmysqlclient`) e o pacote do Ubuntu instala tudo

@@ -10537,6 +10537,95 @@ tier **Etel** (`Armor` 2, `Weapon` 5), que o browiki não tem coluna para,
 recebeu as colunas `Armadura` e `Arma nv. 4` — 1.066 itens do `item_db` estão
 nele.
 
+### O deploy, na madrugada do mesmo dia (2026-08-17, 02:05)
+
+Os três subiram juntos pelo `implanta.sh`, do Mac, de `be300c0` para `7692aba`.
+Nenhum tocava `src/` nem `site/`, então **o build de 67 minutos foi
+dispensado** e o deploy inteiro custou segundos. Não houve patch de cliente a
+publicar: os três são servidor puro (`RECEITAS.md` §0).
+
+Havia **um jogador conectado** — o mesmo IP da véspera —, e o dono mandou tocar
+assim mesmo. Os quatro serviços reiniciaram, o que é o que o Evento de Refino
+exigia de qualquer jeito (não há `@reloadrefinedb`), e de carona valeu pelos
+`@reloaditemdb`/`@reloadscript` dos outros dois.
+
+O fuso, que na véspera foi a surpresa, **estava certo**: `date` na produção
+respondeu `Mon Aug 17 01:58 -03` antes de qualquer coisa. Foi a primeira
+conferência da sessão, e é para continuar sendo.
+
+| conferência | resultado |
+|---|---|
+| pré-voo local e no servidor | ✅ 1139 caminhos, os dois lados aprovados |
+| `Unknown syntax` no map-server | ✅ nenhum |
+| erro de script no `OnInit` | ✅ nenhum, com 3.252 NPCs executados |
+| `db/guerra/item_db_lojas.yml` | ✅ 1.603 entradas lidas |
+| `db/guerra/refine_evento.yml` | ✅ 9 entradas lidas |
+| `[Error]` no carregamento | 4, os mesmos de sempre — gênero de chicote e instrumento, inerentes ao parser |
+| os quatro serviços + site + apache + mariadb | ✅ `active` |
+
+**O aviso `discounted buying price` sumiu, e isso é medição e não impressão:**
+eram um por carta e treze nos visuais, e a subida trouxe **zero**. É a
+confirmação, do lado do servidor, de que a revenda foi mesmo a 0 — o teste do
+`npc_parse_shop` é `value*0.75 < value_sell*1.24`, e com o `Sell` zerado o lado
+direito zera junto. Não substitui a sonda de tela (vender o Tapa-Olho Ferido e
+ver 0 zeny), mas prova que o `Buy: 1` chegou aos 1.603 itens.
+
+**O que continua de tela** — o ciclo do dia às 08:00 e 20:00, a janela de
+refino com as chances novas e a venda a 0 zeny — está na `PENDENCIAS.md` §1a2,
+que passou de "nenhum subiu" para "os três no ar, faltam as sondas".
+
+### O Atualizador 3 no ar, e o deploy que não entregava nada (2026-08-17, 11:47)
+
+O commit `a017b5d` — o conserto do registro de patches indexado só por número —
+subiu para o servidor pelo `implanta.sh`, do Mac. **E o deploy não entregou
+nada**, o que era o esperado e vale registrar: o commit toca só `patcher/` e
+`ferramentas/publica_patch.sh`, nenhum dos quais o servidor executa. Sem `src/`,
+sem `rathena/`, sem `site/` — build dispensado, os quatro no ar, ninguém
+derrubado.
+
+É a `RECEITAS.md` §0 no gume mais fino que ela já teve. Não é o caso comum de
+"mexi no cliente e esqueci o patch": aqui o `git commit` estava feito, o deploy
+rodou, relatou sucesso legítimo em toda linha — e o conserto continuava a zero
+jogadores. O que denuncia é uma sonda de uma linha, e ela discorda do deploy:
+
+```
+$ curl -s https://libraro.filiponegrao.com.br/patch/patcher.txt
+versao=2
+```
+
+com o `patcher/main.go` já em `const VERSAO = 3`. **O canal é a única sonda que
+responde por quem executa o quê** — o commit do servidor não sabe nada sobre
+isso.
+
+Publicado então pelo passo 2 da §11b, **e daqui**: o próprio commit de hoje é o
+que tornou isso seguro, com o `GOOS=windows GOARCH=amd64` explícito no
+`publica_patch.sh` e a conferência do `MZ` atrás. Antes dele o mesmo comando
+rodado do Mac teria subido um Mach-O chamado `Jogar.exe`.
+
+| conferência | resultado |
+|---|---|
+| pré-voo local e no servidor | ✅ 1139 caminhos, os dois lados aprovados |
+| build / reinício | dispensados — `src/` e `rathena/` intactos |
+| os sete serviços | ✅ `active` |
+| relógio da produção | ✅ `-03` |
+| `go vet` (windows/amd64) | ✅ limpo |
+| `patch_test.go` | ✅ compila para windows/amd64 |
+| sha256 local / canal / baixado | ✅ os três `0106ae7f90e1…` |
+| formato | ✅ `PE32+ executable (GUI) x86-64`, começa com `MZ` |
+
+**O `go test` não roda no Mac, e não é defeito:** o pacote é `syscall` do
+Windows de ponta a ponta (`NewLazyDLL`, `SyscallN`, `UTF16PtrFromString`), e o
+`go test` compila para o GOOS do hospedeiro. Quem responde daqui é
+`GOOS=windows go vet` e `go test -c`, que provam que compila — não que passa.
+Rodar os três testes exige Windows.
+
+**Faltava o CDN** nesta hora, que é Windows (`spaces.env` e `rclone.exe` moram
+em `C:\`). Quem já instalou recebia a 3 sozinho na próxima abertura — e era
+justamente quem estava com os patches 0002 e 0003 calados; quem baixasse do site
+pegaria a 2 e se auto-atualizaria na primeira abertura. **O bucket foi acertado no
+mesmo dia**, do Windows: origem do Spaces, CDN e `patcher.txt` os três em
+`0106ae7f90e1…`.
+
 ## O "Unknown Item" que não era do servidor: dois patches calados por um número (2026-08-17)
 
 O relato chegou como defeito de item: **"diversos itens dos requisitados

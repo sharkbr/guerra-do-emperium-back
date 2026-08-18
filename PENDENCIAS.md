@@ -358,13 +358,19 @@ e está em `ferramentas/levanta_sprite_npc.py`.
 
 ## 1a2. Os três pedidos de 2026-08-17 — as sondas de cada um
 
-Os três estão escritos, conferidos offline e registrados. **Nenhum subiu.** O
-que decide cada um, e é diferente em cada:
+**Os três estão NO AR desde 2026-08-17, 02:05** — deploy do `be300c0` para o
+`7692aba`, com reinício dos quatro servidores, que é o que o Evento de Refino
+exigia e valeu pelos `@reload*` dos outros dois. O que o servidor podia
+responder já respondeu (`HISTORICO.md`, "O deploy, na madrugada do mesmo dia"):
+os dois `.yml` carregaram, nenhum `Unknown syntax`, nenhum erro de script, e os
+avisos de `discounted buying price` sumiram.
+
+**Sobram as sondas de TELA**, e são diferentes em cada:
 
 ### O zeny infinito das lojas
 
-Comandos: `@reloaditemdb` (pega o `db/guerra/item_db_lojas.yml`) e
-`@reloadscript` (pega as linhas de `shop` que voltaram a 1 zeny).
+Já carregado: `db/guerra/item_db_lojas.yml`, 1.603 entradas. (Se um dia mudar
+sem reinício, os comandos são `@reloaditemdb` e `@reloadscript`.)
 
 A sonda é uma só, e **não** é abrir a loja: comprar qualquer coisa no Ocleiro e
 tentar vender ao próprio NPC. Tem que aparecer **0 zeny**. O item que responde
@@ -382,7 +388,9 @@ regra, e se alguém já comprou por 200.000 vai notar.
 
 ### O ciclo do dia
 
-Comando: `@reloadscript`.
+Já no ar, e o relógio da produção estava certo na subida (`Mon Aug 17 01:58
+-03`) — então o `OnInit` das 02:05 deve ter posto o mundo em **noite**, e a
+primeira prova natural são as **08:00 de 2026-08-17**.
 
 Não há o que clicar. A sonda barata: `@time` para ver a hora do servidor e
 esperar as 08:00 ou as 20:00 — ou, sem esperar, `@day` e `@night` na mão para
@@ -397,8 +405,9 @@ máquina, não o script — a sonda é `ssh <servidor> date`.
 
 ### O Evento de Refino
 
-**Não tem comando `@`** — é reiniciar o map-server. Login e char podem ficar
-de pé.
+Já no ar: `db/guerra/refine_evento.yml`, 9 entradas lidas no boot das 02:05.
+(**Não tem comando `@`** — ligar ou desligar é sempre reinício do map-server.
+Login e char podem ficar de pé.)
 
 A sonda que decide é a **janela de refino**, não o log: pôr um equipamento no
 +10 e olhar a chance que ela mostra do +10 para o +11. Com o evento ligado deve
@@ -1726,6 +1735,10 @@ uma pasta **vazia** (a de Downloads serve) e abrir de lá.
 
 **Como se publica um Atualizador** — os dois destinos, os comandos e a
 conferência de sha256 — virou receita: `RECEITAS.md` §11b.
+
+E falta rodar **`go test ./...` no Windows** — os três testes do
+`patch_test.go`, um deles com o conteúdo literal do registro quebrado. Do Mac
+só se prova que compilam (`GOOS=windows go vet` e `go test -c`).
 
 ---
 
