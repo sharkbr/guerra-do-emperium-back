@@ -1797,6 +1797,85 @@ entrar com a `librasupremo` para ver o visual.
 
 ---
 
+## 1x. A separação de cartas nova — escrita, nada visto em jogo (2026-08-18)
+
+Tudo do lado do servidor, nada do cliente: os cinco itens envolvidos já têm nome
+em português e arte 4 de 4 neste cliente, então **não há patch a publicar**. O
+que foi feito está no `HISTORICO.md`, "A separação de cartas passa ao modelo
+novo".
+
+### A ordem de recarregamento, e ela importa
+
+```
+@reloadbarterdb     # a Fruta dos Gatos na Máquina de Prontera
+@reloadscript       # o Richard novo e a Máquina Especial de Malangdo
+```
+
+**Nessa ordem.** Invertida, o primeiro clique no Richard já funciona mas a fruta
+não existe na Máquina, e o serviço parece travado por outro motivo.
+
+### O roteiro de teste
+
+Todo item de teste é barato: com `@item` dá para montar cada caso em segundos.
+**Cuidado com a conta de grupo 99** (`CLAUDE.md` §4.7) — aqui ela não atrapalha,
+porque nenhuma trava de item está no caminho, mas o `@item` de carta de MVP é o
+jeito de chegar ao caso 4 sem caçar.
+
+1. **Os dois velhos sumiram.** Em malangdo, conferir que não há mais ninguém em
+   208,166 e 215,166 além do Richard novo — se aparecerem **dois** NPCs
+   empilhados, o `disablenpc` do `OnInit` não pegou, e aí a causa é ordem de
+   carga (o `scripts_custom.conf` tem de vir depois do `re/scripts_athena.conf`).
+2. **Os dez slots aparecem.** Abrir o Richard com peças em vários slots e
+   conferir que o menu mostra as dez linhas, com o nome da peça nas vestidas e
+   "(vazio)" em cinza nas outras.
+3. **Falha não tira nada.** Com uma peça **refinada e encantada** (Essência de
+   Morroc numa cova), pagar 1.000.000 de zeny e falhar — a 2% isso acontece
+   sozinho. Conferir que sobrou tudo: peça, carta, refino, encantamento. Só o
+   zeny some.
+4. **Sucesso devolve inteiro, menos o bônus aleatório.** Com um Lubrificante
+   Refinado (20%), tirar uma carta comum e conferir na janela do item: refino
+   igual, encantamento no lugar, **bônus aleatório some**. A carta volta à
+   mochila.
+5. **Carta de MVP só com Óleo.** Encaixar uma carta de MVP e conferir que o
+   Richard **não oferece** zeny nem lubrificante — só o Óleo, e que ele nunca
+   falha.
+6. **Carta selada de MVP cai no caminho comum.** É a regra 7, e ela vale
+   sozinha porque nenhuma selada está na lista de MVP — conferir mesmo assim.
+7. **Essência de Morroc não entra no menu de cova.** Numa peça **só** com
+   Essência, o Richard tem de dizer que não vê carta nenhuma.
+8. **A Máquina Especial vende os nove.** Conferir os seis itens de instância
+   (Proteção do Deus do Mar e Caixa de Arpões) — são eles que abrem o Esgoto e a
+   Caverna do Polvo, e desligar a máquina do rAthena sem eles fecharia as duas.
+9. **A troca dos velhos.** Com `@item 6440` e `@item 6441`, trocar e conferir 36
+   e 56 Frutas por unidade.
+10. **A Fruta na Máquina de Prontera.** Abrir a Máquina (prontera 167,199) e
+    conferir que a Fruta dos Gatos aparece na janela **com o nome em
+    português** — quem desenha o nome na janela de troca é o `itemInfo.lua` do
+    cliente (`CLAUDE.md` §4.9), e este cliente tem "Fruta dos Gatos".
+
+### Duas coisas que dependem do dono, e não de teste
+
+- **A coordenada.** O Richard ficou em **208,166**, e não nos 220,160 da imagem
+  — porque é 208,166 que a descrição dos três lubrificantes aponta no `<NAVI>`
+  deste cliente, e mudar isso exigiria reescrever a descrição dos três itens
+  **e** publicar patch, senão o link de navegação levaria a um lugar vazio. Se o
+  dono preferir os 220,160, são as duas coisas juntas.
+- **O preço da Fruta.** 1 Moeda Nova cada, o que faz o Óleo custar 192 Moedas —
+  a coisa mais cara da Máquina hoje (o Passe e a Rédea custam 100). O número
+  mantém a proporção do bRO legível, e é o único botão da economia inteira:
+  mexer nele mexe nos três pagamentos de uma vez. Está em
+  `npc/guerra/barters_guerra.yml`, `Maquina#loja`, `Index: 22`.
+
+### E uma que é do bRO, não nossa
+
+As chances **2% / 10% / 20% / 100%** são as da imagem, sem calibragem para este
+servidor. Na prática, uma carta comum sai por ~5 Lubrificantes Refinados (35
+Frutas) ou ~10 Básicos (40 Frutas) em média; o caminho de zeny custa 50 milhões
+em média e existe mais como último recurso do que como opção. Os quatro números
+estão em `.chance_*` no `OnInit` do Richard, num lugar só.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

@@ -10904,3 +10904,149 @@ baixado de volta da CDN e conferido — 850 bytes, sha256 batendo com o
 `patcher/patches.txt`, e os dois xml com o endereço de produção e o
 `<admin>2000004</admin>` dentro. Falta a tela do outro lado (`PENDENCIAS.md`
 §1w).
+
+## A separação de cartas passa ao modelo novo, e o Jeremy sai de cena (2026-08-18)
+
+O pedido veio curto e com uma imagem: *"Remoção de cartas no Richard: hoje temos
+uma remoção antiga que só remove escudo e espada. Precisamos seguir o modelo
+novo da imagem passada como referência"* — a página **Separação** do bRO, com
+dez regras numeradas e uma tabela de quatro pagamentos.
+
+### O que havia, e por que "só escudo e espada"
+
+O `npc/re/merchants/card_separation.txt` do rAthena é **um script só com dois
+`duplicate`**, e cada um atende metade dos slots:
+
+| NPC | onde | slots |
+|---|---|---|
+| `Richard#pa0829` | malangdo 208,166 | mão direita e esquerda (arma e escudo) |
+| `Jeremy#pa0829` | malangdo 215,166 | armadura, sapato, capa, chapéu de topo |
+
+Os dois seguem o modelo **velho**: a falha destrói o item, a carta, ou os dois,
+e o jogador escolhe antes qual dos dois quer que sobreviva. A frase do pedido
+descrevia exatamente metade daquilo.
+
+### O modelo novo, em uma linha
+
+**Na falha não se perde nada.** Nem a peça, nem a carta, nem o refino, nem o
+encantamento — perde-se só o que foi pago. O que o pagamento compra é a
+**chance**:
+
+| pagamento | custa | chance |
+|---|---|---|
+| nenhum | 1.000.000 de zeny | 2% |
+| Lubrificante Básico (25238) | 4 Frutas dos Gatos | 10% |
+| Lubrificante Refinado (25239) | 7 Frutas dos Gatos | 20% |
+| Óleo Removedor Especial (6443) | 192 Frutas dos Gatos | 100% |
+
+Mais o resto das dez regras: uma carta por vez, escolhida por cova; peça
+vestida; carta de MVP **só** com o Óleo, e o Óleo **só** para carta de MVP
+(selada conta como comum); Essência de Morroc não é carta e não sai; e no
+**sucesso** os bônus aleatórios da peça se perdem.
+
+Tudo isso é um NPC novo, `npc/guerra/separacao_de_cartas.txt`, com o Richard nas
+mesmas coordenadas e **os dois do rAthena desligados no `OnInit`**. O Jeremy foi
+desligado por decisão do dono, perguntada na entrega: o Richard novo cobre os
+dez slots sozinho, e deixar o velho de pé ao lado manteria um serviço que
+destrói equipamento, sem nada na tela dizendo qual dos dois é o seguro.
+
+### O cliente já sabia de tudo — inclusive onde o Richard mora
+
+A conferência que economizou o dia: os cinco itens envolvidos já estão inteiros
+neste cliente. Nome em português e **arte 4 de 4** em 25238, 25239, 6443, 6440 e
+6441, e a descrição dos três novos já traz os números do modelo novo — *"Aumenta
+para 10% as chances de sucesso"*, *"Garante 100% de chance de remover uma carta
+de MVP"*, *"Não funciona em Cartas Seladas de MVP"*. **Nenhum patch de cliente
+foi preciso** (`CLAUDE.md` §4.18).
+
+E foi essa leitura que decidiu a coordenada. A imagem diz **malangdo 220,160**;
+o `itemInfo.lua` deste cliente diz **208,166**, nos três lubrificantes, no campo
+`<NAVI>` — que é o link de navegação que o jogador clica na própria descrição do
+item. Duas fontes do bRO discordando. Ficou 208,166, que é também onde o rAthena
+já punha o Richard: as três pontas concordam e não custa patch. Mudar para
+220,160 seria reescrever a descrição dos três itens **e** publicar patch, senão
+o link levaria a um lugar vazio — e isso é decisão do dono, não da entrega.
+
+### A moeda não existia
+
+A parte que o pedido não podia prever: a **Fruta dos Gatos (6417)**, moeda dos
+lubrificantes no bRO, **não tinha fonte nenhuma neste servidor**. Nenhum mob a
+dropa, nenhuma loja nossa a vendia, e o próprio Coin Exchanger de Malangdo
+recusa trocar por ela (*"Cannot exchange for Silvervine"*,
+`coin_exchange.txt:75`). Só sumidouros. O sistema inteiro nasceria travado no
+único caminho que não pede fruta — 1.000.000 de zeny com 2% de chance.
+
+Levantado na entrega, a decisão do dono foi **barter da Máquina de Prontera,
+pago em Moeda Nova**. Virou o `Index: 22` de `Maquina#loja` em
+`npc/guerra/barters_guerra.yml`, a **1 Moeda Nova por fruta** — preço unitário
+escolhido para que a tabela do bRO passasse a valer em Moeda Nova sem conta
+nenhuma: 4, 7 e 192. Esse `Amount` é o único botão da economia inteira; mexer
+nele mexe nos três pagamentos de uma vez.
+
+Para comparar: o Passe Antigravitacional e a Rédea Eterna custam 100 Moedas
+cada, então o Óleo (192) passa a ser a coisa mais cara que a Máquina vende — o
+que combina com ele ser a única forma de tirar carta de MVP sem risco. A Fruta é
+`NoDrop/NoTrade/NoSell/NoCart` no `item_db` do vendor, então ela não vaza para
+mula nem volta em zeny num NPC.
+
+Este acoplamento — **serviço que cobra em item exige a fonte da moeda** — virou
+uma seção do `ARQUITETURA.md` §4.
+
+### A Máquina Especial teve de ser reescrita inteira, e não acrescida
+
+A regra 10 da imagem manda trocar os lubrificantes velhos na Máquina Especial
+(malangdo 218,165), que é a `Special Vending Machine` do rAthena. Ela **não
+vende só lubrificante**: vende também as três Proteções do Deus do Mar e as três
+Caixas de Arpões de Polvo, que são a entrada das instâncias do Esgoto e da
+Caverna do Polvo. Desligar a original e pôr no lugar uma máquina só de
+lubrificante fecharia as duas instâncias, calado — então a nossa reproduz as
+seis linhas, em português, mais os três lubrificantes novos e a troca dos dois
+velhos.
+
+A troca devolve **o que os dois custavam nela mesma**: 36 Frutas pelo
+Lubrificante Comum e 56 pelo Sofisticado. Não há número oficial para isso;
+devolver menos seria confisco e devolver mais abriria ganho para quem tivesse
+estoque. E não é um gerador de moeda: conferido que os dois só tinham **aquela
+máquina** como fonte, e ela deixou de vendê-los — a troca só drena estoque
+antigo.
+
+O nome único é `Máquina Especial#malangdo`, e o `#` não é enfeite: **já existe
+uma "Máquina Especial" no projeto**, a da Sala Secreta da Ordem (`prt_in
+137,108`). Nome único repetido derruba o segundo NPC na carga.
+
+### O que o código teve de proteger
+
+Três coisas que não estavam no pedido e teriam custado caro:
+
+**A lista de cartas de MVP é gerada.** A do rAthena tem 45 ids escritos à mão e
+está parada em 2015. A nossa tem **147**, e saiu de
+`ferramentas/varre_cartas.chefes()` — a mesma função que monta a loja "Carta de
+MVP" do `mercado_de_cartas.txt`, ou seja as duas listas concordam por
+construção. Carta de MVP não se reconhece pelo `item_db` (não há marca lá): sai
+do `mob_db`, por quem a dropa, e o rAthena marca MVP de duas formas. De quebra,
+conferido que **nenhuma carta selada cai nessa lista** — é o que faz a regra 7
+valer sozinha, sem uma segunda lista.
+
+**Não existe comando que tire UMA carta de UMA cova.** O `successremovecards`
+tira **todas** de uma vez, e tira a Essência de Morroc junto porque ela é `Type:
+Card` — quebraria as regras 2 e 8 ao mesmo tempo. O caminho é desmontar e
+remontar (`delequip` + `getitem4`), e aí aparece a armadilha que virou entrada
+do `CLAUDE.md` §5: **vínculo, prazo e grau de encanto não têm `getequip*`
+nenhum**. Quem os lê é o `getinventorylist`. Sem isso, separar carta de um item
+vinculado o devolveria solto — item de conta virando mercadoria — e um item
+alugado voltaria eterno. O primeiro é resolvido com `getitembound4`, o segundo
+com uma recusa por escrito.
+
+**O item é reconferido depois do último menu.** Entre escolher a cova e pagar há
+`next` de sobra para trocar de equipamento; antes de cobrar, o NPC confere que a
+peça continua vestida, que é a mesma (`getequipid`) e que as quatro covas não
+mudaram (`F_IsEquipCardHack`). E peça **forjada ou assinada** é recusada: nela a
+cova 0 é um marcador (254/255/256) e as covas 2 e 3 são o id do dono partido em
+dois — números grandes que passam por id de item.
+
+### O que ficou por fazer
+
+Nada foi visto em jogo ainda — o servidor está no ar e o recarregamento é do
+dono. A ordem importa: **`@reloadbarterdb` primeiro** (a Fruta na Máquina),
+**`@reloadscript` depois** (os dois NPCs). O roteiro de teste está em
+`PENDENCIAS.md`.

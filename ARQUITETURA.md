@@ -379,6 +379,32 @@ O outro custo é o de sempre: (1) não recebe correção do upstream. Vale a pen
 quando a alternativa é editar código de terceiros — e não vale quando um
 `duplicate` resolve, porque `duplicate` compartilha o script e não cria (3).
 
+### Um serviço que cobra em item vive em 2 lugares, e o segundo é a FONTE da moeda
+
+Um NPC que cobra em item só existe de verdade se aquele item tiver de onde vir.
+As duas metades:
+
+| metade | onde | como se aplica |
+|---|---|---|
+| o gasto | o NPC, em `npc/guerra/<nome>.txt` | `@reloadscript` |
+| a fonte | a loja que entrega a moeda — hoje o barter de `npc/guerra/barters_guerra.yml` | `@reloadbarterdb` |
+
+**A divergência não dá erro: o NPC abre, conversa e nunca fecha negócio**, porque
+ninguém no servidor tem a moeda. E ela é fácil de criar sem perceber, porque o
+item **existe** no `item_db` do vendor — o que falta é fonte, não cadastro.
+
+Caso vivo, e ele começou assim: a Separação de Cartas
+(`npc/guerra/separacao_de_cartas.txt`, 2026-08-18) cobra os lubrificantes em
+**Fruta dos Gatos** (6417), que no `item_db` do rAthena só tinha sumidouros —
+nenhum mob a dropa, nenhuma loja nossa a vendia, e o próprio Coin Exchanger de
+Malangdo recusa trocar por ela (`coin_exchange.txt:75`). A metade que faltava
+virou uma linha no barter da Máquina de Prontera, a 1 Moeda Nova cada.
+
+Regra prática: **ao escrever NPC que cobra em item, procurar quem entrega aquele
+item** — `grep` por `getitem <id>` em `npc/`, pelo AegisName em
+`db/re/item_group_db.yml` e pelo drop no `mob_db`. Se nada devolver, o serviço
+nasce travado.
+
 ### Um móvel de cenário vive em 2 lugares, e um é o cliente e o outro o servidor
 
 Plantar o modelo é metade. O `.rsw` **não toca o `.gat`**, então uma peça posta

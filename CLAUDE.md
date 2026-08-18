@@ -1408,6 +1408,42 @@ Produziram diagnóstico falso e custaram retrabalho:
   lembra de outro servidor: a **Carta Senhor das Trevas (4168) é de CALÇADO**
   aqui, e o nosso `item_db` e a descrição do bRO concordam nisso (medido em
   2026-08-17).
+- **`delequip` + `getitem2` devolve o item SEM vínculo, SEM prazo e SEM grau de
+  encanto — e nenhum dos três tem função de leitura por slot de equipamento.**
+  Remontar um equipamento é a única saída quando se precisa mexer numa cova só
+  (o `successremovecards` tira **todas** as cartas de uma vez, e tira a Essência
+  de Morroc junto porque ela é `Type: Card`). Mas o que não for passado de volta
+  se perde, e três campos não têm `getequip*` nenhum: `bound`, `expire_time` e
+  `enchantgrade`. Quem os tem é o **`getinventorylist`**, nos arrays
+  `@inventorylist_bound[]`, `@inventorylist_expire[]` e
+  `@inventorylist_enchantgrade[]` — a linha do item vestido se acha pelo bit de
+  posição (`@inventorylist_equip[] & EQP_*`), que é EQP e não EQI.
+  Consequência que engana sozinha: separar carta de um item **vinculado** o
+  devolve solto — item de conta virando mercadoria, sem erro nenhum. E item
+  **alugado** volta eterno, porque `getitem4` não tem prazo. Os dois só se
+  evitam lendo o `getinventorylist` antes. Caso vivo:
+  `npc/guerra/separacao_de_cartas.txt`, 2026-08-18.
+- **Zero em variável de `.` ou `.@` APAGA a entrada, então `setarray .@x[0],
+  0,0,0,0,0;` deixa um array VAZIO.** O `set_reg_num` (`src/map/script.cpp`)
+  tem dois ramos para esses dois prefixos: `value != 0` grava, e o `else` faz
+  `i64db_remove` mais `script_array_update(..., true)`. Ou seja um array de
+  zeros não existe — `getarraysize` devolve 0, e um comando que exija array
+  de verdade pode recusar. No caso dos três arrays de opção aleatória que o
+  `getitem4` exige isso é inofensivo e até desejável (array vazio = nenhuma
+  opção, que é o que se quer ao remontar), mas contar com "o array tem 5
+  posições" depois de um `setarray` de zeros é contar com o que não está lá.
+  Vale também para `@` (o `pc_setreg` faz o mesmo), e é por isso que
+  `@inventorylist_equip[]` de item não equipado simplesmente não existe.
+- **Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está
+  entre elas.** Aspas duplas não protegem crase — o shell faz substituição de
+  comando antes de o Python ver a linha, e o texto some ou vira saída de outro
+  programa. Num script que gera comentário para arquivo do projeto — onde crase
+  é a marca de nome de arquivo e de comando — o estrago é **calado**: o arquivo
+  é gravado, o `assert` da âncora passa, e o comentário sai mutilado. Medido em
+  2026-08-18, ao acrescentar linha ao `scripts_guerra.conf`; a única pista foram
+  três `command not found` no meio de um "ok" final. A saída é a mesma da
+  armadilha do heredoc: **gerar texto por arquivo de script**, escrito com a
+  ferramenta de escrita, e não por `-c` de uma linha.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

@@ -381,6 +381,39 @@ Body:
             Item: Moeda_Nova
             Amount: 100
 
+      # ----- Malangdo -------------------------------------------------
+      # A FRUTA DOS GATOS, e ela entrou aqui por uma razao so: nao havia
+      # NENHUMA fonte dela neste servidor. Nenhum mob a dropa, nenhuma
+      # loja nossa a vendia, e o proprio Coin Exchanger de Malangdo se
+      # recusa a trocar por ela ("Cannot exchange for Silvervine",
+      # npc/re/merchants/coin_exchange.txt:75). Ela so tinha sumidouros.
+      #
+      # E o sumidouro que importa e novo: desde 2026-08-18 a Fruta e a
+      # moeda dos tres lubrificantes da Separacao de Cartas, na Maquina
+      # Especial de Malangdo (npc/guerra/separacao_de_cartas.txt). Sem
+      # esta linha, aquele NPC inteiro fica travado no unico caminho que
+      # nao pede fruta: 1.000.000 de zeny com 2% de chance.
+      #
+      # 1 MOEDA NOVA POR FRUTA, e o preco unitario e de proposito: a
+      # tabela do bRO (4 pelo Basico, 7 pelo Refinado, 192 pelo Oleo)
+      # passa a valer em Moeda Nova sem conta nenhuma. Este `Amount` e o
+      # unico botao da economia inteira - mexer nele mexe nos tres
+      # pagamentos de uma vez.
+      #
+      # Para comparar: o Passe Antigravitacional e a Redea custam 100
+      # Moedas cada, entao o Oleo (192) passa a ser a coisa mais cara
+      # que a Maquina vende. Combina com ele ser a unica forma de tirar
+      # carta de MVP sem risco nenhum.
+      #
+      # A Fruta e NoDrop/NoTrade/NoSell/NoCart/NoStorage no item_db do
+      # vendor - ela nao vaza para mula nem volta em zeny num NPC.
+      - Index: 22
+        Item: Silvervine                  # 6417 Fruta dos Gatos
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 1
+
   # =====================================================================
   # A Maquina de Troca da Ordem dos Exploradores
   # =====================================================================

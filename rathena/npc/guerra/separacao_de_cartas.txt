@@ -1,0 +1,804 @@
+//===== Guerra do Emperium ===================================
+//= Separacao de Cartas - o modelo NOVO
+//===== Onde =================================================
+//= Richard           malangdo 208,166  sprite 559
+//= Maquina Especial  malangdo 218,165  sprite 562
+//=
+//= As duas coordenadas NAO foram escolhidas por nos: sao as
+//= que o rAthena ja usava, e sao tambem as que a descricao dos
+//= tres lubrificantes no itemInfo.lua DESTE cliente aponta
+//= (`<NAVI>[Richard]<INFO>malangdo,208,166`). As duas celulas
+//= foram conferidas no malangdo.gat deste cliente: tipo 0,
+//= andavel.
+//=
+//= A imagem de referencia do pedido diz "malangdo 220,160"
+//= para o Richard. FICOU EM 208,166 de proposito - ver
+//= "A divergencia dos 220,160", la embaixo.
+//===== Descricao ============================================
+//= Tira UMA carta de UMA cova de um equipamento VESTIDO. O que
+//= muda em relacao ao modelo velho do rAthena e a regra de
+//= perda: aqui a falha nao destroi nada.
+//=
+//= As dez regras, na ordem da imagem de referencia:
+//=
+//=  1. o equipamento tem de estar vestido;
+//=  2. uma carta por vez;
+//=  3. ha chance de falhar, mas nao se perde nada - so o zeny
+//=     ou o lubrificante pagos;
+//=  4. refino, encantamento e Essencia de Morroc nao se perdem
+//=     na falha;
+//=  5. no SUCESSO, os bonus aleatorios do item se perdem;
+//=  6. carta de MVP so sai com o Oleo Removedor Especial;
+//=  7. carta SELADA de MVP conta como comum, e o Oleo nao
+//=     serve para ela;
+//=  8. Essencia de Morroc nao e carta - este sistema nao a
+//=     remove;
+//=  9. o lubrificante aumenta a chance;
+//= 10. o Lubrificante Comum e o Sofisticado nao servem mais
+//=     para nada: trocam-se por Fruta dos Gatos na Maquina
+//=     Especial, malangdo 218,165.
+//=
+//= A tabela de pagamento, tambem da imagem:
+//=
+//=   | pagamento                 | custa               | chance |
+//=   | nenhum                    | 1.000.000 de zeny   |    2%  |
+//=   | Lubrificante Basico       | 4 Frutas dos Gatos  |   10%  |
+//=   | Lubrificante Refinado     | 7 Frutas dos Gatos  |   20%  |
+//=   | Oleo Removedor Especial   | 192 Frutas dos Gatos|  100%  |
+//=
+//= As quatro chances estao em .chance_* no OnInit, num lugar
+//= so. Sao o numero do bRO, nao um numero calibrado para este
+//= servidor: 2% com um milhao de zeny e caro de proposito la,
+//= e o lubrificante e que torna o servico viavel.
+//===== De onde veio =========================================
+//= Pedido em 2026-08-17: "Remocao de cartas no Richard: hoje
+//= temos uma remocao antiga que so remove escudo e espada.
+//= Precisamos seguir o modelo novo da imagem passada como
+//= referencia" - a pagina "Separacao" do bRO, com as dez
+//= regras e a tabela dos quatro pagamentos.
+//=
+//= O QUE HAVIA ANTES, e por que "so escudo e espada": o
+//= npc/re/merchants/card_separation.txt do rAthena e um script
+//= so com DOIS `duplicate`, e cada um atende metade dos slots:
+//=
+//=   Richard#pa0829  malangdo 208,166  mao direita e esquerda
+//=   Jeremy#pa0829   malangdo 215,166  armadura, sapato, capa,
+//=                                     chapeu de topo
+//=
+//= Os dois seguem o modelo velho, em que a falha DESTROI o
+//= item, a carta, ou os dois, e o jogador escolhe antes qual
+//= dos dois quer que sobreviva. Nenhum dos dois sobrevive a
+//= este arquivo: os dois sao desligados no OnInit.
+//=
+//= O JEREMY FOI DESLIGADO POR DECISAO DO DONO em 2026-08-18,
+//= perguntado na entrega. A razao: o Richard novo cobre os dez
+//= slots sozinho, e deixar o Jeremy de pe manteria, ao lado
+//= dele, um servico que destroi equipamento - com o jogador
+//= tendo de saber, sem nenhuma pista na tela, qual dos dois
+//= NPCs e o seguro.
+//===== Como, e por que assim ================================
+//= Nenhum arquivo do rAthena foi editado. Sao os movimentos de
+//= sempre (CLAUDE.md secao 2 e RECEITAS.md secao 1):
+//=
+//= 1) `disablenpc` nos dois NPCs do rAthena, no OnInit deste
+//=    arquivo. Funciona porque o npc/scripts_custom.conf - de
+//=    onde vem o nosso scripts_guerra.conf - e lido DEPOIS do
+//=    npc/re/scripts_athena.conf (npc/re/scripts_main.conf:49).
+//=    Se um dia a ordem mudar, os dois velhos voltam a aparecer
+//=    empilhados nos novos.
+//=
+//=    O nome que o `disablenpc` aceita e o EXNAME, o que vem
+//=    depois do `::` - e como os dois sao `duplicate` SEM `::`,
+//=    o exname e a linha inteira: `Richard#pa0829`, e nao
+//=    `Richard`. CLAUDE.md secao 5.
+//=
+//= 2) NPCs nossos, em portugues, nas MESMAS coordenadas. O
+//=    card_separation.txt nao esta em grupo nenhum do
+//=    traduz_npcs.py, ou seja o original continua em ingles e
+//=    nao ha catalogo a manter.
+//=
+//= 3) A Maquina Especial e reescrita INTEIRA, e nao so
+//=    acrescida. Ela e a `Special Vending Machine` do rAthena,
+//=    e vende mais coisa que lubrificante: as tres Protecoes do
+//=    Deus do Mar e as tres Caixas de Arpoes de Polvo, que sao
+//=    a entrada das instancias do Esgoto e da Caverna do Polvo.
+//=    Desligar o original sem trazer os seis junto fecharia as
+//=    duas instancias, calado.
+//=
+//= A DIVERGENCIA DOS 220,160: a imagem poe o Richard em
+//= malangdo 220,160; o itemInfo.lua deste cliente poe em
+//= 208,166, nos TRES lubrificantes, e e de la que sai o link de
+//= navegacao que o jogador clica na descricao do item. Manter
+//= 208,166 faz as tres pontas concordarem - imagem a parte - e
+//= nao custa patch de cliente nenhum (CLAUDE.md secao 4.18);
+//= mudar para 220,160 exigiria reescrever a descricao dos tres
+//= itens e publicar patch, para que o link nao apontasse para
+//= um lugar vazio. Se o dono preferir os 220,160, sao as duas
+//= coisas juntas, nunca so a coordenada daqui.
+//===== A moeda, e a fonte dela ==============================
+//= O lubrificante se compra com FRUTA DOS GATOS (6417), como no
+//= bRO. E ela NAO TINHA FONTE NENHUMA neste servidor - so
+//= sumidouros: nenhum mob a dropa, o Coin Exchanger de Malangdo
+//= recusa trocar por ela ("Cannot exchange for Silvervine",
+//= npc/re/merchants/coin_exchange.txt:75) e nenhuma loja nossa
+//= a vendia. O sistema inteiro nasceria travado no caminho de
+//= 1.000.000 de zeny a 2%.
+//=
+//= Decisao do dono em 2026-08-18: a Fruta dos Gatos entra no
+//= barter da Maquina de Prontera (167,199), paga em Moeda Nova.
+//= A linha esta em npc/guerra/barters_guerra.yml, no fim da
+//= lista `Maquina#loja`, num grupo novo "Malangdo".
+//=
+//= O PRECO E 1 MOEDA NOVA POR FRUTA, e ele e o unico botao
+//= desta economia: mexer nele mexe nos quatro pagamentos de uma
+//= vez, porque a tabela do bRO passa a valer em Moeda Nova sem
+//= conta nenhuma - 4, 7 e 192. Escolhido assim de proposito,
+//= para que a proporcao da imagem continue legivel. Para
+//= comparar: o Passe Antigravitacional custa 100 Moedas e a
+//= Redea Eterna 100, entao o Oleo (192) e hoje a coisa mais
+//= cara da Maquina - o que combina com ele ser a unica forma de
+//= tirar carta de MVP sem risco.
+//=
+//= A Fruta e NoDrop/NoTrade/NoSell/NoCart no item_db do vendor,
+//= entao ela nao vaza para mula nem para NPC. Nao precisa do
+//= zera_revenda_das_lojas.py: ele e para as vitrines de
+//= Prontera (CLAUDE.md secao 4.16), e barter nao e vitrine.
+//===== Como o item volta inteiro ============================
+//= Nao existe comando de script que tire UMA carta de UMA cova.
+//= O `successremovecards` do rAthena tira TODAS as cartas da
+//= peca de uma vez - e tira a Essencia de Morroc junto, porque
+//= ela e `Type: Card` - o que quebraria as regras 2 e 8 ao
+//= mesmo tempo. Entao o caminho e desmontar e remontar:
+//= `delequip` mais `getitem4`, com as covas que ficaram.
+//=
+//= Remontar assim PERDE O QUE NAO FOR PASSADO DE VOLTA, e isso
+//= e o que exige cuidado:
+//=
+//=   refino          `getequiprefinerycnt`, lido antes
+//=   covas restantes `getequipcardid` das quatro, lidas antes
+//=   grau de encanto `@inventorylist_enchantgrade[]`
+//=   vinculo (bound) `@inventorylist_bound[]`
+//=   bonus aleatorio NAO se devolve - regra 5, e e o unico
+//=                   campo que se perde de proposito
+//=
+//= O grau e o vinculo NAO tem funcao de leitura por slot de
+//= equipamento: quem os tem e o `getinventorylist`, e por isso
+//= ele e chamado e a linha do item vestido e procurada pelo
+//= bit de posicao (`@inventorylist_equip[] & EQP_*`). Sem isso,
+//= separar carta de um item VINCULADO o devolveria solto - um
+//= item de conta virando mercadoria, calado.
+//=
+//= ITEM ALUGADO E RECUSADO por isso mesmo: o
+//= `@inventorylist_expire[]` diz que ele tem prazo, e remontar
+//= com `getitem4` devolveria uma peca eterna. E a unica recusa
+//= que este NPC faz por natureza do item.
+//=
+//= E o `getitem4` exige TRES arrays de opcao aleatoria, mesmo
+//= para nao por nenhuma: eles vao zerados (.@op_id/.@op_val/
+//= .@op_par), e sao o que cumpre a regra 5.
+//===== O que o codigo protege, e nao se ve ==================
+//= 1) A LISTA DE CARTAS DE MVP e GERADA, nao escrita a mao. Os
+//=    147 ids sairam de `ferramentas/varre_cartas.chefes()`, a
+//=    mesma funcao que decide quem entra na loja "Carta de MVP"
+//=    do npc/guerra/mercado_de_cartas.txt - ou seja as duas
+//=    listas concordam por construcao. A do rAthena, no
+//=    card_separation.txt, tem 45 e esta parada em 2015.
+//=
+//=    Carta de MVP nao se reconhece pelo item_db: nao ha marca
+//=    la. Ela se deriva do `mob_db`, por quem a dropa, e o
+//=    rAthena marca MVP de duas formas (`MvpExp:` e `Mvp:`).
+//=    Ao rodar o varre_cartas.py de novo, reconferir esta lista.
+//=
+//=    Nenhuma carta SELADA cai nesta lista - conferido: as
+//=    seladas nao sao drop de MVP. E o que faz a regra 7 valer
+//=    sozinha, sem uma segunda lista.
+//=
+//= 2) O MENU E OS ARRAYS SAEM DA MESMA FONTE, num laco - nao ha
+//=    string de menu escrita a mao ao lado de um `setarray`
+//=    escrito a parte. E a regra 4.11 do CLAUDE.md, e ela custou
+//=    caro no Teleportador da Ordem: menu e destino divergiram e
+//=    catorze viagens foram parar no lugar errado, sem erro
+//=    nenhum. Aqui as tres colunas (rotulo, EQI, EQP) sao
+//=    conferidas por `getarraysize` no OnInit, com `debugmes`.
+//=
+//= 3) NENHUM `||` DENTRO DE `if` COM INDICE. O `||` do script do
+//=    rAthena NAO faz curto-circuito (CLAUDE.md secao 5): os
+//=    dois lados sao sempre avaliados. Por isso toda guarda do
+//=    tipo "se ha carta E ela e comum" esta escrita como `if`
+//=    aninhado.
+//=
+//= 4) O ITEM E RECONFERIDO DEPOIS DO ULTIMO MENU. Entre a
+//=    escolha da cova e o pagamento ha `next`, e nele o jogador
+//=    pode trocar de equipamento. Antes de cobrar, o NPC
+//=    confere que a peca continua vestida, que e a mesma
+//=    (`getequipid`) e que as quatro covas nao mudaram
+//=    (`F_IsEquipCardHack`, que ainda escreve no log).
+//=
+//= 5) EQUIPAMENTO FORJADO OU ASSINADO E RECUSADO. Em peca
+//=    forjada a cova 0 guarda um marcador (254, 255 ou 256) e as
+//=    covas 2 e 3 guardam o id do personagem partido em dois -
+//=    numeros grandes que passam por id de item. Ler isso como
+//=    carta e o caminho para o NPC "devolver" uma carta que nao
+//=    existe.
+//=
+//= 6) `rand` COM 100, NUNCA COM VARIAVEL. O `rand(n)` mata o
+//=    script quando n vale 1 (CLAUDE.md secao 5); aqui o
+//=    argumento e sempre a constante 100.
+//============================================================
+
+malangdo,208,166,6	script	Richard#guerra	559,{
+	disable_items;
+
+	if (checkweight(1201,3) == 0) {
+		mes "[Richard]";
+		mes "Você está carregando tipos de item demais. Guarde alguma coisa e volte.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "[Richard]";
+		mes "Você está pesado demais. Guarde alguma coisa e volte.";
+		close;
+	}
+
+	mes "[Richard]";
+	mes "Eu separo carta de equipamento. Uma carta por vez, e a peça precisa estar ^0000FFvestida^000000.";
+	next;
+	mes "[Richard]";
+	mes "Se der errado, ^0000FFvocê não perde nada^000000: nem a peça, nem a carta, nem o refino, nem o encantamento. Perde só o que me pagou.";
+	next;
+	mes "[Richard]";
+	mes "Mas repare: quando dá ^0000FFcerto^000000, os ^FF0000bônus aleatórios^000000 da peça se perdem. E Essência de Morroc não é carta - dessas eu não cuido.";
+	next;
+
+	// As TRES colunas da tabela de slots. Ver a nota (2) do cabecalho:
+	// o menu abaixo e montado num laco a partir daqui, e nao escrito a
+	// mao ao lado. A terceira coluna e o bit de posicao, e ela existe
+	// porque o `getinventorylist` responde por EQP_*, nao por EQI_*.
+	setarray .@rotulo$[0],
+		"Chapéu (topo)","Chapéu (meio)","Chapéu (baixo)","Armadura",
+		"Mão direita","Mão esquerda","Capa","Sapato",
+		"Acessório direito","Acessório esquerdo";
+	setarray .@slot[0],
+		EQI_HEAD_TOP,EQI_HEAD_MID,EQI_HEAD_LOW,EQI_ARMOR,
+		EQI_HAND_R,EQI_HAND_L,EQI_GARMENT,EQI_SHOES,
+		EQI_ACC_R,EQI_ACC_L;
+	setarray .@bit[0],
+		EQP_HEAD_TOP,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_ARMOR,
+		EQP_HAND_R,EQP_HAND_L,EQP_GARMENT,EQP_SHOES,
+		EQP_ACC_R,EQP_ACC_L;
+
+	.@n = getarraysize(.@slot);
+	if (getarraysize(.@rotulo$) != .@n) {
+		debugmes "Richard#guerra: rotulo e slot com tamanhos diferentes.";
+		mes "[Richard]";
+		mes "Minha bancada está desarrumada hoje. Volte depois.";
+		close;
+	}
+	if (getarraysize(.@bit) != .@n) {
+		debugmes "Richard#guerra: bit e slot com tamanhos diferentes.";
+		mes "[Richard]";
+		mes "Minha bancada está desarrumada hoje. Volte depois.";
+		close;
+	}
+
+	.@menu$ = "";
+	for (.@i = 0; .@i < .@n; .@i++) {
+		if (getequipisequiped(.@slot[.@i]))
+			.@menu$ = .@menu$ + .@rotulo$[.@i] + " - " + getequipname(.@slot[.@i]) + ":";
+		else
+			.@menu$ = .@menu$ + "^999999" + .@rotulo$[.@i] + " (vazio)^000000:";
+	}
+
+	.@esc = select("Deixa para depois:" + .@menu$);
+	if (.@esc == 1) {
+		mes "[Richard]";
+		mes "Quando precisar, estou aqui.";
+		close;
+	}
+	.@col = .@esc - 2;
+	.@part = .@slot[.@col];
+
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Richard]";
+		mes "Não há nada vestido aí.";
+		close;
+	}
+
+	.@equip_id = getequipid(.@part);
+	.@refino = getequiprefinerycnt(.@part);
+	setarray .@cova[0],
+		getequipcardid(.@part,0), getequipcardid(.@part,1),
+		getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	// Ver a nota (5) do cabecalho: em peca forjada ou assinada a cova 0
+	// e um marcador e as covas 2 e 3 sao o id do dono partido em dois.
+	// 254 = CARD0_CREATE, 255 = CARD0_FORGE, 256 = CARD0_PET.
+	if (.@cova[0] == 254 || .@cova[0] == 255 || .@cova[0] == 256) {
+		mes "[Richard]";
+		mes "Essa peça tem assinatura de quem a fez. Não mexo nesse tipo de trabalho.";
+		close;
+	}
+
+	// A cova so entra no menu se tiver carta COMUM. `CARD_ENCHANT` e o
+	// que a Essencia de Morroc e todo encantamento sao (regra 8), e
+	// `getiteminfo` devolve -1 para id que nao existe.
+	.@menu$ = "";
+	.@tem = 0;
+	for (.@i = 0; .@i < 4; .@i++) {
+		.@comum = 0;
+		if (.@cova[.@i] > 0) {
+			if (getiteminfo(.@cova[.@i], ITEMINFO_SUBTYPE) == CARD_NORMAL)
+				.@comum = 1;
+		}
+		if (.@comum == 1) {
+			.@menu$ = .@menu$ + "Cova " + (.@i + 1) + " - " + getitemname(.@cova[.@i]) + ":";
+			.@tem = 1;
+		} else {
+			.@menu$ = .@menu$ + "^777777Cova " + (.@i + 1) + " - sem carta^000000:";
+		}
+	}
+
+	if (.@tem == 0) {
+		mes "[Richard]";
+		mes "Não vejo carta nenhuma nessa peça. Encantamento e Essência de Morroc não contam.";
+		close;
+	}
+
+	mes "[Richard]";
+	mes "De qual cova? Da esquerda para a direita, 1, 2, 3 e 4.";
+	next;
+
+	.@esc = select("Deixa para depois:" + .@menu$);
+	if (.@esc == 1) {
+		mes "[Richard]";
+		mes "Quando precisar, estou aqui.";
+		close;
+	}
+	.@qual = .@esc - 2;
+
+	.@carta = .@cova[.@qual];
+	.@ok = 0;
+	if (.@carta > 0) {
+		if (getiteminfo(.@carta, ITEMINFO_SUBTYPE) == CARD_NORMAL)
+			.@ok = 1;
+	}
+	if (.@ok == 0) {
+		mes "[Richard]";
+		mes "Essa cova não tem carta que eu possa separar.";
+		close;
+	}
+
+	// Regra 6 e 7: quem decide e a lista gerada do mob_db (nota 1 do
+	// cabecalho). Carta selada nao esta la, entao ela cai no caminho
+	// comum sozinha.
+	.@mvp = 0;
+	if (compare(.mvp$, "|" + .@carta + "|"))
+		.@mvp = 1;
+
+	if (.@mvp == 1) {
+		mes "[Richard]";
+		mes "^0000FF" + getitemname(.@carta) + "^000000 é carta de MVP. Lubrificante não dá conta dela: só o ^0000FFÓleo Removedor Especial^000000, e esse não falha nunca.";
+		next;
+		if (countitem(.oleo) < 1) {
+			mes "[Richard]";
+			mes "E você não tem nenhum. A Máquina Especial ali do lado vende, por " + .preco_oleo + " Frutas dos Gatos.";
+			close;
+		}
+		if (select("Deixa para depois:Usar o Óleo Removedor Especial") == 1) {
+			mes "[Richard]";
+			mes "Quando precisar, estou aqui.";
+			close;
+		}
+		.@paga = .oleo;
+		.@chance = .chance_oleo;
+	} else {
+		mes "[Richard]";
+		mes "Carta comum. Escolha como quer pagar - quanto melhor o lubrificante, maior a chance.";
+		next;
+
+		.@menu$ = "Deixa para depois:";
+		if (Zeny >= .preco_zeny)
+			.@menu$ = .@menu$ + "Pagar " + callfunc("F_InsertComma", .preco_zeny) + " zeny - " + .chance_zeny + "% de chance:";
+		else
+			.@menu$ = .@menu$ + "^999999Pagar " + callfunc("F_InsertComma", .preco_zeny) + " zeny (falta zeny)^000000:";
+		if (countitem(.basico) > 0)
+			.@menu$ = .@menu$ + "Usar Lubrificante Básico - " + .chance_basico + "% de chance:";
+		else
+			.@menu$ = .@menu$ + "^999999Lubrificante Básico (não tem)^000000:";
+		if (countitem(.refinado) > 0)
+			.@menu$ = .@menu$ + "Usar Lubrificante Refinado - " + .chance_refinado + "% de chance";
+		else
+			.@menu$ = .@menu$ + "^999999Lubrificante Refinado (não tem)^000000";
+
+		switch (select(.@menu$)) {
+		case 1:
+			mes "[Richard]";
+			mes "Quando precisar, estou aqui.";
+			close;
+		case 2:
+			if (Zeny < .preco_zeny) {
+				mes "[Richard]";
+				mes "Você não tem esse dinheiro todo.";
+				close;
+			}
+			.@paga = 0;
+			.@chance = .chance_zeny;
+			break;
+		case 3:
+			if (countitem(.basico) < 1) {
+				mes "[Richard]";
+				mes "Você não tem Lubrificante Básico.";
+				close;
+			}
+			.@paga = .basico;
+			.@chance = .chance_basico;
+			break;
+		case 4:
+			if (countitem(.refinado) < 1) {
+				mes "[Richard]";
+				mes "Você não tem Lubrificante Refinado.";
+				close;
+			}
+			.@paga = .refinado;
+			.@chance = .chance_refinado;
+			break;
+		}
+	}
+
+	// ----- daqui para baixo nao ha mais menu -------------------------
+	// Ver a nota (4) do cabecalho: entre o primeiro menu e esta linha o
+	// jogador teve `next` de sobra para trocar de equipamento.
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Richard]";
+		mes "Você tirou a peça. Vista de novo e me chame.";
+		close;
+	}
+	if (getequipid(.@part) != .@equip_id) {
+		mes "[Richard]";
+		mes "Essa não é mais a peça que você me mostrou.";
+		close;
+	}
+	if (callfunc("F_IsEquipCardHack", .@part, .@cova[0], .@cova[1], .@cova[2], .@cova[3]))
+		close;
+
+	// O vinculo, o prazo e o grau de encanto so existem aqui - nao ha
+	// `getequip*` para nenhum dos tres. Ver "Como o item volta inteiro".
+	.@achou = 0;
+	.@vinculo = 0;
+	.@prazo = 0;
+	.@grau = 0;
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_equip[.@i] & .@bit[.@col]) {
+			if (@inventorylist_id[.@i] == .@equip_id) {
+				.@vinculo = @inventorylist_bound[.@i];
+				.@prazo   = @inventorylist_expire[.@i];
+				.@grau    = @inventorylist_enchantgrade[.@i];
+				.@achou = 1;
+				break;
+			}
+		}
+	}
+	if (.@achou == 0) {
+		debugmes "Richard#guerra: item vestido nao achado no getinventorylist (id " + .@equip_id + ").";
+		mes "[Richard]";
+		mes "Não consegui pegar essa peça direito. Vista de novo e me chame.";
+		close;
+	}
+	if (.@prazo != 0) {
+		mes "[Richard]";
+		mes "Essa peça é ^FF0000alugada^000000. Se eu a desmontar, ela volta sem prazo - e isso eu não faço.";
+		close;
+	}
+
+	// Cobranca. Daqui em diante o pagamento ja foi, de certo ou errado -
+	// e a regra 3: na falha e SO ele que se perde.
+	if (.@paga == 0)
+		Zeny = Zeny - .preco_zeny;
+	else
+		delitem .@paga, 1;
+
+	mes "[Richard]";
+	mes "Vamos lá...";
+	next;
+
+	if (rand(100) >= .@chance) {
+		specialeffect2 EF_SUI_EXPLOSION;
+		mes "-- Resultado da separação --";
+		mes "A carta ^FF0000não saiu^000000 da cova.";
+		mes "^0000FFNada se perdeu^000000: a peça, a carta, o refino e o encantamento estão como estavam.";
+		next;
+		mes "[Richard]";
+		mes "Perdemos só o material. Quiser tentar de novo, é só falar.";
+		close;
+	}
+
+	.@saiu = .@cova[.@qual];
+	.@cova[.@qual] = 0;
+
+	// Os tres arrays zerados sao o que APAGA o bonus aleatorio - regra 5.
+	// O `getitem4` os exige mesmo quando nao ha opcao nenhuma a por.
+	setarray .@op_id[0], 0,0,0,0,0;
+	setarray .@op_val[0], 0,0,0,0,0;
+	setarray .@op_par[0], 0,0,0,0,0;
+
+	delequip .@part;
+	if (.@vinculo > 0)
+		getitembound4 .@equip_id,1,1,.@refino,0,.@cova[0],.@cova[1],.@cova[2],.@cova[3],.@vinculo,.@grau,.@op_id,.@op_val,.@op_par;
+	else
+		getitem4 .@equip_id,1,1,.@refino,0,.@cova[0],.@cova[1],.@cova[2],.@cova[3],.@grau,.@op_id,.@op_val,.@op_par;
+	getitem .@saiu, 1;
+
+	specialeffect2 EF_MAXPOWER;
+	mes "-- Resultado da separação --";
+	mes "^0000FFA carta saiu inteira^000000, e a peça também.";
+	mes "Refino e encantamento ficaram como estavam.";
+	mes "Os ^FF0000bônus aleatórios^000000 se perderam, como eu avisei.";
+	next;
+	mes "[Richard]";
+	mes "Bom proveito. Volte quando quiser.";
+	close;
+
+OnInit:
+	// Os dois do rAthena (npc/re/merchants/card_separation.txt). O nome
+	// e o EXNAME - `duplicate` sem `::`, entao e a linha inteira.
+	disablenpc "Richard#pa0829";
+	disablenpc "Jeremy#pa0829";
+
+	// ----- a tabela de pagamento (a imagem de referencia) -------------
+	.preco_zeny = 1000000;
+	.chance_zeny = 2;
+
+	.basico = 25238;          // Lubrificante Basico
+	.chance_basico = 10;
+	.preco_basico = 4;        // em Fruta dos Gatos, na Maquina Especial
+
+	.refinado = 25239;        // Lubrificante Refinado
+	.chance_refinado = 20;
+	.preco_refinado = 7;
+
+	// Os tres `.preco_*` acima e este NAO cobram nada: quem cobra e a
+	// Maquina Especial, no `setarray .@custo` dela. Aqui eles existem
+	// so para a fala dizer o numero certo - e por isso podem divergir
+	// sem erro nenhum. Mudou um, muda o outro.
+	.oleo = 6443;             // Oleo Removedor Especial (Sillit_Pong_Bottle)
+	.chance_oleo = 100;
+	.preco_oleo = 192;
+
+	// ----- as 147 cartas de MVP --------------------------------------
+	// GERADA por ferramentas/varre_cartas.chefes(), a mesma funcao que
+	// monta a loja "Carta de MVP" do mercado_de_cartas.txt. Ver a nota
+	// (1) do cabecalho antes de mexer a mao aqui.
+	.mvp$ = "|4005|4074|4121|4123|4127|4128|4131|4132|";
+	.mvp$ = .mvp$ + "4134|4135|4137|4142|4143|4144|4145|4146|";
+	.mvp$ = .mvp$ + "4147|4148|4168|4169|4210|4236|4246|4263|";
+	.mvp$ = .mvp$ + "4276|4302|4305|4318|4324|4330|4342|4352|";
+	.mvp$ = .mvp$ + "4357|4359|4361|4363|4365|4367|4372|4374|";
+	.mvp$ = .mvp$ + "4376|4386|4399|4403|4407|4408|4410|4419|";
+	.mvp$ = .mvp$ + "4425|4430|4441|4451|4456|4507|4509|4520|";
+	.mvp$ = .mvp$ + "4525|4526|4527|4528|4529|4534|4556|4557|";
+	.mvp$ = .mvp$ + "4560|4561|4562|4563|4564|4565|4566|4574|";
+	.mvp$ = .mvp$ + "4576|4578|4580|4592|4601|4603|4610|4625|";
+	.mvp$ = .mvp$ + "4636|4647|4648|4649|4650|4651|4652|4662|";
+	.mvp$ = .mvp$ + "4671|4672|4673|4674|4675|4676|4677|4678|";
+	.mvp$ = .mvp$ + "4679|4680|4681|4682|4683|4697|27020|27025|";
+	.mvp$ = .mvp$ + "27081|27104|27106|27113|27119|27126|27150|27151|";
+	.mvp$ = .mvp$ + "27152|27162|27164|27180|27182|27265|27294|27298|";
+	.mvp$ = .mvp$ + "27305|27318|27319|27321|27326|27327|27346|27362|";
+	.mvp$ = .mvp$ + "27363|31023|31026|300007|300078|300079|300080|300099|";
+	.mvp$ = .mvp$ + "300100|300107|300145|300151|300217|300227|300228|300239|";
+	.mvp$ = .mvp$ + "300248|300262|300281|";
+	end;
+}
+
+//============================================================
+// A MAQUINA ESPECIAL de Malangdo.
+//
+// E a `Special Vending Machine` do rAthena, reescrita em
+// portugues e com a mercadoria do modelo novo. Ver a nota (3)
+// do cabecalho: ela NAO existe so por causa de lubrificante -
+// as seis primeiras linhas sao a entrada das instancias do
+// Esgoto (Protecao do Deus do Mar) e da Caverna do Polvo
+// (Caixa de Arpoes), e desligar o original sem trazer as seis
+// junto fecharia as duas, calado.
+//
+// O QUE MUDOU DA LISTA VELHA:
+//
+//   saiu   Lubrificante Comum        (6440)  36 Frutas
+//   saiu   Lubrificante Sofisticado  (6441)  56 Frutas
+//   entra  Lubrificante Basico      (25238)   4 Frutas
+//   entra  Lubrificante Refinado    (25239)   7 Frutas
+//   ficou  Oleo Removedor Especial   (6443) 192 Frutas
+//
+// A TROCA DOS VELHOS e a regra 10 da imagem, e o preco dela e
+// o que os dois CUSTAVAM na propria maquina - 36 e 56 Frutas.
+// Devolver menos seria confiscar; devolver mais abriria um
+// ganho para quem tivesse estoque. Nao ha numero oficial para
+// isso, entao ficou o unico defensavel.
+//
+// O nome unico e `Maquina Especial#malangdo`, e o `#` nao e
+// enfeite: ja existe uma "Maquina Especial" no projeto, a da
+// Sala Secreta da Ordem (prt_in 137,108). Nome unico repetido
+// derruba o segundo NPC na carga.
+//
+// Nao e loja de barter, e por dois motivos: ela precisa
+// COMPRAR de volta (a janela de troca so vende), e o nome
+// `MaquinaEspecial#loja` ja e da Sala Secreta.
+//============================================================
+
+malangdo,218,165,5	script	Máquina Especial#malangdo	562,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Máquina Especial]";
+		mes "Você está carregando tipos de item demais.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "[Máquina Especial]";
+		mes "Você está pesado demais.";
+		close;
+	}
+
+	mes "[Máquina Especial]";
+	mes "Bem-vindo à CX-82. Aqui se compra com ^0000FF" + getitemname(.fruta) + "^000000.";
+	mes "Você tem: ^0000FF" + countitem(.fruta) + "^000000.";
+	next;
+
+	switch (select("Comprar:Trocar lubrificante antigo:Explicação:Nada, obrigado")) {
+	case 1:
+		break;
+	case 2:
+		// `goto` e nao `callsub` porque o bloco de troca nunca volta:
+		// todo caminho dele termina em `close`.
+		goto S_TROCA;
+	case 3:
+		mes "[Máquina Especial]";
+		mes "A ^0000FFProteção do Deus do Mar^000000 e o ^0000FFArpão de Polvo^000000 dão entrada nas masmorras do Esgoto e da Caverna do Polvo, cada um pelo prazo que o nome diz.";
+		next;
+		mes "[Máquina Especial]";
+		mes "Os ^0000FFlubrificantes^000000 aumentam a chance do Richard separar uma carta: o Básico leva a " + .chance_basico + "%, o Refinado a " + .chance_refinado + "%.";
+		next;
+		mes "[Máquina Especial]";
+		mes "O ^0000FFÓleo Removedor Especial^000000 é outra coisa: ele tira ^0000FFcarta de MVP^000000, e com " + .chance_oleo + "% de certeza. Não serve para carta comum nem para carta selada.";
+		next;
+		mes "[Máquina Especial]";
+		mes "O Lubrificante Comum e o Sofisticado ^FF0000não servem mais^000000. Troque-os aqui pela fruta que custaram.";
+		close;
+	case 4:
+		mes "[Máquina Especial]";
+		mes "Volte sempre.";
+		close;
+	}
+
+	// A vitrine. As TRES colunas saem do mesmo `setarray` e o menu e
+	// montado num laco a partir delas - CLAUDE.md secao 4.11.
+	//
+	// O PRECO DOS TRES LUBRIFICANTES APARECE EM DOIS NPCs: aqui, que e
+	// quem cobra, e no `.preco_*` do OnInit do Richard, que so o CITA
+	// numa fala ("a Maquina Especial vende, por 192 Frutas"). Mudar um
+	// sem o outro nao quebra nada e nao da erro - so faz o Richard
+	// mentir o preco. Os dois lugares estao marcados com este mesmo
+	// aviso.
+	setarray .@item[0],
+		16740, 16763, 16764,
+		16765, 16766, 16767,
+		25238, 25239, 6443;
+	setarray .@custo[0],
+		4, 12, 24,
+		2, 5, 10,
+		4, 7, 192;
+	setarray .@prazo$[0],
+		" [23 horas]", " [7 dias]", " [15 dias]",
+		" [23 horas]", " [3 dias]", " [7 dias]",
+		"-", "-", "-";
+
+	.@n = getarraysize(.@item);
+	if (getarraysize(.@custo) != .@n) {
+		debugmes "Maquina Especial#malangdo: item e custo com tamanhos diferentes.";
+		mes "[Máquina Especial]";
+		mes "Erro interno. Chame um administrador.";
+		close;
+	}
+	if (getarraysize(.@prazo$) != .@n) {
+		debugmes "Maquina Especial#malangdo: item e prazo com tamanhos diferentes.";
+		mes "[Máquina Especial]";
+		mes "Erro interno. Chame um administrador.";
+		close;
+	}
+
+	.@menu$ = "";
+	for (.@i = 0; .@i < .@n; .@i++) {
+		.@rot$ = getitemname(.@item[.@i]);
+		if (.@prazo$[.@i] != "-")
+			.@rot$ = .@rot$ + .@prazo$[.@i];
+		.@menu$ = .@menu$ + .@rot$ + " - " + .@custo[.@i] + " fruta(s):";
+	}
+
+	.@esc = select("Deixa para depois:" + .@menu$);
+	if (.@esc == 1) {
+		mes "[Máquina Especial]";
+		mes "Volte sempre.";
+		close;
+	}
+	.@i = .@esc - 2;
+
+	if (countitem(.fruta) < .@custo[.@i]) {
+		mes "[Máquina Especial]";
+		mes "Faltam ^FF0000" + (.@custo[.@i] - countitem(.fruta)) + "^000000 " + getitemname(.fruta) + ".";
+		close;
+	}
+
+	delitem .fruta, .@custo[.@i];
+	getitem .@item[.@i], 1;
+	mes "[Máquina Especial]";
+	mes "Negócio fechado. Volte sempre.";
+	close;
+
+// A regra 10 da imagem: os dois lubrificantes velhos voltam a ser a
+// fruta que custaram nesta mesma maquina.
+S_TROCA:
+	if (countitem(.velho_comum) < 1) {
+		if (countitem(.velho_sofis) < 1) {
+			mes "[Máquina Especial]";
+			mes "Você não tem nenhum dos dois lubrificantes antigos.";
+			close;
+		}
+	}
+
+	mes "[Máquina Especial]";
+	mes "O Lubrificante Comum e o Sofisticado não servem mais para nada. Devolvo a fruta que custaram.";
+	next;
+
+	.@menu$ = "Deixa para depois:";
+	if (countitem(.velho_comum) > 0)
+		.@menu$ = .@menu$ + getitemname(.velho_comum) + " (" + countitem(.velho_comum) + ") - " + .volta_comum + " cada:";
+	else
+		.@menu$ = .@menu$ + "^999999" + getitemname(.velho_comum) + " (não tem)^000000:";
+	if (countitem(.velho_sofis) > 0)
+		.@menu$ = .@menu$ + getitemname(.velho_sofis) + " (" + countitem(.velho_sofis) + ") - " + .volta_sofis + " cada";
+	else
+		.@menu$ = .@menu$ + "^999999" + getitemname(.velho_sofis) + " (não tem)^000000";
+
+	switch (select(.@menu$)) {
+	case 1:
+		mes "[Máquina Especial]";
+		mes "Volte sempre.";
+		close;
+	case 2:
+		.@qual = .velho_comum;
+		.@vale = .volta_comum;
+		break;
+	case 3:
+		.@qual = .velho_sofis;
+		.@vale = .volta_sofis;
+		break;
+	}
+
+	.@quantos = countitem(.@qual);
+	if (.@quantos < 1) {
+		mes "[Máquina Especial]";
+		mes "Você não tem esse.";
+		close;
+	}
+
+	delitem .@qual, .@quantos;
+	getitem .fruta, .@quantos * .@vale;
+	mes "[Máquina Especial]";
+	mes "Troquei ^0000FF" + .@quantos + "^000000 por ^0000FF" + (.@quantos * .@vale) + "^000000 " + getitemname(.fruta) + ".";
+	close;
+
+OnInit:
+	disablenpc "Special Vending Machine";
+
+	.fruta = 6417;            // Fruta dos Gatos
+
+	.chance_basico = 10;
+	.chance_refinado = 20;
+	.chance_oleo = 100;
+
+	// A troca da regra 10. O valor e o que os dois CUSTAVAM aqui.
+	.velho_comum = 6440;      // Lubrificante Comum
+	.volta_comum = 36;
+	.velho_sofis = 6441;      // Lubrificante Sofisticado
+	.volta_sofis = 56;
+	end;
+}
