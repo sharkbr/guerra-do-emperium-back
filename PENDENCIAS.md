@@ -1804,6 +1804,25 @@ em português e arte 4 de 4 neste cliente, então **não há patch a publicar**.
 que foi feito está no `HISTORICO.md`, "A separação de cartas passa ao modelo
 novo".
 
+### Já provado: o arquivo carrega
+
+Feito em 2026-08-18, no servidor **local**, com ninguém online. Um A/B com o
+arquivo escondido e devolvido:
+
+| | scripts | `OnInit` |
+|---|---|---|
+| sem `separacao_de_cartas.txt` | 19623 | 3252 |
+| com ele | 19625 | 3254 |
+
+**+2 e +2** — os dois NPCs. E, com o arquivo escondido, o log trouxe
+`npc_addsrcfile: Can't find source file "npc/guerra/separacao_de_cartas.txt"`,
+que é a prova de que a linha do `scripts_guerra.conf` está viva. Nenhum erro,
+nenhum aviso citando Richard, Jeremy, Máquina, Malangdo ou o barter — ou seja
+os três `disablenpc` acharam o alvo e não houve colisão de nome único.
+
+Isso prova que **carrega**, e só isso. O comportamento das dez regras continua
+sem nenhuma prova em tela — é o que o roteiro abaixo cobre.
+
 ### A ordem de recarregamento, e ela importa
 
 ```
@@ -1813,6 +1832,41 @@ novo".
 
 **Nessa ordem.** Invertida, o primeiro clique no Richard já funciona mas a fruta
 não existe na Máquina, e o serviço parece travado por outro motivo.
+
+### A produção ainda NÃO recebeu — e o deploy é do Mac
+
+Em 2026-08-18 a produção estava em **`a017b5d`**, quatro commits atrás:
+
+```
+cbfa51e  O Atualizador 3 tambem no bucket
+f96d6f0  O brilho da carta, tres acessorios de lado trocado e o visual de GM
+b2907a0  O Cupom de Roupa que sumia sem trocar o visual
+be338bd  A separacao de cartas passa ao modelo novo
+```
+
+**O deploy vai RECOMPILAR**, e não é por causa deste trabalho: os dois commits
+do meio mexem em `src/map/clif.cpp` e `src/map/pc.cpp` (o brilho da carta e o
+estilo de corpo). São ~67 minutos de build com o jogo no ar, mais os ~28
+segundos de restart do fim. A separação de cartas sozinha não precisaria de
+nada disso — é só `npc/`.
+
+```
+ferramentas/implanta.sh      # NO MAC
+```
+
+**Não dá para rodar do Windows:** a chave desta máquina entra como `ragnarok`
+sem sudo, de propósito (`~/.ssh/config` — ela existe só para o
+`publica_patch.sh`), e o `atualiza_servidor.sh` precisa de root para o
+`systemctl`. Um `git pull` feito à mão daqui seria pior que não fazer nada:
+deixaria `src/` novo em disco sem compilar **e** desarmaria o gatilho de
+restart do próximo deploy, que compara o commit de antes com o de depois
+(`CLAUDE.md` §5).
+
+**Nada a publicar no canal de patch.** Este trabalho é 100% servidor: os cinco
+itens (25238, 25239, 6443, 6440, 6417) já têm nome em português e arte 4 de 4
+neste cliente, e a descrição dos três novos já traz os números do modelo novo.
+Conferido em 2026-08-18 que a `lista.txt` servida pela produção é idêntica ao
+`patcher/patches.txt` — os quatro patches no ar, nenhum pendente.
 
 ### O roteiro de teste
 
