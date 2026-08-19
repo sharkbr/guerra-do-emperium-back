@@ -62,6 +62,31 @@
 //= um segundo andar depois e copiar o bloco de spawn deste
 //= arquivo trocando o nome do mapa - nao ha nada preso a
 //= "vis_h01" fora as linhas abaixo e o .Mapa$ do OnInit.
+//===== O Instinto de Defesa nao existe aqui =================
+//= Desde 2026-08-18 o Instinto de Defesa (ST_REJECTSWORD) e
+//= PROIBIDO neste mapa. Quem o lancava era um so dos 65
+//= tipos, o 2239 Stalker Gertie, e ele continua com a
+//= habilidade em todo o resto do servidor - o bloqueio e por
+//= mapa, nao por monstro.
+//=
+//= A proibicao NAO esta neste arquivo nem em db/: e codigo,
+//= src/custom/habilidade_proibida.hpp, e mudar de ideia exige
+//= recompilar o map-server. O porque inteiro esta no
+//= cabecalho daquele arquivo; o resumo e que o reflexo valia
+//= 50% do dano do proprio jogador, nao passava por reducao
+//= nenhuma, nao tinha icone que avisasse e so alcancava quem
+//= estava de adaga ou espada - dois jogadores no mesmo chefe,
+//= um caia e o outro nao.
+//=
+//= Pedido do dono em 2026-08-18: "os MVPs estao matando MUITO
+//= com essa skill! E nao ha nem o que fazer, nem como saber
+//= que ela esta ativa".
+//=
+//= OS OUTROS REFLEXOS DA SALA FICARAM: CR_REFLECTSHIELD em
+//= seis chefes (1086, 1719, 2068, 2202, 2235, 2319) e
+//= NPC_MAGICMIRROR em tres (1871, 1874, 2131). Nao foram
+//= pedidos, e o primeiro devolve fracao menor e passa pela
+//= reducao geral, ao contrario deste.
 //===== Os chefes ============================================
 //= SAO 130 NO CHAO: 65 TIPOS, DOIS DE CADA. O `2` no terceiro
 //= campo da linha de spawn e a quantidade, e cada um dos dois

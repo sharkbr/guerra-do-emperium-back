@@ -11884,3 +11884,95 @@ exige login ou troca de mapa porque quem reenvia o inventário é o
 
 Tudo isto é **servidor**: nada aqui mora em `C:\GuerraDoEmperium\cliente\`, e
 portanto nada depende de patch. Vai ao jogador pelo `implanta.sh`.
+
+## O Instinto de Defesa dos MVPs, e por que ele matava tanto (2026-08-18)
+
+Pedido do dono: *"bloquear instinto de defesa na cheffenia por uso dos MVPs.
+Hoje os MVPs estão matando MUITO com essa skill! E não há nem o que fazer, nem
+como saber que ela está ativa, perdendo qualquer forma de contornar ou suportar
+a situação"*.
+
+Cheffenia é o **Corredor Fantasma** (`npc/guerra/corredor_fantasma.txt`), mapa
+`vis_h01`, os 130 chefes.
+
+### Quem lançava era UM, não os MVPs
+
+A primeira medição desfez o plural do pedido: dos **65 tipos** da sala, só um
+tem `ST_REJECTSWORD` no `db/re/mob_skill_db.txt` — o **2239 Stalker Gertie**,
+dois no chão como todos os outros. A linha dele, repetida em `idle`, `chase` e
+`attack`:
+
+```
+2239,Stalker Gertie@ST_REJECTSWORD,idle,390,5,10000,0,30000,yes,self,always
+```
+
+Nível 5, **100% de chance**, recarga de 30 segundos. E o `SC_REJECTSWORD` de
+nível 5 (`src/map/status.cpp`) vale `val2 = 15 × nível = 75%` de chance de
+refletir, `val3 = 3` golpes, e `tick = INFINITE_TICK` — **não expira sozinho**.
+Ou seja: praticamente sempre ligado, e recarregado a cada meio minuto.
+
+### As três razões de doer aqui e não doer no kRO
+
+1. **O reflexo é 50% do dano que o JOGADOR causou**, e não uma fração do HP do
+   monstro (`battle.cpp`, `battle_calc_weapon_final_atk_modifiers`, bloco
+   *"Reject Sword"*). Num servidor em que se bate em MVP para centenas de
+   milhares, metade disso volta de uma vez. **Quanto mais forte o jogador, mais
+   forte o golpe que o mata** — a única alavanca que ele tem é justamente a que
+   piora a situação.
+2. **Não passa por redução nenhuma.** Sai por `battle_fix_damage`, que não passa
+   pelo `battle_calc_damage`: escapa da redução de carta e escapa também da
+   redução geral de 80% (`REDUCAO-DE-DANO.md` §4d, onde ele já estava listado
+   como inofensivo — e era, na conta de PvP em que a §4d foi escrita: ali ele
+   devolve um dano *já reduzido*. Contra MVP, o dano de origem não veio
+   reduzido de lugar nenhum).
+3. **Não há como saber que está ativo.** O `SC_REJECTSWORD` não tem ícone, e o
+   monstro só desenha alguma coisa na tela **quando o reflexo já aconteceu** —
+   o `clif_skill_nodamage` sai na mesma linha do dano. Quem morre descobre
+   depois de morto.
+
+E um quarto detalhe que tornava o diagnóstico pior: o reflexo só alcança quem
+está de **adaga, espada de uma mão ou espada de duas mãos** (o teste de arma
+está naquele mesmo bloco). Dois jogadores no mesmo chefe, um cai e o outro não.
+
+### A saída: proibição por mapa, em `src/custom`
+
+`src/custom/habilidade_proibida.hpp` — uma tabela de `(mapa, habilidade)`,
+consultada no topo do laço do `mobskill_use` (`src/map/mob.cpp`), **antes** do
+teste de recarga. Monstro em mapa listado se comporta como se aquela linha do
+`mob_skill_db` não existisse: sem lançamento, sem animação, sem recarga gasta.
+Hoje a tabela tem uma entrada:
+
+```
+{ "vis_h01", ST_REJECTSWORD }
+```
+
+**Por que não tirar a linha do `mob_skill_db`**, que seria o caminho curto:
+
+1. **Não chegaria à produção.** O `mob_skill_db` é CSV, não YAML — não tem
+   `Footer: Imports:`, e os únicos caminhos que o `sv_readdb` lê são
+   `db/re/mob_skill_db.txt` (arquivo do rAthena, que a §2 proíbe editar) e
+   `db/import/mob_skill_db.txt` — e **`db/import` está no `.gitignore` do
+   vendor**. Arquivo não versionado não sai desta máquina.
+2. **Alcançaria os outros lugares.** O 2239 também nasce na instância
+   Laboratório do Wolfchev, e os irmãos dele — **2225 Gertie** e **2232 Stalker
+   Gertie** — têm a mesma habilidade em `lhz_dun04`. Nada disso foi pedido.
+
+### O que ficou de fora, de propósito
+
+Na mesma sala há mais reflexo, e **não foi mexido**: `CR_REFLECTSHIELD` em seis
+chefes (1086 Golden Thief Bug e 2235 Paladin Randel no nível 10, 1719 Detale e
+2319 Buwaya no 5, 2068 Boitata no 3, 2202 Kraken no 1) e `NPC_MAGICMIRROR` em
+três (1871 Falling Bishop, 1874 Beelzebub, 2131 Lost Dragon). São de outra
+natureza: o `CR_REFLECTSHIELD` devolve `10 + 3 × nível` por cento e passa pelo
+`battle_calc_return_damage`, que a redução geral alcança. Se um dia doerem
+também, são duas linhas na mesma tabela.
+
+### O que recarrega
+
+**Nada** — é código. Exige recompilar o map-server (e portanto pará-lo antes de
+linkar), e a produção só recebe pelo `implanta.sh`. **Conferido em jogo pelo
+dono em 2026-08-18**, depois da recompilação: o reflexo não sai mais na sala.
+
+Tudo isto é **servidor** (`src/`): nada mora em `C:\GuerraDoEmperium\cliente\`,
+então **não há patch a publicar** — vai ao jogador pelo deploy, que sai do Mac
+(`CLAUDE.md` §5).

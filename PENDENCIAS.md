@@ -470,6 +470,22 @@ de chance — dá quase 35% de acontecer por acaso. Contar umas dez antes de
 suspeitar. Se em dez não vier nenhuma, o suspeito é o nome do evento na linha de
 spawn, e a armadilha está no `CLAUDE.md` §5.
 
+**3. O Instinto de Defesa foi proibido na sala em 2026-08-18 — conferido em
+jogo aqui, falta chegar à produção.** O que foi feito está no `HISTORICO.md`,
+"O Instinto de Defesa dos MVPs". Como é código e não `db/`, **não tem comando de
+recarga**: a produção só recebe pelo `implanta.sh`, e o deploy sai do Mac.
+
+**Duas decisões ficaram com o dono, e nenhuma foi tomada por conta própria:**
+
+- **O 2239 continua com a habilidade fora daqui** — na instância Laboratório do
+  Wolfchev —, e os irmãos dele (**2225 Gertie** e **2232 Stalker Gertie**) a têm
+  em `lhz_dun04`. O bloqueio é por mapa, e só `vis_h01` entrou. Estender é uma
+  linha na tabela.
+- **Os outros reflexos da sala ficaram de pé**: `CR_REFLECTSHIELD` em seis
+  chefes (1086, 1719, 2068, 2202, 2235, 2319) e `NPC_MAGICMIRROR` em três (1871,
+  1874, 2131). Devolvem menos e passam pela redução geral, mas se doerem também
+  são duas linhas na mesma tabela.
+
 ---
 
 ## 1d. A Teletransportadora oferece destino que derruba o cliente

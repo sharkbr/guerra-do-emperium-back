@@ -404,6 +404,15 @@ não passa por redução nenhuma sua:
   `battle_calc_base_damage` novo (`battle.cpp:5247`), que nunca viu redução
   nenhuma. É a candidata mais provável a ser reportada como "furou a redução" —
   e, dessa vez, quem reportar tem razão. Ver §1d, bloco B.
+
+  **E o "inofensivo" do Instinto de Defesa vale para o PvP, não para MONSTRO.**
+  Ali quem levou o golpe é o chefe, e o dano de origem não veio reduzido de
+  lugar nenhum: 50% do que um jogador de servidor de alta taxa bate volta
+  inteiro, sem ícone que avise e só contra quem usa adaga ou espada. Foi o que
+  matava no Corredor Fantasma até 2026-08-18, e a saída foi proibir a
+  habilidade naquele mapa (`src/custom/habilidade_proibida.hpp`, `CLAUDE.md`
+  §2). Ver `HISTORICO.md`, "O Instinto de Defesa dos MVPs".
+
 - **Reflexo em geral** (`battle_calc_return_damage`, `battle.cpp:6816`, e o
   `CR_REFLECTSHIELD` em `battle.cpp:5118`): o dano refletido é calculado a
   partir do dano que o alvo **já tomou reduzido**, e entregue direto ao

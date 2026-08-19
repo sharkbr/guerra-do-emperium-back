@@ -41,6 +41,8 @@
 #include "pet.hpp"
 #include "quest.hpp"
 
+#include <custom/habilidade_proibida.hpp>
+
 using namespace rathena;
 
 #define ACTIVE_AI_RANGE 4	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
@@ -4298,6 +4300,14 @@ bool mobskill_use(mob_data *md, t_tick tick, int32 event, int64 damage)
 
 		if (i == ms.size())
 			i = 0;
+
+		// Guerra do Emperium: ha mapa em que uma habilidade de monstro e
+		// proibida (hoje o Instinto de Defesa no Corredor Fantasma). Sair
+		// aqui, ANTES de qualquer condicao, faz o monstro se comportar como
+		// se a linha nao existisse: sem lancamento, sem animacao e sem gastar
+		// a recarga. Ver src/custom/habilidade_proibida.hpp.
+		if (habilidade_de_monstro_proibida(md, ms[i]->skill_id))
+			continue;
 
 		if (DIFF_TICK(tick, md->skilldelay[i]) < 0)
 			continue;
