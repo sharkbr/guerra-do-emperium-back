@@ -2056,6 +2056,86 @@ Duas coisas para quando a decisão vier, as duas medidas:
   Óculos Poring (19118), que entrou nesta mesma leva no Ocleiro — ou seja o
   conjunto Poring está a meio caminho, e é a caixa (ou as botas) que o fecha.
 
+**Em 2026-08-18 (tarde) a mesma decisão apareceu de novo, e com mais dois.** O
+segundo pedido do dia trouxe o **Cubo Sombrio de Classe (23115)** e a **Caixa
+de Cubos Refinadores (102592)**, os dois `Usable`/`Container` e sem
+`Locations:`. O dono decidiu deixá-los de fora também, pelo mesmo motivo — e
+agora são **três** caixas esperando a mesma decisão, que é a mesma para as
+três: *onde vende consumível?*
+
+- **23115 Cubo Sombrio de Classe** — existe inteiro no vendor
+  (`Class_Shadow_Cube`, `db/re/item_db_usable.yml`), com nome em português e
+  arte 4/4. Entrega **um** equipamento sombrio sorteado de uma lista de
+  algumas dezenas (`IG_CLASS_SHADOW_CUBE`, `db/re/item_group_db.yml`).
+- **102592 Caixa de Cubos Refinadores** — **não existe no servidor**; entraria
+  como placeholder. Entrega 1 Cubo de Refino sorteado entre sete (Temporal,
+  Memorável, OS, Geffen, Mora, Brasilis e Wolfchev), segundo a descrição do
+  bRO.
+
+As três a 1 zeny numa vitrine são fonte infinita do que entregam. As saídas
+que já apareceram, para quando a decisão vier: a **Tranqueiras** é a única loja
+do quarteirão que não é por slot (e cobra o `Buy` do `item_db`, não 1 zeny), ou
+uma barraca nova só de caixas.
+
+---
+
+## 1y2. Os 29 itens da TARDE de 2026-08-18 nas lojas de Prontera — falta o deploy
+
+O que foi feito e por quê está no `HISTORICO.md`, "Vinte e nove itens em sete
+vitrines, e o número que existia dos dois lados". Aqui fica **só o que falta**.
+
+**Isto é uma segunda leva, não a mesma da §1y.** As duas são do mesmo dia e
+mexem nos mesmos arquivos, e as duas estão no mesmo ponto: testadas em jogo,
+com o patch no ar, esperando o mesmo `implanta.sh`.
+
+### Estado em 2026-08-18, depois do teste em jogo
+
+O dono conferiu as sete vitrines em jogo e deu por bom.
+
+| | |
+|---|---|
+| `@reloaditemdb` + `@reloadscript` | **feitos** |
+| as sete vitrines em jogo | **conferidas pelo dono** |
+| patch **0007** | **no ar** — 13 arquivos, 2,48 MB, sha `bee86d16…`, conferido por HTTP |
+| commit | **feito** |
+| deploy | **FALTA** — é o único passo que sobra |
+
+### O que falta: uma linha, e ela sai do Mac
+
+```
+ferramentas/implanta.sh
+```
+
+**Não sai desta máquina:** a chave do Windows é `ragnarok` e o
+`atualiza_servidor.sh` exige root (`CLAUDE.md` §5). Não há nada a preparar — o
+que ele leva já está no GitHub:
+
+- `npc/guerra/mercado_contemporaneo.txt` — as sete linhas de `shop`;
+- `db/guerra/item_db.yml` — a sexta leva de placeholders (28025 e 16074);
+- `db/guerra/item_db_lojas.yml` — regerado, 1665 itens a `Buy: 1`;
+- `db/re/item_db_equip.yml` — os cinco `Name` que estavam em inglês.
+
+**Enquanto o deploy não sai, a produção não tem nenhum dos 29** — e o patch
+0007, que já está no ar, só resolve a metade de cliente: quem baixá-lo hoje
+recebe o nome e o ícone dos sete itens novos, mas as vitrines de lá continuam
+sem eles. As duas metades só ficam de acordo depois do `implanta.sh`.
+
+**E cuidado com o gatilho de restart:** se alguém der `git pull` na produção por
+fora para publicar outra coisa, o `implanta.sh` seguinte acha `rathena/` sem
+mudança e **não reinicia** — o disco atualiza e o processo vivo fica com a
+configuração velha, sem nada no log (`CLAUDE.md` §5).
+
+**A §1y (a leva da manhã) precisa do mesmo deploy.** Um `implanta.sh` fecha as
+duas.
+
+### Uma divergência que fica registrada, e não se conserta pelo servidor
+
+A **Cauda Arco-Íris (26163)** é `Slots: 1` no nosso `item_db` **e** no bRO, e o
+`itemInfo.lua` deste cliente de 2021 diz **2**. Na tela o nome sai com `[2]` e
+a janela de encaixe de carta abre com uma cova só. Não veio desta leva; quem
+desenha o nome é o cliente (regra 4.9). Fica assim até alguém decidir mexer na
+entrada de cliente — e aí é `instala_item.py`, com patch atrás.
+
 ---
 
 ## 1z. Os cinco martelos, o drop de mapa e o encantamento (2026-08-18)

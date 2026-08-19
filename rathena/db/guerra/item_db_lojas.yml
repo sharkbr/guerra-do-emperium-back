@@ -52,6 +52,12 @@ Body:
     Buy: 1                # Edge
   - Id: 1328
     Buy: 1                # Blut_Axe
+  - Id: 1670
+    Buy: 1                # RWC_Memory_Staff
+  - Id: 1672
+    Buy: 1                # Safety_Rod
+  - Id: 1682
+    Buy: 1                # Shadow_Staff
   - Id: 1940
     Buy: 1                # Trumpet_Shell
   - Id: 1993
@@ -1494,12 +1500,18 @@ Body:
     Buy: 1                # C_Somtam
   - Id: 15954
     Buy: 1                # C_Wichienmaat_Bangkaew
+  - Id: 16026
+    Buy: 1                # RWC_Memory_Mace
+  - Id: 16074
+    Buy: 1                # Cosmic_Hammer
   - Id: 16082
     Buy: 1                # Blut_Mace
   - Id: 18171
     Buy: 1                # Blut_Bow
   - Id: 18508
     Buy: 1                # Garuda_Hat
+  - Id: 18609
+    Buy: 1                # Dark_Blindfold_
   - Id: 18728
     Buy: 1                # Egir_Helm
   - Id: 18740
@@ -1520,6 +1532,10 @@ Body:
     Buy: 1                # Magicstone_Of_Grace
   - Id: 19118
     Buy: 1                # Poring_Sunglasses_K_
+  - Id: 19241
+    Buy: 1                # Magical_Booster_K
+  - Id: 19245
+    Buy: 1                # Crimson_Booster
   - Id: 19262
     Buy: 1                # Jirant_Circlet
   - Id: 19272
@@ -1628,6 +1644,8 @@ Body:
     Buy: 1                # Manteau_Of_Mistic_Froz
   - Id: 20798
     Buy: 1                # GrimReaper_Protection
+  - Id: 20904
+    Buy: 1                # Etran_Shirt_BR
   - Id: 20925
     Buy: 1                # Commander_manteau_J
   - Id: 20952
@@ -1636,6 +1654,8 @@ Body:
     Buy: 1                # Scientist_Mantle
   - Id: 20991
     Buy: 1                # Fairy_Of_Eden
+  - Id: 20993
+    Buy: 1                # Avoidance_Cape
   - Id: 21051
     Buy: 1                # Volar
   - Id: 21053
@@ -1664,8 +1684,14 @@ Body:
     Buy: 1                # Fluffy_FishShoes
   - Id: 22225
     Buy: 1                # Shoes_Of_Punishment_
+  - Id: 22243
+    Buy: 1                # Mamaragan
   - Id: 26141
     Buy: 1                # Blut_Staff
+  - Id: 26150
+    Buy: 1                # Variant_Foxtail
+  - Id: 26163
+    Buy: 1                # Rainbow_Foxtail
   - Id: 26206
     Buy: 1                # Blut_Whip
   - Id: 27012
@@ -2070,6 +2096,8 @@ Body:
     Buy: 1                # Isaac_Card
   - Id: 27396
     Buy: 1                # S_Issac_Card
+  - Id: 28025
+    Buy: 1                # Kingly_Katar
   - Id: 28033
     Buy: 1                # Blut_Katar
   - Id: 28245
@@ -2080,6 +2108,10 @@ Body:
     Buy: 1                # Blut_Shotgun
   - Id: 28248
     Buy: 1                # Blut_Grenade_Launcher
+  - Id: 28251
+    Buy: 1                # Variant_Shotgun
+  - Id: 28252
+    Buy: 1                # Variant_Launcher
   - Id: 28321
     Buy: 1                # Falconer_Claw
   - Id: 28322
@@ -2108,8 +2140,12 @@ Body:
     Buy: 1                # Valkyrie_Drop
   - Id: 28572
     Buy: 1                # Celine_Brooch_BR
+  - Id: 28596
+    Buy: 1                # Toy_Ring
   - Id: 28598
     Buy: 1                # Supplement_Part_Chip
+  - Id: 28617
+    Buy: 1                # Demon_Hunting_Bible_BR
   - Id: 28739
     Buy: 1                # Lacma_R
   - Id: 28746
@@ -2118,6 +2154,10 @@ Body:
     Buy: 1                # Mad_Bunny_K
   - Id: 28910
     Buy: 1                # Imuke_Upper_Shield
+  - Id: 28946
+    Buy: 1                # Bloody_Knight_Shield__
+  - Id: 28953
+    Buy: 1                # Poring_B_Shield
   - Id: 28962
     Buy: 1                # Haurvatat
   - Id: 29148
@@ -2272,10 +2312,16 @@ Body:
     Buy: 1                # C_Cor_Core_Headset
   - Id: 31954
     Buy: 1                # C_Vassalage_Necklace
+  - Id: 32007
+    Buy: 1                # Jirant_Spear
   - Id: 32014
     Buy: 1                # Blut_Spear
   - Id: 32100
     Buy: 1                # Blut_Guitar
+  - Id: 32105
+    Buy: 1                # Variant_Viollin
+  - Id: 32106
+    Buy: 1                # Variant_Blade_Whip
   - Id: 32206
     Buy: 1                # Prta_Mil_Glove
   - Id: 32258
@@ -3098,6 +3144,8 @@ Body:
     Buy: 1                # C_Dr_Eggman_Mask
   - Id: 450120
     Buy: 1                # Sturdy_Armor_Guerra
+  - Id: 450132
+    Buy: 1                # Magical_Cloth
   - Id: 450179
     Buy: 1                # Celine_Dress
   - Id: 450216
@@ -3118,6 +3166,8 @@ Body:
     Buy: 1                # Robe_of_Devotee
   - Id: 450338
     Buy: 1                # Screaming_Ghoost_Party
+  - Id: 460003
+    Buy: 1                # Feather_Shield
   - Id: 460023
     Buy: 1                # Shield_Of_Phoenix
   - Id: 460025
@@ -3308,12 +3358,20 @@ Body:
     Buy: 1                # Orc_Dagger_BR
   - Id: 510155
     Buy: 1                # Ceuci
+  - Id: 520003
+    Buy: 1                # Scythe_Of_Ice_Flame
+  - Id: 540018
+    Buy: 1                # Military_Law_Book
   - Id: 550018
     Buy: 1                # Phoenix_Foxtail
   - Id: 550021
     Buy: 1                # Deus_Ex_Machina_JP
+  - Id: 550095
+    Buy: 1                # Ancient_Royal_Scepter
   - Id: 570070
     Buy: 1                # Erhu_BR
+  - Id: 590014
+    Buy: 1                # Meer_Sceptre
   - Id: 700069
     Buy: 1                # Triangle_Disaster
   - Id: 700080

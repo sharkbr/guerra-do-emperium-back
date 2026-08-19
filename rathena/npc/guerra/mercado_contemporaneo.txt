@@ -401,6 +401,93 @@
 //= itemInfo.lua e arte de item moram em C:\GuerraDoEmperium\
 //= cliente\ e so chegam ao jogador por PATCH. So a linha da loja
 //= e o item_db andam pelo git.
+//= ------------------------------------------------------------
+//= RODADA DE 2026-08-18 (TARDE): 29 ITENS EM SETE DAS NOVE LOJAS
+//=
+//= A segunda leva do mesmo dia, e a maior que o Senhor das Armas
+//= ja recebeu de uma vez - ele sozinho levou 18 dos 29 e passou
+//= de 32 para 50 itens. Onde caiu cada peca:
+//=
+//=   Senhor das Armas       +18   tres cajados, tres do RWC, os
+//=                                cinco Topazio, dois livros
+//=   Ocleiro                 +3   dois fones e uma venda
+//=   Escudeiro               +3
+//=   Capeiro                 +2
+//=   Lorde das Armaduras     +1
+//=   Sapateiro               +1
+//=   Acessorista             +1
+//=
+//= QUATRO DOS 33 NUMEROS PEDIDOS NAO VIRARAM ITEM NOVO, e nenhum
+//= por falha:
+//=
+//=   13092  Adaga do RWC    ja estavam no Senhor das Armas desde
+//=   28739  Lacma           2026-08-16; foram pedidos de novo
+//=   23115  Cubo Sombrio de Classe      `Usable`/`Container`
+//=   102592 Caixa de Cubos Refinadores  idem
+//=
+//= OS DOIS ULTIMOS NAO TEM `Locations:` NENHUM, e as treze lojas
+//= do quarteirao sao todas por slot: nenhuma serve. Ficaram de
+//= fora por decisao do dono, pelo mesmo caminho da Caixa do
+//= ArchAngeling (23073) da leva da manha. Ver PENDENCIAS.md.
+//=
+//= UM ITEM TROCOU DE NUMERO, E A TROCA FOI DECISAO DO DONO. O
+//= pedido dizia "Escudo encouracado 28943", mas o 28943 e o
+//= GRIMORIO PROIBIDO - quem se chama Escudo Encouracado e o 28953
+//= (Poring_B_Shield), um digito ao lado. Os dois sao `Left_Hand`,
+//= os dois estao inteiros no servidor e no cliente, e os dois
+//= iriam para o Escudeiro; entrou o 28953, pelo NOME. E a terceira
+//= vez que um numero do pedido erra por um digito (as duas da
+//= manha foram 47007 -> 470007 e 170106 -> 470106) e a primeira em
+//= que o numero errado TAMBEM existia - por isso esta foi para o
+//= dono em vez de ser resolvida na leitura.
+//=
+//= DE NOVO FOI O `Locations:` QUEM DECIDIU A LOJA (regra 4.14), e
+//= de novo o nome teria errado em tres:
+//=
+//=   26163  "Cauda Arco-Iris"        e ARMA, nao capa nem cauda
+//=   26150  "Cauda de Gato Topazio"  idem
+//=   22243  "Mamaragan"              e CALCADO -> Sapateiro
+//=
+//= Nao houve override nesta rodada: nas pecas conferidas contra a
+//= linha "Tipo:"/"Equipa em:" da descricao do bRO, o nosso item_db
+//= e o bRO concordaram.
+//=
+//= O QUE CUSTOU TRABALHO foram oito pecas, nao 29:
+//=
+//=   7 estavam fora do itemInfo.lua      -> completa_iteminfo.py
+//=   3 estavam sem os 4 arquivos de arte -> instala_visual.py
+//=   2 nao existiam no servidor          -> db/guerra/item_db.yml
+//=   5 estavam com o `Name` em INGLES no servidor
+//=                                       -> nomes_pt_item_db.py
+//=
+//= (As contas se sobrepoem: o Manual Estelar, a Maca de Esculapio
+//= e o Mastro da Princesa contam em tres linhas cada um.)
+//=
+//= AS DUAS QUE NAO EXISTIAM viraram a SEXTA LEVA DE PLACEHOLDERS
+//= do db/guerra/item_db.yml: Katares do Monarca (28025) e Martelo
+//= Cosmico (16074). O katar entra numa familia que o vendor ja tem
+//= INTEIRA sob o prefixo `Kingly_` - armadura, bota, manto e anel
+//= do Monarca, as quatro de nivel 130, o mesmo dele.
+//=
+//= O BURACO DE REVENDA DESTA LEVA ERA GRANDE. O `--conferir` do
+//= zera_revenda_das_lojas.py acusou lucro por clique em 15 dos 29,
+//= e um deles nao era de 9 zeny - o FONE DANIFICADO (19245)
+//= revendia por 1.500.000, ou seja 1.499.999 z por clique, em
+//= laco. Fechado pelo caminho de sempre: `Buy: 1` por override em
+//= db/guerra/item_db_lojas.yml, regerado para 1665 itens.
+//=
+//= UMA DIVERGENCIA DE COVA FICA REGISTRADA, e ela e do CLIENTE: a
+//= Cauda Arco-Iris (26163) e `Slots: 1` no nosso item_db E no bRO,
+//= mas o itemInfo.lua deste cliente de 2021 diz 2. O nome aparece
+//= com "[2]" e a janela de encaixe de carta abre com uma cova so.
+//= Nao se conserta pelo servidor - quem desenha o nome e o cliente
+//= (regra 4.9) -, e nao veio desta leva.
+//=
+//= METADE DISTO E CLIENTE E NAO VAI PELO DEPLOY (regra 4.18):
+//= itemInfo.lua e arte de item moram em C:\GuerraDoEmperium\
+//= cliente\ e so chegam ao jogador por PATCH. So a linha da loja
+//= e o item_db andam pelo git.
+//=
 //= erro de comando desconhecido e a loja nao sobe.
 //=
 //============================================================
@@ -690,6 +777,18 @@ OnInit:
 // RODADA DE 2026-08-18: entrou UM, e a loja foi de 29 para 30.
 // Ver o cabecalho do arquivo para o porque de cada uma.
 //   + 19118   Super Oculos Poring      [1]  (View 954)
+// RODADA DE 2026-08-18 (TARDE): entraram 3, e a loja foi de 30
+// para 33. Os tres sao `Head_Mid` no item_db, que e o que decide
+// (regra 4.14), e os tres ja estavam inteiros - nome em portugues
+// e 8 de 8 arquivos de arte.
+//   +  19245  Fones Danificados       [1]  (View 1355)
+//   +  18609  Venda Sombria           [1]  (View 187)
+//   +  19241  Fones Amplificadores    [1]  (View 873)
+//
+// O FONE DANIFICADO ERA O MAIOR BURACO DE REVENDA DESTA LEVA:
+// revendia por 1.500.000 a 1 zeny de vitrine, ou seja 1.499.999 z
+// por clique. Fechado com o resto pelo `Buy: 1` de
+// db/guerra/item_db_lojas.yml.
 prontera,155,173,4	script	Ocleiro	1_F_MERCHANT_01,{
 	callshop "Ocleiro#loja",0;
 	end;
@@ -698,7 +797,7 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:1,410065:1,410058:1,410028:1,410024:1,19437:1,19380:1,19495:1,410186:1,410130:1,410110:1,410097:1,410009:1,410004:1,19452:1,5592:1,19085:1,19118:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:1,410065:1,410058:1,410028:1,410024:1,19437:1,19380:1,19495:1,410186:1,410130:1,410110:1,410097:1,410009:1,410004:1,19452:1,5592:1,19085:1,19118:1,19245:1,18609:1,19241:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 //
@@ -840,6 +939,40 @@ OnInit:
 //   + 1940    Concha Musical          [1]
 //   + 570070  Erhu                    [2]
 //   + 1993    Arame Farpado           [1]
+// RODADA DE 2026-08-18 (TARDE): entraram 18, e a loja foi de 32
+// para 50 - a maior leva que ela ja recebeu. Ver o cabecalho do
+// arquivo para o porque de cada uma.
+//   +  28617  Biblia Sagrada          [2]  livro
+//   + 540018  Manual Estelar          [1]  livro
+//   +  28025  Katares do Monarca      [1]  placeholder
+//   +  26163  Cauda Arco-Iris         [1]
+//   +  26150  Cauda de Gato Topazio   [1]
+//   +  32106  Chicote Topazio         [1]
+//   +  28251  Espingarda Topazio      [1]
+//   +  28252  Lanca-Granadas Topazio  [1]
+//   +  32105  Violino Topazio         [1]
+//   +   1682  Cajado da Magia Oculta  [2]
+//   +   1672  Cajado de Combate       [1]
+//   +   1670  Cajado do RWC           [1]
+//   + 520003  Foice de Fogo Vivo      [1]
+//   + 550095  Maca de Esculapio       [1]
+//   +  16074  Martelo Cosmico         [2]  placeholder
+//   + 590014  Mastro da Princesa      [1]
+//   +  16026  Maca do RWC             [1]
+//   +  32007  Lanca Soberana          [1]
+//
+// AS CINCO TOPAZIO SAO UMA FAMILIA (`Variant_*`) e as cinco sao
+// citadas pelos MESMOS tres conjuntos do db/re/item_combos.yml -
+// Heavenly_Order, Heavenly_Order_ e a Carta Dop do Labirinto.
+// Nenhuma das outras pecas desses conjuntos esta a venda aqui.
+//
+// AS TRES DO RWC (1670, 16026 e a Adaga 13092, que ja estava) NAO
+// fecham conjunto entre si: os conjuntos delas pedem os aneis e
+// pingentes RWC 2012, que nao estao em loja nossa.
+//
+// QUATRO PRECISARAM DE ENTRADA DE CLIENTE (28617, 540018, 550095
+// e 590014), e tres desses quatro tambem estavam sem os 4
+// arquivos de arte - apareceriam sem nome e com caixa modal.
 prontera,151,167,4	script	Senhor das Armas	1_F_MERCHANT_02,{
 	callshop "Senhor das Armas#loja",0;
 	end;
@@ -848,7 +981,7 @@ OnInit:
 	placadevenda "Armas";
 	end;
 }
--	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -872,6 +1005,10 @@ OnInit:
 //   + 15383   Sobretudo do Sr do Tempo[1]  vinculado - ver abaixo
 //   + 450251  Traje de Assalto        [1]
 //   + 450287  Vestes de Bispo         [1]
+// RODADA DE 2026-08-18 (TARDE): entrou 1, e a loja foi a 16.
+//   + 450132  Robe Magico             [1]
+// Ele revendia por 100.000 antes do `Buy: 1` - o segundo maior
+// buraco da leva, atras so do Fone Danificado.
 prontera,155,167,4	script	Lorde das Armaduras	1_M_MERCHANT,{
 	callshop "Lorde das Armaduras#loja",0;
 	end;
@@ -880,7 +1017,7 @@ OnInit:
 	placadevenda "Armaduras";
 	end;
 }
--	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1,450252:1,15421:1,450224:1,15383:1,450251:1,450287:1
+-	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1,450252:1,15421:1,450224:1,15383:1,450251:1,450287:1,450132:1
 
 // Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
 // proximo e o 2185 (Refletor Magico / Magic Reflect), que e
@@ -898,6 +1035,16 @@ OnInit:
 // Sapatos da Prece Lapine e a carta do Bispo Caido) e o Protetor Sagrado
 // por CINCO - nenhuma das outras pecas desses conjuntos esta a venda neste
 // mercado, entao ninguem fecha conjunto so comprando aqui.
+// RODADA DE 2026-08-18 (TARDE): entraram 3, e a loja foi de 11
+// para 14.
+//   + 460003  Escudo de Penas         [1]
+//   +  28953  Escudo Encouracado      [1]  <- ver o cabecalho
+//   +  28946  Sanguinario Purificado  [1]
+//
+// O 28953 ESTA AQUI NO LUGAR DO 28943 QUE O PEDIDO TRAZIA, por
+// decisao do dono: o nome pedido era "Escudo encouracado", e esse
+// e o 28953; o 28943 e o Grimorio Proibido. O caso inteiro esta no
+// cabecalho do arquivo.
 prontera,159,167,4	script	Escudeiro	1_F_MERCHANT_01,{
 	callshop "Escudeiro#loja",0;
 	end;
@@ -906,7 +1053,7 @@ OnInit:
 	placadevenda "Escudos";
 	end;
 }
--	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1
+-	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
@@ -996,6 +1143,14 @@ OnInit:
 // RODADA DE 2026-08-18: entrou UM, e a loja foi de 23 para 24.
 // Ver o cabecalho do arquivo para o porque de cada uma.
 //   + 480023  Sobretudo do Mestre     [1]  e CAPA, nao armadura
+// RODADA DE 2026-08-18 (TARDE): entraram 2, e a loja foi de 24
+// para 26. As duas sao `Garment` de status, nao cosmetico, e
+// nenhuma tem `View` - nao gastam slot de manto (o teto de 120
+// deste cliente, ver CLAUDE.md secao 5).
+//   +  20904  Bata de Etran           [1]  estava sem entrada de
+//                                          cliente e com o `Name`
+//                                          em ingles no servidor
+//   +  20993  Capa Ajeitadinha        [1]
 prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
@@ -1004,7 +1159,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
@@ -1040,6 +1195,10 @@ OnInit:
 //   + 470026  Sapatos de Porquinho    [1]
 //   + 470057  Sapatos do Perseguidor  [1]
 //   + 22224   Sapatos Fofinhos        [1]  placeholder
+// RODADA DE 2026-08-18 (TARDE): entrou 1, e a loja foi a 25.
+//   +  22243  Mamaragan                    sem cova
+// O nome nao diz nada sobre o slot; quem decidiu foi o `Shoes` do
+// item_db (regra 4.14).
 prontera,155,161,4	script	Sapateiro	1_F_MERCHANT_02,{
 	callshop "Sapateiro#loja",0;
 	end;
@@ -1048,7 +1207,7 @@ OnInit:
 	placadevenda "Sapatos";
 	end;
 }
--	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1,470037:1,470061:1,470007:1,22134:1,470033:1,470004:1,470028:1,22178:1,22191:1,22225:1,470106:1,470026:1,470057:1,22224:1
+-	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1,470037:1,470061:1,470007:1,22134:1,470033:1,470004:1,470028:1,22178:1,22191:1,22225:1,470106:1,470026:1,470057:1,22224:1,22243:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
@@ -1098,6 +1257,8 @@ OnInit:
 // RODADA DE 2026-08-18: entrou UM, e a loja foi de 49 para 50.
 // Ver o cabecalho do arquivo para o porque de cada uma.
 //   + 490038  Anel do Sexto Sentido   [1]
+// RODADA DE 2026-08-18 (TARDE): entrou 1, e a loja foi a 51.
+//   +  28596  Anel de Brinquedo       [1]  `Both_Accessory`
 prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
@@ -1106,4 +1267,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1

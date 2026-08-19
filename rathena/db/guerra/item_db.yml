@@ -2560,3 +2560,149 @@ Body:
     #      chance de autoconjura-la nv.3 no ataque fisico a distancia.
     #      Nenhuma dessas cartas esta em loja nossa - mesmo motivo do 700102.
 
+
+# -------------------------------------------------------------------------
+# SEXTA LEVA DE PLACEHOLDERS - 2026-08-18 (tarde)
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das cinco de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub` (`estado_item.py --id <n> --descricao`).
+#
+# Os dois vieram do segundo pedido de 2026-08-18 para as lojas de Prontera.
+# Dos 33 itens daquela lista foram os UNICOS dois que faltavam no servidor E
+# tinham slot de equipamento. Um terceiro tambem faltava - a Caixa de Cubos
+# Refinadores (102592) -, mas e `Usable`/`Container`, nao tem `Locations:`
+# nenhum e por isso nao cabe em loja nossa: ficou de fora por decisao do
+# dono, com o Cubo Sombrio de Classe (23115). Ver PENDENCIAS.md.
+#
+# OS DOIS `AegisName` SAO PALPITE, como o dos arcos da quinta leva: o
+# oficial nao esta em tabela nenhuma que alcancamos, e o
+# `identifiedResourceName` do bRO e coreano nos dois. O do katar tem um
+# apoio que o do martelo nao tem: o vendor ja traz a familia MONARCA inteira
+# sob o prefixo `Kingly_` - Kingly_Armor (450141), Kingly_Boots (470046),
+# Kingly_Manteau (480051) e Kingly_Ring (490042) -, e as quatro sao
+# `EquipLevelMin: 130`, o mesmo nivel do katar. Os dois nomes foram
+# conferidos como livres no item_db antes de usar.
+#
+# NENHUM DOS DOIS ESTA EM CONJUNTO, e isso foi conferido e nao suposto: os
+# quatro `- Combos:` da familia Kingly_ em db/re/item_combos.yml sao so
+# entre as quatro pecas que ja existem (armadura+anel, armadura+bota+manto,
+# manto+anel, bota+anel). Nenhum cita katar. Nao ha o que espelhar nem o que
+# derrubar.
+#
+# A DUPLICACAO DE CRITICO DO KATAR NAO ESTA NO SCRIPT, e nao e esquecimento.
+# A linha "Duplica a chance de causar um ataque critico" da descricao do bRO
+# descreve o comportamento NATIVO do tipo Katar no rAthena - o
+# `status->cri *= 2` de src/map/status.cpp:6170, que vale para toda arma
+# W_KATAR. Repeti-la como `bonus` dobraria de novo.
+#
+# OS NOMES DE HABILIDADE DAS DUAS DESCRICOES foram resolvidos pelo
+# skillinfolist.lub DESTE cliente (regra 4.12), e nao de memoria:
+#   Laminas de Loki        GC_ROLLINGCUTTER
+#   Castigo de Loki        GC_CROSSRIPPERSLASHER
+#   Laminas Retalhadoras   GC_CROSSIMPACT
+#   Impacto de Tyr         KN_BOWLINGBASH
+#   Cavalo-de-Pau          MC_CARTREVOLUTION
+#   Usar Carrinho          MC_PUSHCART
+#   Pericia com Espada     SM_SWORD
+#   Pericia em Armamento   BS_WEAPONRESEARCH
+#   Punho de Ferro         MO_IRONHAND   (la esta no plural, "Punhos de
+#                                        Ferro" - e a unica das oito que
+#                                        nao casa letra por letra)
+# Duas linhas nao casaram com tabela nenhuma e viraram TODO abaixo.
+
+  - Id: 28025
+    AegisName: Kingly_Katar
+    Name: "Katares do Monarca"
+    # Molde: o 28026 (Neev_Various_Jur), o vizinho imediato de ID - mesmo
+    # SubType, mesmo peso de katar de nivel 4, mesma forma de Jobs/Classes.
+    # `Buy: 20` como o resto das nossas armas: quem decide o preco na
+    # vitrine e o db/guerra/item_db_lojas.yml, que importa depois deste
+    # arquivo e poe `Buy: 1` (regra 4.16).
+    Type: Weapon
+    SubType: Katar
+    Buy: 20
+    Weight: 2800
+    Attack: 150
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",(.@r/2);
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",(.@r/2)*2;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",(.@r/2)*3;
+      if (.@r>=7)
+         bonus bAspdRate,5;
+      if (.@r>=9)
+         bonus bAspdRate,5;
+    # TODO efeito nao implementado: "Refino +12 ou mais: Mantem
+    #      [Investigar] ativo." Duas razoes, e as duas valem sozinhas:
+    #      nao ha `bonus` no rAthena que mantenha uma habilidade ligada
+    #      (mesmo caso do "Mantem [Espalhar Dano] ativo" do 28248, mais
+    #      acima), e "Investigar" nao existe na tabela de habilidades
+    #      deste cliente - o `MO_INVESTIGATE` do rAthena chama-se aqui
+    #      "Impacto Psiquico". Sem saber que habilidade e, nem um
+    #      src/custom/ resolveria.
+
+  - Id: 16074
+    AegisName: Cosmic_Hammer
+    Name: "Martelo Cósmico"
+    # Molde: o 16075 (Rebeginer_NC_Mace), o vizinho imediato de ID, de onde
+    # vieram a forma de Jobs/Classes e o `bonus bUnbreakableWeapon` que
+    # traduz "Indestrutivel em batalha".
+    # ATQ 1 NAO E ERRO DE LEITURA: e o que a descricao do bRO traz, e faz
+    # sentido para uma arma cujo ataque inteiro vem das habilidades
+    # aprendidas e do refino.
+    Type: Weapon
+    SubType: Mace
+    Buy: 20
+    Weight: 20000
+    Attack: 1
+    Range: 1
+    Slots: 2
+    Jobs:
+      SuperNovice: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 110
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      skill "KN_BOWLINGBASH",getskilllv("SM_SWORD");
+      if (getskilllv("MC_PUSHCART")>=10)
+         skill "MC_CARTREVOLUTION",1;
+      bonus bBaseAtk,5*getskilllv("BS_WEAPONRESEARCH");
+      bonus bBaseAtk,30*getskilllv("MO_IRONHAND");
+      bonus bBaseAtk,10*min(.@r,10);
+      if (readparam(bStr)>=108)
+         bonus bUseSPrate,-10;
+      if (readparam(bStr)>=120)
+         bonus bUseSPrate,-20;
+    # TODO efeito nao implementado: "A cada nivel de [Pericia com Machado e
+    #      Espada]: ATQ +7. Precisao +5." Nao ha habilidade com esse nome no
+    #      skillinfolist.lub deste cliente - as cinco que trazem "Machado"
+    #      sao Brandir Machado, Forjar Machado, Maestria com Machados,
+    #      Pericia com Machado e Arremesso de Machado, e nenhuma menciona
+    #      espada. Provavelmente e habilidade de 4a classe posterior a
+    #      2021-11-03; inventar o SKID daria bonus fantasma (regra 4.12).
+    # NOTA: o `readparam(bStr)` acima le a FOR total, com equipamento, e a
+    #      descricao diz "FOR base". E o mesmo atalho que o proprio vendor
+    #      usa nos 40 e tantos itens que testam FOR base (procurar
+    #      `readparam(bStr)>=120` em db/re/item_db_equip.yml); nao ha
+    #      leitura de status base em script de item.

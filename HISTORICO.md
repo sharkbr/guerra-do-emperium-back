@@ -11629,3 +11629,135 @@ gerado em `C:\GuerraDoEmperium\cliente\`, e foi ao jogador como **patch 0006**,
 publicado no mesmo dia - um arquivo só, 3.454 bytes no zip. A metade de
 servidor (os cinco martelos e o `map_drops.yml`) continua dependendo do
 `implanta.sh`, que sai do Mac.
+
+---
+
+## Vinte e nove itens em sete vitrines, e o número que existia dos dois lados (2026-08-18)
+
+O segundo pedido do mesmo dia, e o mesmo formato: uma lista só, **33 números**
+com o nome ao lado, sem dizer quais lojas. Entraram **29** em sete das nove
+lojas do Mercado Contemporâneo. Dos quatro que sobraram, nenhum caiu por falha:
+dois já estavam à venda desde 2026-08-16 (a Adaga do RWC, 13092, e a Lacma,
+28739, as duas no Senhor das Armas) e dois são consumíveis sem slot, que o dono
+decidiu deixar de fora.
+
+### O Senhor das Armas recebeu 18 e quase dobrou
+
+| loja | entraram | ficou com |
+|---|---|---|
+| Senhor das Armas | 18 | 50 |
+| Ocleiro | 3 | 33 |
+| Escudeiro | 3 | 14 |
+| Capeiro | 2 | 26 |
+| Lorde das Armaduras | 1 | 16 |
+| Sapateiro | 1 | 25 |
+| Acessorista | 1 | 51 |
+
+De novo foi o `Locations:` quem decidiu (regra 4.14), e de novo o nome teria
+errado em três — as duas "Caudas" (26163 e 26150) são **arma** de mão direita,
+e o "Mamaragan" (22243) é **calçado**. Nenhum override foi preciso: nas peças
+conferidas contra a linha `Tipo:`/`Equipa em:` da descrição do bRO, o nosso
+`item_db` e o bRO concordaram.
+
+### O caso novo: o número errado também existia
+
+O pedido trazia **"Escudo encouraçado 28943"**, e as duas metades apontavam
+para itens diferentes:
+
+- o **28943** existe, e é o **Grimório Proibido**;
+- quem se chama **Escudo Encouraçado** é o **28953** (`Poring_B_Shield`).
+
+É a terceira vez que um número deste tipo de lista erra por um dígito — as duas
+da manhã foram `47007` → `470007` e `170106` → `470106` —, mas as duas
+anteriores se resolviam sozinhas: o número pedido **não existia**, então só
+havia um candidato. Aqui os dois existem, os dois são `Left_Hand`, os dois estão
+inteiros no servidor e no cliente e os dois iriam para o Escudeiro. Não há
+medição que desempate um pedido consigo mesmo, então foi ao dono: **entrou o
+28953, pelo nome.**
+
+### O trabalho estava em oito peças, não em 29
+
+| o que faltava | quantos | por onde |
+|---|---|---|
+| entrada no `itemInfo.lua` | 7 | `completa_iteminfo.py` |
+| os 4 arquivos de arte | 3 | `instala_visual.py` |
+| não existia no servidor | 2 | `db/guerra/item_db.yml` |
+| `Name` em inglês no servidor | 5 | `nomes_pt_item_db.py` |
+
+As contas se sobrepõem — o Manual Estelar (540018), a Maça de Esculápio
+(550095) e o Mastro da Princesa (590014) aparecem nas três primeiras linhas
+cada um. As outras 21 peças não custaram nada: o rAthena tinha, o cliente tinha
+em português, e o `valida_visual.py` aprovou antes de entrarem.
+
+### A sexta leva de placeholders: um katar e um martelo
+
+Os dois que não existiam no servidor viraram entrada nossa em
+`db/guerra/item_db.yml`, com os bônus lidos da descrição do bRO, como nas cinco
+levas anteriores:
+
+- **28025 Katares do Monarca** — katar, ATQ 150, nível 130. O `AegisName` é
+  palpite (`Kingly_Katar`), mas com um apoio que os arcos da quinta leva não
+  tiveram: o vendor já traz a família Monarca **inteira** sob o prefixo
+  `Kingly_` — armadura (450141), bota (470046), manto (480051) e anel (490042)
+  —, e as quatro são de nível 130, o mesmo dele. Os quatro `- Combos:` dessa
+  família só citam essas quatro peças: não há conjunto para espelhar nem para
+  derrubar.
+- **16074 Martelo Cósmico** — maça de Superaprendiz, ATQ 1, dois slots. O ATQ 1
+  não é erro de leitura: o ataque inteiro dele vem das habilidades aprendidas e
+  do refino.
+
+**A duplicação de crítico do katar ficou fora do script de propósito.** A linha
+*"Duplica a chance de causar um ataque crítico"* da descrição descreve o
+comportamento **nativo** do tipo `W_KATAR` no rAthena — o `status->cri *= 2` de
+`src/map/status.cpp:6170`, aplicado a toda arma katar. Repeti-la como `bonus`
+dobraria de novo.
+
+**Os nomes de habilidade saíram do `skillinfolist.lub` deste cliente** (regra
+4.12), não de memória: Lâminas de Loki é `GC_ROLLINGCUTTER`, Castigo de Loki é
+`GC_CROSSRIPPERSLASHER`, Lâminas Retalhadoras é `GC_CROSSIMPACT`, Impacto de
+Tyr é `KN_BOWLINGBASH`, Cavalo-de-Pau é `MC_CARTREVOLUTION`. Duas linhas não
+casaram com tabela nenhuma e viraram `# TODO` na própria entrada: *"Mantém
+[Investigar] ativo"* (e "Investigar" não é o `MO_INVESTIGATE`, que aqui se
+chama Impacto Psíquico) e *"a cada nível de [Perícia com Machado e Espada]"*,
+que não existe em nenhuma das cinco habilidades de machado deste cliente —
+provavelmente é de 4ª classe posterior a 2021-11-03.
+
+### O buraco de revenda desta leva era de 1,5 milhão por clique
+
+O `--conferir` do `zera_revenda_das_lojas.py` acusou lucro por clique em **15
+dos 29**, e um não era de 9 zeny: o **Fone Danificado (19245)** revendia por
+**1.500.000** com a vitrine a 1 zeny — 1.499.999 z por clique, em laço. O Robe
+Mágico (450132) e o Escudo de Penas (460003) vinham logo atrás, com 99.999 cada
+um.
+
+Fechado pelo caminho de sempre (regra 4.16): `Buy: 1` por override em
+`db/guerra/item_db_lojas.yml`, regerado pelo script para **1665 itens**. O
+`--conferir` depois disso responde *"nenhum item das três lojas revende por mais
+do que custa"*.
+
+Vale como confirmação do que a regra 4.16 previa: **item novo em vitrine de
+Prontera reabre o buraco calado**, e metade da leva o reabriu.
+
+### Uma divergência de cova, e ela é do cliente
+
+A **Cauda Arco-Íris (26163)** é `Slots: 1` no nosso `item_db` **e** no bRO, mas
+o `itemInfo.lua` deste cliente de 2021 diz **2**. O nome aparece com `[2]` e a
+janela de encaixe de carta abre com uma cova só. Não veio desta leva e não se
+conserta pelo servidor — quem desenha o nome é o cliente (regra 4.9). Fica
+registrado no cabeçalho do mercado.
+
+### Metade disto é cliente, e não vai pelo deploy
+
+Treze arquivos moram em `C:\GuerraDoEmperium\cliente\` e só chegam ao jogador
+por **patch** (regra 4.18): o `SystemEN\LuaFiles514\itemInfo.lua`, com as sete
+entradas novas, e os **12 arquivos de arte** dos três itens que estavam sem
+(`540018`, `550095`, `590014`) — dois `.spr`/`.act` de chão e dois `.bmp` de
+ícone cada. Sem o patch, esses três aparecem sem nome e com caixa modal para
+quem baixou o cliente antes. O que anda pelo git é só a linha das lojas, o
+`item_db` e o `item_db_lojas.yml`.
+
+O dono conferiu as sete vitrines em jogo no mesmo dia, e a metade de cliente
+foi ao jogador como **patch 0007** — 13 arquivos, 22,86 MB crus em 2,48 MB de
+zip, sha `bee86d16…`, conferido por HTTP depois de publicado. A metade de
+servidor continua dependendo do `implanta.sh`, que sai do Mac (`PENDENCIAS.md`
+§1y2) — e o mesmo deploy fecha a leva da manhã.

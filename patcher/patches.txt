@@ -18,3 +18,4 @@
 0004	0004-visual-de-gm-na-producao.zip	f11c5f276295c58935993ff856eafe6ff25c5cab28db9d1c694fce3c9be2e07d	850	Visual de GM na producao
 0005	0005-trinta-e-tres-itens-nas-lojas-de-pronter.zip	90ca76d512cc0e8d2d77357526cec9f71a197ba6218528c0011a4fc0959bb933	2644214	Trinta e tres itens nas lojas de Prontera
 0006	0006-encantamento-em-portugues.zip	a9ac2ef572503d48878884cca1e8ec93a5a35ea548dc163bee13a459c352f074	3454	Encantamento em portugues
+0007	0007-vinte-e-nove-itens-nas-lojas-de-prontera.zip	bee86d16e12378ae796db145dd20f667ec70c4fc08b11ef28f2b83123a080a44	2597914	Vinte e nove itens nas lojas de Prontera

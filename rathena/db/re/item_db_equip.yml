@@ -114678,7 +114678,7 @@ Body:
       bonus2 bSubRace,RC_Brute,10;
   - Id: 20904
     AegisName: Etran_Shirt_BR
-    Name: Etran Shirt
+    Name: "Bata de Etran"
     Type: Armor
     Weight: 150
     Slots: 1
@@ -148515,7 +148515,7 @@ Body:
       }
   - Id: 28617
     AegisName: Demon_Hunting_Bible_BR
-    Name: Holy Bible
+    Name: "Bíblia Sagrada"
     Type: Weapon
     SubType: Book
     Weight: 500
@@ -238790,7 +238790,7 @@ Body:
       }
   - Id: 540018
     AegisName: Military_Law_Book
-    Name: Military Law Book
+    Name: "Manual Estelar"
     Type: Weapon
     SubType: Book
     Buy: 20
@@ -245227,7 +245227,7 @@ Body:
       }
   - Id: 550095
     AegisName: Ancient_Royal_Scepter
-    Name: Ancient Royal Scepter
+    Name: "Maça de Esculápio"
     Type: Weapon
     SubType: Mace
     Weight: 100
@@ -253209,7 +253209,7 @@ Body:
       }
   - Id: 590014
     AegisName: Meer_Sceptre
-    Name: Sceptre of Exiled Kingdom
+    Name: "Mastro da Princesa"
     Type: Weapon
     SubType: Mace
     Buy: 20
