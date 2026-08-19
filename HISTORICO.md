@@ -11970,8 +11970,14 @@ também, são duas linhas na mesma tabela.
 ### O que recarrega
 
 **Nada** — é código. Exige recompilar o map-server (e portanto pará-lo antes de
-linkar), e a produção só recebe pelo `implanta.sh`. **Conferido em jogo pelo
-dono em 2026-08-18**, depois da recompilação: o reflexo não sai mais na sala.
+linkar), e a produção só recebe pelo `implanta.sh`.
+
+**Em 2026-08-18 ainda NÃO tinha rodado em lugar nenhum**, e vale registrar como
+a conferência se faz, porque a sonda é de graça e desfez um "funcionando" dito
+de boa-fé: o `map-server.exe` do dev era de **2026-08-17 21:57** e o processo no
+ar tinha subido às **01:54** daquele exe — ou seja, mais velhos que o `mob.obj`
+recém-compilado. **Binário mais velho que o `.obj` é a prova de que o link não
+aconteceu**, e nenhuma observação em jogo antes disso é sobre este código.
 
 Tudo isto é **servidor** (`src/`): nada mora em `C:\GuerraDoEmperium\cliente\`,
 então **não há patch a publicar** — vai ao jogador pelo deploy, que sai do Mac

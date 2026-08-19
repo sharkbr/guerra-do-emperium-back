@@ -470,10 +470,25 @@ de chance — dá quase 35% de acontecer por acaso. Contar umas dez antes de
 suspeitar. Se em dez não vier nenhuma, o suspeito é o nome do evento na linha de
 spawn, e a armadilha está no `CLAUDE.md` §5.
 
-**3. O Instinto de Defesa foi proibido na sala em 2026-08-18 — conferido em
-jogo aqui, falta chegar à produção.** O que foi feito está no `HISTORICO.md`,
-"O Instinto de Defesa dos MVPs". Como é código e não `db/`, **não tem comando de
-recarga**: a produção só recebe pelo `implanta.sh`, e o deploy sai do Mac.
+**3. O Instinto de Defesa foi proibido na sala em 2026-08-18 — falta LINKAR e
+ver em jogo.** O que foi feito está no `HISTORICO.md`, "O Instinto de Defesa dos
+MVPs". Compilado sem erro com `-t:ClCompile`, mas **sem link**, porque o
+map-server estava no ar: o exe do dev continua sendo o de 2026-08-17 21:57.
+Como é código e não `db/`, **não tem comando de recarga** — nem em dev nem na
+produção, que só recebe pelo `implanta.sh` (e o deploy sai do Mac).
+
+Em dev, nesta ordem:
+
+```
+python ferramentas/servidor.py parar
+MSBuild.exe src/map/map-server.vcxproj -p:Configuration=Release -p:Platform=x64 "-p:SolutionDir=<raiz>/rathena/"
+python ferramentas/servidor.py subir
+```
+
+Como conferir: entrar na sala com **adaga ou espada** (o reflexo só alcançava
+essas armas), achar um dos dois **2239 Stalker Gertie** e bater. Antes, três em
+cada quatro golpes voltavam metade do dano; depois, nenhum — e não deve mais
+sair animação de habilidade em cima dele.
 
 **Duas decisões ficaram com o dono, e nenhuma foi tomada por conta própria:**
 
