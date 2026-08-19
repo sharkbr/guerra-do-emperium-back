@@ -93,12 +93,20 @@ Footer:
   - Path: db/re/item_db_usable.yml
   - Path: db/re/item_db_equip.yml
   - Path: db/re/item_db_etc.yml
-  # Guerra do Emperium: as duas linhas nossas neste arquivo do rAthena. Os
+  # Guerra do Emperium: as TRES linhas nossas neste arquivo do rAthena. Os
   # itens proprios ficam todos em db/guerra/item_db.yml - nao em
-  # db/import/, que o .gitignore do rAthena ignora.
+  # db/import/, que o .gitignore do rAthena ignora. As outras duas sao
+  # arquivos GERADOS, e vem depois desta de proposito: cada uma tem a
+  # ultima palavra sobre um campo.
   - Path: db/guerra/item_db.yml
-  # A segunda poe `Buy: 1` em todo item das lojas de Prontera, para que
-  # revender nao gere zeny (decisao de 2026-08-17). Vem DEPOIS da linha
-  # acima de proposito: preco de item de vitrine e decidido aqui, nao la.
+  # A SEGUNDA faz valer o "Indestrutivel em batalha" que a descricao do
+  # item promete e o `Script:` do vendor nao entregava - sem o
+  # `bonus bUnbreakable<slot>` o `skill_break_equip` quebra a peca.
+  # ARQUIVO GERADO - ferramentas/marca_indestrutiveis.py.
+  - Path: db/guerra/item_db_indestrutivel.yml
+  # A TERCEIRA poe `Buy: 1` em todo item das lojas de Prontera, para que
+  # revender nao gere zeny (decisao de 2026-08-17). Vem DEPOIS de
+  # db/guerra/item_db.yml de proposito: preco de item de vitrine e
+  # decidido aqui, nao la.
   # ARQUIVO GERADO - ferramentas/zera_revenda_das_lojas.py.
   - Path: db/guerra/item_db_lojas.yml

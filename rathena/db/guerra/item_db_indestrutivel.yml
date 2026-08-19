@@ -1,0 +1,462 @@
+###########################################################################
+# Guerra do Emperium - O "INDESTRUTIVEL" DA DESCRICAO PASSA A VALER
+#
+# ARQUIVO GERADO por ferramentas/marca_indestrutiveis.py. Editar a mao
+# funciona ate a proxima geracao, que apaga tudo.
+#
+# Cada bloco aqui REPETE O SCRIPT INTEIRO do item com uma linha a mais na
+# primeira posicao. Repetir e obrigatorio: o leitor do item_db SUBSTITUI o
+# `Script:` quando o campo aparece, nao acrescenta.
+#
+# O motivo, em uma frase: a descricao que o jogador le vem do itemInfo.lua do
+# cliente (traducao do bRO) e diz "Indestrutivel em batalha"; o `Script:` do
+# nosso vendor nao trazia o `bonus bUnbreakable<slot>`, e o
+# `skill_break_equip` (src/map/skill.cpp:1944) so poupa quem tem o bonus.
+#
+# CONSEQUENCIA DE ESTE ARQUIVO EXISTIR: enquanto ele estiver aqui, correcao
+# do rAthena no `Script:` destes itens nao chega ao jogo - o nosso vence.
+# Rodar a ferramenta de novo depois de atualizar o vendor.
+#
+# Recarregar: @reloaditemdb, e so - o itemdb_reload termina com um
+# status_calc_pc(sd, SCO_FORCE) por jogador online, que refaz os bonus.
+###########################################################################
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 2495
+    AegisName: Egir_Shoes
+    Script: |
+      bonus bUnbreakableShoes;
+      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte)
+         bonus bMaxHP,BaseLevel*5;
+      else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief)
+         bonus bMaxSP,JobLevel*2;
+  - Id: 5398
+    AegisName: Bone_Head
+    Script: |
+      bonus bUnbreakableHelm;
+      bonus bStr,2;
+      bonus bMdef,5;
+      bonus2 bResEff,Eff_Stun,500;
+      bonus2 bResEff,Eff_Bleeding,500;
+  - Id: 5903
+    AegisName: Hitaikakushi_
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      .@rate = 1;
+      bonus bCritical,.@r*2;
+      bonus bFixedCastrate,-2;
+      if (.@r>=7) {
+         bonus bMatk,20;
+         .@rate += 3;
+      }
+      if (.@r>=9) {
+         bonus bVariableCastrate,-20;
+         bonus2 bSkillUseSP,"SL_STUN",5;
+         bonus2 bSkillUseSP,"SL_SMA",5;
+      }
+      bonus3 bAutoSpellWhenHit,"SL_SWOO",getskilllv("SL_SWOO"),(.@rate*10);
+  - Id: 5905
+    AegisName: Lyrica_Hat_
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",15;
+      if (.@r>=7) {
+         bonus bFixedCastrate,4*(getskilllv("WM_LESSON"));
+      }
+      if (.@r>=9) {
+         bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",10;
+      }
+  - Id: 13473
+    AegisName: Gods_Sword
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bAgi,5;
+      bonus bCritical,50;
+      bonus bFlee2,20;
+      bonus2 bAddRace,RC_Demon,30;
+      .@r = getrefine();
+      .@rate = 1+.@r;
+      .@s = getskilllv("ASC_BREAKER");
+      .@slv = 3;
+      if (.@s>3) {
+         .@slv = .@s;
+      }
+      bonus3 bAutoSpell,"ASC_BREAKER",.@slv,.@rate;
+      if (.@r>=8) {
+         skill "ASC_BREAKER",3;
+      }
+  - Id: 15041
+    AegisName: Boitata_Armor
+    Script: |
+      bonus bUnbreakableArmor;
+      bonus bMdef,3;
+      bonus2 bSubEle,Ele_Neutral,7;
+      bonus bMaxHPrate,5;
+      bonus bFlee,5;
+  - Id: 15061
+    AegisName: Egir_Armor
+    Script: |
+      bonus bUnbreakableArmor;
+      bonus bAllStats,1;
+      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte)
+         bonus2 bResEff,Eff_Silence,5000;
+      else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief)
+         bonus2 bResEff,Eff_Stun,5000;
+  - Id: 15344
+    AegisName: Upgrade_Part_Plate_
+    Script: |
+      bonus bUnbreakableArmor;
+      .@r = getrefine();
+      .@val = 10;
+      if (.@r>6) {
+         bonus2 bSubSize,Size_Large,10;
+         if (.@r>8) {
+            .@val += 5;
+         }
+      }
+      bonus2 bSubSize,Size_Small,.@val;
+      bonus2 bSubSize,Size_Medium,.@val;
+  - Id: 15407
+    AegisName: WhiteknightArmor
+    Script: |
+      bonus bUnbreakableArmor;
+      .@r = getrefine();
+      bonus2 bSubRace,RC_Player_Human,1;
+      bonus2 bSubRace,RC_Player_Doram,1;
+      bonus bDelayrate,-5-(min(10,.@r)*2);
+      if (.@r>=12)
+         bonus bNoWalkDelay;
+  - Id: 15421
+    AegisName: Triad_God_Mail_J_
+    Script: |
+      bonus bUnbreakableArmor;
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+      bonus bAspdRate,.@r;
+      if (.@r>=7)
+         bonus2 bAddRace,RC_All,10;
+      if (.@r>=9)
+         bonus2 bAddRace,RC_All,10;
+  - Id: 18853
+    AegisName: D_Strawberry_Hat_
+    Script: |
+      bonus bUnbreakableHelm;
+      bonus bAllStats,1;
+      if (getrefine()>11)
+         bonus bAspd,2;
+  - Id: 18865
+    AegisName: Sword_Master_Crown
+    Script: |
+      bonus bUnbreakableHelm;
+      .@i = BaseLevel;
+      bonus bBaseAtk,(.@i>150)?(15):((.@i>100)?(10):((.@i>50)?(5):(0)));
+      if (getskilllv("SM_SWORD") == 10)
+         bonus bHit,10;
+      if (getskilllv("SM_TWOHAND") == 10)
+         bonus bUseSPrate,-5;
+      if (getskilllv("AM_AXEMASTERY") == 10)
+         bonus bVariableCastrate,-5;
+      if (getskilllv("AS_KATAR") == 10)
+         bonus bCritAtkRate,20;
+      if (getskilllv("PR_MACEMASTERY") == 10)
+         bonus bAspdRate,10;
+  - Id: 18916
+    AegisName: Bear_Balloon
+    Script: |
+      bonus bUnbreakableHelm;
+      bonus bStr,1;
+      bonus bLuk,1;
+      bonus bMaxHP,50;
+  - Id: 18959
+    AegisName: Old_Pink_Poo_Hat
+    Script: |
+      bonus bUnbreakableHelm;
+      bonus2 bSubRace,RC_Player_Human,13;
+      bonus2 bSubRace,RC_Player_Doram,13;
+  - Id: 22207
+    AegisName: Imperial_Boots
+    Script: |
+      bonus bUnbreakableShoes;
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "AL_INCAGI",1;
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",10*getskilllv("LG_CANNONSPEAR");
+      bonus2 bAddClass,Class_All,4*getskilllv("CR_DEVOTION");
+      if (getskilllv("LG_INSPIRATION")>=5)
+         bonus2 bSkillCooldown,"LG_SHIELDSPELL",-2000;
+      bonus2 bIgnoreDefRaceRate,RC_All,20*getskilllv("LG_PINPOINTATTACK");
+      if (.@r>=5) {
+         bonus bMaxSPrate,7;
+         bonus bMaxHPrate,7;
+         bonus bLongAtkRate,5;
+      }
+      if (.@r>=7) {
+         bonus bMaxSPrate,10;
+         bonus bMaxHPrate,10;
+         bonus bLongAtkRate,5;
+      }
+  - Id: 28950
+    AegisName: Variant_Shield
+    Script: |
+      bonus bUnbreakableShield;
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      if (.@r>=6) {
+         bonus2 bResEff,Eff_Fear,50;
+         bonus2 bSubRace,RC_Player_Human,20;
+      }
+      if (.@r>=8) {
+         bonus2 bResEff,Eff_Fear,50;
+         bonus2 bSubRace,RC_Player_Human,10;
+      }
+  - Id: 28962
+    AegisName: Haurvatat
+    Script: |
+      bonus bUnbreakableShield;
+      bonus bMdef,10;
+      bonus2 bSubSize,Size_All,30;
+      bonus2 bSubEle,Ele_Neutral,10;
+  - Id: 400048
+    AegisName: Gift_of_Panagia
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      bonus bVit,5;
+      bonus bInt,5;
+      bonus bHealPower,10;
+      bonus2 bResEff,Eff_Stun,5000;
+      if (.@r>=7) {
+         bonus bDelayrate,-20;
+         bonus bHealPower,10;
+      }
+      if (.@r>=9)
+         bonus bHealPower,20;
+      if (.@r>=10)
+         bonus bUseSPrate,-20;
+  - Id: 400396
+    AegisName: Ghost_Whisper
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      .@b = BaseLevel;
+      if (.@r>=9) {
+         .@b *=3;
+         bonus2 bSkillAtk,"ASC_BREAKER",BaseLevel*2;
+      }
+      else if (.@r>=7) {
+         .@b *=2;
+         bonus2 bSkillAtk,"ASC_BREAKER",BaseLevel;
+      }
+      bonus bMdef,10;
+      bonus bAspdRate,10;
+      bonus bDelayrate,-3*.@r;
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",.@b;
+      if (getskilllv("GC_WEAPONCRUSH") == 5)
+         bonus2 bAddEle,Ele_All,25;
+      if (getskilllv("GC_WEAPONBLOCKING") == 5)
+         bonus bDelayrate,-20;
+      if (getskilllv("GC_COUNTERSLASH") == 10)
+         bonus bWeaponAtkRate,25;
+      if (getskilllv("GC_HALLUCINATIONWALK") == 5) {
+         bonus2 bSubClass,Class_Normal,20;
+         bonus2 bSubClass,Class_Boss,20;
+      }
+  - Id: 400476
+    AegisName: Boina_Sustenida_BR
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bMatk,15*(.@r/2);
+      if (.@r>=7)
+         bonus2 bMagicAtkEle,Ele_Neutral,15;
+      if (.@r>=9)
+         bonus bLongAtkRate,15;
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Small,15;
+         bonus2 bAddSize,Size_Medium,15;
+         bonus2 bMagicAddSize,Size_Small,15;
+         bonus2 bMagicAddSize,Size_Medium,15;
+      }
+  - Id: 450143
+    AegisName: Samael_Dress
+    Script: |
+      bonus bUnbreakableArmor;
+      .@r = getrefine();
+      .@a = ((.@r>=9)?40:(.@r>=7)?25:(.@r>=5?10:0));
+      bonus bDefEle,Ele_Holy;
+      bonus bNoKnockback;
+      bonus2 bAddRace,RC_Insect,.@a;
+      bonus2 bAddRace,RC_Plant,.@a;
+      bonus2 bAddEle,Ele_Holy,.@a;
+      bonus2 bAddEle,Ele_Poison,.@a;
+      bonus2 bMagicAddRace,RC_Insect,.@a;
+      bonus2 bMagicAddRace,RC_Plant,.@a;
+      bonus2 bMagicAddEle,Ele_Holy,.@a;
+      bonus2 bMagicAddEle,Ele_Poison,.@a;
+  - Id: 450180
+    AegisName: Cute_Frog_Raincoat
+    Script: |
+      bonus bUnbreakableArmor;
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxHPrate,10;
+      bonus2 bMagicAddRace,RC_All,getskilllv("SU_NYANGGRASS")*8;
+      bonus2 bSkillAtk,"SU_CN_METEOR",getskilllv("SU_MEOWMEOW")*10;
+      if (getskilllv("SU_SPIRITOFLAND") == 1)
+         skill "WZ_QUAGMIRE",5;
+      if (getskilllv("SU_CHATTERING") == 5)
+         bonus bAspdRate,10;
+      if (.@r>=5) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
+      if (.@r>=7) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
+      if (.@r>=10) {
+         bonus bMaxHP,5000;
+         bonus2 bMagicAtkEle,Ele_Neutral,15;
+      }
+  - Id: 460023
+    AegisName: Shield_Of_Phoenix
+    Script: |
+      bonus bUnbreakableShield;
+      .@r = getrefine();
+      bonus bMdef,30;
+      bonus bShortAtkRate,15;
+      bonus bMaxHPrate,3*.@r;
+      bonus bMaxSPrate,3*.@r;
+      if (.@r>=5) {
+         bonus bHealPower2,20;
+         bonus bAddItemHealRate,20;
+      }
+      if (.@r>=7)
+         bonus bRestartFullRecover;
+  - Id: 470008
+    AegisName: Fluffy_DandelionShoes_J
+    Script: |
+      bonus bUnbreakableShoes;
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus bAspdRate,getskilllv("SU_CHATTERING")*5;
+      bonus2 bSkillAtk,"SU_CN_METEOR",getskilllv("SU_MEOWMEOW")*15;
+      if (getskilllv("SU_NYANGGRASS") == 5)
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
+      if (getskilllv("SU_SPIRITOFLAND") == 1) {
+         if (getskilllv("SU_CN_POWDERING") == 5) {
+            bonus2 bResEff,Eff_Curse,10000;
+            bonus2 bSkillUseSP,"SU_CN_METEOR",50;
+         }
+         if (getskilllv("SU_CN_METEOR") == 5)
+            bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20;
+         if (getskilllv("SU_NYANGGRASS") == 5)
+            bonus bMatk,50;
+         if (getskilllv("SU_SV_STEMSPEAR") == 5)
+            bonus bSpeedRate,25;
+         if (getskilllv("SU_SV_ROOTTWIST") == 5)
+            bonus bMatk,50;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bDelayrate,-10;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bDelayrate,-10;
+      }
+  - Id: 470027
+    AegisName: Juggernaut
+    Script: |
+      bonus bUnbreakableShoes;
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "AC_CONCENTRATION",1;
+      bonus2 bSkillCooldown,"RL_RICHS_COIN",-3000;
+      bonus2 bFixedCastrate,"RL_BANISHING_BUSTER",-20*getskilllv("RL_BANISHING_BUSTER");
+      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",60*getskilllv("RL_BANISHING_BUSTER");
+      bonus2 bAddClass,Class_All,4*getskilllv("RL_FIRE_RAIN");
+      bonus2 bSkillAtk,"RL_FIRE_RAIN",50*getskilllv("RL_FIRE_RAIN");
+      bonus bDelayrate,-8*getskilllv("RL_H_MINE");
+      bonus2 bSkillAtk,"RL_H_MINE",40*getskilllv("RL_H_MINE");
+      if (getskilllv("RL_FALLEN_ANGEL") == 1) {
+         bonus bAspdRate,20;
+         bonus2 bSkillUseSP,"RL_FIREDANCE",20;
+      }
+      if (getskilllv("RL_AM_BLAST") == 5) {
+         bonus2 bIgnoreDefRaceRate,RC_All,100;
+         bonus4 bAutoSpellOnSkill,"RL_HAMMER_OF_GOD","RL_RICHS_COIN",1,1000;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
+  - Id: 480023
+    AegisName: Arabian_Manteau
+    Script: |
+      bonus bUnbreakableGarment;
+      .@r = getrefine();
+      .@cri = 0;
+      .@criatk = 5;
+      bonus bMaxHPrate,10;
+      if (.@r >= 7) {
+         .@cri += 5;
+         .@criatk += 5;
+      }
+      if (.@r >= 8) {
+         .@cri += 10;
+         .@criatk += 20;
+      }
+      if (.@r >= 9) {
+         .@cri += 20;
+         .@criatk += 30;
+      }
+      if (.@r >= 10) {
+         .@cri += 30;
+         .@criatk += 50;
+      }
+      bonus bCritical,.@cri;
+      bonus bCritAtkRate,.@criatk;
+  - Id: 500009
+    AegisName: Copy_Gram
+    Script: |
+      bonus bUnbreakableWeapon;
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Holy;
+      bonus bStr,10;
+      bonus bInt,10;
+      if (BaseLevel>=100) {
+         bonus bAtkRate,10*.@r;
+         bonus2 bMagicAtkEle,Ele_Holy,5*.@r;
+      }
+      else {
+         bonus bAtkRate,3*.@r;
+         bonus2 bMagicAtkEle,Ele_Holy,2*.@r;
+      }
+      if (.@r>=11)
+         bonus bAllStats,10;
+      if (.@r>=12) {
+         bonus bBaseAtk,200;
+         bonus bMatk,200;
+      }

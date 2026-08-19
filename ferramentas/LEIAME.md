@@ -2801,6 +2801,78 @@ instância. Carta que o jogador caçou também deixa de valer zeny no NPC.
 Recarregar: `@reloaditemdb` em jogo, ou reiniciar o map-server. As linhas de
 `shop` não mudam com isso — elas já estão todas a 1 zeny.
 
+## `marca_indestrutiveis.py` — faz valer o "Indestrutível" que a descrição promete
+
+```
+python marca_indestrutiveis.py             # gera db/guerra/item_db_indestrutivel.yml
+python marca_indestrutiveis.py --conferir  # só relata; sai 1 se achar divergência
+```
+
+**A descrição que o jogador lê e o efeito que o servidor aplica saem de lugares
+diferentes**, e este é o desacordo que custa item: o `itemInfo.lua` do cliente
+diz `^a400cdIndestrutível em batalha.^000000` e o `Script:` do `item_db` não traz
+`bonus bUnbreakableWeapon;`. A peça quebra, e nada no log aponta para nada — é a
+mesma família da Capa do Comandante (`CLAUDE.md` §5), com a diferença de que
+aqui o jogador **perde o equipamento**.
+
+Quem quebra é o `skill_break_equip` (`src/map/skill.cpp:1944`), chamado pelas
+habilidades de monstro `NPC_ARMORBRAKE`, `NPC_HELMBRAKE`, `NPC_SHIELDBRAKE` e
+`NPC_WEAPONBRAKER`. A primeira coisa que ele faz é
+`where &= ~sd->bonus.unbreakable_equip` — **a trava existe e funciona, só não
+estava ligada nesses itens.** E não há campo de `item_db` nem flag para
+ligá-la: o `unbreakable_equip` só recebe bit por `bonus bUnbreakable<slot>`
+rodando no `Script:` do próprio item (`src/map/pc.cpp:4262`).
+
+Medido em 2026-08-18: **540 itens do nosso cliente dizem "Indestrutível" e 27
+não tinham o bônus.** Sete estão à venda em Prontera:
+
+| id | item | loja |
+|---|---|---|
+| 500009 | Lâmina Sagrada | Senhor das Armas |
+| 28962 | Escudo Divino | Escudeiro |
+| 460023 | Escudo da Fênix | Escudeiro |
+| 15421 | Robe da Graça Divina | Mercado Contemporâneo |
+| 480023 | Sobretudo do Mestre | Mercado Contemporâneo |
+| 400396 | Chifres Oníricos | Mercado Contemporâneo |
+| 400476 | Boina Sustenida | loja de troca (`barters_guerra.yml`) |
+
+**O que ele escreve é um override que REPETE O SCRIPT INTEIRO** com uma linha a
+mais. Repetir é obrigatório: o `parseBodyNode` **substitui** o `Script:` quando
+o campo aparece, não acrescenta. E `EquipScript:` não serve — aquele roda uma
+vez, no clique de equipar, e o `status_calc_pc_` refaz os bônus do zero sem ele.
+
+**O bônus entra na primeira linha, não na última**, de propósito: script que
+termine em `if (cond)` sem chaves engoliria a linha seguinte.
+
+O slot sai do `Locations:`, nunca do nome (§4.14): `Type: Weapon` →
+`bUnbreakableWeapon`, `Left_Hand` → `Shield`, `Armor` → `Armor`, `Head_*` →
+`Helm`, `Garment` → `Garment`, `Shoes` → `Shoes`.
+
+**Duas famílias ficam de fora, e o `--conferir` diz quantas:**
+
+- **Machado, maça, cajado, livro e huuma** — 241 armas. O próprio
+  `skill_break_equip` já as isenta por tipo, antes de sortear
+  (`skill.cpp:1968`). Pô-las aqui congelaria o `Script:` de 241 armas do vendor
+  por um efeito que já existe.
+- **Equipamento sombrio** (`Type: Shadowgear`) — 4 itens (24152, 24153, 24154,
+  24155). Não existe `bUnbreakableShadow`: o `unbreakable_equip` só tem bit
+  para os seis slots acima. Eles caem no `EQP_SHADOW_GEAR`, que nenhuma
+  habilidade de monstro pede — na prática não quebram, mas não há como travar
+  por `db/` se um dia quebrarem.
+
+**Esta ferramenta só roda no Windows**: a lista sai do `itemInfo.lua` do nosso
+cliente, que está fora do git. O arquivo gerado é versionado e vale para as três
+máquinas — o que não dá para fazer no Mac é regerá-lo.
+
+**Rodar de novo** sempre que o `itemInfo.lua` ganhar item (`instala_item.py`) ou
+o vendor do rAthena for atualizado. Enquanto este arquivo existir, correção do
+rAthena no `Script:` desses 27 itens não chega ao jogo — o nosso vence.
+
+Recarregar: `@reloaditemdb`, e só. Não precisa relogar nem trocar de mapa — o
+`itemdb_reload` (`src/map/itemdb.cpp`) termina com um
+`status_calc_pc(sd, SCO_FORCE)` por jogador online, e é ele que refaz os bônus.
+Diferente do `Locations:`, que exige relogar (`CLAUDE.md` §5).
+
 ## `escala_drops_de_mapa.py` — põe o drop de mapa na taxa do servidor
 
 ```

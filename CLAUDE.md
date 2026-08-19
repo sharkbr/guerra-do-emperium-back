@@ -85,8 +85,9 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `conf/inter_athena.conf` | uma linha `import: conf/guerra/inter_guerra.txt` (`default_codepage: latin1`) |
 | `conf/login_athena.conf` | uma linha `import: conf/guerra/login_guerra.txt` (`use_MD5_passwords: yes`) |
 | `conf/groups.yml` | um `- Path: conf/guerra/groups_guerra.yml` no rodapé, **antes** do `conf/import/groups.yml` que já estava lá (permissão de comando por grupo — hoje o `@autoloot` e irmãos para o grupo 0). Funciona por merge: o `parseBodyNode` procura o `Id` antes de criar (`src/map/pc_groups.cpp:74`), e grupo que já existe recebe os campos por cima — por isso o nosso arquivo não repete `Name` nem `Level` |
-| `db/re/item_db.yml`, `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
-| `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um — a única exceção da linha de cima. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
+| `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
+| `db/re/item_db.yml` | **três** `- Path:` no rodapé, nesta ordem, e a ordem é a regra — cada um tem a última palavra sobre um campo. `db/guerra/item_db.yml` é o nosso, escrito à mão (itens próprios e overrides de campo). `db/guerra/item_db_indestrutivel.yml` é **gerado** por `ferramentas/marca_indestrutiveis.py` e repete o `Script:` inteiro de 27 itens com um `bonus bUnbreakable<slot>` a mais — sem ele a peça que a descrição promete indestrutível quebra (§4.19). `db/guerra/item_db_lojas.yml` é **gerado** por `ferramentas/zera_revenda_das_lojas.py` e põe `Buy: 1` em todo item de vitrine de Prontera (§4.16) |
+| `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `db/re/map_drops.yml` | o **`Footer: Imports:` inteiro**, pelo mesmo caminho do `quest_db.yml` acima — aquele arquivo também não tinha rodapé. Aponta para `db/guerra/map_drops.yml`, **gerado** por `ferramentas/escala_drops_de_mapa.py` (drop de mapa não passa pela taxa do servidor — ver §5) |
 | `src/map/clif.cpp` | **três** includes de `src/custom/` + **quatro** chamadas, comentadas no arquivo: `placa_de_venda_mostra`, o teto de refino nas duas pontas da janela de refino, e `brilho_da_carta` no `clif_dropflooritem` (o pilar de luz e o som quando cai carta — `src/custom/brilho_da_carta.hpp`) |
@@ -378,6 +379,39 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     **A tabela dos quatro destinos — servidor, patch, base e site — está em
     `RECEITAS.md` §0.** Desde a fase 1 (2026-08-16) ela é a primeira coisa a
     consultar antes de dar qualquer trabalho por entregue.
+
+19. **Efeito que a descrição promete e o `Script:` não entrega é uma família
+    inteira, não um item — e a que DESTRÓI equipamento é o "Indestrutível".**
+    A descrição vem do `itemInfo.lua` do cliente (tradução do bRO), o efeito
+    vem do `Script:` do nosso vendor, e os dois são revisões diferentes
+    (§5, entrada da Capa do Comandante). No caso do indestrutível o desacordo
+    não custa uns pontos de resistência: o jogador **perde a peça**.
+
+    Não há campo de `item_db` nem flag para isso. O `skill_break_equip`
+    (`src/map/skill.cpp:1944`) só poupa quem tem o bit em
+    `sd->bonus.unbreakable_equip`, e esse bit **só** entra por
+    `bonus bUnbreakable<slot>` rodando no `Script:` do próprio item
+    (`src/map/pc.cpp:4262`). Quem quebra na prática são as habilidades de
+    monstro `NPC_ARMORBRAKE`, `NPC_HELMBRAKE`, `NPC_SHIELDBRAKE` e
+    `NPC_WEAPONBRAKER`.
+
+    A trava é `ferramentas/marca_indestrutiveis.py`, que gera
+    `db/guerra/item_db_indestrutivel.yml`. **Ao pôr item de equipamento novo
+    em qualquer vitrine, rodar o script** — é o mesmo hábito da §4.16 e da
+    mesma natureza: o `--conferir` mede e sai 1 se faltar. Medido em
+    2026-08-18: 540 itens do cliente dizem "Indestrutível" e **27** não
+    tinham o bônus, sete deles à venda em Prontera.
+
+    Duas consequências que o script já trata e que não se deve desfazer à
+    mão: o override **repete o `Script:` inteiro** (o `parseBodyNode`
+    substitui o campo, não acrescenta — e `EquipScript:` não serve, porque o
+    `status_calc_pc_` refaz os bônus do zero sem ele), e o bônus entra na
+    **primeira** linha, porque script que termine em `if (cond)` sem chaves
+    engoliria a linha seguinte.
+
+    E o preço de o arquivo existir: enquanto ele estiver ligado, correção do
+    rAthena no `Script:` daqueles 27 itens **não chega ao jogo**. Rodar o
+    script de novo depois de atualizar o vendor.
 
 ## 5. Armadilhas deste ambiente
 
@@ -1043,6 +1077,9 @@ Produziram diagnóstico falso e custaram retrabalho:
   *Esta capa foi consertada em 2026-08-10* (override no `db/guerra/item_db.yml`,
   do lado do servidor) — quem for conferir hoje acha 5, e a armadilha continua
   valendo para todo o resto do `item_db`.
+  **O caso mais caro dessa família já tem trava própria: o "Indestrutível".**
+  Ali a diferença não é de número — a peça quebra e some. Ver §4.19 e
+  `ferramentas/marca_indestrutiveis.py`.
 - **Nem toda parcela de dano do renewal passa pela redução de cartas.** O dano
   físico é montado em `statusAtk`, `weaponAtk`, `equipAtk`, `masteryAtk` e
   `percentAtk`, e a redução do alvo é aplicada **parcela a parcela, antes da

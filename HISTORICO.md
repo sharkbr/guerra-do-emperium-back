@@ -11761,3 +11761,126 @@ foi ao jogador como **patch 0007** — 13 arquivos, 22,86 MB crus em 2,48 MB de
 zip, sha `bee86d16…`, conferido por HTTP depois de publicado. A metade de
 servidor continua dependendo do `implanta.sh`, que sai do Mac (`PENDENCIAS.md`
 §1y2) — e o mesmo deploy fecha a leva da manhã.
+
+## O "Indestrutível" que a descrição prometia e o servidor não entregava (2026-08-18)
+
+O dono relatou que **item indestrutível estava quebrando em batalha com
+monstro** — arma, escudo, armadura. O exemplo veio com nome: **Lâmina
+Sagrada**.
+
+### Achar o item custou uma volta, e a volta explica o resto
+
+"Lâmina Sagrada" não existe em `db/guerra/`, não existe nos NPCs e não aparece
+como `Name:` em lugar nenhum do `rathena/`. Ela existe no **cliente**: é o
+`identifiedDisplayName` do item **500009**, cujo `AegisName` no nosso vendor é
+`Copy_Gram` e cujo `Name:` é a mesma "Lâmina Sagrada" — o mesmo 500009 que a
+`zera_revenda_das_lojas.py` já tinha pegado revendendo a 250.000 zeny, ali
+chamado de "Cópia de Gram". Procurar por nome de tela dentro do `rathena/` é
+procurar no lugar errado: quem batiza é o `itemInfo.lua`.
+
+E a descrição dele, no cliente, diz em roxo:
+
+```
+^a400cdIndestrutível em batalha.^000000
+```
+
+O `Script:` do item, no `db/re/item_db_equip.yml`, **não trazia**
+`bonus bUnbreakableWeapon;`.
+
+### Não era bug de mecânica — a trava existe e estava desligada
+
+Vale registrar o que foi descartado, porque cada descarte é uma hipótese que
+não precisa voltar:
+
+- **`equip_natural_break_rate` está em 0** (`conf/battle/battle.conf`), e não
+  temos override em `conf/guerra/`. Arma não quebra por atacar.
+- **`break_mob_equip: no`**, ou seja não quebramos equipamento de monstro.
+- **`equip_skill_break_rate` e `equip_self_break_rate` estão nos 100 padrão.**
+- A tradução PT do `item_db_equip.yml` (o par `.INGLES` ao lado) mexeu em
+  **linha de `Name:` e em mais nada** — `diff` fechou em zero fora delas.
+
+O que quebra equipamento de jogador são as quatro habilidades de monstro
+`NPC_ARMORBRAKE`, `NPC_HELMBRAKE`, `NPC_SHIELDBRAKE` e `NPC_WEAPONBRAKER`,
+todas passando pelo `skill_break_equip` (`src/map/skill.cpp:1944`). E a
+**primeira coisa** que ele faz é:
+
+```c
+if (sd->bonus.unbreakable_equip)
+    where &= ~sd->bonus.unbreakable_equip;
+```
+
+Ou seja: a trava existe, funciona, e só não estava ligada. **E não há como
+ligá-la por campo de `item_db` nem por flag** — o `unbreakable_equip` só recebe
+bit por `bonus bUnbreakable<slot>` rodando no `Script:` do próprio item
+(`src/map/pc.cpp:4262`).
+
+### A medição: 540 dizem, 27 não entregam
+
+Cruzados o `itemInfo.lua` do cliente (descrição com "Indestrut") e o
+`item_db` do servidor (`Script:` com `bUnbreakable<slot>`), com o slot saindo
+do `Locations:` e não do nome (regra 4.14):
+
+| slot | itens sem o bônus |
+|---|---|
+| Arma | 2 |
+| Escudo | 3 |
+| Armadura | 7 |
+| Elmo | 10 |
+| Manto | 1 |
+| Calçado | 4 |
+| **total** | **27** |
+
+De 540 itens do cliente que prometem indestrutível. **Sete estão à venda em
+Prontera** — Lâmina Sagrada (500009), Escudo Divino (28962), Escudo da Fênix
+(460023), Robe da Graça Divina (15421), Sobretudo do Mestre (480023), Chifres
+Oníricos (400396) e a Boina Sustenida (400476, na loja de troca). Os outros 20
+caem de monstro ou vêm de outras fontes.
+
+**Duas famílias ficaram de fora, de propósito:**
+
+- **241 armas** de machado, maça, cajado, livro e huuma. O próprio
+  `skill_break_equip` já as isenta por tipo, antes de sortear
+  (`skill.cpp:1968`). Pô-las no override congelaria o `Script:` de 241 armas
+  do vendor por um efeito que já existe — custo sem benefício.
+- **4 equipamentos sombrios** (24152, 24153, 24154 e 24155 — um deles chamado,
+  sem ironia, *Malha Sombria Indestrutível*). Não existe `bUnbreakableShadow`:
+  o `unbreakable_equip` só tem bit para os seis slots normais. Eles caem no
+  `EQP_SHADOW_GEAR`, que nenhuma habilidade de monstro pede — na prática não
+  quebram, mas se um dia quebrarem não há como travar por `db/`. Ficou o aviso
+  no `--conferir`.
+
+### O conserto
+
+`ferramentas/marca_indestrutiveis.py`, gerando
+`db/guerra/item_db_indestrutivel.yml` — o terceiro `- Path:` do rodapé de
+`db/re/item_db.yml`, entre o nosso `item_db.yml` e o `item_db_lojas.yml`.
+
+Duas decisões de forma que valem para qualquer override de `Script:`:
+
+1. **O override repete o script inteiro.** O `parseBodyNode` **substitui** o
+   campo `Script:` quando ele aparece; não acrescenta. E `EquipScript:` não
+   serve de atalho — aquele roda uma vez, no clique de equipar, e o
+   `status_calc_pc_` refaz os bônus do zero sem ele.
+2. **O `bonus` entra na primeira linha, não na última.** Script que termine em
+   `if (cond)` sem chaves engoliria a linha seguinte. No topo não há o que
+   engolir, e nenhum dos 27 scripts começa com algo que dependa de ordem.
+
+O preço de o arquivo existir está escrito no cabeçalho dele: enquanto estiver
+ligado, correção do rAthena no `Script:` desses 27 itens não chega ao jogo.
+Rodar o script de novo depois de atualizar o vendor — o `--conferir` responde
+em segundos e sai 1 se faltar.
+
+**A ferramenta só roda no Windows**, porque a lista de quem promete
+indestrutível sai do `itemInfo.lua`, que está fora do git. O `.yml` gerado é
+versionado e vale para as três máquinas.
+
+### O que recarrega
+
+`@reloaditemdb`, e só — **não precisa relogar**. O `itemdb_reload`
+(`src/map/itemdb.cpp`) termina com um `status_calc_pc(sd, SCO_FORCE)` para cada
+jogador online, e é ele que refaz os bônus. É o oposto do `Locations:`, que
+exige login ou troca de mapa porque quem reenvia o inventário é o
+`clif_parse_LoadEndAck` (`CLAUDE.md` §5).
+
+Tudo isto é **servidor**: nada aqui mora em `C:\GuerraDoEmperium\cliente\`, e
+portanto nada depende de patch. Vai ao jogador pelo `implanta.sh`.

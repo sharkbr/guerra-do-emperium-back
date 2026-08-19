@@ -88,6 +88,18 @@ Sem ele o item nasce com o `Buy` do `item_db` e passa a render `Buy/2` por
 clique em qualquer NPC do mundo — **calado**: a loja sobe, vende, e o log não
 reclama. Ver `CLAUDE.md` §4.16.
 
+**E um nono, se o item for EQUIPAMENTO** (vale para qualquer loja, não só as
+de Prontera):
+
+```
+9. python marca_indestrutiveis.py            # se a descrição promete indestrutível
+   python marca_indestrutiveis.py --conferir # tem que dizer 0
+```
+
+O item cuja descrição diz *"Indestrutível em batalha"* e cujo `Script:` não
+traz `bonus bUnbreakable<slot>` **quebra** — e o jogador perde a peça. Ver
+`CLAUDE.md` §4.19.
+
 **Por que a ordem:**
 - **1-2 antes de 3-5** — o validador lê o `identifiedResourceName` do
   `itemInfo.lua`. Sem entrada ele nem sabe que arquivo procurar e responde "não

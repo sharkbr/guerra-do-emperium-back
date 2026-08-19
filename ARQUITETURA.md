@@ -117,6 +117,7 @@ outras **quebra calado**.
 | 4b | `spriterobeid.lub` + `spriterobename.lub` | o slot de manto — **reaproveitando** um dos 40 slots ≤120 sem arte; o cliente ignora acima disso | `estende_robeid.py` |
 | 5 | `npc/guerra/mercado_*.txt` | a loja que vende | à mão / gerador |
 | 5b | `db/guerra/item_db_lojas.yml` | o `Buy: 1` que zera a revenda, **se entrou numa vitrine de Prontera** | `zera_revenda_das_lojas.py` |
+| 5c | `db/guerra/item_db_indestrutivel.yml` | o `bonus bUnbreakable<slot>`, **se a descrição promete "Indestrutível"** — sem ele a peça quebra e o jogador a perde | `marca_indestrutiveis.py` |
 | 6 | `db/guerra/item_combos.yml` | o conjunto, se fizer parte de um | à mão |
 
 **A ordem entre 2, 3 e 4 não é intuitiva e erra em silêncio** — ver `RECEITAS.md`.
