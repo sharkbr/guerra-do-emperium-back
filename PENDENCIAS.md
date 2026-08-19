@@ -2202,6 +2202,53 @@ exigiria duplicata nossa.
 
 ---
 
+## 1y4. O "Indestrutível" que não valia — falta o deploy (2026-08-18)
+
+O que foi feito e por quê está no `HISTORICO.md`, "O 'Indestrutível' que a
+descrição prometia e o servidor não entregava". Aqui fica **só o que falta**.
+
+### Estado em 2026-08-18
+
+| | |
+|---|---|
+| `db/guerra/item_db_indestrutivel.yml` (27 itens) | **gerado e conferido** — em cada bloco só a primeira linha difere do vendor |
+| `- Path:` novo no rodapé de `db/re/item_db.yml` | **feito** |
+| commit e push | **feitos** (`41791cf`) |
+| **`@reloaditemdb` em DEV** | **FALTA** — é o comando do dono |
+| **conferir em jogo** | **FALTA** — bater numa das quatro habilidades de quebra com a Lâmina Sagrada (500009) ou um dos escudos equipado |
+| patch | **não há** — nada disto é cliente |
+| deploy | **FALTA** |
+
+**Não precisa relogar depois do `@reloaditemdb`**: o `itemdb_reload` termina
+com `status_calc_pc(sd, SCO_FORCE)` por jogador online, e é ele que refaz os
+bônus. É o oposto do `Locations:`, que exige login ou troca de mapa
+(`CLAUDE.md` §5).
+
+### O que falta do lado da produção: a mesma linha de sempre
+
+```
+ferramentas/implanta.sh      # NO MAC
+```
+
+**Não sai desta máquina** (`CLAUDE.md` §5). Não há nada a preparar — o que ele
+leva já está no GitHub: `db/guerra/item_db_indestrutivel.yml` (novo) e a linha
+de import em `db/re/item_db.yml`.
+
+**Um `implanta.sh` fecha esta, a §1y, a §1y2 e a §1z.**
+
+### O que fica em aberto, e não se conserta por `db/`
+
+Os **quatro equipamentos sombrios** que prometem indestrutível e não podem
+recebê-lo: 24152 (`S_Solid_Weapon`), 24153 (`S_Solid_Earring`), 24154
+(`S_Immortal_Armor` — a *Malha Sombria Indestrutível*) e 24155
+(`S_Immortal_Pendant`). Não existe `bUnbreakableShadow`: o `unbreakable_equip`
+só tem bit para os seis slots normais, e equipamento sombrio cai no
+`EQP_SHADOW_GEAR`. **Na prática eles não quebram** — nenhuma habilidade de
+monstro pede aquele slot —, então isto é registro, não risco. Se um dia
+quebrarem, o conserto é C++ em `src/custom/`, não `db/`.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`
