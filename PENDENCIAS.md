@@ -2343,7 +2343,7 @@ chega ao jogador por **patch** (`CLAUDE.md` §4.18) — o que a entrega de
 
 ---
 
-## 1z3. Os 41 itens de 2026-08-20 — falta o patch, o deploy e ver em jogo (2026-08-20)
+## 1z3. Os 41 itens de 2026-08-20 — falta publicar o patch, o deploy e ver em jogo (2026-08-20)
 
 A lista de 43 itens do dono foi entregue em **41**, em cinco destinos. Nada
 disto foi visto em jogo: **o servidor estava fora do ar durante a sessão
@@ -2351,6 +2351,19 @@ inteira**, e nenhum comando de recarga foi dado.
 
 O que foi feito está no `HISTORICO.md`, seção *"Quarenta e três itens em cinco
 destinos"*. O que falta é isto.
+
+**Já commitado e empurrado** (`831b62f` na `main`) — o lado servidor está no
+git e entra na próxima passada do `implanta.sh`, que sai do Mac. **O patch 0008
+está montado e registrado, mas NÃO publicado** — ver a seção do patch abaixo.
+
+Em uma linha, o que falta:
+
+| passo | onde roda | estado |
+|---|---|---|
+| `ferramentas/publica_patch.sh` | **Windows** (esta máquina) | falta |
+| `ferramentas/implanta.sh` | **Mac** | falta |
+| `@reloaditemdb` → `@reloadscript` → `@reloadbarterdb` | em jogo | falta |
+| ver as nove vitrines, a Tranqueiras, o Zé e a Máquina | em jogo | falta |
 
 ### O que recarrega, na ordem
 
@@ -2369,7 +2382,45 @@ E **relogar antes de testar**: três itens nasceram nesta rodada
 muda `Locations:`, então a armadilha do item inequipável não se aplica — mas
 com o servidor subindo do zero a questão nem se coloca.
 
-### O PATCH, que é a metade que o deploy não leva
+### O PATCH — **montado, falta publicar**
+
+O **patch 0008** já existe:
+`C:\GuerraDoEmperium\patches\0008-quarenta-e-um-itens-nas-lojas-de-pronter.zip`,
+31 arquivos, 23,12 MB crus → **2,56 MB** no zip, registrado em
+`patcher/patches.txt`. **Falta um comando:**
+
+```
+ferramentas/publica_patch.sh
+```
+
+Ele **roda no Windows** (os zips saem de `C:\GuerraDoEmperium\`) e precisa da
+chave SSH desta máquina, que é a `ragnarok` — a que existe justamente para
+copiar zip para `/var/www/patch`. Publicar daqui: sim. Deploy daqui: não (§5).
+
+**Não foi publicado de propósito**, e a razão é a `RECEITAS.md` §11: *"testar em
+jogo primeiro, montar o patch depois"* — e nada disto foi visto em jogo, porque
+o servidor esteve fora do ar. O número de um patch nunca se reaproveita, então
+patch errado se corrige com patch novo por cima. O zip está pronto para o
+minuto seguinte ao teste.
+
+**O que ficou de fora do zip, e por quê** — os três arquivos que o
+`--desde 2026-08-20` trouxe junto e não deviam ir:
+
+| tirado | por quê |
+|---|---|
+| `savedata/OptionInfo.lua` | é a configuração **local** desta máquina (janelas, volume, atalhos). Mandar sobrescreveria a do jogador |
+| `data/…/spriterobeid.lub` | regerados hoje por engano (uma chamada de `estende_robeid.py` sem argumento) e **byte a byte iguais** ao que o patch 0003 já entregou — conferido por sha256 contra o zip. Só o carimbo de data mudou |
+| `data/…/spriterobename.lub` | idem |
+
+É exatamente o que o aviso do `--desde` prevê: *"ele varre o cliente por data e
+traz junto o que foi tocado por acidente"*.
+
+**O conteúdo do zip foi conferido, e não só o sha256** — que prova apenas que o
+zip é o mesmo que foi montado, não que o conteúdo está certo. Aberto o
+`itemInfo.lua` de dentro dele: os oito nomes novos batem, o 490029 está em
+português com a descrição traduzida, o 19272 voltou a apontar para
+`Garden_Of_Eden`, não há U+FFFD nos 23 MB, e não há `clientinfo`, `Jogar.exe`
+nem `OptionInfo` no pacote.
 
 **Metade desta entrega mora em `C:\GuerraDoEmperium\cliente\`** e só chega ao
 jogador por patch (`CLAUDE.md` §4.18, `RECEITAS.md` §11):
