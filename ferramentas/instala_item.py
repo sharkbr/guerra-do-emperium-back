@@ -71,6 +71,12 @@ ITEMINFO = os.path.join(r'C:\GuerraDoEmperium\cliente',
 #             nosso for merecer arte exclusiva, ai entra o instala_visual.py.
 #             Copiar em tempo de execucao, e nao colar os bytes aqui, e o que
 #             garante que eles cheguem intactos.
+#   recurso   o `resourceName` POR EXTENSO, no lugar de `arte_de`. So ASCII -
+#             nome coreano continua sendo caso de `arte_de`. Existe para o caso
+#             "traduzir entrada alheia SEM mexer na arte": ali `arte_de`
+#             apontando para o proprio item parece a resposta obvia e e uma
+#             armadilha, porque o script se le a si mesmo e uma rodada ruim
+#             vira a fonte da rodada seguinte. Ver a nota do 19272.
 
 ITENS = [
     {
@@ -237,7 +243,13 @@ ITENS = [
     {
         'id': 19272,
         'nome': u'Chapéu do Éden',
-        'arte_de': 19272,               # a propria arte, que ja esta no GRF
+        # A PROPRIA ARTE, escrita por extenso e nao por `arte_de: 19272`. Era
+        # `arte_de` ate 2026-08-20, e isso somado ao bug do `(?<!un)` (ver
+        # `recurso`) deixou o chapeu com o gorro generico de item nao
+        # identificado no icone, na collection e no sprite de chao, de
+        # 2026-08-18 a 2026-08-20. Auto-referencia nao se recupera sozinha: o
+        # valor errado vira a fonte da rodada seguinte.
+        'recurso': u'Garden_Of_Eden',   # o mesmo do 19315 do bRO
         # Os dois campos que a entrada coreana ja trazia, e que sao a
         # razao de `covas`/`visual` existirem: sem eles o nome sairia
         # sem o "[1]" e a peca perderia o id de visual. Batem com o
@@ -261,6 +273,76 @@ ITENS = [
             u'DEF: ^7777775^000000 DEFM: ^7777770^000000',
             u'Peso: ^77777740^000000',
             u'Nível necessário: ^77777790^000000',
+            u'Classes: ^777777Todas^000000',
+        ],
+    },
+    # A NONA ENTRADA, 2026-08-20: a Ferramenta Magica de Gelo (490029). E o
+    # segundo caso do tipo "Chapeu do Eden" - item que existe inteiro no nosso
+    # vendor e cuja entrada de cliente esta na LINGUA ERRADA. Aqui a lingua e
+    # o INGLES (a entrada veio do ROenglishRE, `Server = "jRO"`), e o pedido do
+    # dono em 2026-08-20 foi explicito: "vamos traduzir para Ferramenta Magica
+    # de Gelo".
+    #
+    # POR QUE NAO FOI PELO completa_iteminfo.py: o bRO NAO TEM este ID. Nem
+    # este, nem nenhum outro item da familia Magictool - varridos os 18845 do
+    # `iteminfo_new.lub` em 2026-08-20, por nome e por `identifiedResourceName`,
+    # e o resultado foi zero. Nao ha de onde copiar; o texto abaixo foi
+    # traduzido a mao.
+    #
+    # E ELE CONTINUA SEM ARTE, e isso NAO se resolve aqui. O
+    # `identifiedResourceName` e `Geffenia_Magictool_Ice`, e os quatro arquivos
+    # dele nao existem nem no nosso data.grf nem no do bRO (conferido nos dois
+    # em 2026-08-20). Por isso ele NAO ENTROU em loja nenhuma - item sem arte
+    # entrega caixa de erro ao jogador (CLAUDE.md 4.4). O `arte_de` aponta para
+    # ele mesmo, ou seja preserva o recurso que ja estava la: trocar por um
+    # doador seria dar a ele o desenho de outro item, e isso e decisao do dono.
+    # Ver a ressalva no cabecalho de npc/guerra/mercado_contemporaneo.txt.
+    #
+    # O TEXTO SEGUE O `Script:` DO VENDOR, e nao a descricao em ingles que
+    # estava no arquivo - as duas discordavam num ponto que a regra manda
+    # conferir (CLAUDE.md 5, "a descricao discorda do script"): a linha da
+    # Maestria Arcana (`bonus bDelayrate,-30`) simplesmente NAO ESTAVA na
+    # descricao inglesa. Foi acrescentada.
+    #
+    # OS SEIS NOMES DE HABILIDADE saem do `skillinfolist.lub` DESTE cliente,
+    # que e a tabela que o jogo le (regra 4.12): WZ_STORMGUST = "Nevasca",
+    # WL_COMET = "Cometa", WL_JACKFROST = "Esquife de Gelo", WL_FROSTMISTY =
+    # "Zero Absoluto", WL_STASIS = "Distorcao Arcana" e WL_RECOGNIZEDSPELL =
+    # "Maestria Arcana". Nenhum e traducao livre.
+    #
+    # E O SINAL DO `bSkillUseSP` FOI CONFERIDO, porque o nome do bonus sugere o
+    # contrario do que ele faz: `bonus2 bSkillUseSP,sk,n` DIMINUI o consumo em
+    # n (doc/item_bonus.txt:195). Entao o `,35` e o `,100` do script sao -35 e
+    # -100 na tela, e nao +35 e +100.
+    {
+        'id': 490029,
+        'nome': u'Ferramenta Mágica de Gelo',
+        # O recurso que a entrada em ingles ja trazia, preservado por extenso.
+        # NAO se usa `arte_de: 490029` aqui - ver a nota do 19272 acima.
+        'recurso': u'Geffenia_Magictool_Ice',
+        # Batem com o `Slots: 1` do 490029 em db/re/item_db_equip.yml. Sem
+        # `visual`: acessorio nao tem id de visual, e zero e o valor certo.
+        'covas': 1,
+        'descricao': [
+            u'Um dos grandes tesouros do continente esquecido, Geffenia. Quem a obtém torna-se o soberano do zero absoluto.',
+            u'^0000ffDEFM +10.^000000',
+            u'^0000ffDano mágico contra todos os tamanhos +10%.^000000',
+            u'A cada 3 de nível base:',
+            u'^0000ffDano de [Nevasca] +2%.^000000',
+            u'Ao aprender [Cometa] nv.5:',
+            u'^0000ffConsumo de SP de [Esquife de Gelo] -35.^000000',
+            u'^0000ffConjuração fixa de [Esquife de Gelo] -100%.^000000',
+            u'Ao aprender [Esquife de Gelo] nv.5:',
+            u'^0000ffDano de [Cometa] +50%.^000000',
+            u'^0000ffConsumo de SP de [Cometa] -100.^000000',
+            u'Ao aprender [Distorção Arcana] nv.5:',
+            u'^0000ffDano de [Zero Absoluto] e [Esquife de Gelo] +50%.^000000',
+            u'Ao aprender [Maestria Arcana] nv.5:',
+            u'^0000ffPós-conjuração -30%.^000000',
+            u'Tipo: ^777777Acessório^000000',
+            u'DEF: ^7777772^000000 DEFM: ^7777770^000000',
+            u'Peso: ^77777750^000000',
+            u'Nível necessário: ^777777100^000000',
             u'Classes: ^777777Todas^000000',
         ],
     },
@@ -298,10 +380,50 @@ def recurso(dados, iid):
     if lim is None:
         raise Erro('item %d nao esta no itemInfo.lua - nao da para copiar a '
                    'arte dele' % iid)
-    m = re.search(r'identifiedResourceName = "([^"]*)"', dados[lim[0]:lim[1]])
+    # O `(?<!un)` NAO E ENFEITE, e a falta dele custou dois itens desenhando
+    # errado entre 2026-08-18 e 2026-08-20. A string "unidentifiedResourceName"
+    # TERMINA em "identifiedResourceName", e a linha do UNidentified vem
+    # primeiro no bloco - entao o regex sem lookbehind casava com ela e
+    # devolvia o recurso do item NAO IDENTIFICADO.
+    #
+    # Falha calada e so pela metade: quando as duas linhas trazem o mesmo
+    # recurso - o caso de todo Etc e todo consumivel, e das seis primeiras
+    # receitas desta tabela - o resultado e identico e nada aparece. Ela so
+    # morde EQUIPAMENTO, que e onde o kRO poe um recurso generico de "item nao
+    # identificado" no primeiro campo. Foi o que aconteceu com o Chapeu do Eden
+    # (19272): ele ficou com `캡`, o gorro generico, no lugar de
+    # `Garden_Of_Eden` - icone de inventario, imagem de collection e sprite de
+    # chao trocados. A cabeca vestida continuou certa, porque aquela vem do
+    # `accessoryid`/`View` e nao daqui, e por isso o valida_visual.py dava
+    # "8 de 8 ok" sobre um item com metade da arte errada.
+    m = re.search(r'(?<!un)identifiedResourceName = "([^"]*)"',
+                  dados[lim[0]:lim[1]])
     if not m:
         raise Erro('item %d nao tem identifiedResourceName' % iid)
     return m.group(1)
+
+
+def arte_do(dados, item):
+    u"""O recurso que a entrada vai levar: ou o literal de `recurso`, ou o do
+    item apontado por `arte_de`.
+
+    `recurso` existe para o caso "traduzir entrada alheia SEM mexer na arte".
+    Ali `arte_de` apontando para o proprio item parece a resposta obvia e e uma
+    armadilha: o script se le a si mesmo, entao basta uma rodada ruim para o
+    valor errado virar a fonte da rodada seguinte, e nao ha mais de onde
+    recuperar o certo. Escrever o nome do recurso na receita quebra esse laco -
+    a receita e versionada, o cliente nao.
+
+    So ASCII: `resourceName` e bytes CP949, e nome coreano nao sobrevive a um
+    literal de arquivo-fonte. Para esses, `arte_de`, que copia byte a byte.
+    """
+    if 'recurso' in item:
+        try:
+            return item['recurso'].encode('ascii')
+        except UnicodeEncodeError:
+            raise Erro('o `recurso` do item %d nao e ASCII - use `arte_de`, '
+                       'que copia os bytes sem interpretar' % item['id'])
+    return recurso(dados, item['arte_de'])
 
 
 def onde_entra(dados, iid):
@@ -395,7 +517,7 @@ def aplica(caminho, verificar):
         # O nome vive em unicode na receita; para o console desta maquina ele
         # vai em cp1252, como vai para o arquivo.
         nome = item['nome'].encode('cp1252', 'replace')
-        novo = monta(item, recurso(dados, item['arte_de']))
+        novo = monta(item, arte_do(dados, item))
         lim = bloco(dados, item['id'])
         if lim is None:
             pos, ant, seg = onde_entra(dados, item['id'])

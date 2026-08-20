@@ -1604,6 +1604,29 @@ Produziram diagnóstico falso e custaram retrabalho:
   script: **campo constante num gerador é uma suposição sobre todos os casos
   já vistos**, e o `--verificar` não a denuncia porque ele compara com o que o
   próprio gerador produziria.
+- **`unidentifiedResourceName` TERMINA em `identifiedResourceName`, e um regex
+  sem lookbehind casa com a linha errada.** No bloco do `itemInfo.lua` a linha
+  do *unidentified* vem primeiro, então
+  `re.search(r'identifiedResourceName = "([^"]*)"', bloco)` devolve o recurso do
+  item **não identificado** — para equipamento, o gorro/veste genérica que o kRO
+  põe ali. A saída é `(?<!un)` na âncora. Custou dois dias no `instala_item.py`
+  (2026-08-18 a 2026-08-20), e a falha é calada **e seletiva**: quando as duas
+  linhas trazem o mesmo recurso — o caso de todo `Etc` e todo consumível — o
+  resultado é idêntico e nada aparece, então seis receitas seguidas passaram
+  antes de a sétima morder. A mesma armadilha de nome espera em
+  `unidentifiedDisplayName` e `unidentifiedDescriptionName`.
+  **E o `valida_visual.py` NÃO pega isso**, porque ele confere *presença* de
+  arquivo, não *identidade* de arte: o Chapéu do Éden (19272) deu "8 de 8 ok"
+  com quatro dos oito arquivos apontando para a arte de outro item — os outros
+  quatro estavam certos porque a cabeça vestida vem do `accessoryid`/`View`, não
+  deste campo. **Validador de presença não separa "tem arte" de "tem a arte
+  certa".**
+  Uma consequência de desenho, e ela vale para qualquer gerador: **receita que
+  aponta para si mesma (`arte_de: <o próprio id>`) não se recupera de uma rodada
+  ruim** — o valor errado vira a fonte da rodada seguinte, e o certo não existe
+  mais em lugar nenhum. Onde a intenção é "manter o que já está lá", escrever o
+  valor **por extenso** na receita versionada (o campo `recurso`), nunca relê-lo
+  do arquivo que se vai sobrescrever.
 - **O deploy NÃO sai do Windows, e o pré-voo reprova aqui por um motivo que
   não existe no servidor.** Duas coisas separadas, e as duas dão a impressão de
   que algo quebrou quando nada quebrou:

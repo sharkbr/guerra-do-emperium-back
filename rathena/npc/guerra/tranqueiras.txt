@@ -50,6 +50,43 @@
 //=      Venenoso, Espinho de Cacto e Gema Vermelha -, e por isso nao
 //=      aparecem duas vezes.
 //=
+//= EM 2026-08-20 ENTROU UM QUINTO GRUPO, e a loja foi de 55 para
+//= 59 itens: quatro MATERIAIS DE HABILIDADE, pedidos por nome pelo
+//= dono. Nao sao ingrediente de receita nenhuma - cada um e o
+//= consumivel que UMA habilidade gasta ao ser usada, que e a mesma
+//= natureza dos 55 de baixo vista de outro angulo:
+//=
+//=   6124  Flauta Uivante       [Adestrar Worg]
+//=   6122  Pincel de Grafite    SETE habilidades de Trapaceiro
+//=   6121  Pincel de Maquiagem  as SEIS Mascaras de Trapaceiro
+//=   6217  Muda de Mandragora   [Grito da Mandragora]
+//=
+//= A LIGACAO FOI LIDA DO db/re/skill_db.yml, no `Item:` do bloco
+//= de requisito de cada habilidade, e nao suposta pelo nome. Os
+//= dois pinceis surpreendem: nao servem a uma habilidade cada,
+//= servem a treze no total. O de GRAFITE e gasto por [Borrifar
+//= Tinta], [Pintar Armadilha], [Sede de Sangue], [Simbolo do
+//= Caos], [Porta Dimensional], [Copia Explosiva] e [Redemoinho de
+//= Absorcao]; o de MAQUIAGEM, pelas seis Mascaras - da Fraqueza,
+//= da Melancolia, da Tolice, da Ociosidade, do Infortunio e da
+//= Vulnerabilidade. Os nomes saem do skillinfolist.lub DESTE
+//= cliente, que e a tabela que o jogo le (regra 4.12).
+//=
+//= CONSEQUENCIA, e ela e o motivo de o grupo valer a pena: sem
+//= esta vitrine o Trapaceiro nao tinha onde comprar o insumo de
+//= TREZE das habilidades dele em Prontera.
+//=
+//= A MUDA VEIO NO MEIO DE OUTRA LISTA - a dos 43 itens que foi
+//= quase toda para as lojas do quarteirao. Ela e `Etc`, entao
+//= nenhuma das nove lojas de equipamento servia (todas sao por
+//= slot); veio para ca por decisao do dono, junto dos outros tres.
+//=
+//= OS QUATRO PASSAM NO TESTE DO npc_parse_shop, e isso foi
+//= conferido e nao suposto: os quatro tem `Sell` exatamente igual
+//= a `Buy/2` (10/5 nos tres pinceis e flauta, 2000/1000 na muda),
+//= entao `0,75*Buy` contra `1,24*Sell` da 7,50 contra 6,20 e
+//= 1500 contra 1240. Nenhum aviso sai, e nao ha lucro por clique.
+//=
 //= O QUE FICOU DE FORA DA ALQUIMIA sao dois itens, os dois por
 //= decisao do dono no dia em que o grupo entrou:
 //=
@@ -249,7 +286,7 @@ OnInit:
 	// "Tranqueiras" nao diz o que esta a venda. Cresceu junto com a
 	// vitrine em 2026-08-12, quando a alquimia entrou. Teto de 79
 	// caracteres (MESSAGE_SIZE, src/map/map.hpp:273); esta em 36.
-	placadevenda "Materiais de runa, veneno e alquimia";
+	placadevenda "Materiais de runa, veneno, alquimia e habilidade";
 	end;
 }
 
@@ -327,4 +364,10 @@ OnInit:
 //   7126    Jellopy Tamanho Família            840 z   Pocao Antiterra (x2)
 //   1012    Brasão                             250 z   Pocao Antifogo (x2)
 //
--	shop	Tranqueiras#loja	-1,7939:-1,7938:-1,969:-1,1034:-1,7030:-1,7097:-1,7221:-1,1035:-1,1096:-1,7123:-1,7002:-1,1048:-1,518:-1,716:-1,7069:-1,7099:-1,7210:-1,1025:-1,6210:-1,713:-1,7033:-1,937:-1,952:-1,939:-1,972:-1,657:-1,1093:-1,507:-1,508:-1,509:-1,510:-1,911:-1,708:-1,704:-1,7141:-1,7140:-1,7143:-1,905:-1,1059:-1,929:-1,1032:-1,1050:-1,1051:-1,950:-1,1044:-1,501:-1,503:-1,1017:-1,504:-1,1061:-1,717:-1,1057:-1,715:-1,7126:-1,1012:-1
+// ----- Materiais de habilidade - os 4 de 2026-08-20
+//   6124    Flauta Uivante                      10 z   Adestrar Worg
+//   6122    Pincel de Grafite                   10 z   7 habilidades de Trapaceiro
+//   6121    Pincel de Maquiagem                 10 z   as 6 Mascaras de Trapaceiro
+//   6217    Muda de Mandrágora               2.000 z   Grito da Mandragora
+//
+-	shop	Tranqueiras#loja	-1,7939:-1,7938:-1,969:-1,1034:-1,7030:-1,7097:-1,7221:-1,1035:-1,1096:-1,7123:-1,7002:-1,1048:-1,518:-1,716:-1,7069:-1,7099:-1,7210:-1,1025:-1,6210:-1,713:-1,7033:-1,937:-1,952:-1,939:-1,972:-1,657:-1,1093:-1,507:-1,508:-1,509:-1,510:-1,911:-1,708:-1,704:-1,7141:-1,7140:-1,7143:-1,905:-1,1059:-1,929:-1,1032:-1,1050:-1,1051:-1,950:-1,1044:-1,501:-1,503:-1,1017:-1,504:-1,1061:-1,717:-1,1057:-1,715:-1,7126:-1,1012:-1,6124:-1,6122:-1,6121:-1,6217:-1

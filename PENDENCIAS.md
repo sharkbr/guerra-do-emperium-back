@@ -2343,6 +2343,137 @@ chega ao jogador por **patch** (`CLAUDE.md` §4.18) — o que a entrega de
 
 ---
 
+## 1z3. Os 41 itens de 2026-08-20 — falta o patch, o deploy e ver em jogo (2026-08-20)
+
+A lista de 43 itens do dono foi entregue em **41**, em cinco destinos. Nada
+disto foi visto em jogo: **o servidor estava fora do ar durante a sessão
+inteira**, e nenhum comando de recarga foi dado.
+
+O que foi feito está no `HISTORICO.md`, seção *"Quarenta e três itens em cinco
+destinos"*. O que falta é isto.
+
+### O que recarrega, na ordem
+
+```
+@reloaditemdb        # PRIMEIRO - senao a vitrine sobe sem o item novo, calada
+@reloadscript        # as nove lojas, a Tranqueiras e o Ze do Caixao
+@reloadbarterdb      # a Maquina de Sombrios Gerais - NAO pega com @reloadscript
+```
+
+A ordem do primeiro par não é gosto: o `npc_parse_shop` descarta item que não
+esteja no `item_db` em memória (`npc.cpp:4142`) e o aviso some sob centenas de
+`[Warning]` inofensivos (`CLAUDE.md` §5).
+
+E **relogar antes de testar**: três itens nasceram nesta rodada
+(`db/guerra/item_db.yml`) e o `item_db_lojas.yml` mexeu em 1706 `Buy`. Nada aí
+muda `Locations:`, então a armadilha do item inequipável não se aplica — mas
+com o servidor subindo do zero a questão nem se coloca.
+
+### O PATCH, que é a metade que o deploy não leva
+
+**Metade desta entrega mora em `C:\GuerraDoEmperium\cliente\`** e só chega ao
+jogador por patch (`CLAUDE.md` §4.18, `RECEITAS.md` §11):
+
+| o que | onde |
+|---|---|
+| 8 entradas novas no `itemInfo.lua` | `SystemEN\LuaFiles514\itemInfo.lua` |
+| a tradução do 490029 (nome + descrição) | idem |
+| o conserto do Chapéu do Éden (19272) | idem |
+| 24 arquivos de arte de item (6 itens × 4) | `data\sprite\`, `data\texture\` |
+| 6 arquivos de arte de manto (2589) | `data\sprite\` |
+
+**Sem o patch, para quem já instalou:** os oito itens novos aparecem **sem
+nome** na vitrine (é o "Unknown Item" com sprite de maçã — §5), o 490029
+continua em inglês, e o Chapéu do Éden continua com o gorro genérico de item
+não identificado.
+
+Os oito que precisam do patch para ter nome:
+
+```
+450291  Graca Alcancada          470321  Sapato Fantasma
+ 19252  Orelhas de Kardui        460000  Egide das Divindades
+470318  Galocha Fantasma         490250  Anel Transcendental
+470300  Salto Fantasma           450163  Manto do Cientista
+```
+
+### A Ferramenta Mágica de Gelo (490029) — falta a arte, e a decisão é do dono
+
+Foi o único item da lista que **não entrou em vitrine nenhuma**. Não é falha do
+servidor: ela existe inteira em `db/re/item_db_equip.yml`, com script de dezoito
+linhas, e a entrada de cliente dela já está em português.
+
+**O que falta são os quatro arquivos de arte** do recurso
+`Geffenia_Magictool_Ice`, e eles não existem em lugar nenhum que alcançamos:
+
+- o nosso `data.grf` de 2021-11-03 — `grf.py find magictool` devolve zero;
+- o `data.grf` do bRO — idem;
+- o `iteminfo_new.lub` do bRO — **o ID não existe lá**, nem nenhum outro da
+  família Magictool (varridos os 18845 por nome e por `identifiedResourceName`).
+
+É item de **jRO** (`Server = "jRO"` na entrada do ROenglishRE), e o kRO de 2021
+não o desenhava.
+
+**A saída existe e é de uma linha, mas é decisão do dono**, porque é dar a ele o
+desenho de outro item: o campo `recurso` do `instala_item.py` aponta o
+`identifiedResourceName` para o de um acessório qualquer que já desenhe, e a
+peça passa a validar. Depois disso ela entra no Acessorista como as outras.
+
+```
+1. escolher o doador de arte (decisao do dono)
+2. trocar o 'recurso' da entrada do 490029 em ferramentas/instala_item.py
+3. python instala_item.py --verificar   # e depois sem --verificar
+4. python valida_visual.py --id 490029  # tem que dar 0
+5. por o 490029 na linha do shop do Acessorista
+6. python zera_revenda_das_lojas.py  (e --conferir)
+7. patch de cliente + deploy
+```
+
+### O que conferir em jogo, quando o servidor subir
+
+- **As nove lojas abrem**, e cada uma com a contagem certa: Chapeleiro 22,
+  Ocleiro 36, Retoqueiro 13, Senhor das Armas 51, Lorde das Armaduras 23,
+  Escudeiro 16, Capeiro 29, Sapateiro 31, Acessorista 59.
+- **A Tranqueiras foi a 59 itens** e a placa dela mudou de assunto
+  (*"Materiais de runa, veneno, alquimia e habilidade"*).
+- **O Zé do Caixão foi a nove**, e a Caixa de Elmos Especiais entrega um dos
+  cinco elmos do grupo.
+- **A Máquina de Sombrios Gerais foi a doze**, com as três peças Sombrias a 10
+  Moedas Novas. A janela de troca é `@reloadbarterdb`.
+- **Os três itens novos equipam**: Sapato Fantasma (470321), Égide das
+  Divindades (460000) e Anel Transcendental (490250). O escudo deve desenhar
+  como Escudo Espelho (`View: 4`).
+- **O conjunto [Aura Fantasma]** fecha com o Sapato Fantasma + Aura Fantasma
+  (19439), com FOR base 130 ou mais.
+- **As Asas de Arcanjo Caído (2589) desenham nas costas** — a arte de manto foi
+  instalada nesta rodada, e o cliente só lê a tabela na inicialização.
+- **O Manto do Cientista (450163) não quebra mais** com `NPC_ARMORBRAKE`.
+
+### O que já foi conferido, e não precisa de olho
+
+- **arte:** 45 dos 46 itens deram completo no `valida_visual.py`; o 46º é o
+  490029, acima;
+- **revenda:** `zera_revenda_das_lojas.py --conferir` diz *"nenhum item das
+  lojas de 1 zeny revende por mais do que custa"*, com 1706 itens medidos;
+- **os quatro da Tranqueiras** passam no teste do `npc_parse_shop` (`Sell` =
+  `Buy/2` nos quatro), então nenhum aviso sai e o lucro por clique é zero;
+- **os cinco elmos dentro da caixa** existem nos dois lados e têm arte 8 de 8;
+- **os YAML** todos parseiam (`item_db.yml`, `item_combos.yml`,
+  `barters_guerra.yml`, `item_db_lojas.yml`);
+- **os `.txt` de NPC** não têm linha fora do padrão antes da primeira definição
+  — a conferência que a §5 pede, porque uma linha ruim mata o arquivo inteiro.
+
+### Os quatro conjuntos que o Sapato Fantasma promete e não entrega
+
+A descrição do bRO do 470321 traz cinco conjuntos. O **[Aura Fantasma]** foi
+espelhado em `db/guerra/item_combos.yml`; os outros quatro — **[Bate-Estacas
+Motorizado]**, **[Chave Maxi]**, **[Estal]** e **[Injetor Acoplável]** — ficaram
+como `# TODO` no bloco do item. O vendor não conhece nenhum deles (nada em
+`db/re/item_combos.yml` cita calçado nessas famílias), então não havia o que
+copiar: seria escrever quatro conjuntos do zero a partir de prosa, com peças que
+também não estão em loja nossa. Entra na lista da §2.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

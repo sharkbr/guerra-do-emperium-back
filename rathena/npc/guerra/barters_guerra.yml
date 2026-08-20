@@ -823,6 +823,65 @@ Body:
             Item: Moeda_Nova
             Amount: 1
 
+      # ----- AS TRES DE 2026-08-20 ------------------------------------
+      #
+      # A loja foi de nove para DOZE, e as tres quebram a regra que as
+      # nove primeiras seguiam: ELAS SAO EQUIPAMENTO. Ate aqui a vitrine
+      # era so consumivel - seis cubos e tres combinadores -, e em
+      # 2026-08-16 o Anel do Viajante saiu daqui exatamente por ser peca
+      # de vestir. A diferenca e que aquele era ACESSORIO comum e estas
+      # sao PECAS SOMBRIAS: `Shadow_Left_Accessory`, `Shadow_Armor` e
+      # `Shadow_Weapon`, ou seja o mesmo equipamento que os seis cubos ao
+      # lado sorteiam. Elas nao sao corpo estranho na maquina - sao o
+      # premio dela vendido direto, sem o sorteio.
+      #
+      # O PRECO E 10 MOEDAS NOVAS, pedido assim pelo dono, e e o mais
+      # caro da vitrine por uma ordem de grandeza (cubo 2, combinador 1).
+      # E coerente: aqui nao ha sorteio nenhum, o jogador escolhe a peca.
+      #
+      # AS TRES SAO O CONJUNTO INDESTRUTIVEL do bRO, e duas delas fecham
+      # conjunto entre si (S_Immortal_Pendant + S_Immortal_Armor, em
+      # db/re/item_combos.yml); a terceira, a de arma, fecha com o
+      # S_Solid_Earring, que NAO esta a venda em loja nossa.
+      #
+      # UMA RESSALVA DE NOME, e ela e do cliente: o pedido chamou a 24152
+      # de "Manopla Sombria Indestrutivel", e o itemInfo.lua deste cliente
+      # a chama de "Luvas Sombrias Indestrutiveis". Quem desenha o nome de
+      # cada linha da janela de troca e o CLIENTE - o pacote leva so o ID
+      # (clif.cpp:23225, regra 4.9) -, entao o que o jogador le e o
+      # segundo. Nao se conserta pelo servidor.
+      #
+      # As tres foram conferidas no `estado_item.py` antes de entrarem: as
+      # tres existem no db/re/item_db_equip.yml, as tres tem nome em
+      # portugues no itemInfo.lua deste cliente e as tres tem arte 4 de 4.
+      # Nada foi criado no db/ nem copiado para o cliente, entao esta
+      # mudanca vai ao jogador SO pelo deploy.
+      #
+      # E ELAS NAO PASSAM PELO zera_revenda_das_lojas.py, de proposito:
+      # aquele script cuida das vitrines que cobram ZENY. Esta cobra Moeda
+      # Nova, que e `NoSell` - nao ha lucro por clique a fechar aqui.
+      - Index: 9
+        Item: S_Immortal_Pendant         # 24155 Colar Sombrio Indestrutivel
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+      - Index: 10
+        Item: S_Immortal_Armor           # 24154 Malha Sombria Indestrutivel
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+      # O AegisName diz `Solid` e o nome diz "Indestrutivel" - sao a mesma
+      # coisa, e o vendor traduziu os dois assim. E o item de ARMA do
+      # conjunto, apesar de a descricao falar em luvas.
+      - Index: 11
+        Item: S_Solid_Weapon             # 24152 Luvas Sombrias Indestrutiveis
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova
+            Amount: 10
+
   # =====================================================================
   # A loja da Maquina Especial - Sala Secreta da Ordem, prt_in
   # =====================================================================

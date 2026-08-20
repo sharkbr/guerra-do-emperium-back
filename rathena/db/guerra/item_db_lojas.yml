@@ -62,6 +62,8 @@ Body:
     Buy: 1                # Trumpet_Shell
   - Id: 1993
     Buy: 1                # Concertina_Wire
+  - Id: 2168
+    Buy: 1                # Immuned_Shield
   - Id: 2185
     Buy: 1                # Magic_Reflector
   - Id: 2198
@@ -72,8 +74,14 @@ Body:
     Buy: 1                # Poo_Poo_Hat
   - Id: 2423
     Buy: 1                # Variant_Shoes
+  - Id: 2589
+    Buy: 1                # Fallen_Angel_Wing
+  - Id: 2853
+    Buy: 1                # Telekinetic_Orb
   - Id: 2936
     Buy: 1                # Recovery_Ring
+  - Id: 2979
+    Buy: 1                # Strawberry_Decoration
   - Id: 2980
     Buy: 1                # Evilspirit_Gloves
   - Id: 4001
@@ -1452,8 +1460,12 @@ Body:
     Buy: 1                # Blut_Revolver
   - Id: 13342
     Buy: 1                # Blut_Huuma
+  - Id: 15169
+    Buy: 1                # Kardui_Robe
   - Id: 15371
     Buy: 1                # Antonio_Christmas_Suit
+  - Id: 15374
+    Buy: 1                # lunar_eclipse_Armor_
   - Id: 15383
     Buy: 1                # Time_Overload_Robe
   - Id: 15405
@@ -1532,10 +1544,16 @@ Body:
     Buy: 1                # Magicstone_Of_Grace
   - Id: 19118
     Buy: 1                # Poring_Sunglasses_K_
+  - Id: 19138
+    Buy: 1                # SeraphimCoronet
+  - Id: 19163
+    Buy: 1                # CatharinaPawnBrad60
   - Id: 19241
     Buy: 1                # Magical_Booster_K
   - Id: 19245
     Buy: 1                # Crimson_Booster
+  - Id: 19252
+    Buy: 1                # KarduiEar_BR
   - Id: 19262
     Buy: 1                # Jirant_Circlet
   - Id: 19272
@@ -1648,6 +1666,10 @@ Body:
     Buy: 1                # Etran_Shirt_BR
   - Id: 20925
     Buy: 1                # Commander_manteau_J
+  - Id: 20939
+    Buy: 1                # Time_Overload_Hood
+  - Id: 20940
+    Buy: 1                # Violet_Halo
   - Id: 20952
     Buy: 1                # Anony_As_Muffler
   - Id: 20986
@@ -1680,6 +1702,8 @@ Body:
     Buy: 1                # Nergal_Shoes_TW
   - Id: 22203
     Buy: 1                # Space_shoes_JP
+  - Id: 22204
+    Buy: 1                # Time_Overload_Boots
   - Id: 22224
     Buy: 1                # Fluffy_FishShoes
   - Id: 22225
@@ -1692,6 +1716,8 @@ Body:
     Buy: 1                # Class_Shadow_Cube
   - Id: 23766
     Buy: 1                # Overwhelm_Armor_Box
+  - Id: 23767
+    Buy: 1                # Powerful_Helm_Box
   - Id: 23772
     Buy: 1                # EP17_1_SPC01
   - Id: 23806
@@ -2136,6 +2162,8 @@ Body:
     Buy: 1                # Archpriest_Ring
   - Id: 28433
     Buy: 1                # Luminous_Blue_Stone
+  - Id: 28434
+    Buy: 1                # Boxer_Glove
   - Id: 28437
     Buy: 1                # ArchPriest_Glove
   - Id: 28438
@@ -2150,6 +2178,8 @@ Body:
     Buy: 1                # ChemicalGlove
   - Id: 28564
     Buy: 1                # Valkyrie_Drop
+  - Id: 28565
+    Buy: 1                # Perverse_Demon_Mask
   - Id: 28572
     Buy: 1                # Celine_Brooch_BR
   - Id: 28596
@@ -2326,6 +2356,8 @@ Body:
     Buy: 1                # C_Vassalage_Necklace
   - Id: 32007
     Buy: 1                # Jirant_Spear
+  - Id: 32013
+    Buy: 1                # Metal_Stick
   - Id: 32014
     Buy: 1                # Blut_Spear
   - Id: 32100
@@ -2336,6 +2368,8 @@ Body:
     Buy: 1                # Variant_Blade_Whip
   - Id: 32206
     Buy: 1                # Prta_Mil_Glove
+  - Id: 32221
+    Buy: 1                # Time_Overload_Ring
   - Id: 32258
     Buy: 1                # RingofJupiter
   - Id: 32262
@@ -2488,6 +2522,8 @@ Body:
     Buy: 1                # C_L_Magestic_Goat2
   - Id: 400093
     Buy: 1                # C_18y_Hat_TW
+  - Id: 400113
+    Buy: 1                # Victory_Ear_JP
   - Id: 400131
     Buy: 1                # C_Diadem_Of_Bruenhild
   - Id: 400133
@@ -3000,6 +3036,8 @@ Body:
     Buy: 1                # C_Starry_Ribbon_Twin
   - Id: 420163
     Buy: 1                # C_Protect_Cloth_B
+  - Id: 420164
+    Buy: 1                # Sleep_RedSheep
   - Id: 420165
     Buy: 1                # C_Tent
   - Id: 420170
@@ -3162,8 +3200,14 @@ Body:
     Buy: 1                # Sturdy_Armor_Guerra
   - Id: 450132
     Buy: 1                # Magical_Cloth
+  - Id: 450163
+    Buy: 1                # White_Lily_Robe_
+  - Id: 450165
+    Buy: 1                # Striking_Mail
   - Id: 450179
     Buy: 1                # Celine_Dress
+  - Id: 450208
+    Buy: 1                # Paracelsus_Coat
   - Id: 450216
     Buy: 1                # Twinhead_dragon_Mail_J
   - Id: 450222
@@ -3178,10 +3222,16 @@ Body:
     Buy: 1                # Death_Bringer
   - Id: 450257
     Buy: 1                # Platinum_Arbitrator
+  - Id: 450258
+    Buy: 1                # Loud_Park
   - Id: 450287
     Buy: 1                # Robe_of_Devotee
+  - Id: 450291
+    Buy: 1                # Amazing_Grace
   - Id: 450338
     Buy: 1                # Screaming_Ghoost_Party
+  - Id: 460000
+    Buy: 1                # Divinity_Aegis
   - Id: 460003
     Buy: 1                # Feather_Shield
   - Id: 460023
@@ -3208,10 +3258,14 @@ Body:
     Buy: 1                # Elemental_BootsK
   - Id: 470037
     Buy: 1                # Military_Boots_IL_
+  - Id: 470048
+    Buy: 1                # Striking_Shoes
   - Id: 470057
     Buy: 1                # Chaser_Shoes_
   - Id: 470061
     Buy: 1                # Cylinder_Boots_
+  - Id: 470084
+    Buy: 1                # Rune_Greave_JP
   - Id: 470106
     Buy: 1                # Shoes_Of_Judex_
   - Id: 470112
@@ -3226,6 +3280,12 @@ Body:
     Buy: 1                # Twinhead_dragon_Boots
   - Id: 470293
     Buy: 1                # Virtue_Shoes_BR
+  - Id: 470300
+    Buy: 1                # aegis_470300
+  - Id: 470318
+    Buy: 1                # aegis_470318
+  - Id: 470321
+    Buy: 1                # Phantom_Shoes
   - Id: 480023
     Buy: 1                # Arabian_Manteau
   - Id: 480045
@@ -3324,6 +3384,10 @@ Body:
     Buy: 1                # Themis_Balance
   - Id: 490096
     Buy: 1                # Ring_Of_Hunter
+  - Id: 490098
+    Buy: 1                # Ring_of_Pazuzu
+  - Id: 490099
+    Buy: 1                # Thanatos_Pendant
   - Id: 490102
     Buy: 1                # Skull_Ring
   - Id: 490104
@@ -3350,6 +3414,8 @@ Body:
     Buy: 1                # C_Valkyrie_Hair
   - Id: 490243
     Buy: 1                # Ring_of_SilverClaw
+  - Id: 490250
+    Buy: 1                # Transcendence_Ring
   - Id: 490272
     Buy: 1                # Harvest_Festival
   - Id: 490290

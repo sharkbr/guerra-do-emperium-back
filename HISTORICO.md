@@ -12133,3 +12133,261 @@ com o caminho inteiro para quando o dono decidir se vale.
 vitrine subiria sem ele, calada (§5). O `item_db_lojas.yml` regerado entra pelo
 mesmo `@reloaditemdb`. Nada disto é cliente: **não há patch**, e a produção
 recebe pelo `implanta.sh`, que sai do Mac.
+
+## Quarenta e três itens em cinco destinos, e o gorro que não era do Éden (2026-08-20)
+
+Pedido do dono, algumas horas depois do Zé do Caixão: uma lista de **43 itens**,
+com o destino escrito ao lado de apenas sete deles. Os outros 36 vieram sem
+destino nenhum — e foi o `Locations:` de cada um que decidiu, como manda a
+§4.14.
+
+A entrega fechou em **41 dos 43**. Um item não pôde entrar em vitrine nenhuma
+(a Ferramenta Mágica de Gelo, e o motivo está adiante) e cinco já estavam à
+venda — mas esses cinco não são perda, são a lista repetindo o que já existia.
+
+### Os cinco destinos
+
+| destino | itens | como |
+|---|---|---|
+| as nove lojas do quarteirão | **32** | `mercado_contemporaneo.txt`, 1 zeny |
+| Tranqueiras | **4** | `tranqueiras.txt`, pelo preço de compra |
+| Máquina de Sombrios Gerais | **3** | `barters_guerra.yml`, 10 Moedas Novas |
+| Zé do Caixão | **1** | `ze_do_caixao.txt`, 1 zeny |
+| nenhum | **1** | 490029 — sem arte |
+| (já estavam à venda) | 5 | 490118, 490068, 19437, 400203, 2198 |
+
+É a primeira rodada que toca **as nove lojas de equipamento de uma vez**. O
+Acessorista levou 8, o Lorde das Armaduras 7 e o Sapateiro 6; as outras seis,
+entre 1 e 3.
+
+### O `Locations:` decidiu, e o nome teria errado em quatro
+
+De novo (§4.14), e de novo o nome é a pista errada:
+
+| id | nome | o que parece | onde foi |
+|---|---|---|---|
+| 450163 | **Manto** do Cientista | capa | Lorde das Armaduras (`Armor`) |
+| 15169 | **Manto** do Kardui | capa | Lorde das Armaduras (`Armor`) |
+| 28565 | **Máscara** de Oni | chapéu | Acessorista (`Left_Accessory`) |
+| 32013 | **Perna** de Metal | calçado | Senhor das Armas (`Right_Hand`, lança) |
+
+O que muda desta vez é o que **não** aconteceu: os 38 foram conferidos um a um
+contra a linha `Tipo:`/`Equipa em:` da descrição do bRO, e o nosso `item_db` e o
+bRO **concordaram nos 38**. É a primeira rodada grande sem um único override —
+nas de 2026-08-09 e 2026-08-12 houve quatro.
+
+### Três itens não existiam no servidor, e um deles tinha armadilha
+
+Viraram a **sétima leva de placeholders** do `db/guerra/item_db.yml`:
+
+- **470321 Sapato Fantasma** — o irmão que faltava da família Fantasma;
+- **460000 Égide das Divindades** — escudo, `View: 4`;
+- **490250 Anel Transcendental** — `Left_Accessory`, +5 em tudo (+15 no 180).
+
+A armadilha é do calçado, e é a do `identifiedResourceName` (§5): o bRO chama o
+470321 de **`Runaway_P_Shoes`**, e o nosso vendor **tem esse nome** — no 470089,
+"Runaway Thoughtform Shoes". Não é o mesmo item: DEF 12 / nível 100 / HP e SP
++20% contra DEF 0 / nível 170 / ATQ da arma +5%. Reusar o nome do recurso como
+AegisName teria colidido com um item de verdade. Ele entrou como `Phantom_Shoes`.
+
+**Os bônus não foram adivinhados: foram calibrados contra o que o vendor já
+implementa.** A descrição do bRO é prosa, e a mesma prosa aparece em itens cujo
+`Script:` está escrito ali ao lado — os cinco pares da própria família Fantasma
+(470293 a 470300). Isso fixou a tabela de equivalências, que ficou registrada no
+cabeçalho da leva. A que mais engana:
+
+> **"Dano físico +N%" não é "ATQ da arma +N%".** A segunda é
+> `bonus bAtkRate,N`; a primeira é `bonus2 bAddClass,Class_All,N`, provada pelo
+> conjunto [Medalha de Honra] do `Krieger_Ring1` (2772). O bRO usa **as duas no
+> mesmo item** — o próprio 470321 —, então não há como serem sinônimos.
+
+O calçado ganhou também o conjunto **[Aura Fantasma]** espelhado em
+`db/guerra/item_combos.yml`: cópia exata do grupo de FOR que o vendor já dá aos
+quatro irmãos dele. Os outros quatro conjuntos que a descrição promete
+(Bate-Estacas Motorizado, Chave Maxi, Estal, Injetor Acoplável) ficaram como
+`# TODO` — o vendor não conhece nenhum deles, então não havia o que copiar.
+
+### A Ferramenta Mágica de Gelo: metade do pedido foi feita, e a outra metade não pode ser
+
+O pedido era duplo — *"490029 (vamos traduzir para Ferramenta Mágica de Gelo)"*.
+
+**A tradução foi feita.** A entrada de cliente estava em inglês (veio do
+ROenglishRE, `Server = "jRO"`) e foi traduzida inteira, nome e descrição, pelo
+`instala_item.py`. O bRO **não tem este ID** — nem ele nem nenhum outro da
+família Magictool, varridos os 18845 do `iteminfo_new.lub` por nome e por
+recurso —, então o texto saiu do **`Script:` do vendor**, e não de cópia. Isso
+revelou de passagem que a descrição inglesa estava **incompleta**: faltava a
+linha da Maestria Arcana (`bonus bDelayrate,-30`). Foi acrescentada.
+
+**A venda não foi.** Os quatro arquivos de arte do recurso
+`Geffenia_Magictool_Ice` **não existem** — nem no nosso `data.grf` nem no do
+bRO, conferido nos dois. Item sem arte entrega caixa de erro ao jogador (§4.4),
+então ele ficou fora da vitrine. Para entrar um dia basta escolher um doador de
+arte, e isso é decisão do dono: é dar a ele o desenho de outro item.
+`PENDENCIAS.md` §1z3.
+
+### O gorro que não era do Éden — um bug calado, de dois dias
+
+Foi achado **de raspão**, ao usar o `instala_item.py` para a tradução acima.
+
+A função `recurso()` procurava o recurso do item doador com o regex
+`identifiedResourceName = "([^"]*)"`. A string **`unidentifiedResourceName`
+termina em `identifiedResourceName`**, e a linha do *unidentified* vem primeiro
+no bloco — então o regex casava com **ela**, e o que voltava era o recurso do
+item **não identificado**.
+
+Falha calada e pela metade. Quando as duas linhas trazem o mesmo recurso — o
+caso de todo `Etc` e todo consumível, ou seja das **seis primeiras receitas** da
+tabela — o resultado é idêntico e nada aparece. Ela só morde **equipamento**, que
+é onde o kRO põe um gorro genérico de "item não identificado" no primeiro campo.
+
+E foi exatamente o que aconteceu com o **Chapéu do Éden (19272)**, a sétima
+receita, posta em 2026-08-18: ele ficou com **`캡`** — o gorro genérico — no
+ícone de inventário, na imagem de *collection* e no sprite de chão, no lugar de
+`Garden_Of_Eden`.
+
+**E o `valida_visual.py` dava "8 de 8 ok" sobre isso**, porque a cabeça vestida
+vem do `accessoryid`/`View` e não deste campo: quatro dos oito arquivos estavam
+certos, e os outros quatro apontavam para uma arte que existe — só que é a
+errada. Validador que confere *presença* não pega troca de arte por outra arte.
+
+A auto-referência agravava: `arte_de: 19272` faz o script **ler a si mesmo**,
+então bastou uma rodada ruim para o valor errado virar a fonte da rodada
+seguinte, e não havia mais de onde recuperar o certo.
+
+O conserto foi em três partes:
+
+1. `(?<!un)` no regex, com o porquê escrito ali;
+2. um campo novo, **`recurso`**, que aceita o nome do recurso **por extenso** —
+   é o que quebra o laço da auto-referência, porque a receita é versionada e o
+   cliente não;
+3. as duas receitas que apontavam para si mesmas (19272 e 490029) passaram a
+   usá-lo. O Chapéu do Éden voltou a desenhar `Garden_Of_Eden`.
+
+A regra que sobra subiu para o `CLAUDE.md` §5.
+
+### O que mais custou trabalho
+
+Onze peças, não 32:
+
+| o que faltava | quantas | ferramenta |
+|---|---|---|
+| entrada no `itemInfo.lua` | 7 | `completa_iteminfo.py` |
+| os 4 arquivos de arte | 6 | `instala_visual.py` |
+| existir no servidor | 3 | `db/guerra/item_db.yml` |
+| arte de **manto** | 1 | `instala_manto.py` |
+| `Name` em inglês no servidor | 6 | `nomes_pt_item_db.py` |
+
+(As contas se sobrepõem — o Manto do Cientista conta em três dessas linhas.) O
+`nomes_pt_item_db.py` trocou **exatamente seis linhas** do `db/re/` — as dos
+seis itens cuja entrada de cliente nasceu ou mudou nesta rodada. Nada mais se
+moveu, o que é a prova de que ele é idempotente.
+
+**Uma das onze acendeu uma promessa antiga.** O **Manto do Cientista (450163)**
+diz *"Indestrutível em batalha"* na descrição e o `Script:` do vendor não trazia
+`bonus bUnbreakableArmor` — a peça quebraria, e o jogador a perderia (§4.19). O
+`marca_indestrutiveis.py` o pegou e gerou o override. Isso só apareceu porque a
+**entrada de cliente dele nasceu nesta rodada**: a lista dos que "dizem
+Indestrutível" sai do `itemInfo.lua`, então item novo ali pode acender uma
+promessa que ninguém tinha como ver antes. É o efeito de segunda ordem que a
+regra previa, agora medido.
+
+A capa que precisou de arte de manto foi as **Asas de Arcanjo Caído (2589)**,
+`View 3`. Os **Espinhos Violeta (20940)**, `View 39`, já a tinham completa. Os
+dois `View` estão abaixo do teto de 120 que este exe desenha (§5), então
+**nenhum dos dois gastou slot doador** — continuam 28 livres.
+
+### Os quatro da Tranqueiras, e os treze usos que ninguém esperava
+
+Três foram pedidos por nome (**Flauta Uivante 6124**, **Pincel de Grafite
+6122**, **Pincel de Maquiagem 6121**) e o quarto — a **Muda de Mandrágora
+(6217)** — veio no meio da lista de equipamento. Ela é `Etc`: nenhuma das nove
+lojas do quarteirão servia, porque todas são por slot. Foi para a Tranqueiras
+por decisão do dono, com os outros três.
+
+A ligação item→habilidade foi **lida do `db/re/skill_db.yml`**, no `Item:` do
+bloco de requisito de cada uma, e não suposta pelo nome. Os dois pincéis
+surpreendem: não servem a uma habilidade cada, servem a **treze**.
+
+| item | habilidades |
+|---|---|
+| 6124 Flauta Uivante | [Adestrar Worg] |
+| 6122 Pincel de Grafite | **sete** de Trapaceiro — Borrifar Tinta, Pintar Armadilha, Sede de Sangue, Símbolo do Caos, Porta Dimensional, Cópia Explosiva, Redemoinho de Absorção |
+| 6121 Pincel de Maquiagem | as **seis** Máscaras — Fraqueza, Melancolia, Tolice, Ociosidade, Infortúnio, Vulnerabilidade |
+| 6217 Muda de Mandrágora | [Grito da Mandrágora] |
+
+Os nomes saem do `skillinfolist.lub` **deste cliente**, que é a tabela que o
+jogo lê (§4.12). Consequência prática, e o motivo de o grupo valer a pena: sem
+esta vitrine o Trapaceiro não tinha onde comprar em Prontera o insumo de treze
+das habilidades dele.
+
+**A Tranqueiras vende a `-1`, ou seja pelo `Buy` do `item_db`**, e por isso os
+quatro precisaram passar no teste do `npc_parse_shop` antes de entrar. Passam:
+os quatro têm `Sell` exatamente igual a `Buy/2` (10/5 nos três pincéis e flauta,
+2000/1000 na muda), então `0,75·Buy` contra `1,24·Sell` dá 7,50 contra 6,20 e
+1500 contra 1240. Nenhum aviso sai, e o lucro por clique é zero.
+
+### As três peças Sombrias, e a decisão de 2026-08-16 que elas não desfazem
+
+A Máquina de Sombrios Gerais foi de nove para **doze**, e as três novas — Colar
+(24155), Malha (24154) e Luvas (24152) Sombrias Indestrutíveis — são as
+**primeiras peças de vestir** daquela vitrine, a **10 Moedas Novas** cada.
+
+Isso parece contrariar 2026-08-16, quando o Anel do Viajante saiu de lá por ser
+*"a única coisa vestível entre nove consumíveis"*. Não contraria: aquele era
+acessório comum, e estas são **peças Sombrias** — `Shadow_Left_Accessory`,
+`Shadow_Armor` e `Shadow_Weapon`, o mesmo equipamento que os seis cubos ao lado
+sorteiam. O que a máquina passa a vender é o prêmio dela **sem o sorteio**, e é
+por isso que o preço pulou uma ordem de grandeza (cubo 2, combinador 1).
+
+**Uma ressalva de nome fica registrada, e ela é do cliente:** o pedido chamou a
+24152 de *"Manopla Sombria Indestrutível"*, e o `itemInfo.lua` deste cliente a
+chama de **"Luvas Sombrias Indestrutíveis"**. Quem desenha o nome de cada linha
+da janela de troca é o cliente — o pacote leva só o ID (§4.9) —, então o que o
+jogador lê é o segundo. Não se conserta pelo servidor.
+
+De passagem, o `marca_indestrutiveis.py` avisa que essas três **não têm bônus
+possível**: não existe `bUnbreakableShadow`, e elas caem no `EQP_SHADOW_GEAR`,
+que nenhuma habilidade de monstro pede. Na prática não quebram; o aviso é para
+o dia em que quebrarem.
+
+### A nona caixa do Zé do Caixão
+
+A **Caixa de Elmos Especiais (23767)** entrou no mesmo dia em que o NPC nasceu,
+com o mesmo feitio das oito: `Usable`/`Container` com um `getgroupitem` de uma
+linha. O grupo dela é o **menor da vitrine** — cinco elmos, contra os 90 do Cubo
+Sombrio de Classe —, e os cinco foram conferidos um a um (40 checagens, zero
+falta): Quepe do Cão-mandante (19300), Bênção Celestial (19249), Elmo do
+Xogunato (19263), Chapéu Chique com Pena (19296) e Quepe de Amistr (19308).
+
+### Duas divergências de cova, as duas registradas
+
+- **Morango Cristalizado (2979)** — `Slots: 1` no nosso `item_db` **e** no bRO,
+  mas o `itemInfo.lua` deste cliente de 2021 diz **0**. O nome aparece sem o
+  "[1]" e a janela de encaixe de carta não enxerga a cova. Não se conserta pelo
+  servidor (§4.9), e não veio desta leva — o `completa_iteminfo.py` não a
+  corrige de propósito, porque não toca em entrada que já existe.
+- **Égide das Divindades (460000)** — entrou com `Slots: 1`, que é o `slotCount`
+  do bRO, enquanto o pedido a escreveu sem o "[1]". Onde os dois discordam vale
+  o bRO (regra 3).
+
+### O buraco de revenda
+
+O `--conferir` do `zera_revenda_das_lojas.py` acusou lucro por clique em **8 dos
+33** que entraram em vitrine de zeny, todos de 9 z — nenhum caso grande desta
+vez. Fechado pelo caminho de sempre: `Buy: 1` por override em
+`db/guerra/item_db_lojas.yml`, regerado para **1706 itens** (eram 1673).
+
+### O que recarrega, e o que precisa de patch
+
+`@reloaditemdb` **antes** do `@reloadscript` — nesta ordem, porque o
+`npc_parse_shop` descarta item que não esteja no `item_db` em memória e a
+vitrine subiria sem ele, calada (§5). Mais `@reloadbarterdb` para a Máquina de
+Sombrios, que **não** pega com `@reloadscript`.
+
+**Metade disto é cliente e não vai pelo deploy (§4.18):** as 8 entradas novas de
+`itemInfo.lua`, a tradução do 490029, os 24 arquivos de arte de item, os 6 de
+arte de manto e o conserto do Chapéu do Éden moram em
+`C:\GuerraDoEmperium\cliente\` e só chegam ao jogador por **patch**. Sem ele, os
+seis itens novos aparecem **sem nome** na vitrine e o Chapéu do Éden continua de
+gorro genérico. `PENDENCIAS.md` §1z3.

@@ -96557,7 +96557,7 @@ Body:
       bonus bFixedCast,-.@val*100;
   - Id: 19252
     AegisName: KarduiEar_BR
-    Name: Kardui Ears
+    Name: "Orelhas de Kardui"
     Type: Armor
     Weight: 300
     Locations:
@@ -194967,7 +194967,7 @@ Body:
          bonus2 bAddSize,Size_All,20;
   - Id: 450163
     AegisName: White_Lily_Robe_
-    Name: White Lily Robe
+    Name: "Manto do Cientista"
     Type: Armor
     Weight: 900
     Defense: 40
@@ -198121,7 +198121,7 @@ Body:
       bonus bMatkRate,10*(.@r/3);
   - Id: 450291
     AegisName: Amazing_Grace
-    Name: Amazing Grace
+    Name: "Graça Alcançada"
     Type: Armor
     Weight: 1000
     Defense: 100
@@ -209610,7 +209610,7 @@ Body:
          bonus bLongAtkRate,15;
   - Id: 470300
     AegisName: aegis_470300
-    Name: Phantom Heels
+    Name: "Salto Fantasma"
     Type: Armor
     Weight: 200
     Slots: 1
@@ -209869,7 +209869,7 @@ Body:
       }
   - Id: 470318
     AegisName: aegis_470318
-    Name: Ghost Galoshes
+    Name: "Galocha Fantasma"
     Type: Armor
     Weight: 200
     Slots: 1
@@ -220352,7 +220352,7 @@ Body:
       }
   - Id: 490029
     AegisName: Geffenia_Magictool_Ice
-    Name: Geffenia Ice Magic Tool
+    Name: "Ferramenta Mágica de Gelo"
     Type: Armor
     Weight: 500
     Defense: 2

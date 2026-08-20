@@ -254,3 +254,34 @@ Body:
           - Bacsojin_Card             # 4372   - Carta Lady Branca
     Script: |
       bonus bHealPower,60;
+
+  # ----- Aura Fantasma + Sapato Fantasma -----
+  # O Sapato Fantasma (470321) e peca que o nosso vendor nao tem, criada em
+  # db/guerra/item_db.yml em 2026-08-20. O db/re/item_combos.yml ja traz este
+  # mesmo conjunto para os quatro pes de FOR da familia - Virtue_Shoes_BR
+  # (470293), aegis_470294, Lethargy_Shoes_BR (470295) e aegis_470296 -, e o
+  # Script deles nao muda de pe para pe. Entao este e COPIA EXATA daquele
+  # grupo, sem uma virgula de diferenca; a unica mudanca e o calcado citado.
+  #
+  # Sao entradas separadas, e nao uma alternativa dentro do `- Combos:` deles,
+  # porque de um arquivo de import nao se acrescenta linha a uma entrada
+  # alheia - a mesma razao da Diadema, no topo deste arquivo. O efeito e o
+  # mesmo: so um calcado cabe por vez.
+  #
+  # Ao atualizar o rathena/, conferir este contra o db/re/. Se o vendor um dia
+  # trouxer o 470321 de verdade, ele provavelmente trara este conjunto junto -
+  # e ai esta entrada vira duplicata e sai.
+  #
+  # OS OUTROS QUATRO CONJUNTOS da descricao do bRO ([Bate-Estacas Motorizado],
+  # [Chave Maxi], [Estal], [Injetor Acoplavel]) NAO estao espelhados: o vendor
+  # nao conhece nenhum deles, entao nao ha o que copiar. Ver o TODO no bloco
+  # do item em db/guerra/item_db.yml.
+  - Combos:
+      - Combo:
+          - Subject_Aura     # 19439  - Aura Fantasma
+          - Phantom_Shoes    # 470321 - Sapato Fantasma
+    Script: |
+      if (readparam(bStr)>=130) {
+         bonus bFixedCast,-500;
+         autobonus "{ bonus bStr,70; }",15,5000,BF_WEAPON;
+      }

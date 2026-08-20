@@ -2706,3 +2706,149 @@ Body:
     #      usa nos 40 e tantos itens que testam FOR base (procurar
     #      `readparam(bStr)>=120` em db/re/item_db_equip.yml); nao ha
     #      leitura de status base em script de item.
+
+# -------------------------------------------------------------------------
+# SETIMA LEVA DE PLACEHOLDERS - 2026-08-20
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das seis de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub` (`estado_item.py --id <n> --descricao`).
+#
+# Os TRES vieram do pedido de 2026-08-20 para as lojas de Prontera. Daquela
+# lista de 43 itens foram os unicos tres que faltavam no servidor E tinham
+# slot de equipamento. Um quarto tambem seria caso de leva - a Ferramenta
+# Magica de Gelo (490029) -, mas ele EXISTE no vendor: o que falta nele e
+# ARTE, e arte nao se resolve aqui. Ver a ressalva no cabecalho de
+# npc/guerra/mercado_contemporaneo.txt.
+#
+# OS TRES `AegisName` SAO PALPITE, como os das levas anteriores: o oficial
+# nao esta em tabela nenhuma que alcancamos. Os tres foram conferidos como
+# livres no item_db (vendor e nosso) antes de usar.
+#
+# E UM DELES TINHA ARMADILHA: o `identifiedResourceName` do 470321 no bRO e
+# `Runaway_P_Shoes`, e o nosso vendor TEM esse nome - no 470089 ("Runaway
+# Thoughtform Shoes"), com o `_` no 470090. NAO e o mesmo item: DEF 12 /
+# peso 200 / nivel 100 / HP e SP +20% contra DEF 0 / peso 200 / nivel 170 /
+# ATQ da arma +5%. Nome de recurso e so o DESENHO (CLAUDE.md secao 5) -
+# reusa-lo aqui teria colidido com um item de verdade. Dai `Phantom_Shoes`.
+#
+# COMO OS BONUS FORAM LIDOS. A descricao do bRO e prosa; a traducao para
+# `bonus` foi CALIBRADA contra itens que o vendor ja implementa, e nao
+# adivinhada. As equivalencias usadas, cada uma com a testemunha:
+#
+#   "ATQ da arma +N%"                  -> bonus bAtkRate,N        (470300)
+#   "Dano magico +N%"                  -> bonus bMatkRate,N       (470318)
+#   "Pos-conjuracao -N%"               -> bonus bDelayrate,-N     (22210)
+#   "Conjuracao fixa -0,5 segundos"    -> bonus bFixedCast,-500   (470300)
+#   "Dano fisico corpo a corpo +N%"    -> bonus bShortAtkRate,N   (470293)
+#   "Dano fisico a distancia +N%"      -> bonus bLongAtkRate,N    (470295)
+#   "Dano fisico contra todos os
+#    tamanhos +N%"                     -> bonus2 bAddSize,Size_All,N (470293)
+#   "Dano fisico +N%" (sem qualificar) -> bonus2 bAddClass,Class_All,N
+#                                         (conjunto [Medalha de Honra],
+#                                          Krieger_Ring1 2772)
+#   "Tolerancia a X +100%"             -> bonus2 bResEff,Eff_X,10000 (22210)
+#
+# A ultima e a que mais engana: "Dano fisico +N%" e OUTRA coisa que "ATQ da
+# arma +N%", apesar de as duas soarem igual em portugues. O bRO usa as duas
+# no MESMO item (o 470321 abaixo), entao nao ha como serem sinonimos.
+
+  - Id: 470321
+    AegisName: Phantom_Shoes
+    Name: "Sapato Fantasma"
+    # Molde: os 470293-470300 e 470317/470318 do vendor, a familia FANTASMA
+    # inteira - todos `Weight: 200`, sem `Defense`, nivel 170, refinavel, e
+    # todos com o mesmo tripe de abertura (ATQ ou MATQ +5%, HP e SP +7%) e o
+    # mesmo `bFixedCast,-500` no +10. Este e o irmao que faltava: o de
+    # Pos-conjuracao no +8 e VIT/INT no +12. Sem cova, como no bRO.
+    Type: Armor
+    Weight: 200
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bMaxHPrate,7;
+      bonus bMaxSPrate,7;
+      if (.@r>=8)
+         bonus bDelayrate,-10;
+      if (.@r>=10)
+         bonus bFixedCast,-500;
+      if (.@r>=12) {
+         bonus bVit,10;
+         bonus bInt,10;
+         bonus2 bAddClass,Class_All,15;
+      }
+    # O conjunto [Aura Fantasma] ESTA espelhado, em db/guerra/item_combos.yml
+    # - e copia exata do grupo de FOR do db/re/item_combos.yml, o mesmo que
+    # ja serve aos 470293-470296. Foi barato porque o Script daquele grupo
+    # nao muda de pe para pe.
+    #
+    # TODO os QUATRO conjuntos de arma: [Bate-Estacas Motorizado], [Chave
+    #      Maxi], [Estal] e [Injetor Acoplavel]. O vendor nao conhece
+    #      NENHUM deles - nao ha `- Combos:` citando calcado nessas
+    #      familias -, entao nao ha o que espelhar: seria escrever quatro
+    #      conjuntos do zero a partir de prosa, com pecas que tambem nao
+    #      estao em loja nossa. Conjunto pela metade da bonus fantasma, e e
+    #      a mesma razao dos TODOs das levas anteriores.
+
+  - Id: 460000
+    AegisName: Divinity_Aegis
+    Name: "Égide das Divindades"
+    # `View: 4` e o `ClassNum` que o bRO da a este ID - 4 e o Escudo Espelho
+    # na numeracao de escudo deste cliente, a mesma que o vendor usa no
+    # Escudo Celestial (2168, tambem View 4). Sem View o escudo desenha como
+    # Guarda.
+    # "DEFM: 0" na tela e por isso nao ha `bonus bMdef` nenhum, apesar de
+    # quase todo escudo do vendor ter um.
+    Type: Armor
+    Weight: 1200
+    Defense: 150
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    View: 4
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,15+(2*.@r);
+      if (.@r>=8) {
+         bonus bDelayrate,-10;
+         skill "AL_HEAL",10;
+      }
+      if (.@r>=10) {
+         bonus bDelayrate,-10;
+         bonus2 bResEff,Eff_Stone,10000;
+         bonus2 bResEff,Eff_Bleeding,10000;
+      }
+    # A "Efetividade de cura +15%" e o "+2% a cada refino" viraram UMA linha
+    # porque somam no mesmo lugar: bHealPower e acumulativo. Escrever duas
+    # daria o mesmo numero e uma segunda fonte para divergir.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido e nao suposto: nada em
+    # db/re/item_combos.yml cita escudo desta familia.
+
+  - Id: 490250
+    AegisName: Transcendence_Ring
+    Name: "Anel Transcendental"
+    # `Left_Accessory` e nao `Both_Accessory`: a descricao do bRO diz "Tipo:
+    # Aces. Esquerdo" por extenso, e e ela que decide (regra 4.14). Vale
+    # lembrar que a caixa escrita "Acc. Left" da janela e a da NOSSA direita
+    # - as duas nao estao invertidas (CLAUDE.md secao 5).
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAllStats,5;
+      if (BaseLevel>=180)
+         bonus bAllStats,15;
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.

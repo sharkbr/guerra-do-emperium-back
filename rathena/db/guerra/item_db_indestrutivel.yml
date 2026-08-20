@@ -304,6 +304,19 @@ Body:
       bonus2 bMagicAddRace,RC_Plant,.@a;
       bonus2 bMagicAddEle,Ele_Holy,.@a;
       bonus2 bMagicAddEle,Ele_Poison,.@a;
+  - Id: 450163
+    AegisName: White_Lily_Robe_
+    Script: |
+      bonus bUnbreakableArmor;
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+      bonus bDelayrate,-.@r;
+      if (.@r>=7)
+         bonus bMatkRate,10;
+      if (.@r>=9)
+         bonus bMatkRate,10;
   - Id: 450180
     AegisName: Cute_Frog_Raincoat
     Script: |

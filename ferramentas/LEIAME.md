@@ -310,10 +310,12 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
-A tabela tem sete itens em 2026-08-18 — 30999 Maçã da Inocência, 30998 Moeda
+A tabela tem **nove itens em 2026-08-20** — 30999 Maçã da Inocência, 30998 Moeda
 Nova, 30997 e 30996 (as duas caixas da Máquina), 30995 Caveira Humana, que
 copia a arte da Caveira comum (7420), e 30994 Rolinho de Arroz, o prêmio de
-guerra, que copia a arte do Bolinho de Arroz (555).
+guerra, que copia a arte do Bolinho de Arroz (555). As duas últimas não são
+itens nossos: 19272 Chapéu do Éden e 490029 Ferramenta Mágica de Gelo, os dois
+casos de *"traduzir entrada alheia"* — ver as duas seções abaixo.
 
 **Em 2026-08-18 a tabela ganhou `covas` e `visual`, e a sétima entrada.** Os
 dois campos são opcionais e valem zero quando faltam — as seis receitas antigas
@@ -344,6 +346,55 @@ que é a caixa genérica de consumível) para **12710, a própria Poção de Guy
 a pedido: a caixa passa a ter a cara do que tem dentro. É um exemplo do que o
 campo serve: trocar o desenho de um item nosso é uma linha da tabela e uma
 rodada do script, sem tocar em arte nenhuma.
+
+### O `un` que faltava no regex, e dois dias de gorro errado (2026-08-20)
+
+A tabela ganhou uma **nona entrada** e o script ganhou um **campo novo**, os dois
+pelo mesmo achado.
+
+A nona é a **Ferramenta Mágica de Gelo (490029)**, e é o segundo caso do tipo
+"Chapéu do Éden": item que existe inteiro no vendor e cuja entrada de cliente
+está na língua errada — aqui, **inglês** (veio do ROenglishRE, `Server = "jRO"`).
+O `completa_iteminfo.py` não serve, porque **o bRO não tem este ID**; o texto foi
+traduzido à mão a partir do `Script:` do vendor, o que de passagem mostrou que a
+descrição inglesa estava incompleta (faltava a linha da Maestria Arcana).
+
+Ao fazer isso apareceu o bug. A função `recurso()` procurava
+
+```python
+re.search(r'identifiedResourceName = "([^"]*)"', bloco)
+```
+
+e **`unidentifiedResourceName` termina em `identifiedResourceName`**. A linha do
+*unidentified* vem primeiro no bloco, então o regex casava com ela e devolvia o
+recurso do item **não identificado**.
+
+**A falha é calada e seletiva.** Quando as duas linhas trazem o mesmo recurso — o
+caso de todo `Etc` e todo consumível, ou seja das **seis primeiras receitas** —
+o resultado é idêntico e nada aparece. Ela só morde **equipamento**, que é onde o
+kRO põe um gorro/veste genérica de "item não identificado" no primeiro campo.
+
+Foi o que aconteceu com o **Chapéu do Éden (19272)**, a sétima receita, de
+2026-08-18 a 2026-08-20: ele ficou com `캡`, o gorro genérico, no ícone de
+inventário, na imagem de *collection* e no sprite de chão.
+
+**E o `valida_visual.py` dava "8 de 8 ok"** sobre isso: quatro dos oito arquivos
+estavam certos (a cabeça vestida vem do `accessoryid`/`View`, não deste campo) e
+os outros quatro apontavam para uma arte que **existe** — só que é a de outro
+item. Validador que confere *presença* não pega troca de arte por arte.
+
+O conserto foi `(?<!un)` na âncora. E veio com um segundo, de desenho:
+
+**`recurso` — o nome do recurso por extenso, no lugar de `arte_de`.** Só ASCII
+(nome coreano continua sendo caso de `arte_de`, que copia byte a byte). Ele
+existe para o caso *"traduzir entrada alheia sem mexer na arte"*, em que
+`arte_de: <o próprio id>` parece a resposta óbvia e é uma armadilha: **o script
+se lê a si mesmo**, então basta uma rodada ruim para o valor errado virar a fonte
+da rodada seguinte, e não há mais de onde recuperar o certo. A receita é
+versionada; o cliente não. As duas entradas que apontavam para si mesmas (19272 e
+490029) passaram a usá-lo.
+
+A regra geral subiu para o `CLAUDE.md` §5.
 
 ## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
 

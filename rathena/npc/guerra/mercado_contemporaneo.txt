@@ -488,6 +488,132 @@
 //= cliente\ e so chegam ao jogador por PATCH. So a linha da loja
 //= e o item_db andam pelo git.
 //=
+//= RODADA DE 2026-08-20: 32 ITENS EM TODAS AS NOVE LOJAS
+//=
+//= A primeira rodada que toca as nove de uma vez. Onde caiu cada
+//= peca:
+//=
+//=   Acessorista             +8
+//=   Lorde das Armaduras     +7
+//=   Sapateiro               +6
+//=   Ocleiro                 +3
+//=   Capeiro                 +3
+//=   Escudeiro               +2
+//=   Chapeleiro              +1
+//=   Retoqueiro              +1
+//=   Senhor das Armas        +1
+//=
+//= O PEDIDO TINHA 43 NUMEROS e cinco destinos, nao um: tres itens
+//= foram para a Tranqueiras (mais a Muda de Mandragora, que veio
+//= no meio da lista de equipamento), tres para a Maquina de
+//= Sombrios Gerais e um para o Ze do Caixao. Os 38 que sobraram
+//= sao os que este arquivo recebe - e SEIS deles nao viraram
+//= linha de loja:
+//=
+//=   490118  Anel de Adoramus         ja estava no Acessorista
+//=   490068  Anel de Venus            ja estava no Acessorista
+//=    19437  Adorno Florido           ja estava no Ocleiro
+//=   400203  Quepe do Miau-mirante    ja estava no Chapeleiro
+//=     2198  Escudo dos Esplendidos   ja estava no Escudeiro
+//=   490029  Ferramenta Magica de Gelo  NAO TEM ARTE - ver abaixo
+//=
+//= A FERRAMENTA MAGICA DE GELO (490029) FICOU DE FORA, e a razao
+//= nao e o servidor: ela existe inteira em db/re/item_db_equip.yml,
+//= com script de dezoito linhas. O que falta sao os QUATRO
+//= ARQUIVOS DE ARTE do `identifiedResourceName`
+//= (`Geffenia_Magictool_Ice`), e eles nao existem nem no nosso
+//= data.grf nem no do bRO - conferido nos dois. Item sem arte
+//= entrega caixa de erro ao jogador (regra 4.4), entao ele nao
+//= pode entrar em vitrine nenhuma.
+//=
+//= O PEDIDO DELA ERA DUPLO, e a outra metade FOI FEITA: "vamos
+//= traduzir para Ferramenta Magica de Gelo". A entrada de cliente
+//= estava em ingles (veio do ROenglishRE, `Server = "jRO"`) e foi
+//= traduzida inteira - nome e descricao - por
+//= ferramentas/instala_item.py, com o `Name` do servidor
+//= sincronizado depois pelo nomes_pt_item_db.py. O bRO NAO TEM
+//= este ID (nem nenhum outro da familia Magictool), entao o texto
+//= foi traduzido a mao a partir do `Script:` do vendor, e nao
+//= copiado.
+//=
+//= PARA ELA ENTRAR UM DIA basta escolher um doador de arte: o
+//= campo `recurso` do instala_item.py aponta o
+//= `identifiedResourceName` para o de outro acessorio, e a peca
+//= passa a desenhar. E DECISAO DO DONO, porque e dar a ela o
+//= desenho de outro item. Ver PENDENCIAS.md.
+//=
+//= DE NOVO FOI O `Locations:` QUEM DECIDIU A LOJA (regra 4.14), e
+//= de novo o nome teria errado em quatro:
+//=
+//=   450163  "Manto do Cientista"   e ARMADURA -> Lorde das Armaduras
+//=   15169   "Manto do Kardui"      idem
+//=   28565   "Mascara de Oni"       e ACESSORIO -> Acessorista
+//=   32013   "Perna de Metal"       e LANCA     -> Senhor das Armas
+//=
+//= NAO HOUVE OVERRIDE NESTA RODADA: os 38 foram conferidos um a um
+//= contra a linha "Tipo:"/"Equipa em:" da descricao do bRO, e o
+//= nosso item_db e o bRO concordaram nos 38. E a primeira rodada
+//= grande sem uma divergencia sequer.
+//=
+//= O QUE CUSTOU TRABALHO foram onze pecas, nao 32:
+//=
+//=   7 estavam fora do itemInfo.lua      -> completa_iteminfo.py
+//=   6 estavam sem os 4 arquivos de arte -> instala_visual.py
+//=   3 nao existiam no servidor          -> db/guerra/item_db.yml
+//=   1 precisou de arte de MANTO         -> instala_manto.py
+//=   6 estavam com o `Name` em INGLES no servidor
+//=                                       -> nomes_pt_item_db.py
+//=
+//= (As contas se sobrepoem: o Manto do Cientista conta em tres
+//= linhas dessas.)
+//=
+//= UMA DAS ONZE ENTROU NA LISTA DO "INDESTRUTIVEL", e isso so
+//= apareceu porque a entrada de cliente dela nasceu nesta rodada: o
+//= MANTO DO CIENTISTA (450163) diz "Indestrutivel em batalha" na
+//= descricao e o `Script:` do vendor nao trazia
+//= `bonus bUnbreakableArmor`. O marca_indestrutiveis.py o pegou e
+//= gerou o override (regra 4.19) - sem ele a peca quebraria e o
+//= jogador a perderia. E o efeito de segunda ordem que a regra
+//= previa: item novo no itemInfo.lua pode acender uma promessa
+//= antiga que ninguem tinha como ver antes.
+//=
+//= AS TRES QUE NAO EXISTIAM viraram a SETIMA LEVA DE PLACEHOLDERS
+//= do db/guerra/item_db.yml: Sapato Fantasma (470321), Egide das
+//= Divindades (460000) e Anel Transcendental (490250). O calcado
+//= ganhou tambem o conjunto [Aura Fantasma] espelhado em
+//= db/guerra/item_combos.yml - copia exata do grupo de FOR que o
+//= vendor ja da aos quatro irmaos dele.
+//=
+//= E O `identifiedResourceName` DO CALCADO ERA ARMADILHA: o bRO
+//= chama o 470321 de `Runaway_P_Shoes`, e o nosso vendor TEM esse
+//= nome, no 470089. Nao e o mesmo item - as fichas nao batem em
+//= nada. Nome de recurso e so o DESENHO (CLAUDE.md secao 5).
+//=
+//= A CAPA QUE PRECISOU DE ARTE DE MANTO foi as Asas de Arcanjo
+//= Caido (2589), `View 3`. Os Espinhos Violeta (20940), `View 39`,
+//= ja tinham a arte completa neste cliente. Os DOIS Views estao
+//= abaixo do teto de 120 que este exe desenha, entao NENHUM dos
+//= dois gastou slot doador - continuam 28 livres.
+//=
+//= UMA DIVERGENCIA DE COVA FICA REGISTRADA, e ela e do CLIENTE: o
+//= Morango Cristalizado (2979) e `Slots: 1` no nosso item_db E no
+//= bRO, mas o itemInfo.lua deste cliente de 2021 diz 0. O nome
+//= aparece sem o "[1]" e a janela de encaixe de carta nao enxerga
+//= a cova. Nao se conserta pelo servidor - quem desenha o nome e o
+//= cliente (regra 4.9) - e nao veio desta leva. O
+//= completa_iteminfo.py nao a corrige de proposito: ele nao toca
+//= em entrada que ja existe.
+//=
+//= UMA SEGUNDA DIVERGENCIA, menor: a Egide das Divindades (460000)
+//= entrou com `Slots: 1`, que e o `slotCount` do bRO, enquanto o
+//= pedido a escreveu sem o "[1]". Onde os dois discordam vale o
+//= bRO (regra 3).
+//=
+//= METADE DISTO E CLIENTE E NAO VAI PELO DEPLOY (regra 4.18):
+//= itemInfo.lua, arte de item e arte de manto moram em
+//= C:\GuerraDoEmperium\cliente\ e so chegam ao jogador por PATCH.
+//= So a linha da loja, o item_db e o item_combos andam pelo git.
+//=
 //= erro de comando desconhecido e a loja nao sobe.
 //=
 //============================================================
@@ -581,6 +707,9 @@
 // Ver o cabecalho do arquivo para o porque de cada uma.
 //   + 19272   Chapeu do Eden           [1]  (View 1653)
 //   + 19426   Coroa do Espirito do Rei      (View 1118)
+// RODADA DE 2026-08-20: entrou 1, e a loja foi de 21 para 22.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +   19163  Boneca da Succubus      [1]
 prontera,151,173,4	script	Chapeleiro	1_M_MERCHANT,{
 	callshop "Chapeleiro#loja",0;
 	end;
@@ -589,7 +718,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1,19272:1,19426:1
+-	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1,19272:1,19426:1,19163:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -789,6 +918,11 @@ OnInit:
 // revendia por 1.500.000 a 1 zeny de vitrine, ou seja 1.499.999 z
 // por clique. Fechado com o resto pelo `Buy: 1` de
 // db/guerra/item_db_lojas.yml.
+// RODADA DE 2026-08-20: entraram 3, e a loja foi de 33 para 36.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +  400113  Adorno da Vitória
+//   +   19138  Diadema do Serafim
+//   +   19252  Orelhas de Kardui                    estava fora do itemInfo.lua
 prontera,155,173,4	script	Ocleiro	1_F_MERCHANT_01,{
 	callshop "Ocleiro#loja",0;
 	end;
@@ -797,7 +931,7 @@ OnInit:
 	placadevenda "Cabeça meio";
 	end;
 }
--	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:1,410065:1,410058:1,410028:1,410024:1,19437:1,19380:1,19495:1,410186:1,410130:1,410110:1,410097:1,410009:1,410004:1,19452:1,5592:1,19085:1,19118:1,19245:1,18609:1,19241:1
+-	shop	Ocleiro#loja	-1,19455:1,2204:1,19446:1,19444:1,410125:1,410142:1,410140:1,18894:1,410067:1,410026:1,5985:1,410010:1,410089:1,410065:1,410058:1,410028:1,410024:1,19437:1,19380:1,19495:1,410186:1,410130:1,410110:1,410097:1,410009:1,410004:1,19452:1,5592:1,19085:1,19118:1,19245:1,18609:1,19241:1,400113:1,19138:1,19252:1
 
 // Cabeca baixo. Unica fileira que saiu inteira, os quatro.
 //
@@ -886,6 +1020,9 @@ OnInit:
 // nada sobre arte. Curada pelo par estende_accessoryid.py (o
 // View 2337 nao existia no accessoryid de 2021) mais
 // instala_visual.py. Os sete fecham 8 de 8 hoje.
+// RODADA DE 2026-08-20: entrou 1, e a loja foi de 12 para 13.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +  420164  Carneiro Flutuante
 prontera,159,173,4	script	Retoqueiro	4_M_HUMERCHANT,{
 	callshop "Retoqueiro#loja",0;
 	end;
@@ -894,7 +1031,7 @@ OnInit:
 	placadevenda "Cabeça baixo";
 	end;
 }
--	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:1,15923:1,15922:1,15921:1,15920:1
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:1,15923:1,15922:1,15921:1,15920:1,420164:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 
@@ -973,6 +1110,9 @@ OnInit:
 // QUATRO PRECISARAM DE ENTRADA DE CLIENTE (28617, 540018, 550095
 // e 590014), e tres desses quatro tambem estavam sem os 4
 // arquivos de arte - apareceriam sem nome e com caixa modal.
+// RODADA DE 2026-08-20: entrou 1, e a loja foi de 50 para 51.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +   32013  Perna de Metal          [3]          e LANÇA, nao calcado
 prontera,151,167,4	script	Senhor das Armas	1_F_MERCHANT_02,{
 	callshop "Senhor das Armas#loja",0;
 	end;
@@ -981,7 +1121,7 @@ OnInit:
 	placadevenda "Armas";
 	end;
 }
--	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1,32013:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -1009,6 +1149,15 @@ OnInit:
 //   + 450132  Robe Magico             [1]
 // Ele revendia por 100.000 antes do `Buy: 1` - o segundo maior
 // buraco da leva, atras so do Fone Danificado.
+// RODADA DE 2026-08-20: entraram 7, e a loja foi de 16 para 23.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +  450291  Graça Alcançada        [1]           estava fora do itemInfo.lua
+//   +  450208  Bata de Operação Branca [1]
+//   +  450165  Armadura do Mensageiro  [1]
+//   +  450258  Tremor Sonoro           [1]
+//   +   15374  Armadura Eclipse        [1]
+//   +  450163  Manto do Cientista      [1]          e ARMADURA, nao capa
+//   +   15169  Manto do Kardui         [1]          e ARMADURA, nao capa
 prontera,155,167,4	script	Lorde das Armaduras	1_M_MERCHANT,{
 	callshop "Lorde das Armaduras#loja",0;
 	end;
@@ -1017,7 +1166,7 @@ OnInit:
 	placadevenda "Armaduras";
 	end;
 }
--	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1,450252:1,15421:1,450224:1,15383:1,450251:1,450287:1,450132:1
+-	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1,450252:1,15421:1,450224:1,15383:1,450251:1,450287:1,450132:1,450291:1,450208:1,450165:1,450258:1,15374:1,450163:1,15169:1
 
 // Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
 // proximo e o 2185 (Refletor Magico / Magic Reflect), que e
@@ -1045,6 +1194,10 @@ OnInit:
 // decisao do dono: o nome pedido era "Escudo encouracado", e esse
 // e o 28953; o 28943 e o Grimorio Proibido. O caso inteiro esta no
 // cabecalho do arquivo.
+// RODADA DE 2026-08-20: entraram 2, e a loja foi de 14 para 16.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +  460000  Égide das Divindades   [1]           placeholder novo
+//   +    2168  Escudo Celestial        [1]
 prontera,159,167,4	script	Escudeiro	1_F_MERCHANT_01,{
 	callshop "Escudeiro#loja",0;
 	end;
@@ -1053,7 +1206,7 @@ OnInit:
 	placadevenda "Escudos";
 	end;
 }
--	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1
+-	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1,460000:1,2168:1
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
@@ -1151,6 +1304,11 @@ OnInit:
 //                                          cliente e com o `Name`
 //                                          em ingles no servidor
 //   +  20993  Capa Ajeitadinha        [1]
+// RODADA DE 2026-08-20: entraram 3, e a loja foi de 26 para 29.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +    2589  Asas de Arcanjo Caído   [1]          View 3 -> arte de manto do bRO
+//   +   20939  Manto do Senhor do Tempo [1]         sem View
+//   +   20940  Espinhos Violeta        [1]          View 39, arte ja completa
 prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
@@ -1159,7 +1317,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1,2589:1,20939:1,20940:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
@@ -1199,6 +1357,14 @@ OnInit:
 //   +  22243  Mamaragan                    sem cova
 // O nome nao diz nada sobre o slot; quem decidiu foi o `Shoes` do
 // item_db (regra 4.14).
+// RODADA DE 2026-08-20: entraram 6, e a loja foi de 25 para 31.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +  470048  Sapatos Sagrados
+//   +  470084  Grevas de Platina
+//   +  470318  Galocha Fantasma        [1]          estava fora do itemInfo.lua
+//   +  470300  Salto Fantasma          [1]          estava fora do itemInfo.lua
+//   +  470321  Sapato Fantasma                      placeholder novo
+//   +   22204  Botas do Senhor do Tempo [1]
 prontera,155,161,4	script	Sapateiro	1_F_MERCHANT_02,{
 	callshop "Sapateiro#loja",0;
 	end;
@@ -1207,7 +1373,7 @@ OnInit:
 	placadevenda "Sapatos";
 	end;
 }
--	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1,470037:1,470061:1,470007:1,22134:1,470033:1,470004:1,470028:1,22178:1,22191:1,22225:1,470106:1,470026:1,470057:1,22224:1,22243:1
+-	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1,470037:1,470061:1,470007:1,22134:1,470033:1,470004:1,470028:1,22178:1,22191:1,22225:1,470106:1,470026:1,470057:1,22224:1,22243:1,470048:1,470084:1,470318:1,470300:1,470321:1,22204:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
@@ -1259,6 +1425,16 @@ OnInit:
 //   + 490038  Anel do Sexto Sentido   [1]
 // RODADA DE 2026-08-18 (TARDE): entrou 1, e a loja foi a 51.
 //   +  28596  Anel de Brinquedo       [1]  `Both_Accessory`
+// RODADA DE 2026-08-20: entraram 8, e a loja foi de 51 para 59.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   +   28565  Máscara de Oni         [1]           e ACESSORIO, nao chapeu
+//   +   28434  Luvas do Pugilista      [1]
+//   +  490098  Anel de Pazuzu          [1]
+//   +    2853  Anel da Telecinese
+//   +    2979  Morango Cristalizado    [1]          ver a ressalva de cova
+//   +   32221  Anel do Senhor do Tempo [1]
+//   +  490250  Anel Transcendental     [1]          placeholder novo
+//   +  490099  Pingente de Thanatos
 prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
@@ -1267,4 +1443,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1,28565:1,28434:1,490098:1,2853:1,2979:1,32221:1,490250:1,490099:1

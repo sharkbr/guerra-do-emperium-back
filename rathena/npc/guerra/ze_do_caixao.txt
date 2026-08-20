@@ -51,6 +51,29 @@
 //=    23806  Caixa de Armas Ancestrais   IG_HERO_WEAPON_BOX      38
 //=   100437  Cubo Reforcado Primordial   IG_HERO_WEAPON_CUBE     37
 //=    23115  Cubo Sombrio de Classe      IG_CLASS_SHADOW_CUBE    90
+//=    23767  Caixa de Elmos Especiais    IG_POWERFUL_HELM_BOX     5
+//=
+//= A NONA ENTROU NO MESMO DIA, algumas horas depois: a Caixa de
+//= Elmos Especiais (23767), pedida pelo dono no meio de uma lista
+//= de 43 itens que foi quase toda para as lojas do quarteirao
+//= (npc/guerra/mercado_contemporaneo.txt). Ela e do mesmo feitio
+//= das oito: `Usable`/`Container` com `getgroupitem` de uma linha.
+//=
+//= O GRUPO DELA E O MENOR DA VITRINE - cinco elmos, contra os 90
+//= do Cubo Sombrio de Classe. Os cinco foram conferidos um a um
+//= (40 checagens, zero falta): os cinco existem no item_db, os
+//= cinco tem nome em portugues no itemInfo.lua deste cliente e os
+//= cinco deram arte 8 de 8. Sao Quepe do Cao-mandante (19300),
+//= Bencao Celestial (19249), Elmo do Xogunato (19263), Chapeu
+//= Chique com Pena (19296) e Quepe de Amistr (19308).
+//=
+//= Ela NAO tem `Buy` nem `Sell`, como as outras oito - entao o
+//= preco 1 escrito na linha vale, o lucro por clique e zero, e
+//= nao houve nada a fazer no zera_revenda_das_lojas.py alem de
+//= rodar o --conferir.
+//=
+//= ELA NAO E `NoTrade` NEM PESADA: pesa 80, e livre para armazem,
+//= carrinho, troca e correio. Fica entre as seis soltas da lista.
 //===== O QUE FICOU DE FORA ==================================
 //= A CAIXA DE CUBOS REFINADORES (102592) foi pedida - duas vezes na
 //= mesma lista, a segunda como "Cubo de cubos refinadores" - e NAO
@@ -222,5 +245,6 @@ OnInit:
 //    23806  Caixa de Armas Ancestrais   (38)  pesa 200
 //   100437  Cubo Reforçado Primordial   (37)
 //    23115  Cubo Sombrio de Classe      (90)
+//    23767  Caixa de Elmos Especiais     (5)  pesa 80
 //
--	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1
+-	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1,23767:1
