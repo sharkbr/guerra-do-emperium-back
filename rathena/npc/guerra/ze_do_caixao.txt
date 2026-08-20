@@ -1,0 +1,226 @@
+//===== Guerra do Emperium ===================================
+//= Ze do Caixao
+//===== Onde =================================================
+//= prontera 159,131 - a terceira casa da fileira de baixo do
+//= quarteirao dos mercados, na mesma linha da Tranqueiras:
+//=
+//=            x=151          x=155          x=159
+//=  y=137   Carta Acess.   Carta MVP      Carta Chefe
+//=  y=131   Tranqueiras    Manteleiro     ZE DO CAIXAO
+//=
+//= O Manteleiro veio da quarta fileira dos visuais (163,155) em
+//= 2026-08-20, no mesmo pedido que criou este NPC. Ele continua
+//= morando em npc/guerra/mercado_de_visuais.txt - so a coordenada
+//= mudou.
+//=
+//= A CELULA FOI CONFERIDA no prontera.gat DESTE cliente antes de
+//= plantar: tipo 0, andavel, altura 1,00 nos quatro cantos, e as 24
+//= vizinhas do quadrado 5x5 todas do tipo 0. O NPC ativo mais
+//= proximo e a Carta de Chefe (159,137), seis celulas ao norte, e o
+//= Manteleiro (155,131), quatro a oeste - entao este arquivo nao
+//= desliga ninguem. O `Suspicious Coffin#2013HE` do rAthena fica em
+//= 154,136, a poucas celulas, mas o npc/events/halloween_2013.txt
+//= esta comentado no scripts_athena.conf e nunca nasce. Quem um dia
+//= ligar aquele arquivo ganha um NPC empilhado por perto.
+//=
+//= CUIDADO com o prontera.gat: sao TRES map_cache.dat e a prontera
+//= de renewal (312x392) so existe no db/re/. Ferramenta que abra so
+//= o db/map_cache.dat responde pela `pprontera`, que e outro mapa.
+//= Ver CLAUDE.md secao 5.
+//===== Descricao ============================================
+//= Loja de CAIXAS E CUBOS, oito itens a 1 zeny. Nasceu em
+//= 2026-08-20, pedida item por item pelo dono.
+//=
+//= NENHUM DOS OITO E EQUIPAMENTO: todos sao `Usable` com a bandeira
+//= `Container`, e o `Script:` de cada um e uma linha so -
+//= `getgroupitem(IG_<GRUPO>)`, que sorteia UM item do grupo
+//= correspondente em db/re/item_group_db.yml. Ou seja o que a loja
+//= vende e o sorteio; o acervo de verdade sao os 245 itens dos oito
+//= grupos.
+//=
+//= A ORDEM DA LINHA DO `shop` E A ORDEM DA JANELA, e ela e a ordem
+//= em que o dono pediu. A ultima coluna e quantos itens o grupo
+//= sorteia, CONTADOS no item_group_db.yml e nao supostos - grupo
+//= vazio faria a caixa sumir na mao do jogador sem erro nenhum:
+//=
+//=   100547  Caixa de Espolios           IG_BIOWEAPON_HELM_BOX   12
+//=    23772  Caixa de Armas OS           IG_EP17_1_SPC01         16
+//=    23992  Caixa de Bioarmas           IG_BIO_W_BOX            39
+//=    23073  Caixa do ArchAngeling       IG_ANGELPORING_BOX       7
+//=    23766  Caixa de Armadura do Heroi  IG_OVERWHELM_ARMOR_BOX   6
+//=    23806  Caixa de Armas Ancestrais   IG_HERO_WEAPON_BOX      38
+//=   100437  Cubo Reforcado Primordial   IG_HERO_WEAPON_CUBE     37
+//=    23115  Cubo Sombrio de Classe      IG_CLASS_SHADOW_CUBE    90
+//===== O QUE FICOU DE FORA ==================================
+//= A CAIXA DE CUBOS REFINADORES (102592) foi pedida - duas vezes na
+//= mesma lista, a segunda como "Cubo de cubos refinadores" - e NAO
+//= ENTROU. Ela nao existe no nosso vendor nem no itemInfo.lua deste
+//= cliente: so no bRO.
+//=
+//= NAO E UM CASO DE "TRAZER DO bRO" DE UMA ENTRADA SO. Pela
+//= descricao do bRO ela sorteia UM de SETE Cubos de Refino, e tres
+//= deles tambem faltam aqui:
+//=
+//=   100268  Cubo de Refino Temporal     ok
+//=   100269  Cubo de Refino de Geffen    ok
+//=   100270  Cubo de Refino Memoravel    ok
+//=   100321  Cubo de Refino OS           ok
+//=   102589  Cubo de Refino de Mora      FALTA nos dois lados
+//=   102590  Cubo de Refino de Brasilis  FALTA nos dois lados
+//=   102591  Cubo de Refino de Wolfchev  FALTA nos dois lados
+//=
+//= Os quatro que existem sao `DelayConsume` com `laphine_upgrade()`,
+//= ou seja o efeito nao mora no item: mora em
+//= db/re/laphine_upgrade.yml, uma tabela por conjunto de
+//= equipamento. Repor os tres que faltam e escrever tres tabelas
+//= dessas a mao - as Reliquias de Mora ao +12, os equipamentos do
+//= Festival de Brasilis ao +9 e os do Laboratorio de Wolfchev ao
+//= +12, cada lista com dezenas de itens -, mais quatro entradas de
+//= item_db e quatro entradas de cliente. E entrada de cliente so
+//= chega ao jogador por PATCH (CLAUDE.md 4.18), o que esta entrega
+//= nao precisa.
+//=
+//= Por isso ficou de fora, com o pedido cumprido em oito de nove.
+//= A pendencia esta em PENDENCIAS.md.
+//===== O preco ==============================================
+//= 1 ZENY, a convencao das lojas de Prontera (CLAUDE.md 4.16).
+//=
+//= NAO E `-1` COMO NA TRANQUEIRAS, e a diferenca importa: `-1` faz o
+//= npc_parse_shop trocar o preco pelo `Buy` do item_db
+//= (src/map/npc.cpp:4146), e NENHUMA das oito caixas declara `Buy`.
+//= O `Buy` delas e zero, entao `-1` aqui daria as oito de graca.
+//=
+//= A OUTRA PONTA - a revenda - fica em 0 por
+//= db/guerra/item_db_lojas.yml, gerado por
+//= ferramentas/zera_revenda_das_lojas.py. ESTE ARQUIVO FOI
+//= ACRESCENTADO A LISTA DE LOJAS DAQUELE SCRIPT em 2026-08-20; sem
+//= isso ele nao mede esta vitrine, e item novo posto aqui reabriria
+//= o buraco de dinheiro infinito calado. Ao mexer na linha do
+//= `shop`, rodar os dois:
+//=
+//=   python ferramentas/zera_revenda_das_lojas.py
+//=   python ferramentas/zera_revenda_das_lojas.py --conferir
+//=
+//= NAO HA LUCRO POR CLIQUE HOJE, e nao havia nem antes do override:
+//= as oito caixas nao declaram `Buy` nem `Sell`, entao ja revendiam
+//= por 0. Duas delas - a de Armas OS (23772) e a do ArchAngeling
+//= (23073) - ainda sao `NoSell`, ou seja nao ha a quem vender.
+//===== O que o jogador precisa saber ========================
+//= DUAS DAS OITO SAO PRESAS AO PERSONAGEM pelo item_db do rAthena, e
+//= nos nao mexemos nisso:
+//=
+//=   23772  Caixa de Armas OS      NoDrop NoTrade NoSell NoCart
+//=                                 NoStorage NoGuildStorage NoMail
+//=                                 NoAuction
+//=   23073  Caixa do ArchAngeling  o mesmo, menos o NoStorage
+//=
+//= Comprada, a Caixa de Armas OS nao sai do inventario de quem
+//= comprou: nem armazem, nem carrinho, nem troca, nem correio. Quem
+//= quiser mudar isso mexe em db/guerra/item_db.yml por override -
+//= nao aqui, que a linha do `shop` nao sabe de restricao nenhuma.
+//=
+//= DUAS PESAM 200 CADA - a Caixa de Armadura do Heroi (23766) e a de
+//= Armas Ancestrais (23806), `Weight: 2000` no item_db. Comprar dez
+//= de uma vez sao 2000 de peso, e nada avisa o jogador antes. As
+//= outras seis pesam 1, menos a de Armas OS, que pesa 10.
+//=
+//= E O CONTEUDO NAO CAI NO CHAO SE A MOCHILA ESTIVER CHEIA: ele
+//= SOME. O `getgroupitem` chama `pc_additem` e, no fracasso, so
+//= manda um `clif_additem` de erro (src/map/itemdb.cpp:3104) - nao
+//= ha `map_addflooritem` naquele caminho, ao contrario do `getitem`
+//= de script (CLAUDE.md secao 5). E o `pc_useitem` apaga a caixa
+//= ANTES de rodar o script (src/map/pc.cpp:6516), entao a caixa se
+//= perde junto. Na pratica o buraco que a propria caixa deixa quase
+//= sempre cabe o premio; o caso que morde e pilha de caixas com a
+//= mochila no limite.
+//===== O sprite e uma CLASSE DE JOGADOR ======================
+//= Sprite 5 (`JOB_MERCHANT`), pedido assim: "mesmo sprite do
+//= Tranqueiras". Isso e incomum - nenhum dos 26 mil `script` do
+//= vendor usa id de classe - e vem com uma armadilha: o ramo do
+//= `status_set_viewdata` que monta a aparencia de id de classe deixa
+//= o penteado em ZERO, e os penteados deste cliente vao de 1 a 42.
+//= Sem as duas linhas de `setunitdata` do OnInit o NPC pede um
+//= sprite de cabeca que nao existe.
+//=
+//= A EXPLICACAO INTEIRA, com os arquivos e as linhas, esta no
+//= cabecalho de npc/guerra/tranqueiras.txt, secao "O sprite e uma
+//= CLASSE DE JOGADOR". Nao se repete aqui para as duas nao
+//= divergirem.
+//=
+//= SE ELE NASCER INVISIVEL OU SEM CABECA, a saida ja esta escolhida
+//= la: trocar o `JOB_MERCHANT` por 776 (`4_M_TWMIDMAN`), e as duas
+//= linhas de `setunitdata` saem junto.
+//=
+//= SAO DOIS NPCs DE APARENCIA IDENTICA a oito celulas um do outro -
+//= este e a Tranqueiras. E de proposito: foi pedido assim.
+//===== Notas ================================================
+//= A loja e FLUTUANTE (`-` no lugar do mapa) e o NPC a chama com
+//= `callshop`. E o idioma dos tres mercados e da Tranqueiras: um
+//= `shop` com coordenada seria uma vitrine sem NPC, sem OnInit e sem
+//= placa.
+//=
+//= A PLACA sobre a cabeca e a mesma dos mercados
+//= (src/custom/placa_de_venda). Aqui ela ganha o assunto e nao a
+//= contagem, porque "Ze do Caixao" nao diz o que se vende. Teto de
+//= 79 caracteres (MESSAGE_SIZE, src/map/map.hpp:273).
+//=
+//= OS ITENS FORAM VALIDADOS UM A UM antes de entrar (CLAUDE.md 4.4),
+//= em 2026-08-20: os oito existem no item_db do servidor, os oito
+//= tem entrada no itemInfo.lua DESTE cliente com NOME EM PORTUGUES e
+//= os oito deram "arte 4 de 4 ok" no valida_visual.py - 32
+//= checagens, zero quebra. Nenhum precisou de entrada nova de
+//= cliente nem de arte do bRO, e por isso ESTA ENTREGA NAO PRECISA
+//= DE PATCH: vai inteira pelo deploy.
+//=
+//= E OS 245 ITENS DE DENTRO tambem foram conferidos, de uma vez: os
+//= 245 existem no item_db, os 245 tem entrada no itemInfo.lua e os
+//= 245 deram arte completa - 1028 checagens, zero falta. Caixa que
+//= sorteia item sem arte entrega caixa de erro ao jogador, e a falha
+//= aparece so na hora de abrir, longe daqui. Quem trocar um grupo
+//= por outro refaz essa conferencia.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo le.
+//= Ver CLAUDE.md secao 4.1. Editar com script que grave em cp1252 -
+//= a ferramenta de edicao do assistente troca TODO byte acentuado do
+//= arquivo por U+FFFD, e sem avisar.
+//=
+//= Mudanca neste arquivo pega com @reloadscript. Item novo na linha
+//= do `shop` exige `@reloaditemdb` ANTES do `@reloadscript`, senao o
+//= item novo some da vitrine calado (CLAUDE.md secao 5).
+//============================================================
+
+prontera,159,131,4	script	Zé do Caixão	JOB_MERCHANT,{
+	callshop "Zé do Caixão#loja",0;
+	end;
+
+OnInit:
+	// Aparencia. As duas linhas existem porque o sprite e uma CLASSE de
+	// jogador e nao um view id de NPC - o porque esta no cabecalho de
+	// npc/guerra/tranqueiras.txt. O ramo do rAthena que monta essa
+	// aparencia deixa o penteado em ZERO, e este cliente so tem de 1 a
+	// 42: sem a segunda linha o NPC pede um sprite de cabeca que nao
+	// existe. Trocando o sprite por um view id de NPC, as duas saem.
+	setunitdata(getnpcid(0), UNPC_SEX, SEX_MALE);
+	setunitdata(getnpcid(0), UNPC_HAIRSTYLE, 1);
+
+	// O assunto, e nao a contagem: o nome "Ze do Caixao" nao diz o que
+	// esta a venda. Teto de 79 caracteres; esta em 29.
+	placadevenda "Caixas e cubos de equipamento";
+	end;
+}
+
+// A ORDEM DESTA LISTA E A ORDEM DA JANELA, e e a ordem do pedido. O preco
+// e 1 zeny ESCRITO na linha, e nao `-1`: nenhuma das oito caixas declara
+// `Buy` no item_db, entao `-1` viraria zero e a loja daria tudo de graca.
+// O numero entre parenteses e quantos itens o grupo sorteia.
+//
+//   100547  Caixa de Espólios           (12)
+//    23772  Caixa de Armas OS           (16)  NoDrop/NoTrade/NoSell/...
+//    23992  Caixa de Bioarmas           (39)
+//    23073  Caixa do ArchAngeling        (7)  NoDrop/NoTrade/NoSell/...
+//    23766  Caixa de Armadura do Herói   (6)  pesa 200
+//    23806  Caixa de Armas Ancestrais   (38)  pesa 200
+//   100437  Cubo Reforçado Primordial   (37)
+//    23115  Cubo Sombrio de Classe      (90)
+//
+-	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1

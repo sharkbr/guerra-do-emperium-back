@@ -29,7 +29,8 @@ da ferramenta tampouco:
   (31421, 31422, 31423, 31424, 31429).
 
 **A rodada de 2026-08-08** abriu a quarta loja da fileira, o
-**Manteleiro** (`prontera 163,155`), com treze mantos cosméticos, e pôs
+**Manteleiro** (então em `prontera 163,155`; desde 2026-08-20 em
+`155,131`), com treze mantos cosméticos, e pôs
 a **Glória Imperial** (420029) no Camareiro. Nenhum dos catorze sai da
 ferramenta: foram pedidos item por item, e manto o `varre_cosmeticos.py`
 nem classifica como curável — falta a metade dele que estende o
@@ -562,7 +563,13 @@ itens nas lojas de Prontera".
 
 ## Manteleiro — Costume capa (25 itens)
 
-`prontera 163,155` — sprite `1_M_MERCHANT`
+`prontera 155,131` — sprite `1_M_MERCHANT`
+
+**Não fica mais na fileira dos visuais.** Nasceu em `163,155`, a quarta
+coluna de `y=155`, e em 2026-08-20 o dono a mudou para `155,131`, entre a
+Tranqueiras (`151,131`) e o Zé do Caixão (`159,131`). Só a coordenada
+mudou — o NPC, a loja e os 25 itens continuam em
+`npc/guerra/mercado_de_visuais.txt`.
 
 Aberta em 2026-08-08 com treze; onze entraram em 2026-08-09.
 Os vinte e quatro foram pedidos item por item e **nenhum sai de

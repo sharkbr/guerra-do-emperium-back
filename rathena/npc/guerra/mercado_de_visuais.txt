@@ -4,18 +4,32 @@
 //= prontera, quarta fileira do quarteirão do Mercado
 //= Contemporâneo, uma coluna por slot de visual:
 //=
-//=            x=151          x=155          x=159          x=163
+//=            x=151          x=155          x=159
 //=  y=173   Chapeleiro     Ocleiro        Retoqueiro
 //=  y=167   Sr das Armas   Lorde das Arm. Escudeiro
 //=  y=161   Capeiro        Sapateiro      Acessorista
-//=  y=155   Costumeiro     Adereceiro     Camareiro     Manteleiro
-//=                                                      <- este arquivo
+//=  y=155   Costumeiro     Adereceiro     Camareiro
+//=                                        <- este arquivo
 //=
-//= As QUATRO células foram conferidas no prontera.gat antes de
-//= plantar: tipo 0, andável, como as nove de cima, e a de x=163
-//= com as nove vizinhas livres. A faixa x=148..162 está livre de
-//= y=150 a y=160, então há espaço de sobra entre as colunas para o
-//= jogador circular.
+//= O MANTELEIRO NÃO FICA MAIS NESTA FILEIRA. Ele nasceu em 2026-08-08
+//= numa quarta coluna daqui (x=163, y=155) e em 2026-08-20 o dono o
+//= mudou para prontera 155,131, duas fileiras abaixo, entre a
+//= Tranqueiras e o Zé do Caixão:
+//=
+//=            x=151          x=155          x=159
+//=  y=137   Carta Acess.   Carta MVP      Carta Chefe
+//=  y=131   Tranqueiras    MANTELEIRO     Zé do Caixão
+//=
+//= O NPC continua sendo deste arquivo - só a coordenada mudou -, e a
+//= loja de CAPA continua sendo a quarta deste mercado. A célula nova
+//= foi conferida no prontera.gat DESTE cliente: tipo 0, andável,
+//= altura 1,00 nos quatro cantos, e as 24 vizinhas do quadrado 5x5
+//= todas do tipo 0.
+//=
+//= As TRÊS células de cabeça foram conferidas no prontera.gat antes
+//= de plantar: tipo 0, andável, como as nove de cima. A faixa
+//= x=148..162 está livre de y=150 a y=160, então há espaço de sobra
+//= entre as colunas para o jogador circular.
 //===== Descrição ============================================
 //= QUATRO lojas de VISUAL: três por slot de cabeça e, desde
 //= 2026-08-08, uma de MANTO. 452 itens, tudo a 1 zeny.
@@ -484,8 +498,10 @@ OnInit:
 }
 -	shop	Camareiro#loja	-1,5983:1,15854:1,15954:1,19604:1,20798:1,31305:1,31386:1,31490:1,31500:1,31503:1,31584:1,31593:1,31594:1,31625:1,31698:1,31700:1,31735:1,31844:1,31882:1,31932:1,31954:1,400258:1,400327:1,400425:1,400427:1,410265:1,420014:1,420026:1,420029:1,420044:1,420046:1,420047:1,420054:1,420070:1,420071:1,420083:1,420085:1,420086:1,420091:1,420104:1,420107:1,420113:1,420114:1,420115:1,420116:1,420117:1,420118:1,420119:1,420120:1,420121:1,420122:1,420123:1,420124:1,420125:1,420126:1,420127:1,420128:1,420132:1,420133:1,420140:1,420150:1,420151:1,420152:1,420156:1,420161:1,420162:1,420163:1,420165:1,420170:1,420172:1,420181:1,420191:1,420192:1,420193:1,420197:1,420207:1,420208:1,420209:1,420211:1,420212:1,420218:1,420219:1,420221:1,420232:1,420233:1,420237:1,420241:1,420254:1,420255:1,420264:1,420273:1,420274:1,420275:1,420276:1,420277:1,420278:1,420279:1,420280:1,420281:1,420282:1,420283:1,420284:1,420285:1,420286:1,420287:1,420288:1,420289:1,420290:1,420291:1,420292:1,420303:1,420305:1,420307:1,420317:1,420320:1,420321:1,420340:1,420341:1,420344:1,420345:1,420347:1,420349:1,420350:1,420353:1,420357:1,420359:1,420360:1,490242:1
 
-// ----- Manteleiro (x=163): Visual de CAPA -- manto, asa, mochila, instrumento.
-// 25 itens, e a quarta loja da fileira. Pedida em 2026-08-08, item
+// ----- Manteleiro (155,131): Visual de CAPA -- manto, asa, mochila,
+// instrumento. 25 itens, e a quarta loja deste mercado, ainda que
+// desde 2026-08-20 ela nao fique na mesma fileira que as outras tres
+// (ver o cabecalho). Pedida em 2026-08-08, item
 // por item: ela NAO sai de varredura nenhuma, porque o
 // varre_cosmeticos.py nao classifica manto como `curavel`.
 //
@@ -565,7 +581,14 @@ OnInit:
 // atravessa os dois arquivos e que o Camareiro (mulher) deixou em
 // aberto. Conferido no npcidentity.lub deste cliente, com .spr e
 // .act em data\sprite\npc\ - a armadilha de sempre.
-prontera,163,155,4	script	Manteleiro	1_M_MERCHANT,{
+//
+// MUDOU DE LUGAR EM 2026-08-20, por pedido do dono: de prontera 163,155
+// - a quarta coluna da fileira de visuais - para 155,131, entre a
+// Tranqueiras (151,131) e o Ze do Caixao (159,131). SO A COORDENADA
+// MUDOU: a loja flutuante, os 25 itens, a placa e o sprite continuam os
+// mesmos, e o NPC continua morando neste arquivo. O cabecalho tem o
+// desenho das duas fileiras.
+prontera,155,131,4	script	Manteleiro	1_M_MERCHANT,{
 	callshop "Manteleiro#loja",0;
 	end;
 

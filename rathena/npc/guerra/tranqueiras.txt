@@ -6,12 +6,18 @@
 //=
 //=            x=151          x=155          x=159
 //=  y=137   Carta Acess.   Carta MVP      Carta Chefe
-//=  y=131   TRANQUEIRAS    --             --
+//=  y=131   TRANQUEIRAS    Manteleiro     Ze do Caixao
 //=
 //= A celula foi conferida no prontera.gat DESTE cliente antes de
 //= plantar: tipo 0, andavel, altura 1,00 nos quatro cantos. Nao ha
 //= NPC nenhum - do rAthena ou nosso - a menos de tres celulas, entao
 //= este arquivo nao desliga ninguem.
+//=
+//= A FILEIRA ENCHEU EM 2026-08-20: o Manteleiro veio da fileira de
+//= visuais (163,155) para 155,131 e o Ze do Caixao nasceu em 159,131
+//= (npc/guerra/ze_do_caixao.txt), com o MESMO sprite desta NPC, que e
+//= id de classe de jogador. Os dois ficam a quatro e a oito celulas
+//= daqui, entao a frase acima continua valendo - nada foi desligado.
 //=
 //= CUIDADO com o prontera.gat: sao TRES map_cache.dat e a prontera de
 //= renewal (312x392) so existe no db/re/. Ferramenta que abra so o

@@ -11,11 +11,11 @@
 #
 # ------------------------------------------------------------- o que ele e
 #
-# `Buy: 1` em todo item vendido nas tres lojas de vitrine a 1 zeny de
-# Prontera - o Mercado Contemporaneo, o Mercado de Cartas e o Mercado de
-# Visuais. Decisao do dono em 2026-08-17: "itens que sao vendidos nas lojas
-# de Prontera devem ter valor 1 zeny pra evitar criacao de dinheiro
-# infinito".
+# `Buy: 1` em todo item vendido nas lojas de vitrine a 1 zeny de Prontera -
+# o Mercado Contemporaneo, o Mercado de Cartas, o Mercado de Visuais e, desde
+# 2026-08-20, o Ze do Caixao. Decisao do dono em 2026-08-17: "itens que sao
+# vendidos nas lojas de Prontera devem ter valor 1 zeny pra evitar criacao
+# de dinheiro infinito".
 #
 # A TRANQUEIRAS NAO ESTA AQUI, de proposito. Ela vende a `-1`, ou seja pelo
 # `Buy` do item, e ja tinha lucro por clique zero - ver o cabecalho de
@@ -1686,6 +1686,18 @@ Body:
     Buy: 1                # Shoes_Of_Punishment_
   - Id: 22243
     Buy: 1                # Mamaragan
+  - Id: 23073
+    Buy: 1                # AngelPoring_Box
+  - Id: 23115
+    Buy: 1                # Class_Shadow_Cube
+  - Id: 23766
+    Buy: 1                # Overwhelm_Armor_Box
+  - Id: 23772
+    Buy: 1                # EP17_1_SPC01
+  - Id: 23806
+    Buy: 1                # Hero_Weapon_Box
+  - Id: 23992
+    Buy: 1                # Bio_W_Box
   - Id: 26141
     Buy: 1                # Blut_Staff
   - Id: 26150
@@ -2332,6 +2344,10 @@ Body:
     Buy: 1                # Shield_Ring
   - Id: 32295
     Buy: 1                # Crystal_Blade_Necklace
+  - Id: 100437
+    Buy: 1                # Hero_Weapon_Cube
+  - Id: 100547
+    Buy: 1                # BioWeapon_Helm_Box
   - Id: 300001
     Buy: 1                # Poisonous_Card
   - Id: 300002

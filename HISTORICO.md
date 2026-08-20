@@ -11982,3 +11982,154 @@ aconteceu**, e nenhuma observação em jogo antes disso é sobre este código.
 Tudo isto é **servidor** (`src/`): nada mora em `C:\GuerraDoEmperium\cliente\`,
 então **não há patch a publicar** — vai ao jogador pelo deploy, que sai do Mac
 (`CLAUDE.md` §5).
+
+---
+
+## O Zé do Caixão, e o Manteleiro que mudou de fileira (2026-08-20)
+
+Pedido do dono, em duas partes: mover o **Manteleiro** de `prontera 163,155`
+para `155,131`, e criar um NPC novo em `159,131` — **"Zé do Caixão"**, com o
+**mesmo sprite da Tranqueiras** —, vendendo nove caixas e cubos nomeados um a
+um. Oito entraram; um não, e o porquê está no fim.
+
+### O que a mudança do Manteleiro fez com o desenho do mercado
+
+A fileira dos visuais (`y=155`) tinha **quatro** colunas: Costumeiro,
+Adereceiro e Camareiro nos três slots de cabeça, e o Manteleiro numa quarta
+coluna (`x=163`), de capa. Ele saiu de lá e desceu duas fileiras, e com isso a
+fileira de baixo — que era só a Tranqueiras — encheu:
+
+```
+           x=151          x=155          x=159          x=163
+ y=155   Costumeiro     Adereceiro     Camareiro       (vazio)
+ y=137   Carta Acess.   Carta MVP      Carta Chefe
+ y=131   Tranqueiras    MANTELEIRO     ZÉ DO CAIXÃO
+```
+
+**Só a coordenada mudou.** O Manteleiro continua sendo de
+`npc/guerra/mercado_de_visuais.txt`, continua sendo a quarta loja daquele
+mercado, e os 25 itens, a placa e o sprite `1_M_MERCHANT` são os mesmos. Não
+houve `disablenpc` nem duplicata: o NPC é nosso, e mover NPC nosso é editar a
+linha dele.
+
+O que custou trabalho foi o **contrário** de mexer no código: os quatro lugares
+que descreviam a fileira antiga. O cabeçalho do `mercado_de_visuais.txt` tinha
+um diagrama com a quarta coluna e um parágrafo dizendo *"As QUATRO células
+foram conferidas… e a de x=163 com as nove vizinhas livres"*; o
+`scripts_guerra.conf` dizia *"o Manteleiro (x=163)"*; o `CATALOGO-VISUAIS.md`
+repetia a coordenada em dois pontos; e o cabeçalho da `tranqueiras.txt` tinha
+um desenho da fileira de baixo com dois `--` onde agora há dois NPCs. Nenhum
+deles daria erro — é a §4.17 outra vez, e a única defesa é procurar a
+coordenada velha em vez de confiar na memória. `grep -n "163,155"` respondeu em
+um comando.
+
+### As duas células, conferidas antes de plantar
+
+`155,131` e `159,131` no `prontera.gat` **deste cliente**: tipo 0, andável,
+altura 1,00 nos quatro cantos, e as 24 vizinhas do quadrado 5×5 de cada uma
+também tipo 0. O NPC ativo mais próximo de cada uma fica a quatro células
+(Tranqueiras / Manteleiro) ou a seis (Carta de MVP / Carta de Chefe), então
+nada foi desligado nem empilhado.
+
+Um vizinho merece registro porque **está no arquivo e não está no ar**: o
+`Suspicious Coffin#2013HE` do rAthena fica em `prontera 154,136`, a poucas
+células — mas o `npc/events/halloween_2013.txt` está comentado no
+`scripts_athena.conf`. Quem um dia ligar aquele arquivo ganha um NPC empilhado
+ali perto, e isso está dito no cabeçalho do arquivo novo.
+
+### O que o Zé do Caixão vende, e o que isso realmente é
+
+Oito itens a **1 zeny**. Nenhum é equipamento: os oito são `Usable` com a
+bandeira `Container`, e o `Script:` de cada um é **uma linha só**,
+`getgroupitem(IG_<GRUPO>)`. Ou seja **o que a loja vende é um sorteio** — o
+acervo de verdade são os itens dos oito grupos de `db/re/item_group_db.yml`:
+
+| id | item | grupo | sorteia |
+|---|---|---|---|
+| 100547 | Caixa de Espólios | `IG_BIOWEAPON_HELM_BOX` | 12 |
+| 23772 | Caixa de Armas OS | `IG_EP17_1_SPC01` | 16 |
+| 23992 | Caixa de Bioarmas | `IG_BIO_W_BOX` | 39 |
+| 23073 | Caixa do ArchAngeling | `IG_ANGELPORING_BOX` | 7 |
+| 23766 | Caixa de Armadura do Herói | `IG_OVERWHELM_ARMOR_BOX` | 6 |
+| 23806 | Caixa de Armas Ancestrais | `IG_HERO_WEAPON_BOX` | 38 |
+| 100437 | Cubo Reforçado Primordial | `IG_HERO_WEAPON_CUBE` | 37 |
+| 23115 | Cubo Sombrio de Classe | `IG_CLASS_SHADOW_CUBE` | 90 |
+
+**245 itens no total, e essa foi a conferência que valeu a pena.** A §4.4 manda
+validar a arte do item que entra na vitrine, e os oito passaram — 32 checagens,
+zero falta. Mas caixa não entrega caixa: entrega o que está dentro, e **item
+sem arte entrega caixa de erro ao jogador na hora de abrir**, longe da loja e
+longe de quem editou. Os 245 foram conferidos de uma vez, numa chamada só do
+`valida_visual.py`: os 245 existem no `item_db`, os 245 têm entrada no
+`itemInfo.lua` deste cliente e os 245 deram arte completa — **1028 checagens,
+zero falta**. Nenhum precisou de arte do bRO nem de entrada nova de cliente, e
+**é por isso que esta entrega não precisa de patch**: vai inteira pelo deploy.
+
+Os oito grupos também foram **contados**, não supostos. Grupo vazio faria a
+caixa sumir na mão do jogador sem erro nenhum — nenhum está vazio.
+
+### O preço: 1 zeny escrito, e não `-1`
+
+A Tranqueiras — que tem o mesmo sprite e fica a oito células — cobra `-1`, que
+o `npc_parse_shop` troca pelo `Buy` do `item_db` (`npc.cpp:4146`). **Aqui isso
+daria tudo de graça:** nenhuma das oito caixas declara `Buy`, então o `Buy`
+delas é zero. Por isso o preço é o **1 escrito na linha**, que é a convenção
+das lojas de Prontera (§4.16).
+
+A outra ponta — a revenda — já era zero antes de qualquer override, porque as
+oito também não declaram `Sell` (e duas delas, a de Armas OS e a do
+ArchAngeling, são `NoSell`). Ainda assim o arquivo novo **entrou na lista de
+lojas do `zera_revenda_das_lojas.py`**, e essa é a parte que não podia ficar de
+fora: a lista daquele script é escrita à mão, e vitrine que ele não conhece
+**não é medida por ninguém**. Item novo posto ali amanhã reabriria o buraco de
+dinheiro infinito calado. Depois de acrescentado, a contagem foi de **1665 para
+1673** itens a `Buy: 1` — os oito, e só os oito, que é o número que se esperava
+ver.
+
+### Duas coisas que o jogador vai sentir e não estão escritas em lugar nenhum
+
+**Duas das oito são presas ao personagem**, e isso vem do `item_db` do rAthena,
+não de decisão nossa: a **Caixa de Armas OS (23772)** é
+`NoDrop`/`NoTrade`/`NoSell`/`NoCart`/`NoStorage`/`NoGuildStorage`/`NoMail`/
+`NoAuction`, e a **Caixa do ArchAngeling (23073)** é o mesmo menos o
+`NoStorage`. Comprou, não sai do inventário. **Duas pesam 200 cada** — a de
+Armadura do Herói e a de Armas Ancestrais, `Weight: 2000`. Nada avisa antes.
+
+E há um detalhe do `getgroupitem` que **não** é o do `getitem` de script: com a
+mochila cheia, **o conteúdo não cai no chão — ele some**. O `itemdb.cpp:3104`
+chama `pc_additem` e, no fracasso, só manda um `clif_additem` de erro; não há
+`map_addflooritem` naquele caminho. E o `pc_useitem` apaga a caixa **antes** de
+rodar o script (`pc.cpp:6516`), então a caixa se perde junto. Na prática o
+buraco que a própria caixa deixa quase sempre cabe o prêmio; o caso que morde é
+pilha de caixas com a mochila no limite.
+
+### O nono item, e por que ele não entrou
+
+A **Caixa de Cubos Refinadores (102592)** foi pedida **duas vezes na mesma
+lista** — a segunda como *"Cubo de cubos refinadores"*, mesmo id. Ela não
+existe nem no nosso vendor nem no `itemInfo.lua` deste cliente: só no bRO.
+
+E não é caso de trazer uma entrada e pronto. Pela descrição do bRO ela sorteia
+**um de sete Cubos de Refino**, e **três deles também faltam aqui** (102589 de
+Mora, 102590 de Brasilis, 102591 de Wolfchev). Os quatro que existem são
+`DelayConsume` com `laphine_upgrade()` — o efeito não mora no item, mora em
+`db/re/laphine_upgrade.yml`, uma tabela por conjunto de equipamento. Repor os
+três é escrever três tabelas dessas à mão (as Relíquias de Mora ao +12, os
+equipamentos do Festival de Brasilis ao +9 e os do Laboratório de Wolfchev ao
++12, cada lista com dezenas de itens), mais quatro entradas de `item_db`, mais
+quatro entradas de cliente — e entrada de cliente só chega ao jogador por
+patch.
+
+**Um item de aparência trivial custava mais que os outros oito somados.** O que
+respondeu isso em dois comandos foi o `estado_item.py --id <lista>` seguido de
+`--descricao`: o primeiro disse que ela não existe dos dois lados, o segundo
+listou os sete cubos que ela promete. A pendência está na `PENDENCIAS.md` §1z2,
+com o caminho inteiro para quando o dono decidir se vale.
+
+### O que recarrega
+
+`@reloaditemdb` **antes** do `@reloadscript` — nesta ordem, porque o
+`npc_parse_shop` descarta item que não esteja no `item_db` em memória e a
+vitrine subiria sem ele, calada (§5). O `item_db_lojas.yml` regerado entra pelo
+mesmo `@reloaditemdb`. Nada disto é cliente: **não há patch**, e a produção
+recebe pelo `implanta.sh`, que sai do Mac.

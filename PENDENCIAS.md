@@ -120,7 +120,7 @@ sem confirmação in-game.
 | Mercado de Cartas (9 lojas, 1410 cartas) | `prontera`, y=149/143/137 | 2026-08-05 |
 | Logue e Ganhe — 20 dias de Moeda Nova | janela do cliente, sem NPC | 2026-08-07 |
 | Criança — link de navegação e balão de MVP | `comodo 207,148` | 2026-08-08 |
-| Manteleiro (13 mantos cosméticos) | `prontera 163,155` | 2026-08-08 |
+| Manteleiro (13 mantos cosméticos) | `prontera 155,131` — mudou de `163,155` em 2026-08-20 | 2026-08-08 |
 | Mister Peso | `prontera 99,64` | 2026-08-08 |
 | Mestre das Montarias (Riding Creature Master em PT) | `prontera 130,213` | 2026-08-08 |
 | Área de Treinamento no lugar novo | `prontera 157,187` | 2026-08-08 |
@@ -144,6 +144,8 @@ sem confirmação in-game.
 | **O Evento de Refino ligado** | janela de refino | 2026-08-17 |
 | **O pilar roxo e o som quando cai carta** | qualquer monstro que solte carta | 2026-08-17 |
 | **Os três acessórios de lado trocado** (490290, 490336, 490337) | janela de equipamentos | 2026-08-17 |
+| **Zé do Caixão — 8 caixas e cubos a 1 zeny** | `prontera 159,131` | 2026-08-20 |
+| **O Manteleiro no lugar novo** (de `163,155`) | `prontera 155,131` | 2026-08-20 |
 
 **A Tranqueiras é a única da lista que pode falhar por um motivo novo**, e ele
 é do lado do cliente: ela usa **sprite 5 (`JOB_MERCHANT`), uma classe de
@@ -2277,6 +2279,67 @@ só tem bit para os seis slots normais, e equipamento sombrio cai no
 `EQP_SHADOW_GEAR`. **Na prática eles não quebram** — nenhuma habilidade de
 monstro pede aquele slot —, então isto é registro, não risco. Se um dia
 quebrarem, o conserto é C++ em `src/custom/`, não `db/`.
+
+---
+
+## 1z2. A Caixa de Cubos Refinadores (102592) — pedida e não entregue (2026-08-20)
+
+O pedido de 2026-08-20 que criou o **Zé do Caixão** (`prontera 159,131`) tinha
+**nove** itens. Oito entraram; a **Caixa de Cubos Refinadores (102592)** não —
+e ela veio pedida **duas vezes na mesma lista**, a segunda como *"Cubo de cubos
+refinadores"*, o que sugere que o dono a quer mesmo.
+
+### Por que não entrou
+
+Ela não existe **nem no nosso vendor nem no `itemInfo.lua` deste cliente**: só
+no bRO. E não é caso de trazer uma entrada e pronto — pela descrição do bRO ela
+sorteia **um de sete Cubos de Refino**, e **três deles também faltam aqui**:
+
+| id | item | estado |
+|---|---|---|
+| 100268 | Cubo de Refino Temporal | ok, servidor + cliente |
+| 100269 | Cubo de Refino de Geffen | ok |
+| 100270 | Cubo de Refino Memorável | ok |
+| 100321 | Cubo de Refino OS | ok |
+| **102589** | Cubo de Refino de Mora | **falta nos dois lados** |
+| **102590** | Cubo de Refino de Brasilis | **falta nos dois lados** |
+| **102591** | Cubo de Refino de Wolfchev | **falta nos dois lados** |
+
+### O que custa fechar
+
+Os quatro que existem são `DelayConsume` com **`laphine_upgrade()`** — ou seja
+o efeito não mora no item, mora em **`db/re/laphine_upgrade.yml`**, uma tabela
+por conjunto de equipamento. Repor os três que faltam é escrever três tabelas
+dessas à mão, cada uma com dezenas de itens, a partir da descrição do bRO:
+
+- **102589**, Relíquias de Mora ao **+12** — Ur, Nab, Peuz, Manuks, Afeição,
+  Aquático, Vermelho, Asas da Luz, Asas das Sombras, Florestal, Julgamento,
+  Açoite de Ouro, Bíblia da Promessa (Vol. 1) e Cajados Fortalecidos;
+- **102590**, Equipamentos do Festival de Brasilis ao **+9** — 17 itens
+  nomeados na descrição;
+- **102591**, Equipamentos do Laboratório de Wolfchev ao **+12** — 20 itens
+  nomeados na descrição.
+
+Mais **quatro entradas de `item_db`** (a caixa e os três cubos), mais **quatro
+entradas de cliente** pelo `completa_iteminfo.py`. E entrada de cliente só
+chega ao jogador por **patch** (`CLAUDE.md` §4.18) — o que a entrega de
+2026-08-20 não precisou, porque os oito que entraram já estavam nos dois lados.
+
+### O caminho, quando for a vez
+
+```
+1. python estado_item.py --id 102589,102590,102591,102592 --descricao
+2. escrever os 3 grupos em db/guerra/laphine_upgrade.yml (arquivo NOVO) e
+   ligar o import no rodapé de db/re/laphine_upgrade.yml
+3. escrever as 4 entradas em db/guerra/item_db.yml (cp1252, por script)
+4. python completa_iteminfo.py --id 102589,102590,102591,102592
+5. python valida_visual.py --id 102589,102590,102591,102592   # tem que dar 0
+6. pôr 102592 na linha do shop de npc/guerra/ze_do_caixao.txt
+7. python zera_revenda_das_lojas.py  (e --conferir)
+8. patch de cliente (RECEITAS.md §11) + deploy
+```
+
+**A decisão que falta é do dono:** se vale o preço, ou se a loja fica com oito.
 
 ---
 

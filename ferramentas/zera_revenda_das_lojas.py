@@ -44,11 +44,12 @@ que o cabecalho do mercado_contemporaneo.txt tinha CONSIDERADO E RECUSADO em
 2026-08-12, exatamente por isso; a decisao do dono em 2026-08-17 foi a
 contraria, com o numero dos 913 na mao.
 
-QUE LOJAS ENTRAM: as tres de VITRINE A 1 ZENY -
+QUE LOJAS ENTRAM: as de VITRINE A 1 ZENY -
 
     npc/guerra/mercado_contemporaneo.txt   9 lojas de equipamento
     npc/guerra/mercado_de_cartas.txt       8 lojas de carta
     npc/guerra/mercado_de_visuais.txt      4 lojas de visual
+    npc/guerra/ze_do_caixao.txt            1 loja de caixa e cubo
 
 A TRANQUEIRAS FICA DE FORA, por decisao do dono no mesmo dia. Ela nao vende a
 1 zeny: vende a `-1`, que o `npc_parse_shop` troca pelo `Buy` do item
@@ -95,6 +96,11 @@ LOJAS = [
     os.path.join('npc', 'guerra', 'mercado_contemporaneo.txt'),
     os.path.join('npc', 'guerra', 'mercado_de_cartas.txt'),
     os.path.join('npc', 'guerra', 'mercado_de_visuais.txt'),
+    # Entrou em 2026-08-20, com a loja: oito caixas a 1 zeny. Nenhuma delas
+    # declara `Buy` nem `Sell`, entao o lucro por clique ja era zero antes do
+    # override - mas a lista tem de conhecer a vitrine, senao item novo posto
+    # la nao e medido por ninguem.
+    os.path.join('npc', 'guerra', 'ze_do_caixao.txt'),
 ]
 
 SAIDA = os.path.join('db', 'guerra', 'item_db_lojas.yml')
@@ -227,7 +233,7 @@ def main():
     if conferir:
         achados = confere(itens, lojas)
         if not achados:
-            print u'OK: nenhum item das tres lojas revende por mais do que custa.'
+            print u'OK: nenhum item das lojas de 1 zeny revende por mais do que custa.'
             return 0
         print u''
         print u'LUCRO POR CLIQUE em %d itens - falta rodar este script sem --conferir:' % len(achados)
@@ -265,11 +271,11 @@ CABECALHO = u'''################################################################
 #
 # ------------------------------------------------------------- o que ele e
 #
-# `Buy: 1` em todo item vendido nas tres lojas de vitrine a 1 zeny de
-# Prontera - o Mercado Contemporaneo, o Mercado de Cartas e o Mercado de
-# Visuais. Decisao do dono em 2026-08-17: "itens que sao vendidos nas lojas
-# de Prontera devem ter valor 1 zeny pra evitar criacao de dinheiro
-# infinito".
+# `Buy: 1` em todo item vendido nas lojas de vitrine a 1 zeny de Prontera -
+# o Mercado Contemporaneo, o Mercado de Cartas, o Mercado de Visuais e, desde
+# 2026-08-20, o Ze do Caixao. Decisao do dono em 2026-08-17: "itens que sao
+# vendidos nas lojas de Prontera devem ter valor 1 zeny pra evitar criacao
+# de dinheiro infinito".
 #
 # A TRANQUEIRAS NAO ESTA AQUI, de proposito. Ela vende a `-1`, ou seja pelo
 # `Buy` do item, e ja tinha lucro por clique zero - ver o cabecalho de
