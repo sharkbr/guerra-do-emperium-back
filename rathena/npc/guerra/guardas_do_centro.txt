@@ -229,15 +229,15 @@ auction_01,194,87,4	script	Guarda#co_can_l	966,{
 
 	if (SalaSecretaOrdem == 11) {
 		mes "[Guarda]";
-		mes "Voce tem uma senha pra mim?";
+		mes "Você tem uma senha pra mim?";
 		next;
 		input .@senha$;
 		if (.@senha$ == "Audaces Fortuna Juvat") {
 			mes "[Guarda]";
-			mes "As palavras sao ditas!";
+			mes "As palavras são ditas!";
 			next;
 			mes "[Guarda]";
-			mes "Bem vindo, milord!";
+			mes "Bem-vindo, milord!";
 			SalaSecretaOrdem = 12;
 			close2;
 			warp "prt_in",129,108;
@@ -253,7 +253,7 @@ auction_01,194,87,4	script	Guarda#co_can_l	966,{
 	mes "[Guarda]";
 	mes "Entrar na Sala Secreta?";
 	next;
-	if (select("Sim:Nao") == 1) {
+	if (select("Sim:Não") == 1) {
 		close2;
 		warp "prt_in",129,108;
 		end;

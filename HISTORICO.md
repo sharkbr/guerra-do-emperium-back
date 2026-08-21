@@ -12391,3 +12391,73 @@ arte de manto e o conserto do Chapéu do Éden moram em
 `C:\GuerraDoEmperium\cliente\` e só chegam ao jogador por **patch**. Sem ele, os
 seis itens novos aparecem **sem nome** na vitrine e o Chapéu do Éden continua de
 gorro genérico. `PENDENCIAS.md` §1z3.
+
+---
+
+## A missão da Sala Secreta ganha português e caminho no minimapa (2026-08-21)
+
+Dois pedidos do dono, sobre a mesma missão: **acentuar o texto** dos NPCs da
+Sala Secreta da Ordem e, nos diálogos **que se repetem**, pôr uma palavra
+clicável apontando o próximo passo.
+
+### O texto tinha nascido em ASCII puro
+
+Não era mojibake nem U+FFFD (§5): os dois arquivos da missão simplesmente não
+tinham **um único byte acentuado**. `menino_do_amuleto.txt` (a Criança e o
+Dario) e `senha_da_sala_secreta.txt` (Suad, Assessor, Bolaozão, Maram e o teste
+do guardião) foram escritos sem acento nenhum, e no
+`guardas_do_centro.txt` só o Guarda do canto leste — o que fecha a missão —
+estava assim, enquanto os outros sete já tinham acento desde 2026-08-11.
+
+Foram **166 trocas** ao todo, em `mes`, rótulos de `select`, os dois
+`mapannounce` e o `dispbottom` do teste, o nome do monstro invocado
+("Guardião Reforçado") e os nomes de tela da **Criança** e do **Bolaozão**. Os
+comentários continuam em ASCII, como em todo o projeto.
+
+Feito **por script**, com âncora em ASCII, `assert` de contagem em cada troca e
+um `decode('cp1252')` de volta antes de gravar — a ferramenta de edição do
+assistente teria trocado todo byte acentuado do arquivo por U+FFFD (§5). Duas
+armadilhas conhecidas apareceram e foram pagas de graça pelos `assert`: a
+contagem de `mes "[Crianca]"` era 15 e não 10, e uma âncora de linha com **dois
+tabs** de recuo casa também dentro da mesma linha com **seis** — a de dentro do
+primeiro ramo da Criança —, então a âncora passou a levar o fim de linha nas
+duas pontas.
+
+Três correções que não são de acento, e ficam registradas por serem escolha e
+não regra: `por hora` → **`por ora`** (Maram), `Bem vindo` → **`Bem-vindo`**
+(Guarda) e o rótulo `Perguntar por que da euforia` → **`Perguntar o porquê da
+euforia`** (Criança).
+
+### Os quatro links de navegação, e os dois que ficaram de fora
+
+A etiqueta `<NAVI>` dentro do próprio `mes` — lida pelo **cliente**, não pelo
+servidor — já era conhecida do projeto: estreou em `crianca_de_comodo.txt` em
+2026-08-13, e é lá que a sintaxe e os três números do fim estão explicados.
+
+| Quem repete | Palavra | Vai para |
+|---|---|---|
+| Criança, estados 1–11 | `aqui` | portal do Centro da Ordem, `prontera 165,168` |
+| Suad, estados 4–6 | `aqui` | Assessor, `cmd_in02 63,66` |
+| Suad, estados 8–11 | `aqui` | Comandante Maram, `cmd_in02 73,86` |
+| Bolaozão, repetição | `ali em cima` | Assessor, `cmd_in02 63,66` |
+
+**Dois não têm link, por decisão do dono:** o Assessor mandando procurar o
+Bolaozão (estado 5) e o Maram mandando procurar o Guarda do Centro (estado 11).
+Achar esses dois **é** a missão — dar o caminho mataria o passo. O Dario, que
+manda o jogador para Comodo, também ficou de fora pelo mesmo motivo.
+
+Três decisões de desenho que valem para o próximo link:
+
+- **Só no ramo que se repete**, nunca no que avança a variável. O primeiro é a
+  cena; o segundo é o lembrete de quem se perdeu. No caso da Criança os dois
+  blocos têm o mesmo texto palavra por palavra, e o que os separa é o recuo.
+- **O texto do link é ASCII puro** — por isso o do Bolaozão diz `ali em cima` e
+  não "lá em cima". O `doc/script_commands.txt` avisa que código de cor colado
+  em letra acentuada pode sair errado, e o `^4D4DFF` do azul é nosso, na mão.
+- **Os três de Comodo apontam para dentro do próprio `cmd_in02`**, o mapa de
+  quem fala — navegação no mesmo mapa, o caso mais simples. O `cmd_in02` está
+  na tabela de navegação deste cliente (`navi_map_krpri.lub` e
+  `navi_link_krpri.lub`, conferido no `data.grf`), o que **não** é prova de
+  efeito na tela (§5): só o clique em jogo diz se o caminho é traçado.
+
+Pega com **`@reloadscript`**. Nada disto é cliente — não precisa de patch.

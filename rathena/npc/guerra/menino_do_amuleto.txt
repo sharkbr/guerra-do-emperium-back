@@ -71,6 +71,33 @@
 //= proprio dialogo consome UMA (`delitem`) e avanca a variavel -
 //= mesma conveniencia do Egebreu (comprador_de_caveiras.txt), so
 //= que aqui NAO paga nada em troca, e a fala cobra isso.
+//===== O link de navegacao da repeticao =========================
+//= 2026-08-21: o dialogo QUE SE REPETE da Crianca ganhou uma palavra
+//= clicavel, "aqui", que traca no minimapa o caminho ate o portal do
+//= Centro da Ordem - prontera 165,168, o warp `centro_ordem_entrada`
+//= de centro_da_ordem.txt. E a etiqueta <NAVI> dentro do proprio
+//= `mes`, lida pelo CLIENTE; a sintaxe e os tres numeros do fim
+//= estao explicados no cabecalho de npc/guerra/crianca_de_comodo.txt,
+//= que estreou isso no projeto.
+//=
+//= SO NO RAMO QUE SE REPETE, nunca no primeiro. Os dois blocos tem o
+//= mesmo texto, palavra por palavra, e por isso o que separa um do
+//= outro e o RECUO: dois tabs na repeticao, seis no primeiro ramo.
+//= O primeiro fica sem link de proposito - ali e a cena, aqui e o
+//= lembrete de quem se perdeu.
+//=
+//= O texto do link e ASCII puro. O "aqui" nao leva acento, mas se
+//= levasse teria de sair de dentro da etiqueta: o
+//= doc/script_commands.txt avisa que codigo de cor colado em letra
+//= acentuada pode sair errado, e o ^4D4DFF do azul e nosso, na mao.
+//=
+//= O DARIO NAO TEM LINK, e e decisao do dono: e ele quem manda o
+//= jogador para Comodo, e achar o caminho ate la faz parte da missao.
+//===== Acentuacao ================================================
+//= 2026-08-21: todo o texto de JOGO deste arquivo passou a ser
+//= acentuado - ele tinha nascido em ASCII puro. Vale para `mes`,
+//= para os rotulos de `select` e para o nome de tela da Crianca. Os
+//= COMENTARIOS continuam em ASCII, como em todo o projeto.
 //===== Gravado em cp1252 =========================================
 //= Como todo texto que o jogo le (CLAUDE.md secao 4.1). Gerado por
 //= ferramentas/ - nao editar com a ferramenta de edicao do
@@ -79,80 +106,80 @@
 //= Mudanca neste arquivo pega com @reloadscript.
 //==============================================================
 
-prontera,142,186,4	script	Crianca::CriancaDoAmuleto	4_M_DST_CHILD,{
+prontera,142,186,4	script	Criança::CriancaDoAmuleto	4_M_DST_CHILD,{
 	if (SalaSecretaOrdem == 0) {
-		mes "[Crianca]";
+		mes "[Criança]";
 		mes "*menino comendo bolinho de arroz*";
-		mes "Olaaa mocoo!!!!!!!";
+		mes "Oláaaa moçoo!!!!!!!";
 		next;
-		switch (select("Nao dar atencao:Perguntar por que da euforia")) {
+		switch (select("Não dar atenção:Perguntar o porquê da euforia")) {
 		case 1:
 			close;
 		case 2:
-			mes "[Crianca]";
-			mes "Eu to lascado! Meu tio vai brigaaar!!";
-			mes "Voce gosta de bolinho de arroz?";
+			mes "[Criança]";
+			mes "Eu tô lascado! Meu tio vai brigaaar!!";
+			mes "Você gosta de bolinho de arroz?";
 			next;
-			mes "[Crianca]";
-			mes "Daquele que da 100% de HP/SP?";
+			mes "[Criança]";
+			mes "Daquele que dá 100% de HP/SP?";
 			next;
-			mes "[Crianca]";
-			mes "Se voce me ajudar te conto aonde tem um";
+			mes "[Criança]";
+			mes "Se você me ajudar te conto aonde tem um";
 			mes "monte! Hehehe.";
 			next;
-			switch (select("Nao, obrigado!:Fala o que voce precisa")) {
+			switch (select("Não, obrigado!:Fala o que você precisa")) {
 			case 1:
 				close;
 			case 2:
-				mes "[Crianca]";
+				mes "[Criança]";
 				mes "Meu tio tem um amuleto da sorte! E mais";
 				mes "cedo, pra impressionar essa menina, eu";
 				mes "peguei escondido pra fazer um movimento";
 				mes "sensacional com a espada, jogando pra";
 				mes "cima e pegando! Deu certo, hahahaha.";
 				next;
-				mes "[Crianca]";
+				mes "[Criança]";
 				mes "Mas quando eu fui devolver pro meu tio,";
-				mes "escondido, ele ja tinha saido aaaa!";
+				mes "escondido, ele já tinha saído aaaa!";
 				next;
-				mes "[Crianca]";
-				mes "Eu nao posso sair de Prontera, entao";
-				mes "meu plano e: eu dou pra voce, voce";
-				mes "descobre onde ele ta e diz que viu";
+				mes "[Criança]";
+				mes "Eu não posso sair de Prontera, então";
+				mes "meu plano é: eu dou pra você, você";
+				mes "descobre onde ele tá e diz que viu";
 				mes "caindo do bolso dele!!!! PRONTO!";
 				next;
-				switch (select("Muito arriscado!:Posso fazer, mas quem e seu tio?")) {
+				switch (select("Muito arriscado!:Posso fazer, mas quem é seu tio?")) {
 				case 1:
 					close;
 				case 2:
-					mes "[Crianca]";
-					mes "Meu tio e o Comandante Maram! Foi ele";
-					mes "que salvou a ultima Emperium de ser";
-					mes "destruida pra sempre, a de Kriemhild!";
+					mes "[Criança]";
+					mes "Meu tio é o Comandante Maram! Foi ele";
+					mes "que salvou a última Emperium de ser";
+					mes "destruída pra sempre, a de Kriemhild!";
 					next;
-					mes "[Crianca]";
-					mes "Ele e o Comandante da Ordem aqui em";
-					mes "Rune Midgard! Mas eu nao sei aonde ele";
+					mes "[Criança]";
+					mes "Ele é o Comandante da Ordem aqui em";
+					mes "Rune Midgard! Mas eu não sei aonde ele";
 					mes "vai!";
 					next;
-					mes "[Crianca]";
+					mes "[Criança]";
 					mes "Desde que ele entregou tudo que tinha";
 					mes "que entregar ele chega de madrugada e";
-					mes "dorme ate tarde. Deve ta por ai.";
+					mes "dorme até tarde. Deve tá por aí.";
 					next;
-					switch (select("Combinado:Melhor naoooo, deixa pra la!")) {
+					switch (select("Combinado:Melhor nãooo, deixa pra lá!")) {
 					case 1:
-						mes "[Crianca]";
-						mes "Otimo!!! No Centro da Ordem, tem um";
+						mes "[Criança]";
+						mes "Ótimo!!! No Centro da Ordem, tem um";
 						mes "cara do lado esquerdo do Egebreu, meu";
-						mes "irmao Dario! Roupa preta.";
+						mes "irmão Dario! Roupa preta.";
 						next;
-						mes "[Crianca]";
+						mes "[Criança]";
 						mes "Ele vai te falar aonde o Comandante";
-						mes "Maram esta se voce perguntar! Mas nao";
-						mes "fala que fui eu, fala que voce precisa";
+						mes "Maram está se você perguntar! Mas não";
+						mes "fala que fui eu, fala que você precisa";
 						mes "entregar uma mensagem... do povo das";
-						mes "Piramides!!";
+						mes "Pirâmides!!";
 						SalaSecretaOrdem = 1;
 						// Tira o balao "!" da cabeca dela agora, e nao na
 						// proxima acao que o servidor reavalia - ver o OnInit.
@@ -170,23 +197,24 @@ prontera,142,186,4	script	Crianca::CriancaDoAmuleto	4_M_DST_CHILD,{
 		// fecha o primeiro ramo, pedido assim: "toda vez que voce
 		// falar com o npc agora ate terminar a quest ele vai repetir
 		// isso".
-		mes "[Crianca]";
-		mes "Otimo!!! No Centro da Ordem, tem um";
+		mes "[Criança]";
+		mes "Ótimo!!! No Centro da Ordem, tem um";
 		mes "cara do lado esquerdo do Egebreu, meu";
-		mes "irmao Dario! Roupa preta.";
+		mes "irmão Dario! Roupa preta.";
+		mes "O portal do Centro da Ordem fica <NAVI>^4D4DFFaqui^000000<INFO>prontera,165,168,0,000,0</INFO></NAVI>.";
 		next;
-		mes "[Crianca]";
+		mes "[Criança]";
 		mes "Ele vai te falar aonde o Comandante";
-		mes "Maram esta se voce perguntar! Mas nao";
-		mes "fala que fui eu, fala que voce precisa";
+		mes "Maram está se você perguntar! Mas não";
+		mes "fala que fui eu, fala que você precisa";
 		mes "entregar uma mensagem... do povo das";
-		mes "Piramides!!";
+		mes "Pirâmides!!";
 		close;
 	}
 	else {
-		mes "[Crianca]";
-		mes "Valeu pela ajuda! E ingles voce sabe?";
-		mes "Essa menina so fala em ingleeeess :(";
+		mes "[Criança]";
+		mes "Valeu pela ajuda! E inglês você sabe?";
+		mes "Essa menina só fala em ingleeeess :(";
 		close;
 	}
 
@@ -235,46 +263,46 @@ auction_01,192,75,4	script	Dario::DarioDoAmuleto	4_M_YOUNGKNIGHT,{
 		// guardas do salao ja mencionam (guardas_do_centro.txt, o
 		// guarda da parede norte leste).
 		mes "[Dario]";
-		mes "O povo acha que a Face-Sombria e do mal.";
-		mes "A gente so tem esse nome porque a gente";
-		mes "faz o trabalho sujo, que ninguem quer!";
+		mes "O povo acha que a Face-Sombria é do mal.";
+		mes "A gente só tem esse nome porque a gente";
+		mes "faz o trabalho sujo, que ninguém quer!";
 		close;
 	}
 
 	if (SalaSecretaOrdem >= 12) {
 		mes "[Dario]";
-		mes "Pode ficar a vontade pra ir pra Sala";
-		mes "Secreta! So falar com o guarda mais";
+		mes "Pode ficar à vontade pra ir pra Sala";
+		mes "Secreta! Só falar com o guarda mais";
 		mes "perto do canto ali em cima!";
 		close;
 	}
 
 	if (SalaSecretaOrdem == 1) {
 		mes "[Dario]";
-		mes "Mensagem do povo das Piramides???";
+		mes "Mensagem do povo das Pirâmides???";
 		next;
 		mes "[Dario]";
-		mes "O Comandante Maram nao esta a servico";
-		mes "mais, esta de folga, deixou seu manto";
+		mes "O Comandante Maram não está a serviço";
+		mes "mais, está de folga, deixou seu manto";
 		mes "preto aqui na Ordem! Fala a mensagem pra";
-		mes "mim, mais facil.";
+		mes "mim, mais fácil.";
 		next;
-		switch (select("Deixa pra la:Insistir que tem que ser entregue a Maram")) {
+		switch (select("Deixa pra lá:Insistir que tem que ser entregue a Maram")) {
 		case 1:
 			close;
 		case 2:
 			mes "[Dario]";
-			mes "Ok! Se voce me ajudar com uma coisa eu";
-			mes "te digo, ai voce entrega sua mensagem!";
+			mes "Ok! Se você me ajudar com uma coisa eu";
+			mes "te digo, aí você entrega sua mensagem!";
 			next;
 			mes "[Dario]";
-			mes "Meu pai Egebreu nao quer me dar um dos";
-			mes "Cranios Humanos para que eu possa fazer";
-			mes "alguns dos meus testes! Ele nao acredita";
-			mes "na minha ciencia, acha que e magia.";
+			mes "Meu pai Egebreu não quer me dar um dos";
+			mes "Crânios Humanos para que eu possa fazer";
+			mes "alguns dos meus testes! Ele não acredita";
+			mes "na minha ciência, acha que é magia.";
 			next;
 			mes "[Dario]";
-			mes "Se voce me trouxer uma ^0000FFCaveira Humana^000000,";
+			mes "Se você me trouxer uma ^0000FFCaveira Humana^000000,";
 			mes "daquelas obtidas na Arena de Prontera,";
 			mes "eu te digo!";
 			SalaSecretaOrdem = 2;
@@ -286,28 +314,28 @@ auction_01,192,75,4	script	Dario::DarioDoAmuleto	4_M_YOUNGKNIGHT,{
 		if (countitem(.caveira) > 0) {
 			delitem .caveira, 1;
 			mes "[Dario]";
-			mes "Perfeito! O Comandante esta em Comodo,";
+			mes "Perfeito! O Comandante está em Comodo,";
 			mes "no Cassino Casa Rosa! Muito provavelmente";
-			mes "nao vai querer ser incomodado, entao fale";
-			mes "com o amigo/guardiao dele, Suad!";
+			mes "não vai querer ser incomodado, então fale";
+			mes "com o amigo/guardião dele, Suad!";
 			next;
 			mes "[Dario]";
-			mes "Entao e isso: encontre o Comandante Suad";
+			mes "Então é isso: encontre o Comandante Suad";
 			mes "no Cassino de Comodo!";
 			SalaSecretaOrdem = 3;
 			close;
 		}
 		mes "[Dario]";
-		mes "Cade a Caveira Humana? Tem que ser";
+		mes "Cadê a Caveira Humana? Tem que ser";
 		mes "daquelas que caem de jogadores na Arena";
-		mes "de Prontera! Tem um espirito preto";
-		mes "grande no centro de Prontera, e ali.";
+		mes "de Prontera! Tem um espírito preto";
+		mes "grande no centro de Prontera, é ali.";
 		close;
 	}
 
 	// SalaSecretaOrdem 3 a 11: caveira ja entregue, so repete o alvo.
 	mes "[Dario]";
-	mes "Entao e isso: encontre o Comandante Suad";
+	mes "Então é isso: encontre o Comandante Suad";
 	mes "no Cassino de Comodo!";
 	close;
 
