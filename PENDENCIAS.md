@@ -2343,7 +2343,7 @@ chega ao jogador por **patch** (`CLAUDE.md` §4.18) — o que a entrega de
 
 ---
 
-## 1z3. Os 41 itens de 2026-08-20 — falta publicar o patch, o deploy e ver em jogo (2026-08-20)
+## 1z3. Os 41 itens de 2026-08-20 — patch no ar, falta o deploy e ver em jogo (2026-08-20)
 
 A lista de 43 itens do dono foi entregue em **41**, em cinco destinos. Nada
 disto foi visto em jogo: **o servidor estava fora do ar durante a sessão
@@ -2353,14 +2353,13 @@ O que foi feito está no `HISTORICO.md`, seção *"Quarenta e três itens em cin
 destinos"*. O que falta é isto.
 
 **Já commitado e empurrado** (`831b62f` na `main`) — o lado servidor está no
-git e entra na próxima passada do `implanta.sh`, que sai do Mac. **O patch 0008
-está montado e registrado, mas NÃO publicado** — ver a seção do patch abaixo.
+git e entra na próxima passada do `implanta.sh`, que sai do Mac.
 
 Em uma linha, o que falta:
 
 | passo | onde roda | estado |
 |---|---|---|
-| `ferramentas/publica_patch.sh` | **Windows** (esta máquina) | falta |
+| `ferramentas/publica_patch.sh` | **Windows** (esta máquina) | **feito em 2026-08-21** |
 | `ferramentas/implanta.sh` | **Mac** | falta |
 | `@reloaditemdb` → `@reloadscript` → `@reloadbarterdb` | em jogo | falta |
 | ver as nove vitrines, a Tranqueiras, o Zé e a Máquina | em jogo | falta |
@@ -2382,26 +2381,26 @@ E **relogar antes de testar**: três itens nasceram nesta rodada
 muda `Locations:`, então a armadilha do item inequipável não se aplica — mas
 com o servidor subindo do zero a questão nem se coloca.
 
-### O PATCH — **montado, falta publicar**
+### O PATCH — **publicado em 2026-08-21**
 
-O **patch 0008** já existe:
-`C:\GuerraDoEmperium\patches\0008-quarenta-e-um-itens-nas-lojas-de-pronter.zip`,
-31 arquivos, 23,12 MB crus → **2,56 MB** no zip, registrado em
-`patcher/patches.txt`. **Falta um comando:**
+O **patch 0008** está no ar:
+`0008-quarenta-e-um-itens-nas-lojas-de-pronter.zip`, 31 arquivos, 23,12 MB
+crus → **2,56 MB** no zip. Conferido **por HTTP**, que é o que decide — o
+`scp` prova cópia, não publicação: baixado da CDN, sha256
+`4861536121…a3e72da60` e 2.688.273 bytes, os dois batendo com
+`patcher/patches.txt`, e a `lista.txt` remota terminando na linha `0008`.
 
-```
-ferramentas/publica_patch.sh
-```
+**Fora da ordem da `RECEITAS.md` §11**, e por decisão do dono em 2026-08-21
+(*"sobe os patchs"*): a receita manda testar em jogo antes de publicar, e nada
+disto foi visto em jogo — o servidor esteve fora do ar na sessão em que os 41
+itens foram feitos. O número de um patch nunca se reaproveita, então erro aqui
+se corrige com patch **novo** por cima, nunca editando a linha do 0008.
 
-Ele **roda no Windows** (os zips saem de `C:\GuerraDoEmperium\`) e precisa da
-chave SSH desta máquina, que é a `ragnarok` — a que existe justamente para
-copiar zip para `/var/www/patch`. Publicar daqui: sim. Deploy daqui: não (§5).
-
-**Não foi publicado de propósito**, e a razão é a `RECEITAS.md` §11: *"testar em
-jogo primeiro, montar o patch depois"* — e nada disto foi visto em jogo, porque
-o servidor esteve fora do ar. O número de um patch nunca se reaproveita, então
-patch errado se corrige com patch novo por cima. O zip está pronto para o
-minuto seguinte ao teste.
+**A ordem em que isto saiu é a segura, e vale registrar:** o patch é CLIENTE e
+foi antes do deploy, que é SERVIDOR. Cliente adiantado só significa entrada de
+`itemInfo.lua` para item que a loja ainda não vende — invisível. O contrário é
+que dói: servidor adiantado põe o item na vitrine sem nome no cliente, o
+"Unknown Item" com sprite de maçã (§5).
 
 **O que ficou de fora do zip, e por quê** — os três arquivos que o
 `--desde 2026-08-20` trouxe junto e não deviam ir:
@@ -2522,6 +2521,56 @@ como `# TODO` no bloco do item. O vendor não conhece nenhum deles (nada em
 `db/re/item_combos.yml` cita calçado nessas famílias), então não havia o que
 copiar: seria escrever quatro conjuntos do zero a partir de prosa, com peças que
 também não estão em loja nossa. Entra na lista da §2.
+
+---
+
+## 1z4. A missão da Sala Secreta acentuada — falta o deploy e ver os links em jogo (2026-08-21)
+
+Os NPCs da missão da Sala Secreta ganharam acento e quatro links `<NAVI>` nos
+diálogos que se repetem. **Commitado e empurrado** (`6ceabeb` na `main`); o que
+foi feito está no `HISTORICO.md`, seção *"A missão da Sala Secreta ganha
+português e caminho no minimapa"*.
+
+**É 100% servidor** — três arquivos em `npc/guerra/`, nada de cliente, **nada a
+publicar no canal de patch** (§4.18).
+
+| passo | onde roda | estado |
+|---|---|---|
+| `ferramentas/implanta.sh` | **Mac** | falta |
+| `@reloadscript` | em jogo | falta |
+| clicar os quatro links e ver o caminho no minimapa | em jogo | falta |
+
+### O que só o jogo responde
+
+**Se o caminho é traçado ao clicar.** A etiqueta `<NAVI>` é lida pelo
+**cliente**, não pelo servidor: o `mes` sai igual de qualquer jeito, e o que
+pode faltar é a tabela de navegação conhecer o mapa. Apurado offline, e não
+basta: o `cmd_in02` **está** em `navi_map_krpri.lub` e `navi_link_krpri.lub`
+(conferido no `data.grf`), e os três links de Comodo apontam para dentro do
+**próprio mapa de quem fala** — navegação no mesmo mapa, o caso mais simples.
+Ainda assim, tabela certa + arquivo lido ≠ efeito na tela (§5): quem decide é
+o clique.
+
+Os quatro, para conferir de uma vez:
+
+| quem | estado | palavra | vai para |
+|---|---|---|---|
+| Criança, `prontera 142,186` | 1–11 | `aqui` | portal do Centro, `prontera 165,168` |
+| Suad, `cmd_in02 74,76` | 4–6 | `aqui` | Assessor, `cmd_in02 63,66` |
+| Suad, `cmd_in02 74,76` | 8–11 | `aqui` | Maram, `cmd_in02 73,86` |
+| Bolaozão, `cmd_in02 182,89` | repetição | `ali em cima` | Assessor, `cmd_in02 63,66` |
+
+Atalho para não refazer a missão inteira: `SalaSecretaOrdem` é variável
+permanente **por personagem**, então `@set SalaSecretaOrdem <n>` (ou o
+equivalente do grupo 99) põe o estado onde se quiser.
+
+### O que ficou levantado, e é decisão do dono
+
+**O Assessor tem um segundo diálogo de repetição sem link** — no estado 7+ ele
+diz *"Vai lá, avisa o Suad"*, que é um ponteiro de próximo passo como os
+outros. Ficou de fora porque o pedido dizia "o Assessor não tem", mas a razão
+dada (*"faz parte da quest achar o cara"*) vale para o estado **5**, não para
+esse. É uma linha, se o dono quiser.
 
 ---
 
