@@ -2579,26 +2579,7 @@ esse. É uma linha, se o dono quiser.
 O que foi feito e por quê está no `HISTORICO.md`, "Três coisas novas na área
 logada". Aqui fica **só o que falta**.
 
-### O que trava a entrega, e é uma linha
-
-**O `implanta.sh` NÃO roda SQL.** Ele faz `git pull`, compila e reinicia; não há
-nenhum passo de migração no `atualiza_servidor.sh`. A tabela nova
-(`guerra_site_chamado`) tem de ser criada **à mão na produção**, e o site sobe
-sem ela sem reclamar: o `AbreBanco` só faz `Ping`, e a falha aparece na cara do
-primeiro jogador que apertar *Enviar chamado*.
-
-```
-ssh libraro
-mysql -u guerra -p guerra < /caminho/do/repo/site/sql/site.sql
-```
-
-O arquivo é todo `CREATE TABLE IF NOT EXISTS`, então rodá-lo inteiro é seguro e
-não toca a `guerra_site_cadastro` que já existe.
-
-**A ordem importa:** o SQL primeiro, o `implanta.sh` depois. Ao contrário, há
-uma janela em que o site novo está no ar e a tabela não existe.
-
-### Estado em 2026-08-22
+### Estado em 2026-08-22 — está NO AR, falta olhar a tela
 
 | | |
 |---|---|
@@ -2606,10 +2587,16 @@ uma janela em que o site novo está no ar e a tabela não existe.
 | `site/banco.go`, `api.go`, `main.go` | **escritos**, compilam, `go vet` limpo |
 | `site/web/` (HTML, CSS, JS) | **escritos** |
 | conferência de API contra MariaDB em contêiner | **feita** — a tabela está no `HISTORICO.md` |
-| **`site.sql` na produção** | **FALTA** — é o passo acima, e nada o faz sozinho |
-| **`ferramentas/implanta.sh`** | **FALTA** |
+| `guerra_site_chamado` na produção | **criada** — à mão, antes do deploy |
+| deploy | **feito**, por `implanta_site.sh` — **ninguém foi derrubado** |
+| as três rotas novas respondendo em produção | **conferido** — `401` sem sessão |
 | **olhar a tela** | **FALTA** — não havia navegador na sessão |
 | patch de cliente | **não há** — nada disto é cliente |
+
+**Nenhum deploy roda SQL** (`RECEITAS.md` §13): tabela nova é sempre à mão, e
+**antes** do deploy — o site sobe sem ela sem reclamar, porque o `AbreBanco` só
+faz `Ping`, e a falha aparece na cara do primeiro jogador que apertar *Enviar
+chamado*.
 
 ### O que só a tela decide
 
