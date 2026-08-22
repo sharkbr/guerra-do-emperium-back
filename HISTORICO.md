@@ -1868,6 +1868,9 @@ As duas são do tipo que **consome o cupom e não muda nada na tela**, sem erro:
    cliente desenha a cor padrão.
 2. **Cupom de Roupa.** Ele mexe em `Body2`, o corpo alternativo. **Não foi
    verificado** se o GRF de 2021 tem os sprites `_body` que ele pede.
+   *(Respondido em 2026-08-22: os sprites existem — 101 `.spr` em `costume_1`.
+   O defeito era outro, e eram três; ver "O estilo de corpo que nunca chegou a
+   existir".)*
 
 O remédio, se um dia incomodar, não é mexer no NPC: é podar as opções em
 `db/re/stylist.yml` (que teria de virar override nosso) ou tirar o cupom da
@@ -12464,8 +12467,6 @@ Pega com **`@reloadscript`**. Nada disto é cliente — não precisa de patch.
 
 ---
 
----
-
 ## Três coisas novas na área logada: download, personagem preso e chamados (2026-08-22)
 
 Pedido do dono, três itens numa frase: um caminho para o download dentro do
@@ -12757,3 +12758,108 @@ o endereço do CSS. Daqui para a frente não acontece mais.
 A caixa ganhou de passagem 150px de altura de partida, em vez de 120: é o campo
 principal daquele formulário, e caixa pequena convida ao relato de uma linha,
 que é justamente o relato que não resolve.
+
+---
+
+## O estilo de corpo que nunca chegou a existir (2026-08-22)
+
+O Cupom de Roupa voltou da `PENDENCIAS.md` §0b-a, e o que parecia o fim de um
+conserto de 2026-08-17 era o começo de outro. **Eram três defeitos empilhados,
+e cada um só ficava visível depois de o anterior sair da frente.** Nenhum deles
+dava erro.
+
+### O primeiro: o binário no ar era anterior ao conserto
+
+O `src/custom/estilo_de_corpo.hpp` e o enxerto no `pc.cpp` foram escritos em
+2026-08-17 às 23:17. O `map-server.exe` que estava rodando era das **21:57 do
+mesmo dia** — o `pc.obj` chegou a ser recompilado em 18/08, mas o link nunca
+sobrescreveu o executável (o `LNK1104` de servidor no ar, §5). Vinte e quatro
+horas de teste em jogo contra um binário que não tinha o conserto dentro.
+
+Recompilado e religado. **O sintoma não mudou em nada** — e é isso que fez o
+resto aparecer.
+
+### O segundo: um arquivo do vendor que ninguém lia
+
+Com o binário certo, o `@bodystyle 4332` respondia *"This job has no alternate
+body styles"*. Esse recado sai de `job->alternate_outfits.empty()`
+(`src/map/atcommand.cpp:1965`), e o vetor estava vazio **para todo trabalho**.
+
+A causa: o `JobDatabase::getDefaultLocation()` (`src/map/pc.cpp:13819`) aponta
+só para `db/re/job_stats.yml`, e é o **`db/re/job_outfits.yml`** que traz os
+treze `AlternateOutfits`. Aquele arquivo não tinha `Footer:`, não era citado em
+`conf/` nenhum e não era carregado por código nenhum: estava **órfão no
+vendor**, com o formato certo e sem ninguém para lê-lo. Religado por
+`Footer: Imports:` no `job_stats.yml` — o mesmo caminho do `quest_db.yml` e do
+`map_drops.yml`, seguro porque o `parseImports` mora no `YamlDatabase`
+(`src/common/database.cpp:176`) e os dois arquivos têm o mesmo cabeçalho
+(`JOB_STATS`, versão 4).
+
+Depois de `@reloadpcdb` o recado mudou para *"Número inválido especificado"* —
+a lista passou a existir. Ainda não funcionava.
+
+### O terceiro: a guarda vencida, e o que a denunciou
+
+O `pc_changelook`, no `case LOOK_BODY2:`, faz:
+
+```cpp
+estilo_de_corpo_resolve( sd, &val );   // nosso: 0 -> classe, 1 -> 4332
+if( !job_db.exists( val ) ){
+    return;                            // <- morria aqui
+}
+sd->status.body = val;
+```
+
+`job_db.exists()` é `find(key) != nullptr` (`src/common/database.hpp:103`), e o
+`job_db` só ganha entrada por um `Jobs:`. **Nenhum arquivo do vendor declara os
+ids 4332..4344 num `Jobs:`** — o `job_outfits.yml` só os cita dentro de
+`AlternateOutfits`, que empurra o número para o vetor do trabalho *pai* e não
+cria entrada nenhuma. Então a guarda reprovava **todo** valor válido, sempre, e
+o `clif_changelook` do fim da função nunca rodava: nenhum pacote saía. Como
+`pc_changelook` é `void`, o `@bodystyle` imprimia *"Aparência alterada"* logo
+depois, incondicionalmente.
+
+É a mesma vencidez do `db/re/stylist.yml` de 2026-08-17, uma camada abaixo: a
+guarda foi escrita quando `LOOK_BODY2` valia 0 ou 1 — Aprendiz e Espadachim,
+dois trabalhos que o `job_db` conhece.
+
+**O que denunciou foi o banco, e a evidência era um padrão, não um erro.** Uma
+consulta ao `char` mostrou **todo** personagem com `body` igual a `class`
+(Abemus 4060/4060, Libra 4077/4077, Carmelio 1/1, Fagas 14/14). Esse é
+exatamente — e somente — o ramo `val == 0` do `estilo_de_corpo_resolve`, que
+devolve `sd->status.class_`, um id que o `job_db` conhece e que por isso passa
+pela guarda. Nenhum personagem tinha 4332: o outro ramo morria antes de gravar.
+Ou seja a função rodava, e só metade dela sobrevivia.
+
+### O conserto, e por que é dado e não C++
+
+`db/guerra/job_estilo_de_corpo.yml` declara os treze ids num `Jobs:`, sem campo
+de propriedade nenhum, e entra pelo mesmo rodapé. A alternativa era **substituir**
+a linha `if( !job_db.exists( val ) )` do rAthena, e substituição não sobrevive a
+merge por si (§2 do `CLAUDE.md` — há exatamente uma no projeto, no `battle.cpp`,
+listada como risco). Não foi preciso: os treze são trabalhos de verdade, estão
+no enum de `src/common/mmo.hpp` e são citados pelo próprio `job_outfits.yml`.
+Declará-los é dar ao `job_db` o dado que o vendor esqueceu de embarcar.
+
+**Efeito colateral conferido em vez de suposto, e a primeira leitura estava
+errada.** Uma varredura por `job_db.` sugeriu que nada enumera o banco — mas o
+`JobDatabase::loadingFinished()` (`pc.cpp:14277`) itera `*this` e avisa sobre
+trabalho sem tabela de EXP. Ele faz `continue` quando `!pcdb_checkid(job_id)`, e
+nenhuma faixa do `pcdb_checkid` (`pc.hpp:1219`) cobre 4331+ — a última é
+`JOB_SKY_EMPEROR2 = 4316`. As entradas ficam inertes, só para a guarda achar.
+
+### O que ficou provado, e o que era palpite
+
+A arte **existe** e nunca foi o problema: 101 `.spr` de corpo em
+`data\sprite\<humano>\<corpo>\<sexo>\costume_1\` no `data.grf` de 2021-11-03,
+incluindo `룬나이트_남_1.spr` e `슈라_남_1.spr`. Isso responde a pergunta que
+ficou em aberto na seção do Xanin e Edgard, onde se registrou que *"não foi
+verificado se o GRF de 2021 tem os sprites que ele pede"*.
+
+Conferido em jogo em 2026-08-22, nos **dois** caminhos: `@bodystyle 4332` num
+Rune Knight e o Cupom de Roupa na Estilista de Prontera (`prt_in 243,168`) num
+Sura. Os dois trocam o visual.
+
+**Nada disto é cliente — não precisa de patch.** São dois arquivos de `db/`, que
+vão por deploy (`RECEITAS.md` §0). Em jogo pega com **`@reloadpcdb`**, que chama
+o `pc_readdb` (`src/map/atcommand.cpp:4490`) e não derruba ninguém.

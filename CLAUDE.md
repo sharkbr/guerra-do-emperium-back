@@ -89,6 +89,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/item_db.yml` | **três** `- Path:` no rodapé, nesta ordem, e a ordem é a regra — cada um tem a última palavra sobre um campo. `db/guerra/item_db.yml` é o nosso, escrito à mão (itens próprios e overrides de campo). `db/guerra/item_db_indestrutivel.yml` é **gerado** por `ferramentas/marca_indestrutiveis.py` e repete o `Script:` inteiro de 27 itens com um `bonus bUnbreakable<slot>` a mais — sem ele a peça que a descrição promete indestrutível quebra (§4.19). `db/guerra/item_db_lojas.yml` é **gerado** por `ferramentas/zera_revenda_das_lojas.py` e põe `Buy: 1` em todo item de vitrine de Prontera (§4.16) |
 | `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
+| `db/re/job_stats.yml` | o **`Footer: Imports:` inteiro**, com **dois** `- Path:`, e o primeiro deles não é nosso. `db/re/job_outfits.yml` é arquivo do **próprio rAthena** e estava **órfão**: o `JobDatabase::getDefaultLocation()` (`src/map/pc.cpp:13819`) aponta só para o `job_stats.yml`, então os treze `AlternateOutfits` (o "Roupa alternativa" do estilista) não eram lidos por ninguém e `job->alternate_outfits` ficava vazio para todo trabalho. `db/guerra/job_estilo_de_corpo.yml` é nosso e declara os ids 4332..4344 num `Jobs:`, porque a guarda `job_db.exists()` do `pc_changelook` reprova todo valor de estilo de corpo sem eles (§5). Sem os dois, o Cupom de Roupa some sem trocar nada |
 | `db/re/map_drops.yml` | o **`Footer: Imports:` inteiro**, pelo mesmo caminho do `quest_db.yml` acima — aquele arquivo também não tinha rodapé. Aponta para `db/guerra/map_drops.yml`, **gerado** por `ferramentas/escala_drops_de_mapa.py` (drop de mapa não passa pela taxa do servidor — ver §5) |
 | `src/map/clif.cpp` | **três** includes de `src/custom/` + **quatro** chamadas, comentadas no arquivo: `placa_de_venda_mostra`, o teto de refino nas duas pontas da janela de refino, e `brilho_da_carta` no `clif_dropflooritem` (o pilar de luz e o som quando cai carta — `src/custom/brilho_da_carta.hpp`) |
 | `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto configurável, 99% hoje, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
@@ -138,6 +139,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
 | `conf/guerra/groups_guerra.yml` (permissão de comando) | `@reloadatcommand` — chama `pc_groups_reload()` (`src/map/atcommand.cpp:4422`). **Não** é `@reloadbattleconf` nem `@reloadscript` |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
+| `db/guerra/job_estilo_de_corpo.yml`, `db/re/job_outfits.yml` (estilo de corpo) | `@reloadpcdb` — chama `pc_readdb()` (`src/map/atcommand.cpp:4490`), que faz `job_db.clear()` + `job_db.load()` e segue o rodapé. **Não** exige reiniciar, e **não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/refine.yml`, `db/guerra/refine_evento.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb`. Vale também para ligar/desligar o Evento de Refino, que é comentar a linha `- Path: db/guerra/refine_evento.yml` no rodapé de `db/refine.yml` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
@@ -414,6 +416,13 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     rAthena no `Script:` daqueles 27 itens **não chega ao jogo**. Rodar o
     script de novo depois de atualizar o vendor.
 
+20. **NUNCA reiniciar o servidor de PRODUÇÃO por conta própria — só o de
+    DEV/HML.** Decisão do dono em 2026-08-22. Reiniciar em PRD derruba todo
+    jogador conectado ali; recompilar/parar/subir o servidor **local** (os
+    quatro de `ferramentas/servidor.py`) continua liberado sem perguntar,
+    porque só afeta esta máquina. Produção só se reinicia com pedido
+    explícito do dono, e o caminho para chegar nela de qualquer jeito é outra
+    máquina (Mac, ver §9) — nada aqui deveria alcançá-la sozinho.
 ## 5. Armadilhas deste ambiente
 
 Produziram diagnóstico falso e custaram retrabalho:
@@ -1694,6 +1703,54 @@ Produziram diagnóstico falso e custaram retrabalho:
   **Cache já envenenado não se conserta do servidor**: quem carregou a página
   antes só vê o novo com recarga forçada (Cmd+Shift+R) ou quando o prazo
   heurístico vencer.
+- **Arquivo de `db/` do vendor pode estar ÓRFÃO — formato certo, conteúdo
+  certo, e ninguém o lê.** É um degrau além do "valor semanticamente vencido"
+  do `stylist.yml`: lá o dado era lido e estava velho; aqui o dado está certo e
+  **não é carregado por código nenhum**. O `db/re/job_outfits.yml` viveu assim
+  no nosso vendor: cabeçalho `JOB_STATS` válido, os treze `AlternateOutfits` do
+  estilo de corpo dentro, e o `JobDatabase::getDefaultLocation()`
+  (`src/map/pc.cpp:13819`) apontando **só** para `db/re/job_stats.yml`, que não
+  tinha rodapé. Resultado: `job->alternate_outfits` vazio para **todo**
+  trabalho. Falha calada e enganosa — o recado que sai é *"This job has no
+  alternate body styles"*, que soa como "esta classe não tem", e não como "o
+  arquivo inteiro não foi lido". **A sonda é `getDefaultLocation()` mais um
+  `grep` pelo nome do arquivo em `src/` e `conf/`: arquivo de `db/` que não
+  apareça em nenhum dos dois e não tenha rodapé apontando para ele não está
+  sendo carregado.** O conserto é o mesmo `Footer: Imports:` do `quest_db.yml`.
+- **Guarda de validação do rAthena pode reprovar 100% dos valores válidos, e o
+  chamador ainda relatar sucesso.** No `pc_changelook`, `case LOOK_BODY2:`, o
+  `if( !job_db.exists( val ) ) return;` foi escrito quando aquele campo valia 0
+  ou 1 (Aprendiz e Espadachim, dois trabalhos que o `job_db` conhece). Hoje o
+  campo guarda o Id do visual alternativo — 4332..4344 —, e **nenhum arquivo do
+  vendor declara esses ids num `Jobs:`**: o `job_outfits.yml` só os cita em
+  `AlternateOutfits`, que preenche o vetor do trabalho *pai* e não cria entrada.
+  Como `job_db.exists()` é `find(key) != nullptr` (`src/common/database.hpp:103`),
+  a guarda reprova sempre, o `clif_changelook` do fim da função nunca roda e
+  nenhum pacote sai. E como `pc_changelook` é **`void`**, o `@bodystyle` imprime
+  *"Aparência alterada"* logo depois, incondicionalmente. **Função `void` que
+  desiste no meio é indistinguível de função que trabalhou** — ao depurar um
+  "mudou e não mudou", ler o corpo da função e não a mensagem de quem a chamou.
+  Consertado por dado (`db/guerra/job_estilo_de_corpo.yml`, §2), nunca por
+  substituir a linha.
+- **Padrão idêntico numa coluna do banco é evidência, e não se parece com
+  erro.** O que denunciou a guarda acima foi uma consulta ao `char` em que
+  **todo** personagem tinha `body` igual a `class` — 4060/4060, 1/1, 14/14. Não
+  havia valor "errado" à vista: era o único ramo do nosso código que sobrevivia
+  à guarda (`val == 0` → `sd->status.class_`), e o outro morria antes de gravar.
+  **Coluna inteira com o mesmo relacionamento entre dois campos é sintoma**, do
+  mesmo jeito que tabela de tamanho 1 é sintoma de chave não resolvida. Vale a
+  pena olhar o banco cedo: ele mostra o que ficou gravado, que é diferente do
+  que a tela mostra e do que o log conta.
+- **Varredura por `nome_db.` NÃO acha quem itera o banco de dentro da própria
+  classe.** Um `grep "job_db\."` filtrando `find|exists|load|clear` devolveu
+  "ninguém enumera" — e o `JobDatabase::loadingFinished()` (`src/map/pc.cpp:14277`)
+  itera `*this` e avisa sobre trabalho sem tabela de EXP. Método da classe usa
+  `*this`, `this->`, ou nada; o nome da variável global não aparece. **Antes de
+  concluir que acrescentar entrada num banco é inócuo, ler o `loadingFinished()`
+  dele.** No caso do estilo de corpo o risco era real e não se concretizou: o
+  laço faz `continue` quando `!pcdb_checkid(job_id)`, e nenhuma faixa do
+  `pcdb_checkid` (`src/map/pc.hpp:1219`) cobre 4331+ — a última é
+  `JOB_SKY_EMPEROR2 = 4316`.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

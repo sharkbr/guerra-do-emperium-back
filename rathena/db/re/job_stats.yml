@@ -7815,3 +7815,20 @@ Body:
         Spl: 1
       - Level: 59
         Pow: 1
+
+# Guerra do Emperium: este arquivo nao tinha `Footer:` nenhum. O bloco abaixo
+# e novo, e nao e conteudo nosso - e outro arquivo do PROPRIO rAthena,
+# db/re/job_outfits.yml, que define `AlternateOutfits` (o "Roupa alternativa"
+# do estilista, 3a classe) e que ate 2026-08-22 nao era lido por NENHUM
+# codigo: o JobDatabase::getDefaultLocation() (src/map/pc.cpp:13819) aponta
+# so para este arquivo, e este arquivo nunca teve as entradas. Resultado:
+# `job->alternate_outfits` ficava vazio para TODO trabalho, e nao so para um
+# - `@bodystyle` respondia "This job has no alternate body styles" para
+# qualquer 3a classe, e o Cupom de Roupa nao tinha o que aplicar (ver
+# src/custom/estilo_de_corpo.hpp). Seguro pelo mesmo motivo do quest_db.yml:
+# o `parseImports` mora no YamlDatabase (src/common/database.cpp:176), nao no
+# leitor de job_db, e o Header dos dois arquivos bate (JOB_STATS, Version 4).
+Footer:
+  Imports:
+    - Path: db/re/job_outfits.yml
+    - Path: db/guerra/job_estilo_de_corpo.yml

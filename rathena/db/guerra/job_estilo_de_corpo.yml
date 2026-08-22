@@ -1,0 +1,87 @@
+# Guerra do Emperium - os treze trabalhos de VISUAL ALTERNATIVO (estilo de corpo)
+#
+# O QUE ESTE ARQUIVO CONSERTA
+# ===========================
+#
+# Sem ele, trocar o estilo de corpo NAO FUNCIONA por caminho nenhum: nem pelo
+# Cupom de Roupa na Estilista de Prontera, nem pelo @bodystyle. E os dois
+# falham CALADOS - a Estilista come o cupom e responde sucesso, e o @bodystyle
+# chega a imprimir "Aparencia alterada".
+#
+# ------------------------------------------------------------- onde ele morre
+#
+# O `pc_changelook`, no `case LOOK_BODY2:` (src/map/pc.cpp):
+#
+#     estilo_de_corpo_resolve( sd, &val );   // nosso: 0 -> classe, 1 -> 4332
+#     if( !job_db.exists( val ) ){
+#         return;                            // <- MORRE AQUI
+#     }
+#     sd->status.body = val;
+#
+# O `job_db.exists()` e literalmente `find(key) != nullptr`
+# (src/common/database.hpp:103), e o `job_db` so ganha entrada por um `Jobs:`
+# de um arquivo JOB_STATS. Acontece que **nenhum arquivo do vendor declara os
+# ids 4332..4344 num `Jobs:`**: o `db/re/job_stats.yml` nao tem nenhum `_2nd`,
+# e o `db/re/job_outfits.yml` so os cita dentro de `AlternateOutfits`, que
+# empurra o numero para o vetor `alternate_outfits` do trabalho PAI e nao cria
+# entrada nenhuma.
+#
+# Resultado: `job_db.exists(4332)` e falso, o `return` acontece, `status.body`
+# nunca e escrito e o `clif_changelook` do fim da funcao nunca roda - nenhum
+# pacote sai. Como `pc_changelook` e `void`, quem chamou nao tem como saber:
+# o `@bodystyle` (src/map/atcommand.cpp) imprime "Aparencia alterada" logo
+# depois, incondicionalmente.
+#
+# A guarda nao esta "errada", esta VENCIDA - e da mesma familia do
+# `db/re/stylist.yml`: foi escrita quando o LOOK_BODY2 valia 0 ou 1, que sao
+# Aprendiz e Espadachim, dois trabalhos que o job_db conhece. Com o significado
+# de hoje (id do trabalho do visual alternativo) ela reprova **todo** valor
+# valido, sempre. Ver src/custom/estilo_de_corpo.hpp para a outra metade.
+#
+# ----------------------------------------------------------- como se provou
+#
+# Medido em 2026-08-22, no banco: **todo** personagem tinha `body` igual a
+# `class` (Abemus 4060/4060, Libra 4077/4077, Carmelio 1/1, Fagas 14/14).
+# Esse e exatamente - e somente - o ramo `val == 0` do
+# `estilo_de_corpo_resolve`, que devolve `sd->status.class_`, um id que o
+# job_db conhece e que por isso passa pela guarda. Nenhum personagem tinha
+# 4332: o ramo do visual alternativo morria antes de gravar.
+#
+# ------------------------------------------------- por que dado, e nao C++
+#
+# Porque a alternativa era SUBSTITUIR a linha `if( !job_db.exists( val ) )` do
+# rAthena, e substituicao nao sobrevive a merge por si (CLAUDE.md secao 2 - ha
+# exatamente uma no projeto, no battle.cpp, e ela e listada como risco). Aqui
+# nao e preciso: os treze ids sao trabalhos de verdade, estao no enum de
+# `src/common/mmo.hpp` (JOB_SECOND_JOB_START = 4331) e sao citados pelo proprio
+# `db/re/job_outfits.yml`. Declara-los num `Jobs:` e dar ao job_db o dado que o
+# vendor esqueceu de embarcar - a mesma natureza do proprio job_outfits.yml,
+# que estava orfao (ver o rodape de db/re/job_stats.yml).
+#
+# Nao ha efeito colateral: **nada enumera o job_db** - varrido em 2026-08-22,
+# todo acesso e `find`/`exists`/`get_*` por um id vindo de `sd->status.class_`
+# ou explicito, e nenhum personagem tem `class_` nessa faixa. As entradas ficam
+# so para a guarda achar.
+#
+# Estes trabalhos NAO recebem campo nenhum de propriedade (peso, HP, EXP) de
+# proposito: eles nunca sao a classe de um jogador, so o valor de um visual.
+
+Header:
+  Type: JOB_STATS
+  Version: 4
+
+Body:
+  - Jobs:
+      Rune_Knight_2nd: true
+      Warlock_2nd: true
+      Ranger_2nd: true
+      ArchBishop_2nd: true
+      Mechanic_2nd: true
+      Guillotine_Cross_2nd: true
+      Royal_Guard_2nd: true
+      Sorcerer_2nd: true
+      Minstrel_2nd: true
+      Wanderer_2nd: true
+      Sura_2nd: true
+      Genetic_2nd: true
+      Shadow_Chaser_2nd: true

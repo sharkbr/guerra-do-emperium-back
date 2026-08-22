@@ -17,40 +17,11 @@ Estado em 2026-08-08.
 
 ## 0b. Os três relatos de 2026-08-17 — estilista, carta e janela de missões
 
-Três coisas relatadas pelo dono depois de jogar. **Uma está diagnosticada e
-corrigida em código** (falta linkar e ver em jogo); as outras duas continuam
-abertas por falta de uma observação que só o jogo dá.
-
-### a) Cupom de Roupa comido sem trocar o visual — CORRIGIDO, falta linkar
-
-O `Stylist#prontera` (`prt_in 243,168`, arquivo do rAthena) aceita o Cupom de
-Roupa (6959), **consome** o cupom e o personagem não muda.
-
-**Causa, achada em 2026-08-17:** o `db/re/stylist.yml` ainda traz o valor
-legado 0/1 no `Look: Body2`, e neste rAthena aquele campo passou a guardar o
-**Id do trabalho** do visual alternativo (`Rune_Knight_2nd` e irmãos, faixa
-4332..4349). O `pc_delitem` roda **antes** de o visual mudar, então o cupom some
-e o `clif_changelook` manda `body = 0`. A armadilha inteira está no
-`CLAUDE.md` §5, e o raciocínio em `src/custom/estilo_de_corpo.hpp`.
-
-**O que foi feito:** `src/custom/estilo_de_corpo.hpp` novo, mais um include e
-uma chamada acrescentada no `case LOOK_BODY2:` do `pc_changelook`
-(`src/map/pc.cpp`) — as duas são ACRÉSCIMO, não substituição. **Compila
-limpo**; o `LNK1104` do build de 2026-08-17 foi só o map-server no ar.
-
-**O que falta:**
-
-1. parar o map-server, linkar e subir de novo:
-   ```
-   python ferramentas/servidor.py parar
-   MSBuild.exe src/map/map-server.vcxproj -p:Configuration=Release      -p:Platform=x64 "-p:SolutionDir=<raiz>/rathena/"
-   python ferramentas/servidor.py subir
-   ```
-2. num personagem de **3ª classe** (só eles chegam a essa parte da janela),
-   comprar um Cupom de Roupa na Máquina, abrir o estilista e trocar o estilo de
-   corpo. A arte existe no GRF (`costume_1\`, 127 sprites, conferido).
-3. conferir também o caminho de volta (Index 1 = visual padrão), que **também
-   cobra um cupom** — é o que o `db/re/stylist.yml` diz, e não foi mexido.
+Três coisas relatadas pelo dono depois de jogar. **A primeira (o Cupom de Roupa)
+foi resolvida e conferida em jogo em 2026-08-22** — eram três defeitos
+empilhados, e o registro está no `HISTORICO.md`, "O estilo de corpo que nunca
+chegou a existir". As outras duas continuam abertas por falta de uma observação
+que só o jogo dá.
 
 ### b) Carta Senhor das Trevas (4168) não abre a janela de encaixe — ABERTO
 
