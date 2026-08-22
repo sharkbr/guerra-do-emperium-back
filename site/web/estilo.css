@@ -282,9 +282,18 @@ input:focus, select:focus, textarea:focus {
    controle por um menu proprio. */
 select option { background: var(--carvao); color: var(--tinta); }
 
-/* Texto livre de chamado: cresce so' na vertical. Sem o resize:vertical o
-   arrastar do canto estoura a largura do cartao. */
-textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+/* Texto livre de chamado. Tres coisas, e cada uma resolve uma:
+
+   - o `display: block` da regra acima e' o que o poe SOZINHO NA LINHA. Sem
+     ele o textarea nasce inline e divide a linha com o texto do <label> que
+     o embrulha, ficando estreito e desalinhado - foi assim que ele apareceu
+     na tela do dono em 2026-08-22, e a causa era CSS velho em cache, nao a
+     folha (ver o semCache em site/main.go);
+   - `resize: vertical` porque arrastar o canto na horizontal estoura a
+     largura do cartao;
+   - altura de partida generosa: e' o campo principal do formulario, e caixa
+     pequena convida a relato de uma linha, que e' o relato que nao resolve. */
+textarea { resize: vertical; min-height: 150px; line-height: 1.5; }
 
 .opcional { color: #7d786c; font-weight: 400; }
 

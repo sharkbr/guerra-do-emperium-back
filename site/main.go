@@ -142,7 +142,7 @@ func main() {
 	mux.HandleFunc("POST /api/painel/chamado", s.abreChamado)
 
 	// Front estatico.
-	mux.Handle("/", http.FileServer(http.Dir("web")))
+	mux.Handle("/", semCache(http.FileServer(http.Dir("web"))))
 
 	srv := &http.Server{
 		Addr:              cfg.Endereco,
@@ -173,12 +173,49 @@ func main() {
 	log.Println("ate' logo")
 }
 
+// semCache manda o navegador CONFERIR antes de usar o que ele guardou.
+//
+// Sem cabecalho de cache nenhum - que era o caso ate' 2026-08-22 - o
+// navegador nao fica sem cache: ele inventa um. E' o cache HEURISTICO do
+// RFC 9111, e a regra usual e' guardar por 10% do tempo desde o
+// Last-Modified. Consequencia perversa: quanto mais VELHO o arquivo,
+// MAIOR o tempo que a copia velha e' considerada fresca - um estilo.css
+// parado ha' uma semana fica valendo por umas quinze horas depois de
+// trocado, e o navegador nem pergunta.
+//
+// A falha e' calada e do pior tipo: o deploy dizia sucesso, o arquivo
+// certo estava no servidor, e a tela do jogador continuava a antiga.
+// Achado em 2026-08-22, quando a caixa de texto do formulario de chamado
+// apareceu sem estilo para o dono - o CSS no ar ja' estava correto.
+//
+// "no-cache" NAO quer dizer "nao guarde": quer dizer "guarde, mas
+// pergunte antes de usar". Com o Last-Modified que o FileServer ja' manda,
+// a pergunta volta como um 304 de duzentos bytes - barato o bastante para
+// um site deste tamanho, e a alternativa (versionar o nome de cada
+// arquivo) exige um passo de build que aqui nao existe.
+//
+// Em /api/ o caso e' outro e o cabecalho tambem: ali trafega nome de
+// conta, e-mail e lista de personagens. Resposta com dado pessoal nao se
+// guarda em disco nenhum - "no-store".
+func semCache(prox http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-cache")
+		prox.ServeHTTP(w, r)
+	})
+}
+
 // registra poe uma linha por requisicao no log. Sem corpo e sem query -
 // eles carregam senha e CPF, e log e' o lugar classico onde segredo vaza
 // sem ninguem perceber.
 func registra(prox http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		inicio := time.Now()
+		// Ver semCache: /api/ carrega dado pessoal e nao se guarda em
+		// lugar nenhum. Posto ANTES do handler para que valha tambem nas
+		// respostas de erro, que saem por outros caminhos.
+		if strings.HasPrefix(r.URL.Path, "/api/") {
+			w.Header().Set("Cache-Control", "no-store")
+		}
 		prox.ServeHTTP(w, r)
 		if strings.HasPrefix(r.URL.Path, "/api/") {
 			log.Printf("%s %s %s (%v)", ipDe(r), r.Method, r.URL.Path,

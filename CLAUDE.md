@@ -1673,6 +1673,27 @@ Produziram diagnóstico falso e custaram retrabalho:
   a mesma armadilha vale para toda tabela que o char-server mantenha em
   memória, não só a `char`. Caso vivo: o botão de destravar personagem do
   site, 2026-08-22.
+- **Resposta HTTP sem `Cache-Control` NÃO fica sem cache: o navegador
+  inventa um — e quanto mais VELHO o arquivo, mais tempo a cópia velha vale.**
+  É o cache heurístico do RFC 9111 §4.2.2, e a regra usual é guardar por 10%
+  do tempo decorrido desde o `Last-Modified`. Consequência que inverte a
+  intuição: um `estilo.css` parado há uma semana continua sendo servido do
+  disco do jogador por umas **quinze horas** depois de trocado, e o navegador
+  **nem pergunta** — não há requisição, então não há 304, e nada aparece no
+  log do servidor. O deploy diz sucesso, o arquivo certo está no servidor, e
+  a tela do jogador é a antiga. Medido em 2026-08-22, quando a caixa de texto
+  do formulário de chamado apareceu sem estilo para o dono e o CSS no ar já
+  estava correto — o diagnóstico que engana é culpar o CSS, que é o único
+  lugar onde não está o defeito.
+  **A sonda que decide é `curl -sI` no arquivo público** e comparar com o que
+  a tela mostra: se o servidor entrega o certo, o problema é do outro lado.
+  A saída é `Cache-Control: no-cache`, que **não** quer dizer "não guarde" e
+  sim "guarde, mas pergunte antes de usar" — com o `Last-Modified` que o
+  `http.FileServer` já manda, a pergunta volta como um 304 de zero byte.
+  Resposta com dado pessoal (`/api/`) leva `no-store`, que é outra coisa.
+  **Cache já envenenado não se conserta do servidor**: quem carregou a página
+  antes só vê o novo com recarga forçada (Cmd+Shift+R) ou quando o prazo
+  heurístico vencer.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

@@ -12700,3 +12700,60 @@ deixou de existir pelo caminho do script, e continua valendo para quem der
 `git pull` à mão no servidor, que avança o repositório sem avançar carimbo
 nenhum. A receita nova é a `RECEITAS.md` §13, e a tabela dos quatro destinos da
 §0 ganhou a linha do `site/sql/`, que nenhum deploy roda.
+
+---
+
+## A caixa de texto sem estilo, e o cache que o navegador inventa (2026-08-22)
+
+O dono abriu o formulário de chamado e mandou o print: a caixa de texto dividia
+a linha com o rótulo *"O que aconteceu"*, estreita e desalinhada. O pedido foi
+direto — *"vamos deixar ele sozinho em uma linha"*.
+
+**O CSS no ar já fazia exatamente isso.** Um `curl` na folha pública mostrava a
+regra `select, textarea { display: block; width: 100% }` no lugar. O que a tela
+mostrava era uma cópia velha, guardada pelo navegador do dono.
+
+### Por que o navegador guardou, se ninguém mandou guardar
+
+Resposta sem `Cache-Control` **não fica sem cache**: o navegador inventa um. É o
+cache heurístico do RFC 9111, e a regra usual é considerar a cópia fresca por
+**10% do tempo decorrido desde o `Last-Modified`**. Isso inverte a intuição —
+quanto mais velho o arquivo, mais tempo a versão obsoleta continua valendo. Um
+`estilo.css` parado havia uma semana seguiria sendo servido do disco por umas
+quinze horas depois de trocado, **sem uma única requisição ao servidor**: sem
+requisição não há 304, e sem 304 não há linha no log.
+
+Ou seja, era a família de falha que este projeto mais persegue: o deploy diz
+sucesso, o arquivo certo está no servidor, e para o jogador não mudou nada. E o
+diagnóstico natural — mexer no CSS — aponta para o único lugar onde o defeito
+não está.
+
+Três pistas que confirmaram antes de qualquer conserto:
+
+- os `input` apareciam estilizados e o `select`/`textarea` não. Os primeiros já
+  estavam na regra **antiga**; os dois últimos só entraram na nova;
+- o `select` tinha a aparência nativa do macOS, com as setinhas azuis;
+- o `curl -sI` mostrava `Last-Modified` e **nenhum** `Cache-Control`.
+
+### O conserto
+
+`Cache-Control: no-cache` no estático, que não quer dizer *"não guarde"* e sim
+*"guarde, mas pergunte antes de usar"*. Com o `Last-Modified` que o
+`http.FileServer` já manda, a pergunta volta como um **304 de zero byte** —
+medido. Para um site deste tamanho isso é mais barato que a alternativa
+(versionar o nome de cada arquivo), que exigiria um passo de build que aqui não
+existe.
+
+E em `/api/` o cabeçalho é outro: `no-store`. Ali trafega nome de conta, e-mail
+e lista de personagens, e resposta com dado pessoal não se guarda em disco
+nenhum. Foi posto **antes** do handler, para valer também nas respostas de erro,
+que saem por outros caminhos — conferido no 401.
+
+**O que o conserto não alcança:** cache já envenenado. Quem carregou a página
+antes só vê o novo com recarga forçada ou quando o prazo heurístico vencer — e
+o próprio `index.html` está no mesmo caso, o que descarta o truque de versionar
+o endereço do CSS. Daqui para a frente não acontece mais.
+
+A caixa ganhou de passagem 150px de altura de partida, em vez de 120: é o campo
+principal daquele formulário, e caixa pequena convida ao relato de uma linha,
+que é justamente o relato que não resolve.
