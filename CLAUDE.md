@@ -1373,17 +1373,26 @@ Produziram diagnóstico falso e custaram retrabalho:
   A leitura certa é **mesclar**, com o campo que o override declarou vencendo e
   o resto vindo do rAthena; ver `instala_manto.item_de`. Ver `PENDENCIAS.md` §1v.
 - **Deploy parcial feito à mão desarma o gatilho de restart do deploy seguinte,
-  e a perda é calada.** O `atualiza_servidor.sh` decide reiniciar o jogo
-  comparando o commit de **antes** do `git pull` com o de depois (`ANTES`
-  contra `DEPOIS`, linha 260) — quem faz o `git pull` por fora, para publicar
-  só o site sem derrubar jogador, **consome esse gatilho**: o próximo
-  `implanta.sh` acha `rathena/` sem mudança e não reinicia. O que ficou no
-  disco continua no disco, o processo vivo segue com a configuração velha, e
-  nada no log denuncia — o deploy até diz *"nada do jogo mudou, ninguém foi
-  derrubado"*, que é a frase de sucesso. Feito em 2026-08-16 para não derrubar
-  três jogadores; a dívida está na `PENDENCIAS.md` §0. **Ao pular etapa do
-  deploy por causa de jogador online, anotar o que ficou por carregar** — o
-  próprio deploy já não lembra.
+  e a perda é calada — CORRIGIDO em 2026-08-22, e a armadilha continua valendo
+  para quem der `git pull` no servidor por fora.** Até aquela data o
+  `atualiza_servidor.sh` decidia reiniciar o jogo comparando o commit de
+  **antes** do `git pull` com o de depois: quem fizesse o `git pull` por fora,
+  para publicar só o site sem derrubar jogador, **consumia esse gatilho**, e o
+  próximo `implanta.sh` achava `rathena/` sem mudança e não reiniciava. O que
+  ficara no disco continuava no disco, o processo vivo seguia com a
+  configuração velha, e nada no log denunciava — o deploy até dizia *"nada do
+  jogo mudou, ninguém foi derrubado"*, que é a frase de sucesso. Aconteceu em
+  2026-08-16, para não derrubar três jogadores.
+  **O conserto é não perguntar "o que mudou no repositório desde o último
+  pull?" e sim "o que mudou desde o que está RODANDO?".** Dois arquivos na raiz
+  do servidor guardam isso e não vão para o git: `.carimbo-jogo` (o commit com
+  que os quatro servidores estão no ar) e `.carimbo-site`. O
+  `ferramentas/implanta_site.sh` publica só o site e **não toca** o primeiro,
+  então a mudança de jogo que veio de carona no mesmo pull continua pendente
+  aos olhos do deploy completo — e o próprio script a **lista** no fim, com os
+  nomes dos arquivos. **O que continua sem rede é o `git pull` dado à mão no
+  servidor**, que avança o repositório sem avançar carimbo nenhum; com o modo
+  `--so-site` não há mais motivo para fazê-lo.
 - **"Unknown Item" com sprite de maçã NUNCA é problema de servidor — e a
   pergunta que resolve é *quais* itens, não *por que aquele item*.** O nome do
   item não trafega na rede: o servidor manda o ID e quem desenha é o

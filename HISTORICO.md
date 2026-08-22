@@ -12585,3 +12585,96 @@ Não há navegador nesta sessão, então a conferência foi de API contra um Mar
 O que **não** foi conferido, por não haver navegador: a tela. Falta olhar o
 painel com as cinco dobras, a lista de personagens no celular e o `<select>` do
 tipo de chamado.
+
+---
+
+## O deploy do site sai do deploy do jogo, e o gatilho deixa de se desarmar (2026-08-22)
+
+Ia rodar o `implanta.sh` para publicar as três novidades da área logada, com
+três jogadores online, e a conta não fechou: o deploy leva tudo que está entre o
+commit do servidor e o HEAD, e ali havia **dois commits do Windows com três
+arquivos de NPC**. `rathena/` mudou é o gatilho de reiniciar o jogo — os três
+cairiam por causa de uma mudança de site.
+
+O dono decidiu, e ampliou o pedido: *"opção 1, mas inclusive se não temos um
+script pra atualizar SÓ o site, precisamos. Não podemos ter um script só que
+atualiza tudo."*
+
+### Por que não foi um script novo
+
+A lógica de deploy não é o `git pull`: é o `runuser -u ragnarok` (sem ele os
+arquivos nascem `root:root` e o servidor perde a escrita), o pré-voo que aborta,
+a ordem dos quatro serviços. Copiar isso para um segundo arquivo garante que as
+duas cópias divirjam, e a errada é sempre a que alguém roda.
+
+Então virou um **modo**: `atualiza_servidor.sh --so-site`, com dois wrappers no
+Mac — `implanta.sh` e `implanta_site.sh`. O `--` do `ssh libraro 'bash -s --
+--so-site'` é o que faz a opção chegar ao script que vem pelo stdin, em vez de
+ser lida pelo próprio bash.
+
+### O problema de verdade não era o modo: era o gatilho
+
+Um deploy só de site **consumia** o gatilho do deploy seguinte, e isso já estava
+documentado no `CLAUDE.md` §5 desde 2026-08-16, quando foi feito à mão pelo
+mesmo motivo (não derrubar três jogadores). A decisão de reiniciar era o diff
+entre o HEAD de **antes** do `git pull` e o de depois; quem atualizasse só o
+site já teria feito o pull, então o `implanta.sh` seguinte achava `rathena/` sem
+mudança e **não reiniciava** — imprimindo *"nada do jogo mudou, ninguém foi
+derrubado"*, que é a frase de sucesso. O disco novo, o processo velho, e nada no
+log.
+
+Construir o modo `--so-site` em cima disso seria **industrializar a armadilha**:
+o que era um deslize manual passaria a acontecer toda vez.
+
+**O conserto é trocar a pergunta.** Não *"o que mudou no repositório desde o
+último pull?"* — que qualquer atualização parcial responde errado — e sim *"o
+que mudou desde o que está RODANDO?"*. Dois arquivos na raiz do servidor, fora
+do git, guardam a resposta:
+
+| | |
+|---|---|
+| `.carimbo-jogo` | o commit com que os quatro servidores estão no ar |
+| `.carimbo-site` | o commit com que o binário do site foi construído |
+
+O `--so-site` mexe **só no segundo**. E o script ainda **lista** no fim os
+arquivos de `rathena/` que chegaram ao disco e não estão no ar, com o lembrete
+do `@reloadscript` — porque o modo só é honesto se a mudança que ficou para trás
+for visível.
+
+Três detalhes que fazem os carimbos não terem lado errado:
+
+- **Carimbo ausente cai no `ANTES`**, o HEAD de antes do pull. É o valor certo
+  na primeira execução e para quem vem da versão anterior do script, porque até
+  aqui "o que estava no disco" e "o que estava rodando" eram a mesma coisa.
+- **Carimbo apontando para commit que o repositório não conhece** (ramo
+  reescrito, clone novo) é pior que carimbo nenhum: todo diff contra ele
+  falharia e o script cairia no lado errado de cada decisão. Um `cat-file -e`
+  filtra, e o inválido cai no mesmo `ANTES` — ou seja, **reinicia**.
+- **O carimbo do jogo só avança quando os processos de fato passam a rodar o
+  commit novo**: por restart, ou porque nada do jogo mudou. Ele é escrito no
+  **fim**, e como o script morre no primeiro erro (`set -e`), não chegar lá é a
+  forma de não carimbar.
+
+### A prova, antes de tocar no servidor
+
+A lógica das três decisões foi extraída para um script de mesa e rodada contra o
+repositório de verdade, com o servidor em `244f71c` e o HEAD em `eb160c6`:
+
+| cenário | compila | reinicia | site |
+|---|---|---|---|
+| hoje, sem carimbo nenhum | não | **sim (derruba)** | sim |
+| depois do `--so-site` | não | **sim (derruba)** | não |
+| idem, com `.carimbo-jogo` parado | não | **sim (derruba)** | não |
+| depois de um `implanta.sh` completo | não | não | não |
+| carimbo com lixo dentro | não | **sim (derruba)** | sim |
+
+A linha que importa é a segunda: **depois de publicar só o site, o gatilho
+continua armado.** Era exatamente o que se perdia antes.
+
+### O que ficou registrado onde
+
+A entrada do `CLAUDE.md` §5 não foi apagada — foi **corrigida**. A armadilha
+deixou de existir pelo caminho do script, e continua valendo para quem der
+`git pull` à mão no servidor, que avança o repositório sem avançar carimbo
+nenhum. A receita nova é a `RECEITAS.md` §13, e a tabela dos quatro destinos da
+§0 ganhou a linha do `site/sql/`, que nenhum deploy roda.

@@ -39,7 +39,46 @@
 # A decisao e' por diff entre o commit que estava e o que chegou, olhando
 # so' o que entra no binario: src/, configure e Makefile.in.
 #
+# ---------------------------------------------------------------------
+# O MODO --so-site, E O CARIMBO QUE O TORNA SEGURO
+#
+# O site e' Go, sobe em segundos e nao encosta no jogo; o emulador so'
+# reinicia derrubando todo mundo. Sao dois ritmos diferentes, e amarra-los
+# num comando so' obriga a escolher entre "publico o site" e "nao derrubo
+# ninguem". Com --so-site o script traz o codigo, recompila e reinicia
+# APENAS o guerra-site.
+#
+# O QUE ISSO QUEBRAVA ATE' 2026-08-22, e e' a razao dos carimbos: a decisao
+# de reiniciar era o diff entre o HEAD de ANTES do pull e o de depois. Quem
+# atualizasse so' o site CONSUMIA esse gatilho - o pull ja' tinha
+# acontecido, entao o deploy seguinte achava rathena/ sem mudanca e nao
+# reiniciava. O que estava no disco continuava no disco, o processo vivo
+# seguia com a configuracao velha, e o deploy AINDA IMPRIMIA a frase de
+# sucesso ("nada do jogo mudou, ninguem foi derrubado"). Aconteceu de
+# verdade em 2026-08-16, a mao, e esta' no CLAUDE.md secao 5.
+#
+# A saida e' nao perguntar "o que mudou no repositorio desde o ultimo
+# pull?" e sim "o que mudou desde o que esta' RODANDO?". Dois arquivos na
+# raiz guardam isso, e nenhum vai para o git:
+#
+#   .carimbo-jogo  - o commit com que os quatro servidores estao no ar
+#   .carimbo-site  - o commit com que o binario do site foi construido
+#
+# O modo --so-site mexe SO' no segundo. Entao a mudanca de NPC que chegou
+# junto continua pendente aos olhos do proximo deploy completo, que a vera'
+# e reiniciara' - que e' exatamente o que se quer.
+#
 set -euo pipefail
+
+# O unico argumento aceito. Chega por 'ssh ... bash -s -- --so-site', que e'
+# o que o ferramentas/implanta_site.sh faz.
+SO_SITE=0
+for a in "$@"; do
+    case "$a" in
+        --so-site) SO_SITE=1 ;;
+        *) printf 'uso: %s [--so-site]\n' "$0" >&2; exit 2 ;;
+    esac
+done
 
 USUARIO="ragnarok"
 RAIZ="/opt/guerra-do-emperium"
@@ -88,6 +127,42 @@ else
     ok "clonado em $DEPOIS"
 fi
 
+# =====================================================================
+# 1b. Os carimbos - o que esta' RODANDO, e nao o que estava no disco
+# =====================================================================
+# Ver o cabecalho. Le-se aqui, escreve-se no fim, e um carimbo que ainda
+# nao exista nasce com o ANTES: e' o valor certo tanto na primeira vez
+# quanto para quem esta' migrando de uma versao anterior deste script,
+# porque ate' aqui "o que estava no disco" e "o que estava rodando" eram a
+# mesma coisa.
+CARIMBO_JOGO="$RAIZ/.carimbo-jogo"
+CARIMBO_SITE="$RAIZ/.carimbo-site"
+
+le_carimbo() {
+    local arquivo="$1" valor=""
+    [ -f "$arquivo" ] && valor="$(tr -d '[:space:]' < "$arquivo")"
+    # Carimbo que aponte para um commit que o repositorio nao conhece (ramo
+    # reescrito, clone novo) e' pior que carimbo nenhum: todo diff contra
+    # ele falharia, e o script cairia no lado errado de cada decisao.
+    if [ -n "$valor" ] && como_jogo git -C "$RAIZ" cat-file -e "$valor^{commit}" 2>/dev/null; then
+        printf '%s' "$valor"
+    else
+        printf '%s' "$ANTES"
+    fi
+}
+
+grava_carimbo() { printf '%s\n' "$2" | como_jogo tee "$1" >/dev/null; }
+
+BASE_JOGO="$(le_carimbo "$CARIMBO_JOGO")"
+BASE_SITE="$(le_carimbo "$CARIMBO_SITE")"
+
+if [ "$SO_SITE" = "1" ]; then
+    aviso "modo --so-site: o jogo NAO sera' tocado, ninguem cai"
+fi
+if [ -n "$BASE_JOGO" ] && [ "$BASE_JOGO" != "$DEPOIS" ]; then
+    ok "jogo esta' rodando com $(echo "$BASE_JOGO" | cut -c1-8)"
+fi
+
 [ -d "$EMULADOR" ] || erro "$EMULADOR nao existe - o clone veio incompleto?"
 
 # =====================================================================
@@ -100,16 +175,18 @@ for b in "${BINARIOS[@]}"; do
     [ -x "$EMULADOR/$b" ] || FALTANDO+=("$b")
 done
 
-if [ ${#FALTANDO[@]} -gt 0 ]; then
+if [ "$SO_SITE" = "1" ]; then
+    pula "modo --so-site - o emulador nao e' compilado nem tocado"
+elif [ ${#FALTANDO[@]} -gt 0 ]; then
     COMPILAR=1
     ok "faltam binarios: ${FALTANDO[*]}"
-elif [ -z "$ANTES" ]; then
+elif [ -z "$BASE_JOGO" ]; then
     COMPILAR=1
     ok "primeiro clone"
-elif ! como_jogo git -C "$RAIZ" diff --quiet "$ANTES" "$DEPOIS" -- \
+elif ! como_jogo git -C "$RAIZ" diff --quiet "$BASE_JOGO" "$DEPOIS" -- \
         rathena/src rathena/configure rathena/Makefile.in 2>/dev/null; then
     COMPILAR=1
-    ok "src/ mudou entre os dois commits"
+    ok "src/ mudou desde o que esta' no ar"
 else
     pula "nada que entre no binario mudou - build dispensado"
 fi
@@ -205,8 +282,8 @@ fi
 passo "Site"
 # O site e' Go: recompilar custa segundos, entao a decisao aqui e' mais
 # frouxa que a do emulador - qualquer mudanca em site/ ja' vale um build.
-if [ ! -x "$RAIZ/site/site" ] || [ -z "$ANTES" ] || \
-   ! como_jogo git -C "$RAIZ" diff --quiet "$ANTES" "$DEPOIS" -- site 2>/dev/null; then
+if [ ! -x "$RAIZ/site/site" ] || [ -z "$BASE_SITE" ] || \
+   ! como_jogo git -C "$RAIZ" diff --quiet "$BASE_SITE" "$DEPOIS" -- site 2>/dev/null; then
     if ( cd "$RAIZ/site" && como_jogo env HOME=/tmp GOCACHE=/tmp/gocache \
             GOPATH=/tmp/gopath GOFLAGS=-mod=mod go build -o site . ) 2>/tmp/site-build.log; then
         ok "recompilado"
@@ -251,25 +328,37 @@ passo "Servicos"
 # Custou uma vez, em 2026-08-15: um deploy de CSS derrubou o dono do jogo, e
 # a Etapa 12 do IMPLANTACAO.md ja' avisava exatamente isso por escrito.
 REINICIAR_JOGO=0
-if [ "$COMPILAR" = "1" ]; then
+if [ "$SO_SITE" = "1" ]; then
+    :
+elif [ "$COMPILAR" = "1" ]; then
     REINICIAR_JOGO=1
     MOTIVO="o binario foi recompilado"
-elif [ -z "$ANTES" ]; then
+elif [ -z "$BASE_JOGO" ]; then
     REINICIAR_JOGO=1
     MOTIVO="primeiro clone"
-elif ! como_jogo git -C "$RAIZ" diff --quiet "$ANTES" "$DEPOIS" -- rathena 2>/dev/null; then
+elif ! como_jogo git -C "$RAIZ" diff --quiet "$BASE_JOGO" "$DEPOIS" -- rathena 2>/dev/null; then
     REINICIAR_JOGO=1
     MOTIVO="rathena/ mudou"
 fi
 
-if [ "$REINICIAR_JOGO" = "0" ]; then
+# O carimbo do jogo so' avanca quando os processos de fato passam a rodar
+# o commit novo - por restart, ou porque nada do jogo mudou. No --so-site
+# ele NAO e' tocado, e e' essa linha que faz a mudanca de NPC que chegou
+# junto continuar pendente para o proximo deploy completo.
+AVANCA_CARIMBO_JOGO=0
+
+if [ "$SO_SITE" = "1" ]; then
+    pula "modo --so-site - os quatro seguem no ar, ninguem foi derrubado"
+elif [ "$REINICIAR_JOGO" = "0" ]; then
     pula "nada do jogo mudou - os quatro seguem no ar, ninguem foi derrubado"
+    AVANCA_CARIMBO_JOGO=1
 elif systemctl list-unit-files 'guerra-*.service' --no-legend 2>/dev/null | grep -q "guerra-map"; then
     aviso "reiniciando o jogo ($MOTIVO) - quem estiver jogando CAI agora"
     for s in guerra-login guerra-char guerra-web guerra-map; do
         systemctl restart "$s"
         ok "$s reiniciado"
     done
+    AVANCA_CARIMBO_JOGO=1
 
     # Mudanca so' de npc/ ou db/ nem precisaria de restart - pediria
     # @reloadscript e irmaos (CLAUDE.md secao 3). Distinguir isso exige
@@ -279,6 +368,33 @@ else
     aviso "units guerra-*.service ainda nao existem (Etapa 9) - nada reiniciado"
 fi
 
+# =====================================================================
+# 7. Carimbos e pendencia
+# =====================================================================
+# Escritos no FIM, e so' agora: um carimbo gravado antes do passo que ele
+# descreve mentiria se aquele passo falhasse - e o script morre no primeiro
+# erro (set -e), entao nao chegar aqui e' a forma de nao carimbar.
+[ "$AVANCA_CARIMBO_JOGO" = "1" ] && grava_carimbo "$CARIMBO_JOGO" "$DEPOIS"
+grava_carimbo "$CARIMBO_SITE" "$DEPOIS"
+
+# O que chegou ao disco e ainda NAO esta' no ar. So' acontece no --so-site,
+# e e' a unica coisa que impede aquele modo de ser uma perda calada: sem
+# esta lista, a mudanca de NPC que veio de carona some da vista de todo
+# mundo ate' alguem estranhar em jogo.
+# Relido do arquivo, e nao da variavel: e' o valor que de fato ficou
+# gravado que descreve o que esta' no ar.
+NO_AR="$(le_carimbo "$CARIMBO_JOGO")"
+[ -n "$NO_AR" ] || NO_AR="$DEPOIS"
+PENDENTE_JOGO="$(como_jogo git -C "$RAIZ" diff --name-only "$NO_AR" "$DEPOIS" -- rathena 2>/dev/null || true)"
+if [ -n "$PENDENTE_JOGO" ]; then
+    passo "ATENCAO: mudanca de jogo no disco e FORA do ar"
+    printf '%s\n' "$PENDENTE_JOGO" | sed 's/^/         /'
+    aviso "os arquivos ja' estao no servidor; os processos ainda nao os leram"
+    aviso "resolve com '@reloadscript' e irmaos em jogo (CLAUDE.md secao 3)"
+    aviso "ou com um 'ferramentas/implanta.sh' quando nao houver ninguem on"
+fi
+
 passo "Pronto"
 echo "    commit:  $(como_jogo git -C "$RAIZ" log -1 --format='%h %s')"
+echo "    jogo:    $(como_jogo git -C "$RAIZ" log -1 --format='%h %s' "$NO_AR" 2>/dev/null || echo 'nao esta no ar')"
 echo "    binario: $(date -r "$EMULADOR/map-server" '+%Y-%m-%d %H:%M' 2>/dev/null || echo 'nao compilado')"

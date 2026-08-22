@@ -91,3 +91,10 @@ site/site
 # patches (patcher/patches.txt) esse SIM e' versionado: e' a fonte da lista.txt
 # que o servidor serve, e o git e' o historico do que foi ao ar.
 patcher/Jogar.exe
+
+# Os carimbos do deploy: o commit com que o jogo e o site estao NO AR.
+# Sao estado da MAQUINA, nao do repositorio - cada servidor tem o seu, e
+# versiona-los faria um deploy sobrescrever o carimbo do outro. Ver o
+# cabecalho de ferramentas/atualiza_servidor.sh.
+/.carimbo-jogo
+/.carimbo-site

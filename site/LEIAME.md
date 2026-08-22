@@ -39,15 +39,31 @@ duas decisões que não são óbvias — por que guardamos **hash** de CPF/celul
 não o número, e por que o `account_id` **nasce nulo** —, e a
 `guerra_site_chamado`, que é a dos tickets.
 
-**O `implanta.sh` não roda SQL.** Ele faz `git pull`, compila e reinicia; não há
-passo de migração em lugar nenhum do deploy. Tabela nova é aplicada à mão, e o
-site sobe sem ela sem reclamar — a falha aparece na cara do primeiro jogador que
-usar a função. O arquivo é todo `CREATE TABLE IF NOT EXISTS`, então rodá-lo
-inteiro é seguro:
+**Nenhum dos dois deploys roda SQL.** Eles fazem `git pull`, compilam e
+reiniciam; não há passo de migração em lugar nenhum. Tabela nova é aplicada à
+mão **antes**, e o site sobe sem ela sem reclamar — a falha aparece na cara do
+primeiro jogador que usar a função. O arquivo é todo
+`CREATE TABLE IF NOT EXISTS`, então rodá-lo inteiro é seguro:
 
 ```
-mysql -u guerra -p guerra < site/sql/site.sql
+ssh libraro 'mysql guerra' < site/sql/site.sql
 ```
+
+## Publicar o site sem derrubar ninguém
+
+```
+ferramentas/implanta_site.sh      # do Mac; reinicia só o guerra-site
+```
+
+O `implanta.sh` completo reinicia os quatro servidores do jogo quando `rathena/`
+muda, e isso **derruba todo mundo que estiver jogando**. Como o repositório é um
+só, uma correção de CSS pode chegar junto com um NPC que alguém commitou do
+Windows — e aí o deploy completo cobra o preço do jogo por uma mudança de site.
+
+O `implanta_site.sh` recompila e reinicia **apenas** o `guerra-site`. A mudança
+de jogo que vier de carona fica no disco, é **listada no fim** do script, e
+continua pendente para o próximo deploy completo (é o `.carimbo-jogo` que
+garante isso — `RECEITAS.md` §13).
 
 ## Duas conexões com o banco, e cada uma só encosta nas tabelas dela
 

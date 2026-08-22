@@ -23,7 +23,8 @@ A pergunta que decide é **onde o arquivo mora**:
 | `rathena/npc/`, `db/`, `conf/`, `src/` | **deploy** | `ferramentas/implanta.sh` | na hora — ninguém baixa nada |
 | `C:\GuerraDoEmperium\cliente\` | **patch** | `monta_patch.py` + `publica_patch.sh` (§11) | na próxima vez que abrir o `Jogar.exe` |
 | idem, mas mudou **muita** coisa | **base** | `monta_cliente.py` + `publica_cliente.sh` (§12) | só quem instalar do zero |
-| `site/` | **deploy do site** | ver `site/LEIAME.md` | na hora, ao recarregar a página |
+| `site/` | **deploy do site** | `ferramentas/implanta_site.sh` (§13) | na hora, ao recarregar a página |
+| `site/sql/` | **à mão, e ANTES do deploy** | `ssh libraro 'mysql guerra' < site/sql/site.sql` | nenhum deploy roda SQL (§13) |
 
 Três consequências que já custaram retrabalho:
 
@@ -523,3 +524,77 @@ meio** é o teste que importa: tem de retomar de onde parou.
 
 E **conferir o atalho** — se o "Iniciar em" não for a pasta do jogo, o cliente
 abre sem `data\`, sem `System\` e sem nada do que é nosso, sem erro nenhum.
+
+---
+
+## 13. Publicar o site sem derrubar quem está jogando
+
+**São dois deploys, de propósito**, porque o site e o jogo têm ritmos
+diferentes: o site é Go, sobe em segundos e não encosta em ninguém; o emulador
+só reinicia **derrubando todo mundo**, com um "Erro desconhecido" na tela.
+
+| comando | reinicia | derruba jogador |
+|---|---|---|
+| `ferramentas/implanta.sh` | os quatro do jogo **+** o site | **sim**, se `rathena/` mudou |
+| `ferramentas/implanta_site.sh` | só o `guerra-site` | **não**, nunca |
+
+Os dois saem **do Mac** (`CLAUDE.md` §9), e os dois puxam do GitHub — o que não
+tiver `push` não vai.
+
+### O que fazer, na ordem
+
+1. **Tabela nova? aplique o SQL primeiro.** Nenhum dos dois deploys roda SQL —
+   não há passo de migração em lugar nenhum. O site sobe sem a tabela **sem
+   reclamar** (o `AbreBanco` só faz `Ping`), e a falha aparece na cara do
+   primeiro jogador que usar a função. O arquivo é todo
+   `CREATE TABLE IF NOT EXISTS`, então rodá-lo inteiro é seguro:
+
+   ```
+   ssh libraro 'mysql guerra' < site/sql/site.sql
+   ```
+
+2. `git push` — o servidor puxa do GitHub, não desta pasta.
+3. `ferramentas/implanta_site.sh`
+
+### O que ele faz com a mudança de JOGO que vier de carona
+
+O repositório é um só, então o `git pull` do servidor traz tudo — inclusive
+NPC e `db/` que alguém commitou do Windows. Esses arquivos **chegam ao disco e
+não entram no ar**: os processos não os releram.
+
+Isso não se perde, e é a parte que o script resolve sozinho:
+
+- ele **lista** os arquivos pendentes no fim, sob *"mudanca de jogo no disco e
+  FORA do ar"*;
+- e **não avança o `.carimbo-jogo`**, então o próximo `implanta.sh` continua
+  vendo aquela mudança e reinicia por causa dela.
+
+Para pôr no ar sem esperar: `@reloadscript` e irmãos em jogo (a tabela de qual
+comando para qual mudança está no `CLAUDE.md` §3). Ou o `implanta.sh` completo
+quando o servidor esvaziar.
+
+### Como saber se há gente jogando antes de decidir
+
+```
+ssh libraro "mysql guerra -e \"SELECT char_id,name,base_level,last_map FROM \\\`char\\\` WHERE online=1\""
+```
+
+### Os dois carimbos
+
+Moram na raiz do repositório **no servidor**, fora do git, e são estado da
+máquina e não do projeto:
+
+| | |
+|---|---|
+| `.carimbo-jogo` | o commit com que os quatro servidores estão no ar |
+| `.carimbo-site` | o commit com que o binário do site foi construído |
+
+Eles existem porque a pergunta certa não é *"o que mudou no repositório desde o
+último pull?"* — que qualquer atualização parcial responde errado — e sim *"o
+que mudou desde o que está RODANDO?"*. Carimbo ausente ou apontando para commit
+que o repositório não conhece cai no lado **seguro**: o script reinicia. Ver o
+`CLAUDE.md` §5.
+
+**O que continua sem rede é `git pull` dado à mão no servidor**: ele avança o
+repositório sem avançar carimbo nenhum. Com o `--so-site` não há mais motivo
+para fazê-lo.
