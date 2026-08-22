@@ -134,6 +134,12 @@ func main() {
 	mux.HandleFunc("GET /api/painel", s.painel)
 	mux.HandleFunc("POST /api/painel/senha", s.trocaSenha)
 	mux.HandleFunc("POST /api/painel/pin", s.recuperaPin)
+	mux.HandleFunc("GET /api/painel/personagens", s.personagens)
+	mux.HandleFunc("POST /api/painel/destrava", s.destrava)
+	// So' grava. A leitura dos chamados vira com o painel do dono
+	// (PENDENCIAS.md); ate' la' nao ha' rota que devolva chamado nenhum,
+	// nem o proprio.
+	mux.HandleFunc("POST /api/painel/chamado", s.abreChamado)
 
 	// Front estatico.
 	mux.Handle("/", http.FileServer(http.Dir("web")))

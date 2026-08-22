@@ -58,3 +58,60 @@ CREATE TABLE IF NOT EXISTS `guerra_site_cadastro` (
   UNIQUE KEY `conta` (`account_id`),
   KEY `criado_em` (`criado_em`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ------------------------------------------------------------------
+-- CHAMADOS ABERTOS PELO JOGADOR
+--
+-- Enquanto faltarem itens, traducoes, missoes e correcoes, o jogador
+-- precisa de um lugar para avisar. Esta tabela e' esse lugar.
+--
+-- POR QUE utf8mb4 E NAO latin1, contra todo o resto deste banco:
+-- as 105 colunas de texto do rAthena sao latin1 porque o JOGO as le', e o
+-- cliente de 2021 nao entende outra coisa (CLAUDE.md secao 4.1). Chamado
+-- nao passa pelo jogo em nenhum momento: nasce num formulario web (UTF-8),
+-- e vai ser lido num painel web. Guardar em latin1 obrigaria a converter
+-- nas duas pontas e perderia calado tudo o que nao couber em cp1252 - e
+-- jogador escreve emoji em chamado.
+--
+-- O PRECO, e ele e' real: esta tabela NAO pode ser lida pela mesma conexao
+-- que le' a `login` e a `char`. O site abre DUAS conexoes por isso - ver o
+-- cabecalho de banco.go, que e' onde a decisao esta' documentada por
+-- inteiro.
+--
+-- O ESTADO JA' NASCE AQUI, mesmo sem ninguem para le'-lo. O painel de
+-- leitura vem depois (PENDENCIAS.md); acrescentar a coluna junto com ele
+-- exigiria um ALTER TABLE numa tabela que ja' teria chamado dentro, e o
+-- valor de um chamado antigo teria de ser adivinhado.
+CREATE TABLE IF NOT EXISTS `guerra_site_chamado` (
+  `id`            int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `account_id`    int(11) unsigned NOT NULL,
+
+  -- Copia do nome da conta e do personagem no momento da abertura, e nao
+  -- um JOIN. Nome de conta nao muda, mas personagem se apaga - e um
+  -- chamado que diga "o item sumiu do meu Ferreiro" perde o sentido se o
+  -- Ferreiro nao existir mais na hora de ler.
+  `usuario`       varchar(23)      NOT NULL DEFAULT '',
+  `personagem`    varchar(30)      NOT NULL DEFAULT '',
+
+  `tipo`          enum('item','traducao','missao','mapa','conta','outro')
+                                   NOT NULL DEFAULT 'outro',
+  `assunto`       varchar(120)     NOT NULL,
+  `mensagem`      text             NOT NULL,
+
+  `estado`        enum('aberto','andamento','fechado') NOT NULL DEFAULT 'aberto',
+  `resposta`      text             DEFAULT NULL,
+
+  `ip`            varchar(45)      NOT NULL DEFAULT '',
+  `criado_em`     datetime         NOT NULL,
+  `fechado_em`    datetime         DEFAULT NULL,
+
+  PRIMARY KEY (`id`),
+
+  -- O teto de chamados por hora e' contado por conta; sem este indice a
+  -- contagem varre a tabela inteira a cada abertura.
+  KEY `conta_criado` (`account_id`, `criado_em`),
+
+  -- A consulta do painel que ainda nao existe: os abertos, mais antigos
+  -- primeiro.
+  KEY `fila` (`estado`, `criado_em`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

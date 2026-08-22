@@ -7,6 +7,7 @@ import (
 	"errors"
 	"net/http"
 	"net/mail"
+	"strconv"
 	"strings"
 )
 
@@ -35,7 +36,15 @@ func falha(w http.ResponseWriter, codigo int, msg string) {
 func leCorpo(r *http.Request, destino any) error {
 	// Teto no corpo: sem ele, um POST de 2 GB derruba um processo que so'
 	// tem 961 MB de maquina embaixo.
-	r.Body = http.MaxBytesReader(nil, r.Body, 16*1024)
+	return leCorpoAte(r, destino, 16*1024)
+}
+
+// leCorpoAte e' o mesmo com o teto escolhido. So' o chamado precisa de mais
+// que os 16 KB: quatro mil caracteres de texto livre com acento passam de
+// 8 KB so' de corpo, e um teto apertado devolveria "pedido malformado" para
+// quem escreveu um relato longo - a mensagem menos util possivel.
+func leCorpoAte(r *http.Request, destino any, teto int64) error {
+	r.Body = http.MaxBytesReader(nil, r.Body, teto)
 	return json.NewDecoder(r.Body).Decode(destino)
 }
 
@@ -348,5 +357,190 @@ func (s *Servidor) recuperaPin(w http.ResponseWriter, r *http.Request) {
 		"ok": true,
 		"mensagem": "PIN apagado. No proximo login o jogo vai pedir que voce " +
 			"escolha um novo.",
+	})
+}
+
+// ------------------------------------------------------------------
+// PERSONAGENS: listar e destravar
+//
+// Por que isto existe: ha' mapas que o rAthena conhece e o nosso cliente
+// de 2021 ainda nao tem, e o jogador consegue chegar neles. Quando isso
+// acontece ele nao "morre" - ele fica PRESO, porque toda entrada seguinte
+// no jogo o poe de volta no mesmo lugar. Sem este botao, so' um GM
+// resolve, um a um.
+
+func (s *Servidor) personagens(w http.ResponseWriter, r *http.Request) {
+	c, ok := s.exigeSessao(w, r)
+	if !ok {
+		return
+	}
+	lista, err := s.banco.Personagens(c.ID)
+	if err != nil {
+		falha(w, http.StatusInternalServerError, "nao consegui ler seus personagens")
+		return
+	}
+
+	saida := make([]resposta, 0, len(lista))
+	for _, p := range lista {
+		saida = append(saida, resposta{
+			"id":      p.ID,
+			"nome":    p.Nome,
+			"nivel":   p.Nivel,
+			"mapa":    p.Mapa,
+			"online":  p.Online,
+			"em_casa": p.Mapa == mapaSeguro,
+		})
+	}
+	devolve(w, http.StatusOK, resposta{"personagens": saida, "destino": mapaSeguro})
+}
+
+// destrava move um personagem para Prontera.
+//
+// NAO PEDE A SENHA, e as outras duas acoes do painel pedem. A diferenca e'
+// o que esta' em jogo: trocar senha e apagar PIN mexem no acesso a' conta,
+// entao um cookie roubado nao pode bastar. Mover personagem parado para a
+// praca de Prontera nao tira nada de ninguem - e' reversivel andando, e so'
+// funciona com o personagem DESCONECTADO, o que ja' impede o unico abuso
+// imaginavel (arrancar alguem de uma guerra). Pedir senha aqui seria
+// atrito na tela de quem ja' esta' travado e irritado.
+func (s *Servidor) destrava(w http.ResponseWriter, r *http.Request) {
+	c, ok := s.exigeSessao(w, r)
+	if !ok {
+		return
+	}
+	// Teto por conta: o botao mexe na `char`, e um laco de requisicao nao
+	// deve poder martelar a tabela que o char-server usa.
+	if !s.limite.Permite("destrava:" + strconv.FormatInt(c.ID, 10)) {
+		falha(w, http.StatusTooManyRequests, "muitos pedidos seguidos. Espere um pouco.")
+		return
+	}
+
+	var p struct {
+		Personagem int64 `json:"personagem"`
+	}
+	if err := leCorpo(r, &p); err != nil {
+		falha(w, http.StatusBadRequest, "pedido malformado")
+		return
+	}
+
+	err := s.banco.MoveParaProntera(c.ID, p.Personagem)
+	switch {
+	case errors.Is(err, ErrNaoAchou):
+		// O personagem nao e' dele, ou nao existe. As duas dao a mesma
+		// resposta: dizer qual seria contar quem tem qual char_id.
+		falha(w, http.StatusNotFound, "personagem nao encontrado nesta conta")
+		return
+	case errors.Is(err, ErrJaEmProntera):
+		falha(w, http.StatusConflict, "esse personagem ja esta em Prontera")
+		return
+	case errors.Is(err, ErrPersonagemOnline):
+		falha(w, http.StatusConflict,
+			"esse personagem esta conectado. Saia do jogo por completo (fechar "+
+				"a janela nao basta: espere alguns segundos) e tente de novo.")
+		return
+	case err != nil:
+		falha(w, http.StatusInternalServerError, "nao consegui mover o personagem")
+		return
+	}
+
+	devolve(w, http.StatusOK, resposta{
+		"ok": true,
+		"mensagem": "Pronto. Ao entrar no jogo, esse personagem vai aparecer na " +
+			"praca de Prontera.",
+	})
+}
+
+// ------------------------------------------------------------------
+// CHAMADOS
+//
+// So' GRAVA. O painel de leitura vem depois (PENDENCIAS.md), e a tabela ja'
+// nasce com o campo de estado para nao precisar de ALTER TABLE quando ele
+// chegar.
+
+const (
+	maxAssunto      = 120  // guerra_site_chamado.assunto varchar(120)
+	minMensagem     = 15   // menos que isso nao descreve nada
+	maxMensagem     = 4000 // em RUNAS, nao em bytes - ver o comentario abaixo
+	chamadosPorHora = 5
+)
+
+// Os tipos aceitos. A lista e' fechada aqui e no ENUM da tabela; um valor
+// fora dela viraria string vazia no MySQL, calado.
+var tiposDeChamado = map[string]bool{
+	"item": true, "traducao": true, "missao": true,
+	"mapa": true, "conta": true, "outro": true,
+}
+
+func (s *Servidor) abreChamado(w http.ResponseWriter, r *http.Request) {
+	c, ok := s.exigeSessao(w, r)
+	if !ok {
+		return
+	}
+
+	var p struct {
+		Tipo       string `json:"tipo"`
+		Personagem string `json:"personagem"`
+		Assunto    string `json:"assunto"`
+		Mensagem   string `json:"mensagem"`
+	}
+	if err := leCorpoAte(r, &p, 64*1024); err != nil {
+		falha(w, http.StatusBadRequest, "pedido malformado")
+		return
+	}
+
+	p.Tipo = strings.TrimSpace(p.Tipo)
+	p.Personagem = strings.TrimSpace(p.Personagem)
+	p.Assunto = strings.TrimSpace(p.Assunto)
+	p.Mensagem = strings.TrimSpace(p.Mensagem)
+
+	if !tiposDeChamado[p.Tipo] {
+		p.Tipo = "outro"
+	}
+
+	// CONTAGEM EM RUNAS, e nao em bytes: "correção" tem 9 letras e 11
+	// bytes. Medir em len() faria o limite apertar sozinho para quem
+	// escreve em portugues de verdade - e o campo do formulario, que conta
+	// caracteres, discordaria do servidor sem ninguem entender por que.
+	if n := len([]rune(p.Assunto)); n < 5 || n > maxAssunto {
+		falha(w, http.StatusBadRequest,
+			"o assunto precisa ter de 5 a 120 caracteres")
+		return
+	}
+	if n := len([]rune(p.Mensagem)); n < minMensagem || n > maxMensagem {
+		falha(w, http.StatusBadRequest,
+			"conte o que aconteceu em pelo menos 15 e no maximo 4000 caracteres")
+		return
+	}
+	if len([]rune(p.Personagem)) > 30 { // char.name varchar(30)
+		falha(w, http.StatusBadRequest, "nome de personagem longo demais")
+		return
+	}
+
+	n, err := s.banco.ChamadosNaHora(c.ID)
+	if err != nil {
+		falha(w, http.StatusInternalServerError, "erro ao consultar o banco")
+		return
+	}
+	if n >= chamadosPorHora {
+		falha(w, http.StatusTooManyRequests,
+			"voce ja abriu cinco chamados nesta hora. Espere um pouco - "+
+				"eles nao se perdem.")
+		return
+	}
+
+	id, err := s.banco.CriaChamado(c.ID, c.Usuario, p.Personagem, p.Tipo,
+		p.Assunto, p.Mensagem, ipDe(r))
+	if err != nil {
+		falha(w, http.StatusInternalServerError, "nao consegui registrar o chamado")
+		return
+	}
+
+	// O numero vai para a tela: sem ele o jogador nao tem como cobrar
+	// depois, e o painel de leitura vai indexar por ele.
+	devolve(w, http.StatusCreated, resposta{
+		"ok":     true,
+		"numero": id,
+		"mensagem": "Chamado registrado. Guarde o numero — ele identifica o seu " +
+			"pedido quando a resposta vier.",
 	})
 }

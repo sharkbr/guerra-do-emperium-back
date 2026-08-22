@@ -8,8 +8,18 @@
 const $  = (s, raiz = document) => raiz.querySelector(s);
 const $$ = (s, raiz = document) => [...raiz.querySelectorAll(s)];
 
+/* Uma unica coisa de estado no arquivo: se ha sessao aberta.
+ *
+ * Existe porque o painel ganhou um botao de Download (2026-08-22), e com
+ * ele o caminho painel -> download -> Voltar passou a ser comum. Sem saber
+ * que ha sessao, o Voltar joga um jogador logado na tela de boas-vindas, e
+ * o botao "Conta" de la abre o formulario de login para quem ja entrou. */
+let logado = false;
+
 /* ---------- navegacao entre telas ---------- */
 function vaiPara(nome) {
+  // Quem ja entrou nao tem o que fazer no formulario de login.
+  if (nome === "conta" && logado) nome = "painel";
   $$(".tela").forEach(t => t.classList.toggle("ativa", t.id === "tela-" + nome));
   // O hash deixa o botao voltar do navegador funcionar, que e' o primeiro
   // reflexo de quem se perde numa tela.
@@ -157,8 +167,19 @@ $("#form-criar").onsubmit = e => {
 /* ---------- painel ---------- */
 function abrePainel(usuario) {
   $("[data-nome]").textContent = usuario || "jogador";
+  entrouNaConta();
   vaiPara("painel");
   carregaPainel();
+}
+
+// entrouNaConta e' o unico lugar que liga o estado - e ele tambem reaponta
+// o Voltar da tela de download. Ali o botao nasce apontando para o inicio,
+// que e' o certo para visitante; para quem esta logado, o lugar de onde ele
+// veio e' o painel.
+function entrouNaConta() {
+  logado = true;
+  const voltar = $("#tela-download .voltar");
+  if (voltar) voltar.dataset.ir = "painel";
 }
 
 async function carregaPainel() {
@@ -166,7 +187,9 @@ async function carregaPainel() {
     const d = await chama("/api/painel", null, "GET");
     $("[data-nome]").textContent = d.usuario;
     $("[data-email]").textContent = d.email || "";
+    entrouNaConta();
   } catch (_) {
+    logado = false;
     vaiPara("conta");
   }
 }
@@ -177,8 +200,171 @@ $$("[data-abre]").forEach(b => {
     const abrindo = alvo.classList.contains("escondido");
     $$(".dobra").forEach(d => d.classList.add("escondido"));
     alvo.classList.toggle("escondido", !abrindo);
+    if (!abrindo) return;
+    // A lista de personagens e' buscada ao ABRIR, e nao na carga da pagina:
+    // quem entrou so' para trocar a senha nao paga uma consulta a tabela
+    // `char` por isso.
+    //
+    // Nas duas dobras, e nao so' na de destravar: o formulario de chamado
+    // completa o nome do personagem a partir da MESMA lista, e sem isto ela
+    // so' existiria para quem tivesse aberto a outra dobra antes. A
+    // diferenca e' que a de destravar sempre recarrega (o estado
+    // "conectado" muda enquanto o jogador mexe na tela) e a de chamado
+    // busca uma vez so'.
+    if (b.dataset.abre === "personagens") carregaPersonagens();
+    if (b.dataset.abre === "chamado" && !$("#lista-personagens").children.length) {
+      buscaPersonagens().catch(() => { /* sem a lista o campo ainda aceita digitacao */ });
+    }
   };
 });
+
+/* ---------- destravar personagem ----------
+ *
+ * Ha mapas que o rAthena conhece e o nosso cliente de 2021 ainda nao tem, e
+ * o jogador consegue chegar neles. Quem chega fica PRESO: toda entrada
+ * seguinte no jogo o poe de volta no mesmo lugar, e so' um GM tirava.
+ *
+ * A lista e desenhada por JS e nao por HTML fixo porque o numero de
+ * personagens varia de 0 a 9, e o botao de cada um depende do estado dele.
+ */
+// buscaPersonagens traz a lista e ja' alimenta o datalist do formulario de
+// chamado - quem abre chamado sobre um personagem digita o nome, e nome de
+// RO se erra facil.
+async function buscaPersonagens() {
+  const d = await chama("/api/painel/personagens", null, "GET");
+  const lista = d.personagens || [];
+  preencheDatalist(lista);
+  return lista;
+}
+
+async function carregaPersonagens() {
+  const caixa = $("[data-lista-personagens]");
+  caixa.innerHTML = '<p class="miudo">Carregando…</p>';
+
+  let lista;
+  try {
+    lista = await buscaPersonagens();
+  } catch (err) {
+    caixa.innerHTML = "";
+    caixa.append(paragrafo("miudo", err.message));
+    return;
+  }
+
+  caixa.innerHTML = "";
+  if (!lista.length) {
+    caixa.append(paragrafo("miudo",
+      "Você ainda não criou nenhum personagem nesta conta."));
+    return;
+  }
+
+  for (const p of lista) caixa.append(linhaDePersonagem(p));
+}
+
+function paragrafo(classe, texto) {
+  const el = document.createElement("p");
+  el.className = classe;
+  el.textContent = texto;
+  return el;
+}
+
+function linhaDePersonagem(p) {
+  const linha = document.createElement("div");
+  linha.className = "personagem";
+
+  const info = document.createElement("div");
+  info.className = "quem";
+  const nome = document.createElement("strong");
+  // textContent e nao innerHTML: nome de personagem e' texto que o jogador
+  // escolheu, e ele passa pelo filtro do jogo, nao pelo nosso.
+  nome.textContent = p.nome;
+  const onde = paragrafo("miudo", "nível " + p.nivel + " · " + p.mapa +
+    (p.online ? " · conectado agora" : ""));
+  info.append(nome, onde);
+
+  const botao = document.createElement("button");
+  botao.className = "botao fantasma curto";
+  botao.type = "button";
+
+  if (p.online) {
+    botao.textContent = "Conectado";
+    botao.disabled = true;
+    botao.title = "Saia do jogo para poder mover este personagem";
+  } else if (p.em_casa) {
+    botao.textContent = "Em Prontera";
+    botao.disabled = true;
+  } else {
+    botao.textContent = "Ir para Prontera";
+    botao.onclick = () => destrava(p, botao);
+  }
+
+  linha.append(info, botao);
+  return linha;
+}
+
+async function destrava(p, botao) {
+  const caixa = $("[data-lista-personagens]");
+  const texto = botao.textContent;
+  botao.disabled = true;
+  botao.textContent = "Movendo…";
+  try {
+    const d = await chama("/api/painel/destrava", { personagem: p.id });
+    recado(caixa, d.mensagem, "certo");
+    // Recarrega em vez de acertar a linha na mao: assim o que aparece na
+    // tela e' o que o banco tem, e nao o que o JavaScript supos.
+    await carregaPersonagens();
+  } catch (err) {
+    recado(caixa, err.message, "erro");
+    botao.disabled = false;
+    botao.textContent = texto;
+  }
+}
+
+/* ---------- chamado ---------- */
+function preencheDatalist(lista) {
+  const dl = $("#lista-personagens");
+  if (!dl) return;
+  dl.innerHTML = "";
+  for (const p of lista) {
+    const o = document.createElement("option");
+    o.value = p.nome;
+    dl.append(o);
+  }
+}
+
+// O contador de caracteres. O servidor conta em RUNAS e nao em bytes
+// (api.go), e o .length do JavaScript conta unidades UTF-16 - as duas
+// contas so' divergem em emoji e afins, que gastam duas unidades aqui e uma
+// runa la'. A diferenca e' a favor do jogador: o campo trava antes.
+const campoMensagem = $("#form-chamado [name=mensagem]");
+if (campoMensagem) {
+  const conta = $("[data-conta-mensagem]");
+  const atualiza = () => { conta.textContent = campoMensagem.value.length; };
+  campoMensagem.oninput = atualiza;
+  atualiza();
+}
+
+$("#form-chamado").onsubmit = e => {
+  e.preventDefault();
+  const f = e.target;
+  comBotaoTravado(f, async () => {
+    try {
+      const d = await chama("/api/painel/chamado", {
+        tipo: f.tipo.value,
+        personagem: f.personagem.value.trim(),
+        assunto: f.assunto.value.trim(),
+        mensagem: f.mensagem.value.trim()
+      });
+      f.reset();
+      if (campoMensagem) campoMensagem.oninput();
+      f.classList.add("escondido");
+      // O NUMERO E' O QUE O JOGADOR LEVA. Nao ha tela de leitura de chamado
+      // ainda; sem o numero na frente dele, ele nao tem como cobrar depois.
+      recado(f, "Chamado nº " + d.numero + " registrado. " + d.mensagem, "certo");
+    } catch (err) {
+      recado(f, err.message, "erro");
+    }
+  });
+};
 
 $("#form-senha").onsubmit = e => {
   e.preventDefault();
@@ -212,6 +398,9 @@ $("#form-pin").onsubmit = e => {
 
 $("#botao-sair").onclick = async () => {
   await chama("/api/sessao/sair");
+  logado = false;
+  const voltar = $("#tela-download .voltar");
+  if (voltar) voltar.dataset.ir = "inicio";
   vaiPara("inicio");
 };
 
@@ -257,6 +446,7 @@ $("#botao-sair").onclick = async () => {
     const d = await chama("/api/painel", null, "GET");
     $("[data-nome]").textContent = d.usuario;
     $("[data-email]").textContent = d.email || "";
+    entrouNaConta();
     if (!location.hash || location.hash === "#inicio") vaiPara("painel");
   } catch (_) {
     // sem sessao: o inicio ja' esta' na tela

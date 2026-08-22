@@ -2574,6 +2574,78 @@ esse. É uma linha, se o dono quiser.
 
 ---
 
+## 1y5. As três novidades da área logada — falta o SQL e a tela (2026-08-22)
+
+O que foi feito e por quê está no `HISTORICO.md`, "Três coisas novas na área
+logada". Aqui fica **só o que falta**.
+
+### O que trava a entrega, e é uma linha
+
+**O `implanta.sh` NÃO roda SQL.** Ele faz `git pull`, compila e reinicia; não há
+nenhum passo de migração no `atualiza_servidor.sh`. A tabela nova
+(`guerra_site_chamado`) tem de ser criada **à mão na produção**, e o site sobe
+sem ela sem reclamar: o `AbreBanco` só faz `Ping`, e a falha aparece na cara do
+primeiro jogador que apertar *Enviar chamado*.
+
+```
+ssh libraro
+mysql -u guerra -p guerra < /caminho/do/repo/site/sql/site.sql
+```
+
+O arquivo é todo `CREATE TABLE IF NOT EXISTS`, então rodá-lo inteiro é seguro e
+não toca a `guerra_site_cadastro` que já existe.
+
+**A ordem importa:** o SQL primeiro, o `implanta.sh` depois. Ao contrário, há
+uma janela em que o site novo está no ar e a tabela não existe.
+
+### Estado em 2026-08-22
+
+| | |
+|---|---|
+| `site/sql/site.sql` (tabela nova) | **escrito** |
+| `site/banco.go`, `api.go`, `main.go` | **escritos**, compilam, `go vet` limpo |
+| `site/web/` (HTML, CSS, JS) | **escritos** |
+| conferência de API contra MariaDB em contêiner | **feita** — a tabela está no `HISTORICO.md` |
+| **`site.sql` na produção** | **FALTA** — é o passo acima, e nada o faz sozinho |
+| **`ferramentas/implanta.sh`** | **FALTA** |
+| **olhar a tela** | **FALTA** — não havia navegador na sessão |
+| patch de cliente | **não há** — nada disto é cliente |
+
+### O que só a tela decide
+
+- O painel agora tem **seis** botões e duas dobras novas. Cabe no cartão de
+  460px sem virar uma parede de botões?
+- A linha de personagem (`nome` + `nível · mapa` de um lado, botão do outro)
+  no celular: abaixo de 460px ela empilha, e isso não foi visto.
+- O `<select>` do tipo de chamado desenha a lista com as cores do **sistema**,
+  não da página. Há `select option { background: var(--carvao) }` para isso,
+  mas o Firefox e o Safari tratam esse seletor de jeitos diferentes.
+- O `<textarea>` com o contador de caracteres embaixo.
+
+### O painel de leitura dos chamados — adiado por decisão
+
+O dono pediu explicitamente: *"mais pra frente vou te pedir pra criar um painel
+onde eu consiga ver esses tickets e fechá-los, mas por hora só deixe tudo pronto
+salvando no banco, sem leitura mesmo"*. Não há rota que devolva chamado nenhum,
+nem o próprio.
+
+**O que já está preparado para ele**, e não vai exigir `ALTER TABLE`:
+
+- a coluna `estado` (`aberto`/`andamento`/`fechado`), com `aberto` por padrão;
+- a coluna `resposta` e a `fechado_em`, nulas;
+- o índice `fila` (`estado`, `criado_em`), que é a consulta do painel: os
+  abertos, mais antigos primeiro;
+- `usuario` e `personagem` copiados na abertura em vez de um `JOIN` — nome de
+  conta não muda, mas personagem se apaga, e um chamado que diga "o item sumiu
+  do meu Ferreiro" perde o sentido se o Ferreiro não existir mais na hora de
+  ler.
+
+**O que ele vai precisar decidir**: como o dono se autentica (o `group_id` da
+`login` já distingue GM, e o site nunca olhou para ele), e se a resposta volta
+ao jogador pelo site ou por fora.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

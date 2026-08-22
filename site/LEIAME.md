@@ -1,7 +1,8 @@
 # O site — criação de conta e painel do jogador
 
-Um binário Go que serve quatro telas e seis chamadas de API. Escrito em
-2026-08-14, para o beta.
+Um binário Go que serve quatro telas e nove chamadas de API. Escrito em
+2026-08-14, para o beta; a área logada ganhou download, destravamento de
+personagem e chamados em 2026-08-22.
 
 ## Por que Go, e não Node
 
@@ -33,9 +34,54 @@ de produção não seriam reconhecidas pelo limite depois.
 
 ## As tabelas
 
-`sql/site.sql` cria a `guerra_site_cadastro`. O cabeçalho dela explica as duas
-decisões que não são óbvias: por que guardamos **hash** de CPF/celular e não o
-número, e por que o `account_id` **nasce nulo**.
+`sql/site.sql` cria duas. A `guerra_site_cadastro`, cujo cabeçalho explica as
+duas decisões que não são óbvias — por que guardamos **hash** de CPF/celular e
+não o número, e por que o `account_id` **nasce nulo** —, e a
+`guerra_site_chamado`, que é a dos tickets.
+
+**O `implanta.sh` não roda SQL.** Ele faz `git pull`, compila e reinicia; não há
+passo de migração em lugar nenhum do deploy. Tabela nova é aplicada à mão, e o
+site sobe sem ela sem reclamar — a falha aparece na cara do primeiro jogador que
+usar a função. O arquivo é todo `CREATE TABLE IF NOT EXISTS`, então rodá-lo
+inteiro é seguro:
+
+```
+mysql -u guerra -p guerra < site/sql/site.sql
+```
+
+## Duas conexões com o banco, e cada uma só encosta nas tabelas dela
+
+A `db` fala **latin1** e serve o que o jogo lê (`login`, `char`). A `dbTexto`
+fala **utf8mb4** e serve só a `guerra_site_chamado`.
+
+Não há meio-termo: o charset é escolhido na **abertura** da conexão, e é ele que
+decide como o MySQL interpreta os bytes que chegam. Chamado é texto livre de
+jogador, com acento e emoji, e nunca passa pelo jogo — guardá-lo em latin1
+perderia calado tudo o que não coubesse em cp1252. Com uma conexão só, o acento
+viraria mojibake ou a gravação seria recusada inteira, as duas caladas.
+
+**A volta do mesmo problema está na leitura**, e é a parte fácil de esquecer:
+nome de personagem chega em latin1, e o nosso `char_guerra.txt` permite acento
+em nome. Sem converter, o `encoding/json` troca cada byte acentuado por U+FFFD
+e o jogador não reconhece o próprio personagem. Quem converte é o `deLatin1` do
+`banco.go` — feito à mão, sem `golang.org/x/text`, e conferido nos 256 bytes
+contra o cp1252.
+
+## Destravar personagem: a guarda é o `online = 0`, e ela vai no `UPDATE`
+
+Há mapas que o rAthena conhece e o nosso cliente de 2021 ainda não tem, e o
+jogador consegue chegar neles — e fica preso, porque toda entrada seguinte o põe
+de volta no mesmo lugar.
+
+O char-server carrega o personagem do banco na entrada e só escreve de volta na
+saída. Um `UPDATE` com o jogador conectado seria **sobrescrito**, sem erro
+nenhum. Por isso a condição vai no próprio `UPDATE`, e não só na leitura de
+antes: entre ler e escrever o jogador pode ter entrado. Está no `CLAUDE.md` §5.
+
+Duas coisas que o conserto faz além do óbvio: zera o `last_instanceid` (senão
+quem ficou preso dentro de instância continua sendo mandado para a cópia dela), e
+só mexe no ponto de retorno quando ele aponta para o **mesmo** mapa da
+armadilha — um `save_map` legítimo em Payon não se perde.
 
 ## O limite de uma conta por pessoa
 

@@ -1647,6 +1647,23 @@ Produziram diagnóstico falso e custaram retrabalho:
      **devolve CRLF de um blob que é LF**, confirmando o diagnóstico errado.
   É o espelho exato da armadilha do Mac (§9): lá o APFS esconde o defeito que o
   Linux pune; aqui o checkout do Windows inventa um defeito que o Linux não tem.
+- **`UPDATE` na tabela `char` com o jogador CONECTADO é desfeito na saída
+  dele, e o comando não erra.** O char-server carrega o personagem do banco
+  quando ele entra no jogo e só escreve de volta ao sair
+  (`char_mmo_char_tosql`, `src/char/char.cpp`): entre uma coisa e outra o
+  banco é uma cópia velha, e quem escreve nele está escrevendo num rascunho
+  que vai ser substituído. O `UPDATE` responde `1 row affected`, o valor
+  aparece se alguém for conferir por `SELECT`, e some quando o jogador
+  desloga — falha calada e com atraso de horas, do tipo que se atribui a
+  qualquer outra coisa.
+  A guarda é `AND online = 0` **no próprio `UPDATE`**, e não na leitura de
+  antes: entre ler e escrever o jogador pode ter entrado. Zero linha afetada
+  é a resposta, e ela quer dizer "ele está no jogo", não "não existe".
+  Duas ressalvas: a coluna `online` fica **presa em 1** se o servidor cair, e
+  quem a destrava é o `char_set_all_offline_sql` na subida do char-server; e
+  a mesma armadilha vale para toda tabela que o char-server mantenha em
+  memória, não só a `char`. Caso vivo: o botão de destravar personagem do
+  site, 2026-08-22.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

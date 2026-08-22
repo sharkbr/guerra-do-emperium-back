@@ -178,10 +178,77 @@
       <p class="miudo" data-email></p>
 
       <div class="acoes">
+        <!-- O Download vem primeiro de proposito: quem acabou de criar a
+             conta cai direto nesta tela, e a proxima coisa que ele precisa
+             fazer e' baixar o jogo. Antes disto o unico caminho ate o
+             instalador era voltar ao inicio, que ninguem descobria. -->
+        <button class="botao" data-ir="download">Baixar o jogo</button>
+        <button class="botao fantasma" data-abre="personagens">Destravar personagem</button>
+        <button class="botao fantasma" data-abre="chamado">Abrir um chamado</button>
         <button class="botao fantasma" data-abre="senha">Alterar senha</button>
         <button class="botao fantasma" data-abre="pin">Recuperar PIN</button>
         <button class="botao fantasma perigo" id="botao-sair">Sair</button>
       </div>
+
+      <!-- ---- destravar personagem ----
+           Ha mapas que o rAthena conhece e o nosso cliente ainda nao tem, e
+           da para chegar neles. Quem chega nao morre: fica PRESO, porque
+           toda entrada seguinte no jogo o poe no mesmo lugar. -->
+      <div class="dobra escondido" id="form-personagens">
+        <p class="nota">
+          Se um personagem seu ficou preso num mapa que ainda não existe no
+          jogo, traga-o de volta para a praça de Prontera. Ele precisa estar
+          <strong>desconectado</strong> — o servidor grava a posição quando
+          você sai, e a mudança seria desfeita.
+        </p>
+        <div data-lista-personagens class="personagens">
+          <p class="miudo">Carregando…</p>
+        </div>
+      </div>
+
+      <!-- ---- chamado ----
+           So grava. A leitura vem com o painel do dono; ate la o jogador
+           leva o numero na tela e e' so isso que ele tem. -->
+      <form class="dobra escondido" id="form-chamado">
+        <p class="nota">
+          O servidor ainda está sendo construído: faltam itens, traduções,
+          missões e correções. Achou algo errado? Conte aqui. Cada chamado
+          recebe um número — <strong>anote-o</strong>, é por ele que a
+          resposta vem.
+        </p>
+
+        <label>Do que se trata
+          <select name="tipo">
+            <option value="item">Item errado ou faltando</option>
+            <option value="traducao">Tradução</option>
+            <option value="missao">Missão</option>
+            <option value="mapa">Mapa ou lugar</option>
+            <option value="conta">Conta e acesso</option>
+            <option value="outro" selected>Outro</option>
+          </select>
+        </label>
+
+        <label>Personagem <span class="opcional">(opcional)</span>
+          <input name="personagem" maxlength="30" list="lista-personagens" autocomplete="off">
+          <datalist id="lista-personagens"></datalist>
+          <small>Deixe em branco se não for sobre um personagem</small>
+        </label>
+
+        <label>Assunto
+          <input name="assunto" minlength="5" maxlength="120" required>
+          <small>Uma linha. Ex: "Chapéu do Éden aparece sem nome na loja"</small>
+        </label>
+
+        <label>O que aconteceu
+          <textarea name="mensagem" rows="6" minlength="15" maxlength="4000" required></textarea>
+          <small>
+            Quanto mais concreto, mais rápido resolve: onde estava, o que fez,
+            o que esperava e o que aconteceu. <span data-conta-mensagem>0</span>/4000
+          </small>
+        </label>
+
+        <button class="botao" type="submit">Enviar chamado</button>
+      </form>
 
       <form class="dobra escondido" id="form-senha">
         <label>Senha atual

@@ -556,6 +556,35 @@ jogador um item **sem nome**, sem erro em lugar nenhum (`CLAUDE.md` §4.18).
 Formato, ordem de publicação e o canal separado do próprio Atualizador estão em
 `patcher/LEIAME.md`; o passo a passo, em `RECEITAS.md` §11.
 
+### Uma tabela nova do site vive em 2 lugares, e o segundo não é o deploy
+
+| Onde | O quê |
+|---|---|
+| `site/sql/site.sql` | o `CREATE TABLE`, versionado |
+| **o MySQL da produção** | a tabela de verdade — **criada à mão, uma vez** |
+
+**O `implanta.sh` não roda SQL.** Ele faz `git pull`, compila o Go, reinicia a
+unit — e não há passo de migração em lugar nenhum do `atualiza_servidor.sh`.
+Tabela nova commitada é tabela que existe só no repositório.
+
+A falha é calada e **assimétrica no tempo**: o site sobe normalmente (o
+`AbreBanco` só faz `Ping`), o deploy diz que deu certo, e o erro aparece
+depois — na cara do primeiro jogador que usar a função que depende da tabela,
+com uma mensagem genérica de "não consegui registrar". Nada no log do deploy
+aponta para lá.
+
+A ordem, e ela importa: **o SQL primeiro, o deploy depois.** Ao contrário há uma
+janela em que o binário novo já está no ar e a tabela não existe.
+
+```
+ssh libraro
+mysql -u guerra -p guerra < <repo>/site/sql/site.sql   # CREATE TABLE IF NOT EXISTS
+```
+
+É da mesma família do passo novo de `provisiona.sh` que não alcança a máquina já
+de pé (`CLAUDE.md` §5): script que só vale para a próxima vez, e nada avisa que a
+atual ficou de fora.
+
 ## 5. O que sobrevive a um clone limpo
 
 | Sobrevive | Não sobrevive |

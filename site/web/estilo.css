@@ -260,7 +260,8 @@ body {
 /* ---------- formulario ---------- */
 label { display: block; margin-bottom: 15px; font-size: .85rem; color: var(--tinta-fraca); }
 
-input[type="text"], input[type="password"], input[type="email"], input:not([type]) {
+input[type="text"], input[type="password"], input[type="email"], input:not([type]),
+select, textarea {
   display: block; width: 100%; margin-top: 6px;
   padding: 11px 13px;
   background: rgba(0,0,0,.32);
@@ -271,7 +272,21 @@ input[type="text"], input[type="password"], input[type="email"], input:not([type
   /* 16px evita o zoom automatico do Safari no iPhone ao focar o campo */
   font-size: 16px;
 }
-input:focus { outline: none; border-color: var(--ouro); background: rgba(0,0,0,.45); }
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--ouro); background: rgba(0,0,0,.45);
+}
+
+/* O <select> nativo desenha a lista com as cores do SISTEMA, e nao com as
+   da pagina: num tema claro sai texto claro sobre fundo claro, ilegivel.
+   Cor explicita na <option> e' o unico jeito de mandar nisto sem trocar o
+   controle por um menu proprio. */
+select option { background: var(--carvao); color: var(--tinta); }
+
+/* Texto livre de chamado: cresce so' na vertical. Sem o resize:vertical o
+   arrastar do canto estoura a largura do cartao. */
+textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+
+.opcional { color: #7d786c; font-weight: 400; }
 
 small { display: block; margin-top: 5px; font-size: .74rem; color: #7d786c; }
 
@@ -311,6 +326,42 @@ small { display: block; margin-top: 5px; font-size: .74rem; color: #7d786c; }
 .acoes { display: grid; gap: 10px; margin: 22px 0 0; }
 .dobra { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); }
 .dobra.escondido { display: none; }
+
+/* ---------- lista de personagens ----------
+ * Uma linha por personagem: quem e' de um lado, o que da' para fazer do
+ * outro. O botao tem largura propria porque .botao nasce ocupando a linha
+ * inteira - o que e' certo para o botao principal de um formulario e errado
+ * para um botao que convive com texto.
+ */
+.personagens { display: grid; gap: 8px; margin-top: 14px; }
+
+.personagem {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 11px 13px;
+  background: rgba(0,0,0,.26);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px;
+}
+.personagem .quem { min-width: 0; }
+.personagem .quem strong { display: block; font-weight: 600; }
+/* O nome do mapa nao quebra em duas linhas por causa de um cartao estreito:
+   corta com reticencias e a linha continua com uma altura so'. */
+.personagem .quem .miudo {
+  margin: 2px 0 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.botao.curto {
+  width: auto; flex: 0 0 auto;
+  padding: 9px 14px;
+  font-size: .85rem;
+}
+.botao.curto[disabled] { opacity: .4; cursor: default; }
+
+@media (max-width: 460px) {
+  .personagem { flex-direction: column; align-items: stretch; gap: 10px; }
+  .botao.curto { width: 100%; }
+}
 
 /* ---------- rodape ----------
  * Sai do fluxo fixo que estava aqui antes: o texto cresceu e um rodape

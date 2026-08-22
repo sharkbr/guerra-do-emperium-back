@@ -12461,3 +12461,127 @@ Três decisões de desenho que valem para o próximo link:
   efeito na tela (§5): só o clique em jogo diz se o caminho é traçado.
 
 Pega com **`@reloadscript`**. Nada disto é cliente — não precisa de patch.
+
+---
+
+---
+
+## Três coisas novas na área logada: download, personagem preso e chamados (2026-08-22)
+
+Pedido do dono, três itens numa frase: um caminho para o download dentro do
+painel, um jeito de o jogador tirar personagem preso, e um formulário de
+chamados — *"como ainda faltam itens, traduções, quests e correções, precisamos
+deixar um espaço pros jogadores abrirem ticket"*. O painel de leitura dos
+chamados foi explicitamente adiado: **por ora só grava**.
+
+### 1. O download dentro do painel
+
+O botão existia só na tela de boas-vindas. Quem criava a conta caía direto no
+painel, e o instalador ficava a um *Voltar* de distância que ninguém
+descobria — o pior lugar possível para a única coisa que a pessoa precisa fazer
+em seguida. Agora ele é o **primeiro** botão do painel, e o único em cor de
+ação (`--rubro`); o resto continua fantasma.
+
+**Isso obrigou o `app.js` a saber que há sessão aberta**, coisa que ele nunca
+soube. O caminho painel → download → *Voltar* passou a ser comum, e sem esse
+estado o *Voltar* jogava um jogador logado na tela de boas-vindas, onde o botão
+"Conta" abre o formulário de **login** para quem já entrou. São três linhas:
+uma variável `logado`, um desvio de `conta` para `painel` dentro do `vaiPara`, e
+o `data-ir` do *Voltar* da tela de download reapontado para o painel quando há
+sessão. O `data-ir` é lido **no clique**, não na ligação do evento, então
+reapontar o atributo basta.
+
+### 2. Destravar personagem — e a guarda que faz isso ser seguro
+
+O problema é o da §1d da `PENDENCIAS.md` visto do outro lado: há mapas que o
+rAthena conhece e o nosso cliente de 2021 ainda não tem, e o jogador **consegue
+chegar neles**. Quem chega não morre — fica preso, porque toda entrada seguinte
+no jogo o põe de volta no mesmo lugar. Até aqui só um GM tirava, um a um.
+
+O botão lista os personagens da conta e move o escolhido para
+`prontera,155,183` (célula conferida contra o `db/re/map_cache.dat`, que é o
+único dos três que tem a Prontera de renewal — `CLAUDE.md` §5).
+
+**A guarda é o `online = 0`, e ela vai dentro do próprio `UPDATE`.** O
+char-server carrega o personagem do banco quando ele entra no jogo e só escreve
+de volta na saída (`char_mmo_char_tosql`): um `UPDATE` feito com o jogador
+conectado seria **sobrescrito**, e o site teria dito "pronto" para uma coisa que
+não aconteceu — a pior das duas falhas possíveis aqui. Pôr a condição só na
+leitura de antes não bastaria: entre ler e escrever o jogador pode ter entrado.
+
+**Três decisões que não são óbvias:**
+
+- **O `last_instanceid` é zerado junto.** É a metade do conserto que se
+  esquece: quem ficou preso dentro de instância continua sendo mandado para a
+  cópia dela se o campo sobreviver.
+- **O ponto de retorno (`save_map`) só é mexido quando aponta para o MESMO mapa
+  em que o personagem está preso.** Zerar sempre custaria ao jogador um ponto de
+  retorno legítimo em Payon ou Geffen; deixar sempre o devolveria para a
+  armadilha na primeira morte.
+- **Não pede a senha, e as outras duas ações do painel pedem.** Trocar senha e
+  apagar PIN mexem no acesso à conta, então cookie roubado não pode bastar.
+  Mover personagem **parado** para a praça de Prontera não tira nada de ninguém:
+  é reversível andando, e o `online = 0` já impede o único abuso imaginável
+  (arrancar alguém de uma guerra). Pedir senha aqui seria atrito na tela de quem
+  já está travado e irritado.
+
+### 3. Os chamados — e por que o site passou a ter DUAS conexões com o banco
+
+A tabela é a `guerra_site_chamado`, e ela é a **primeira do projeto em
+utf8mb4**. Todo o resto do banco é latin1 porque o *jogo* lê, e o cliente de
+2021 não entende outra coisa (`CLAUDE.md` §4.1). Chamado não passa pelo jogo em
+momento nenhum: nasce num formulário web e vai ser lido num painel web. Guardar
+em latin1 obrigaria a converter nas duas pontas e perderia calado tudo o que não
+coubesse em cp1252 — e jogador escreve emoji em chamado.
+
+**O preço é que o charset é escolhido na ABERTURA da conexão**, e é ele que
+decide como o MySQL interpreta os bytes que chegam. Uma conexão só guardaria
+acento de chamado como mojibake ou recusaria a gravação inteira, as duas
+caladas — e a segunda só apareceria no dia em que alguém escrevesse com acento.
+Então são dois pools: a `db` em latin1 para `login` e `char`, a `dbTexto` em
+utf8mb4 só para os chamados. Custa conexão ociosa, não memória do processo.
+
+**E a volta desse mesmo problema apareceu na leitura:** nome de personagem chega
+em latin1, e o nosso `conf/guerra/char_guerra.txt` permite acento em nome. Sem
+converter, o `encoding/json` troca cada byte acentuado por U+FFFD e o jogador
+**não reconhece o próprio personagem na lista**. O `deLatin1` do `banco.go` faz
+isso à mão — a tabela é de 32 entradas porque só a faixa `0x80-0x9F` diverge (o
+"latin1" do MySQL é CP1252) — e foi conferida byte a byte contra o cp1252 do
+Python, nos 256. Feito à mão para não acrescentar `golang.org/x/text`: o
+servidor compila sem rede, e uma dependência nova por vinte linhas não se paga.
+
+**A `estado` já nasce na tabela**, mesmo sem ninguém para lê-la. Acrescentá-la
+junto com o painel exigiria um `ALTER TABLE` numa tabela que já teria chamado
+dentro, e o valor de um chamado antigo teria de ser adivinhado.
+
+Os limites: assunto de 5 a 120 caracteres, mensagem de 15 a 4000, **contados em
+runas e não em bytes** — "correção" tem 9 letras e 11 bytes, e medir em `len()`
+apertaria o limite sozinho para quem escreve português de verdade, com o campo
+do formulário discordando do servidor sem ninguém entender por quê. O teto de
+cinco chamados por hora é contado **no banco** e não no limitador de memória:
+reiniciar o site não pode zerar a contagem de quem estava justamente enchendo a
+fila. E o número do chamado vai para a tela, porque sem ele o jogador não tem
+como cobrar depois.
+
+### O que foi conferido, e como
+
+Não há navegador nesta sessão, então a conferência foi de API contra um MariaDB
+12 em contêiner, carregado com o `sql-files/main.sql` do rAthena e o nosso
+`site/sql/site.sql`:
+
+| | |
+|---|---|
+| nome de personagem com acento (`Filip\xE3o` em latin1) | volta `Filipão` no JSON |
+| destravar preso em `1@dth3`, ponto de retorno no mesmo mapa | move os dois |
+| destravar preso em `ba_maison`, ponto de retorno em Payon | move só a posição, **Payon preservado**; `last_instanceid` de 42 → 0 |
+| personagem conectado | recusa, e a linha no banco não muda |
+| personagem que já está em Prontera | recusa |
+| `char_id` de outra conta | "não encontrado", sem dizer qual dos dois motivos |
+| chamado com acento **e emoji** | volta idêntico do banco |
+| `tipo` fora da lista (`"; DROP TABLE"`) | vira `outro` |
+| sexto chamado na mesma hora | recusado |
+| `deLatin1` nos 256 bytes | idêntico ao cp1252 do Python |
+
+O que **não** foi conferido, por não haver navegador: a tela. Falta olhar o
+painel com as cinco dobras, a lista de personagens no celular e o `<select>` do
+tipo de chamado.
