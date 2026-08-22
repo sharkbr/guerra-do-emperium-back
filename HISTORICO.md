@@ -12671,6 +12671,28 @@ repositório de verdade, com o servidor em `244f71c` e o HEAD em `eb160c6`:
 A linha que importa é a segunda: **depois de publicar só o site, o gatilho
 continua armado.** Era exatamente o que se perdia antes.
 
+### O defeito que só apareceu no deploy de verdade
+
+O primeiro `implanta_site.sh` fez tudo certo — ninguém caiu, os três NPCs foram
+listados como pendentes — e **não criou o `.carimbo-jogo`**. Ler com fallback
+não bastava: no modo `--so-site` o carimbo do jogo não avança, então um carimbo
+que não existisse também não **nascia**. A execução seguinte voltaria ao
+fallback, que a essa altura já é o commit novo — e as mudanças de jogo que
+vieram naquele mesmo pull passariam a estar **atrás** da base, sumindo da conta.
+A armadilha inteira, de volta, pelo caminho oposto.
+
+A correção é semear os dois carimbos **logo depois de lê-los**, e não no fim: no
+instante seguinte ao `git pull`, com nada reiniciado ainda, o `ANTES` descreve
+com exatidão o que está no ar. A sequência foi então provada em três rodadas
+(`--so-site`, `--so-site`, `implanta.sh`), e o carimbo do jogo fica parado em
+`244f71c` nas duas primeiras, com o *reinicia* continuando **sim** — só a
+terceira o avança.
+
+Vale como lembrete de que **script de deploy não se prova rodando uma vez**: o
+primeiro `--so-site` passou em tudo o que dava para ver, e o defeito morava na
+execução *seguinte*. Foi a leitura do estado deixado no servidor — e não a saída
+do script — que o denunciou.
+
 ### O que ficou registrado onde
 
 A entrada do `CLAUDE.md` §5 não foi apagada — foi **corrigida**. A armadilha

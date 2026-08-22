@@ -156,6 +156,20 @@ grava_carimbo() { printf '%s\n' "$2" | como_jogo tee "$1" >/dev/null; }
 BASE_JOGO="$(le_carimbo "$CARIMBO_JOGO")"
 BASE_SITE="$(le_carimbo "$CARIMBO_SITE")"
 
+# SEMEAR AGORA, e nao no fim. Ler com fallback nao basta: no --so-site o
+# carimbo do jogo nao avanca, entao se ele nao existir tambem nao NASCE - e
+# a proxima execucao volta a cair no fallback, que a essa altura ja' e' o
+# commit novo. As mudancas de jogo que vieram no pull deste --so-site
+# passariam a estar ATRAS da base e sumiriam da conta, que e' exatamente a
+# armadilha que os carimbos existem para fechar. Custou um deploy para
+# aparecer, em 2026-08-22.
+#
+# O valor semeado e' o proprio BASE_JOGO/BASE_SITE, ou seja o ANTES quando
+# o arquivo faltava: naquele instante ele descreve com exatidao o que esta'
+# no ar, porque o pull acabou de acontecer e nada foi reiniciado ainda.
+[ -f "$CARIMBO_JOGO" ] || { grava_carimbo "$CARIMBO_JOGO" "$BASE_JOGO"; ok "carimbo do jogo criado em $(echo "$BASE_JOGO" | cut -c1-8)"; }
+[ -f "$CARIMBO_SITE" ] || grava_carimbo "$CARIMBO_SITE" "$BASE_SITE"
+
 if [ "$SO_SITE" = "1" ]; then
     aviso "modo --so-site: o jogo NAO sera' tocado, ninguem cai"
 fi
