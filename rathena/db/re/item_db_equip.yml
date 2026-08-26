@@ -122115,7 +122115,7 @@ Body:
       }
   - Id: 22221
     AegisName: Demonist_Shoes_
-    Name: Devil Worshipper Shoes
+    Name: "Botas do Ocultista"
     Type: Armor
     Buy: 20
     Weight: 500
@@ -147200,7 +147200,7 @@ Body:
       bonus2 bSkillAtk,"NC_POWERSWING",BaseLevel/7;
   - Id: 28538
     AegisName: Glove_Of_Wizard_BR
-    Name: Magician's Gloves
+    Name: "Luvas de H. Motto"
     Type: Armor
     Buy: 20
     Weight: 500
@@ -151890,7 +151890,7 @@ Body:
       }
   - Id: 28944
     AegisName: Scutum_BR
-    Name: Sleiporing Shield
+    Name: "Escudo de Sleiporing"
     Type: Armor
     Weight: 500
     Defense: 1
@@ -163125,7 +163125,7 @@ Body:
       }
   - Id: 32265
     AegisName: Tip_Of_Thief_Vol2
-    Name: Thief's Guide Vol.2
+    Name: "Diário do Renegado Cap.2"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -165875,7 +165875,7 @@ Body:
          bonus bDelayrate,-15;
   - Id: 400114
     AegisName: Victory_Ear_JP_
-    Name: Victory Wing Ear
+    Name: "Adorno da Vitória"
     Type: Armor
     Weight: 300
     Defense: 2
@@ -175130,7 +175130,7 @@ Body:
     View: 957
   - Id: 400566
     AegisName: Awaking_Bloom
-    Name: Awaking Bloom
+    Name: "Mitra do Florescer"
     Type: Armor
     Weight: 500
     Defense: 10
@@ -181267,7 +181267,7 @@ Body:
       bonus bMatk,BaseLevel;
   - Id: 410027
     AegisName: Wonder_Egg_Basket
-    Name: Wonder Egg Basket
+    Name: "Cesta das Maravilhas"
     Type: Armor
     Locations:
       Head_Mid: true
@@ -182888,7 +182888,7 @@ Body:
       bonus bMatk,BaseLevel;
   - Id: 410159
     AegisName: Magic_Celestial_Globe_
-    Name: Magic Celestial Globe
+    Name: "Globo Armilar"
     Type: Armor
     Weight: 100
     Defense: 2
@@ -185757,7 +185757,7 @@ Body:
     View: 2139
   - Id: 420028
     AegisName: Imperial_Glory
-    Name: Imperial Glory
+    Name: "Ombreiras da Glória"
     Type: Armor
     View: 2056
     Buy: 20
@@ -196908,7 +196908,7 @@ Body:
       bonus bMaxSP,100;
   - Id: 450247
     AegisName: Brilliant
-    Name: Brillance
+    Name: "Radiância"
     Type: Armor
     Weight: 1000
     Defense: 100
@@ -200179,7 +200179,7 @@ Body:
       }
   - Id: 450417
     AegisName: aegis_450417
-    Name: Robe of Morpheus's
+    Name: "Vestes de Morpheus"
     Type: Armor
     Weight: 800
     Defense: 20
@@ -209524,7 +209524,7 @@ Body:
          bonus bShortAtkRate,15;
   - Id: 470296
     AegisName: aegis_470296
-    Name: Phantom Combat Boots
+    Name: "Coturno Fantasma"
     Type: Armor
     Weight: 200
     Slots: 1
@@ -211157,7 +211157,7 @@ Body:
       bonus bDelayrate,-.@r/2;
   - Id: 480025
     AegisName: Owl_Baron_Mantle
-    Name: Owl Baron Mantle
+    Name: "Manto do Barão"
     Type: Armor
     Weight: 100
     Defense: 5
@@ -211876,7 +211876,7 @@ Body:
     View: 89
   - Id: 480088
     AegisName: Ultio_Cape_TW
-    Name: Ultio Holy Magic Cloak
+    Name: "Capa Ultio-OS"
     Type: Armor
     Weight: 100
     Defense: 20
@@ -212836,7 +212836,7 @@ Body:
       }
   - Id: 480154
     AegisName: Devil_Flame_Manteau_TW
-    Name: Devil's Fire Cloak
+    Name: "Manto das Chamas"
     Type: Armor
     Weight: 100
     Slots: 1
@@ -226488,7 +226488,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,10;
   - Id: 490451
     AegisName: Colar_Rubi_BR
-    Name: Crimson Necklace
+    Name: "Colar Rubi"
     Type: Armor
     Weight: 300
     Locations:
@@ -229989,7 +229989,7 @@ Body:
       }
   - Id: 500005
     AegisName: Magic_Sword_J
-    Name: Infinity Blade
+    Name: "Lâmina do Infinito"
     Type: Weapon
     SubType: 1hSword
     Buy: 20

@@ -2852,3 +2852,239 @@ Body:
       if (BaseLevel>=180)
          bonus bAllStats,15;
     # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+# -------------------------------------------------------------------------
+# OITAVA LEVA DE PLACEHOLDERS - 2026-08-26
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das sete de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub` (`estado_item.py --id <n> --descricao`).
+#
+# Os CINCO vieram do pedido de 2026-08-26 para as lojas de Prontera. Daquela
+# lista de 47 itens foram os unicos cinco que faltavam no servidor; os
+# outros 42 ja existiam no vendor e so precisavam de entrada de cliente,
+# arte e linha de loja.
+#
+# UM DELES E RENUMERACAO DO bRO, e isso foi PROVADO e nao suposto - e o caso
+# da Diadema do Paraiso (19024 -> 19455) e dos dois calcados de 2026-08-18,
+# repetido:
+#
+#   420227  Raposa Ilusional   o vendor tem o 420314, `White_Fox_US`
+#                              ("Calming White Fox"), mesma ficha e mesmo
+#                              script
+#
+# As tres provas, e nenhuma sozinha bastaria (regra do `identifiedResource
+# Name`, CLAUDE.md secao 5): o `ClassNum` do 420227 no bRO e 2335, que e o
+# `View` do 420314; o recurso e `C_Friendly_White_Fox`, e o 420314 e a unica
+# raposa branca de cabeca-baixo do vendor; e - a que fecha - os QUATRO
+# conjuntos que a descricao do bRO lista para o 420227 sao, um a um, os
+# quatro `- Combos:` que db/re/item_combos.yml da ao `White_Fox_US`:
+#
+#   [Maca Longa Ilusional]   Long_Mace_IL         16063
+#   [Maca Ilusional]         Apple_Of_Archer_IL   19210
+#   [Sapato Ilusional]       Shoes_IL             22133
+#   [Sobrepeliz Ilusional]   Muffler_IL           20838
+#
+# POR ISSO OS QUATRO ESTAO ESPELHADOS em db/guerra/item_combos.yml, copia
+# exata dos do vendor com o nosso AegisName no lugar do dele. Sem o espelho
+# o item entraria na loja com quatro conjuntos mortos - e conjunto que nao
+# fecha nao da erro, o jogador so ve um numero menor.
+#
+# POR QUE NAO POR O 420314 NA LOJA E PRONTO: o nome dele no nosso cliente e
+# "Calming White Fox", em ingles, e o bRO nao tem esse ID - entao nao ha de
+# onde trazer o nome em portugues. So entra na loja item com nome em
+# portugues (regra 4.2). O 420227 tem "Raposa Ilusional" no bRO.
+#
+# OS QUATRO OUTROS NAO EXISTEM EM LUGAR NENHUM DO VENDOR, conferido por
+# ficha e nao por nome:
+#
+#   420326  Sistema Elyumina   o `ClassNum` dele (1788) e compartilhado com
+#                              DOIS itens do vendor - o 31572 (a versao
+#                              COSMETICA, "Aureolas Digitais") e o 420342
+#                              ("Wireless Security Drone"). Nenhum dos dois
+#                              e ele: o primeiro e Costume_Head_Low, e o
+#                              segundo tem peso 450 e outros seis bonus.
+#                              Desenho e desenho; ficha e ficha.
+#   590041  Mangual Ogro       nenhuma maca do vendor tem ATQ 150 + peso
+#                              4000 + nivel 4
+#   510064  Ninjaken           nenhuma adaga do vendor tem ATQ 80 + ATQM 120
+#   550073  Vara Morta         nenhum cajado do vendor tem ATQ 60 + ATQM 160
+#
+# OS CINCO `AegisName` SAO PALPITE, como os das levas anteriores: o oficial
+# nao esta em tabela nenhuma que alcancamos (o `identifiedResourceName` das
+# tres armas e coreano). Os cinco foram conferidos como livres nos 29396
+# AegisName do item_db (vendor e nosso) antes de usar.
+#
+# A CONTA DE PESO: o campo `Weight` daqui e o "Peso:" da tela VEZES DEZ,
+# para arma e para armadura igual. Medido em cinco testemunhas antes de
+# escrever - 19311 (tela 80 / campo 800), 22171 (60 / 600), 490381 (10 /
+# 100), 19137 (10 / 100) e 500005 (130 / 1300). Vale registrar porque o
+# cabecalho da QUINTA leva, logo acima, diz o contrario para os dois arcos:
+# ver PENDENCIAS.md.
+#
+# AS EQUIVALENCIAS DE BONUS usadas aqui, todas ja com testemunha no projeto
+# (a lista completa esta no cabecalho da SETIMA leva) mais duas novas:
+#
+#   "Taxa de DROP +N%"            -> bonus2 bDropAddRace,RC_All,N
+#                                    (38569, 72331, 76763 e outros do vendor)
+#   "Efetividade de cura +N%"     -> bonus bHealPower,N   (460000, mais acima)
+#   "Dano fisico +N%" (sem
+#    qualificar)                  -> bonus2 bAddClass,Class_All,N
+#   "Resistencias as racas Humano
+#    e Doram +N%"                 -> bonus2 bSubRace,RC_Player_(Human|Doram),N
+#   "Indestrutivel em batalha"    -> bonus bUnbreakableWeapon
+#
+# "A CADA N REFINOS" E DIVISAO INTEIRA, como nos arcos da quinta leva: em +7
+# com degrau de 4 sao um degrau, e nao 1,75.
+
+  - Id: 420227
+    AegisName: Illusion_White_Fox
+    Name: "Raposa Ilusional"
+    # Copiado campo por campo do 420314 do vendor - mesmo peso, mesmo nivel,
+    # mesmo View, mesmo Script. Sem `Buy:` e sem `Refineable:` porque o
+    # 420314 tambem nao os tem; quem decide o preco na vitrine e o
+    # db/guerra/item_db_lojas.yml, que importa depois deste arquivo.
+    # `RC2_Illusion_Moonlight` e o grupo de monstro da Ilusao da Lua, e ele
+    # existe: db/re/mob_db.yml marca oito monstros com `Illusion_Moonlight`.
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2335
+    Script: |
+      bonus2 bAddRace2,RC2_Illusion_Moonlight,20;
+      bonus2 bMagicAddRace2,RC2_Illusion_Moonlight,20;
+
+  - Id: 420326
+    AegisName: Elyumina_System
+    Name: "Sistema Elyumina"
+    # Molde: o 420342 do vendor, que compartilha o `View: 1788` - mesma
+    # forma de cabeca-baixo sem cova e sem refino. O peso e o nivel sao os
+    # da descricao do bRO (tela 10 -> 100; nivel 130), nao os do molde.
+    # SEM `Refineable:` de proposito: os "Refino +7 ou mais" da descricao
+    # estao todos DENTRO de bloco de conjunto, e falam do refino da OUTRA
+    # peca, nao desta. Nenhum bonus proprio dela depende de refino.
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    View: 1788
+    Script: |
+      bonus2 bDropAddRace,RC_All,5;
+    # TODO os CINCO conjuntos: [Motor Ilusion A] ou [Motor Ilusion B],
+    #      [S-Magia], [S-Rapidez], [S-CRIT] e [U-Total]. O vendor nao
+    #      conhece NENHUMA dessas familias - nao ha `- Combos:` citando
+    #      cabeca-baixo em nenhuma delas -, entao nao ha o que espelhar:
+    #      seria escrever cinco conjuntos do zero a partir de prosa, com
+    #      pecas que tambem nao estao em loja nossa. Conjunto pela metade da
+    #      bonus fantasma, e e a mesma razao dos TODOs das levas anteriores.
+
+  - Id: 590041
+    AegisName: Ogre_Flail
+    Name: "Mangual Ogro"
+    # Molde: o 590039/590048 do vendor, os vizinhos de ID - a mesma familia
+    # numerica, os mesmos `Weight: 4000` e `Range: 1`, e o mesmo
+    # `bUnbreakableWeapon` sozinho no Script. O que muda e o que a descricao
+    # do bRO manda mudar: ATQ 150 (nao 400), nivel 4 (nao 5), nivel minimo
+    # 100 (nao 210) e uma cova.
+    # "Classes: Mercadores e evolucoes" sao os TRES `Jobs:` abaixo: no
+    # rAthena o ramo do Mercador se parte em `Blacksmith` e `Alchemist`, e
+    # `Merchant` sozinho nao os alcanca. Sem `Classes:`, porque "e
+    # evolucoes" inclui o proprio Mercador - por-lo em `All_Third` cortaria
+    # justamente quem a descricao aceita.
+    Type: Weapon
+    SubType: Mace
+    Weight: 4000
+    Attack: 150
+    Range: 1
+    Slots: 1
+    Jobs:
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bAddClass,Class_All,10*(getrefine()/4);
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml e nao
+    # suposto: a descricao do bRO nao lista conjunto, e nada la cita maca
+    # desta familia.
+
+  - Id: 510064
+    AegisName: Ninjaken
+    Name: "Ninjaken"
+    # Molde: o 28777-28780 do vendor, as adagas de nivel 4 / minimo 100 /
+    # uma cova - todas `Weight: 600`, `Range: 1`, sem `Defense`. O `Jobs:`
+    # e o do 13078 (Mikatsuki), a outra adaga de Ninja do vendor:
+    # "Ninjas e evolucoes" e `Ninja` + `KagerouOboro`, sem `Classes:`.
+    #
+    # "PRESO NA CONTA" DA DESCRICAO NAO FOI IMPLEMENTADO, e e uma
+    # divergencia conhecida, nao esquecimento. Nao existe campo de item_db
+    # para vinculo de CONTA: o unico que ha e `Flags: BindOnEquip`, que
+    # prende ao PERSONAGEM (doc/item_db.txt linha 242) - outra coisa, e mais
+    # apertada. No bRO o vinculo vem do `getitembound` de quem entrega o
+    # item, nao do banco. Como esta peca sai de vitrine publica a 1 zeny,
+    # nao ha o que prender. Levantado por escrito em PENDENCIAS.md.
+    Type: Weapon
+    SubType: Dagger
+    Weight: 600
+    Attack: 80
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Ninja: true
+      KagerouOboro: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bMatkRate,5*min(getrefine(),10);
+    # O `min(...,10)` e o "ate o +10" da descricao por extenso: sem ele um
+    # +15 daria 75% de dano magico, que a descricao nao promete.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  - Id: 550073
+    AegisName: Dead_Rod
+    Name: "Vara Morta"
+    # Molde: o 26171 (Ponitendtia_J) do vendor - cajado de nivel 4, minimo
+    # 100, uma cova, `Range: 1`, e o mesmo `Jobs: Priest` + `Classes:
+    # All_Third`/`Fourth`, que e como o vendor escreve "Arcebispos e
+    # evolucoes": o Arcebispo e a terceira classe do ramo do Sacerdote, e o
+    # Cardeal e a quarta. O peso (tela 10 -> 100) e o do bRO, e nao o do
+    # molde; ha precedente de cajado tao leve no vendor, o 1643.
+    Type: Weapon
+    SubType: Staff
+    Weight: 100
+    Attack: 60
+    MagicAttack: 160
+    Range: 1
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bHealPower,2*getrefine();
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.

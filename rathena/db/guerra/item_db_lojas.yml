@@ -1448,6 +1448,8 @@ Body:
     Buy: 1                # Fortune3
   - Id: 5388
     Buy: 1                # Snake_Head
+  - Id: 5539
+    Buy: 1                # Jaguar_Hat
   - Id: 5592
     Buy: 1                # Sigrun's_Wing
   - Id: 5983
@@ -1460,6 +1462,8 @@ Body:
     Buy: 1                # Blut_Revolver
   - Id: 13342
     Buy: 1                # Blut_Huuma
+  - Id: 15166
+    Buy: 1                # Necklace_Rosary
   - Id: 15169
     Buy: 1                # Kardui_Robe
   - Id: 15371
@@ -1532,6 +1536,8 @@ Body:
     Buy: 1                # C_MoonStar_Accessory
   - Id: 18849
     Buy: 1                # Celines_Ribbon
+  - Id: 18853
+    Buy: 1                # D_Strawberry_Hat_
   - Id: 18878
     Buy: 1                # Palace_Guard_Cap
   - Id: 18894
@@ -1544,8 +1550,12 @@ Body:
     Buy: 1                # Magicstone_Of_Grace
   - Id: 19118
     Buy: 1                # Poring_Sunglasses_K_
+  - Id: 19137
+    Buy: 1                # Strawberry_In_Mouth_
   - Id: 19138
     Buy: 1                # SeraphimCoronet
+  - Id: 19139
+    Buy: 1                # SurviveOrb
   - Id: 19163
     Buy: 1                # CatharinaPawnBrad60
   - Id: 19241
@@ -1560,10 +1570,18 @@ Body:
     Buy: 1                # Garden_Of_Eden
   - Id: 19288
     Buy: 1                # C_Gigant_Helm
+  - Id: 19311
+    Buy: 1                # Greater_Dracul_Horn
+  - Id: 19327
+    Buy: 1                # Feather_Of_Seraphim
+  - Id: 19329
+    Buy: 1                # Hand_Of_Devil
   - Id: 19380
     Buy: 1                # Floating_Ball
   - Id: 19381
     Buy: 1                # Protect_cloth
+  - Id: 19409
+    Buy: 1                # Black_Feather
   - Id: 19426
     Buy: 1                # King_Of_Spirit_Circlet
   - Id: 19437
@@ -1574,10 +1592,16 @@ Body:
     Buy: 1                # Injured_Eyepatch_JP_
   - Id: 19452
     Buy: 1                # Heavenly_Order_
+  - Id: 19453
+    Buy: 1                # Jejecap_JP
   - Id: 19455
     Buy: 1                # Protect_Feathers_
+  - Id: 19469
+    Buy: 1                # Crown_Of_Saint_Jp
   - Id: 19495
     Buy: 1                # Diabolus_Wing
+  - Id: 19499
+    Buy: 1                # FortunetellinSealed
   - Id: 19519
     Buy: 1                # Lightning_Cloud
   - Id: 19551
@@ -1696,6 +1720,8 @@ Body:
     Buy: 1                # Applause_Sandal_
   - Id: 22134
     Buy: 1                # Enforcer_Shoes
+  - Id: 22171
+    Buy: 1                # Ancient_Hero_Boots
   - Id: 22178
     Buy: 1                # Anony_Sm_Shoes
   - Id: 22191
@@ -1704,6 +1730,8 @@ Body:
     Buy: 1                # Space_shoes_JP
   - Id: 22204
     Buy: 1                # Time_Overload_Boots
+  - Id: 22221
+    Buy: 1                # Demonist_Shoes_
   - Id: 22224
     Buy: 1                # Fluffy_FishShoes
   - Id: 22225
@@ -2158,6 +2186,8 @@ Body:
     Buy: 1                # Shadow_Ring
   - Id: 28394
     Buy: 1                # King_of_Spirit_Ring
+  - Id: 28410
+    Buy: 1                # Sapphire_Wrist
   - Id: 28430
     Buy: 1                # Archpriest_Ring
   - Id: 28433
@@ -2168,14 +2198,20 @@ Body:
     Buy: 1                # ArchPriest_Glove
   - Id: 28438
     Buy: 1                # Fairy_Leaf_Powder
+  - Id: 28439
+    Buy: 1                # SeeOtter_Fan
   - Id: 28491
     Buy: 1                # Matagi_Swordaxe
+  - Id: 28492
+    Buy: 1                # Tip_Of_Thief_Vol1
   - Id: 28517
     Buy: 1                # Ring_Of_The_Abyss_King
   - Id: 28531
     Buy: 1                # Glove_Of_Smith
   - Id: 28533
     Buy: 1                # ChemicalGlove
+  - Id: 28538
+    Buy: 1                # Glove_Of_Wizard_BR
   - Id: 28564
     Buy: 1                # Valkyrie_Drop
   - Id: 28565
@@ -2196,6 +2232,8 @@ Body:
     Buy: 1                # Mad_Bunny_K
   - Id: 28910
     Buy: 1                # Imuke_Upper_Shield
+  - Id: 28944
+    Buy: 1                # Scutum_BR
   - Id: 28946
     Buy: 1                # Bloody_Knight_Shield__
   - Id: 28953
@@ -2376,8 +2414,12 @@ Body:
     Buy: 1                # Ball_Of_RasenHuuma
   - Id: 32263
     Buy: 1                # Shield_Ring
+  - Id: 32265
+    Buy: 1                # Tip_Of_Thief_Vol2
   - Id: 32295
     Buy: 1                # Crystal_Blade_Necklace
+  - Id: 100100
+    Buy: 1                # Temporal_Manteau_Box
   - Id: 100437
     Buy: 1                # Hero_Weapon_Cube
   - Id: 100547
@@ -2512,6 +2554,8 @@ Body:
     Buy: 1                # CLB_SS_LL_Card
   - Id: 300552
     Buy: 1                # CLB_SS_LT_Card
+  - Id: 400002
+    Buy: 1                # Victory_Wing_Ear_
   - Id: 400006
     Buy: 1                # Orcsuccessionhelm_TW
   - Id: 400080
@@ -2524,6 +2568,8 @@ Body:
     Buy: 1                # C_18y_Hat_TW
   - Id: 400113
     Buy: 1                # Victory_Ear_JP
+  - Id: 400114
+    Buy: 1                # Victory_Ear_JP_
   - Id: 400131
     Buy: 1                # C_Diadem_Of_Bruenhild
   - Id: 400133
@@ -2686,6 +2732,8 @@ Body:
     Buy: 1                # C_Sonic_Ring
   - Id: 400517
     Buy: 1                # C_Fairy_Poison_Apple
+  - Id: 400566
+    Buy: 1                # Awaking_Bloom
   - Id: 400567
     Buy: 1                # C_Awaking_Bloom
   - Id: 400585
@@ -2732,10 +2780,14 @@ Body:
     Buy: 1                # Eyes_Of_Illusion_
   - Id: 410011
     Buy: 1                # C_Dark_Blindfold
+  - Id: 410017
+    Buy: 1                # Battle_Processor_
   - Id: 410024
     Buy: 1                # Ribbon_Of_Life_J_
   - Id: 410026
     Buy: 1                # Magic_Heir_J_
+  - Id: 410027
+    Buy: 1                # Wonder_Egg_Basket
   - Id: 410028
     Buy: 1                # Wonder_Egg_Basket_
   - Id: 410030
@@ -2836,6 +2888,8 @@ Body:
     Buy: 1                # C_Bouquet_Valletta
   - Id: 410157
     Buy: 1                # C_Happening_Clover
+  - Id: 410159
+    Buy: 1                # Magic_Celestial_Globe_
   - Id: 410160
     Buy: 1                # C_Magic_Celestial_Globe
   - Id: 410178
@@ -2872,6 +2926,8 @@ Body:
     Buy: 1                # C_Pope_Ribbon_R
   - Id: 410226
     Buy: 1                # C_Black_Rabbit
+  - Id: 410233
+    Buy: 1                # Gambler_Seal_KR_
   - Id: 410234
     Buy: 1                # C_Rebel_Pocket_Watch
   - Id: 410236
@@ -2948,10 +3004,14 @@ Body:
     Buy: 1                # C_Injured_Eyepatch
   - Id: 410364
     Buy: 1                # C_Wisdom_Core_Headphone
+  - Id: 420006
+    Buy: 1                # Vassalage_Necklace
   - Id: 420014
     Buy: 1                # C_Japanes_Hair
   - Id: 420026
     Buy: 1                # C_Ribbon_Piamat_J
+  - Id: 420028
+    Buy: 1                # Imperial_Glory
   - Id: 420029
     Buy: 1                # C_Imperial_Glory
   - Id: 420044
@@ -3058,6 +3118,8 @@ Body:
     Buy: 1                # C_L_Ribbon_M_BU
   - Id: 420197
     Buy: 1                # C_Twinkle_Wave
+  - Id: 420198
+    Buy: 1                # Sanctus
   - Id: 420207
     Buy: 1                # C_Eternal_Rose
   - Id: 420208
@@ -3074,6 +3136,8 @@ Body:
     Buy: 1                # C_Come_On_Melon
   - Id: 420221
     Buy: 1                # C_Skia_Two_Side_Up
+  - Id: 420227
+    Buy: 1                # Illusion_White_Fox
   - Id: 420232
     Buy: 1                # C_Cheesy_Snack_In_Mouth
   - Id: 420233
@@ -3158,6 +3222,8 @@ Body:
     Buy: 1                # C_Charm_Of_Rough_Wind
   - Id: 420321
     Buy: 1                # C_Neon_Half_Long
+  - Id: 420326
+    Buy: 1                # Elyumina_System
   - Id: 420340
     Buy: 1                # C_Kitchen_Car
   - Id: 420341
@@ -3208,6 +3274,8 @@ Body:
     Buy: 1                # Celine_Dress
   - Id: 450208
     Buy: 1                # Paracelsus_Coat
+  - Id: 450214
+    Buy: 1                # Dark_Triad
   - Id: 450216
     Buy: 1                # Twinhead_dragon_Mail_J
   - Id: 450222
@@ -3216,6 +3284,8 @@ Body:
     Buy: 1                # Ruler_Robe_J_
   - Id: 450226
     Buy: 1                # Four_of_a_kind
+  - Id: 450247
+    Buy: 1                # Brilliant
   - Id: 450251
     Buy: 1                # Assault_Suit
   - Id: 450252
@@ -3230,6 +3300,8 @@ Body:
     Buy: 1                # Amazing_Grace
   - Id: 450338
     Buy: 1                # Screaming_Ghoost_Party
+  - Id: 450417
+    Buy: 1                # aegis_450417
   - Id: 460000
     Buy: 1                # Divinity_Aegis
   - Id: 460003
@@ -3280,6 +3352,8 @@ Body:
     Buy: 1                # Twinhead_dragon_Boots
   - Id: 470293
     Buy: 1                # Virtue_Shoes_BR
+  - Id: 470296
+    Buy: 1                # aegis_470296
   - Id: 470300
     Buy: 1                # aegis_470300
   - Id: 470318
@@ -3288,6 +3362,8 @@ Body:
     Buy: 1                # Phantom_Shoes
   - Id: 480023
     Buy: 1                # Arabian_Manteau
+  - Id: 480025
+    Buy: 1                # Owl_Baron_Mantle
   - Id: 480045
     Buy: 1                # Guardian_Soul
   - Id: 480055
@@ -3312,6 +3388,8 @@ Body:
     Buy: 1                # Fafnir_Manteau
   - Id: 480085
     Buy: 1                # Devil_Manteau_JP
+  - Id: 480088
+    Buy: 1                # Ultio_Cape_TW
   - Id: 480094
     Buy: 1                # ErymanthianSkin
   - Id: 480096
@@ -3334,6 +3412,8 @@ Body:
     Buy: 1                # C_Samba_Carnival
   - Id: 480127
     Buy: 1                # C_Hooked_Straw_Hat
+  - Id: 480154
+    Buy: 1                # Devil_Flame_Manteau_TW
   - Id: 480155
     Buy: 1                # C_Vietnam_flag_hood
   - Id: 480169
@@ -3398,6 +3478,8 @@ Body:
     Buy: 1                # Jasper_Ring
   - Id: 490118
     Buy: 1                # RingOfAdoramus
+  - Id: 490130
+    Buy: 1                # SkynetBlowRing
   - Id: 490141
     Buy: 1                # Metal_Pick
   - Id: 490145
@@ -3428,12 +3510,20 @@ Body:
     Buy: 1                # Amulet_of_GenesisStone
   - Id: 490367
     Buy: 1                # Ullr_Bracelet
+  - Id: 490381
+    Buy: 1                # Majesty_of_Yggdrasil_
   - Id: 490427
     Buy: 1                # Ring_Of_Storm
+  - Id: 490451
+    Buy: 1                # Colar_Rubi_BR
   - Id: 490497
     Buy: 1                # Somatology_Glove
+  - Id: 500005
+    Buy: 1                # Magic_Sword_J
   - Id: 500009
     Buy: 1                # Copy_Gram
+  - Id: 510064
+    Buy: 1                # Ninjaken
   - Id: 510146
     Buy: 1                # Jurupari
   - Id: 510147
@@ -3448,12 +3538,16 @@ Body:
     Buy: 1                # Phoenix_Foxtail
   - Id: 550021
     Buy: 1                # Deus_Ex_Machina_JP
+  - Id: 550073
+    Buy: 1                # Dead_Rod
   - Id: 550095
     Buy: 1                # Ancient_Royal_Scepter
   - Id: 570070
     Buy: 1                # Erhu_BR
   - Id: 590014
     Buy: 1                # Meer_Sceptre
+  - Id: 590041
+    Buy: 1                # Ogre_Flail
   - Id: 700069
     Buy: 1                # Triangle_Disaster
   - Id: 700080

@@ -74,6 +74,40 @@
 //=
 //= ELA NAO E `NoTrade` NEM PESADA: pesa 80, e livre para armazem,
 //= carrinho, troca e correio. Fica entre as seis soltas da lista.
+//=
+//= A DECIMA ENTROU EM 2026-08-26: a Caixa de Mantos Temporais
+//= (100100), que veio no pedido de 47 itens daquele dia LISTADA
+//= SOB "CAPAS". Ela nao e capa nem equipamento nenhum - e
+//= `Usable`/`Container`, sem `Locations:`, com o mesmo
+//= `getgroupitem` de uma linha das outras nove -, entao nao havia
+//= vitrine do quarteirao que a recebesse por regra (4.14). Foi
+//= decisao do dono manda-la para ca, e e o lugar certo: esta e a
+//= loja de caixas.
+//=
+//= O GRUPO DELA SAO SEIS, e sao capas de VERDADE - `Garment` com
+//= DEF, refino e uma cova, uma por atributo:
+//=
+//=   20963  Manto Temporal FOR      20966  Manto Temporal INT
+//=   20964  Manto Temporal AGI      20967  Manto Temporal DES
+//=   20965  Manto Temporal VIT      20968  Manto Temporal SOR
+//=
+//= As seis foram conferidas uma a uma antes de a caixa entrar (24
+//= checagens, zero falta): as seis existem no item_db, as seis tem
+//= nome em portugues no itemInfo.lua deste cliente e as seis deram
+//= arte 4 de 4. E a mesma conferencia que os 245 itens dos outros
+//= nove grupos passaram - caixa que sorteia item sem arte entrega
+//= caixa de erro ao jogador, e a falha aparece so na hora de abrir,
+//= longe daqui.
+//=
+//= O QUE A ALTERNATIVA TERIA SIDO, e vale registrar porque ela foi
+//= considerada: por as SEIS capas direto no Capeiro, a 1 zeny. Da
+//= no mesmo acervo sem o sorteio, e cabia por regra (as seis sao
+//= `Garment`). O dono escolheu a caixa - o giro faz parte.
+//=
+//= ELA NAO TEM `Buy` NEM `Sell`, como as outras nove: o preco 1
+//= escrito na linha vale e o lucro por clique e zero. Pesa 100 no
+//= item_db (10 na tela) e nao tem trava de troca nenhuma; tem
+//= `BuyingStore`, ou seja cabe em loja de compra de jogador.
 //===== O QUE FICOU DE FORA ==================================
 //= A CAIXA DE CUBOS REFINADORES (102592) foi pedida - duas vezes na
 //= mesma lista, a segunda como "Cubo de cubos refinadores" - e NAO
@@ -246,5 +280,6 @@ OnInit:
 //   100437  Cubo Reforçado Primordial   (37)
 //    23115  Cubo Sombrio de Classe      (90)
 //    23767  Caixa de Elmos Especiais     (5)  pesa 80
+//   100100  Caixa de Mantos Temporais    (6)  as capas Temporais
 //
--	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1,23767:1
+-	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1,23767:1,100100:1

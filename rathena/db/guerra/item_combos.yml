@@ -285,3 +285,69 @@ Body:
          bonus bFixedCast,-500;
          autobonus "{ bonus bStr,70; }",15,5000,BF_WEAPON;
       }
+
+  # -----------------------------------------------------------------------
+  # RAPOSA ILUSIONAL (420227) - 2026-08-26
+  #
+  # Os QUATRO conjuntos que db/re/item_combos.yml da ao `White_Fox_US`
+  # (420314), copiados linha por linha com o nosso AegisName no lugar do
+  # dele. O 420227 e o MESMO item que o 420314, renumerado pelo bRO - a
+  # prova esta no cabecalho da oitava leva em db/guerra/item_db.yml.
+  #
+  # Sem estes quatro o item entraria na loja com os conjuntos que a
+  # descricao promete mortos, e conjunto que nao fecha nao da erro: o
+  # jogador so ve um numero menor. E a mesma receita da Diadema do Paraiso
+  # (19455) e do Sapato Fantasma (470321), mais acima.
+  #
+  # As quatro pecas parceiras existem no vendor e NAO estao em loja nossa -
+  # sao drop das Ilusoes. Espelhar mesmo assim e barato e correto: quem
+  # trouxer a peca de fora tem o conjunto funcionando.
+  - Combos:
+      - Combo:
+          - Long_Mace_IL          # 16063  - Maca Longa Ilusional
+          - Illusion_White_Fox    # 420227 - Raposa Ilusional
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMaxSP,200*(.@r/2);
+      bonus2 bAddClass,Class_Boss,5;
+      if (.@r>=9)
+         bonus bNoCastCancel;
+      if (.@r>=11)
+         bonus2 bSkillAtk,"MO_EXTREMITYFIST",35;
+
+  - Combos:
+      - Combo:
+          - Apple_Of_Archer_IL    # 19210  - Maca Ilusional
+          - Illusion_White_Fox    # 420227 - Raposa Ilusional
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,10*(.@r/2);
+      bonus bDex,3*(.@r/2);
+      bonus2 bAddSize,Size_All,2*(.@r/2);
+
+  - Combos:
+      - Combo:
+          - Shoes_IL              # 22133  - Sapato Ilusional
+          - Illusion_White_Fox    # 420227 - Raposa Ilusional
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      if (getequiprefinerycnt(EQI_SHOES)>=9) {
+         bonus bAspdRate,10;
+         bonus bFixedCast,-500;
+      }
+
+  - Combos:
+      - Combo:
+          - Muffler_IL            # 20838  - Sobrepeliz Ilusional
+          - Illusion_White_Fox    # 420227 - Raposa Ilusional
+    Script: |
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      if (getequiprefinerycnt(EQI_GARMENT)>=9) {
+         bonus bVariableCastrate,-15;
+         bonus2 bSubEle,Ele_Fire,10;
+         bonus2 bSubEle,Ele_Earth,10;
+         bonus2 bSubEle,Ele_Water,10;
+         bonus2 bSubEle,Ele_Wind,10;
+      }

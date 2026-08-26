@@ -12863,3 +12863,180 @@ Sura. Os dois trocam o visual.
 **Nada disto é cliente — não precisa de patch.** São dois arquivos de `db/`, que
 vão por deploy (`RECEITAS.md` §0). Em jogo pega com **`@reloadpcdb`**, que chama
 o `pc_readdb` (`src/map/atcommand.cpp:4490`) e não derruba ninguém.
+
+## Quarenta e seis itens nas nove vitrines de Prontera (2026-08-26)
+
+O pedido veio **já agrupado por slot** — "Equipamentos para cabeça (topo)",
+"(meio)", "(baixo)", armaduras, calçados, capas, armas, escudos, acessórios —,
+com 47 números. Entraram **46**, nas nove lojas do Mercado Contemporâneo. O
+quadragésimo sétimo não é equipamento e foi para o **Zé do Caixão**, a loja de
+caixas — ver o último bloco desta seção.
+
+| loja | entraram | ficou com |
+|---|---|---|
+| Retoqueiro | 10 | 23 |
+| Chapeleiro | 8 | 30 |
+| Acessorista | 8 | 67 |
+| Ocleiro | 6 | 42 |
+| Senhor das Armas | 4 | 55 |
+| Lorde das Armaduras | 3 | 26 |
+| Capeiro | 3 | 32 |
+| Sapateiro | 3 | 34 |
+| Escudeiro | 1 | 17 |
+
+### A primeira lista grande em que o `Locations:` não discordou de nada
+
+Toda rodada anterior teve pelo menos uma peça cuja loja o nome errava — a
+Piscadela de Freya, a Máscara de Minorous, as duas "Caudas" que eram arma, o
+"Manto do Cientista" que era armadura. Nesta, as **duas** conferências que a
+regra 4.14 manda fazer deram acordo nos 46: o agrupamento do dono bateu com o
+`Locations:` do nosso `item_db`, e o `item_db` bateu com a linha
+`Tipo:`/`Equipa em:` da descrição do bRO. **Nenhum override de `Locations:`.**
+
+O agrupamento do pedido acertou até onde costuma escorregar: a **Máscara de
+Onça-Pintada** (5539) é `Head_Low` **e** `Head_Mid` **e** `Head_Top` no
+`item_db`, foi pedida como topo, e foi para o Chapeleiro — o mesmo caso do Véu
+das Gemas Sagradas (19106), de 2026-08-12.
+
+### O trabalho estava em 24 peças, não em 46
+
+| o que faltava | quantos | por onde |
+|---|---|---|
+| entrada no `itemInfo.lua` | 23 | `completa_iteminfo.py` |
+| `Name` em inglês no servidor | 17 | `nomes_pt_item_db.py` |
+| os 4 arquivos de arte | 8 | `instala_visual.py` |
+| não existia no servidor | 5 | `db/guerra/item_db.yml` |
+| entrada de `accessoryid` | 1 | `estende_accessoryid.py` |
+
+As contas se sobrepõem: o **Sanctus** (420198) aparece em quatro linhas. As
+outras 22 peças não custaram nada — o rAthena tinha, o cliente tinha em
+português, e o `valida_visual.py` aprovou os 8 (ou 4) arquivos antes de
+entrarem. A reconferência fechou em **0 faltando nos 47**.
+
+### O ID pedido existia aqui com outro número, e a prova não foi o nome do recurso
+
+A **Raposa Ilusional** foi pedida como **420227**, e o nosso vendor tem a mesma
+peça no **420314**, `White_Fox_US` — "Calming White Fox", em inglês. As três
+provas de que são o mesmo item, e a última é a que decide:
+
+1. o `ClassNum` do 420227 no bRO é **2335**, que é o `View` do 420314;
+2. o `identifiedResourceName` é `C_Friendly_White_Fox`;
+3. os **quatro** conjuntos que a descrição do bRO lista para o 420227 são, um a
+   um, os quatro `- Combos:` que `db/re/item_combos.yml` dá ao `White_Fox_US` —
+   `Long_Mace_IL`, `Apple_Of_Archer_IL`, `Shoes_IL` e `Muffler_IL`.
+
+Sozinho, o nome do recurso não provaria nada (`CLAUDE.md` §5, a armadilha dos
+dois arcos de 2026-08-18); é a coincidência dos quatro conjuntos que fecha.
+
+**Entrou o 420227**, e não o 420314, por uma razão só: o 420314 **não existe no
+bRO**, então não há de onde tirar o nome em português, e só entra na loja item
+com nome em português (regra 4.2). Os quatro conjuntos foram **espelhados** em
+`db/guerra/item_combos.yml` — sem isso o item entraria com os quatro conjuntos
+que a descrição promete mortos, e conjunto que não fecha não dá erro: o jogador
+vê um número menor.
+
+### A oitava leva de placeholders: dois de cabeça e três armas
+
+As cinco que não existiam no servidor viraram entrada nossa em
+`db/guerra/item_db.yml`, com os bônus lidos da descrição do bRO:
+
+| id | item | o que é |
+|---|---|---|
+| 420227 | Raposa Ilusional | `Head_Low`, dano +20% contra a Ilusão da Lua |
+| 420326 | Sistema Elyumina | `Head_Low`, taxa de drop +5% |
+| 590041 | Mangual Ogro | Maça, ATQ 150, Mercadores |
+| 510064 | Ninjaken | Adaga, ATQ 80 / ATQM 120, Ninjas |
+| 550073 | Vara Morta | Cajado, ATQ 60 / ATQM 160, Arcebispos |
+
+As **três armas** trazem *"Indestrutível em batalha"* na descrição e já
+nasceram com `bonus bUnbreakableWeapon` — não dependeram do
+`marca_indestrutiveis.py`, que só alcança item do vendor. Duas delas nem
+precisariam: maça e cajado já são isentos no C++, e o script conta 241 armas
+nessa condição. A adaga precisava.
+
+Duas equivalências novas entraram no glossário do arquivo, as duas com
+testemunha: *"Taxa de DROP +N%"* → `bonus2 bDropAddRace,RC_All,N` e
+*"Efetividade de cura +N%"* → `bonus bHealPower,N`.
+
+### O peso é o da tela vezes dez, e isso foi medido antes de escrever
+
+Nenhuma das cinco tinha molde direto para o peso, então a escala foi conferida
+em cinco testemunhas em que os dois lados são conhecidos: 19311 (tela 80 /
+campo 800), 22171 (60 / 600), 490381 (10 / 100), 19137 (10 / 100) e 500005
+(130 / 1300). Vale para arma e para armadura igual.
+
+Isso **contradiz o cabeçalho da quinta leva**, que afirma o contrário para os
+dois arcos de 2026-08-18 e os deixou dez vezes leves. Não foi corrigido nesta
+sessão porque mexe em item que jogador já pode ter — está em `PENDENCIAS.md`
+§1z7.
+
+### O único que precisou das duas ferramentas de visual
+
+O **Sanctus** (420198) tem `View 2351`, que não existe no `accessoryid.lub` de
+2021: sem a entrada de tabela não há arquivo que o cliente vá procurar, e o
+`instala_visual.py` sozinho não cura. Foi `estende_accessoryid.py` primeiro,
+`instala_visual.py` depois — a mesma receita que o 400287 estreou em
+2026-08-02. Os outros sete que faltavam arte eram só os 4 arquivos de item.
+
+### As duas travas de sempre rodaram, e uma mediu 16 buracos
+
+O `zera_revenda_das_lojas.py` achou **16 itens dando lucro por clique** entre os
+46 novos — quinze a 9 zeny e a Mão do Demônio a 4 —, e o `Buy: 1` fechou os
+1752 itens das 23 lojas. O `marca_indestrutiveis.py` regerou o override e o
+Chapéu de Moranguinho (18853) já estava lá desde 2026-08-20.
+
+### O quadragésimo sétimo não era capa, e foi para a loja de caixas
+
+A **Caixa de Mantos Temporais (100100)** veio na lista sob *"Capas"*, e não é
+capa nem equipamento nenhum: é `Usable` com `Flags: Container`, sem
+`Locations:`, e o `Script:` inteiro dela é `getgroupitem(IG_TEMPORAL_MANTEAU_BOX)`.
+Sem `Locations:` não há vitrine do quarteirão que a receba por regra (4.14) — o
+mesmo impasse da Caixa de Cubos Refinadores (102592) de 2026-08-20, que ficou de
+fora.
+
+Desta vez o destino existia: o **Zé do Caixão** (`prontera 159,131`), a loja de
+caixas e cubos criada naquele mesmo 2026-08-20. Foi decisão do dono, e ela é a
+décima da vitrine.
+
+O grupo dela são **seis capas de verdade** — `Garment` com DEF, refino e uma
+cova, uma por atributo (20963 a 20968, FOR/AGI/VIT/INT/DES/SOR). As seis foram
+conferidas antes de a caixa entrar, pela mesma regra que aquele arquivo já
+aplicava aos 245 itens dos outros nove grupos: existem no `item_db`, têm nome em
+português no `itemInfo.lua` deste cliente, e deram **24 de 24** no
+`valida_visual.py`. Caixa que sorteia item sem arte entrega caixa de erro ao
+jogador, e a falha só aparece na hora de abrir — longe de onde ela nasceu.
+
+A alternativa considerada era pôr as **seis capas direto no Capeiro**, o que
+dava o mesmo acervo sem o sorteio e cabia por regra. O dono escolheu a caixa.
+
+Ela não declara `Buy` nem `Sell`, como as outras nove: o preço `1` **escrito** na
+linha vale (e não `-1`, que viraria zero — `npc.cpp:4146`), e o lucro por clique
+é zero. O `zera_revenda_das_lojas.py` foi de 1752 para 1753 itens.
+
+### A subida não trouxe erro novo — e os três contadores que importam deram zero
+
+Os quatro servidores locais subiram com o conteúdo novo. As três sondas que
+denunciariam este trabalho deram **zero** no log da subida:
+
+| o que procurar | denuncia | saiu |
+|---|---|---|
+| `Unknown syntax` | linha ruim no `.txt` — e ela mata o **arquivo inteiro** dali para baixo | 0 |
+| `Invalid sell item` | item de vitrine que o `item_db` não conhece — a linha some da loja, calada | 0 |
+| `discounted buying price` | revenda maior que a vitrine | 0 |
+
+O log **não** está vazio de `[Error]`: saem **72**, e as três famílias são todas
+anteriores a esta sessão. Conferido contra a subida de 2026-08-22, que tem as
+mesmas famílias:
+
+- **34** são `Job <X>_2nd is already in the alternate outfit list`, de
+  `db/re/job_outfits.yml` — vieram com o estilo de corpo daquele dia. O número
+  34 é exatamente a soma dos trabalhos dos treze blocos daquele arquivo, e as
+  mensagens saem na mesma proporção por trabalho: **o arquivo é processado duas
+  vezes**. Ficou registrado em `PENDENCIAS.md` §1z8;
+- **2** são de `db/guerra/item_db.yml`, nos itens **26206** (`Blut_Whip`) e
+  **510155** (`Ceuci`): *"Whips are always female-only"* e *"Musical instruments
+  are always male-only"*, os dois com o rAthena corrigindo sozinho;
+- os outros **36** são as linhas `Occurred in file` que acompanham cada um.
+
+Nenhum toca a oitava leva — o `git diff` deste arquivo é um acréscimo puro a
+partir da linha 2855, e as duas linhas citadas nos erros são 819 e 1176.

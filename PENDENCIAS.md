@@ -2604,6 +2604,178 @@ ao jogador pelo site ou por fora.
 
 ---
 
+## 1z6. Os 47 itens de 2026-08-26 — só falta o deploy (2026-08-26)
+
+A lista de 47 números do dono foi entregue **inteira**: 46 nas nove lojas do
+Mercado Contemporâneo e a Caixa de Mantos Temporais (100100) no Zé do Caixão.
+O que foi feito e por quê está no `HISTORICO.md`, seção *"Quarenta e seis itens
+nas nove vitrines de Prontera"*. Aqui fica **só o que falta**.
+
+**Conferido em jogo pelo dono em 2026-08-26**, no cliente local — as nove
+vitrines e o Zé do Caixão.
+
+**Patch `0009` no ar desde 2026-08-26**: 39 arquivos, 2,63 MB
+(`itemInfo.lua`, `accessoryid.lub`, `accname.lub` e os 36 de arte). O
+`publica_patch.sh --confere` fecha local e remoto. Todo jogador o recebe na
+próxima vez que abrir o `Jogar.exe`.
+
+### O que falta: uma coisa só
+
+| passo | onde roda | estado |
+|---|---|---|
+| commit + push | Windows (esta máquina) | **feito** |
+| patch de cliente | Windows | **feito** — `0009` |
+| ver em jogo | cliente local | **feito** |
+| **`ferramentas/implanta.sh`** | **Mac** | **FALTA** |
+
+**O deploy não sai desta máquina** (`CLAUDE.md` §5): a chave daqui é `ragnarok`,
+que só alcança `/var/www/patch`; o `atualiza_servidor.sh` responde *"precisa
+rodar como root"*. Sai do Mac.
+
+### O que o deploy leva
+
+Cinco arquivos de servidor, todos já no `git`:
+
+```
+rathena/db/guerra/item_db.yml               5 itens novos (oitava leva)
+rathena/db/guerra/item_combos.yml           4 conjuntos da Raposa Ilusional
+rathena/db/guerra/item_db_lojas.yml         1753 itens a `Buy: 1`
+rathena/db/re/item_db_equip.yml             17 `Name` sincronizados para PT
+rathena/npc/guerra/mercado_contemporaneo.txt  46 linhas nas 9 lojas
+rathena/npc/guerra/ze_do_caixao.txt         a Caixa de Mantos Temporais
+```
+
+O `implanta.sh` reinicia os quatro servidores sozinho, então **não há comando de
+recarga a dar depois**. Se um dia for preciso aplicar sem reiniciar, a ordem é
+**`@reloaditemdb` primeiro e `@reloadscript` depois** — invertido, o
+`npc_parse_shop` descarta item que ainda não está em memória e a vitrine sobe
+sem ele, calado (`CLAUDE.md` §5).
+
+**Nada disto derruba jogador enquanto o deploy não roda:** o patch já entregou a
+metade de cliente, e item que o servidor ainda não conhece simplesmente não
+aparece na vitrine — não dá erro.
+
+---
+
+## 1z7. Os dois arcos de 2026-08-18 estão dez vezes leves (2026-08-26)
+
+Achado ao calibrar o peso da oitava leva, e **não corrigido** de propósito.
+
+O campo `Weight` do `item_db` é o **"Peso:" da tela vezes dez**, para arma e
+para armadura igual. Medido em cinco testemunhas em que os dois lados são
+conhecidos:
+
+| id | tela (bRO) | `Weight` do vendor |
+|---|---|---|
+| 19311 | 80 | 800 |
+| 22171 | 60 | 600 |
+| 490381 | 10 | 100 |
+| 19137 | 10 | 100 |
+| 500005 | 130 | 1300 |
+
+Os dois arcos da **quinta leva** de `db/guerra/item_db.yml` foram escritos com o
+número da tela cru:
+
+| id | item | tem hoje | devia ter |
+|---|---|---|---|
+| 700102 | Arco Experimental | `Weight: 150` | `1500` |
+| 700080 | Arco Mágico | `Weight: 160` | `1600` |
+
+**O comentário ao lado deles afirma o contrário**, e é o que fez o erro passar:
+*"'Peso: 150' na tela ja e o valor do campo aqui — arma nao e em decimos como
+armadura. Conferido contra os arcos vizinhos do vendor: o 700066 tem
+`Weight: 1500` e a tela dele diz 1500."* A segunda frase é falsa: o 700066 **não
+está no bRO**, e a descrição dele no `itemInfo.lua` deste cliente diz
+**"Peso: 90"**, não 1500. É a regra 4.17 do outro lado — o comentário descrevia
+uma conferência que não foi essa.
+
+**Por que não foi corrigido nesta sessão:** os dois arcos estão à venda no
+Senhor das Armas desde 2026-08-18, então há jogador que pode ter comprado. Subir
+o peso de 15 para 150 muda o que ele carrega, e isso é decisão do dono, não
+consequência de uma medição. O conserto é trocar dois números.
+
+---
+
+## 1z8. O `job_outfits.yml` é lido DUAS vezes, e isso dá 68 `[Error]` por subida (2026-08-26)
+
+Apareceu ao ler o log da subida de 2026-08-26, e **não é desta sessão**: as
+mesmas linhas estão na subida de 2026-08-22, a do estilo de corpo.
+
+Em cada subida saem 34 mensagens do tipo
+
+```
+[ Error ] : Job Rune_Knight_2nd is already in the alternate outfit list.
+             Occurred in file 'db/re/job_outfits.yml' on line 90 and column 6.
+```
+
+mais as 34 linhas `Occurred in file` que as acompanham — **68 no total**, e são
+94% de todos os `[Error]` da subida (72).
+
+### O 34 é a medição que aponta a causa
+
+O `db/re/job_outfits.yml` tem **treze** blocos `- Jobs:` … `AlternateOutfits:`, e
+cada bloco lista de 2 a 4 trabalhos. Somando os trabalhos dos treze blocos dá
+**exatamente 34** — 4 do Rune Knight, 2 do Warlock, 4 do Ranger, 2 do Arch
+Bishop, 4 do Mechanic, 2 do Guillotine Cross, 4 do Royal Guard e 2 de cada um
+dos seis restantes.
+
+E as mensagens saem **por trabalho na mesma proporção**: `Rune_Knight_2nd` sai 4
+vezes, `Warlock_2nd` sai 2. Ou seja **o arquivo inteiro é processado uma segunda
+vez**, e na segunda passada cada par (trabalho, visual) já está lá.
+
+Isso é consistente com o código: o `alternate_outfits` é um vetor **por
+trabalho** (`JobDatabase::parseBodyNode`, `src/map/pc.cpp:14253`), então dentro
+de uma passada só não haveria repetição — o `Rune_Knight` e o `Rune_Knight2` são
+ids diferentes, com vetores diferentes. Repetição só sai de uma segunda leitura
+sem `job_db.clear()` no meio.
+
+### O que provavelmente é, e a sonda
+
+Nós ligamos o `db/re/job_outfits.yml` num `Footer: Imports:` que criamos no
+`db/re/job_stats.yml` (`CLAUDE.md` §2). Se o `job_db` for carregado duas vezes na
+subida — ou se houver um segundo caminho lendo aquele arquivo —, o import passa
+duas vezes.
+
+A sonda mais barata é um contador: um **`ShowWarning`** no topo do
+`JobDatabase::parseBodyNode` (nunca `ShowInfo` — ele não chega ao arquivo de log,
+`CLAUDE.md` §5) imprimindo quantas vezes o `loadingFinished()` roda. Se der dois,
+o caminho é achar quem chama a segunda vez.
+
+### Por que vale consertar, mesmo com o estilo de corpo funcionando
+
+O visual alternativo **funciona** — conferido em jogo em 2026-08-22, nos dois
+caminhos (`@bodystyle 4332` e o Cupom de Roupa na Estilista). O
+`parseBodyNode` reclama e segue. O custo é outro: **68 linhas de `[Error]` por
+subida soterrando erro de verdade**, que é exatamente a razão por que a §5 manda
+procurar por `Unknown syntax` em vez de ler o fim do log.
+
+---
+
+## 1z9. O "Preso na conta" do Ninjaken (510064) não foi implementado (2026-08-26)
+
+Divergência conhecida, registrada na própria entrada do item em
+`db/guerra/item_db.yml`.
+
+A descrição do bRO do Ninjaken começa com *"Preso na conta"*, e o jogador vai
+ler isso na tela. **O item não está preso.** Não existe campo de `item_db` para
+vínculo de conta: o único que há é `Flags: BindOnEquip`
+(`doc/item_db.txt:242`), que prende ao **personagem** — outra coisa, e mais
+apertada. No bRO o vínculo vem de quem **entrega** o item (`getitembound`), não
+do banco.
+
+Como a peça sai de vitrine pública a 1 zeny, não há o que prender: qualquer
+personagem compra a sua. É a família da armadilha da Capa do Comandante
+(`CLAUDE.md` §5) — descrição e `Script:` de revisões diferentes —, mas aqui a
+divergência é **permissiva**, e não custa peça ao jogador como o
+"Indestrutível" custava.
+
+**A saída, se o dono quiser honrar a linha:** um `Trade:` com `NoDrop`,
+`NoTrade`, `NoMail`, `NoAuction` e `NoGuildStorage`, que é o que mais se
+aproxima de conta-vinculado sem ser personagem-vinculado. São cinco linhas na
+entrada do item.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`
