@@ -1894,6 +1894,37 @@ Produziram diagnóstico falso e custaram retrabalho:
   E cuidado com o sintoma, que aponta para longe: um monstro que nasce com o HP
   cheio faz um evento de "encher a barra" terminar no mesmo segundo em que
   começa — o que parece lógica de conclusão errada, e não escrita de HP.
+- **O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e
+  tratar uma pasta nova como se já estivesse provada custa uma sessão
+  inteira.** As pastas onde o override de `cliente\data\` comprovadamente vale
+  hoje são `System\`, `data\luafiles514\lua files\datainfo\` e as de sprite e
+  textura. Em 2026-08-26 a `data\luafiles514\lua files\effecttool\` foi usada
+  pela primeira vez — para pôr um emissor de partículas sob um NPC — e **quatro
+  tentativas em jogo não desenharam nada**, incluindo uma que só clonava um
+  emissor que já funcionava.
+
+  **Antes de escrever conteúdo novo numa pasta de cliente que o projeto nunca
+  usou, gravar ali uma CÓPIA IDÊNTICA do arquivo original do GRF e entrar no
+  jogo.** Se o que já funcionava continuar funcionando, o override vale e o
+  defeito é do que se escreve; se parar de funcionar, o problema é o mecanismo,
+  e nenhum ajuste de conteúdo vai resolver. É o controle mais barato que existe
+  e foi justamente o que faltou nas quatro tentativas — cada uma mudava conteúdo
+  e posição ao mesmo tempo.
+
+- **Dá para provar que o cliente ABRIU um arquivo, contornando a regra de uma
+  hora do NTFS: basta empurrar o `LastAccessTime` para o passado antes do
+  teste.** A entrada acima sobre o horário de acesso registra que o carimbo só
+  é reescrito quando o valor guardado tem mais de uma hora — o que torna a sonda
+  inútil logo depois de gravar o arquivo, que é justamente quando se quer usá-la.
+  Empurrando o carimbo para ontem (`(Get-Item $f).LastAccessTime =
+  (Get-Date).AddDays(-1)`), qualquer leitura seguinte passa a marcar, e a
+  resposta vem sem depender do que se vê na tela. Medido em 2026-08-26: o
+  carimbo pulou para treze segundos depois da abertura do cliente.
+
+  **Mas ABRIR não é USAR.** No mesmo dia o cliente abriu o arquivo e não
+  desenhou nada do que havia nele — então esta sonda responde "o arquivo chegou
+  ao cliente", e só isso. Concluir dela que o conteúdo foi aplicado é o erro que
+  custou duas tentativas.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

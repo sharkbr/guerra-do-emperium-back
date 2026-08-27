@@ -3,6 +3,7 @@
 
     python planta_brilho.py                 # mostra o que ha no mapa hoje
     python planta_brilho.py --aplicar       # grava o override no cliente
+    python planta_brilho.py --sonda         # diagnostico (ver o fim do cabecalho)
     python planta_brilho.py --reverter      # apaga o override
 
 POR QUE ISTO EXISTE
@@ -18,7 +19,13 @@ O que existe e melhor: o cliente tem um sistema de EMISSORES DE PARTICULAS
 por mapa, em `data\\luafiles514\\lua files\\effecttool\\<mapa>.lub`, e ele
 aceita o CAMINHO DA TEXTURA direto. E o mesmo mecanismo que faz a fumaca
 sair das chamines de Prontera (tres emissores com `effect\\smoke1.bmp`).
-Ou seja: da para pedir exatamente aquela arte, na coordenada que se quiser.
+*** ESTA FERRAMENTA NAO FUNCIONOU. ***
+
+Em 2026-08-26 ela foi tentada em jogo QUATRO vezes e nao desenhou nada. O
+dono mandou parar e registrar, para a proxima tentativa nao repetir o
+caminho. O que foi eliminado, o que ficou de pe e - principalmente - a
+SONDA QUE FALTOU FAZER estao no fim deste cabecalho, na secao "O QUE JA SE
+SABE". Leia aquilo antes de mexer aqui.
 
 ISTO E CLIENTE. Vai ao jogador por PATCH, nao por deploy (CLAUDE.md 4.18).
 
@@ -53,9 +60,90 @@ relativo a `data\\texture\\`), `pos`, `size`, `life`, `rate`, `maxcount`,
 `color` (RGBA) e `gravity`. Os outros sao copiados do que o mapa ja usava,
 para nao inventar valor que nao se pode conferir.
 
-O `.lub` e BYTECODE Lua 5.1: o arquivo e gerado como texto e compilado com
-o `luac.exe` do ROenglishRE, que e tambem a unica prova de que ele compila
-(CLAUDE.md secao 5).
+O do GRF e BYTECODE Lua 5.1, mas o que gravamos e TEXTO Lua - o cliente
+aceita os dois, e texto e o formato que este projeto ja comprovou (o
+OngoingQuestInfoList.lub, o CheckAttendance.lub e os .lub de `data\\`
+gerados pelo traduz_ptbr.py sao todos texto e sao lidos). O `luac.exe` do
+ROenglishRE continua no caminho, como CONFERENCIA: ele e a unica prova de
+que o arquivo carrega (CLAUDE.md secao 5).
+
+O `--sonda`, E QUANDO USA-LO
+----------------------------
+Se o brilho nao aparecer em tela, NAO adianta mexer em cor e tamanho no
+escuro - e o erro que o CLAUDE.md secao 5 registra em tres lugares
+diferentes. O `--sonda` e a marca que nao depende do efeito procurado, e
+responde duas perguntas de uma vez.
+
+Ele nao acrescenta emissor nenhum e nao muda um campo de aparencia: pega a
+fumaca da chamine - que comprovadamente desenha neste mapa - e MOVE para a
+celula alvo. So o `pos` muda. Entao, em Prontera:
+
+  fumaca saindo do chao sob o Varmunt  -> o arquivo E lido e a conversao de
+                                         coordenadas esta certa; o defeito
+                                         esta na configuracao do NOSSO
+                                         emissor (textura, cor, tamanho);
+  nada sob o Varmunt, mas fumaca ainda -> a coordenada esta errada;
+  nas outras duas chamines
+  nenhuma fumaca em lugar nenhum       -> o cliente nao le este arquivo, e
+                                         nenhum ajuste de cor resolve.
+
+Depois de responder, `--aplicar` devolve o estado normal.
+
+O QUE JA SE SABE - quatro tentativas em jogo, 2026-08-26
+---------------------------------------------------------
+ELIMINADO. Nao vale reinvestigar nada disto:
+
+  * a textura existe no GRF, nos dois caminhos, e o --aplicar recusa sem ela;
+  * o caminho do effecttool e UNICO (nao e o caso do petinfo.lub, que tem
+    dois) e e o que esta ferramenta usa;
+  * o arquivo gerado e valido: passa no luac -p e, recompilado e relido pelo
+    mesmo parser que le os .lub do GRF, entrega os emissores certos;
+  * O CLIENTE ABRE O ARQUIVO. Provado empurrando o LastAccessTime para ontem
+    e reabrindo o jogo: o carimbo pulou para treze segundos depois da
+    abertura do cliente. Esse truque contorna a regra de uma hora do NTFS que
+    o CLAUDE.md secao 5 registra, e vale para conferir QUALQUER override;
+  * a conversao de celula para mundo esta CERTA, e nao por deducao: os 1304
+    modelos do .rsw de prontera foram convertidos para celula pelas duas
+    hipoteses de eixo Z e cruzados com o .gat. Z direto acerta 76,1% de
+    celula bloqueada, Z invertido 41,1% - modelo e construcao, e construcao
+    bloqueia passagem;
+  * bytecode contra texto nao explica: as duas formas foram tentadas.
+
+O QUE FOI TENTADO, NESTA ORDEM:
+
+  1. emissor novo, quinze campos inventados, gravado em BYTECODE     -> nada
+  2. idem em TEXTO, herdando os campos de desenho da fumaca          -> nada
+  3. sonda: mover a fumaca da chamine para a celula do Varmunt       -> nada
+     (e aqui houve erro de metodo: o `pos` inteiro foi trocado, mexendo em
+     posicao horizontal E altura de uma vez. Corrigido na tentativa 4.)
+  4. regua: seis clones da fumaca que funciona, mudando SO o z, entre a
+     praca e o Varmunt                            -> NADA, NEM A ORIGINAL.
+
+O passo 4 e o que mais informa, e ele DERRUBA a leitura do passo 3: como
+nem a fumaca de origem apareceu, o que se viu no passo 3 ("as outras
+fumacas continuam") pode ter sido o arquivo do GRF o tempo todo, e nao
+prova nenhuma de que o nosso conteudo foi aplicado.
+
+A SONDA QUE FALTOU, E POR ONDE COMECAR DA PROXIMA VEZ:
+
+  Gravar em data\...\effecttool\prontera.lub o arquivo ORIGINAL DO GRF,
+  byte por byte, SEM MUDAR NADA, e entrar no jogo.
+
+    fumacas continuam saindo -> o override funciona, e o defeito esta no que
+                                esta ferramenta ESCREVE (formato do texto,
+                                indice base 0, ordem dos campos, o valor de
+                                _prontera_effect_version);
+    fumacas somem            -> o cliente ABRE o arquivo de data\ (o carimbo
+                                prova) mas nao consegue usa-lo. Ai o
+                                suspeito e o proprio mecanismo de override
+                                para esta pasta, e nao o conteudo.
+
+  E o controle mais basico que existe - copiar o original sem alterar - e
+  NAO FOI FEITO em nenhuma das quatro tentativas. Cada uma delas mudou
+  conteudo e posicao ao mesmo tempo, entao nenhuma separa "o que eu escrevo
+  esta errado" de "override desta pasta nao vale".
+
+  Fazer essa antes de escrever qualquer linha nova.
 """
 import os
 import subprocess
@@ -287,17 +375,44 @@ def aplica(sonda=False):
     destino = os.path.join(PASTA_EFX, '%s.lub' % MAPA)
 
     if sonda:
-        # A MARCA QUE NAO DEPENDE DO EFEITO PROCURADO (CLAUDE.md secao 5).
-        # Troca a textura das fumacas que JA APARECEM, sem mexer em mais
-        # nada. Se as chamines de Prontera passarem a soltar o brilho, o
-        # arquivo esta sendo lido e o problema e do nosso emissor; se
-        # continuarem soltando fumaca, o cliente nao le este arquivo - e
-        # nenhum ajuste de tamanho ou cor vai resolver.
-        for i in em:
-            em[i]['texture'] = TEXTURA
-            em[i]['size'] = {1.0: 30.0, 2.0: 40.0}
-        print 'MODO SONDA: as tres fumacas de Prontera passam a usar %s' % TEXTURA
-        print '  (nenhum emissor novo; so a textura e o tamanho mudaram)'
+        # A MARCA QUE NAO DEPENDE DO EFEITO PROCURADO (CLAUDE.md secao 5),
+        # e ela responde DUAS perguntas de uma vez.
+        #
+        # Nao acrescenta emissor nenhum e nao muda um unico campo de
+        # aparencia: pega a fumaca da chamine - que comprovadamente desenha
+        # neste mapa - e MOVE para a celula do Varmunt. So o `pos` muda.
+        #
+        #   fumaca sob o Varmunt   -> o arquivo E lido E a conversao de
+        #                             coordenadas esta certa. O defeito
+        #                             esta na configuracao do nosso
+        #                             emissor (textura, cor, tamanho);
+        #   nada sob o Varmunt, e  -> a coordenada esta errada;
+        #   fumaca ainda na chamine
+        #   nada em lugar nenhum   -> o cliente nao le este arquivo, e
+        #                             nenhum ajuste de cor resolve.
+        #
+        # A terceira pergunta - "o cliente le?" - so precisa ser feita se a
+        # fumaca sumir das chamines TAMBEM.
+        alvo = min(em)
+        antes = _vetor(em[alvo]['pos'])
+        x, y, z = _mundo()
+        # SO X E Z. A altura fica a ORIGINAL da chamine, e isso importa: a
+        # primeira sonda trocou o `pos` inteiro e mexeu em duas variaveis de
+        # uma vez (posicao horizontal E altura, de -7.0 para -1.5). Se nao
+        # aparecesse, nao daria para saber qual das duas era. Aqui a altura
+        # e a mesma que ja desenha hoje.
+        em[alvo]['pos'] = {1.0: x, 2.0: antes[1], 3.0: z}
+        print 'MODO SONDA: a fumaca [%d] foi movida da chamine para o Varmunt.' % int(alvo)
+        print '  de   %s' % antes
+        print '  para [%.1f, %.1f, %.1f]   (celula %d,%d)' % (x, antes[1], z, CELULA[0], CELULA[1])
+        print '  SO X E Z MUDARAM - a altura (%.1f) e a mesma que a chamine ja usa,' % antes[1]
+        print '  e nenhum campo de aparencia foi tocado.'
+        print
+        print '  O QUE OLHAR, em Prontera:'
+        print '   - fumaca saindo do chao sob o Sabio Varmunt  -> arquivo lido, posicao certa'
+        print '   - as outras duas fumacas continuam nas chamines (perto da praca central)'
+        print '   - nada sob o Varmunt mas fumaca nas chamines -> a coordenada esta errada'
+        print '   - nenhuma fumaca em lugar nenhum             -> o cliente nao le o arquivo'
         print
     else:
         modelo = em[min(em)]          # um emissor que o mapa ja desenha
@@ -306,7 +421,8 @@ def aplica(sonda=False):
 
     if not _grava(gera_lua(em, versao), destino):
         return 1
-    if not _confere(destino, TEXTURA, n_antes):
+    # na sonda nao ha textura nova: confere-se a fumaca, que e o que se moveu
+    if not _confere(destino, 'effect\smoke1.bmp' if sonda else TEXTURA, n_antes):
         return 1
     print
     print 'O cliente so rele o mapa ao ENTRAR nele - saia de Prontera e volte.'
@@ -323,10 +439,63 @@ def reverte():
     print 'O cliente volta a ler o effecttool do GRF, sem o brilho.'
 
 
+def regua():
+    """Uma fila de fumacas entre a praca e o alvo, para achar ONDE elas param.
+
+    A sonda anterior respondeu que o arquivo e lido e aplicado (a fumaca
+    sumiu da chamine) mas que ela nao apareceu no destino - e a conversao de
+    coordenadas foi medida contra o .gat e esta certa (76% dos modelos do
+    .rsw caem em celula bloqueada com ela, contra 41% na hipotese invertida).
+
+    Entao a pergunta deixou de ser "onde fica a celula" e passou a ser "ate
+    onde o cliente desenha". Esta regua clona a fumaca que FUNCIONA em seis
+    pontos ao longo da linha que vai da praca ate o Varmunt, mudando **so o
+    z**. Andando para o norte, o jogador conta quantas aparecem:
+
+      todas as seis            -> o problema nunca foi a posicao;
+      as primeiras e depois nao-> ha um limite de distancia ou de regiao;
+      so a primeira            -> so a posicao original funciona, e o
+                                  effecttool nao aceita ponto arbitrario.
+    """
+    versao, em = carrega()
+    base = dict(em[min(em)])
+    z0 = _vetor(base['pos'])[2]
+    x0 = _vetor(base['pos'])[0]
+    y0 = _vetor(base['pos'])[1]
+    _, _, z_alvo = _mundo()
+
+    novos = {}
+    passos = 6
+    print 'REGUA: %d fumacas identicas, mudando so o z' % passos
+    print '  x=%.1f  y=%.1f  (os mesmos da chamine que funciona)' % (x0, y0)
+    for k in range(passos):
+        z = z0 + (z_alvo - z0) * k / float(passos - 1)
+        e = dict(base)
+        e['pos'] = {1.0: x0, 2.0: y0, 3.0: z}
+        novos[float(k)] = e
+        cy = z / 5.0 + 392 / 2.0 - 0.5
+        print '   [%d] z=%7.1f   celula y ~ %5.1f%s' % (
+            k, z, cy, '   <- a original' if k == 0 else
+                      ('   <- o Varmunt' if k == passos - 1 else ''))
+    print
+    print '  ANDE DO CENTRO DE PRONTERA PARA O NORTE, pela linha x=158, e conte'
+    print '  quantas fumacas encontra. A primeira e a que ja existia.'
+    print
+
+    destino = os.path.join(PASTA_EFX, '%s.lub' % MAPA)
+    if not _grava(gera_lua(novos, versao), destino):
+        return 1
+    if not _confere(destino, 'effect\\smoke1.bmp', len(em)):
+        return 1
+    return 0
+
+
 def main():
     if '--reverter' in sys.argv:
         reverte()
         return 0
+    if '--regua' in sys.argv:
+        return regua()
     if '--sonda' in sys.argv:
         return aplica(sonda=True)
     if '--aplicar' in sys.argv:

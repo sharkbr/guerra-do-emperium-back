@@ -3557,22 +3557,25 @@ virada real ainda. O que provar: receber as moedas, tentar de novo no mesmo dia
 | arquivo | o que é | estado |
 |---|---|---|
 | `cliente\data\pprontera.rsw` | a cor da dimensão, intensidade 6/10 | **aprovada em tela** |
-| `cliente\data\luafiles514\lua files\effecttool\prontera.lub` | o brilho sob o Varmunt | **nunca visto em jogo** |
+| ~~`effecttool\prontera.lub`~~ (o brilho) | **RETIRADO** — quatro tentativas em jogo, nada desenhou; override revertido |
 
 Sem o patch, o evento roda inteiro — numa Prontera de cor normal e sem brilho,
 sem erro nenhum. Falha calada e só cosmética.
 
-**O brilho é o único item da entrega que ninguém olhou.** O que ele tem de
-frágil são os números do emissor (`size`, `color`, `rate`, `life`, `maxcount`):
-foram escolhidos para um halo parado — sem gravidade, sem velocidade, mistura
-aditiva —, mas só a tela diz se o tamanho e a intensidade estão bons. Estão
-todos em `_emissor_nosso()`, no `ferramentas/planta_brilho.py`, e recalibrar é
-rodar `--aplicar` de novo e **sair e voltar a Prontera** (o cliente só relê o
-mapa ao entrar).
+**O brilho sob o Varmunt está PARADO, por decisão do dono em 2026-08-26**, e o
+override foi revertido — Prontera voltou a ler o effecttool do GRF, com as três
+fumaças de sempre. Nada ficou pior do que estava.
 
-Se o brilho aparecer como um **quadrado branco**, a textura não foi encontrada —
-mas a ferramenta já recusa aplicar se ela não estiver no GRF, então o suspeito
-passa a ser o caminho dentro do `.lub`.
+Foram quatro tentativas em jogo e nenhuma desenhou. **O registro completo — o
+que ficou eliminado, as quatro tentativas e, principalmente, a sonda de controle
+que faltou fazer — está no `HISTORICO.md`, "O brilho que não saiu", e repetido
+no cabeçalho de `ferramentas/planta_brilho.py`.**
+
+Quem for retomar começa por **uma coisa só**: gravar em
+`data\...\effecttool\prontera.lub` uma cópia byte a byte do arquivo original
+do GRF e entrar no jogo. Isso separa "o que escrevemos está errado" de "o
+override não vale para esta pasta", e é o controle que nenhuma das quatro
+tentativas fez.
 
 ### Sondas que ficaram no ar, de propósito
 

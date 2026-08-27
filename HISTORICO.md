@@ -13775,3 +13775,91 @@ mesma técnica que resolveu o `estende_robeid.py` e o `ajusta_tamanho_fonte.py`.
 abertos** na máquina no momento da captura, um deles de **16:34** — seis horas
 antes de o arquivo existir. Se a captura veio dele, ele nunca teve o que ler. O
 próximo teste começa fechando os dois.
+
+### O brilho que não saiu: quatro tentativas e o controle que faltou (2026-08-26)
+
+O pedido era simples — *"uns brilhos embaixo da célula do Sábio Varmunt, com a
+textura `epi_glow_01.bmp`"*. **Quatro idas ao jogo e nada apareceu.** O dono
+mandou parar e registrar: *"em algum momento vou querer brilho e não podemos
+errar de novo"*. Isto é esse registro.
+
+O override foi **revertido** — Prontera voltou a ler o effecttool do GRF, com as
+três fumaças de sempre. Nada ficou pior do que estava.
+
+### Por que o caminho escolhido era o certo
+
+Não dá para pedir aquela arte por `specialeffect`: o brilho de Epiclesis não é
+um efeito numerado do cliente, é uma **unidade de habilidade**
+(`UNT_EPICLESIS`), que só existe enquanto a magia está no chão — não há `EF_`
+para ele no rAthena. O que existe é o sistema de **emissores de partículas por
+mapa** (`data\luafiles514\lua files\effecttool\<mapa>.lub`), que aceita **o
+caminho da textura direto** e é o que faz a fumaça sair das chaminés de
+Prontera. A escolha continua sendo essa; o que falhou foi a execução.
+
+### O que ficou ELIMINADO — não vale reinvestigar
+
+- **a textura existe** no GRF, nos dois caminhos (a ferramenta recusa sem ela);
+- **o caminho do effecttool é único** — não é o caso do `petinfo.lub`, que tem
+  dois, e era uma hipótese boa que morreu na medição;
+- **o arquivo gerado é válido**: passa no `luac -p` e, recompilado e relido pelo
+  mesmo parser que lê os `.lub` do GRF, entrega os emissores certos;
+- **o cliente ABRE o arquivo.** Provado empurrando o `LastAccessTime` para
+  ontem e reabrindo o jogo: o carimbo pulou para **treze segundos depois** da
+  abertura do cliente. Esse truque contorna a regra de uma hora do NTFS que o
+  `CLAUDE.md` §5 registra, e passa a valer para conferir **qualquer** override
+  de cliente — é o subproduto mais útil desta sessão;
+- **a conversão de célula para mundo está certa**, e não por dedução: os
+  **1.304 modelos** do `.rsw` de Prontera foram convertidos para célula pelas
+  duas hipóteses de eixo Z e cruzados com o `.gat` — modelo é construção,
+  construção bloqueia. **Z direto acerta 76,1%** de célula bloqueada; Z
+  invertido, 41,1%;
+- **bytecode contra texto não explica**: as duas formas foram tentadas.
+
+### As quatro tentativas, na ordem
+
+| # | o que foi | resultado |
+|---|---|---|
+| 1 | emissor novo, 15 campos inventados, em **bytecode** | nada |
+| 2 | idem em **texto**, herdando os campos de desenho da fumaça | nada |
+| 3 | sonda: **mover** a fumaça da chaminé para a célula do Varmunt | nada |
+| 4 | régua: **seis clones** da fumaça que funciona, mudando só o z | **nada, nem a original** |
+
+### O erro de método, e o que ele custou
+
+Na tentativa 3 eu troquei o `pos` **inteiro** — mexendo em posição horizontal e
+altura de uma vez. Se não aparecesse, e não apareceu, não haveria como saber
+qual das duas era. É exatamente o que o `CLAUDE.md` §5 manda não fazer, cometido
+dentro da própria ferramenta de diagnóstico. Corrigido na tentativa 4.
+
+**E o passo 4 derruba a leitura do passo 3.** Como nem a fumaça de origem
+apareceu, o que se viu no passo 3 — *"as outras fumaças continuam saindo"* —
+pode ter sido **o arquivo do GRF o tempo todo**. Ou seja: a conclusão de que "o
+arquivo é lido e aplicado", que eu dei como fechada, nunca esteve provada. O
+carimbo prova que o cliente **abre**; nada prova que ele **usa**.
+
+### A sonda que faltou, e é por onde começar da próxima vez
+
+**Gravar em `data\...\effecttool\prontera.lub` o arquivo ORIGINAL DO GRF, byte
+por byte, sem mudar nada, e entrar no jogo.**
+
+- **fumaças continuam saindo** → o override funciona, e o defeito está no que a
+  ferramenta *escreve* (formato do texto, índice base 0, ordem dos campos, o
+  valor de `_prontera_effect_version`);
+- **fumaças somem** → o cliente abre o arquivo de `data\` mas não consegue
+  usá-lo, e o suspeito passa a ser o próprio mecanismo de override para essa
+  pasta — não o conteúdo.
+
+É o controle mais básico que existe — copiar o original sem alterar — e **não
+foi feito em nenhuma das quatro tentativas**. Cada uma mudou conteúdo e posição
+ao mesmo tempo, então nenhuma separa "o que eu escrevo está errado" de "override
+desta pasta não vale".
+
+A lição, e ela é maior que este brilho: **antes de mexer numa peça nova do
+cliente, provar que o mecanismo de override funciona para aquela pasta — com uma
+cópia idêntica do original.** As pastas onde ele comprovadamente vale hoje são
+`System\`, `data\luafiles514\lua files\datainfo\` e as de sprite; `effecttool\`
+**nunca tinha sido usada** por este projeto, e foi tratada como se já estivesse
+provada.
+
+A ferramenta ficou no repositório com esse roteiro no cabeçalho, marcada como
+não funcional, e com `--sonda` e `--regua` prontos para a próxima tentativa.
