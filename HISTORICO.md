@@ -13040,3 +13040,632 @@ mesmas famílias:
 
 Nenhum toca a oitava leva — o `git diff` deste arquivo é um acréscimo puro a
 partir da linha 2855, e as duas linhas citadas nos erros são 819 e 1176.
+
+## A Anomalia Dimensional, e a descoberta de que se cura monstro (2026-08-26)
+
+O pedido foi *"vamos implementar a Anomalia Dimensional, o evento que adiciona
+Pets de MVP"*, com a página do bROWiki mandada em quatro capturas de tela — o
+site devolve 403 para leitura automática, e as capturas trouxeram a página
+inteira, inclusive a tabela de sorteio com as dez faixas de chance.
+
+O evento é temporário no bRO (janeiro) e entrou aqui **permanente**.
+
+### O que ele é
+
+Fala-se com o **Sábio Varmunt** (`prontera 156,303`, nível 60+), ele abre uma
+fenda, e do outro lado há uma cópia de Prontera com **quatro Pedras Guardiãs
+morrendo**. As Pedras não se quebram e não revidam: elas precisam ser
+**curadas**, com Curar, Curatio ou Santuário, enquanto Entidades Sombrias
+nascem de dez em dez segundos e, raramente, um MVP atravessa junto — com
+anúncio para o servidor inteiro. Curadas as quatro, Varmunt paga **7 Moedas de
+Estimação**, uma vez por dia, com a virada às 4 da manhã.
+
+As moedas compram giros na **Máquina Dimensional** (`prontera 165,304`), 10 por
+giro, e é de lá que saem os ovos de pet. Ao lado está o **Manouro**
+(`prontera 167,304`), que troca 30 Âmagos por um Ovo de Freeoni, 1 Âmago por um
+ovo menor, e reabre a missão do dia por 2 Moedas Novas.
+
+### A descoberta que fez o evento caber em script: curar monstro FUNCIONA
+
+A mecânica central parecia exigir C++, porque a intuição de RO diz que Curar só
+alcança jogador. Metade disso é verdade — a metade dos mortos-vivos.
+
+Quem decide é o `SkillHeal::castendNoDamageId`
+(`src/map/skills/acolyte/heal.cpp`, neste rAthena refatorado em que cada
+habilidade tem classe própria). A função calcula o valor e a **única** coisa que
+faz com alvo monstro é zerar a cura em três casos:
+
+```cpp
+if (status_isimmune(bl) || (dstmd && (status_get_class(bl) == MOBID_EMPERIUM ||
+    status_get_class_(bl) == CLASS_BATTLEFIELD)))
+        heal = 0;
+```
+
+e logo abaixo faz `status_heal(bl, heal, 0, 0)` com o `bl` que veio — monstro
+inclusive. O `status_isimmune` (`status.cpp:9306`) só olha jogador (a Garra do
+Golden Thief Bug) e `SC_HERMODE`, então para monstro devolve 0 sempre. O
+Santuário segue o mesmo caminho noutro lugar: o `case UNT_SANCTUARY` do
+`skill_unit_onplace_timer` (`skill.cpp:6923`) tem os **mesmos três testes** e o
+mesmo `status_heal`.
+
+Ou seja, as duas metades do pedido do bRO — "Curar, Curatio e Santuário" —
+funcionam nativas, e **nenhuma linha de C++ nosso entrou neste evento**.
+
+Achar isso custou uma escavação que vale registrar: o `grep` por `case AL_HEAL`
+no `skill.cpp` devolve duas ocorrências, e **nenhuma delas é a cura** — uma é o
+desvio para dano em morto-vivo, a outra é a validação de alvo. O corpo do heal
+não está no `skill.cpp`: este vendor é a versão em que o `default:` do
+`skill_castend_nodamage_id` chama `skill->impl->castendNoDamageId`, e cada
+habilidade mora em `src/map/skills/<classe>/<nome>.cpp`. Quem procurar o
+comportamento de uma habilidade no switch grande vai concluir que ele não
+existe.
+
+### Por que a Pedra é o Guardian Stone (1907)
+
+Precisávamos de um monstro com cara de pedra que o cliente de 2021 desenhasse.
+O 1907 (`S_EMPEL_1`) serve por quatro motivos somados:
+
+1. o cliente o conhece — `JT_S_EMPEL_1 = 1907` no `npcidentity.lub`, com sprite
+   `s_empel_1` presente no `data.grf`;
+2. `Ai: 06`, que em `src/map/mob.hpp` é `MONSTER_TYPE_06 = 0` — **modos
+   zerados**. Não anda, não ataca, não revida, não chama amigo. É uma pedra de
+   verdade sem precisar de uma linha de script para isso;
+3. **nenhum script do servidor o usa.** Os "1907" e "1908" que aparecem numa
+   varredura por `npc/` são o item Guitarra, não o monstro — a Guerra do
+   Emperium 2.0 não roda aqui;
+4. ele passa nos três testes do `heal.cpp`: é `Element: Neutral` e
+   `Race: Formless` (morto-vivo receberia **dano** em vez de cura), é
+   `Class: Boss` e não `Battlefield`, e tem MDEF 50.
+
+O HP sai de `setunitdata` no script, sem override de `db/`. **A ordem não é
+livre:** `UMOB_MAXHP` atualiza o HP atual junto (está no exemplo do Poring em
+`doc/script_commands.txt`), então o máximo vem antes e o HP baixo depois —
+invertido, a Pedra nasce cheia e a rodada acaba no segundo em que começa.
+
+### O mapa: `pprontera`, e a instância que foi descartada
+
+No bRO a dimensão é uma cópia corrompida de Rachel, Lighthalzen ou Prontera,
+conforme o dia. Aqueles três mapas são de 2024 e **não existem** neste cliente
+de 2021-11-03 — e mapa sem `.rsw` no GRF derruba o cliente e ainda prende o
+personagem lá (regra 6).
+
+A saída foi a **`pprontera`**, e ela é boa demais para ser sorte: uma cópia de
+Prontera que já mora no GRF, 312×392 igual à original, com os mesmos 1480
+objetos e os mesmos modelos coreanos (muralha, torre do relógio, casas) —
+conferido modelo a modelo com `ferramentas/rsw.py`. Já está no
+`conf/maps_athena.conf`, já está no `db/map_cache.dat`, e tem **zero NPC**:
+nenhuma linha de `npc/` a menciona. Uma Prontera inteira e vazia, de graça.
+
+Ela já era conhecida do projeto pelo lado errado: o `CLAUDE.md` §5 a cita como
+a armadilha de quem lê o `map_cache` grande e recebe a `pprontera` achando que
+é a cidade. Desta vez ela era exatamente o que se queria.
+
+**Instância foi descartada por uma linha do rAthena:** o `instance_addnpc`
+(`instance.cpp:590`) faz `map_foreachinallarea(..., BL_NPC, ...)`, ou seja
+**clona todos os NPCs do mapa-molde**. Instanciar a nossa Prontera clonaria as
+22 lojas e as Kafras, por party. Com a `pprontera` vazia até seria viável, mas
+aí o evento perderia o que tem de melhor — várias pessoas curando a mesma pedra
+e o broadcast de MVP para o servidor inteiro.
+
+**O rodízio do bRO foi mantido mudando de eixo:** lá trocava o mapa por dia da
+semana, aqui trocam as **quatro posições das Pedras** dentro da mesma Prontera —
+três conjuntos, exatamente como os três minimapas da página do bRO mostram três
+arranjos diferentes. As doze células saíram de uma varredura do `map_cache`:
+andáveis, com raio 3 livre em volta e a pelo menos 90 células umas das outras.
+
+### O céu roxo é mudança de CLIENTE
+
+O dono pediu que a `pprontera` não fosse a Prontera de sempre: *"uma cópia de
+prontera assim como era no bRO, com a coloração parecida com o que era"*. Isso
+virou `ferramentas/tinge_dimensao.py`, que troca os **24 bytes de luz** do
+`.rsw` — difusa de (1,00/1,00/1,00) para (1,00/0,55/0,80) e ambiente de
+(0,55/0,50/0,50) para (0,62/0,30/0,68). Luz direta rosada, sombra roxa.
+
+Sem textura nova, sem modelo novo e sem tocar o `.gnd` (3,3 MB, que pesaria no
+patch): a luz multiplica tudo que é desenhado ali, então o mapa inteiro muda de
+clima de uma vez. O arquivo gravado tem **exatamente o mesmo tamanho** do
+original e 16 bytes diferentes.
+
+**E isso põe o evento nos dois destinos do `RECEITAS.md` §0 ao mesmo tempo:** o
+servidor vai por deploy, e o `cliente\data\pprontera.rsw` vai por **patch**.
+Quem não receber o patch joga a Anomalia inteira, sem erro nenhum, numa Prontera
+de cor normal — falha calada e só cosmética, mas é a diferença entre "uma fenda
+dimensional" e "a cidade de sempre com pedras no chão".
+
+### O que já existia, e foi a melhor notícia do dia
+
+O levantamento antes de escrever uma linha achou o evento quase todo pronto no
+vendor e no cliente:
+
+| peça | estado |
+|---|---|
+| Moeda de Estimação (25376), Âmago Dimensional (7925), Ração Luxuosa (25377) | existiam, com nome PT |
+| os 23 ovos, as 14 iscas e as 15 comidas da tabela | **29 de 29** resolvidos por nome, sem homônimo |
+| os 15 itens no `itemInfo.lua` do cliente | **15 de 15** — nenhum item precisou de entrada nova |
+| os 23 pets no `petinfo.lub` do cliente | todos, com sprite, ilustração e comida |
+| Gibbet 1503, Dullahan 1504, Loli Ruri 1505 | existiam |
+| "Serial Killer" | é o **Bloody Murderer (1507)** — o nome PT saiu do nosso `mob_db.yml`, gerado do `navi_mob_br.lub` do bRO |
+
+### O Freeoni: o que faltava era só o servidor
+
+O prêmio máximo estava **comentado em dois lugares do vendor ao mesmo tempo**: o
+mob `PHREEONI2` (Id 20425) no `db/re/mob_db.yml`, só com o esqueleto `Id` +
+`AegisName`, e a entrada de pet correspondente no `db/re/pet_db.yml` — 44 pets
+estão assim. Um depende do outro: o `pet_db` resolve o pet por AegisName, e
+AegisName que não existe faz o `parseBodyNode` descartar a entrada inteira.
+
+O que decidiu usar o 20425 em vez de inventar outro Id é que **o cliente já
+sabia tudo sobre ele**:
+
+```
+npcidentity.lub   JT_PHREEONI2 = 20425
+jobname.lub       20425 -> sprite `phreeoni`
+data.grf          data\sprite\<monstro>\phreeoni2.spr e .act, e o ovo
+petinfo.lub       PetEggItemID_PetJobID[9111] = JT_PHREEONI2
+                  PetFoodTable = 25377 (Ração Luxuosa)
+                  PetIllustNameTable = 'pet_phreeoni.bmp' (existe no GRF)
+```
+
+A metade de cliente do Freeoni estava inteira desde 2021 e só o servidor
+faltava. Trocar o Id quebraria as cinco tabelas de uma vez, e a falha seria a
+calada de sempre (§4.9).
+
+Os status do mob vieram do **PHREEONI (1159)** campo a campo, sem `Modes: Mvp`,
+sem os `MvpDrops`, sem os `Drops` e sem EXP — o vendor não diz quais são os do
+20425, e o único número honesto disponível é o do monstro que ele copia
+(regra 3). O que não se pode herdar é a premiação: um mob que só existe para ser
+bicho de estimação não pode valer 63.800 de base por `@monster`.
+
+O `db/guerra/pet_db.yml` é o primeiro pet nosso, e entrou por **uma linha** no
+rodapé de `db/pet_db.yml` — aquele rodapé já existia, então não foi preciso
+criar `Footer:` como no `quest_db` e no `job_stats`.
+
+### A tabela de sorteio, e o ×50 que não cabia
+
+O dono pediu para **multiplicar as chances por 50**, com o exemplo do Freeoni:
+de 0,006664% para 0,3332%, *"1 para 333"*.
+
+Multiplicar a tabela **inteira** por 50 é impossível: os ovos somam 5,52% no
+bRO, e ×50 dá **276%**. Então o fator decresce conforme o prêmio fica comum —
+×50 no Freeoni, ×10 no Gato de Nove Caudas, ×5 nos nove raros, ×4 nos doze
+comuns — e o espaço sai das comidas de pet, que continuam sendo a maior parte da
+tabela. A chance de sair **algum** ovo passou de 5,52% para **24,32%**.
+
+Os pesos estão em milionésimos e somam **1.000.000 exatos**. O `OnInit` da
+Máquina confere isso sozinho e grita com `debugmes` se a soma mudar ou se as
+três colunas paralelas ficarem desalinhadas — a regra §4.11, que existe porque
+coluna desalinhada não dá erro: entrega o prêmio errado, calada.
+
+### O reset das 4h sem quest, de propósito
+
+O caminho óbvio para "repete após as 4 da manhã" seria uma quest com
+`TimeLimit: 4h` — o `CLAUDE.md` §5 até registra que a forma sem `+` devolve o
+próximo 04:00. **Não foi usado**, e a razão é o custo do outro lado: quest nova
+exige entrada na tabela do cliente, e quest que o cliente não conhece **derruba
+o cliente**, uma caixa por missão e por atualização da janela. Custou um bug em
+2026-08-08 nas placas da Ordem. Um temporizador de evento não vale esse risco.
+
+O que se usa é um "dia lógico" calculado na função `AnomaliaDia`, guardado na
+variável permanente `anomalia_dia`. A conta **não tem constante de fuso**: ela
+descobre o deslocamento comparando a hora local que o servidor dá
+(`gettime(DT_HOUR)`, `America/Sao_Paulo` desde 2026-08-16) com a hora UTC
+derivada do `gettimetick(2)`, e só então corta o dia às 4h. Se o horário de
+verão voltar, ela acompanha sozinha.
+
+### Duas falhas caladas que a leitura do doc pegou antes de irem para o jogo
+
+- **`mobcount("mapa","all")` não conta nada.** O `mobcount` conta monstros que
+  tenham *aquele* label; o especial de "todos" é a **string vazia**, que conta os
+  sem label — que é o caso dos nossos. Com `"all"` ele procuraria um label
+  chamado `all`, acharia zero, e o teto de monstros nunca pegaria: o mapa
+  entupiria em silêncio.
+- **`killmonster "mapa","all"` não mata nada.** O buildin compara
+  `strcmp(event,"All")` — maiúsculo e exato (`script.cpp:11486`). Trocado por
+  `killmonsterall`, que não tem como errar a capitalização.
+
+E uma terceira, do próprio rAthena: **`callsub` não abre escopo novo** — ele
+enxerga e sobrescreve as `.@` de quem chamou (só o `callfunc` isola). O
+subprograma que planta a Pedra usa `.@pn`/`.@php`/`.@pk` com prefixo por causa
+disso; um `.@hp` ali dentro apagaria o `.@hp` do laço que mede as Pedras.
+
+### O que ficou como número a calibrar
+
+O HP de cada Pedra (**50.000**, começando em 1.000) e a chance de MVP por onda
+(**2%**) são escolha nossa — o bRO não publica nenhum dos dois, e o wiki diz
+literalmente que a chance de MVP é *"desconhecida e bem baixa"*. Os dois estão
+em constante nomeada no `OnInit`, num arquivo só.
+
+E a conta da economia, que o dono vai querer ver com o evento rodando: a missão
+paga 7 moedas por dia, o giro custa 10, e a tabela devolve em média 4,14 por
+giro — custo líquido de 5,86, ou **1,19 giros por dia** para quem só faz a
+diária. Com o Freeoni a 1 em 300, isso dá cerca de **250 dias** de missão pura.
+É o prêmio máximo e tem dois atalhos (o reset pago e os 30 Âmagos do Manouro),
+mas o número está aqui para quando a calibragem for revista.
+
+### O primeiro teste em jogo, no mesmo dia: o rosa-choque e o relog
+
+O dono entrou na dimensão poucas horas depois, e a captura de tela respondeu de
+graça três coisas que estavam em `PENDENCIAS.md` esperando o jogo: o Varmunt de
+Prontera **teleporta**, a `pprontera` **abre** sem derrubar o cliente, e a
+rodada **começa sozinha** — o `mapannounce` *"A fenda se abre. Quatro Pedras
+Guardiãs pedem socorro."* saiu no topo da tela e no chat.
+
+Duas coisas vieram junto, e as duas foram corrigidas na mesma sessão.
+
+**1. A cor estava magenta, não roxa.** O preset da estreia era difusa
+`(1,00 / 0,55 / 0,80)` e ambiente `(0,62 / 0,30 / 0,68)` — derrubar o verde e
+**subir** o azul. Isso não é roxo: é **rosa-choque**, e a cidade inteira ficou
+pink. O pedido de correção veio com uma escala: *"levemente avermelhado,
+alaranjado, mas mais suave — intensidade 3 numa escala de 1 a 10"*.
+
+A regra que faltava é de uma linha, e vale para qualquer tingimento futuro:
+**verde baixo + azul alto = rosa; azul baixo = laranja.** Vermelho intacto e
+azul derrubado é o que produz o tom quente de fim de tarde.
+
+E a lição de desenho: **o `tinge_dimensao.py` pedia seis floats, e seis floats
+não são calibráveis por quem não decorou a regra acima.** Ele passou a ter
+`--intensidade`, de 0 a 10, que mistura a luz de fábrica com um alvo quente
+único — 0 devolve a Prontera normal, 10 entrega o alvo puro. Assim a cor nunca
+"vira outra coisa" no meio do caminho: só fica mais forte ou mais fraca na mesma
+direção. Rodar sem argumento imprime a escala inteira, para escolher olhando.
+O valor em uso é **3**: difusa `(1,000 / 0,916 / 0,835)`, ambiente
+`(0,601 / 0,476 / 0,440)`.
+
+**2. Ninguém pode morar na dimensão.** Pedido do dono na sequência: quem
+deslogar lá dentro tem de relogar em Prontera. Resolvido com três mapflags no
+próprio arquivo do evento:
+
+```
+pprontera	mapflag	nosave	prontera,156,300
+pprontera	mapflag	nomemo
+pprontera	mapflag	nobranch
+```
+
+O `nosave` com ponto explícito é lido no `pc.cpp:2001`, e o comentário do
+próprio rAthena ali entrega o detalhe que importa — *"Maybe since the player's
+logout the nosave mapflag was added to the map"*: **a troca acontece no LOGIN, e
+não na hora de deslogar.** Duas consequências boas: isso resgata também quem já
+estava preso lá dentro de antes da linha existir, sem tocar no banco; e o
+personagem nunca chega a ter `pprontera` como ponto de retorno, então morrer
+também não o traz de volta para lá.
+
+Os outros dois são a mesma intenção: `nomemo` impede memorizar a dimensão com o
+Portal (entrar sem passar pelo Varmunt) e `nobranch` impede Galho Seco — um mapa
+que já invoca MVP sozinho não precisa de ajuda. **`noreturn` foi deixado de fora
+de propósito:** ele bloquearia a Asa de Borboleta, que é justamente como se sai
+de lá.
+
+**A prova de que as três linhas foram aceitas é indireta e sólida:** elas estão
+nas linhas 210-212 do arquivo, e a sonda `ANOMALIA: Maquina Dimensional pronta`
+vem do `OnInit` da linha 587. Linha inválida faz o `npc_parsesrcfile` parar e
+**abandonar o resto do arquivo** (`CLAUDE.md` §5) — se os mapflags tivessem
+falhado, a sonda não teria saído.
+
+### O mapa vazio, e a promessa que ninguém tinha escrito (2026-08-26, noite)
+
+O segundo teste em jogo veio com uma pergunta que era um diagnóstico: *"falo com
+o NPC, ele diz que existe uma pedra marcada no mini-mapa, mas não tem nada, e
+nada aparece no mapa. O mapa fica vazio, é isso mesmo?"*
+
+Não era. Eram **dois defeitos empilhados**, e o primeiro é da família mais cara
+do projeto.
+
+**1. A fala prometia uma marcação que não existia.** O Varmunt dizia *"As Pedras
+estão marcadas no seu mini-mapa pelo brilho que ainda lhes resta"* — e não havia
+uma linha de código que marcasse coisa alguma. É a **§4.17 pega no ato**, e da
+pior maneira: não é um cabeçalho descrevendo regra que ninguém escreveu, é o
+**próprio NPC dizendo ao jogador** o que o servidor não faz. Escrito por mim, no
+mesmo dia, sem que nada denunciasse — nem no boot, nem no log.
+
+O conserto é o `viewpoint`, que existia o tempo todo: `viewpoint 1,<x>,<y>,<n>,
+<cor>` marca no mini-mapa de quem está anexado. Entrou em três lugares, e são
+três porque o RID muda em cada um:
+
+- ao falar com o Varmunt e aceitar (`callsub S_Marca`, tem jogador anexado);
+- ao **entrar** na dimensão, via `OnPCLoadMapEvent` — que exigiu o mapflag
+  `loadevent`, sem o qual aquele label simplesmente nunca dispara;
+- ao **começar** a rodada, e aí é `viewpointmap` e não `viewpoint`: o
+  `OnComecaRodada` roda pelo temporizador, **sem RID nenhum**, e o `viewpoint`
+  comum precisa de um. Sem essa terceira, quem entrasse *antes* da rodada
+  começar ficaria sem marca até falar com o Varmunt de novo.
+
+**2. As Pedras estavam longe demais para serem achadas.** O arranjo original
+espalhava as quatro pela Prontera inteira — até **200 células** do ponto de
+chegada — num rodízio de três conjuntos por dia da semana, imitando os três
+minimapas da página do bRO. No papel era fidelidade; em jogo era um mapa vazio
+em todas as direções.
+
+Decisão do dono: **as quatro ficam sempre em volta do centro.** O rodízio caiu
+inteiro. As posições novas são fixas, uma por quadrante, a 16-17 células do
+Varmunt:
+
+```
+    SO 145,179      SE 167,179
+             (156,190)
+    NO 143,201      NE 168,201
+```
+
+Escolhidas pela varredura do `map_cache` como as mais próximas de um quadrado
+simétrico ideal que tivessem **raio 2 livre** em volta. A cruz perfeita não
+serve: `156,205`, ao norte, esbarra na fonte da praça.
+
+A lição, que vale além deste evento: **variedade que ninguém acha não é
+variedade.** O rodízio custava zero para implementar e custou uma ida ao jogo
+para descobrir que tornava o evento injogável.
+
+### Duas correções finas na mesma rodada
+
+**O sprite do Varmunt virou o 654 (`4_M_BARMUND`)** — nos dois, o de Prontera e
+o da dimensão, porque são o mesmo personagem. O 755 (`4_M_SAGE_C`) era palpite
+meu, escolhido por ser "um sábio"; o `BARMUND` é o sprite do próprio NPC no kRO,
+e o nome quase idêntico ao do personagem é o que o entrega. Conferido no cliente
+antes: `JT_4_M_BARMUND = 654` no `npcidentity.lub`, com o sprite presente no GRF.
+
+**O Mensageiro Continental mudou de esquina.** O `Continental Messenger#01` do
+rAthena mora em `prontera 164,304`, e a Máquina Dimensional nasceu em `165,304`
+— uma célula ao lado. Pior: aquele NPC tem **área de toque `3,3`**, um quadrado
+de 7×7 que cobria a Máquina e o Manouro inteiros, jogando um diálogo por cima de
+quem fosse girar a Máquina. Foi para `150,306`, com a área junto.
+
+**O `movenpc` não serviria, e é uma armadilha que vale guardar:** ele faz
+`map_moveblock` e mais nada (`npc.cpp:5046`) — não chama `npc_unsetcells` nem
+`npc_setcells`. E a área de toque **não mora no NPC, mora no mapa**: o
+`npc_setcells` (`npc.cpp:4971`) marca `CELL_NPC` célula por célula no
+carregamento. Com `movenpc` o boneco andaria e o gatilho ficaria em `164,304` —
+a fala continuaria disparando em cima da Máquina e não dispararia no lugar novo.
+Silencioso e exatamente ao contrário do pedido.
+
+Foi então a receita da §2 (`disablenpc` + duplicata nossa), com uma sutileza que
+quase mordeu: o script daquele NPC descobre a cidade lendo o **próprio nome**,
+com `set .@area$,strnpcinfo(2)` e um `if (.@area$ == "01")`. O sufixo `#01` não
+é enfeite, é o dado — uma duplicata chamada `#01b` faria o NPC anunciar "01b"
+como se fosse o nome da cidade. O que salva é que `strnpcinfo(2)` lê o
+`nd->name` (`script.cpp:9276`) enquanto o nome único é o `nd->exname`, que é o
+`strnpcinfo(3)`: campos diferentes. Então a duplicata mantém `#01` na parte
+visível e ganha nome próprio depois do `::`.
+
+Os dois blocos ficaram **no arquivo do evento**, e de propósito: foi o evento que
+empurrou o Mensageiro, e desligar o evento devolve o Mensageiro ao lugar sozinho,
+porque o `disablenpc` que o esconde mora ali.
+
+**A prova de que os dois nasceram é uma contagem:** o boot passou de **24168
+para 24170 NPCs**, exatamente os dois acrescentados, sem um único
+`npc_parsename` (nome único repetido) e sem *"Attempted to disablenpc a
+non-existing NPC"*.
+
+### "Curava, mas eu não tive feedback" — a mecânica invisível (2026-08-26)
+
+O terceiro teste em jogo trouxe o relato mais útil de todos, em três frases:
+*"eu consegui curar, mas fiquei curando muito e não dava nada"*, *"curava, com
+um valor, mas eu não tive feedback"*, *"então não sabia se algum dia ia parar"*.
+
+Nada estava quebrado. **A mecânica funcionava e era invisível** — que é uma
+falha pior do que não funcionar, porque não deixa rastro nenhum para diagnosticar.
+
+**O cliente de RO não desenha barra de vida de monstro.** Essa frase é o defeito
+inteiro. Curar uma Pedra e não curar produziam exatamente a mesma tela: o número
+verde subia (isso o cliente mostra) e nada mais acontecia. O jogador não tinha
+como saber se faltava um lançamento ou cinquenta, nem se o evento estava de pé.
+Toda a leitura de código que provou que `status_heal` alcança monstro não serviu
+de nada para quem estava lá dentro.
+
+**E o número estava errado por cima disso.** As Pedras estrearam com 50.000 de
+HP cada, escolhido supondo que um Curar entregasse uns 2.000. A fórmula
+(`skill.cpp:552`) diz outra coisa:
+
+```
+hp = ((nivel + INT) / 8) * (4 + nivel_da_magia * 8)
+```
+
+Num personagem de nível 200 com INT 200 isso dá `(400/8) * 84` ≈ **4.200 por
+lançamento** — mas mesmo assim 50.000 por Pedra eram uns 12 lançamentos em cada
+uma e **48 na rodada inteira**, para uma pessoa só. Passou para **15.000**: ~4
+por Pedra, ~16 na rodada, e cai proporcionalmente com mais gente curando.
+
+### O que entrou como retorno, em três camadas
+
+Nenhuma delas é enfeite — cada uma responde uma pergunta diferente:
+
+1. **A Pedra fala.** Sempre que o HP dela sobe, ela anuncia a própria
+   porcentagem (`unittalk`) e solta um `EF_HEAL`. Responde *"minha magia está
+   entrando?"* na hora, e no lugar onde o jogador está olhando. Um balão por
+   segundo no máximo, e só quando há progresso de verdade.
+2. **O aviso do conjunto passou de 25% para 10%.** O balão diz como vai **uma**
+   Pedra; o `mapannounce` diz como vai a **rodada**. Responde *"estou perto do
+   fim?"*.
+3. **O Varmunt ganhou "Como estão as quatro?"**, que lista as quatro com HP,
+   máximo e porcentagem, mais o total. É a barra de vida que o cliente não
+   desenha, e a fala termina dizendo o que fazer se o número não subir: *"é
+   porque a magia não é de cura — ou não está alcançando a Pedra"*.
+
+E uma quarta camada, essa para nós: um `debugmes` de dez em dez segundos com os
+quatro HPs, no console do map-server. Existe porque a pergunta que importa nesta
+mecânica não tinha resposta na tela **nem no log** — e é `debugmes` e não
+`ShowInfo` de propósito, porque informação não tem bit no `console_msg_log` 3 e
+não chegaria ao arquivo (`CLAUDE.md` §5).
+
+**A lição, que é maior que este evento:** ao construir mecânica em cima de um
+número que o cliente não mostra — HP de monstro, contador interno, progresso de
+qualquer coisa —, o retorno visual **faz parte da mecânica**, não é acabamento.
+Sem ele o jogador não consegue nem relatar o defeito direito, e do lado de cá
+tudo parece funcionando.
+
+### A cor, terceira e última versão
+
+O laranja 3/10 do ajuste anterior ficou *"muito suave"*. Pedido: mais roxo, 4/10.
+
+A regra que faltava, e que resume as três tentativas: **quem manda no matiz é a
+posição relativa de verde e azul.** `B > G` puxa para o roxo/rosa; `B < G` puxa
+para o laranja; a distância entre os dois diz o quanto disso aparece.
+
+| tentativa | difusa | G − B | resultado |
+|---|---|---|---|
+| 1ª | 1,000 / 0,550 / 0,800 | −0,250 | magenta, rosa-choque |
+| 2ª (3/10) | 1,000 / 0,916 / 0,835 | +0,081 | laranja limpo, suave demais |
+| 3ª (4/10) | 1,000 / 0,832 / 0,896 | −0,064 | roxo avermelhado |
+
+O alvo da escala mudou para `(1,00 / 0,58 / 0,74)` — o **verde** é quem cai
+mais, não o azul — e a intensidade padrão subiu para 4.
+
+### "A cura não está pegando" — e estava. O leitor é que lia zero (2026-08-26)
+
+O relato veio com duas capturas e uma suspeita bem formulada: *"eu curo e a
+estatística não muda. Minha suspeita procede, a cura não está pegando mesmo
+aparecendo que curou."*
+
+A suspeita **procedia como sintoma e apontava para o lugar errado**, e as
+capturas continham a resposta:
+
+- na primeira, a Pedra Guardiã em pé, com números **verdes** de cura subindo
+  sobre ela — ou seja, `clif_skill_nodamage` com `heal > 0`;
+- na segunda, o painel novo do Varmunt dizendo **`0% (0 de 15000)` nas quatro**.
+
+Curando e lendo zero ao mesmo tempo. Se a cura não entrasse, o número verde não
+sairia; se entrasse, o painel não leria zero. Um dos dois lados estava mentindo,
+e o único jeito de saber qual era olhar a janela do map-server:
+
+```
+[Warning]: buildin_getunitdata: Error in argument! Please give a variable to store values in.
+[Warning]: Script command 'getunitdata' returned failure.
+```
+
+**`getunitdata` não é função — é comando que preenche um array.** A forma certa
+é `getunitdata <GID>,<array>;`, com os índices sendo as próprias constantes
+(`.@dados[UMOB_HP]`). Eu havia escrito `.@hp = getunitdata(gid, UMOB_HP)`, que
+é o reflexo natural justamente porque o **`setunitdata` irmão tem três
+argumentos** e parece autorizar a leitura simétrica. Escrito assim ele devolve
+**sempre zero**.
+
+**A cura sempre funcionou.** O `SkillHeal`, o elemento do mob, o `damagetaken`,
+a guarda dos três casos — tudo aquilo que foi lido e reconferido estava certo o
+tempo todo. O defeito eram duas linhas de leitura, uma no `OnTimer1000` e outra
+no painel do NPC.
+
+O que torna esse erro caro é a combinação de três coisas: o aviso sai **só na
+janela** (o `console_msg_log` 3 não manda informação para o arquivo), o zero é
+um valor **plausível** para quase toda pergunta que se faça a uma unidade, e o
+sintoma resultante — "curo e nada acontece" — descreve com perfeição um bug de
+mecânica que não existia. Foram três hipóteses investigadas no lugar errado
+antes de alguém olhar o console.
+
+Corrigido nos dois lugares. O painel passou a ler também o **`UMOB_MAXHP` do
+próprio monstro** em vez da nossa constante — assim ele prova, de quebra, que o
+`setunitdata` do plantio pegou: se aparecer `120500` ali, o HP base do 1907
+voltou a valer.
+
+**A regra que sobra, e virou entrada da §5:** quando um valor lido vier zero de
+forma suspeita, desconfiar **do leitor antes do fenômeno**. É a mesma família do
+"tabela com 1 entrada é sintoma de chave não resolvida" — o número plausível é
+justamente o que impede de ver o defeito.
+
+E a ironia útil: o painel "Como estão as quatro?", que existia havia uma hora
+para dar feedback ao jogador, foi o que **entregou o bug** — não pelo que
+mostrava, mas por mostrar um número que não podia ser verdade.
+
+### A Pedra que nascia cheia: underflow no `status_set_maxhp` (2026-08-26)
+
+Corrigida a leitura, o evento passou a se comportar de um jeito novo e pior: a
+rodada abria e **fechava no mesmo segundo**, em laço, com o chat alternando *"A
+fenda se abre"* e *"A luz voltou por inteiro!"*. O dono descreveu com precisão e
+já ofereceu as duas hipóteses certas: *"ou é resquício de cura das minhas
+interações passadas que não foram contadas, ou a instância se auto-encerra"*.
+
+Era uma terceira: **as Pedras nasciam com o HP cheio.**
+
+Desta vez não houve teoria. Um NPC de teste temporário plantou um 1907 no boot e
+leu o HP de volta depois de cada `setunitdata`, imprimindo tudo no console:
+
+| passo | resultado |
+|---|---|
+| só `monster` | `120500/120500` |
+| após `UMOB_MAXHP 15000` | **`2147604147`**/15000 |
+| após `UMOB_HP 1000` | `120500`/15000 |
+| `UMOB_HP 1000` **primeiro** | `1000/120500` |
+| `UMOB_MAXHP 15000` depois | `15000/15000` |
+| `UMOB_HP 1000` de novo | **`1000/15000`** |
+
+O `2147604147` entregou a causa. O `status_set_maxhp` (`status.cpp:1343`) faz:
+
+```c
+heal = maxhp - status->max_hp;   // os dois lados sao uint32
+...
+if (heal > 0) status_heal(...); else status_zap(...);
+```
+
+**Reduzir o máximo dá underflow**: `15000 - 120500` em `uint32` vira um número
+enorme e positivo, o `if (heal > 0)` acerta, e o servidor **cura** em vez de
+reduzir. O HP estoura no teto de `int32` e, dali em diante, nenhum `UMOB_HP`
+consegue trazê-lo de volta.
+
+A saída é nunca deixar o HP acima do máximo novo na hora da troca — **três
+chamadas**: baixa o HP (ainda dentro do máximo velho), troca o máximo (o
+underflow ainda ocorre, mas o `status_heal` que ele dispara é limitado ao máximo
+recém-gravado, então o HP para nele), baixa o HP de novo. Validado no mesmo NPC
+de teste antes de entrar no evento: `1000/15000`.
+
+**E o comentário do arquivo dizia exatamente o contrário** — *"o MaxHP vem
+primeiro e o HP baixo depois; invertido, a pedra nasce cheia"* —, escrito por mim
+no mesmo dia com base no exemplo do Poring do `doc/script_commands.txt`, que é
+verdadeiro só quando o máximo **aumenta**. Era a §4.17 de novo, agora num
+comentário que descrevia a ordem errada com toda a confiança. Corrigido junto.
+
+### Duas coisas que caíram na mesma rodada
+
+**A trava de participação saiu.** Havia um `@anomalia_rodada != .rodada_num` que
+respondia *"você chegou depois do trabalho feito"* a quem não tivesse escolhido
+"Quero ajudar" no menu — e o dono levou essa recusa tendo acabado de curar. Era
+injusta em dois casos comuns: quem já estava no mapa quando a rodada começou (não
+passa pelo menu) e quem cura sem falar com o Varmunt antes. Quem está falando com
+ele está dentro da dimensão, e a janela de pagamento dura 30 segundos; **o que
+protege a economia é o reset diário**, que vale por personagem e por dia. A
+variável foi removida inteira, sem deixar escrita órfã.
+
+**O `.PedraHpMax` foi de 50.000 para 15.000** — ~4 lançamentos de cura por Pedra
+e ~16 na rodada, para uma pessoa só (a fórmula de `skill.cpp:552` dá ~4.200 por
+lançamento num personagem de nível 200 com INT 200).
+
+### O método, que é a parte reaproveitável
+
+Três defeitos seguidos neste evento — a leitura que devolvia zero, a marcação de
+mini-mapa que não existia, e agora o HP corrompido — e os três foram resolvidos
+do mesmo jeito: **parar de deduzir e instrumentar**. O que decidiu aqui foi um
+NPC descartável que fazia o plantio no boot e imprimia o estado depois de cada
+passo; ele custou dez minutos e respondeu o que a leitura de `status_set_maxhp`
+sozinha não tinha respondido (eu havia lido aquela função **antes**, e o
+underflow não salta aos olhos).
+
+Ficou no evento uma versão permanente disso: o `S_Planta` lê o HP de volta logo
+depois de plantar e imprime `pedi hp=N -> ficou X/Y`. Se algum dia o número
+divergir, aparece de graça na primeira rodada.
+
+### O acabamento, e o painel que se tornou desnecessário (2026-08-26)
+
+Com o underflow corrigido o evento rodou inteiro e foi aprovado: *"agora deu
+certo! ficou ótimo!"*. Três ajustes finos vieram junto.
+
+**O painel "Como estão as quatro?" saiu do NPC.** Ele tinha nascido como muleta
+para um problema que deixou de existir: enquanto não havia retorno nenhum, era o
+único jeito de o jogador saber se a cura entrava. Depois que a Pedra passou a
+anunciar a própria porcentagem e o conjunto a avisar de 10 em 10%, o painel
+virou uma opção de menu que ninguém precisaria abrir. Saiu inteiro, e com ele o
+array `.Canto$` — que existia só para rotular aquelas quatro linhas e viraria
+código morto. A conferência de colunas paralelas do `OnInit` ficou, agora
+comparando `.px` e `.py` entre si.
+
+Vale registrar a ordem em que isso aconteceu, porque ela é o oposto do
+desperdício que parece: **o painel foi o que entregou o bug do `getunitdata`** —
+não pelo que mostrava, mas por mostrar `0 de 15000`, um número que não podia ser
+verdade. Ele cumpriu duas funções (sonda de diagnóstico e muleta de feedback) e
+saiu quando as duas deixaram de ser necessárias.
+
+**Receber as moedas devolve o jogador a Prontera.** Fecha o ciclo no lugar
+certo: as moedas só servem na Máquina Dimensional, que fica a doze células do
+ponto de chegada, e ninguém tem o que fazer na dimensão depois de receber. É
+`close2` e não `close` — o `close` devolve o controle e encerra o script ali, e
+o `warp` nunca rodaria.
+
+**A cor foi para 6/10**, mesmo alvo roxo avermelhado da rodada anterior. Como a
+escala mistura sempre na mesma direção, subir a intensidade **não muda o matiz**
+— só a distância até a luz de fábrica. Foi exatamente para isso que ela existe:
+depois de três tentativas em que a cor "virava outra coisa" a cada ajuste, as
+duas últimas calibragens foram um dígito cada.

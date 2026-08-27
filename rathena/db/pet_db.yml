@@ -60,4 +60,5 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/pet_db.yml
     Mode: Renewal
+  - Path: db/guerra/pet_db.yml
   - Path: db/import/pet_db.yml

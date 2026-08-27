@@ -85,7 +85,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `conf/inter_athena.conf` | uma linha `import: conf/guerra/inter_guerra.txt` (`default_codepage: latin1`) |
 | `conf/login_athena.conf` | uma linha `import: conf/guerra/login_guerra.txt` (`use_MD5_passwords: yes`) |
 | `conf/groups.yml` | um `- Path: conf/guerra/groups_guerra.yml` no rodapé, **antes** do `conf/import/groups.yml` que já estava lá (permissão de comando por grupo — hoje o `@autoloot` e irmãos para o grupo 0). Funciona por merge: o `parseBodyNode` procura o `Id` antes de criar (`src/map/pc_groups.cpp:74`), e grupo que já existe recebe os campos por cima — por isso o nosso arquivo não repete `Name` nem `Level` |
-| `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml` | um `- Path: db/guerra/...` no rodapé de cada |
+| `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml`, `db/pet_db.yml` | um `- Path: db/guerra/...` no rodapé de cada. O do `pet_db` entrou em 2026-08-26 com a Anomalia Dimensional e aponta para `db/guerra/pet_db.yml`, hoje com um pet só — o Freeoni, que o rAthena traz **comentado** dos dois lados (a entrada de pet e o mob `PHREEONI2`, Id 20425). **Não existe `@reloadpetdb`:** mexer ali é reiniciar o map-server |
 | `db/re/item_db.yml` | **três** `- Path:` no rodapé, nesta ordem, e a ordem é a regra — cada um tem a última palavra sobre um campo. `db/guerra/item_db.yml` é o nosso, escrito à mão (itens próprios e overrides de campo). `db/guerra/item_db_indestrutivel.yml` é **gerado** por `ferramentas/marca_indestrutiveis.py` e repete o `Script:` inteiro de 27 itens com um `bonus bUnbreakable<slot>` a mais — sem ele a peça que a descrição promete indestrutível quebra (§4.19). `db/guerra/item_db_lojas.yml` é **gerado** por `ferramentas/zera_revenda_das_lojas.py` e põe `Buy: 1` em todo item de vitrine de Prontera (§4.16) |
 | `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
@@ -139,6 +139,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
 | `conf/guerra/groups_guerra.yml` (permissão de comando) | `@reloadatcommand` — chama `pc_groups_reload()` (`src/map/atcommand.cpp:4422`). **Não** é `@reloadbattleconf` nem `@reloadscript` |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
+| `db/guerra/pet_db.yml` (pets) | **reiniciar o map-server** — não existe `@reloadpetdb`; o `pet_db.load()` só roda no `do_init_pet`. Login e char podem ficar de pé |
 | `db/guerra/job_estilo_de_corpo.yml`, `db/re/job_outfits.yml` (estilo de corpo) | `@reloadpcdb` — chama `pc_readdb()` (`src/map/atcommand.cpp:4490`), que faz `job_db.clear()` + `job_db.load()` e segue o rodapé. **Não** exige reiniciar, e **não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/refine.yml`, `db/guerra/refine_evento.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb`. Vale também para ligar/desligar o Evento de Refino, que é comentar a linha `- Path: db/guerra/refine_evento.yml` no rodapé de `db/refine.yml` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
@@ -423,6 +424,36 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     porque só afeta esta máquina. Produção só se reinicia com pedido
     explícito do dono, e o caminho para chegar nela de qualquer jeito é outra
     máquina (Mac, ver §9) — nada aqui deveria alcançá-la sozinho.
+21. **Mecânica construída sobre número que o cliente NÃO MOSTRA precisa do
+    retorno visual como parte da mecânica, não como acabamento.** O caso que
+    estreou a regra: as Pedras Guardiãs da Anomalia Dimensional
+    (2026-08-26) são curadas com magia de cura, e **o cliente de RO não
+    desenha barra de vida de monstro**. Curar e não curar produziam a mesma
+    tela — o número verde subia, e nada mais. O dono jogou e relatou: *"eu
+    consegui curar, mas fiquei curando muito e não dava nada"*, *"não sabia
+    se algum dia ia parar"*.
+
+    **É pior do que não funcionar**, por dois motivos: do lado de cá tudo
+    parece certo (o servidor executa, o log fica limpo, a leitura de código
+    confirma), e do lado de lá o jogador não consegue nem descrever o
+    defeito — porque não há defeito, há ausência de informação.
+
+    Vale para qualquer coisa que o jogador não enxergue: HP de monstro,
+    contador interno, progresso de coleta, tempo restante, chance
+    acumulada. **A pergunta a fazer ao desenhar é "como ele sabe que está
+    funcionando?"**, e se a resposta for "não sabe", falta código.
+
+    As três camadas que resolveram, e cada uma responde uma pergunta
+    diferente: a Pedra anuncia a própria porcentagem (`unittalk` +
+    `specialeffect`) toda vez que o HP sobe — *"minha magia entrou?"*; o
+    `mapannounce` do conjunto a cada 10% — *"estou perto do fim?"*; e uma
+    opção no NPC que lista os quatro números — *"qual é o estado exato?"*.
+    Mais um `debugmes` periódico para o console, que é a única sonda que
+    responde **do lado do servidor** (e é `debugmes`, não `ShowInfo`, pela
+    §5).
+
+    Da mesma família da §4.17, do outro lado: lá o texto prometia o que o
+    código não fazia; aqui o código faz e não conta a ninguém.
 ## 5. Armadilhas deste ambiente
 
 Produziram diagnóstico falso e custaram retrabalho:
@@ -1751,6 +1782,118 @@ Produziram diagnóstico falso e custaram retrabalho:
   laço faz `continue` quando `!pcdb_checkid(job_id)`, e nenhuma faixa do
   `pcdb_checkid` (`src/map/pc.hpp:1219`) cobre 4331+ — a última é
   `JOB_SKY_EMPEROR2 = 4316`.
+- **O corpo de uma habilidade NÃO está mais no `skill.cpp` — cada uma tem
+  classe própria em `src/map/skills/`.** Um `grep` por `case AL_HEAL` no
+  `skill.cpp` devolve duas ocorrências e **nenhuma das duas é a cura**: uma é o
+  desvio para dano em morto-vivo, a outra é a validação de alvo. Quem parar aí
+  conclui que a habilidade não é tratada — e ela é, em
+  `src/map/skills/acolyte/heal.cpp`, achada pelo `default:` do
+  `skill_castend_nodamage_id` (`skill.cpp:4587`), que faz
+  `skill->impl->castendNoDamageId(...)` e só imprime *"missing code case"* se
+  não houver classe. Medido em 2026-08-26, ao apurar se dava para curar
+  monstro. **Ao investigar o que uma habilidade faz, procurar primeiro em
+  `src/map/skills/<classe>/<nome>.cpp`**; o switch grande hoje só guarda as
+  que sobraram.
+- **Curar MONSTRO funciona, e é o Emperium que não pode — não o monstro.** Vale
+  o contrário da intuição de RO: o `SkillHeal::castendNoDamageId`
+  (`src/map/skills/acolyte/heal.cpp`) chama `status_heal(bl, heal, 0, 0)` com o
+  alvo que veio, monstro inclusive, e só zera a cura em três casos — alvo com
+  `status_isimmune` (que só olha jogador, `status.cpp:9306`), o **Emperium**, e
+  `Class: Battlefield`. O Santuário tem os mesmos três testes
+  (`skill.cpp:6923`). **O que inverte o resultado é morto-vivo:** em alvo undead
+  a cura vira dano ofensivo (`skill.cpp:4417`), então monstro de raça ou
+  elemento morto-vivo **perde** HP. Quem for construir mecânica em cima disso
+  escolhe um mob Neutro e sem raça — foi assim que a Anomalia Dimensional
+  (2026-08-26) fez as Pedras Guardiãs sem uma linha de C++.
+- **`mobcount` e `killmonster` com `"all"` não fazem nada, e não avisam.** São
+  dois enganos do mesmo dia e da mesma família — o argumento é um **rótulo de
+  evento**, não uma palavra mágica, e rótulo que não existe simplesmente não
+  casa com nada. No `mobcount("<mapa>","all")` o resultado é **0**, então um
+  teto de monstros escrito assim nunca dispara e o mapa entope em silêncio; o
+  especial de "todos" ali é a **string vazia**, que conta os monstros *sem*
+  rótulo — que é o caso de tudo que nasce por `monster`/`areamonster`. No
+  `killmonster "<mapa>","all"` não morre ninguém, porque o buildin compara
+  `strcmp(event,"All")` — **maiúsculo e exato** (`script.cpp:11486`). Para
+  matar tudo, `killmonsterall "<mapa>"`, que não tem capitalização para errar.
+- **`callsub` NÃO abre escopo novo: ele enxerga e sobrescreve as `.@` de quem
+  chamou.** Só o `callfunc` isola. Um subprograma que use `.@i` ou `.@hp`
+  "porque é variável local" apaga a do laço que o chamou, e o sintoma aparece
+  longe — o laço externo passa a ler outro valor a partir da primeira chamada.
+  Convenção que resolve: prefixo no nome das variáveis do subprograma
+  (`.@pn`, `.@php`), como em `npc/guerra/anomalia_dimensional.txt`.
+- **`movenpc` move o BONECO e deixa a ÁREA DE TOQUE para trás.** O
+  `npc_movenpc` (`src/map/npc.cpp:5046`) faz `map_moveblock` e mais nada — não
+  chama `npc_unsetcells` nem `npc_setcells`. E a área de toque **não mora no
+  NPC, mora no MAPA**: o `npc_setcells` (`npc.cpp:4971`) marca `CELL_NPC`
+  célula por célula em volta dele, uma vez, no carregamento. Resultado de mover
+  um NPC com `<xs>,<ys>` por script: o sprite anda, o gatilho **fica onde
+  estava** — dispara no lugar velho e não dispara no novo, sem erro e sem log.
+  Para mover NPC com área de toque, a receita da §2 (`disablenpc` no original +
+  duplicata nossa na coordenada nova, repetindo o `<xs>,<ys>`), que faz o
+  `npc_setcells` rodar no lugar certo. Medido em 2026-08-26, ao tirar o
+  Mensageiro Continental de cima da Máquina Dimensional.
+- **`strnpcinfo(2)` lê o nome de EXIBIÇÃO, não o nome único — e há script do
+  rAthena que guarda dado no sufixo `#`.** São campos diferentes: o `case 2` do
+  `buildin_strnpcinfo` (`script.cpp:9276`) devolve o pedaço de `nd->name` depois
+  do `#`, enquanto o nome único é o `nd->exname`, que é o `strnpcinfo(3)`. Isso
+  importa ao duplicar NPC do rAthena, porque alguns **decidem o comportamento
+  por ali**: o `Continental Messenger#01` faz `set .@area$,strnpcinfo(2)` e um
+  `if (.@area$ == "01")` para saber que está em Prontera. Uma duplicata chamada
+  `#01b` — o reflexo natural para não repetir nome — faria o NPC anunciar
+  "01b" como se fosse o nome da cidade, calado. A saída é manter o sufixo
+  original na parte visível e pendurar o nome único depois do `::`, que o
+  `strnpcinfo(2)` não enxerga.
+- **`getunitdata` NÃO é função: é comando que PREENCHE UM ARRAY — e usado como
+  função devolve zero, calado na tela.** A forma certa é
+  `getunitdata <GID>,<array>;`, e os índices do array são as próprias
+  constantes: `.@dados[UMOB_HP]`, `.@dados[UMOB_MAXHP]`. Escrito como
+  `.@hp = getunitdata(<GID>, UMOB_HP)` — que é o reflexo natural, porque o
+  **`setunitdata` irmão tem três argumentos e parece autorizar a leitura
+  simétrica** — o valor sai **sempre 0**.
+
+  O que torna isso caro é onde o aviso aparece: *"buildin_getunitdata: Error in
+  argument! Please give a variable to store values in"* sai **só na janela do
+  map-server**, e o zero devolvido é um número plausível para quase toda
+  pergunta que se faça a uma unidade — HP, nível, velocidade. Em 2026-08-26 isso
+  fez a Anomalia Dimensional parecer quebrada de um jeito muito convincente: as
+  Pedras Guardiãs recebiam cura na tela (o número verde subia, o efeito saía) e
+  o painel do NPC lia **"0 de 15000"** nas quatro, o tempo todo. O diagnóstico
+  natural — "a cura não está pegando no monstro" — apontava para o
+  `SkillHeal`, para o elemento do mob, para o `damagetaken`: três lugares onde
+  não havia defeito nenhum. **A cura sempre funcionou; só a leitura estava
+  errada.**
+
+  Duas lições que sobram: ao ler estado de unidade, **conferir a janela do
+  map-server antes de acreditar no número** (o log em arquivo não recebe esses
+  avisos, `console_msg_log` 3); e, quando um valor lido vier zero de forma
+  suspeita, desconfiar **do leitor antes do fenômeno** — é a mesma família do
+  "tabela com 1 entrada é sintoma de chave não resolvida".
+- **`setunitdata UMOB_MAXHP` para BAIXAR o máximo CORROMPE o HP — é underflow
+  `uint32` no rAthena, e o servidor cura em vez de reduzir.** O
+  `status_set_maxhp` (`src/map/status.cpp:1343`) faz:
+
+  ```c
+  heal = maxhp - status->max_hp;   // os dois lados sao uint32
+  ...
+  if (heal > 0) status_heal(...); else status_zap(...);
+  ```
+
+  Reduzir (15.000 − 120.500) dá underflow: o resultado vira um número enorme e
+  **positivo**, o `if (heal > 0)` acerta, e ele **cura**. Medido em 2026-08-26
+  ao pôr as Pedras Guardiãs em 15.000: o HP foi para **2.147.604.147**, e
+  nenhum `UMOB_HP` depois disso trazia de volta — ficava travado no HP original.
+  Aumentar o máximo não tem o problema.
+
+  **A receita são TRÊS chamadas, nesta ordem:** `UMOB_HP` para o valor
+  desejado (ainda dentro do máximo velho) → `UMOB_MAXHP` para o novo máximo (o
+  underflow ainda acontece, mas o `status_heal` que ele dispara é limitado ao
+  máximo recém-gravado, então o HP só sobe até ele) → `UMOB_HP` de novo. Medido
+  passo a passo; a sequência `MAXHP` e depois `HP`, que é a que o exemplo do
+  `doc/script_commands.txt` sugere, **não funciona** quando o máximo diminui.
+
+  E cuidado com o sintoma, que aponta para longe: um monstro que nasce com o HP
+  cheio faz um evento de "encher a barra" terminar no mesmo segundo em que
+  começa — o que parece lógica de conclusão errada, e não escrita de HP.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

@@ -3390,3 +3390,68 @@ quando o processo morre.
 Duas armadilhas que custaram rodadas e estão no `CLAUDE.md` §5: **chave do
 Spaces só-leitura** (lista bem, não escreve) e o **`CreateBucket` do rclone**
 (daí o `NO_CHECK_BUCKET`).
+
+## `tinge_dimensao.py` — o céu roxo da Anomalia Dimensional
+
+```
+python tinge_dimensao.py                        # a luz de hoje + a escala inteira
+python tinge_dimensao.py --aplicar              # grava o override (intensidade 6)
+python tinge_dimensao.py --aplicar --intensidade 4
+python tinge_dimensao.py --reverter             # apaga o override
+```
+
+Troca a cor da luz da **`pprontera`**, o mapa onde a Anomalia Dimensional
+acontece (`npc/guerra/anomalia_dimensional.txt`), para que ela pareça uma
+dimensão corrompida em vez da Prontera de sempre.
+
+**Por que existe:** no bRO o evento roda numa cópia corrompida da cidade.
+Aqueles mapas são de 2024 e não existem no nosso cliente de 2021-11-03, então o
+evento usa a `pprontera` — uma cópia *limpa* de Prontera que já mora no GRF.
+Esta ferramenta é o que faz a cópia parecer outra coisa.
+
+**O que ele mexe são 24 bytes.** O `.rsw` guarda a luz do mapa em dois trios de
+float: a **difusa** (a luz direta) e o **ambiente** (a cor da sombra). Eles
+multiplicam tudo que é desenhado ali, então o mapa inteiro muda de clima sem
+uma textura nova, sem um modelo novo e sem tocar o `.gnd` — que tem 3,3 MB e
+pesaria no patch. O arquivo gravado tem **o mesmo tamanho** do original; o
+script confere isso e aborta se mudar.
+
+**Calibrar é UM número, não seis floats.** O `--intensidade` vai de 0 a 10 e
+mistura a luz de fábrica com o alvo: 0 devolve a Prontera normal, 10 entrega o
+alvo puro. Rodar sem argumento imprime a escala inteira, para escolher olhando.
+O padrão é **6**, calibrado em jogo em 2026-08-26.
+
+**Quem manda no matiz é a posição relativa de VERDE e AZUL** — e essa é a única
+coisa que se precisa lembrar aqui. `B > G` puxa para o roxo/rosa; `B < G` puxa
+para o laranja; a distância entre os dois diz o quanto disso aparece. O vermelho
+fica intacto nos dois casos.
+
+Custou três idas ao jogo para chegar nisso:
+
+| tentativa | difusa | G − B | em tela |
+|---|---|---|---|
+| 1ª | 1,000 / 0,550 / 0,800 | −0,250 | magenta, rosa-choque |
+| 2ª (alvo laranja, 3/10) | 1,000 / 0,916 / 0,835 | +0,081 | laranja limpo, suave demais |
+| 3ª (alvo roxo, 4/10) | 1,000 / 0,832 / 0,896 | −0,064 | roxo avermelhado, aprovado |
+| **atual (6/10)** | 1,000 / 0,748 / 0,844 | −0,096 | o mesmo tom, mais forte |
+
+Note que subir a intensidade **não muda o matiz** — só a distância até a luz de
+fábrica. Foi para isso que a escala existe: a cor nunca "vira outra coisa" no
+meio da calibragem.
+
+**Onde ele grava, e por que isso importa:** em `cliente\data\pprontera.rsw`, que
+vence o GRF pelo `DataFolderFirst`. Ou seja, é **mudança de cliente** — não vai
+ao jogador pelo `implanta.sh`, precisa de patch (`CLAUDE.md` §4.18,
+`RECEITAS.md` §11). Quem não receber o patch joga a Anomalia inteira, sem erro
+nenhum, numa Prontera de cor normal: a falha é calada e só cosmética.
+
+**O original nunca sai do GRF**, então `--reverter` é só apagar o arquivo — não
+há backup a manter. É a mesma lógica do `destroi_mapa.py`.
+
+**Duas travas antes de gravar:** o `rsw.verificar()` (ler e reescrever sem mexer
+tem de devolver os bytes originais — sem isso não há como saber se o layout está
+certo, e layout errado não dá erro, dá arquivo corrompido) e uma releitura do
+resultado conferindo que os seis floats gravaram o que foi pedido.
+
+**O cliente só relê o mapa ao entrar nele.** Se você já estiver na `pprontera`,
+sair e voltar — ou reabrir o cliente.

@@ -1,0 +1,87 @@
+###########################################################################
+# Guerra do Emperium - pets nossos
+###########################################################################
+#
+# Entrou em 2026-08-26 com a Anomalia Dimensional
+# (npc/guerra/anomalia_dimensional.txt) e por enquanto tem UM pet: o
+# Freeoni, premio maximo da Maquina Dimensional.
+#
+# O arquivo e lido por um `- Path: db/guerra/pet_db.yml` no rodape de
+# db/pet_db.yml (o da raiz, nao o de db/re/) - aquele rodape ja existia,
+# com os tres imports do proprio rAthena, entao o enxerto foi de UMA linha
+# e nao precisou criar `Footer:` como foi preciso no quest_db e no
+# job_stats. Ver CLAUDE.md secao 2.
+#
+###### Por que este pet nao vinha de fabrica ###############################
+#
+# O rAthena TEM a entrada do Freeoni, escrita e completa - e COMENTADA, em
+# db/re/pet_db.yml, junto com outras 43. O bloco abaixo e aquele bloco,
+# copiado linha por linha, so sem o `#` da frente: os `# unknown` no fim de
+# cinco campos sao do proprio rAthena e ficaram de proposito, porque sao a
+# marca de que aqueles cinco numeros nunca foram confirmados contra o kRO.
+# Apagar os comentarios daria ao arquivo uma certeza que ele nao tem.
+#
+# O motivo de estar comentado la e o mob: a entrada aponta para o AegisName
+# PHREEONI2, e o Id 20425 tambem esta comentado no db/re/mob_db.yml. Um
+# depende do outro, e os dois foram destravados juntos - o mob esta em
+# db/guerra/mob_db_guerra.yml, e o cabecalho DELE explica por que o Id
+# 20425 e o certo (as cinco tabelas do cliente que ja o conhecem).
+#
+###### O que cada campo significa aqui #####################################
+#
+# EggItem     9111, o Ovo de Freeoni. E o de-para que o cliente TAMBEM tem,
+#             em petinfo.lub: PetEggItemID_PetJobID[9111] = JT_PHREEONI2.
+#             As duas metades tem que concordar (CLAUDE.md secao 4.9).
+# FoodItem    25377, Racao Luxuosa - e o MESMO numero que o PetFoodTable do
+#             cliente traz para este pet, conferido em 2026-08-26. Ela cai
+#             da Maquina Dimensional a 3,998% no bRO, ou seja o evento
+#             alimenta o proprio pet que ele entrega.
+# CaptureRate 0, ou seja NAO SE CAPTURA com isca: nenhuma quantidade de
+#             Bonequinha Oriental pega um Freeoni. O unico caminho e o ovo,
+#             e o unico caminho para o ovo e a Maquina (sorteio) ou o
+#             Manouro (30 Amagos). E de proposito - e o premio maximo.
+# AllowAutoFeed  true, entra na alimentacao automatica da janela de pet.
+#
+# O `Script:` e o bonus que o pet da ao dono, por faixa de intimidade:
+# ate +18 de Precisao e +15% de acerto perfeito no nivel Leal. Nao mexemos
+# nele; e o numero do rAthena.
+#
+###### Recarga ############################################################
+#
+# NAO existe `@reloadpetdb`. Mudanca aqui exige REINICIAR o map-server -
+# o pet_db.load() so roda no do_init_pet. Login e char podem ficar de pe.
+#
+###########################################################################
+
+Header:
+  Type: PET_DB
+  Version: 1
+
+Body:
+  - Mob: PHREEONI2
+    EggItem: Phreeoni_Egg
+    FoodItem: High_Class_Pet_food
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    AllowAutoFeed: true
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus bHit,18;
+         bonus bPerfectHitRate,15;
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus bHit,14;
+         bonus bPerfectHitRate,10;
+      }
+      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+         bonus bHit,10;
+         bonus bPerfectHitRate,5;
+      }
+      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+         bonus bHit,6;
+      }

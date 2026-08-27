@@ -96,6 +96,47 @@
 # status->amotion/adelay/hit de forma ABSOLUTA a partir da conf, por cima do
 # que quer que o mob_db (ou este arquivo) tenha posto.
 #
+###### O MOB DO PET FREEONI (20425) - Anomalia Dimensional, 2026-08-26 ######
+#
+# Este NAO e ajuste de campo como o 1287 acima: e um monstro que NAO EXISTE
+# no vendor e precisou nascer aqui. O rAthena traz o Id 20425 (PHREEONI2)
+# COMENTADO no db/re/mob_db.yml, so o esqueleto `Id` + `AegisName`, sem uma
+# linha de status - e comentada tambem a entrada dele no db/re/pet_db.yml.
+#
+# Ele importa porque e o pet do OVO DE FREEONI (9111), o premio maximo da
+# Maquina Dimensional. Sem o mob, o ovo eclode em nada: o pet_db resolve o
+# pet por AegisName do mob, e AegisName que nao existe faz o parseBodyNode
+# descartar a entrada inteira (o mesmo `return 0` de sempre, com um aviso
+# no console que ninguem le).
+#
+# O CLIENTE ja sabe tudo sobre ele, e foi isso que decidiu usar o 20425 em
+# vez de inventar outro Id (medido em 2026-08-26, no cliente de 2021-11-03):
+#
+#   npcidentity.lub     JT_PHREEONI2 = 20425
+#   jobname.lub         20425 -> sprite `phreeoni`
+#   data.grf            data\sprite\<monstro>\phreeoni2.spr e .act
+#   petinfo.lub         PetEggItemID_PetJobID[9111] = JT_PHREEONI2
+#                       PetNameTable      = 'phreeoni'
+#                       PetFoodTable      = 25377 (Racao Luxuosa)
+#                       PetIllustNameTable= 'pet_phreeoni.bmp'  (existe no GRF)
+#
+# Ou seja: a metade de cliente do Freeoni ja estava inteira e so o servidor
+# faltava. Trocar o Id quebraria as cinco tabelas de uma vez - e a falha
+# seria a calada de sempre (CLAUDE.md secao 4.9).
+#
+# DE ONDE VIERAM OS NUMEROS: do proprio PHREEONI (1159), o MVP, campo a
+# campo, com TRES coisas tiradas - `Modes: Mvp`, os `MvpDrops` e os
+# `Drops`, mais o `BaseExp`/`JobExp`/`MvpExp`. Isto e deliberado e segue a
+# regra 3 (traz-se do bRO/vendor, nao se inventa): o vendor nao diz quais
+# sao os status do 20425, entao o unico numero honesto disponivel e o do
+# monstro que ele copia. O que NAO se pode herdar e a premiacao - um mob
+# que so existe para ser bicho de estimacao nao pode ser invocavel por
+# `@monster` valendo 63.800 de base e soltando Coracao Congelado.
+#
+# `Class: Normal` (era Boss) pelo mesmo motivo: Boss traz imunidade a
+# status e a knockback, que nao fazem sentido num pet e atrapalhariam se
+# alguem o spawnar para conferir o sprite.
+#
 ###########################################################################
 
 Header:
@@ -109,3 +150,34 @@ Body:
     AttackMotion: 220
     ClientAttackMotion: 220
     Dex: 369
+  - Id: 20425
+    AegisName: PHREEONI2
+    Name: Phreeoni
+    JapaneseName: "Freeoni"
+    Level: 71
+    Hp: 300000
+    Attack: 693
+    Attack2: 967
+    Defense: 269
+    MagicDefense: 98
+    Str: 88
+    Agi: 70
+    Vit: 112
+    Int: 87
+    Dex: 122
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1020
+    AttackMotion: 1020
+    ClientAttackMotion: 324
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Normal

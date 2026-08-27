@@ -1,0 +1,1071 @@
+//===== Guerra do Emperium =================================================
+//= Anomalia Dimensional
+//===========================================================================
+//= O evento que traz os pets de MVP. Conversao do evento do bRO
+//= (browiki.org/wiki/Anomalia_Dimensional), escrito em 2026-08-26.
+//===========================================================================
+//
+//= O QUE E, EM UMA FRASE: fala-se com o Sabio Varmunt em Prontera, ele
+//= abre uma fenda para uma Prontera corrompida, e la dentro quatro Pedras
+//= Guardias moribundas precisam ser CURADAS - com Curar, Curatio ou
+//= Santuario - enquanto Entidades Sombrias nascem em volta. Curou as
+//= quatro, Varmunt paga 7 Moedas de Estimacao. As moedas compram sorteios
+//= na Maquina Dimensional, e e de la que saem os ovos de pet.
+//
+//===== A PECA MAIS IMPROVAVEL: CURAR MONSTRO FUNCIONA ======================
+//
+//= A mecanica central do evento parece precisar de C++ e nao precisa. Em
+//= RO a intuicao diz que Curar so alcanca jogador, e que em monstro ou
+//= falha ou vira dano. Metade disso e verdade - a metade dos mortos-vivos.
+//
+//= Quem decide e o SkillHeal::castendNoDamageId
+//= (src/map/skills/acolyte/heal.cpp, neste rAthena refatorado em que cada
+//= habilidade tem classe propria). A funcao calcula o valor, e a UNICA
+//= coisa que ela faz com alvo monstro e zerar a cura em tres casos:
+//
+//=     if (status_isimmune(bl) || (dstmd && (status_get_class(bl) ==
+//=         MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD)))
+//=             heal = 0;
+//
+//= e logo abaixo faz `status_heal(bl, heal, 0, 0)` com o `bl` que veio -
+//= monstro inclusive. Ou seja: cura monstro de verdade, desde que ele nao
+//= seja o Emperium, nao seja `Class: Battlefield` e nao seja imune. O
+//= `status_isimmune` (src/map/status.cpp:9306) so olha jogador (a Garra do
+//= Golden Thief Bug) e SC_HERMODE, entao para monstro devolve 0 sempre.
+//
+//= O Santuario segue o mesmo caminho, num lugar diferente: o
+//= `case UNT_SANCTUARY` do skill_unit_onplace_timer (skill.cpp:6923) tem os
+//= MESMOS tres testes e o mesmo `status_heal(bl, heal, 0, 0)`. As duas
+//= metades do pedido do bRO - "Curar, Curatio e Santuario" - funcionam
+//= nativas, e nenhuma linha de C++ nosso entrou neste evento.
+//
+//= O que TEM de ser evitado, e por isso a pedra e o 1907 e nao outro mob:
+//=   - morto-vivo NAO SERVE. Em alvo undead o Curar vira dano ofensivo
+//=     (skill.cpp:4417, o desvio para skill_castend_damage_id) e a pedra
+//=     perderia HP em vez de ganhar. O 1907 e `Element: Neutral` e
+//=     `Race: Formless`.
+//=   - `Class: Battlefield` NAO SERVE, pelo `if` de cima. O 1907 e
+//=     `Class: Boss`, que passa. (O vizinho 1906 e Battlefield - se um dia
+//=     alguem trocar o Id "porque da no mesmo", a cura zera calada.)
+//=   - MDEF 100 nao serve. O 1907 tem 50.
+//
+//===== POR QUE A PEDRA E O GUARDIAN STONE (1907) ===========================
+//
+//= Precisavamos de um monstro com cara de pedra que o cliente de 2021
+//= desenhasse. O 1907 (S_EMPEL_1, "Guardian Stone") e a pedra da Guerra do
+//= Emperium 2.0, e serve por quatro motivos somados:
+//
+//=   1. o cliente o conhece - JT_S_EMPEL_1 = 1907 no npcidentity.lub, com
+//=      sprite `s_empel_1` presente no data.grf (conferido em 2026-08-26);
+//=   2. `Ai: 06`, que em src/map/mob.hpp e `MONSTER_TYPE_06 = 0` - modos
+//=      ZERADOS. Nao anda, nao ataca, nao revida, nao chama amigo. E uma
+//=      pedra de verdade, sem precisar de uma linha de script para isso;
+//=   3. NENHUM script do servidor o usa. Os "1907" e "1908" que aparecem
+//=      numa varredura por `npc/` sao o item Guitarra, nao o monstro - a
+//=      Guerra do Emperium 2.0 nao roda aqui (so o Kriemhild da 1.0, com
+//=      os outros 19 castelos desligados, ver scripts_guild.conf);
+//=   4. ele passa nos tres testes do heal.cpp acima.
+//
+//= NAO ha override dele em db/guerra/: o HP e ajustado por `setunitdata`
+//= no OnInit desta rodada, e isso e seguro justamente para HP - o
+//= cabecalho de db/guerra/mob_db_guerra.yml explica por que UMOB_MAXHP e
+//= UMOB_HP funcionam onde UMOB_ATKMIN e irmaos falham calados (eles
+//= chamam status_set_maxhp/status_set_hp, que escrevem no status vivo, em
+//= vez de depender de um recalculo que exclui SCB_BASE).
+//
+//= E O PLANTIO SAO TRES CHAMADAS, NUMA ORDEM QUE PARECE ERRADA: baixa o
+//= HP, troca o maximo, baixa o HP de novo. O motivo e um bug do rAthena em
+//= status_set_maxhp (status.cpp:1343), que calcula `maxhp - status->max_hp`
+//= com os dois lados `uint32`: REDUZIR o maximo da underflow, o resultado
+//= sai gigante e positivo, e o servidor CURA em vez de reduzir. Medido em
+//= 2026-08-26 - o HP da Pedra foi para 2.147.604.147 e nunca mais obedeceu.
+//= O comentario que ficava aqui dizia o contrario ("MaxHP primeiro"), e era
+//= justamente o que fazia as Pedras nascerem cheias. O passo a passo esta
+//= no S_Planta.
+//
+//===== O MAPA: pprontera, E O PORQUE DE NAO SER PRONTERA ===================
+//
+//= No bRO a dimensao e uma copia corrompida de Rachel, Lighthalzen ou
+//= Prontera, conforme o dia da semana. Aqueles tres mapas de evento sao de
+//= 2024 e NAO EXISTEM neste cliente de 2021-11-03 - e mapa sem .rsw no GRF
+//= derruba o cliente e ainda prende o personagem la (CLAUDE.md regra 6).
+//
+//= A saida foi a `pprontera`, e ela e boa demais para ser sorte: e uma
+//= copia de Prontera que ja mora no GRF, 312x392 igual a original, com os
+//= mesmos 1480 objetos e os mesmos modelos coreanos de Prontera (muralha,
+//= torre do relogio, casas) - conferido modelo a modelo com ferramentas/
+//= rsw.py em 2026-08-26. Ja esta no conf/maps_athena.conf, ja esta no
+//= db/map_cache.dat, e tem ZERO NPC: nenhuma linha de `npc/` a menciona.
+//= Ou seja, uma Prontera inteira e vazia, de graca.
+//
+//= NAO foi usada instancia, e o motivo e uma linha do rAthena: o
+//= instance_addnpc (src/map/instance.cpp:590) faz
+//= `map_foreachinallarea(instance_addnpc_sub, it.src_m, ..., BL_NPC, it.m)`,
+//= ou seja CLONA TODOS OS NPCS do mapa-molde. Instanciar a nossa Prontera
+//= clonaria as 22 lojas, as Kafras e o resto, por party. Com a pprontera
+//= vazia a instancia ate seria viavel, mas ai o evento perderia o que ele
+//= tem de melhor - varias pessoas curando a mesma pedra e o broadcast de
+//= MVP para o servidor inteiro.
+//
+//= O RODIZIO DO bRO NAO SOBREVIVEU, e esta e a unica coisa do evento que
+//= foi tentada e desfeita no mesmo dia. A ideia era boa no papel: como os
+//= tres mapas nao existem, trocar as QUATRO POSICOES das pedras por bloco
+//= de dias, imitando os tres minimapas da pagina do bRO. Foram doze
+//= celulas, escolhidas por varredura, espalhadas pela cidade inteira.
+//
+//= Em jogo aquilo era um MAPA VAZIO. As pedras ficavam a ate 200 celulas
+//= do ponto de chegada, em direcoes que ninguem tinha por que adivinhar; o
+//= jogador entrava, ouvia o Varmunt mandar procurar, e nao via nada em
+//= lugar nenhum. Decisao do dono em 2026-08-26, depois de entrar: as
+//= quatro ficam SEMPRE EM VOLTA DO CENTRO, nas mesmas celulas.
+//
+//= Variedade que ninguem acha nao e variedade. As posicoes estao no OnInit,
+//= uma por quadrante, a 16-17 celulas do Varmunt - e agora vem marcadas no
+//= mini-mapa (`viewpoint`), que era o que a fala dele ja prometia sem que
+//= ninguem tivesse escrito.
+//
+//===== O CEU QUENTE E UMA MUDANCA DE CLIENTE (nao esquecer o patch) ========
+//
+//= A pedido do dono em 2026-08-26, a pprontera nao e a Prontera de sempre:
+//= ela tem a luz puxada, como a dimensao corrompida do bRO - um roxo
+//= avermelhado na intensidade 4 de 10 do ferramentas/tinge_dimensao.py.
+//= (Foram tres tentativas: a 1a subiu o azul e saiu MAGENTA; a 2a derrubou
+//= o azul e saiu laranja suave demais. A regra e que quem manda no matiz e
+//= a posicao relativa de verde e azul - B > G puxa para o roxo.)
+//= Isso NAO esta neste arquivo e nao vai por deploy - e um
+//= `cliente\data\pprontera.rsw` com a luz ambiente trocada, que vence o
+//= GRF pelo DataFolderFirst e chega ao jogador POR PATCH (CLAUDE.md 4.18).
+//
+//= Consequencia que vale escrever: quem nao tiver o patch joga o evento
+//= inteiro, sem erro nenhum, numa Prontera de cor normal. A falha e calada
+//= e so cosmetica - mas e a diferenca entre "uma fenda dimensional" e "a
+//= cidade de sempre com pedras no chao".
+//
+//===== A ECONOMIA, COM OS NUMEROS NA MAO ===================================
+//
+//= A missao paga 7 Moedas de Estimacao por dia. Um sorteio na Maquina
+//= custa 10, e a propria tabela devolve moeda em cinco das 58 linhas -
+//= media de 4,14 por sorteio. Custo liquido: 5,86 moedas, ou seja ~1,2
+//= sorteios por dia para quem so faz a missao diaria.
+//
+//= As chances sao as do bRO ESCALADAS, por decisao do dono na mesma data:
+//= o Ovo de Freeoni sai de 0,006664% para 0,3332%, que e x50. Multiplicar
+//= a tabela inteira por 50 e IMPOSSIVEL - somaria 276% -, entao o fator
+//= decresce conforme o premio fica comum (x50 no Freeoni, x10 no Gato de
+//= Nove Caudas, x5 nos nove raros, x4 nos doze comuns) e o espaco sai das
+//= comidas de pet, que continuam sendo a maior parte da tabela. A soma
+//= fecha em 1.000.000 milionesimos exatos, conferida por
+//= ferramentas/ ... nao: pelo script de apoio que gerou os setarray.
+//
+//= O que isso da na pratica, e o dono ja sabe: Freeoni e 1 em 300
+//= sorteios, ou uns 250 dias de missao diaria pura. E o premio maximo e
+//= tem dois atalhos - o reset pago (Moeda Nova, abaixo) e os 30 Amagos do
+//= Manouro. Se doer, o lugar de calibrar e o array .Peso do OnInit da
+//= Maquina, num arquivo so, e nada mais precisa mudar junto.
+//
+//===== O RESET DIARIO E AS 4 DA MANHA ======================================
+//
+//= No bRO a missao repete "apos as 4 horas da manha". Isso NAO foi feito
+//= com quest de TimeLimit, que seria o caminho obvio (CLAUDE.md secao 5
+//= explica que `4h` sem o `+` e hora exata e devolve o proximo 04:00) - e
+//= foi de proposito: quest nova exige entrada na tabela do CLIENTE, e
+//= quest que o cliente nao conhece DERRUBA O CLIENTE, uma caixa de erro
+//= por missao e por atualizacao da janela. Custou um bug em 2026-08-08 nas
+//= placas da Ordem. Um temporizador de evento nao vale esse risco.
+//
+//= O que se usa aqui e um "dia logico" calculado na mao, guardado na
+//= variavel permanente `anomalia_dia` do personagem. A conta esta na
+//= funcao AnomaliaDia abaixo e nao depende de constante de fuso: ela
+//= descobre o deslocamento comparando a hora LOCAL (gettime(DT_HOUR), que
+//= o servidor da em America/Sao_Paulo) com a hora UTC derivada do
+//= gettimetick(2), e so entao corta o dia as 4h. Se o horario de verao
+//= voltar, ela acompanha sozinha.
+//
+//===== ARMADILHAS DO PROJETO QUE ESTE ARQUIVO RESPEITA ======================
+//
+//= - `||` e `&&` NAO fazem curto-circuito no script do rAthena (secao 5).
+//=   Nenhuma guarda aqui usa os dois lados na mesma linha quando o segundo
+//=   depende do primeiro; onde precisou, e `if` aninhado.
+//= - `rand(1)` MATA o script. Todo rand daqui tem argumento >= 2, e o
+//=   sorteio da Maquina usa rand(1000000), constante.
+//= - zero em variavel `.` ou `.@` APAGA a entrada, entao toda coluna de
+//=   inteiro termina em SENTINELA -1 e a conferencia de tamanho compara
+//=   as tres colunas (secao 4.11 e a entrada do EQI_ACC_L na secao 5).
+//= - `mes` que comeca com ESPACO cola na linha anterior. Onde ha lista, o
+//=   recuo e com "- ", nunca com espaco.
+//= - `getitem` com a mochila cheia LARGA O ITEM NO CHAO. Por isso todo
+//=   pagamento aqui passa por checkweight antes.
+//
+//===========================================================================
+
+//===== NINGUEM MORA NA DIMENSAO ============================================
+//
+//= Pedido do dono em 2026-08-26, depois do primeiro teste em jogo: quem
+//= deslogar la dentro tem de RELOGAR EM PRONTERA, e nao na fenda.
+//
+//= Quem faz isso e o `nosave` com ponto de volta explicito. O caminho e o
+//= `pc_set_lastpoint`/`pc_setsavepoint` (src/map/pc.cpp:2001): no login, se
+//= o mapa de onde o personagem saiu tem MF_NOSAVE e um `save.map`
+//= definido, o servidor TROCA o last_point pelo ponto do mapflag antes de
+//= colocar o jogador no mundo.
+//
+//= Duas consequencias boas, e a segunda so o comentario do proprio rAthena
+//= revela - `"Maybe since the player's logout the nosave mapflag was added
+//= to the map"`:
+//=   - a troca acontece NO LOGIN, e nao na hora de deslogar. Entao isto
+//=     tambem RESGATA quem ja esta preso la dentro de antes desta linha
+//=     existir - nao e preciso mexer no banco;
+//=   - o personagem nunca chega a ter `pprontera` gravado como ponto de
+//=     retorno, entao morrer tambem nao o traz de volta para ca.
+//
+//= `nomemo` e `nobranch` vao junto por serem a mesma intencao: o primeiro
+//= impede memorizar a dimensao com o Portal (que seria entrar sem passar
+//= pelo Varmunt), e o segundo impede Galho Seco - um mapa que ja invoca MVP
+//= sozinho nao precisa de ajuda. NAO se usa `noreturn` aqui, e de proposito:
+//= ele bloquearia a Asa de Borboleta, que e justamente como se SAI daqui.
+//
+//===========================================================================
+pprontera	mapflag	nosave	prontera,156,300
+pprontera	mapflag	nomemo
+pprontera	mapflag	nobranch
+// O `loadevent` e o que faz o OnPCLoadMapEvent deste arquivo disparar quando
+// alguem entra na dimensao - e por ele que as Pedras sao marcadas no
+// mini-mapa de quem chega. Sem o mapflag aquele label NUNCA roda, e a falha
+// e calada: o jogador entra e nao ha marca nenhuma.
+pprontera	mapflag	loadevent
+
+// A dimensao inteira e este NPC: ele guarda o estado da rodada, as pedras,
+// as ondas e a tabela de sorteio nao - essa e da Maquina. O nome unico
+// VarmuntDim e o que os outros NPCs chamam por donpcevent.
+pprontera,156,190,4	script	Sábio Varmunt#dim::VarmuntDim	654,{
+	if (.rodada == 2) {
+		mes "[Sábio Varmunt]";
+		mes "As quatro Pedras voltaram a brilhar. A fenda está se fechando";
+		mes "sozinha — sinta o ar ficando mais leve.";
+		next;
+		// NAO HA MAIS TRAVA DE PARTICIPACAO AQUI, e e decisao, nao
+		// esquecimento. Existia um `@anomalia_rodada != .rodada_num` que
+		// respondia "voce chegou depois do trabalho feito" - e ele era
+		// injusto em dois casos comuns: quem ja estava no mapa quando a
+		// rodada comecou (nao passava pelo menu) e quem curou sem falar
+		// com o Varmunt antes. O dono levou essa recusa em 2026-08-26
+		// tendo acabado de curar.
+		//
+		// Quem esta aqui falando com ele esta DENTRO da dimensao, e a
+		// janela de pagamento dura 30 segundos - o proveito de entrar de
+		// carona no fim e pequeno. O que protege a economia e o reset
+		// diario logo abaixo, que vale por personagem e por dia; essa sim
+		// e a trava que importa.
+		.@dia = callfunc("AnomaliaDia");
+		if (anomalia_dia == .@dia) {
+			mes "[Sábio Varmunt]";
+			mes "Você já recebeu a sua parte hoje. A fenda cobra caro de";
+			mes "quem atravessa demais no mesmo dia.";
+			next;
+			mes "[Sábio Varmunt]";
+			mes "Volte depois das quatro da manhã — ou procure o Manouro,";
+			mes "ao lado da Máquina, se a pressa for grande.";
+			close;
+		}
+		if (checkweight(25376, 7) == 0) {
+			mes "[Sábio Varmunt]";
+			mes "Você não tem como carregar a recompensa. Guarde alguma";
+			mes "coisa e fale comigo de novo, antes que a fenda feche.";
+			close;
+		}
+		anomalia_dia = .@dia;
+		getitem 25376, 7;
+		// As Pedras cumpriram o papel: tirar as marcas do mini-mapa para
+		// nao apontarem para um chao vazio ate a proxima rodada.
+		callsub S_Desmarca;
+		mes "[Sábio Varmunt]";
+		mes "Sete Moedas de Estimação. Leve-as à Máquina Dimensional — e";
+		mes "saia daqui antes que a fenda feche com você dentro.";
+		// Devolve para Prontera junto com o pagamento (decisao do dono em
+		// 2026-08-26). Fecha o ciclo no lugar certo: as moedas so servem
+		// na Maquina, que fica a doze celulas do ponto de chegada, e
+		// ninguem tem o que fazer na dimensao depois de receber.
+		//
+		// `close2` e nao `close`: o `close` devolve o controle ao jogador e
+		// o script acaba ali, entao o warp nunca rodaria. O par
+		// close2/warp/end e o mesmo do "Tire-me daqui" mais abaixo.
+		close2;
+		warp "prontera", 156, 300;
+		end;
+	}
+	mes "[Sábio Varmunt]";
+	mes "Esta Prontera não é a sua. É a mesma cidade vista de um ângulo";
+	mes "que não deveria existir.";
+	next;
+	mes "[Sábio Varmunt]";
+	mes "Quatro Pedras Guardiãs a sustentam, e as quatro estão morrendo.";
+	mes "Pedra que apaga leva um pedaço do mundo junto.";
+	next;
+	switch (select("O que são as Pedras?:Quero ajudar a restaurá-las.:Tire-me daqui.")) {
+	case 1:
+		mes "[Sábio Varmunt]";
+		mes "Não se quebram e não se defendem. Elas só precisam de CURA —";
+		mes "Curar, Curatio, Santuário, o que você souber lançar.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "E ouça bem: é CURA de verdade, magia de Acólito. Espada não";
+		mes "adianta, poção não adianta, e quem não tem a magia não tem o";
+		mes "que fazer aqui além de segurar as Entidades.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "- Aponte a magia de cura para a Pedra, como faria num ferido.";
+		mes "- Quatro Pedras, todas até o topo.";
+		mes "- As Entidades Sombrias nascem sem parar até o fim.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "E fique atento ao céu: às vezes a fenda deixa passar algo bem";
+		mes "maior que uma Entidade. Quando isso acontece, o mundo inteiro";
+		mes "fica sabendo.";
+		close;
+	case 2:
+		if (.rodada == 0) {
+			donpcevent "VarmuntDim::OnComecaRodada";
+		}
+		callsub S_Marca;
+		mes "[Sábio Varmunt]";
+		mes "Então vá. As quatro estão em volta desta praça, marcadas no";
+		mes "seu mini-mapa pelo brilho que ainda lhes resta.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "Quando as quatro estiverem inteiras, volte a falar comigo.";
+		close;
+	case 3:
+		mes "[Sábio Varmunt]";
+		mes "Volte quando tiver estômago para isto.";
+		close2;
+		warp "prontera", 156, 300;
+		end;
+	}
+
+OnInit:
+	// AS QUATRO PEDRAS FICAM EM VOLTA DO CENTRO, e sempre nas mesmas
+	// celulas. Decisao do dono em 2026-08-26, depois de entrar na dimensao
+	// e nao achar nada: "coloque pra aparecer sempre em volta do centro".
+	//
+	// A primeira versao espalhava as quatro pela Prontera inteira - ate 200
+	// celulas do ponto de chegada, com um rodizio de tres arranjos por dia
+	// da semana. Em jogo aquilo era um mapa VAZIO: o jogador chegava, o
+	// Varmunt mandava procurar, e nao havia nada a vista em nenhuma
+	// direcao. O rodizio caiu junto; o que ele imitava (os tres minimapas
+	// da pagina do bRO) nao vale o custo de nao se achar a Pedra.
+	//
+	// Uma por quadrante, a 16-17 celulas do Varmunt - perto o bastante para
+	// aparecerem na tela em duas corridas, longe o bastante para as quatro
+	// nao virarem um amontoado. Escolhidas por varredura do map_cache: as
+	// mais proximas de um quadrado simetrico ideal que tivessem raio 2
+	// livre em volta (a cruz perfeita nao serve - `156,205`, ao norte,
+	// esbarra na fonte da praca).
+	//
+	//     SO 145,179      SE 167,179
+	//              (156,190)
+	//     NO 143,201      NE 168,201
+	setarray .px[0], 145,167,143,168;
+	setarray .py[0], 179,179,201,201;
+	setarray .px[4], -1;
+	setarray .py[4], -1;
+
+	// HP de cada Pedra. NUMERO CALIBRADO EM JOGO, e o caminho ate ele foi
+	// o mais caro deste evento.
+	//
+	// Estreou em 50.000, escolhido supondo que um Curar entregasse uns
+	// 2.000. A formula diz outra coisa (skill.cpp:552):
+	//
+	//     hp = ((nivel + INT) / 8) * (4 + nivel_da_magia * 8)
+	//
+	// Num personagem de nivel 200 com INT 200 isso da (400/8) * 84 =
+	// ~4.200 por lancamento. Mesmo assim, 50.000 por Pedra eram ~12
+	// lancamentos em CADA UMA e ~48 na rodada - e o dono relatou em
+	// 2026-08-26 exatamente o que esse numero produz: "eu consegui curar,
+	// mas fiquei curando muito e nao dava nada".
+	//
+	// 15.000 davam ~4 lancamentos por Pedra e ~16 na rodada, para uma
+	// pessoa so - o numero que fez a mecanica ser aprovada em jogo. Com a
+	// mecanica fechada, o dono pediu QUATRO VEZES aquilo (2026-08-26):
+	// 60.000 por Pedra, ~14 lancamentos em cada e ~57 na rodada. E o passo
+	// de "provar que funciona" para "dar trabalho de verdade", e escala
+	// para baixo sozinho quando ha mais de um curandeiro.
+	.PedraHpMax = 60000;
+	// Com quanto ela nasce: uns 7% do maximo, "moribunda".
+	.PedraHpIni = 1000;
+
+	// As Entidades Sombrias do bRO. O Serial Killer do bRO e o
+	// BLOODY_MURDERER (1507) do rAthena - o nome PT sai de
+	// db/guerra/mob_db.yml, gerado do navi_mob_br.lub do proprio bRO.
+	setarray .Sombria[0], 1503,1505,1504,1507;
+	setarray .Sombria[4], -1;
+
+	// Os MVPs que a fenda pode deixar passar. O bRO diz so "um MVP
+	// aleatorio, com chance desconhecida e bem baixa" - a lista e a chance
+	// sao ESCOLHA NOSSA, e e o unico lugar deste evento que nao veio de
+	// fonte. Sao MVPs classicos que este cliente desenha; o Phreeoni abre a
+	// lista de proposito, porque e o dono do premio maximo da Maquina.
+	setarray .Mvp[0], 1159,1038,1039,1046,1059,1086,1087,1112,1115,1147,1150,1157,1190,1251,1252;
+	setarray .Mvp[15], -1;
+	// Em milesimos, por onda. 20 = 2%.
+	.MvpChance = 20;
+
+	// Teto de monstros vivos no mapa. Sem ele uma rodada longa com pouca
+	// gente vira um mapa entupido de Entidades, e o servidor sente.
+	//
+	// Subiu de 60 para 180 JUNTO com o triplo de monstros por onda
+	// (2026-08-26), e nao por pedido separado: mantido em 60, o teto seria
+	// alcancado em dez ondas e as Entidades parariam de nascer: o triplo
+	// pedido nao apareceria em jogo. Sao 30 ondas de folga.
+	//
+	// E ESTE e o botao a mexer se o mapa pesar - nao a quantidade por onda.
+	.TetoMobs = 180;
+
+	// As duas colunas de posicao andam juntas, e a sentinela -1 fecha cada
+	// uma (zero em variavel `.` apaga a entrada, entao contar sem sentinela
+	// mentiria). Coluna com um valor a menos desloca tudo e nao da erro.
+	if (getarraysize(.px) - 1 != 4) {
+		debugmes "ANOMALIA: .px tem " + (getarraysize(.px) - 1) + " posicoes, e nao 4";
+	}
+	if (getarraysize(.py) - 1 != 4) {
+		debugmes "ANOMALIA: .py tem " + (getarraysize(.py) - 1) + " posicoes, e nao 4";
+	}
+
+	.rodada = 0;
+	.rodada_num = 0;
+	initnpctimer;
+	debugmes "ANOMALIA: dimensao pronta - 4 pedras de " + .PedraHpMax + " HP, comecando em " + .PedraHpIni + ".";
+	end;
+
+// Um tique por segundo. O corpo so trabalha quando ha gente na dimensao -
+// mapa vazio custa uma comparacao e volta a dormir.
+OnTimer1000:
+	setnpctimer 0;
+	if (.rodada == 0) {
+		if (getmapusers("pprontera") > 0) {
+			donpcevent "VarmuntDim::OnComecaRodada";
+		}
+		end;
+	}
+	if (.rodada == 2) {
+		.espera -= 1;
+		if (.espera <= 0) {
+			donpcevent "VarmuntDim::OnLimpaRodada";
+		}
+		end;
+	}
+
+	// Mapa esvaziou no meio da rodada: encerra e limpa. Sem isto as
+	// Entidades continuariam nascendo de dez em dez segundos numa Prontera
+	// sem ninguem, ate bater no teto - e ficariam la.
+	if (getmapusers("pprontera") == 0) {
+		donpcevent "VarmuntDim::OnLimpaRodada";
+		end;
+	}
+
+	// --- rodada em curso: mede as quatro Pedras ---
+	.@somaHp = 0;
+	for (.@i = 0; .@i < 4; .@i++) {
+		if (unitexists(.pedra[.@i]) == 0) {
+			// Pedra derrubada por alguem (ou perdida num reload): reergue no
+			// mesmo lugar, com o HP que ela tinha. Nao ha aviso: a rodada
+			// simplesmente continua.
+			callsub S_Planta, .@i, .hpguardado[.@i];
+		}
+		// getunitdata NAO E FUNCAO: e comando que PREENCHE UM ARRAY, e os
+		// indices sao as proprias constantes UMOB_*. Escrito como
+		// `.@hp = getunitdata(gid, UMOB_HP)` ele devolve SEMPRE ZERO, com
+		// um aviso que so aparece na janela do map-server. Custou a manha
+		// de 2026-08-26: o dono curava, a Pedra recebia, e as quatro liam
+		// "0 de 15000" - o que parecia cura que nao pega e era leitura
+		// errada. Ver CLAUDE.md secao 5.
+		getunitdata .pedra[.@i], .@dados;
+		.@hp = .@dados[UMOB_HP];
+
+		// O FEEDBACK, e ele e o coracao desta mecanica - nao um enfeite.
+		//
+		// O cliente de RO NAO DESENHA BARRA DE VIDA DE MONSTRO. Sem isto o
+		// jogador lanca cura na Pedra, ve o numero verde subir e... nada
+		// mais: nao sabe se falta um lancamento ou cinquenta, nem se o
+		// evento esta funcionando. Foi exatamente o relato do dono em
+		// 2026-08-26: "curava, com um valor, mas eu nao tive feedback,
+		// entao nao sabia se algum dia ia parar".
+		//
+		// Entao a propria Pedra anuncia o quanto ja voltou, toda vez que o
+		// HP dela sobe. Um balao por segundo no maximo (este laco e o
+		// tique de 1s), e so quando ha progresso de verdade.
+		if (.@hp > .hpguardado[.@i]) {
+			.@pc = .@hp * 100 / .PedraHpMax;
+			if (.@pc >= 100) {
+				unittalk .pedra[.@i], "A luz voltou por inteiro!";
+			}
+			else {
+				unittalk .pedra[.@i], "Pedra Guardiã: " + .@pc + "% restaurada";
+			}
+			specialeffect EF_HEAL, AREA, .pedra[.@i];
+		}
+
+		.hpguardado[.@i] = .@hp;
+		.@somaHp += .@hp;
+	}
+	.@alvo = .PedraHpMax * 4;
+
+	// Aviso do CONJUNTO, a cada dez por cento vencidos. Era de 25 em 25 e
+	// passou a 10 em 10 na mesma rodada em que o balao da Pedra entrou
+	// (2026-08-26): o balao diz como vai UMA Pedra, este diz como vai a
+	// rodada, e sem os dois o jogador nao sabe se esta perto do fim.
+	//
+	// O `.aviso` guarda a ultima dezena anunciada, entao cada faixa sai uma
+	// vez so - e nao a cada segundo.
+	.@pct = .@somaHp * 100 / .@alvo;
+	.@dez = .@pct / 10;
+	if (.@dez > .aviso) {
+		if (.@dez < 10) {
+			.aviso = .@dez;
+			mapannounce "pprontera", "As Pedras Guardiãs: " + (.@dez * 10) + "% da luz restaurada.", bc_map, 0x70A0FF;
+		}
+	}
+
+	if (.@somaHp >= .@alvo) {
+		donpcevent "VarmuntDim::OnFechaRodada";
+		end;
+	}
+
+	// --- ondas, de dez em dez segundos ---
+	.tique += 1;
+	if (.tique % 10 == 0) {
+		donpcevent "VarmuntDim::OnOnda";
+		// Sonda de console, de dez em dez segundos. Existe porque a unica
+		// pergunta que importa nesta mecanica - "a cura esta ENTRANDO?" -
+		// nao tem resposta na tela: o cliente nao desenha barra de vida de
+		// monstro. Com esta linha, quem estiver olhando o map-server ve o
+		// HP das quatro andar (ou nao andar) enquanto alguem lanca a magia.
+		// `debugmes` e nao `ShowInfo` de proposito: informacao nao tem bit
+		// no console_msg_log 3 e nao chegaria ao arquivo (CLAUDE.md sec.5).
+		debugmes "ANOMALIA: pedras " + .hpguardado[0] + "/" + .hpguardado[1] + "/" +
+			.hpguardado[2] + "/" + .hpguardado[3] + " de " + .PedraHpMax +
+			"  (" + (.@somaHp * 100 / .@alvo) + "%)";
+	}
+	end;
+
+OnComecaRodada:
+	if (.rodada != 0) end;
+	.rodada = 1;
+	.rodada_num += 1;
+	.tique = 0;
+	.aviso = 0;
+
+	for (.@i = 0; .@i < 4; .@i++) {
+		callsub S_Planta, .@i, .PedraHpIni;
+		.hpguardado[.@i] = .PedraHpIni;
+	}
+	// Marca as quatro para TODO MUNDO que ja esta no mapa. E `viewpointmap`
+	// e nao `viewpoint` porque este label roda pelo temporizador, sem
+	// jogador anexado - o `viewpoint` comum precisa de um RID e aqui nao ha
+	// nenhum. Sem esta linha, quem entrou ANTES da rodada comecar ficaria
+	// sem marca ate falar com o Varmunt de novo.
+	for (.@i = 0; .@i < 4; .@i++) {
+		viewpointmap "pprontera", 1, .px[.@i], .py[.@i], .@i + 1, 0xFF3030;
+	}
+	mapannounce "pprontera", "A fenda se abre. Quatro Pedras Guardiãs pedem socorro.", bc_map, 0xFFCC00;
+	end;
+
+// Planta a Pedra <numero 0..3> com <hp>. Chamado no comeco da rodada e de
+// novo se alguem derrubar a Pedra no meio.
+// Marca as quatro Pedras no mini-mapa de QUEM ESTIVER ANEXADO. Precisa de um
+// jogador (o viewpoint e por personagem), entao so e chamado de dentro de um
+// dialogo ou do OnPCLoadMapEvent - nunca do OnTimer, que roda sem RID.
+//
+// Sem isto o Varmunt prometia uma marca que nao existia, e foi assim que a
+// dimensao foi ao ar em 2026-08-26: o jogador chegava, ouvia "estao marcadas
+// no seu mini-mapa" e nao tinha marca nenhuma. E a secao 4.17 do CLAUDE.md
+// pega no ato - o texto descrevendo uma regra que ninguem escreveu.
+S_Marca:
+	for (.@mi = 0; .@mi < 4; .@mi++) {
+		viewpoint 1, .px[.@mi], .py[.@mi], .@mi + 1, 0xFF3030;
+	}
+	return;
+
+// Apaga as quatro marcas. O `2` e a acao de limpar.
+S_Desmarca:
+	for (.@mi = 0; .@mi < 4; .@mi++) {
+		viewpoint 2, .px[.@mi], .py[.@mi], .@mi + 1, 0xFF3030;
+	}
+	return;
+
+// Dispara quando alguem PISA na dimensao - depende do mapflag `loadevent`
+// la em cima. O teste do mapa nao e paranoia: este label e chamado para
+// TODO mapa que tenha aquele mapflag, e o servidor tem outros.
+OnPCLoadMapEvent:
+	if (strcharinfo(3) != "pprontera") end;
+	if (.rodada == 1) {
+		callsub S_Marca;
+	}
+	end;
+
+// Os nomes .@pn/.@php/.@pk tem prefixo de proposito: `callsub` NAO abre
+// escopo novo - ele enxerga e sobrescreve as `.@` de quem chamou (so o
+// `callfunc` isola). Um `.@hp` aqui dentro apagaria o `.@hp` do laco do
+// OnTimer1000, que mede as Pedras.
+S_Planta:
+	.@pn = getarg(0);
+	.@php = getarg(1);
+	// Piso: `.hpguardado` de uma Pedra que nunca foi plantada vale 0 (zero
+	// em variavel `.` nao guarda - ele APAGA a entrada), e uma Pedra com
+	// HP 0 nasceria morta. Neste caso ela recomeca moribunda, como no
+	// inicio da rodada.
+	if (.@php < 1) .@php = .PedraHpIni;
+	.@pk = .@pn;
+	monster "pprontera", .px[.@pk], .py[.@pk], "Pedra Guardiã", 1907, 1;
+	.pedra[.@pn] = $@mobid[0];
+	// SAO TRES CHAMADAS, E A ORDEM E O REMEDIO PARA UM BUG DO rAthena.
+	//
+	// O 1907 nasce com 120.500 de HP e nos queremos 15.000. Reduzir o
+	// maximo com `UMOB_MAXHP` sozinho CORROMPE o HP, porque o
+	// status_set_maxhp (src/map/status.cpp:1343) faz:
+	//
+	//     heal = maxhp - status->max_hp;      // uint32 - uint32
+	//
+	// com os dois lados `uint32`. Reduzir da underflow: 15000 - 120500 vira
+	// um numero gigante POSITIVO, o `if (heal > 0)` acerta, e o servidor
+	// CURA em vez de reduzir. Medido em 2026-08-26: o HP foi para
+	// 2.147.604.147 e nenhum `UMOB_HP` depois disso conseguia trazer de
+	// volta - ficava travado em 120.500.
+	//
+	// A saida e nunca deixar o HP acima do maximo NOVO na hora da troca:
+	//   1) baixa o HP primeiro, ainda dentro do maximo velho;
+	//   2) troca o maximo - agora o underflow ainda acontece, mas o
+	//      status_heal que ele dispara e limitado ao maximo recem-gravado,
+	//      entao o HP so sobe ate 15.000;
+	//   3) baixa o HP de novo, agora dentro do maximo certo.
+	//
+	// Medido passo a passo, nesta ordem exata, antes de entrar aqui.
+	setunitdata .pedra[.@pn], UMOB_HP, .@php;
+	setunitdata .pedra[.@pn], UMOB_MAXHP, .PedraHpMax;
+	setunitdata .pedra[.@pn], UMOB_HP, .@php;
+	// 1% do dano recebido. Nao e enfeite: sem isso um jogador entediado
+	// derruba a Pedra e a rodada anda para tras. Nao se usa 0 aqui - o
+	// campo e porcentagem inteira e 1 e o menor valor util (CLAUDE.md
+	// secao 5, a entrada do damagetaken).
+	setunitdata .pedra[.@pn], UMOB_DAMAGETAKEN, 1;
+	// Le de volta o que o servidor REALMENTE gravou. Nao e paranoia: em
+	// 2026-08-26 as Pedras nasceram cheias e a rodada fechava no mesmo
+	// segundo, e so esta leitura separa "o setunitdata nao pegou" de "o
+	// valor que eu mandei ja estava errado". O prefixo .@p e obrigatorio
+	// aqui - callsub nao isola `.@`.
+	getunitdata .pedra[.@pn], .@pconf;
+	debugmes "ANOMALIA: plantou " + .@pn + " gid=" + .pedra[.@pn] +
+		" pedi hp=" + .@php + " -> ficou " + .@pconf[UMOB_HP] +
+		"/" + .@pconf[UMOB_MAXHP];
+	return;
+
+OnOnda:
+	if (.rodada != 1) end;
+	// Label VAZIO, nao "all": o mobcount conta monstros que tenham aquele
+	// label, e o especial de "todos" e a string vazia - que conta os sem
+	// label, que e exatamente o caso dos nossos (doc/script_commands.txt).
+	// Com "all" ele procuraria um label chamado all, acharia zero, e o teto
+	// nunca pegaria - calado, ate o mapa entupir.
+	if (mobcount("pprontera", "") >= .TetoMobs) end;
+
+	// A onda nasce em volta de uma das quatro Pedras, sorteada.
+	.@n = rand(4);
+	.@k = .@n;
+	.@x = .px[.@k];
+	.@y = .py[.@k];
+	.@qual = .Sombria[rand(4)];
+	// O <xs>,<ys> do areamonster e um RETANGULO de cantos, nao um raio -
+	// aqui sao 20x20 celulas em volta da Pedra.
+	//
+	// SEIS por onda, e nao dois: o dono pediu o TRIPLO em 2026-08-26, com
+	// a instrucao de "manter a cadencia, apenas aumentar a quantidade por
+	// spawn". Por isso o numero mudou aqui e o intervalo de dez segundos
+	// do OnTimer1000 ficou onde estava - sao dois botoes diferentes, e
+	// mexer no errado deixaria as Entidades chegando em rajadas curtas em
+	// vez de em maior numero.
+	//
+	// O `.TetoMobs` continua sendo o limite real: com 6 por onda ele e
+	// alcancado tres vezes mais rapido, e e o que impede a rodada longa de
+	// entupir a Prontera.
+	areamonster "pprontera", .@x - 10, .@y - 10, .@x + 10, .@y + 10, "--ja--", .@qual, 6;
+
+	if (rand(1000) < .MvpChance) {
+		.@m = .Mvp[rand(15)];
+		monster "pprontera", .@x, .@y, "--ja--", .@m, 1;
+		announce "Anomalia Dimensional: algo grande atravessou a fenda em Prontera!", bc_all, 0xFF3030;
+	}
+	end;
+
+OnFechaRodada:
+	if (.rodada != 1) end;
+	.rodada = 2;
+	// Meio minuto para quem estava curando falar com o Varmunt e receber.
+	.espera = 30;
+	// killmonsterall, e nao killmonster com "all": o buildin compara o
+	// label com strcmp(event,"All") EXATO (script.cpp:11486), entao "all"
+	// minusculo nao mataria nada e nao diria nada.
+	killmonsterall "pprontera";
+	// As Pedras morreram junto com o killmonster; zerar os GIDs para o
+	// tique nao tentar reergue-las enquanto se paga.
+	for (.@i = 0; .@i < 4; .@i++) {
+		.pedra[.@i] = 0;
+	}
+	mapannounce "pprontera", "As quatro Pedras estão inteiras. Falem com Varmunt, no centro.", bc_map, 0xFFCC00;
+	end;
+
+OnLimpaRodada:
+	// Tira as marcas de quem ainda estiver la: sem isto o mini-mapa
+	// continuaria apontando quatro Pedras que ja nao existem.
+	for (.@i = 0; .@i < 4; .@i++) {
+		viewpointmap "pprontera", 2, .px[.@i], .py[.@i], .@i + 1, 0xFF3030;
+	}
+	.rodada = 0;
+	// killmonsterall, e nao killmonster com "all": o buildin compara o
+	// label com strcmp(event,"All") EXATO (script.cpp:11486), entao "all"
+	// minusculo nao mataria nada e nao diria nada.
+	killmonsterall "pprontera";
+	end;
+}
+
+// Varmunt do lado de ca. E o mesmo homem - o de la e uma projecao dele, e
+// o dialogo diz isso -, mas sao dois NPCs porque um mora em cada mapa.
+prontera,156,303,4	script	Sábio Varmunt::VarmuntPrt	654,{
+	mes "[Sábio Varmunt]";
+	mes "Você sente? O ar aqui está mais fino do que devia. Há uma fenda";
+	mes "aberta a três passos de nós, e ela não deveria existir.";
+	next;
+	if (BaseLevel < 60) {
+		mes "[Sábio Varmunt]";
+		mes "Mas não. Atravessar isso com a sua experiência seria pedir";
+		mes "que você não voltasse.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "Volte no nível 60. A fenda vai estar aqui — infelizmente.";
+		close;
+	}
+	mes "[Sábio Varmunt]";
+	mes "Do outro lado há uma Prontera que não é esta. Mesmas ruas, mesma";
+	mes "torre, e um céu que ninguém deveria ver duas vezes.";
+	next;
+	switch (select("Atravessar a fenda.:O que há do outro lado?:Deixe estar.")) {
+	case 1:
+		mes "[Sábio Varmunt]";
+		mes "Então segure firme o que estiver carregando.";
+		close2;
+		warp "pprontera", 156, 186;
+		end;
+	case 2:
+		mes "[Sábio Varmunt]";
+		mes "Quatro Pedras Guardiãs sustentam aquela cidade, e as quatro";
+		mes "estão se apagando. Elas não precisam de espada: precisam de";
+		mes "cura.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "Leve quem saiba Curar, Curatio ou Santuário — ou aprenda. E";
+		mes "leve companhia: as Entidades Sombrias não gostam de visitas.";
+		next;
+		mes "[Sábio Varmunt]";
+		mes "Quem restaura as quatro recebe Moedas de Estimação. A Máquina";
+		mes "Dimensional, logo ali, sabe o que fazer com elas.";
+		close;
+	case 3:
+		mes "[Sábio Varmunt]";
+		mes "Deixar estar é o que todo mundo faz. É por isso que ela";
+		mes "cresce.";
+		close;
+	}
+}
+
+//===== O MENSAGEIRO QUE ESTAVA NO CAMINHO ==================================
+//
+//= Este bloco NAO e do evento - e a conta que o evento teve de pagar. O
+//= `Continental Messenger#01` do rAthena mora em `prontera 164,304`, e a
+//= nossa Maquina Dimensional nasceu em `165,304`: uma celula ao lado.
+//
+//= Pior que a vizinhanca: aquele NPC tem AREA DE TOQUE `3,3`, um quadrado
+//= de 7x7 celulas, e dispara uma fala na tela de quem passa. Isso cobria a
+//= Maquina inteira e o Manouro, entao quem fosse girar a Maquina levava um
+//= dialogo do Mensageiro por cima. Decisao do dono em 2026-08-26: mover o
+//= Mensageiro para `150,306`, com a area junto.
+//
+//###### Por que NAO foi com `movenpc` #######################################
+//
+//= Era o caminho obvio - uma linha num OnInit - e ele NAO move a area. O
+//= `npc_movenpc` (src/map/npc.cpp:5046) faz `map_moveblock` e mais nada:
+//= nao chama `npc_unsetcells` nem `npc_setcells`. E a area de toque nao
+//= mora no NPC, mora no MAPA: o `npc_setcells` (npc.cpp:4971) marca
+//= `CELL_NPC` celula por celula em volta dele, no carregamento.
+//
+//= Ou seja, com `movenpc` o boneco andaria e o gatilho ficaria em 164,304
+//= - a fala continuaria disparando no lugar antigo, em cima da Maquina, e
+//= no lugar novo nao dispararia nada. Falha calada e exatamente ao
+//= contrario do que se pediu.
+//
+//###### A receita de sempre, com uma sutileza ###############################
+//
+//= Entao e o caminho do CLAUDE.md secao 2: `disablenpc` no original e uma
+//= duplicata nossa na coordenada nova, com o `3,3` repetido - e ai a area
+//= nasce no lugar certo, porque o `npc_setcells` roda no carregamento da
+//= duplicata.
+//
+//= A sutileza e o NOME, e ela morde. O script do Mensageiro descobre em
+//= que cidade esta lendo o proprio nome:
+//
+//=     set .@area$,strnpcinfo(2);
+//=     if (.@area$ == "01") { set .@area$,"Prontera"; }
+//
+//= O `strnpcinfo(2)` e o pedaco depois do `#`. Ou seja o sufixo `01` NAO e
+//= enfeite: e o dado que faz o NPC dizer "Prontera". Uma duplicata chamada
+//= `#01b` faria a variavel valer "01b", nenhum `if` casaria, e o texto na
+//= tela citaria "01b" como se fosse o nome da cidade.
+//
+//= O que salva e que `strnpcinfo(2)` le o `nd->name` (script.cpp:9276) e o
+//= nome UNICO e o `nd->exname`, que e `strnpcinfo(3)`. Sao campos
+//= diferentes - entao da para manter o `#01` na parte visivel e pendurar
+//= um nome unico proprio depois do `::`. E o que a linha abaixo faz.
+//
+//= Desligar este arquivo devolve o Mensageiro a 164,304 sozinho, porque o
+//= `disablenpc` que o esconde mora aqui.
+//
+//===========================================================================
+-	script	AnomaliaMudaMensageiro	FAKE_NPC,{
+	end;
+
+OnInit:
+	// O original nao tem `::`, entao o nome unico dele e a linha inteira
+	// (CLAUDE.md secao 5). Desligar pelo nome de exibicao seria o erro
+	// classico aqui - so que neste caso os dois sao o mesmo texto.
+	disablenpc "Continental Messenger#01";
+	end;
+}
+
+prontera,150,306,3	duplicate(ConMessenger)	Continental Messenger#01::MensageiroPrt	997,3,3
+
+// A conta do "dia logico": devolve quantos dias inteiros se passaram desde
+// a epoca, cortando o dia as 4 DA MANHA em vez da meia-noite - e o "apos as
+// 4 horas da manha" do bRO.
+//
+// O deslocamento de fuso e DESCOBERTO, nao escrito: compara a hora local
+// que o servidor da (gettime(DT_HOUR), America/Sao_Paulo desde 2026-08-16)
+// com a hora UTC derivada do gettimetick(2). Assim nao ha constante para
+// envelhecer se o horario de verao voltar.
+function	script	AnomaliaDia	{
+	.@epoch = gettimetick(2);
+	.@utc = (.@epoch % 86400) / 3600;
+	.@off = gettime(DT_HOUR) - .@utc;
+	if (.@off > 12) .@off -= 24;
+	if (.@off < -12) .@off += 24;
+	return (.@epoch + .@off * 3600 - 14400) / 86400;
+}
+
+// A Maquina Dimensional: 10 Moedas de Estimacao por um sorteio. A tabela
+// inteira mora no OnInit dela, em tres colunas paralelas.
+prontera,165,304,4	script	Máquina Dimensional::MaquinaDimensional	564,{
+	mes "[Máquina Dimensional]";
+	mes "Uma caixa de vidro cheia de coisas que não combinam entre si:";
+	mes "ovos, iscas, comida de bicho e moedas soltas.";
+	next;
+	mes "[Máquina Dimensional]";
+	mes "Uma volta custa ^0000FF10 Moedas de Estimação^000000.";
+	mes "Você tem ^0000FF" + countitem(25376) + "^000000.";
+	next;
+	if (countitem(25376) < 10) {
+		mes "[Máquina Dimensional]";
+		mes "Falta moeda. O Sábio Varmunt paga sete por dia a quem cuida";
+		mes "das Pedras.";
+		close;
+	}
+	switch (select("Girar uma vez.:O que pode sair daqui?:Deixar para depois.")) {
+	case 1:
+		break;
+	case 2:
+		mes "[Máquina Dimensional]";
+		mes "O que ela cospe, do mais raro ao mais comum:";
+		mes "- Ovo de Freeoni, o fundo do poço da fenda.";
+		mes "- Ovo de Gato de Nove Caudas.";
+		mes "- Nove ovos raros, de Grand Orc a Hodremlin.";
+		mes "- Âmago Dimensional, que o Manouro troca.";
+		next;
+		mes "[Máquina Dimensional]";
+		mes "- Doze ovos comuns, de Picky a PecoPeco.";
+		mes "- Iscas de captura e comida de bicho.";
+		mes "- Moedas de Estimação de volta, de 15 a 150.";
+		close;
+	case 3:
+		close;
+	}
+
+	delitem 25376, 10;
+	// O sorteio: soma dos pesos = 1.000.000, conferido no OnInit. O rand
+	// tem constante grande, entao nao ha o risco do rand(1) (secao 5).
+	.@r = rand(1000000);
+	.@ac = 0;
+	.@n = getarraysize(.Peso) - 1;   // a sentinela nao entra
+	for (.@i = 0; .@i < .@n; .@i++) {
+		.@ac += .Peso[.@i];
+		if (.@r < .@ac) break;
+	}
+	if (.@i >= .@n) .@i = .@n - 1;   // rede: nunca cair fora da tabela
+
+	.@id = .ItemId[.@i];
+	.@qtd = .ItemQtd[.@i];
+	mes "[Máquina Dimensional]";
+	mes "A caixa chacoalha e devolve:";
+	mes "- ^0000FF" + .@qtd + " " + getitemname(.@id) + "^000000.";
+	getitem .@id, .@qtd;
+	// Ovo raro merece o servidor inteiro sabendo. So os quatro primeiros da
+	// tabela - Freeoni, Gato de Nove Caudas e os nove raros terminam no
+	// indice 10.
+	if (.@i <= 10) {
+		announce "Anomalia Dimensional: " + strcharinfo(0) + " tirou " + getitemname(.@id) + " da Máquina Dimensional!", bc_all, 0x00CCFF;
+	}
+	close;
+
+OnInit:
+	// TABELA DE SORTEIO - peso em MILIONESIMOS, soma exata 1.000.000.
+	// Gerada a partir da tabela do bROWiki com o fator do dono (ver
+	// cabecalho do arquivo). As tres colunas andam JUNTAS e terminam em
+	// sentinela -1; a conferencia logo abaixo existe porque coluna
+	// desalinhada nao da erro nenhum - entrega o premio errado, calada
+	// (CLAUDE.md 4.11).
+	setarray .ItemId[0], 9111,9096,9087,9099,9119,9055,9047,9105,9118,9054;
+	setarray .ItemId[10], 9002,7925,9010,9013,9012,9019,9018,9025,9015,9005;
+	setarray .ItemId[20], 9016,9014,9004,9009,25376,25376,12366,12360,12373,12372;
+	setarray .ItemId[30], 23189,12370,23188,12369,14574,12371,642,637,100796,23187;
+	setarray .ItemId[40], 25376,25376,25377,628,23257,23256,620,23258,633,622;
+	setarray .ItemId[50], 659,636,623,626,625,537,643,25376;
+	setarray .ItemId[58], -1;
+
+	setarray .ItemQtd[0], 1,1,1,1,1,1,1,1,1,1;
+	setarray .ItemQtd[10], 1,1,1,1,1,1,1,1,1,1;
+	setarray .ItemQtd[20], 1,1,1,1,50,30,1,1,1,1;
+	setarray .ItemQtd[30], 1,1,1,1,1,1,1,1,1,1;
+	setarray .ItemQtd[40], 150,20,1,1,1,1,1,1,1,1;
+	setarray .ItemQtd[50], 1,1,1,1,1,1,1,15;
+	setarray .ItemQtd[58], -1;
+
+	setarray .Peso[0], 3332,7996,7995,7995,7995,7995,7995,7995,7995,7995;
+	setarray .Peso[10], 7995,19990,13328,13328,13328,13328,13328,13328,13328,13328;
+	setarray .Peso[20], 13328,13328,13328,13328,3332,13330,16660,16660,16660,16660;
+	setarray .Peso[30], 16660,16660,16660,16660,16660,16660,16660,16660,16660,16660;
+	setarray .Peso[40], 16660,26650,27158,27158,27158,27158,27158,27158,27158,27158;
+	setarray .Peso[50], 27158,27158,27158,27158,27158,27158,27158,36209;
+	setarray .Peso[58], -1;
+
+	.@a = getarraysize(.ItemId);
+	.@b = getarraysize(.ItemQtd);
+	.@c = getarraysize(.Peso);
+	if (.@a != .@b) {
+		debugmes "ANOMALIA: a tabela da Maquina esta DESALINHADA (id=" + .@a + " qtd=" + .@b + ")";
+	}
+	if (.@a != .@c) {
+		debugmes "ANOMALIA: a tabela da Maquina esta DESALINHADA (id=" + .@a + " peso=" + .@c + ")";
+	}
+	.@soma = 0;
+	for (.@i = 0; .@i < .@a - 1; .@i++) {
+		.@soma += .Peso[.@i];
+	}
+	if (.@soma != 1000000) {
+		debugmes "ANOMALIA: os pesos da Maquina somam " + .@soma + ", e nao 1000000";
+	}
+	// Linha de vida, e nao enfeite: sem ela, um arquivo que o
+	// scripts_guerra.conf deixou de carregar produz o MESMO silencio que um
+	// arquivo carregado sem erro. Com ela, ausencia desta linha no console
+	// do map-server quer dizer "o evento nao subiu".
+	debugmes "ANOMALIA: Maquina Dimensional pronta - " + (.@a - 1) + " premios, pesos somando " + .@soma + ".";
+	end;
+}
+
+// O Manouro, ao lado da Maquina: troca Amago, e vende pressa.
+prontera,167,304,4	script	Manouro::ManouroDim	750,{
+	mes "[Manouro]";
+	mes "Eu não giro a Máquina. Eu fico do lado dela e recolho o que as";
+	mes "pessoas jogam fora sem saber o que é.";
+	next;
+	mes "[Manouro]";
+	mes "Âmago Dimensional, por exemplo. Você tem ^0000FF" + countitem(7925) + "^000000.";
+	next;
+	switch (select("Trocar 30 Âmagos por um Ovo de Freeoni.:Trocar 1 Âmago por um ovo menor.:Reabrir a fenda de hoje.:Nada disso.")) {
+	case 1:
+		if (countitem(7925) < 30) {
+			mes "[Manouro]";
+			mes "Trinta. Nem vinte e nove.";
+			close;
+		}
+		if (checkweight(9111, 1) == 0) {
+			mes "[Manouro]";
+			mes "Não cabe mais nada em você. Volte mais leve.";
+			close;
+		}
+		delitem 7925, 30;
+		getitem 9111, 1;
+		mes "[Manouro]";
+		mes "Trinta âmagos viram um ovo, e esse ovo vira a coisa mais";
+		mes "faminta que você já teve. Boa sorte.";
+		close;
+	case 2:
+		if (countitem(7925) < 1) {
+			mes "[Manouro]";
+			mes "Sem âmago, sem conversa.";
+			close;
+		}
+		// Menu e tabela saem da MESMA fonte, montados aqui num laco - a
+		// regra 4.11, escrita com sangue no Teleportador da Ordem.
+		setarray .@ovo[0], 9105, 9096;
+		setarray .@ovo[2], -1;
+		.@menu$ = "";
+		for (.@i = 0; .@ovo[.@i] != -1; .@i++) {
+			// O separador vai ANTES, e nao depois: um ":" sobrando no fim
+			// da string cria uma opcao vazia no menu, clicavel.
+			if (.@i > 0) .@menu$ = .@menu$ + ":";
+			.@menu$ = .@menu$ + getitemname(.@ovo[.@i]);
+		}
+		.@e = select(.@menu$) - 1;
+		if (checkweight(.@ovo[.@e], 1) == 0) {
+			mes "[Manouro]";
+			mes "Não cabe mais nada em você. Volte mais leve.";
+			close;
+		}
+		delitem 7925, 1;
+		getitem .@ovo[.@e], 1;
+		mes "[Manouro]";
+		mes "Pegue. E alimente, pelo amor de tudo.";
+		close;
+	case 3:
+		.@dia = callfunc("AnomaliaDia");
+		if (anomalia_dia != .@dia) {
+			mes "[Manouro]";
+			mes "A sua fenda de hoje ainda está aberta. Vá lá e resolva —";
+			mes "não cobro por trabalho que você ainda pode fazer.";
+			close;
+		}
+		if (anomalia_reset == .@dia) {
+			mes "[Manouro]";
+			mes "Já reabri uma para você hoje. Duas no mesmo dia, nem por";
+			mes "todo o dinheiro do mundo.";
+			close;
+		}
+		mes "[Manouro]";
+		mes "Reabrir custa ^0000FF2 Moedas Novas^000000. Uma vez por dia, e";
+		mes "não me pergunte como eu faço.";
+		next;
+		if (select("Pagar as 2 Moedas Novas.:Deixa quieto.") == 2) {
+			close;
+		}
+		if (countitem(30998) < 2) {
+			mes "[Manouro]";
+			mes "Você não tem duas Moedas Novas.";
+			close;
+		}
+		delitem 30998, 2;
+		anomalia_reset = .@dia;
+		anomalia_dia = 0;
+		mes "[Manouro]";
+		mes "Pronto. Fale com o Varmunt de novo — para a fenda, hoje ainda";
+		mes "não aconteceu.";
+		close;
+	case 4:
+		mes "[Manouro]";
+		mes "Então não atrapalhe a fila.";
+		close;
+	}
+}

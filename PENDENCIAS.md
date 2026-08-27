@@ -3501,3 +3501,89 @@ mais caro.
 
 ---
 
+---
+
+## 1z9. A Anomalia Dimensional — o que sobrou (2026-08-26)
+
+**O evento foi jogado e aprovado pelo dono na noite de 2026-08-26**: *"agora deu
+certo! ficou ótimo!"*. O que era a lista de "falta ver no jogo" foi percorrido
+quase inteiro na mesma sessão, e os quatro defeitos que apareceram foram
+corrigidos e reconferidos — estão no `HISTORICO.md`, nas quatro seções que
+começam em "A Anomalia Dimensional, e a descoberta de que se cura monstro".
+
+### Conferido em jogo
+
+- o Varmunt de Prontera teleporta; a `pprontera` abre sem derrubar o cliente;
+- a rodada começa sozinha e o anúncio sai;
+- **as Pedras são curadas com magia de cura, e o progresso aparece** — o balão
+  de porcentagem em cada Pedra e o aviso de 10 em 10% do conjunto;
+- a rodada fecha quando as quatro enchem, e o Varmunt paga as 7 Moedas;
+- os três mapflags (`nosave`, `nomemo`, `nobranch`) e o sprite 654 do Varmunt;
+- o Mensageiro Continental no lugar novo, com a área de toque junto.
+
+### O que ainda não foi tocado por ninguém
+
+**1. A Máquina Dimensional e o Manouro.** As moedas já são pagas, mas nenhum
+giro foi dado. O que provar: 10 Moedas por giro; o nome do item sorteado
+aparecendo certo na janela (vem do `getitemname`, ou seja do **servidor** —
+este não é caso da §4.9); e o anúncio global quando sai ovo raro (os 11
+primeiros da tabela).
+
+**2. O ovo eclode, e o pet é o certo.** É o teste que fecha o Freeoni, e o único
+item da entrega cuja metade de cliente e metade de servidor foram escritas com
+vinte anos de distância: `@item 9111`, usar, e ver nascer um **Phreeoni** de
+estimação — com nome, ilustração na janela de pet e a Ração Luxuosa (25377)
+como comida.
+
+**3. O Manouro nas três funções:** 30 Âmagos → Ovo de Freeoni, 1 Âmago → ovo
+menor, e o reset por **2 Moedas Novas** (30998), que só deve ser oferecido a
+quem **já** pegou a recompensa do dia.
+
+**4. O MVP raro (2% por onda).** Nunca apareceu. Vale ver um nascer antes de
+decidir se 2% é muito: numa rodada de vinte minutos saem ~120 ondas, o que dá
+mais de dois MVPs por rodada. É provável que o número tenha de cair — está em
+`.MvpChance`, no `OnInit`.
+
+**5. O reset das 4 da manhã.** A conta do "dia lógico" foi testada fora do jogo
+(6 de 6 casos, incluindo a virada de mês), mas nenhum jogador atravessou uma
+virada real ainda. O que provar: receber as moedas, tentar de novo no mesmo dia
+(deve recusar), e conseguir de novo depois das 04:00.
+
+### O que NÃO se prova nesta máquina
+
+**A cor é patch, não deploy.** O `cliente\data\pprontera.rsw` está gravado aqui
+em **intensidade 6 de 10** (roxo avermelhado), aprovada em tela. Para o jogador
+ela só muda depois de um patch publicado — `RECEITAS.md` §11. Sem o patch o
+evento roda inteiro numa Prontera de cor normal, sem erro nenhum.
+
+**Este é o único item da Anomalia que ainda não saiu desta máquina.** O resto é
+servidor e vai por deploy.
+
+### Sondas que ficaram no ar, de propósito
+
+O evento imprime três linhas no console do map-server, e elas são a rede de
+segurança de quem mexer nele depois:
+
+- no boot: `ANOMALIA: Maquina Dimensional pronta - 58 premios, pesos somando
+  1000000` e `ANOMALIA: dimensao pronta - 4 pedras de 60000 HP`. **A ausência
+  delas quer dizer que o arquivo não foi carregado** — que é um silêncio
+  idêntico ao de carregar sem erro;
+- a cada plantio: `ANOMALIA: plantou N gid=... pedi hp=1000 -> ficou 1000/15000`.
+  Existe por causa do bug de underflow do `status_set_maxhp` (ver `CLAUDE.md`
+  §5): se algum dia o número divergir, aparece de graça na primeira rodada;
+- a cada 10s de rodada: os quatro HPs e a porcentagem.
+
+### Números que continuam abertos para calibragem
+
+Todos em constante nomeada no `OnInit`, num arquivo só:
+
+| o quê | hoje | como saber se está errado |
+|---|---|---|
+| `.PedraHpMax` | **60.000** | ~14 curas por Pedra, ~57 na rodada, sozinho |
+| monstros por onda | **6** | a cadência é fixa em 10s; este é o botão da quantidade |
+| `.MvpChance` | 2% por onda | ver o item 4 acima |
+| `.TetoMobs` | **180** | mapa pesado numa rodada longa — mexer AQUI, não na quantidade por onda |
+| tabela da Máquina | `.Peso[]`, soma 1.000.000 | Freeoni a 1 em 300 giros ≈ 250 dias de missão diária |
+
+A conta inteira da economia está no `HISTORICO.md`, na primeira das quatro
+seções.
