@@ -2783,21 +2783,23 @@ que faltavam entraram todos**, em oito das nove lojas do Mercado Contemporâneo.
 O que foi feito e por quê está no `HISTORICO.md`, seção *"Vinte e um itens em
 oito vitrines de Prontera"*. Aqui fica **só o que falta**.
 
-### O que falta
+**Conferido em jogo pelo dono em 2026-08-27**, no cliente local, nas oito
+vitrines.
+
+### O que falta: duas coisas
 
 | passo | onde roda | estado |
 |---|---|---|
-| ver em jogo (as 8 vitrines) | cliente local | **FALTA** |
-| commit + push | Windows (esta máquina) | **FALTA** |
-| patch de cliente | Windows | **FALTA** |
-| `ferramentas/implanta.sh` | **Mac** | **FALTA** |
+| ver em jogo (as 8 vitrines) | cliente local | **feito** |
+| commit + push | Windows (esta máquina) | **feito** — `e864db7` |
+| montar o patch de cliente | Windows | **feito** — `0011`, 25 arquivos, 2,53 MB |
+| **`ferramentas/publica_patch.sh`** | Windows | **FALTA** |
+| **`ferramentas/implanta.sh`** | **Mac** | **FALTA** |
 
-A ordem importa: **ver em jogo primeiro, montar o patch depois** (`RECEITAS.md`
-§11). Número de patch não se reaproveita.
-
-Os quatro servidores locais **já foram reiniciados** com o conteúdo novo, e o
-`itemInfo.lua` desta máquina já tem as entradas — para ver na tela basta fechar
-e reabrir o cliente (ele lê aquele arquivo só na inicialização).
+**A ordem entre os dois que faltam não importa, e nenhum derruba jogador.** O
+patch entrega a metade de cliente; item que o servidor ainda não conhece
+simplesmente não aparece na vitrine, sem erro. O deploy reinicia os quatro
+servidores sozinho.
 
 ### O que o patch leva — 25 arquivos
 
@@ -2818,11 +2820,27 @@ data/texture/<ui>/collection/<os mesmos 6>.bmp         6 arquivos
 que também já estão lá (`Ice_Stone_4th` e `Celine_Brooch`). Nos três, o que muda
 é só a entrada do `itemInfo.lua`.
 
-**Não usar `--desde 2026-08-27` sem olhar a lista:** aquela varredura traz junto
-o `signboardlist.lub` (que já foi no patch 0010, de madrugada), o `savedata/` e
-um screenshot. Os caminhos de sprite e textura têm pasta coreana, que não
-sobrevive ao `argv` do console — o jeito é chamar `monta_patch.monta()` de um
-script Python com a lista `unicode`, como o `--desde` faz por dentro.
+**O `--desde 2026-08-27` não foi usado, e não deve ser:** aquela varredura traria
+junto o `signboardlist.lub` (que já foi no patch 0010, de madrugada), o
+`savedata/` e um screenshot. A lista foi montada à mão, chamando
+`monta_patch.monta()` de um script com os caminhos em `unicode` — os de sprite e
+textura têm pasta coreana, que não sobrevive ao `argv` do console.
+
+**Duas armadilhas desse caminho, para a próxima vez:**
+
+- **O `ITEM` e o `UI` do `valida_visual.py` são `str` com bytes CP949, e no
+  disco eles viraram o que a API ANSI desta máquina (cp1252) fez deles** —
+  `¾ÆÀÌÅÛ` e `À¯ÀúÀÎÅÍÆäÀÌ½º`, que é o que o Explorer mostra. Para chegar ao
+  nome Unicode de verdade, `decode('cp1252')`, **não** `decode('cp949')`.
+- **Não envolver o `sys.stdout` num `codecs.getwriter` no script chamador**: o
+  próprio `monta_patch.py` já o envolve. Dois wrappers empilhados fazem o de
+  dentro receber `str` já codificado e tentar decodificá-lo em ascii — e a falha
+  aparece **no meio do zip**, no primeiro nome coreano, deixando um `.parte`
+  para trás.
+
+A conferência de que os caminhos internos ficaram certos foi comparar as pastas
+do zip com as do **patch 0009**, que os jogadores já aplicaram: os conjuntos são
+idênticos.
 
 ### O que o deploy leva
 

@@ -14389,3 +14389,20 @@ O log traz **72 `[Error]`**, o mesmo número da subida de 2026-08-26 e das mesma
 duas famílias: os 34+34 do `job_outfits.yml` lido duas vezes (`PENDENCIAS.md`
 §1z8) e os 2+2 de chicote/instrumento do nosso `item_db.yml`, nas linhas 819 e
 1176 — as duas anteriores a esta sessão, que só acrescentou a partir da 3090.
+
+### Publicado
+
+Conferido em jogo pelo dono em 2026-08-27 e commitado em `e864db7`. A metade de
+cliente virou o **patch `0011`**, "Vinte e um itens nas lojas de Prontera" — 25
+arquivos, 23 MB crus em 2,53 MB de zip, quase tudo o `itemInfo.lua`.
+
+Duas armadilhas do caminho de montagem ficaram registradas em `PENDENCIAS.md`
+§1z10, porque a lista **não** pôde vir do `--desde`: o `ITEM`/`UI` do
+`valida_visual.py` decodificam em **cp1252** e não em cp949 (é o que a API ANSI
+gravou no disco, e é o que o Explorer mostra), e **não se envolve o `sys.stdout`
+num segundo `codecs.getwriter`** — o `monta_patch.py` já tem o dele, e dois
+empilhados quebram no meio do zip, no primeiro nome coreano.
+
+A conferência de que os caminhos internos do zip estão certos foi comparar as
+pastas dele com as do **patch 0009**, que os jogadores já aplicaram: conjuntos
+idênticos.
