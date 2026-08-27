@@ -128,31 +128,44 @@ def _lua_num(v):
     return repr(v)
 
 
-def _emissor_nosso(pos):
-    """O brilho. Valores escolhidos para um halo parado, e nao uma fumaca.
+def _emissor_nosso(pos, modelo):
+    """O brilho, HERDANDO do emissor de fumaca que o mapa ja usa.
 
-    `gravity` zerado e `speed` 0 deixam as particulas onde nascem (a fumaca
-    de Prontera sobe porque tem gravidade negativa); `life` alto e `rate`
-    baixo dao um brilho continuo em vez de pulsos; `srcmode`/`destmode` 5/2
-    sao os de mistura aditiva, que e o que faz luz parecer luz.
+    A primeira versao inventou os quinze campos do zero e nao apareceu em
+    tela. Esta parte do `modelo` - um dos emissores de fumaca das chamines
+    de Prontera, que comprovadamente desenham neste cliente - e troca **so
+    o que precisa mudar**. Os campos de desenho (`srcmode`, `destmode`,
+    `zenable`, `speed`) vem de la sem serem tocados: sao modos de blending
+    do Direct3D, nao ha como conferir o valor certo offline, e o que se
+    sabe e que aqueles funcionam.
+
+    E a mesma regra do resto do projeto - mesclar por chave em vez de
+    escrever por cima (CLAUDE.md 4.5).
+
+    O que muda, e por que:
+      texture   a arte pedida;
+      pos       a celula do Varmunt;
+      gravity   ZERADA - a fumaca sobe porque tem -2.0 no eixo Y, e um halo
+                de chao tem que ficar parado;
+      dir1/dir2 zerados pelo mesmo motivo (a fumaca se espalha);
+      size      maior que os 15-20 da fumaca, para cobrir a celula;
+      color     claro e quente, contra o [5,15,20,50] escuro da fumaca;
+      life/rate/maxcount  poucas particulas, vivendo mais - brilho continuo
+                em vez de jato.
     """
-    return {
-        'texture': TEXTURA,
-        'pos': {1.0: pos[0], 2.0: pos[1], 3.0: pos[2]},
-        'size': {1.0: 40.0, 2.0: 55.0},
-        'life': {1.0: 3.0, 2.0: 4.0},
-        'rate': {1.0: 12.0, 2.0: 16.0},
-        'maxcount': {1.0: 6.0},
-        'color': {1.0: 255.0, 2.0: 200.0, 3.0: 120.0, 4.0: 45.0},
-        'gravity': {1.0: 0.0, 2.0: 0.0, 3.0: 0.0},
-        'dir1': {1.0: 0.0, 2.0: 0.0, 3.0: 0.0},
-        'dir2': {1.0: 0.0, 2.0: 0.0, 3.0: 0.0},
-        'radius': {1.0: 2.0, 2.0: 0.0, 3.0: 2.0},
-        'speed': {1.0: 0.0},
-        'srcmode': {1.0: 5.0},
-        'destmode': {1.0: 2.0},
-        'zenable': {1.0: 0.0},
-    }
+    e = dict(modelo)
+    e['texture'] = TEXTURA
+    e['pos'] = {1.0: pos[0], 2.0: pos[1], 3.0: pos[2]}
+    e['gravity'] = {1.0: 0.0, 2.0: 0.0, 3.0: 0.0}
+    e['dir1'] = {1.0: 0.0, 2.0: 0.0, 3.0: 0.0}
+    e['dir2'] = {1.0: 0.0, 2.0: 0.0, 3.0: 0.0}
+    e['size'] = {1.0: 35.0, 2.0: 45.0}
+    e['color'] = {1.0: 200.0, 2.0: 170.0, 3.0: 110.0, 4.0: 60.0}
+    e['life'] = {1.0: 3.0, 2.0: 4.0}
+    e['rate'] = {1.0: 8.0, 2.0: 10.0}
+    e['maxcount'] = {1.0: 8.0}
+    e['radius'] = {1.0: 0.0, 2.0: 0.0, 3.0: 0.0}
+    return e
 
 
 ORDEM = ['texture', 'pos', 'size', 'life', 'rate', 'maxcount', 'color',
@@ -203,7 +216,65 @@ def mostra():
     print 'override no cliente: %s' % ('SIM  ' + d if os.path.exists(d) else 'nao')
 
 
-def aplica():
+def _grava(texto, destino):
+    """Grava o .lub como TEXTO Lua, nao como bytecode.
+
+    O cliente aceita os dois, e o texto e o formato que este projeto ja usa
+    e comprovou: o `OngoingQuestInfoList.lub`, o `CheckAttendance.lub` e os
+    `.lub` de `data\\` gerados pelo traduz_ptbr.py sao todos texto puro
+    (comecam com `--`), e sao lidos.
+
+    A primeira versao desta ferramenta compilava com `luac -s`, e o
+    resultado nao apareceu em tela. Nao ficou provado que o bytecode era a
+    causa - mas ele era a unica peca do caminho sem precedente no projeto,
+    e trocar por texto custa nada e elimina a duvida.
+
+    O `luac -p` continua rodando, agora so como CONFERENCIA de sintaxe: ele
+    e a unica prova de que o arquivo carrega (CLAUDE.md secao 5).
+    """
+    if not os.path.isdir(PASTA_EFX):
+        os.makedirs(PASTA_EFX)
+    open(destino, 'wb').write(texto)
+    r = subprocess.call([LUAC, '-p', destino])
+    if r != 0:
+        print '### o luac recusou o arquivo gerado'
+        return False
+    return True
+
+
+def _confere(destino, esperado, n_antes):
+    """Le de volta o que foi gravado, PASSANDO PELO INTERPRETADOR.
+
+    O arquivo e texto, e conferir texto com regex provaria pouco - diria
+    que a string esta la, nao que o Lua entende o arquivo. Entao ele e
+    compilado para um bytecode temporario e lido com o mesmo parser que le
+    os `.lub` do GRF: se as tabelas sairem certas daqui, sairao certas no
+    cliente.
+    """
+    tmp = destino + '.conferencia'
+    if subprocess.call([LUAC, '-o', tmp, destino]) != 0:
+        print '### o luac nao compilou o arquivo para conferencia'
+        return False
+    try:
+        conf = ptbr.tabelas(open(tmp, 'rb').read())
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+    dep = conf['_%s_emitterInfo' % MAPA]
+    print 'gravado: %s' % destino
+    print '  %d bytes, %d emissores (eram %d)' % (
+        os.path.getsize(destino), len(dep), n_antes)
+    achou = [i for i in dep if dep[i].get('texture') == esperado]
+    if not achou:
+        print '### a textura %s NAO esta no arquivo lido de volta' % esperado
+        return False
+    for i in sorted(achou):
+        print '  [%d] %s pos=%s size=%s' % (
+            int(i), esperado, _vetor(dep[i]['pos']), _vetor(dep[i]['size']))
+    return True
+
+
+def aplica(sonda=False):
     versao, em = carrega()
     n_antes = len(em)
 
@@ -213,41 +284,32 @@ def aplica():
         print '### a textura nao esta no GRF: %s' % TEXTURA
         return 1
 
-    novo = max(int(i) for i in em) + 1
-    em[float(novo)] = _emissor_nosso(_mundo())
-
-    texto = gera_lua(em, versao)
-    if not os.path.isdir(PASTA_EFX):
-        os.makedirs(PASTA_EFX)
-    fonte = os.path.join(PASTA_EFX, '%s.lua' % MAPA)
     destino = os.path.join(PASTA_EFX, '%s.lub' % MAPA)
-    open(fonte, 'wb').write(texto)
 
-    # A trava: o .lub so falha no CLIENTE, e falha calado. O luac e a unica
-    # prova de que ele compila (CLAUDE.md secao 5).
-    r = subprocess.call([LUAC, '-p', fonte])
-    if r != 0:
-        print '### o luac recusou o arquivo gerado - nada foi instalado'
-        return 1
-    r = subprocess.call([LUAC, '-s', '-o', destino, fonte])
-    if r != 0:
-        print '### o luac nao conseguiu compilar - nada foi instalado'
-        return 1
-    os.remove(fonte)
+    if sonda:
+        # A MARCA QUE NAO DEPENDE DO EFEITO PROCURADO (CLAUDE.md secao 5).
+        # Troca a textura das fumacas que JA APARECEM, sem mexer em mais
+        # nada. Se as chamines de Prontera passarem a soltar o brilho, o
+        # arquivo esta sendo lido e o problema e do nosso emissor; se
+        # continuarem soltando fumaca, o cliente nao le este arquivo - e
+        # nenhum ajuste de tamanho ou cor vai resolver.
+        for i in em:
+            em[i]['texture'] = TEXTURA
+            em[i]['size'] = {1.0: 30.0, 2.0: 40.0}
+        print 'MODO SONDA: as tres fumacas de Prontera passam a usar %s' % TEXTURA
+        print '  (nenhum emissor novo; so a textura e o tamanho mudaram)'
+        print
+    else:
+        modelo = em[min(em)]          # um emissor que o mapa ja desenha
+        novo = max(int(i) for i in em) + 1
+        em[float(novo)] = _emissor_nosso(_mundo(), modelo)
 
-    # relê o que foi gravado e confere que o emissor novo esta la
-    conf = ptbr.tabelas(open(destino, 'rb').read())
-    dep = conf['_%s_emitterInfo' % MAPA]
-    print 'gravado: %s' % destino
-    print '  emissores: %d -> %d' % (n_antes, len(dep))
-    achou = [i for i in dep if dep[i].get('texture') == TEXTURA]
-    if not achou:
-        print '### o emissor novo NAO esta no arquivo lido de volta'
+    if not _grava(gera_lua(em, versao), destino):
         return 1
-    e = dep[achou[0]]
-    print '  o nosso: indice %d, pos %s' % (int(achou[0]), _vetor(e['pos']))
+    if not _confere(destino, TEXTURA, n_antes):
+        return 1
     print
-    print 'O cliente so rele o mapa ao ENTRAR nele - saia e volte a Prontera.'
+    print 'O cliente so rele o mapa ao ENTRAR nele - saia de Prontera e volte.'
     print 'ISTO E CLIENTE: vai ao jogador por PATCH, nao por deploy.'
     return 0
 
@@ -265,6 +327,8 @@ def main():
     if '--reverter' in sys.argv:
         reverte()
         return 0
+    if '--sonda' in sys.argv:
+        return aplica(sonda=True)
     if '--aplicar' in sys.argv:
         return aplica()
     mostra()

@@ -3460,9 +3460,17 @@ sair e voltar — ou reabrir o cliente.
 
 ```
 python planta_brilho.py              # o que há no mapa hoje, e onde o nosso iria
-python planta_brilho.py --aplicar    # gera, compila e instala o override
+python planta_brilho.py --aplicar    # gera e instala o override
+python planta_brilho.py --sonda      # diagnóstico: ver se o cliente LÊ o arquivo
 python planta_brilho.py --reverter   # apaga o override
 ```
+
+**O `--sonda` é a marca que não depende do efeito procurado** (`CLAUDE.md` §5):
+em vez de acrescentar um emissor, ele troca a textura das **três fumaças que já
+aparecem**, sem mexer em mais nada. Se as chaminés de Prontera passarem a soltar
+o brilho, o arquivo está sendo lido e o problema é do nosso emissor; se
+continuarem soltando fumaça, o cliente não lê este arquivo — e nenhum ajuste de
+tamanho ou cor vai resolver.
 
 Põe um brilho no chão sob o **Sábio Varmunt** (`prontera 156,303`), com a
 textura `effect\mineffect\new_epiclesis\epi_glow_01.bmp` — a mesma arte que o
@@ -3492,12 +3500,27 @@ documentada no cabeçalho do `edita_mapa.py` como *"centro na fronteira entre a
 `72×5 − 250 = 110`. E **o Z não é invertido** — cresce junto com o y de célula.
 A altura sai do `.gat`, com o sinal trocado.
 
-**O arquivo é bytecode Lua 5.1** e tem só duas globais, sem nenhuma função — o
-que torna a regeração segura. A ferramenta lê os emissores existentes do GRF,
-acrescenta o nosso, gera o `.lua` em texto e compila com o `luac.exe` do
-ROenglishRE; o `luac -p` é a única prova de que o resultado compila
-(`CLAUDE.md` §5), e no fim ela **relê o `.lub` gravado** e confere que o
-emissor novo está lá.
+**O arquivo do GRF é bytecode Lua 5.1**, mas o que a ferramenta grava é **texto
+Lua** — e é de propósito. O cliente aceita os dois, e o texto é o formato que
+este projeto já usa e comprovou: o `OngoingQuestInfoList.lub`, o
+`CheckAttendance.lub` e os `.lub` de `data\` gerados pelo `traduz_ptbr.py` são
+todos texto puro (começam com `--`) e são lidos. A primeira versão desta
+ferramenta compilava com `luac -s`, e o resultado não apareceu em tela; não
+ficou provado que o bytecode era a causa, mas ele era a única peça do caminho
+**sem precedente no projeto**, e trocar por texto custa nada e elimina a dúvida.
+
+O arquivo tem só duas globais, sem nenhuma função, o que torna a regeração
+segura. A conferência do fim **compila o que foi gravado para um bytecode
+temporário e o lê com o mesmo parser que lê os `.lub` do GRF** — conferir texto
+por regex provaria só que a string está lá, não que o Lua entende o arquivo.
+
+**E o emissor novo HERDA de um que já funciona.** A primeira versão inventou os
+quinze campos do zero; esta parte de um dos emissores de fumaça das chaminés e
+troca só o que precisa mudar (textura, posição, gravidade, tamanho, cor, vida).
+Os campos de desenho — `srcmode`, `destmode`, `zenable`, `speed` — são modos de
+blending do Direct3D, não há como conferir o valor certo offline, e o que se
+sabe é que **aqueles** desenham neste cliente. É a regra de mesclar por chave
+em vez de escrever por cima (§4.5).
 
 **Ele lê a base sempre do GRF, nunca do override** — reler o próprio arquivo
 gerado faria a receita apontar para si mesma, e uma rodada ruim viraria a fonte

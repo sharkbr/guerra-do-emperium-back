@@ -13726,3 +13726,52 @@ O que os números do emissor (`size`, `color`, `rate`, `life`) têm de frágil �
 de sempre: foram escolhidos para um halo parado — sem gravidade, sem velocidade,
 mistura aditiva — e **só a tela diz se estão bons**. Estão todos em
 `_emissor_nosso()`, num lugar só.
+
+### O brilho que não apareceu, e o que foi eliminado (2026-08-26)
+
+Primeira ida ao jogo com o emissor instalado: **nada**. O relato veio com a
+captura e a pergunta certa — *"sem brilho. O que houve? não conseguimos?"*.
+
+Ainda não há resposta, e vale registrar o que **já foi eliminado**, para a
+próxima tentativa não refazer o caminho:
+
+- **a textura existe** no GRF, nos dois caminhos, e a ferramenta recusa aplicar
+  se não estiver;
+- **o caminho do arquivo é único**: só há `data\luafiles514\lua files\
+  effecttool\` no GRF — não é o caso do `petinfo.lub`, que tem dois;
+- **o arquivo gerado é válido**: passa no `luac -p` e, relido pelo mesmo parser
+  que lê os `.lub` do GRF, entrega os quatro emissores com a textura e a posição
+  certas;
+- **o carimbo de acesso não decide nada aqui.** O arquivo foi gravado às 22:20 e
+  o cliente subiu às 22:33 — treze minutos, dentro da mesma hora, e o NTFS só
+  reescreve o `LastAccessTime` quando o valor guardado tem mais de uma hora
+  (`CLAUDE.md` §5). A sonda é inconclusiva por construção.
+
+**Duas coisas foram trocadas por precaução, e as duas por terem precedente:**
+
+**O arquivo passou a ser gravado como TEXTO Lua**, não bytecode. O cliente
+aceita os dois, mas texto é o formato que este projeto já comprovou — o
+`OngoingQuestInfoList.lub`, o `CheckAttendance.lub` e os `.lub` de `data\`
+gerados pelo `traduz_ptbr.py` são todos texto puro e são lidos. O bytecode era a
+única peça do caminho **sem precedente aqui**, e trocá-lo custa nada.
+
+**O emissor passou a HERDAR de um que já funciona.** A primeira versão inventou
+os quinze campos do zero, incluindo `srcmode`, `destmode` e `zenable` — modos de
+blending do Direct3D que não se conferem offline. Agora ele parte de um dos
+emissores de fumaça das chaminés de Prontera e troca só o que precisa mudar:
+textura, posição, gravidade (zerada, para o halo não subir), tamanho, cor e
+vida. É a regra de mesclar por chave em vez de escrever por cima (§4.5), agora
+aplicada a um arquivo de cliente.
+
+**E entrou um `--sonda`, que é o que decide se houver uma segunda falha.** Em
+vez de acrescentar um emissor, ele troca a textura das **três fumaças que já
+aparecem** e não mexe em mais nada. Se as chaminés passarem a soltar o brilho, o
+arquivo está sendo lido e o defeito é do nosso emissor; se continuarem soltando
+fumaça, o cliente não lê este arquivo, e nenhum ajuste de cor ou tamanho vai
+resolver. É a "marca que não depende do efeito procurado" do `CLAUDE.md` §5 — a
+mesma técnica que resolveu o `estende_robeid.py` e o `ajusta_tamanho_fonte.py`.
+
+**A hipótese mais simples ainda não foi descartada:** havia **dois clientes
+abertos** na máquina no momento da captura, um deles de **16:34** — seis horas
+antes de o arquivo existir. Se a captura veio dele, ele nunca teve o que ler. O
+próximo teste começa fechando os dois.
