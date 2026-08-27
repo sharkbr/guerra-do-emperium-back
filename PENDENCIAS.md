@@ -3557,25 +3557,28 @@ virada real ainda. O que provar: receber as moedas, tentar de novo no mesmo dia
 | arquivo | o que é | estado |
 |---|---|---|
 | `cliente\data\pprontera.rsw` | a cor da dimensão, intensidade 6/10 | **aprovada em tela** |
-| ~~`effecttool\prontera.lub`~~ (o brilho) | **RETIRADO** — quatro tentativas em jogo, nada desenhou; override revertido |
 
-Sem o patch, o evento roda inteiro — numa Prontera de cor normal e sem brilho,
-sem erro nenhum. Falha calada e só cosmética.
+Sem o patch, o evento roda inteiro — numa Prontera de cor normal, sem erro
+nenhum. Falha calada e só cosmética.
 
-**O brilho sob o Varmunt está PARADO, por decisão do dono em 2026-08-26**, e o
-override foi revertido — Prontera voltou a ler o effecttool do GRF, com as três
-fumaças de sempre. Nada ficou pior do que estava.
+**O brilho sob o Varmunt FOI RESOLVIDO em 2026-08-27, e não por este caminho.**
+Ele deixou de ser arquivo de cliente: é uma linha de script no servidor
+(`efeitoespecial 1642` num laço de 900ms, no `VarmuntPrt`), **conferida em jogo
+pelo dono**. O `effecttool` saiu da conta — não há mais override de
+`prontera.lub`, e o brilho não depende de patch. O registro está no
+`HISTORICO.md`, "O brilho que saiu do cliente e virou uma linha de servidor".
 
-Foram quatro tentativas em jogo e nenhuma desenhou. **O registro completo — o
-que ficou eliminado, as quatro tentativas e, principalmente, a sonda de controle
-que faltou fazer — está no `HISTORICO.md`, "O brilho que não saiu", e repetido
-no cabeçalho de `ferramentas/planta_brilho.py`.**
+A pergunta que destravou foi outra: em vez de *"como desenho esta textura?"*,
+**"que número de efeito já desenha esta textura?"** — e a resposta é
+`ferramentas/lista_efeitos_do_cliente.py --textura <padrão>`.
 
-Quem for retomar começa por **uma coisa só**: gravar em
-`data\...\effecttool\prontera.lub` uma cópia byte a byte do arquivo original
-do GRF e entrar no jogo. Isso separa "o que escrevemos está errado" de "o
-override não vale para esta pasta", e é o controle que nenhuma das quatro
-tentativas fez.
+O `planta_brilho.py` continua no repositório, sem uso e marcado como não
+funcional. **A sonda de controle que faltou nas quatro tentativas continua sem
+ser feita**, e continua sendo por onde recomeçar se um dia alguém precisar
+mesmo do `effecttool` (textura que não pertença a efeito nenhum): gravar em
+`data\...\effecttool\prontera.lub` uma cópia byte a byte do original do GRF e
+entrar no jogo, para separar "o que escrevemos está errado" de "o override não
+vale para esta pasta".
 
 ### Sondas que ficaram no ar, de propósito
 

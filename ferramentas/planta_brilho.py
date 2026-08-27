@@ -19,7 +19,27 @@ O que existe e melhor: o cliente tem um sistema de EMISSORES DE PARTICULAS
 por mapa, em `data\\luafiles514\\lua files\\effecttool\\<mapa>.lub`, e ele
 aceita o CAMINHO DA TEXTURA direto. E o mesmo mecanismo que faz a fumaca
 sair das chamines de Prontera (tres emissores com `effect\\smoke1.bmp`).
-*** ESTA FERRAMENTA NAO FUNCIONOU. ***
+*** ESTA FERRAMENTA NAO FUNCIONOU, E QUASE NUNCA E O CAMINHO CERTO. ***
+
+ANTES DE USAR ISTO, LEIA ESTES DOIS PARAGRAFOS.
+
+Em 2026-08-27 o mesmo pedido - "um brilho embaixo do Varmunt", com outra
+textura - foi resolvido em UMA LINHA DE SCRIPT no servidor, sem tocar em
+arquivo de cliente nenhum. O que mudou nao foi a execucao, foi a pergunta:
+em vez de "como faco o cliente desenhar esta textura?", que e o que traz
+para ca, a pergunta e "QUE NUMERO DE EFEITO JA DESENHA esta textura?".
+
+Responde em um comando:
+
+    python lista_efeitos_do_cliente.py --textura <parte do nome do .bmp>
+
+Se houver numero, o pedido inteiro e um `efeitoespecial <n>` num laco -
+sem patch, sem override, sem pasta nova para provar. O sinal de que existe
+numero e um `.str` na mesma pasta da textura, dentro do GRF. So volte para
+esta ferramenta se NAO houver: textura sem `.str` por perto (o
+`epi_glow_01.bmp`, que e unidade de habilidade UNT_EPICLESIS) nao tem
+efeito numerado, e ai o effecttool e mesmo o unico caminho - e ai o
+primeiro passo e a sonda de controle do fim deste cabecalho.
 
 Em 2026-08-26 ela foi tentada em jogo QUATRO vezes e nao desenhou nada. O
 dono mandou parar e registrar, para a proxima tentativa nao repetir o

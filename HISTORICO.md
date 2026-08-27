@@ -13863,3 +13863,105 @@ provada.
 
 A ferramenta ficou no repositório com esse roteiro no cabeçalho, marcada como
 não funcional, e com `--sonda` e `--regua` prontos para a próxima tentativa.
+
+### O brilho que saiu do cliente e virou uma linha de servidor (2026-08-27)
+
+O pedido voltou no dia seguinte, e com **outra textura**:
+`effect\mineffect\new_soundofdestruction\new_soundofdestruction_cast\
+sound_castaura_7.bmp`, no Sábio Varmunt de `prontera 156,303`. Funcionou de
+primeira, **sem tocar em um arquivo de cliente sequer** — e o que mudou não foi
+a execução, foi a pergunta.
+
+**A pergunta errada era "como faço o cliente desenhar esta textura?".** Ela leva
+ao `effecttool`, que é o único mecanismo que aceita caminho de textura direto —
+e foi por ali que se gastaram quatro idas ao jogo. A pergunta certa é **"que
+número de efeito JÁ desenha esta textura?"**. Na maioria das vezes existe um, e
+aí o pedido inteiro é uma linha de script, sem patch, sem override, sem pasta
+nova para provar.
+
+O que separou um caso do outro foi um detalhe do próprio pedido: junto do
+`.bmp` havia um **`.str`** na mesma pasta do GRF. `.str` é definição de efeito
+numerado; `epi_glow_01.bmp`, do pedido anterior, não tinha um — era unidade de
+habilidade (`UNT_EPICLESIS`), e por isso ali o `effecttool` era mesmo o único
+caminho. **A presença de um `.str` ao lado da textura é o sinal de que existe
+número**, e é a primeira coisa a olhar.
+
+#### Como o número foi achado — e por que não bastava lê-lo
+
+O cliente numera efeito num `switch` de tabela direta, em
+`GuerraDoEmperium.exe` (offset 0x006b6ce4):
+
+```
+lea eax, [ebx-13]                  ; ebx = numero do efeito
+cmp eax, 0x937                     ; 2359
+ja  <default: nao desenha nada>
+jmp dword [eax*4 + 0x00ABFEE0]     ; tabela de 2360 entradas
+```
+
+Ou seja `número = 13 + índice`, faixa **13..2372**, e o bloco de cada `case`
+empilha o caminho do `.str`. Daí sai **1642** para o
+`new_soundofdestruction_cast`.
+
+**Ler a instrução não é prova** — é uma medição só, e o projeto já pagou caro
+por aceitar uma. A prova foi cruzar os 1015 efeitos com `.str` contra o enum
+`e_special_effects` do próprio rAthena, pelo nome do arquivo:
+
+| deslocamento | acertos |
+|---|---|
+| **13** | **25**, de `EF_STORMGUST` (89) a `EF_FULLMOON_KICK` (1230) |
+| todos os outros, de 0 a 26 | **zero** |
+
+Pico único, e os acertos vão de uma ponta à outra da faixa que o rAthena
+nomeia — ou seja não há deriva nos ids altos, que é justamente onde o 1642
+está. Mesma natureza da medição que decidiu o eixo Z do `.rsw` (76,1% contra
+41,1%).
+
+#### O teto que não era do cliente
+
+`specialeffect 1642` **não funcionaria**, e o motivo é uma armadilha nova: o
+`buildin_specialeffect` recusa a partir do `EF_MAX` do rAthena, que vale
+**1243**. Só que esse teto é do **emulador**, não do cliente — este kRO de
+2021-11-03 conhece efeitos até 2372, e **941 deles, com arte própria no GRF,
+estão acima daquele teto**. O rAthena simplesmente não os nomeou.
+
+Não se mexeu no enum nem no `specialeffect` (§2: código de terceiro não se
+edita). Entrou um comando nosso, `efeitoespecial`, pelos ganchos oficiais
+`src/custom/script.inc` e `src/custom/script_def.inc` — que o rAthena já
+inclui sozinho, então **nenhum arquivo de terceiro foi tocado**. Ele é o
+`specialeffect` com a faixa do cliente e nada mais; o original continua
+intacto e continua recusando acima de 1242.
+
+#### Os dois números que a tela decidiu
+
+**900ms de laço.** O `.str` tem 54 quadros a 60 fps = 0,90s, então o laço fecha
+exatamente na duração. Quem estiver com efeitos **normais** vê a outra variante
+(67 quadros, 1,12s) e o disparo corta os últimos 0,22s. Preferiu-se cortar a
+piscar: buraco entre voltas lê-se como defeito, corte lê-se como pulso.
+
+**A textura pedida é a da variante REDUZIDA.** O efeito 1642 tem dois `.str`,
+escolhidos em tempo de execução por `cmp [0x011d189c], 1` — a opção de efeitos
+reduzidos. O `mineffect\` usa `sound_castaura_0..9.bmp` (a pedida); o normal
+usa `sou_cast_00..09.bmp`, que é a mesma aura em resolução maior. Quem joga com
+efeitos normais vê a segunda. Foi entregue assim, e o dono aprovou em tela.
+
+#### A prova de que o laço gira, sem olhar para a tela
+
+Log limpo não prova nada — é o silêncio de quem não rodou, e é exatamente o que
+enganou nas quatro tentativas. A sonda foi a de sempre, a marca que não depende
+do efeito procurado: **trocar 1642 por um número fora da faixa** e reiniciar. O
+`efeitoespecial` gritou no log **37 vezes, uma por segundo**, provando de uma
+vez que o `OnInit` rodou, que o temporizador gira e que o comando executa.
+Depois, com o 1642 de volta: zero linha. Custou dois reinícios de dev e
+respondeu o que a tela sozinha não separa.
+
+#### O que sobrou
+
+`ferramentas/lista_efeitos_do_cliente.py` — o de-para número ↔ `.str`, com
+`--id`, `--textura` (qual efeito desenha tal `.bmp`) e `--conferir`, que refaz a
+prova de calibragem e sai 1 se o cliente mudar. **É a ferramenta que responde o
+próximo pedido de brilho em um comando.**
+
+O `planta_brilho.py` continua onde estava, sem uso e marcado como não
+funcional — o `effecttool` só volta a fazer falta para textura que não pertença
+a efeito numerado nenhum, e nesse dia a sonda de controle do capítulo anterior
+continua sendo o primeiro passo.

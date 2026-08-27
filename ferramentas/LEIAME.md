@@ -3534,3 +3534,80 @@ relê o mapa ao entrar nele — sair e voltar a Prontera.
 gravidade, sem velocidade, mistura aditiva — em vez de uma fumaça, mas só o jogo
 diz se o tamanho e o brilho estão bons. Todos estão em `_emissor_nosso()`, num
 lugar só.
+
+---
+
+## `lista_efeitos_do_cliente.py` — que número desenha aquela textura
+
+```
+python lista_efeitos_do_cliente.py                    # resumo + grava a lista
+python lista_efeitos_do_cliente.py --id 1642          # o que é o efeito 1642
+python lista_efeitos_do_cliente.py --textura castaura # quem desenha essa .bmp
+python lista_efeitos_do_cliente.py --conferir         # a prova de calibragem
+```
+
+**Existe por causa de uma pergunta errada.** Pedido de brilho chega pelo nome de
+um `.bmp`, e o reflexo é procurar onde enfiar aquele caminho — o que leva ao
+`effecttool` e ao `planta_brilho.py`, que custou quatro idas ao jogo sem
+desenhar nada. A pergunta certa é **"que número de efeito já desenha esta
+textura?"**, e na maioria das vezes existe um: aí o pedido inteiro vira uma
+linha de script no servidor, sem patch de cliente e sem override de pasta
+nenhuma.
+
+**O sinal de que existe número é um `.str` na mesma pasta da textura, no GRF.**
+`.str` é definição de efeito numerado. Textura sem `.str` por perto — o
+`epi_glow_01.bmp` do Epiclesis, que é unidade de habilidade — não tem, e para
+essa o `effecttool` é mesmo o único caminho.
+
+### O teto do rAthena não é o do cliente
+
+`specialeffect` para no `EF_MAX` do emulador, **1243**. Este cliente conhece
+efeitos até **2372**, e **941 deles têm `.str` acima daquele teto**. Para
+alcançá-los há o **`efeitoespecial`**, nosso, em `src/custom/script.inc` — mesmo
+comando, faixa do cliente.
+
+### De onde sai a numeração
+
+Do próprio exe. Um `switch` de tabela direta, em `GuerraDoEmperium.exe` no
+offset de arquivo `0x006b6ce4`:
+
+```
+lea eax, [ebx-13]                  ; ebx = numero do efeito
+cmp eax, 0x937                     ; 2359
+ja  <default: nao desenha nada>
+jmp dword [eax*4 + 0x00ABFEE0]     ; tabela de 2360 entradas
+```
+
+ou seja `número = 13 + índice`, faixa 13..2372. Cada `case` empilha o caminho de
+um `.str`; quando há dois, são as variantes `mineffect\` e normal, escolhidas em
+tempo de execução por `cmp [0x011d189c], 1`.
+
+### `--conferir` é o que torna isso confiável
+
+Ler a instrução seria aceitar uma medição só. O `--conferir` cruza os efeitos
+resolvidos com o enum `e_special_effects` do próprio rAthena, pelo nome do
+arquivo, e testa **todos** os deslocamentos de 0 a 26:
+
+| deslocamento | acertos |
+|---|---|
+| **13** | **25**, de `EF_STORMGUST` (89) a `EF_FULLMOON_KICK` (1230) |
+| todos os outros | **zero** |
+
+Pico único, e os acertos vão de ponta a ponta da faixa que o rAthena nomeia —
+não há deriva nos ids altos, que é justamente onde moram os efeitos que só o
+cliente conhece. **Sai 1 se o pico deixar de ser o 13**, o que quer dizer
+cliente novo e endereços a remedir.
+
+### Duas armadilhas que ele existe para evitar
+
+- **Número fora da faixa não desenha nada e não avisa** — cai no `default` do
+  switch, sem erro de Lua, sem caixa, sem log. Errar o número é indistinguível
+  de "o efeito não existe".
+- **As duas variantes usam texturas diferentes.** O efeito 1642 desenha
+  `sound_castaura_0..9.bmp` com efeitos reduzidos e `sou_cast_00..09.bmp` com
+  efeitos normais. Uma `.bmp` pedida pode existir só de um lado, e aí ela só
+  aparece com aquela opção ligada. O `--id` mostra os dois lados, com a duração
+  de cada um — que é o número que decide o intervalo do laço.
+
+**Isto é leitura do cliente, mas o resultado é servidor:** o brilho entregue com
+ele é uma linha de script e vai por **deploy**, não por patch.

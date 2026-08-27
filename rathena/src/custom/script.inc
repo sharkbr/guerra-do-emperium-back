@@ -12,6 +12,7 @@
  **/
 
 #include <custom/placa_de_venda.hpp>
+#include <custom/efeito_do_cliente.hpp>
 
 //BUILDIN_FUNC(example)
 //{
@@ -47,6 +48,60 @@ BUILDIN_FUNC(placadevenda)
 	}
 
 	placa_de_venda_define(*nd, texto);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// efeitoespecial <numero>{,<alvo>{,"<nome unico do NPC>"}};
+///
+/// Igual ao `specialeffect` do rAthena, com uma diferenca so: aceita a faixa
+/// inteira que o NOSSO cliente conhece (13..2372) em vez de parar no `EF_MAX`
+/// do emulador, que e 1243. Ha 941 efeitos com arte propria acima daquele
+/// teto, e o `specialeffect` recusa todos eles com "unsupported effect id".
+///
+/// O porque, a medicao do teto e a armadilha do numero fora da faixa (que nao
+/// desenha nada e nao avisa) estao em `src/custom/efeito_do_cliente.hpp`.
+///
+/// Sem o terceiro argumento, sai no NPC ao qual o script esta preso - que e o
+/// caso do uso em `OnTimer`, onde nao ha jogador anexado.
+BUILDIN_FUNC(efeitoespecial)
+{
+	block_list* bl = map_id2bl(st->oid);
+	int32 numero = script_getnum(st, 2);
+	enum send_target target = script_hasdata(st, 3)
+		? (send_target)script_getnum(st, 3) : AREA;
+
+	if (bl == nullptr)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (!efeito_do_cliente_existe(numero)) {
+		ShowError("buildin_efeitoespecial: efeito %d fora da faixa que o "
+			"cliente conhece (%d..%d).\n", numero,
+			EFEITO_DO_CLIENTE_MINIMO, EFEITO_DO_CLIENTE_MAXIMO);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 4)) {
+		const char* nome = script_getstr(st, 4);
+		npc_data* nd = npc_name2id(nome);
+
+		if (nd == nullptr) {
+			ShowError("buildin_efeitoespecial: NPC \"%s\" nao existe.\n", nome);
+			return SCRIPT_CMD_FAILURE;
+		}
+		bl = nd;
+	}
+
+	if (target == SELF) {
+		map_session_data* sd;
+
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+
+		clif_specialeffect_single(bl, numero, sd->fd);
+	} else {
+		clif_specialeffect(bl, numero, target);
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }

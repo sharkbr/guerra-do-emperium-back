@@ -1925,6 +1925,45 @@ Produziram diagnóstico falso e custaram retrabalho:
   desenhou nada do que havia nele — então esta sonda responde "o arquivo chegou
   ao cliente", e só isso. Concluir dela que o conteúdo foi aplicado é o erro que
   custou duas tentativas.
+- **O `EF_MAX` do rAthena NÃO é o teto de efeitos do cliente — é o do
+  emulador, e ele está 900 efeitos atrasado.** O `buildin_specialeffect`
+  recusa todo número a partir de `EF_MAX`, que vale **1243** no nosso vendor
+  (o último nomeado é `EF_SOUL_EXPLOSION`, 1242). Só que este kRO de
+  2021-11-03 conhece efeitos até **2372**, e **941 deles têm arte própria
+  (`.str` no GRF) acima daquele teto**. Pedir um deles por `specialeffect`
+  não desenha nada e escreve *"unsupported effect id"* no log — o efeito
+  existe, a arte existe, e quem estava fechado era o caminho entre os dois.
+  É a mesma família do `db/` do vendor semanticamente vencido (a entrada do
+  `stylist.yml` acima): o dado não está errado, está velho, e nada avisa.
+  A saída é o **`efeitoespecial`**, nosso, em `src/custom/script.inc` — o
+  `specialeffect` com a faixa do cliente e nada mais. Entrou pelos ganchos
+  oficiais `script.inc`/`script_def.inc`, então **não custou um byte de
+  arquivo de terceiro**, e o `specialeffect` original continua intacto.
+  **E há uma segunda armadilha dentro desta:** número fora da faixa 13..2372
+  cai no `default` do switch do cliente e ele **não desenha nada, calado** —
+  sem erro de Lua, sem caixa, sem log. Errar o número é indistinguível de "o
+  efeito não existe". Conferir antes em
+  `ferramentas/lista_efeitos_do_cliente.py --id <n>`.
+- **Antes de mexer no `effecttool` para pôr uma textura na tela, perguntar
+  que EFEITO já a desenha.** O pedido chega pelo nome de um `.bmp` e o
+  reflexo é procurar onde enfiar aquele caminho — o que leva ao
+  `effecttool\<mapa>.lub`, único mecanismo que aceita caminho de textura
+  direto, e que custou **quatro idas ao jogo sem desenhar nada** em
+  2026-08-26. Na maioria das vezes a textura pertence a um efeito que o
+  cliente **já numera**, e aí o pedido inteiro é uma linha de script no
+  servidor: sem patch, sem override, sem pasta nova para provar.
+  **O sinal está no próprio GRF: um `.str` na mesma pasta da textura.**
+  `.str` é definição de efeito numerado; textura sem `.str` por perto (o
+  `epi_glow_01.bmp`, que é unidade de habilidade `UNT_EPICLESIS`) não tem
+  número, e aí o `effecttool` é mesmo o único caminho. Foi essa diferença,
+  e só ela, que separou o brilho que não saiu do que saiu de primeira.
+  A pergunta se responde em um comando:
+  `ferramentas/lista_efeitos_do_cliente.py --textura <padrão>`.
+  **Cuidado com um detalhe que engana na entrega:** quase todo efeito tem
+  **duas** variantes de arte, `mineffect\` e normal, escolhidas em tempo de
+  execução pela opção de efeitos reduzidos do jogador. Elas costumam usar
+  texturas **diferentes**, então a `.bmp` pedida pode só aparecer com aquela
+  opção ligada — o `--id` diz de que lado cada uma está.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

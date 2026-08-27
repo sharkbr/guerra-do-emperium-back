@@ -773,6 +773,33 @@ prontera,156,303,4	script	Sábio Varmunt::VarmuntPrt	654,{
 		mes "cresce.";
 		close;
 	}
+	end;
+
+// O halo sob os pes dele. E o efeito 1642 do cliente - a aura de
+// conjuracao do Sound of Destruction, `new_soundofdestruction_cast` -,
+// pedida pelo dono pela textura `sound_castaura_7.bmp`, que e uma das
+// dez daquele .str.
+//
+// NAO e `specialeffect`: aquele comando recusa numero a partir do
+// EF_MAX do rAthena, que vale 1243, e este cliente conhece efeito ate
+// 2372. O `efeitoespecial` e nosso e mora em `src/custom/script.inc`;
+// a medicao do teto esta em `src/custom/efeito_do_cliente.hpp`.
+//
+// POR QUE 900ms: o `.str` tem 54 quadros a 60 fps, ou seja 0,90s. O
+// laco fecha exatamente na duracao, sem buraco entre uma volta e a
+// seguinte. Quem estiver com efeitos NORMAIS (nao reduzidos) ve a
+// variante de 67 quadros (1,12s), e nesse caso o disparo corta os
+// ultimos 0,22s - o rabo da animacao. Preferiu-se cortar a piscar:
+// buraco entre voltas le-se como defeito, corte le-se como pulso.
+// Este e o unico numero a mexer se ficar feio na tela.
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer900:
+	efeitoespecial 1642;
+	setnpctimer 0;
+	end;
 }
 
 //===== O MENSAGEIRO QUE ESTAVA NO CAMINHO ==================================
