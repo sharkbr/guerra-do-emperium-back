@@ -13965,3 +13965,144 @@ O `planta_brilho.py` continua onde estava, sem uso e marcado como não
 funcional — o `effecttool` só volta a fazer falta para textura que não pertença
 a efeito numerado nenhum, e nesse dia a sonda de controle do capítulo anterior
 continua sendo o primeiro passo.
+
+## A placa coreana sobre chão vazio, e as 514 que o cliente desenha sozinho (2026-08-27)
+
+O dono mandou um print: em `prontera 166,300`, ao lado da Máquina Dimensional,
+um balãozinho em coreano boiando sobre chão vazio. Pediu para tirar, mas antes
+para saber do que se tratava.
+
+### Não era NPC — e o `grep` provou isso primeiro
+
+Varredura em `rathena/npc/` na faixa `prontera,16x,29x-30x` devolveu quatro
+linhas, todas em `y=304/305` (Máquina Dimensional, Manouro, o Continental
+Messenger duplicado e o `Billboard#Prt6`). Em `166,300`, nada. Se não é NPC e
+mesmo assim desenha, é cliente.
+
+### Ler o texto: recortar, binarizar, e decodificar byte a byte
+
+O texto estava em CP949 renderizado como cp1252 — a mojibake de sempre. O
+caminho que resolveu foi mecânico, não adivinhação:
+
+1. Recortar a região do balão do `.jpg` e ampliar em **nearest-neighbor**, que
+   é a mesma técnica da comparação de fonte de 2026-08-10 — a olho, naquele
+   tamanho, `°` e `º` são o mesmo pixel.
+2. Binarizar por luminância (>150 vira branco), o que tira o ruído de JPEG e
+   deixa a forma de cada glifo inequívoca.
+3. Transcrever os glifos e **decodificar por força bruta**, com alternativas
+   para os ambíguos.
+
+A segunda palavra fechou de primeira: `ÇÁ·Î¸ð¼Ç` = `C7C1 B7CE B8F0 BCC7` =
+**프로모션**, "promoção". A primeira levou mais tempo porque a primeira leitura
+(`°Ô½ÃÆÇ`, 게시판, "quadro de avisos") era **plausível e errada** — e o que a
+derrubou não foi olhar de novo o print, foi procurar `프로모션` no cliente e
+achar o contexto.
+
+### O que a busca respondeu — e o `<NAVI>` que entregou a coordenada
+
+Varrendo os bytes de `프로모션` pela pasta do cliente (pulando o `data.grf`, que
+é grande demais para ler cru), o `System\itemInfo_sak.lub` deu 18 ocorrências.
+Uma delas trazia a descrição da **Moeda Booster**:
+
+```
+프로모션 아이템 교환: <NAVI>[센트로]<INFO>prontera,166,300,0,100,0,0</INFO></NAVI>
+```
+
+**A própria coordenada do print.** Ou seja: no kRO havia ali um NPC de troca da
+*Ragnarok Booster Promotion* de 2021, uma campanha paga de pré-venda. Aqui o
+NPC nunca existiu; sobrou o anúncio. Com o contexto, a primeira palavra saiu
+sozinha: `ºÎ½ºÅÍ` = **부스터**, "Booster".
+
+### De onde a placa sai: um arquivo que o projeto nunca tinha aberto
+
+Varrer as 282 entradas de texto do GRF apontou
+`data\luafiles514\lua files\signboardlist.lub` — bytecode Lua 5.1, uma tabela
+`SignBoardList` de **514 entradas** que o **cliente desenha sozinho**, por mapa
+e célula, sem o servidor participar. Os nomes dos campos saem do
+`signboardlist_f.lub` ao lado:
+
+```
+{ MAPNAME, CELLX, CELLY, HEIGHT, ICONID, FILEPATH [, CONTENTS, CHARCOLOR] }
+```
+
+A entrada é a **segunda do arquivo**:
+
+```lua
+{ "prontera", 166, 300, 6, IT_SIGNBOARD,
+  "item\콜오브네메시스.bmp", "  부스터 프로모션", "#0x00FFFFFF" }
+```
+
+E não estava sozinha: a mesma campanha morta tem mais duas, `sp_cor 98,136`
+(부스터일루시온인챈트) e `malangdo 152,136` (부스터 의상 인챈트). O dono mandou
+arrancar as três.
+
+### O caminho fácil que foi recusado, e por quê
+
+O `cliente\data\...\signboardlist_f.lub` — que o ROenglishRE já tinha deixado
+lá — traz um **`SignBoardIgnore`** feito exatamente para isto: declarar mapa e
+coordenada em `SystemEN\Sign_Data.lub` e a função devolve `0`. Três linhas.
+
+Não foi o caminho escolhido, porque ele pende de uma corrente que **não está
+provada neste cliente**: o `_f` do override precisa vencer o do GRF, e o
+`require('SystemEN/LuaFiles514/rotp_f')` do topo dele precisa achar um arquivo
+que existe como **`.lua`**, não `.lub`. Se qualquer um dos dois falhar, o
+cliente cai no `_f` do GRF — que não conhece `SignBoardIgnore` — e a placa
+continua na tela, **calada**. Tirar a entrada da própria tabela não pende de
+nada disso: seja qual for o `_f` que rodar, ele indexa `SignBoardList[idx]`, e o
+que não está lá não é desenhado.
+
+Custa mais: regerar 514 entradas a partir de bytecode. Foi o que
+`ferramentas/remove_placas_mortas.py` passou a fazer.
+
+### A trava que impede a regeração de jogar dado fora
+
+Regerar um arquivo a partir de um leitor próprio tem um perigo específico: uma
+construção que o leitor não entenda é **descartada em silêncio**, e o arquivo
+novo sai plausível e incompleto — a mesma família do `RK` acima de 255 do
+`luadis.py` e da tabela de uma entrada só do `ptbr._interpreta`.
+
+A trava é exigir que o **conjunto de opcodes** do bytecode seja exatamente o
+esperado (`LOADK`, `GETGLOBAL`, `SETGLOBAL`, `NEWTABLE`, `SETLIST`, `RETURN`) e
+abortar em qualquer outro. Deu certo: o arquivo tem só esses seis.
+
+Mais duas: as três placas casam por mapa+célula **e** pelo texto exato (nenhuma
+das duas chaves identifica sozinha), e a conferência **compila o que foi gravado
+e relê o bytecode com o mesmo parser**, comparando as 511 entradas uma a uma —
+conferir por regex provaria só que a string sumiu, não que o Lua entende o
+arquivo. É a mesma conferência do `planta_brilho.py`.
+
+O gravado é **texto Lua**, não bytecode, pelo mesmo motivo do `planta_brilho.py`
+— é o formato que este projeto já comprovou. E **cp949**: os 511 textos que
+ficam são coreanos.
+
+### Um bug de uma linha, que o Python esconde
+
+O leitor de bytecode estourou na primeira execução, dentro da seção de depuração
+do arquivo — longe da causa. A linha era:
+
+```python
+self.p += 4 * self._u32()
+```
+
+O `+=` guarda o `self.p` **de antes** de avaliar a direita, e o `_u32()` avança
+o ponteiro no meio da conta — os 4 bytes gastos para ler o próprio contador se
+perdem. O mesmo código em duas linhas, que era como estava no rascunho,
+funcionava. Vale para qualquer `x += f()` em que `f` mexa em `x`.
+
+### O que ficou de fora, por escolha
+
+Das 514 entradas, **107 têm texto**, e boa parte segue em coreano — o
+`traduz_ptbr.py` nunca tocou este arquivo. Foram tiradas só as três da campanha
+morta. As outras dezenove de Prontera são legítimas: as quatro de salão de clã,
+o `등급강화소` e o teleportador da Ordem (`낙원단 공간이동사`, 124,76). **Apagar o
+arquivo inteiro levaria todas junto**, e é por isso que a conferência em jogo
+não podia ser só "a placa sumiu": arquivo quebrado também some. O que separou os
+dois foi olhar, na mesma ida, uma que tinha de ficar.
+
+Traduzir as que sobraram continua em aberto, e pelo caminho da ferramenta é
+trocar o campo `CONTENTS` na própria tabela.
+
+### Publicado
+
+Conferido em jogo pelo dono e publicado como **patch 0010**, "Placas mortas fora
+do cliente" (5.946 bytes). É cliente: não anda por deploy.

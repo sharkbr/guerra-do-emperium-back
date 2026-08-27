@@ -1964,6 +1964,33 @@ Produziram diagnóstico falso e custaram retrabalho:
   execução pela opção de efeitos reduzidos do jogador. Elas costumam usar
   texturas **diferentes**, então a `.bmp` pedida pode só aparecer com aquela
   opção ligada — o `--id` diz de que lado cada uma está.
+- **O cliente desenha coisa no mundo SEM o servidor — `grep` em `npc/` não
+  prova que algo não existe.** O `data\luafiles514\lua files\signboardlist.lub`
+  é uma tabela de **514 placas** (ícone em moldura laranja + plaquinha marrom
+  com texto) que o cliente põe por mapa e célula, sozinho. Não há NPC por trás:
+  clicar não faz nada, e nenhum `grep` no `rathena/` acha aquela coordenada.
+  Boa parte anuncia coisa do kRO que aqui nunca existiu — em 2026-08-27 apareceu
+  a `부스터 프로모션` em `prontera 166,300`, da campanha paga de 2021, e o
+  `itemInfo` ainda traz a Moeda Booster com um `<NAVI>` para exatamente aquela
+  célula. **107 das 514 têm texto, boa parte ainda em coreano** — o
+  `traduz_ptbr.py` nunca tocou esse arquivo. É a §4.9 num terceiro grau: lá o
+  cliente tinha metade da configuração, aqui ele tem as duas.
+  Ferramenta: `ferramentas/remove_placas_mortas.py`. **É cliente — vai por
+  patch** (§4.18).
+- **Ler mojibake a olho num screenshot dá resposta plausível e errada.** No
+  balão acima, `°Ô½ÃÆÇ` (게시판, "quadro de avisos") e `ºÎ½ºÅÍ` (부스터,
+  "Booster") são o mesmo desenho naquele tamanho — `°`/`º` e `Ô`/`Î` diferem em
+  um pixel, e o JPEG come esse pixel. O caminho que decide é mecânico: recortar,
+  ampliar em **nearest-neighbor**, **binarizar por luminância** para tirar o
+  ruído de JPEG, transcrever com alternativas para os glifos ambíguos e
+  **decodificar por força bruta** — a combinação que der Coreano com sentido é a
+  resposta. E quando uma palavra fecha, **procurar essa palavra pelo cliente**:
+  foi o contexto do arquivo, não o print, que derrubou a leitura errada.
+- **`x += f()` em que `f` mexe em `x` perde o que `f` consumiu.** O `+=` guarda
+  o `x` de antes de avaliar a direita. Num leitor de arquivo binário,
+  `self.p += 4 * self._u32()` joga fora os 4 bytes gastos para ler o próprio
+  contador, e o estouro aparece muitas seções adiante, longe da causa. O mesmo
+  código em duas linhas funciona.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

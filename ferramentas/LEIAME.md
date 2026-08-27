@@ -3611,3 +3611,101 @@ cliente novo e endereços a remedir.
 
 **Isto é leitura do cliente, mas o resultado é servidor:** o brilho entregue com
 ele é uma linha de script e vai por **deploy**, não por patch.
+
+## `remove_placas_mortas.py` — tira placa do cliente que anuncia coisa que não existe
+
+```
+python remove_placas_mortas.py            # regera o override
+python remove_placas_mortas.py --conferir # não grava; sai 1 se o disco divergir
+```
+
+### O que é uma placa
+
+O `data\luafiles514\lua files\signboardlist.lub` é uma tabela de **514
+entradas** que o **cliente** desenha sozinho, por mapa e célula, sem o servidor
+participar: um ícone em moldura laranja mais uma placa marrom com um texto. Não
+há NPC por trás — a placa fica boiando sobre a célula, e clicar nela não faz
+nada.
+
+Cada entrada tem 6 ou 8 campos, e os nomes saem do `signboardlist_f.lub`:
+
+```
+{ MAPNAME, CELLX, CELLY, HEIGHT, ICONID, FILEPATH [, CONTENTS, CHARCOLOR] }
+```
+
+O `ICONID` é uma das quatro globais que o próprio arquivo define no topo
+(`IT_NONE`, `IT_BMP`, `IT_SPRITE`, `IT_SIGNBOARD`). **107 das 514 têm texto**, e
+boa parte dele continua em coreano — o `traduz_ptbr.py` nunca tocou este
+arquivo.
+
+### O que ela tira hoje
+
+As três da *Ragnarok Booster Promotion* de 2021, campanha paga de pré-venda do
+kRO que aqui nunca existiu:
+
+| mapa | célula | texto |
+|---|---|---|
+| `prontera` | 166,300 | 부스터 프로모션 |
+| `sp_cor` | 98,136 | 부스터일루시온인챈트 |
+| `malangdo` | 152,136 | 부스터 의상 인챈트 |
+
+A de Prontera foi a que apareceu: o `itemInfo` ainda traz a Moeda Booster com um
+`<NAVI>...<INFO>prontera,166,300,...</INFO>`, que era onde ficava o NPC de
+troca. Sobrou a placa sobre chão vazio.
+
+**As outras dezenove placas de Prontera são legítimas** — as quatro de salão de
+clã, o `등급강화소` e o teleportador da Ordem (`낙원단 공간이동사`, 124,76).
+Apagar o arquivo inteiro levaria todas junto.
+
+### Por que regerar a tabela, e não usar o `SignBoardIgnore`
+
+O `signboardlist_f.lub` que o ROenglishRE já deixou em `cliente\data\` tem um
+`SignBoardIgnore` feito exatamente para isto — três linhas em
+`SystemEN\Sign_Data.lub` e pronto. **Não é o caminho escolhido**, porque ele
+depende de uma corrente que não está provada neste cliente: o `_f` do override
+precisa vencer o que está no GRF, e o `require('SystemEN/LuaFiles514/rotp_f')`
+do topo dele precisa achar um arquivo que existe como **`.lua`** e não como
+`.lub`. Se qualquer um dos dois falhar, o cliente cai no `_f` do GRF — que não
+conhece `SignBoardIgnore` — e a placa continua na tela, **calada**.
+
+Tirar a entrada da própria tabela não depende de nada disso: seja qual for o
+`_f` que rodar, ele indexa `SignBoardList[idx]`, e o que não está lá não é
+desenhado.
+
+### O que ela grava, e por que é texto
+
+**Texto Lua, não bytecode.** O do GRF é bytecode (`\x1bLuaQ`), mas o cliente
+aceita os dois, e texto é o formato que este projeto já comprovou — mesma
+decisão do `planta_brilho.py`, algumas seções acima. E **cp949**: os 511 textos
+que ficam são coreanos, e gravar UTF-8 os destruiria sem aviso (§4.1).
+
+**A base vem sempre do GRF**, nunca do override que ela mesma grava — reler o
+próprio arquivo gerado faria a receita apontar para si mesma, e uma rodada ruim
+viraria a fonte da seguinte (a armadilha do `arte_de` do `instala_item.py`).
+
+### As três travas
+
+1. **O conjunto de opcodes do bytecode tem de ser exatamente o esperado**
+   (`LOADK`, `GETGLOBAL`, `SETGLOBAL`, `NEWTABLE`, `SETLIST`, `RETURN`).
+   Qualquer outro aborta. Sem isso, uma construção que o leitor não entendesse
+   seria **descartada em silêncio** e a regeração jogaria dado fora — o mesmo
+   perigo do `RK` acima de 255 do `luadis.py`.
+2. **As três placas casam por mapa+célula E pelo texto exato.** Coordenada
+   sozinha se repete entre mapas, texto sozinho se repete entre cidades. Se
+   qualquer uma das três não casar, aborta em vez de gravar duas.
+3. **A conferência compila o que foi gravado e relê o bytecode com o mesmo
+   parser**, comparando as 511 entradas uma a uma e exigindo que as três
+   ausentes estejam ausentes. Conferir o texto por regex provaria só que a
+   string sumiu, não que o Lua entende o arquivo.
+
+### Como saber, em jogo, que deu certo
+
+O cliente só lê a tabela na inicialização, e só redesenha ao entrar no mapa:
+**fechar e reabrir o cliente**, e sair e voltar a Prontera.
+
+A placa sumir **não basta** como prova — arquivo quebrado também some, e leva as
+outras 511 junto. O que separa os dois é olhar uma que tem de **ficar**: o
+`등급강화소` em `prontera 50,293`, ou o teleportador da Ordem em
+`prontera 124,76`. As duas na tela + a de 166,300 fora = deu certo.
+
+**É cliente: vai por PATCH, não por deploy** (`CLAUDE.md` §4.18).
