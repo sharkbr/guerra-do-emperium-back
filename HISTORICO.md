@@ -13669,3 +13669,60 @@ escala mistura sempre na mesma direção, subir a intensidade **não muda o mati
 — só a distância até a luz de fábrica. Foi exatamente para isso que ela existe:
 depois de três tentativas em que a cor "virava outra coisa" a cada ajuste, as
 duas últimas calibragens foram um dígito cada.
+
+### Calibragem e embelezamento, com a mecânica fechada (2026-08-26)
+
+*"AGORA SIM! mecânica fechada!"* — e então os números de verdade. Três pedidos.
+
+**Três vezes mais Entidades por onda, mantendo a cadência.** O pedido veio com a
+instrução exata (*"manter a cadência, apenas aumentar a quantidade por spawn"*),
+que separa os dois botões: a quantidade mudou de 2 para **6** no `areamonster`, e
+o intervalo de dez segundos do `OnTimer1000` ficou onde estava. Mexer no errado
+faria as Entidades chegarem em rajadas curtas em vez de em maior número.
+
+**E o teto subiu junto, sem ter sido pedido** — de 60 para 180. Não é escopo
+esticado: mantido em 60, o teto seria alcançado em dez ondas e as Entidades
+parariam de nascer, ou seja **o triplo pedido não apareceria em jogo**. É o teto,
+e não a quantidade por onda, o botão a mexer se o mapa pesar; ficou escrito no
+próprio arquivo.
+
+**Quatro vezes mais HP nas Pedras**, de 15.000 para **60.000** cada — de ~4
+lançamentos de cura por Pedra para ~14, e de ~16 para ~57 na rodada inteira,
+para uma pessoa só. É a passagem de "provar que funciona" para "dar trabalho", e
+escala para baixo sozinha quando há mais de um curandeiro.
+
+**Brilhos sob o Varmunt, e o caminho que não era o óbvio.** O pedido nomeou a
+arte: `effect\mineffect\new_epiclesis\epi_glow_01.bmp`. Não dá para pedir isso
+por `specialeffect` — o brilho de Epiclesis não é um efeito numerado do cliente,
+é uma **unidade de habilidade** (`UNT_EPICLESIS`) que só existe enquanto a magia
+está no chão; não há `EF_` para ele no rAthena.
+
+O que existe é melhor: o cliente tem um sistema de **emissores de partículas por
+mapa**, em `data\luafiles514\lua files\effecttool\<mapa>.lub`, que aceita **o
+caminho da textura direto**. É o que faz a fumaça sair das chaminés de Prontera —
+três emissores com `effect\smoke1.bmp`, que estavam ali o tempo todo. Virou
+`ferramentas/planta_brilho.py`.
+
+A parte que erra calado é a conversão de célula para mundo, e ela foi **derivada
+de um caso já conferido em tela**, não chutada: o cabeçalho do `edita_mapa.py`
+registra que a fonte do Centro da Ordem, em `auction_01` (200×100), tem centro em
+"mundo (400, 110)". Daí saem as duas fórmulas — `célula×5 − (lado/2)×5` nos dois
+eixos — e o fato de que **o Z não é invertido**. O Varmunt, em `prontera 156,303`
+de um mapa 312×392 com terreno na altura 1,0, cai em mundo `(2,5, −1,5, 537,5)`;
+a sanidade é que os emissores de fumaça existentes ficam em z 27–54, o que dá
+células y≈202–207, as casas ao norte da praça.
+
+O `.lub` é bytecode Lua 5.1 e tem só duas globais, sem função nenhuma — por isso
+regerar é seguro. A ferramenta lê a base **sempre do GRF** (nunca do próprio
+override, que faria a receita apontar para si mesma), acrescenta o emissor,
+compila com o `luac` do ROenglishRE e **relê o arquivo gravado** para conferir
+que o novo está lá: `3 -> 4 emissores`, o nosso no índice 3.
+
+**Isto é cliente e vai por patch** — junto com a cor, que na mesma rodada foi
+para **6/10**, mesmo alvo roxo. Como a escala mistura sempre na mesma direção,
+subir a intensidade não muda o matiz, só a distância até a luz de fábrica.
+
+O que os números do emissor (`size`, `color`, `rate`, `life`) têm de frágil é o
+de sempre: foram escolhidos para um halo parado — sem gravidade, sem velocidade,
+mistura aditiva — e **só a tela diz se estão bons**. Estão todos em
+`_emissor_nosso()`, num lugar só.

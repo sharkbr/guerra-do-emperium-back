@@ -3455,3 +3455,59 @@ resultado conferindo que os seis floats gravaram o que foi pedido.
 
 **O cliente só relê o mapa ao entrar nele.** Se você já estiver na `pprontera`,
 sair e voltar — ou reabrir o cliente.
+
+## `planta_brilho.py` — um emissor de partículas numa célula de mapa
+
+```
+python planta_brilho.py              # o que há no mapa hoje, e onde o nosso iria
+python planta_brilho.py --aplicar    # gera, compila e instala o override
+python planta_brilho.py --reverter   # apaga o override
+```
+
+Põe um brilho no chão sob o **Sábio Varmunt** (`prontera 156,303`), com a
+textura `effect\mineffect\new_epiclesis\epi_glow_01.bmp` — a mesma arte que o
+Epiclesis usa.
+
+**Por que não é `specialeffect`:** o brilho de Epiclesis não é um efeito
+numerado do cliente, é uma **unidade de habilidade** (`UNT_EPICLESIS`), que só
+existe enquanto a magia está no chão. Não há constante `EF_` para ele no
+rAthena e não há como pedi-lo por script. O que existe — e é melhor — é o
+sistema de **emissores de partículas por mapa** do cliente, em
+`data\luafiles514\lua files\effecttool\<mapa>.lub`, que aceita **o caminho da
+textura direto**. É o mesmo mecanismo que faz a fumaça sair das chaminés de
+Prontera (três emissores com `effect\smoke1.bmp`, que a ferramenta preserva).
+
+**A conversão de célula para mundo**, que é a parte que erra calado:
+
+```
+mundo_x = (célula_x + 0,5 − largura/2)   × 5
+mundo_z = (célula_y + 0,5 − altura_mapa/2) × 5
+mundo_y = −altura_do_terreno    (o eixo Y é negativo para cima)
+```
+
+Os dois primeiros **não são chute**: saem do único caso do projeto já conferido
+em tela pelo dono — a fonte do Centro da Ordem, em `auction_01` (200×100),
+documentada no cabeçalho do `edita_mapa.py` como *"centro na fronteira entre a
+179 e a 180: mundo (400, 110)"*. Conferindo: `180×5 − 500 = 400` e
+`72×5 − 250 = 110`. E **o Z não é invertido** — cresce junto com o y de célula.
+A altura sai do `.gat`, com o sinal trocado.
+
+**O arquivo é bytecode Lua 5.1** e tem só duas globais, sem nenhuma função — o
+que torna a regeração segura. A ferramenta lê os emissores existentes do GRF,
+acrescenta o nosso, gera o `.lua` em texto e compila com o `luac.exe` do
+ROenglishRE; o `luac -p` é a única prova de que o resultado compila
+(`CLAUDE.md` §5), e no fim ela **relê o `.lub` gravado** e confere que o
+emissor novo está lá.
+
+**Ele lê a base sempre do GRF, nunca do override** — reler o próprio arquivo
+gerado faria a receita apontar para si mesma, e uma rodada ruim viraria a fonte
+da seguinte (a armadilha do `arte_de` do `instala_item.py`).
+
+**É cliente: vai por PATCH, não por deploy** (`CLAUDE.md` §4.18). E o cliente só
+relê o mapa ao entrar nele — sair e voltar a Prontera.
+
+**O que ainda não foi conferido em tela** são os números do emissor (`size`,
+`color`, `rate`, `life`, `maxcount`): foram escolhidos para um halo parado — sem
+gravidade, sem velocidade, mistura aditiva — em vez de uma fumaça, mas só o jogo
+diz se o tamanho e o brilho estão bons. Todos estão em `_emissor_nosso()`, num
+lugar só.

@@ -3551,13 +3551,28 @@ virada real ainda. O que provar: receber as moedas, tentar de novo no mesmo dia
 
 ### O que NÃO se prova nesta máquina
 
-**A cor é patch, não deploy.** O `cliente\data\pprontera.rsw` está gravado aqui
-em **intensidade 6 de 10** (roxo avermelhado), aprovada em tela. Para o jogador
-ela só muda depois de um patch publicado — `RECEITAS.md` §11. Sem o patch o
-evento roda inteiro numa Prontera de cor normal, sem erro nenhum.
+**SÃO DOIS ARQUIVOS DE CLIENTE, e os dois só chegam ao jogador por patch**
+(`RECEITAS.md` §11) — o resto da Anomalia é servidor e vai por deploy:
 
-**Este é o único item da Anomalia que ainda não saiu desta máquina.** O resto é
-servidor e vai por deploy.
+| arquivo | o que é | estado |
+|---|---|---|
+| `cliente\data\pprontera.rsw` | a cor da dimensão, intensidade 6/10 | **aprovada em tela** |
+| `cliente\data\luafiles514\lua files\effecttool\prontera.lub` | o brilho sob o Varmunt | **nunca visto em jogo** |
+
+Sem o patch, o evento roda inteiro — numa Prontera de cor normal e sem brilho,
+sem erro nenhum. Falha calada e só cosmética.
+
+**O brilho é o único item da entrega que ninguém olhou.** O que ele tem de
+frágil são os números do emissor (`size`, `color`, `rate`, `life`, `maxcount`):
+foram escolhidos para um halo parado — sem gravidade, sem velocidade, mistura
+aditiva —, mas só a tela diz se o tamanho e a intensidade estão bons. Estão
+todos em `_emissor_nosso()`, no `ferramentas/planta_brilho.py`, e recalibrar é
+rodar `--aplicar` de novo e **sair e voltar a Prontera** (o cliente só relê o
+mapa ao entrar).
+
+Se o brilho aparecer como um **quadrado branco**, a textura não foi encontrada —
+mas a ferramenta já recusa aplicar se ela não estiver no GRF, então o suspeito
+passa a ser o caminho dentro do `.lub`.
 
 ### Sondas que ficaram no ar, de propósito
 
