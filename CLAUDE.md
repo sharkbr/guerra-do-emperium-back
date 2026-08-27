@@ -1653,6 +1653,25 @@ Produziram diagnóstico falso e custaram retrabalho:
   script: **campo constante num gerador é uma suposição sobre todos os casos
   já vistos**, e o `--verificar` não a denuncia porque ele compara com o que o
   próprio gerador produziria.
+- **O `ClassNum` de ARMA no `itemInfo.lua` não vem do `View:` do `item_db` — ele
+  vive só do lado do cliente, e zerá-lo troca o desenho da arma na mão, calado.**
+  A regra que o `instala_item.py` documenta — *"`visual` bate com o `View:`"* —
+  vale para equipamento de **cabeça**, onde o servidor manda o número. Para arma
+  não há número a mandar: o `Vigilante_Bow` (18145) tem `ClassNum = 73` no
+  cliente e **nenhum `View:`** no `item_db`, e **nenhum arco do vendor tem**.
+  Quem for escrever receita de arma e procurar `View:` para copiar acha zero,
+  escreve zero, e o arco passa a desenhar outra coisa — sem erro, sem log, e só
+  se vê com a peça equipada. **Copiar o `ClassNum` que a entrada já traz.** Os
+  vizinhos confirmam a numeração: 18109 e 1748 também são 73, o 18143 e o 18163
+  são 11. Medido em 2026-08-27.
+- **Nome e descrição do MESMO bloco do `itemInfo.lua` podem estar em línguas
+  diferentes, e a ferramenta que resolve cada metade é outra.** O 18145 tem
+  `identifiedDisplayName` em **coreano** e `identifiedDescriptionName` em
+  **inglês** (do ROenglishRE) — ler só o nome faz o item parecer caso de
+  `completa_iteminfo.py`, e ler só a descrição faz parecer que só falta
+  traduzir. Não era nem um nem outro: o bRO tem o ID **em coreano e sem
+  descrição**, então não há de onde copiar nada, e o caminho é receita à mão no
+  `instala_item.py`. Ao classificar um item por idioma, **olhar os dois campos**.
 - **`unidentifiedResourceName` TERMINA em `identifiedResourceName`, e um regex
   sem lookbehind casa com a linha errada.** No bloco do `itemInfo.lua` a linha
   do *unidentified* vem primeiro, então

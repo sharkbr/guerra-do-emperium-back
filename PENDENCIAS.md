@@ -2776,6 +2776,119 @@ entrada do item.
 
 ---
 
+## 1z10. Os 21 itens de 2026-08-27 — falta ver em jogo, o patch e o deploy (2026-08-27)
+
+A lista de 57 números do dono tinha **36 itens que já estavam à venda**; os **21
+que faltavam entraram todos**, em oito das nove lojas do Mercado Contemporâneo.
+O que foi feito e por quê está no `HISTORICO.md`, seção *"Vinte e um itens em
+oito vitrines de Prontera"*. Aqui fica **só o que falta**.
+
+### O que falta
+
+| passo | onde roda | estado |
+|---|---|---|
+| ver em jogo (as 8 vitrines) | cliente local | **FALTA** |
+| commit + push | Windows (esta máquina) | **FALTA** |
+| patch de cliente | Windows | **FALTA** |
+| `ferramentas/implanta.sh` | **Mac** | **FALTA** |
+
+A ordem importa: **ver em jogo primeiro, montar o patch depois** (`RECEITAS.md`
+§11). Número de patch não se reaproveita.
+
+Os quatro servidores locais **já foram reiniciados** com o conteúdo novo, e o
+`itemInfo.lua` desta máquina já tem as entradas — para ver na tela basta fechar
+e reabrir o cliente (ele lê aquele arquivo só na inicialização).
+
+### O que o patch leva — 25 arquivos
+
+```
+SystemEN/LuaFiles514/itemInfo.lua                     10 entradas novas,
+                                                      + 18145 e 490029 reescritos,
+                                                      + 490482 criado
+data/sprite/<item>/{aramazd_revelation,europa_robe_j,
+     illusion_shield_a,illusion_shield_b,auto_shield_a,
+     arrogance_p_shoes}.{spr,act}                     12 arquivos
+data/texture/<ui>/item/<os mesmos 6>.bmp               6 arquivos
+data/texture/<ui>/collection/<os mesmos 6>.bmp         6 arquivos
+```
+
+**Três itens não precisam de arte no patch, e é de propósito.** O Arco Vigilante
+(18145) já tinha os 4 arquivos no GRF de 2021, e a Ferramenta Mágica de Gelo
+(490029) e o Pingente da Celine (490482) **pegaram emprestada** a arte de peças
+que também já estão lá (`Ice_Stone_4th` e `Celine_Brooch`). Nos três, o que muda
+é só a entrada do `itemInfo.lua`.
+
+**Não usar `--desde 2026-08-27` sem olhar a lista:** aquela varredura traz junto
+o `signboardlist.lub` (que já foi no patch 0010, de madrugada), o `savedata/` e
+um screenshot. Os caminhos de sprite e textura têm pasta coreana, que não
+sobrevive ao `argv` do console — o jeito é chamar `monta_patch.monta()` de um
+script Python com a lista `unicode`, como o `--desde` faz por dentro.
+
+### O que o deploy leva
+
+```
+rathena/db/guerra/item_db.yml                 3 itens novos (nona leva)
+rathena/db/guerra/item_combos.yml             2 conjuntos espelhados
+rathena/db/guerra/item_db_lojas.yml           1774 itens a `Buy: 1`
+rathena/db/re/item_db_equip.yml               10 `Name` sincronizados para PT
+rathena/npc/guerra/mercado_contemporaneo.txt  21 linhas em 8 lojas
+ferramentas/instala_item.py                   3 receitas de cliente
+```
+
+O `instala_item.py` não é arquivo de servidor — vai no commit porque o
+**gerador** é versionado e a saída (o `itemInfo.lua`) não, que é como o cliente
+se reconstrói numa máquina nova.
+
+O `implanta.sh` reinicia os quatro servidores sozinho — não há comando de
+recarga a dar depois. Se um dia for preciso aplicar sem reiniciar, a ordem é
+**`@reloaditemdb` primeiro e `@reloadscript` depois** (`CLAUDE.md` §5).
+
+**O deploy não sai desta máquina**: a chave daqui é `ragnarok`, que só alcança
+`/var/www/patch`. Sai do Mac.
+
+### O que olhar em jogo, além de "o item está na lista"
+
+Três peças desta rodada têm um jeito de falhar que a vitrine não mostra:
+
+- **Arco Vigilante (18145)** — **equipar e olhar o desenho na mão.** A receita
+  preserva o `ClassNum = 73` que a entrada já trazia; se ele tiver se perdido, o
+  arco desenha outra coisa, sem erro nenhum (`CLAUDE.md` §5).
+- **Ferramenta Mágica de Gelo da Geffenia (490029)** e **Pingente da Celine
+  (490482)** — os dois usam arte **emprestada** de outra peça, por escolha do
+  dono. O ícone é o da Ice Stone e o do Broche da Celine, respectivamente, e
+  isso é o esperado, não defeito. O que se confere é que **não sai caixa modal**
+  ao abrir o Acessorista.
+- **Elmo Alado Dourado (19317)** — é `View: 1361`, o mesmo do Rune Helm do
+  vendor. Vestir e ver se a cabeça desenha.
+
+### Uma linha do Pingente da Celine é inerte neste cliente
+
+O `Script:` do 490482 tem `bonus bSpl,3`, e **SPL não existe neste cliente**: é
+uma das seis características de 4ª classe (POW, STA, WIS, SPL, CON, CRT), que
+chegaram ao kRO em 2022 — o nosso é de 2021-11-03. Não há janela para elas e o
+pacote não as leva.
+
+A linha **está** na descrição, com a sigla, para que a conta de efeito feche com
+o `item_db` (`CLAUDE.md` §5) e para que ela já faça sentido no dia em que o
+cliente subir de versão. **Não é erro de tradução** — é bônus que o servidor
+aplica e o cliente não sabe mostrar. Quem for revisar o texto daquele item vai
+tropeçar nela; fica registrado aqui para não virar "conserto".
+
+### E uma coisa pequena que o Arco Vigilante deixou para trás
+
+O 18145 fecha um conjunto de três peças no `db/re/item_combos.yml` — com o
+`Vigilante_Suits` (15176) e o `Vigilante_Bedge` (28441) —, e **a descrição nova
+dele não cita esse conjunto**. Foi deliberado: as duas outras peças têm nome
+**coreano** no `itemInfo.lua` deste cliente e não estão à venda em loja nenhuma,
+então citá-las seria pôr coreano na tela do jogador.
+
+O conjunto **continua valendo** — quem trouxer as três peças de fora recebe o
+bônus. Se um dia as duas ganharem nome em português (mesma receita do
+`instala_item.py`, e a arte delas precisa ser conferida antes), vale acrescentar
+as duas linhas à descrição do arco.
+
+---
+
 ## 2. Itens com `# TODO` — quatro efeitos e oito conjuntos
 
 Placeholders que entraram sem bônus. Cada `# TODO` no `db/guerra/item_db.yml`

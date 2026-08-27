@@ -14106,3 +14106,286 @@ trocar o campo `CONTENTS` na própria tabela.
 
 Conferido em jogo pelo dono e publicado como **patch 0010**, "Placas mortas fora
 do cliente" (5.946 bytes). É cliente: não anda por deploy.
+
+## Vinte e um itens em oito vitrines de Prontera (2026-08-27)
+
+O pedido veio com **57 números** e o próprio dono avisou que podia haver
+repetição — *"alguns podem estar duplicados ou já existirem, ignore se for o
+caso"*. Havia: **36 dos 57 já estavam à venda**. Os **21 que faltavam entraram
+todos**, em oito das nove lojas do Mercado Contemporâneo — os dois últimos
+depois de o dono escolher de que item cada um pegaria o desenho.
+
+| loja | entraram | ficou com |
+|---|---|---|
+| Escudeiro | 5 | 22 |
+| Chapeleiro | 3 | 33 |
+| Lorde das Armaduras | 3 | 29 |
+| Senhor das Armas | 3 | 58 |
+| Acessorista | 3 | 70 |
+| Sapateiro | 2 | 36 |
+| Retoqueiro | 1 | 24 |
+| Capeiro | 1 | 33 |
+
+O **Ocleiro** foi a única loja que não recebeu nada: nenhum dos 21 é
+equipamento de cabeça-meio.
+
+### A metade do pedido que já estava pronta
+
+Cruzar a lista com as linhas de `shop` dos três mercados antes de qualquer outra
+coisa custou um script de vinte linhas e economizou a rodada inteira: **36 dos
+57** já estavam em vitrine. Vale registrar porque dois deles pareceriam perdidos
+a quem procurasse só no Mercado Contemporâneo — a **Muda de Mandrágora** (6217)
+está na **Tranqueiras** e a **Caixa de Elmos Especiais** (23767) está no **Zé do
+Caixão** (`prontera 159,131`). As duas são lojas de Prontera, só não são deste
+quarteirão.
+
+### O `Locations:` concordou com o pedido nos 21 — a segunda rodada seguida
+
+As duas conferências que a regra 4.14 manda fazer deram acordo: o `Locations:`
+do nosso `item_db` bateu com o destino pedido, e o `item_db` bateu com a linha
+`Tipo:`/`Equipa em:` da descrição do bRO nos 21. **Nenhum override de
+`Locations:` e nenhuma divergência a levantar.**
+
+### O trabalho estava em 16 peças, não em 21
+
+| o que faltava | quantos | por onde |
+|---|---|---|
+| entrada no `itemInfo.lua` | 10 | `completa_iteminfo.py` |
+| `Name` em inglês no servidor | 10 | `nomes_pt_item_db.py` |
+| os 4 arquivos de arte | 6 | `instala_visual.py` |
+| não existia no servidor | 3 | `db/guerra/item_db.yml` |
+| receita de cliente escrita à mão | 3 | `instala_item.py` |
+| conjunto a espelhar | 2 | `db/guerra/item_combos.yml` |
+
+As contas se sobrepõem — cada **Escudo Ilusión** aparece em três linhas, e a
+**Greva Fantasma** nas quatro. As outras cinco peças não custaram nada: o
+rAthena tinha, o cliente tinha em português, e o `valida_visual.py` aprovou os 4
+(ou 8) arquivos antes de entrarem. A reconferência fechou em **0 faltando nos
+21**.
+
+### A nona leva de placeholders, e uma delas é renumeração de novo
+
+As três que não existiam no servidor viraram entrada nossa em
+`db/guerra/item_db.yml`, com os bônus lidos da descrição do bRO:
+
+| id | item | o que é |
+|---|---|---|
+| 810011 | Velho Rifle | Rifle, ATQ 110, Justiceiros, dano de [Execução] por INT |
+| 19317 | Elmo Alado Dourado | `Head_Top`, VIT +3, dano de [Explosão Rúnica] |
+| 470309 | Greva Fantasma | `Shoes`, ATQ da arma +5%, ATQ +80 no +8 |
+
+O **Elmo Alado Dourado (19317)** é o mesmo item que o **5970 do vendor**
+(`RuneHelm`), renumerado pelo bRO — o mesmo padrão da Diadema do Paraíso
+(19024 → 19455) e da Raposa Ilusional (420314 → 420227), e ele foi provado por
+três caminhos independentes:
+
+1. o `ClassNum` do 19317 no bRO é **1361**, que é o `View` do 5970;
+2. o `Script:` do 5970 abre com as **três mesmas linhas** que a descrição do
+   19317 promete — `bonus bVit,3`, `bonus bMaxHPrate,4` e o dano de [Explosão
+   Rúnica];
+3. o 5970 traz o pacote de **oito `autobonus3`** que é como o vendor escreve
+   *"Mantém [Milagre das Runas] ativo"* — frase que a descrição do 19317 tem por
+   extenso.
+
+A terceira é a que fecha, e ela só apareceu porque a frase foi procurada nos
+18845 itens do bRO em vez de ser interpretada: os únicos dois equipamentos que a
+têm são o 19317 e o **[MEGA] Elmo de Fafnir (400177)**, que já está no
+Chapeleiro desde a primeira rodada — e o `Script:` do Fafnir mostrava o pacote
+pronto. No vendor ele aparece em três itens (5970, 19468 e 400177), então é
+padrão e não invenção de um deles.
+
+**Entrou o 19317 e não o 5970** pela razão de sempre: o nome do 5970 é **coreano**
+no nosso cliente, e o bRO também o traz em coreano e **sem descrição** — o bRO
+traduziu o número novo e deixou o velho para trás. Só entra na loja item com
+nome em português (regra 4.2).
+
+Onde a descrição do bRO discordou do 5970, quem venceu foi ela, porque é o texto
+que o jogador lê: `Defense` 0 em vez de 15, nível mínimo 1 em vez de 50, e os
+degraus de [Explosão Rúnica] em +9/+11 em vez de +6/+8 (os três valores são os
+mesmos: 30/50/70). Uma linha do 5970 ficou **de fora de propósito** — o
+`bonus2 bFixedCastrate,"RK_REFRESH",-100`, que a descrição do 19317 não promete.
+
+### A Greva Fantasma repetiu a armadilha do Sapato Fantasma, com outro número
+
+O `identifiedResourceName` do **470309** no bRO é `Arrogance_P_Shoes`, e o nosso
+vendor **tem** esse nome — no **470080** ("Arrogant Thoughtform Shoes"), com o
+`_` no 470081. Não é o mesmo item: DEF 12 / nível 100 / HP e SP +20% contra DEF
+0 / nível 170 / ATQ da arma +5%. É exatamente o que aconteceu com o 470321 em
+2026-08-20 (`Runaway_P_Shoes`), e pelo mesmo motivo: nome de recurso é só o
+**desenho**, e a família Fantasma reaproveita os desenhos das *Thoughtform*.
+Daí `Phantom_Greave`.
+
+O conjunto **[Aura Fantasma]** dela foi espelhado em `db/guerra/item_combos.yml`
+— cópia exata do grupo de FOR do vendor, que já serve aos 470293-470296 e ao
+nosso 470321. Os outros quatro da descrição ([Argen Blanco], [Vernan],
+[Fortridge] e [Ferramenta Dourada]) viraram **TODO**: as quatro armas existem no
+vendor — `Argen_Blanco` (32023), `Vernan` (21052), `Fortrage` (32025) e
+`Golden_Wrench` (1333) —, mas **nenhum `- Combos:` do `db/re/` casa qualquer uma
+delas com calçado**, então não há o que copiar. Escrever quatro conjuntos do zero
+a partir de prosa é o que as levas anteriores recusaram fazer.
+
+### O nome de duas habilidades não estava no cliente, e uma delas veio do bRO
+
+Os nomes saem do `skillinfolist.lub` **deste** cliente (regra 4.12), e ele
+resolveu [Explosão Rúnica] = `RK_STORMBLAST`, [Vento Cortante] =
+`RK_WINDCUTTER`, [Espiral Lunar] = `LG_MOONSLASHER`, [Arremesso de Machado] =
+`NC_AXEBOOMERANG` e [Lança das Mil Pontas] = `RK_HUNDREDSPEAR`.
+
+**[Execução] não estava lá** — é habilidade posterior a 2021-11-03. O
+`skillinfolist.lub` do GRF do bRO (que é bytecode, lido com o `ptbr.py`) a dá
+como **`RL_HAMMER_OF_GOD`**, e o vendor confirma o par sem margem: os únicos
+itens do `item_db` que citam essa habilidade são os rifles **810000** e
+**810002**, os dois de Justiceiro. Duas fontes independentes apontando para o
+mesmo `SKID` é o que autoriza usá-lo.
+
+**[Milagre das Runas] não é habilidade nenhuma** — foi o que a busca por nome
+mostrou, e é o que evitou inventar um `bonus`. Ver o bloco do 19317, acima.
+
+### As duas travas de sempre rodaram
+
+O `zera_revenda_das_lojas.py` achou **4 itens dando lucro por clique** entre os
+novos, e um deles não era de 9 zeny: o **Robe Chique (450010)** tem
+`Buy: 200000` no vendor e revendia por **100.000 por clique**. O `Buy: 1` fechou
+os 1774 itens das 23 lojas, e o `--conferir` deu OK.
+
+O `marca_indestrutiveis.py` regerou o override sem mudar um byte: **nenhum dos
+21** está entre os 28 que dizem "Indestrutível" sem ter o bônus. O Velho Rifle
+diz, e já nasceu com `bonus bUnbreakableWeapon` — como as três armas da oitava
+leva.
+
+### O Arco Vigilante entrou por um terceiro caminho: nome coreano, descrição inglesa
+
+O **18145** ia ficar de fora pela regra 4.2 — só entra na loja item com nome em
+português, e o `itemInfo.lua` deste cliente o traz em **coreano** (`자경단 보우`).
+O bRO tem o ID, mas também em coreano e **sem descrição**, exatamente como o
+5970: o `completa_iteminfo.py` não tinha de onde copiar.
+
+Só que o item está **inteiro** do lado do servidor (`Vigilante_Bow`, com
+conjunto) e a arte deu **4 de 4**. O que faltava era só texto — e o próprio
+pedido já trazia o nome: *"Arco Vigilante = 18145"*. É o caso **"Chapéu do
+Éden"** pela terceira vez, e o primeiro em que as duas metades da entrada estão
+em **línguas diferentes**: nome em coreano, descrição em inglês (ROenglishRE).
+
+Virou a **décima receita** do `instala_item.py`, o único script que substitui
+bloco existente. A descrição é tradução da inglesa que já estava lá, e as duas
+foram conferidas linha por linha contra o `Script:` do vendor — *"for each 20
+base DEX, +5% bow damage"* é `5*(readparam(bDex)/20)`, o *"+10% additional"* do
++7 é o `.@bonus += 10`, e o *"+50% Double Strafing"* do +9 é
+`bonus2 bSkillAtk,"AC_DOUBLE",50`. **Nada sobrou dos dois lados**, que é o que
+autoriza usar o texto inglês como fonte (no 490029, em 2026-08-20, tinha
+sobrado — faltava a linha da Maestria Arcana).
+
+Três decisões desse bloco que valem para a próxima receita:
+
+- **A arte veio de `arte_de: 18163`, e não do próprio ID.** O recurso é coreano
+  (`자경단보우`), então não cabe no campo `recurso`, que é ASCII; e `arte_de:
+  18145` seria a auto-referência que a nota do 19272 proíbe — o script se leria
+  a si mesmo. A saída foi o terceiro caminho: o **18163 usa o mesmo
+  `identifiedResourceName`**, e são os dois únicos que o usam. Copiar dele é
+  copiar o mesmo desenho sem ler o bloco que se vai sobrescrever.
+- **`visual: 73` não bate com `View:` nenhum, e isso é o certo para arma.** O
+  18145 não tem `View:` no `item_db`, e **nenhum arco do vendor tem** — o
+  `ClassNum` do `itemInfo.lua` é a numeração de arma do cliente, que vive só
+  daquele lado. Zerá-lo trocaria o desenho do arco na mão do personagem,
+  calado. Os vizinhos confirmam a numeração: 18109 e 1748 também são 73, o
+  18143 e o 18163 são 11. **A regra do LEIAME de que `visual` bate com `View:`
+  vale para equipamento de cabeça, não para arma.**
+- **O conjunto não é citado na descrição, de propósito.** O 18145 fecha um trio
+  com o `Vigilante_Suits` (15176) e o `Vigilante_Bedge` (28441), e o conjunto
+  **continua valendo** — só não aparece no texto. As duas outras peças têm nome
+  **coreano** no `itemInfo.lua` deste cliente e não estão à venda: citá-las
+  seria pôr coreano na tela do jogador.
+
+A linha de classes saiu do bRO e não da entrada inglesa: o **18109**
+(Catapulta) tem exatamente o mesmo `Jobs: Rogue` + `Classes: All_Third`/`Fourth`
+e a descrição dele no bRO diz *"Classes: Renegados e evoluções"*. A entrada
+inglesa dizia só *"Shadow Chaser"*, que é mais apertado do que o `item_db`
+permite.
+
+### Os dois últimos estavam presos na arte, e o destravamento foi uma escolha do dono
+
+| id | item | o que faltava |
+|---|---|---|
+| 490029 | Ferramenta Mágica de Gelo | **arte** |
+| 490482 | Pingente da Celine | **arte, nome e descrição** |
+
+O **490029** já tinha ficado de fora em 2026-08-20 pelo mesmo motivo, e a
+reconferência de hoje repetiu o resultado: os quatro arquivos de
+`Geffenia_Magictool_Ice` não existem nem no nosso `data.grf` nem no do bRO. Item
+sem arte entrega caixa modal ao aparecer na loja (regra 4.4). Dar a ele o
+desenho de outro item — o que o `arte_de` do `instala_item.py` faz numa linha —
+é decisão do dono. O pedido também trazia um nome novo, *"Ferramenta Mágica de
+Gelo da Geffenia"*; o que o cliente desenha hoje é *"Ferramenta Mágica de Gelo"*,
+e trocar é editar a receita daquele script.
+
+O **490482** é o beco completo: o item existe no vendor (`Cel_Design_Pendant`),
+mas o bRO **não tem este ID** — nem por número nem por nome; varridos os 18845,
+o que há de "Celine" é o Broche (28572, já no Acessorista), o Laço, a Fita, o
+Adereço e os dois vestidos. Sem entrada no bRO não há de onde trazer nome nem
+descrição, e os quatro arquivos de arte também não estão em GRF nenhum. Ele tem
+**dois conjuntos** no vendor, com o Broche e com o Laço, então não é peça
+qualquer.
+
+Os dois travavam na mesma coisa, e ela **não é decisão técnica**: dar a uma peça
+o desenho de outra muda o que o jogador vê. Perguntado, o dono escolheu os
+doadores por arquivo — `ice_stone_4th.bmp` para a Ferramenta e
+`celine_brooch.spr` para o Pingente. Os dois recursos têm os **quatro** arquivos
+no nosso `data.grf`, conferido antes de escrever a receita, e a consequência boa
+disso é que **essa arte não entra no patch**: quem tem o cliente já a tem, desde
+2021.
+
+A **Ferramenta** também mudou de nome, como o pedido escreveu por extenso:
+*"Ferramenta Mágica de Gelo da Geffenia"*. São 37 caracteres, dentro do corte de
+40 do `nomes_pt_item_db.py`.
+
+O **Pingente** precisou de descrição escrita do zero — não há texto de origem em
+língua nenhuma —, e as três frases saíram de testemunhas do próprio bRO em vez
+de tradução livre: `bonus2 bMagicAtkEle,Ele_All,10` é *"Dano mágico de todas as
+propriedades +10%"* (22204, 20943), `bonus2 bMagicAddEle,Ele_All,25` é *"Dano
+mágico contra oponentes de todas as propriedades +25%"* (490015) e
+`bonus2 bMagicAddRace,RC_All,N` é *"Dano mágico contra todas as raças +N%"*
+(1670, 15824).
+
+**Uma linha do `Script:` dele é inerte neste cliente, e isso ficou no comentário
+e não na tela — quase.** O `bonus bSpl,3` mexe em SPL, uma das seis
+características de 4ª classe (POW, STA, WIS, SPL, CON, CRT) que chegaram ao kRO
+em **2022**, depois do nosso 2021-11-03: este cliente não tem janela para elas e
+o pacote não as leva. O bRO desta máquina também não as nomeia em descrição
+nenhuma — procurado "SPL" nos 18845, zero. A linha entrou na descrição **com a
+sigla**, que é como o rAthena a chama, para que a conta de efeito feche com o
+`item_db` (`CLAUDE.md` §5) e para que ela já faça sentido no dia em que o
+cliente subir de versão.
+
+### O conjunto do Pingente com o Broche não fechava, e os dois ficam na mesma loja
+
+O `db/re/item_combos.yml` casa o `Cel_Design_Pendant` com o **`Celine_Brooch`**,
+que é o **28513** — e o broche da nossa vitrine é o **28572**,
+`Celine_Brooch_BR`, o ID do bRO, que entrou como placeholder em 2026-08-01. São
+itens diferentes, então o conjunto do vendor **não fecha com a peça que o
+jogador compra ao lado**: os dois acessórios ficam no Acessorista, a poucos
+cliques um do outro.
+
+Foi espelhado em `db/guerra/item_combos.yml`, cópia exata do `Script:` do vendor
+com o nosso AegisName no lugar do dele — a mesma receita da Diadema do Paraíso
+(19455) e do Sapato Fantasma (470321). Sem ele a descrição prometeria um
+conjunto que não acontece, e conjunto que não fecha não dá erro.
+
+O outro conjunto do Pingente, com o **Laço da Celine** (18849, no Chapeleiro),
+já fechava sozinho: o vendor casa `Celines_Ribbon` com o `Cel_Design_Pendant`, e
+o Laço está à venda com nome em português.
+
+### A subida não trouxe erro novo
+
+Os quatro servidores locais foram reiniciados com o conteúdo novo. As três
+sondas que denunciariam este trabalho deram **zero**:
+
+| o que procurar | denuncia | saiu |
+|---|---|---|
+| `Unknown syntax` | linha ruim no `.txt` — mata o arquivo inteiro dali para baixo | 0 |
+| `Invalid sell item` | item de vitrine que o `item_db` não conhece | 0 |
+| `discounted buying price` | revenda maior que a vitrine | 0 |
+
+O log traz **72 `[Error]`**, o mesmo número da subida de 2026-08-26 e das mesmas
+duas famílias: os 34+34 do `job_outfits.yml` lido duas vezes (`PENDENCIAS.md`
+§1z8) e os 2+2 de chicote/instrumento do nosso `item_db.yml`, nas linhas 819 e
+1176 — as duas anteriores a esta sessão, que só acrescentou a partir da 3090.

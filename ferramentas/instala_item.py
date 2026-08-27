@@ -314,12 +314,32 @@ ITENS = [
     # contrario do que ele faz: `bonus2 bSkillUseSP,sk,n` DIMINUI o consumo em
     # n (doc/item_bonus.txt:195). Entao o `,35` e o `,100` do script sao -35 e
     # -100 na tela, e nao +35 e +100.
+    #
+    # EM 2026-08-27 ELE GANHOU ARTE EMPRESTADA E UM NOME MAIOR, os dois a
+    # pedido do dono, e foi o que finalmente o pos numa vitrine.
+    #
+    # A ARTE: o recurso original (`Geffenia_Magictool_Ice`) nao existe em GRF
+    # nenhum - nem no nosso, nem no do bRO, reconferido nos dois em 2026-08-27.
+    # Por isso ele passou um pedido inteiro fora das lojas: item sem arte
+    # entrega caixa modal ao aparecer na vitrine (regra 4.4). O dono escolheu o
+    # doador: `Ice_Stone_4th`, que e a Ice Stone (1000295) do proprio vendor e
+    # tem os QUATRO arquivos no NOSSO data.grf - sprite de chao, .act, icone de
+    # inventario e icone grande. Como a arte ja esta no GRF de 2021, ela NAO
+    # precisa entrar em patch: quem tem o cliente ja a tem.
+    #
+    # O NOME passou de "Ferramenta Magica de Gelo" para "Ferramenta Magica de
+    # Gelo da Geffenia", como o pedido de 2026-08-27 escreveu por extenso. Sao
+    # 37 caracteres, dentro do que o nomes_pt_item_db.py aceita (o corte dele e
+    # em 40).
     {
         'id': 490029,
-        'nome': u'Ferramenta Mágica de Gelo',
-        # O recurso que a entrada em ingles ja trazia, preservado por extenso.
-        # NAO se usa `arte_de: 490029` aqui - ver a nota do 19272 acima.
-        'recurso': u'Geffenia_Magictool_Ice',
+        'nome': u'Ferramenta Mágica de Gelo da Geffenia',
+        # A ARTE DA Ice Stone (1000295), por escolha do dono em 2026-08-27. O
+        # recurso original, `Geffenia_Magictool_Ice`, nao tem arquivo nenhum -
+        # ver a nota acima. `arte_de: 1000295` daria o mesmo, e o nome por
+        # extenso foi preferido porque nao depende de aquele bloco continuar
+        # existindo. NAO se usa `arte_de: 490029` aqui - ver a nota do 19272.
+        'recurso': u'Ice_Stone_4th',
         # Batem com o `Slots: 1` do 490029 em db/re/item_db_equip.yml. Sem
         # `visual`: acessorio nao tem id de visual, e zero e o valor certo.
         'covas': 1,
@@ -342,6 +362,151 @@ ITENS = [
             u'Tipo: ^777777Acessório^000000',
             u'DEF: ^7777772^000000 DEFM: ^7777770^000000',
             u'Peso: ^77777750^000000',
+            u'Nível necessário: ^777777100^000000',
+            u'Classes: ^777777Todas^000000',
+        ],
+    },
+    # A DECIMA ENTRADA, 2026-08-27: o Arco Vigilante (18145). E o TERCEIRO caso
+    # do tipo "Chapeu do Eden" - item que existe inteiro no nosso vendor e cuja
+    # entrada de cliente esta na lingua errada -, e o primeiro em que as duas
+    # metades da entrada estao em linguas DIFERENTES: o nome em COREANO
+    # ("자경단 보우") e a descricao em INGLES (veio do ROenglishRE). O pedido do
+    # dono em 2026-08-27 nomeou o item na propria lista: "Arco Vigilante".
+    #
+    # POR QUE NAO FOI PELO completa_iteminfo.py: o bRO TEM o ID, mas em coreano
+    # e SEM DESCRICAO - o mesmo estado do 5970 (Rune Helm). Nao ha de onde
+    # copiar nome nem texto; a descricao abaixo e traducao da inglesa que ja
+    # estava no arquivo, conferida linha por linha contra o `Script:` do vendor.
+    #
+    # AS DUAS BATERAM, e isso foi conferido e nao suposto (CLAUDE.md 5, "a
+    # descricao discorda do script"): "for each 20 base DEX, +5% bow damage" e
+    # `5*(readparam(bDex)/20)`; o "+10% additional" do +7 e o `.@bonus += 10`;
+    # e o "+50% Double Strafing" do +9 e o `bonus2 bSkillAtk,"AC_DOUBLE",50`.
+    # Nada sobrou dos dois lados.
+    #
+    # O NOME DA HABILIDADE sai do `skillinfolist.lub` DESTE cliente (regra
+    # 4.12): AC_DOUBLE = "Rajada de Flechas". "Double Strafing" e o nome ingles
+    # do ROenglishRE, e nao entra.
+    #
+    # A LINHA DE CLASSES saiu do bRO, e nao da entrada inglesa: o 18109
+    # (Catapulta) tem exatamente o mesmo `Jobs: Rogue` + `Classes: All_Third`/
+    # `Fourth` do 18145, e a descricao dele no bRO diz "Classes: Renegados e
+    # evolucoes". A entrada inglesa dizia so "Shadow Chaser", que e mais
+    # apertado do que o item_db permite.
+    #
+    # O CONJUNTO NAO E CITADO, de proposito. O 18145 fecha um trio com o
+    # Vigilante_Suits (15176) e o Vigilante_Bedge (28441) em
+    # db/re/item_combos.yml, e o conjunto CONTINUA VALENDO - so nao aparece na
+    # descricao. As duas outras pecas tem nome COREANO no itemInfo.lua deste
+    # cliente e nao estao a venda em loja nenhuma: cita-las seria por coreano na
+    # tela do jogador (regra 4.2 pelo avesso). Fica registrado em PENDENCIAS.md.
+    {
+        'id': 18145,
+        'nome': u'Arco Vigilante',
+        # O recurso e COREANO (`자경단보우`), entao nao cabe no campo `recurso`,
+        # que e ASCII. E `arte_de: 18145` seria a auto-referencia que a nota do
+        # 19272 proibe. A saida e o TERCEIRO caminho: o 18163 do vendor usa o
+        # MESMO `identifiedResourceName` (conferido byte a byte no itemInfo.lua
+        # desta maquina, e sao os dois unicos que o usam), entao copiar dele e
+        # copiar o mesmo desenho sem ler o proprio bloco.
+        'arte_de': 18163,
+        # `covas` bate com o `Slots: 2` do 18145 em db/re/item_db_equip.yml.
+        #
+        # `visual` NAO bate com `View:` nenhum, e isso e o certo para ARMA: o
+        # 18145 nao tem `View:` no item_db, e nenhum arco do vendor tem. O 73 e
+        # o `ClassNum` que a entrada ja trazia - a numeracao de arma do
+        # cliente, que e outra coisa e vive so deste lado. Zera-lo trocaria o
+        # desenho do arco na mao do personagem, calado. Os vizinhos confirmam a
+        # numeracao: 18109 e 1748 tambem sao 73, o 18143 e o 18163 sao 11.
+        'covas': 2,
+        'visual': 73,
+        'descricao': [
+            u'Arco de vigilante, dos que no passado se usavam para conter criminosos.',
+            u'A cada 20 de DES base:',
+            u'^0000ffDano com armas da classe Arco +5%.^000000',
+            u'Refino +7 ou mais:',
+            u'^0000ffDano com armas da classe Arco +10% adicional.^000000',
+            u'Refino +9 ou mais:',
+            u'^0000ffDano de [Rajada de Flechas] +50%.^000000',
+            u'Tipo: ^777777Arco^000000',
+            u'ATQ: ^777777140^000000 ATQM: ^7777770^000000',
+            u'Peso: ^777777100^000000',
+            u'Nível da arma: ^7777773^000000',
+            u'Nível necessário: ^777777100^000000',
+            u'Classes: ^777777Renegados e evoluções^000000',
+        ],
+    },
+    # A DECIMA PRIMEIRA ENTRADA, 2026-08-27: o Pingente da Celine (490482). E o
+    # caso mais fundo de todos - o item existe INTEIRO no vendor
+    # (`Cel_Design_Pendant`, `Both_Accessory`, com DOIS conjuntos), e do lado do
+    # cliente NAO EXISTE NADA: nem entrada no itemInfo.lua, nem arte.
+    #
+    # E O bRO NAO TEM ESTE ID. Varridos os 18845 do `iteminfo_new.lub` por
+    # numero e por nome em 2026-08-27; o que ha de "Celine" e o Broche (28572),
+    # o Laco (18849), a Fita (20232), o Adereco (32237) e dois vestidos. Entao
+    # nao ha de onde copiar nome, descricao nem recurso - o completa_iteminfo.py
+    # nao tem o que fazer aqui, e por isso o item passou de fora em 2026-08-27.
+    #
+    # O NOME veio do pedido do dono ("Pingente da Celine = 490482") e a ARTE foi
+    # escolhida por ele: `Celine_Brooch`, o desenho do Broche da Celine, que tem
+    # os QUATRO arquivos no NOSSO data.grf. `arte_de: 28572` daria o mesmo (o
+    # 28572 e o nosso placeholder do Broche e usa esse recurso), e o nome por
+    # extenso foi preferido pela mesma razao do 490029. Como a arte ja esta no
+    # GRF de 2021, ela NAO precisa entrar em patch.
+    #
+    # A DESCRICAO E TRADUCAO DO `Script:` DO VENDOR, linha a linha, porque nao
+    # ha texto de origem em lingua nenhuma. As duas equivalencias saem de
+    # testemunha do proprio bRO: `bonus2 bMagicAtkEle,Ele_All,10` e "Dano magico
+    # de todas as propriedades +10%" (a frase esta na descricao dos 22204 e
+    # 20943).
+    #
+    # E O `bonus bSpl,3` E INERTE NESTE CLIENTE, o que fica dito aqui e nao na
+    # tela: SPL e uma das seis caracteristicas de 4a classe (POW, STA, WIS, SPL,
+    # CON, CRT), que chegaram ao kRO em 2022 - depois do nosso 2021-11-03. Este
+    # cliente nao tem janela para elas e o pacote nao as leva, e o bRO desta
+    # maquina tambem nao as nomeia em descricao nenhuma (procurado "SPL" nos
+    # 18845: zero). A linha entra na descricao com a SIGLA, que e como o rAthena
+    # a chama, para que a conta de efeito feche com o item_db (CLAUDE.md 5) - e
+    # para que ela ja faca sentido no dia em que o cliente subir de versao.
+    #
+    # OS DOIS CONJUNTOS SAO CITADOS, e os dois FECHAM de verdade - o que nao era
+    # obvio, porque so um deles fechava sozinho:
+    #
+    #   [Laco da Celine]    o db/re/item_combos.yml ja casa `Celines_Ribbon`
+    #                       (18849) com o `Cel_Design_Pendant`, e o Laco esta a
+    #                       venda no Chapeleiro, com nome em portugues. Nada a
+    #                       fazer.
+    #   [Broche da Celine]  o combo do vendor cita `Celine_Brooch`, que e o
+    #                       28513 - e o que esta na nossa vitrine e o 28572,
+    #                       `Celine_Brooch_BR`, o ID do bRO. Sao itens
+    #                       diferentes, entao o conjunto NAO fecharia com a peca
+    #                       que o jogador compra ao lado. Foi ESPELHADO em
+    #                       db/guerra/item_combos.yml, copia exata do Script do
+    #                       vendor com o nosso AegisName no lugar do dele.
+    #
+    # Sem esse espelho os dois acessorios ficariam na MESMA loja, a poucos
+    # cliques um do outro, com um conjunto que a descricao promete e que nao
+    # acontece - e conjunto que nao fecha nao da erro (regra do 19455).
+    {
+        'id': 490482,
+        'nome': u'Pingente da Celine',
+        'recurso': u'Celine_Brooch',
+        # Bate com o `Slots: 1` do 490482 em db/re/item_db_equip.yml. Sem
+        # `visual`: acessorio nao tem id de visual.
+        'covas': 1,
+        'descricao': [
+            u'Pingente que a Celine desenhou para acompanhar o broche e o laço que levam o nome dela.',
+            u'^0000ffSPL +3.^000000',
+            u'^0000ffDano mágico de todas as propriedades +10%.^000000',
+            u'^FA4E09Conjunto^000000',
+            u'^FA4E09[Laço da Celine]^000000',
+            u'A cada 2 refinos do Laço:',
+            u'^0000ffDano mágico contra todas as raças +3%.^000000',
+            u'^FA4E09Conjunto^000000',
+            u'^FA4E09[Broche da Celine]^000000',
+            u'^0000ffDano mágico contra oponentes de todas as propriedades +25%.^000000',
+            u'Tipo: ^777777Acessório^000000',
+            u'Peso: ^77777710^000000',
             u'Nível necessário: ^777777100^000000',
             u'Classes: ^777777Todas^000000',
         ],

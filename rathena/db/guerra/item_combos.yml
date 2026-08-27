@@ -351,3 +351,55 @@ Body:
          bonus2 bSubEle,Ele_Water,10;
          bonus2 bSubEle,Ele_Wind,10;
       }
+
+  # -----------------------------------------------------------------------
+  # AURA FANTASMA + GREVA FANTASMA (470309) - 2026-08-27
+  #
+  # Mesma receita do Sapato Fantasma (470321), logo acima, e pela mesma
+  # razao: a Greva Fantasma e peca que o nosso vendor nao tem, criada em
+  # db/guerra/item_db.yml na nona leva, e o db/re/item_combos.yml ja traz
+  # este mesmo conjunto para os quatro pes de FOR da familia
+  # (470293-470296), com um Script que nao muda de pe para pe. Entao este e
+  # COPIA EXATA daquele grupo; a unica mudanca e o calcado citado.
+  #
+  # Ao atualizar o rathena/, conferir este contra o db/re/. Se o vendor um
+  # dia trouxer o 470309 de verdade, ele provavelmente trara este conjunto
+  # junto - e ai esta entrada vira duplicata e sai.
+  #
+  # OS OUTROS QUATRO CONJUNTOS da descricao do bRO ([Argen Blanco],
+  # [Vernan], [Fortridge], [Ferramenta Dourada]) NAO estao espelhados: as
+  # armas existem no vendor, mas nenhum conjunto dele casa arma com
+  # calcado. Ver o TODO no bloco do item em db/guerra/item_db.yml.
+  - Combos:
+      - Combo:
+          - Subject_Aura      # 19439  - Aura Fantasma
+          - Phantom_Greave    # 470309 - Greva Fantasma
+    Script: |
+      if (readparam(bStr)>=130) {
+         bonus bFixedCast,-500;
+         autobonus "{ bonus bStr,70; }",15,5000,BF_WEAPON;
+      }
+
+  # -----------------------------------------------------------------------
+  # BROCHE DA CELINE (28572) + PINGENTE DA CELINE (490482) - 2026-08-27
+  #
+  # O db/re/item_combos.yml casa o `Cel_Design_Pendant` (490482) com o
+  # `Celine_Brooch`, que e o 28513 - e o broche que esta na NOSSA vitrine e o
+  # 28572, `Celine_Brooch_BR`, o ID do bRO. Sao itens diferentes (ver o bloco
+  # do 28572 em db/guerra/item_db.yml), entao o conjunto do vendor nao fecha
+  # com a peca que o jogador compra.
+  #
+  # E os dois estao na MESMA loja, o Acessorista, a poucos cliques um do
+  # outro: o Broche desde 2026-08-01 e o Pingente desde 2026-08-27. Sem este
+  # espelho a descricao do Pingente prometeria um conjunto que nao acontece -
+  # e conjunto que nao fecha nao da erro, o jogador so ve um numero menor. E a
+  # mesma receita da Diadema do Paraiso (19455) e do Sapato Fantasma (470321).
+  #
+  # Script copiado sem uma virgula de diferenca do conjunto 28513 + 490482 do
+  # db/re/item_combos.yml. Ao atualizar o rathena/, conferir contra o de la.
+  - Combos:
+      - Combo:
+          - Celine_Brooch_BR     # 28572  - Broche da Celine (bRO)
+          - Cel_Design_Pendant   # 490482 - Pingente da Celine
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,25;

@@ -83018,7 +83018,7 @@ Body:
       /*Todo: When Equipped Adds Water Attribute to Arrows for 180 minutes*/
   - Id: 18145
     AegisName: Vigilante_Bow
-    Name: Vigilante Bow
+    Name: "Arco Vigilante"
     Type: Weapon
     SubType: Bow
     Weight: 1000
@@ -172993,7 +172993,7 @@ Body:
     View: 1005
   - Id: 400486
     AegisName: Coroa_Monarca_BR
-    Name: Monarch's Crown
+    Name: "Coroa do Monarca"
     Type: Armor
     Weight: 100
     Defense: 30
@@ -190756,7 +190756,7 @@ Body:
       }
   - Id: 450010
     AegisName: Europa_Robe_J
-    Name: Europa Robe
+    Name: "Robe Chique"
     Type: Armor
     Buy: 200000
     Weight: 500
@@ -196301,7 +196301,7 @@ Body:
       sc_end SC_UNLIMIT;
   - Id: 450215
     AegisName: Aramazd_revelation
-    Name: Revelation of Aramazd
+    Name: "Revelação de Aramazd"
     Type: Armor
     Weight: 1000
     Defense: 150
@@ -200683,7 +200683,7 @@ Body:
       }
   - Id: 460004
     AegisName: Illusion_Shield_A
-    Name: Illusion Shield I
+    Name: "Escudo Ilusión A"
     Type: Armor
     Weight: 1200
     Defense: 95
@@ -200852,7 +200852,7 @@ Body:
       }
   - Id: 460014
     AegisName: Illusion_Shield_B
-    Name: Illusion Shield II
+    Name: "Escudo Ilusión B"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -200874,7 +200874,7 @@ Body:
          bonus2 bSubEle,Ele_Neutral,5;
   - Id: 460015
     AegisName: Auto_Shield_A
-    Name: Automatic Shield I
+    Name: "Escudo Ilusión C"
     Type: Armor
     Weight: 1200
     Defense: 95
@@ -204275,7 +204275,7 @@ Body:
       }
   - Id: 470085
     AegisName: Rune_Greave_JP_
-    Name: Rune Greaves
+    Name: "Grevas de Platina"
     Type: Armor
     Weight: 400
     Defense: 12
@@ -220352,7 +220352,7 @@ Body:
       }
   - Id: 490029
     AegisName: Geffenia_Magictool_Ice
-    Name: "Ferramenta Mágica de Gelo"
+    Name: "Ferramenta Mágica de Gelo da Geffenia"
     Type: Armor
     Weight: 500
     Defense: 2
@@ -227011,7 +227011,7 @@ Body:
       bonus2 bSkillAtk,"SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS",BaseLevel/10;
   - Id: 490482
     AegisName: Cel_Design_Pendant
-    Name: Celine Kimi Pendant
+    Name: "Pingente da Celine"
     Type: Armor
     Weight: 100
     Slots: 1

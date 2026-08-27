@@ -1342,6 +1342,11 @@ Body:
     #      mercado, no Acessorista. Os outros dois ([Presilha de Rosas] e
     #      [Laco da Celine] 18849) darao para fazer quando valer a pena -
     #      o Laco tambem ja esta na loja, no Chapeleiro.
+    # UM QUARTO ENTROU EM 2026-08-27, e esse esta FEITO: o conjunto com o
+    # Pingente da Celine (490482), que entrou no Acessorista naquele dia.
+    # O db/re/ so o casa com o 28513, o Broche do vendor - por isso foi
+    # espelhado para este ID em db/guerra/item_combos.yml. Sem o espelho os
+    # dois estariam na mesma loja com um conjunto morto entre eles.
     Script: |
       bonus bMaxHP,500;
       bonus bMaxSP,250;
@@ -3088,3 +3093,220 @@ Body:
       bonus bUnbreakableWeapon;
       bonus bHealPower,2*getrefine();
     # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+# -------------------------------------------------------------------------
+# NONA LEVA DE PLACEHOLDERS - 2026-08-27
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das oito de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub` (`estado_item.py --id <n> --descricao`).
+#
+# Os TRES vieram do pedido de 2026-08-27 para as lojas de Prontera. Daquela
+# lista de 57 itens, 36 ja estavam a venda e 21 faltavam; destes 21, so
+# estes tres nao existiam no servidor - os outros 18 so precisavam de
+# entrada de cliente, arte e linha de loja.
+#
+# UM DELES E RENUMERACAO DO bRO, e isso foi PROVADO e nao suposto - o mesmo
+# caso da Diadema do Paraiso (19024 -> 19455) e da Raposa Ilusional
+# (420314 -> 420227):
+#
+#   19317   Elmo Alado Dourado   o vendor tem o 5970, `RuneHelm` ("Rune
+#                                Helm"), com o MESMO `View: 1361`
+#
+# As tres provas, e nenhuma sozinha bastaria: o `ClassNum` do 19317 no bRO
+# e 1361, que e o `View` do 5970; o Script do 5970 abre com as tres MESMAS
+# linhas que a descricao do 19317 promete (`bVit,3`, `bMaxHPrate,4` e o
+# dano de [Explosao Runica]); e - a que fecha - o 5970 traz o pacote de
+# oito `autobonus3` que e como o vendor escreve "Mantem [Milagre das Runas]
+# ativo", frase que a descricao do 19317 tem por extenso.
+#
+# POR QUE NAO POR O 5970 NA LOJA E PRONTO: o nome dele no nosso cliente e
+# COREANO, e o bRO tambem o traz em coreano e SEM DESCRICAO - o bRO
+# traduziu o numero novo e deixou o velho para tras. So entra na loja item
+# com nome em portugues (regra 4.2). O 19317 tem "Elmo Alado Dourado".
+#
+# OS OUTROS DOIS NAO EXISTEM EM LUGAR NENHUM DO VENDOR, conferido por ficha
+# e nao por nome:
+#
+#   810011  Velho Rifle      nenhum rifle do vendor tem ATQ 110 + peso 850
+#                            + nivel de arma 4 + nivel minimo 100
+#   470309  Greva Fantasma   nenhum calcado do vendor tem DEF 0 + nivel 170
+#                            + "Dano fisico a distancia +15%" no +12
+#
+# E O 470309 TINHA A MESMA ARMADILHA DO 470321, da setima leva: o
+# `identifiedResourceName` dele no bRO e `Arrogance_P_Shoes`, e o nosso
+# vendor TEM esse nome - no 470080 ("Arrogant Thoughtform Shoes"), com o
+# `_` no 470081. NAO e o mesmo item: DEF 12 / nivel 100 / HP e SP +20%
+# contra DEF 0 / nivel 170 / ATQ da arma +5%. Nome de recurso e so o
+# DESENHO (CLAUDE.md secao 5) - reusa-lo aqui teria colidido com um item de
+# verdade. Dai `Phantom_Greave`.
+#
+# OS TRES `AegisName` SAO PALPITE, como os das levas anteriores: o oficial
+# nao esta em tabela nenhuma que alcancamos. Os tres foram conferidos como
+# livres no item_db (vendor e nosso) antes de usar.
+#
+# AS EQUIVALENCIAS DE BONUS usadas aqui - a lista completa esta nos
+# cabecalhos da SETIMA e da OITAVA leva - mais tres novas, todas com
+# testemunha no vendor:
+#
+#   "Dano de [X] +N%"              -> bonus2 bSkillAtk,"<SKID>",N
+#                                     (5970, 400177, 810000)
+#   "ATQ +N" (numero absoluto)     -> bonus bBaseAtk,N   (810000, 810002)
+#   "A cada N de <STAT> base"      -> readparam(b<Stat>)/N
+#                                     (dez itens do vendor com bInt/10)
+#
+# OS NOMES DE HABILIDADE saem do `skillinfolist.lub` DESTE cliente, que e a
+# tabela que o jogo le (regra 4.12) - com UMA excecao, dita abaixo:
+#   [Explosao Runica]  = RK_STORMBLAST
+#   [Execucao]         = RL_HAMMER_OF_GOD   <- esta NAO esta no nosso
+#                        cliente (e habilidade posterior a 2021-11-03); o
+#                        nome saiu do `skillinfolist.lub` do bRO, e o
+#                        vendor confirma o par: os rifles 810000 e 810002
+#                        dele sao os unicos itens com `RL_HAMMER_OF_GOD`.
+#
+# "A CADA N REFINOS" E DIVISAO INTEIRA, como nas levas anteriores.
+
+  - Id: 810011
+    AegisName: Old_Rifle
+    Name: "Velho Rifle"
+    # Molde: o 810000 e o 810002 do vendor, os dois rifles de nivel 4 que
+    # tratam [Execucao] - mesmos `Range: 9` e `Both_Hand`, mesmo
+    # `bUnbreakableWeapon` de abertura no segundo. O que muda e o que a
+    # descricao do bRO manda mudar: ATQ 110, peso 850 (tela 85 x 10), nivel
+    # minimo 100 e uma cova.
+    #
+    # `Jobs: Rebellion` SOZINHO, e nao o par Gunslinger+Rebellion que todos
+    # os rifles do vendor usam: a descricao diz "Classes: Justiceiros e
+    # evolucoes", e Justiceiro e o Rebellion (o Arruaceiro e o Gunslinger).
+    # Sem `Classes:`, porque "e evolucoes" inclui o proprio Justiceiro.
+    #
+    # SEM `View:`, apesar de o `ClassNum` do bRO ser 18: nenhum dos 28
+    # rifles 810xxx do vendor declara View, e para arma quem escolhe o
+    # sprite e o `SubType`.
+    #
+    # "PRESO NA CONTA" DA DESCRICAO NAO FOI IMPLEMENTADO, pela mesma razao
+    # do Ninjaken (510064, oitava leva): nao existe campo de item_db para
+    # vinculo de CONTA, e a peca sai de vitrine publica a 1 zeny, entao nao
+    # ha o que prender.
+    Type: Weapon
+    SubType: Rifle
+    Weight: 850
+    Attack: 110
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus2 bAddClass,Class_All,10*min(getrefine(),10);
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7*(readparam(bInt)/10);
+      if (readparam(bInt)>=110)
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+    # O `min(...,10)` e o "ate o +10" da descricao por extenso, igual ao do
+    # Ninjaken: sem ele um +15 daria 150% de dano fisico.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  - Id: 19317
+    AegisName: Golden_Wing_Helm
+    Name: "Elmo Alado Dourado"
+    # COPIA DO 5970 do vendor, que e o mesmo item renumerado (ver o
+    # cabecalho desta leva) - mesmo `View`, mesmo peso, mesmo pacote de
+    # runas. Onde a descricao do bRO DISCORDA do 5970, quem vence e ela,
+    # porque e o texto que o jogador le no cliente (a entrada de itemInfo
+    # veio do bRO). As tres divergencias, todas deliberadas:
+    #
+    #   Defense    5970 tem 15; a descricao diz "DEF: 0"
+    #   nivel min  5970 pede 50; a descricao diz 1
+    #   [Explosao Runica]  o 5970 escala com +6/+8 (30/50/70); a descricao
+    #                      escala com +9/+11, nos mesmos tres degraus
+    #
+    # E UMA LINHA DO 5970 FICOU DE FORA de proposito: o
+    # `bonus2 bFixedCastrate,"RK_REFRESH",-100`. A descricao do 19317 nao a
+    # promete, e efeito que a tela nao anuncia e a mesma familia de
+    # divergencia que a regra manda evitar (CLAUDE.md secao 5, "a descricao
+    # discorda do script").
+    Type: Armor
+    Weight: 3000
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1361
+    Script: |
+      .@r = getrefine();
+      bonus bVit,3;
+      bonus bMaxHPrate,4;
+      bonus2 bSkillAtk,"RK_STORMBLAST",30;
+      if (BaseLevel<=99)
+         bonus bVit,3*(.@r/3);
+      if (BaseLevel>=130)
+         bonus bVit,2*(.@r/2);
+      if (.@r>=9)
+         bonus2 bSkillAtk,"RK_STORMBLAST",20;
+      if (.@r>=11)
+         bonus2 bSkillAtk,"RK_STORMBLAST",20;
+      autobonus3 "{ bonus bAtkRate,-50; bonus bMatkRate,-50; bonus3 bAutoSpellWhenHit,\"RK_MILLENNIUMSHIELD\",1,10; }",1000,60000,"RK_MILLENNIUMSHIELD";
+      autobonus3 "{ percentheal 100,100; sc_end UNLUCKY; sc_end IGNORANCE; sc_end WEAKNESS; sc_end ENERVATION; sc_end LAZINESS; }",1000,1000,"RK_REFRESH";
+      autobonus3 "{ bonus bNoKnockback; }",1000,30000,"RK_CRUSHSTRIKE";
+      autobonus3 "{ bonus2 bHPRegenRate,500,10000; }",1000,300000,"RK_VITALITYACTIVATION";
+      autobonus3 "{ bonus bBaseAtk,10; bonus bAspdRate,10; }",1000,300000,"RK_FIGHTINGSPIRIT";
+      autobonus3 "{ bonus2 bSPRegenRate,40,10000; }",1000,300000,"RK_ABUNDANCE";
+      autobonus3 "{ bonus bStr,30; bonus bInt,-30; }",1000,300000,"RK_GIANTGROWTH";
+      autobonus3 "{ bonus bShortWeaponDamageReturn,10; heal -1000,0; }",1000,300000,"RK_STONEHARDSKIN";
+    # OS OITO `autobonus3` SAO O "Milagre das Runas", copiados byte a byte
+    # do 5970. Nao sao invencao do Elmo de Fafnir: os mesmos oito aparecem
+    # em TRES itens do vendor (5970, 19468 e 400177), e os tres sao
+    # justamente os que a descricao do bRO marca com aquela frase. Os dois
+    # `autobonus3` a mais que o 5970 tem (os de refino +6 e +8, que
+    # reforcam o Escudo Milenar) ficaram de fora: sao dele, e a descricao
+    # do 19317 nao os promete.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  - Id: 470309
+    AegisName: Phantom_Greave
+    Name: "Greva Fantasma"
+    # Molde: a familia FANTASMA inteira do vendor (470293-470300,
+    # 470317/470318) mais o nosso 470321 - todos `Weight: 200`, sem
+    # `Defense`, nivel 170, refinaveis, e todos com o mesmo tripe de
+    # abertura (ATQ ou MATQ +5%, HP e SP +7%) e o mesmo `bFixedCast,-500`
+    # no +10. Este e o irmao de ATQ ABSOLUTO: +80 de ATQ no +8 e dano a
+    # distancia no +12. Com uma cova, como no bRO.
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bMaxHPrate,7;
+      bonus bMaxSPrate,7;
+      if (.@r>=8)
+         bonus bBaseAtk,80;
+      if (.@r>=10)
+         bonus bFixedCast,-500;
+      if (.@r>=12)
+         bonus bLongAtkRate,15;
+    # O conjunto [Aura Fantasma] ESTA espelhado, em db/guerra/item_combos.yml
+    # - e copia exata do grupo de FOR do db/re/item_combos.yml, o mesmo que
+    # ja serve aos 470293-470296 e ao nosso 470321.
+    #
+    # TODO os QUATRO conjuntos de arma: [Argen Blanco], [Vernan],
+    #      [Fortridge] e [Ferramenta Dourada]. As quatro armas EXISTEM no
+    #      vendor - Argen_Blanco (32023), Vernan (21052), Fortrage (32025)
+    #      e Golden_Wrench (1333) -, mas nenhum `- Combos:` do
+    #      db/re/item_combos.yml casa qualquer uma delas com calcado, entao
+    #      nao ha o que espelhar: seria escrever quatro conjuntos do zero a
+    #      partir de prosa. Conjunto pela metade da bonus fantasma, e e a
+    #      mesma razao dos TODOs das levas anteriores.

@@ -310,12 +310,13 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
-A tabela tem **nove itens em 2026-08-20** — 30999 Maçã da Inocência, 30998 Moeda
+A tabela tem **dez itens em 2026-08-27** — 30999 Maçã da Inocência, 30998 Moeda
 Nova, 30997 e 30996 (as duas caixas da Máquina), 30995 Caveira Humana, que
 copia a arte da Caveira comum (7420), e 30994 Rolinho de Arroz, o prêmio de
-guerra, que copia a arte do Bolinho de Arroz (555). As duas últimas não são
-itens nossos: 19272 Chapéu do Éden e 490029 Ferramenta Mágica de Gelo, os dois
-casos de *"traduzir entrada alheia"* — ver as duas seções abaixo.
+guerra, que copia a arte do Bolinho de Arroz (555). As três últimas não são
+itens nossos: 19272 Chapéu do Éden, 490029 Ferramenta Mágica de Gelo e 18145
+Arco Vigilante, os três casos de *"traduzir entrada alheia"* — ver as seções
+abaixo.
 
 **Em 2026-08-18 a tabela ganhou `covas` e `visual`, e a sétima entrada.** Os
 dois campos são opcionais e valem zero quando faltam — as seis receitas antigas
@@ -340,6 +341,15 @@ que o próprio gerador produziria. A lição geral subiu para o `CLAUDE.md` §5.
 **Os dois campos têm de bater com o `item_db`** — `covas` com o `Slots:` e
 `visual` com o `View:`. O servidor manda o número, o cliente desenha o que
 estiver escrito aqui, e divergir não dá erro nenhum.
+
+**Mas o `visual` só bate com o `View:` em equipamento de CABEÇA.** Para **arma**
+o `ClassNum` do `itemInfo.lua` é a numeração de arma do cliente, que vive só
+daquele lado: o `Vigilante_Bow` (18145) tem `ClassNum = 73` e **nenhum `View:`**
+no `item_db` — e nenhum arco do vendor tem. Zerá-lo (o padrão do campo) trocaria
+o desenho da arma na mão do personagem, calado. Os vizinhos dão a numeração:
+18109 e 1748 também são 73, o 18143 e o 18163 são 11. Ao escrever receita de
+arma, **copiar o `ClassNum` que a entrada já traz** e não procurar `View:` no
+`item_db`.
 
 Em 2026-08-12 o `arte_de` do **30996** mudou de 22668 (a caixa de 20 do bRO,
 que é a caixa genérica de consumível) para **12710, a própria Poção de Guyak** —
@@ -395,6 +405,43 @@ versionada; o cliente não. As duas entradas que apontavam para si mesmas (19272
 490029) passaram a usá-lo.
 
 A regra geral subiu para o `CLAUDE.md` §5.
+
+### O recurso coreano que não cabe no campo, e o irmão que o compartilha (2026-08-27)
+
+A tabela ganhou a **décima entrada**, o **Arco Vigilante (18145)** — terceiro
+caso do tipo "Chapéu do Éden", e o primeiro em que as duas metades da entrada
+estão em **línguas diferentes**: nome em coreano (`자경단 보우`) e descrição em
+inglês, do ROenglishRE. O bRO tem o ID, mas também em coreano e **sem
+descrição**, então o `completa_iteminfo.py` não tinha o que copiar.
+
+O que ele acrescentou de método foi o **terceiro caminho da arte**. Os dois
+conhecidos não serviam:
+
+| caminho | por que não serviu aqui |
+|---|---|
+| `recurso: u'...'` | é ASCII, e o recurso deste é coreano |
+| `arte_de: 18145` | auto-referência — a armadilha da seção acima |
+
+A saída foi `arte_de: **18163**`: outro item do vendor que usa o **mesmo**
+`identifiedResourceName`, conferido byte a byte no `itemInfo.lua` desta máquina
+(e são os dois únicos que o usam). Copiar do irmão é copiar o mesmo desenho
+**sem ler o bloco que se vai sobrescrever**. Quando o recurso for coreano,
+procurar quem mais o usa é o primeiro passo — e se ninguém usar, aí sim o campo
+`recurso` precisa aprender a receber bytes.
+
+**A descrição inglesa foi conferida contra o `Script:` do vendor antes de virar
+tradução**, e é o que autoriza usá-la como fonte: *"for each 20 base DEX, +5%
+bow damage"* é `5*(readparam(bDex)/20)`, o *"+10% additional"* do +7 é o
+`.@bonus += 10`, e o *"+50% Double Strafing"* do +9 é
+`bonus2 bSkillAtk,"AC_DOUBLE",50`. **Nada sobrou dos dois lados.** No 490029, em
+2026-08-20, tinha sobrado — faltava a linha da Maestria Arcana —, e por isso lá
+a fonte foi o `Script:` e não o texto.
+
+**A linha `Classes:` não sai da entrada inglesa.** Ela dizia só *"Shadow
+Chaser"*, mais apertado do que o `item_db` permite (`Jobs: Rogue` +
+`Classes: All_Third`/`Fourth`). O 18109 (Catapulta) tem exatamente a mesma
+combinação e **tem descrição no bRO**: *"Classes: Renegados e evoluções"*. Item
+irmão com descrição em português é a fonte certa para essa linha.
 
 ## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
 

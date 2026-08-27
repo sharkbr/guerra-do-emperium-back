@@ -699,6 +699,126 @@
 //= So a linha da loja, o item_db e o item_combos andam pelo git.
 //=
 //=
+//= ------------------------------------------------------------
+//= RODADA DE 2026-08-27: 21 ITENS EM OITO DAS NOVE LOJAS
+//=
+//= O PEDIDO TINHA 57 NUMEROS E 36 DELES JA ESTAVAM A VENDA - o
+//= proprio pedido avisava disso ("alguns podem estar duplicados
+//= ou ja existirem, ignore se for o caso"). Os 21 que faltavam
+//= entraram TODOS. Onde caiu cada peca:
+//=
+//=   Escudeiro               +5
+//=   Chapeleiro              +3
+//=   Lorde das Armaduras     +3
+//=   Senhor das Armas        +3
+//=   Acessorista             +3
+//=   Sapateiro               +2
+//=   Retoqueiro              +1
+//=   Capeiro                 +1
+//=
+//= So o Ocleiro ficou de fora - nenhum dos 21 e equipamento de
+//= cabeca-meio.
+//=
+//= DOIS DOS 36 QUE JA ESTAVAM A VENDA NAO ESTAO NESTE MERCADO, e
+//= vale registrar para nao parecerem perdidos: a Muda de
+//= Mandragora (6217) esta na TRANQUEIRAS e a Caixa de Elmos
+//= Especiais (23767) esta no ZE DO CAIXAO (prontera 159,131). As
+//= duas sao lojas de Prontera, so nao sao deste quarteirao.
+//=
+//= O `Locations:` CONCORDOU COM O PEDIDO NOS 21, e as duas
+//= conferencias foram feitas: contra o nosso item_db e contra a
+//= linha "Tipo:"/"Equipa em:" da descricao do bRO. Nao houve
+//= override de `Locations:` nesta rodada, e nao ha divergencia a
+//= levantar - a segunda rodada seguida em que isso acontece.
+//=
+//= O QUE CUSTOU TRABALHO foram 16 pecas, nao 21:
+//=
+//=   10 estavam fora do itemInfo.lua      -> completa_iteminfo.py
+//=    6 estavam sem os 4 arquivos de arte -> instala_visual.py
+//=    3 nao existiam no servidor          -> db/guerra/item_db.yml
+//=    3 precisaram de receita a mao       -> instala_item.py
+//=   10 estavam com o `Name` em INGLES no servidor
+//=                                        -> nomes_pt_item_db.py
+//=    2 conjuntos foram espelhados        -> db/guerra/item_combos.yml
+//=
+//= (As contas se sobrepoem: os tres Escudos Ilusion contam em
+//= tres linhas cada.)
+//=
+//= AS TRES QUE NAO EXISTIAM viraram a NONA LEVA DE PLACEHOLDERS
+//= do db/guerra/item_db.yml: Velho Rifle (810011), Elmo Alado
+//= Dourado (19317) e Greva Fantasma (470309).
+//=
+//= UMA DELAS E RENUMERACAO, e a prova esta la: o ELMO ALADO
+//= DOURADO (19317) e o mesmo item que o 5970 do vendor
+//= (`RuneHelm`), que tem o MESMO `View: 1361` e o mesmo pacote de
+//= oito `autobonus3` do "Milagre das Runas". Nao deu para por o
+//= 5970 na loja porque o nome dele e COREANO no nosso cliente - e
+//= o bRO tambem o traz em coreano e sem descricao (regra 4.2). E
+//= o mesmo caso da Raposa Ilusional, de ontem.
+//=
+//= E A GREVA FANTASMA (470309) REPETIU A ARMADILHA DO SAPATO
+//= FANTASMA: o `identifiedResourceName` dela no bRO e
+//= `Arrogance_P_Shoes`, e o vendor TEM esse nome, no 470080, que
+//= e outro item (DEF 12 / nivel 100 contra DEF 0 / nivel 170).
+//= Nome de recurso e so o DESENHO. O conjunto [Aura Fantasma]
+//= dela foi espelhado em db/guerra/item_combos.yml, como o do
+//= irmao; os outros quatro da descricao viraram TODO, porque as
+//= armas existem no vendor mas nenhum `- Combos:` dele casa arma
+//= com calcado.
+//=
+//= AS TRES RECEITAS A MAO no ferramentas/instala_item.py sao a
+//= novidade de metodo desta rodada, e as tres sao do mesmo
+//= genero: item que existe INTEIRO no servidor e cuja metade de
+//= CLIENTE esta faltando ou na lingua errada. O
+//= completa_iteminfo.py nao resolve nenhuma delas, porque o bRO
+//= nao tem o texto:
+//=
+//=   18145   Arco Vigilante     nome em COREANO e descricao em
+//=                              INGLES no mesmo bloco - as duas
+//=                              metades em linguas diferentes, o
+//=                              que nao tinha acontecido antes. A
+//=                              descricao inglesa foi conferida
+//=                              linha a linha contra o `Script:`
+//=                              do vendor antes de virar
+//=                              traducao, e as duas bateram sem
+//=                              sobra. A arte ja estava no GRF.
+//=   490029  Ferramenta Magica  ARTE EMPRESTADA, por escolha do
+//=           de Gelo da         dono: o recurso dela
+//=           Geffenia           (`Geffenia_Magictool_Ice`) nao
+//=                              existe em GRF nenhum, e ela
+//=                              passou o pedido de 2026-08-20
+//=                              inteiro fora das lojas por isso.
+//=                              Agora usa `Ice_Stone_4th`, a arte
+//=                              da Ice Stone (1000295). O nome
+//=                              tambem cresceu, como o pedido
+//=                              escreveu por extenso.
+//=   490482  Pingente da        ARTE EMPRESTADA (`Celine_Brooch`,
+//=           Celine             a do Broche) mais nome e descricao
+//=                              escritos do zero: o bRO NAO TEM
+//=                              este ID, entao nao havia texto em
+//=                              lingua nenhuma. A descricao e
+//=                              traducao do `Script:` do vendor,
+//=                              com as frases calibradas em
+//=                              testemunhas do proprio bRO.
+//=
+//= AS DUAS ARTES EMPRESTADAS JA ESTAO NO data.grf DE 2021, entao
+//= elas NAO entram no patch: quem tem o cliente ja as tem. O que
+//= vai no patch e so a entrada do itemInfo.lua.
+//=
+//= O CONJUNTO DO PINGENTE COM O BROCHE FOI ESPELHADO, e sem isso
+//= a descricao mentiria a poucos cliques de distancia: o
+//= db/re/item_combos.yml casa o Pingente com o `Celine_Brooch`,
+//= que e o 28513 - e o broche da NOSSA vitrine e o 28572, o ID do
+//= bRO. Os dois acessorios ficam na MESMA loja. O conjunto com o
+//= [Laco da Celine] (18849, no Chapeleiro) ja fechava sozinho.
+//=
+//= METADE DISTO E CLIENTE E NAO VAI PELO DEPLOY (regra 4.18): o
+//= itemInfo.lua e a arte de item moram em
+//= C:\GuerraDoEmperium\cliente\ e so chegam ao jogador por
+//= PATCH. So a linha da loja, o item_db e o item_combos andam
+//= pelo git.
+//=
+//=
 //============================================================
 
 // ----- Fileira de cima (y=173): cabeca -----------------------
@@ -803,6 +923,11 @@
 //   + 19329   Mao do Demonio                    (View 1018)
 //   + 19311   Elmo do Guerreiro Feroz      [1]  (View 1695)
 //   + 5539    Mascara de Onca-Pintada      [1]  (View 530)
+// RODADA DE 2026-08-27: entraram 3, e a loja foi de 30 para 33.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 400486  Coroa do Monarca             [1]
+//   + 19390   Chapéu Preguiçoso            [1]
+//   + 19317   Elmo Alado Dourado           [1]  nao existia no vendor
 prontera,151,173,4	script	Chapeleiro	1_M_MERCHANT,{
 	callshop "Chapeleiro#loja",0;
 	end;
@@ -811,7 +936,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1,19272:1,19426:1,19163:1,19453:1,19469:1,19409:1,18853:1,400566:1,19329:1,19311:1,5539:1
+-	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1,19272:1,19426:1,19163:1,19453:1,19469:1,19409:1,18853:1,400566:1,19329:1,19311:1,5539:1,400486:1,19390:1,19317:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela
@@ -1136,6 +1261,9 @@ OnInit:
 //   + 19499   Echarpe Misteriosa                (View 1901)
 //   + 420028  Ombreiras da Gloria               (View 2056)
 //   + 420006  Coleira de Espinhos               (View 2018)
+// RODADA DE 2026-08-27: entrou 1, e a loja foi de 23 para 24.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 5978    Vacina da Cura
 prontera,159,173,4	script	Retoqueiro	4_M_HUMERCHANT,{
 	callshop "Retoqueiro#loja",0;
 	end;
@@ -1144,7 +1272,7 @@ OnInit:
 	placadevenda "Cabeça baixo";
 	end;
 }
--	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:1,15923:1,15922:1,15921:1,15920:1,420164:1,19137:1,420326:1,420198:1,19327:1,19139:1,420227:1,15166:1,19499:1,420028:1,420006:1
+-	shop	Retoqueiro#loja	-1,19381:1,420110:1,420236:1,18985:1,420112:1,420187:1,420180:1,420105:1,15923:1,15922:1,15921:1,15920:1,420164:1,19137:1,420326:1,420198:1,19327:1,19139:1,420227:1,15166:1,19499:1,420028:1,420006:1,5978:1
 
 // ----- Fileira do meio (y=167): armas, armaduras, escudos ----
 
@@ -1232,6 +1360,11 @@ OnInit:
 //   + 510064  Ninjaken                     [1]
 //   + 550073  Vara Morta                   [1]
 //   + 500005  Lamina do Infinito           [1]
+// RODADA DE 2026-08-27: entraram 3, e a loja foi de 55 para 58.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 16051   Maça da Valquíria Mágica     [4]
+//   + 810011  Velho Rifle                  [1]  nao existia no vendor
+//   + 18145   Arco Vigilante               [2]  nome so em coreano
 prontera,151,167,4	script	Senhor das Armas	1_F_MERCHANT_02,{
 	callshop "Senhor das Armas#loja",0;
 	end;
@@ -1240,7 +1373,7 @@ OnInit:
 	placadevenda "Armas";
 	end;
 }
--	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1,32013:1,590041:1,510064:1,550073:1,500005:1
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,510146:1,1132:1,510147:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1,32013:1,590041:1,510064:1,550073:1,500005:1,16051:1,810011:1,18145:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -1282,6 +1415,11 @@ OnInit:
 //   + 450247  Radiancia                    [1]
 //   + 450214  Triade Sombria               [1]
 //   + 450417  Vestes de Morpheus           [1]
+// RODADA DE 2026-08-27: entraram 3, e a loja foi de 26 para 29.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 450242  Possessão Elemental          [1]
+//   + 450215  Revelação de Aramazd         [1]  estava fora do itemInfo.lua
+//   + 450010  Robe Chique                  [1]  estava fora do itemInfo.lua
 prontera,155,167,4	script	Lorde das Armaduras	1_M_MERCHANT,{
 	callshop "Lorde das Armaduras#loja",0;
 	end;
@@ -1290,7 +1428,7 @@ OnInit:
 	placadevenda "Armaduras";
 	end;
 }
--	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1,450252:1,15421:1,450224:1,15383:1,450251:1,450287:1,450132:1,450291:1,450208:1,450165:1,450258:1,15374:1,450163:1,15169:1,450247:1,450214:1,450417:1
+-	shop	Lorde das Armaduras#loja	-1,450338:1,450257:1,450222:1,450120:1,15371:1,15405:1,450216:1,450179:1,450226:1,450252:1,15421:1,450224:1,15383:1,450251:1,450287:1,450132:1,450291:1,450208:1,450165:1,450258:1,15374:1,450163:1,15169:1,450247:1,450214:1,450417:1,450242:1,450215:1,450010:1
 
 // Escudos. O "Escudo Refletor" nao existe com esse nome; o mais
 // proximo e o 2185 (Refletor Magico / Magic Reflect), que e
@@ -1325,6 +1463,13 @@ OnInit:
 // RODADA DE 2026-08-26: entraram 1, e a loja foi de 16 para 17.
 // Ver o cabecalho do arquivo para o porque de cada uma.
 //   + 28944   Escudo de Sleiporing         [1]  (View 1)
+// RODADA DE 2026-08-27: entraram 5, e a loja foi de 17 para 22.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 28902   Coelho Macabro               [1]
+//   + 28956   Espelho da Bruxa             [1]
+//   + 460004  Escudo Ilusión A             [1]  estava fora do itemInfo.lua
+//   + 460014  Escudo Ilusión B             [1]  estava fora do itemInfo.lua
+//   + 460015  Escudo Ilusión C             [1]  estava fora do itemInfo.lua
 prontera,159,167,4	script	Escudeiro	1_F_MERCHANT_01,{
 	callshop "Escudeiro#loja",0;
 	end;
@@ -1333,7 +1478,7 @@ OnInit:
 	placadevenda "Escudos";
 	end;
 }
--	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1,460000:1,2168:1,28944:1
+-	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,28901:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1,460000:1,2168:1,28944:1,28902:1,28956:1,460004:1,460014:1,460015:1
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
@@ -1441,6 +1586,9 @@ OnInit:
 //   + 480088  Capa Ultio-OS                [1]
 //   + 480154  Manto das Chamas             [1]
 //   + 480025  Manto do Barao               [1]
+// RODADA DE 2026-08-27: entrou 1, e a loja foi de 32 para 33.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 480134  Avareco                      [1]
 prontera,151,161,4	script	Capeiro	4_M_HUMERCHANT,{
 	callshop "Capeiro#loja",0;
 	end;
@@ -1449,7 +1597,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1,2589:1,20939:1,20940:1,480088:1,480154:1,480025:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1,2589:1,20939:1,20940:1,480088:1,480154:1,480025:1,480134:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas
@@ -1502,6 +1650,10 @@ OnInit:
 //   + 470296  Coturno Fantasma             [1]
 //   + 22221   Botas do Ocultista           [1]
 //   + 22171   Botas Ancestrais             [1]
+// RODADA DE 2026-08-27: entraram 2, e a loja foi de 34 para 36.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 470309  Greva Fantasma               [1]  nao existia no vendor
+//   + 470085  Grevas de Platina            [1]  estava fora do itemInfo.lua
 prontera,155,161,4	script	Sapateiro	1_F_MERCHANT_02,{
 	callshop "Sapateiro#loja",0;
 	end;
@@ -1510,7 +1662,7 @@ OnInit:
 	placadevenda "Sapatos";
 	end;
 }
--	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1,470037:1,470061:1,470007:1,22134:1,470033:1,470004:1,470028:1,22178:1,22191:1,22225:1,470106:1,470026:1,470057:1,22224:1,22243:1,470048:1,470084:1,470318:1,470300:1,470321:1,22204:1,470296:1,22221:1,22171:1
+-	shop	Sapateiro#loja	-1,470180:1,470206:1,470293:1,22203:1,470130:1,2423:1,22014:1,470274:1,470112:1,22071:1,470037:1,470061:1,470007:1,22134:1,470033:1,470004:1,470028:1,22178:1,22191:1,22225:1,470106:1,470026:1,470057:1,22224:1,22243:1,470048:1,470084:1,470318:1,470300:1,470321:1,22204:1,470296:1,22221:1,22171:1,470309:1,470085:1
 
 // Acessorios. O "Anel de Ulle" da lista e o 490367, que o bRO
 // chama de Bracelete de Ulle - nao confundir com o 5123,
@@ -1582,6 +1734,11 @@ OnInit:
 //   + 28538   Luvas de H. Motto            [1]
 //   + 490451  Colar Rubi
 //   + 28439   Ventilador Portatil          [1]
+// RODADA DE 2026-08-27: entraram 3, e a loja foi de 67 para 70.
+// Ver o cabecalho do arquivo para o porque de cada uma.
+//   + 28411   Brincos de Esmeralda         [1]
+//   + 490029  Ferramenta Mag. de Gelo Geff.[1]  arte emprestada
+//   + 490482  Pingente da Celine           [1]  arte emprestada
 prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
@@ -1590,4 +1747,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1,28565:1,28434:1,490098:1,2853:1,2979:1,32221:1,490250:1,490099:1,28492:1,32265:1,490130:1,490381:1,28410:1,28538:1,490451:1,28439:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1,28565:1,28434:1,490098:1,2853:1,2979:1,32221:1,490250:1,490099:1,28492:1,32265:1,490130:1,490381:1,28410:1,28538:1,490451:1,28439:1,28411:1,490029:1,490482:1
