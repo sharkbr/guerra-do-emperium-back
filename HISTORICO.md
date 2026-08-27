@@ -14406,3 +14406,9 @@ empilhados quebram no meio do zip, no primeiro nome coreano.
 A conferência de que os caminhos internos do zip estão certos foi comparar as
 pastas dele com as do **patch 0009**, que os jogadores já aplicaram: conjuntos
 idênticos.
+
+**No ar desde 2026-08-27**, com o `publica_patch.sh --confere` fechando local e
+remoto nos onze. Todo jogador o recebe na próxima vez que abrir o `Jogar.exe`.
+Falta só o `implanta.sh`, que sai do Mac — e enquanto ele não roda nada
+quebra: o item que o servidor ainda não conhece simplesmente não aparece na
+vitrine.

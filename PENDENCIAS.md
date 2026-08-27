@@ -2786,20 +2786,20 @@ oito vitrines de Prontera"*. Aqui fica **só o que falta**.
 **Conferido em jogo pelo dono em 2026-08-27**, no cliente local, nas oito
 vitrines.
 
-### O que falta: duas coisas
+### O que falta: uma coisa só
 
 | passo | onde roda | estado |
 |---|---|---|
 | ver em jogo (as 8 vitrines) | cliente local | **feito** |
 | commit + push | Windows (esta máquina) | **feito** — `e864db7` |
 | montar o patch de cliente | Windows | **feito** — `0011`, 25 arquivos, 2,53 MB |
-| **`ferramentas/publica_patch.sh`** | Windows | **FALTA** |
+| `ferramentas/publica_patch.sh` | Windows | **feito** — `0011` no ar |
 | **`ferramentas/implanta.sh`** | **Mac** | **FALTA** |
 
-**A ordem entre os dois que faltam não importa, e nenhum derruba jogador.** O
-patch entrega a metade de cliente; item que o servidor ainda não conhece
-simplesmente não aparece na vitrine, sem erro. O deploy reinicia os quatro
-servidores sozinho.
+**O patch já está no ar, e nada derruba jogador enquanto o deploy não roda:**
+ele entregou a metade de cliente, e item que o servidor ainda não conhece
+simplesmente não aparece na vitrine, sem erro. O `implanta.sh` reinicia os
+quatro servidores sozinho.
 
 ### O que o patch leva — 25 arquivos
 
