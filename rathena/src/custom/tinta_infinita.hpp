@@ -76,8 +76,10 @@
 #ifndef GUERRA_TINTA_INFINITA_HPP
 #define GUERRA_TINTA_INFINITA_HPP
 
-#include "../map/itemdb.hpp"
-#include "../map/pc.hpp"
+#include <common/cbasetypes.hpp>
+
+#include <map/itemdb.hpp>
+#include <map/pc.hpp>
 
 // A Tinta para Parede comum. O rAthena tem ITEMID_PAINT_BRUSH (6122) em
 // itemdb.hpp, mas nao tem constante para esta - dai a nossa.
