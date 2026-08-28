@@ -310,6 +310,17 @@ tabela Lua com chave explícita, então a posição não muda nada para o jogo.
 Aplicado em 2026-07-31: +670 bytes, entrada entre 29715 e 31000, e o resto do
 arquivo **byte a byte idêntico ao backup**.
 
+**Em 2026-08-28 entrou a décima primeira, e ela é a primeira com ARTE PRÓPRIA
+de verdade:** o **Pincel do Infinito (30992)**. Aqui o `arte_de` não servia, e o
+motivo é o ponto do item — ele senta na mochila **ao lado** do Pincel de
+Maquiagem e do de Grafite, e três pincéis idênticos é problema de leitura. A
+arte saiu do `doura_arte.py` (seção própria abaixo), que recolore a do 6121 para
+ouro e põe uma aura na ponta. Por isso o campo dele é `recurso` e não `arte_de`:
+o nome do recurso é nosso e é ASCII, então não há byte CP949 a copiar de
+ninguém. **É o primeiro uso do `recurso` para um recurso que não existia antes**
+— os dois anteriores (19272 e 490029) o usavam para apontar para a arte que a
+própria entrada já trazia.
+
 A tabela tem **dez itens em 2026-08-27** — 30999 Maçã da Inocência, 30998 Moeda
 Nova, 30997 e 30996 (as duas caixas da Máquina), 30995 Caveira Humana, que
 copia a arte da Caveira comum (7420), e 30994 Rolinho de Arroz, o prêmio de
@@ -442,6 +453,51 @@ Chaser"*, mais apertado do que o `item_db` permite (`Jobs: Rogue` +
 `Classes: All_Third`/`Fourth`). O 18109 (Catapulta) tem exatamente a mesma
 combinação e **tem descrição no bRO**: *"Classes: Renegados e evoluções"*. Item
 irmão com descrição em português é a fonte certa para essa linha.
+
+### A corrente de 31 itens em coreano, e a receita que é montada (2026-08-28)
+
+A tabela saltou de 12 para **43 entradas**, e as 31 novas entraram de uma vez
+porque eram uma **corrente**, não uma lista: a Caixa de Primeiros Socorros que
+todo personagem novo recebe (o **23484**, do `start_items` em
+`conf/char_athena.conf:124`) entrega cinco itens, e um deles é a caixa
+seguinte — de cinco em cinco níveis, até o 95. O fecho transitivo tem 35
+itens, e 31 estavam em coreano.
+
+É o quarto caso do tipo *"traduzir entrada alheia"*, depois do 19272, do
+490029 e do 18145, e o primeiro em que a quantidade mudou a forma da receita.
+Três coisas ficam dele:
+
+**1. A lista de conteúdo é MONTADA a partir do `item_db`, não escrita ao lado
+dele.** Cada caixa promete por extenso o que entrega; são 19 listas, e
+escrevê-las à mão seria criar 19 chances de a §4.11 do `CLAUDE.md` acontecer —
+menu e tabela indexados pelo mesmo número saindo de fontes diferentes, com a
+divergência calada. A receita traz só `(id, nível, [(quantidade, id)])`,
+transcrito do `Script:`, mais um de-para de nomes; o texto sai daí num laço.
+Por isso a `class Erro` subiu para o topo do arquivo: a receita é montada em
+tempo de carga do módulo e pode levantar erro antes de qualquer função rodar.
+
+**2. O doador de arte é sempre o IRMÃO, e a varredura é o primeiro passo.**
+Os nove `resourceName` envolvidos são coreanos, então `recurso` (ASCII) não
+servia; e `arte_de` apontando para o próprio item é a auto-referência que a
+seção anterior documenta — com 31 itens de uma vez, uma rodada ruim apagaria a
+fonte de todos. A varredura *"quem mais usa este recurso?"* respondeu por
+todos: `응급처치상자` → 7641, `파란포션` → 505, `수리용키트` → 6434, e assim
+por diante. **Nenhum dos nove doadores está na receita**, o que é a condição
+para a fonte não virar o resultado da rodada anterior.
+
+**3. O número da descrição sai do `item_db`, mesmo quando a entrada inglesa
+discorda.** O inglês do 11518 dizia peso 1 e o `Weight: 50` do vendor diz 5.
+Quem manda o número para a janela é o servidor.
+
+O texto veio do bRO onde havia de onde vir: sete destes itens são a variante
+"não à venda" de um item comum que o bRO tem em português **com os mesmos
+números**, conferidos campo a campo. Nas duas poções de velocidade de ataque a
+lista de `Jobs:` foi comparada conjunto a conjunto com a do irmão antes de a
+linha `Classes:` ser copiada — traduzir nome de classe à mão é onde aquela
+linha erraria calada.
+
+Medido: 31 blocos trocados e só eles, 0 recursos alterados, 0 U+FFFD,
+`luac -p` compila, +3.153 bytes.
 
 ## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
 
@@ -2238,6 +2294,94 @@ primeiras entradas e conclui, errado, que a tabela é minúscula. É preciso
 acompanhar os `LOADK` e resolver os registradores — ver
 `filtra_lub_por_skid.py:skids_do_cliente`.
 
+## `doura_arte.py` — faz arte nova recolorindo a arte que já existe
+
+```
+python doura_arte.py --de 6121 --recurso pincel_do_infinito
+python doura_arte.py --de 6121 --recurso pincel_do_infinito --aplicar
+python doura_arte.py --de 6121 --recurso pincel_do_infinito --previa <pasta>
+python doura_arte.py --recurso pincel_do_infinito --reverter --aplicar
+```
+
+**É o terceiro caminho da arte de um item nosso.** Os outros dois são o
+`arte_de` do `instala_item.py` (dois IDs apontando para o mesmo desenho) e o
+`instala_visual.py` (trazer arte pronta do bRO). Este serve para o caso em que
+nenhum dos dois serve: quando o item novo tem de ser **reconhecível ao lado** do
+velho, e não igual a ele.
+
+Foi o caso do **Pincel do Infinito (30992)**: ele senta na mochila ao lado do
+Pincel de Maquiagem e do Pincel de Grafite, e três pincéis idênticos é problema
+de leitura. A Tinta Infinita (30993) podia usar `arte_de` porque o jogador nunca
+tem as duas tintas com a mesma função ativa.
+
+**Custa quase nada porque a arte de item de RO é quase toda indexada.** Dos
+quatro arquivos, o `.spr` de chão e o ícone de 24x24 são imagens de 256 cores
+com a paleta em bloco próprio — recolorir é reescrever **1024 bytes**, e nenhum
+pixel é tocado. Só a `collection` é RGB de verdade, e mesmo ela tem 75x100.
+
+### A rampa, e por que não se empurra o matiz
+
+Não se escolhe cor por pixel: escolhe-se uma **rampa**. Cada cor da origem vira
+uma luminância (`0.299R + 0.587G + 0.114B`) e a luminância escolhe um ponto da
+rampa, que vai de marrom escuro a amarelo pálido passando por ouro. O volume da
+peça original — o que é sombra e o que é brilho — fica intacto, porque é
+exatamente isso que a luminância carrega.
+
+**Empurrar o matiz daria amarelo chapado.** É essa a diferença entre "amarelo" e
+"dourado", e é por isso que a rampa tem cinco paradas: menos que isso o meio-tom
+achata, mais que isso não se distingue na tela. Trocar de metal é trocar cinco
+pares de números em `RAMPA_OURO`.
+
+### A aura
+
+`--aura x,y,raio,força`, em coordenadas de **tela** (y=0 no topo), e só na
+`collection` — no ícone de 24x24 ela vira borrão. É um halo radial que mistura o
+que estiver embaixo com uma cor quente, com intensidade caindo com o quadrado da
+distância.
+
+**A mistura é por interpolação, não por soma**, e isso não é detalhe: o fundo
+daquela imagem é branco puro, e luz somada a (255,255,255) não vai a lugar
+nenhum.
+
+### Três coisas que são armadilha
+
+- **A fonte é o GRF do bRO, não o nosso.** As entradas de arte de item no
+  `data.grf` de 2021-11-03 estão com DES (flags 3 e 5) e o `grf.py` não lê
+  arquivo cifrado. O do bRO é mais novo e não usa DES — o mesmo caminho que o
+  `instala_visual.py` já usava.
+- **A ordem dos canais muda entre os formatos**: BMP guarda BGRA, SPR guarda
+  RGBA. Trocar transformaria o marrom da rampa em azul.
+- **Duas cores nunca são tocadas**: o magenta puro (255,0,255), que é a
+  transparência do ícone e do `.spr` (e o índice 0 do `.spr`, que o cliente
+  trata como vazio seja qual for a cor), e o branco puro da `collection`.
+  Dourar a primeira pinta o fundo do ícone de ouro sólido; dourar a segunda
+  pinta a moldura da janela de descrição.
+
+O `.act` passa **intacto** — é animação, não imagem. Está na lista só para o
+item ter os quatro arquivos: sem ele o cliente dá `Cannot find File` ao desenhar
+o item no chão.
+
+### Onde grava, e o que isso obriga
+
+Em `cliente\data\...`, que vence o GRF pelo `DataFolderFirst` — a mesma lógica
+do `tinge_dimensao.py` e do `destroi_mapa.py`. Ou seja: **é mudança de cliente e
+vai por patch**, não pelo `implanta.sh` (`RECEITAS.md` §0). O original nunca sai
+do GRF, então `--reverter` é só apagar os arquivos e não há backup a manter.
+
+O nome do recurso é **ASCII de propósito** — recurso novo não tem a amarra do
+byte CP949 coreano dos itens do kRO, e ASCII é o único que sobrevive ao console,
+ao git e ao campo `recurso` do `instala_item.py`. As pastas continuam coreanas:
+quem monta os caminhos é o `valida_visual.caminhos()`, fonte única deles no
+projeto.
+
+O `--previa` grava PNGs (antes/depois, 4x) para conferir com o olho antes de
+gravar. PNG cru, escrito no próprio script: o cliente não lê PNG, e instalar
+PIL para conferir uma imagem de 75x100 seria trocar uma dependência por um
+olhar.
+
+**Depois de aplicar**: `valida_visual.py --id <id>` tem que dar 4 de 4, e o
+cliente precisa ser fechado e reaberto.
+
 ## `instala_manto.py` — põe a arte de um manto cosmético no lugar certo
 
 ```
@@ -3332,6 +3476,19 @@ antes de gravar existe para isso ser visto.
 `.INGLES`, `.KOREA`. São 65 arquivos e 711 MB no cliente desta máquina, 28 deles
 cópias de 22 MB do `itemInfo.lua`: sem o filtro, um `--desde` manda tudo isso
 para o jogador.
+
+**E pula a pasta `savedata\` inteira**, que é outra coisa: aquilo não é lixo
+nosso, é **estado do jogador** — teclas (`UserKeys_s.lua`), opções de vídeo,
+layout da janela de conversa —, e o cliente reescreve tudo isso toda vez que
+fecha. Mandar em patch sobrescreve a configuração de **todo** jogador com a
+desta máquina, e o sintoma para ele é *"minhas teclas mudaram sozinhas"*, sem
+nada no jogo apontando para um patch.
+
+> São **duas** listas porque são duas perguntas: `LIXO` olha o **nome** do
+> arquivo, `PASTAS_FORA` olha o **caminho**. `OptionInfo.lua` não tem marca
+> nenhuma no nome, então só a segunda o pega. Apareceu em 2026-08-28, quando um
+> `--desde` do dia trouxe quatro arquivos de `savedata` junto com a arte do
+> Pincel do Infinito — só porque o cliente tinha sido aberto para testar o item.
 
 **Recusa o `Jogar.exe`**, que tem canal próprio pelo motivo do
 `patcher/LEIAME.md` §3.

@@ -339,9 +339,13 @@ Body:
   # ja faz com o combustivel do Mado Gear duas linhas acima. Ver a secao 2
   # do CLAUDE.md.
   #
-  # O PINCEL DE GRAFITE (6122) CONTINUA SENDO EXIGIDO, de proposito: ele e
-  # `Amount: 0` no skill_db, ou seja ferramenta e nao custo - a habilidade
-  # pede que esteja no inventario e nunca o gasta. Custa 10z na Tranqueiras.
+  # ELA NAO COBRE O PINCEL DE GRAFITE (6122) nem nada de Mascara - quem faz
+  # isso e o Pincel do Infinito (30992), logo abaixo. Os dois itens tem
+  # trabalhos separados de proposito: esta e a TINTA DE PAREDE, aquele sao
+  # os dois PINCEIS mais a TINTA DE PELE. Sem o Pincel do Infinito, o 6122
+  # continua exigido - ele e `Amount: 0` no skill_db, ou seja ferramenta e
+  # nao custo (a habilidade pede que esteja no inventario e nunca o gasta),
+  # e custa 10z na Tranqueiras.
   #
   # Type Etc, e nao Usable, pelo mesmo motivo da Maca da Inocencia: o
   # jogador nao usa esta Tinta. Ela so precisa estar no inventario, e um
@@ -368,6 +372,64 @@ Body:
   - Id: 30993
     AegisName: Tinta_Parede_Infinita
     Name: Tinta para Parede Infinita
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+
+  # ----- O Pincel do Infinito --------------------------------------------
+  #
+  # O IRMAO DA TINTA INFINITA, e o mesmo mecanismo: quem o carrega tem TRES
+  # requisitos zerados de uma vez, e o Pincel nunca e gasto -
+  #
+  #     6121  Pincel de Maquiagem  ferramenta das seis Mascaras (2292-2297)
+  #     6122  Pincel de Grafite    ferramenta das sete Pinturas (2289, 2299-2304)
+  #     6120  Tinta para Pele      insumo GASTO, 1 por Mascara lancada
+  #
+  # A regra esta em src/custom/pincel_do_infinito.hpp e entra na MESMA linha
+  # do skill_get_requirement em que entra a Tinta Infinita (src/map/skill.cpp).
+  # Ver a secao 2 do CLAUDE.md.
+  #
+  # A TINTA PARA PAREDE (6123) NAO ESTA NA LISTA, de proposito: ela continua
+  # sendo trabalho da Tinta para Parede Infinita (30993). Quem quiser lancar
+  # Copia Explosiva sem gastar nada carrega os DOIS itens - antes eram
+  # quatro (6120, 6121, 6122 e 6123).
+  #
+  # POR QUE A FERRAMENTA TAMBEM PRECISA DE ISENCAO, que e a parte que
+  # engana: `Amount: 0` no skill_db nao quer dizer "opcional". O
+  # skill_check_condition_castbegin (src/map/skill.cpp:9559) reprova por
+  # `index[i] < 0` antes de olhar a quantidade - sem o pincel na mochila a
+  # habilidade falha com o mesmo "item necessario nao encontrado" de quando
+  # falta tinta. Zerar o itemid tira as duas exigencias de uma vez.
+  #
+  # Type Etc, e nao Usable, pelo mesmo motivo da Maca e da Tinta: o jogador
+  # nao usa este Pincel, ele so precisa estar no inventario.
+  #
+  # AS TRAVAS SAO AS DA TINTA (30993), e pelo mesmo motivo - hoje so a
+  # staff, e o mesmo caminho de virar objetivo de quest mais para a frente
+  # sem que o C++ mude, porque a regra la olha "tem o item?" e nao como ele
+  # chegou. Lembrar da regra 4.7: a conta de teste (grupo 99) IGNORA as sete
+  # travas.
+  #
+  # O primeiro portador e o fantasma da arena (pvp_n_1-5), que desde
+  # 2026-08-28 lanca a Mascara da Vulnerabilidade a cada volta do ciclo e a
+  # Mascara da Tolice quando leva golpe pesado - sem esta isencao, uma Tinta
+  # para Pele por lance, reposta a mao para sempre. Ver ..\FANTASMA-BOT.md.
+  #
+  # LADO DO CLIENTE: entrada propria no itemInfo.lua e ARTE PROPRIA, as duas
+  # postas por ferramenta - `instala_item.py` (o texto) e `doura_arte.py` (o
+  # pincel dourado, recolorido a partir do 6121). E mudanca de CLIENTE, ou
+  # seja vai por PATCH e nao pelo implanta.sh (RECEITAS.md secao 0).
+  - Id: 30992
+    AegisName: Pincel_Do_Infinito
+    Name: Pincel do Infinito
     Type: Etc
     Weight: 10
     Trade:

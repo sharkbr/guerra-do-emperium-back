@@ -34,6 +34,14 @@ import time
 ITEMINFO = os.path.join(r'C:\GuerraDoEmperium\cliente',
                         'SystemEN', 'LuaFiles514', 'itemInfo.lua')
 
+
+# Fica aqui em cima, e nao la embaixo com o resto do codigo, porque a receita
+# das Caixas de Primeiros Socorros e MONTADA em tempo de carga do modulo e
+# pode levantar `Erro` antes de a primeira funcao ser chamada.
+class Erro(Exception):
+    pass
+
+
 # --------------------------------------------------------------- a receita
 #
 # Um dicionario por item. Acrescentar item e editar esta tabela, nao o codigo.
@@ -234,7 +242,42 @@ ITENS = [
             u'Um pote de tinta que não seca e não acaba. Enquanto estiver na bolsa, nenhuma pintura consome tinta.',
             u'_______________________',
             u'^000088Substitui a Tinta para Parede em todas as habilidades que a exigem, e não é consumida ao usá-las.^000000',
-            u'^000088O Pincel de Grafite continua sendo necessário.^000000',
+            u'^000088O Pincel de Grafite continua sendo necessário, a menos que se carregue o Pincel do Infinito.^000000',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Etc',
+            u'^0000CCPeso:^000000 1',
+        ],
+    },
+    # O PINCEL DO INFINITO (30992), 2026-08-28. O irmao da Tinta Infinita, e
+    # a primeira receita desta tabela com ARTE PROPRIA de verdade.
+    #
+    # POR QUE NAO DEU PARA USAR `arte_de`, que resolveu as dez receitas
+    # anteriores: aqui o item novo e o item velho fazem A MESMA COISA. A Tinta
+    # Infinita podia usar o desenho da Tinta comum porque o jogador nunca tem
+    # as duas com a mesma funcao ativa; o Pincel do Infinito senta na mochila
+    # ao lado do Pincel de Maquiagem e do Pincel de Grafite, e tres pinceis
+    # identicos e um problema de leitura, nao de estetica.
+    #
+    # A arte saiu do `doura_arte.py`: os quatro arquivos do 6121, recoloridos
+    # para ouro pela luminancia (o volume da peca original fica intacto) mais
+    # uma aura na ponta, que e o que a descricao promete. Sao arquivos soltos
+    # em `cliente/data/`, que vencem o GRF pelo DataFolderFirst - ou seja
+    # MUDANCA DE CLIENTE, que vai por patch. Reverter e apagar.
+    #
+    # Por isso o campo aqui e `recurso` e nao `arte_de`: o nome do recurso e
+    # nosso e e ASCII, entao nao ha byte CP949 a copiar de ninguem.
+    {
+        'id': 30992,
+        'nome': u'Pincel do Infinito',
+        'recurso': 'pincel_do_infinito',
+        'descricao': [
+            u'Pincel feito com minerais de um meteoro de alto impacto, banhado a ouro. Possui uma aura que se materializa na ponta.',
+            u'',
+            u'Usado para pinturas de rosto, corporais e de parede, infinito.',
+            u'_______________________',
+            u'^000088Substitui o Pincel de Maquiagem e o Pincel de Grafite, e dispensa a Tinta para Pele em todas as habilidades que a exigem.^000000',
+            u'^000088Não é consumido ao usá-las.^000000',
+            u'^000088A Tinta para Parede continua sendo necessária.^000000',
             u'_______________________',
             u'^0000CCTipo:^000000 Etc',
             u'^0000CCPeso:^000000 1',
@@ -538,8 +581,334 @@ ITENS = [
 ]
 
 
-class Erro(Exception):
-    pass
+# ------------------------------- A cadeia das Caixas de Primeiros Socorros
+#
+# 2026-08-28. O primeiro item que todo personagem novo recebe e a Caixa de
+# Primeiros Socorros (5) - o 23484, e ele esta escrito no `start_items` do
+# `conf/char_athena.conf`, linha 124. Ela nasceu em COREANO, e o coreano nao
+# para nela: abrir a caixa entrega cinco itens, um deles e a caixa SEGUINTE, e
+# a corrente vai de cinco em cinco niveis ate o 95. Ao todo sao **35 itens** no
+# fecho transitivo do 23484, e **31 deles** estavam com o nome em coreano - o
+# que o jogador ve na primeira hora de jogo.
+#
+# O relato veio pelo 23485 (a caixa de nivel 10), que e o que sobra na mochila
+# depois de abrir a primeira. O 23484 esta aqui porque ele e o que o jogador
+# recebe de fato - e nao aparece em `npc/` nenhum, so naquela linha de conf.
+#
+# Nenhuma das duas ferramentas vizinhas resolvia:
+#
+#   completa_iteminfo.py   o bRO tem os IDs, mas TAMBEM em coreano - nao ha
+#                          de onde copiar. E ele nao reescreve bloco alheio,
+#                          de proposito.
+#   nomes_pt_item_db.py    aquele copia o nome do CLIENTE para o servidor; o
+#                          buraco esta justamente do lado do cliente.
+#
+# Sobrou este script, que e o unico que substitui bloco existente. E o mesmo
+# caso do Chapeu do Eden (19272) e do Arco Vigilante (18145), so que em escala:
+# "traduzir entrada alheia".
+#
+# DE ONDE SAIU O TEXTO, que e a parte que a regra 3 do CLAUDE.md governa: a
+# maioria destes itens e a variante "[nao a venda]" de um item comum que o bRO
+# JA TEM em portugues, com os MESMOS numeros - conferido campo a campo no
+# item_db, nao suposto:
+#
+#   11570 = 501 Pocao Vermelha (45~65 HP, peso 7)
+#   11566 = 503 Pocao Amarela (175~235 HP, peso 13)
+#   11572 = 505 Pocao Azul (40~60 SP, peso 15)
+#   11614 = 519 Leite (27~37 HP, peso 3)
+#   11615 = 516 Batata Doce (15~23 HP, peso 2)
+#   22544 = 656 Pocao do Despertar (mesmo Script, mesmo Jobs, mesmo nivel 40)
+#   22543 = 657 Pocao da Furia Selvagem (idem, nivel 85)
+#
+# Nos dois ultimos a lista de `Jobs:` foi comparada conjunto a conjunto com a
+# do irmao do bRO antes de a linha "Classes:" ser copiada - deram IGUAIS, e e
+# isso que autoriza copiar a frase por extenso em vez de reescreve-la (nome de
+# classe em portugues e onde essa traducao erraria calada).
+#
+# O PREFIXO `[Evento]` NAO E INVENCAO NOSSA: e como o bRO ja traduz o
+# `[비매품]` ("nao a venda") do kRO nos dois itens desta mesma cadeia que ele
+# tinha em portugues - 11565 `[Evento] Pocao Branca` e 22542 `[Evento] Pocao
+# da Concentracao`. Seguir o vizinho de mochila vale mais que a traducao
+# literal.
+#
+# A VOZ e a das entradas do bRO, e nao a das seis primeiras receitas deste
+# arquivo: regua `--------------------------`, `Peso: ^777777N^000000`,
+# `^0000ff...^000000` no efeito. Estes itens sentam na mochila ao lado do
+# 11565, do 11569 e do 22542, que sao do bRO - duas vozes ali seria pior que
+# uma voz que nao e a nossa.
+#
+# O PESO SAI DO item_db, NAO DA DESCRICAO INGLESA. Ela discorda em pelo menos
+# um caso: o ingles do 11518 diz peso 1 e o `Weight: 50` do vendor diz 5. Quem
+# manda o numero para a janela e o servidor, entao a descricao que fecha com
+# ele e a certa (CLAUDE.md 5, entrada da Capa do Comandante).
+#
+# A ARTE veio de `arte_de` apontando para o IRMAO que compartilha o mesmo
+# `identifiedResourceName`, nunca para o proprio item - a auto-referencia da
+# secao do 19272. Os recursos aqui sao todos coreanos, entao `recurso` (ASCII)
+# nao servia. Conferido byte a byte no itemInfo.lua desta maquina:
+#
+#   응급처치상자  as 19 caixas + 7641 Caixa com Primeiros Socorros  -> 7641
+#   파란포션      11518, 11572 + 505 Pocao Azul                     -> 505
+#   빨간포션      11570 + 501 Pocao Vermelha                        -> 501
+#   노란포션      11566 + 503 Pocao Amarela                         -> 503
+#   우유          11614 + 519 Leite                                 -> 519
+#   고구마        11615 + 516 Batata Doce                           -> 516
+#   각성포션      22544 + 656 Pocao do Despertar                    -> 656
+#   버서크포션    22543 + 657 Pocao da Furia Selvagem               -> 657
+#   수리용키트    23503..23506 + 6434 Kit de Reparo                 -> 6434
+#
+# Nenhum dos nove doadores esta nesta tabela, entao nenhum e reescrito - e por
+# isso a fonte da arte nao pode virar o resultado da rodada anterior.
+
+ITENS += [
+    {
+        'id': 11518,
+        'nome': u'Poção Azul de Aprendiz',
+        'arte_de': 505,                     # a Pocao Azul comum
+        # `itemheal 0,5` - cinco de SP, e nao os 40~60 da Pocao Azul de
+        # verdade. E o peso e 5 (`Weight: 50`), nao o 1 que o ingles dizia.
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Poção feita de ervas azuis moídas, preparada para aprendizes.',
+            u'Dê um clique duplo no item para usar.',
+            u'--------------------------',
+            u'^0000ffRecupera 5 de SP.^000000',
+            u'--------------------------',
+            u'Peso: ^7777775^000000',
+        ],
+    },
+    {
+        'id': 11614,
+        'nome': u'Leite Fresco',
+        'arte_de': 519,                     # o Leite comum
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Leite acabado de tirar. É muito usado como alimento no crescimento das crianças.',
+            u'Dê um clique duplo no item para usar.',
+            u'--------------------------',
+            u'^0000ffRecupera cerca de 27 a 37 de HP.^000000',
+            u'--------------------------',
+            u'Peso: ^7777773^000000',
+        ],
+    },
+    {
+        'id': 11615,
+        'nome': u'Batata Doce Fresca',
+        'arte_de': 516,                     # a Batata Doce comum
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Tubérculo roxo recém-colhido. Rico em amido e adocicado, é muito usado como alimento.',
+            u'Dê um clique duplo no item para usar.',
+            u'--------------------------',
+            u'^0000ffRecupera cerca de 15 a 23 de HP.^000000',
+            u'--------------------------',
+            u'Peso: ^7777772^000000',
+        ],
+    },
+    {
+        'id': 11570,
+        'nome': u'[Evento] Poção Vermelha',
+        'arte_de': 501,                     # a Pocao Vermelha comum
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Poção feita de ervas vermelhas.',
+            u'Dê um clique duplo no item para usar.',
+            u'--------------------------',
+            u'^0000ffRecupera cerca de 45 a 65 de HP.^000000',
+            u'--------------------------',
+            u'Peso: ^7777777^000000',
+        ],
+    },
+    {
+        'id': 11566,
+        'nome': u'[Evento] Poção Amarela',
+        'arte_de': 503,                     # a Pocao Amarela comum
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Poção feita de ervas amarelas.',
+            u'Dê um clique duplo no item para usar.',
+            u'--------------------------',
+            u'^0000ffRecupera cerca de 175 a 235 de HP.^000000',
+            u'--------------------------',
+            u'Peso: ^77777713^000000',
+        ],
+    },
+    {
+        'id': 11572,
+        'nome': u'[Evento] Poção Azul',
+        'arte_de': 505,                     # a Pocao Azul comum
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Poção feita de ervas azuis.',
+            u'Dê um clique duplo no item para usar.',
+            u'--------------------------',
+            u'^0000ffRecupera cerca de 40 a 60 de SP.^000000',
+            u'--------------------------',
+            u'Peso: ^77777715^000000',
+        ],
+    },
+    {
+        'id': 22544,
+        'nome': u'[Evento] Poção do Despertar',
+        'arte_de': 656,                     # a Pocao do Despertar comum
+        # Texto do 656 do bRO, por extenso. O `Script:`, o `Jobs:` e o
+        # `EquipLevelMin:` dos dois sao IGUAIS - comparados conjunto a
+        # conjunto antes de copiar a linha "Classes:".
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Poção medicinal que acelera o metabolismo de quem a ingere.',
+            u'--------------------------',
+            u'^0000ffVelocidade de ataque +15%.^000000',
+            u'^008080O bônus substitui o efeito da Poção da Concentração.^000000',
+            u'--------------------------',
+            u'Duração: ^77777730 minutos^000000',
+            u'Peso: ^77777715^000000',
+            u'Nível necessário: ^77777740^000000',
+            u'Classes: ^777777Todas, exceto Bardos, Odaliscas, Sacerdotes e evoluções, Noviços^000000',
+        ],
+    },
+    {
+        'id': 22543,
+        'nome': u'[Evento] Poção da Fúria Selvagem',
+        'arte_de': 657,                     # a Pocao da Furia Selvagem comum
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Fórmula química extremamente potente que estimula a circulação, criando uma reação em cadeia.',
+            u'--------------------------',
+            u'^0000ffVelocidade de ataque +20%.^000000',
+            u'^008080O bônus substitui o efeito da Poção da Concentração e do Despertar.^000000',
+            u'--------------------------',
+            u'Duração: ^77777730 minutos^000000',
+            u'Peso: ^77777720^000000',
+            u'Nível necessário: ^77777785^000000',
+            u'Classes: ^777777Todas, exceto Noviços, Arqueiros, Invocadores, Gatunos e Mercenários, Sábios, Aprendizes, Ninjas e evoluções^000000',
+        ],
+    },
+]
+
+
+# O de-para que as descricoes das caixas citam. Ele existe para que a lista de
+# conteudo de cada caixa seja MONTADA a partir do `Script:` do item_db, e nao
+# escrita a mao ao lado dele: caixa que promete uma coisa e entrega outra e
+# exatamente a divergencia calada da 4.11 do CLAUDE.md, e aqui haveria 22
+# listas para divergir.
+#
+# Os dois ultimos NAO estao na tabela ITENS e nao sao reescritos: o bRO ja os
+# tem em portugues. Estao aqui so porque as caixas de pocao os citam.
+NOME_DO_CONTEUDO = {
+    11518: u'Poção Azul de Aprendiz',
+    11565: u'[Evento] Poção Branca',
+    11566: u'[Evento] Poção Amarela',
+    11569: u'Poção Laranja de Aprendiz',
+    11570: u'[Evento] Poção Vermelha',
+    11572: u'[Evento] Poção Azul',
+    11614: u'Leite Fresco',
+    11615: u'Batata Doce Fresca',
+    12325: u'Lupa de Iniciante',
+    22542: u'[Evento] Poção da Concentração',
+    22543: u'[Evento] Poção da Fúria Selvagem',
+    22544: u'[Evento] Poção do Despertar',
+}
+
+# As quatro caixas de 20 pocoes: (id, plural que vai no nome, id do conteudo).
+# Todas com `Weight:` ausente no item_db, ou seja peso 0.
+CAIXAS_DE_POCAO = [
+    (23503, u'Vermelhas', 11570),
+    (23504, u'Laranjas', 11569),
+    (23505, u'Amarelas', 11566),
+    (23506, u'Brancas', 11565),
+]
+
+# A corrente das 19 Caixas de Primeiros Socorros: (id, nivel minimo, conteudo).
+# O conteudo e (quantidade, id) NA ORDEM do `Script:` de
+# db/re/item_db_usable.yml, transcrito de la em 2026-08-28. A ultima linha de
+# quase todas e a PROXIMA CAIXA - e o que faz disto uma corrente e o que leva
+# o coreano do 23485 ate o nivel 95.
+CAIXAS = [
+    (23484, 5, [(10, 11518), (20, 11614), (15, 12325), (1, 22542), (1, 23485)]),
+    (23485, 10, [(15, 11518), (40, 11614), (15, 12325), (1, 22542), (1, 23486)]),
+    (23486, 15, [(20, 11518), (60, 11614), (10, 12325), (2, 22542), (1, 23487)]),
+    (23487, 20, [(15, 11518), (80, 11615), (10, 12325), (2, 22542), (1, 23488)]),
+    (23488, 25, [(20, 11518), (100, 11615), (5, 12325), (3, 22542), (1, 23489)]),
+    (23489, 30, [(25, 11518), (120, 11615), (5, 12325), (3, 22542), (1, 23490)]),
+    (23490, 35, [(15, 11572), (3, 22542), (1, 23491), (5, 23503)]),
+    (23491, 40, [(15, 11572), (2, 22544), (1, 23492), (6, 23503)]),
+    (23492, 45, [(20, 11572), (2, 22544), (1, 23493), (7, 23503)]),
+    (23493, 50, [(20, 11572), (2, 22544), (1, 23494), (7, 23504)]),
+    (23494, 55, [(25, 11572), (2, 22544), (1, 23495), (8, 23504)]),
+    (23495, 60, [(25, 11572), (1, 23496), (9, 23504)]),
+    (23496, 65, [(30, 11572), (1, 23497), (5, 23505)]),
+    (23497, 70, [(30, 11572), (1, 23498), (6, 23505)]),
+    (23498, 75, [(35, 11572), (1, 23499), (7, 23505)]),
+    (23499, 80, [(35, 11572), (1, 23500), (8, 23505)]),
+    (23500, 85, [(40, 11572), (2, 22543), (1, 23501), (7, 23506)]),
+    (23501, 90, [(40, 11572), (2, 22543), (1, 23502), (8, 23506)]),
+    (23502, 95, [(45, 11572), (2, 22543), (8, 23506)]),
+]
+
+NOME_DA_CAIXA = u'Caixa de Primeiros Socorros (%d)'
+NOME_DA_CAIXA_DE_POCAO = u'[Evento] Cx. Poções %s (20)'
+
+# A mesma frase vermelha que o ingles trazia, e ela nao e enfeite: `getitem`
+# com a mochila cheia LARGA O ITEM NO CHAO (CLAUDE.md 5), e as caixas despejam
+# ate 120 unidades de uma vez.
+AVISO_DA_CAIXA = (u'^ff0000Atenção! Itens podem ser perdidos se o peso ou a '
+                  u'quantidade que você carrega estiver no limite quando a '
+                  u'caixa for aberta.^000000')
+
+
+def _nome_do_conteudo(iid):
+    u"""O nome em portugues do item que uma caixa entrega."""
+    if iid in NOME_DO_CONTEUDO:
+        return NOME_DO_CONTEUDO[iid]
+    for cid, nivel, _ in CAIXAS:
+        if cid == iid:
+            return NOME_DA_CAIXA % nivel
+    for cid, plural, _ in CAIXAS_DE_POCAO:
+        if cid == iid:
+            return NOME_DA_CAIXA_DE_POCAO % plural
+    raise Erro('nao sei o nome em portugues do item %d, que alguma caixa '
+               'entrega' % iid)
+
+
+for _id, _plural, _conteudo in CAIXAS_DE_POCAO:
+    ITENS.append({
+        'id': _id,
+        'nome': NOME_DA_CAIXA_DE_POCAO % _plural,
+        'arte_de': 6434,                    # o Kit de Reparo
+        'descricao': [
+            u'^ff0000Intransferível.^000000',
+            u'Uma caixa com 20 unidades de %s.' % _nome_do_conteudo(_conteudo),
+            u'Boa para levar e abrir quando precisar.',
+            u'--------------------------',
+            AVISO_DA_CAIXA,
+            u'--------------------------',
+            u'Peso: ^7777770^000000',
+        ],
+    })
+
+for _id, _nivel, _conteudo in CAIXAS:
+    _linhas = [
+        u'^ff0000Intransferível.^000000',
+        u'Caixa de primeiros socorros com remédios simples. Ela contém:',
+        u'--------------------------',
+    ]
+    _linhas += [u'%dx %s' % (_qtd, _nome_do_conteudo(_alvo))
+                for _qtd, _alvo in _conteudo]
+    _linhas += [
+        u'--------------------------',
+        AVISO_DA_CAIXA,
+        u'--------------------------',
+        u'Peso: ^7777770^000000',
+        u'Nível necessário: ^777777%d^000000' % _nivel,
+        u'Classes: ^777777Todas^000000',
+    ]
+    ITENS.append({
+        'id': _id,
+        'nome': NOME_DA_CAIXA % _nivel,
+        'arte_de': 7641,                    # a Caixa com Primeiros Socorros
+        'descricao': _linhas,
+    })
 
 
 # ------------------------------------------------------------------ leitura

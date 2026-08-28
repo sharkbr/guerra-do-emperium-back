@@ -14645,3 +14645,318 @@ seguida: *"funciona exatamente como esperado"*.
   (`mon_trans_disable_in_gvg`, `clif.cpp`). Não alcança nada hoje — o fantasma
   só vive em `pvp_n_1-5` —, mas se um dia ele pisar num castelo, volta a ser
   gente até sair de lá.
+
+---
+
+## O Pincel do Infinito, e a arte dourada que saiu de uma paleta (2026-08-28)
+
+**Pedido do dono, na mesma sessão em que o fantasma da arena ganhou as duas
+Máscaras.** Com elas o bot passou a gastar **Tinta para Pele (6120)** — uma por
+lance, para sempre —, e o item que já resolvia esse tipo de problema, a Tinta
+para Parede Infinita, não cobria essa tinta nem os pincéis. Nasceu o irmão dela.
+
+### O que ele faz, e o que deliberadamente não faz
+
+Quem carrega o **Pincel do Infinito (30992)** tem **três** requisitos zerados:
+
+| item | o que é | quem exige |
+| --- | --- | --- |
+| 6121 Pincel de Maquiagem | ferramenta (`Amount: 0`) | as seis Máscaras, 2292–2297 |
+| 6122 Pincel de Grafite | ferramenta (`Amount: 0`) | as sete Pinturas, 2289 e 2299–2304 |
+| 6120 Tinta para Pele | insumo, 1 por lance | as seis Máscaras |
+
+**A Tinta para Parede (6123) ficou de fora de propósito** — ela continua sendo
+trabalho da Tinta para Parede Infinita (30993). Os dois itens têm funções
+separadas, e quem quiser lançar a Cópia Explosiva sem gastar nada carrega os
+dois. Eram quatro itens no inventário do fantasma; passaram a ser dois.
+
+O pedido inicial era só "supre a Tinta para Pele"; **a correção veio no meio da
+implementação** e acrescentou os dois pincéis, mantendo a tinta de parede fora.
+
+### `Amount: 0` não quer dizer "opcional" — a parte que engana
+
+Os dois pincéis são ferramenta: a habilidade exige que estejam no inventário e
+nunca os gasta. Parece que não precisariam de isenção nenhuma. Precisam, e quem
+mostra isso é o `skill_check_condition_castbegin` (`src/map/skill.cpp:9559`):
+
+```cpp
+if( index[i] < 0 || sd.inventory...amount < require.amount[i] )
+```
+
+O `index[i] < 0` reprova **antes** de olhar a quantidade. Sem o pincel na
+mochila a habilidade falha com o mesmo *"item necessário não encontrado"* de
+quando falta tinta. Zerar o `itemid` tira as duas exigências de uma vez, porque
+o laço pula todo requisito com id zero.
+
+### Um arquivo novo, e não uma linha no antigo
+
+O enxerto entrou onde já estava o da Tinta, na mesma linha do
+`skill_get_requirement` — mas a regra foi para
+**`src/custom/pincel_do_infinito.hpp`**, arquivo próprio. Juntar os dois num só
+teria sido menos código e mais confusão: são dois itens de jogo distintos, com
+coberturas distintas, e um dia um pode existir sem o outro. O `skill.cpp`
+passou a ter dois includes e um `if` com duas chamadas.
+
+Vale de novo o que valeu para a Tinta: **um ponto só basta**, porque o
+`skill_get_requirement` alimenta o `castbegin` (quem recusa), o `castend` e o
+`consume` (quem apaga o item).
+
+### A arte: recolorir vale mais que desenhar
+
+Aqui o `arte_de` do `instala_item.py` — o campo que resolveu as dez receitas
+anteriores copiando o `resourceName` de outro item — **não servia**, e o motivo
+é o ponto do item: a Tinta Infinita podia usar o desenho da Tinta comum porque
+o jogador nunca tem as duas com a mesma função ativa. O Pincel do Infinito
+senta na mochila **ao lado** do Pincel de Maquiagem e do de Grafite. Três
+pincéis idênticos é problema de leitura, não de estética.
+
+O dono pediu um pincel dourado e ofereceu ele mesmo abrir o Photoshop. Não
+precisou: **a arte de item de RO é quase toda indexada.** Dos quatro arquivos,
+o `.spr` de chão e o ícone de 24x24 são imagens de 256 cores com a paleta em
+bloco próprio — recolorir é reescrever **1024 bytes** e nenhum pixel é tocado.
+Só a imagem de `collection` é RGB de verdade, e mesmo ela tem 75x100.
+
+Daí o **`ferramentas/doura_arte.py`**. Ele não escolhe cor por pixel: escolhe
+uma **rampa**. Cada cor vira uma luminância (0.299R + 0.587G + 0.114B) e a
+luminância escolhe um ponto da rampa, que vai de marrom escuro a amarelo pálido
+passando por ouro. O volume da peça original — o que é sombra e o que é brilho —
+sobrevive intacto, porque é exatamente isso que a luminância carrega. Empurrar
+o matiz teria dado amarelo chapado; é essa a diferença entre "amarelo" e
+"dourado".
+
+Mais uma **aura na ponta**, que é o que a descrição do item promete. Ela é um
+halo radial só na `collection` (no ícone de 24x24 viraria borrão), e é misturada
+por **interpolação e não por soma**: o fundo daquela imagem é branco puro, e luz
+somada a (255,255,255) não vai a lugar nenhum.
+
+### Três coisas que o script teve de saber, e que são armadilha
+
+- **O nosso GRF não serve de fonte.** As quatro entradas do 6121 estão com DES
+  no `data.grf` de 2021-11-03 (flags 3 e 5) e o `grf.py` não lê arquivo
+  cifrado. A arte saiu do **GRF do bRO**, que é mais novo e não usa DES — o
+  mesmo caminho que o `instala_visual.py` já usava.
+- **A ordem dos canais da paleta muda entre os dois formatos**: BMP guarda
+  BGRA, SPR guarda RGBA. Trocar os canais transformaria o marrom da rampa em
+  azul.
+- **Duas cores nunca são tocadas**: o magenta puro (255,0,255), que é a
+  transparência do ícone e do `.spr`, e o branco puro da `collection`. Dourar
+  a primeira pinta o fundo do ícone de ouro sólido; dourar a segunda pinta a
+  moldura inteira da janela de descrição.
+
+O `.act` passa intacto — é animação, não imagem. Existe na lista só para o item
+ter os **quatro** arquivos: sem ele o cliente dá `Cannot find File` ao desenhar
+o item no chão.
+
+### O que isso torna possível daqui pra frente
+
+O `doura_arte.py` é o **terceiro caminho da arte** de um item nosso, ao lado do
+`arte_de` (copiar o desenho de outro) e do `instala_visual.py` (trazer arte
+pronta do bRO). Ele serve sempre que o item novo precisa ser *reconhecível ao
+lado* do velho, e não *igual* a ele — e não custa nem um repack de GRF nem uma
+rodada de editor de imagem.
+
+### Como foi conferido
+
+- `cl /Zs` sobre o `skill.cpp` com os `defines` e includes do
+  `map-server.vcxproj` (Release|x64): **exit 0, sem erro e sem warning**.
+- `valida_visual.py --id 30992`: **4 de 4 ok**, os quatro no disco, em
+  `cliente\data\`.
+- `instala_item.py --verificar` antes de gravar; a entrada entrou entre 29715 e
+  30993, +973 bytes, backup em `itemInfo.lua.BACKUP-20260828-0139`.
+
+### O que falta, e não é pouco
+
+- **Recompilar o map-server e reiniciá-lo.** A regra é C++: enquanto o binário
+  for o antigo, o item existe, aparece com nome e arte, e **não faz nada**. O
+  servidor estava no ar durante o trabalho, então o `.exe` estava travado.
+- **Mandar o patch de cliente.** `itemInfo.lua` e os quatro arquivos de arte
+  moram em `C:\GuerraDoEmperium\cliente\` — não vão pelo `implanta.sh`
+  (`RECEITAS.md` §0). Quem não receber vê o item sem nome e com caixa de erro
+  de arte.
+- **A descrição diz "pinturas de rosto e corporal"** e o item também cobre as
+  de parede, desde a correção. O texto é do dono, palavra por palavra, e foi
+  mantido assim de propósito — a ficha logo abaixo dele conta a mecânica
+  inteira, mas a linha de sabor merece uma decisão.
+
+### O Vínculo Sombrio, o `savedata` que quase foi no patch, e o UTF-8 que voltou (2026-08-28, noite)
+
+Fechamento da sessão do fantasma. Três coisas, e duas delas são armadilha.
+
+#### O Vínculo Sombrio como último recurso
+
+Pedido do dono: **abaixo de 10% do HP**, o fantasma joga o **Vínculo Sombrio**
+(`SC_SHADOWFORM`, Id 2287) no oponente, com teto de 15s. Virou a fase `shadow`
+do plugin, com precedência sobre tudo — inclusive sobre a fase `panic`, porque
+mascarar o oponente não adianta nada com a barra no fim.
+
+**O que muda o desenho é que o status fica em QUEM LANÇA, não em quem leva.**
+O `sc_start4(src, src, ...)` de `src/map/skills/thief/shadowform.cpp` põe o
+`SC__SHADOWFORM` no próprio caster; o alvo entra como `val2`, e é **ele** que
+come o dano que o fantasma levar, até `4 + nível` golpes. Por isso a guarda de
+*"já está ligado"* olha o próprio char.
+
+E o preço é alto: **quem está com o Vínculo não bate e não lança mais nada** —
+`skill_check_condition_castbegin` recusa qualquer habilidade a quem o tem
+(`src/map/skill.cpp:8327`) e o status ainda traz `NoAttack` no
+`db/re/status.yml`. Daí o `lowHpTimeout`, e daí a receita terminar em
+`chase 15 hold` em vez de tentar atacar: **grudar mantém o vínculo vivo**, que
+morre se o caster se afastar mais de dez células do alvo (o bloco *"Shadow Form
+Caster Moving"*, `src/map/map.cpp:599`).
+
+Nada disso é código novo: é uma receita de config a mais, como as outras três.
+
+#### O `savedata` que o `--desde` teria mandado a todo mundo
+
+Ao montar o patch, o `monta_patch.py --desde 2026-08-28` trouxe **quatro
+arquivos de `savedata\`** junto com a arte — `UserKeys_s.lua`,
+`OptionInfo.lua`, `ChatWndInfo_U.lua`, `MiniPartyInfo.lua` — só porque o
+cliente tinha sido aberto para testar o item.
+
+Aquilo é **estado do jogador**, não conteúdo: teclas, opções de vídeo, layout
+de janela. Mandar em patch sobrescreve a configuração de **todo** jogador com a
+desta máquina, e o sintoma para ele é *"minhas teclas mudaram sozinhas"* — sem
+nada no jogo apontando para um patch.
+
+O filtro `LIXO` não pegava porque **ele olha só o NOME do arquivo**, e
+`OptionInfo.lua` não tem marca nenhuma. Entrou o `PASTAS_FORA`, que olha o
+**caminho** — são duas perguntas diferentes e cada uma precisa da sua.
+
+Sobreviveu por ser a única coisa que o resumo impresso antes de gravar existe
+para pegar. **Esse resumo é a última linha de defesa do `--desde`, e foi lido.**
+
+#### O `item_db.yml` reescrito em UTF-8, e quem pegou
+
+Ao acrescentar a entrada do 30992, o `item_db.yml` foi gravado em **UTF-8 e
+CRLF** — e ele é **cp1252 e LF** (a codificação é a regra 4.1 do `CLAUDE.md`; o
+LF é regra explícita do `.gitattributes`, `*.yml text eol=lf`). Doze acentos
+viraram U+FFFD, dano irreversível, e **nada no jogo teria reclamado**.
+
+Quem pegou foi o **`prevoo.sh`**, no passo 3. Não foi teste, não foi revisão,
+não foi o servidor: foi a varredura que existe exatamente para isso. O conserto
+foi `git checkout` do arquivo e reaplicar as duas alterações por um script
+`rb`/`wb`, byte a byte, sem decodificar nada.
+
+**A lição não é nova — é a §4.1 inteira** —, mas ganhou um detalhe: *escrever*
+é o passo perigoso, e a ferramenta de edição erra o encoding **e** o fim de
+linha na mesma gravação. Rodar o `prevoo.sh` antes de considerar terminado
+qualquer trabalho que toque `db/guerra/` é barato e pega os dois.
+
+#### O que ficou pronto, e o que não
+
+- **Patch 0013 montado e conferido** (`monta_patch.py --confere`: 0 problemas),
+  5 arquivos, 2,46 MB. **Não publicado** — `publica_patch.sh` é o passo do dono.
+- **`prevoo.sh` reprova por um motivo pré-existente**: 25 arquivos nossos com
+  `\r`, todos assim **no próprio git** e nenhum tocado nesta sessão. Não é
+  desta sessão, mas **bloqueia o `implanta.sh`**, que aborta com o pré-voo
+  reprovado — precisa ser resolvido antes do próximo deploy de servidor.
+- **A fase `shadow` não foi testada em jogo.** O Pincel, as Máscaras e a
+  reação ao golpe pesado foram (*"FICOU LINDO! tudo testado!"*); o Vínculo
+  entrou depois.
+
+## A caixa de socorros que todo personagem novo recebe, em coreano (2026-08-28)
+
+O dono mandou dois prints. No primeiro, o item que ele tinha na mochila desde
+o primeiro minuto de jogo — a caixa de primeiros socorros — com o nome
+`구급 상자(10)` e a descrição em inglês. No segundo, um dos itens que saem de
+dentro dela: `초보자용 파란포션`, também em coreano. O pedido foi corrigir os
+dois lados, *"todos os itens que vem dela assim como a descrição da própria e
+nome"*.
+
+### O buraco era uma corrente, não um item
+
+O 23485 do print entrega cinco itens, e **um deles é a caixa seguinte**. Ela
+entrega outra, de cinco em cinco níveis, até o 95. O fecho transitivo tem
+**35 itens**, e **31 deles** estavam com o nome em coreano — tudo que um
+personagem novo vê pela frente.
+
+E o item de verdade não é o do print: o `start_items` do
+`conf/char_athena.conf`, linha 124, entrega o **23484**, a caixa de nível 5. O
+23485 é o que sobra na mochila depois de abrir a primeira. **Não há `grep` em
+`npc/` que ache isso** — a linha mora no conf, e mais nada no servidor cita
+aquele ID. Subiu para o `CLAUDE.md` §4.8.
+
+### Nenhuma das duas ferramentas vizinhas servia
+
+O `completa_iteminfo.py` importa do bRO, e **o bRO tem os IDs em coreano
+também**; além disso ele se recusa a reescrever bloco alheio, de propósito. O
+`nomes_pt_item_db.py` copia o nome do cliente para o servidor, e o buraco
+estava justamente do lado do cliente. Sobrou o `instala_item.py`, que é o
+único que **substitui** bloco existente — o mesmo caso do Chapéu do Éden
+(19272) e do Arco Vigilante (18145), agora em escala.
+
+### De onde saiu o texto, que é o que a regra 3 governa
+
+A maioria destes itens é a variante *"não à venda"* de um item comum **que o
+bRO já tem em português, com os mesmos números**. Conferido campo a campo no
+`item_db`, não suposto:
+
+| nosso | é o mesmo que | conferido |
+|---|---|---|
+| 11570 | 501 Poção Vermelha | 45~65 HP, peso 7 |
+| 11566 | 503 Poção Amarela | 175~235 HP, peso 13 |
+| 11572 | 505 Poção Azul | 40~60 SP, peso 15 |
+| 11614 | 519 Leite | 27~37 HP, peso 3 |
+| 11615 | 516 Batata Doce | 15~23 HP, peso 2 |
+| 22544 | 656 Poção do Despertar | mesmo `Script:`, mesmo `Jobs:`, nível 40 |
+| 22543 | 657 Poção da Fúria Selvagem | idem, nível 85 |
+
+Nas duas últimas a lista de `Jobs:` foi comparada **conjunto a conjunto** com
+a do irmão do bRO antes de a linha `Classes:` ser copiada — deram iguais, e é
+isso que autoriza copiar a frase por extenso. Traduzir nome de classe para o
+português é onde essa linha erraria calada.
+
+**O prefixo `[Evento]` não é invenção nossa.** É como o bRO já traduz o
+`[비매품]` (*"não à venda"*) do kRO nos dois itens desta mesma corrente que ele
+tinha em português: 11565 `[Evento] Poção Branca` e 22542 `[Evento] Poção da
+Concentração`. Seguir o vizinho de mochila vale mais que a tradução literal.
+
+### O peso saiu do `item_db`, e num caso os dois discordavam
+
+A descrição inglesa do 11518 dizia peso **1**; o `Weight: 50` do vendor diz
+**5**. Quem manda o número para a janela é o servidor, então a descrição que
+fecha com ele é a certa — a mesma família da Capa do Comandante
+(`CLAUDE.md` §5).
+
+### A lista de conteúdo é montada, não escrita
+
+Cada caixa promete por extenso o que entrega. São 19 listas, e escrevê-las ao
+lado do `Script:` seria criar 19 chances de a §4.11 acontecer — divergência
+calada entre duas fontes indexadas pelo mesmo número. A receita traz só
+`(id, nível, [(quantidade, id)])`, transcrito do `item_db`, e o texto sai daí
+num laço. O aviso vermelho de perda de item foi mantido, e não é enfeite:
+`getitem` com a mochila cheia **larga o item no chão**, e as caixas despejam
+até 120 unidades de uma vez.
+
+### A arte veio do irmão, nunca do próprio item
+
+Os nove `resourceName` envolvidos são todos coreanos, então o campo `recurso`
+(ASCII) não servia, e `arte_de` apontando para o próprio item é a
+auto-referência que a seção do 19272 documenta. Cada um foi resolvido pelo
+**irmão que compartilha o mesmo recurso** e que não está na receita — o
+`응급처치상자` das 19 caixas saiu do 7641 (Caixa com Primeiros Socorros), o
+`파란포션` do 505, o `수리용키트` do 6434, e assim por diante.
+
+### Medições
+
+- **31 blocos trocados, e só eles.** Comparado bloco a bloco com o backup: 0
+  entradas fora da receita, 0 sumiram, 0 apareceram.
+- **0 recursos trocados** — os 31 `identifiedResourceName` são byte a byte os
+  de antes.
+- **0 ocorrências de U+FFFD** no arquivo, e os 31 blocos decodificam em cp1252.
+- `luac -p` compila o `itemInfo.lua` inteiro.
+- +3.153 bytes.
+
+### O que ficou de fora, por escrito
+
+- **O `Name:` do servidor continua em inglês nestes 31.** Ele só aparece dentro
+  de diálogo de NPC (`getitemname()`), e nenhum destes itens é citado por NPC
+  nenhum — o único lugar que os menciona é o `start_items`. Sincronizar exige
+  `nomes_pt_item_db.py`, que hoje mediria **16.746 trocas** em três arquivos do
+  vendor: é decisão de outra sessão, não carona desta.
+- **É cliente, então precisa de patch** (§4.18). Saiu no **0014**, e não
+  remontando o 0013 — que já estava montado, conferido e com a linha escrita
+  no registro quando isto entrou. Rebobinar um número já registrado, ainda que
+  não publicado, é o hábito que o cabeçalho do `patches.txt` desaconselha, e o
+  preço de não rebobinar é conhecido e pequeno: o `itemInfo.lua` viaja inteiro
+  em todo patch que o toque, então o jogador baixa 2,45 MB comprimidos duas
+  vezes em vez de uma. Os dois foram publicados juntos.

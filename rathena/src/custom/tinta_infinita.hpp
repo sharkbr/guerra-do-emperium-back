@@ -53,13 +53,20 @@
 //
 // ------------------------------------------------------- o que NAO e coberto
 //
-// O PINCEL DE GRAFITE (6122) CONTINUA SENDO EXIGIDO, de proposito. Ele ja e
+// O PINCEL DE GRAFITE (6122) NAO E COBERTO POR ESTE ARQUIVO. Ele ja e
 // `Amount: 0` no skill_db - a habilidade pede que ele esteja no inventario mas
 // nunca o gasta -, entao ele nao e um custo que se esgota, e uma ferramenta.
 // Custa 10z na Tranqueiras (npc/guerra/tranqueiras.txt) e vale uma vez so.
 // Quem estiver com a Tinta Infinita e sem o Pincel continua sem lancar, e o
-// erro no cliente e o mesmo "item necessario nao encontrado" - se um dia isso
-// incomodar, a mudanca e uma linha aqui.
+// erro no cliente e o mesmo "item necessario nao encontrado".
+//
+// Em 2026-08-28 isso ganhou resposta, e ela mora em OUTRO arquivo: o **Pincel
+// do Infinito** (30992, `src/custom/pincel_do_infinito.hpp`) dispensa os dois
+// pinceis (6121 e 6122) e a Tinta para Pele (6120). Ficaram dois itens com
+// trabalhos separados de proposito - este cuida da tinta de PAREDE, aquele dos
+// PINCEIS e da tinta de PELE -, e os dois entram na mesma linha do
+// `skill_get_requirement`. Nao juntar os dois num arquivo so foi decisao: sao
+// dois itens de jogo distintos, e um dia um pode existir sem o outro.
 //
 // ------------------------------------------------------------------- quem tem
 //

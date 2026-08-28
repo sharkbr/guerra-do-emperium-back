@@ -66,6 +66,22 @@ APAGAR = '_patch_apagar.txt'
 LIXO = ('BACKUP', '.ORIGINAL', '.original', '.INGLES', '.KOREA', '.KOR',
         '.pyc', 'Thumbs.db', 'desktop.ini')
 
+# Pastas do cliente que NUNCA entram em patch, mesmo quando o `--desde` as
+# encontra. Ao contrario do LIXO, que e coisa NOSSA deixada na pasta, esta e
+# coisa DO JOGADOR: `savedata\` guarda o estado local dele - teclas
+# (`UserKeys_s.lua`), layout da janela de conversa, opcoes de video, janela de
+# grupo -, e o proprio cliente reescreve tudo isso toda vez que fecha.
+#
+# Mandar em patch sobrescreve a configuracao de TODO jogador com a DESTA
+# maquina, e o sintoma para ele e "minhas teclas mudaram sozinhas" - falha
+# calada e chata de diagnosticar, porque nada no jogo aponta para um patch.
+#
+# Apareceu em 2026-08-28: um `--desde` do dia trouxe quatro arquivos de
+# savedata junto com a arte do Pincel do Infinito, so porque o cliente tinha
+# sido aberto para testar o item. O filtro do LIXO nao pegava porque ele olha
+# so o NOME do arquivo, e `OptionInfo.lua` nao tem marca nenhuma.
+PASTAS_FORA = ('savedata',)
+
 # O Atualizador nao entra em patch comum: ele nao consegue sobrescrever a si
 # mesmo enquanto roda. Quem o troca e o canal proprio (`patcher.txt`), que
 # renomeia o exe em execucao antes de gravar o novo - ver `patcher/LEIAME.md`.
@@ -100,7 +116,13 @@ def apelido(nome):
 
 def e_lixo(caminho):
     nome = os.path.basename(caminho)
-    return any(marca in nome for marca in LIXO)
+    if any(marca in nome for marca in LIXO):
+        return True
+    # Duas perguntas diferentes: o LIXO olha o NOME do arquivo, PASTAS_FORA
+    # olha o CAMINHO. Sem a segunda, `savedata\OptionInfo.lua` passa - o nome
+    # dele nao tem marca nenhuma.
+    partes = os.path.normpath(caminho).lower().split(os.sep)
+    return any(p in PASTAS_FORA for p in partes)
 
 
 def confere_apontamento(interno, cheio):

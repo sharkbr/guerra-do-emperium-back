@@ -24,3 +24,5 @@
 0010	0010-placas-mortas-fora-do-cliente.zip	ca979ad5e85b99180f05f59803eadce732fa638787e1b6cfeb51bd642db89f0f	5946	Placas mortas fora do cliente
 0011	0011-vinte-e-um-itens-nas-lojas-de-prontera.zip	f303b8cbde25583472d6ffd31d703a666620debd15fa59de52159c690cec0be9	2649480	Vinte e um itens nas lojas de Prontera
 0012	0012-tinta-para-parede-infinita.zip	b5be63b32475db2cf9c578e82a862c6c42e07560c8af2c751cfffc7b3e91ee3f	2568920	Tinta para Parede Infinita
+0013	0013-pincel-do-infinito.zip	9bccfe9e199416b039bcbe7fb6fb2b598357c5ed8d53294228a22b67d7a9fe1a	2574522	Pincel do Infinito
+0014	0014-caixa-de-primeiros-socorros-em-portugues.zip	3deb099f48b14eec7b573f80a72a6804a9364b09f9ca1854c997b46a1da1fb42	2569365	Caixa de Primeiros Socorros em portugues
