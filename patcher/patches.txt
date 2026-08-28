@@ -26,3 +26,4 @@
 0012	0012-tinta-para-parede-infinita.zip	b5be63b32475db2cf9c578e82a862c6c42e07560c8af2c751cfffc7b3e91ee3f	2568920	Tinta para Parede Infinita
 0013	0013-pincel-do-infinito.zip	9bccfe9e199416b039bcbe7fb6fb2b598357c5ed8d53294228a22b67d7a9fe1a	2574522	Pincel do Infinito
 0014	0014-caixa-de-primeiros-socorros-em-portugues.zip	3deb099f48b14eec7b573f80a72a6804a9364b09f9ca1854c997b46a1da1fb42	2569365	Caixa de Primeiros Socorros em portugues
+0015	0015-icones-de-status-em-portugues.zip	bf652ecf8c23c3e85589f4b544e17123d028730f98c85db04cbc2f24b595529b	24777	Icones de status em portugues
