@@ -194,6 +194,60 @@
 //= AS OUTRAS 39 ARENAS pvp_n_* CONTINUAM DERRUBANDO. Esta linha e
 //= de um mapa so, o desta porta. Se um dia outra arena abrir, ela
 //= precisa da linha dela.
+//===== O visual do fantasma ===============================
+//= O bot de openkore que caca dentro da arena aparece como uma
+//= CAVEIRA FLAMEJANTE - o Flame Skull 1869 do db/re/mob_db.yml.
+//= Quem faz isso sao os dois rotulos abaixo, OnPCLoginEvent e
+//= OnPCDieEvent, e o teste e sempre o mesmo: `getgroupid() ==
+//= .Fantasma`, o grupo Id 20 de conf/guerra/groups_guerra.yml.
+//= Jogador nenhum passa por ele. O bot inteiro esta descrito em
+//= FANTASMA-BOT.md, na raiz de projects/.
+//=
+//= O VISUAL E DO GRUPO, NAO DO PERSONAGEM - era o pedido. Nao ha
+//= nome nem char_id escrito aqui: qualquer personagem daquela
+//= conta nasce caveira, e trocar o personagem do bot nao encosta
+//= neste arquivo.
+//=
+//= NAO E @disguise, E O MOTOR DO PERGAMINHO DE TRANSFORMACAO. Sao
+//= coisas diferentes, e a diferenca decide o recurso:
+//=
+//=   @disguise troca a unidade inteira, e a partir dai o rAthena
+//=   anuncia o personagem como NPC_TYPE em vez de jogador
+//=   (clif_bl_type, src/map/clif.cpp). Cliente nenhum ataca um
+//=   NPC: o fantasma viraria um alvo que ninguem consegue
+//=   acertar - o oposto do ponto dele. Ainda por cima o disfarce
+//=   nao sobrevive ao logout e o pacote de rank de PvP e pulado
+//=   de proposito para disfarcados.
+//=
+//=   `transform` liga o SC_MONSTER_TRANSFORM, o mesmo status que
+//=   o pergaminho usa. Quem troca o sprite e o CLIENTE, ao
+//=   receber o EFST_MONSTER_TRANSFORM com o id do monstro dentro
+//=   (`SendVal1: true`, db/re/status.yml). Do lado do servidor
+//=   nada muda: continua jogador, clicavel, atacavel e no rank
+//=   da arena.
+//=
+//= INFINITE_TICK e duracao infinita, e ela SOBREVIVE AO LOGOUT
+//= sozinha: o status nao tem `NoSave` nem `NoSaveInfinite`, o
+//= chrif_save_scdata grava a duracao como infinita e o
+//= `debuff_on_logout: 0` de conf/battle/status.conf nao limpa
+//= nada na saida. O OnPCLoginEvent existe para o primeiro login
+//= e para o dia em que alguem apagar o status na mao.
+//=
+//= JOGADOR NENHUM TIRA: o status e NoDispell, NoClearance,
+//= NoClearbuff e NoBanishingBuster. So a MORTE tira - e e por
+//= isso que o OnPCDieEvent tambem reaplica.
+//=
+//= NAO NASCE NPC NOVO NA ARENA POR CAUSA DISTO. Rotulo de evento
+//= nao tem lugar no mapa: o npc_script_event (src/map/npc.cpp)
+//= percorre a lista de todos os NPCs que carregam o rotulo e
+//= chama cada um, esteja ele onde estiver. Estes dois moram aqui
+//= dentro, nesta porta de Prontera. A arena continua sem NPC
+//= nosso la dentro.
+//=
+//= Em mapa de Guerra do Emperium o rAthena desliga a
+//= transformacao sozinho (mon_trans_disable_in_gvg, no clif.cpp).
+//= Nao alcanca nada hoje - o fantasma so vive em pvp_n_1-5 -, mas
+//= se um dia ele pisar num castelo, volta a ser gente ate sair.
 //===== Notas ================================================
 //= NAO SE PERDE EQUIPAMENTO AQUI, e isso e ajuste nosso: ver a
 //= secao "O drop na morte" abaixo e a linha de mapflag no fim do
@@ -281,11 +335,35 @@ OnInit:
 	                        // 1000ms do rAthena de proposito: ver a secao
 	                        // "Por que ele ja esteve desligado".
 
+	// O fantasma da arena - a conta de bot do openkore. O grupo e o
+	// Id 20 de conf/guerra/groups_guerra.yml; 1869 e o Flame Skull do
+	// db/re/mob_db.yml. Ver a secao "O visual do fantasma" no
+	// cabecalho antes de mexer em qualquer um dos dois.
+	.Fantasma = 20;
+	.Caveira = 1869;
+
 	// Nao ha `disablenpc` nenhum aqui desde 2026-08-12, e a ausencia e
 	// deliberada: 147,180 e celula vazia. Ate aquele dia esta porta
 	// ficava em 154,187, em cima do Guia de Prontera, e precisava
 	// desliga-lo. Ver a secao "Este arquivo nao toca NPC de terceiros"
 	// no cabecalho antes de por um de volta.
+	end;
+
+OnPCLoginEvent:
+	// A caveira do fantasma, ligada uma vez por sessao. O teste de
+	// grupo corta na primeira linha para todo jogador de verdade,
+	// entao este rotulo nao custa nada no login de ninguem.
+	//
+	// Por que aqui e nao numa lista de personagens: o pedido era que
+	// o visual fosse da CONTA. Qualquer char do grupo Fantasma nasce
+	// caveira, e trocar o personagem do bot nao mexe neste arquivo.
+	//
+	// Reaplicar por cima de um status que ja veio salvo do banco e
+	// de graca: o `transform` encerra o anterior antes de comecar o
+	// novo (buildin_montransform, src/map/script.cpp).
+	if (getgroupid() != .Fantasma)
+		end;
+	transform .Caveira, INFINITE_TICK;
 	end;
 
 OnPCDieEvent:
@@ -314,6 +392,18 @@ OnPCDieEvent:
 	// pc_respawn chama pc_setrestartvalue). Levantar ANTES de
 	// teleportar, para o cliente nao receber um cadaver andando.
 	recovery 0, .@cid, 1;
+
+	// E a caveira do fantasma volta. A morte e a UNICA coisa que
+	// derruba o SC_MONSTER_TRANSFORM, e ela derruba antes deste
+	// rotulo rodar: o status_change_clear do status_damage limpa
+	// primeiro, e so depois o rAthena chama os eventos de jogador
+	// ("Always run NPC scripts for players last", src/map/status.cpp).
+	// Ou seja, quando esta linha executa nao ha status para
+	// atrapalhar - e ela precisa vir DEPOIS do `recovery`, porque
+	// status nenhum inicia em quem esta morto.
+	if (getgroupid() == .Fantasma)
+		transform .Caveira, INFINITE_TICK;
+
 	warp .Volta$, .VoltaX, .VoltaY;
 	end;
 }

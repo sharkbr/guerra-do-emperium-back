@@ -14527,3 +14527,121 @@ staff isso não alcança jogador nenhum, mas **antes de a quest existir ele tem
 de ir por patch** (§4.18) — senão o item aparece como "Unknown Item" com
 sprite de maçã para quem o receber, que foi exatamente o sintoma visto aqui
 antes de o `instala_item.py` rodar.
+
+## A caveira do fantasma, e o disfarce que o teria tornado inatacável (2026-08-28)
+
+O pedido do dono foi o visual: que o personagem da conta fantasma — *"que
+todos de preferência"* — aparecesse como uma **caveira FLAME_SKULL (1869)**.
+Ele já veio com duas hipóteses próprias: reusar *"o mesmo mecanismo que define
+o grupo da conta de GM podendo os personagens terem a roupa do GM"*, ou então
+*"criar um pergaminho de transformação que atribui essa forma, mas aí teríamos
+outras logísticas como fornecimento e obtenção dos mesmos"*.
+
+As duas foram investigadas antes de escrever uma linha. **A primeira não
+existe. A segunda existe — e o pergaminho é justamente a parte dispensável
+dela.**
+
+### O visual de GM não vem do grupo. Vem do cliente, e é estático
+
+Isto já estava apurado no `PENDENCIAS.md` §1w, de 2026-08-17: o `group_id 99`
+do banco dá os **comandos**; quem dá o **visual** é a lista `<aid><admin>`
+dentro dos dois `clientinfo.xml`. É lista fixa dentro do cliente, fixa também
+no sprite de GM, e a frase que ficou escrita lá vale inteira aqui: *"não há
+como o servidor promover ninguém ao visual"*.
+
+Ou seja, não há grupo a criar. Aquele caminho não tem para onde apontar.
+
+### O `@disguise` faz exatamente o que se pediu — e mataria o recurso
+
+O rAthena tem, sim, o mecanismo de "trocar o sprite inteiro do personagem": é
+o `pc_disguise` (`src/map/pc.cpp`). Mas quem está disfarçado deixa de ser
+anunciado como jogador:
+
+```c
+case BL_PC:  return (disguised(bl) && !pcdb_checkid(...))? 0x1:0x0; //PC_TYPE
+```
+
+`clif_bl_type`, `src/map/clif.cpp`. O `0x1` é **NPC_TYPE** — e cliente nenhum
+ataca um NPC. O fantasma viraria um alvo que ninguém consegue acertar, que é o
+oposto exato do que ele existe para ser. Três defeitos menores vêm de brinde: o
+disfarce não sobrevive ao logout (é memória), o `pc_changelook` o desfaz, e o
+pacote de rank de PvP é pulado de propósito para disfarçados (`clif.cpp`,
+comentário *"Causes crashes when a 'mob' with pvp info dies"*).
+
+### O que entrou: o motor do pergaminho, sem o pergaminho
+
+O pergaminho de transformação é só um item que liga `SC_MONSTER_TRANSFORM`. O
+status pode ser ligado direto por script — `transform 1869, INFINITE_TICK;` —
+e com isso toda a logística de fornecimento que preocupava o dono desaparece.
+
+E ele não é só mais conveniente que o disfarce; é tecnicamente melhor:
+
+| | |
+| --- | --- |
+| **quem troca o sprite** | o **cliente**, ao receber o `EFST_MONSTER_TRANSFORM` com o id do monstro dentro (`SendVal1: true`, `db/re/status.yml`). O servidor não mexe no tipo da unidade: continua jogador — clicável, atacável e no rank da arena |
+| **quando o fantasma sai do `@hide`** | o `clif_spawn` reenvia os EFST para a área (`clif.cpp`), então quem está por perto vê a caveira materializando |
+| **no logout** | sobrevive sozinho: o status não tem `NoSave` nem `NoSaveInfinite`, o `chrif_save_scdata` grava a duração como infinita, e o `debuff_on_logout: 0` de `conf/battle/status.conf` não limpa nada na saída |
+| **jogador tirando na marra** | não tira: `NoDispell`, `NoClearance`, `NoClearbuff`, `NoBanishingBuster` |
+| **na morte** | cai — e é o único jeito de cair |
+
+### Duas ordens, e as duas decidem se funciona
+
+**A morte apaga o status antes do `OnPCDieEvent` rodar.** O
+`status_change_clear` está no meio do `status_damage`, e os eventos de jogador
+vêm depois — o próprio rAthena comenta a linha: *"Always run NPC scripts for
+players last"* (`src/map/status.cpp`). É essa ordem que torna a reaplicação
+possível ali dentro: quando o rótulo executa, não há status velho a atrapalhar.
+
+**E ela precisa vir depois do `recovery`**, porque status nenhum inicia em quem
+está morto. O `OnPCDieEvent` da arena já levantava e curava antes de teleportar
+(por outro motivo — não mandar cadáver andando para o cliente), e essa linha já
+existente é o que abre espaço para a nova.
+
+### Não nasceu NPC nenhum na arena, e a dúvida era boa
+
+O dono perguntou, ao ver a proposta: *"mas vai ficar um NPC na arena? visível?
+clicável? ocupando uma célula?"*. Não — e a pergunta merece ficar registrada,
+porque a palavra "NPC" no rAthena cobre duas coisas diferentes.
+
+**Rótulo de evento não tem lugar no mapa.** O `npc_script_event`
+(`src/map/npc.cpp`) percorre a lista de todos os NPCs que carregam o rótulo e
+chama cada um, esteja ele onde estiver. Existe até o NPC *flutuante* para isso
+(`-<TAB>script<TAB>Nome<TAB>-1`), sem mapa e sem célula — mas nem ele foi
+preciso: os dois rótulos moram dentro da porta da arena, que já estava de pé em
+`prontera,147,180`. A arena continua sem NPC nosso lá dentro.
+
+### O que ficou
+
+| arquivo | o quê |
+| --- | --- |
+| `rathena/npc/guerra/arena_de_combate.txt` | `.Fantasma`/`.Caveira` no `OnInit`, o rótulo `OnPCLoginEvent` novo, e uma linha no `OnPCDieEvent` depois do `recovery` — mais a seção "O visual do fantasma" no cabeçalho |
+| `rathena/npc/guerra/scripts_guerra.conf` | o parágrafo do índice narrado |
+| `..\FANTASMA-BOT.md` | a linha na tabela do §2 e a subseção "O visual de caveira" |
+
+**Nenhum arquivo do rAthena foi tocado**, e **não há patch de cliente**: o
+sprite 1869 é kRO padrão, já usado pelo `EndlessTower.txt` e pelo
+`SealedShrine.txt`, e o cliente o desenha sem saber de nós. Isto vai por deploy
+e só por deploy (`RECEITAS.md` §0).
+
+**O visual é do GRUPO, não do personagem** — era o pedido. O teste é
+`getgroupid() == 20`, o grupo `Fantasma` de `conf/guerra/groups_guerra.yml`.
+Nenhum nome nem `char_id` foi escrito em lugar nenhum, então trocar o
+personagem do bot não encosta em nada disto.
+
+### Conferido
+
+`@reloadscript` rodado pelo dono, e o `log/map-msg_log.log` não ganhou **uma
+linha** de erro de parse (as 19.800 que entraram são todas
+`mob_spawn_guardian`, o barulho normal de todo reload). Visto em jogo em
+seguida: *"funciona exatamente como esperado"*.
+
+### Duas pendências, nenhuma bloqueante
+
+- **O `FANTASMA-BOT.md` continua fora do git** — ele mora em `..\`, na pasta
+  guarda-chuva, que não é repositório. A parte do fantasma que este commit leva
+  é a de dentro do `rathena/`; o resto segue sendo a decisão **D6** daquele
+  documento.
+- **Em mapa de Guerra do Emperium o rAthena desliga a transformação sozinho**
+  (`mon_trans_disable_in_gvg`, `clif.cpp`). Não alcança nada hoje — o fantasma
+  só vive em `pvp_n_1-5` —, mas se um dia ele pisar num castelo, volta a ser
+  gente até sair de lá.
