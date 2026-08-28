@@ -24,6 +24,7 @@ bRO e a fonte de referencia: nada aqui e traduzido por nos, tudo e importado.
     mapinfo      o letreiro ao entrar no mapa      System\\mapInfo.lub
     cartas       o prefixo que a carta poe no nome data\\cardprefixnametable.txt
     encantamen.  o efeito do encantamento no item  addrandomoptionnametable.lub
+    efeitos      o balao do icone de status        stateicon\\stateiconinfo.lub
 
 **Toda parte e idempotente**: rodar duas vezes nao muda nada na segunda. O que
 manda no destino e sempre o arquivo que o cliente ja usa - o do ROenglishRE -, e
@@ -1418,6 +1419,218 @@ def parte_encantamentos(verificar):
     return grava(alvo, texto, verificar, 'encantamentos')
 
 
+
+# ============================================= efeitos (o icone de status)
+
+# O `stateiconinfo.lub` NAO existe solto no cliente de fabrica - ele vive
+# dentro do data.grf, em coreano. Criar o solto e o que faz o DataFolderFirst
+# preferi-lo. Mesmo caminho do `addrandomoptionnametable.lub`, logo acima.
+EFEITO_ALVO = os.path.join('data', 'luafiles514', 'lua files', 'stateicon',
+                           'stateiconinfo.lub')
+EFEITO_NO_GRF = ('data\\luafiles514\\lua files\\stateicon'
+                 '\\stateiconinfo.lub')
+EFEITO_EN = os.path.join(ROENGLISH, 'Translation', 'Renewal', 'data',
+                         'luafiles514', 'lua files', 'stateicon',
+                         'stateiconinfo.lub')
+
+# As cinco cores nomeadas. Nao sao decoracao: o titulo verde diz "isto e um
+# bonus", o vermelho "isto e um castigo" e o laranja marca o tempo que corre -
+# a mesma informacao que o jogador le sem ler. No bytecode a cor ja chega
+# resolvida em RGB (o `_interpreta` segue o SETGLOBAL), entao o caminho de
+# volta ao nome e por VALOR.
+EFEITO_CORES = [
+    ('COLOR_TITLE_BUFF',   (155, 202, 155)),
+    ('COLOR_TITLE_DEBUFF', (250, 100, 100)),
+    ('COLOR_TITLE_TOGGLE', (190, 190, 250)),
+    ('COLOR_SYSTEM',       (255, 255, 0)),
+    ('COLOR_TIME',         (255, 176, 98)),
+]
+
+CABECA_EFEITO = """\
+-- Guerra do Emperium - o texto do icone de status em portugues
+--
+-- GERADO por ferramentas/traduz_ptbr.py efeitos. Nao editar a mao: a proxima
+-- rodada reescreve o arquivo inteiro.
+--
+-- E o balao que aparece ao passar o mouse nos icones da direita da tela: o
+-- que o efeito faz e quanto tempo falta. Este arquivo NAO existe solto no
+-- cliente de fabrica - mora dentro do data.grf, em coreano, e era assim que o
+-- jogador o via. Quem faz o solto vencer e o DataFolderFirst.
+--
+-- As CHAVES sao as do NOSSO GRF (Gravity, 2021-11-03), todas as %(total)d, e
+-- isso e a trava: `EFST_IDs.<X>` que este exe nao conhecesse viraria `nil`, e
+-- uma entrada de chave `nil` derruba o arquivo INTEIRO - todo icone de
+-- status ficaria sem balao. E o motivo de nao se copiar o arquivo do
+-- ROenglishRE por cima: ele traz 120 efeitos que so existem em cliente mais
+-- novo que este.
+--
+-- O TEXTO vem do bRO onde ele tem (%(pt)d), do ROenglishRE no resto (%(en)d)
+-- e fica em coreano onde nenhum dos dois alcanca (%(kr)d).
+--
+-- A entrada e trocada INTEIRA, e nao linha a linha: o `posTimeLimitStr` e o
+-- indice da linha do relogio dentro do `descript`, entao ele so faz sentido
+-- ao lado do descript que veio junto. Os dois discordam de verdade - no
+-- EFST_QUEST_BUFF1 o coreano diz 3 e o bRO diz 2.
+--
+-- O `COLOR_TITLE_SYSTEM` e apelido: o ROenglishRE batizou assim o que a
+-- Gravity chama `COLOR_SYSTEM`, e como os blocos ingleses entram verbatim os
+-- dois nomes precisam existir. Ja o `COLOR_SYSTEMF` que aparece numa linha e
+-- erro de digitacao da Gravity, esta nos dois GRFs e fica: global inexistente
+-- e `nil`, que e o que o cliente ja recebe hoje.
+--
+-- Gravado em cp1252, como todo texto que o jogo le. O cliente so le isto na
+-- INICIALIZACAO: depois de gerar, fechar e reabrir.
+
+%(cores)s
+
+StateIconList = {}
+"""
+
+
+def _efeitos_do_grf(caminho, rotulo):
+    u"""GRF -> {'EFST_X': a entrada montada}."""
+    import grf as _grf
+    if not os.path.exists(caminho):
+        raise Erro('nao achei o GRF em %s' % caminho)
+    dados = _grf.Grf(caminho).read(EFEITO_NO_GRF)
+    tabela = ptbr.tabelas(dados).get('StateIconList')
+    if not tabela:
+        raise Erro('%s nao definiu StateIconList' % rotulo)
+    saida = {}
+    for chave, valor in tabela.items():
+        if isinstance(chave, ptbr.Sym) and chave.nome.startswith('EFST_IDs.'):
+            saida[chave.nome.split('.', 1)[1]] = valor
+    if not saida:
+        raise Erro('%s: nenhuma chave EFST_IDs.*, o leitor de bytecode nao '
+                   'resolveu o simbolo' % rotulo)
+    return saida
+
+
+def _cor_efeito(valor):
+    u"""O valor de cor de volta ao nome da global, quando bate."""
+    if isinstance(valor, ptbr.Sym):
+        return valor.nome
+    if isinstance(valor, dict):
+        rgb = tuple(int(x) for x in ptbr.lista(valor))
+        for nome, alvo in EFEITO_CORES:
+            if rgb == alvo:
+                return nome
+        return '{ %d, %d, %d }' % rgb
+    return None
+
+
+def _bloco_efeito(chave, entrada, traduz):
+    u"""Uma entrada lida do bytecode -> o texto Lua dela."""
+    if not isinstance(entrada, dict) or 'descript' not in entrada:
+        raise Erro('%s veio sem descript' % chave)
+    linhas = []
+    for campo in ('haveTimeLimit', 'posTimeLimitStr'):
+        if campo in entrada:
+            linhas.append('\t%s = %d,' % (campo, int(entrada[campo])))
+    corpo = []
+    for linha in ptbr.lista(entrada['descript']):
+        partes = ptbr.lista(linha)
+        if not partes or not isinstance(partes[0], str):
+            raise Erro('%s tem linha de descript sem texto' % chave)
+        texto = aspas(pt(partes[0]) if traduz else partes[0])
+        cor = _cor_efeito(partes[1]) if len(partes) > 1 else None
+        corpo.append('\t\t{ "%s"%s }' % (texto, ', %s' % cor if cor else ''))
+    linhas.append('\tdescript = {\r\n%s\r\n\t}' % ',\r\n'.join(corpo))
+    return ('StateIconList[EFST_IDs.%s] = {\r\n%s\r\n}\r\n'
+            % (chave, '\r\n'.join(linhas)))
+
+
+def parte_efeitos(verificar):
+    u"""O balao dos icones de status: o que cada efeito faz e quanto falta.
+
+    Estava em coreano inteiro, e e dos poucos textos de tela que o jogador ve
+    o tempo todo sem abrir janela nenhuma.
+
+    As tres fontes, e a ordem entre elas e a mesma dos encantamentos:
+
+      1. o NOSSO GRF da as CHAVES e a lista do que existe - 720 efeitos. So
+         ele pode dar: `EFST_IDs.<X>` e resolvido em tempo de execucao contra
+         o `efstids.lub` DESTE exe, e chave desconhecida vira `nil`. Copiar o
+         arquivo do ROenglishRE por cima traria 120 efeitos de cliente mais
+         novo e derrubaria a tabela inteira.
+      2. o bRO da o texto em portugues, casado por chave (regra 4.5). A
+         entrada vem inteira, pelo motivo que o cabecalho do arquivo gerado
+         explica: o `posTimeLimitStr` so vale ao lado do seu descript.
+      3. o ROenglishRE preenche o resto, com o bloco dele **verbatim** - e
+         texto puro, ja valido, e nao ha o que reescrever.
+
+    Medido em 2026-08-28: 515 do bRO, 202 do ROenglishRE, 3 sem fonte.
+    """
+    nosso = _efeitos_do_grf(ptbr.NOSSO_GRF, 'nosso GRF')
+    bro = _efeitos_do_grf(ptbr.BRO_GRF, 'GRF do bRO')
+
+    ingles = {}
+    if os.path.exists(EFEITO_EN):
+        dados_en = le(EFEITO_EN)
+        for chave, ini, fim in ptbr.blocos_lua(dados_en):
+            if chave.startswith('EFST_IDs.'):
+                ingles[chave.split('.', 1)[1]] = dados_en[ini:fim]
+    else:
+        print ('    AVISO: ROenglishRE ausente; o que o bRO nao tiver fica '
+               'em coreano')
+
+    print '    nosso GRF: %d efeitos | bRO: %d | ROenglishRE: %d' % (
+        len(nosso), len(bro), len(ingles))
+
+    blocos = []
+    de_pt = de_en = de_kr = 0
+    for chave in sorted(nosso):
+        if chave in bro:
+            blocos.append(_bloco_efeito(chave, bro[chave], True))
+            de_pt += 1
+        elif chave in ingles:
+            # Verbatim: o bloco do ROenglishRE ja e `[EFST_IDs.X] = {...}`.
+            blocos.append('StateIconList%s\r\n' % ingles[chave])
+            de_en += 1
+        else:
+            blocos.append(_bloco_efeito(chave, nosso[chave], False))
+            de_kr += 1
+
+    print '    %d do bRO, %d do ROenglishRE, %d sem fonte (coreano)' % (
+        de_pt, de_en, de_kr)
+
+    # O cabecalho nasce com '\n' e vira CRLF de uma vez so, aqui. Montar
+    # as cores ja em CRLF faria o replace produzir '\r\r\n' - o arquivo
+    # abriria do mesmo jeito, e o fim de linha ficaria misturado sem nada
+    # denunciar.
+    cores = '\n'.join('%s = { %d, %d, %d }' % ((n,) + rgb)
+                      for n, rgb in EFEITO_CORES)
+    cores += '\nCOLOR_TITLE_SYSTEM = COLOR_SYSTEM'
+    texto = (CABECA_EFEITO % {'pt': de_pt, 'en': de_en, 'kr': de_kr,
+                              'total': len(nosso), 'cores': cores}
+             ).replace('\n', '\r\n') + ''.join(blocos)
+
+    # As duas travas. A primeira e a que importa: uma entrada que engolisse a
+    # seguinte sairia com menos chaves, e o cliente perderia o balao daquele
+    # efeito sem dar erro nenhum.
+    saiu = sorted(c.split('.', 1)[1] for c, _, _ in ptbr.blocos_lua(texto)
+                  if c.startswith('EFST_IDs.'))
+    if saiu != sorted(nosso):
+        raise Erro('efeitos: sairam %d entradas para %d do GRF. Nada gravado.'
+                   % (len(saiu), len(nosso)))
+    _confere_luac(texto, 'stateiconinfo.lub')
+
+    alvo = os.path.join(ptbr.CLIENTE, EFEITO_ALVO)
+    if not os.path.exists(alvo):
+        if verificar:
+            print '    --verificar: criaria %s (%d bytes)' % (alvo, len(texto))
+            return 0
+        pasta = os.path.dirname(alvo)
+        if not os.path.isdir(pasta):
+            os.makedirs(pasta)
+        fh = open(alvo, 'wb')
+        fh.write(texto)
+        fh.close()
+        print '    criado: %s (%d bytes)' % (os.path.basename(alvo), len(texto))
+        return 1
+    return grava(alvo, texto, verificar, 'efeitos')
+
+
 PARTES = [
     ('msgstrid',   parte_msgstrid,   'rotulos de janela e de botao'),
     ('msgtable',   parte_msgtable,   'mensagens de sistema e de erro'),
@@ -1434,6 +1647,7 @@ PARTES = [
     ('monstros',   parte_monstros,   'o nome que flutua sobre o monstro'),
     ('encantamentos', parte_encantamentos,
      'o efeito do encantamento na janela do item'),
+    ('efeitos',    parte_efeitos,    'o balao do icone de status'),
 ]
 
 

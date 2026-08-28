@@ -532,6 +532,17 @@ Produziram diagnóstico falso e custaram retrabalho:
   não o `read` devolver bytes. Medido em 2026-08-13 no `4_ghost_stand`.
 - **`.lub` do GRF é bytecode** (header `\x1bLua`); os do ROenglishRE são texto
   puro. Comparar tamanho entre os dois não significa nada.
+- **O bRO entrega o MESMO arquivo em `.lua` e em `.lub`, e o legível pode
+  estar velho.** O reflexo é pegar o texto puro e poupar o desmonte de
+  bytecode; ele funciona, abre, tem conteúdo e **está incompleto**. Medido em
+  2026-08-28 no `stateiconinfo`: o `.lua` do bRO cita **340** efeitos e o
+  `.lub` ao lado tem **530** — 193 a menos, mais de um terço das traduções,
+  sem erro nenhum e sem nada na tela que denuncie (o efeito que faltasse
+  simplesmente continuaria em coreano, que é o estado de antes). É a mesma
+  família do catálogo velho da §4.13: o arquivo abre, tem conteúdo, e o que
+  falta nele não existe para quem o lê. **Quem manda é o `.lub`** — é ele que
+  o cliente do bRO carrega. Contar as entradas dos dois antes de escolher
+  custa um comando.
 - **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`
   gerado compila.**
 - **Patch de exe "aplicado e confirmado" NÃO é patch com efeito — e script que

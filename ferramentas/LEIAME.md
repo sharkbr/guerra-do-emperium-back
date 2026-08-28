@@ -742,7 +742,8 @@ python traduz_ptbr.py itens skills         # só essas partes
 python traduz_ptbr.py tudo --sem-acento    # a saída de emergência
 ```
 
-Treze partes, treze fontes diferentes dentro da instalação do Ragnarok Brazil.
+Catorze partes, catorze fontes diferentes dentro da instalação do Ragnarok
+Brazil.
 Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 2026-08-02 (`PENDENCIAS.md`).
 
@@ -761,6 +762,7 @@ Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 | `cartas` | o prefixo que a carta põe no nome | `data\cardprefixnametable.txt` |
 | `monstros` | o nome que flutua sobre o monstro | `navi_mob_br.lub` |
 | `encantamentos` | o efeito do encantamento na janela do item | `addrandomoptionnametable.lub` |
+| `efeitos` | o balão do ícone de status (buff e debuff) | `stateicon\stateiconinfo.lub` |
 
 Toda parte é **idempotente** e faz backup antes de gravar.
 
@@ -831,6 +833,46 @@ Uma armadilha do leitor de bytecode ficou registrada no `CLAUDE.md` §5: a chave
 desta tabela é um símbolo **indexado por número**, e um leitor que só saiba
 tratar símbolo indexado por string devolve `None` para todas — a tabela de 252
 entradas colapsa numa só, sem erro nenhum, e o número que ele imprime é 1.
+
+### `efeitos` — o balão do ícone de status, e o `.lua` do bRO que mente
+
+Os ícones da direita da tela — o que avisa que a Agilidade está aumentada, que
+o veneno corre, quanto tempo falta — mostram um balão ao passar o mouse, e esse
+balão estava **inteiro em coreano**. É o mesmo caso do `encantamentos`: o
+`stateiconinfo.lub` não existe solto em `cliente\data`, então o cliente lia o do
+`data.grf`, que é o original da Gravity. E é dos poucos textos de tela que o
+jogador vê o tempo todo sem abrir janela nenhuma.
+
+As chaves saem do **nosso GRF** pelo motivo de sempre — `EFST_IDs.<X>` é
+resolvido em tempo de execução contra o `efstids.lub` deste exe, e o arquivo do
+ROenglishRE traz 120 efeitos que só existem em cliente mais novo, cada um deles
+uma chave `nil` capaz de derrubar a tabela inteira. São **720** efeitos; o texto
+vem do bRO em 515, do ROenglishRE em 202, e 3 ficam em coreano.
+
+**A entrada é trocada inteira, e não linha a linha.** O `posTimeLimitStr` é o
+índice da linha do relógio dentro do `descript` — só faz sentido ao lado do
+descript que veio junto, e os dois discordam de verdade: no `EFST_QUEST_BUFF1`
+o coreano diz 3 e o bRO diz 2. Os 202 blocos ingleses entram **verbatim**: são
+texto já válido, e não há o que reescrever.
+
+**A armadilha é a fonte, e ela é convidativa.** O bRO entrega os dois lado a
+lado — `stateiconinfo.lua`, texto puro e legível, e `stateiconinfo.lub`,
+bytecode — e o `.lua` está **velho**: 340 efeitos contra 530 do `.lub`, 193 a
+menos. Escolher o legível custaria mais de um terço das traduções, sem erro
+nenhum. Ver `CLAUDE.md` §5.
+
+**Isto já foi tentado uma vez, do jeito errado.** Em 2026-07-30 o arquivo do
+ROenglishRE foi copiado inteiro para essa pasta e o cliente morreu em
+`[string "buf"]:6801: table index is nil` — a linha 6801 é
+`StateIconList[EFST_IDs.EFST_VR_BOOK002] = {`, uma das 120 chaves que este exe
+não conhece. O arquivo foi tirado dali e os ícones voltaram ao coreano, e é essa
+dívida que esta parte paga. O episódio deixou uma prova de graça: o cliente
+**leu** aquele arquivo solto, então o `DataFolderFirst` alcança a pasta
+`stateicon\` — não é uma pasta a provar, como foi a `effecttool\`.
+
+**Isto é cliente, e cliente não vai pelo deploy** (`CLAUDE.md` §4.18): depois de
+gerar, fechar e reabrir o cliente para ver, e mandar por patch para chegar ao
+jogador.
 
 ### O `msgstringtable.txt` é o único sem chave, e por isso o único com risco
 

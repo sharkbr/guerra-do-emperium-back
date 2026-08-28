@@ -14960,3 +14960,92 @@ auto-referência que a seção do 19272 documenta. Cada um foi resolvido pelo
   preço de não rebobinar é conhecido e pequeno: o `itemInfo.lua` viaja inteiro
   em todo patch que o toque, então o jogador baixa 2,45 MB comprimidos duas
   vezes em vez de uma. Os dois foram publicados juntos.
+
+## O balão do ícone de status sai do coreano, 720 efeitos depois (2026-08-28)
+
+O dono passou o mouse nos ícones da direita da tela e mandou quatro
+screenshots: todo balão de status — o que diz o que o efeito faz e quanto tempo
+falta — vinha em **coreano**. *"todos os status, que aparecem."* Num deles dava
+para ver a tradução funcionando em volta do texto que não estava traduzido:
+`53 segundos` em português na segunda linha, e a primeira ilegível.
+
+### Onde o texto morava, e por que nunca esteve traduzido
+
+No `data\luafiles514\lua files\stateicon\stateiconinfo.lub`, **dentro do
+`data.grf`**, em coreano — sem arquivo solto em `cliente\data` para vencê-lo. É
+o mesmo desenho do `addrandomoptionnametable.lub` de 2026-08-18: o
+`traduz_ptbr.py` tinha catorze partes e nenhuma tocava este arquivo. Não foi
+regressão, foi ausência.
+
+O que o cliente pede está escrito no exe, em `Lua Files\StateIcon\StateIconInfo`,
+ao lado de `EFSTIDs`, `StateIconInfo_F` e `StateIconImgInfo`.
+
+### Já tinha sido tentado uma vez — e derrubou o cliente
+
+Em **2026-07-30, ~12:35** (seção acima) o arquivo do ROenglishRE foi copiado
+inteiro para essa pasta e virou o erro nº 2 dos oito: `StateIcon\StateIconInfo`
+— `[string "buf"]:6801: table index is nil`. Ele foi movido para
+`_backup_luafiles_roenglish\stateicon\`, e o custo registrado ali — *"nomes de
+ícones de status voltam ao coreano"* — é exatamente a dívida que esta sessão
+paga. A pasta `cliente\data\...\stateicon\` ficou vazia desde então.
+
+Aquele arquivo foi reaberto agora, e a causa fecha no detalhe: das 842 entradas
+dele **120 usam `EFST_IDs.<X>` que este exe não conhece**, a primeira na linha
+6727 (`EFST_VR_SPEED`); a linha 6801, a que o cliente citou, é
+`StateIconList[EFST_IDs.EFST_VR_BOOK002] = {`. Chave que o `efstids.lub` deste
+cliente não tem vira `nil`, e `tabela[nil] = {...}` é erro de Lua que mata o
+arquivo inteiro.
+
+**O lado bom desse episódio é uma prova de graça:** o cliente *leu* aquele
+arquivo solto e estourou nele, então o `DataFolderFirst` alcança a pasta
+`stateicon\`. Não é uma pasta a provar, como foi a `effecttool\` em
+2026-08-26 — é uma pasta já provada, de um jeito barulhento.
+
+### As três fontes, e por que a chave só pode sair de uma
+
+Entrou como a parte **`efeitos`** do `traduz_ptbr.py`, com a mesma arquitetura
+do `encantamentos`:
+
+1. **O nosso GRF dá as chaves** — 720 efeitos, todos por definição conhecidos
+   deste exe. É o que impede o estrago de 2026-07-30 de se repetir.
+2. **O bRO dá o português** — 515 dos 720, casado por chave (§4.5).
+3. **O ROenglishRE preenche o resto** — 202, com o bloco dele verbatim, já que
+   é texto puro e válido.
+
+Sobram **3** em coreano (`EFST_NEEDLE_OF_PARALYZE`, `EFST_PERIOD_PLUSEXP_2ND`,
+`EFST_PERIOD_RECEIVEITEM_2ND`), que nenhuma das duas fontes conhece.
+
+### A entrada vai inteira, e não linha a linha
+
+O `posTimeLimitStr` é o **índice** da linha do relógio dentro do `descript` —
+só faz sentido ao lado do descript que veio junto. E os dois discordam de
+verdade: no `EFST_QUEST_BUFF1` o coreano diz `3` e o bRO diz `2`, porque a
+ordem das linhas mudou entre as revisões. Trocar só os textos e manter o
+`posTimeLimitStr` de cá poria o relógio na linha errada, calado.
+
+### A armadilha que quase custou um terço do trabalho
+
+O bRO entrega o **mesmo arquivo duas vezes**: `stateiconinfo.lua`, texto puro e
+legível, e `stateiconinfo.lub`, bytecode ao lado. O reflexo é pegar o legível —
+e ele está **velho**: cita 340 efeitos contra os 530 do `.lub`. Ler o `.lua`
+teria entregado 193 traduções a menos, sem erro nenhum, e o sintoma seria
+indistinguível de *"o bRO não tem esse efeito"*. Subiu para o `CLAUDE.md` §5.
+
+### Medições
+
+- 720 entradas geradas para 720 do GRF; **0** entradas do GRF perdidas.
+- **0** chaves que o `efstids.lub` deste exe não conheça — a trava que 2026-07-30
+  pagou para descobrir.
+- **0** ocorrências de U+FFFD; 520 linhas de texto com byte acentuado.
+- 0 linhas com contagem ímpar de aspas.
+- `luac -p` compila o arquivo inteiro.
+- 169.318 bytes, CRLF, cp1252.
+
+### O que fica em aberto
+
+- **A conferência em jogo.** O cliente só lê isto na inicialização (§3): fechar
+  e reabrir. O `LastAccessTime` do arquivo gerado foi empurrado para ontem, então
+  o carimbo andar é a prova mecânica de que o cliente o abriu.
+- **É cliente, então precisa de patch** (§4.18), e o patch fica para depois
+  daquela conferência: publicar um `.lub` que o cliente recusasse tiraria o
+  balão de **todos** os efeitos de quem já joga.
