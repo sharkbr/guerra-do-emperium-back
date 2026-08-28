@@ -14412,3 +14412,118 @@ remoto nos onze. Todo jogador o recebe na próxima vez que abrir o `Jogar.exe`.
 Falta só o `implanta.sh`, que sai do Mac — e enquanto ele não roda nada
 quebra: o item que o servidor ainda não conhece simplesmente não aparece na
 vitrine.
+
+## A Tinta para Parede Infinita, e o insumo que o fantasma queimava (2026-08-27)
+
+O bot fantasma da Arena de Combate (`..\FANTASMA-BOT.md`) ganhou um ciclo de
+combate que lança **Cópia Explosiva** (`SC_FEINTBOMB`) a cada volta, mais ou
+menos a cada onze segundos. Isso expôs um custo que ninguém tinha medido: a
+habilidade **gasta uma Tinta para Parede por uso** — da ordem de **oito mil por
+dia** naquele ritmo. O estoque do personagem acabou no meio do próprio teste, e
+a partir dali o log encheu de `Item necessário não encontrado - item 6123
+(erro 71)`.
+
+O pedido do dono foi por um item: *"seria ideal que ele tivesse um item 'Tinta
+de Parede Infinita' que não fosse consumida quando a habilidade é usada, mas
+que permitisse que a habilidade fosse usada"*.
+
+### O que se descobriu antes de escrever qualquer coisa
+
+**A habilidade pede DOIS itens, e o que acaba não é o que se imagina.** O
+`Requires` dela no `db/re/skill_db.yml`:
+
+```yaml
+ItemCost:
+  - Item: Paint_Brush     # 6122 Pincel de Grafite
+    Amount: 0             # so precisa TER, nao gasta
+  - Item: Surface_Paint   # 6123 Tinta para Parede
+    Amount: 1             # gasta 1 por uso
+```
+
+O **Pincel de Grafite é ferramenta, não custo** — fica no inventário e nunca
+some. Quem se esgota é a **Tinta para Parede (6123)**. É fácil trocar os dois,
+e a troca leva a consertar o item errado.
+
+**E a Tranqueiras vende o 6122, não o 6123.** O cabeçalho dela
+(`npc/guerra/tranqueiras.txt`) diz que a vitrine existe para o Trapaceiro ter
+onde comprar o insumo de treze habilidades em Prontera — mas o que aquelas
+habilidades de fato consomem é a Tinta, que não está lá. O 6123 só é vendido
+pelos `Part-Timer` do `s_atelier` (`npc/re/merchants/shops.txt:93`). Fica
+levantado, e não foi mexido: é decisão de conteúdo, não do bot.
+
+### O mecanismo: zerar o requisito, e um ponto só basta
+
+O rAthena já faz exatamente isto para outro item, duas linhas acima de onde o
+nosso enxerto entrou (`skill_get_requirement`, `src/map/skill.cpp`):
+
+```c
+// Check requirement for Magic Gear Fuel
+if (req.itemid[i] == ITEMID_MAGIC_GEAR_FUEL && sd->special_state.no_mado_fuel)
+    req.itemid[i] = req.amount[i] = 0;
+```
+
+O combustível do Mado Gear **some da lista de exigências** em vez de ser
+descontado. A Tinta Infinita entra na linha de baixo, com a mesma forma.
+
+**E um ponto só resolve as duas metades do problema** porque o
+`skill_get_requirement` é a fonte única dos três caminhos que olham o custo:
+
+| chamador | linha | papel |
+| --- | --- | --- |
+| `skill_check_condition_castbegin` | 8349 | é quem recusa o lance (o `erro 71`) |
+| `skill_check_condition_castend` | 9501 | revalida ao terminar o cast |
+| `skill_consume_requirement` | 9606 | é quem apaga o item |
+
+Zerar ali faz a habilidade **passar na checagem** e **não consumir nada**, de
+uma vez. Não há segundo lugar a mexer, nem risco de um caminho concordar e o
+outro não.
+
+### A regra é por ITEM, não por lista de habilidades
+
+A condição olha o **insumo exigido** (6123), e não uma lista de `skill_id`.
+São sete as habilidades que gastam Tinta — Cópia Explosiva, Pintar Armadilha,
+Porta Dimensional, Símbolo do Caos, Redemoinho de Absorção, Sede de Sangue e
+Borrifar Tinta —, e escrever essa lista no C++ criaria uma segunda fonte da
+mesma verdade, que divergiria do `skill_db.yml` no dia em que alguém mexesse
+nele. Pela via do item, a regra acompanha o banco sozinha.
+
+O **Pincel de Grafite continua exigido**, de propósito: ele não é um custo que
+se esgota, e custa 10z na Tranqueiras.
+
+### O que ficou
+
+| arquivo | o quê |
+| --- | --- |
+| `rathena/src/custom/tinta_infinita.hpp` | novo — a regra e o porquê |
+| `rathena/src/map/skill.cpp` | um include + **uma** chamada (§2 do `CLAUDE.md`; era o primeiro enxerto neste arquivo) |
+| `rathena/db/guerra/item_db.yml` | o item **30993**, `Tinta_Parede_Infinita`, Etc, com as sete travas da Maçã |
+| `ferramentas/instala_item.py` | a receita da entrada de cliente, com `arte_de: 6123` |
+| `cliente\...\itemInfo.lua` | aplicado nesta máquina (backup `.BACKUP-20260827-2052`) |
+
+**Quem pode ter, hoje: só a staff.** O item nasceu `NoDrop`/`NoTrade`/`NoSell`/
+`NoStorage`, sem vitrine e sem drop. A decisão do dono foi *"agora só a
+staff/fantasma, mas mais pra frente ele pode se tornar um item objetivo de
+quest grande"* — ou seja isto é o estado inicial, não o final. Quando a quest
+existir, muda o `item_db` e o NPC que a entrega; **o C++ não muda**, porque a
+regra pergunta "tem o item?", não como ele chegou.
+
+### Medido em jogo, não suposto
+
+Com o item no inventário do fantasma, contado a partir do restart das 20:53:
+
+| medida | antes | depois |
+| --- | --- | --- |
+| falhas `item 6123 (erro 71)` | 79 | **0** |
+| `Item removido do inventário` | 1 por volta do ciclo | **0** |
+| usos confirmados pelo servidor | — | 11 |
+
+As duas metades são medidas separadas de propósito: a primeira prova que a
+habilidade passou a ser **lançável**, a segunda que **nada é gasto**.
+
+### Pendência
+
+O `itemInfo.lua` é cliente, e só existe nesta máquina. Enquanto o item for de
+staff isso não alcança jogador nenhum, mas **antes de a quest existir ele tem
+de ir por patch** (§4.18) — senão o item aparece como "Unknown Item" com
+sprite de maçã para quem o receber, que foi exatamente o sintoma visto aqui
+antes de o `instala_item.py` rodar.

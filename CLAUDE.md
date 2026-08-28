@@ -97,6 +97,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `npc/scripts_guild.conf` | duas coisas. **(a)** 19 das 20 linhas de castelo da Guerra do Emperium 1 comentadas — só o `prtg_cas01.txt` (Kriemhild) fica. É o que tira Emperium, Kafra, Gerente e bandeiras dos castelos-museu de uma vez, e é também **o que limita a guerra ao Kriemhild**: sem o arquivo do castelo não há `Agit#<castelo>`, logo não nasce Emperium. Ver `npc/guerra/guardioes_dos_castelos.txt`. **Levou 279 bandeiras junto** — devolvidas por `npc/guerra/bandeiras_do_feudo.txt`, todas hasteando o dono do Kriemhild. **(b)** o `agit_controller.txt` comentado, substituído por `npc/guerra/horario_da_guerra.txt` (quinta 20–22, domingo 18–20, horário de Brasília). Nunca deixar os dois ligados |
 | `src/map/pc.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `estilo_de_corpo_resolve` no topo do `case LOOK_BODY2:` do `pc_changelook`, **antes** do `job_db.exists`. Acréscimo, não substituição. Traduz o valor legado 0/1 que o `db/re/stylist.yml` ainda manda para o Id do trabalho do visual alternativo — sem ela a UI de estilista come o Cupom de Roupa e não muda nada (`src/custom/estilo_de_corpo.hpp`) |
 | `src/map/mob.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `habilidade_de_monstro_proibida` no topo do laço do `mobskill_use`, **antes** do teste de recarga — monstro em mapa listado se comporta como se não tivesse aquela linha do `mob_skill_db`. Acréscimo, não substituição. Hoje a tabela tem uma entrada só: Instinto de Defesa (`ST_REJECTSWORD`) no Corredor Fantasma (`vis_h01`), que refletia 50% do dano do jogador sem passar por redução nenhuma (`src/custom/habilidade_proibida.hpp`) |
+| `src/map/skill.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `tinta_infinita_dispensa` dentro do `skill_get_requirement`, na linha seguinte à do Magic Gear Fuel — quem carrega a **Tinta para Parede Infinita** (30993) tem o requisito de Tinta para Parede (6123) zerado, e com isso a habilidade passa na checagem **e** nada é consumido. Acréscimo, não substituição, e usa a mesma forma que o rAthena já usa duas linhas acima (`req.itemid[i] = req.amount[i] = 0`). **Um ponto só basta porque o `skill_get_requirement` é a fonte única dos três caminhos** — `skill_check_condition_castbegin` (é quem recusa o lance), `..._castend` e `skill_consume_requirement` (é quem apaga o item). Alcança as sete habilidades de Trapaceiro/Renegado que gastam Tinta, porque a condição olha o **insumo** e não uma lista de habilidades (`src/custom/tinta_infinita.hpp`) |
 | `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -2010,6 +2011,34 @@ Produziram diagnóstico falso e custaram retrabalho:
   `self.p += 4 * self._u32()` joga fora os 4 bytes gastos para ler o próprio
   contador, e o estouro aparece muitas seções adiante, longe da causa. O mesmo
   código em duas linhas funciona.
+- **Parar SÓ o map-server para recompilar deixa o jogador travado no login, e a
+  mensagem culpa o cliente.** O char-server mantém o personagem em memória e a
+  coluna `online` em 1 (a entrada do `UPDATE` na tabela `char`, acima, é a
+  mesma armadilha por outro ângulo); quem a destrava é o
+  `char_set_all_offline_sql`, que roda **na subida do char-server** e em mais
+  lugar nenhum. Quem tentar entrar recebe *"The game server still recognizes
+  your last log-in. Please try again after about 30 seconds.(8)"* — que soa
+  como problema de cliente ou de rede, e não é. **Depois de linkar, reiniciar o
+  char-server junto**, não só o map. Medido em 2026-08-27.
+- **Subir o servidor a partir de um shell que pode ser encerrado deixa os
+  quatro processos órfãos — e a subida seguinte cria DUPLICATA em vez de
+  reaproveitar.** O `servidor.py subir` é idempotente, mas a idempotência
+  depende de o processo anterior estar **vivo** para ele reconhecer; processo
+  morto não é pulado, é recriado. Rodado de dentro de um shell de ferramenta
+  (ou de qualquer coisa que o sistema possa coletar), os servidores morrem
+  junto com o pai e a próxima subida sobe um segundo de cada.
+  **E o sintoma aparece três passos depois da causa:** dois char-servers
+  brigando pelo login-server enchem o log de `Connection to Char Server lost`
+  em laço, e o volume de conexões de `127.0.0.1` dispara o anti-DDoS
+  (`connect_check: DDoS Attack detected from 127.0.0.1!`), que então recusa
+  **todo mundo** — inclusive quem nunca teve nada a ver com o problema. Um bot
+  de openkore reconectando a cada 40s alimenta o mesmo contador.
+  A saída é subir **desacoplado** (`Start-Process` no PowerShell, ou o `.bat`
+  fora do shell da ferramenta) e **conferir a contagem por serviço**, não só o
+  `status`: `Get-Process -Name map-server,char-server,login-server,web-server |
+  Group-Object ProcessName` tem de dar 1 em cada. O `status` do `servidor.py`
+  responde pela **porta**, e porta ocupada por uma das duas cópias parece
+  saudável. Medido em 2026-08-27.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

@@ -325,6 +325,61 @@ Body:
     Script: |
       percentheal 100,100;
 
+  # ----- A Tinta para Parede Infinita -----------------------------------
+  #
+  # O insumo que NAO acaba das sete habilidades de Trapaceiro/Renegado que
+  # gastam Tinta para Parede (6123): Copia Explosiva, Pintar Armadilha,
+  # Porta Dimensional, Simbolo do Caos, Redemoinho de Absorcao, Sede de
+  # Sangue e Borrifar Tinta.
+  #
+  # ELA NAO E UMA MOEDA E NAO E GASTA. Quem a carrega tem o requisito de
+  # Tinta ZERADO - a habilidade passa na checagem e nada e descontado. A
+  # regra esta em src/custom/tinta_infinita.hpp e entra por uma linha no
+  # skill_get_requirement (src/map/skill.cpp), do mesmo jeito que o rAthena
+  # ja faz com o combustivel do Mado Gear duas linhas acima. Ver a secao 2
+  # do CLAUDE.md.
+  #
+  # O PINCEL DE GRAFITE (6122) CONTINUA SENDO EXIGIDO, de proposito: ele e
+  # `Amount: 0` no skill_db, ou seja ferramenta e nao custo - a habilidade
+  # pede que esteja no inventario e nunca o gasta. Custa 10z na Tranqueiras.
+  #
+  # Type Etc, e nao Usable, pelo mesmo motivo da Maca da Inocencia: o
+  # jogador nao usa esta Tinta. Ela so precisa estar no inventario, e um
+  # botao de usar que nao faz nada so confundiria.
+  #
+  # AS TRAVAS SAO AS DA MACA (30999), e por ora sao de proposito: em
+  # 2026-08-27 a decisao do dono foi "agora so a staff/fantasma, mas mais
+  # pra frente ele pode se tornar um item objetivo de quest grande". Ou
+  # seja isto aqui e o estado inicial, nao o final. Quando a quest existir,
+  # o que muda e este bloco (afrouxar o Trade) e o NPC que a entrega - o
+  # C++ nao muda, porque a regra la olha "tem o item?", nao como ele chegou.
+  #
+  # Lembrar da regra 4.7: a conta de teste (grupo 99) IGNORA as sete travas,
+  # entao testar NoTrade nela sempre da falso negativo.
+  #
+  # O primeiro portador e o fantasma da arena (pvp_n_1-5), que lanca a
+  # Copia Explosiva a cada volta do ciclo de combate - da ordem de oito mil
+  # Tintas por dia se fosse pagar por elas. Ver ..\FANTASMA-BOT.md.
+  #
+  # FALTA O LADO DO CLIENTE: sem entrada no itemInfo.lua o item aparece
+  # como "Unknown Item" na mochila (CLAUDE.md secao 5). Como hoje ele so
+  # existe para a staff, isso nao chega a jogador nenhum - mas antes de a
+  # quest existir, rodar ferramentas/instala_item.py e mandar por patch.
+  - Id: 30993
+    AegisName: Tinta_Parede_Infinita
+    Name: Tinta para Parede Infinita
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+      NoCart: true
+
   # ----- A moeda da Ordem dos Exploradores -------------------------------
   #
   # ATENCAO AO ID: 25737 esta FORA da nossa faixa 30000-30999, e nao e

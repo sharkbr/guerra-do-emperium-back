@@ -51,3 +51,57 @@ Body:
       autoloot: true
       alootid: true
       autoloottype: true
+
+  # ---------------------------------------------------------------------
+  # Id 20 - "Fantasma", a conta de bot da Arena de Combate.
+  #
+  # E o perfil da conta que o openkore usa em plugins/pvpGhost. Ele nao
+  # e staff: e um NPC de carne, que fica invisivel dentro de pvp_n_1-5 e
+  # aparece quando ha um jogador sozinho por perto.
+  #
+  # POR QUE ELE PRECISA DE UM GRUPO PROPRIO, E NAO DO Id 10: sao dois
+  # comandos, so. Dar "Law Enforcement" para uma conta que roda sozinha
+  # 24/7 num processo perl entregaria junto @kill, @ban, @recall
+  # e o resto - qualquer descuido no openkore vira estrago no
+  # servidor inteiro. Aqui a conta nao consegue fazer nada alem de
+  # sumir e andar.
+  #
+  # Level 0 DE PROPOSITO. O Level nao e enfeite: entra nas comparacoes
+  # de hierarquia do rAthena (src/map/clif.cpp, pc_get_group_level nas
+  # linhas de sussurro e de @who). Com 0 o bot fica embaixo de todo
+  # mundo da staff de verdade - qualquer GM continua vendo, movendo e
+  # expulsando ele. E o Level NAO acende aura nem nome amarelo no
+  # cliente: o rAthena nunca manda esse campo no pacote de ator, o
+  # visual de GM vem so da roupa/sprite equipada. Este bot nao veste
+  # nada de GM, entao aparece como um jogador comum - que e o ponto.
+  #
+  #   hide          o @hide, o unico truque do fantasma. E ALTERNADOR:
+  #                 mandar duas vezes desfaz (ACMD_FUNC(hide),
+  #                 src/map/atcommand.cpp) - o plugin le OPTION_INVISIBLE
+  #                 antes de mandar, justamente por isso.
+  #   hide_session  tira ele do @who. Sem isto o "fantasma" aparece na
+  #                 lista de quem esta online e a brincadeira acaba.
+  #   mapmove       o @warp de volta para a arena. Necessario porque
+  #                 pvp_n_1-5 tem `mapflag nosave SavePoint`
+  #                 (npc/mapflag/nosave.txt) e o OnPCDieEvent da arena
+  #                 joga o morto em prontera: sem @warp o bot morre uma
+  #                 vez e nunca mais volta.
+  #   any_warp      nao e preciso hoje - pvp_n_1-5 nao esta em
+  #                 nowarpto.txt nem nowarp.txt - e esta aqui para o dia
+  #                 em que alguem trancar o mapa e o bot parar calado.
+  #
+  # A conta se liga a este grupo pela coluna `group_id` da tabela
+  # `login`. Recarrega com @reloadatcommand, como o resto deste arquivo.
+  # ---------------------------------------------------------------------
+  - Id: 20
+    Name: Fantasma
+    Inherit:
+      Player: true
+    Level: 0
+    LogCommands: true
+    Commands:
+      hide: true
+      mapmove: true
+    Permissions:
+      hide_session: true
+      any_warp: true

@@ -23,3 +23,4 @@
 0009	0009-quarenta-e-sete-itens-nas-lojas-de-pront.zip	9c19f6852a636db1b4375be274cb896282e3d0566d84febfd68c06eab63fb871	2754255	Quarenta e sete itens nas lojas de Prontera
 0010	0010-placas-mortas-fora-do-cliente.zip	ca979ad5e85b99180f05f59803eadce732fa638787e1b6cfeb51bd642db89f0f	5946	Placas mortas fora do cliente
 0011	0011-vinte-e-um-itens-nas-lojas-de-prontera.zip	f303b8cbde25583472d6ffd31d703a666620debd15fa59de52159c690cec0be9	2649480	Vinte e um itens nas lojas de Prontera
+0012	0012-tinta-para-parede-infinita.zip	b5be63b32475db2cf9c578e82a862c6c42e07560c8af2c751cfffc7b3e91ee3f	2568920	Tinta para Parede Infinita

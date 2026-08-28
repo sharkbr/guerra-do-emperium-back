@@ -46,6 +46,8 @@
 #include "status.hpp"
 #include "unit.hpp"
 
+#include <custom/tinta_infinita.hpp>
+
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "skills/skill_factory.cpp"
@@ -9956,6 +9958,14 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 				}
 				// Check requirement for Magic Gear Fuel
 				if (req.itemid[i] == ITEMID_MAGIC_GEAR_FUEL && sd->special_state.no_mado_fuel)
+					req.itemid[i] = req.amount[i] = 0;
+				// Guerra do Emperium: a Tinta para Parede Infinita (30993)
+				// tira a Tinta para Parede (6123) da conta - a habilidade
+				// passa a poder ser lancada e nada e consumido. Mesma forma
+				// do Magic Gear Fuel logo acima. Este e o ponto unico: o
+				// skill_get_requirement alimenta o castbegin, o castend e o
+				// consume. Ver src/custom/tinta_infinita.hpp.
+				if (tinta_infinita_dispensa(sd, req.itemid[i]))
 					req.itemid[i] = req.amount[i] = 0;
 			}
 			break;

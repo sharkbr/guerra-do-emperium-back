@@ -216,6 +216,30 @@ ITENS = [
             u'^0000CCPeso:^000000 1',
         ],
     },
+    # A TINTA PARA PAREDE INFINITA (30993), 2026-08-27. O insumo que nao
+    # acaba das sete habilidades de Trapaceiro/Renegado que gastam Tinta
+    # para Parede. Quem a carrega tem o requisito de Tinta ZERADO - a
+    # habilidade passa na checagem e nada e descontado. A regra e nossa e
+    # esta em src/custom/tinta_infinita.hpp; ver CLAUDE.md secao 2.
+    #
+    # A arte vem da PROPRIA Tinta para Parede (6123), e a escolha e o
+    # ponto do item: e a mesma tinta, e o jogador tem de reconhece-la de
+    # imediato na mochila. Item nosso com desenho proprio seria trabalho de
+    # instala_visual.py sem ganho nenhum aqui.
+    {
+        'id': 30993,
+        'nome': u'Tinta para Parede Infinita',
+        'arte_de': 6123,                    # a Tinta para Parede comum
+        'descricao': [
+            u'Um pote de tinta que não seca e não acaba. Enquanto estiver na bolsa, nenhuma pintura consome tinta.',
+            u'_______________________',
+            u'^000088Substitui a Tinta para Parede em todas as habilidades que a exigem, e não é consumida ao usá-las.^000000',
+            u'^000088O Pincel de Grafite continua sendo necessário.^000000',
+            u'_______________________',
+            u'^0000CCTipo:^000000 Etc',
+            u'^0000CCPeso:^000000 1',
+        ],
+    },
     # O CHAPEU DO EDEN (19272), 2026-08-18. Nao e item nosso: o rAthena o tem
     # inteiro (Garden_Of_Eden, View 1653, Head_Top, 1 cova). O que faltava era
     # o NOME - o itemInfo.lua deste cliente traz o 19272 com o nome COREANO, e
