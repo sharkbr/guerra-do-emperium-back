@@ -14,6 +14,7 @@
 //=   auction_02    59,38   placa das Missoes C
 //=   auction_02    37,39   o Teleportador
 //=   auction_02    50,39   a Maquina de Troca
+//=   auction_02    56,46   o Explorador da Ordem, a troca de volta
 //=   auction_02    43,65   o Lider, o Encantamento - e ele
 //=                         mora em npc/guerra/encantamento_da_ordem.txt,
 //=                         nao aqui. Depende do OnInit DESTE arquivo, que
@@ -65,10 +66,13 @@
 //= primeiro os dois guardas, depois o salao, e a Opheliac ao
 //= fundo.
 //=
-//= QUATRO DAS DEZ CELULAS NAO SAO ANDAVEIS, e nao e engano - as
+//= CINCO DAS ONZE CELULAS NAO SAO ANDAVEIS, e nao e engano - as
 //= posicoes vieram do dono. As tres placas ficam DENTRO da
-//= parede leste (x59, com x58 e x60 solidos), e a Opheliac fica
-//= em cima do bloco central. Isso funciona: NPC de script nao
+//= parede leste (x59, com x58 e x60 solidos), a Opheliac fica
+//= em cima do bloco central e o Explorador da Ordem fica no
+//= bloco de parede do lado leste, na altura do afunilamento
+//= (56,46 - o desenho esta na seccao dele, mais abaixo neste
+//= arquivo). Isso funciona: NPC de script nao
 //= precisa de chao, e o alcance de clique e `AREA_SIZE+1`, ou
 //= seja 15 celulas (npc_checknear, npc.cpp:2158) - da ultima
 //= celula andavel do salao (x57) ate as placas sao 2. O proprio
@@ -758,6 +762,75 @@ auction_02,50,39,4	script	Máquina de Troca	564,{
 
 OnInit:
 	.moeda = 25737;   // Moeda do Explorador, db/guerra/item_db.yml
+	end;
+}
+
+
+// ---------------------------------------------------------------
+// O Explorador da Ordem - a troca de volta
+// ---------------------------------------------------------------
+// A MAO INVERSA DA MAQUINA DE TROCA. Ela converte Moeda do
+// Explorador em Moeda Nova a 10 por 1; este converte Moeda Nova em
+// Moeda do Explorador a 1 por 1 - decisao do dono em 2026-08-28.
+//
+// AS DUAS TAXAS JUNTAS NAO FECHAM CICLO, e e isso que torna o par
+// seguro: 1 Moeda Nova vira 1 Moeda do Explorador, e sao precisas
+// DEZ Moedas do Explorador para 1 Moeda Nova de volta - a ida e
+// volta custa nove decimos. O ciclo so passaria a RENDER se este
+// NPC desse mais de dez Moedas do Explorador por Moeda Nova, que e
+// exatamente a taxa que a Maquina cobra do outro lado. Quem mexer
+// em qualquer um dos dois `Amount` refaz essa conta antes.
+//
+// 56,46 E CELULA BLOQUEADA, e nao e engano - e a mesma familia da
+// Opheliac e das tres placas. O salao afunila entre y43 e y49 (anda
+// so de x34 a x53) e volta a alargar em y50; x54-x57 nessa faixa e
+// o bloco de parede do lado leste. Desenhado do map_cache do
+// rAthena, celula a celula:
+//
+//       x30                         x59
+//  y50  ............................##
+//  y49  ####....................######
+//  y48  ####....................######
+//  y47  ####....................######
+//  y46  ####....................##E###   E = o Explorador, 56,46
+//  y45  ####....................######
+//  y44  ####....................######
+//  y43  ####.........##.........######
+//
+// E O rAthena JA PUNHA NPC ALI DENTRO: o `Auction Broker#lhz1` de
+// 57,46, que o OnInit deste arquivo desliga - ou seja a celula esta
+// livre e a vizinha ja foi provada por NPC oficial. Da ultima
+// celula andavel do salao (x53) sao tres de distancia, e o alcance
+// de clique e AREA_SIZE+1, quinze celulas (npc_checknear,
+// npc.cpp:2158).
+//
+// O que NAO da para provar daqui e se a geometria da parede esconde
+// o sprite - isso so o jogo mostra, e vale a mesma saida das
+// placas: mover para x53 na mesma altura resolve sem mexer em mais
+// nada.
+//
+// Facing 2 (oeste), o mesmo do Auction Broker que ficava ao lado:
+// olha para dentro do salao, para quem sobe do corredor. Ponto
+// cardeal nao decide isto - o que decide e para onde o sprite
+// aponta na TELA (CLAUDE.md secao 5).
+//
+// A FALA E DO DONO, palavra por palavra. O "rapaz que fazia uns
+// itens" nao tem NPC nenhum atras: e sabor, e explica por que ha
+// alguem novo nesta celula.
+//
+// A mercadoria vive em npc/guerra/barters_guerra.yml, na loja
+// flutuante `Explorador#loja` - mudanca la pega com
+// `@reloadbarterdb`, NAO com @reloadscript.
+auction_02,56,46,2	script	Explorador da Ordem	899,{
+	mes "[Explorador da Ordem]";
+	mes "O rapaz que ficava aqui fazia uns itens. Era um bruxo.";
+	mes "Mas se você quiser eu troco uma Moeda Nova sua por uma Moeda do Explorador.";
+
+	// `close2` e nao `close`: fecha a caixa mas mantem o jogador
+	// preso ao NPC, que e o que permite a janela de troca abrir em
+	// seguida. O mesmo idioma da Maquina de Troca acima.
+	close2;
+	callshop "Explorador#loja";
 	end;
 }
 

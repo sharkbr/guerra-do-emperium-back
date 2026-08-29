@@ -15186,3 +15186,69 @@ Uma unidade perdida: Anel de Jasper (490113) refino 0 com Carta Ahat (27322).
 Os outros três travamentos morreram no `delequip` com o acessório esquerdo já
 vazio — cobraram e não apagaram nada. Cinco cobranças ao todo: 50 Moedas do
 Explorador e 500.000z.
+
+## O Explorador da Ordem — a troca de moeda no sentido inverso (2026-08-28)
+
+Pedido do dono: um NPC em `auction_02 56,46`, sprite `4_M_HUMAN_02` (899), que
+troque **Moeda Nova por Moeda do Explorador, 1 para 1**, com a fala dele palavra
+por palavra — *"O rapaz que ficava aqui fazia uns itens. Era um bruxo. Mas se
+você quiser eu troco uma Moeda Nova sua por uma Moeda do Explorador"*.
+
+### A conta que se faz antes de escrever: por que 1:1 não imprime moeda
+
+A Máquina de Troca do mesmo salão (50,39) já fazia o caminho contrário desde
+2026-08-08: **10 Moedas do Explorador por 1 Moeda Nova**. Duas lojas convertendo
+a mesma dupla de moedas nos dois sentidos é a forma clássica de abrir dinheiro
+infinito, e é o tipo de coisa que ninguém percebe pelo log — percebe-se pela
+economia, semanas depois.
+
+Não fecha, e sobra folga: 1 Moeda Nova vira 1 Moeda do Explorador aqui, e são
+precisas **dez** para comprar 1 Moeda Nova de volta na Máquina — a ida e volta
+custa nove décimos. O ciclo só passaria a **render** se uma Moeda Nova comprasse
+mais de dez Moedas do Explorador, que é exatamente a taxa cobrada do outro lado.
+A conta ficou escrita nos dois arquivos, porque mexer num `Amount` sem olhar o
+outro é o que a quebraria.
+
+O barter ainda ajuda de graça: **não há campo de quantidade para o item
+vendido** (o cabeçalho do `barters_guerra.yml` já registrava a trava), então
+"mais de dez por moeda" só se alcançaria por uma **caixa** de moedas. Se algum
+dia entrar uma, a conta se refaz com o número de dentro dela.
+
+### A célula, que é bloqueada de propósito
+
+`56,46` não é andável, e não é engano — é a mesma família da Opheliac e das três
+placas. O salão afunila entre y43 e y49 (anda só de x34 a x53) e volta a alargar
+em y50; x54–x57 nessa faixa é o bloco de parede do lado leste.
+
+O rAthena já punha NPC ali dentro: o `Auction Broker#lhz1` de **57,46**, uma
+célula ao lado, que o `OnInit` do `ordem_dos_exploradores.txt` desliga desde
+2026-08-08. Ou seja a célula está livre e a vizinha já foi provada por NPC
+oficial. Da última célula andável do salão (x53) são três de distância, e o
+alcance de clique é quinze (`npc_checknear`, `npc.cpp:2158`).
+
+Facing **2** (oeste), o mesmo do Broker que ficava ao lado: olha para dentro do
+salão, para quem sobe do corredor.
+
+### Onde ficou, e o que isso quer dizer para a entrega
+
+| o quê | onde |
+|---|---|
+| o NPC | `npc/guerra/ordem_dos_exploradores.txt` |
+| a loja flutuante `Explorador#loja` | `npc/guerra/barters_guerra.yml` |
+| a linha do índice narrado | `npc/guerra/scripts_guerra.conf` |
+
+**Nada do cliente.** As duas moedas já têm entrada no `itemInfo.lua` desde a
+Máquina e a Opheliac, então isto é **só deploy** — não há patch (`RECEITAS.md`
+§0).
+
+Recarrega com `@reloadbarterdb` **e só então** `@reloadscript`: com o barter
+ainda não lido, o `callshop` do NPC procura um nome que não existe.
+
+### Duas escolhas nossas, por escrito
+
+- **O nome de tela.** O pedido não trazia um, e a tela precisa. Ficou
+  "Explorador da Ordem", na família dos dois "Guarda da Ordem" do mesmo salão.
+- **O "rapaz que fazia uns itens"** não tem NPC nenhum atrás — é sabor, e serve
+  para explicar por que há alguém novo numa célula que estava vazia.
+
+Conferido em jogo pelo dono no mesmo dia.

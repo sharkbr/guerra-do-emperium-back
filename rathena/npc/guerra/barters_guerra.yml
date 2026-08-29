@@ -457,6 +457,45 @@ Body:
             Amount: 10
 
   # =====================================================================
+  # A troca de volta - o Explorador da Ordem
+  # =====================================================================
+  #
+  # FLUTUANTE, como as outras tres. Quem esta no mapa e o NPC de script
+  # (npc/guerra/ordem_dos_exploradores.txt, em auction_02 56,46), que
+  # fala e so entao chama esta loja com `callshop "Explorador#loja"`.
+  #
+  # E A MAO INVERSA DO `Ordem#loja` logo acima, e por isso nao e
+  # `duplicate` dele: aquele da 1 Moeda Nova por 10 Moedas do
+  # Explorador, este da 1 Moeda do Explorador por 1 Moeda Nova. Duas
+  # mercadorias, duas entradas.
+  #
+  # 1:1, por decisao do dono em 2026-08-28.
+  #
+  # AS DUAS TAXAS JUNTAS NAO FECHAM CICLO, e e isso que torna o par
+  # seguro. A ida e volta custa nove decimos: 1 Moeda Nova vira 1 Moeda
+  # do Explorador aqui, e sao precisas DEZ para comprar 1 Moeda Nova de
+  # volta na Maquina. O ciclo so passaria a RENDER se este `Amount`
+  # ficasse abaixo de 1 sem a Maquina acompanhar - ou seja, se uma Moeda
+  # Nova comprasse mais de dez Moedas do Explorador. Nao ha campo de
+  # quantidade para o item VENDIDO no barter (ver o cabecalho deste
+  # arquivo), entao a unica forma de chegar la e por CAIXA de moedas: se
+  # algum dia entrar uma, refazer a conta com o numero de dentro dela.
+  #
+  # POR QUE BARTER E NAO `itemshop`: o mesmo motivo do `Ordem#loja`, e
+  # aqui vale em dobro pelo mesmo par de itens - as DUAS moedas sao
+  # NoSell, a que se paga e a que se recebe.
+  #
+  # Mudanca aqui pega com `@reloadbarterdb`, NAO com @reloadscript.
+  - Name: Explorador#loja
+    Items:
+      - Index: 0
+        Item: Dalcom_Coin                # 25737 Moeda do Explorador
+        RequiredItems:
+          - Index: 0
+            Item: Moeda_Nova             # 30998, db/guerra/item_db.yml
+            Amount: 1
+
+  # =====================================================================
   # A loja da Opheliac - a Troca de Moedas da Ordem dos Exploradores
   # =====================================================================
   #
