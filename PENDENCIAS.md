@@ -3739,3 +3739,89 @@ Todos em constante nomeada no `OnInit`, num arquivo só:
 
 A conta inteira da economia está no `HISTORICO.md`, na primeira das quatro
 seções.
+
+---
+
+## A Glast Heim Sombria em jogo (aberta em 2026-08-29)
+
+A instância está no ar em DEV e **nunca foi jogada**. Tudo o que se sabe dela
+foi verificado do lado do servidor: os catorze monstros carregam sem descarte, o
+script parseia sem erro, o nome bate byte a byte com o `instance_db` e todas as
+coordenadas passaram pelo `confere_celula.py`. **Nada disso prova que ela é
+jogável** — é o que a §5 chama de verificação offline que passa e não é prova de
+efeito.
+
+Decisão do dono no mesmo dia: **deixar os jogadores validarem.** O que segue é a
+lista do que só a tela responde, em ordem de risco.
+
+### O que mais provavelmente vai aparecer primeiro
+
+1. **O encadeamento dos estágios.** A instância é uma máquina de estados
+   (`'estagio`, 0 a 14) e cada passo depende do anterior fechar. O ponto frágil
+   é o `OnSetorLimpo`: ele conta por rótulo de evento, e monstro que nasça fora
+   do alcance de qualquer jogador trava o setor sem erro nenhum. Sintoma: os
+   monstros acabaram e o NPC seguinte não aparece.
+2. **Os seis Homens caídos.** Cada um invoca Arclouses uma vez só, e a trava é
+   uma variável de NPC. Se a trava falhar, a ala oeste enche. Se a invocação
+   entrar no mesmo rótulo do setor, o setor só fecha depois dos Arclouses — que
+   é o desejado, mas não foi visto.
+3. **O `1@gl_he2`.** É o único mapa cujas coordenadas não vieram do
+   `OldGlastHeim.txt`: saíram do centro dos pedaços conectados. Os pontos são
+   andáveis, mas "andável" não quer dizer "no lugar certo da sala" — pode haver
+   NPC dentro de parede visual, ou chefe nascendo num canto.
+
+### O que pode estar calibrado errado, e é decisão e não defeito
+
+4. **Os 42,9 milhões de HP do Amdarais Sombrio**, e a DEF/MDEF 333 da Origem da
+   Escuridão. São os números do kRO, por escolha do dono ("fiel ao bRO"), para
+   um grupo de nível 180 num servidor 1x. Se o time do servidor não passar
+   disso, o ajuste é um número no `PARES`/derivação do
+   `monta_mobs_da_sombria.py` — mas aí deixa de ser derivação e vira valor
+   nosso, e isso tem de ficar escrito no cabeçalho da ferramenta.
+5. **As recompensas de EXP valem 1/50 do que o número sugere**, porque `getexp`
+   não passa pela taxa do servidor (`CLAUDE.md` §5). São 250.000/150.000 e
+   350.000/250.000. Mantidas por fidelidade; ajustar é trocar quatro números em
+   `npc/guerra/glast_heim_sombria.txt`.
+
+### O que está apurado e não precisa de teste
+
+- **Não precisa de patch de cliente.** Os dois mapas, os catorze sprites e as
+  seis quests já estão neste cliente, as quests inclusive traduzidas. Foi
+  conferido no GRF e no `QuestInfoList`.
+- **O pré-requisito** é `isbegin_quest(12321) == 2`, a mesma leitura que o
+  `OldGlastHeim.txt` usa para liberar o atalho dele. Quem nunca terminou a
+  Maldição normal não entra — e a Maldição normal **também nunca foi validada em
+  jogo**, então o primeiro jogador vai precisar das duas.
+
+### Para desligar sem deixar nada pela metade
+
+Comentar a linha `npc: npc/guerra/glast_heim_sombria.txt` no
+`scripts_guerra.conf`. Os monstros continuam no `mob_db` (inofensivos, nada os
+invoca) e as quests continuam declaradas.
+
+---
+
+## Sujeira no `rathena/.gitignore` (achada em 2026-08-29)
+
+Há **saída de `git status` commitada dentro de um comentário**, entre as linhas
+158 e 186 do arquivo: `Your branch is up to date with 'origin/main'.`, uma lista
+de `modified:` e o `no changes added to commit`, partindo em duas a frase da
+nota do `!/src/custom/`.
+
+É anterior ao trabalho da Sombria — está no `HEAD` — e é da família do heredoc
+que come contrabarra (`CLAUDE.md` §5): alguma geração de texto capturou a saída
+de um comando e a gravou no meio da linha.
+
+**Não é funcional.** Nenhuma daquelas linhas casa com caminho de verdade, e o
+`!/src/custom/` no fim do arquivo continua valendo — o `src/custom/` está
+versionado normalmente. Mas está num arquivo que decide o que chega à produção,
+e a próxima pessoa que for ler a nota do `src/custom` vai ler uma frase cortada
+ao meio por uma lista de arquivos modificados em agosto.
+
+Consertar é apagar as linhas 159 a 185 e emendar a frase:
+
+    # Sem esta linha o arquivo nao aparece nem no proximo clone.
+
+Não foi feito junto com a Sombria de propósito: mexer no `.gitignore` no mesmo
+commit que estreia uma exceção nele misturaria duas coisas que precisam ser
+lidas separadas se alguma der errado.

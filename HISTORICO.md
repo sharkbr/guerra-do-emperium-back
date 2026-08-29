@@ -15252,3 +15252,194 @@ ainda não lido, o `callshop` do NPC procura um nome que não existe.
   para explicar por que há alguém novo numa célula que estava vazia.
 
 Conferido em jogo pelo dono no mesmo dia.
+
+---
+
+## A Glast Heim Sombria, que estava pré-instalada e faltando (2026-08-29)
+
+O dono pediu para "deixar ativa" a **Maldição de Glast Heim Sombria** — a
+versão difícil da Maldição de Glast Heim. A expectativa razoável era descomentar
+alguma coisa. Não havia nada para descomentar: **a instância não existe em
+versão nenhuma do rAthena**.
+
+O que o vendor tem é uma linha de `Enter:` no `instance_db` (Id 49, mapa
+`1@gl_he`) e **catorze monstros comentados** — `Id` e `AegisName`, sem um único
+status. O `db/re/mob_db.yml` do **master do rAthena baixado neste dia** está
+igual. E o `OldGlastHeim.txt` registra no próprio changelog que o NPC de acesso
+a ela chegou a existir e foi **removido** na v1.5, sem que o outro lado da porta
+tivesse sido escrito:
+
+```
+//= 1.2 Add NPC Hugin's Follower [exneval]
+//=     NPC that give access to Glast Heim Nightmare Mode.
+//= 1.5 idAthena merge. Removed Hugin's Follower NPCs. [Secretdataz]
+```
+
+### A medição que mudou o tamanho do trabalho
+
+A parte cara de escrever instância é a planta: sem as coordenadas de dentro do
+mapa, cada spawn e cada NPC é chute, e chute em coordenada falha **calado**.
+
+O `1@gl_he` tem `.gnd` e `.rsw` do **mesmo tamanho** que o `2@gl_k`, o segundo
+mapa da Maldição normal. Isso levou à comparação que decidiu tudo — e ela não
+saiu do GRF, porque o `1@gl_k.gat` está **cifrado com DES** lá dentro e o
+`grf.py` recusa. Saiu do `map_cache.dat` do próprio servidor:
+
+```
+mapa       xs   ys    bytes  md5 das celulas
+1@gl_k     300  300     4012  91bd3083a9f2f1b2648b3e56786e6124
+2@gl_k     300  300     3720  d983b45802caca950d2c1b530828370e
+1@gl_he    300  300     3720  d983b45802caca950d2c1b530828370e   <-
+1@gl_he2   300  300     3790  23c4bdfb86bbe6acaa1242a3ce12229e
+1@gl_k2    300  300     4012  91bd3083a9f2f1b2648b3e56786e6124
+```
+
+**As células andáveis do `1@gl_he` são idênticas às do `2@gl_k`** — mesmo md5.
+A Sombria roda na planta do segundo mapa da Maldição normal, e toda coordenada
+do `OldGlastHeim.txt` vale nela sem conversão: a entrada (150,46), o Varmunt
+(151,71), o Henrich (148,67) e os três portais do corredor central. De quebra,
+o `1@gl_k2` (o modo Iniciante, também sem script) é cópia do `1@gl_k`.
+
+Só o `1@gl_he2` é planta própria, e para ela não há referência em lugar nenhum.
+As coordenadas dele saíram do `confere_celula.py --salas`, escrito para isso.
+
+### O que já estava pronto, e ninguém tinha usado
+
+Três descobertas em sequência, todas na direção de "isto custa menos do que
+parece":
+
+**O cliente conhece os catorze monstros.** Os ids 3139..3152 estão no
+`npcidentity.lub` deste kRO de 2021, casando exatamente com os `AegisName` que o
+vendor tem comentados. O `jobname.lub` dá o sprite de cada um: doze reusam arte
+que já existe (`zombie`, `ghoul`, `khalitzburg`…) e **os dois MVPs têm arte
+própria** — `mg_amdarais_h.spr` e `mg_corruption_root_h.spr`, os dois no
+`data.grf`.
+
+**O cliente conhece as quests, traduzidas.** O `QuestInfoList` traz as seis da
+Sombria em português, e ninguém as tinha achado porque nada as citava:
+
+```
+12334  "Glast Heim Sombria"  /  "Retorne apos 3 dias."
+12335  "Glast Heim Sombria"  /  "Entre na instancia Glast Heim Sombria."
+12336  "Glast Heim Sombria"  /  "Elimine a Origem da Escuridao."
+12337  "Glast Heim Sombria"  /  "Elimine o Amdarais Sombrio."
+12338  "Glast Heim Sombria"  /  "Reporte o caso a Hugin."
+12339  "Glast Heim Sombria"  /  "Reporte o caso a Hugin."
+```
+
+**E o `quest_db` do vendor já declarava quatro delas** — 12334 inclusive com o
+`TimeLimit: 3d 4h` certo —, órfãs, sem nenhum script do rAthena as citando.
+Faltavam só 12336 e 12337, e a razão é exata: são as únicas que precisam de
+`Targets:`, e o alvo delas era um monstro que não existia.
+
+Somando: **a instância inteira não pede patch de cliente.** Os mapas, os
+sprites e os textos já estão na máquina de quem baixou o jogo.
+
+### A derivação dos monstros
+
+Cada `_H` é o monstro normal da Maldição com `Level +30`, `Hp ×2` (×10 nos dois
+MVPs) e `EXP ×2`; todo o resto idêntico. Isso foi **conferido campo a campo
+contra o divine-pride nos treze pares**, não deduzido — o HP bate nos treze, o
+EXP bate nos treze, os seis atributos e as duas defesas batem em todos.
+
+Ficou em `ferramentas/monta_mobs_da_sombria.py`, com `--conferir`, em vez de à
+mão: a regra é mecânica, e assim ela se refaz se o vendor for atualizado.
+
+Três detalhes que o gerador trata e não se devem desfazer:
+
+- **`Attack` e `Attack2` não mudam.** O divine-pride mostra a faixa já
+  *calculada*, não o campo. A razão entre a faixa do `_H` e o `Attack2` do
+  normal deu 1,50 nos dois casos que dá para isolar (4804/3200 no Sanguinário,
+  4179/2787 na Alma) — o campo é o mesmo, o que sobe é o nível.
+- **O elemento vem do monstro normal, não do divine-pride**, onde a linha
+  "Element" é a tabela de *resistência* e mostra `Neutral (100%)` para bicho
+  Morto-vivo. Ler dali poria metade dos catorze em Neutro.
+- **A carta é a única coisa que não se copia.** Os dois MVPs têm carta própria
+  já no `item_db` (4602 e 4604). Copiar a do normal faria a Sombria, que custa
+  dez vezes mais HP, entregar o mesmo prêmio da fácil — e deixaria as duas `_H`
+  sem fonte no servidor inteiro.
+
+### As habilidades, e a exceção no `.gitignore`
+
+O `mob_skill_db.txt` não é YAML — não tem rodapé de import. O `mob_readskilldb`
+(`mob.cpp:7184`) lê de `db/re/` e `db/import/` e mais nada, e `db/re/` é arquivo
+de terceiro. Então as 78 linhas foram para `db/import/mob_skill_db.txt`, que o
+`.gitignore` do vendor ignorava.
+
+A primeira tentativa de exceção **não funcionou, e isso não aparece no `git
+status`**: `/db/import` exclui a *pasta*, o git não desce nela, e o
+`!/db/import/mob_skill_db.txt` é letra morta. A forma que vale é
+`/db/import/*` mais a negação. O próprio `rathena/.gitignore` já descrevia a
+regra vinte linhas abaixo, na nota do `!/src/custom/` — que resolve o caso
+oposto.
+
+Vale a ressalva de que `git check-ignore -v` **não** separa os dois casos: ele
+imprime a regra de negação e sai 0 nos dois. Quem responde é
+`git status --short --untracked-files=all db/import/`.
+
+### O script
+
+`npc/guerra/glast_heim_sombria.txt`, 851 linhas, seguindo os vinte passos da
+página `Glast_Heim_Sombria` do `arquivo.browiki.org` — cada um marcado no código
+como `// browiki N`. Entrada pelo **Sósia de Hugin** em `glast_01 179,282`, que é
+onde a browiki o põe, ao lado do Hugin da Maldição normal.
+
+Os diálogos são nossos: a browiki descreve o que acontece em cada passo, não o
+texto das falas. O que veio de lá e não se inventa é o **nome** de cada coisa.
+
+Os sete bônus do Fantasma de Varmunt saíram inteiros: os sete `SC_GLASTHEIM_*`
+do rAthena são **exatamente** os sete "Temporais" que a browiki lista, com os
+mesmos valores (+20 atributos, DEF+200/DEFM+50, HP+10.000/SP+1.000, cura
++100%/+50%, +100% de resistência ao Amdarais, +90% contra as barreiras de fogo,
++100% de dano). A Maldição normal já usa quatro deles com esses números, o que
+serviu de conferência.
+
+### Dois comandos que não existem neste rAthena
+
+O script não subiu de primeira, e as duas falhas foram da mesma família:
+`has_instance` e `getnpcx()`/`getnpcy()` **não estão na tabela de buildins deste
+vendor**. O parser não diz "comando desconhecido" — diz `unmatched ')'` na
+coluna do parêntese, porque tratou o nome como variável. A mensagem manda
+procurar erro de sintaxe numa linha sintaticamente perfeita. Está no
+`CLAUDE.md` §5, com a sonda que responde em um comando.
+
+O `has_instance` saiu sem substituto: o `IE_NOINSTANCE` do próprio
+`instance_enter` já responde "a fenda não está aberta" — uma checagem a menos, e
+uma verdade a menos para divergir. O `getnpcx()` virou
+`getmapxy(.@m$,.@x,.@y,BL_NPC)` sem valor de busca, que devolve a posição do NPC
+que está rodando — e é o que faz os seis Homens caídos saberem cada um onde
+está sem repetir coordenada.
+
+### O que ficou medido
+
+| antes do conserto | depois |
+|---|---|
+| erros de script na subida | 2 → **0** |
+| monstros da Sombria no servidor | 14, `Loading` = `Done reading` |
+| linhas de habilidade | 78 |
+| erros de carga dos nossos arquivos | nenhum |
+
+O `Loading '14'` igual ao `Done reading '14'` é a prova de que nada foi
+descartado — e as quests 12336/12337 carregarem sem erro prova que os mobs 3150
+e 3151 existem com o `AegisName` certo, porque o `parseBodyNode` do `quest_db`
+descarta a quest inteira quando o `Mob:` não resolve (`quest.cpp:132`).
+
+### Uma ressalva que fica por escrito
+
+As recompensas de EXP são as do bRO — 250.000/150.000 no Varmunt e
+350.000/250.000 no Hugin. O `getexp` **não passa pela taxa de EXP do servidor**,
+só pelo `quest_exp_rate`, que está em 100 (`CLAUDE.md` §5). Num servidor onde
+monstro rende 50x, essas recompensas valem um cinquenta avos do que o número
+sugere em relação ao resto. Foi mantido assim porque a decisão do dono neste dia
+foi seguir o bRO; ajustar é trocar quatro números no arquivo.
+
+### Uma sujeira achada de passagem
+
+O `rathena/.gitignore` tem **saída de `git status` commitada no meio de um
+comentário**, entre as linhas 158 e 186 — `Your branch is up to date with
+'origin/main'.`, uma lista de `modified:` e o `no changes added to commit`
+partindo a frase da nota do `!/src/custom/` em duas. É anterior a este trabalho
+(está no `HEAD`) e é da família do heredoc que come contrabarra, do `CLAUDE.md`
+§5. **Não é funcional** — nenhuma daquelas linhas casa com caminho de verdade, e
+o `!/src/custom/` no fim continua valendo —, mas está num arquivo que decide o
+que chega à produção. Anotado em `PENDENCIAS.md`.

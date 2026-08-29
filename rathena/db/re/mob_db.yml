@@ -120904,3 +120904,4 @@ Footer:
   Imports:
     - Path: db/guerra/mob_db.yml
     - Path: db/guerra/mob_db_guerra.yml
+    - Path: db/guerra/mob_db_sombria.yml

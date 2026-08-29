@@ -91,3 +91,33 @@ Body:
   # Poring Village
   - Id: 47
     Name: Vila dos Porings
+  # Old Glast Heim (Challenge Mode) - a Sombria.
+  #
+  # Aqui NAO basta o `Name:`, ao contrario de todas as outras deste arquivo:
+  # a entrada do vendor (db/re/instance_db.yml linha 379) so tem `Enter:`, e
+  # faltam as outras duas coisas.
+  #
+  # `TimeLimit: 3600` porque o bRO diz "Duracao: 1 hora". Sem ele a
+  # instancia herda o padrao e fica de pe muito alem do que o roteiro supoe.
+  #
+  # `AdditionalMaps: 1@gl_he2` porque a Sombria tem DOIS mapas, e o vendor
+  # so declara o primeiro. Sem esta linha o `instance_mapname("1@gl_he2")`
+  # nao resolve e a segunda metade inteira - os dois Comandantes e o
+  # Amdarais Sombrio - fica inalcancavel.
+  #
+  # Os dois mapas sao 300x300 e, medido pelo map_cache do proprio servidor
+  # em 2026-08-28, o 1@gl_he tem a andabilidade IDENTICA a do 2@gl_k (mesmo
+  # md5 das celulas) - e por isso as coordenadas do OldGlastHeim.txt valem
+  # aqui sem conversao. O 1@gl_he2 e outra planta (32.604 celulas andaveis
+  # contra 49.426).
+  #
+  # O NOME: o bRO chama de "Glast Heim Sombria" na wiki e nos titulos de
+  # quest do cliente. Aqui ele ganhou o "Maldicao de" na frente para ficar
+  # ao lado da Id 12, que e a "Maldicao de Glastheim" - as duas sao a mesma
+  # masmorra em duas dificuldades, e o jogador escolhe entre elas numa
+  # lista. Teto de 60 bytes (INSTANCE_NAME_LENGTH); esta tem 30.
+  - Id: 49
+    Name: Maldição de Glast Heim Sombria
+    TimeLimit: 3600
+    AdditionalMaps:
+      1@gl_he2: true

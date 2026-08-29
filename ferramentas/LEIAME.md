@@ -3955,3 +3955,140 @@ outras 511 junto. O que separa os dois é olhar uma que tem de **ficar**: o
 `prontera 124,76`. As duas na tela + a de 166,300 fora = deu certo.
 
 **É cliente: vai por PATCH, não por deploy** (`CLAUDE.md` §4.18).
+
+---
+
+## `monta_mobs_da_sombria.py` — os 14 monstros da Glast Heim Sombria
+
+```
+python monta_mobs_da_sombria.py             # gera os dois arquivos
+python monta_mobs_da_sombria.py --conferir  # sai 1 se algo divergir
+```
+
+Gera `db/guerra/mob_db_sombria.yml` (os monstros) e
+`db/import/mob_skill_db.txt` (as habilidades deles).
+
+### O problema
+
+Os monstros da Sombria — ids **3139 a 3152** — **não existem em versão nenhuma
+do rAthena**. No `db/re/mob_db.yml` do nosso vendor, e também no master do
+rAthena baixado em 2026-08-28, os catorze estão como *placeholder*: duas linhas
+comentadas cada um, com `Id` e `AegisName` e mais nada.
+
+```
+#  - Id: 3139
+#    AegisName: MG_ZOMBIE_H
+```
+
+Não há o que descomentar. Sem status, sem drop, sem habilidade.
+
+### A regra de derivação, e por que ela não é invenção
+
+Cada `_H` é o monstro normal da Maldição com **três campos** mexidos:
+
+| campo | mudança |
+|---|---|
+| `Level` | +30 |
+| `Hp` | ×2 — e **×10** nos dois MVPs (3150 e 3151) |
+| `BaseExp` / `JobExp` | ×2 |
+
+Todo o resto é idêntico: os seis atributos, `Defense`, `MagicDefense`,
+`AttackRange`, `Size`, `Race`, `Element`, `ElementLevel`, as velocidades, o
+`Ai`, o `Class` e a tabela de drops.
+
+**Isso foi conferido campo a campo contra o divine-pride nos treze pares**, em
+2026-08-28 — não deduzido. O HP bate nos treze (135.600 → 271.200,
+208.100 → 416.200, … 4.290.000 → 42.900.000 no Amdarais); o EXP bate nos treze;
+os atributos e as defesas batem em todos.
+
+**`Attack` e `Attack2` não mudam**, e isso também foi medido: o divine-pride
+mostra a faixa já **calculada**, não o campo. A razão entre a faixa do `_H` e o
+`Attack2` do normal deu **1,50** nos dois casos magicamente isoláveis
+(4804/3200 no Sanguinário, 4179/2787 na Alma) — ou seja o campo é o mesmo e o
+que sobe é o nível.
+
+### A leitura que engana: elemento
+
+No divine-pride, a linha "Element" é a tabela de **resistência**, e ela mostra
+`Neutral (100%)` para bicho de elemento **Morto-vivo**. Ler dali poria metade
+dos catorze em Neutro. O elemento vem do monstro normal, e as duas leituras
+concordam onde dá para separar: o Cavaleiro Sombrio aparece como "Dark 4" e o
+2470 é `Dark`/4; o Arclouse como "Earth 2" e o 2467 é `Earth`/2. A linha
+`Dark 0% | Undead 0%` do 3146 confirma Morto-vivo no Khalitzburg.
+
+### A única coisa que a derivação não copia: a carta
+
+Os dois MVPs têm carta própria, e ela já existe no `item_db` do vendor — a
+**4602** (Carta Amdarais Sombrio) e a **4604** (Carta Origem da Escuridão).
+Copiar a carta do normal faria a Sombria, que custa dez vezes mais HP, entregar
+exatamente o mesmo prêmio da fácil, e deixaria as duas `_H` sem fonte no
+servidor inteiro. A troca está na tabela `CARTAS` do gerador.
+
+### Por que as habilidades moram em `db/import/`
+
+O `mob_skill_db.txt` **não é YAML** — não tem `Footer: Imports:`. O
+`mob_readskilldb` (`src/map/mob.cpp:7184`) lê de **dois** lugares e só dois:
+`db/re/` e `db/import/`. Como `db/re/mob_skill_db.txt` é arquivo de terceiro e
+a §2 do `CLAUDE.md` proíbe enxertar dado nele, o nosso vai para `db/import/`.
+
+**E isso custou uma exceção no `rathena/.gitignore`**, que ignorava
+`/db/import` inteiro. A forma que funciona é `/db/import/*` seguido de
+`!/db/import/mob_skill_db.txt` — e a barra-asterisco **é o que faz funcionar**:
+pasta excluída o git nem abre, então negar um arquivo dentro dela não tem
+efeito nenhum. Os outros ~60 arquivos de `db/import` continuam fora do git, que
+é onde devem ficar.
+
+Onze dos treze têm habilidade; o Khalitzburg (2471) e os dois Comandantes
+(2473, 2474) não têm nenhuma no vendor, então os `_H` deles também não ganham.
+
+### Depois de rodar
+
+**Reiniciar o map-server** (ou `@reloadmobdb`). O `--conferir` também checa se o
+`- Path: db/guerra/mob_db_sombria.yml` está no rodapé de `db/re/mob_db.yml` e se
+a exceção do `.gitignore` está lá — sem qualquer um dos dois a falha é calada.
+
+---
+
+## `confere_celula.py` — aquela célula é andável?
+
+```
+python confere_celula.py 1@gl_he 150,46 151,71 148,67
+python confere_celula.py 1@gl_he2 --salas 8
+```
+
+Responde se uma coordenada é chão andável, e acha lugar bom para plantar coisa.
+
+### Por que existe
+
+Coordenada de spawn escrita a olho produz uma falha das caras: o `mob_spawn`
+sorteia com `map_search_freecell`, então célula fechada vira *"o bicho nasceu em
+outro lugar"* e **não** um erro. NPC plantado em célula fechada fica
+inalcançável, e nada no log aponta para a linha.
+
+### De onde vem a resposta, e por que isso importa
+
+Do **`map_cache.dat` do servidor**, que é o que o rAthena de fato lê — não do
+`.gat` do GRF. Dois motivos:
+
+1. metade dos `.gat` de mapa de instância está **cifrada com DES** no
+   `data.grf` (o `1@gl_k.gat` está), e o `grf.py` recusa. Ler dali devolveria
+   *"mapa não existe"* sobre um mapa que existe;
+2. são **três** `map_cache` e o primeiro que tiver o mapa vence
+   (`map.cpp:3922`). Ferramenta que abra só o `db/map_cache.dat` responde pelo
+   mapa errado — a `prontera` de renewal, por exemplo, só existe no `db/re/`.
+
+A ferramenta percorre os três na ordem certa e diz de qual veio.
+
+### `--salas`
+
+Varre os **pedaços conectados** de chão e devolve, de cada um dos maiores, o
+ponto de maior distância até a parede. É o que se quer para plantar chefe,
+portal ou grupo de monstro.
+
+O tamanho de cada pedaço responde de quebra a pergunta que o `vis_h01` levantou
+(`CLAUDE.md` §5): pedaço de algumas centenas de células **solto no canto do
+mapa** é ruído do `.gat`, não sala — o `1@gl_he` tem um de 599 células em
+`299,0`, e monstro sorteado ali nunca é achado.
+
+Foi ela que deu todas as coordenadas do `1@gl_he2`, que é planta para a qual não
+existe referência em lugar nenhum.

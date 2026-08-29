@@ -87,7 +87,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `conf/groups.yml` | um `- Path: conf/guerra/groups_guerra.yml` no rodapé, **antes** do `conf/import/groups.yml` que já estava lá (permissão de comando por grupo — hoje o `@autoloot` e irmãos para o grupo 0). Funciona por merge: o `parseBodyNode` procura o `Id` antes de criar (`src/map/pc_groups.cpp:74`), e grupo que já existe recebe os campos por cima — por isso o nosso arquivo não repete `Name` nem `Level` |
 | `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml`, `db/pet_db.yml` | um `- Path: db/guerra/...` no rodapé de cada. O do `pet_db` entrou em 2026-08-26 com a Anomalia Dimensional e aponta para `db/guerra/pet_db.yml`, hoje com um pet só — o Freeoni, que o rAthena traz **comentado** dos dois lados (a entrada de pet e o mob `PHREEONI2`, Id 20425). **Não existe `@reloadpetdb`:** mexer ali é reiniciar o map-server |
 | `db/re/item_db.yml` | **três** `- Path:` no rodapé, nesta ordem, e a ordem é a regra — cada um tem a última palavra sobre um campo. `db/guerra/item_db.yml` é o nosso, escrito à mão (itens próprios e overrides de campo). `db/guerra/item_db_indestrutivel.yml` é **gerado** por `ferramentas/marca_indestrutiveis.py` e repete o `Script:` inteiro de 27 itens com um `bonus bUnbreakable<slot>` a mais — sem ele a peça que a descrição promete indestrutível quebra (§4.19). `db/guerra/item_db_lojas.yml` é **gerado** por `ferramentas/zera_revenda_das_lojas.py` e põe `Buy: 1` em todo item de vitrine de Prontera (§4.16) |
-| `db/re/mob_db.yml` | **dois** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s) |
+| `db/re/mob_db.yml` | **três** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s); `db/guerra/mob_db_sombria.yml` é o terceiro, **gerado** por `ferramentas/monta_mobs_da_sombria.py`, e traz os **catorze monstros da Glast Heim Sombria** (ids 3139..3152), que o vendor tem só como placeholder comentado e que o rAthena **nunca implementou, nem no master** |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `db/re/job_stats.yml` | o **`Footer: Imports:` inteiro**, com **dois** `- Path:`, e o primeiro deles não é nosso. `db/re/job_outfits.yml` é arquivo do **próprio rAthena** e estava **órfão**: o `JobDatabase::getDefaultLocation()` (`src/map/pc.cpp:13819`) aponta só para o `job_stats.yml`, então os treze `AlternateOutfits` (o "Roupa alternativa" do estilista) não eram lidos por ninguém e `job->alternate_outfits` ficava vazio para todo trabalho. `db/guerra/job_estilo_de_corpo.yml` é nosso e declara os ids 4332..4344 num `Jobs:`, porque a guarda `job_db.exists()` do `pc_changelook` reprova todo valor de estilo de corpo sem eles (§5). Sem os dois, o Cupom de Roupa some sem trocar nada |
 | `db/re/map_drops.yml` | o **`Footer: Imports:` inteiro**, pelo mesmo caminho do `quest_db.yml` acima — aquele arquivo também não tinha rodapé. Aponta para `db/guerra/map_drops.yml`, **gerado** por `ferramentas/escala_drops_de_mapa.py` (drop de mapa não passa pela taxa do servidor — ver §5) |
@@ -98,7 +98,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `src/map/pc.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `estilo_de_corpo_resolve` no topo do `case LOOK_BODY2:` do `pc_changelook`, **antes** do `job_db.exists`. Acréscimo, não substituição. Traduz o valor legado 0/1 que o `db/re/stylist.yml` ainda manda para o Id do trabalho do visual alternativo — sem ela a UI de estilista come o Cupom de Roupa e não muda nada (`src/custom/estilo_de_corpo.hpp`) |
 | `src/map/mob.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `habilidade_de_monstro_proibida` no topo do laço do `mobskill_use`, **antes** do teste de recarga — monstro em mapa listado se comporta como se não tivesse aquela linha do `mob_skill_db`. Acréscimo, não substituição. Hoje a tabela tem uma entrada só: Instinto de Defesa (`ST_REJECTSWORD`) no Corredor Fantasma (`vis_h01`), que refletia 50% do dano do jogador sem passar por redução nenhuma (`src/custom/habilidade_proibida.hpp`) |
 | `src/map/skill.cpp` | **dois** includes de `src/custom/` + **uma** chamada (um `if` com duas funções), comentada no arquivo, dentro do `skill_get_requirement`, na linha seguinte à do Magic Gear Fuel. `tinta_infinita_dispensa` zera o requisito de **Tinta para Parede** (6123) para quem carrega a **Tinta para Parede Infinita** (30993); `pincel_do_infinito_dispensa` zera os de **Pincel de Maquiagem** (6121), **Pincel de Grafite** (6122) e **Tinta para Pele** (6120) para quem carrega o **Pincel do Infinito** (30992). Com o requisito zerado a habilidade passa na checagem **e** nada é consumido. Acréscimo, não substituição, e usa a mesma forma que o rAthena já usa duas linhas acima (`req.itemid[i] = req.amount[i] = 0`). **Um ponto só basta porque o `skill_get_requirement` é a fonte única dos três caminhos** — `skill_check_condition_castbegin` (é quem recusa o lance), `..._castend` e `skill_consume_requirement` (é quem apaga o item). E ele resolve **ferramenta** (`Amount: 0`) junto com insumo: o castbegin reprova por `index[i] < 0` antes de olhar a quantidade, então pincel que falta na mochila derruba a habilidade igual a tinta que falta. Alcança as treze habilidades de Trapaceiro/Renegado envolvidas porque a condição olha o **insumo** e não uma lista de habilidades (`src/custom/tinta_infinita.hpp`, `src/custom/pincel_do_infinito.hpp`) |
-| `rathena/.gitignore` | `!/src/custom/` — o upstream ignora essa pasta inteira |
+| `rathena/.gitignore` | duas coisas. **(a)** `!/src/custom/` — o upstream ignora essa pasta inteira. **(b)** `/db/import` virou **`/db/import/*`** mais um `!/db/import/mob_skill_db.txt`: as habilidades dos monstros da Glast Heim Sombria só podem morar ali, porque o `mob_skill_db.txt` não é YAML (não tem rodapé de import) e o `mob_readskilldb` (`src/map/mob.cpp:7184`) lê de `db/re/` e `db/import/` e mais nada. **A barra-asterisco é o que faz funcionar** — pasta excluída o git nem abre, então negar um arquivo dentro dela não teria efeito; excluir o CONTEÚDO deixa a pasta visível e a negação passa a valer. Os outros ~60 arquivos de `db/import` continuam fora do git, que é onde devem ficar |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
 `src/custom`, `conf/guerra` é alteração em código de terceiros e precisa de
@@ -2109,6 +2109,35 @@ Produziram diagnóstico falso e custaram retrabalho:
   Group-Object ProcessName` tem de dar 1 em cada. O `status` do `servidor.py`
   responde pela **porta**, e porta ocupada por uma das duas cópias parece
   saudável. Medido em 2026-08-27.
+- **Comando de script que "existe no rAthena" pode não existir NESTE rAthena, e
+  o erro do parser aponta para o lugar errado.** O vendor foi congelado numa
+  revisão; comando que entrou depois, ou que só existe em fork, simplesmente
+  não está na tabela de buildins — e o `parse_simpleexpr` não diz *"comando
+  desconhecido"*, diz **`unmatched ')'`** na coluna do parêntese de abertura,
+  porque tratou o nome como variável e tropeçou no `(` seguinte. A mensagem
+  manda procurar erro de sintaxe numa linha que está sintaticamente perfeita.
+  Medido em 2026-08-29 ao escrever a Glast Heim Sombria: **`has_instance`** e
+  **`getnpcx()`/`getnpcy()`** não existem aqui (o primeiro se resolve pelo
+  `IE_NOINSTANCE` do próprio `instance_enter`; o segundo é
+  `getmapxy(.@m$,.@x,.@y,BL_NPC)` sem valor de busca, que devolve a posição do
+  NPC que está rodando).
+  **A conferência que decide é `grep "BUILDIN_DEF(<nome>" src/map/script.cpp`**,
+  e ela é de graça. O `doc/script_commands.txt` do próprio vendor também serve,
+  e é mais confiável que qualquer wiki — mas cuidado com o inverso: **constante
+  de sprite não aparece pelo nome no `grep`**, porque o `export_constant_npc`
+  corta o prefixo (`JT_WARPNPC` vira `WARPNPC` em tempo de execução). Procurar
+  `\bWARPNPC\b` devolve zero sobre uma constante que existe.
+- **No `.gitignore`, negar um arquivo dentro de pasta excluída NÃO tem efeito —
+  e o `git status` não denuncia, porque o arquivo simplesmente continua
+  invisível.** Pasta excluída o git nem abre. `/db/import` mais
+  `!/db/import/mob_skill_db.txt` deixa o arquivo ignorado do mesmo jeito; o que
+  funciona é excluir o **conteúdo**, `/db/import/*`, e só então negar. Custou
+  uma rodada em 2026-08-29, e o próprio `rathena/.gitignore` já descrevia a
+  regra vinte linhas abaixo, na nota do `!/src/custom/` — que resolve o caso
+  oposto (lá se quer a pasta inteira, e negar a pasta basta).
+  **A sonda que decide não é `git check-ignore`**, que imprime a regra de
+  negação e sai 0 dos dois jeitos: é `git status --short --untracked-files=all
+  <pasta>`, que só lista o que o git realmente enxerga.
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

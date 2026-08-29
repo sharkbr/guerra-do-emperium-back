@@ -64,7 +64,21 @@ Thumbs.db
 /3rdparty/httplib/obj
 
 # /db/
-/db/import
+# Guerra do Emperium: era `/db/import`, e virou `/db/import/*` para
+# abrir UMA excecao. As habilidades dos monstros da Glast Heim Sombria
+# moram em db/import/mob_skill_db.txt porque o mob_skill_db.txt nao e
+# YAML - nao tem rodape de import -, e o mob_readskilldb (mob.cpp linha
+# 7184) le de db/re e db/import e mais nada. Sem a excecao o arquivo nao
+# chega a producao e os catorze monstros ficam sem conjurar, calados.
+#
+# A BARRA-ASTERISCO E O QUE FAZ FUNCIONAR, e e a mesma pegadinha que a
+# nota do !/src/custom/ ja descrevia mais abaixo: pasta excluida o git
+# nem abre, entao negar um arquivo dentro dela nao tem efeito. Excluir o
+# CONTEUDO deixa a pasta visivel e a negacao passa a valer. Aqui nao da
+# para negar a pasta toda como o src/custom faz - os outros ~60 arquivos
+# de db/import sao configuracao de maquina e ficam fora de proposito.
+/db/import/*
+!/db/import/mob_skill_db.txt
 
 # /conf/
 /conf/import

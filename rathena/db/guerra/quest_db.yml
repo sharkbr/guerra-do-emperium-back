@@ -365,3 +365,44 @@ Body:
     Title: Orc's Memory Time Limit
     TimeLimit: 0h
 
+# ------------------------------------------------------------------------
+# As duas cacas da Maldicao de Glast Heim Sombria (npc/guerra/
+# glast_heim_sombria.txt). Sao as UNICAS duas coisas que faltavam do lado
+# das quests - o resto da Sombria ja estava pronto nos dois lados, e ficou
+# anos sem ninguem usar:
+#
+#   12334  vendor, `TimeLimit: 3d 4h`   o tempo de espera (o "Retorne apos
+#                                       3 dias" que o cliente ja mostra)
+#   12335  vendor                       entrou na instancia
+#   12338  vendor                       reporte a Hugin (Origem)
+#   12339  vendor                       reporte a Hugin (Amdarais)
+#
+# Os quatro estao em db/re/quest_db.yml, orfaos: nenhum script do rAthena
+# os cita, porque a instancia nunca foi implementada. E o cliente ja traz
+# os SEIS titulos traduzidos no QuestInfoList ("Glast Heim Sombria" /
+# "Elimine a Origem da Escuridao."), o que e o que torna esta instancia
+# inteira possivel SEM PATCH DE CLIENTE - quest que o cliente nao conhece
+# derruba o cliente, e nao e o caso de nenhuma destas.
+#
+# 12336 e 12337 faltavam porque so elas precisam de `Targets:`, e o alvo
+# de cada uma e um monstro que nao existia ate agora: os `_H` sao gerados
+# por ferramentas/monta_mobs_da_sombria.py, em db/guerra/mob_db_sombria.yml.
+# Sem aquele arquivo carregado ANTES deste, o `Mob:` aqui nao resolve e o
+# parseBodyNode descarta a quest inteira (quest.cpp:132) - nao o alvo.
+#
+# Por que HUNTING e nao um contador no script: e a mesma razao do bloco la
+# em cima. O `quest_update_objective` roda fora do ramo do `npc_event` e
+# ainda propaga para a party dentro de AREA_SIZE, entao ele conta a morte
+# do chefe para o grupo todo - que e exatamente o que o bRO promete ("todos
+# do grupo precisam estar vivos e na mesma tela para contabilizar").
+  - Id: 12336
+    Title: Ominous Corrupted Soul Hunt
+    Targets:
+      - Mob: MG_CORRUPTION_ROOT_H
+        Count: 1
+  - Id: 12337
+    Title: Ominous Amdarais Hunt
+    Targets:
+      - Mob: MG_AMDARAIS_H
+        Count: 1
+

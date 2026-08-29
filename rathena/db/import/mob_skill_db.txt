@@ -1,0 +1,108 @@
+//===========================================================================
+// Guerra do Emperium - habilidades dos monstros da Glast Heim Sombria
+//===========================================================================
+//
+// GERADO por ferramentas/monta_mobs_da_sombria.py. Editar a mao morre na
+// proxima rodada.
+//
+// POR QUE ESTE ARQUIVO MORA AQUI, E NAO EM db/guerra/
+//
+// O mob_skill_db.txt nao e YAML - nao tem rodape `Footer: Imports:`. O
+// mob_readskilldb (src/map/mob.cpp linha 7184) le de dois lugares e so
+// dois: db/re/ e db/import/. Como db/re/mob_skill_db.txt e arquivo de
+// terceiro, e a secao 2 do CLAUDE.md proibe enxertar dado nele, o nosso vem
+// para ca.
+//
+// E POR ISSO O .gitignore DO VENDOR GANHOU UMA EXCECAO
+//
+// O rathena/.gitignore ignora /db/import inteiro. Sem um
+// `!/db/import/mob_skill_db.txt` este arquivo NAO chega a producao, e os
+// catorze monstros ficam sem habilidade nenhuma - calados, porque monstro
+// sem linha aqui simplesmente nao conjura. E a mesma excecao que o
+// `!/src/custom/` ja fazia.
+//
+// As linhas sao as do monstro NORMAL correspondente com o id trocado. O
+// Khalitzburg (2471) e os dois Comandantes (2473, 2474) nao tem habilidade
+// no vendor, entao os _H deles tambem nao tem.
+//
+// MobID,Dummy value (info only),State,SkillID,SkillLv,Rate,CastTime,Delay,Cancelable,Target,Condition type,Condition value,val1,val2,val3,val4,val5,Emotion,Chat
+//===========================================================================
+
+3139,Ominous Steward@NPC_UNDEADATTACK,chase,347,3,5000,0,5000,no,target,always,0,,,,,,,
+3139,Ominous Steward@AL_HEAL,idle,28,1,5000,1000,3000,no,self,always,0,,,,,,26,
+3139,Ominous Steward@NPC_UNDEADATTACK,attack,347,3,5000,500,3000,no,target,always,0,,,,,,28,
+3139,Ominous Steward@NPC_BLOODDRAIN,attack,199,1,5000,500,5000,no,target,always,0,,,,,,47,
+3140,Ominous Monk@NPC_CURSEATTACK,chase,181,5,5000,800,5000,no,target,always,0,,,,,,9,
+3140,Ominous Monk@NPC_BLINDATTACK,attack,177,5,5000,0,5000,no,target,always,0,,,,,,,
+3140,Ominous Monk@NPC_CURSEATTACK,attack,181,5,5000,800,5000,no,target,always,0,,,,,,9,
+3140,Ominous Monk@NPC_ENERGYDRAIN,attack,200,1,5000,0,5000,no,target,always,0,,,,,,,
+3141,Ominous Chamberlain@NPC_UNDEADATTACK,chase,347,4,5000,0,5000,no,target,always,0,,,,,,,
+3141,Ominous Chamberlain@AL_HEAL,idle,28,1,5000,1000,3000,no,self,always,0,,,,,,26,
+3141,Ominous Chamberlain@NPC_BLEEDING,attack,660,4,500,900,5000,no,target,always,0,,,,,,9,
+3141,Ominous Chamberlain@NPC_UNDEADATTACK,attack,347,4,5000,500,3000,no,target,always,0,,,,,,28,
+3141,Ominous Chamberlain@NPC_BLOODDRAIN,attack,199,2,5000,500,5000,no,target,always,0,,,,,,47,
+3142,Ominous Maggot@NPC_GROUNDATTACK,attack,185,5,2000,0,5000,no,target,always,0,,,,,,,
+3142,Ominous Maggot@NPC_EMOTION,chase,197,1,200,0,5000,no,self,always,0,19,0x81,,,,,
+3142,Ominous Maggot@NPC_EMOTION,idle,197,1,2000,0,5000,no,self,always,0,7,0x3095,,,,,
+3143,Ominous Palace Guard@SM_BASH,chase,5,8,5000,1000,5000,no,target,always,0,,,,,,,
+3143,Ominous Palace Guard@BS_MAXIMIZE,chase,114,5,5000,1000,5000,no,self,always,0,,,,,,,
+3143,Ominous Palace Guard@CR_AUTOGUARD,chase,249,2,2000,0,300000,no,self,always,0,,,,,,,
+3143,Ominous Palace Guard@SM_MAGNUM,attack,7,9,5000,1000,5000,no,self,always,0,,,,,,,
+3143,Ominous Palace Guard@NPC_DARKNESSATTACK,attack,190,5,5000,500,5000,no,target,always,0,,,,,,,
+3144,Ominous Archer@AC_DOUBLE,chase,46,5,5000,1000,1000,no,target,always,0,,,,,,,
+3144,Ominous Archer@AC_CHARGEARROW,attack,148,1,5000,0,50000,no,target,always,0,,,,,,,
+3144,Ominous Archer@NPC_DARKNESSATTACK,attack,190,5,5000,1000,5000,no,target,always,0,,,,,,,
+3144,Ominous Archer@AC_DOUBLE,attack,46,9,5000,1800,5000,no,target,always,0,,,,,,,
+3145,Ominous Abysmal Knight@NPC_DARKSTRIKE,idle,340,3,5000,0,10000,no,target,rudeattacked,,,,,,,,
+3145,Ominous Abysmal Knight@CR_AUTOGUARD,chase,249,10,2000,0,300000,no,self,longrangeattacked,,,,,,,,
+3145,Ominous Abysmal Knight@AC_CHARGEARROW,chase,148,1,500,0,5000,no,target,always,0,,,,,,,
+3145,Ominous Abysmal Knight@KN_BRANDISHSPEAR,attack,57,10,500,2000,5000,no,target,always,0,,,,,,9,
+3145,Ominous Abysmal Knight@NPC_DARKNESSATTACK,attack,190,9,500,1500,10000,no,target,always,0,,,,,,7,
+3145,Ominous Abysmal Knight@NPC_CRITICALSLASH,attack,170,1,500,0,5000,no,target,always,0,,,,,,,
+3147,Ominous Bloody Knight@WZ_METEOR,chase,83,7,2000,0,10000,no,target,myhpltmaxrate,50,,,,,,,
+3147,Ominous Bloody Knight@WZ_METEOR,attack,83,7,2000,0,5000,no,target,myhpltmaxrate,30,,,,,,,
+3147,Ominous Bloody Knight@KN_BRANDISHSPEAR,attack,57,7,500,1000,5000,no,target,always,0,,,,,,9,
+3147,Ominous Bloody Knight@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,9,
+3147,Ominous Bloody Knight@NPC_PULSESTRIKE,attack,661,3,500,2000,10000,no,self,always,0,,,,,,7,
+3151,Ominous Corrupted Soul@NPC_EARTHQUAKE,idle,653,2,10000,5000,5000,yes,self,rudeattacked,,,,,,,7,
+3151,Ominous Corrupted Soul@NPC_EVILLAND,idle,670,10,7000,3000,5000,yes,randomtarget,always,0,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_HELLJUDGEMENT,idle,662,5,10000,5000,0,yes,self,always,0,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_VAMPIRE_GIFT,idle,679,5,2000,5000,5000,yes,self,always,0,,,,,,29,
+3151,Ominous Corrupted Soul@NPC_BLOODDRAIN,idle,199,1,2000,0,2000,no,randomtarget,always,0,,,,,,29,
+3151,Ominous Corrupted Soul@AM_DEMONSTRATION,idle,229,9,10000,0,2000,no,randomtarget,always,0,,,,,,,
+3151,Ominous Corrupted Soul@NPC_HELLJUDGEMENT,idle,662,5,10000,5000,5000,yes,self,myhpltmaxrate,50,,,,,,,
+3151,Ominous Corrupted Soul@AL_HEAL,idle,28,11,10000,0,5000,no,self,myhpltmaxrate,50,,,,,,,
+3151,Ominous Corrupted Soul@NPC_POWERUP,idle,349,5,10000,1000,5000,yes,self,myhpltmaxrate,50,,,,,,,
+3151,Ominous Corrupted Soul@NPC_EARTHQUAKE,idle,653,4,10000,5000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
+3151,Ominous Corrupted Soul@NPC_EVILLAND,idle,670,10,10000,1000,5000,yes,randomtarget,myhpltmaxrate,30,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_HELLJUDGEMENT,idle,662,10,10000,5000,0,yes,self,rudeattacked,,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_HELLJUDGEMENT,idle,662,8,10000,5000,0,yes,self,casttargeted,,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_HELLJUDGEMENT,idle,662,6,10000,5000,0,yes,self,longrangeattacked,,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_WIDESOULDRAIN,idle,680,5,10000,1000,0,yes,self,skillused,490,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_WIDESOULDRAIN,idle,680,5,10000,1000,0,yes,self,skillused,271,,,,,,9,
+3151,Ominous Corrupted Soul@NPC_DARKSTRIKE,attack,340,10,5000,1000,5000,yes,target,always,0,,,,,,,
+3151,Ominous Corrupted Soul@NPC_BLOODDRAIN,attack,199,1,2000,1000,0,no,target,always,0,,,,,,29,
+3151,Ominous Corrupted Soul@NPC_CRITICALWOUND,attack,673,4,500,0,5000,no,target,always,0,,,,,,,
+3151,Ominous Corrupted Soul@AS_SONICBLOW,attack,136,10,500,800,5000,yes,target,always,0,,,,,,,
+3151,Ominous Corrupted Soul@NPC_WIDECURSE,attack,677,5,10000,1000,5000,yes,self,always,0,,,,,,,
+3151,Ominous Corrupted Soul@NPC_WIDESILENCE,attack,663,5,8000,1000,5000,yes,self,always,0,,,,,,,
+3151,Ominous Corrupted Soul@NPC_WIDESTONE,attack,666,3,10000,1000,5000,yes,self,always,0,,,,,,,
+3151,Ominous Corrupted Soul@NPC_WIDESTUN,attack,678,3,5000,1000,5000,yes,self,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_DARKSTRIKE,idle,340,10,10000,0,0,no,target,rudeattacked,,,,,,,,
+3150,Ominous Amdarais@NPC_DARKSTRIKE,chase,340,5,5000,0,1000,no,target,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_HELLJUDGEMENT,chase,662,5,5000,4000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
+3150,Ominous Amdarais@NPC_DRAGONFEAR,chase,659,5,10000,0,0,no,self,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,yes,self,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_HELLJUDGEMENT,attack,662,5,10000,4000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
+3150,Ominous Amdarais@NPC_GRANDDARKNESS,attack,339,10,10000,2000,1000,yes,self,myhpltmaxrate,30,,,,,,9,
+3150,Ominous Amdarais@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,30,,,,,,6,
+3150,Ominous Amdarais@NPC_VAMPIRE_GIFT,attack,679,5,10000,0,0,no,self,skillused,490,,,,,,42,
+3150,Ominous Amdarais@NPC_CRITICALWOUND,attack,673,4,500,500,5000,yes,target,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_CHANGEUNDEAD,attack,348,1,500,0,5000,no,target,always,0,,,,,,44,
+3150,Ominous Amdarais@NPC_MENTALBREAKER,attack,159,4,500,1500,5000,no,target,always,0,,,,,,42,
+3150,Ominous Amdarais@NPC_CRITICALSLASH,attack,170,1,10000,0,5000,no,target,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_DARKCROSS,attack,338,10,5000,0,5000,no,target,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_UNDEADATTACK,attack,347,10,10000,500,5000,yes,target,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_CURSEATTACK,attack,181,5,4000,0,3000,no,target,always,0,,,,,,,
+3150,Ominous Amdarais@NPC_STUNATTACK,attack,179,5,2000,0,3000,no,target,always,0,,,,,,,
+3150,Ominous Amdarais@SM_MAGNUM,attack,7,25,10000,500,5000,yes,self,always,0,,,,,,,

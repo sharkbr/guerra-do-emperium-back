@@ -1,0 +1,850 @@
+//===== Guerra do Emperium ===================================
+//= Maldição de Glast Heim Sombria  (Old Glast Heim - Challenge Mode)
+//===========================================================
+//= Instância Id 49, mapas 1@gl_he e 1@gl_he2, nível 160, uma
+//= hora, tempo de espera de três dias. Entrada pelo Sósia de
+//= Hugin, em glast_01 179,282.
+//===========================================================
+//
+//= POR QUE ESTE ARQUIVO EXISTE
+//
+//= A Sombria não está implementada em versão nenhuma do
+//= rAthena - nem no master, conferido em 2026-08-28. O que o
+//= vendor tem é uma linha de `Enter:` no instance_db e catorze
+//= monstros COMENTADOS, só com Id e AegisName. O NPC que dava
+//= acesso a ela (o "Hugin's Follower") chegou a existir no
+//= OldGlastHeim.txt e foi REMOVIDO na v1.5, sem que o outro
+//= lado da porta tivesse sido escrito.
+//
+//= Então isto aqui não é um `disablenpc` desfeito: é a
+//= instância inteira.
+//
+//= O QUE TORNOU ISTO BARATO, E É A DESCOBERTA CENTRAL
+//
+//= Medido pelo map_cache do próprio servidor em 2026-08-28: as
+//= células andáveis do 1@gl_he são IDÊNTICAS às do 2@gl_k -
+//= mesmo md5. Ou seja a Sombria roda na planta do segundo mapa
+//= da Maldição normal, e toda coordenada do OldGlastHeim.txt
+//= vale aqui sem conversão. Foi de lá que saíram a entrada
+//= (150,46), o Varmunt (151,71), o Henrich (148,67) e os três
+//= portais do corredor central.
+//
+//= O 1@gl_he2 é outra planta (32.604 células andáveis contra
+//= 49.426), e para ele não há coordenada de referência em lugar
+//= nenhum - as daqui foram achadas por
+//= `ferramentas/confere_celula.py --salas`, que devolve o
+//= centro de cada pedaço conectado de chão. Todas as
+//= coordenadas deste arquivo passaram por aquela ferramenta.
+//
+//= O DESENHO DOS DOIS ANDARES
+//
+//= Os dois mapas são um corredor central mais três alas, e as
+//= alas são pedaços DESCONECTADOS do corredor - quem liga são
+//= os portais. Isso não foi escolha nossa, é a planta:
+//
+//=   corredor   2.062 células   centro 149,52
+//=   ala oeste  14.334 células  centro 129,104
+//=   ala leste  13.609 células  centro 191,107
+//=   salão      18.822 células  centro 151,232   (só no andar 1)
+//
+//= Há um quinto pedaço de 599 células no canto (299,0) que é
+//= ruído do .gat, da mesma família do vis_h01 da seção 5 do
+//= CLAUDE.md. Nada nasce lá, e é por isso que todo spawn deste
+//= arquivo é `areamonster` com centro e raio, nunca `0,0`.
+//
+//= DE ONDE VEIO O ROTEIRO
+//
+//= Da página Glast_Heim_Sombria do arquivo.browiki.org, passo a
+//= passo, que é a fonte do bRO (regra 3). Os vinte passos dela
+//= estão marcados no código como `// browiki N`.
+//
+//= Os diálogos são nossos: a browiki descreve o que acontece em
+//= cada passo, não o texto das falas. O que veio de lá e não se
+//= inventa é o NOME de cada coisa - monstro, item, NPC.
+//
+//= O QUE NÃO PRECISOU DE CLIENTE
+//
+//= Nada. Os dois mapas estão no GRF, os catorze monstros estão
+//= no npcidentity.lub com sprite e arte, e as SEIS quests da
+//= Sombria já estavam traduzidas no QuestInfoList deste cliente
+//= ("Glast Heim Sombria" / "Elimine a Origem da Escuridão").
+//= Quest que o cliente não conhece derruba o cliente, e não é o
+//= caso de nenhuma delas. Esta instância não pede patch.
+//
+//= AS QUESTS, E QUEM AS DECLARA
+//
+//=   12334  vendor   o tempo de espera, `TimeLimit: 3d 4h`
+//=   12335  vendor   entrou na instância
+//=   12336  NOSSA    caçar a Origem da Escuridão (3151)
+//=   12337  NOSSA    caçar o Amdarais Sombrio (3150)
+//=   12338  vendor   reportar a Hugin (Origem)
+//=   12339  vendor   reportar a Hugin (Amdarais)
+//
+//= As duas nossas estão em db/guerra/quest_db.yml e são as
+//= únicas que precisam de `Targets:` - por isso eram as únicas
+//= que faltavam: o alvo delas não existia até os monstros serem
+//= gerados.
+//
+//= O PRÉ-REQUISITO
+//
+//= `isbegin_quest(12321) == 2` - a "Time Conqueror", que é o
+//= que a Maldição normal marca ao ser concluída. É o "Quests
+//= anteriores: Maldição de Glast Heim" da browiki. O
+//= OldGlastHeim.txt usa a mesma leitura para liberar o atalho
+//= dele, então a semântica está conferida contra o uso que já
+//= existe, e não suposta.
+//
+//= UMA RESSALVA QUE FICA POR ESCRITO
+//
+//= As recompensas de EXP são as do bRO - 250.000/150.000 no
+//= Varmunt e 350.000/250.000 no Hugin. `getexp` NÃO passa pela
+//= taxa de EXP do servidor: só pelo `quest_exp_rate`, que está
+//= em 100 (seção 5). Num servidor onde monstro rende 50x, essas
+//= recompensas valem um cinquenta avos do que o número sugere
+//= em relação ao resto. Foi mantido assim de propósito, porque
+//= a decisão do dono em 2026-08-29 foi seguir o bRO; ajustar é
+//= trocar quatro números aqui.
+//===========================================================
+
+// browiki 1 - a entrada, em Glast Heim. O sósia fica ao lado do
+// Hugin da Maldição normal (204,273), que continua onde estava.
+glast_01,179,282,5	script	Sósia de Hugin::SombriaHugin	4_M_SAGE_C,{
+	.@md$ = "Maldição de Glast Heim Sombria";
+
+	if (BaseLevel < 160) {
+		mes "[Sósia de Hugin]";
+		mes "Existe uma segunda fenda, mais funda que a do meu original, e ela não perdoa. Volte quando tiver nível 160.";
+		close;
+	}
+	if (isbegin_quest(12321) != 2) {
+		mes "[Sósia de Hugin]";
+		mes "Você ainda não atravessou a Maldição de Glast Heim. Quem não viu a ruína de perto não tem o que fazer do outro lado.";
+		next;
+		mes "[Sósia de Hugin]";
+		mes "Fale com o meu original, ali adiante. Quando terminar aquilo, volte aqui.";
+		close;
+	}
+
+	mes "[Sósia de Hugin]";
+	mes "Eu não sou ele. Sou o que sobrou de uma travessia que deu errado - o Hugin que ficou do lado de dentro quando a fenda fechou.";
+	next;
+	mes "[Sósia de Hugin]";
+	mes "O que você viu foi a maldição da Himmelmez enfraquecendo. Existe uma versão daquela noite em que ela não enfraqueceu.";
+	next;
+	mes "[Sósia de Hugin]";
+	mes "Os mesmos corredores, a mesma gente morta, e o Amdarais inteiro. Quer ver?";
+	next;
+
+	switch (select("Quero entrar.", "Quero gerar a fenda.", "Agora não.")) {
+	case 1:
+		// Nao ha `has_instance` neste rAthena - so `instance_enter`,
+		// e o IE_NOINSTANCE dele ja responde "a fenda nao esta
+		// aberta". Uma checagem a menos, e uma verdade a menos para
+		// divergir.
+		if (isbegin_quest(12334) == 1) {
+			mes "[Sósia de Hugin]";
+			mes "Você atravessou faz pouco. O corpo leva três dias para aguentar de novo.";
+			close;
+		}
+		switch (instance_enter(.@md$)) {
+		case IE_OK:
+			if (isbegin_quest(12335) == 0)
+				setquest 12335;
+			mapannounce "glast_01", strcharinfo(0) + " atravessou para a Glast Heim Sombria.", bc_map, 0x99CCFF;
+			close;
+		case IE_NOMEMBER:
+			mes "[Sósia de Hugin]";
+			mes "Você não é do grupo que abriu esta fenda.";
+			close;
+		case IE_NOINSTANCE:
+			mes "[Sósia de Hugin]";
+			mes "A fenda não está aberta.";
+			close;
+		default:
+			mes "[Sósia de Hugin]";
+			mes "Alguma coisa empurrou você de volta. Tente outra vez.";
+			close;
+		}
+
+	case 2:
+		if (is_party_leader() == false) {
+			mes "[Sósia de Hugin]";
+			mes "Só quem lidera o grupo consegue rasgar o tempo. Chame o seu líder.";
+			close;
+		}
+		switch (instance_create(.@md$)) {
+		case IE_NOMEMBER:
+			mes "[Sósia de Hugin]";
+			mes "Você precisa de um grupo, mesmo que seja só você nele.";
+			close;
+		case IE_NOINSTANCE:
+			mes "[Sósia de Hugin]";
+			mes "Falhei ao abrir a fenda. Tente daqui a pouco.";
+			close;
+		case IE_OTHER:
+			mes "[Sósia de Hugin]";
+			mes "Esta fenda já está aberta.";
+			close;
+		default:
+			mes "[Sósia de Hugin]";
+			mes "Pronto. Fale comigo de novo para atravessar - e leve gente.";
+			close;
+		}
+
+	case 3:
+		close;
+	}
+}
+
+// ---------------------------------------------------------
+// O CONTROLADOR
+//
+// Guarda o estágio da instância e é quem liga e desliga tudo.
+// Mora em 1,1 porque não tem corpo: o `HIDDEN_WARP_NPC` é o
+// mesmo que o OldGlastHeim.txt usa para os `#talkinstance`.
+//
+// `OnInstanceInit` e NÃO `OnInit`: o `disablenpc` do OnInit
+// esconde o NPC do mapa-molde, onde ninguém entra, e o clone
+// de dentro da instância nasce LIGADO - o `npc_duplicate_sub`
+// copia `nd->state`, que o `disablenpc` nunca escreve
+// (CLAUDE.md seção 5). É seguro porque o `instance_addnpc`
+// cria todos os clones ANTES de rodar qualquer
+// `OnInstanceInit` (instance.cpp:586-598).
+// ---------------------------------------------------------
+1@gl_he,1,1,0	script	#sombria_controle	HIDDEN_WARP_NPC,{
+	end;
+
+OnInstanceInit:
+	'mapa$[0] = instance_mapname("1@gl_he");
+	'mapa$[1] = instance_mapname("1@gl_he2");
+	'estagio = 0;
+
+	disablenpc instance_npcname("Henrich#sombria");
+	disablenpc instance_npcname("Coroinha de Domun#sombria");
+	disablenpc instance_npcname("Ferreira Hollgrehenn#sombria");
+	disablenpc instance_npcname("Himmelmez#sombria1");
+	disablenpc instance_npcname("Himmelmez#sombria2");
+	disablenpc instance_npcname("Hugin#sombria");
+	disablenpc instance_npcname("#sombria_portal_oeste");
+	disablenpc instance_npcname("#sombria_portal_leste");
+	disablenpc instance_npcname("#sombria_portal_salao");
+	disablenpc instance_npcname("#sombria_portal_andar2");
+	disablenpc instance_npcname("#sombria_estatua_chave");
+
+	for (.@i = 1; .@i <= 6; .@i++)
+		disablenpc instance_npcname("Homem caído#sombria" + .@i);
+	for (.@i = 1; .@i <= 7; .@i++)
+		disablenpc instance_npcname("Estátua Estranha#sombria" + .@i);
+	end;
+
+// Cada setor termina do mesmo jeito: quando o último monstro
+// com o rótulo cai. Um rótulo por setor, e o `mobcount` conta
+// por rótulo - nunca por "all", que devolve 0 e faz o setor
+// nunca fechar, calado (CLAUDE.md seção 5).
+OnSetorLimpo:
+	if (mobcount('mapa$[0], instance_npcname("#sombria_controle") + "::OnSetorLimpo") > 0)
+		end;
+	donpcevent instance_npcname("#sombria_controle") + "::OnAvanca";
+	end;
+
+OnAvanca:
+	'estagio++;
+	switch ('estagio) {
+	// browiki 6 - o Coroinha de Domun, depois do setor 1
+	case 3:
+		mapannounce 'mapa$[0], "A maldição da Himmelmez enfraqueceu neste trecho. Procurem sobreviventes.", bc_map, 0xFFFF00;
+		enablenpc instance_npcname("Coroinha de Domun#sombria");
+		break;
+	// browiki 8 - a Ferreira Hollgrehenn, depois do setor 2
+	case 5:
+		mapannounce 'mapa$[0], "O setor oeste está limpo. Alguém chama por socorro no corredor.", bc_map, 0xFFFF00;
+		enablenpc instance_npcname("Ferreira Hollgrehenn#sombria");
+		break;
+	// browiki 10 - a Himmelmez, depois do setor 3
+	case 7:
+		mapannounce 'mapa$[0], "O setor leste está limpo. O portal do salão se abriu.", bc_map, 0xFFFF00;
+		enablenpc instance_npcname("#sombria_portal_salao");
+		enablenpc instance_npcname("Himmelmez#sombria1");
+		break;
+	}
+	end;
+
+// browiki 5 - setor 1, no corredor central.
+OnSetor1:
+	.@rot$ = instance_npcname("#sombria_controle") + "::OnSetorLimpo";
+	areamonster 'mapa$[0],149,52,20,20,"--ja--",3139,8,.@rot$;
+	areamonster 'mapa$[0],149,52,20,20,"--ja--",3141,6,.@rot$;
+	areamonster 'mapa$[0],149,52,20,20,"--ja--",3140,4,.@rot$;
+	mapannounce 'mapa$[0], "Os mortos do corredor se levantaram.", bc_map, 0xFF6666;
+	end;
+
+// browiki 7 - setor 2, ala oeste. Os Homens caídos ficam de pé
+// junto com os monstros: quem chegar perto deles leva Arclouses.
+OnSetor2:
+	.@rot$ = instance_npcname("#sombria_controle") + "::OnSetorLimpo";
+	areamonster 'mapa$[0],129,104,35,35,"--ja--",3139,12,.@rot$;
+	areamonster 'mapa$[0],129,104,35,35,"--ja--",3141,10,.@rot$;
+	for (.@i = 1; .@i <= 6; .@i++)
+		enablenpc instance_npcname("Homem caído#sombria" + .@i);
+	mapannounce 'mapa$[0], "Cuidado com os Homens caídos: eles não vieram sozinhos.", bc_map, 0xFF6666;
+	end;
+
+// browiki 9 - setor 3, ala leste.
+OnSetor3:
+	.@rot$ = instance_npcname("#sombria_controle") + "::OnSetorLimpo";
+	areamonster 'mapa$[0],191,107,35,35,"--ja--",3143,10,.@rot$;
+	areamonster 'mapa$[0],191,107,35,35,"--ja--",3144,8,.@rot$;
+	mapannounce 'mapa$[0], "A guarda do reino ainda patrulha o setor leste.", bc_map, 0xFF6666;
+	end;
+
+// browiki 13 - o andar 2. Aqui os monstros não abrem portal:
+// eles só precisam ser derrubados até a mensagem aparecer, que
+// é o que a browiki descreve ("as chances da mensagem aparecer
+// são aleatórias, é importante continuar matando").
+OnAndar2:
+	.@rot$ = instance_npcname("#sombria_controle") + "::OnAndar2Morto";
+	areamonster 'mapa$[1],129,104,35,35,"--ja--",3146,8,.@rot$;
+	areamonster 'mapa$[1],129,104,35,35,"--ja--",3145,6,.@rot$;
+	areamonster 'mapa$[1],191,107,35,35,"--ja--",3147,6,.@rot$;
+	areamonster 'mapa$[1],191,107,35,35,"--ja--",3143,8,.@rot$;
+	areamonster 'mapa$[1],191,107,35,35,"--ja--",3144,6,.@rot$;
+	'mortos = 0;
+	end;
+
+OnAndar2Morto:
+	'mortos++;
+	// 12 mortes garantem, e antes disso é sorte. O `rand` nunca
+	// recebe menos de 2 - `rand(1)` MATA o script (seção 5).
+	if ('mortos < 12) {
+		if (rand(6) != 0)
+			end;
+	}
+	if ('estagio >= 11)
+		end;
+	'estagio = 11;
+	mapannounce 'mapa$[1], "Um dos Comandantes da Destruição se revelou na ala oeste.", bc_map, 0xFFFF00;
+	donpcevent instance_npcname("#sombria_controle") + "::OnDesmorto";
+	end;
+
+// browiki 14 - o Desmorto Sombrio, num de quatro pontos.
+OnDesmorto:
+	setarray .@x[0], 118, 141, 100, 129, -1;
+	setarray .@y[0], 118,  90, 130, 104, -1;
+	.@n = 4;
+	.@i = rand(.@n);
+	monster 'mapa$[1],.@x[.@i],.@y[.@i],"--ja--",3148,1,
+		instance_npcname("#sombria_controle") + "::OnDesmortoMorto";
+	end;
+
+OnDesmortoMorto:
+	'estagio = 12;
+	mapannounce 'mapa$[1], "O Comandante caiu. A irmã dele acordou na ala leste.", bc_map, 0xFFFF00;
+	setarray .@x[0], 191, 205, 178, 196, -1;
+	setarray .@y[0], 107,  95, 120, 130, -1;
+	.@n = 4;
+	.@i = rand(.@n);
+	monster 'mapa$[1],.@x[.@i],.@y[.@i],"--ja--",3149,1,
+		instance_npcname("#sombria_controle") + "::OnDesmortaMorta";
+	end;
+
+// browiki 16 - a Himmelmez de novo, e o Amdarais Sombrio.
+OnDesmortaMorta:
+	'estagio = 13;
+	mapannounce 'mapa$[1], "O caminho para o norte se abriu. A Himmelmez espera.", bc_map, 0xFFFF00;
+	enablenpc instance_npcname("#sombria_portal_andar2");
+	enablenpc instance_npcname("Himmelmez#sombria2");
+	end;
+
+// O Amdarais chama Arclouses o tempo todo, e é isso que a
+// browiki avisa: "esta versão do MVP invocará Arclouses
+// Sombrios". Um temporizador do controlador, e não uma linha
+// de mob_skill_db, porque a invocação é do encontro e não do
+// bicho - fora daqui ele não deve chamar nada.
+OnAmdaraisComeca:
+	initnpctimer;
+	end;
+
+OnTimer25000:
+	if (mobcount('mapa$[1], instance_npcname("#sombria_controle") + "::OnAmdaraisMorto") == 0) {
+		stopnpctimer;
+		end;
+	}
+	areamonster 'mapa$[1],148,172,12,12,"--ja--",3142,4,
+		instance_npcname("#sombria_controle") + "::OnArclouseMorto";
+	initnpctimer;
+	end;
+
+OnArclouseMorto:
+	end;
+
+OnAmdaraisMorto:
+	stopnpctimer;
+	'estagio = 14;
+	killmonster 'mapa$[1], instance_npcname("#sombria_controle") + "::OnArclouseMorto";
+	mapannounce 'mapa$[1], "O Amdarais Sombrio caiu. Falem com Hugin.", bc_map, 0x99FF99;
+	enablenpc instance_npcname("Hugin#sombria");
+	enablenpc instance_npcname("#sombria_estatua_chave");
+	end;
+}
+
+// ---------------------------------------------------------
+// ANDAR 1
+// ---------------------------------------------------------
+
+// browiki 2 - Varmunt, logo depois da entrada. Ele é também
+// quem paga a primeira recompensa, no passo 11.
+1@gl_he,151,71,3	script	Varmunt#sombria	4_M_BARMUND,{
+	if ('estagio == 0) {
+		if (is_party_leader() == false) {
+			mes "[Varmunt]";
+			mes "Chame quem lidera vocês. Eu não repito isto duas vezes.";
+			close;
+		}
+		mes "[Varmunt]";
+		mes "Você de novo. Ou uma versão de você que ainda não me conhece - nesta noite eu nunca sei.";
+		next;
+		mes "[Varmunt]";
+		mes "Aqui a maldição não enfraqueceu. Ela pegou. O castelo inteiro é dela, e o Amdarais está de pé lá em cima.";
+		next;
+		select("O que a gente faz?");
+		mes "[Varmunt]";
+		mes "Fala com o Henrich. Ele está logo ali, e vai dizer que não dá. Insista.";
+		close2;
+		'estagio = 1;
+		enablenpc instance_npcname("Henrich#sombria");
+		end;
+	}
+
+	// browiki 11 - a recompensa da Origem da Escuridão. Todo
+	// mundo do grupo fala, um por um.
+	if ('estagio == 8) {
+		if (isbegin_quest(12336) != 2) {
+			mes "[Varmunt]";
+			mes "Você não estava lá quando aquilo caiu. Não tenho o que lhe dar.";
+			close;
+		}
+		if (isbegin_quest(12338) != 0) {
+			mes "[Varmunt]";
+			mes "Já acertei com você. Suba - o Henrich abriu o caminho.";
+			close;
+		}
+		mes "[Varmunt]";
+		mes "A raiz está fora. Isso compra alguns minutos, e minuto aqui é tudo que existe.";
+		next;
+		setquest 12338;
+		completequest 12336;
+		if (isbegin_quest(12339) == 0) {
+			// primeira vez
+			getexp 250000, 150000;
+			getitem 6607, 1;
+			getitem 6608, 1;
+			mes "[Varmunt]";
+			mes "Leve isto. O cristal é do tempo daqui, e a mana coagulada é do que sobrou dela.";
+		} else {
+			getexp 250000, 150000;
+			getitem 6607, 1;
+			getitem 6755, 1;
+			mes "[Varmunt]";
+			mes "O de sempre. Um cristal, e uma mana que ninguém devia carregar no bolso.";
+		}
+		close2;
+		if ('estagio == 8) {
+			'estagio = 9;
+			enablenpc instance_npcname("#sombria_portal_andar2");
+			mapannounce 'mapa$[0], "O Henrich abriu a passagem para o andar de cima.", bc_map, 0xFFFF00;
+		}
+		end;
+	}
+
+	mes "[Varmunt]";
+	mes "Ande. O tempo aqui não é nosso.";
+	close;
+}
+
+// browiki 3 - Henrich. Ele é quem solta o primeiro setor.
+1@gl_he,148,67,5	script	Henrich#sombria	4_M_HEINRICH,{
+	if ('estagio == 1) {
+		if (is_party_leader() == false) {
+			mes "[Henrich]";
+			mes "Fale com o seu líder primeiro.";
+			close;
+		}
+		mes "[Henrich]";
+		mes "Não. Da última vez eu levei gente para dentro e trouxe menos gente de volta.";
+		next;
+		select("Desta vez é diferente.");
+		mes "[Henrich]";
+		mes "É pior. Vocês não fazem ideia.";
+		next;
+		mes "[Henrich]";
+		mes "Mas eu não vou ficar aqui olhando outra vez. Eu seguro o corredor. Vocês limpam o que vier.";
+		close2;
+		'estagio = 2;
+		donpcevent instance_npcname("#sombria_controle") + "::OnSetor1";
+		end;
+	}
+	// browiki 12 - depois da recompensa do Varmunt.
+	if ('estagio >= 9) {
+		mes "[Henrich]";
+		mes "A escada está livre. Subam juntos, e não se separem lá em cima.";
+		close;
+	}
+	mes "[Henrich]";
+	mes "Eu seguro aqui. Vão.";
+	close;
+}
+
+// browiki 6 - o Coroinha de Domun. Abre o portal do setor 2.
+1@gl_he,143,58,4	script	Coroinha de Domun#sombria	4_M_KID1,{
+	mes "[Coroinha de Domun]";
+	mes "Eu me escondi debaixo do altar. Eu ouvi tudo.";
+	next;
+	mes "[Coroinha de Domun]";
+	mes "Tem gente viva na ala oeste. Ou tinha, faz pouco. Eles não conseguem sair porque os Homens caídos estão em pé no caminho.";
+	next;
+	mes "[Coroinha de Domun]";
+	mes "Não cheguem perto deles. Sério.";
+	close2;
+	if ('estagio == 3) {
+		'estagio = 4;
+		enablenpc instance_npcname("#sombria_portal_oeste");
+		donpcevent instance_npcname("#sombria_controle") + "::OnSetor2";
+		mapannounce 'mapa$[0], "O portal do setor oeste se abriu no corredor.", bc_map, 0xFFFF00;
+	}
+	end;
+}
+
+// browiki 8 - a Ferreira Hollgrehenn. Abre o portal do setor 3.
+1@gl_he,156,58,2	script	Ferreira Hollgrehenn#sombria	4_F_JOB_BLACKSMITH,{
+	mes "[Ferreira Hollgrehenn]";
+	mes "Eu conserto armadura, não gente. E hoje só apareceu gente para consertar.";
+	next;
+	mes "[Ferreira Hollgrehenn]";
+	mes "A guarda do reino inteira está do lado leste, e nenhum deles respira. Se vocês vão por ali, vão de uma vez.";
+	close2;
+	if ('estagio == 5) {
+		'estagio = 6;
+		enablenpc instance_npcname("#sombria_portal_leste");
+		donpcevent instance_npcname("#sombria_controle") + "::OnSetor3";
+		mapannounce 'mapa$[0], "O portal do setor leste se abriu no corredor.", bc_map, 0xFFFF00;
+	}
+	end;
+}
+
+// browiki 7 - os Homens caídos. Área de toque de 5x5, igual à
+// do "A dead man" da Maldição normal.
+//
+// A invocação tem trava por NPC: sem ela, atravessar o mesmo
+// homem dez vezes enche a ala de Arclouses e trava o setor.
+1@gl_he,118,118,4	script	Homem caído#sombria1	4_M_DIEMAN,5,5,{
+	end;
+OnTouch:
+	if (getvariableofnpc(.chamou, strnpcinfo(3)) == 1)
+		end;
+	set getvariableofnpc(.chamou, strnpcinfo(3)), 1;
+	npctalk "Não... não cheguem perto...";
+	specialeffect EF_CURSEATTACK;
+	// Nao existe `getnpcx()` neste rAthena. Quem devolve a posicao
+	// do proprio NPC e o `getmapxy` com BL_NPC e sem valor de
+	// busca - e e assim que os seis duplicados sabem cada um onde
+	// esta, sem repetir coordenada no script.
+	getmapxy(.@m$, .@x, .@y, BL_NPC);
+	areamonster 'mapa$[0],.@x,.@y,6,6,"--ja--",3142,5,
+		instance_npcname("#sombria_controle") + "::OnSetorLimpo";
+	end;
+OnInstanceInit:
+	.chamou = 0;
+	end;
+}
+1@gl_he,100,130,2	duplicate(Homem caído#sombria1)	Homem caído#sombria2	4_M_DIEMAN,5,5
+1@gl_he,140,90,6	duplicate(Homem caído#sombria1)	Homem caído#sombria3	4_M_DIEMAN,5,5
+1@gl_he,112,95,0	duplicate(Homem caído#sombria1)	Homem caído#sombria4	4_M_DIEMAN,5,5
+1@gl_he,129,125,4	duplicate(Homem caído#sombria1)	Homem caído#sombria5	4_M_DIEMAN,5,5
+1@gl_he,145,110,2	duplicate(Homem caído#sombria1)	Homem caído#sombria6	4_M_DIEMAN,5,5
+
+// browiki 10 - a Himmelmez do salão, e a Origem da Escuridão.
+1@gl_he,151,225,4	script	Himmelmez#sombria1	4_F_HIMEL,{
+	if ('estagio != 7) {
+		mes "[Himmelmez]";
+		mes "Ainda não.";
+		close;
+	}
+	mes "[Himmelmez]";
+	mes "Vocês chegaram longe. Mais longe do que da outra vez.";
+	next;
+	mes "[Himmelmez]";
+	mes "Não faz diferença. O que eu plantei aqui já pegou raiz, e raiz não se desfaz conversando.";
+	next;
+	select("Então a gente arranca.");
+	mes "[Himmelmez]";
+	mes "Arranquem.";
+	close2;
+	if ('estagio == 7) {
+		'estagio = 71;
+		if (isbegin_quest(12336) == 0)
+			setquest 12336;
+		disablenpc();
+		mapannounce 'mapa$[0], "A Origem da Escuridão rompeu o chão do salão.", bc_map, 0xFF3333;
+		monster 'mapa$[0],151,232,"--ja--",3151,1,
+			instance_npcname("Himmelmez#sombria1") + "::OnOrigemMorta";
+	}
+	end;
+OnOrigemMorta:
+	'estagio = 8;
+	mapannounce 'mapa$[0], "A Origem da Escuridão caiu. Falem com Varmunt.", bc_map, 0x99FF99;
+	end;
+}
+
+// Os três portais do corredor. As coordenadas são as do
+// 2@gl_k, que valem aqui porque o .gat é o mesmo - ver o
+// cabeçalho. Cada um leva à ala e tem o par de volta.
+1@gl_he,145,123,0	script	#sombria_portal_oeste	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[0],126,123;
+	end;
+}
+1@gl_he,136,122,0	script	#sombria_volta_oeste	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[0],150,116;
+	end;
+}
+1@gl_he,154,101,0	script	#sombria_portal_leste	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[0],174,101;
+	end;
+}
+1@gl_he,165,101,0	script	#sombria_volta_leste	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[0],150,111;
+	end;
+}
+1@gl_he,150,163,0	script	#sombria_portal_salao	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[0],150,179;
+	end;
+}
+1@gl_he,150,167,0	script	#sombria_volta_salao	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[0],150,149;
+	end;
+}
+
+// browiki 12 - a passagem para o andar de cima.
+1@gl_he,150,60,0	script	#sombria_portal_andar2	WARPNPC,2,2,{
+OnTouch:
+	warp 'mapa$[1],150,46;
+	if ('estagio == 9) {
+		'estagio = 10;
+		donpcevent instance_npcname("#sombria_controle") + "::OnAndar2";
+	}
+	end;
+}
+
+// ---------------------------------------------------------
+// ANDAR 2
+// ---------------------------------------------------------
+
+// browiki 16 - a Himmelmez do fim, e o Amdarais Sombrio.
+1@gl_he2,148,165,4	script	Himmelmez#sombria2	4_F_HIMEL,{
+	if ('estagio != 13) {
+		mes "[Himmelmez]";
+		mes "Ainda não.";
+		close;
+	}
+	mes "[Himmelmez]";
+	mes "Os meus dois comandantes. Vocês têm mesmo pressa de morrer.";
+	next;
+	mes "[Himmelmez]";
+	mes "Adiante está o que sobrou do rei que mandou construir isto. Ele não vai reconhecer nenhum de vocês, e não vai fazer diferença.";
+	next;
+	select("Sai da frente.");
+	mes "[Himmelmez]";
+	mes "Com prazer.";
+	close2;
+	if ('estagio == 13) {
+		'estagio = 131;
+		if (isbegin_quest(12337) == 0)
+			setquest 12337;
+		disablenpc();
+		mapannounce 'mapa$[1], "O Amdarais Sombrio se levantou. Fiquem atrás da escada.", bc_map, 0xFF3333;
+		monster 'mapa$[1],148,172,"--ja--",3150,1,
+			instance_npcname("#sombria_controle") + "::OnAmdaraisMorto";
+		enablenpc instance_npcname("Fantasma de Varmunt#sombria1");
+		enablenpc instance_npcname("Fantasma de Varmunt#sombria2");
+		donpcevent instance_npcname("#sombria_controle") + "::OnAmdaraisComeca";
+	}
+	end;
+}
+
+// browiki 16 - o Fantasma de Varmunt. Chegar perto dá um dos
+// sete bônus temporários.
+//
+// Os sete SC_GLASTHEIM_* do rAthena são exatamente os sete
+// "Temporais" que a browiki lista, e os valores conferem um a
+// um com o que ela diz (+20 atributos, DEF+200/DEFM+50,
+// HP+10.000/SP+1.000, cura +100%/+50%, +100% de resistência ao
+// Amdarais, +90% contra as barreiras de fogo, +100% de dano).
+// A Maldição normal já usa quatro deles com estes mesmos
+// números - conferido em OldGlastHeim.txt linha 1976.
+1@gl_he2,144,178,4	script	Fantasma de Varmunt#sombria1	4_M_BARMUND,2,2,{
+	end;
+OnTouch:
+	specialeffect2 EF_ENHANCE;
+	switch (rand(7)) {
+	case 0:
+		sc_start SC_GLASTHEIM_STATE,30000,20,10000,SCSTART_NOTICKDEF;
+		dispbottom "Estado Temporal: todos os atributos +20.", 0x99CCFF;
+		break;
+	case 1:
+		sc_start2 SC_GLASTHEIM_ITEMDEF,30000,200,50,10000,SCSTART_NOTICKDEF;
+		dispbottom "Poder Temporal: DEF +200 e DEFM +50.", 0x99CCFF;
+		break;
+	case 2:
+		sc_start2 SC_GLASTHEIM_HPSP,30000,10000,1000,10000,SCSTART_NOTICKDEF;
+		dispbottom "Energia Temporal: HP +10.000 e SP +1.000.", 0x99CCFF;
+		break;
+	case 3:
+		sc_start2 SC_GLASTHEIM_HEAL,30000,100,50,10000,SCSTART_NOTICKDEF;
+		dispbottom "Cura Temporal: efetividade de cura +100%, cura recebida +50%.", 0x99CCFF;
+		break;
+	case 4:
+		sc_start SC_GLASTHEIM_DEF,30000,100,10000,SCSTART_NOTICKDEF;
+		dispbottom "Defesa Temporal: resistência ao Amdarais Sombrio +100%.", 0x99CCFF;
+		break;
+	case 5:
+		sc_start SC_GLASTHEIM_HIDDEN,30000,90,10000,SCSTART_NOTICKDEF;
+		dispbottom "Escudo Temporal: resistência às barreiras de fogo +90%.", 0x99CCFF;
+		break;
+	default:
+		sc_start SC_GLASTHEIM_ATK,30000,100,10000,SCSTART_NOTICKDEF;
+		dispbottom "Ataque Temporal: dano físico contra o Amdarais Sombrio +100%.", 0x99CCFF;
+		break;
+	}
+	end;
+OnInstanceInit:
+	disablenpc();
+	end;
+}
+1@gl_he2,152,178,4	duplicate(Fantasma de Varmunt#sombria1)	Fantasma de Varmunt#sombria2	4_M_BARMUND,2,2
+
+// browiki 17 - Hugin paga a segunda recompensa.
+1@gl_he2,148,160,4	script	Hugin#sombria	4_M_SAGE_C,{
+	if (isbegin_quest(12337) != 2) {
+		mes "[Hugin]";
+		mes "Você não viu aquilo cair. Não posso registrar o que você não viu.";
+		close;
+	}
+	if (isbegin_quest(12339) != 0) {
+		mes "[Hugin]";
+		mes "Já acertei com você. Antes de sair, olhe a estátua do primeiro andar.";
+		close;
+	}
+	mes "[Hugin]";
+	mes "Está feito. Esta noite acabou de um jeito que ela nunca tinha acabado.";
+	next;
+	setquest 12339;
+	completequest 12337;
+	// O tempo de espera de três dias começa aqui, e não na
+	// entrada: quem entrou e não terminou pode voltar.
+	if (isbegin_quest(12334) == 0)
+		setquest 12334;
+	if (isbegin_quest(12338) == 1) {
+		// primeira vez - a browiki dá 5 de cada
+		getexp 350000, 250000;
+		getitem 6607, 5;
+		getitem 6755, 5;
+		mes "[Hugin]";
+		mes "Cinco cristais e cinco manas sombrias. É o que esta noite vale, e é mais do que eu esperava poder pagar.";
+	} else {
+		getexp 350000, 250000;
+		getitem 6607, 1;
+		getitem 6755, 1;
+		mes "[Hugin]";
+		mes "Um cristal e uma mana. O de sempre.";
+	}
+	next;
+	mes "[Hugin]";
+	mes "Antes de ir, volte ao primeiro andar e toque a estátua estranha ao lado da fonte. Tem uma sala atrás dela.";
+	close;
+}
+
+// browiki 18 - a estátua que leva à sala das sete.
+1@gl_he,150,52,4	script	#sombria_estatua_chave	4_GARGOYLE_STATUE,{
+	if ('estagio < 14) {
+		mes "A estátua não se mexe.";
+		close;
+	}
+	mes "[Estátua Estranha]";
+	mes "A pedra cede quando você encosta. Atrás dela há degraus.";
+	next;
+	if (select("Descer.", "Ficar.") == 2)
+		close;
+	close2;
+	for (.@i = 1; .@i <= 7; .@i++)
+		enablenpc instance_npcname("Estátua Estranha#sombria" + .@i);
+	warp 'mapa$[1],129,104;
+	end;
+}
+
+// browiki 19 - as sete estátuas. Cada uma dá uma gema, e uma
+// mana - 90% coagulada, 10% sombria.
+//
+// Os itens saem por `getitem`, e todos eles são NoDrop falso,
+// ou seja mochila cheia LARGA NO CHÃO (seção 5). Por isso a
+// checagem de peso antes: é mais barato recusar do que deixar
+// a gema no chão de uma instância que vai fechar.
+1@gl_he2,124,104,4	script	Estátua Estranha#sombria1	4_GARGOYLE_STATUE,{
+	if (getvariableofnpc(.usada, strnpcinfo(3)) == 1) {
+		mes "A estátua já se desfez em pó.";
+		close;
+	}
+	if (checkweight(6607, 3) == 0) {
+		mes "Você não tem espaço na mochila. A estátua espera.";
+		close;
+	}
+	set getvariableofnpc(.usada, strnpcinfo(3)), 1;
+	setarray .@gema[0], 719, 720, 721, 722, 725, 726, 727, -1;
+	.@qual = .@gema[rand(7)];
+	getitem .@qual, 1;
+	// 90% coagulada, 10% sombria - a browiki dá os dois números
+	if (rand(100) < 10)
+		getitem 6755, 1;
+	else
+		getitem 6608, 1;
+	mes "A estátua se abre, deixa cair o que guardava, e vira pó.";
+	close2;
+	disablenpc();
+	end;
+OnInstanceInit:
+	.usada = 0;
+	end;
+}
+1@gl_he2,134,104,4	duplicate(Estátua Estranha#sombria1)	Estátua Estranha#sombria2	4_GARGOYLE_STATUE
+1@gl_he2,129,99,4	duplicate(Estátua Estranha#sombria1)	Estátua Estranha#sombria3	4_GARGOYLE_STATUE
+1@gl_he2,129,109,4	duplicate(Estátua Estranha#sombria1)	Estátua Estranha#sombria4	4_GARGOYLE_STATUE
+1@gl_he2,125,99,4	duplicate(Estátua Estranha#sombria1)	Estátua Estranha#sombria5	4_GARGOYLE_STATUE
+1@gl_he2,133,109,4	duplicate(Estátua Estranha#sombria1)	Estátua Estranha#sombria6	4_GARGOYLE_STATUE
+1@gl_he2,125,109,4	duplicate(Estátua Estranha#sombria1)	Estátua Estranha#sombria7	4_GARGOYLE_STATUE
+
+// browiki 20 - a saída. Fica nos dois andares.
+1@gl_he,149,32,0	script	#sombria_saida1	WARPNPC,2,2,{
+OnTouch:
+	warp "glast_01",179,280;
+	end;
+}
+1@gl_he2,149,32,0	duplicate(#sombria_saida1)	#sombria_saida2	WARPNPC,2,2
+
+// Mapflags: ninguém memoriza, ninguém volta por asa, e o
+// grupo não se separa por teleporte.
+1@gl_he	mapflag	nomemo
+1@gl_he	mapflag	noteleport
+1@gl_he	mapflag	nosave	SavePoint
+1@gl_he	mapflag	nobranch
+1@gl_he	mapflag	nopenalty
+1@gl_he	mapflag	noreturn
+1@gl_he2	mapflag	nomemo
+1@gl_he2	mapflag	noteleport
+1@gl_he2	mapflag	nosave	SavePoint
+1@gl_he2	mapflag	nobranch
+1@gl_he2	mapflag	nopenalty
+1@gl_he2	mapflag	noreturn
