@@ -602,10 +602,17 @@ OnPCLoadMapEvent:
 	}
 	end;
 
-// Os nomes .@pn/.@php/.@pk tem prefixo de proposito: `callsub` NAO abre
-// escopo novo - ele enxerga e sobrescreve as `.@` de quem chamou (so o
-// `callfunc` isola). Um `.@hp` aqui dentro apagaria o `.@hp` do laco do
-// OnTimer1000, que mede as Pedras.
+// TUDO O QUE ESTE BLOCO PRECISA CHEGA POR `getarg`, e nao por herdar as
+// `.@` do chamador: `callsub` abre escopo `.@` NOVO E VAZIO, igual ao
+// `callfunc` (as duas ultimas linhas do buildin_callsub,
+// src/map/script.cpp:5508). Ler `.@hp` do laco do OnTimer1000 aqui
+// devolveria ZERO, calado.
+//
+// Ate 2026-08-28 este comentario afirmava o contrario, e o CLAUDE.md
+// tambem. O codigo daqui sempre esteve certo - o porque e que estava
+// errado -, mas a frase custou um item de jogador no
+// npc/guerra/encantamento_da_ordem.txt, que foi escrito acreditando
+// nela. O prefixo .@p continua, e agora por outro motivo: legibilidade.
 S_Planta:
 	.@pn = getarg(0);
 	.@php = getarg(1);
@@ -650,8 +657,7 @@ S_Planta:
 	// Le de volta o que o servidor REALMENTE gravou. Nao e paranoia: em
 	// 2026-08-26 as Pedras nasceram cheias e a rodada fechava no mesmo
 	// segundo, e so esta leitura separa "o setunitdata nao pegou" de "o
-	// valor que eu mandei ja estava errado". O prefixo .@p e obrigatorio
-	// aqui - callsub nao isola `.@`.
+	// valor que eu mandei ja estava errado".
 	getunitdata .pedra[.@pn], .@pconf;
 	debugmes "ANOMALIA: plantou " + .@pn + " gid=" + .pedra[.@pn] +
 		" pedi hp=" + .@php + " -> ficou " + .@pconf[UMOB_HP] +

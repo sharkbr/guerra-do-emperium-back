@@ -15049,3 +15049,140 @@ indistinguível de *"o bRO não tem esse efeito"*. Subiu para o `CLAUDE.md` §5.
 - **É cliente, então precisa de patch** (§4.18), e o patch fica para depois
   daquela conferência: publicar um `.lub` que o cliente recusasse tiraria o
   balão de **todos** os efeitos de quem já joga.
+
+## O Líder da Ordem, o anel que ele comeu, e a frase do CLAUDE.md que o mandou comer (2026-08-28)
+
+Pedido do dono: *"adicione na Ordem dos Exploradores o NPC que encanta os
+equipamentos, em auction_02 43 65, com a sprite 4_M_HUMAN_01, que já esteve no
+bRO fazendo o seguinte"* — com dois prints da página "Ordem dos Exploradores"
+do browiki, que trazem as sete regras do serviço e as três colunas de encantos.
+
+O NPC ficou em `npc/guerra/encantamento_da_ordem.txt`, arquivo próprio: são
+onze peças, quarenta e seis pedras e um cabeçalho longo, e enfiar isso no
+`ordem_dos_exploradores.txt` teria dobrado um arquivo que já é grande.
+
+### O que o Líder faz
+
+Põe **um** encanto por vez em capa, calçado ou acessório da lista do bRO, e
+reseta todos de uma vez. Cobra 10 Moedas do Explorador mais 100.000 zeny nas
+duas coisas — o preço da página. Capa e calçado aceitam 3 encantos, acessório
+2, e acessório só conta no lado **direito**.
+
+O encanto não é campo de item: é uma carta gravada nas covas 4, 3 e 2, de trás
+para frente, deixando a cova 1 para carta de verdade. É o arranjo oficial, o
+mesmo que os encantadores do próprio rAthena usam (`enchan_verus.txt:229`).
+Como não existe comando que escreva numa cova, a peça sai e volta por
+`delequip` + `getitem4`, levando de volta refino, covas, vínculo, grau de
+encanto e bônus aleatório — os três últimos só existem no `getinventorylist`,
+que é por isso que ele é chamado.
+
+### O bug que apagou um Anel de Jasper
+
+**Na primeira ida a jogo o NPC destruiu um item do dono e travou a janela.** O
+`picklog` fechou o caso em uma linha: às 19:21:27, `type N`, `nameid 490113`
+(Anel de Jasper) com `card0 27322` (Carta Ahat), `amount -1`, e nada devolvido.
+No log do map-server, no mesmo segundo:
+
+```
+buildin_getitem2: Nonexistant item 0 requested
+Script command 'getitem4' returned failure
+```
+
+A remontagem morava num `callsub S_Remonta`, e foi escrita sobre esta frase,
+que estava no `CLAUDE.md` §5:
+
+> `callsub` NÃO abre escopo novo: ele enxerga e sobrescreve as `.@` de quem
+> chamou. Só o `callfunc` isola.
+
+**É o contrário.** As duas últimas linhas do `buildin_callsub`
+(`src/map/script.cpp:5508`) são as mesmas do `buildin_callfunc`:
+
+```c
+st->stack->scope.vars   = i64db_alloc(DB_OPT_RELEASE_DATA);
+st->stack->scope.arrays = idb_alloc(DB_OPT_BASE);
+```
+
+Escopo novo e **vazio**. A única diferença entre os dois é o `callsub` passar
+`.@` como argumento por referência, para o `getarg` — e **array não passa por
+`getarg`**, o que torna `callsub` errado por natureza para uma sub-rotina que
+mexa em `.@cova[]`.
+
+Lá dentro, então, `.@part` valia **0**, que é `EQI_ACC_L`: o `delequip 0` tirou
+e apagou o que estivesse no acessório esquerdo. E `.@equip_id` valia 0, então o
+`getitem4` seguinte morreu, deixando o diálogo aberto no "Deixa comigo". **Os
+dois sintomas relatados eram a mesma linha**, e por isso travava justamente
+"quando ia dar certo": o caminho do sucesso era o único que chamava a
+sub-rotina.
+
+O que sobra, e vale mais que o conserto:
+
+- **Zero é um valor plausível para quase tudo** — posição de equipamento, id de
+  item, índice de tabela. Sub-rotina que devolva zero não parece quebrada,
+  parece que não achou.
+- **Comando que apaga coisa do jogador não roda sobre valor que não foi
+  conferido na linha de cima.** A remontagem passou a ser inline, e ganhou uma
+  trava redundante de propósito imediatamente antes do `delequip`: se algo
+  voltar a zerar aquelas variáveis, o Líder recusa atender em vez de comer
+  equipamento.
+
+A entrada do `CLAUDE.md` §5 foi invertida, com o trecho do fonte e o custo. O
+`anomalia_dimensional.txt` repetia a mesma frase num comentário — **o código
+dele sempre esteve certo** (o `S_Planta` recebe tudo por `getarg`, e o
+`S_Marca`/`S_Desmarca` só leem variáveis `.`), só o porquê estava errado, e foi
+corrigido. Os outros seis arquivos com `callsub` foram auditados um a um:
+`guardioes_dos_castelos`, `horario_da_guerra`, `senha_da_sala_secreta`,
+`honra_de_combate`, `guia_de_prontera` e `porta_dos_orcs` passam por `getarg`
+ou só leem `.`. Nenhum outro estava quebrado.
+
+### A regra 7, e a metade que não estava escrita
+
+A página do browiki diz, textualmente: *"Equipamentos refinados no +9 garantem
+encantos melhores (Indicados em negrito abaixo)"*. A primeira versão leu isso
+como **troca de faixa**: abaixo do +9 sorteava as comuns, do +9 para cima
+sorteava só as de negrito.
+
+Essa segunda metade não estava escrita em lugar nenhum. A página marca quais
+são melhores; não diz que o sorteio encolhe. E o resultado em jogo foi o
+contrário do que a própria regra promete: refinar a capa para +9 derrubava as
+possibilidades de **dezesseis para três**. Quem pegou foi o dono, com a conta
+na mão — *"deveríamos ter 20% de chance de falha, 80% de sucesso, e dentro dos
+80% cada um teria 6,25%"*, que é 1/16, e o que saía era 1/3.
+
+Cortada inteira por decisão dele: **chances iguais**, sem faixa separada e sem
+peso por linha. O refino não influi em nada; o negrito ficou sendo só a ordem
+da tabela.
+
+É a §4.17 do `CLAUDE.md` pelo outro lado: lá o texto prometia o que o código
+não fazia, aqui o código fez o que o texto **não** prometia. Regra de fonte
+externa que só diz "X é melhor" não autoriza escrever "só X".
+
+### Medições
+
+- **46 pedras e 11 peças**, conferidas uma a uma nas duas travas: existem no
+  `item_db` (as 46 com `SubType: Enchant`, que é o `CARD_ENCHANT` do reset) e
+  têm entrada no `itemInfo.lua` deste cliente.
+- Distribuição, dentro dos 80% de sucesso: calçado 12 pedras a **8,33%**,
+  acessório 18 a **5,56%**, capa 16 a **6,25%** — o número que o dono mediu.
+- As três faixas são contíguas e cobrem as 46; o `OnInit` recusa subir se
+  deixarem de ser.
+- `4_M_HUMAN_01` = view id **898**, conferido no `npcidentity.lub` e com
+  `.spr`/`.act` no `data.grf` deste cliente.
+- Três ids que não saem do nome: **22105** (Grilhões *com* cova — a sem cova é
+  a 2408), **28388** (Bola de Ferro Ensanguentada com cova — a sem é a 2655) e
+  **4767** (`Atk3`, "ATQ+3%"; o vendor tem *dois* itens chamados "ATQ +1%",
+  4819 e 4882, na vizinhança do "ATQM +3%", e nenhum é o par dele).
+
+### O de sempre, que também apareceu
+
+Os diálogos tinham sido escritos com quebra de linha manual, e na tela o
+cliente quebrou de novo por cima — sobras curtas no meio das frases. O dono
+apontou: *"já não é a primeira vez, então adicione isso como observação"*.
+Virou a **§4.22** do `CLAUDE.md`: um `mes` por parágrafo, nunca um `mes` por
+linha de tela.
+
+### Reposição
+
+Uma unidade perdida: Anel de Jasper (490113) refino 0 com Carta Ahat (27322).
+Os outros três travamentos morreram no `delequip` com o acessório esquerdo já
+vazio — cobraram e não apagaram nada. Cinco cobranças ao todo: 50 Moedas do
+Explorador e 500.000z.

@@ -1,0 +1,896 @@
+//===== Guerra do Emperium ===================================
+//= O Encantamento da Ordem dos Exploradores
+//===== Onde =================================================
+//= Lider   auction_02 43,65   sprite 898 (4_M_HUMAN_01)
+//=
+//= Fica no fundo NORTE do mesmo salao da Ordem, vinte e quatro
+//= celulas alem da Opheliac. O SALAO NAO ACABA EM y42 como o
+//= mapa do cabecalho do ordem_dos_exploradores.txt sugere:
+//= aquele desenho e so a metade de baixo. A sala sobe ate y69,
+//= e o pedaco de cima e este - desenhado do map_cache do
+//= rAthena, celula a celula, `.` anda e `#` nao:
+//=
+//=       x36           x51
+//=  y70  ################
+//=  y69  ................
+//=  y68  ................
+//=  y67  .......##.......
+//=  y66  .......##.......     L = o Lider, 43,65
+//=  y65  ....###L####....
+//=  y64  ....########....
+//=  y63  .#..########..#.
+//=  y62  .#..########..#.
+//=  y61  ..####....####..
+//=
+//= 43,65 E CELULA BLOQUEADA, e nao e engano: e a face norte do
+//= pilar central (x40-47, y62-65), no vao que o bloco de cima
+//= (x43-44, y66-67) fecha por tras. E o recanto do print do
+//= bRO, com a estante e as caixas.
+//=
+//= E E EXATAMENTE ONDE O rAthena PUNHA O `Auction Broker#lhz3`,
+//= que o OnInit do ordem_dos_exploradores.txt ja desliga - ou
+//= seja a celula esta livre e ja foi provada por NPC oficial.
+//=
+//= Funciona porque NPC de script nao precisa de chao e o
+//= alcance de clique e AREA_SIZE+1, 15 celulas (npc_checknear,
+//= npc.cpp:2158). As celulas andaveis mais proximas sao 42,66 e
+//= 45,66 - uma diagonal.
+//===== Descricao ============================================
+//= O SERVICO DE ENCANTAMENTO DO bRO, tal como a pagina "Ordem
+//= dos Exploradores" do browiki o descreve. As sete regras,
+//= palavra por palavra de la:
+//=
+//=  1. o Lider encanta e reseta ao custo de 10 Moedas do
+//=     Explorador e 100.000 zenys;
+//=  2. Capas e Calcados podem receber ate 3 encantos.
+//=     Acessorios, 2;
+//=  3. o NPC adiciona 1 encanto por vez;
+//=  4. resetar os encantos remove todos os encantamentos;
+//=  5. tem chances de falha ao encantar, mas nao ha perda dos
+//=     equipamentos;
+//=  6. para encantar acessorios, o item devera estar equipado
+//=     no lado DIREITO;
+//=  7. equipamentos refinados no +9 garantem encantos melhores
+//=     (os que a pagina marca em negrito) - REGRA NAO
+//=     IMPLEMENTADA, por decisao do dono. Ver a seccao abaixo.
+//=
+//= A regra 6 e a unica que parece capricho e nao e: e ela que
+//= torna o servico uma escolha. Acessorio de lado unico
+//= (`Left_Accessory`, como o Cartao SSD) simplesmente nao entra.
+//===== A CHANCE, e por que a regra 7 nao existe aqui ========
+//= 80% de sucesso e 20% de falha, por decisao do dono em
+//= 2026-08-28. O browiki diz que ha chance de falha e NAO diz
+//= qual - o numero e nosso, e mora em `.chance`, num lugar so.
+//=
+//= DENTRO DOS 80%, A COLUNA INTEIRA DO browiki SORTEIA COM PESO
+//= IGUAL. Para a capa isso e 1 em 16, ou seja 6,25% cada uma; no
+//= calcado 1 em 12 e no acessorio 1 em 18. Nao ha tabela de
+//= peso: o sorteio e um `rand` sobre a faixa inteira do grupo.
+//=
+//= A REGRA 7 DO browiki NAO EXISTE AQUI, e o registro fica pelo
+//= tipo de erro que ela produziu antes de ser cortada.
+//=
+//= A pagina diz, textualmente: "Equipamentos refinados no +9
+//= garantem encantos melhores (Indicados em negrito abaixo)".
+//= Ela AFIRMA que o +9 favorece as linhas de negrito e APONTA
+//= quais sao - e nao diz mais nada. A primeira versao deste
+//= arquivo transformou isso em TROCA DE FAIXA: abaixo do +9
+//= sorteava so as comuns, do +9 para cima sorteava SO as de
+//= negrito.
+//=
+//= ESSA SEGUNDA METADE NAO ESTAVA ESCRITA EM LUGAR NENHUM. A
+//= pagina marca quais sao melhores; nao diz que o sorteio
+//= encolhe. E o resultado em jogo foi o contrario do que a
+//= propria regra promete: refinar a capa para +9 derrubava as
+//= possibilidades de DEZESSEIS para TRES - Pedra de Encantamento
+//= 6, Anti-Horario 3 e Pedra da Mira Apurada 3 -, que foi
+//= exatamente o que o dono viu e mediu (1 em 3, onde a conta
+//= dele pedia 1 em 16).
+//=
+//= Cortada inteira por decisao do dono em 2026-08-28: CHANCES
+//= IGUAIS, sem faixa separada e sem peso por linha. O refino NAO
+//= influi em nada - nao ha `.refino_bom`, e o
+//= `getequiprefinerycnt` so serve para mostrar na tela e para a
+//= trava anti-troca. O negrito do browiki fica sendo uma
+//= anotacao da pagina de origem, sem efeito no codigo.
+//=
+//= A licao, que e a §4.17 do CLAUDE.md por outro angulo: ali o
+//= texto prometia o que o codigo nao fazia; aqui o codigo fez o
+//= que o texto NAO prometia. Regra de fonte externa que so diz
+//= "X e melhor" nao autoriza escrever "so X" - a metade que
+//= falta e invencao, e invencao que restringe o jogador aparece
+//= em jogo como defeito.
+//=
+//= Isso importa ao acrescentar encanto: basta pos-lo na faixa
+//= do grupo, e ele ja entra com o mesmo peso de todos - nao ha
+//= um segundo numero para esquecer de ajustar.
+//===== As tabelas, e por que sao UMA SO ======================
+//= Onze pecas, quarenta e seis linhas de encanto, e tudo num
+//= array chato com faixas por grupo. Nao ha uma segunda lista
+//= de nomes ao lado de uma lista de ids: o menu SAI da tabela,
+//= num laco (CLAUDE.md secao 4.11 - foi o que custou catorze
+//= destinos errados no Teleportador da Ordem).
+//=
+//= OS TRES GRUPOS, e onde cada um mora em `.enc[]`. UMA FAIXA
+//= POR GRUPO, e ela e a coluna inteira do browiki:
+//=
+//=   grupo 1  Calcado    EQI_SHOES     ate 3 encantos
+//=            faixa  1..12   12 pedras,  8,33% cada
+//=   grupo 2  Acessorio  EQI_ACC_R     ate 2 encantos
+//=            faixa 13..30   18 pedras,  5,55% cada
+//=   grupo 3  Capa       EQI_GARMENT   ate 3 encantos
+//=            faixa 31..46   16 pedras,  6,25% cada
+//=
+//= As porcentagens sao DENTRO dos 80% de sucesso. A conta do
+//= grupo 3 e a que o dono usou para pegar o defeito da primeira
+//= versao: 1/16 = 6,25%, e o que estava saindo era 1/3.
+//=
+//= A ORDEM DENTRO DA FAIXA E A DA COLUNA DO browiki, de cima
+//= para baixo, com as linhas que la estao em NEGRITO no fim de
+//= cada grupo. O negrito nao tem efeito nenhum no codigo (ver
+//= a seccao da chance) - a ordem so foi mantida assim para que
+//= a tabela daqui e a pagina de la se leiam lado a lado.
+//=
+//= TUDO E 1-BASED, e nao e estilo: ZERO EM VARIAVEL DE `.`
+//= APAGA A ENTRADA (CLAUDE.md secao 5). Indice de grupo, de
+//= faixa e de peca comecam em 1 para que nenhum valor da tabela
+//= possa ser zero - e por isso `getarraysize` sobre elas
+//= responde a verdade, que e o que as guardas do OnInit medem.
+//===== Onde o encanto MORA na peca ==========================
+//= Encanto nao e campo do item: e uma CARTA gravada numa cova,
+//= de tras para frente. E o arranjo oficial, e o rAthena o usa
+//= em todos os encantadores dele (ver `enchan_verus.txt:229` -
+//= `if (.@card[3] < 1 && .@max_slot < 4)`).
+//=
+//=   cova 0   a cova de CARTA de verdade, e nunca se toca nela
+//=   cova 1   3o encanto (so calcado e capa)
+//=   cova 2   2o encanto
+//=   cova 3   1o encanto
+//=
+//= O piso e calculado, nao escrito: `4 - <teto do grupo>`, mas
+//= nunca abaixo do numero de covas REAIS da peca
+//= (`getitemslots`). As onze pecas de hoje tem 1 cova (as Botas
+//= Veteranas, nenhuma), entao o piso e 1 para capa e calcado e
+//= 2 para acessorio. Se um dia entrar aqui uma peca de 2 covas,
+//= a conta sozinha impede o encanto de comer a segunda cova de
+//= carta - sem isso a perda seria calada.
+//=
+//= CUIDADO AO LER ISTO NO CLIENTE: a peca continua dizendo
+//= "[1]" no nome, porque o `[n]` vem do `slotCount` do
+//= itemInfo.lua e nao do pacote. Os encantos aparecem na
+//= DESCRICAO, que le as quatro covas.
+//===== Como a peca volta inteira ============================
+//= Nao existe comando que escreva numa cova: o caminho e
+//= desmontar e remontar, `delequip` mais `getitem4`.
+//=
+//= Remontar PERDE O QUE NAO FOR PASSADO DE VOLTA:
+//=
+//=   refino          `getequiprefinerycnt`, lido antes
+//=   as quatro covas `getequipcardid`, lidas antes
+//=   grau de encanto `@inventorylist_enchantgrade[]`
+//=   vinculo (bound) `@inventorylist_bound[]`
+//=   bonus aleatorio `@inventorylist_option_*`, os cinco
+//=
+//= OS TRES PRIMEIROS NAO TEM `getequip*` NENHUM: quem os tem e
+//= o `getinventorylist`, e por isso ele e chamado e a linha da
+//= peca vestida e procurada pelo bit de posicao
+//= (`@inventorylist_equip[] & EQP_*`, que e EQP e nao EQI). Sem
+//= isso, encantar um item VINCULADO o devolveria solto.
+//=
+//= OS BONUS ALEATORIOS SAO PRESERVADOS. Nada no bRO manda
+//= perde-los, e um encanto que apagasse a opcao aleatoria da
+//= peca seria uma perda calada. O `getitem4` le a quantidade
+//= pela chave mais alta do array de IDs
+//= (`script_array_highest_key`, script.cpp:7104), entao passar
+//= os cinco arrays cobre de nenhuma opcao a cinco sem contar
+//= nada.
+//=
+//= ITEM ALUGADO E RECUSADO: `@inventorylist_expire[]` diz que a
+//= peca tem prazo, e remontar com `getitem4` devolveria uma
+//= peca eterna.
+//=
+//= A PECA VOLTA DESVESTIDA. E consequencia do `delequip` e nao
+//= ha o que fazer - `equip` de volta escolheria sozinho entre
+//= duas copias iguais na mochila. O NPC avisa por escrito.
+//===== O BUG QUE COMEU UM ANEL, e a trava que ficou =========
+//= EM 2026-08-28, NA PRIMEIRA IDA A JOGO, ESTE NPC APAGOU UM
+//= Anel de Jasper (490113) COM UMA Carta Ahat (27322) DENTRO,
+//= e travou a janela no "Deixa comigo". A causa esta registrada
+//= aqui porque a crenca que a produziu estava escrita no
+//= CLAUDE.md, e era falsa.
+//=
+//= A remontagem morava num `callsub S_Remonta`, escrito sobre a
+//= afirmacao de que "`callsub` nao abre escopo novo: ele
+//= enxerga as `.@` de quem chamou". O `buildin_callsub`
+//= (src/map/script.cpp:5508) faz o OPOSTO, e e a mesma coisa
+//= que o `callfunc` faz:
+//=
+//=     st->stack->scope.vars   = i64db_alloc(...);
+//=     st->stack->scope.arrays = idb_alloc(...);
+//=
+//= Escopo NOVO e VAZIO. O que `callsub` tem de diferente e so
+//= passar `.@` como ARGUMENTO por referencia, para o `getarg`.
+//=
+//= Dentro do `S_Remonta`, entao, `.@part` valia 0 - que e
+//= `EQI_ACC_L` - e `.@equip_id` valia 0. O `delequip 0` tirou e
+//= APAGOU o que estivesse no acessorio esquerdo, e o
+//= `getitem4 0` falhou com "Nonexistant item 0 requested",
+//= matando o script com a janela aberta. Os dois sintomas eram
+//= a mesma linha.
+//=
+//= DUAS COISAS FICARAM, e as duas valem mais que o conserto:
+//=
+//= 1) A REMONTAGEM E INLINE, e nao ha `callsub` em nenhum
+//=    caminho que apague ou crie item. Sub-rotina que precise
+//=    de valor do chamador so serve com `getarg` - e array nao
+//=    passa por `getarg`, o que torna `callsub` errado para
+//=    este trabalho por natureza, e nao por descuido.
+//=
+//= 2) A TRAVA DE REMONTAGEM, inline, logo antes do `delequip`. Ela
+//=    recusa
+//=    seguir se a peca vestida agora nao for exatamente a que o
+//=    NPC leu. Ela e redundante hoje - e e de proposito: e ela
+//=    que teria transformado o bug acima em "o Lider recusou
+//=    atender", em vez de um item apagado. Comando que APAGA
+//=    coisa do jogador nao roda sobre valor que nao foi
+//=    conferido na linha de cima.
+//===== Armadilhas que este arquivo respeita =================
+//= `rand(1)` NAO devolve 0: ele MATA o script (buildin_rand,
+//= script.cpp:5604). Toda faixa de sorteio aqui tem 2 ou mais
+//= linhas hoje, mas o sorteio esta guardado com
+//= `if (.@qtde > 1)` mesmo assim.
+//=
+//= `||` e `&&` NAO fazem curto-circuito (C_LOR/C_LAND,
+//= script.cpp:3839): os dois lados sao avaliados sempre. Por
+//= isso toda guarda que combina "achei" com "olha o array" esta
+//= escrita como `if` aninhado, nunca com o operador.
+//=
+//= AS TRES `F_IsEquip*Hack` SO VALEM COM VALOR VELHO. Elas
+//= comparam o que esta vestido AGORA com o que se passa a elas,
+//= e o reflexo natural - reler a peca logo antes de chamar - as
+//= transforma em `x == x`: passam sempre, sem erro e sem log.
+//= Por isso o retrato da peca e tirado UMA VEZ, antes do
+//= primeiro `next`, e nao e refeito depois.
+//=
+//= UM `mes` POR PARAGRAFO, e nunca um `mes` por linha de tela.
+//= Quem quebra a linha e o cliente, pela largura da janela; um
+//= texto ja quebrado no script aparece quebrado DUAS vezes, com
+//= as sobras curtas no meio da frase. Ver CLAUDE.md secao 4.22.
+//===== Notas ================================================
+//= Os 46 encantos e as 11 pecas foram conferidos um a um nas
+//= duas travas, em 2026-08-28: existem no item_db do servidor
+//= (os 46 com `SubType: Enchant`, que e o CARD_ENCHANT do
+//= reset) e tem entrada no itemInfo.lua deste cliente.
+//=
+//= Tres ids nao saem do nome, e vale registrar:
+//=   22105  Grilhoes [1]  - e a versao COM cova (`Cuffs_`); a
+//=          sem cova e a 2408, e nao e a que o bRO lista.
+//=   28388  Bola de Ferro Ensanguentada [1] (`..._`), pelo
+//=          mesmo motivo; a sem cova e a 2655.
+//=    4767  "ATQ+3%" (`Atk3`) - o vendor tem DOIS itens
+//=          chamados "ATQ +1%" (4819 e 4882) na vizinhanca do
+//=          "ATQM +3%", e nenhum deles e o par dele.
+//=
+//= NENHUM ARQUIVO DO rAthena FOI TOCADO. A celula 43,65 ja
+//= esta livre porque o `#ordem_montagem` do
+//= ordem_dos_exploradores.txt desliga o `Auction Broker#lhz3`
+//= que ficava nela - este arquivo depende daquele.
+//=
+//= Gravado em Latin-1 (ISO-8859-1), como todo texto que o jogo
+//= le. Ver CLAUDE.md secao 4.1.
+//=
+//= Mudanca neste arquivo pega com @reloadscript.
+//============================================================
+
+auction_02,43,65,4	script	Líder#ordem_lider	898,{
+	mes "[Líder]";
+	mes "A Ordem guardou muita coisa dos tempos antigos, mas o que eu guardei foram as ^0000FFpedras^000000.";
+	next;
+	mes "[Líder]";
+	mes "Encanto ^0000FFcapa^000000, ^0000FFcalçado^000000 e ^0000FFacessório^000000 - e reseto, quando o encanto sai ruim. Um de cada vez, e por um preço.";
+	next;
+
+	// ----- que pecas o jogador esta vestindo que eu atendo ------------
+	// O menu SAI da tabela do OnInit, num laco. Ver "As tabelas, e por
+	// que sao UMA SO" no cabecalho: nao ha uma segunda lista de nomes
+	// para sair de sincronia com os ids.
+	.@ng = getarraysize(.rotulo$) - 1;   // as tabelas sao 1-based
+	.@np = getarraysize(.peca) - 1;
+	.@menu$ = "";
+	.@qtd = 0;
+	deletearray .@gr[0];
+
+	for (.@g = 1; .@g <= .@ng; .@g++) {
+		if (getequipisequiped(.slot[.@g]) == 0)
+			continue;
+		.@id = getequipid(.slot[.@g]);
+
+		// `&&` avalia os dois lados sempre - por isso o `if` aninhado.
+		.@atende = 0;
+		for (.@j = 1; .@j <= .@np; .@j++) {
+			if (.peca[.@j] == .@id) {
+				if (.grupo[.@j] == .@g)
+					.@atende = 1;
+			}
+		}
+		if (.@atende == 0)
+			continue;
+
+		.@qtd++;
+		.@gr[.@qtd] = .@g;
+		.@menu$ = .@menu$ + .rotulo$[.@g] + " - " +
+		          getequipname(.slot[.@g]) + ":";
+	}
+
+	if (.@qtd == 0) {
+		mes "[Líder]";
+		mes "Você não está usando nada que eu saiba encantar. E acessório tem que estar na ^FF0000mão direita^000000 - a pedra não assenta do outro lado.";
+		next;
+		callsub S_Lista;
+		mes "[Líder]";
+		mes "Vista uma dessas e volte.";
+		close;
+	}
+
+	.@esc = select("Deixa para depois:" + .@menu$);
+	if (.@esc == 1) {
+		mes "[Líder]";
+		mes "As pedras não têm pressa.";
+		close;
+	}
+	.@g = .@gr[.@esc - 1];
+
+	// A escolha vira posicao de equipamento AQUI, e a guarda existe
+	// porque foi um `.@g` fora da faixa que fez o `delequip` cair no
+	// acessorio esquerdo em 2026-08-28. Ver "O BUG QUE COMEU UM ANEL".
+	if (.@g < 1 || .@g > .@ng) {
+		debugmes "Lider#ordem_lider: escolha " + .@esc + " virou grupo " +
+		         .@g + ", fora de 1.." + .@ng + ".";
+		mes "[Líder]";
+		mes "Me perdi no que você escolheu. Fale comigo de novo.";
+		close;
+	}
+	.@part = .slot[.@g];
+
+	// ----- o retrato da peca ------------------------------------------
+	// ESTE E O RETRATO QUE VALE. Entre este bloco e a cobranca ha `next`
+	// de sobra para o jogador trocar de equipamento, e o que fecha essa
+	// porta e comparar o que foi lido AQUI com o que estiver vestido LA -
+	// e o que as tres `F_IsEquip*Hack` do rAthena fazem, e por isso elas
+	// so servem se receberem estes valores, nao valores relidos na hora.
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Líder]";
+		mes "Não há nada vestido aí.";
+		close;
+	}
+	.@equip_id = getequipid(.@part);
+	.@refino = getequiprefinerycnt(.@part);
+	setarray .@cova[0],
+		getequipcardid(.@part,0), getequipcardid(.@part,1),
+		getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	// O piso: de que cova para cima o encanto pode morar. Ver "Onde o
+	// encanto MORA na peca" - a conta e que impede o encanto de comer
+	// uma cova de carta de verdade numa peca de duas covas.
+	.@piso = 4 - .maxenc[.@g];
+	.@covas_reais = getitemslots(.@equip_id);
+	if (.@piso < .@covas_reais)
+		.@piso = .@covas_reais;
+	.@teto = 4 - .@piso;
+
+	.@usados = 0;
+	for (.@i = .@piso; .@i <= 3; .@i++) {
+		if (.@cova[.@i] > 0)
+			.@usados++;
+	}
+
+	mes "[Líder]";
+	mes "^0000FF" + getequipname(.@part) + "^000000";
+	mes "Refino ^0000FF+" + .@refino + "^000000, com ^0000FF" + .@usados +
+	    "^000000 de " + .@teto + " encantos.";
+	if (.@usados > 0) {
+		for (.@i = 3; .@i >= .@piso; .@i--) {
+			if (.@cova[.@i] > 0)
+				mes "- " + getitemname(.@cova[.@i]);
+		}
+	}
+	mes "Toda pedra que eu tenho para esse tipo de peça tem a ^0000FFmesma chance^000000 de assentar - são ^0000FF" +
+	    (.fim[.@g] - .ini[.@g] + 1) + "^000000, e nenhuma é mais rara que as outras.";
+	next;
+
+	.@acao = select("Encantar mais um:Resetar os encantos:Deixa para depois");
+	if (.@acao == 3) {
+		mes "[Líder]";
+		mes "As pedras não têm pressa.";
+		close;
+	}
+
+	if (.@acao == 1) {
+		if (.@usados >= .@teto) {
+			mes "[Líder]";
+			mes "Essa peça já tem os ^0000FF" + .@teto + "^000000 encantos que aguenta. Para trocar, tem que resetar - e reseta ^FF0000tudo^000000.";
+			close;
+		}
+	} else {
+		if (.@usados == 0) {
+			mes "[Líder]";
+			mes "Não há encanto nenhum nessa peça para eu tirar.";
+			close;
+		}
+	}
+
+	mes "[Líder]";
+	mes "Custa ^0000FF" + .custo_moeda + " " +
+	    ((.custo_moeda == 1) ? "Moeda do Explorador" : "Moedas do Explorador") +
+	    "^000000 e ^0000FF" + .custo_zeny + "^000000 zeny.";
+	if (.@acao == 1) {
+		mes "A pedra assenta em ^0000FF" + .chance + "^000000 de cada 100 tentativas. Se não assentar, ^FF0000você perde só o pagamento^000000 - a peça, o refino e os encantos que já estão nela ficam como estão.";
+	} else {
+		mes "^FF0000Sai tudo^000000: os " + .@usados + " encantos se perdem de uma vez. O refino e a carta da peça ficam.";
+	}
+	mes "E a peça volta para a mochila ^FF0000desvestida^000000 - é assim que eu trabalho. Vista de novo depois.";
+	next;
+
+	if (select("Sim, pode fazer:Deixa para depois") == 2) {
+		mes "[Líder]";
+		mes "As pedras não têm pressa.";
+		close;
+	}
+
+	// ===== daqui para baixo nao ha mais menu ==========================
+	// A PECA NAO E RELIDA AQUI, e isso e o ponto: as tres funcoes abaixo
+	// comparam o que esta vestido AGORA com o retrato tirado la em cima,
+	// antes do primeiro `next`, e registram no `logmes` quando difere.
+	// Reler e passar o valor recem-lido faria as tres compararem uma
+	// coisa com ela mesma - passariam sempre, e a porta ficaria aberta.
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Líder]";
+		mes "Você tirou a peça. Vista de novo e me chame.";
+		close;
+	}
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id)) {
+		mes "[Líder]";
+		mes "Essa não é mais a peça que você me mostrou. Nada foi cobrado.";
+		close;
+	}
+	if (callfunc("F_IsEquipRefineHack", .@part, .@refino)) {
+		mes "[Líder]";
+		mes "O refino dessa peça mudou enquanto conversávamos. Me mostre de novo - nada foi cobrado.";
+		close;
+	}
+	if (callfunc("F_IsEquipCardHack", .@part, .@cova[0], .@cova[1],
+	             .@cova[2], .@cova[3])) {
+		mes "[Líder]";
+		mes "As covas dessa peça mudaram enquanto conversávamos. Me mostre de novo - nada foi cobrado.";
+		close;
+	}
+
+	// Peca forjada ou assinada usa as covas para outra coisa: a cova 0 e
+	// um marcador e as covas 2 e 3 guardam o id do dono partido em dois.
+	// 254 = CARD0_CREATE, 255 = CARD0_FORGE, 256 = CARD0_PET.
+	if (.@cova[0] == 254 || .@cova[0] == 255 || .@cova[0] == 256) {
+		mes "[Líder]";
+		mes "Essa peça tem assinatura de quem a fez. Não mexo nesse tipo de trabalho.";
+		close;
+	}
+
+	// O vinculo, o prazo, o grau de encanto e os bonus aleatorios so
+	// existem aqui - nao ha `getequip*` para nenhum deles. Ver "Como a
+	// peca volta inteira", no cabecalho.
+	.@achou = 0;
+	.@vinculo = 0;
+	.@prazo = 0;
+	.@grau = 0;
+	// Os tres arrays nascem EXISTINDO, e nao por zelo: o `getitem4` os
+	// exige como array de verdade (`script_array_src`, script.cpp:7055) e
+	// recusa a chamada inteira se um deles nunca tiver sido declarado.
+	// Zerados eles ficam vazios - o que e o certo para peca sem bonus
+	// aleatorio nenhum, porque a quantidade que o buildin le e a chave
+	// mais alta do array de IDs.
+	setarray .@op_id[0],  0, 0, 0, 0, 0;
+	setarray .@op_val[0], 0, 0, 0, 0, 0;
+	setarray .@op_par[0], 0, 0, 0, 0, 0;
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_equip[.@i] & .bit[.@g]) {
+			if (@inventorylist_id[.@i] == .@equip_id) {
+				.@vinculo = @inventorylist_bound[.@i];
+				.@prazo   = @inventorylist_expire[.@i];
+				.@grau    = @inventorylist_enchantgrade[.@i];
+				setarray .@op_id[0],
+					@inventorylist_option_id1[.@i],
+					@inventorylist_option_id2[.@i],
+					@inventorylist_option_id3[.@i],
+					@inventorylist_option_id4[.@i],
+					@inventorylist_option_id5[.@i];
+				setarray .@op_val[0],
+					@inventorylist_option_value1[.@i],
+					@inventorylist_option_value2[.@i],
+					@inventorylist_option_value3[.@i],
+					@inventorylist_option_value4[.@i],
+					@inventorylist_option_value5[.@i];
+				setarray .@op_par[0],
+					@inventorylist_option_parameter1[.@i],
+					@inventorylist_option_parameter2[.@i],
+					@inventorylist_option_parameter3[.@i],
+					@inventorylist_option_parameter4[.@i],
+					@inventorylist_option_parameter5[.@i];
+				.@achou = 1;
+				break;
+			}
+		}
+	}
+	if (.@achou == 0) {
+		debugmes "Lider#ordem_lider: peca vestida nao achada no " +
+		         "getinventorylist (id " + .@equip_id + ").";
+		mes "[Líder]";
+		mes "Não consegui pegar essa peça direito. Vista de novo e me chame.";
+		close;
+	}
+	if (.@prazo != 0) {
+		mes "[Líder]";
+		mes "Essa peça é ^FF0000alugada^000000. Se eu a desmontar, ela volta sem prazo - e isso eu não faço.";
+		close;
+	}
+
+	// `.@piso`, `.@teto`, `.@usados` e `.@cova[]` continuam valendo: `.@`
+	// pertence a ESTA execucao do script e atravessa `next` inteiro. E as
+	// tres funcoes acima acabaram de provar que a peca vestida ainda e a
+	// mesma que gerou esses numeros.
+	if (countitem(.moeda) < .custo_moeda) {
+		mes "[Líder]";
+		mes "Faltam ^0000FFMoedas do Explorador^000000. São " + .custo_moeda +
+		    ", e você tem " + countitem(.moeda) + ".";
+		close;
+	}
+	if (Zeny < .custo_zeny) {
+		mes "[Líder]";
+		mes "Falta zeny. São ^0000FF" + .custo_zeny + "^000000, e você tem ^0000FF" + Zeny + "^000000.";
+		close;
+	}
+
+	// ----- daqui em diante o pagamento ja foi ------------------------
+	delitem .moeda, .custo_moeda;
+	Zeny -= .custo_zeny;
+
+	mes "[Líder]";
+	mes "Deixa comigo.";
+	next;
+
+	.@tirados = 0;
+	.@novo = 0;
+
+	if (.@acao == 2) {
+		// ----- resetar ------------------------------------------------
+		// So as covas de ENCANTO, e so as da janela: a cova de carta de
+		// verdade nao entra na conta, e a Essencia de Morroc, que mora
+		// nela, fica onde esta.
+		for (.@i = .@piso; .@i <= 3; .@i++) {
+			if (.@cova[.@i] > 0) {
+				if (getiteminfo(.@cova[.@i], ITEMINFO_SUBTYPE) == CARD_ENCHANT) {
+					.@cova[.@i] = 0;
+					.@tirados++;
+				}
+			}
+		}
+		if (.@tirados == 0) {
+			debugmes "Lider#ordem_lider: reset nao achou encanto na " +
+			         "janela (id " + .@equip_id + ", piso " + .@piso + ").";
+			getitem .moeda, .custo_moeda;
+			Zeny += .custo_zeny;
+			mes "[Líder]";
+			mes "Não achei encanto nenhum para tirar. Tome o seu de volta.";
+			close;
+		}
+	} else {
+		// ----- encantar -----------------------------------------------
+		if (rand(100) >= .chance) {
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "-- Resultado --";
+			mes "A pedra ^FF0000não assentou^000000. ^0000FFNada se perdeu^000000: a peça, o refino e os encantos que já estavam nela estão como estavam.";
+			next;
+			mes "[Líder]";
+			mes "Foi só o material. Quiser tentar de novo, é só falar.";
+			close;
+		}
+
+		// UMA FAIXA SO POR GRUPO, e o refino NAO entra nesta conta.
+		// Ver "A CHANCE, e por que a regra 7 nao existe aqui" no
+		// cabecalho: a coluna inteira do browiki sorteia com peso
+		// igual, e nao ha segunda faixa nem tabela de peso.
+		.@ini = .ini[.@g];
+		.@fim = .fim[.@g];
+		.@qtde = .@fim - .@ini + 1;
+
+		// `rand(1)` NAO devolve 0 - ele MATA o script (script.cpp:5604).
+		// Nenhuma faixa de hoje tem uma linha so, e esta guarda e o que
+		// garante que continue funcionando se um dia tiver.
+		.@k = 0;
+		if (.@qtde > 1)
+			.@k = rand(.@qtde);
+		.@novo = .enc[.@ini + .@k];
+
+		// A cova livre mais ALTA, que e a ordem oficial de preenchimento:
+		// 3, depois 2, depois 1.
+		.@onde = -1;
+		for (.@i = 3; .@i >= .@piso; .@i--) {
+			if (.@onde < 0) {
+				if (.@cova[.@i] == 0)
+					.@onde = .@i;
+			}
+		}
+		if (.@onde < 0 || .@novo <= 0) {
+			debugmes "Lider#ordem_lider: encanto impossivel (id " +
+			         .@equip_id + ", piso " + .@piso + ", cova " + .@onde +
+			         ", pedra " + .@novo + ").";
+			getitem .moeda, .custo_moeda;
+			Zeny += .custo_zeny;
+			mes "[Líder]";
+			mes "Errei a conta. Tome o seu de volta.";
+			close;
+		}
+		.@cova[.@onde] = .@novo;
+	}
+
+	// ===== A REMONTAGEM =================================================
+	// INLINE, e nao em `callsub`. Ver "O BUG QUE COMEU UM ANEL" no
+	// cabecalho: `callsub` abre escopo `.@` NOVO E VAZIO
+	// (script.cpp:5508), e dentro dele `.@part` valia 0 - o acessorio
+	// esquerdo - e o `delequip` apagou o anel de quem estava testando.
+	//
+	// A TRAVA ABAIXO E REDUNDANTE DE PROPOSITO. Nenhum comando que apague
+	// coisa do jogador roda sobre valor que nao foi conferido na linha de
+	// cima; se um dia algo voltar a zerar essas variaveis, o Lider recusa
+	// atender em vez de comer equipamento.
+	.@ok = 1;
+	if (.@equip_id <= 0) .@ok = 0;
+	if (.@part < 0) .@ok = 0;
+	if (.@part > 3) .@ok = 0;
+	if (.@part != .slot[.@g]) .@ok = 0;
+	if (.@ok == 1) {
+		if (getequipisequiped(.@part) == 0) .@ok = 0;
+	}
+	if (.@ok == 1) {
+		if (getequipid(.@part) != .@equip_id) .@ok = 0;
+	}
+	if (.@ok == 0) {
+		debugmes "Lider#ordem_lider: a trava de remontagem recusou " +
+		         "(part " + .@part + ", grupo " + .@g + ", id " +
+		         .@equip_id + ").";
+		getitem .moeda, .custo_moeda;
+		Zeny += .custo_zeny;
+		mes "[Líder]";
+		mes "Alguma coisa saiu do lugar na minha bancada e eu não vou arriscar sua peça. Tome o seu de volta e me chame de novo.";
+		close;
+	}
+
+	delequip .@part;
+	if (.@vinculo > 0)
+		getitembound4 .@equip_id, 1, 1, .@refino, 0, .@cova[0], .@cova[1], .@cova[2], .@cova[3], .@vinculo, .@grau, .@op_id, .@op_val, .@op_par;
+	else
+		getitem4 .@equip_id, 1, 1, .@refino, 0, .@cova[0], .@cova[1], .@cova[2], .@cova[3], .@grau, .@op_id, .@op_val, .@op_par;
+
+	if (.@acao == 2) {
+		specialeffect2 EF_DETOXICATION;
+		mes "-- Resultado --";
+		mes "^0000FF" + .@tirados + "^000000 " +
+		    ((.@tirados == 1) ? "encanto saiu" : "encantos saíram") +
+		    " da peça. O refino, a carta e os bônus aleatórios ficaram.";
+		next;
+		mes "[Líder]";
+		mes "Está limpa. A peça voltou ^FF0000desvestida^000000 para a mochila.";
+		close;
+	}
+
+	specialeffect2 EF_MAXPOWER;
+	mes "-- Resultado --";
+	mes "A pedra assentou: ^0000FF" + getitemname(.@novo) + "^000000.";
+	mes "Encantos agora: ^0000FF" + (.@usados + 1) + "^000000 de " + .@teto + ".";
+	next;
+	mes "[Líder]";
+	mes "A peça voltou ^FF0000desvestida^000000 para a mochila. Vista de novo e veja na descrição.";
+	close;
+
+
+// ---------------------------------------------------------------
+// S_Lista - o que este NPC atende
+// ---------------------------------------------------------------
+// Sai da MESMA tabela do menu. Escrever a lista a mao aqui seria uma
+// segunda fonte para divergir da primeira (CLAUDE.md secao 4.11).
+//
+// ESTE `callsub` E SEGURO, e a razao e especifica: este bloco nao le
+// NENHUMA `.@` do chamador - so variaveis `.` do NPC, que independem de
+// escopo, e as suas proprias. `callsub` abre escopo novo e vazio
+// (script.cpp:5508), entao sub-rotina que precise de valor do chamador
+// so funciona por `getarg` - e array nem por `getarg` passa.
+S_Lista:
+	.@ls_ng = getarraysize(.rotulo$) - 1;
+	.@ls_np = getarraysize(.peca) - 1;
+	for (.@ls_g = 1; .@ls_g <= .@ls_ng; .@ls_g++) {
+		mes "^0000FF" + .rotulo$[.@ls_g] + "^000000 (até " +
+		    .maxenc[.@ls_g] + " encantos):";
+		for (.@ls_j = 1; .@ls_j <= .@ls_np; .@ls_j++) {
+			if (.grupo[.@ls_j] == .@ls_g)
+				mes "- " + getitemname(.peca[.@ls_j]);
+		}
+	}
+	next;
+	return;
+
+
+OnInit:
+	// ----- o preco e a chance -----------------------------------------
+	.moeda = 25737;          // Moeda do Explorador (db/guerra/item_db.yml)
+	.custo_moeda = 10;       // browiki: "10 Moedas do Explorador"
+	.custo_zeny = 100000;    // browiki: "e 100.000 zenys"
+
+	// 80 de sucesso, 20 de falha - decisao do dono em 2026-08-28. O
+	// browiki diz que ha falha e nao diz quanto; este numero e nosso.
+	//
+	// NAO EXISTE `.refino_bom` NEM PESO POR PEDRA, e a ausencia e a
+	// regra: dentro dos 80%, toda pedra da faixa do grupo tem a mesma
+	// chance. Ver "A CHANCE, e por que a regra 7 nao existe aqui" no
+	// cabecalho antes de reintroduzir qualquer coisa ligada a refino.
+	.chance = 80;
+
+	// ----- os tres grupos ---------------------------------------------
+	// 1-based, sempre: zero em variavel de `.` APAGA a entrada, e as
+	// guardas abaixo medem `getarraysize`. EQI_ACC_L vale 0 e nao entra
+	// aqui - acessorio so no lado direito, que e a regra 6 do bRO.
+	setarray .rotulo$[1], "Calçado", "Acessório", "Capa";
+	setarray .slot[1],    EQI_SHOES, EQI_ACC_R, EQI_GARMENT;
+	setarray .bit[1],     EQP_SHOES, EQP_ACC_R, EQP_GARMENT;
+	setarray .maxenc[1],  3, 2, 3;
+
+	// ----- as onze pecas ----------------------------------------------
+	// Da tabela "Calcados / Acessorios / Capas" do browiki. As duas
+	// marcadas [1] la sao as versoes COM cova, e sao outros ids - ver as
+	// Notas do cabecalho.
+	setarray .peca[1],
+		15368,  22129,  22105,                   // calcados
+		32204,  28594,  28388,  490174, 490578,  // acessorios
+		20925,  20955,  480332;                  // capas
+	setarray .grupo[1],
+		    1,      1,      1,
+		    2,      2,      2,      2,      2,
+		    3,      3,      3;
+
+	// ----- os quarenta e seis encantos --------------------------------
+	// A ordem e a das tres colunas do browiki, de cima para baixo, com
+	// as linhas em NEGRITO (as do +9) no fim de cada grupo. As faixas
+	// abaixo e que dizem onde cada pedaco comeca e acaba.
+	setarray .enc[1],
+		// --- 1..10   calcado, comum
+		4900,   // HP +5%
+		4802,   // SP +150
+		29135,  // Faro Agucado 1
+		29136,  // Faro Agucado 2
+		4815,   // Pedra de Encantamento 1
+		4814,   // Pedra de Encantamento 2
+		4832,   // Pedra da Mira Apurada 1
+		4833,   // Pedra da Mira Apurada 2
+		4869,   // Anti-Atraso 1
+		4872,   // Anti-Atraso 2
+		// --- 11..12  calcado, +9 (as duas em negrito no browiki)
+		4950,   // Anti-Horario 3
+		4888,   // Pedra de Feitico 4
+		// --- 13..30  acessorio (nao ha coluna em negrito no browiki)
+		4992,   // Absorcao de HP 1
+		4993,   // Absorcao de SP 1
+		4818,   // Pedra de Critico 1
+		4817,   // Pedra de Critico 2
+		4815,   // Pedra de Encantamento 1
+		4814,   // Pedra de Encantamento 2
+		4832,   // Pedra da Mira Apurada 1
+		4833,   // Pedra da Mira Apurada 2
+		4869,   // Anti-Atraso 1
+		4872,   // Anti-Atraso 2
+		4811,   // Espirito do Lutador 1
+		4810,   // Espirito do Lutador 2
+		4803,   // Cura 1
+		4804,   // Catolicismo 1
+		4805,   // Fator de Cura 1
+		4850,   // Fator de Cura 2
+		4806,   // ATQM +3%
+		4767,   // ATQ +3%  (Atk3 - NAO e o 4819 nem o 4882)
+		// --- 31..43  capa, comum
+		4949,   // Anti-Horario 2
+		4818,   // Pedra de Critico 1
+		4854,   // Super Agilidade
+		4856,   // Super Inteligencia
+		4872,   // Anti-Atraso 2
+		4855,   // Super Vitalidade
+		4857,   // Super Destreza
+		4858,   // Super Sorte
+		4853,   // Super Forca
+		4817,   // Pedra de Critico 2
+		4812,   // Pedra de Encantamento 4
+		4826,   // Pedra de Encantamento 5
+		4869,   // Anti-Atraso 1
+		// --- 44..46  capa, +9 (as tres em negrito no browiki)
+		4827,   // Pedra de Encantamento 6
+		4950,   // Anti-Horario 3
+		4834;   // Pedra da Mira Apurada 3
+
+	// UMA FAIXA POR GRUPO, e cada uma e a coluna INTEIRA do browiki:
+	//
+	//   grupo 1  Calcado     1..12   12 pedras,  8,33% cada
+	//   grupo 2  Acessorio  13..30   18 pedras,  5,55% cada
+	//   grupo 3  Capa       31..46   16 pedras,  6,25% cada
+	//
+	// As porcentagens sao DENTRO dos 80% de sucesso, e saem sozinhas de
+	// `rand(.@qtde)` - nao ha nada a manter em sincronia com elas.
+	setarray .ini[1],  1, 13, 31;
+	setarray .fim[1], 12, 30, 46;
+
+	// ----- as travas ---------------------------------------------------
+	// Coluna a menos numa das tabelas desalinha tudo dali para baixo, e
+	// em jogo isso so aparece como "o Lider pos o encanto errado". Como
+	// tudo aqui e 1-based e nenhum valor e zero, `getarraysize` responde
+	// a verdade e estas contas provam o alinhamento.
+	.@ng = getarraysize(.rotulo$) - 1;
+	if (.@ng != 3) {
+		debugmes "Lider#ordem_lider: a tabela de grupos nao tem 3 linhas.";
+		end;
+	}
+	if (getarraysize(.slot) != .@ng + 1 ||
+	    getarraysize(.bit) != .@ng + 1 ||
+	    getarraysize(.maxenc) != .@ng + 1 ||
+	    getarraysize(.ini) != .@ng + 1 ||
+	    getarraysize(.fim) != .@ng + 1) {
+		debugmes "Lider#ordem_lider: as colunas por grupo estao com " +
+		         "tamanhos diferentes - encantos DESALINHADOS.";
+		end;
+	}
+
+	.@np = getarraysize(.peca) - 1;
+	if (getarraysize(.grupo) != .@np + 1) {
+		debugmes "Lider#ordem_lider: .peca e .grupo estao com tamanhos " +
+		         "diferentes - pecas DESALINHADAS.";
+		end;
+	}
+	for (.@i = 1; .@i <= .@np; .@i++) {
+		if (.grupo[.@i] < 1 || .grupo[.@i] > .@ng) {
+			debugmes "Lider#ordem_lider: a peca " + .peca[.@i] +
+			         " aponta um grupo que nao existe.";
+			end;
+		}
+	}
+
+	// As tres faixas tem de COBRIR a tabela inteira e nao se sobrepor:
+	// pedra fora de faixa nunca sai, e faixa que invade a vizinha poe
+	// encanto de capa em calcado. Nenhuma das duas da erro em jogo.
+	.@ne = getarraysize(.enc) - 1;
+	.@cobertas = 0;
+	for (.@g = 1; .@g <= .@ng; .@g++) {
+		if (.ini[.@g] < 1 || .fim[.@g] > .@ne || .ini[.@g] > .fim[.@g]) {
+			debugmes "Lider#ordem_lider: a faixa do grupo " + .@g +
+			         " esta fora da tabela de encantos.";
+			end;
+		}
+		if (.@g > 1) {
+			if (.ini[.@g] != .fim[.@g - 1] + 1) {
+				debugmes "Lider#ordem_lider: a faixa do grupo " + .@g +
+				         " nao comeca onde a do grupo anterior acabou.";
+				end;
+			}
+		}
+		.@cobertas = .@cobertas + (.fim[.@g] - .ini[.@g] + 1);
+		if (.maxenc[.@g] < 1 || .maxenc[.@g] > 3) {
+			debugmes "Lider#ordem_lider: o teto de encantos do grupo " +
+			         .@g + " nao cabe nas covas 1 a 3.";
+			end;
+		}
+	}
+	if (.@cobertas != .@ne) {
+		debugmes "Lider#ordem_lider: as faixas cobrem " + .@cobertas +
+		         " pedras, e a tabela tem " + .@ne + " - ha pedra que " +
+		         "nunca sai, ou faixa sobrando.";
+		end;
+	}
+	if (.ini[1] != 1) {
+		debugmes "Lider#ordem_lider: a primeira faixa nao comeca em 1.";
+		end;
+	}
+	end;
+}

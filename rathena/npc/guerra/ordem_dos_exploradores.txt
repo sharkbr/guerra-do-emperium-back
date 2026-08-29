@@ -14,6 +14,14 @@
 //=   auction_02    59,38   placa das Missoes C
 //=   auction_02    37,39   o Teleportador
 //=   auction_02    50,39   a Maquina de Troca
+//=   auction_02    43,65   o Lider, o Encantamento - e ele
+//=                         mora em npc/guerra/encantamento_da_ordem.txt,
+//=                         nao aqui. Depende do OnInit DESTE arquivo, que
+//=                         e quem desliga o Auction Broker daquela celula.
+//=
+//= O desenho do salao abaixo e so a METADE DE BAIXO da sala: ela nao acaba
+//= em y42, sobe ate y69. O pedaco de cima, onde fica o Lider, esta
+//= desenhado no cabecalho do encantamento_da_ordem.txt.
 //=
 //= O patio de Alberta e uma alcova murada de 24 celulas
 //= (x114-119, y70-73), com uma entrada so, pelo sul, e o

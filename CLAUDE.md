@@ -462,6 +462,29 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
 
     Da mesma família da §4.17, do outro lado: lá o texto prometia o que o
     código não fazia; aqui o código faz e não conta a ninguém.
+22. **Um `mes` por PARÁGRAFO, nunca um `mes` por linha de tela — quem quebra
+    a linha é o cliente.** O `clif_scriptmes` manda a string crua e a janela
+    dobra o texto pela própria largura; um parágrafo já quebrado no script
+    aparece quebrado **duas vezes**, e as sobras curtas caem no meio das
+    frases. Escrever `mes` com 60 caracteres "para caber" é reproduzir à mão
+    um trabalho que o cliente refaz por cima.
+
+    O reflexo que produz isso é o de quem edita código: a linha do arquivo
+    fica bonita, e é justamente por isso que o defeito passa na revisão —
+    **só aparece na tela do jogador**. Reclamado pelo dono em 2026-08-28,
+    e não pela primeira vez.
+
+    Na prática: a frase inteira num `mes` só, por mais longa que fique no
+    arquivo. Quebra de verdade se pede com um `mes` novo, e é aí que ela
+    passa a significar alguma coisa — parágrafo, item de lista, linha de
+    tabela. Vale para `mes`, `npctalk`, `unittalk` e `mapannounce`.
+
+    Duas ressalvas que continuam valendo, e não são contradição:
+    - **`mes` que começa com ESPAÇO não abre linha nova, cola na anterior**
+      (§5). Para recuar uma lista, caractere visível (`- `, `. `).
+    - O cliente **não** dobra `mes` sem espaços (um nome de item colado num
+      código de cor, por exemplo) — aí a linha estoura a janela.
+
 ## 5. Armadilhas deste ambiente
 
 Produziram diagnóstico falso e custaram retrabalho:
@@ -1853,12 +1876,41 @@ Produziram diagnóstico falso e custaram retrabalho:
   `killmonster "<mapa>","all"` não morre ninguém, porque o buildin compara
   `strcmp(event,"All")` — **maiúsculo e exato** (`script.cpp:11486`). Para
   matar tudo, `killmonsterall "<mapa>"`, que não tem capitalização para errar.
-- **`callsub` NÃO abre escopo novo: ele enxerga e sobrescreve as `.@` de quem
-  chamou.** Só o `callfunc` isola. Um subprograma que use `.@i` ou `.@hp`
-  "porque é variável local" apaga a do laço que o chamou, e o sintoma aparece
-  longe — o laço externo passa a ler outro valor a partir da primeira chamada.
-  Convenção que resolve: prefixo no nome das variáveis do subprograma
-  (`.@pn`, `.@php`), como em `npc/guerra/anomalia_dimensional.txt`.
+- **`callsub` ABRE ESCOPO `.@` NOVO E VAZIO, igual ao `callfunc` — e ler as
+  `.@` do chamador lá dentro devolve ZERO, calado.** As duas últimas linhas do
+  `buildin_callsub` (`src/map/script.cpp:5508`) são as mesmas do
+  `buildin_callfunc`:
+
+  ```c
+  st->stack->scope.vars   = i64db_alloc(DB_OPT_RELEASE_DATA);
+  st->stack->scope.arrays = idb_alloc(DB_OPT_BASE);
+  ```
+
+  A única diferença entre os dois é que o `callsub` passa `.@` como
+  **argumento por referência**, para o `getarg` — quem precisa de valor do
+  chamador tem de recebê-lo assim, e **array não passa por `getarg`**, o que
+  torna `callsub` errado por natureza para sub-rotina que mexa em array.
+
+  **Até 2026-08-28 esta entrada afirmava o CONTRÁRIO** ("callsub não abre
+  escopo; ele enxerga as `.@` de quem chamou; só o `callfunc` isola"), e o
+  preço foi um item de jogador apagado: o `S_Remonta` do
+  `npc/guerra/encantamento_da_ordem.txt` lia `.@part` (a posição do
+  equipamento) e recebia **0**, que é `EQI_ACC_L` — o `delequip 0` tirou e
+  destruiu o Anel de Jasper que estava no acessório esquerdo de quem testava,
+  e o `getitem4 0` seguinte morreu com *"Nonexistant item 0 requested"*,
+  deixando a janela de diálogo travada. **Os dois sintomas eram a mesma
+  linha**, e nenhum deles apontava para o `callsub`.
+
+  Duas coisas que sobram, e valem mais que o conserto:
+  - **Zero é um valor plausível para quase tudo** — posição de equipamento, id
+    de item, índice de tabela. Sub-rotina que devolva zero não parece
+    quebrada, parece que "não achou".
+  - **Comando que APAGA coisa do jogador (`delequip`, `delitem`,
+    `successremovecards`) não roda sobre valor que não foi conferido na linha
+    de cima.** A trava redundante imediatamente antes do `delequip` teria
+    transformado isso num "o NPC recusou atender". É a mesma família da §4.11
+    ("comentário não é trava"), um degrau acima: aqui quem mentia era o
+    `CLAUDE.md`.
 - **`movenpc` move o BONECO e deixa a ÁREA DE TOQUE para trás.** O
   `npc_movenpc` (`src/map/npc.cpp:5046`) faz `map_moveblock` e mais nada — não
   chama `npc_unsetcells` nem `npc_setcells`. E a área de toque **não mora no
