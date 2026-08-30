@@ -487,1658 +487,186 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
 
 ## 5. Armadilhas deste ambiente
 
-Produziram diagnóstico falso e custaram retrabalho:
+**Cada linha abaixo já custou horas.** O caso inteiro — sintoma, causa
+medida e saída — está no caderno nomeado no título do grupo; aqui fica só o
+gatilho, para que a armadilha seja reconhecida **antes** de o tempo ser gasto.
+Ao mexer numa peça, ler a lista do grupo dela de cima a baixo; ao ver na tela
+um sintoma parecido com uma linha, abrir o caderno e ler aquela entrada.
 
-- **`strings` não existe** no Git Bash daqui — com `2>/dev/null` falha calado e
-  parece "zero resultados".
-- **`[Text.Encoding]::Latin1` não existe** no PowerShell 5.1 → devolve `$null` e
-  todo resultado derivado é lixo. Usar `GetEncoding(28591)`.
-- **`Get-ChildItem -Include`** sem curinga no caminho retorna vazio.
-- **Arquivo cp1252 salvo como UTF-8 vira `\xef\xbf\xbd` (U+FFFD) e o acento se
-  perde para sempre.** Não é mojibake reversível: o byte original já não está
-  lá. Achado em 2026-08-07 no `db/guerra/item_db.yml` — 4 acentos de "Maçã da
-  Inocência" e "Diadema do Paraíso" tinham virado isso, e ninguém percebeu
-  porque o nome que o jogador lê vem do `itemInfo.lua`, não do servidor.
-  O teste, em qualquer arquivo que o jogo leia:
-  `python -c "d=open(p,'rb').read(); print '\xef\xbf\xbd' in d"`.
-- **E quem faz isso hoje é a FERRAMENTA DE EDIÇÃO do assistente.** Ela lê e
-  grava como UTF-8: num arquivo cp1252 ela troca **todo** byte acentuado do
-  arquivo por U+FFFD — não só os da linha editada, e sem avisar. Medido em
-  2026-08-12 num arquivo de três linhas com seis acentos: trocar uma linha
-  **sem acento nenhum** destruiu os seis. Vale para `npc/guerra/*.txt`,
-  `db/guerra/item_db.yml`, `.lub`, `itemInfo.lua` — todo texto que o jogo lê.
-  (Os `.md` são UTF-8 e podem ser editados à vontade.)
-  **A saída é gravar por script**: âncora em ASCII, texto novo nascendo
-  `unicode` e um `.encode('cp1252')` num lugar só, mais um `assert` de que a
-  âncora é única e um `decode('cp1252')` de volta antes de valer. E **medir o
-  fim de linha do arquivo antes de escrever a âncora, nunca supor**: âncora com
-  o `\r\n` errado casa zero vezes, e linha remontada com o outro deixa o
-  arquivo misturado. Não há padrão a decorar — medido em 2026-08-12, dos 44
-  arquivos nossos em `npc/guerra` e `db/guerra` **18 são CRLF e 26 são LF**,
-  nenhum misto, e o `.gitattributes` tem `text=auto` (com `*.yml eol=lf`), ou
-  seja quem decide é o checkout. Os erros aconteceram nesta ordem em
-  2026-08-12; os dois foram baratos porque o `assert` da âncora parou o script
-  antes de gravar.
-- **E o `$` de um regex com `re.M` NÃO casa antes do `\r` — ele casa DEPOIS,
-  deixando o `\r` dentro do grupo capturado.** Em arquivo CRLF, um
-  `re.compile(r'^(.*)$', re.M)` devolve a linha **com o carriage return
-  colado no fim**; reescrever a linha a partir daí grava só `\n`, e o
-  arquivo fica com fins de linha misturados. Falha calada: o rAthena lê
-  os dois, o `git diff` mostra a linha inteira como trocada e nada acusa.
-  Medido em 2026-08-17 ao pôr as vitrines de Prontera a 1 zeny — as 9
-  linhas de `shop` do `mercado_contemporaneo.txt` perderam o `\r`, e quem
-  denunciou foi um contador que achou **41 preços trocados onde a medição
-  anterior dizia 36**: as 5 linhas de sobra eram justamente as que já
-  terminavam em `:1` e "mudaram" só por causa do `\r`. **Número que não
-  bate com a medição anterior é o aviso** — sem ele o estrago passa.
-  A saída é `(?=\r?$)` na âncora, ou partir por `\n` e tratar o `\r` na
-  mão. Da mesma família da regra de medir o fim de linha antes de
-  escrever, logo acima.
-- **A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela.**
-  As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`
-  padrão deste MariaDB 12.3 é `utf8mb4` — e o rAthena só manda `SET NAMES` se
-  `default_codepage` estiver preenchido (`inter.cpp:978`, `map.cpp:4416`), o que
-  **não era o caso**. Um byte cp1252 sozinho é UTF-8 inválido, então o
-  MariaDB recusa a gravação inteira com *"ERROR 1366 (22007): Incorrect string
-  value"*. Ou seja: **texto acentuado que o servidor tenta gravar no banco não
-  chega lá**, e o caminho de erro é do lado do SQL, longe de onde o texto
-  nasceu. Corrigido em 2026-08-10 por `conf/guerra/inter_guerra.txt`
-  (`default_codepage: latin1`); a armadilha continua valendo para quem
-  desconfiar do `conf/import/` e apagar esse import.
-- **Entrada de GRF marcada como "DES" NÃO é entrada ausente.** O
-  `ferramentas/grf.py` recusa arquivo com o bit de cifra (`flags & 6`) com um
-  *"arquivo com DES: ..."*, e metade dos sprites antigos deste `data.grf` está
-  assim — inclusive `.spr`/`.act` de NPC que desenham perfeitamente em jogo. Ler
-  isso como "o cliente não tem o sprite" **reprova sprite bom**, que é
-  exatamente a conferência que a regra do view id manda fazer. O que prova
-  presença é o **nome estar na tabela** do GRF (`grf.py <grf> find <padrão>`),
-  não o `read` devolver bytes. Medido em 2026-08-13 no `4_ghost_stand`.
-- **`.lub` do GRF é bytecode** (header `\x1bLua`); os do ROenglishRE são texto
-  puro. Comparar tamanho entre os dois não significa nada.
-- **O bRO entrega o MESMO arquivo em `.lua` e em `.lub`, e o legível pode
-  estar velho.** O reflexo é pegar o texto puro e poupar o desmonte de
-  bytecode; ele funciona, abre, tem conteúdo e **está incompleto**. Medido em
-  2026-08-28 no `stateiconinfo`: o `.lua` do bRO cita **340** efeitos e o
-  `.lub` ao lado tem **530** — 193 a menos, mais de um terço das traduções,
-  sem erro nenhum e sem nada na tela que denuncie (o efeito que faltasse
-  simplesmente continuaria em coreano, que é o estado de antes). É a mesma
-  família do catálogo velho da §4.13: o arquivo abre, tem conteúdo, e o que
-  falta nele não existe para quem o lê. **Quem manda é o `.lub`** — é ele que
-  o cliente do bRO carrega. Contar as entradas dos dois antes de escolher
-  custa um comando.
-- **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`
-  gerado compila.**
-- **Patch de exe "aplicado e confirmado" NÃO é patch com efeito — e script que
-  confere o próprio trabalho não prova nada.** O `ajusta_tamanho_fonte.py`
-  desviava 8 chamadas, respondia *"8 ja desviadas"* no `--verificar` e era
-  **inócuo**: procurava o formato do próprio stub, não o resultado na tela.
-  Subir o número (2 → 4 → 6) só gastou rodadas. **Antes de calibrar valor,
-  provar que o patch chega à tela com uma marca que não dependa do efeito
-  procurado** — sublinhado, negrito, outra face de fonte. Responde numa rodada
-  o que tentativa e erro não responde em cinco. Duas medições que enganam junto:
-  contar call site só por `ff 15 [IAT]` ignora `mov reg,[IAT]`, thunk,
-  delay-import e cave de patch anterior; e `int3` não mata processo quando a
-  função tem SEH (`push fs:[0]`), então "subiu vivo" não quer dizer "não
-  executou". Ver `HISTORICO.md`, "Tamanho da fonte".
-- **Comparar tamanho de texto a olho, em tela cheia, não decide.** Duas rodadas
-  foram gastas discutindo se a fonte tinha mudado. O que decidiu foi recortar a
-  mesma região de dois screenshots e ampliar em nearest-neighbor — aí "idêntico
-  ao pixel" ou "mudou" é fato, não impressão.
-- **Um TETO num valor que todo mundo pede não limita exageros: ele apaga a
-  escala inteira.** O `--teto 11` do `ajusta_tamanho_fonte.py` parecia calibrado
-  — cada degrau foi olhado na tela — e na verdade achatava os **oito** corpos do
-  cliente num só. O jogo ficou sem hierarquia tipográfica: nome de mapa do
-  tamanho do chat. **Passou porque cada texto isolado parecia plausível**; o que
-  destoou foi o maior, e o pedido chegou como "o nome do mapa está pequeno", que
-  aponta para o lugar errado. Antes de pôr teto, **medir a distribuição do que é
-  pedido** — se nada cai abaixo dele, não é teto, é achatamento. E há como
-  medir: o cache do stub é indexado pelo tamanho pedido, então lê-lo no processo
-  vivo (`--tabela`, `ReadProcessMemory`) devolve o histograma. Uma leitura
-  respondeu o que dois dias de calibragem a olho não responderam.
-- **Metade de uma seção de PE pode não existir em disco.** A `.xdiff` deste exe
-  tem `VirtualSize` 0x1000 e **`SizeOfRawData` 0x400**: de `0x013B5400` para
-  cima o carregador zera, e byte gravado ali no arquivo **não chega na
-  memória** — fica no fim do `.exe`, fora de qualquer seção mapeada. Rascunho
-  funciona (zero é o estado inicial certo); **tabela de dados não**, e a falha é
-  calada — lê-se zero. Conferir `SizeOfRawData` antes de escolher onde pôr dado
-  em patch de exe.
-- **O vão que decide onde centrar um modelo pode não estar nem no `.gat` nem
-  no id de textura do `.gnd`.** Tapete, mosaico e faixa de piso costumam ser
-  **outra região do mesmo `.bmp`**, escolhida pelas **coordenadas UV** da
-  superfície — o `.bmp` é um atlas. Então: o `.gat` diz chão liso e andável, o
-  id de textura diz uma textura só para o corredor inteiro, e o tapete que
-  aparece no print não existe em nenhuma das duas leituras. Quem só olha essas
-  duas conclui "aqui não há vão, célula inteira serve" e planta meia célula
-  fora do centro — a mesma armadilha da fonte do Centro da Ordem (vão de
-  largura **par**: nenhum inteiro acerta o centro), só que invisível.
-  O que mostra é ler os **8 floats de UV** da superfície de topo tile a tile
-  (`Gnd.superficie_topo` + os bytes 0..31) e desenhar: o tapete salta como um
-  bloco de UVs distintos. Caso vivo em 2026-08-11: os três tapetes de 8x8
-  células da ala leste de `auction_01`, todos na textura 3.
-- **`setwall` com tamanho maior que 1 pode sair mais curto do que o pedido, e
-  não avisa.** O `map_iwall_set` percorre as células uma a uma e **para na
-  primeira que já esteja bloqueada** (`map.cpp:3503`), gravando
-  `iwall->size = i` — a parede fica com o comprimento que deu, sem erro, sem
-  log, e o `checkwall` depois responde que ela existe. Quem precisa das
-  células exatas usa **tamanho 1 por célula**, que não tem o que truncar, e
-  confere cada uma com `checkcell(..., CELL_CHKNOPASS)` antes de dar por
-  fechado. Ver a escrivaninha em `npc/guerra/centro_da_ordem.txt`.
-- **Caixa envolvente de `.rsm` com vários nós mente se juntar tudo num box
-  só.** O `pos` do nó raiz é offset no espaço do modelo, não dimensão: no
-  `desk_h_02.rsm` (4 nós, raiz em `x = -129,35`) a medida junta dá **148,90 de
-  largura — 29,8 células** em vez de 20,02 (4,0 células). O número é plausível
-  o bastante para condenar um modelo por "não cabe". Medir **nó a nó**.
-  **E medir nó a nó não diz onde é o CENTRO da peça** — para isso é preciso
-  remontar os nós, e a regra é: o vértice do nó **raiz** entra como
-  `vértice − pos_raiz`, e o do **filho** deslocado de `pos_filho − pos_raiz`.
-  Sem isso as caixas não se encontram e a leitura parece corrompida: nas
-  `prn_statue_*` a base dá `X −21,50..−14,45` e a figura `X −5,13..3,91`, uma
-  fora da outra. Quem remonta acha a base em **−3,53..+3,53 nos dois eixos** —
-  um quadrado perfeitamente centrado —, e é essa coincidência que prova a
-  leitura. Consequência prática: **a origem do modelo é o centro da base**, e é
-  ela que o `edita_mapa.py` põe na célula.
-- **No `.rsm`, a ALTURA é o Z e não o Y — a planta de um móvel é X × Y.** Ler
-  X × Z troca profundidade por altura e devolve uma planta plausível e errada,
-  na direção que faz um móvel parecer caber onde não cabe: a escrivaninha do
-  Centro da Ordem é 4,0 × 2,8 células e pelo eixo errado sai 3,9 × 1,5. A prova
-  é barata e não é teórica — medir uma peça alta e fina: a coluna
-  `내부소품\기둥2` dá 6,34 × 6,34 × **30,21** e a estátua `모로코\동상` dá
-  8,57 × 5,43 × **29,25**. O eixo de 30 é o vertical.
-  Isso dá de graça **de que lado é a frente** de um móvel — o encosto é o lado
-  do Y onde o modelo é alto (`+Y` nos dois sofás do salão) — e daí a rotação,
-  que antes era palpite: **`+Y` → (sen θ, cos θ) em (X, Z)**, ou seja em
-  **rot 0 as costas apontam para o norte** e em rot 90 para leste. Consequência
-  que engana sozinha: **rot 0/180 põem a LARGURA no eixo leste-oeste, e 90/270
-  no norte-sul** — o contrário do que a intuição sugere. Tudo isto está medido
-  e conferido contra os 22 usos oficiais do sofá em `prt_cas`; a ferramenta é
-  `ferramentas/mede_rsm.py`, que já imprime os eixos rotulados.
-- **Modelos de uma mesma família numerada NÃO têm a mesma frente, e supor que
-  têm vira metade deles de costas.** As oito `prontera\prn_statue_0*.rsm` são
-  da mesma pasta, do mesmo conjunto e da mesma cara — e pelo menos uma nasceu
-  virada ao contrário: em `prt_lib`, lado a lado na mesma parede sul e olhando
-  as duas para o norte, a `_08` está em **rot 180** e a `_02` em **rot 0**.
-  Calibrar a rotação de uma e reusar o número nas outras sete põe estátua de
-  costas, calado. **Medir por modelo**, e a medida é de graça: varrer os `.rsw`
-  do GRF do bRO pelo `filename` dá as instâncias oficiais, e o `.gat` em volta
-  de cada uma diz para que lado está a parede — estátua encostada em parede
-  olha para fora dela. A convenção de ângulo é a mesma do sofá (**rot 0 olha
-  para o sul, 90 oeste, 180 norte, 270 leste**); o que muda de modelo para
-  modelo é qual ângulo é o "de frente".
-- **`mede_rsm.py` que não sobra 0 byte não vale nada.** Formato de malha é
-  cheio de campo opcional por versão, e um campo lido a menos desalinha tudo o
-  que vem depois **devolvendo números do mesmo jeito**. O `sofa_01.rsm` sobra
-  exatamente 8 bytes se o leitor parar nos nós e não ler o rabicho de quadros
-  de posição e caixas de volume — e as dimensões que ele imprime até ali
-  parecem boas.
-- **`source` do mysql.exe quebra com barra invertida** (`\U` = comando
-  desconhecido). Usar barras normais no caminho.
-- **São TRÊS `map_cache.dat`, e a `prontera` não está no grande.** O rAthena
-  abre `db/import/map_cache.dat`, `db/re/map_cache.dat` e `db/map_cache.dat`
-  **nessa ordem** (`map.cpp:3922`), e o primeiro que tiver o mapa vence. O
-  `db/re/` tem oito mapas — `prontera`, `alberta`, `izlude`, `morocc`,
-  `prt_church`, `prt_fild05`, `prt_fild08`, `prt_in` — e são esses que valem.
-  A `prontera` de renewal (312x392) **só existe lá**; o cache grande, de 1288
-  mapas, tem uma `pprontera` do mesmo tamanho, que é outro mapa. Ferramenta
-  que abra só o `db/map_cache.dat` responde *"prontera não está no cache"* —
-  resposta do leitor, não do mapa — ou, pior, entrega a `pprontera` como se
-  fosse a cidade. Conferir célula andável passa pelos três, na ordem.
-- **Ler tabela grande de bytecode Lua 5.1:** o operando `RK` só endereça
-  constante até o índice 255; depois disso o compilador emite `LOADK` num
-  registrador e o `SETTABLE` referencia `R<n>`. Um parser que lê só
-  `SETTABLE ... ; B="NOME" C=<valor>` captura as ~127 primeiras entradas e
-  devolve um número **plausível e errado**.
-- **Chave de tabela que é SÍMBOLO INDEXADO POR NÚMERO colapsa a tabela inteira
-  numa entrada só, sem erro nenhum.** O `ptbr._interpreta` sabia resolver
-  `SKID.NV_BASIC` (símbolo indexado por *string*) e devolvia `None` para
-  qualquer outro caso — inclusive `EnumVAR.VAR_MAXHPAMOUNT[1]`, que é a chave
-  do `addrandomoptionnametable.lub`. Como todas as chaves viram `None`, o
-  `dict` fica com **uma** entrada, a última: o leitor responde *"tabela com 1
-  entrada"* sobre um arquivo de 252, e nada quebra. Corrigido em 2026-08-18
-  com um ramo de `Sym` indexado por número. A regra que sobra: **tamanho de
-  tabela igual a 1 é sintoma de chave não resolvida**, não de arquivo vazio.
-- **Tabela do cliente cujas chaves são `EnumVAR.<X>`, `SKID.<X>` e afins tem de
-  ter as CHAVES tiradas do NOSSO GRF — nunca do ROenglishRE nem do bRO.** A
-  chave não é constante: é resolvida em tempo de execução contra o `enumvar.lub`
-  (ou equivalente) **deste exe**. Chave que ele não conheça vira `nil`, e
-  indexar `nil[1]` é erro de Lua que derruba a tabela inteira — o efeito some da
-  janela, não fica "sem nome". É a mesma família da armadilha do `skilltreeview`
-  e da janela de missões; o texto pode vir de qualquer fonte, a chave não.
-- **Um `.lub` pode definir MAIS DE UMA tabela, e ler tudo numa lista só
-  colapsa uma na outra.** O `valida_visual.tabela_lua` devolve os pares de
-  todas as tabelas do arquivo achatados; um `dict()` por cima fica com a
-  **última**. O `spriterobename.lub` tem três globais — `RobeNameTable`,
-  `RobeNameTable_Eng` e `RobeTopLayer` —, e as duas primeiras têm as mesmas
-  chaves com valores diferentes. O `instala_manto.py` leu a errada de
-  2026-08-08 a 2026-08-09 e não doeu porque 98 das 120 entradas têm os dois
-  nomes iguais; nas 17 em que diferem, a pasta que existe no GRF é a da
-  **primeira**, em 17 de 17. Quem lê `.lub` corta o bytecode por `SETGLOBAL`
-  (ver `estende_robeid._globais`) antes de indexar. E cuidado com o terceiro
-  tipo: `RobeTopLayer` é **vetor** (`SETLIST`), não mapa — quem só olha
-  `SETTABLE` o vê vazio e o descarta, e regerar o arquivo sem ele faz 38
-  mantos passarem a desenhar atrás do personagem, calados.
-- **Este cliente NÃO desenha manto com slot acima de 120**, e a tabela não
-  tem nada a ver com isso. Medido em tela em 2026-08-09: slot 61, 73, 75, 82,
-  90, 99, 104 e 114 desenham; 122, 136, 148, 154 e 158 não. A
-  `spriterobeid.lub` foi levada a **158 entradas contíguas**, o cliente a
-  leu, e nada mudou. É teto do exe. Enquanto ele não for levantado (patch de
-  exe, ver `PENDENCIAS.md` §4), manto novo entra **reaproveitando** um dos 40
-  slots ≤120 que não têm arte neste cliente — `ferramentas/estende_robeid.py`,
-  com o de-para no `View:` do `db/guerra/item_db.yml`. Sobram 28.
-  **E não é só manto cosmético:** capa de STATUS (`Garment`) com `View` cai no
-  mesmo teto e gasta doador igual — foi o que a Som do Luar e as Asas de Garuda
-  mostraram em 2026-08-16, no Capeiro.
-- **Rótulo de aba da janela de habilidades é escrito na VERTICAL: o
-  comprimento gasta altura, não largura — e some com as abas de baixo.** As
-  nove abas do `skilltreeview.lub` empilham uma letra por linha (~13px cada) e
-  dividem uma coluna de ~370px. `Aprendiz-1a` + `2a-Transcend.` bastavam para
-  cortar a terceira aba ao meio, **fora do alcance do clique**, escondendo a
-  habilidade que um equipamento concede (achado em 2026-08-11). Teto de **7
-  caracteres**, travado por `LIMITE_ABA` no `traduz_ptbr.py`. Falha calada: a
-  janela abre, funciona, e uma aba inteira do personagem não existe.
-- **Tabela certa + arte certa + arquivo lido pelo cliente ≠ desenha na
-  tela.** As três se verificam offline, as três deram OK, e o item continuou
-  invisível por um quarto motivo que nenhuma delas alcança. **Verificação
-  offline que passa não é prova de efeito** — o que decide é uma marca na
-  tela que não dependa do efeito procurado. Foi a sonda do
-  `estende_robeid.py` (reapontar um slot que já funciona para outra arte) que
-  respondeu em uma rodada o que três hipóteses plausíveis não responderam:
-  falta de arte, arquivo não lido e buraco na numeração — todas descartadas
-  **depois** de já terem custado tempo. Mesma família do
-  `ajusta_tamanho_fonte.py`, logo acima.
-- **O horário de ACESSO do arquivo diz se o cliente leu.** `Get-ChildItem |
-  Select LastAccessTime` no `cliente\data\...\datainfo` mostra o instante em
-  que cada `.lub` foi aberto — e compará-lo com a hora em que o cliente subiu
-  separa "o override não chega" de "o override chega e não basta" sem entrar
-  no jogo. Funciona mesmo com `DisableLastAccess = 2` neste Windows.
-  **Mas o carimbo só anda de hora em hora, e isso inverte a resposta.** O NTFS
-  só reescreve o `LastAccessTime` quando o valor guardado tem **mais de uma
-  hora**; leitura dentro da mesma hora não mexe nele. Então qualquer coisa que
-  tenha tocado o arquivo há pouco — inclusive a sua própria conferência depois
-  de gravar — congela o carimbo, e a sonda responde *"o cliente não leu"* sobre
-  um arquivo que ele leu. Medido em 2026-08-14, e custou uma hipótese inteira.
-  Só vale como prova quando o último acesso é **anterior em mais de uma hora**
-  ao instante em que o cliente subiu.
-- **O endereço do servidor mora no `sclientinfo.xml`, não no `clientinfo.xml`.**
-  Este exe é `<servertype>sakray</servertype>`, e o par sakray é o
-  `cliente\data\sclientinfo.xml` — provado em 2026-08-14, quando trocar só o
-  `clientinfo.xml` deixou o cliente indo em `127.0.0.1` e trocar o
-  `sclientinfo.xml` fez o login na produção acontecer. Engana porque os **dois**
-  existem em `cliente\data\`, os dois têm `<address>`, o exe carrega as duas
-  strings sobrepostas (`sclientinfo.xml` em `0x9f707c`, `clientinfo.xml` um byte
-  adiante) e o `.epi` ainda lista o patch `CallKoreaClientInfo`, que sugere o
-  contrário. **Manter os dois com o mesmo endereço** é o que evita a próxima
-  hora perdida. Vale para o instalador também: quem empacotar o cliente leva os
-  dois.
-  Três becos sem saída do mesmo dia, para não se repetirem: o cliente **resolve
-  nome de domínio** (`EnableDnsSupport` está no `.epi`, então o `<address>` pode
-  ser o domínio); **não há regra de firewall** para o exe e a saída é liberada; e
-  **demora não descarta o loopback** — o SYN para `127.0.0.1:6900` com nada
-  escutando ficou em `SynSent` até estourar o tempo, em vez da recusa imediata
-  que a intuição promete. O que decide de verdade é olhar **para onde o pacote
-  vai**: um laço de `Get-NetTCPConnection -OwningProcess <pid>` gravando o que
-  aparece enquanto o jogador aperta Login responde numa tentativa o que três
-  hipóteses plausíveis não responderam. Mesma família do `ajusta_tamanho_fonte.py`
-  — marca que não depende do efeito procurado.
-  **Desde 2026-08-16 isso ganhou um segundo gume:** este cliente é o de dev e
-  aponta para `127.0.0.1`, então **empacotar a base ou mandar um dos dois xml
-  em patch publica um cliente que ninguém consegue usar** — 3,4 GB corretos,
-  sha256 fechando, e todo mundo tentando logar na própria máquina. O
-  `monta_patch.py` e o `monta_cliente.py` passaram a recusar endereço local
-  (`confere_apontamento`), e é bom que recusem: nada mais nesse caminho olha
-  para esse campo.
-  **E há o gume de VOLTA, que só apareceu em 2026-08-18: rodar o Atualizador
-  dentro da pasta de dev transforma o cliente de dev em cliente de PRODUÇÃO.**
-  Existe um `Jogar.exe` em `C:\GuerraDoEmperium\cliente`, e o patch 0004 leva
-  os dois `clientinfo` com o endereço de produção — aplicá-lo ali reaponta o
-  cliente sem perguntar nada. Os dois pacotadores protegem a **saída**; nada
-  protegia a **entrada**, e essa falha é calada da pior maneira: o jogo abre,
-  loga e joga, só que no servidor errado — quem estiver "testando local" está
-  testando produção, e nada na tela diz isso. Vai voltar a acontecer em todo
-  patch que leve os xml. O conserto é um comando, `ferramentas/aponta_cliente.py
-  --dev`, e sem argumento ele só relata para onde os dois apontam.
-  **E os backups eram de um lado só.** Existia `.BACKUP-138.197.155.31` e mais
-  nada, então quando o de dev foi sobrescrito não havia de onde restaurar — o
-  `127.0.0.1` teve de ser reconstruído à mão. Agora há `.BACKUP-` dos **dois**
-  lados, e o `aponta_cliente.py` grava o lado de onde saiu antes de trocar.
-- **A IA do homúnculo e a do mercenário moram em `cliente\AI_sakray\`, não em
-  `cliente\AI\` — e a pasta errada não dá erro até alguém invocar o bicho.**
-  Pelo mesmo `<servertype>sakray</servertype>` da entrada acima, as **cinco**
-  strings de caminho de IA deste exe são todas da variante sakray
-  (`.\AI_sakray\AI.lua`, `.\AI_sakray\AI_M.lua` e as duas de
-  `USER_AI\`, mais a pasta) e **não existe nenhuma da pasta normal** — a
-  instalação de 2021-11-05, porém, traz a pasta chamada `AI`. Resultado:
-  clicar em Criar Homunculus devolve uma caixa `AI.lua error — cannot open
-  .\AI_sakray\AI.lua`, com o embrião já consumido, e a suspeita cai em sprite
-  ou IA quebrada — as duas erradas (os 21 `.spr` de homúnculo estão inteiros
-  no GRF). A saída é copiar `AI` para `AI_sakray`, com o `USER_AI` junto. Os
-  `require "AI\\Const"` de dentro **não** se mudam: o caminho traz o nome da
-  própria pasta, ou seja a resolução é relativa à raiz do cliente. Medido em
-  2026-08-15. **Fora do git** — some em cliente novo, e o instalador tem de
-  levá-la.
-- **Ferramenta que consulta tabela do cliente tem de ler `cliente\data\`
-  ANTES do GRF.** O `DataFolderFirst` faz o disco vencer, então depois de
-  qualquer `estende_*.py` gravar o override é ele que o cliente lê. Uma
-  ferramenta que só leia o GRF continua respondendo pelo arquivo de
-  2021-11-03 e **nega a existência do que acabou de ser posto** — o
-  `instala_manto.py` recusou, em 2026-08-09, um manto cuja entrada de tabela
-  existia havia um minuto. O `valida_visual.le_tabelas_acessorio` já
-  documentava isso do lado do chapéu; o erro foi não aplicar do outro.
-- **Compilar pela linha de comando exige `SolutionDir` explícito.** O
-  `map-server.vcxproj` tira os caminhos de include dessa variável, que só o
-  `.sln` define. Sem ela o compilador não acha `common/cbasetypes.hpp` e
-  despeja dezenas de `C1083` — que parecem código quebrado, e não são. E
-  `MSBuild rAthena.sln -t:map-server` **não** funciona: o alvo é repassado a
-  todo projeto da solução e cada um responde `MSB4057`. O que funciona:
-  ```
-  MSBuild.exe src/map/map-server.vcxproj -p:Configuration=Release \
-    -p:Platform=x64 "-p:SolutionDir=<raiz>/rathena/"
-  ```
-  **Parar o map-server antes de linkar** — executável no ar dá `LNK1104`, e aí
-  o binário em disco continua o antigo enquanto tudo mais indica sucesso.
-- **Em `db/refine.yml`, `Level:` é 1-based e NÃO é o refino do item.** O leitor
-  faz `refine_level -= 1` — comentário *"Database is 1 based, code is 0 based"*
-  em `status.cpp:189` — e compara com o refino **atual**. `Level: 7` é a
-  tentativa de sair do +6 para o +7. Ler o número como refino atual erra por um
-  na tabela inteira, e o erro não se denuncia: a tabela continua fazendo
-  sentido, só está deslocada. Foi por isso que a Bênção do Ferreiro pareceu
-  "desativada" em 2026-08-07.
-- **`invalidWarning` no leitor de YAML diz "skipping" e descarta o registro
-  inteiro.** No `RefineDatabase::parseBodyNode` (`status.cpp:183`), um nível de
-  refino acima do `MAX_REFINE` emite *"Refine level %hu is invalid, skipping"*
-  e cai num `return 0` que joga fora o **grupo todo**, não a linha. Baixar o
-  `MAX_REFINE` sem cortar os níveis do `.yml` desliga o refino de Armor e
-  Weapon inteiros, com um aviso no log que parece inofensivo. O mesmo padrão
-  aparece nos outros `parseBodyNode`.
-- **Comentário no fim de uma linha de spawn entra DENTRO do nome do evento.**
-  O `npc_parsesrcfile` enche o `w4` *"to end of line"* (`src/map/npc.cpp`), e o
-  `npc_parse_mob` lê o evento com `%77[^,]` — que só para na vírgula. Um
-  `<TAB>// Amon Ra` depois do evento vira parte dele, e o `mob_parse_dataset`
-  (`src/map/mob.cpp:446`) só tira a aspa quando ela é o **último** byte. Falha
-  **calada**: o chefe nasce, anda, morre, e o evento nunca dispara — nada no log
-  aponta para a linha. Quem documenta um spawn documenta **acima** dele, ou no
-  cabeçalho do arquivo (ver `npc/guerra/corredor_fantasma.txt`).
-- **Uma linha ruim mata o ARQUIVO INTEIRO, não a linha — inclusive linha de
-  comentário.** O `npc_parsesrcfile` (`src/map/npc.cpp:5646`) imprime
-  *"Unknown syntax in file '...', line 'N'. Stopping..."* e **para de ler o
-  arquivo ali**. Tudo que vier abaixo simplesmente não existe, sem outro aviso.
-  Achado em 2026-08-08: um `\n` dentro do texto de um gerador partiu uma linha
-  `//=` do **cabeçalho** em duas, e a metade órfã (`pc\ do`) derrubou os dois
-  NPCs que estavam 25 linhas mais abaixo. Duas consequências:
-  1. **Um erro no cabeçalho é tão fatal quanto um erro no código.** Depois de
-     gerar arquivo de NPC, conferir que **toda linha antes da primeira definição
-     começa com `//`** ou está vazia.
-  2. **O log não ajuda a achar.** Essa única linha de `[Error]` fica soterrada
-     sob centenas de `[Warning]` inofensivos dos mercados. Procurar por
-     `Unknown syntax`, não ler o fim do log.
-- **Heredoc do Bash aqui come a contrabarra dupla.** `<<'EOF'` deveria ser
-  literal e não é: `\\` chega como `\` no arquivo gerado. Se esse arquivo for um
-  script Python, o `\n` que sobra vira quebra de linha de verdade dentro do
-  texto — foi essa a causa da armadilha acima. Ao gerar texto com caminho do
-  Windows (`data\sprite\npc\`), escrever o script com a ferramenta de escrita de
-  arquivo, não por heredoc — ou montar a contrabarra com `chr(92)`.
-- **Em spawn com área, `<xs>,<ys>` NÃO é o lado do retângulo.** O `mob_spawn`
-  chama `map_search_freecell` com `xs-1` (`src/map/mob.cpp:1149`), que sorteia em
-  `rnd_value(bx-rx, bx+rx)`. `mapa,120,120,70,70` é **120 ± 69**, não 120±35 nem
-  um quadrado de 70. Ler como lado erra a área por quatro, e o erro não se
-  denuncia — os monstros nascem, só que em lugar diferente do planejado.
-- **Mapa pode ter pedaço andável solto, e `0,0` no spawn sorteia lá.** O
-  `vis_h01` tem 16.104 células no mapa de verdade **mais 479 na linha y=239**,
-  ruído do `.gat`. Monstro sorteado ali fica inalcançável. Antes de usar `0,0`,
-  varrer os pedaços conectados do `.gat` — ou dar coordenada e área, como o
-  `corredor_fantasma.txt` faz.
-- **No `.cat` de tradução, o `arquivo#N` NÃO é a linha — é a ordem do literal
-  dentro do arquivo.** Está na docstring do `literais_todos`
-  (`ferramentas/traduz_npcs.py`), e é de propósito: assim o índice não anda
-  quando a lista de contextos muda. A armadilha é que o número **parece** linha
-  e cai na mesma faixa de grandeza dela, então um recorte "só as falas deste
-  NPC, que vai da linha A à B" filtra por engano e **devolve uma lista
-  plausível**. Medido em 2026-08-12 ao recortar os cinco NPCs do Cassino de
-  Comodo: o filtro errado deu 444 textos com o `Man#megin` zerado — e um NPC de
-  203 linhas mudo era a única coisa que denunciava. Com a contagem certa deram
-  353, com 59 dele. Para converter, recontar os literais com o mesmo
-  `RE_LITERAL` guardando a linha de cada um.
-- **`rand(1)` não devolve 0: ele MATA o script.** O `buildin_rand`
-  (`src/map/script.cpp:5604`) na forma de um argumento só faz `maximum -= 1` e
-  então recusa `maximum < 1` com *"range is too small. No randomness
-  possible"*, pondo `st->state = END`. Ou seja **`rand(n)` só é seguro com
-  `n >= 2`** — e o caso perigoso não é a constante, é a **variável**: `rand(.@x)`
-  onde `.@x` é um contador que encolhe (cartas que restam, itens que sobraram,
-  jogadores vivos) passa por 1 no fim, sempre, e aí o script morre no meio com
-  o diálogo aberto e o que já foi cobrado, cobrado. Nada no cliente denuncia; o
-  log traz uma linha longe de onde o número nasceu. Achado em 2026-08-12 no
-  blackjack do Cassino de Comodo, onde `rand(@bj_resta[valor])` valia 1 toda vez
-  que saía a última carta daquele valor. A saída é uma linha:
-  `if (.@x > 1) .@i = rand(.@x);` com `.@i` já em 0.
-- **`getitem` com a mochila cheia LARGA O ITEM NO CHÃO.** O
-  `buildin_getitem` (`src/map/script.cpp`) chama `pc_additem`, e no fracasso
-  cai num `map_addflooritem` — então "vai direto para o inventário" não é
-  garantia do script, é garantia do **item**. Quem impede a queda é o
-  `pc_candrop`, que recusa item `NoDrop`; com ele o item se perde e o cliente
-  avisa. Item sem `NoDrop` entregue por script aparece no chão da arena, ao
-  alcance de qualquer um, e nada no log denuncia. Caso vivo: a Caveira Humana
-  (30995), em `npc/guerra/honra_de_combate.txt`.
-- **`mes` que começa com ESPAÇO não abre linha nova — cola na anterior.** O
-  `clif_scriptmes` (`src/map/clif.cpp:2472`) manda a string **crua**, sem `\n`:
-  quem decide onde quebrar é o cliente, e o critério dele é o primeiro
-  caractere. Visível abre linha; espaço é continuação. Então indentar uma
-  lista com `mes "  item…"` **concatena a lista inteira**, e o que se vê na
-  tela é o resultado da largura da caixa, não do script. Medido em 2026-08-11
-  na Máquina de Sombrios Totais: das quatro linhas de prêmio, três pareciam
-  certas — tinham estourado a largura e quebrado sozinhas — e a quarta apareceu
-  grudada no fim da terceira. **Três das quatro estavam erradas e pareciam
-  certas**, e mexer em qualquer texto (nome de item mais curto, porcentagem com
-  menos dígitos) reorganiza a janela sem erro nenhum. Para recuar, caractere
-  visível (`- `, `. `), nunca espaço.
-- **Sprite de NPC "enterrado no chão" é o `.act`, não o mapa.** O `.act` diz a
-  que altura o desenho é colado em relação à célula; com `y` perto de zero o
-  **centro** do sprite fica na altura do chão, a metade de baixo vai para
-  debaixo do piso, e o depth buffer do terreno a corta — dá um **corte reto e
-  horizontal** na base. Parece problema de célula, de altura de mapa ou de
-  modelo, e não é: em 2026-08-12 a `2_COLAVEND` apareceu cortada em terreno
-  medido como **plano** (4,00 nas duas células e na faixa inteira). As máquinas
-  oficiais deste cliente levantam o desenho — `4_vending_machine` −53,
-  `2_DROP_MACHINE` −44, `2_VENDING_MACHINE1` −40 — e a `2_COLAVEND` é a única
-  com **`y = 0` nas oito direções**. A conta que os oficiais seguem é
-  `-(altura/2 - 8)`. Ferramenta: `ferramentas/levanta_sprite_npc.py`; o
-  override é **cliente, fora do git**, e some em cliente novo.
-- **Bandeira de `CTRL+<n>` não está no `emotionlist.lub`, está no EXE — e o
-  que ela vale depende do `<servicetype>`.** O `emotionlist.lub` define o
-  `enum` inteiro (`ET_FLAG` 13, `ET_BR_FLAG` 51 e as outras sete) e ainda um
-  `EMOTION_ORDERLIST`, o que o faz parecer o lugar certo; mas aquela lista tem
-  **64 entradas e nenhuma bandeira** — é a ordem da *janela* de emoções, e
-  bandeira não aparece na janela. Quem trata a tecla é um `switch` de nove
-  casos no exe (`0x00638950`, tabela de saltos em `0x00638B1C`), e **cada caso
-  é uma cadeia de comparações contra o `<servicetype>` do `clientinfo.xml`**
-  (global `[012BF51C]`; `korea`=0 … `brazil`=12, na ordem dos nomes no
-  `.rdata`) antes do trecho que empurra a emoção. Consequência que engana
-  sozinha: com `korea` as nove teclas funcionam, com `brazil` **só o CTRL+1**,
-  e com `america`/`japan`/`thai` **nenhuma**. Medido em 2026-08-12, quando o
-  `data\clientinfo.xml` dizia `brazil` e o jogo se comportava como `korea`.
-  Ferramenta: `ferramentas/ordena_bandeiras_ctrl.py`, que reaponta a tabela
-  direto para os nove trechos e torna a ordem independente do servicetype.
-- **`||` e `&&` do script do rAthena NÃO fazem curto-circuito.** São o `C_LOR`
-  e o `C_LAND`, operadores de **dois números** (`script.cpp:3839`) resolvidos
-  pelo `op_2num` depois de os dois lados já estarem na pilha — não há salto
-  como em C. Então a guarda mais comum de todas, `if (i == 0 || v[i-1] != x)`,
-  avalia `v[-1]` na primeira volta, **sempre**. O mesmo vale para
-  `if (getarraysize(.a) > 0 && .a[0] == 1)` e para qualquer
-  `if (x != 0 && y/x > 2)`. Falha barulhenta no log (*"getelementofarray:
-  index out of range (-1)"*) e **calada na tela**: o comando devolve falha, o
-  `OnInit` MORRE ALI, e tudo que ele ainda ia montar fica vazio — um menu
-  construído depois abre em branco, sem nenhuma linha de erro que aponte para
-  o menu. Achado em 2026-08-12 no Guia de Prontera. A saída é `if` aninhado ou
-  `if`/`else if`, nunca o operador.
-- **O nome único de um NPC é o que vem DEPOIS do `::`, não a linha inteira.**
-  Em `<Nome na tela>::<Nome único>` o `npc_parsename` (`src/map/npc.cpp:3674`)
-  põe a primeira metade em `nd->name` — que só serve para desenhar — e a
-  segunda em `nd->exname`, que é a chave do `npcname_db` e o que
-  `disablenpc`/`enablenpc`/`donpcevent` aceitam. Ou seja o
-  `Guide#01prontera::GuideProntera` se desliga por **`GuideProntera`**.
-  Confunde porque a metade da esquerda **parece** o nome único (tem `#`, é o
-  que se lê no arquivo) e porque num NPC **sem** `::` as duas são a mesma
-  coisa — inclusive nos `duplicate`, que quase nunca têm `::`. Erra-se num e
-  acerta-se nos outros quatro, e o resultado é NPC velho de pé empilhado no
-  novo: os dois aparecem, o jogador clica no de cima, e qual é o de cima
-  ninguém escolheu. O log traz *"Attempted to disablenpc a non-existing NPC"*.
-- **`explode` NÃO limpa o array de destino.** Ele grava a partir do índice
-  dado (`script.cpp:17305`) e para quando a string acaba — o que sobrou de uma
-  chamada anterior mais longa continua lá. Ler o resultado por
-  `getarraysize()` depois de uma linha curta devolve o tamanho da linha
-  ANTERIOR, e nada denuncia. `deletearray <array>[0];` antes de cada
-  `explode`, sempre.
-- **`getarraysize()` de array de texto para no último elemento NÃO VAZIO.**
-  Então tabela de colunas paralelas em que a última coluna termine em `""`
-  encolhe, e a conferência "todas as colunas têm o mesmo tamanho" — que é o
-  que a regra §4.11 pede — passa a mentir justamente quando deveria pegar o
-  desalinhamento. Usar um marcador visível (`"-"`) no lugar de `""`, e numerar
-  coluna de inteiro a partir de 1 e não de 0, pelo mesmo motivo.
-- **O NOME do sprite não descreve a arte, e neste cliente NÃO EXISTE aura de
-  chão colorida.** O `4_PURPLE_WARP` (10237) não tem nada de roxo: é um quadro
-  só, 157x84, com **um único índice de paleta usado, o 255, que é preto** — o
-  mesmo desenho do `1_SHADOW_NPC` (723), pixel por pixel. E não há outro:
-  varridos em 2026-08-12 os 1.046 sprites de NPC com arte legível e view id
-  abaixo do teto de 10508, **só esses dois** são decalque chato de quadro
-  único. O arco-íris de sombras coloridas que o rAthena numera de 10554 a
-  10560 (`1_SHADOW_RED` … `1_SHADOW_VIOLET`) é de um kRO posterior: não está no
-  `npcidentity.lub` nem no `jobname.lub` daqui, não tem `.spr` no nosso GRF nem
-  no do bRO, e o número ainda ficaria acima do teto. Pedido de "aura de chão"
-  se responde com óvalo escuro ou com `specialeffect` em laço — o segundo
-  reinicia a animação a cada disparo e some no intervalo. Ver `HISTORICO.md`,
-  "Três ajustes em Comodo".
-- **Facing de NPC se calcula pela CÉLULA de destino, não pelo lado da tela.**
-  Tabela do `enum directions` (`src/map/path.hpp:16`) medida em jogo com a
-  câmera padrão: **4 (sul) desenha para baixo-direita, 2 (oeste) para
-  baixo-esquerda, 0 (norte) para cima-esquerda, 6 (leste) para cima-direita.**
-  A pergunta certa é "que direção me leva daqui até lá". O cabeçalho da
-  `npc/guerra/maquina.txt` traz uma tabela em termos de "direita/esquerda" que
-  vale **só para aquele sprite** — reusá-la virou a Máquina de Sombrios Gerais
-  para o lado errado em 2026-08-12.
-  **E há um caso em que o ponto cardeal pedido é a resposta errada: NPC de
-  FALA.** Quando o pedido diz "virado para leste" e o NPC fica de frente para o
-  jogador, ótimo; quando fica **de costas**, não houve erro de conversão — foi o
-  `6` fazendo o que a tabela promete. Para quem conversa, o que importa é a
-  direção **na tela**, e com a câmera padrão quem olha para o jogador que sobe o
-  salão é **4** ou **2**, nunca 6 ou 0. Custou uma rodada nos três NPCs de fala
-  da Sala Secreta da Ordem em 2026-08-13, todos pedidos em "leste" e todos
-  entregues de costas. Ao receber ponto cardeal para NPC que dialoga,
-  **perguntar para onde ele deve OLHAR na tela**, não só que célula encarar.
-- **NPC com sprite de CLASSE DE JOGADOR nasce pedindo o penteado 0, e o 0 não
-  existe.** Sprite de NPC normal (`view id` ≥ 44, do `npcidentity.lub`) traz a
-  aparência pronta do `npc_viewdb`; id de **classe** (`JOB_MERCHANT` = 5 e
-  irmãos) cai noutro caminho — o `npcdb_checkid` recusa, e o
-  `status_set_viewdata` (`src/map/status.cpp`, `case BL_NPC`) monta a aparência
-  à mão num `else if (pcdb_checkid(class_))`: `look[LOOK_BASE] = class_` e
-  `look[LOOK_HAIR] = cap_value(0, MIN_HAIR_STYLE, MAX_HAIR_STYLE)`. Com o nosso
-  `min_hair_style: 0` (`conf/battle/client.conf`) isso dá **penteado 0**, e os
-  penteados deste cliente vão de **1 a 42** nos dois sexos — não há
-  `0_<sexo>.spr`. O corpo da classe existe; a cabeça é que não. Remédio, no
-  `OnInit`: `setunitdata(getnpcid(0), UNPC_HAIRSTYLE, 1)` (e `UNPC_SEX`, que
-  também nasce zerado pelo `memset`) — as duas **gravam no `nd->vd` do próprio
-  NPC** (`clif_changelook`, `case LOOK_HAIR`, faz `vd->look[type] = val`), então
-  valem para quem logar depois e não são pacote solto. **Nenhum dos 26 mil
-  `script` do rAthena usa id de classe** — a varredura é barata e a ausência
-  total é o aviso. Caso vivo: a Tranqueiras, `prontera 151,131`, 2026-08-12.
-- **Em `conf/groups.yml`, `false` não desliga nada.** Herança de grupo é um OU
-  binário aplicado **depois** do parse (`pc_groups.cpp:275`,
-  `permissions |= otherGroup->permissions`). Permissão que o pai concede, o
-  filho não consegue tirar — `attendance: false` no `Super Player` é letra
-  morta, porque ele herda do `Player`, que a concede. Ler a linha e concluir
-  "esse grupo não tem" dá diagnóstico invertido.
-- **`OnNPCKillEvent` NUNCA dispara para mob que tem evento próprio.** Em
-  `mob.cpp:3592` os dois são ramos de um `else if`: se `md->npc_event[0]` está
-  preenchido, roda o evento do mob e o global **não roda**. Como todo chefe de
-  instância nasce com `instance_npcname(...)+"::OnMyMobDead"`, **nenhum deles
-  dispara o evento global** — um contador de caçada feito assim compila, sobe,
-  não erra no log e conta zero. Quem conta morte de verdade é o objetivo
-  `HUNTING` de quest: o `quest_update_objective` roda antes, fora daquele `if`,
-  e o `map_foreachinallrange` (`mob.cpp:3575`) ainda propaga para a **party
-  inteira dentro de `AREA_SIZE`**. É o que as instâncias do próprio rAthena
-  usam. Mesmo quando o global dispara, é para o `first_sd` — o primeiro do
-  registro de dano, não o matador.
-- **`disablenpc` NÃO desliga o NPC dentro da instância — a receita de §2 não
-  vale para NPC de mapa de instância.** São dois campos diferentes e só um
-  atravessa a clonagem: o `buildin_disablenpc` (`script.cpp:12388`) chama
-  `npc_enable_target`, que mexe em `is_invisible` e `sc.option` e **nunca
-  grava `nd->state`**; e é justamente `state`, e só ele, que o
-  `npc_duplicate_sub` copia para a cópia (`npc.cpp:4655-4657`). Então
-  `disablenpc "X"` num `OnInit` esconde o NPC do **mapa-molde**, onde ninguém
-  entra, e **o clone de dentro da instância nasce ligado** — empilhado no
-  substituto, com a regra velha de volta. Falha calada: os dois aparecem, o
-  jogador clica no de cima, e qual é o de cima ninguém escolheu. Só o
-  `script(DISABLED)` de tempo de parse propaga (`npc.cpp:3974`), e ele mora no
-  arquivo do rAthena. **A saída é o `OnInstanceInit` do NPC substituto**, e ela
-  é segura porque o `instance_addnpc` cria TODOS os clones antes de rodar
-  qualquer `OnInstanceInit` — os dois laços estão um embaixo do outro em
-  `instance.cpp:586-598`, com os comentários *"First add the NPCs"* e *"Now run
-  their OnInstanceInit"*. Caso vivo: o seletor de dificuldade do Túmulo do
-  Monarca, `npc/guerra/tumulo_do_monarca.txt`, 2026-08-12.
-- **Quest que o cliente não conhece DERRUBA O CLIENTE.** Não é "aparece sem
-  título" — é caixa de erro de Lua, uma **por missão e por atualização da
-  janela**, até a conexão cair. O `GetOngoingQuestInfoByID`
-  (`data\luafiles514\lua files\datainfo\questinfo_f.lub`, linha 4) faz
-  `QuestInfoList[id].Title` **sem guarda de nil**, e sai
-  *"attempt to index field '?' (a nil value)"*. As outras funções do mesmo
-  arquivo (`Description`, `RewardItemList`, `CoolTimeQuest`) **têm** guarda —
-  só a do título não. Pegar sete missões de uma vez rende dezenas de caixas
-  seguidas. Achado em 2026-08-08, no primeiro teste das placas da Ordem.
-  A entrada mora em `System\OngoingQuestInfoList_True.lub` e
-  `_Sakray.lub`, e o mínimo que impede o estouro é
-  `[<id>] = { Title = "...", Description = { "..." }, Summary = "..." }`.
-  **Aqueles dois arquivos são gerados** pelo `traduz_ptbr.py questinfo`, que
-  os reconstrói do coreano de 2021 — entrada posta à mão some na próxima
-  rodada. Por isso as nossas são geradas por
-  `ferramentas/monta_missoes_da_ordem.py`, que roda **depois** dele.
-- **`getexp` NÃO passa pela taxa de EXP do servidor.** A `base_exp_rate` é
-  aplicada uma vez só, ao EXP de **mob**, no carregamento do `mob_db`
-  (`mob.cpp:5077`); o `getexp` de script só é multiplicado pelo
-  `quest_exp_rate` (`conf/battle/exp.conf`), que está em **100**. Então
-  `getexp 800000,800000` entrega 800.000 num servidor cujo monstro rende dez
-  vezes mais — a recompensa de NPC vale **um décimo** do que o número sugere,
-  em relação ao resto. Ler "somos 10x" e supor que o script acompanha erra a
-  economia inteira, e nada denuncia.
-- **Equipamento ilusional não está no `Drops:` do monstro: é DROP DE MAPA — e
-  drop de mapa NÃO passa pela taxa do servidor.** São dois enganos em fila, e o
-  segundo é o caro. O primeiro: procurar a Espada Ilusional (13469) no
-  `mob_db` do Congelador Ominoso devolve **zero**, o que parece item que não
-  cai de nada; ela mora em `db/re/map_drops.yml`, um banco separado, indexado
-  por **mapa** e processado no fim do `mob_dead` (`mob.cpp:3372`, "Process map
-  specific drops") — e para monstro dentro de instância a busca é pelo
-  `instance_src_map`, o mapa-molde. O segundo: o `mob_getdroprate` chamado ali
-  (`mob.cpp:3388`) só aplica bônus de LUK e de equipamento do jogador. Os
-  `item_rate_*: 5000` de `conf/guerra/battle_guerra.txt` **não alcançam campo
-  nenhum daquele arquivo**, e o cabeçalho do próprio `map_drops.yml` diz isso
-  numa linha em inglês: *"These drops are unaffected by server drop rate"*.
-  Consequência medida em 2026-08-18: num servidor de 50x, o ramo ilusional
-  inteiro rodava a **1x** — a espada a 0,025% por Congelador Ominoso (549.071
-  de HP) e a Pedra da Ilusão a 0,010%, com a troca oficial pedindo **cem**
-  pedras. Nada estava quebrado, então nada aparecia no log; o sintoma é
-  indistinguível de azar. Corrigido por `db/guerra/map_drops.yml`, gerado por
-  `ferramentas/escala_drops_de_mapa.py`.
-  **E o teto de `Rate` não é cortado, é recusado:** acima de 100000 o
-  `parseDrop` devolve `false` e o `parseBodyNode` descarta o **mapa inteiro**
-  (`mob.cpp:7072`) — com os drops já lidos daquele mapa aplicados, ou seja um
-  override pela metade. Quem multiplicar taxa daquele arquivo põe o `min()` no
-  gerador.
-- **Em `TimeLimit` de quest, o `+` é o que decide o significado.** `+3h` é
-  intervalo (três horas a partir de agora); `6h`, sem o sinal, é **hora
-  exata** — o `quest_time()` (`quest.cpp:554`) devolve o próximo 06:00, hoje
-  ou amanhã. Os dois caminhos saem do mesmo campo (`quest.cpp:71`), e trocar
-  um pelo outro dá um prazo plausível e errado. Reset diário não precisa de
-  temporizador: é a forma sem `+`.
-- **`MAX_QUEST_OBJECTIVES` é 3** (`src/common/mmo.hpp:111`). Um quarto alvo
-  numa quest emite *"Targets list exceeds the maximum"* e cai no mesmo
-  `return 0` de sempre, que descarta a **quest inteira** — não o alvo a mais.
-  O mesmo vale para `Mob:` com AegisName inexistente (`quest.cpp:132`).
-- **`os.system` com a linha começando por aspas** falha no `cmd` do Windows: o
-  primeiro par de aspas é comido e sai *"A sintaxe do nome do arquivo... está
-  incorreta"* — que parece defeito do arquivo passado, e não é. Usar
-  `subprocess.call([exe, arg, ...])`.
-- **Literal de `setarray` pode virar NOME DE VARIÁVEL, e aí traduzir quebra.**
-  No `DevilTower.txt` os cinco `"DIR_NORTHWEST"`, `"DIR_NORTH"` etc. são
-  concatenados: `'coord_seal_DIR_NORTHWEST` e `'round[DIR_NORTHWEST]`. Chegam
-  ao catálogo de tradução por um `setarray` de texto, **parecem rótulo de
-  direção** e não são — traduzir faz o script procurar variável que não
-  existe. Falha calada: o selo mágico simplesmente não anda. O `RE_TECNICO`
-  cobre `setd`/`getd`, não este caso. Regra prática: literal em MAIÚSCULA com
-  `_` dentro de `setarray` é suspeito até prova em contrário.
-- **`F_GetPlural` aplica regra de plural INGLESA à palavra que a gente
-  escrever.** O `callfunc("F_InsertPlural", n, "Second")` vira "3 Seconds";
-  traduzido para `"Segundo"` vira "3 Segundos", que está certo — mas por sorte
-  de terminação. A função (`npc/other/Global_Functions.txt`) acrescenta `-es`
-  em `-s/-x/-z/-ch/-sh`, troca `-f/-fe` por `-ves`, `-y` por `-ies`, e tem uma
-  lista de exceção em `-o` (`potato|tomato|…`). Palavra portuguesa que caia num
-  desses ramos sai errada na tela e **nada avisa**. Conferir a terminação antes
-  de traduzir argumento de `F_InsertPlural`.
-- **A descrição do item na tela discorda do script do servidor — no NÚMERO, não
-  só na presença.** A descrição vem do `itemInfo` do cliente, que é a tradução
-  do kRO de 2021; o efeito vem do `Script:` do `item_db` do nosso rAthena, que é
-  outra revisão. Caso vivo em 2026-08-09: a **Capa do Comandante** (20925) diz
-  na tela *"Resistência as raças Humano e Doram +5%"* e o script dá
-  `bonus2 bSubRace,RC_Player_Human,3` — 3, e nada para Doram. Somar resistência
-  lendo a tela dá um total plausível e errado, e a diferença não aparece em
-  lugar nenhum. **Conta de efeito se fecha no `item_db`.**
-  *Esta capa foi consertada em 2026-08-10* (override no `db/guerra/item_db.yml`,
-  do lado do servidor) — quem for conferir hoje acha 5, e a armadilha continua
-  valendo para todo o resto do `item_db`.
-  **O caso mais caro dessa família já tem trava própria: o "Indestrutível".**
-  Ali a diferença não é de número — a peça quebra e some. Ver §4.19 e
-  `ferramentas/marca_indestrutiveis.py`.
-- **Nem toda parcela de dano do renewal passa pela redução de cartas.** O dano
-  físico é montado em `statusAtk`, `weaponAtk`, `equipAtk`, `masteryAtk` e
-  `percentAtk`, e a redução do alvo é aplicada **parcela a parcela, antes da
-  soma** (`battle.cpp`, bloco "Card Fix for target"). Dá no mesmo que reduzir no
-  fim — tudo que vem depois é multiplicativo — **desde que toda parcela entre**.
-  O `percentAtk` não entrava (corrigido por nós; ver §2). Ao mexer em dano,
-  desconfiar sempre: parcela que não está naquele bloco ignora resistência a
-  raça, elemento, tamanho e classe, todas de uma vez, e nada denuncia.
-  **A lista completa do que escapa — habilidades com `IgnoreDefCard`, dano fixo,
-  reflexo, dano de status — está em `REDUCAO-DE-DANO.md`.** Consultar antes de
-  chamar de bug.
-- **MONSTRO NÃO TEM RESISTÊNCIA POR RAÇA — não existe "redução humano" para
-  mob.** O `bonus2 bSubRace,RC_Player_Human` é bônus de **jogador**: o
-  `battle_calc_cardfix` lê o `subrace` do `tsd`, e alvo `BL_MOB` **não tem ramo
-  naquela função**. Não há como dar resistência a humano a um guardião por
-  `db/`, por script ou por carta — e o pedido chega exatamente com essa
-  palavra, porque é a que o dono conhece do lado do jogador. O que existe e
-  serve é o **`md->damagetaken`** (o `DamageTaken:` do `mob_db`, também
-  `setunitdata UMOB_DAMAGETAKEN`), aplicado no fim do `battle_calc_damage`
-  (`battle.cpp:2072`) como multiplicador sobre tudo que acerta aquele monstro.
-  É **por instância** — mora no `md`, não no `mob_db` —, então não contamina
-  outros do mesmo ID. Mas é **inteiro em porcentagem**: `1` é o menor valor
-  útil, ou seja **99% é o teto**, e 99,9% não cabe nele.
-- **Dentro de castelo, a redução de 80% da guerra vale 24 HORAS POR DIA — e
-  vale também quando o alvo é MONSTRO.** O mapflag é `gvg_castle`, posto
-  estaticamente em `npc/mapflag/gvg.txt`, e o `mapdata_flag_gvg2`
-  (`map.hpp:977`) só olha mapflag: não consulta o `agit_flag`. O `gvgon` da
-  Guerra do Emperium acrescenta o `MF_GVG` por cima, mas a redução já estava
-  ligada. Duas consequências: dano medido em castelo fora do horário de guerra
-  é o **mesmo** da guerra (ótimo para testar), e qualquer resistência dada a um
-  guardião **multiplica** com os `gvg_*_attack_damage_rate: 20` — 99% de
-  redução no monstro com os nossos 20% que passam dá `0,20 × 0,01`, ou seja
-  **0,2% do dano bruto**. Calibrar o HP sem fazer essa conta erra por duas
-  ordens de grandeza.
-- **`status_calc_mob_` sem nenhuma flag LIBERA o `md->base_status` e passa a
-  usar o status compartilhado do `mob_db`.** O `if (!flag) { … aFree(md->base_status);
-  … return 0; }` (`status.cpp:2812`) é a porta de saída de todo monstro comum.
-  Quem enxertar ajuste de status de monstro **depois** dessa linha precisa
-  garantir que alguma flag esteja ligada, senão escreve no registro do banco de
-  monstros e altera **todos** os monstros daquele ID de uma vez — calado, e
-  sobrevivendo até o próximo `@reloadmobdb`. O `setunitdata` não cai nessa
-  armadilha porque aloca o `base_status` próprio antes de escrever
-  (`script.cpp:19420`).
-- **Desligar um arquivo de castelo do rAthena leva 17 BANDEIRAS junto, e nada
-  no log diz isso.** Cada `npc/guild/<castelo>.txt` define, além do Emperium e
-  do Gerente, **quatro bandeiras no feudo, doze dentro do castelo e uma na
-  cidade** — nos dezenove que desligamos em 2026-08-13 eram **279 bandeiras em
-  27 mapas**, incluindo Prontera, Geffen, Payon e Al De Baran. Bandeira que
-  some não emite aviso; quem percebeu foi o dono, na tela. **Ao comentar
-  qualquer `npc:` de castelo, contar o que mais estava naquele arquivo.** A
-  boa notícia é que bandeira **não é atrelada ao castelo**: o que a prende é
-  uma linha, o `FlagEmblem GetCastleData("<mapa>", CD_GUILD_ID)`, e trocar o
-  mapa ali faz a bandeira hastear outro clã (ver
-  `npc/guerra/bandeiras_do_feudo.txt`).
-- **Nome de NPC pode ter ESPAÇO, e um `\S+` no lugar dele perde arquivo
-  inteiro.** Os campos de uma linha de NPC são separados por **TAB**; o nome é
-  `[^\t]+`, não `\S+`. As bandeiras dos cinco castelos de Payon se chamam
-  `Bright Arbor#1-2`, e o regex errado devolveu **219 bandeiras em vez de
-  279** — sem erro, com Payon zerado e um total plausível demais para
-  desconfiar. Só uma coluna de zeros numa listagem por arquivo denunciou:
-  **listar por arquivo, e não só o total**, é o que transforma esse tipo de
-  perda silenciosa em algo visível.
-- **No renewal, a chance de acerto é literalmente `hit − esquiva` em pontos
-  percentuais — e o piso de 5% esconde o quanto se está longe.** A taxa base do
-  renewal é **zero** (no pre-renewal era 80), e a única coisa somada a ela é
-  aquela subtração; o resultado é travado entre `min_hitrate: 5` e
-  `max_hitrate: 100` (`battle.cpp:3289-3341`). Duas consequências que enganam
-  juntas: **cem pontos cobrem a escala inteira**, de "nunca acerta" a "nunca
-  erra" — não há meio-termo suave para calibrar; e **tudo que está 95 pontos
-  abaixo parece igual**, porque o piso devolve 5% tanto para quem está a 10
-  pontos quanto para quem está a 300. O `hit` de monstro é `nível + DEX + 150`
-  (`status.cpp:2635`), o que dá 309 no Guardião Soldado e 422 no Arqueiro — os
-  dois no piso contra jogador de guerra, com sintomas idênticos. Antes de somar
-  precisão, **ler a Esquiva do alvo**: o número certo é `esquiva + a chance
-  desejada`, e um bônus somado em monstros de bases diferentes espalha o
-  resultado por toda a escala.
-- **No `mob_db` do renewal, `Attack2` NÃO é o ATQ máximo — vira `rhw.matk`.**
-  O parser (`mob.cpp:5107`) manda `Attack2` para `status.rhw.matk` sob
-  `RENEWAL` e só cai em `rhw.atk2` no pre-renewal. Quem lê `Attack: 873,
-  Attack2: 163` como "dano de 163 a 873" erra duas vezes: o mínimo e o máximo
-  saem os dois do **`Attack`**, no `status_calc_misc`, como 80% e 120% dele
-  (`status_base_atk_min`/`_max`, `status.cpp:2522`). Os dois campos são
-  `uint16` — **teto de 65.535** para dano de monstro.
-- **`guardian` sem índice é guardião TEMPORÁRIO, e é o que se quer fora de
-  castelo com dono.** Com índice, ele ocupa um dos oito slots
-  `CD_ENABLED_GUARDIAN` e passa a ser alcançado pelo `mob_guardian_guildchange`
-  (`mob.cpp:3690`), que **apaga guardião de castelo sem dono** — o sumiço vem
-  na primeira vez que alguém tocar na dona do castelo, e é calado. O preço do
-  temporário é não ter respawn nem `guardianinfo`.
-- **`killmonster` com o terceiro argumento tem o sentido INVERTIDO do que o
-  nome sugere:** sem ele o rótulo dos mortos **não** dispara; `1` é que faz
-  disparar (`doc/script_commands.txt`, `*killmonster`). Para limpeza silenciosa,
-  omitir.
-- **O cabeçalho do `map_cache.dat` tem 8 bytes, não 6.** É
-  `uint32 file_size; uint16 map_count;` e o compilador o alinha em 8; ler a
-  partir do byte 6 desalinha o arquivo inteiro e o leitor estoura umas dezenas
-  de mapas adiante, longe da causa. O cabeçalho de cada mapa
-  (`char name[12]; int16 xs; int16 ys; int32 len;`) tem 20 e esse não tem
-  surpresa. Ver §5, entrada dos TRÊS `map_cache.dat`, para saber em qual deles
-  procurar.
-- **No `sshd_config` o PRIMEIRO valor vence, não o último — e isso inverte o
-  sentido do número no nome do arquivo em `sshd_config.d/`.** É o contrário do
-  `nginx`, do `sysctl` e de praticamente tudo que usa pasta `.d`, onde o último
-  a falar ganha. O glob carrega em ordem alfabética, e a imagem Ubuntu da
-  DigitalOcean já traz `50-cloud-init.conf` e `60-cloudimg-settings.conf`: um
-  drop-in nosso chamado `99-` **perderia para os dois, calado** — o arquivo
-  existe, o `sshd -t` aprova, e a diretiva simplesmente não vale. Por isso o
-  nosso é `10-guerra.conf`. Entre o drop-in e o `sshd_config` principal não há
-  disputa: o `Include` está na linha 12 e vence o que vier depois. Medido em
-  2026-08-14. **A conferência que decide é `sshd -T`**, que imprime a
-  configuração efetiva — ler o arquivo não prova nada. Cuidado com um
-  sinônimo que engana na saída: `prohibit-password` é reimpresso como
-  `without-password`.
-- **Sessão SSH já aberta não prova endurecimento nenhum.** Ela foi autenticada
-  antes da mudança e continua viva de propósito — é o que impede o tiro no pé.
-  Testar sempre em **conexão nova**, e testar também o que deve FALHAR
-  (`ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no`), não
-  só o que deve funcionar.
-- **`tr -dc … | head -c N` mata o script inteiro sob `set -o pipefail`.** O
-  `head` fecha o cano ao completar os N bytes, o `tr` morre de **SIGPIPE**
-  (exit 141), o `pipefail` propaga e o `set -e` encerra tudo — **sem imprimir
-  uma linha**, porque SIGPIPE é silencioso. Parece que o script "terminou" no
-  meio. Para gerar senha, `openssl rand -hex 16`, que não usa cano. Custou duas
-  rodadas em 2026-08-14 no `provisiona.sh`.
-- **O `needrestart` do Ubuntu 24.04 reinicia serviço sozinho durante o `apt`, e
-  o `ssh.service` está na lista dele.** Script de provisionamento rodado *por*
-  SSH pode ter a própria conexão derrubada no meio da instalação. Exportar
-  `NEEDRESTART_SUSPEND=1` antes do `apt`.
-- **O bit de execução do `rathena/` NÃO está no git, e no Linux isso vira
-  `Permission denied`.** O vendor foi feito no Windows, onde o git não registra
-  esse bit: o `rathena/configure` está no repositório como **`100644`**, e no
-  Linux `./configure` responde *"Permission denied"* — mensagem que parece
-  problema de dono, de `runuser` ou de montagem, e não é. A saída **não** é
-  `chmod` (o próximo `git reset --hard` do deploy o desfaz) nem mexer no modo
-  do arquivo de terceiro: é chamar o interpretador direto, `sh configure`.
-  Vale para qualquer `.sh` que venha do vendor. Medido em 2026-08-14.
-  **E o mesmo vale para ferramenta NOSSA escrita no Windows, onde o remédio é
-  o oposto.** Em 2026-08-17 o `ferramentas/publica_patch.sh` recusou rodar no
-  Mac (*"permission denied"*) porque estava no git como `100644` — o
-  `publica_cliente.sh` também, e os dois são justamente os que nasceram do lado
-  Windows. Os oito `.sh` restantes de `ferramentas/` estão `100755`, então a
-  divergência não salta aos olhos: só se descobre ao rodar o script pela
-  primeira vez de outra máquina. Como o arquivo é **nosso**, aqui a saída não é
-  chamar `bash <script>` para sempre: é consertar o modo no índice,
-  `git update-index --chmod=+x <arquivo>`, e commitar. Fica valendo para as
-  três máquinas. Conferência: `git ls-files -s ferramentas/*.sh`.
-- **`libmariadb-dev` não basta para compilar o rAthena — falta o
-  `libmariadb-dev-compat`.** O `configure` procura os nomes do **MySQL**
-  (`mysql_config`, `mysql.h`, `-lmysqlclient`) e o pacote do Ubuntu instala tudo
-  com nome MariaDB (`mariadb_config`, `/usr/include/mariadb/`). O resultado é
-  `configure: error: MySQL not found or incompatible` **com o MariaDB
-  instalado, no ar e aceitando conexão** — o que manda procurar defeito no
-  banco, que está perfeito. O `-compat` existe só para fazer essa ponte.
-- **A senha da conta de comunicação entre servidores tem teto de 23
-  caracteres, e passar disso falha CALADO — apontando para o lugar errado.**
-  O `char_logif.cpp:826` monta o pacote de conexão com
-  `memcpy(WFIFOP(login_fd,26), charserv_config.passwd, 24)`: vinte e quatro
-  bytes, ponto, **ainda que o `PASSWD_LENGTH` do banco seja 33**. Senha maior é
-  truncada ali: o `conf/import/char_conf.txt` aceita, o banco guarda o hash da
-  senha inteira, e o login-server hasheia os 23 primeiros e recusa. A mensagem
-  que sai é *"The server communication passwords (default s1/p1) are probably
-  invalid"* — que manda conferir `s1`/`p1` e o sexo `S` da conta, tudo já
-  correto. Medido em 2026-08-15 com uma senha de 32 caracteres. O
-  `ferramentas/configura_servidor.sh` gera 20.
-- **Há arquivo de nome COREANO dentro do cliente, e ele quebra o Python 2 de
-  duas maneiras diferentes.** A `AI_sakray\` traz o manual da IA do kRO
-  (`호문클루스…htm`), e provavelmente não é o único. **Na leitura:** `os.walk`
-  com caminho `str` usa a API ANSI, devolve o nome como `????` e o primeiro
-  `os.stat` estoura com *"A sintaxe do nome do arquivo... está incorreta"* —
-  mensagem que aponta para o arquivo, quando o defeito é do leitor. A saída é
-  o caminho nascer `unicode` (`ur'C:\...'`), que faz o Python usar a API W.
-  **Na escrita da tela:** um `print` daquele nome derruba a ferramenta com
-  `UnicodeEncodeError` — e derruba **depois** de o trabalho já ter sido feito,
-  deixando saída pela metade. A saída é uma linha no topo do arquivo:
-  `sys.stdout = codecs.getwriter(sys.stdout.encoding or 'cp1252')(sys.stdout,
-  'replace')`. Sem `sys.stdout.encoding` (saída redirecionada) o Python 2
-  devolve `None`, então o `or` não é enfeite. Medido em 2026-08-15 no
-  `monta_patch.py`.
-- **`StretchDIBits` falha de vez em quando, e mente no `GetLastError`.** Duas
-  execuções do mesmo binário devolveram 630 linhas (sucesso) e a terceira
-  devolveu **0** — com o erro do sistema dizendo *"operação concluída com
-  êxito"*. O sintoma é a janela do Atualizador nascer com o retângulo da arte
-  preto, sem nada além do log dizer o que houve.
-  **A primeira suspeita foi o modo `HALFTONE`, e estava errada:** tirar o
-  HALFTONE e tirar a escala (cópia 1:1) não consertou — voltou a falhar na
-  primeira execução seguinte. É a função, não o modo. Vale como lembrete de que
-  "mexi e parou de acontecer" não é diagnóstico quando o defeito é
-  intermitente: a versão sem HALFTONE rodou três vezes seguidas antes de
-  falhar.
-  **A saída é não usar aquele caminho:** `CreateDIBSection` devolve um ponteiro
-  para os bits do bitmap, e os pixels são **copiados** para lá — sem conversão,
-  sem escala, sem chamada que possa falhar por motivo obscuro. A redução de
-  tamanho, quando precisa, se faz em código antes. Ver `patcher/janela.go`,
-  `preparaArte` e `reduz`.
-- **Metade da configuração do cliente está no REGISTRO DO WINDOWS, e não no
-  cliente.** É a §4.9 um degrau adiante: lá as duas metades divergiam entre
-  arquivos, aqui uma delas não é arquivo nenhum. O `GuerraDoEmperium.exe`
-  escolhe em qual placa criar o dispositivo Direct3D lendo
-  `HKLM\SOFTWARE\Gravity Soft\Ragnarok` (`DEVICENAME`, `GUIDDEVICE`,
-  `GUIDDRIVER`, `SOUNDMODE`…), que quem escreve é o **`Setup.exe`** da raiz do
-  cliente. Numa máquina onde ele nunca rodou a chave não existe, e o jogo morre
-  na abertura com **`Cannot init d3d OR grf file has problem`** — mensagem que
-  junta dois casos opostos com um `OR` e manda todo mundo conferir o GRF, que
-  está perfeito. Medido em 2026-08-16, no primeiro teste do instalador em outra
-  máquina: 4,2 GB corretos em disco, sha256 de cada pedaço fechando, e o jogo
-  sem abrir.
-  Duas consequências que andam juntas: **é por isso que o cliente pede
-  elevação** (`HKEY_LOCAL_MACHINE` não se escreve sem privilégio), e um
-  `exec.Command` do Go **não sabe elevar** — o `CreateProcess` devolve
-  `ERROR_ELEVATION_REQUIRED` em vez de mostrar o UAC, e o jogador lê
-  *"fork/exec …: The requested operation requires elevation"*. Quem eleva é o
-  `ShellExecuteW`. Os dois sintomas eram a mesma causa vista de dois ângulos.
-  **Consequência para qualquer cliente novo:** copiar a pasta do jogo NÃO
-  basta. O `Setup.exe` tem de rodar uma vez por máquina, e o atalho precisa do
-  bit `SLDF_RUNAS_USER`. O instalador faz os dois (`patcher/video.go`).
-- **O servidor de jogo NÃO tem relógio próprio: `gettime` e `OnClock` leem a
-  hora LOCAL da máquina — e a máquina de produção nasce em UTC.** A imagem
-  Ubuntu da DigitalOcean vem em `Etc/UTC`, três horas à frente do Brasil, e
-  nada no rAthena converte nada: o `gettime(DT_HOUR)` de script e os rótulos
-  `OnClock<hhmm>` saem do `localtime` do processo. Consequência medida em
-  2026-08-16: a Guerra do Emperium de quinta às 20h
-  (`npc/guerra/horario_da_guerra.txt`, horário de Brasília) abriria às **17h**
-  do Brasil — e a falha é completamente calada, porque o script roda, o anúncio
-  sai e o Emperium nasce, só que na hora errada. O `ferramentas/provisiona.sh`
-  passou a fazer `timedatectl set-timezone America/Sao_Paulo` como passo 0
-  (`America/Sao_Paulo` e não `-03`: se o horário de verão voltar, quem resolve é
-  o `tzdata`). **Processo já no ar mantém o fuso antigo** — reiniciar os quatro
-  servidores depois. E a sonda que decide é `ssh <servidor> date`, nunca o
-  relógio de quem está olhando.
-  **E arrumar o `provisiona.sh` NÃO arruma a máquina que já está de pé:** o
-  `implanta.sh` faz `git pull`, compila e reinicia — ele **não** roda o
-  provisionamento. Um passo novo acrescentado lá só vale para a próxima
-  máquina, e nada avisa que a atual ficou de fora. Medido em 2026-08-17:
-  vinte e quatro horas depois de o passo 0 entrar no script, a produção ainda
-  estava em `Etc/UTC` — corrigida à mão, com o `timedatectl` antes do deploy
-  para o restart dele pegar o fuso novo de carona. **Passo novo de
-  `provisiona.sh` é para aplicar à mão na produção no mesmo dia**, ou fica
-  valendo só no papel.
-- **A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt`
-  dentro do GRF — não no rAthena e não no exe.** Procurar `fuck`/`swear`/
-  `badword` no `GuerraDoEmperium.exe` devolve zero e leva a concluir que o
-  filtro não existe; procurar no `rathena/` também, porque o emulador não
-  filtra palavra nenhuma. O arquivo tem 1409 linhas (uma palavra por linha,
-  CP949, CRLF) e **25 delas são inglês** (`fuck`, `sex`, `shit`, `ass`,
-  `damn`…), nenhuma em português — daí o sintoma parecer "censura de inglês".
-  Desligar é um override em `cliente\data\manner.txt` (o `DataFolderFirst` faz
-  o disco vencer o GRF), com uma palavra inócua dentro em vez de vazio, e vai
-  ao jogador **por patch** — é cliente, ver §4.18.
-- **`nslookup` sai com código 0 mesmo quando o domínio NÃO existe.** Uma sonda
-  `nslookup $host && echo "resolve"` imprime *"resolve"* para NXDOMAIN, e em
-  2026-08-16 isso deu por propagado um endereço de CDN que não existia — a
-  conclusão errada durou até alguém tentar baixar. Quem decide é `curl`, que
-  falha de verdade (`Could not resolve host`). Da mesma família: **cache DNS
-  negativo local**, que faz o `curl` continuar recusando um host que já
-  propagou; o `ipconfig /flushdns` limpa, e enquanto não limpar as duas sondas
-  discordam sem que nenhuma esteja mentindo.
-- **Chave do DigitalOcean Spaces pode ser somente-leitura, e a listagem
-  funciona igual.** As chaves têm escopo (Read Only, ou acesso limitado por
-  bucket), e com uma de leitura o `rclone lsf` responde normalmente enquanto
-  **toda escrita volta `403 AccessDenied`**. Pior quando o script silencia o
-  erro: `lsf … 2>/dev/null || true` transforma "não consigo falar com o bucket"
-  em *"(vazio)"*, que é indistinguível de um bucket recém-criado — e aí a
-  publicação tenta subir 3,4 GB para falhar no primeiro pedaço. O que separa os
-  dois em um comando é um `PutObject` de 14 bytes. E o campo que engana no
-  painel: o valor curto que a DigitalOcean mostra como nome da credencial
-  (`key-1786915948100`) **não é** o Access Key — esse tem ~20 caracteres e
-  começa com `DO00`.
-- **O rclone chama `CreateBucket` antes de subir arquivo grande.** Para usar
-  cópia multi-thread (o que ele faz sozinho a partir de algumas centenas de MB)
-  ele garante que o destino existe — e uma chave com acesso ao CONTEÚDO do
-  bucket mas sem permissão de criar bucket recebe `403` ali, antes de um byte
-  sair. A mensagem fala em `CreateBucket` e manda procurar defeito na
-  credencial, que está certa. A saída é `--s3-no-check-bucket` (ou
-  `RCLONE_CONFIG_<remoto>_NO_CHECK_BUCKET=true`).
-- **`valida_visual.le_item_db` devolve uma LISTA CHATA com o item DUAS vezes**,
-  uma por arquivo — e nem a primeira nem a última é a resposta certa. Ele recebe
-  os dois `item_db` (o `db/re/` e o nosso `db/guerra/`) e emite um registro por
-  bloco; **a primeira é a do rAthena** (o `View` original, o `Type`, os
-  `Locations` completos) e **a última é o nosso override** (que, sendo bloco
-  parcial de YAML, só tem os campos que a gente declarou). Quem pega a primeira
-  ignora a decisão que o servidor de fato usa — o `Footer: Imports:` faz o nosso
-  arquivo vencer; quem pega a última perde tudo o que o override não repetiu.
-  As duas leituras erradas estão em uso hoje: `instala_manto.py` pegava a
-  primeira (corrigido em 2026-08-16, com mescla campo a campo) e
-  `instala_visual.py` e `estende_accessoryid.py` montam um `dict` por
-  compreensão, que fica com a última. São **16 itens** hoje, medidos: com o
-  `dict`, o Cachecol Glorioso (15854) perde o `Type` e o `View: 2079` do
-  `db/re/` e passa a **não parecer chapéu** — os 4 arquivos de arte de cabeça
-  dele seriam pulados, calados.
-  A leitura certa é **mesclar**, com o campo que o override declarou vencendo e
-  o resto vindo do rAthena; ver `instala_manto.item_de`. Ver `PENDENCIAS.md` §1v.
-- **Deploy parcial feito à mão desarma o gatilho de restart do deploy seguinte,
-  e a perda é calada — CORRIGIDO em 2026-08-22, e a armadilha continua valendo
-  para quem der `git pull` no servidor por fora.** Até aquela data o
-  `atualiza_servidor.sh` decidia reiniciar o jogo comparando o commit de
-  **antes** do `git pull` com o de depois: quem fizesse o `git pull` por fora,
-  para publicar só o site sem derrubar jogador, **consumia esse gatilho**, e o
-  próximo `implanta.sh` achava `rathena/` sem mudança e não reiniciava. O que
-  ficara no disco continuava no disco, o processo vivo seguia com a
-  configuração velha, e nada no log denunciava — o deploy até dizia *"nada do
-  jogo mudou, ninguém foi derrubado"*, que é a frase de sucesso. Aconteceu em
-  2026-08-16, para não derrubar três jogadores.
-  **O conserto é não perguntar "o que mudou no repositório desde o último
-  pull?" e sim "o que mudou desde o que está RODANDO?".** Dois arquivos na raiz
-  do servidor guardam isso e não vão para o git: `.carimbo-jogo` (o commit com
-  que os quatro servidores estão no ar) e `.carimbo-site`. O
-  `ferramentas/implanta_site.sh` publica só o site e **não toca** o primeiro,
-  então a mudança de jogo que veio de carona no mesmo pull continua pendente
-  aos olhos do deploy completo — e o próprio script a **lista** no fim, com os
-  nomes dos arquivos. **O que continua sem rede é o `git pull` dado à mão no
-  servidor**, que avança o repositório sem avançar carimbo nenhum; com o modo
-  `--so-site` não há mais motivo para fazê-lo.
-- **"Unknown Item" com sprite de maçã NUNCA é problema de servidor — e a
-  pergunta que resolve é *quais* itens, não *por que aquele item*.** O nome do
-  item não trafega na rede: o servidor manda o ID e quem desenha é o
-  `itemInfo.lua` do cliente (§4.9). Nenhum reinício, `@reloaditemdb` ou deploy
-  muda uma letra daquela janela. O que a falta de carga no servidor produz é o
-  sintoma **oposto**: o item **some da lista**, sem virar "Unknown".
-  O que engana é a falha ser **seletiva** — numa vitrine de 23 linhas os itens
-  antigos aparecem certos e só os novos caem no *fallback*, o que parece "cinco
-  itens quebrados" e não "cliente com a tabela velha". O diagnóstico é uma
-  medição só: **listar os IDs que falham e comparar com a lista dos que mudaram
-  de tabela**. Em 2026-08-17 os 11 que falhavam eram exatamente as 11 entradas
-  novas do `itemInfo.lua`, e a lista saiu de graça do backup que a ferramenta
-  deixa ao lado (`itemInfo.lua.BACKUP-<data>`). Se bater, a causa é uma das
-  duas: cliente aberto **antes** de o arquivo mudar (§3 — só se lê na
-  inicialização), ou o patch não chegou à máquina do jogador (§4.18).
-- **O registro de patch do jogador é indexado por número, e DUAS contagens
-  diferentes começam em 0001.** O `patch\aplicados.txt` é o diário dos patches
-  (`patcher/patches.txt`), mas o instalador numera os pedaços da BASE
-  (`patcher/base.txt`) do 0001 também — e enquanto o `marcaAplicado` morou
-  dentro do `aplica`, o instalador anotava os pedaços ali. Resultado medido em
-  2026-08-17: todo cliente instalado tinha `0002 As musicas` e `0003 A Guerra
-  do Emperium (1 de 2)` no diário, e o Atualizador **pulou os patches 0002 e
-  0003 para sempre**, dizendo *"Cliente atualizado"* com a barra cheia. Os
-  números 0004 e 0005 ficaram queimados para os dois patches seguintes.
-  A trava é comparar **número E sha256** (`leAplicados` devolve o sha), e ela
-  ainda **repara sozinha** quem já instalou. A regra geral: **número não
-  identifica artefato entre duas contagens independentes** — quem decide é o
-  conteúdo. E o sintoma aparece a três passos dali, na janela de loja, sem
-  nada apontar para o registro.
-- **`DropEffect: CLIENT` no `item_db` NÃO é "sem efeito" nem "o padrão" — é
-  uma escolha que este cliente resolve desenhando NADA, e ela já está em 1882
-  itens do vendor.** O campo tem sete valores, e o 1 (`CLIENT`) quer dizer
-  literalmente *"decide voce, cliente"*; os outros nomeiam um pilar de cor.
-  O `db/re/` do nosso rAthena declara `DropEffect: CLIENT` em 1882 itens —
-  **quase toda carta entre eles** —, e o cliente de 2021-11-03 decide não
-  desenhar. Consequência que engana sozinha: código que trate "campo diferente
-  de `NONE`" como "o item já escolheu" desliga a própria regra em silêncio,
-  para exatamente os itens que mais importam. A guarda certa é
-  `> DROPEFFECT_CLIENT`, nunca `!= DROPEFFECT_NONE`. Custou três hipóteses
-  erradas em 2026-08-17 (`src/custom/brilho_da_carta.hpp`).
-- **`ShowInfo` NÃO chega ao `log/map-msg_log.log`.** O `console_msg_log` deste
-  servidor é **3** (`conf/import/map_conf.txt`), e a escala é 1 = Warning,
-  2 = Error/SQL, 4 = Debug — **informação não tem bit**, em nenhum valor. Ou
-  seja: sonda escrita com `ShowInfo` imprime só na **janela** do map-server, e
-  quem for ler o arquivo conclui que a sonda não rodou — diagnóstico invertido
-  sobre código que está funcionando. Sonda que precise ir para o arquivo usa
-  `ShowWarning`.
-  **E dá para ler a janela sem pedir print:** `AttachConsole(<pid do
-  map-server>)` mais `ReadConsoleOutputCharacterW` sobre o `CONOUT$` devolve o
-  buffer de tela inteiro. Foi o que fechou o caso do brilho de carta em
-  2026-08-17, depois de o arquivo de log ter vindo vazio duas vezes.
-- **Trocar `Locations` de um item com o servidor NO AR deixa o item
-  INEQUIPÁVEL até o jogador relogar — e a mensagem culpa o item.** O cliente
-  guarda o `location` de cada item do inventário de quando a lista lhe foi
-  enviada (`clif_inventorylist` manda `pc_equippoint`, `clif.cpp:3092`), e ao
-  equipar ele **manda essa posição de volta** (`clif_parse_EquipItem` repassa o
-  `p->position` cru). O `pc_equipitem` então testa `!(pos & req_pos)`
-  (`pc.cpp:12064`): com o servidor já dizendo `Acc. Direito` e o cliente ainda
-  pedindo `Acc. Esquerdo`, a conta dá zero e sai *"You can't put this item
-  on."*, uma por clique. **O `@reloaditemdb` não desfaz isso**: o
-  `itemdb_reload` chama `pc_setinventorydata`, não `clif_inventorylist`
-  (`itemdb.cpp:4992`). Quem reenvia a lista é o `clif_parse_LoadEndAck`
-  (`clif.cpp:10795`) — ou seja **login ou troca de mapa**, e só isso.
-  Duas consequências: em DEV, depois de mexer em `Locations`, **relogar antes
-  de testar** — senão a própria conferência acusa um defeito que não existe;
-  e em PRODUÇÃO o problema não aparece, porque o deploy reinicia o map-server e
-  todo mundo reconecta. Isto vale para o item na MOCHILA; o que já está
-  equipado tem o mesmo gatilho, e ali o `pc_checkitem` desequipa sozinho
-  (`pc.cpp:12623`).
-- **As duas caixas de acessório da janela de equipamentos NÃO estão
-  invertidas — a etiqueta só parece trocada porque o personagem está de
-  frente.** `Acc. Right` fica à **nossa esquerda** e `Acc. Left` à nossa
-  direita, que é o correto: a direita do personagem é a nossa esquerda. Então
-  "acessório direito caindo na caixa escrita Left" **não** é defeito de
-  cliente, de etiqueta nem de pacote — é o `Locations:` do nosso vendor
-  discordando da descrição que o jogador lê, que vem do `itemInfo.lua`, ou
-  seja do bRO (a mesma família da §4.14). A leitura errada é cara: leva a
-  inverter `EQP_ACC_R`/`EQP_ACC_L` no `mmo.hpp`, o que mudaria **todo** item
-  do servidor para consertar três. **A medição que decide é a população**, e
-  ela é barata: cruzar todo acessório de lado único do `item_db` com a linha
-  `Tipo: Aces. Direito/Esquerdo` da descrição do bRO. Em 2026-08-17 deu 76
-  acordos contra 3 divergências — inversão geral daria 79 a 0.
-- **`@reloadscript` sem `@reloaditemdb` FAZ O ITEM NOVO SUMIR DA VITRINE.** O
-  `npc_parse_shop` descarta todo item que não está no `item_db` em memória
-  (`npc.cpp:4142`, *"Invalid sell item ... (id 'N')"*) — então recarregar o
-  script de uma loja que ganhou item novo **antes** de recarregar o `item_db`
-  publica a vitrine sem ele. A linha de aviso existe, e some sob centenas de
-  `[Warning]` inofensivos dos mercados. **Item novo em loja: `@reloaditemdb`
-  primeiro, `@reloadscript` depois.** Num boot completo o problema não existe
-  (o `item_db` carrega antes dos NPCs), o que o torna exclusivo do
-  recarregamento parcial — e faz o mesmo servidor se comportar de dois jeitos.
-  Medido em 2026-08-17 com dois placeholders novos.
-- **`go build` sem `GOOS`/`GOARCH` explícitos num script que PUBLICA binário é
-  uma bomba de fuso horário de máquina.** O `-o Jogar.exe` decide só o nome:
-  rodado do Mac, o mesmo comando produz um **Mach-O chamado `Jogar.exe`**, com
-  sha256 correto, que sobe para o canal de auto-atualização de todos os
-  jogadores e não abre em máquina nenhuma. Nada mais no caminho olha para o
-  formato do arquivo — nem o `scp`, nem o `patcher.txt`, nem o Atualizador que
-  o baixa. O `publica_patch.sh` fixa `GOOS=windows GOARCH=amd64` e confere a
-  assinatura `MZ` depois de compilar; achado em 2026-08-17, ao rever o caminho
-  antes de publicar do Mac.
-- **`LOOK_BODY2` não é mais uma bandeira 0/1: guarda o Id do TRABALHO do visual
-  alternativo — e o `db/re/stylist.yml` do vendor não foi atualizado.** O
-  arquivo ainda traz `Look: Body2` com `Value: 0` e `Value: 1`, do tempo em que
-  estilo de corpo era liga/desliga; hoje o valor certo é `Rune_Knight_2nd` e
-  irmãos, a faixa **4332..4349** (`JOB_SECOND_JOB_START = 4331`,
-  `src/common/mmo.hpp`), listados por trabalho em `db/re/job_outfits.yml`. O
-  próprio rAthena sabe do desencontro e não conserta: a validação de faixa do
-  Body2 no `StylistDatabase::parseBodyNode` (`src/map/npc.cpp`) está dentro de um
-  `#if 0` com o comentário *"TODO: Unsupported for now => This is job specific
-  now"*.
-  **A falha é calada e cobra:** o `clif_parse_stylist_buy_sub`
-  (`src/map/clif.cpp`) chama `pc_delitem` **antes** do `switch` que muda o
-  visual, então o Cupom de Roupa some; o `pc_changelook` aceita 0 e 1 porque
-  `job_db.exists()` os conhece (Aprendiz e Espadachim); e o pacote de aparência
-  reduz tudo a `p.body = (look > 4331 && < 4350) ? 1 : 0`, ou seja **0**. O
-  servidor responde sucesso, o cliente não erra, e o único rastro é um cupom a
-  menos. Consertado em 2026-08-17 por `src/custom/estilo_de_corpo.hpp` (§2).
-  Duas consequências que valem para o resto: **valor de `db/` do vendor pode
-  estar semanticamente vencido sem dar aviso** — o `#if 0` é o sinal a procurar
-  —, e **override de `stylist.yml` não resolveria**, porque a tabela tem um valor
-  por índice e o certo depende do trabalho de quem clicou (o `parseBodyNode`
-  mescla por `Look`+`Index` e não sabe remover entrada nem zerar custo já
-  existente).
-- **A janela de encaixe de carta não abre quando o único equipamento compatível
-  está EQUIPADO — e o servidor não manda pacote nenhum.** O `clif_use_card`
-  (`src/map/clif.cpp`) monta a lista pulando o que já está no corpo
-  (`if( sd->inventory.u.items_inventory[i].equip > 0 ) continue;`), o não
-  identificado, o `itemdb_isspecial` e o que não tem cova livre; se sobrar zero
-  ele faz `if( !c ) return;`. Não há erro, não há log, não há janela — o duplo
-  clique na carta simplesmente não faz nada, o que parece carta quebrada.
-  Some-se a isso que o `Locations:` de uma carta pode não ser o que o jogador
-  lembra de outro servidor: a **Carta Senhor das Trevas (4168) é de CALÇADO**
-  aqui, e o nosso `item_db` e a descrição do bRO concordam nisso (medido em
-  2026-08-17).
-- **`delequip` + `getitem2` devolve o item SEM vínculo, SEM prazo e SEM grau de
-  encanto — e nenhum dos três tem função de leitura por slot de equipamento.**
-  Remontar um equipamento é a única saída quando se precisa mexer numa cova só
-  (o `successremovecards` tira **todas** as cartas de uma vez, e tira a Essência
-  de Morroc junto porque ela é `Type: Card`). Mas o que não for passado de volta
-  se perde, e três campos não têm `getequip*` nenhum: `bound`, `expire_time` e
-  `enchantgrade`. Quem os tem é o **`getinventorylist`**, nos arrays
-  `@inventorylist_bound[]`, `@inventorylist_expire[]` e
-  `@inventorylist_enchantgrade[]` — a linha do item vestido se acha pelo bit de
-  posição (`@inventorylist_equip[] & EQP_*`), que é EQP e não EQI.
-  Consequência que engana sozinha: separar carta de um item **vinculado** o
-  devolve solto — item de conta virando mercadoria, sem erro nenhum. E item
-  **alugado** volta eterno, porque `getitem4` não tem prazo. Os dois só se
-  evitam lendo o `getinventorylist` antes. Caso vivo:
-  `npc/guerra/separacao_de_cartas.txt`, 2026-08-18.
-- **Zero em variável de `.` ou `.@` APAGA a entrada, então `setarray .@x[0],
-  0,0,0,0,0;` deixa um array VAZIO.** O `set_reg_num` (`src/map/script.cpp`)
-  tem dois ramos para esses dois prefixos: `value != 0` grava, e o `else` faz
-  `i64db_remove` mais `script_array_update(..., true)`. Ou seja um array de
-  zeros não existe — `getarraysize` devolve 0, e um comando que exija array
-  de verdade pode recusar. No caso dos três arrays de opção aleatória que o
-  `getitem4` exige isso é inofensivo e até desejável (array vazio = nenhuma
-  opção, que é o que se quer ao remontar), mas contar com "o array tem 5
-  posições" depois de um `setarray` de zeros é contar com o que não está lá.
-  Vale também para `@` (o `pc_setreg` faz o mesmo), e é por isso que
-  `@inventorylist_equip[]` de item não equipado simplesmente não existe.
-  **E o caso que morde de verdade é a TABELA DE CONSTANTES, não o array de
-  zeros escrito à mão.** `EQI_ACC_L` vale **0**; num `setarray .@slot[0],
-  EQI_HEAD_TOP,…,EQI_ACC_L;` de dez colunas, o zero é o último, some, e
-  `getarraysize` devolve **nove**. Quem usa isso para conferir se as colunas
-  paralelas da §4.11 batem recebe um desalinhamento que não existe — foi assim
-  que o Richard da separação de cartas recusou atender no primeiro teste em
-  jogo, em 2026-08-18, com a própria guarda de integridade se autobloqueando.
-  A saída é **sentinela `-1` no fim de toda coluna de inteiro**, e ela deixa a
-  conferência mais forte: o último elemento nunca é zero, e como o `setarray`
-  grava por posição, uma coluna com um valor a menos desloca a sentinela e o
-  tamanho não bate. O tamanho de referência sai da coluna de **texto**, que não
-  tem elemento vazio.
-- **Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está
-  entre elas.** Aspas duplas não protegem crase — o shell faz substituição de
-  comando antes de o Python ver a linha, e o texto some ou vira saída de outro
-  programa. Num script que gera comentário para arquivo do projeto — onde crase
-  é a marca de nome de arquivo e de comando — o estrago é **calado**: o arquivo
-  é gravado, o `assert` da âncora passa, e o comentário sai mutilado. Medido em
-  2026-08-18, ao acrescentar linha ao `scripts_guerra.conf`; a única pista foram
-  três `command not found` no meio de um "ok" final. A saída é a mesma da
-  armadilha do heredoc: **gerar texto por arquivo de script**, escrito com a
-  ferramenta de escrita, e não por `-c` de uma linha.
-- **O `identifiedResourceName` do bRO é o DESENHO, não a identidade do item —
-  e dois itens diferentes o compartilham.** É a ponte que resolve o caso em que
-  o mesmo item tem número diferente aqui e lá (o bRO renumerou muita coisa), e
-  por isso é tentador tratá-lo como chave. Não é: nome de recurso é só o
-  caminho de um `.spr`, e sprite de arco, de bota e de capa é reaproveitado à
-  vontade. Medido em 2026-08-18, nos quatro itens de um pedido que o nosso
-  vendor não tinha, e **deu os dois resultados**:
+**Referência a `CLAUDE.md` §5 espalhada pelos outros documentos continua
+valendo** — e são cerca de duzentas. Ela chega aqui, no gatilho, e daqui ao
+caderno do grupo, que é onde o caso está contado por inteiro. Não há link
+quebrado a consertar.
 
-  | pedido | recurso | quem mais usa | é o mesmo item? |
-  |---|---|---|---|
-  | 470004 Botas Imperiais | `Imperial_Boots` | 22207 | **sim** |
-  | 22224 Sapatos Fofinhos | `Fluffy_FishShoes` | 22210 (`_J`) | **sim** |
-  | 700102 Arco Experimental | `Local02_Bow` | 18173 Yinyang Bow | **não** |
-  | 700080 Arco Mágico | `Hs_Rg_Bow` | 700061 Herosria Rogue Bow | **não** |
+### `ARMADILHAS-AMBIENTE.md` — Ambiente e ferramentas desta máquina
 
-  Nos dois calçados a **ficha inteira** batia — peso, DEF, nível, e o `Script:`
-  linha por linha —, e eram de fato o mesmo item, na versão sem cova. Nos dois
-  arcos não batia **nada**: ATQ 130/nível 70 contra ATQ 180/nível 105, e ATQ
-  200/sem cova/nível 200 contra ATQ 130/três covas/nível 100. Quem parasse no
-  nome do recurso teria posto na loja o arco errado, com o nome certo e o
-  desenho certo — falha calada e difícil de ver, porque a vitrine fica
-  plausível. **O que decide é a ficha do `estado_item.py --id <n> --descricao`
-  comparada campo a campo, nunca o recurso sozinho.**
-  Da mesma família da §4.14 (o `Locations:` decide, não o nome) e da regra 3
-  (traz-se do bRO, não se inventa): o recurso *sugere* de onde trazer, a ficha
-  é que *prova*.
-- **Gerador de entrada de cliente pode ter campo ZERO FIXO, e por seis itens
-  seguidos isso pode estar certo.** O `instala_item.py` escrevia
-  `slotCount = 0` e `ClassNum = 0` literais desde 2026-07-31, e nenhum dos
-  seis itens nossos até 2026-08-18 tinha cova ou visual de cabeça — então o
-  valor errado nunca apareceu. O primeiro item com os dois (o Chapéu do Éden,
-  19272) sairia sem o `[1]` no nome, sem a cova na janela de encaixe de carta
-  e sem o id de visual, **os três calados**. Os dois campos viraram
-  `covas`/`visual`, opcionais, com zero por padrão. A lição não é sobre esse
-  script: **campo constante num gerador é uma suposição sobre todos os casos
-  já vistos**, e o `--verificar` não a denuncia porque ele compara com o que o
-  próprio gerador produziria.
-- **O `ClassNum` de ARMA no `itemInfo.lua` não vem do `View:` do `item_db` — ele
-  vive só do lado do cliente, e zerá-lo troca o desenho da arma na mão, calado.**
-  A regra que o `instala_item.py` documenta — *"`visual` bate com o `View:`"* —
-  vale para equipamento de **cabeça**, onde o servidor manda o número. Para arma
-  não há número a mandar: o `Vigilante_Bow` (18145) tem `ClassNum = 73` no
-  cliente e **nenhum `View:`** no `item_db`, e **nenhum arco do vendor tem**.
-  Quem for escrever receita de arma e procurar `View:` para copiar acha zero,
-  escreve zero, e o arco passa a desenhar outra coisa — sem erro, sem log, e só
-  se vê com a peça equipada. **Copiar o `ClassNum` que a entrada já traz.** Os
-  vizinhos confirmam a numeração: 18109 e 1748 também são 73, o 18143 e o 18163
-  são 11. Medido em 2026-08-27.
-- **Nome e descrição do MESMO bloco do `itemInfo.lua` podem estar em línguas
-  diferentes, e a ferramenta que resolve cada metade é outra.** O 18145 tem
-  `identifiedDisplayName` em **coreano** e `identifiedDescriptionName` em
-  **inglês** (do ROenglishRE) — ler só o nome faz o item parecer caso de
-  `completa_iteminfo.py`, e ler só a descrição faz parecer que só falta
-  traduzir. Não era nem um nem outro: o bRO tem o ID **em coreano e sem
-  descrição**, então não há de onde copiar nada, e o caminho é receita à mão no
-  `instala_item.py`. Ao classificar um item por idioma, **olhar os dois campos**.
-- **`unidentifiedResourceName` TERMINA em `identifiedResourceName`, e um regex
-  sem lookbehind casa com a linha errada.** No bloco do `itemInfo.lua` a linha
-  do *unidentified* vem primeiro, então
-  `re.search(r'identifiedResourceName = "([^"]*)"', bloco)` devolve o recurso do
-  item **não identificado** — para equipamento, o gorro/veste genérica que o kRO
-  põe ali. A saída é `(?<!un)` na âncora. Custou dois dias no `instala_item.py`
-  (2026-08-18 a 2026-08-20), e a falha é calada **e seletiva**: quando as duas
-  linhas trazem o mesmo recurso — o caso de todo `Etc` e todo consumível — o
-  resultado é idêntico e nada aparece, então seis receitas seguidas passaram
-  antes de a sétima morder. A mesma armadilha de nome espera em
-  `unidentifiedDisplayName` e `unidentifiedDescriptionName`.
-  **E o `valida_visual.py` NÃO pega isso**, porque ele confere *presença* de
-  arquivo, não *identidade* de arte: o Chapéu do Éden (19272) deu "8 de 8 ok"
-  com quatro dos oito arquivos apontando para a arte de outro item — os outros
-  quatro estavam certos porque a cabeça vestida vem do `accessoryid`/`View`, não
-  deste campo. **Validador de presença não separa "tem arte" de "tem a arte
-  certa".**
-  Uma consequência de desenho, e ela vale para qualquer gerador: **receita que
-  aponta para si mesma (`arte_de: <o próprio id>`) não se recupera de uma rodada
-  ruim** — o valor errado vira a fonte da rodada seguinte, e o certo não existe
-  mais em lugar nenhum. Onde a intenção é "manter o que já está lá", escrever o
-  valor **por extenso** na receita versionada (o campo `recurso`), nunca relê-lo
-  do arquivo que se vai sobrescrever.
-- **O deploy NÃO sai do Windows, e o pré-voo reprova aqui por um motivo que
-  não existe no servidor.** Duas coisas separadas, e as duas dão a impressão de
-  que algo quebrou quando nada quebrou:
-  1. **A chave desta máquina é `ragnarok`, não `root`** — decisão do dono em
-     2026-08-16, e está escrita no `~/.ssh/config` daqui: ela existe só para o
-     `publica_patch.sh` copiar zip para `/var/www/patch`. O
-     `atualiza_servidor.sh` responde *"precisa rodar como root"* e `sudo -n`
-     pede senha. **Publicar patch daqui: sim. Deploy daqui: não** — o deploy
-     sai do Mac, com a chave de lá.
-  2. **A conferência de fim de linha do `prevoo.sh` é falso positivo no
-     Windows.** Ela mede o *diretório de trabalho*, e com `* text=auto` no
-     `.gitattributes` o checkout do Windows entrega CRLF de propósito — em
-     2026-08-18 ela reprovou 25 arquivos e abortou o deploy antes de tocar no
-     servidor. O que importa é o **índice**, que é LF, e é ele que o Linux
-     recebe. A sonda que decide é `git ls-files --eol <caminho>`: a coluna
-     `i/` é a que vale, a `w/` é a da máquina. Cuidado com `git show HEAD:<f>`
-     nessa conferência — no Git for Windows ele aplica o filtro de checkout e
-     **devolve CRLF de um blob que é LF**, confirmando o diagnóstico errado.
-  É o espelho exato da armadilha do Mac (§9): lá o APFS esconde o defeito que o
-  Linux pune; aqui o checkout do Windows inventa um defeito que o Linux não tem.
-- **`UPDATE` na tabela `char` com o jogador CONECTADO é desfeito na saída
-  dele, e o comando não erra.** O char-server carrega o personagem do banco
-  quando ele entra no jogo e só escreve de volta ao sair
-  (`char_mmo_char_tosql`, `src/char/char.cpp`): entre uma coisa e outra o
-  banco é uma cópia velha, e quem escreve nele está escrevendo num rascunho
-  que vai ser substituído. O `UPDATE` responde `1 row affected`, o valor
-  aparece se alguém for conferir por `SELECT`, e some quando o jogador
-  desloga — falha calada e com atraso de horas, do tipo que se atribui a
-  qualquer outra coisa.
-  A guarda é `AND online = 0` **no próprio `UPDATE`**, e não na leitura de
-  antes: entre ler e escrever o jogador pode ter entrado. Zero linha afetada
-  é a resposta, e ela quer dizer "ele está no jogo", não "não existe".
-  Duas ressalvas: a coluna `online` fica **presa em 1** se o servidor cair, e
-  quem a destrava é o `char_set_all_offline_sql` na subida do char-server; e
-  a mesma armadilha vale para toda tabela que o char-server mantenha em
-  memória, não só a `char`. Caso vivo: o botão de destravar personagem do
-  site, 2026-08-22.
-- **Resposta HTTP sem `Cache-Control` NÃO fica sem cache: o navegador
-  inventa um — e quanto mais VELHO o arquivo, mais tempo a cópia velha vale.**
-  É o cache heurístico do RFC 9111 §4.2.2, e a regra usual é guardar por 10%
-  do tempo decorrido desde o `Last-Modified`. Consequência que inverte a
-  intuição: um `estilo.css` parado há uma semana continua sendo servido do
-  disco do jogador por umas **quinze horas** depois de trocado, e o navegador
-  **nem pergunta** — não há requisição, então não há 304, e nada aparece no
-  log do servidor. O deploy diz sucesso, o arquivo certo está no servidor, e
-  a tela do jogador é a antiga. Medido em 2026-08-22, quando a caixa de texto
-  do formulário de chamado apareceu sem estilo para o dono e o CSS no ar já
-  estava correto — o diagnóstico que engana é culpar o CSS, que é o único
-  lugar onde não está o defeito.
-  **A sonda que decide é `curl -sI` no arquivo público** e comparar com o que
-  a tela mostra: se o servidor entrega o certo, o problema é do outro lado.
-  A saída é `Cache-Control: no-cache`, que **não** quer dizer "não guarde" e
-  sim "guarde, mas pergunte antes de usar" — com o `Last-Modified` que o
-  `http.FileServer` já manda, a pergunta volta como um 304 de zero byte.
-  Resposta com dado pessoal (`/api/`) leva `no-store`, que é outra coisa.
-  **Cache já envenenado não se conserta do servidor**: quem carregou a página
-  antes só vê o novo com recarga forçada (Cmd+Shift+R) ou quando o prazo
-  heurístico vencer.
-- **Arquivo de `db/` do vendor pode estar ÓRFÃO — formato certo, conteúdo
-  certo, e ninguém o lê.** É um degrau além do "valor semanticamente vencido"
-  do `stylist.yml`: lá o dado era lido e estava velho; aqui o dado está certo e
-  **não é carregado por código nenhum**. O `db/re/job_outfits.yml` viveu assim
-  no nosso vendor: cabeçalho `JOB_STATS` válido, os treze `AlternateOutfits` do
-  estilo de corpo dentro, e o `JobDatabase::getDefaultLocation()`
-  (`src/map/pc.cpp:13819`) apontando **só** para `db/re/job_stats.yml`, que não
-  tinha rodapé. Resultado: `job->alternate_outfits` vazio para **todo**
-  trabalho. Falha calada e enganosa — o recado que sai é *"This job has no
-  alternate body styles"*, que soa como "esta classe não tem", e não como "o
-  arquivo inteiro não foi lido". **A sonda é `getDefaultLocation()` mais um
-  `grep` pelo nome do arquivo em `src/` e `conf/`: arquivo de `db/` que não
-  apareça em nenhum dos dois e não tenha rodapé apontando para ele não está
-  sendo carregado.** O conserto é o mesmo `Footer: Imports:` do `quest_db.yml`.
-- **Guarda de validação do rAthena pode reprovar 100% dos valores válidos, e o
-  chamador ainda relatar sucesso.** No `pc_changelook`, `case LOOK_BODY2:`, o
-  `if( !job_db.exists( val ) ) return;` foi escrito quando aquele campo valia 0
-  ou 1 (Aprendiz e Espadachim, dois trabalhos que o `job_db` conhece). Hoje o
-  campo guarda o Id do visual alternativo — 4332..4344 —, e **nenhum arquivo do
-  vendor declara esses ids num `Jobs:`**: o `job_outfits.yml` só os cita em
-  `AlternateOutfits`, que preenche o vetor do trabalho *pai* e não cria entrada.
-  Como `job_db.exists()` é `find(key) != nullptr` (`src/common/database.hpp:103`),
-  a guarda reprova sempre, o `clif_changelook` do fim da função nunca roda e
-  nenhum pacote sai. E como `pc_changelook` é **`void`**, o `@bodystyle` imprime
-  *"Aparência alterada"* logo depois, incondicionalmente. **Função `void` que
-  desiste no meio é indistinguível de função que trabalhou** — ao depurar um
-  "mudou e não mudou", ler o corpo da função e não a mensagem de quem a chamou.
-  Consertado por dado (`db/guerra/job_estilo_de_corpo.yml`, §2), nunca por
-  substituir a linha.
-- **Padrão idêntico numa coluna do banco é evidência, e não se parece com
-  erro.** O que denunciou a guarda acima foi uma consulta ao `char` em que
-  **todo** personagem tinha `body` igual a `class` — 4060/4060, 1/1, 14/14. Não
-  havia valor "errado" à vista: era o único ramo do nosso código que sobrevivia
-  à guarda (`val == 0` → `sd->status.class_`), e o outro morria antes de gravar.
-  **Coluna inteira com o mesmo relacionamento entre dois campos é sintoma**, do
-  mesmo jeito que tabela de tamanho 1 é sintoma de chave não resolvida. Vale a
-  pena olhar o banco cedo: ele mostra o que ficou gravado, que é diferente do
-  que a tela mostra e do que o log conta.
-- **Varredura por `nome_db.` NÃO acha quem itera o banco de dentro da própria
-  classe.** Um `grep "job_db\."` filtrando `find|exists|load|clear` devolveu
-  "ninguém enumera" — e o `JobDatabase::loadingFinished()` (`src/map/pc.cpp:14277`)
-  itera `*this` e avisa sobre trabalho sem tabela de EXP. Método da classe usa
-  `*this`, `this->`, ou nada; o nome da variável global não aparece. **Antes de
-  concluir que acrescentar entrada num banco é inócuo, ler o `loadingFinished()`
-  dele.** No caso do estilo de corpo o risco era real e não se concretizou: o
-  laço faz `continue` quando `!pcdb_checkid(job_id)`, e nenhuma faixa do
-  `pcdb_checkid` (`src/map/pc.hpp:1219`) cobre 4331+ — a última é
-  `JOB_SKY_EMPEROR2 = 4316`.
-- **O corpo de uma habilidade NÃO está mais no `skill.cpp` — cada uma tem
-  classe própria em `src/map/skills/`.** Um `grep` por `case AL_HEAL` no
-  `skill.cpp` devolve duas ocorrências e **nenhuma das duas é a cura**: uma é o
-  desvio para dano em morto-vivo, a outra é a validação de alvo. Quem parar aí
-  conclui que a habilidade não é tratada — e ela é, em
-  `src/map/skills/acolyte/heal.cpp`, achada pelo `default:` do
-  `skill_castend_nodamage_id` (`skill.cpp:4587`), que faz
-  `skill->impl->castendNoDamageId(...)` e só imprime *"missing code case"* se
-  não houver classe. Medido em 2026-08-26, ao apurar se dava para curar
-  monstro. **Ao investigar o que uma habilidade faz, procurar primeiro em
-  `src/map/skills/<classe>/<nome>.cpp`**; o switch grande hoje só guarda as
-  que sobraram.
-- **Curar MONSTRO funciona, e é o Emperium que não pode — não o monstro.** Vale
-  o contrário da intuição de RO: o `SkillHeal::castendNoDamageId`
-  (`src/map/skills/acolyte/heal.cpp`) chama `status_heal(bl, heal, 0, 0)` com o
-  alvo que veio, monstro inclusive, e só zera a cura em três casos — alvo com
-  `status_isimmune` (que só olha jogador, `status.cpp:9306`), o **Emperium**, e
-  `Class: Battlefield`. O Santuário tem os mesmos três testes
-  (`skill.cpp:6923`). **O que inverte o resultado é morto-vivo:** em alvo undead
-  a cura vira dano ofensivo (`skill.cpp:4417`), então monstro de raça ou
-  elemento morto-vivo **perde** HP. Quem for construir mecânica em cima disso
-  escolhe um mob Neutro e sem raça — foi assim que a Anomalia Dimensional
-  (2026-08-26) fez as Pedras Guardiãs sem uma linha de C++.
-- **`mobcount` e `killmonster` com `"all"` não fazem nada, e não avisam.** São
-  dois enganos do mesmo dia e da mesma família — o argumento é um **rótulo de
-  evento**, não uma palavra mágica, e rótulo que não existe simplesmente não
-  casa com nada. No `mobcount("<mapa>","all")` o resultado é **0**, então um
-  teto de monstros escrito assim nunca dispara e o mapa entope em silêncio; o
-  especial de "todos" ali é a **string vazia**, que conta os monstros *sem*
-  rótulo — que é o caso de tudo que nasce por `monster`/`areamonster`. No
-  `killmonster "<mapa>","all"` não morre ninguém, porque o buildin compara
-  `strcmp(event,"All")` — **maiúsculo e exato** (`script.cpp:11486`). Para
-  matar tudo, `killmonsterall "<mapa>"`, que não tem capitalização para errar.
-- **`callsub` ABRE ESCOPO `.@` NOVO E VAZIO, igual ao `callfunc` — e ler as
-  `.@` do chamador lá dentro devolve ZERO, calado.** As duas últimas linhas do
-  `buildin_callsub` (`src/map/script.cpp:5508`) são as mesmas do
-  `buildin_callfunc`:
+Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, ferramentas nossas.
 
-  ```c
-  st->stack->scope.vars   = i64db_alloc(DB_OPT_RELEASE_DATA);
-  st->stack->scope.arrays = idb_alloc(DB_OPT_BASE);
-  ```
+- `strings` não existe no Git Bash daqui — com `2>/dev/null` falha calado e parece "zero resultados"
+- `[Text.Encoding]::Latin1` não existe no PowerShell 5.1 → devolve `$null` e todo resultado derivado é lixo. Usar `GetEncoding(28591)`
+- `Get-ChildItem -Include` sem curinga no caminho retorna vazio
+- Arquivo cp1252 salvo como UTF-8 vira `\xef\xbf\xbd` (U+FFFD) e o acento se perde para sempre. Não é mojibake reversível
+- E quem faz isso hoje é a FERRAMENTA DE EDIÇÃO do assistente. Ela lê e grava como UTF-8
+- E o `$` de um regex com `re.M` NÃO casa antes do `\r` — ele casa DEPOIS, deixando o `\r` dentro do grupo capturado
+- A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela. As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`…
+- `source` do mysql.exe quebra com barra invertida (`\U` = comando desconhecido). Usar barras normais no caminho
+- Compilar pela linha de comando exige `SolutionDir` explícito. O `map-server.vcxproj` tira os caminhos de include dessa variável, que só o `.sln`…
+- Heredoc do Bash aqui come a contrabarra dupla. `<<'EOF'` deveria ser literal e não é: `\\` chega como `\` no arquivo gerado
+- No `.cat` de tradução, o `arquivo#N` NÃO é a linha — é a ordem do literal dentro do arquivo
+- `os.system` com a linha começando por aspas falha no `cmd` do Windows: o primeiro par de aspas é comido e sai
+- Nome de NPC pode ter ESPAÇO, e um `\S+` no lugar dele perde arquivo inteiro. Os campos de uma linha de NPC são separados por TAB
+- Há arquivo de nome COREANO dentro do cliente, e ele quebra o Python 2 de duas maneiras diferentes
+- `valida_visual.le_item_db` devolve uma LISTA CHATA com o item DUAS vezes, uma por arquivo — e nem a primeira nem a última é a resposta certa
+- Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está entre elas. Aspas duplas não protegem crase
+- `x += f()` em que `f` mexe em `x` perde o que `f` consumiu. O `+=` guarda o `x` de antes de avaliar a direita
+- No `.gitignore`, negar um arquivo dentro de pasta excluída NÃO tem efeito — e o `git status` não denuncia, porque o arquivo simplesmente continua…
+- Ferramentas rodam em Python 2.7 (`C:\Python27\python.exe`)
 
-  A única diferença entre os dois é que o `callsub` passa `.@` como
-  **argumento por referência**, para o `getarg` — quem precisa de valor do
-  chamador tem de recebê-lo assim, e **array não passa por `getarg`**, o que
-  torna `callsub` errado por natureza para sub-rotina que mexa em array.
+### `ARMADILHAS-CLIENTE.md` — O cliente de RO
 
-  **Até 2026-08-28 esta entrada afirmava o CONTRÁRIO** ("callsub não abre
-  escopo; ele enxerga as `.@` de quem chamou; só o `callfunc` isola"), e o
-  preço foi um item de jogador apagado: o `S_Remonta` do
-  `npc/guerra/encantamento_da_ordem.txt` lia `.@part` (a posição do
-  equipamento) e recebia **0**, que é `EQI_ACC_L` — o `delequip 0` tirou e
-  destruiu o Anel de Jasper que estava no acessório esquerdo de quem testava,
-  e o `getitem4 0` seguinte morreu com *"Nonexistant item 0 requested"*,
-  deixando a janela de diálogo travada. **Os dois sintomas eram a mesma
-  linha**, e nenhum deles apontava para o `callsub`.
+GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch de exe, itemInfo, efeitos.
 
-  Duas coisas que sobram, e valem mais que o conserto:
-  - **Zero é um valor plausível para quase tudo** — posição de equipamento, id
-    de item, índice de tabela. Sub-rotina que devolva zero não parece
-    quebrada, parece que "não achou".
-  - **Comando que APAGA coisa do jogador (`delequip`, `delitem`,
-    `successremovecards`) não roda sobre valor que não foi conferido na linha
-    de cima.** A trava redundante imediatamente antes do `delequip` teria
-    transformado isso num "o NPC recusou atender". É a mesma família da §4.11
-    ("comentário não é trava"), um degrau acima: aqui quem mentia era o
-    `CLAUDE.md`.
-- **`movenpc` move o BONECO e deixa a ÁREA DE TOQUE para trás.** O
-  `npc_movenpc` (`src/map/npc.cpp:5046`) faz `map_moveblock` e mais nada — não
-  chama `npc_unsetcells` nem `npc_setcells`. E a área de toque **não mora no
-  NPC, mora no MAPA**: o `npc_setcells` (`npc.cpp:4971`) marca `CELL_NPC`
-  célula por célula em volta dele, uma vez, no carregamento. Resultado de mover
-  um NPC com `<xs>,<ys>` por script: o sprite anda, o gatilho **fica onde
-  estava** — dispara no lugar velho e não dispara no novo, sem erro e sem log.
-  Para mover NPC com área de toque, a receita da §2 (`disablenpc` no original +
-  duplicata nossa na coordenada nova, repetindo o `<xs>,<ys>`), que faz o
-  `npc_setcells` rodar no lugar certo. Medido em 2026-08-26, ao tirar o
-  Mensageiro Continental de cima da Máquina Dimensional.
-- **`strnpcinfo(2)` lê o nome de EXIBIÇÃO, não o nome único — e há script do
-  rAthena que guarda dado no sufixo `#`.** São campos diferentes: o `case 2` do
-  `buildin_strnpcinfo` (`script.cpp:9276`) devolve o pedaço de `nd->name` depois
-  do `#`, enquanto o nome único é o `nd->exname`, que é o `strnpcinfo(3)`. Isso
-  importa ao duplicar NPC do rAthena, porque alguns **decidem o comportamento
-  por ali**: o `Continental Messenger#01` faz `set .@area$,strnpcinfo(2)` e um
-  `if (.@area$ == "01")` para saber que está em Prontera. Uma duplicata chamada
-  `#01b` — o reflexo natural para não repetir nome — faria o NPC anunciar
-  "01b" como se fosse o nome da cidade, calado. A saída é manter o sufixo
-  original na parte visível e pendurar o nome único depois do `::`, que o
-  `strnpcinfo(2)` não enxerga.
-- **`getunitdata` NÃO é função: é comando que PREENCHE UM ARRAY — e usado como
-  função devolve zero, calado na tela.** A forma certa é
-  `getunitdata <GID>,<array>;`, e os índices do array são as próprias
-  constantes: `.@dados[UMOB_HP]`, `.@dados[UMOB_MAXHP]`. Escrito como
-  `.@hp = getunitdata(<GID>, UMOB_HP)` — que é o reflexo natural, porque o
-  **`setunitdata` irmão tem três argumentos e parece autorizar a leitura
-  simétrica** — o valor sai **sempre 0**.
+- Entrada de GRF marcada como "DES" NÃO é entrada ausente. O `ferramentas/grf.py` recusa arquivo com o bit de cifra (`flags & 6`) com um
+- `.lub` do GRF é bytecode (header `\x1bLua`); os do ROenglishRE são texto puro. Comparar tamanho entre os dois não significa nada
+- O bRO entrega o MESMO arquivo em `.lua` e em `.lub`, e o legível pode estar velho. O reflexo é pegar o texto puro e poupar o desmonte de bytecode
+- `Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub` gerado compila
+- Patch de exe "aplicado e confirmado" NÃO é patch com efeito — e script que confere o próprio trabalho não prova nada
+- Comparar tamanho de texto a olho, em tela cheia, não decide. Duas rodadas foram gastas discutindo se a fonte tinha mudado
+- Um TETO num valor que todo mundo pede não limita exageros: ele apaga a escala inteira. O `--teto 11` do `ajusta_tamanho_fonte.py` parecia calibrado
+- Metade de uma seção de PE pode não existir em disco. A `.xdiff` deste exe tem `VirtualSize` 0x1000 e `SizeOfRawData` 0x400
+- O vão que decide onde centrar um modelo pode não estar nem no `.gat` nem no id de textura do `.gnd`
+- Caixa envolvente de `.rsm` com vários nós mente se juntar tudo num box só. O `pos` do nó raiz é offset no espaço do modelo, não dimensão
+- No `.rsm`, a ALTURA é o Z e não o Y — a planta de um móvel é X × Y. Ler X × Z troca profundidade por altura e devolve uma planta plausível e errada…
+- Modelos de uma mesma família numerada NÃO têm a mesma frente, e supor que têm vira metade deles de costas
+- `mede_rsm.py` que não sobra 0 byte não vale nada. Formato de malha é cheio de campo opcional por versão
+- São TRÊS `map_cache.dat`, e a `prontera` não está no grande. O rAthena abre `db/import/map_cache.dat`, `db/re/map_cache.dat` e `db/map_cache.dat`…
+- Ler tabela grande de bytecode Lua 5.1: o operando `RK` só endereça constante até o índice 255
+- Chave de tabela que é SÍMBOLO INDEXADO POR NÚMERO colapsa a tabela inteira numa entrada só, sem erro nenhum
+- Tabela do cliente cujas chaves são `EnumVAR.<X>`, `SKID.<X>` e afins tem de ter as CHAVES tiradas do NOSSO GRF — nunca do ROenglishRE nem do bRO
+- Um `.lub` pode definir MAIS DE UMA tabela, e ler tudo numa lista só colapsa uma na outra
+- Este cliente NÃO desenha manto com slot acima de 120, e a tabela não tem nada a ver com isso. Medido em tela em 2026-08-09
+- Rótulo de aba da janela de habilidades é escrito na VERTICAL: o comprimento gasta altura, não largura — e some com as abas de baixo
+- Tabela certa + arte certa + arquivo lido pelo cliente ≠ desenha na tela. As três se verificam offline, as três deram OK
+- O horário de ACESSO do arquivo diz se o cliente leu. `Get-ChildItem | Select LastAccessTime` no `cliente\data\...\datainfo` mostra o instante em que…
+- O endereço do servidor mora no `sclientinfo.xml`, não no `clientinfo.xml`. Este exe é `<servertype>sakray</servertype>`
+- A IA do homúnculo e a do mercenário moram em `cliente\AI_sakray\`, não em `cliente\AI\` — e a pasta errada não dá erro até alguém invocar o bicho
+- Ferramenta que consulta tabela do cliente tem de ler `cliente\data\` ANTES do GRF
+- Sprite de NPC "enterrado no chão" é o `.act`, não o mapa. O `.act` diz a que altura o desenho é colado em relação à célula
+- Bandeira de `CTRL+<n>` não está no `emotionlist.lub`, está no EXE — e o que ela vale depende do `<servicetype>`
+- O NOME do sprite não descreve a arte, e neste cliente NÃO EXISTE aura de chão colorida. O `4_PURPLE_WARP` (10237) não tem nada de roxo
+- Quest que o cliente não conhece DERRUBA O CLIENTE. Não é "aparece sem título" — é caixa de erro de Lua, uma por missão e por atualização da janela…
+- O cabeçalho do `map_cache.dat` tem 8 bytes, não 6. É `uint32 file_size; uint16 map_count;` e o compilador o alinha em 8
+- Metade da configuração do cliente está no REGISTRO DO WINDOWS, e não no cliente. É a §4.9 um degrau adiante
+- A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt` dentro do GRF — não no rAthena e não no exe
+- "Unknown Item" com sprite de maçã NUNCA é problema de servidor — e a pergunta que resolve é *quais* itens, não *por que aquele item*
+- O `identifiedResourceName` do bRO é o DESENHO, não a identidade do item — e dois itens diferentes o compartilham
+- Gerador de entrada de cliente pode ter campo ZERO FIXO, e por seis itens seguidos isso pode estar certo
+- O `ClassNum` de ARMA no `itemInfo.lua` não vem do `View:` do `item_db` — ele vive só do lado do cliente
+- Nome e descrição do MESMO bloco do `itemInfo.lua` podem estar em línguas diferentes, e a ferramenta que resolve cada metade é outra
+- `unidentifiedResourceName` TERMINA em `identifiedResourceName`, e um regex sem lookbehind casa com a linha errada
+- O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e tratar uma pasta nova como se já estivesse provada custa uma sessão inteira
+- Dá para provar que o cliente ABRIU um arquivo, contornando a regra de uma hora do NTFS
+- O `EF_MAX` do rAthena NÃO é o teto de efeitos do cliente — é o do emulador, e ele está 900 efeitos atrasado
+- Antes de mexer no `effecttool` para pôr uma textura na tela, perguntar que EFEITO já a desenha
+- O cliente desenha coisa no mundo SEM o servidor — `grep` em `npc/` não prova que algo não existe
+- Ler mojibake a olho num screenshot dá resposta plausível e errada. No balão acima, `°Ô½ÃÆÇ` (게시판, "quadro de avisos") e `ºÎ½ºÅÍ` (부스터, "Booster") são…
 
-  O que torna isso caro é onde o aviso aparece: *"buildin_getunitdata: Error in
-  argument! Please give a variable to store values in"* sai **só na janela do
-  map-server**, e o zero devolvido é um número plausível para quase toda
-  pergunta que se faça a uma unidade — HP, nível, velocidade. Em 2026-08-26 isso
-  fez a Anomalia Dimensional parecer quebrada de um jeito muito convincente: as
-  Pedras Guardiãs recebiam cura na tela (o número verde subia, o efeito saía) e
-  o painel do NPC lia **"0 de 15000"** nas quatro, o tempo todo. O diagnóstico
-  natural — "a cura não está pegando no monstro" — apontava para o
-  `SkillHeal`, para o elemento do mob, para o `damagetaken`: três lugares onde
-  não havia defeito nenhum. **A cura sempre funcionou; só a leitura estava
-  errada.**
+### `ARMADILHAS-SCRIPT.md` — Script de NPC do rAthena
 
-  Duas lições que sobram: ao ler estado de unidade, **conferir a janela do
-  map-server antes de acreditar no número** (o log em arquivo não recebe esses
-  avisos, `console_msg_log` 3); e, quando um valor lido vier zero de forma
-  suspeita, desconfiar **do leitor antes do fenômeno** — é a mesma família do
-  "tabela com 1 entrada é sintoma de chave não resolvida".
-- **`setunitdata UMOB_MAXHP` para BAIXAR o máximo CORROMPE o HP — é underflow
-  `uint32` no rAthena, e o servidor cura em vez de reduzir.** O
-  `status_set_maxhp` (`src/map/status.cpp:1343`) faz:
+Comandos de script, variáveis e arrays, spawn, instância, unidades, sintaxe do parser.
 
-  ```c
-  heal = maxhp - status->max_hp;   // os dois lados sao uint32
-  ...
-  if (heal > 0) status_heal(...); else status_zap(...);
-  ```
+- `setwall` com tamanho maior que 1 pode sair mais curto do que o pedido, e não avisa
+- Comentário no fim de uma linha de spawn entra DENTRO do nome do evento. O `npc_parsesrcfile` enche o `w4` *"to end of line"* (`src/map/npc.cpp`)
+- Uma linha ruim mata o ARQUIVO INTEIRO, não a linha — inclusive linha de comentário
+- Em spawn com área, `<xs>,<ys>` NÃO é o lado do retângulo. O `mob_spawn` chama `map_search_freecell` com `xs-1` (`src/map/mob.cpp:1149`), que sorteia…
+- Mapa pode ter pedaço andável solto, e `0,0` no spawn sorteia lá. O `vis_h01` tem 16.104 células no mapa de verdade mais 479 na linha y=239, ruído do…
+- `rand(1)` não devolve 0: ele MATA o script. O `buildin_rand` (`src/map/script.cpp:5604`) na forma de um argumento só faz `maximum -= 1` e então…
+- `getitem` com a mochila cheia LARGA O ITEM NO CHÃO. O `buildin_getitem` (`src/map/script.cpp`) chama `pc_additem`
+- `mes` que começa com ESPAÇO não abre linha nova — cola na anterior. O `clif_scriptmes` (`src/map/clif.cpp:2472`) manda a string crua, sem `\n`
+- `||` e `&&` do script do rAthena NÃO fazem curto-circuito. São o `C_LOR` e o `C_LAND`, operadores de dois números (`script.cpp:3839`) resolvidos pelo…
+- O nome único de um NPC é o que vem DEPOIS do `::`, não a linha inteira. Em `<Nome na tela>::<Nome único>` o `npc_parsename` (`src/map/npc.cpp:3674`)…
+- `explode` NÃO limpa o array de destino. Ele grava a partir do índice dado (`script.cpp:17305`) e para quando a string acaba
+- `getarraysize()` de array de texto para no último elemento NÃO VAZIO. Então tabela de colunas paralelas em que a última coluna termine em `""`…
+- Facing de NPC se calcula pela CÉLULA de destino, não pelo lado da tela. Tabela do `enum directions` (`src/map/path.hpp:16`) medida em jogo com a…
+- NPC com sprite de CLASSE DE JOGADOR nasce pedindo o penteado 0, e o 0 não existe
+- `OnNPCKillEvent` NUNCA dispara para mob que tem evento próprio. Em `mob.cpp:3592` os dois são ramos de um `else if`
+- `disablenpc` NÃO desliga o NPC dentro da instância — a receita de §2 não vale para NPC de mapa de instância
+- `getexp` NÃO passa pela taxa de EXP do servidor. A `base_exp_rate` é aplicada uma vez só, ao EXP de mob, no carregamento do `mob_db`…
+- Literal de `setarray` pode virar NOME DE VARIÁVEL, e aí traduzir quebra. No `DevilTower.txt` os cinco `"DIR_NORTHWEST"`, `"DIR_NORTH"` etc
+- `F_GetPlural` aplica regra de plural INGLESA à palavra que a gente escrever. O `callfunc("F_InsertPlural", n, "Second")` vira "3 Seconds"
+- `killmonster` com o terceiro argumento tem o sentido INVERTIDO do que o nome sugere: sem ele o rótulo dos mortos não dispara
+- `delequip` + `getitem2` devolve o item SEM vínculo, SEM prazo e SEM grau de encanto
+- Zero em variável de `.` ou `.@` APAGA a entrada, então `setarray .@x[0], 0,0,0,0,0;` deixa um array VAZIO
+- `mobcount` e `killmonster` com `"all"` não fazem nada, e não avisam. São dois enganos do mesmo dia e da mesma família
+- `callsub` ABRE ESCOPO `.@` NOVO E VAZIO, igual ao `callfunc` — e ler as `.@` do chamador lá dentro devolve ZERO, calado
+- `movenpc` move o BONECO e deixa a ÁREA DE TOQUE para trás. O `npc_movenpc` (`src/map/npc.cpp:5046`) faz `map_moveblock` e mais nada
+- `strnpcinfo(2)` lê o nome de EXIBIÇÃO, não o nome único — e há script do rAthena que guarda dado no sufixo `#`. São campos diferentes
+- `getunitdata` NÃO é função: é comando que PREENCHE UM ARRAY — e usado como função devolve zero, calado na tela
+- `setunitdata UMOB_MAXHP` para BAIXAR o máximo CORROMPE o HP — é underflow `uint32` no rAthena, e o servidor cura em vez de reduzir
+- Comando de script que "existe no rAthena" pode não existir NESTE rAthena, e o erro do parser aponta para o lugar errado
 
-  Reduzir (15.000 − 120.500) dá underflow: o resultado vira um número enorme e
-  **positivo**, o `if (heal > 0)` acerta, e ele **cura**. Medido em 2026-08-26
-  ao pôr as Pedras Guardiãs em 15.000: o HP foi para **2.147.604.147**, e
-  nenhum `UMOB_HP` depois disso trazia de volta — ficava travado no HP original.
-  Aumentar o máximo não tem o problema.
+### `ARMADILHAS-RATHENA.md` — db/, conf/ e C++ do rAthena
 
-  **A receita são TRÊS chamadas, nesta ordem:** `UMOB_HP` para o valor
-  desejado (ainda dentro do máximo velho) → `UMOB_MAXHP` para o novo máximo (o
-  underflow ainda acontece, mas o `status_heal` que ele dispara é limitado ao
-  máximo recém-gravado, então o HP só sobe até ele) → `UMOB_HP` de novo. Medido
-  passo a passo; a sequência `MAXHP` e depois `HP`, que é a que o exemplo do
-  `doc/script_commands.txt` sugere, **não funciona** quando o máximo diminui.
+Bancos em YAML, recarregadores, item_db, guardas do C++, operação dos quatro servidores.
 
-  E cuidado com o sintoma, que aponta para longe: um monstro que nasce com o HP
-  cheio faz um evento de "encher a barra" terminar no mesmo segundo em que
-  começa — o que parece lógica de conclusão errada, e não escrita de HP.
-- **O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e
-  tratar uma pasta nova como se já estivesse provada custa uma sessão
-  inteira.** As pastas onde o override de `cliente\data\` comprovadamente vale
-  hoje são `System\`, `data\luafiles514\lua files\datainfo\` e as de sprite e
-  textura. Em 2026-08-26 a `data\luafiles514\lua files\effecttool\` foi usada
-  pela primeira vez — para pôr um emissor de partículas sob um NPC — e **quatro
-  tentativas em jogo não desenharam nada**, incluindo uma que só clonava um
-  emissor que já funcionava.
+- Em `db/refine.yml`, `Level:` é 1-based e NÃO é o refino do item. O leitor faz `refine_level -= 1`
+- `invalidWarning` no leitor de YAML diz "skipping" e descarta o registro inteiro. No `RefineDatabase::parseBodyNode` (`status.cpp:183`), um nível de…
+- Em `conf/groups.yml`, `false` não desliga nada. Herança de grupo é um OU binário aplicado depois do parse (`pc_groups.cpp:275`
+- Equipamento ilusional não está no `Drops:` do monstro: é DROP DE MAPA — e drop de mapa NÃO passa pela taxa do servidor. São dois enganos em fila
+- Em `TimeLimit` de quest, o `+` é o que decide o significado. `+3h` é intervalo (três horas a partir de agora); `6h`, sem o sinal, é hora exata
+- `MAX_QUEST_OBJECTIVES` é 3 (`src/common/mmo.hpp:111`). Um quarto alvo numa quest emite *"Targets list exceeds the maximum"* e cai no mesmo `return 0`…
+- A descrição do item na tela discorda do script do servidor — no NÚMERO, não só na presença
+- Desligar um arquivo de castelo do rAthena leva 17 BANDEIRAS junto, e nada no log diz isso
+- `DropEffect: CLIENT` no `item_db` NÃO é "sem efeito" nem "o padrão" — é uma escolha que este cliente resolve desenhando NADA
+- `ShowInfo` NÃO chega ao `log/map-msg_log.log`. O `console_msg_log` deste servidor é 3 (`conf/import/map_conf.txt`)
+- Trocar `Locations` de um item com o servidor NO AR deixa o item INEQUIPÁVEL até o jogador relogar — e a mensagem culpa o item
+- As duas caixas de acessório da janela de equipamentos NÃO estão invertidas — a etiqueta só parece trocada porque o personagem está de frente
+- `@reloadscript` sem `@reloaditemdb` FAZ O ITEM NOVO SUMIR DA VITRINE. O `npc_parse_shop` descarta todo item que não está no `item_db` em memória…
+- `LOOK_BODY2` não é mais uma bandeira 0/1: guarda o Id do TRABALHO do visual alternativo — e o `db/re/stylist.yml` do vendor não foi atualizado
+- A janela de encaixe de carta não abre quando o único equipamento compatível está EQUIPADO — e o servidor não manda pacote nenhum
+- Arquivo de `db/` do vendor pode estar ÓRFÃO — formato certo, conteúdo certo, e ninguém o lê
+- Guarda de validação do rAthena pode reprovar 100% dos valores válidos, e o chamador ainda relatar sucesso
+- Padrão idêntico numa coluna do banco é evidência, e não se parece com erro. O que denunciou a guarda acima foi uma consulta ao `char` em que todo…
+- Varredura por `nome_db.` NÃO acha quem itera o banco de dentro da própria classe
+- O corpo de uma habilidade NÃO está mais no `skill.cpp` — cada uma tem classe própria em `src/map/skills/`
+- Parar SÓ o map-server para recompilar deixa o jogador travado no login, e a mensagem culpa o cliente
+- Subir o servidor a partir de um shell que pode ser encerrado deixa os quatro processos órfãos
 
-  **Antes de escrever conteúdo novo numa pasta de cliente que o projeto nunca
-  usou, gravar ali uma CÓPIA IDÊNTICA do arquivo original do GRF e entrar no
-  jogo.** Se o que já funcionava continuar funcionando, o override vale e o
-  defeito é do que se escreve; se parar de funcionar, o problema é o mecanismo,
-  e nenhum ajuste de conteúdo vai resolver. É o controle mais barato que existe
-  e foi justamente o que faltou nas quatro tentativas — cada uma mudava conteúdo
-  e posição ao mesmo tempo.
+### `ARMADILHAS-COMBATE.md` — Combate e números
 
-- **Dá para provar que o cliente ABRIU um arquivo, contornando a regra de uma
-  hora do NTFS: basta empurrar o `LastAccessTime` para o passado antes do
-  teste.** A entrada acima sobre o horário de acesso registra que o carimbo só
-  é reescrito quando o valor guardado tem mais de uma hora — o que torna a sonda
-  inútil logo depois de gravar o arquivo, que é justamente quando se quer usá-la.
-  Empurrando o carimbo para ontem (`(Get-Item $f).LastAccessTime =
-  (Get-Date).AddDays(-1)`), qualquer leitura seguinte passa a marcar, e a
-  resposta vem sem depender do que se vê na tela. Medido em 2026-08-26: o
-  carimbo pulou para treze segundos depois da abertura do cliente.
+Redução de dano, precisão, status de monstro, castelo e guerra.
 
-  **Mas ABRIR não é USAR.** No mesmo dia o cliente abriu o arquivo e não
-  desenhou nada do que havia nele — então esta sonda responde "o arquivo chegou
-  ao cliente", e só isso. Concluir dela que o conteúdo foi aplicado é o erro que
-  custou duas tentativas.
-- **O `EF_MAX` do rAthena NÃO é o teto de efeitos do cliente — é o do
-  emulador, e ele está 900 efeitos atrasado.** O `buildin_specialeffect`
-  recusa todo número a partir de `EF_MAX`, que vale **1243** no nosso vendor
-  (o último nomeado é `EF_SOUL_EXPLOSION`, 1242). Só que este kRO de
-  2021-11-03 conhece efeitos até **2372**, e **941 deles têm arte própria
-  (`.str` no GRF) acima daquele teto**. Pedir um deles por `specialeffect`
-  não desenha nada e escreve *"unsupported effect id"* no log — o efeito
-  existe, a arte existe, e quem estava fechado era o caminho entre os dois.
-  É a mesma família do `db/` do vendor semanticamente vencido (a entrada do
-  `stylist.yml` acima): o dado não está errado, está velho, e nada avisa.
-  A saída é o **`efeitoespecial`**, nosso, em `src/custom/script.inc` — o
-  `specialeffect` com a faixa do cliente e nada mais. Entrou pelos ganchos
-  oficiais `script.inc`/`script_def.inc`, então **não custou um byte de
-  arquivo de terceiro**, e o `specialeffect` original continua intacto.
-  **E há uma segunda armadilha dentro desta:** número fora da faixa 13..2372
-  cai no `default` do switch do cliente e ele **não desenha nada, calado** —
-  sem erro de Lua, sem caixa, sem log. Errar o número é indistinguível de "o
-  efeito não existe". Conferir antes em
-  `ferramentas/lista_efeitos_do_cliente.py --id <n>`.
-- **Antes de mexer no `effecttool` para pôr uma textura na tela, perguntar
-  que EFEITO já a desenha.** O pedido chega pelo nome de um `.bmp` e o
-  reflexo é procurar onde enfiar aquele caminho — o que leva ao
-  `effecttool\<mapa>.lub`, único mecanismo que aceita caminho de textura
-  direto, e que custou **quatro idas ao jogo sem desenhar nada** em
-  2026-08-26. Na maioria das vezes a textura pertence a um efeito que o
-  cliente **já numera**, e aí o pedido inteiro é uma linha de script no
-  servidor: sem patch, sem override, sem pasta nova para provar.
-  **O sinal está no próprio GRF: um `.str` na mesma pasta da textura.**
-  `.str` é definição de efeito numerado; textura sem `.str` por perto (o
-  `epi_glow_01.bmp`, que é unidade de habilidade `UNT_EPICLESIS`) não tem
-  número, e aí o `effecttool` é mesmo o único caminho. Foi essa diferença,
-  e só ela, que separou o brilho que não saiu do que saiu de primeira.
-  A pergunta se responde em um comando:
-  `ferramentas/lista_efeitos_do_cliente.py --textura <padrão>`.
-  **Cuidado com um detalhe que engana na entrega:** quase todo efeito tem
-  **duas** variantes de arte, `mineffect\` e normal, escolhidas em tempo de
-  execução pela opção de efeitos reduzidos do jogador. Elas costumam usar
-  texturas **diferentes**, então a `.bmp` pedida pode só aparecer com aquela
-  opção ligada — o `--id` diz de que lado cada uma está.
-- **O cliente desenha coisa no mundo SEM o servidor — `grep` em `npc/` não
-  prova que algo não existe.** O `data\luafiles514\lua files\signboardlist.lub`
-  é uma tabela de **514 placas** (ícone em moldura laranja + plaquinha marrom
-  com texto) que o cliente põe por mapa e célula, sozinho. Não há NPC por trás:
-  clicar não faz nada, e nenhum `grep` no `rathena/` acha aquela coordenada.
-  Boa parte anuncia coisa do kRO que aqui nunca existiu — em 2026-08-27 apareceu
-  a `부스터 프로모션` em `prontera 166,300`, da campanha paga de 2021, e o
-  `itemInfo` ainda traz a Moeda Booster com um `<NAVI>` para exatamente aquela
-  célula. **107 das 514 têm texto, boa parte ainda em coreano** — o
-  `traduz_ptbr.py` nunca tocou esse arquivo. É a §4.9 num terceiro grau: lá o
-  cliente tinha metade da configuração, aqui ele tem as duas.
-  Ferramenta: `ferramentas/remove_placas_mortas.py`. **É cliente — vai por
-  patch** (§4.18).
-- **Ler mojibake a olho num screenshot dá resposta plausível e errada.** No
-  balão acima, `°Ô½ÃÆÇ` (게시판, "quadro de avisos") e `ºÎ½ºÅÍ` (부스터,
-  "Booster") são o mesmo desenho naquele tamanho — `°`/`º` e `Ô`/`Î` diferem em
-  um pixel, e o JPEG come esse pixel. O caminho que decide é mecânico: recortar,
-  ampliar em **nearest-neighbor**, **binarizar por luminância** para tirar o
-  ruído de JPEG, transcrever com alternativas para os glifos ambíguos e
-  **decodificar por força bruta** — a combinação que der Coreano com sentido é a
-  resposta. E quando uma palavra fecha, **procurar essa palavra pelo cliente**:
-  foi o contexto do arquivo, não o print, que derrubou a leitura errada.
-- **`x += f()` em que `f` mexe em `x` perde o que `f` consumiu.** O `+=` guarda
-  o `x` de antes de avaliar a direita. Num leitor de arquivo binário,
-  `self.p += 4 * self._u32()` joga fora os 4 bytes gastos para ler o próprio
-  contador, e o estouro aparece muitas seções adiante, longe da causa. O mesmo
-  código em duas linhas funciona.
-- **Parar SÓ o map-server para recompilar deixa o jogador travado no login, e a
-  mensagem culpa o cliente.** O char-server mantém o personagem em memória e a
-  coluna `online` em 1 (a entrada do `UPDATE` na tabela `char`, acima, é a
-  mesma armadilha por outro ângulo); quem a destrava é o
-  `char_set_all_offline_sql`, que roda **na subida do char-server** e em mais
-  lugar nenhum. Quem tentar entrar recebe *"The game server still recognizes
-  your last log-in. Please try again after about 30 seconds.(8)"* — que soa
-  como problema de cliente ou de rede, e não é. **Depois de linkar, reiniciar o
-  char-server junto**, não só o map. Medido em 2026-08-27.
-- **Subir o servidor a partir de um shell que pode ser encerrado deixa os
-  quatro processos órfãos — e a subida seguinte cria DUPLICATA em vez de
-  reaproveitar.** O `servidor.py subir` é idempotente, mas a idempotência
-  depende de o processo anterior estar **vivo** para ele reconhecer; processo
-  morto não é pulado, é recriado. Rodado de dentro de um shell de ferramenta
-  (ou de qualquer coisa que o sistema possa coletar), os servidores morrem
-  junto com o pai e a próxima subida sobe um segundo de cada.
-  **E o sintoma aparece três passos depois da causa:** dois char-servers
-  brigando pelo login-server enchem o log de `Connection to Char Server lost`
-  em laço, e o volume de conexões de `127.0.0.1` dispara o anti-DDoS
-  (`connect_check: DDoS Attack detected from 127.0.0.1!`), que então recusa
-  **todo mundo** — inclusive quem nunca teve nada a ver com o problema. Um bot
-  de openkore reconectando a cada 40s alimenta o mesmo contador.
-  A saída é subir **desacoplado** (`Start-Process` no PowerShell, ou o `.bat`
-  fora do shell da ferramenta) e **conferir a contagem por serviço**, não só o
-  `status`: `Get-Process -Name map-server,char-server,login-server,web-server |
-  Group-Object ProcessName` tem de dar 1 em cada. O `status` do `servidor.py`
-  responde pela **porta**, e porta ocupada por uma das duas cópias parece
-  saudável. Medido em 2026-08-27.
-- **Comando de script que "existe no rAthena" pode não existir NESTE rAthena, e
-  o erro do parser aponta para o lugar errado.** O vendor foi congelado numa
-  revisão; comando que entrou depois, ou que só existe em fork, simplesmente
-  não está na tabela de buildins — e o `parse_simpleexpr` não diz *"comando
-  desconhecido"*, diz **`unmatched ')'`** na coluna do parêntese de abertura,
-  porque tratou o nome como variável e tropeçou no `(` seguinte. A mensagem
-  manda procurar erro de sintaxe numa linha que está sintaticamente perfeita.
-  Medido em 2026-08-29 ao escrever a Glast Heim Sombria: **`has_instance`** e
-  **`getnpcx()`/`getnpcy()`** não existem aqui (o primeiro se resolve pelo
-  `IE_NOINSTANCE` do próprio `instance_enter`; o segundo é
-  `getmapxy(.@m$,.@x,.@y,BL_NPC)` sem valor de busca, que devolve a posição do
-  NPC que está rodando).
-  **A conferência que decide é `grep "BUILDIN_DEF(<nome>" src/map/script.cpp`**,
-  e ela é de graça. O `doc/script_commands.txt` do próprio vendor também serve,
-  e é mais confiável que qualquer wiki — mas cuidado com o inverso: **constante
-  de sprite não aparece pelo nome no `grep`**, porque o `export_constant_npc`
-  corta o prefixo (`JT_WARPNPC` vira `WARPNPC` em tempo de execução). Procurar
-  `\bWARPNPC\b` devolve zero sobre uma constante que existe.
-- **No `.gitignore`, negar um arquivo dentro de pasta excluída NÃO tem efeito —
-  e o `git status` não denuncia, porque o arquivo simplesmente continua
-  invisível.** Pasta excluída o git nem abre. `/db/import` mais
-  `!/db/import/mob_skill_db.txt` deixa o arquivo ignorado do mesmo jeito; o que
-  funciona é excluir o **conteúdo**, `/db/import/*`, e só então negar. Custou
-  uma rodada em 2026-08-29, e o próprio `rathena/.gitignore` já descrevia a
-  regra vinte linhas abaixo, na nota do `!/src/custom/` — que resolve o caso
-  oposto (lá se quer a pasta inteira, e negar a pasta basta).
-  **A sonda que decide não é `git check-ignore`**, que imprime a regra de
-  negação e sai 0 dos dois jeitos: é `git status --short --untracked-files=all
-  <pasta>`, que só lista o que o git realmente enxerga.
-- Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
+- Nem toda parcela de dano do renewal passa pela redução de cartas. O dano físico é montado em `statusAtk`, `weaponAtk`, `equipAtk`, `masteryAtk` e…
+- MONSTRO NÃO TEM RESISTÊNCIA POR RAÇA — não existe "redução humano" para mob. O `bonus2 bSubRace,RC_Player_Human` é bônus de jogador
+- Dentro de castelo, a redução de 80% da guerra vale 24 HORAS POR DIA — e vale também quando o alvo é MONSTRO
+- `status_calc_mob_` sem nenhuma flag LIBERA o `md->base_status` e passa a usar o status compartilhado do `mob_db`
+- No renewal, a chance de acerto é literalmente `hit − esquiva` em pontos percentuais — e o piso de 5% esconde o quanto se está longe
+- No `mob_db` do renewal, `Attack2` NÃO é o ATQ máximo — vira `rhw.matk`. O parser (`mob.cpp:5107`) manda `Attack2` para `status.rhw.matk` sob…
+- `guardian` sem índice é guardião TEMPORÁRIO, e é o que se quer fora de castelo com dono
+- Curar MONSTRO funciona, e é o Emperium que não pode — não o monstro. Vale o contrário da intuição de RO
+
+### `ARMADILHAS-INFRA.md` — Infra, deploy, rede e publicação
+
+SSH, Ubuntu, MariaDB, DigitalOcean, DNS, cache HTTP, deploy, Atualizador e patches.
+
+- `tr -dc … | head -c N` mata o script inteiro sob `set -o pipefail`. O `head` fecha o cano ao completar os N bytes, o `tr` morre de SIGPIPE (exit…
+- No `sshd_config` o PRIMEIRO valor vence, não o último — e isso inverte o sentido do número no nome do arquivo em `sshd_config.d/`
+- Sessão SSH já aberta não prova endurecimento nenhum. Ela foi autenticada antes da mudança e continua viva de propósito — é o que impede o tiro no pé
+- O `needrestart` do Ubuntu 24.04 reinicia serviço sozinho durante o `apt`, e o `ssh.service` está na lista dele
+- O bit de execução do `rathena/` NÃO está no git, e no Linux isso vira `Permission denied`
+- `libmariadb-dev` não basta para compilar o rAthena — falta o `libmariadb-dev-compat`
+- A senha da conta de comunicação entre servidores tem teto de 23 caracteres, e passar disso falha CALADO — apontando para o lugar errado
+- `StretchDIBits` falha de vez em quando, e mente no `GetLastError`. Duas execuções do mesmo binário devolveram 630 linhas (sucesso) e a terceira…
+- O servidor de jogo NÃO tem relógio próprio: `gettime` e `OnClock` leem a hora LOCAL da máquina — e a máquina de produção nasce em UTC
+- `nslookup` sai com código 0 mesmo quando o domínio NÃO existe. Uma sonda `nslookup $host && echo "resolve"` imprime *"resolve"* para NXDOMAIN
+- Chave do DigitalOcean Spaces pode ser somente-leitura, e a listagem funciona igual
+- O rclone chama `CreateBucket` antes de subir arquivo grande. Para usar cópia multi-thread (o que ele faz sozinho a partir de algumas centenas de MB)…
+- Deploy parcial feito à mão desarma o gatilho de restart do deploy seguinte, e a perda é calada — CORRIGIDO em 2026-08-22
+- O registro de patch do jogador é indexado por número, e DUAS contagens diferentes começam em 0001
+- `go build` sem `GOOS`/`GOARCH` explícitos num script que PUBLICA binário é uma bomba de fuso horário de máquina. O `-o Jogar.exe` decide só o nome
+- O deploy NÃO sai do Windows, e o pré-voo reprova aqui por um motivo que não existe no servidor. Duas coisas separadas
+- `UPDATE` na tabela `char` com o jogador CONECTADO é desfeito na saída dele, e o comando não erra
+- Resposta HTTP sem `Cache-Control` NÃO fica sem cache: o navegador inventa um — e quanto mais VELHO o arquivo, mais tempo a cópia velha vale
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
 
@@ -2148,6 +676,7 @@ Produziram diagnóstico falso e custaram retrabalho:
 | Documento | Função | Como ler |
 |---|---|---|
 | `CLAUDE.md` | mapa, regras, o que não se pode fazer | inteiro — é a partida |
+| `ARMADILHAS-*.md` | os seis cadernos de armadilhas: o caso inteiro de cada linha da §5 — sintoma, causa medida e saída | **nunca inteiro**; a lista do grupo ao mexer na peça, e a entrada que o gatilho da §5 apontar |
 | `ARQUITETURA.md` | quem lê o quê, o que muda junto | inteiro, ao mexer em peça nova |
 | `RECEITAS.md` | passo a passo dos fluxos repetíveis | só a receita da tarefa |
 | `PENDENCIAS.md` | **só o que está em aberto** | inteiro — é curto |
@@ -2179,7 +708,7 @@ natureza do que se escreve, não por quando:
 | Trabalho **terminado** (o que foi feito e por quê) | `HISTORICO.md`, ao fim da seção do assunto, com **data absoluta** |
 | Trabalho **em aberto** (falta fazer, falta testar) | `PENDENCIAS.md` |
 | **Regra nova** ("nunca faça X", "sempre confira Y") | `CLAUDE.md` §4 |
-| **Armadilha nova** de ferramenta/ambiente | `CLAUDE.md` §5 |
+| **Armadilha nova** de ferramenta/ambiente | **duas pontas:** o caso inteiro no `ARMADILHAS-*.md` do domínio, e uma linha de gatilho na §5 do `CLAUDE.md` |
 | **Fluxo novo** que vai se repetir | `RECEITAS.md` |
 | **Acoplamento novo** (mexer em A exige mexer em B) | `ARQUITETURA.md` §4 |
 | Caminho, porta, comando, credencial | `REFERENCIA.md` |
@@ -2197,6 +726,13 @@ natureza do que se escreve, não por quando:
 3. **Não duplicar.** Se algo já está no `CLAUDE.md`, o histórico aponta para
    ele em vez de repetir — duas cópias divergem, e a errada é sempre a que
    alguém lê.
+4. **Armadilha se escreve nas DUAS pontas, sempre.** O corpo mora no
+   `ARMADILHAS-*.md` do domínio; o gatilho, na §5. Escrever só o corpo é
+   enterrar a armadilha num caderno que ninguém abre sem já desconfiar dela
+   — que é justamente o momento em que ela já custou o tempo. Escrever só
+   o gatilho é perder a medição, que é o que separa esta lista de um
+   palpite. **O gatilho é uma linha e não tem "continua abaixo": ele tem de
+   bastar para a armadilha ser reconhecida na tela, sozinho.**
 
 ## 8. Convenções de trabalho
 

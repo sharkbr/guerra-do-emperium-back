@@ -15443,3 +15443,84 @@ partindo a frase da nota do `!/src/custom/` em duas. É anterior a este trabalho
 §5. **Não é funcional** — nenhuma daquelas linhas casa com caminho de verdade, e
 o `!/src/custom/` no fim continua valendo —, mas está num arquivo que decide o
 que chega à produção. Anotado em `PENDENCIAS.md`.
+
+---
+
+## A §5 sai do `CLAUDE.md` e vira seis cadernos (2026-08-30)
+
+O `CLAUDE.md` chegou a **168.083 bytes**, e a divisão interna dele explicava
+por quê:
+
+| seção | bytes | % |
+|---|---|---|
+| §5 Armadilhas | **120.484** | **72%** |
+| §4 Regras | 21.467 | 13% |
+| §2 Lei da customização | 11.090 | 7% |
+| §1, §3, §6–§9 | 11.614 | 7% |
+
+Eram **140 armadilhas** numa lista única. O arquivo que a §6 manda ler
+inteiro por ser "curto de propósito" tinha passado a carregar, em toda sessão,
+a armadilha do `sshd_config` para quem ia mexer num NPC e a do `.rsm` para quem
+ia fazer deploy.
+
+**O corte foi por domínio, e o critério foi "que peça a pessoa está tocando":**
+
+| caderno | armadilhas | bytes |
+|---|---|---|
+| `ARMADILHAS-CLIENTE.md` | 44 | 41.869 |
+| `ARMADILHAS-SCRIPT.md` | 29 | 27.479 |
+| `ARMADILHAS-RATHENA.md` | 22 | 20.450 |
+| `ARMADILHAS-AMBIENTE.md` | 19 | 12.314 |
+| `ARMADILHAS-INFRA.md` | 18 | 17.917 |
+| `ARMADILHAS-COMBATE.md` | 8 | 6.868 |
+
+O `CLAUDE.md` foi para **66.307 bytes — 61% menor**.
+
+### O que ficou para trás, e por que não podia sair
+
+**O valor de uma armadilha é reconhecer o sintoma antes de gastar horas
+nele.** Mover o texto inteiro para outro arquivo resolveria o tamanho e
+desligaria a lista: ninguém abre `ARMADILHAS-SCRIPT.md` para descobrir que
+`callsub` abre escopo `.@` novo — abre depois de o `delequip 0` já ter
+apagado o anel, que é quando a armadilha já cobrou.
+
+Então o que saiu foi o **corpo**; o que ficou foi o **gatilho**, uma linha por
+armadilha, agrupada pelo caderno onde o caso está contado por inteiro. A §5
+continua sendo uma lista de 140 linhas que se lê de cima a baixo — só que
+custa 21 KB em vez de 120.
+
+**As ~200 referências a `CLAUDE.md` §5` espalhadas pelos outros documentos
+não foram tocadas, e continuam certas:** a §5 existe, e agora leva ao caderno.
+Reescrevê-las seria muito risco por nenhum ganho — boa parte dos `§5` do
+`HISTORICO.md` e do `PENDENCIAS.md` são de *outros* documentos
+(`PENDENCIAS.md §5b`, `IMPLANTACAO.md §5`), e um `sed` largo trocaria os dois.
+
+### A regra que subiu
+
+A §7 ganhou uma quarta regra: **armadilha se escreve nas duas pontas**, o
+corpo no caderno e o gatilho na §5. Escrever só o corpo é enterrar; escrever
+só o gatilho é perder a medição. E o gatilho tem de bastar sozinho — se
+precisar de "continua abaixo", não é gatilho.
+
+### Três coisas que a própria divisão quase quebrou
+
+As três estão na §5 e as três morderam durante o trabalho, o que é um
+argumento a favor da lista:
+
+1. **O `CLAUDE.md` é CRLF.** O divisor leu por `split('\n')`, o que deixa o
+   `\r` dentro de cada linha, e as linhas novas do índice nasceram em LF: o
+   arquivo ficou **misto** (580 CR em 758 linhas) sem nada denunciar. O
+   `git ls-files --eol` foi quem contou — `w/mixed` contra o `w/crlf` dos
+   vizinhos. Tudo passou a ser lido em LF e gravado em CRLF, num lugar só.
+2. **Heredoc com acento.** As âncoras de substituição passadas por
+   `<<'EOF'` para o Python 2 casaram **zero vezes** — o `assert` parou antes
+   de gravar, que é exatamente o que a §5 manda ter. Os scripts passaram a
+   ser escritos como arquivo, com escapes `\xNN` nas âncoras.
+3. **`cd` dentro de comando composto.** Um `cd` no início de uma linha fez o
+   `cp` seguinte restaurar o backup **dentro do scratchpad** em vez do
+   projeto, e o divisor releu o arquivo já dividido. A validação de
+   classificação pegou (140 linhas sem grupo), de novo antes de gravar.
+
+A conferência que fechou o trabalho compara o corpo das 140 armadilhas com o
+backup, **linha a linha**: 1.635 linhas idênticas, nenhuma perdida nem
+alterada.
