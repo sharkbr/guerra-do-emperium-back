@@ -3825,3 +3825,4 @@ Consertar é apagar as linhas 159 a 185 e emendar a frase:
 Não foi feito junto com a Sombria de propósito: mexer no `.gitignore` no mesmo
 commit que estreia uma exceção nele misturaria duas coisas que precisam ser
 lidas separadas se alguma der errado.
+

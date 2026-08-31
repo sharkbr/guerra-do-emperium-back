@@ -215,15 +215,21 @@ Body:
     AegisName: Caveira_Humana
     Name: Caveira Humana
     # O TROFEU DA ARENA. Pedida em 2026-08-08 para cair de jogador morto
-    # em PvP - level maximo e reputacao positiva, dentro da arena de
-    # Prontera. A descricao que o jogador le (itemInfo.lua) ja diz isso.
+    # em PvP dentro da arena de Prontera.
     #
     # QUEM A ENTREGA: o OnPCKillEvent do npc/guerra/honra_de_combate.txt,
-    # desde 2026-08-08, no mesmo bloco que pontua a morte. Sao TRES
-    # condicoes - os dois lados em nivel 200, o morto com 1 ponto ou mais
-    # de Honra de Combate, e a morte tem de passar pelo anti-conluio do
-    # .Limite. O cabecalho daquele arquivo, secao "O trofeu da arena",
-    # explica por que a terceira existe sem ter sido pedida.
+    # desde 2026-08-08, no mesmo bloco que pontua a morte. A condicao e
+    # UMA desde 2026-08-30 - os dois lados em nivel 200 -, e e a mesma que
+    # libera o ponto: onde sai um, sai o outro. Eram TRES ate ali; as
+    # outras duas (o morto com 1 ponto de Honra ou mais, e a morte
+    # passando pelo anti-conluio do .Limite) cairam em 2026-08-30 e
+    # 2026-08-13. O cabecalho daquele arquivo, secao "O trofeu da arena",
+    # conta as duas quedas.
+    #
+    # A DESCRICAO DO CLIENTE AINDA PROMETE "reputacao positiva", e desde
+    # 2026-08-30 isso e mentira. O texto mora em ferramentas/instala_item.py
+    # e ja foi corrigido la; chegar ao jogador exige rodar a ferramenta e
+    # publicar patch (CLAUDE.md secao 4.18). Ver PENDENCIAS.md.
     #
     # O `NoDrop` abaixo NAO e so tematico: e ele que cumpre o "nunca no
     # chao". Com a mochila cheia o getitem tenta map_addflooritem, mas

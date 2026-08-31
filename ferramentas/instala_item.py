@@ -179,9 +179,13 @@ ITENS = [
             u'^0000CCPeso:^000000 0',
         ],
     },
-    # O trofeu da arena, 2026-08-08. Ele nao tem fonte ainda: nada no servidor
-    # o entrega, e a segunda linha da descricao promete um caminho que sera
-    # escrito depois. Ver db/guerra/item_db.yml, entrada 30995, e PENDENCIAS.md.
+    # O trofeu da arena, 2026-08-08. A fonte existe desde o mesmo dia: o
+    # OnPCKillEvent do npc/guerra/honra_de_combate.txt. A segunda linha da
+    # descricao MUDOU em 2026-08-30, quando a arena ficou com uma regra so -
+    # ela prometia "reputacao positiva", e isso deixou de ser verdade. O texto
+    # daqui e o certo; o cliente so recebe rodando esta ferramenta e
+    # publicando patch. Ver db/guerra/item_db.yml, entrada 30995, e
+    # PENDENCIAS.md.
     {
         'id': 30995,
         'nome': u'Caveira Humana',
@@ -193,7 +197,7 @@ ITENS = [
         'descricao': [
             u'Caveira humana de um jogador morto em combate.',
             u'_______________________',
-            u'Essa caveira só cai de jogadores no level máximo com reputação positiva dentro da Arena de Prontera.',
+            u'Essa caveira só cai de jogadores no level máximo dentro da Arena de Prontera.',
             u'_______________________',
             u'^0000CCTipo:^000000 Etc',
             u'^0000CCPeso:^000000 0',

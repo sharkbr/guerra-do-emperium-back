@@ -15524,3 +15524,103 @@ argumento a favor da lista:
 A conferência que fechou o trabalho compara o corpo das 140 armadilhas com o
 backup, **linha a linha**: 1.635 linhas idênticas, nenhuma perdida nem
 alterada.
+
+
+## A Arena de Prontera fica com uma regra só (2026-08-30)
+
+O pedido foi de derrubar, não de acrescentar: *"vamos derrubar a maioria das
+regras, a única regra que vai valer agora é: pra contabilizar ponto e dropar a
+caveira humana o jogador precisa ser level 200. Quando mata-se ganha um ponto.
+Quando morre-se, perde 1 ponto. É isso"*.
+
+### O que existia, e o que sobrou
+
+| Regra | Desde | Hoje |
+|---|---|---|
+| só em `pvp_n_1-5` | 2026-08-07 | fica |
+| matador e morto em nível 200 | 2026-08-07 | fica — e é a única condição |
+| o matador só pontua se o morto tinha 0 ou mais (`.Piso`) | 2026-08-08 | **saiu** |
+| a Caveira Humana só sai se o morto tinha 1 ponto ou mais (`.TrofeuPiso`) | 2026-08-08 | **saiu** |
+| o morto perde 1 ponto em toda morte válida, até o piso de −10 | 2026-08-07 (o piso, 2026-08-13) | fica |
+
+As duas que saíram eram de 2026-08-08 e viveram 22 dias. As variáveis foram
+**apagadas** do `OnInit`, e não zeradas: regra que não existe mais não deve
+continuar configurável, senão o próximo leitor a encontra e supõe que ela ainda
+decide alguma coisa.
+
+Com o `.Piso` fora, o `.@pontos_morto` perdeu o único uso que tinha — o script
+não lê mais a reputação do morto em lugar nenhum. O `attachrid` até ele
+continua, e hoje é só pelo nível e pelo nome.
+
+O `getitem` do troféu e o `callsub` que pontua o matador ficaram lado a lado, no
+mesmo caminho, depois do único `if` que sobrou: **onde sai um, sai o outro.**
+
+### O nível 200 continua valendo dos DOIS lados
+
+Perguntado ao dono antes de escrever, porque a frase do pedido está no singular
+("o jogador precisa ser level 200") e as duas leituras dão servidores
+diferentes. Com o `.Piso` fora, exigir o nível só de quem mata abriria a fazenda
+de alt nível 1: matar o próprio boneco descartável em laço renderia um ponto e
+uma caveira por morte, sem custo nenhum.
+
+### O piso de −10 ficou, e é o único número que ainda limita alguma coisa
+
+Também perguntado. Tirá-lo obrigaria a mexer no `Minimum: -10` do Id 5 em
+`db/guerra/reputation.yml` — o piso tem dois donos, ver `ARQUITETURA.md` —, e
+isso exige **reiniciar o map-server**, enquanto a mudança das regras pega com
+`@reloadscript`. Ficou como estava.
+
+### O freio da economia saiu junto, e isso é deliberado
+
+O que segurava a Caveira Humana — que é MOEDA, trocada por Moeda Nova no
+Egebreu — vinha em camadas, e a última caiu aqui:
+
+- até 2026-08-13 havia teto por par de contas (o anti-conluio, `.Limite`);
+- de 2026-08-13 a 2026-08-30 sobrou o `.Piso`, que era um freio de fato: cada
+  morte empurra o alvo para baixo, então uma conta descartável rendia UMA
+  caveira e UM ponto e depois parava;
+- desde 2026-08-30 não há mais nada além do nível 200.
+
+Uma dupla de nível 200 em revezamento produz uma caveira **por morte**, sem teto
+nem espera. Está escrito nos três cabeçalhos que citam a torneira
+(`honra_de_combate.txt`, `comprador_de_caveiras.txt` e a entrada 30995 do
+`db/guerra/item_db.yml`), porque foi decidido sabendo disso — a mesma linha do
+"vamos observar primeiro" de 2026-08-13.
+
+### A descrição do item ficou mentindo, e virou o patch 0016
+
+A Caveira Humana (30995) dizia, no `itemInfo.lua` do cliente:
+
+> *"Essa caveira só cai de jogadores no level máximo **com reputação positiva**
+> dentro da Arena de Prontera."*
+
+A segunda metade deixou de ser verdade no instante em que o `.TrofeuPiso` saiu —
+é a §4.17 do `CLAUDE.md` pelo lado do cliente. O conserto tem três pontas e
+nenhuma delas é o deploy:
+
+1. o texto, em `ferramentas/instala_item.py`, que é o gerador versionado;
+2. `python ferramentas/instala_item.py`, que reescreve o `itemInfo.lua` desta
+   máquina — **−23 bytes**, e o resto do arquivo byte a byte idêntico ao backup
+   depois de deslocar o buraco (conferido, não suposto: o primeiro byte
+   diferente é o 14.965.271 e `a[i+23:] == b[i:]`);
+3. o **patch 0016**, "Descricao da Caveira Humana", 2,45 MB, já publicado — sem
+   ele o jogador que já baixou o cliente continuaria lendo a frase velha
+   (§4.18).
+
+A frase que ficou: *"Essa caveira só cai de jogadores no level máximo dentro da
+Arena de Prontera."*
+
+### Onde encostou
+
+| Arquivo | O que mudou |
+|---|---|
+| `npc/guerra/honra_de_combate.txt` | as duas travas, o `.@pontos_morto`, o texto da placa e três seções do cabeçalho |
+| `npc/guerra/scripts_guerra.conf` | o índice narrado do NPC |
+| `npc/guerra/comprador_de_caveiras.txt` | o cabeçalho dizia "três condições" e citava o anti-conluio, fora desde 2026-08-13 |
+| `db/guerra/item_db.yml` (30995) | o mesmo engano, na entrada do item |
+| `ferramentas/instala_item.py` | a descrição que o cliente mostra |
+| `patcher/patches.txt` | o registro do patch 0016 |
+
+Pega com **`@reloadscript`**. Nenhum valor de `db/` mudou, então não há
+recarregador de banco nem reinício a dar. O lado do cliente já está no ar
+(patch 0016); o do servidor espera o deploy.

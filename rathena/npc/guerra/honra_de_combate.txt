@@ -67,23 +67,33 @@
 //= deixaria a tela velha até o jogador trocar de mapa - a lista
 //= completa só é enviada no clif_parse_LoadEndAck.
 //===== As regras ============================================
+//= SÃO DUAS, e desde 2026-08-30 é tudo o que existe:
 //= 1) Só na arena (pvp_n_1-5). Fora dela o evento sai na
 //=    primeira linha.
 //= 2) Matador e morto precisam ser nível .Nivel. Fecha a porta
-//=    para personagem descartável criado só para dar pontos.
-//= 3) O MATADOR só pontua se o morto tinha .Piso (zero) ou mais.
-//=    Matar quem já está negativo não rende nada a ninguém.
-//= 4) O MORTO perde um ponto em toda morte válida, tenha ele
-//=    quanto tiver - até .PisoQueda (-10), de onde não desce
-//=    mais.
+//=    para personagem descartável criado só para dar pontos, e
+//=    vale para o PONTO e para a CAVEIRA de uma vez.
 //=
-//= (3) E (4) SÃO DUAS DECISÕES SEPARADAS, e até 2026-08-13 não
-//= eram: um `if (.@pontos_morto < .Piso) end;` saltava as duas
-//= pontuações de uma vez, então quem estava negativo também
-//= parava de PERDER ponto. O cabeçalho daquela época dizia o
-//= contrário do que o código fazia ("continua sendo alvo:
-//= morrer ainda tira ponto dele") - a regra nova é a que o
-//= texto já prometia.
+//= Passada a (2): quem mata ganha um ponto e recolhe a Caveira
+//= Humana, quem morre perde um ponto. Não há mais nenhuma
+//= condição sobre a pontuação de quem morreu.
+//=
+//= O QUE SAIU EM 2026-08-30, a pedido do dono ("vamos derrubar
+//= a maioria das regras"), e as duas eram de 2026-08-08:
+//=   - o .Piso: o matador só pontuava se o morto tivesse zero
+//=     ou mais. Derrubar quem já estava negativo não rendia
+//=     nada a ninguém; hoje rende o ponto e a caveira.
+//=   - o .TrofeuPiso: a Caveira Humana só saía se o morto
+//=     tivesse 1 ponto ou mais antes de morrer. Hoje sai em
+//=     toda morte válida.
+//= As duas variáveis foram APAGADAS do OnInit, e não zeradas:
+//= regra que não existe mais não deve continuar configurável.
+//=
+//= O QUE FICOU do lado do morto: ele perde um ponto em toda
+//= morte válida, tenha ele quanto tiver - até .PisoQueda (-10),
+//= de onde não desce mais. Este piso foi mantido de propósito
+//= no mesmo pedido; é o único número que ainda limita alguma
+//= coisa aqui.
 //=
 //= O PISO DE QUEDA NÃO É ESCOLHA DESTE ARQUIVO SOZINHO: o
 //= `Minimum: -10` de db/guerra/reputation.yml já trava o modal
@@ -110,11 +120,15 @@
 //= nível .Nivel dos dois lados é o único custo que sobrou, e
 //= não é pequeno - mas não é trava.
 //=
-//= O que segura a economia hoje é a própria regra (3): um alvo
-//= só vale ponto enquanto estiver em zero ou acima, e cada
-//= morte o empurra para baixo. Uma conta descartável rende UMA
-//= caveira e UM ponto, e depois só volta a render se alguém lhe
-//= devolver pontuação.
+//= E DESDE 2026-08-30 O NÍVEL É O ÚNICO CUSTO QUE EXISTE. Até
+//= aquele dia a economia tinha um segundo freio, que era a
+//= regra do .Piso: um alvo só valia ponto enquanto estivesse em
+//= zero ou acima, e cada morte o empurrava para baixo, então
+//= uma conta descartável rendia UMA caveira e UM ponto e depois
+//= parava. Com o .Piso fora, a mesma conta rende uma caveira
+//= POR MORTE, sem fim. Foi pedido assim, sabendo disso; o piso
+//= de queda (-10) segue o morto para baixo mas não impede mais
+//= nada.
 //=
 //= A tabela guerra_pvp_confronto continua NO BANCO, sem ninguém
 //= escrever nela. Foi tirada do sql-files/guerra_arena_pvp.sql;
@@ -127,7 +141,7 @@
 //= aconteceu, não o que valeu ponto.
 //===== O troféu da arena ====================================
 //= A Caveira Humana (30995) vai para o INVENTÁRIO do matador
-//= no instante em que a morte pontua. Ela não cai no chão em
+//= em toda morte válida. Ela não cai no chão em
 //= caso nenhum, e isso não depende deste script: o item é
 //= `NoDrop` no db/guerra/item_db.yml, o que fecha o único
 //= caminho pelo qual o `getitem` largaria item no chão - com a
@@ -136,29 +150,22 @@
 //= `NoDrop`. Mochila cheia perde a caveira, e o cliente avisa o
 //= jogador com a mensagem de inventário lotado.
 //=
-//= SÃO TRÊS CONDIÇÕES:
-//=   1) matador e morto em nível .Nivel;
-//=   2) a morte precisa PONTUAR para o matador - ou seja, o
-//=      morto em .Piso ou acima;
-//=   3) o morto precisa ter .TrofeuPiso ou mais de Honra de
-//=      Combate ANTES de morrer.
+//= A CONDIÇÃO É UMA SÓ, desde 2026-08-30: matador e morto em
+//= nível .Nivel - exatamente a mesma que libera o ponto. Onde
+//= sai um, sai o outro, e por isso os dois moram no mesmo `if`.
 //=
-//= A (3) É MAIS APERTADA QUE O .Piso: pontuar exige zero ou
-//= mais, a caveira exige um ou mais. Foi pedido assim em
-//= 2026-08-08 ("reputação maior que 0"), então quem está em
-//= zero ainda vale ponto e não vale troféu. Os dois números
-//= estão separados no OnInit de propósito, para que essa
-//= diferença de um seja visível a quem for mexer.
+//= ELA JÁ TEVE TRÊS. As outras duas eram "a morte precisa
+//= PONTUAR para o matador" (o .Piso) e "o morto precisa ter 1
+//= ponto ou mais ANTES de morrer" (o .TrofeuPiso), as duas de
+//= 2026-08-08 e as duas fora em 2026-08-30. O que elas
+//= seguravam está na seção acima: a Caveira é MOEDA - a
+//= descrição da Moeda Nova (30998) promete trocá-la - e hoje
+//= nada limita quantas saem do mesmo par de contas.
 //=
-//= A (2) TINHA UM TERCEIRO PEDAÇO ATÉ 2026-08-13: passar pelo
-//= anti-conluio. Com ele fora, "pontuar" virou só o .Piso, e a
-//= Caveira - que é MOEDA, a descrição da Moeda Nova (30998)
-//= promete trocá-la - perdeu o teto por par de contas. Ver a
-//= seção acima: quem segura é a regra (3), não mais um limite.
-//=
-//= O número lido é `.@pontos_morto`, colhido ANTES do S_Pontua:
-//= vale a reputação que o morto tinha ao morrer, e não a de
-//= depois de perder o ponto pela própria morte.
+//= COM ELAS SAIU O `.@pontos_morto`: este script não lê mais a
+//= reputação do morto em lugar nenhum, porque não há mais
+//= decisão que dependa dela. O `attachrid` continua, e é pelo
+//= nível e pelo nome.
 //===== Notas ================================================
 //= `killedrid` é ACCOUNT ID: para jogador, o id de bloco é o
 //= account_id (src/map/pc.cpp, `sd->id = account_id`).
@@ -221,13 +228,11 @@ prontera,142,180,4	script	Placar da Arena	20269,{
 	// As regras que o jogador precisa saber ANTES de brigar. Os números
 	// vêm do OnInit, e não do texto: mexer no piso conserta a regra e a
 	// explicação de uma vez.
-	mes "Só pontua quem luta contra outro nível ^0000FF" + .Nivel + "^000000 - os DOIS lados.";
+	mes "A regra é uma só: valem as lutas entre dois de nível ^0000FF" + .Nivel + "^000000 - os DOIS lados.";
+	mes " ";
+	mes "Quem mata ganha ^0000FF1^000000 ponto e ainda recolhe a ^0000FFCaveira Humana^000000 do perdedor.";
 	mes " ";
 	mes "Quem morre perde ^0000FF1^000000 ponto, até o piso de ^0000FF" + .PisoQueda + "^000000. Daí não desce mais.";
-	mes " ";
-	mes "Quem mata só pontua se o morto tiver ^0000FF" + .Piso + "^000000 ponto ou mais. Derrubar quem já está negativo não rende nada.";
-	mes " ";
-	mes "Quem vence uma luta que pontua ainda recolhe a ^0000FFCaveira Humana^000000 do perdedor - mas só se ele tiver ^0000FF" + .TrofeuPiso + "^000000 ponto ou mais de Honra de Combate.";
 	mes " ";
 	mes "^777777(Não há limite por dia nem espera entre uma luta e outra. Toda morte na arena vira anúncio, valendo ponto ou não.)^000000";
 	next;
@@ -270,13 +275,13 @@ OnInit:
 	.Rep = 5;               // o Id: de db/guerra/reputation.yml
 	.Grupo = 4;             // o Id: de db/guerra/reputation_group.yml
 	.Nivel = 200;           // nível de base exigido dos DOIS lados
-	.Piso = 0;              // o morto precisa ter ISTO ou mais para o matador pontuar
-	.PisoQueda = -10;       // e ESTE e o fundo do poço de quem morre. Tem de ser
+	.PisoQueda = -10;       // o fundo do poço de quem morre, e o único limite que
+	                        // sobrou depois de 2026-08-30. Tem de ser
 	                        // igual ao `Minimum:` do Id 5 em
 	                        // db/guerra/reputation.yml, senão a tabela e o modal
 	                        // param em números diferentes. Ver o cabeçalho.
-	.Trofeu = 30995;        // Caveira Humana - o troféu que o matador leva
-	.TrofeuPiso = 1;        // e a reputação MÍNIMA do morto para largá-lo
+	.Trofeu = 30995;        // Caveira Humana - o troféu que o matador leva, e
+	                        // ele sai em toda morte válida desde 2026-08-30
 	.Top = 5;               // linhas do quadro de cima
 	.Completo = 15;         // linhas do "Ranking completo"
 	end;
@@ -294,36 +299,34 @@ OnPCKillEvent:
 	.@nome_matador$ = strcharinfo(0);
 	.@nivel_matador = BaseLevel;
 
-	// Um pulo até o morto para ler o que só se lê estando anexado: nível,
-	// pontuação e nome. Se ele já saiu do ar entre a morte e este evento,
-	// não há o que pontuar nem o que anunciar.
+	// Um pulo até o morto para ler o que só se lê estando anexado: nível
+	// e nome. Se ele já saiu do ar entre a morte e este evento, não há o
+	// que pontuar nem o que anunciar.
+	//
+	// A reputação dele NÃO é lida mais desde 2026-08-30: nenhuma decisão
+	// depende dela. Ver "As regras" no cabeçalho.
 	if (!attachrid(.@morto))
 		end;
 	.@cid_morto = getcharid(0);
 	.@nome_morto$ = strcharinfo(0);
 	.@nivel_morto = BaseLevel;
-	.@pontos_morto = #RepPointsPvP;
 	attachrid(.@matador);
 
 	// Sai antes das travas: anúncio é relato, não prêmio.
 	announce .@nome_matador$ + " matou " + .@nome_morto$ + " na Arena de Combate de Prontera", bc_all;
 
+	// A ÚNICA TRAVA QUE SOBROU, e ela vale para as três coisas que vêm
+	// depois: o ponto do matador, a caveira e o ponto perdido pelo morto.
+	// Ver "As regras" no cabeçalho antes de acrescentar qualquer outra.
 	if (.@nivel_matador < .Nivel || .@nivel_morto < .Nivel)
 		end;
 
-	// O GANHO DO MATADOR É CONDICIONAL; A QUEDA DO MORTO, NÃO. Ver "As
-	// regras" no cabeçalho: até 2026-08-13 este `if` era um `end` que
-	// saltava as duas pontuações de uma vez.
-	if (.@pontos_morto >= .Piso) {
-		// O troféu sai ANTES do S_Pontua de propósito: aqui o jogador
-		// anexado ainda é com certeza o matador.
-		if (.@pontos_morto >= .TrofeuPiso) {
-			getitem .Trofeu, 1;
-			dispbottom "Você recolheu a Caveira Humana de " + .@nome_morto$ + ".";
-		}
-		callsub S_Pontua, .@matador, .@cid_matador, .@nome_matador$, 1;
-	}
+	// O troféu sai ANTES do S_Pontua de propósito: aqui o jogador anexado
+	// ainda é com certeza o matador.
+	getitem .Trofeu, 1;
+	dispbottom "Você recolheu a Caveira Humana de " + .@nome_morto$ + ".";
 
+	callsub S_Pontua, .@matador, .@cid_matador, .@nome_matador$, 1;
 	callsub S_Pontua, .@morto, .@cid_morto, .@nome_morto$, -1;
 	end;
 
