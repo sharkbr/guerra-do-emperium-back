@@ -3118,7 +3118,7 @@ Body:
       itemheal rand(400,600),0;
   - Id: 11518
     AegisName: N_Blue_Potion
-    Name: Blue Potion
+    Name: "Poção Azul de Aprendiz"
     Type: Healing
     Weight: 50
     Trade:
@@ -3584,7 +3584,7 @@ Body:
       itemheal rand(325,405),0;
   - Id: 11566
     AegisName: Yellow_Potion_B
-    Name: "[Not For Sale] Yellow Potion"
+    Name: "[Evento] Poção Amarela"
     Type: Healing
     Weight: 130
     Trade:
@@ -3645,7 +3645,7 @@ Body:
       itemheal rand(105,145),0;
   - Id: 11570
     AegisName: Red_Potion_B
-    Name: "[Not For Sale] Red Potion"
+    Name: "[Evento] Poção Vermelha"
     Type: Healing
     Weight: 70
     Trade:
@@ -3679,7 +3679,7 @@ Body:
       sc_end SC_CONFUSION;
   - Id: 11572
     AegisName: Blue_Potion_B
-    Name: "[Not For Sale] Blue Potion"
+    Name: "[Evento] Poção Azul"
     Type: Healing
     Weight: 150
     Trade:
@@ -4130,7 +4130,7 @@ Body:
       itemheal 0,100;
   - Id: 11614
     AegisName: Fresh_Milk
-    Name: Fresh Milk
+    Name: "Leite Fresco"
     Type: Healing
     Weight: 30
     Trade:
@@ -4145,7 +4145,7 @@ Body:
       itemheal rand(27,37),0;
   - Id: 11615
     AegisName: Sweet_Potato_
-    Name: Sweet Potato
+    Name: "Batata Doce Fresca"
     Type: Healing
     Weight: 20
     Trade:
@@ -57020,7 +57020,7 @@ Body:
       sc_start SC_ASPDPOTION0,1800000,4;
   - Id: 22543
     AegisName: Berserk_Potion_B
-    Name: "[Not For Sale] Berserk Potion"
+    Name: "[Evento] Poção da Fúria Selvagem"
     Type: Usable
     Weight: 200
     Jobs:
@@ -57050,7 +57050,7 @@ Body:
       sc_start SC_ASPDPOTION2,1800000,9;
   - Id: 22544
     AegisName: Awakening_Potion_B
-    Name: "[Not For Sale] Awakening Potion"
+    Name: "[Evento] Poção do Despertar"
     Type: Usable
     Weight: 150
     Jobs:
@@ -63778,7 +63778,7 @@ Body:
       sc_start SC_INFINITY_DRINK,1800000,0;
   - Id: 23484
     AegisName: Firstaid_Box_5
-    Name: First aid Box (5)
+    Name: "Caixa de Primeiros Socorros (5)"
     Type: Usable
     EquipLevelMin: 5
     Trade:
@@ -63797,7 +63797,7 @@ Body:
       getitem 23485,1;
   - Id: 23485
     AegisName: Firstaid_Box_10
-    Name: First aid Box (10)
+    Name: "Caixa de Primeiros Socorros (10)"
     Type: Usable
     EquipLevelMin: 10
     Trade:
@@ -63816,7 +63816,7 @@ Body:
       getitem 23486,1;
   - Id: 23486
     AegisName: Firstaid_Box_15
-    Name: First aid Box (15)
+    Name: "Caixa de Primeiros Socorros (15)"
     Type: Usable
     EquipLevelMin: 15
     Trade:
@@ -63835,7 +63835,7 @@ Body:
       getitem 23487,1;
   - Id: 23487
     AegisName: Firstaid_Box_20
-    Name: First aid Box (20)
+    Name: "Caixa de Primeiros Socorros (20)"
     Type: Usable
     EquipLevelMin: 20
     Trade:
@@ -63854,7 +63854,7 @@ Body:
       getitem 23488,1;
   - Id: 23488
     AegisName: Firstaid_Box_25
-    Name: First aid Box (25)
+    Name: "Caixa de Primeiros Socorros (25)"
     Type: Usable
     EquipLevelMin: 25
     Trade:
@@ -63873,7 +63873,7 @@ Body:
       getitem 23489,1;
   - Id: 23489
     AegisName: Firstaid_Box_30
-    Name: First aid Box (30)
+    Name: "Caixa de Primeiros Socorros (30)"
     Type: Usable
     EquipLevelMin: 30
     Trade:
@@ -63892,7 +63892,7 @@ Body:
       getitem 23490,1;
   - Id: 23490
     AegisName: Firstaid_Box_35
-    Name: First aid Box (35)
+    Name: "Caixa de Primeiros Socorros (35)"
     Type: Usable
     EquipLevelMin: 35
     Trade:
@@ -63910,7 +63910,7 @@ Body:
       getitem 23503,5;
   - Id: 23491
     AegisName: Firstaid_Box_40
-    Name: First aid Box (40)
+    Name: "Caixa de Primeiros Socorros (40)"
     Type: Usable
     EquipLevelMin: 40
     Trade:
@@ -63928,7 +63928,7 @@ Body:
       getitem 23503,6;
   - Id: 23492
     AegisName: Firstaid_Box_45
-    Name: First aid Box (45)
+    Name: "Caixa de Primeiros Socorros (45)"
     Type: Usable
     EquipLevelMin: 45
     Trade:
@@ -63946,7 +63946,7 @@ Body:
       getitem 23503,7;
   - Id: 23493
     AegisName: Firstaid_Box_50
-    Name: First aid Box (50)
+    Name: "Caixa de Primeiros Socorros (50)"
     Type: Usable
     EquipLevelMin: 50
     Trade:
@@ -63964,7 +63964,7 @@ Body:
       getitem 23504,7;
   - Id: 23494
     AegisName: Firstaid_Box_55
-    Name: First aid Box (55)
+    Name: "Caixa de Primeiros Socorros (55)"
     Type: Usable
     EquipLevelMin: 55
     Trade:
@@ -63982,7 +63982,7 @@ Body:
       getitem 23504,8;
   - Id: 23495
     AegisName: Firstaid_Box_60
-    Name: First aid Box (60)
+    Name: "Caixa de Primeiros Socorros (60)"
     Type: Usable
     EquipLevelMin: 60
     Trade:
@@ -63999,7 +63999,7 @@ Body:
       getitem 23504,9;
   - Id: 23496
     AegisName: Firstaid_Box_65
-    Name: First aid Box (65)
+    Name: "Caixa de Primeiros Socorros (65)"
     Type: Usable
     EquipLevelMin: 65
     Trade:
@@ -64016,7 +64016,7 @@ Body:
       getitem 23505,5;
   - Id: 23497
     AegisName: Firstaid_Box_70
-    Name: First aid Box (70)
+    Name: "Caixa de Primeiros Socorros (70)"
     Type: Usable
     EquipLevelMin: 70
     Trade:
@@ -64033,7 +64033,7 @@ Body:
       getitem 23505,6;
   - Id: 23498
     AegisName: Firstaid_Box_75
-    Name: First aid Box (75)
+    Name: "Caixa de Primeiros Socorros (75)"
     Type: Usable
     EquipLevelMin: 75
     Trade:
@@ -64050,7 +64050,7 @@ Body:
       getitem 23505,7;
   - Id: 23499
     AegisName: Firstaid_Box_80
-    Name: First aid Box (80)
+    Name: "Caixa de Primeiros Socorros (80)"
     Type: Usable
     EquipLevelMin: 80
     Trade:
@@ -64067,7 +64067,7 @@ Body:
       getitem 23505,8;
   - Id: 23500
     AegisName: Firstaid_Box_85
-    Name: First aid Box (85)
+    Name: "Caixa de Primeiros Socorros (85)"
     Type: Usable
     EquipLevelMin: 85
     Trade:
@@ -64085,7 +64085,7 @@ Body:
       getitem 23506,7;
   - Id: 23501
     AegisName: Firstaid_Box_90
-    Name: First aid Box (90)
+    Name: "Caixa de Primeiros Socorros (90)"
     Type: Usable
     EquipLevelMin: 90
     Trade:
@@ -64103,7 +64103,7 @@ Body:
       getitem 23506,8;
   - Id: 23502
     AegisName: Firstaid_Box_95
-    Name: First aid Box (95)
+    Name: "Caixa de Primeiros Socorros (95)"
     Type: Usable
     EquipLevelMin: 95
     Trade:
@@ -64120,7 +64120,7 @@ Body:
       getitem 23506,8;
   - Id: 23503
     AegisName: Red_Potion_B_20
-    Name: "[Not For Sale] Crate of 20 Red Potions"
+    Name: "[Evento] Cx. Poções Vermelhas (20)"
     Type: Usable
     Trade:
       NoDrop: true
@@ -64134,7 +64134,7 @@ Body:
       getitem 11570,20;
   - Id: 23504
     AegisName: Orange_Potion_B_20
-    Name: "[Not For Sale] Crate of 20 Orange Potions"
+    Name: "[Evento] Cx. Poções Laranjas (20)"
     Type: Usable
     Trade:
       NoDrop: true
@@ -64148,7 +64148,7 @@ Body:
       getitem 11569,20;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
-    Name: "[Not For Sale] Crate of 20 Yellow Potions"
+    Name: "[Evento] Cx. Poções Amarelas (20)"
     Type: Usable
     Trade:
       NoDrop: true
@@ -64162,7 +64162,7 @@ Body:
       getitem 11566,20;
   - Id: 23506
     AegisName: White_Potion_B_20
-    Name: "[Not For Sale] Box of 20 White Potion"
+    Name: "[Evento] Cx. Poções Brancas (20)"
     Type: Usable
     Trade:
       NoDrop: true

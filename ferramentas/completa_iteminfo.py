@@ -134,6 +134,25 @@ ITENS = [
     490290,   # Anel de Ameretat
     490367,   # Bracelete de Ulle
     28572,    # Broche da Celine         (placeholder em db/guerra/item_db.yml)
+    # --- As NOVE versoes [MEGA] da Valquiria Mega, de Malangdo
+    # (npc/guerra/valquirias_de_malangdo.txt), levantadas em 2026-09-02:
+    # sao as dez transformacoes do Labirinto das Valquirias menos o
+    # 400177 (Elmo de Fafnir), que ja tinha entrada. Sem elas a peca sai
+    # da NPC sem nome e sem icone, e as cinco do vendor ainda faziam o
+    # DIALOGO dela falar ingles: o menu e escrito com `getitemname()`,
+    # que le o `Name` do servidor, e o `Name` do servidor sai daqui pelo
+    # nomes_pt_item_db.py.
+    22245,    # [MEGA] Botas Espaciais
+    470047,   # [MEGA] Patas de Raposas
+    450181,   # [MEGA] Vestimenta de Seda
+    450158,   # [MEGA] Robe Gelado
+    450286,   # [MEGA] Vestes de Cardeal
+    # As quatro seguintes sao NOSSAS (db/guerra/item_db.yml, decima leva)
+    # e ja nascem em portugues no servidor; nelas falta so o cliente.
+    810012,   # [MEGA] A.R.-89
+    510065,   # [MEGA] Totsuka
+    550074,   # [MEGA] Vara
+    590042,   # [MEGA] Mangual do Demonio
 ]
 
 

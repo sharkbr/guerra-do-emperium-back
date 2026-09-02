@@ -3927,8 +3927,32 @@ O que precisa de teste, e é o tipo de coisa que só a tela mostra:
   cobrar.
 - **As quatro guardas.** Tirar a peça no meio do diálogo, ou trocá-la, tem de
   cair numa das três `F_IsEquip*Hack` sem cobrar nada.
-- **Os quatro itens novos.** `@item 810012`, `510065`, `550074`, `590042` e
-  ler a descrição — vão aparecer **sem nome** até o patch de cliente.
+- **Os nove itens `[MEGA]`.** `@item 22245`, `470047`, `450181`, `450158`,
+  `450286`, `810012`, `510065`, `550074` e `590042`, e ler nome e descrição.
+  Os nove ganharam entrada de `itemInfo.lua` em 2026-09-02 (`HISTORICO.md`
+  da data) — **fechar e reabrir o cliente** antes de olhar, porque aquele
+  arquivo só é lido na inicialização. O que se quer ver: nome em português,
+  ícone desenhado e descrição legível nos nove, e o 810012 **equipado** sem
+  caixa de erro, que é o único cuja arte teve de ser instalada.
+- **O preço em Mente, que mudou em 2026-09-02**: 20 nas seis primeiras
+  transformações e 200 nas quatro últimas (Vara Morta, Vestes de Bispo,
+  Mangual Ogro, Elmo Alado Dourado). Conferir na tela que a fala da Mega diz
+  o número certo em cada destino — ela o escreve a partir do mesmo array que
+  cobra, então a fala é a prova.
+
+### O patch de cliente que este evento vai exigir
+
+Nada do Labirinto chega ao jogador sem ele (§4.18). O que já está pronto
+nesta máquina e precisa viajar:
+
+| arquivo | o que é |
+|---|---|
+| `SystemEN\LuaFiles514\itemInfo.lua` | as nove entradas `[MEGA]` de 2026-09-02 |
+| 4 arquivos de arte do `810012` | `.spr`, `.act`, ícone e ícone grande, em `data\sprite\<item>\` e `data\texture\<ui>\...` |
+
+**Não foi publicado de propósito**: o Labirinto inteiro ainda não foi visto em
+jogo, e patch publicado é irreversível para quem já baixou. Vai junto com o
+resto quando o evento fechar.
 
 ### Uma correção barata que ficou de fora
 

@@ -16437,3 +16437,92 @@ nada, e deixar os 25% nos dois lugares seria a segunda fonte que diverge da
 primeira. Hoje o número está em `MENTE_CHANCE`, no
 `ferramentas/monta_labirinto.py`, e o arquivo do `mob_db` guarda a nota
 dizendo para onde ele foi.
+
+## A Mente cai de 200 para 20, e os nove [MEGA] ganham nome (2026-09-02)
+
+Primeiro relato de jogo das duas Valquírias de Malangdo, e ele trouxe dois
+defeitos de naturezas diferentes: um número errado e um nome ausente.
+
+### O preço em Mente: 20 nas seis primeiras, 200 nas quatro últimas
+
+Pedido do dono, jogando: *"a quantidade está errada, não são 200 por
+tentativa, são 20 por tentativa pra todos menos pra alguns, que são 200: pra
+Vara Morta, Vestes de Bispo, Mangual Ogro e Elmo Alado Dourado"*.
+
+**Isso troca a fonte, e é o interessante do caso.** A tabela de 2026-09-01
+seguia a **notícia** do bRO de 2024, que dá 200 para tudo (300 nas Patas de
+Raposas) nos dois servidores. Os quatro itens que o dono nomeou são
+exatamente os **quatro últimos** da tabela — e são exatamente os quatro que a
+**coluna Valhalla do wiki** cobra a 200, deixando os seis primeiros a 20. Ou
+seja: o pedido, que veio da tela e não de documento nenhum, escolheu a outra
+fonte inteira, coluna por coluna.
+
+Quem decide entre duas fontes que discordam é a nossa economia, e não a idade
+do documento — as lojas de Prontera vendem e recompram a 1 zeny justamente
+para não fabricar dinheiro (§4.16). O cabeçalho do arquivo foi reescrito para
+dizer isso, porque ele afirmava o contrário por extenso.
+
+**Uma divergência ficou por escrito**, no cabeçalho e aqui: o wiki cobra
+**30** nas Patas de Raposas (índice 2, o Sapato Infernal), a única das seis
+fora dos 20. O pedido foi "20 para todos menos" os quatro, e é o que está na
+tabela. Se a intenção era espelhar o wiki inteiro, a linha a mudar é essa, e
+só ela.
+
+### Os nove [MEGA] não existiam no cliente
+
+O segundo relato foi *"o nome dos novos itens no NPC está em inglês, no
+diálogo"*, e a causa tem duas metades que se somam.
+
+O menu da Valquíria Mega é montado em laço com `getitemname()`, que lê o
+`Name` do **servidor**. Cinco dos dez `[MEGA]` são itens do vendor e estavam
+com o nome em inglês lá (`Awakened Robe of Worshiper` e irmãos). Os outros
+quatro são nossos e já nasciam em português — por isso metade do menu estava
+certa, o que torna o defeito mais fácil de ler como "alguns itens".
+
+E o `Name` do servidor **sai do cliente**: quem o sincroniza é o
+`ferramentas/nomes_pt_item_db.py`, que copia o nome que o `itemInfo.lua`
+desenha. Ele não tinha o que copiar — **os nove `[MEGA]` estavam fora do
+`itemInfo.lua`**, os cinco do vendor inclusive. Na mochila eles apareceriam
+sem nome e sem ícone; no diálogo, em inglês. Um sintoma só, duas tabelas.
+
+A cura foi a de sempre, e estava no disco: o `iteminfo_new.lub` do bRO tem os
+nove, **com o nome oficial em português e a descrição**. Os nove entraram na
+lista do `ferramentas/completa_iteminfo.py` (que é versionado; o
+`itemInfo.lua` não é) e de lá para o cliente:
+
+| Id | nome |
+|---|---|
+| 22245 | `[MEGA] Botas Espaciais` |
+| 470047 | `[MEGA] Patas de Raposas` |
+| 450181 | `[MEGA] Vestimenta de Seda` |
+| 450158 | `[MEGA] Robe Gelado` |
+| 450286 | `[MEGA] Vestes de Cardeal` |
+| 810012 | `[MEGA] A.R.-89` |
+| 510065 | `[MEGA] Totsuka` |
+| 550074 | `[MEGA] Vara` |
+| 590042 | `[MEGA] Mangual do Demônio` |
+
+Depois o `nomes_pt_item_db.py` levou os cinco do vendor para o `item_db`, e o
+diálogo passou a falar português nos dez destinos.
+
+**A arte do 810012 faltava**, e só dele — os oito outros já tinham os quatro
+arquivos. Veio do GRF do bRO por `instala_visual.py`, e o `valida_visual.py`
+fecha em 4 de 4. Os quatro `[MEGA]` de arma herdam o `ClassNum` do original
+(18, 31, 69 e 62), então o visual equipado já estava coberto.
+
+### O que veio de brinde, e por que ficou
+
+A passada do `nomes_pt_item_db.py` também sincronizou **31 itens de
+`item_db_usable.yml`** que estavam parados desde 2026-08-28 — as dezoito
+Caixas de Primeiros Socorros, as poções de evento e o Leite Fresco. São
+entradas de cliente que entraram naquele dia sem a sincronia do servidor
+depois. Ficaram: é a §4.9 sendo fechada, não escopo novo — com elas fora, a
+mochila diria "Caixa de Primeiros Socorros (5)" e todo NPC diria "First aid
+Box (5)".
+
+### O que falta
+
+O `itemInfo.lua` e os quatro arquivos de arte do 810012 moram em
+`C:\GuerraDoEmperium\cliente\` e **não chegam ao jogador pelo deploy**
+(§4.18). O patch está anotado no `PENDENCIAS.md` §1ab, junto com o resto do
+Labirinto, que ainda não foi visto em jogo por inteiro.

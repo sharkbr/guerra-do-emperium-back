@@ -122539,7 +122539,7 @@ Body:
       }
   - Id: 22245
     AegisName: Space_shoes_JP_
-    Name: Awakened Special Environment Boots
+    Name: "[MEGA] Botas Espaciais"
     Type: Armor
     Weight: 1000
     Defense: 15
@@ -194945,7 +194945,7 @@ Body:
       }
   - Id: 450158
     AegisName: Triad_God_Mail_J__
-    Name: Awakening Triad God Mail
+    Name: "[MEGA] Robe Gelado"
     Type: Armor
     Weight: 900
     Defense: 90
@@ -195570,7 +195570,7 @@ Body:
       }
   - Id: 450181
     AegisName: White_Lily_Robe__
-    Name: Awakened White Lily Robe
+    Name: "[MEGA] Vestimenta de Seda"
     Type: Armor
     Weight: 900
     Defense: 40
@@ -198074,7 +198074,7 @@ Body:
       }
   - Id: 450286
     AegisName: Robe_of_Devotee_A
-    Name: Awakened Robe of Worshiper
+    Name: "[MEGA] Vestes de Cardeal"
     Type: Armor
     Weight: 900
     Defense: 120
@@ -203419,7 +203419,7 @@ Body:
       }
   - Id: 470047
     AegisName: Awakening_Nergal_Shoes
-    Name: Awakened Fire Thunder Great Boots
+    Name: "[MEGA] Patas de Raposas"
     Type: Armor
     Weight: 1000
     Defense: 18
