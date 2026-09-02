@@ -790,6 +790,34 @@ versionado, então a cópia fria dele continua obrigatória.
 
 ---
 
+**7. O personagem do bot fantasma, em PRODUÇÃO** (2026-09-02). O
+`implanta_fantasma.sh` rodou até o fim no servidor: openkore clonado e
+compilado, delta aplicado, `/etc/guerra/fantasma.txt` com a senha de verdade,
+unit escrita, e a **conta `fantasma` criada no banco de produção**
+(`account_id 2000037`, `group_id 20`, hash conferido contra o arquivo). O
+serviço está `disabled`, de propósito.
+
+Falta a única coisa que não sai daqui: **o personagem Renegado**. Ele não se
+cria por SQL — precisa do cliente, e o cliente é do Windows. São três passos,
+todos lá:
+
+1. entrar com `fantasma` / `fant4smaArena26`, PIN `4728`, **apontando o cliente
+   para PRODUÇÃO** (`ferramentas/aponta_cliente.py --producao`), e criar um
+   **Renegado**;
+2. se ele não nascer no slot 1, pôr `char N` em `/etc/guerra/fantasma.txt` —
+   não no `config.txt`, que é versionado e o `instala.sh` sobrescreve;
+3. dar a ele os dois insumos infinitos, com o char-command `#`:
+   `#item <personagem> 30993 1` e `#item <personagem> 30992 1`.
+
+Sem os dois itens as habilidades do ciclo não saem e o fantasma vira só
+pancada normal — o `pvpGhost/README.md` §"Trocar o personagem" tem a tabela de
+qual item dispensa qual insumo.
+
+Depois disso o start é do dono, com a arena vazia:
+`systemctl enable --now guerra-fantasma`.
+
+---
+
 ## 9b. Preparado no Windows, à espera do Mac
 
 O inverso da §9: trabalho que já está pronto e commitado, e que só falta um

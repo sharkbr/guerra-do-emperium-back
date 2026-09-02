@@ -16585,12 +16585,66 @@ degradar para *"seguindo assim mesmo"* só é honesto quando o que se perdeu é
 dispensável. Se a leitura é o que arma uma trava, o certo é o erro aparecer e o
 script parar.
 
-### Ordem para retomar
+### E aí o fantasma subiu — menos o personagem
 
-O deploy normal primeiro — é ele que leva os três commits e o bit novo para o
-servidor —, e só então o fantasma:
+Feito no mesmo dia, nesta ordem: deploy completo (autorizado pelo dono, que era
+o único jogador on), depois o `implanta_fantasma.sh` duas vezes.
+
+**As duas passadas são o desenho, não um tropeço.** O `438d931` da sessão do
+Windows fez o passo 6/7 criar a conta a partir do `/etc/guerra/fantasma.txt`, e
+o script se recusa a criar conta de produção com a senha de exemplo — então a
+primeira passada escreve o arquivo e para, a segunda cria. No meio entra a
+senha de verdade.
+
+Resultado em produção: openkore clonado e compilado, delta aplicado, link do
+segredo resolvendo, unit escrita e `disabled`, e a conta:
 
 ```
-ferramentas/implanta.sh
-ferramentas/implanta_fantasma.sh
+account_id 2000037    userid fantasma    group_id 20    pincode 4728
 ```
+
+O hash foi conferido dos dois lados por fora do script — `md5sum` da senha do
+arquivo contra a coluna `user_pass` —, que é a premissa inteira do desenho de
+fonte única. Casam.
+
+**O `account_id` de produção não é o 2000002 do README.** Aquele é o da máquina
+de DEV; a coluna é `AUTO_INCREMENT` e cada banco dá o próximo número dele. O
+README foi acertado para trazer os dois lado a lado, porque procurar o 2000002
+em produção não acha nada.
+
+### Um defeito encontrado na leitura, antes de o SQL tocar o banco
+
+O commit `438d931` avisava, com todas as letras, *"NAO TESTADO CONTRA UM
+BANCO"*. Lendo o passo 6/7 antes de rodá-lo apareceu a guarda da senha:
+
+```sh
+case "$SENHA" in
+    *\'*|*\*) erro "... tem aspa simples ou barra invertida" ;;
+esac
+```
+
+O `\*` torna o asterisco **literal**, então o padrão casa *"qualquer coisa
+terminada em asterisco"* — recusava um asterisco no fim (inofensivo em SQL) e
+**aceitava barra invertida em qualquer posição**, que é exatamente o caractere
+que quebraria o `INSERT` montado por concatenação. O oposto do que o comentário
+prometia, e do que o próprio autor quis escrever.
+
+Medido antes de corrigir:
+
+```
+[a\b]     -> aceita     <- deveria recusar
+[senha\x] -> aceita     <- deveria recusar
+[fim*]    -> RECUSA     <- não precisava
+```
+
+Corrigido para `*\\*`. É a §4.17 do `CLAUDE.md` em miniatura — o comentário
+descrevia uma regra que o código não implementava —, e vale registrar o que a
+achou: **ler o trecho que o commit disse não ter testado, antes de deixá-lo
+tocar produção.**
+
+### O que falta, e por que não sai do Mac
+
+O **personagem Renegado**. Ele não se cria por SQL — precisa do cliente, que é
+do Windows. Os três passos (criar, ajustar o `char N`, dar os dois insumos
+infinitos) ficaram na §9 do `IMPLANTACAO.md`, item 7. O serviço está `disabled`
+de propósito: o start é do dono, com a arena vazia.

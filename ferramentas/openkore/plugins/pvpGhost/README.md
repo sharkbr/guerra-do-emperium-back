@@ -368,13 +368,25 @@ O `console.txt` só guarda o carregamento das tabelas e para no meio — não
 Grupo **Id 20, `Fantasma`**, em `rathena/conf/guerra/groups_guerra.yml`.
 Dá exatamente três coisas — `@hide`, `@warp` e o `hide_session` que tira
 o char do `@who`. Nada de `@kill`/`@ban`: o cabeçalho do grupo explica
-por quê. Já criada:
+por quê. Já criada **nos dois lados**:
 
 ```
-userid     fantasma        (account_id 2000002, group_id 20)
-senha      fant4smaArena26
-pincode    4728
+userid     fantasma        senha  fant4smaArena26   pincode  4728
+
+DEV/HML (Windows)    account_id 2000002
+PRODUÇÃO (libraro)   account_id 2000037
 ```
+
+**O `account_id` é o único campo que difere entre os dois, e difere de
+propósito:** a coluna é `AUTO_INCREMENT`, então cada banco dá o próximo
+número dele. Não procurar o 2000002 em produção — lá a conta é a 2000037.
+O que identifica a conta nos dois é o `userid`, e é por ele que o
+`configura_fantasma.sh` a procura.
+
+**Em produção a conta não se cria à mão.** Quem a cria é o passo 6/7 do
+`configura_fantasma.sh`, a partir do `/etc/guerra/fantasma.txt` — o
+arquivo é a fonte única da senha e o banco obedece a ele. Criada em
+2026-09-02 por esse caminho.
 
 > **A senha no banco é MD5, não texto puro.** `conf/guerra/login_guerra.txt:48`
 > sobrescreve o `login_athena.conf` com `use_MD5_passwords: yes`. O
