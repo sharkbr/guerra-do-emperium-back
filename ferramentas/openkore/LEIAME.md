@@ -80,37 +80,136 @@ Na prática: `/etc/guerra/fantasma.txt` é o `conf/import/` deste bot.
 > `FileParsers.pm:1931`). O include tira o segredo do git, e nada mais.
 > Quem impede o episódio inteiro continua sendo o `ignoreInvalidLogin 1`.
 
-## Como isto chega ao servidor
+## Pôr o bot no ar em produção — o roteiro do Mac
 
-**Na primeira vez**, do Mac:
+Tudo daqui roda **no Mac**, na raiz do repositório. Nenhum passo precisa
+de SQL na mão.
+
+### 1. Publicar
 
 ```
-ferramentas/implanta.sh              # leva o repositorio ao servidor
-ferramentas/implanta_fantasma.sh     # instala e configura o bot
+git pull
+ferramentas/implanta.sh
 ```
 
-O `implanta_fantasma.sh` e um wrapper fino: o trabalho esta no
-`configura_fantasma.sh`, que roda **no servidor** e viaja pelo stdin do
-`ssh`. Esse `< arquivo` e facil de errar, e errar significa executar o
-script no Mac — foi o que aconteceu em 2026-09-02. O wrapper torna a
-forma certa a forma curta, e ainda confere antes se o servidor ja tem o
-delta e se esta no mesmo commit.
+Leva `ferramentas/openkore/` ao servidor. O `configura_fantasma.sh` lê
+essa pasta do disco de lá e **não puxa o repositório sozinho** — por isso
+este passo vem primeiro.
 
-Ele instala as dependências, clona o openkore no commit fixado, compila o
-`XSTools`, aplica o `instala.sh`, cria o segredo e escreve a unit — e
-**não inicia o serviço**.
+### 2. Instalar (roda duas vezes, e isso não é defeito)
 
-**Depois**, mudança no plugin ou na config viaja no deploy normal:
+```
+ferramentas/implanta_fantasma.sh
+```
+
+Na **primeira** vez ele instala dependências, clona o openkore no commit
+fixado, compila o `XSTools`, aplica o delta, escreve a unit — e cria
+`/etc/guerra/fantasma.txt` com uma senha de exemplo. **A conta não é
+criada nessa passada**, de propósito: uma conta de produção não deve
+existir com senha de exemplo nem por um minuto.
+
+### 3. A senha, num lugar só
+
+```
+ssh libraro 'vi /etc/guerra/fantasma.txt'
+```
+
+```
+password uma-senha-boa-sem-aspas
+loginPinCode 4728
+```
+
+**Este arquivo é a fonte única.** A senha vive em dois lugares por
+exigência do protocolo — em texto aqui (o openkore precisa mandá-la em
+claro) e em MD5 na coluna `user_pass`. Dois lugares é uma chance de
+divergir, e o projeto já pagou por isso com a conta interserver. Aqui a
+divergência não existe: quem manda é o arquivo, e o script faz o banco
+obedecer.
+
+O arquivo nasce `chmod 600`, dono `ragnarok`, fora do repositório — nenhum
+comando de git o alcança e ele sobrevive a um reclone.
+
+### 4. Rodar de novo — agora a conta nasce
+
+```
+ferramentas/implanta_fantasma.sh
+```
+
+Desta vez o passo 6 cria a conta `fantasma` com `MD5(senha)`, `group_id`
+20 e o PIN, confere que o grupo 20 está no `groups_guerra.yml`, e lista os
+personagens que a conta tem. Rodar de novo depois disso **sincroniza** —
+é assim que se troca a senha no futuro: edita o arquivo, roda, pronto.
+
+### 5. O personagem — o único passo que não dá para automatizar
+
+Não existe caminho por SQL: a criação passa pelo char-server. Entre no
+cliente com a conta `fantasma` e crie um **Renegado** — a classe é
+decisão, é dela que saem a Cópia Explosiva, as Máscaras e o Vínculo
+Sombrio do ciclo.
+
+Depois, com um GM, os dois itens infinitos:
+
+```
+#item <personagem> 30993 1     Tinta para Parede Infinita
+#item <personagem> 30992 1     Pincel do Infinito
+```
+
+**Sem eles as habilidades do ciclo não saem** — e o `#` (char-command) é
+obrigatório, porque `@item` só dá para si mesmo.
+
+Se o personagem não nascer no slot 1, ponha `char N` no
+`/etc/guerra/fantasma.txt`. Ele vence o valor do git, porque o `!include`
+é a última linha do bloco de login (ver acima).
+
+### 6. Ligar, com a arena vazia
+
+```
+ssh libraro 'systemctl enable --now guerra-fantasma'
+ssh libraro 'journalctl -u guerra-fantasma -f'
+```
+
+E, se quiser o RSS real em Linux, que ainda é estimativa:
+
+```
+ssh libraro 'systemctl status guerra-fantasma | grep Memory'
+```
+
+### Desligar
+
+```
+ssh libraro 'systemctl disable --now guerra-fantasma'
+```
+
+Não derruba ninguém e não toca no jogo. O grupo 20 e os dois rótulos do
+visual ficam inertes.
+
+### Se o login for recusado sem explicação
+
+É quase sempre o grupo. O `pc_group_pc_load`
+(`src/map/pc_groups.cpp:348`) **chuta a conta** se o `group_id` não
+existir nos grupos *carregados* — e o arquivo estar no disco não basta.
+Recarrega com **`@reloadatcommand`**, não `@reloadscript`.
+
+## Atualizar depois
+
+Mudança no plugin ou na config viaja no deploy normal:
 
 ```
 ferramentas/implanta.sh
 ```
 
-A seção *6b* do `atualiza_servidor.sh` cuida disso. Ela tem **carimbo
-próprio** (`.carimbo-fantasma`), e a razão importa: reiniciar o fantasma
-não derruba ninguém, então amarrá-lo ao `.carimbo-jogo` faria uma
-correção de plugin esperar pela próxima janela de manutenção sem motivo.
-É a mesma lógica que separou o site do emulador.
+A seção *6b* do `atualiza_servidor.sh` cuida disso: reaplica o delta e
+reinicia o bot. Ela tem **carimbo próprio** (`.carimbo-fantasma`), e a
+razão importa: reiniciar o fantasma não derruba ninguém, então amarrá-lo
+ao `.carimbo-jogo` faria uma correção de plugin esperar pela próxima
+janela de manutenção sem motivo. É a mesma lógica que separou o site do
+emulador.
+
+O `implanta_fantasma.sh` fica para instalar, reparar, trocar a senha, ou
+subir a versão do openkore — casos em que há compilação ou banco
+envolvidos. Ele **não** é o caminho de atualização de plugin: não reinicia
+o serviço, então os arquivos mudariam em disco e o bot seguiria rodando o
+código velho, calado.
 
 ## Subir a versão do openkore
 

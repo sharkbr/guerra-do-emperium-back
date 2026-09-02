@@ -22,7 +22,13 @@
 #   3. compila o XSTools (a unica parte que pode falhar de verdade)
 #   4. aplica o nosso delta (ferramentas/openkore/instala.sh)
 #   5. cria /etc/guerra/fantasma.txt e o link control/fantasma.txt
-#   6. escreve a unit do systemd
+#   6. cria (ou sincroniza) a conta no banco a partir desse arquivo
+#   7. escreve a unit do systemd
+#
+# RODE DUAS VEZES, e isso nao e defeito: na primeira ele cria o arquivo de
+# senha com um valor de exemplo e NAO cria a conta. Voce edita a senha e
+# roda de novo; ai a conta nasce com ela. E o que evita uma conta de
+# producao existir com senha de exemplo, mesmo que por um minuto.
 #
 # ---------------------------------------------------------------------
 # POR QUE O OPENKORE NAO MORA DENTRO DE /opt/guerra-do-emperium
@@ -61,6 +67,13 @@ OPENKORE="/opt/openkore"
 SEGREDOS="/etc/guerra"
 ARQUIVO_SEGREDO="$SEGREDOS/fantasma.txt"
 UNIT="/etc/systemd/system/guerra-fantasma.service"
+
+# A conta do bot. O grupo 20 mora em conf/guerra/groups_guerra.yml e da'
+# exatamente tres coisas - @hide, @warp e hide_session. Nada de @kill nem
+# @ban: se a senha vazar, o estrago para no que um fantasma faz.
+BANCO="guerra"
+CONTA="fantasma"
+GRUPO=20
 
 # O commit do upstream contra o qual o nosso delta foi conferido. Subir
 # este numero e' decisao consciente: depois de trocar, rode o instala.sh
@@ -109,7 +122,7 @@ id "$USUARIO" >/dev/null 2>&1 || erro "usuario $USUARIO nao existe.
        O repositorio no servidor esta' desatualizado: rode o ferramentas/implanta.sh antes."
 
 # ---------------------------------------------------------------------
-passo "1/6  Dependencias de build"
+passo "1/7  Dependencias de build"
 #
 # perl + libperl-dev  -> o XSTools e' um modulo XS; precisa dos headers e
 #                        do xsubpp/typemap do ExtUtils
@@ -131,7 +144,7 @@ else
 fi
 
 # ---------------------------------------------------------------------
-passo "2/6  Clone do openkore ($OPENKORE)"
+passo "2/7  Clone do openkore ($OPENKORE)"
 if [ -d "$OPENKORE/.git" ]; then
     ATUAL="$(como_jogo git -C "$OPENKORE" rev-parse HEAD)"
     if [ "$ATUAL" = "$OPENKORE_COMMIT" ]; then
@@ -152,7 +165,7 @@ else
 fi
 
 # ---------------------------------------------------------------------
-passo "3/6  Compilando o XSTools"
+passo "3/7  Compilando o XSTools"
 #
 # E' o unico passo com risco real de falhar. O XSTools e' um modulo XS em
 # C++ e o openkore nao roda sem ele - "use XSTools" e' a linha 25 do
@@ -174,11 +187,11 @@ else
 fi
 
 # ---------------------------------------------------------------------
-passo "4/6  Aplicando o nosso delta"
+passo "4/7  Aplicando o nosso delta"
 como_jogo "$RAIZ_REPO/ferramentas/openkore/instala.sh" "$OPENKORE"
 
 # ---------------------------------------------------------------------
-passo "5/6  O segredo da conta"
+passo "5/7  O segredo da conta"
 #
 # Mesmo padrao do /etc/guerra/site.env: fora do repositorio, para que
 # nenhum comando de git o alcance e ele sobreviva a um reclone.
@@ -224,7 +237,99 @@ else
 fi
 
 # ---------------------------------------------------------------------
-passo "6/6  A unit do systemd"
+passo "6/7  A conta no banco"
+#
+# O ARQUIVO E' A FONTE UNICA DA SENHA, e o banco e' sincronizado com ele.
+#
+# A senha do bot vive em dois lugares por exigencia do protocolo: em texto
+# aqui (o openkore precisa manda-la em claro) e em MD5 na coluna user_pass
+# (use_MD5_passwords, conf/guerra/login_guerra.txt:48). Dois lugares e' uma
+# chance de divergir - e este projeto ja' pagou por isso com a conta de
+# comunicacao entre servidores, que nasce s1/p1 em texto e derrubava o
+# char-server com uma mensagem que apontava para o lugar errado (ver o
+# cabecalho do configura_servidor.sh).
+#
+# Entao aqui a divergencia nao existe: quem manda e' o arquivo, e este
+# passo faz o banco obedecer. Trocar a senha do fantasma passa a ser
+# editar /etc/guerra/fantasma.txt e rodar isto de novo.
+#
+# root fala com o MariaDB por unix_socket, sem senha - e' o mesmo caminho
+# que o backup.sh usa.
+
+le_do_segredo() {   # extrai uma chave do arquivo, ignorando comentarios
+    sed -n "s/^[[:space:]]*$1[[:space:]]\+\(.*\)$/\1/p" "$ARQUIVO_SEGREDO" \
+        | tail -1 | tr -d '\r'
+}
+SENHA="$(le_do_segredo password)"
+PIN="$(le_do_segredo loginPinCode)"
+
+if [ -z "$SENHA" ] || [ "$SENHA" = "TROQUE-ME" ]; then
+    aviso "a senha em $ARQUIVO_SEGREDO ainda e' o exemplo - conta NAO criada"
+    aviso "edite o arquivo e rode este script de novo"
+elif ! command -v mysql >/dev/null 2>&1; then
+    aviso "mysql nao encontrado - conta NAO criada"
+else
+    # Aspa simples ou barra invertida quebrariam o SQL montado abaixo. Em
+    # vez de escapar (e errar), recusamos: a senha de um bot nao precisa
+    # desses dois caracteres, e falhar alto aqui e' melhor que gravar um
+    # hash de uma senha diferente da que o openkore vai mandar.
+    case "$SENHA" in
+        *\'*|*\*) erro "a senha em $ARQUIVO_SEGREDO tem aspa simples ou barra invertida.
+       Troque por uma sem esses dois caracteres - eles quebrariam o SQL." ;;
+    esac
+    case "$PIN" in
+        ''|*[!0-9]*) aviso "loginPinCode ausente ou nao-numerico - o pincode nao sera' ajustado"; PIN="" ;;
+        *) [ "${#PIN}" = "4" ] || { aviso "loginPinCode nao tem 4 digitos - o pincode nao sera' ajustado"; PIN=""; } ;;
+    esac
+
+    EXISTE="$(mysql -N -B "$BANCO" -e \
+        "SELECT account_id FROM login WHERE userid='$CONTA' LIMIT 1" 2>/dev/null || true)"
+
+    if [ -z "$EXISTE" ]; then
+        # sex e' 'M': o valor 'S' e' reservado para a conta de comunicacao
+        # entre servidores, e usa-lo aqui faria o char-server tratar o bot
+        # como interserver. character_slots fica em 0 de proposito - o
+        # char_logif.cpp:347 converte 0 em MIN_CHARS ao carregar.
+        mysql "$BANCO" -e "INSERT INTO login (userid, user_pass, sex, email, group_id, pincode)
+             VALUES ('$CONTA', MD5('$SENHA'), 'M', '$CONTA@local', $GRUPO, '$PIN')"
+        NOVO="$(mysql -N -B "$BANCO" -e "SELECT account_id FROM login WHERE userid='$CONTA' LIMIT 1")"
+        ok "conta '$CONTA' criada (account_id $NOVO, group_id $GRUPO)"
+        aviso "falta o PERSONAGEM: crie um Renegado com esta conta no cliente"
+    else
+        SQL="UPDATE login SET user_pass=MD5('$SENHA'), group_id=$GRUPO"
+        [ -n "$PIN" ] && SQL="$SQL, pincode='$PIN'"
+        mysql "$BANCO" -e "$SQL WHERE userid='$CONTA'"
+        ok "conta '$CONTA' ja' existia (account_id $EXISTE) - senha e grupo sincronizados"
+    fi
+
+    # O grupo tem de existir nos grupos CARREGADOS, nao so' no arquivo:
+    # pc_group_pc_load (pc_groups.cpp:348) chuta a conta no login se o
+    # group_id nao existir, e o sintoma e' uma desconexao sem explicacao.
+    if ! grep -q "Id: $GRUPO" "$RAIZ_REPO/rathena/conf/guerra/groups_guerra.yml" 2>/dev/null; then
+        aviso "grupo $GRUPO NAO esta' no groups_guerra.yml - o login vai ser recusado"
+    else
+        pula "grupo $GRUPO esta' no groups_guerra.yml"
+        aviso "se o map-server nao reiniciou desde o deploy dele, rode @reloadatcommand em jogo"
+    fi
+
+    # Quantos personagens a conta tem hoje - responde "falta criar o char?"
+    CHARS="$(mysql -N -B "$BANCO" -e \
+        "SELECT COUNT(*) FROM \`char\` c JOIN login l ON l.account_id=c.account_id
+         WHERE l.userid='$CONTA'" 2>/dev/null || echo '?')"
+    if [ "$CHARS" = "0" ]; then
+        aviso "a conta nao tem nenhum personagem ainda"
+    else
+        ok "a conta tem $CHARS personagem(ns)"
+        mysql -N -B "$BANCO" -e \
+            "SELECT CONCAT('         slot ', c.char_num, ': ', c.name, '  (class ', c.class, ')')
+             FROM \`char\` c JOIN login l ON l.account_id=c.account_id
+             WHERE l.userid='$CONTA' ORDER BY c.char_num" 2>/dev/null || true
+        aviso "confira que o 'char N' bate com o slot certo (N e' o char_num acima)"
+    fi
+fi
+
+# ---------------------------------------------------------------------
+passo "7/7  A unit do systemd"
 #
 # Console::Simple e' seguro sem terminal, e isso foi conferido no codigo
 # (2026-08-31): o ritmo do laco principal vem do usleep(sleepTime) da
@@ -271,16 +376,23 @@ ok "$UNIT escrita"
 
 # ---------------------------------------------------------------------
 printf '\n\033[1;32m== Preparado. O servico NAO foi iniciado. ==\033[0m\n\n'
-printf 'Antes de ligar, tres coisas que nao vem do git:\n\n'
-printf '  1. a senha e o PIN de verdade em %s\n' "$ARQUIVO_SEGREDO"
-printf '  2. a conta no banco, com group_id 20:\n'
-printf '       INSERT ... userid='"'"'fantasma'"'"', user_pass=MD5('"'"'...'"'"'), group_id=20\n'
-printf '  3. o personagem Renegado criado, o "char N" do config.txt\n'
-printf '     apontando para o slot dele, e os dois itens na mochila:\n'
-printf '       #item <char> 30993 1     (Tinta para Parede Infinita)\n'
-printf '       #item <char> 30992 1     (Pincel do Infinito)\n'
-printf '\nQuando a arena estiver vazia:\n\n'
-printf '    systemctl enable --now guerra-fantasma\n'
-printf '    journalctl -u guerra-fantasma -f\n\n'
+if [ -z "${SENHA:-}" ] || [ "${SENHA:-}" = "TROQUE-ME" ]; then
+    printf 'FALTA O PRINCIPAL - a senha ainda e a de exemplo:\n\n'
+    printf '  1. edite %s e ponha a senha de verdade\n' "$ARQUIVO_SEGREDO"
+    printf '  2. rode este script DE NOVO - e ele quem cria a conta no banco\n\n'
+else
+    printf 'A conta esta no banco e sincronizada com %s.\n' "$ARQUIVO_SEGREDO"
+    printf 'Trocar a senha no futuro e editar aquele arquivo e rodar isto de novo.\n\n'
+    printf 'Falta so o PERSONAGEM, que nao da para criar por SQL:\n\n'
+    printf '  1. entre no cliente com a conta "%s" e crie um RENEGADO\n' "$CONTA"
+    printf '  2. se ele nao nascer no slot 1, ponha "char N" em %s\n' "$ARQUIVO_SEGREDO"
+    printf '  3. de os dois itens infinitos a ele, com o char-command #:\n'
+    printf '       #item <personagem> 30993 1     (Tinta para Parede Infinita)\n'
+    printf '       #item <personagem> 30992 1     (Pincel do Infinito)\n'
+    printf '     sem eles as habilidades do ciclo simplesmente nao saem.\n\n'
+    printf 'Quando a arena estiver vazia:\n\n'
+    printf '    systemctl enable --now guerra-fantasma\n'
+    printf '    journalctl -u guerra-fantasma -f\n\n'
+fi
 printf 'Para desligar, a qualquer momento e sem afetar ninguem:\n\n'
 printf '    systemctl disable --now guerra-fantasma\n\n'
