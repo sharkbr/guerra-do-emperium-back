@@ -139,6 +139,42 @@
 #
 ###########################################################################
 
+###### O EMPERIUM (1288) DEIXA DE SER SAGRADO - pedido do dono, 2026-09-02 ##
+#
+# Sintoma relatado: "Emperium nao ta tomando dano de sagrado". Nao era
+# impressao nem numero pequeno - era ZERO literal, e a culpa esta no elemento
+# do proprio Emperium.
+#
+# O Emperium e PLANTA (os quatro `Modes` Ignore* que o rAthena da a ele), e
+# planta leva 1 de dano por golpe - e por isso que ele tem `Hp: 100` e cai em
+# cem pancadas. Mas esse 1 AINDA PASSA pela tabela de elementos: o
+# battle_calc_attack_plant (src/map/battle.cpp:4980) tem um bloco so para o
+# MOBID_EMPERIUM que chama `battle_attr_fix` com o elemento da ARMA contra o
+# `def_ele` dele.
+#
+# Com o Emperium em `Element: Holy` / `ElementLevel: 1`, o db/re/attr_fix.yml
+# da `Holy -> Holy` = 0% no nivel 1. 1 x 0% = 0: quem ataca com Aspersio,
+# Conversor Sagrado, flecha sagrada ou arma de elemento sagrado nao tira UM
+# ponto do Emperium. A mesma conta ja derrubava o veneno, que e 75% ali
+# (1 x 75 / 100 = 0, truncado).
+#
+# Com `Element: Neutral` / `ElementLevel: 1` a linha vira 100% para todos os
+# elementos, com uma excecao so: Ghost, que e 90% - e 90% de 1 tambem trunca
+# para 0. O nivel 1 e o melhor dos quatro exatamente por isso: nos niveis 2,
+# 3 e 4 o Neutral resiste ao Ghost com 70%, 50% e 25%.
+#
+# Por que aqui e nao no arquivo do rAthena: a lei da secao 2 do CLAUDE.md. O
+# par Element/ElementLevel basta porque o parseBodyNode do mob_db so escreve
+# os campos presentes no no (src/map/mob.cpp:5332 e :5354) - todo o resto do
+# 1288 continua vindo do vendor.
+#
+# PARA VALER EM JOGO NAO BASTA `@reloadmobdb`: o Emperium ja plantado copiou
+# o status no spawn (ele e um dos que ganham `base_status` proprio,
+# src/map/status.cpp:2802). O que estiver no mapa continua sagrado ate nascer
+# de novo, no OnAgitStart seguinte (npc/guild/agit_main.txt:97).
+#
+###########################################################################
+
 Header:
   Type: MOB_DB
   Version: 5
@@ -150,6 +186,9 @@ Body:
     AttackMotion: 220
     ClientAttackMotion: 220
     Dex: 369
+  - Id: 1288
+    Element: Neutral
+    ElementLevel: 1
   - Id: 20425
     AegisName: PHREEONI2
     Name: Phreeoni

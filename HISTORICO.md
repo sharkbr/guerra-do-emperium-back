@@ -16648,3 +16648,36 @@ O **personagem Renegado**. Ele não se cria por SQL — precisa do cliente, que 
 do Windows. Os três passos (criar, ajustar o `char N`, dar os dois insumos
 infinitos) ficaram na §9 do `IMPLANTACAO.md`, item 7. O serviço está `disabled`
 de propósito: o start é do dono, com a arena vazia.
+
+## O Emperium era sagrado, e por isso não sentia o sagrado (2026-09-02)
+
+Relato do dono: *"Emperium não tá tomando dano de sagrado. Emperium precisa
+não ter elemento, elemento neutro."*
+
+Não era dano baixo — era **zero**, e a conta fecha exatamente.
+
+O Emperium é planta (os quatro `Modes: Ignore*` que o rAthena dá ao 1288), e
+planta leva **1 de dano por golpe**; é por isso que ele tem `Hp: 100` no
+`mob_db` e cai em cem pancadas. O que quase ninguém espera é que esse 1 ainda
+passe pela tabela de elementos: o `battle_calc_attack_plant`
+(`src/map/battle.cpp:4980`) tem um bloco só para o `MOBID_EMPERIUM` que chama
+`battle_attr_fix` com o elemento da **arma** contra o `def_ele` dele. Com o
+Emperium em `Element: Holy` / `ElementLevel: 1`, o `db/re/attr_fix.yml` dá
+`Holy → Holy` = **0%**, e `1 × 0% = 0`: Aspersio, Conversor Sagrado, flecha
+sagrada e arma de elemento sagrado tiravam literalmente nada. O veneno caía
+na mesma armadilha por truncamento — 75% de 1 é 0.
+
+**A correção é um override de três linhas** em
+`rathena/db/guerra/mob_db_guerra.yml` (Id 1288, `Element: Neutral` /
+`ElementLevel: 1`), pela lei da §2 — o arquivo do rAthena não se toca, e o
+`parseBodyNode` do `mob_db` só escreve os campos presentes no nó
+(`src/map/mob.cpp:5332` e `:5354`), então todo o resto do 1288 continua vindo
+do vendor. O **porquê** de cada escolha, inclusive por que o nível 1 é o
+melhor dos quatro (Neutral nível 1 resiste ao Ghost com 90%; os níveis 2, 3 e
+4 resistem com 70%, 50% e 25%), está no cabeçalho do próprio arquivo.
+
+**O que isso exige em jogo:** `@reloadmobdb` **não basta**. O Emperium já
+plantado copiou o status no momento do spawn — ele é um dos monstros que
+ganham `base_status` próprio (`src/map/status.cpp:2802`) — então o que estiver
+no mapa continua sagrado até nascer de novo, no `OnAgitStart` seguinte
+(`npc/guild/agit_main.txt:97`).
