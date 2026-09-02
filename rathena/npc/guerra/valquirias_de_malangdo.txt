@@ -97,11 +97,12 @@
 //=      antes do `delequip`. Se algo zerar as variaveis, a
 //=      NPC devolve o que cobrou em vez de comer a peca.
 //===== O que NAO entrou =====================================
-//= O GERENTE, o terceiro NPC do bRO (malangdo 206,145). Ele
-//= vendia "armas por 150 Frutas dos Gatos" e NENHUMA fonte
-//= diz QUAIS armas - nem o wiki, nem as tres noticias. Sem a
-//= lista nao ha o que escrever, e inventar uma vitrine e a
-//= regra 3 ao contrario. Esta em PENDENCIAS.md.
+//= O GERENTE, o terceiro NPC do bRO (malangdo 206,145), e ele
+//= NAO VAI EXISTIR - decisao do dono em 2026-09-02, e nao
+//= pendencia. Ele vendia "armas por 150 Frutas dos Gatos" e
+//= nenhuma fonte diz QUAIS armas: nem o wiki, nem as tres
+//= noticias arquivadas. Sem a lista nao ha o que escrever, e
+//= inventar uma vitrine e a regra 3 ao contrario.
 //=
 //= O ELMO DE FAFNIR NAO ENCANTA. Ele e a decima
 //= transformacao e a Mega o entrega normalmente, mas as

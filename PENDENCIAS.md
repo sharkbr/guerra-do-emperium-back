@@ -3902,7 +3902,7 @@ Do **3º andar** veio um terceiro print, e ele traz menos de propósito: a chega
 desenho só traz o caminho que resolve. No 2º andar são nove arcos de ruído, e
 esses continuam sorteados com semente fixa.
 
-### A economia: as duas Valquírias estão escritas, o Gerente não
+### A economia: as duas Valquírias
 
 **Valquíria Mega** (`malangdo 204,147`) e **Valquíria Cena** (`207,147`) foram
 escritas em 2026-09-01, em `npc/guerra/valquirias_de_malangdo.txt`, e os quatro
@@ -3929,18 +3929,6 @@ O que precisa de teste, e é o tipo de coisa que só a tela mostra:
   cair numa das três `F_IsEquip*Hack` sem cobrar nada.
 - **Os quatro itens novos.** `@item 810012`, `510065`, `550074`, `590042` e
   ler a descrição — vão aparecer **sem nome** até o patch de cliente.
-
-### O Gerente, que não foi escrito
-
-O terceiro NPC do bRO (`malangdo 206,145`) vendia *"armas por 150 Frutas dos
-Gatos"* e **nenhuma fonte diz quais armas** — nem a wiki, nem as três notícias
-arquivadas. Sem a lista não há o que escrever, e inventar uma vitrine é a
-regra 3 ao contrário.
-
-Se a ideia for abrir mesmo assim, a leitura que faz sentido é ele vender os
-**quatro originais** que a Mega transforma e que hoje só existem em vitrine de
-Prontera — Velho Rifle, Ninjaken, Vara Morta e Mangual Ogro. Mas isso é
-desenho nosso, não do bRO, e é decisão do dono.
 
 ### Uma correção barata que ficou de fora
 

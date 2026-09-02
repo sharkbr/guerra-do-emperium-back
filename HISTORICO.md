@@ -15885,7 +15885,8 @@ e linha. A cura foi tirar a contrabarra do comentário.
 ### O que não foi escrito
 
 O **Gerente**, o terceiro NPC. Vendia "armas por 150 Frutas dos Gatos" e
-nenhuma fonte diz quais. Em `PENDENCIAS.md`.
+nenhuma fonte diz quais. Em 2026-09-02 o dono encerrou o assunto: ele
+**não vai existir** aqui.
 
 ## O primeiro teste em jogo do Labirinto, e as quatro coisas que ele derrubou (2026-09-01)
 
