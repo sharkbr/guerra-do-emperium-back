@@ -279,7 +279,7 @@ else
     # desses dois caracteres, e falhar alto aqui e' melhor que gravar um
     # hash de uma senha diferente da que o openkore vai mandar.
     case "$SENHA" in
-        *\'*|*\*) erro "a senha em $ARQUIVO_SEGREDO tem aspa simples ou barra invertida.
+        *\'*|*\\*) erro "a senha em $ARQUIVO_SEGREDO tem aspa simples ou barra invertida.
        Troque por uma sem esses dois caracteres - eles quebrariam o SQL." ;;
     esac
     case "$PIN" in
