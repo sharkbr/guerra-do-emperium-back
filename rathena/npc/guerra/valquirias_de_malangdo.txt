@@ -1,0 +1,837 @@
+//===== Guerra do Emperium ===================================
+//= As Valquirias de Malangdo
+//===== Onde =================================================
+//= Valquiria Mega  malangdo 204,147  4_F_VALKYRIE   (sudeste)
+//= Valquiria Cena  malangdo 207,147  4_F_VALKYRIE2
+//=
+//= As duas ficam ao lado do Portal do Labirinto das
+//= Valquirias (malangdo 211,155). As tres celulas foram
+//= conferidas no map_cache: andaveis, com as nove vizinhas
+//= livres. Os dois sprites existem neste cliente -
+//= 4_F_VALKYRIE e 811 e 4_F_VALKYRIE2 e 403 no
+//= npcidentity.lub, os dois abaixo do teto de 10508 deste
+//= exe, e os .spr/.act estao em data\sprite\npc\ do nosso GRF.
+//===== Descricao ============================================
+//= O que se faz com a Mente Maligna. A Mega transforma dez
+//= equipamentos +12 na versao [MEGA]; a Cena encanta essas
+//= versoes. As duas cobram zeny e Mente, as duas podem
+//= falhar, e nas duas a falha cobra igual.
+//=
+//= A Mente sai do Labirinto (npc/guerra/labirinto_das_
+//= valquirias.txt), e so do terceiro andar dele.
+//===== De onde veio =========================================
+//= Do evento do bRO, morto desde 2026-07-29. Ao contrario do
+//= calabouco - cujo mapa e cuja fiacao de portais tiveram de
+//= ser descobertos -, ESTA METADE O bRO PUBLICOU INTEIRA: as
+//= dez transformacoes com preco e chance, as tabelas de
+//= encanto com o id de cada pedra, e as coordenadas dos NPCs.
+//= Esta tudo em arquivo.browiki.org/wiki/Labirinto_das_
+//= Valquirias e nas tres noticias oficiais, do Wayback.
+//=
+//= DOIS NUMEROS FORAM ESCOLHIDOS POR NOS, e estao ditos onde
+//= aparecem: qual coluna de preco usar (o bRO tinha dois
+//= servidores com precos diferentes) e a chance de sucesso do
+//= encanto, que o bRO nunca publicou.
+//===== A COLUNA DE PRECO: Valhalla, e nao Thor ==============
+//= O bRO tinha dois servidores e cobrava diferente em cada.
+//= Aqui usamos os numeros do VALHALLA, de cinco a nove vezes
+//= menores em zeny:
+//=
+//=                       Thor          Valhalla
+//=   Botas Espaciais     30.000.000z    5.000.000z
+//=   Patas de Raposas    80.000.000z    9.000.000z
+//=   Elmo de Fafnir      40.000.000z   12.000.000z
+//=
+//= A razao e a nossa economia: as lojas de Prontera vendem E
+//= RECOMPRAM a 1 zeny justamente para nao fabricar dinheiro
+//= (CLAUDE.md 4.16). Uma escala de 80 milhoes foi desenhada
+//= para um servidor que imprime zeny; o nosso nao imprime.
+//=
+//= A QUANTIDADE DE MENTE segue a NOTICIA de 2024, e nao a
+//= tabela do wiki. Sao fontes que discordam, e a noticia e
+//= mais nova: ela da 200 para tudo (300 nas Patas de
+//= Raposas) nos DOIS servidores, enquanto a coluna Valhalla
+//= do wiki ficou com os 20/30 da edicao de 2023 nos seis
+//= primeiros itens e 200 nos quatro que entraram depois - ou
+//= seja, o wiki nao atualizou metade da coluna. Segui-lo daria
+//= Botas Espaciais por 20 Mentes e Mega Vara por 200, dez
+//= vezes mais, por dois itens do mesmo porte.
+//===== O item tem de estar VESTIDO ==========================
+//= As duas NPCs trabalham na peca EQUIPADA, nao na mochila.
+//= Nao e escolha de gosto: refino e covas so se leem por
+//= `getequip*`, que pede um slot de equipamento; e vinculo,
+//= prazo, grau de encanto e bonus aleatorio nao tem `getequip*`
+//= NENHUM - so saem do `getinventorylist`, cruzado pelo bit de
+//= equipamento. Trabalhar sobre item solto na mochila
+//= significaria devolver a peca sem refino e sem carta.
+//=
+//= E o mesmo desenho do Lider da Ordem (npc/guerra/
+//= encantamento_da_ordem.txt), inclusive na consequencia: A
+//= PECA VOLTA DESVESTIDA para a mochila, porque o caminho e
+//= `delequip` mais `getitem4`.
+//===== A REMONTAGEM, e o anel que ja foi comido =============
+//= Toda a leitura acontece ANTES de qualquer cobranca, e o
+//= `delequip` roda INLINE, nunca dentro de `callsub`.
+//=
+//= O motivo esta por extenso no cabecalho do Lider da Ordem e
+//= custou um anel: `callsub` ABRE ESCOPO `.@` NOVO E VAZIO
+//= (script.cpp:5508), entao `.@part` valia 0 la dentro - que
+//= e EQI_ACC_L, o acessorio esquerdo - e o `delequip 0`
+//= apagou a peca errada. E por isso que o unico `callsub`
+//= deste arquivo (S_Bolsa) so recebe numero por argumento e
+//= so devolve numero.
+//=
+//= AS QUATRO GUARDAS, na ordem em que rodam depois do ultimo
+//= menu e antes da primeira cobranca:
+//=
+//=   1. as tres `F_IsEquip*Hack` do rAthena, comparando o que
+//=      esta vestido AGORA com o retrato tirado antes do
+//=      primeiro `next`. Nao se rele a peca para compara-la
+//=      consigo mesma - isso passaria sempre;
+//=   2. peca FORJADA ou ASSINADA (cova 0 em 254/255/256) e
+//=      recusada: nela as covas guardam o id do dono, nao
+//=      carta;
+//=   3. peca ALUGADA (prazo != 0) e recusada: o `getitem4`
+//=      devolveria sem prazo, o que seria um presente;
+//=   4. a trava de remontagem, redundante de proposito, logo
+//=      antes do `delequip`. Se algo zerar as variaveis, a
+//=      NPC devolve o que cobrou em vez de comer a peca.
+//===== O que NAO entrou =====================================
+//= O GERENTE, o terceiro NPC do bRO (malangdo 206,145). Ele
+//= vendia "armas por 150 Frutas dos Gatos" e NENHUMA fonte
+//= diz QUAIS armas - nem o wiki, nem as tres noticias. Sem a
+//= lista nao ha o que escrever, e inventar uma vitrine e a
+//= regra 3 ao contrario. Esta em PENDENCIAS.md.
+//=
+//= O ELMO DE FAFNIR NAO ENCANTA. Ele e a decima
+//= transformacao e a Mega o entrega normalmente, mas as
+//= tabelas de encanto do bRO cobrem "Armaduras" e "Calcados"
+//= e mais nada - equipamento de cabeca nao aparece em coluna
+//= nenhuma. A Cena o recusa por omissao, em vez de inventar
+//= uma tabela.
+//=
+//= ARMA NAO ENCANTA, e essa e regra do proprio bRO, dita com
+//= todas as letras: "Armas nao podem ser encantadas".
+//===== Onde o encanto MORA na peca ==========================
+//= Nas covas de tras para a frente, e nunca em cima de cova
+//= de carta de verdade. A conta e a mesma do Lider da Ordem:
+//=
+//=   piso = max(4 - 3, covas_reais_do_item)
+//=
+//= Os itens [MEGA] tem UMA cova, entao piso = 1 e teto = 3 -
+//= as covas 1, 2 e 3 sao dos encantos e a cova 0 fica para a
+//= carta. Bate com as TRES colunas das tabelas do bRO.
+//=
+//= "OS ENCANTAMENTOS NAO SAO EXCLUSIVOS DE CADA SLOT",
+//= palavras do wiki: a coluna 2 repete varias pedras da
+//= coluna 1. O que a coluna seguinte faz e DESBLOQUEAR pedras
+//= novas, nao trocar de lista. E por isso que as bolsas
+//= abaixo se sobrepoem, e nao e engano.
+//===== A chance de encanto e NOSSA ==========================
+//= O bRO dizia so "existem chances de falha no encantamento".
+//= Numero, nenhum. O `.chance_enc` do OnInit e nosso: 70%.
+//=
+//= A da Mega, ao contrario, e do bRO: 15%, igual nas dez
+//= transformacoes e nos dois servidores.
+//===== O reset cobra mesmo com a peca limpa =================
+//= Regra do bRO, e o proprio wiki a avisa como armadilha: "A
+//= NPC reseta o equipamento mesmo se ele nao possuir
+//= encantamentos, entao fique de olho no seu item equipado
+//= para nao perder a Mente e os zenys".
+//=
+//= FOI MANTIDA, mas a Cena passou a DIZER quantos encantos a
+//= peca tem antes de cobrar. A regra continua a mesma; o que
+//= mudou e o jogador saber no que esta clicando.
+//============================================================
+
+malangdo,204,147,5	script	Valquíria Mega	4_F_VALKYRIE,{
+	mes "[Valquíria Mega]";
+	mes "Eu pego o que você já levou ao limite e empurro além dele. Não é refino, não é carta: é outra peça, com o nome que ela merecia ter desde o começo.";
+	next;
+	mes "[Valquíria Mega]";
+	mes "As regras são curtas. A peça tem de estar ^0000FFvestida^000000 e no ^0000FF+" + .refino_min + "^000000 ou mais. Eu cobro zeny e Mente Maligna, e a chance de dar certo é de ^0000FF" + .chance + "%^000000.";
+	next;
+	mes "[Valquíria Mega]";
+	mes "Se der errado, o zeny e as Mentes ficam comigo e a peça continua sua, do jeito que estava. Se der certo, o refino e a carta atravessam junto.";
+	next;
+
+	// O menu sai da MESMA tabela dos destinos, montado em laco - escrever
+	// a lista a mao seria uma segunda fonte para divergir (CLAUDE.md 4.11).
+	.@n = getarraysize(.orig) - 1;
+	.@menu$ = "";
+	for (.@i = 1; .@i <= .@n; .@i++)
+		.@menu$ = .@menu$ + getitemname(.orig[.@i]) + " -> " +
+		          getitemname(.mega[.@i]) + ":";
+	.@menu$ = .@menu$ + "Deixa para depois";
+	.@e = select(.@menu$);
+	if (.@e > .@n) {
+		mes "[Valquíria Mega]";
+		mes "Eu não vou a lugar nenhum.";
+		close;
+	}
+
+	.@part = .parte[.@e];
+	.@bit = .bit[.@e];
+	.@de = .orig[.@e];
+	.@para = .mega[.@e];
+	.@custo_zeny = .zeny[.@e];
+	.@custo_mente = .mente[.@e];
+
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Valquíria Mega]";
+		mes "Você não está com nada vestido nesse lugar. Vista a peça primeiro — eu preciso dela no corpo, não na mochila.";
+		close;
+	}
+	if (getequipid(.@part) != .@de) {
+		mes "[Valquíria Mega]";
+		mes "O que você está vestindo aí é ^0000FF" + getequipname(.@part) + "^000000, e não é o que eu pedi.";
+		close;
+	}
+
+	// O RETRATO DA PECA, tirado antes de qualquer `next`. E contra ele
+	// que as tres F_IsEquip*Hack vao comparar la embaixo.
+	.@equip_id = getequipid(.@part);
+	.@refino = getequiprefinerycnt(.@part);
+	setarray .@cova[0],
+		getequipcardid(.@part,0), getequipcardid(.@part,1),
+		getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	if (.@refino < .refino_min) {
+		mes "[Valquíria Mega]";
+		mes "Está no ^0000FF+" + .@refino + "^000000. Eu não toco em nada abaixo do ^0000FF+" + .refino_min + "^000000 — o metal ainda não aguenta o que eu faço com ele.";
+		close;
+	}
+
+	mes "[Valquíria Mega]";
+	mes "^0000FF" + getitemname(.@de) + "^000000 vira ^0000FF" + getitemname(.@para) + "^000000, e leva o ^0000FF+" + .@refino + "^000000 junto.";
+	mes "Custa " + callfunc("F_InsertComma", .@custo_zeny) + " zeny e " + .@custo_mente + " " + getitemname(.mente_id) + ".";
+	next;
+	mes "[Valquíria Mega]";
+	mes "Última chance de desistir. " + .chance + " em cada 100 dão certo, e eu cobro nos 100.";
+	next;
+	if (select("Pode ir:Pensando bem, não") == 2) {
+		mes "[Valquíria Mega]";
+		mes "Volte quando tiver estômago.";
+		close;
+	}
+
+	// ===== daqui para baixo nao ha mais menu ===========================
+	// A peca NAO e relida: as tres funcoes comparam o que esta vestido
+	// agora com o retrato de cima. Reler e comparar com o valor recem-lido
+	// faria as tres passarem sempre.
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Valquíria Mega]";
+		mes "Você tirou a peça. Vista de novo e me chame.";
+		close;
+	}
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id)) {
+		mes "[Valquíria Mega]";
+		mes "Essa não é mais a peça que você me mostrou. Nada foi cobrado.";
+		close;
+	}
+	if (callfunc("F_IsEquipRefineHack", .@part, .@refino)) {
+		mes "[Valquíria Mega]";
+		mes "O refino mudou enquanto conversávamos. Me mostre de novo — nada foi cobrado.";
+		close;
+	}
+	if (callfunc("F_IsEquipCardHack", .@part, .@cova[0], .@cova[1],
+	             .@cova[2], .@cova[3])) {
+		mes "[Valquíria Mega]";
+		mes "As covas dessa peça mudaram enquanto conversávamos. Me mostre de novo — nada foi cobrado.";
+		close;
+	}
+
+	// Peca forjada ou assinada usa as covas para outra coisa: a cova 0 e
+	// um marcador e as covas 2 e 3 guardam o id do dono partido em dois.
+	// 254 = CARD0_CREATE, 255 = CARD0_FORGE, 256 = CARD0_PET.
+	if (.@cova[0] == 254 || .@cova[0] == 255 || .@cova[0] == 256) {
+		mes "[Valquíria Mega]";
+		mes "Essa peça tem assinatura de quem a fez. Não mexo nesse tipo de trabalho.";
+		close;
+	}
+
+	// O vinculo, o prazo, o grau de encanto e os bonus aleatorios so
+	// existem aqui - nao ha `getequip*` para nenhum deles. Os tres arrays
+	// nascem EXISTINDO porque o `getitem4` os exige como array de verdade
+	// (`script_array_src`, script.cpp:7055) e recusa a chamada inteira se
+	// um deles nunca tiver sido declarado.
+	.@achou = 0;
+	.@vinculo = 0;
+	.@prazo = 0;
+	.@grau = 0;
+	setarray .@op_id[0],  0, 0, 0, 0, 0;
+	setarray .@op_val[0], 0, 0, 0, 0, 0;
+	setarray .@op_par[0], 0, 0, 0, 0, 0;
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_equip[.@i] & .@bit) {
+			if (@inventorylist_id[.@i] == .@equip_id) {
+				.@vinculo = @inventorylist_bound[.@i];
+				.@prazo   = @inventorylist_expire[.@i];
+				.@grau    = @inventorylist_enchantgrade[.@i];
+				setarray .@op_id[0],
+					@inventorylist_option_id1[.@i],
+					@inventorylist_option_id2[.@i],
+					@inventorylist_option_id3[.@i],
+					@inventorylist_option_id4[.@i],
+					@inventorylist_option_id5[.@i];
+				setarray .@op_val[0],
+					@inventorylist_option_value1[.@i],
+					@inventorylist_option_value2[.@i],
+					@inventorylist_option_value3[.@i],
+					@inventorylist_option_value4[.@i],
+					@inventorylist_option_value5[.@i];
+				setarray .@op_par[0],
+					@inventorylist_option_parameter1[.@i],
+					@inventorylist_option_parameter2[.@i],
+					@inventorylist_option_parameter3[.@i],
+					@inventorylist_option_parameter4[.@i],
+					@inventorylist_option_parameter5[.@i];
+				.@achou = 1;
+				break;
+			}
+		}
+	}
+	if (.@achou == 0) {
+		debugmes "Valquiria Mega: peca vestida nao achada no " +
+		         "getinventorylist (id " + .@equip_id + ").";
+		mes "[Valquíria Mega]";
+		mes "Não consegui pegar essa peça direito. Vista de novo e me chame.";
+		close;
+	}
+	if (.@prazo != 0) {
+		mes "[Valquíria Mega]";
+		mes "Essa peça é ^FF0000alugada^000000. Se eu a desmontar, ela volta sem prazo — e isso eu não faço.";
+		close;
+	}
+
+	if (Zeny < .@custo_zeny) {
+		mes "[Valquíria Mega]";
+		mes "Faltam zeny.";
+		close;
+	}
+	if (countitem(.mente_id) < .@custo_mente) {
+		mes "[Valquíria Mega]";
+		mes "Faltam Mentes. Você tem " + countitem(.mente_id) + " das " + .@custo_mente + " que eu preciso.";
+		close;
+	}
+
+	delitem .mente_id, .@custo_mente;
+	Zeny -= .@custo_zeny;
+
+	if (rand(100) >= .chance) {
+		specialeffect2 EF_SUFFRAGIUM;
+		mes "[Valquíria Mega]";
+		mes "Não pegou. A peça continua inteira e continua sua — o que eu cobrei, não volta.";
+		close;
+	}
+
+	// ===== A REMONTAGEM ================================================
+	// INLINE, e nao em `callsub`. A trava e redundante de proposito:
+	// nenhum comando que apague coisa do jogador roda sobre valor que nao
+	// foi conferido na linha de cima.
+	.@ok = 1;
+	if (.@equip_id <= 0) .@ok = 0;
+	if (.@equip_id != .@de) .@ok = 0;
+	if (.@para <= 0) .@ok = 0;
+	if (.@part < 1) .@ok = 0;
+	if (.@part > 10) .@ok = 0;
+	if (.@part != .parte[.@e]) .@ok = 0;
+	if (.@ok == 1) {
+		if (getequipisequiped(.@part) == 0) .@ok = 0;
+	}
+	if (.@ok == 1) {
+		if (getequipid(.@part) != .@equip_id) .@ok = 0;
+	}
+	if (.@ok == 0) {
+		debugmes "Valquiria Mega: a trava de remontagem recusou (part " +
+		         .@part + ", escolha " + .@e + ", id " + .@equip_id + ").";
+		getitem .mente_id, .@custo_mente;
+		Zeny += .@custo_zeny;
+		mes "[Valquíria Mega]";
+		mes "Alguma coisa saiu do lugar na minha bancada e eu não vou arriscar sua peça. Tome o seu de volta e me chame de novo.";
+		close;
+	}
+
+	delequip .@part;
+	if (.@vinculo > 0)
+		getitembound4 .@para, 1, 1, .@refino, 0, .@cova[0], .@cova[1], .@cova[2], .@cova[3], .@vinculo, .@grau, .@op_id, .@op_val, .@op_par;
+	else
+		getitem4 .@para, 1, 1, .@refino, 0, .@cova[0], .@cova[1], .@cova[2], .@cova[3], .@grau, .@op_id, .@op_val, .@op_par;
+
+	specialeffect2 EF_FORESTLIGHT4;
+	mes "-- Resultado --";
+	mes "^0000FF" + getitemname(.@para) + "^000000, no ^0000FF+" + .@refino + "^000000.";
+	next;
+	mes "[Valquíria Mega]";
+	mes "Pronto. Ela voltou ^FF0000desvestida^000000 para a mochila — vista de novo e leia a descrição, porque quase nada nela é o que era.";
+	close;
+
+OnInit:
+	// ----- os dois numeros do bRO --------------------------------------
+	.refino_min = 12;
+	.chance = 15;
+	.mente_id = 7583;
+
+	// ----- as dez transformacoes ---------------------------------------
+	// 1-based, sempre: zero em variavel de `.` APAGA a entrada, e o menu
+	// mede `getarraysize` (CLAUDE.md 5).
+	//
+	// AS SEIS COLUNAS ANDAM JUNTAS e sao lidas pelo MESMO indice. O menu
+	// e montado em laco a partir delas justamente para nao existir uma
+	// segunda ordem escrita a mao - foi assim que o Teletransportador da
+	// Ordem levou aos catorze lugares errados (CLAUDE.md 4.11).
+	//
+	// `.parte` e `.bit` sairam do `Locations:` de cada original,
+	// conferido um a um no item_db - nao do nome. Os quatro `EQI_HAND_R`
+	// incluem o Velho Rifle, que e `Both_Hand`: arma de duas maos ocupa a
+	// mao direita. Os dois arrays dizem a MESMA coisa em dois formatos
+	// porque o rAthena pede os dois: `EQI_*` no `getequip*` e `EQP_*` no
+	// bit do `@inventorylist_equip`.
+	setarray .orig[1],
+		22203,   22191,   450163,  15421,   810011,
+		510064,  550073,  450287,  590041,  19317;
+	setarray .mega[1],
+		22245,   470047,  450181,  450158,  810012,
+		510065,  550074,  450286,  590042,  400177;
+	setarray .parte[1],
+		EQI_SHOES,   EQI_SHOES,   EQI_ARMOR,   EQI_ARMOR,   EQI_HAND_R,
+		EQI_HAND_R,  EQI_HAND_R,  EQI_ARMOR,   EQI_HAND_R,  EQI_HEAD_TOP;
+	setarray .bit[1],
+		EQP_SHOES,   EQP_SHOES,   EQP_ARMOR,   EQP_ARMOR,   EQP_HAND_R,
+		EQP_HAND_R,  EQP_HAND_R,  EQP_ARMOR,   EQP_HAND_R,  EQP_HEAD_TOP;
+	setarray .zeny[1],
+		5000000,  9000000,  7000000,  7000000,  5000000,
+		7000000,  7000000,  7000000,  7000000, 12000000;
+	setarray .mente[1],
+		200,      300,      200,      200,      200,
+		200,      200,      200,      200,      200;
+
+	// A trava que o Teletransportador nao tinha. Se alguem acrescentar uma
+	// transformacao e esquecer uma coluna, isto grita no console em vez de
+	// entregar a peca errada em silencio.
+	if (getarraysize(.orig) != getarraysize(.mega) ||
+	    getarraysize(.orig) != getarraysize(.parte) ||
+	    getarraysize(.orig) != getarraysize(.bit) ||
+	    getarraysize(.orig) != getarraysize(.zeny) ||
+	    getarraysize(.orig) != getarraysize(.mente))
+		debugmes "Valquiria Mega: as seis colunas da tabela nao tem o mesmo tamanho.";
+	end;
+}
+
+malangdo,207,147,4	script	Valquíria Cena	4_F_VALKYRIE2,{
+	mes "[Valquíria Cena]";
+	mes "Minha irmã faz a peça. Eu faço o que mora dentro dela.";
+	next;
+	mes "[Valquíria Cena]";
+	mes "Só toco em peça ^0000FF[MEGA]^000000, e só em armadura e calçado. Arma não encanta — não é regra minha, é como a coisa funciona.";
+	next;
+	mes "[Valquíria Cena]";
+	mes "Cada tentativa custa " + callfunc("F_InsertComma", .custo_zeny) + " zeny e " + .custo_mente + " " + getitemname(.mente_id) + ". Vale para encantar e vale para limpar.";
+	next;
+
+	.@escolha = select("Encantar:Limpar os encantos:Que peças você aceita:Sair");
+	if (.@escolha == 4) {
+		mes "[Valquíria Cena]";
+		mes "Até logo.";
+		close;
+	}
+	if (.@escolha == 3) {
+		mes "[Valquíria Cena]";
+		mes "As peças que eu encanto:";
+		for (.@i = 1; .@i <= getarraysize(.peca) - 1; .@i++)
+			mes "- " + getitemname(.peca[.@i]) +
+			    ((.familia[.@i] == 1) ? " ^777777(encantos físicos)^000000" :
+			    ((.familia[.@i] == 2) ? " ^777777(encantos mágicos)^000000" : ""));
+		next;
+		mes "[Valquíria Cena]";
+		mes "Até o ^0000FF+12^000000 saem só atributos. Do ^0000FF+13^000000 em diante abre o resto — e aí importa se a peça é Robe ou Vestimenta, porque as duas listas não se misturam.";
+		next;
+		mes "[Valquíria Cena]";
+		mes "Cada encanto novo não troca a lista: ele ^0000FFacrescenta^000000 pedra que antes não podia sair. Cabem três.";
+		close;
+	}
+	.@acao = .@escolha;
+
+	// ----- que peca -----------------------------------------------------
+	.@n = getarraysize(.peca) - 1;
+	.@menu$ = "";
+	for (.@i = 1; .@i <= .@n; .@i++) {
+		if (getequipisequiped(.parte[.@i]) && getequipid(.parte[.@i]) == .peca[.@i])
+			.@menu$ = .@menu$ + getitemname(.peca[.@i]) + ":";
+		else
+			.@menu$ = .@menu$ + "^999999" + getitemname(.peca[.@i]) + " (não vestida)^000000:";
+	}
+	.@menu$ = .@menu$ + "Voltar";
+	.@e = select(.@menu$);
+	if (.@e > .@n) {
+		mes "[Valquíria Cena]";
+		mes "Como quiser.";
+		close;
+	}
+
+	.@peca_id = .peca[.@e];
+	.@part = .parte[.@e];
+	.@bit = .bit[.@e];
+	.@grupo = .grupo[.@e];
+	.@familia = .familia[.@e];
+
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Valquíria Cena]";
+		mes "Vista a peça primeiro. Eu preciso dela no corpo.";
+		close;
+	}
+	if (getequipid(.@part) != .@peca_id) {
+		mes "[Valquíria Cena]";
+		mes "Isso aí é ^0000FF" + getequipname(.@part) + "^000000, não é o que você escolheu.";
+		close;
+	}
+
+	// O retrato da peca - ver o cabecalho.
+	.@equip_id = getequipid(.@part);
+	.@refino = getequiprefinerycnt(.@part);
+	setarray .@cova[0],
+		getequipcardid(.@part,0), getequipcardid(.@part,1),
+		getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	// Onde o encanto mora: ver "Onde o encanto MORA na peca".
+	.@piso = 4 - 3;
+	.@covas_reais = getitemslots(.@equip_id);
+	if (.@piso < .@covas_reais)
+		.@piso = .@covas_reais;
+	.@teto = 4 - .@piso;
+	.@usados = 0;
+	for (.@i = .@piso; .@i <= 3; .@i++) {
+		if (.@cova[.@i] > 0)
+			.@usados++;
+	}
+
+	mes "[Valquíria Cena]";
+	mes "^0000FF" + getequipname(.@part) + "^000000, refino ^0000FF+" + .@refino + "^000000, com ^0000FF" + .@usados + "^000000 de " + .@teto + " encantos.";
+	if (.@usados > 0) {
+		for (.@i = 3; .@i >= .@piso; .@i--) {
+			if (.@cova[.@i] > 0)
+				mes "- " + getitemname(.@cova[.@i]);
+		}
+	}
+	next;
+
+	if (.@acao == 2) {
+		mes "[Valquíria Cena]";
+		if (.@usados == 0)
+			mes "Ela já está limpa. ^FF0000Eu cobro assim mesmo^000000 — é como eu trabalho, e é por isso que eu te contei quantos encantos ela tem antes de perguntar.";
+		else
+			mes "Vou tirar os " + .@usados + " de uma vez. O refino, a carta e os bônus aleatórios ficam.";
+		next;
+		if (select("Pode limpar:Deixa quieto") == 2) {
+			mes "[Valquíria Cena]";
+			mes "Melhor assim.";
+			close;
+		}
+	} else {
+		if (.@usados >= .@teto) {
+			mes "[Valquíria Cena]";
+			mes "Não cabe mais nada. Se quiser trocar, tem de limpar antes.";
+			close;
+		}
+		.@coluna = .@usados + 1;
+		.@bolsa = callsub(S_Bolsa, .@grupo, .@familia, .@refino, .@coluna);
+		.@ini = .ini[.@bolsa];
+		.@fim = .fim[.@bolsa];
+		mes "[Valquíria Cena]";
+		mes "Seria o ^0000FF" + .@coluna + "º^000000 encanto. Para essa peça nesse refino eu tenho ^0000FF" + (.@fim - .@ini + 1) + "^000000 pedras, e todas com a mesma chance.";
+		next;
+		mes "[Valquíria Cena]";
+		mes "Assenta em ^0000FF" + .chance_enc + "^000000 de cada 100. Quando não assenta, você perde o que pagou e a peça não muda.";
+		next;
+		if (select("Pode encantar:Agora não") == 2) {
+			mes "[Valquíria Cena]";
+			mes "Estou aqui.";
+			close;
+		}
+	}
+
+	// ===== daqui para baixo nao ha mais menu ===========================
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Valquíria Cena]";
+		mes "Você tirou a peça. Vista de novo e me chame.";
+		close;
+	}
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id)) {
+		mes "[Valquíria Cena]";
+		mes "Essa não é mais a peça que você me mostrou. Nada foi cobrado.";
+		close;
+	}
+	if (callfunc("F_IsEquipRefineHack", .@part, .@refino)) {
+		mes "[Valquíria Cena]";
+		mes "O refino mudou enquanto conversávamos. Me mostre de novo — nada foi cobrado.";
+		close;
+	}
+	if (callfunc("F_IsEquipCardHack", .@part, .@cova[0], .@cova[1],
+	             .@cova[2], .@cova[3])) {
+		mes "[Valquíria Cena]";
+		mes "As covas dessa peça mudaram enquanto conversávamos. Me mostre de novo — nada foi cobrado.";
+		close;
+	}
+	if (.@cova[0] == 254 || .@cova[0] == 255 || .@cova[0] == 256) {
+		mes "[Valquíria Cena]";
+		mes "Essa peça tem assinatura de quem a fez. Não mexo nesse tipo de trabalho.";
+		close;
+	}
+
+	.@achou = 0;
+	.@vinculo = 0;
+	.@prazo = 0;
+	.@grau = 0;
+	setarray .@op_id[0],  0, 0, 0, 0, 0;
+	setarray .@op_val[0], 0, 0, 0, 0, 0;
+	setarray .@op_par[0], 0, 0, 0, 0, 0;
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_equip[.@i] & .@bit) {
+			if (@inventorylist_id[.@i] == .@equip_id) {
+				.@vinculo = @inventorylist_bound[.@i];
+				.@prazo   = @inventorylist_expire[.@i];
+				.@grau    = @inventorylist_enchantgrade[.@i];
+				setarray .@op_id[0],
+					@inventorylist_option_id1[.@i],
+					@inventorylist_option_id2[.@i],
+					@inventorylist_option_id3[.@i],
+					@inventorylist_option_id4[.@i],
+					@inventorylist_option_id5[.@i];
+				setarray .@op_val[0],
+					@inventorylist_option_value1[.@i],
+					@inventorylist_option_value2[.@i],
+					@inventorylist_option_value3[.@i],
+					@inventorylist_option_value4[.@i],
+					@inventorylist_option_value5[.@i];
+				setarray .@op_par[0],
+					@inventorylist_option_parameter1[.@i],
+					@inventorylist_option_parameter2[.@i],
+					@inventorylist_option_parameter3[.@i],
+					@inventorylist_option_parameter4[.@i],
+					@inventorylist_option_parameter5[.@i];
+				.@achou = 1;
+				break;
+			}
+		}
+	}
+	if (.@achou == 0) {
+		debugmes "Valquiria Cena: peca vestida nao achada no " +
+		         "getinventorylist (id " + .@equip_id + ").";
+		mes "[Valquíria Cena]";
+		mes "Não consegui pegar essa peça direito. Vista de novo e me chame.";
+		close;
+	}
+	if (.@prazo != 0) {
+		mes "[Valquíria Cena]";
+		mes "Essa peça é ^FF0000alugada^000000. Se eu a desmontar, ela volta sem prazo — e isso eu não faço.";
+		close;
+	}
+
+	if (Zeny < .custo_zeny) {
+		mes "[Valquíria Cena]";
+		mes "Faltam zeny.";
+		close;
+	}
+	if (countitem(.mente_id) < .custo_mente) {
+		mes "[Valquíria Cena]";
+		mes "Faltam Mentes. Você tem " + countitem(.mente_id) + " das " + .custo_mente + ".";
+		close;
+	}
+
+	delitem .mente_id, .custo_mente;
+	Zeny -= .custo_zeny;
+
+	if (.@acao == 2) {
+		.@tirados = 0;
+		for (.@i = .@piso; .@i <= 3; .@i++) {
+			if (.@cova[.@i] > 0) {
+				.@cova[.@i] = 0;
+				.@tirados++;
+			}
+		}
+	} else {
+		if (rand(100) >= .chance_enc) {
+			specialeffect2 EF_SUFFRAGIUM;
+			mes "[Valquíria Cena]";
+			mes "A pedra não assentou. Some na mão, como areia.";
+			close;
+		}
+		// A cova livre mais baixa acima do piso: o encanto empilha de
+		// baixo para cima, e e por isso que `.@usados` da a coluna.
+		.@onde = -1;
+		for (.@i = .@piso; .@i <= 3; .@i++) {
+			if (.@cova[.@i] == 0) {
+				.@onde = .@i;
+				break;
+			}
+		}
+		.@novo = 0;
+		if (.@onde >= 0)
+			.@novo = .enc[.@ini + rand(.@fim - .@ini + 1)];
+		if (.@onde < 0 || .@novo <= 0) {
+			debugmes "Valquiria Cena: nao consegui montar o encanto (onde " +
+			         .@onde + ", bolsa " + .@bolsa + ", faixa " + .@ini +
+			         ".." + .@fim + ", pedra " + .@novo + ").";
+			getitem .mente_id, .custo_mente;
+			Zeny += .custo_zeny;
+			mes "[Valquíria Cena]";
+			mes "Minha bancada está bagunçada hoje. Tome o seu de volta.";
+			close;
+		}
+		.@cova[.@onde] = .@novo;
+	}
+
+	// ===== A REMONTAGEM - inline, nunca em callsub =====================
+	.@ok = 1;
+	if (.@equip_id <= 0) .@ok = 0;
+	if (.@equip_id != .@peca_id) .@ok = 0;
+	if (.@part < 1) .@ok = 0;
+	if (.@part > 10) .@ok = 0;
+	if (.@part != .parte[.@e]) .@ok = 0;
+	if (.@ok == 1) {
+		if (getequipisequiped(.@part) == 0) .@ok = 0;
+	}
+	if (.@ok == 1) {
+		if (getequipid(.@part) != .@equip_id) .@ok = 0;
+	}
+	if (.@ok == 0) {
+		debugmes "Valquiria Cena: a trava de remontagem recusou (part " +
+		         .@part + ", id " + .@equip_id + ").";
+		getitem .mente_id, .custo_mente;
+		Zeny += .custo_zeny;
+		mes "[Valquíria Cena]";
+		mes "Alguma coisa saiu do lugar na minha bancada e eu não vou arriscar sua peça. Tome o seu de volta e me chame de novo.";
+		close;
+	}
+
+	delequip .@part;
+	if (.@vinculo > 0)
+		getitembound4 .@equip_id, 1, 1, .@refino, 0, .@cova[0], .@cova[1], .@cova[2], .@cova[3], .@vinculo, .@grau, .@op_id, .@op_val, .@op_par;
+	else
+		getitem4 .@equip_id, 1, 1, .@refino, 0, .@cova[0], .@cova[1], .@cova[2], .@cova[3], .@grau, .@op_id, .@op_val, .@op_par;
+
+	if (.@acao == 2) {
+		specialeffect2 EF_DETOXICATION;
+		mes "-- Resultado --";
+		mes "^0000FF" + .@tirados + "^000000 " + ((.@tirados == 1) ? "encanto saiu" : "encantos saíram") + " da peça.";
+		next;
+		mes "[Valquíria Cena]";
+		mes "Está limpa, e voltou ^FF0000desvestida^000000 para a mochila.";
+		close;
+	}
+
+	specialeffect2 EF_MAXPOWER;
+	mes "-- Resultado --";
+	mes "Assentou: ^0000FF" + getitemname(.@novo) + "^000000.";
+	mes "Encantos agora: ^0000FF" + (.@usados + 1) + "^000000 de " + .@teto + ".";
+	next;
+	mes "[Valquíria Cena]";
+	mes "A peça voltou ^FF0000desvestida^000000. Vista de novo e veja na descrição.";
+	close;
+
+// ---------------------------------------------------------------
+// S_Bolsa - qual bolsa de pedras vale para esta peca agora
+//
+// `callsub` ABRE ESCOPO `.@` NOVO (CLAUDE.md 5), entao tudo o que esta
+// funcao precisa chega por argumento e nada dela e lido de fora. Ela nao
+// apaga nem entrega nada: so devolve numero.
+//   getarg(0) grupo    1 calcado, 2 armadura
+//   getarg(1) familia  1 fisico (Robe), 2 magico (Vestimenta/Vestes)
+//   getarg(2) refino
+//   getarg(3) coluna   1..3
+// ---------------------------------------------------------------
+S_Bolsa:
+	if (getarg(0) == 1) {
+		if (getarg(2) <= 12)
+			return 10;
+		return 10 + getarg(3);
+	}
+	if (getarg(2) <= 12)
+		return getarg(3);
+	if (getarg(1) == 1)
+		return 3 + getarg(3);
+	return 6 + getarg(3);
+
+OnInit:
+	.custo_zeny = 800000;
+	.custo_mente = 10;
+	.mente_id = 7583;
+
+	// NOSSO numero, nao do bRO - ver "A chance de encanto e NOSSA".
+	.chance_enc = 70;
+
+	// ----- as cinco pecas que encantam ---------------------------------
+	// Das dez transformacoes da Mega sobram cinco: as quatro armas o bRO
+	// proibe, e o Elmo de Fafnir nao tem tabela publicada.
+	//
+	// `familia` e o que separa as duas listas do +13 em diante, e o bRO a
+	// escreve pelo NOME da peca: "Apenas Robe" contra "Apenas
+	// Vestimenta/Vestes". 1 = fisico, 2 = magico, 3 = calcado (que nao tem
+	// familia). Nao ha 0 aqui de proposito: zero em variavel de `.` APAGA
+	// a entrada (CLAUDE.md 5).
+	setarray .peca[1],    22245,     470047,    450158,    450181,    450286;
+	setarray .parte[1],   EQI_SHOES, EQI_SHOES, EQI_ARMOR, EQI_ARMOR, EQI_ARMOR;
+	setarray .bit[1],     EQP_SHOES, EQP_SHOES, EQP_ARMOR, EQP_ARMOR, EQP_ARMOR;
+	setarray .grupo[1],   1,         1,         2,         2,         2;
+	setarray .familia[1], 3,         3,         1,         2,         2;
+
+	// ----- as treze bolsas de pedra ------------------------------------
+	// Copiadas coluna por coluna das tabelas do browiki. As faixas
+	// `.ini`/`.fim` dizem onde cada bolsa comeca e acaba dentro do `.enc`,
+	// e a `S_Bolsa` acima e quem escolhe a bolsa.
+	//
+	//    1..3   armadura +0..+12, colunas 1, 2 e 3
+	//    4..6   armadura +13, FISICO (Robe), colunas 1, 2 e 3
+	//    7..9   armadura +13, MAGICO (Vestimenta/Vestes), colunas 1, 2, 3
+	//   10      calcado +0..+12, as tres colunas (sao iguais no bRO)
+	//   11..13  calcado +13, colunas 1, 2 e 3
+	//
+	// OS 68 IDS FORAM CONFERIDOS UM A UM no item_db antes de entrar aqui:
+	// os 68 existem no vendor, nenhum precisou ser criado.
+	setarray .enc[1],
+		// --- bolsa 1: armadura +0..+12, coluna 1 (1..6)
+		4700, 4730, 4740, 4710, 4720, 4750,
+		// --- bolsa 2: armadura +0..+12, coluna 2 (7..12)
+		4703, 4733, 4743, 4713, 4723, 4753,
+		// --- bolsa 3: armadura +0..+12, coluna 3 (13..18)
+		4704, 4734, 4744, 4714, 4724, 4754,
+		// --- bolsa 4: armadura +13 fisico, coluna 1 (19..26)
+		4706, 4736, 4726, 4756, 4948, 29135, 4832, 4811,
+		// --- bolsa 5: armadura +13 fisico, coluna 2 (27..38)
+		4746, 4819, 4766, 4767, 4863, 4864, 4818, 4817, 4949, 29136, 4833, 4810,
+		// --- bolsa 6: armadura +13 fisico, coluna 3 (39..50)
+		4853, 4854, 4855, 4856, 4857, 4858, 4865, 4950, 4869, 4872, 4834, 4809,
+		// --- bolsa 7: armadura +13 magico, coluna 1 (51..58)
+		4746, 4716, 4726, 4756, 4948, 4945, 4805, 4815,
+		// --- bolsa 8: armadura +13 magico, coluna 2 (59..68)
+		4736, 4883, 4896, 4897, 4885, 4886, 4949, 4946, 4850, 4814,
+		// --- bolsa 9: armadura +13 magico, coluna 3 (69..79)
+		4853, 4854, 4855, 4856, 4857, 4858, 4950, 4947, 4852, 4869, 4872,
+		// --- bolsa 10: calcado +0..+12, as tres colunas (80..89)
+		4700, 4701, 4730, 4731, 4740, 4741, 4720, 4721, 4750, 4751,
+		// --- bolsa 11: calcado +13, coluna 1 (90..101)
+		4703, 4704, 4733, 4734, 4743, 4744, 4723, 4724, 4753, 4754, 4805, 4850,
+		// --- bolsa 12: calcado +13, coluna 2 (102..113)
+		4703, 4704, 4733, 4734, 4743, 4744, 4723, 4724, 4753, 4754, 4949, 4950,
+		// --- bolsa 13: calcado +13, coluna 3 (114..126)
+		4704, 4734, 4744, 4724, 4754, 4853, 4854, 4855, 4856, 4857, 4858, 4852;
+
+	setarray .ini[1],   1,  7, 13, 19, 27, 39, 51, 59, 69, 80,  90, 102, 114;
+	setarray .fim[1],   6, 12, 18, 26, 38, 50, 58, 68, 79, 89, 101, 113, 126;
+
+	// As travas. Nenhuma deveria disparar; se disparar, o console diz
+	// qual, em vez de a NPC sortear uma pedra que nao existe.
+	if (getarraysize(.enc) - 1 != .fim[13])
+		debugmes "Valquiria Cena: o .enc tem " + (getarraysize(.enc)-1) +
+		         " pedras e a ultima faixa acaba em " + .fim[13] + ".";
+	if (getarraysize(.ini) != getarraysize(.fim))
+		debugmes "Valquiria Cena: .ini e .fim tem tamanhos diferentes.";
+	if (getarraysize(.peca) != getarraysize(.parte) ||
+	    getarraysize(.peca) != getarraysize(.bit) ||
+	    getarraysize(.peca) != getarraysize(.grupo) ||
+	    getarraysize(.peca) != getarraysize(.familia))
+		debugmes "Valquiria Cena: as cinco colunas de peca nao batem.";
+	end;
+}

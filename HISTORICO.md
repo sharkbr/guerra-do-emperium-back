@@ -15624,3 +15624,815 @@ Arena de Prontera."*
 Pega com **`@reloadscript`**. Nenhum valor de `db/` mudou, então não há
 recarregador de banco nem reinício a dar. O lado do cliente já está no ar
 (patch 0016); o do servidor espera o deploy.
+
+## O Labirinto das Valquírias, que estava inteiro no vendor e desligado (2026-09-01)
+
+Pedido em 2026-08-31: *"no bRO tinha um evento sazonal chamado Labirinto das
+Valquírias. Quero implementá-lo permanente aqui"*. Veio com quatro prints da
+bROWiki e um aviso — a descrição de lá está incompleta sobre mapa e monstros,
+*"o mapa na verdade são dois ou três andares, e cada andar possui portais
+'labirinto'"*.
+
+Estava certo nas duas coisas, e a segunda foi o trabalho todo.
+
+### O evento morreu, e a documentação morreu junto
+
+O bRO fechou em **2026-07-29**. A página da wiki existe, mas descreve só a
+economia: os dez pares de upgrade [MEGA], as tabelas de encanto, os preços e as
+coordenadas dos NPCs em Malangdo. Sobre o calabouço ela diz três frases —
+três andares, 1.000.000z por andar, e *"existem portais no calabouço que
+enviarão seu personagem para fora do mapa"*. Nome de mapa, nenhum. Nome de
+monstro, nenhum.
+
+As três notícias oficiais do evento (2023, duas de 2024) foram recuperadas do
+Wayback e repetem o mesmo, com uma frase a mais: *"uma sala exclusiva com
+monstros poderosos que dropam a Mente Maligna. Os monstros não dão EXP e nem
+dropam nenhum outro item"*.
+
+### O mapa saiu de um minimapa de screenshot
+
+A notícia de 2023 trazia duas imagens embutidas, e a segunda era uma
+**screenshot in-game** — um grupo parado numa sala de pedra escura, ao lado de
+uma estátua, com o **minimapa do cliente no canto da tela**.
+
+O minimapa foi recortado da imagem, reduzido a uma máscara binária e comparado
+contra **os 761 minimapas do `data.grf` do bRO**. Casou com `force_map1`. A
+conferência contra o `.gat` fechou desenho por desenho: quatro salas de canto,
+quatro corredores de borda, cruz central, e a cruz do sul com um bloco no meio
+— o bloco é o pedestal da estátua da screenshot.
+
+**`force_map1`, `force_map2` e `force_map3` são três arenas que a Gravity
+desenhou e nunca usou.** O rAthena as traz **comentadas** em
+`conf/maps_athena.conf` (linhas 19–21), sem um NPC, sem um warp e sem um spawn
+— mas com verbete no `db/map_index.txt`, células no `map_cache.dat` e
+`.gat`/`.gnd`/`.rsw`/minimapa no GRF do nosso cliente. Estavam prontas e
+apagadas.
+
+**Não é o Labirinto da Floresta (`prt_maze01..03`) nem o Ilusão do Labirinto
+(`prt_mz03_i`).** O dono levantou isso no meio da sessão — *"que eu me lembre
+existem cerca de 3 labirintos no jogo"* — e foi o que derrubou a primeira
+hipótese, que era o `prt_maze`. São três labirintos diferentes, e este é o
+terceiro.
+
+### As salas não se tocam, e isso não é desenho nosso
+
+Contadas pelo `map_cache` do próprio servidor (`confere_celula.py --salas`):
+**13 salas no 1º andar, 11 no 2º, 16 no 3º**. Nenhuma encosta em outra —
+nem uma célula de ligação. É assim que os mapas foram feitos.
+
+Foi isso que explicou a pergunta do pedido. O portal da direita não leva ao
+pedaço da esquerda porque **não existe "esquerda"**: existem 40 ilhas soltas e
+um grafo de portais por cima. O bRO não desenhou labirinto nenhum; ligou salas
+que já eram ilhas.
+
+As quatro salas de canto do 1º andar são o detalhe bonito: cada uma é um
+**anel com uma câmara selada no meio**, e a câmara é outra sala, só alcançável
+por portal. A escada para o 2º andar fica dentro de uma delas.
+
+### Os monstros já estavam no vendor, com o drop certo e sem spawn
+
+A wiki não os nomeia. O caminho foi pelo item: `7583` = `Evil_Mind`
+(사악한 마음), a Mente Maligna, e o Divine-Pride lista seis monstros que a
+largam a 50% — os Ids **1799 a 1804**, os seis heróis selados
+(`B_SEYREN_`, `B_EREMES_`, `B_HARWORD_`, `B_MAGALETA_`, `B_SHECIL_`,
+`B_KATRINN_`).
+
+No **nosso** `db/re/mob_db.yml` esses seis já vinham com **um único drop, a
+Mente Maligna**, e com **spawn em lugar nenhum**: nada em `npc/` os invoca. O
+conteúdo do evento estava inteiro no rAthena e nunca tinha sido ligado — a
+mesma história dos três mapas.
+
+Os andares 1 e 2 vieram do dono, com dois prints da RagnaPlace: os monstros de
+**Biolaboratório 3** (`1634`–`1639` e o `2667`, Cecil Damon Brutal). Nível e HP
+dos prints batem campo a campo com o nosso `mob_db` — os Ids do bRO são os do
+rAthena, não houve nada a importar.
+
+### As três decisões do dono, e a que mudou a implementação
+
+1. **EXP fica** — nos três andares, contra o *"não dão EXP"* do bRO.
+2. **Drop sai**, e **os MVPs de Bio 3 ficam de fora** (só a fileira de volume).
+3. **Mente Maligna a 25%**, contra os 50% que o vendor herdou do kRO.
+
+A segunda decisão é a que teve pegadinha. Tirar o drop dos `1634`–`1639` pelo
+`mob_db` tiraria o drop **em `lhz_dun03` também** — valor de monstro mora no
+`mob_db`, não na sala; é a mesma armadilha do `Buy: 1` das lojas de Prontera
+(§4.16). A saída foi o mapflag **`nomobloot`**, que é por mapa: os andares 1 e
+2 ficam secos e o Biolaboratório fica exatamente como estava.
+
+O caminho oposto — `Rate: 0` no `mob_db` — **não funciona neste servidor**: o
+`mob_getdroprate` (`mob.cpp:2884`) só respeita zero com `drop_rate0item`
+ligado, e o nosso está em `no` (`conf/battle/drops.conf:137`). Taxa 0 volta
+para 1, ou seja 0,01%.
+
+E os 25% precisaram de **`Index: 0`** no override. Sem o índice o
+`parseDropNode` (`mob.cpp:4854`) **acrescenta** um segundo drop em vez de
+trocar o primeiro, e os seis passariam a ter Mente Maligna duas vezes, uma a
+50% e outra a 25% — 62,5% efetivos, o contrário do pedido, e sem um aviso no
+log.
+
+### O que foi escrito
+
+| Arquivo | O quê |
+|---|---|
+| `npc/guerra/labirinto_das_valquirias.txt` | o calabouço inteiro: Portal em `malangdo 211,155`, duas escadas, 14 mapflags, **78 portais** e 41 linhas de spawn |
+| `conf/guerra/mapas_guerra.txt` | liga os três mapas |
+| `conf/maps_athena.conf` | uma linha `import:` — enxerto novo, já na tabela do `CLAUDE.md` §2 |
+| `db/guerra/mob_db_guerra.yml` | os seis overrides de taxa |
+| `npc/guerra/scripts_guerra.conf` | a linha e o parágrafo |
+
+**Toda coordenada foi conferida contra o `map_cache`** — chegada, portal e área
+de spawn, uma a uma, por um script de conferência que também percorre o grafo.
+Nove centros de spawn tinham caído em cima de pilar e foram recalculados. O
+grafo alcança as 13, as 11 e as 16 salas a partir da entrada de cada andar, e
+as duas salas de escada são alcançáveis.
+
+A conferência achou também o que a §5 já avisava: **área de spawn é raio+1, não
+lado**, e nos quatro anéis do 1º andar uma área "óbvia" põe monstro **dentro da
+câmara selada** — o `map_search_freecell` olha se a célula é andável, nunca se
+dá para chegar nela. Por isso os anéis têm duas linhas de spawn, uma por braço.
+
+### A prova de que subiu
+
+O map-server foi reiniciado e o `log/map-msg_log.log` não tem **uma linha**
+sobre `force_map`. Isso é prova positiva, e não só ausência de erro: são 14
+mapflags nos três mapas, e o `npc_parse_mapflag` (`npc.cpp:5434`) grita
+*Unknown map* para mapa que não esteja **carregado**. Zero avisos = os três
+carregaram.
+
+Os 78 warps também passaram (`npc_parse_warp` erra em linha malformada e em
+destino desconhecido), e o override do `mob_db` não levantou `invalidWarning`.
+
+### O que ficou de fora, e é grande
+
+Os três NPCs de economia do bRO — **Valquíria Mega**, **Valquíria Cena** e o
+**Gerente** — não foram escritos. Quatro dos dez itens [MEGA] nem existem no
+nosso `item_db`. E falta a entrada em português da Mente Maligna no
+`itemInfo.lua`, que é patch de cliente. Tudo em `PENDENCIAS.md`.
+
+## As duas Valquírias, e as três chamadas de script que não existiam (2026-09-01)
+
+Segunda metade do Labirinto das Valquírias: o que se faz com a Mente Maligna.
+A primeira metade — o calabouço — está na seção anterior.
+
+### O que entrou
+
+**Valquíria Mega** em `malangdo 204,147`, sprite `4_F_VALKYRIE`, virada para o
+sudeste. Transforma dez equipamentos `+12` na versão `[MEGA]`, a 15%.
+**Valquíria Cena** em `207,147`, sprite `4_F_VALKYRIE2`. Encanta essas
+versões, até três encantos por peça, 800.000z e 10 Mentes por tentativa.
+
+Os três sprites do dia — os dois da tabela acima e o `PORTAL` (10007) que o
+dono pediu no lugar do `45` para a entrada do calabouço — foram conferidos
+neste cliente antes de serem escritos: os três estão no `npcidentity.lub`,
+abaixo do teto de 10508 deste exe, e os `.spr`/`.act` dos três estão em
+`data\sprite\npc\` do nosso GRF. O rAthena exporta as três constantes com o
+prefixo `JT_` cortado (`export_constant_offset(a,3)`), então no script elas se
+escrevem `4_F_VALKYRIE`, `4_F_VALKYRIE2` e `PORTAL`.
+
+### Os quatro itens que faltavam, com o nome certo
+
+Das dez transformações, seis já tinham os dois lados no vendor. Quatro tinham
+só o original. Os quatro `[MEGA]` entraram na décima leva de
+`db/guerra/item_db.yml`.
+
+O que muda em relação às nove levas anteriores: **os `AegisName` não são
+palpite**. As levas de antes registram por escrito que os deles eram — o nome
+oficial não estava ao alcance. Desta vez estava, no Divine-Pride, que os traz
+como itens de jRO: `Assault_Rifle_89_`, `Spiritual_Dagger_`, `Shinboku_Wand_`
+e `God_Ogre_Frail_`. O `_` final é a convenção da própria Gravity para "versão
+melhorada", e casa com o par de cada um.
+
+Efeito colateral do achado: descobrimos que dois nomes de levas anteriores
+estão errados — `Ninjaken` (510064) devia ser `Spiritual_Dagger`, e
+`Old_Rifle` (810011) devia ser `Assault_Rifle_89`. Não foram trocados, e o
+porquê está em `PENDENCIAS.md`.
+
+### O `.lua` legível estava velho, e teria mentido
+
+Os quatro itens citam doze habilidades pelo nome em português, e três delas
+são de Justiceiro: [Espiral Perfurante], [Explosão Antimatéria] e [Execução].
+Procurá-las no `skillinfolist.lua` do bRO — o arquivo de **texto**, o que se
+abre e se lê — devolve "não existe" para as três.
+
+E é resposta errada. O bRO entrega o mesmo arquivo em `.lua` e em `.lub`, e o
+legível está atrasado: 278 KB e 1062 habilidades contra 433 KB e 1253. As três
+só existem no bytecode. Foi preciso escrever um leitor de bytecode para
+alcançá-las — `RL_MASS_SPIRAL`, `RL_AM_BLAST` e `RL_HAMMER_OF_GOD`.
+
+A armadilha já estava registrada em `ARMADILHAS-CLIENTE.md` ("o legível pode
+estar velho") e ainda assim custou a primeira tentativa. A diferença é que
+desta vez ela **não** ia dar erro: ia dar uma lista de doze com três faltando,
+e três `TODO` num arquivo cheio de `TODO` legítimos.
+
+### Três comandos de script que eu inventei, e o rAthena não tem
+
+O primeiro rascunho das duas NPCs lia o estado da peça com
+`getequipisbound`, `getequipgrade` e `getequiprandomoption`. **Nenhum dos três
+existe.** Vínculo, prazo, grau de encanto e bônus aleatório não têm `getequip*`
+nenhum: saem do `getinventorylist`, cruzando `@inventorylist_equip[i]` com o
+bit `EQP_*` da peça e conferindo o Id.
+
+Isso já estava resolvido no `encantamento_da_ordem.txt`, escrito em agosto, e
+o cabeçalho de lá diz exatamente isso. As duas Valquírias passaram a copiar o
+padrão dele inteiro, e não só essa parte:
+
+- o **retrato da peça** tirado antes do primeiro `next`, e as três
+  `F_IsEquip*Hack` comparando contra ele depois do último menu — reler a peça
+  para compará-la consigo mesma passaria sempre;
+- a recusa de peça **forjada ou assinada** (cova 0 em 254/255/256), onde as
+  covas guardam o id do dono e não carta;
+- a recusa de peça **alugada**, que voltaria sem prazo — um presente;
+- a **trava de remontagem** redundante antes do `delequip`, que devolve o
+  pagamento em vez de comer a peça;
+- o `delequip` **inline**, nunca em `callsub` — o escopo `.@` novo e vazio é
+  o que comeu um anel em agosto. O único `callsub` deste arquivo recebe
+  número, devolve número e não toca em nada do jogador.
+
+### A contrabarra que matou um arquivo inteiro
+
+O sprite da entrada do calabouço mudou de `45` para `PORTAL`, e junto foi um
+parágrafo de comentário explicando por quê. O parágrafo citava o caminho
+`data\sprite\npc\portal.spr`, e o `\n` de `\npc` **virou quebra de linha de
+verdade** ao passar pelo shell.
+
+O resultado: meia linha de comentário virou uma linha solta, e o
+`npc_parsesrcfile` respondeu *"Unknown syntax ... Stopping"* — que **mata o
+arquivo inteiro dali para baixo**, os 78 portais e os 41 spawns junto. Um
+comentário derrubou o calabouço.
+
+A armadilha é conhecida das duas pontas (`ARMADILHAS-AMBIENTE.md` traz o
+heredoc que come a contrabarra dupla, e `ARMADILHAS-SCRIPT.md` traz "uma linha
+ruim mata o ARQUIVO INTEIRO, inclusive linha de comentário") e ainda assim
+aconteceu. O que a pegou foi o log: uma linha de `[ Error ]` nomeando arquivo
+e linha. A cura foi tirar a contrabarra do comentário.
+
+### As decisões que foram nossas, e estão ditas onde aparecem
+
+- **A coluna de preço: Valhalla, não Thor.** O bRO cobrava diferente nos dois
+  servidores dele, e o Thor pedia até 80.000.000z por peça. A nossa economia
+  não imprime zeny — as lojas de Prontera recompram a 1 (§4.16) —, então a
+  escala menor é a que faz sentido aqui.
+- **A quantidade de Mente segue a notícia de 2024, não a wiki.** As duas
+  discordam, e a wiki não atualizou metade da coluna: seguir ela daria Botas
+  Espaciais por 20 Mentes e Mega Vara por 200, dez vezes mais, por dois itens
+  do mesmo porte. A notícia dá 200 para tudo, 300 nas Patas de Raposas.
+- **A chance de encanto é 70%, e é nossa.** O bRO só dizia "existem chances de
+  falha".
+- **O reset cobra mesmo com a peça limpa**, como no bRO — mas a Cena agora diz
+  quantos encantos a peça tem **antes** de perguntar. A regra é a mesma; o que
+  mudou é o jogador saber no que está clicando.
+
+### O que não foi escrito
+
+O **Gerente**, o terceiro NPC. Vendia "armas por 150 Frutas dos Gatos" e
+nenhuma fonte diz quais. Em `PENDENCIAS.md`.
+
+## O primeiro teste em jogo do Labirinto, e as quatro coisas que ele derrubou (2026-09-01)
+
+O dono jogou o 1º andar no dia em que ele ficou pronto. Quatro relatos, e
+todos os quatro eram defeito de verdade — nenhum era gosto.
+
+### 1. A sala tinha elenco fixo, e isso não é labirinto
+
+*"Se eu fizer sempre o mesmo caminho, vou encontrar sempre os mesmos. (…)
+monstros específicos estão entrando em partes específicas do mapa, quando
+deveria ser aleatório."*
+
+A distribuição original dava **um tipo por sala**, ciclando os seis em ordem.
+A regra era limpa de ler e errada de jogar: com as salas fixas e os portais
+fixos, o elenco de cada sala virava parte da rota. Agora **os seis tipos
+entram em todas as salas**, e o que muda de sala para sala é só a quantidade.
+
+### 2. O volume estava em um quarto do que devia
+
+Pedido: mais 300%, ou seja 400% do que havia. **161 monstros viraram 640** —
+246 no 1º andar, 238 no 2º, 156 no 3º.
+
+### 3. Matar não adiantava nada
+
+*"O respawn tá alto, quando o player mata, tem que ter um respiro no mapa.
+Hoje não acontece."*
+
+Os andares 1 e 2 estavam com os **5 segundos** que os monstros têm em
+Biolaboratório 3 — copiados de lá junto com os monstros, sem pensar. Cinco
+segundos é menos do que se leva para atravessar a sala: o jogador matava e o
+bicho já estava de pé atrás dele. Agora são **30 segundos** nos andares 1 e 2
+e **60** no 3º, sem variação.
+
+O único caso em que a regra pedida acelerou algo foi o Cecil Damon Brutal,
+que estava em 10 minutos e caiu para 60 segundos. Está registrado em
+`PENDENCIAS.md` porque é o que mais provavelmente vai querer voltar atrás.
+
+### 4. Os portais nasciam colados na parede
+
+O print mostrava um portal entalado na quina da sala, meio atrás de um pilar.
+A causa era o critério de colocação: **as duas células mais distantes entre
+si** dentro da sala — o que, por construção, cai exatamente nos dois extremos,
+que é onde ficam as paredes.
+
+Agora a peneira é a **folga**: só entram células com espaço livre em volta, e
+o par mais separado sai de dentro dessa peneira. A folga mínima resultante é
+2 e a média fica entre 4 e 6.
+
+E apareceu de brinde um defeito que ninguém tinha visto ainda: **duas salas
+tinham a chegada a duas células de um portal.** Ficar fora da área de toque
+de 3×3 não basta — desembarcar ao lado dela significa que o primeiro passo na
+direção errada teleporta o jogador antes de ele ver onde caiu. A regra agora
+é quatro células de distância, e as 40 salas passam.
+
+### O arquivo virou gerado
+
+Os quatro ajustes juntos mexeriam em 78 portais, uma tabela de chegada por
+sala e 250 linhas de spawn — e mover uma chegada obriga a mover todo portal
+que aponta para ela. Escrever isso à mão duas vezes seria a §4.11 do
+`CLAUDE.md` ao contrário.
+
+`npc/guerra/labirinto_das_valquirias.txt` passou a sair inteiro de
+**`ferramentas/monta_labirinto.py`**, que lê o `map_cache` do próprio
+servidor e a tabela `GRAFO`. Volume, renascimento, fiação e pedágio são cada
+um uma constante no topo da ferramenta.
+
+Foi o que tornou esta volta barata: os quatro pedidos viraram quatro
+constantes e uma função de colocação reescrita.
+
+### E as escadas ganharam o sprite da porta
+
+O `PORTAL` (10007) que o dono pediu para a entrada valia para as escadas
+também — elas são NPC de clicar, como a porta, e estavam com o `45`, que é o
+sprite de warp: o desenho dizia "atravesse", e a coisa pedia clique.
+
+### Conferido
+
+O map-server subiu com o arquivo novo e o log não tem uma linha sobre
+`force_map`. O conferidor de coordenadas passa nas 40 salas: as 78 origens e
+destinos são andáveis, nenhuma das 250 áreas de spawn vaza para outra sala,
+os 81 nomes são únicos, e o grafo alcança as 13, as 11 e as 16 salas a partir
+da entrada de cada andar.
+
+## O mapa sabia onde os portais iam, e ninguém tinha perguntado a ele (2026-09-01)
+
+Terceira volta do Labirinto, e a que resolveu o problema de raiz.
+
+### O relato
+
+*"Todos os portais parecem estar errados. Existe um semicírculo no chão no
+qual o portal deveria estar lá, nenhum portal está corretamente posto no
+lugar."* — com quatro prints, e nos quatro dá para ver o semicírculo de pedra
+encostado na parede, vazio, e o portal a dez células dali, no meio do chão
+liso.
+
+Junto veio a pergunta que importava: *"Você consegue confirmar o bRO a
+respeito dos portais? Do contrário vou ter um longo trabalho de mapear cada
+um."*
+
+### A resposta estava no `.rsw`, e ninguém tinha aberto
+
+O `force_map1/2/3` traz plantado, no próprio arquivo de mundo, o modelo 3D
+`반원워프장치.rsm` — em coreano, ao pé da letra, **"dispositivo de warp
+semicircular"**. São **22 no 1º andar, 25 no 2º e 40 no 3º**.
+
+Quem desenhou a arena marcou onde cada warp devia ficar, e a marca está no
+arquivo desde sempre. As duas versões anteriores escolheram a célula por conta
+própria — primeiro pelos extremos da sala, depois pela folga — e as duas
+erraram, porque **a pergunta certa não era "onde cabe um portal" e sim "onde o
+mapa diz que tem um"**.
+
+A conversão do `.rsw` para célula é `pos.x/5 + largura/2` e
+`altura/2 - pos.z/5`, com encaixe na célula andável mais próxima porque parte
+dos arcos é desenhada meio dentro da parede. O `.rsw` saiu do `data.grf` do
+bRO — no nosso ele tem flag DES.
+
+### O que os arcos revelaram de quebra
+
+**Quatro salas do 1º andar não têm arco nenhum**: as câmaras seladas dentro
+dos anéis, aquelas que se enxerga do corredor e não se alcança. E o 3º andar
+tem uma na mesma situação. Isso não é esquecimento do autor do mapa — é a
+resposta dele: aquelas salas **não fazem parte do labirinto**, são cenário
+que se vê e não se pisa.
+
+As quatro saíram do grafo, e a escada do 1º andar, que morava numa delas,
+mudou para o Anel Sudeste, em cima de um arco. O 1º andar passou de 13 salas
+para 9; o 3º, de 16 para 15.
+
+### O que dá para confirmar do bRO, e o que não dá
+
+**Confirmado:** o mapa, os três andares, o pedágio, as regras de teleporte e
+os portais que expulsam. E agora a **posição** de cada portal, que é a fonte
+mais forte que existe para isso — não é o bRO dizendo, é o mapa que o bRO
+usou.
+
+**Não confirmável:** a **fiação** — qual portal leva a qual sala. Ela só
+existia no script do servidor do bRO. O histórico da página do wiki foi
+puxado inteiro: são catorze revisões, todas na tabela de upgrade e nos
+encantos, nenhuma sobre o calabouço. As três notícias oficiais dizem a mesma
+frase de sempre. E o wiki tem duas imagens no total, nenhuma de mapa.
+
+A fiação daqui é sorteada com **semente fixa** — fixa para o labirinto não
+mudar a cada rodada da ferramenta e o jogador que aprendeu o caminho não o
+perder sem aviso. É garantidamente resolvível: o primeiro arco de cada sala
+liga a próxima de uma corrente que passa por todas, e o último elo é a
+escada. Os arcos que sobram são o ruído, e um em cada quatro expulsa.
+
+### E as duas coisas menores do mesmo relato
+
+**Todas as salas ganharam monstro**, inclusive as de chegada — *"a primeira
+sala continua sem monstros, logo que entra. Todas precisam ter"*. A regra
+anterior deixava as três de chegada vazias por segurança; agora a segurança
+vem da distância, não do vazio.
+
+**A chegada ficou mais longe dos portais.** *"Às vezes ao passar de um portal
+pro outro eu apareço quase no meio do novo portal."* Com os portais nos arcos,
+que ficam nas paredes, e a chegada na célula mais aberta da sala a pelo menos
+quatro células de qualquer arco, os dois deixam de disputar o mesmo canto.
+
+### Conferido
+
+76 portais (78 arcos menos as duas escadas), 238 linhas de spawn, 634
+monstros. O map-server subiu sem uma linha sobre `force_map`, e o conferidor
+passa: as 9, 11 e 15 salas são alcançáveis a partir da entrada de cada andar,
+nenhuma área de spawn vaza para outra sala, e os 79 nomes são únicos.
+
+## A corrente do 2º andar, que veio de um minimapa com setas (2026-09-01)
+
+Um dia depois de eu dizer que a fiação do labirinto estava perdida, o dono
+apareceu com um print do minimapa do `force_map2` — o do bRO — com o caminho
+desenhado em setas verdes, sala a sala.
+
+As onze salas casaram uma a uma com as nossas, pelo formato: o quadradinho do
+canto, a barra com o dente em cima, o retângulo alto da direita, os dois
+blocos em L. A corrente:
+
+```
+3 → 9 → 4 → 6 → 7 → 5 → 2 → 10 → 1 → 8 → 11
+```
+
+**E ela derrubou uma suposição nossa.** A sala 3 é a única sem seta chegando,
+o que faz dela a chegada do andar — e nós estávamos usando a 11. As duas
+trocaram de papel: a 11 passou a ser onde fica a escada para o 3º andar, que
+é o fim da corrente. A escada do 1º andar acompanhou: agora desembarca em
+`force_map2 25,25`, dentro da sala 3.
+
+**Qual arco de cada sala**, quando a sala tem mais de um, saiu da direção da
+seta. Seis das onze têm arco único e não deixam dúvida; nas outras cinco a
+seta aponta para um lado só — a de 7 para 5 vai para oeste, a de 2 para 10
+vai para leste, a de 10 para 1 desce para sudeste, a de 1 para 8 vai para
+oeste no alto, e a de 8 para 11 sobe para noroeste. Cada uma casa com um arco
+só.
+
+**O que o print não diz** é para onde vão os nove arcos que sobram: o desenho
+traz o caminho que resolve, não o labirinto inteiro. Esses continuam
+sorteados — e são eles que fazem o andar ser labirinto em vez de fila.
+
+O 1º e o 3º andar continuam com fiação nossa. Print equivalente entra na
+ferramenta em minutos: são as constantes `CORRENTE_MANUAL` e
+`ARCO_DA_CORRENTE`, e a validação que já existe recusa corrente que não
+cubra todas as salas ou que não comece na entrada declarada.
+
+
+## O 1o andar veio no mesmo dia, e trouxe "Comeco" e "Fim" escritos (2026-09-01)
+
+Meia hora depois do print do 2o andar veio o do 1o, e esse era ainda melhor:
+o desenho traz as duas pontas rotuladas.
+
+```
+1 → 6 → 3 → 8 → 5 → 9 → 4 → 7 → 2
+```
+
+Nove salas, nove elos, e cada seta desenhada DENTRO da sala apontando para o
+lado em que fica a proxima - o que confirmou a leitura de qual arco usar em
+todas as nove, sem chute. A entrada ja era a nossa, o Atrio da Estatua; o que
+mudou foi a escada, que saiu do Anel Sudeste e foi para a Encruzilhada, que e
+o "Fim" do print.
+
+Sobrou UMA ambiguidade no levantamento inteiro, e esta escrita na ferramenta:
+o print marca a sala 2 como Fim mas nao diz qual dos dois arcos dela e a
+escada, porque a seta de la aponta para a chegada e nao para a saida.
+Escolhemos o arco sul, que e o mais perto de onde a seta termina.
+
+E o print pegou um defeito de brinde. Com a corrente do bRO travada, o sorteio
+dos arcos-isca deu, na sala 6, o MESMO destino do elo da corrente: os dois
+portais da sala levavam ao mesmo lugar, o que tira a escolha do jogador sem
+avisar. O sorteio agora recusa repetir o destino do elo.
+
+So o 3o andar continua com fiacao nossa.
+
+
+## O 3º andar deu a chegada e os dois portais que expulsam (2026-09-01)
+
+Terceiro print do mesmo dia, e o que traz menos - de propósito. Ele mostra o
+minimapa do `force_map3` com a seta branca do jogador no alto e um aviso:
+*"tome bastante cuidado com esses 2 portais! Eles o teleportarão para
+Malangdo novamente"*, com duas setas apontando para eles.
+
+O que dá para tirar dele:
+
+- **A chegada é a sala 1**, a Grande Galeria Norte. O canto do minimapa mostra
+  `110 188`, e essa célula cai dentro dela - confirmação numérica, não só
+  visual. Nós estávamos usando a 15, a Câmara Noroeste.
+- **Os dois portais que expulsam** são o `92,140`, na Câmara do Centro, e o
+  `100,34`, na ponta sul do Corredor Central-Sul. São os únicos do andar: o
+  sorteio deixou de criar expulsão no 3º andar.
+
+E um detalhe de encaixe: o arco `92,140` é justamente o que a corrente usaria
+como elo da Câmara do Centro. Como ele expulsa, o elo passou para o outro arco
+da sala.
+
+**A fiação do 3º andar continua sorteada**, e por decisão do dono: *"aqui não
+temos o grafo, de onde vai pra aonde, mas aqui é livre, o importante é o
+começo"*.
+
+
+## O 1º andar deixa de ser deduzido e passa a ser ditado (2026-09-01)
+
+Depois de percorrer o andar em jogo, o dono ditou a planta inteira: portal por
+portal, com a célula de destino de cada um. O 1º andar deixou de sair de
+`ARCOS` mais corrente e passou a sair de uma tabela própria,
+`PORTAIS_MANUAIS`, onde **o destino é uma célula e não uma sala**.
+
+### O que entrou
+
+**Onze portais novos**, todos de raio 2 — gatilho 5×5 em vez de 3×3, que é o
+tamanho de quem se trombra sem procurar. Um deles, em `99,11`, é o portal de
+volta para Malangdo.
+
+**Doze mudanças nos que já existiam**: a chegada do andar saiu do meio do mapa
+para `99,18`; o portal de `66,26` andou três células para a esquerda; e dez
+tiveram o destino trocado por uma célula exata. O de `100,180` deixou de
+existir.
+
+**A escada trocou de lugar com o portal de cima da Encruzilhada.** Ela estava
+em `100,81` e o portal em `100,118`; agora o NPC fica em `99,123` e `100,81`
+virou portal comum, herdando o destino que era do outro.
+
+### Três destinos ditados caíram dentro de parede
+
+`174,37`, `163,175` e `26,164`. Os dois primeiros estavam a uma e a duas
+células da sala certa e foram encaixados em `174,38` e `161,175`.
+
+O terceiro é o que merecia cuidado: **`26,164` tem a câmara selada a duas
+células e o anel a três.** Encaixar pelo mais perto teria mandado o jogador
+para uma sala sem saída — as quatro câmaras do 1º andar não têm arco, não têm
+portal e não têm como sair. Foi para o anel, em `26,161`, que é onde outro
+portal do próprio levantamento já manda.
+
+### E duas chegadas tiveram de se mexer sozinhas
+
+Isto não estava no pedido e só apareceu na conferência. Dois portais antigos
+mandavam para células que os portais NOVOS agora cobrem:
+
+- a chegada da sala 6 era `25,10`, e o portal novo de `25,8` tem raio 2 — o
+  gatilho dele vai até `y=10`;
+- a chegada da sala 8 era `10,173`, e o portal novo de `8,173` tem raio 2 — o
+  gatilho vai até `x=10`.
+
+Nos dois casos o jogador desembarcaria **em cima** de um warp e seria
+teleportado de novo antes de dar um passo. As duas chegadas passaram a ser
+calculadas descontando o raio de cada portal, e foram para `10,19` e `19,158`.
+
+A ferramenta ganhou junto uma trava, o `confere_gatilhos`: nenhum destino pode
+cair dentro do gatilho de nenhum portal, e a geração **para** se cair. É o
+tipo de defeito que não dá erro no servidor - o jogador só é cuspido em
+sequência e não entende por quê.
+
+### Uma coisa para olhar em jogo
+
+O portal de `156,26` manda para `121,100`, e o portal novo de `124,100` tem
+raio 2, ou seja gatilho a partir de `x=122`. Estão a **uma célula** um do
+outro: quem desembarca ali e dá um passo para leste é levado para `130,26`.
+Passa na trava porque `121` está fora do gatilho, mas é de propósito ou é
+engano - só quem jogou sabe.
+
+
+## O portal fica na parede que dá para a próxima sala (2026-09-02)
+
+O 2º andar foi percorrido em jogo e o relato foi o mesmo do 1º, mas com uma
+regra junto: *"se estou no mapinha 2 e para ir para o mapinha 3, que fica
+acima, o portal fica horizontalmente no meio e na parte de cima do mapinha"*.
+
+E com dois exemplos com célula: da Sala Leste para a Sala do Centro o portal
+tinha de ficar *"perto da célula 159 77"*, e não no meio da sala; e da Sala do
+Sul para a Sala Sudeste tinha de ficar *"na direita"*, não embaixo.
+
+### Por que isso contraria o `.rsw`, e por que está certo assim
+
+No 1º andar os portais foram para cima dos semicírculos de pedra, e o dono
+aprovou. No 2º não dá: as salas têm **um arco só**, e ele quase nunca está na
+parede que dá para a sala seguinte. A Sala Leste tem o dela no meio; a Sala do
+Sul, embaixo. Seguir o arco ali é pôr o jogador para procurar o portal em
+qualquer parede menos a que faz sentido.
+
+O 2º andar passou a ter regra própria, `PORTAL_NA_PAREDE`, e o 1º e o 3º
+continuam como estavam.
+
+### A conta
+
+O eixo dominante entre os dois centros escolhe a parede; a posição **ao longo**
+da parede mira o centro da sala vizinha, presa dentro da caixa. Reproduz os
+três exemplos do relato célula por célula:
+
+| de → para | onde fica a próxima | portal |
+|---|---|---|
+| Sala Leste → Sala do Centro | a oeste | `159,77` |
+| Sala Sudeste → Sala Leste | ao norte | `173,40` |
+| Sala do Sul → Sala Sudeste | a leste | `113,25` |
+
+**Mirar em vez de centralizar não é enfeite:** no Grande Salão Nordeste a
+seguinte e a anterior estão as duas a oeste, e é a mira que separa os dois
+portais em 51 células, um apontando para o norte e outro para o sul. Centrar
+os dois teria posto um em cima do outro.
+
+### E cada sala ganhou o portal de volta
+
+*"Depois que tivermos os portais corretamente localizados podemos adicionar
+mais um portal em cada mapinha, sempre levando pro nó anterior, para dar o
+efeito de labirinto."* Foi feito: raio 2, na parede que dá para a sala
+anterior. A primeira sala não tem volta; a última tem a escada no lugar da
+ida, na parede oposta à de onde se veio.
+
+São 20 portais no andar — dez de ida e dez de volta — contra 19 antes.
+
+### O que sumiu junto, e é para decidir
+
+O 2º andar **ficou sem portal de expulsão**. Os dois que existiam eram sorteio
+nosso sobre os arcos, e os arcos deixaram de ser usados ali. O print do bRO do
+2º andar não marcava nenhum, ao contrário do 3º, onde os dois estão marcados e
+foram respeitados. Está em `PENDENCIAS.md`.
+
+
+## Os pilares como régua, e o sinal que o mapa simétrico escondia (2026-09-02)
+
+O 2º andar foi percorrido de novo e voltou com seis relatos idênticos: *"o
+portal tá muito pra direita, fora da marcação"*, com a coordenada de cada
+sala. Num deles o desvio foi quantificado — *"cerca de 6 células"* — e num
+outro, *"esse ficou bem distante, não só algumas células"*.
+
+### O erro
+
+A conta que tira a célula da posição do modelo no `.rsw` estava com o sinal do
+`z` invertido. A tabela de marcações saía **espelhada no eixo norte–sul**.
+
+E ela passou por duas rodadas sem ninguém ver, porque o primeiro mapa em que
+foi usada, o `force_map1`, **é simétrico de cima para baixo**: o conjunto
+espelhado cai em cima de si mesmo, e só troca de que sala cada marcação é. Os
+portais do 1º andar ficaram certos por acidente — e depois foram ditados à
+mão, o que apagou o rastro de vez.
+
+### A régua estava no mesmo arquivo
+
+O `.rsw` traz 82 modelos de **pilar** no 1º andar e 72 no 2º, e pilar é célula
+fechada no `.gat`. Testadas as quatro combinações de sinal:
+
+| conta | 1º andar | 2º andar |
+|---|---|---|
+| `x/5+L/2`, `A/2−z/5` | 70 de 82 | 50 de 72 |
+| `x/5+L/2`, `A/2+z/5` | **82 de 82** | **72 de 72** |
+| `L/2−x/5`, `A/2−z/5` | 70 de 82 | 51 de 72 |
+| `L/2−x/5`, `A/2+z/5` | 82 de 82 | 60 de 72 |
+
+Os dois sinais de `x` empatam no mapa simétrico. **Foi o segundo mapa que
+desempatou** — e é a lição que ficou registrada nas armadilhas: validar num
+mapa simétrico não valida nada.
+
+### Com a tabela certa, os seis relatos fecham
+
+| sala | portal estava em | arco está em | desvio |
+|---|---|---|---|
+| Sala Oeste | `33,92` | `26,92` | 7 |
+| Salão Noroeste | `56,130` | `50,132` | 6 — *"cerca de 6 células"* |
+| Sala Central-Norte | `85,129` | `92,128` | 7 |
+| Sala Central-Norte | `115,142` | `108,144` | 7 |
+| Grande Salão NE | `159,180` | `160,178` | 2 |
+| Grande Salão NE | `159,129` | `174,116` | 28 — *"bem distante"* |
+
+### A regra final: a parede escolhe, o arco decide
+
+A geometria continua escolhendo **qual parede** — é a regra que o dono ditou
+e que reproduz os exemplos dele. O que mudou é que o portal agora **encaixa no
+arco** daquela parede, em vez de parar na conta. Guloso: o par mais próximo
+casa primeiro e arco não se repete.
+
+Duas salas do 2º andar têm **um arco só e dois portais**, e nelas um dos dois
+fica fora de marcação, por falta de marcação: a Sala Sudeste (o de ida, na
+parede norte) e o Vestíbulo (a escada, na parede oeste). Não é engano da
+ferramenta — é o que o mapa tem.
+
+### E a chegada passou a depender de onde se veio
+
+*"Venho do mapinha da direita, aterrizo no da esquerda, e nasço no meio dele
+em vez de nascer no canto direito, como se tivesse acabado de atravessar."*
+
+A chegada deixou de ser uma célula por sala e passou a ser **uma por
+travessia**: sai da parede que dá para a sala de origem e anda para dentro até
+achar célula andável a pelo menos quatro células de qualquer portal daquela
+sala, descontado o raio. Quem vem do leste desembarca no leste.
+
+Vale no 2º andar. No 1º os destinos foram ditados célula a célula e continuam
+como estão; o 3º ainda usa a chegada por sala.
+
+
+## Bio 4 entra, e o portal do 3º andar deixa de cuspir para fora (2026-09-02)
+
+Duas coisas no mesmo pedido, e a segunda foi um achado do dono jogando:
+*"percebi que colocamos monstros apenas de transclasse. Faltaram aqueles que
+representam as novas classes."*
+
+### Os sete de Biolaboratório 4
+
+Estavam à mão, e com nome em português: `2221` Randel Lawrence, `2222` Flamer
+Emul, `2223` Celia Alde, `2224` Chen Liu, `2225` Gertie We, `2226` Alphoccio
+Basil e `2227` Trentini. Nível 141-142, de 205 mil a 479 mil de HP — mesmo
+patamar dos seis de Bio 3 que já estavam lá.
+
+Não foi preciso ir ao bRO: os IDs dele são os do rAthena, o que já tinha sido
+provado nos de Bio 3, e o `lhz_dun04` do vendor traz a lista inteira.
+
+**Os `G_*` de Bio 4 (2228 a 2234) ficaram de fora**, pela mesma decisão que
+tirou os de Bio 3 em 2026-09-01: são os MVPs do andar, de 2 a 3 milhões de HP.
+
+### A repartição, ditada
+
+| andar | antes | agora |
+|---|---|---|
+| 1º | 246 de Bio 3 | igual |
+| 2º | 238 de Bio 3 | 162 de Bio 3 (−31%) + 77 de Bio 4 + 4 Brutais |
+| 3º | 150 heróis | 156 heróis + 182 de Bio 4 |
+
+*"Segundo andar reduz 30% pra colocar esses novos nesses cerca de 30%. E no
+terceiro andar só adiciona eles, na mesma quantidade que os outros."* É o que
+está. São 827 monstros no labirinto, contra 634.
+
+### O portal do 3º andar agora sobe
+
+Os dois que o print do bRO marcava como saída — `100,12` e `92,138` —
+deixaram de mandar para Malangdo e passam a devolver o jogador para a
+**chegada do 2º andar**, `force_map2 25,25`. Quem tomba num deles perde o
+caminho, não a sessão, e não paga pedágio de novo.
+
+O 2º andar continua **sem portal de expulsão**, por decisão. Só o 1º ainda
+tem, e são três.
+
+### Uma consequência que o pedido não previa
+
+Os sete de Bio 4 têm **oito drops cada**, e o 3º andar é o único sem
+`nomobloot` — ele não pode ter, porque é o mapflag que mataria a Mente
+Maligna junto. Então o 3º andar passou a ser fonte de todo o loot de Bio 4:
+182 monstros largando o que largam em `lhz_dun04`.
+
+Nos andares 1 e 2 isso não acontece — o mapflag continua lá.
+
+Está em `PENDENCIAS.md`. As saídas, se incomodar, são clonar os sete com IDs
+nossos e sem drop (o que não toca `lhz_dun04`) ou aceitar.
+
+
+## A Mente deixa de ser drop para o labirinto poder ser sem drop (2026-09-02)
+
+*"Sem drop. Precisamos manter isso, sem drop."* — resposta ao aviso de que o
+3º andar tinha virado fonte do loot de Bio 4.
+
+### O impasse
+
+O `nomobloot` é o único jeito de tirar o drop **sem tocar no `mob_db`** — e
+tocar no `mob_db` tiraria o drop em `lhz_dun03` e `lhz_dun04` também, que é a
+armadilha do `Buy: 1` das lojas outra vez. Só que o mapflag mata **todo** drop
+do mapa, a Mente Maligna inclusive.
+
+Enquanto o 3º andar tinha só os seis heróis — cujo único drop **é** a Mente —
+dava para deixar o andar sem o mapflag. Com os sete de Bio 4 lá dentro, cada
+um com oito drops, não dava mais.
+
+### A saída, e ela ficou melhor do que o arranjo anterior
+
+`nomobloot` nos **três** andares, e a Mente entregue pelo **evento de morte**
+dos seis heróis:
+
+```
+OnHeroiMorto:
+    if (rand(100) < .MenteChance)
+        getitem .MenteId, 1;
+    end;
+```
+
+`rand(100) < 25` é 25% cravado — o `rand(100)` do rAthena devolve 0..99.
+
+**Quem recebe é quem deu o último golpe:** o `mob_npc_event_type` deste
+servidor é 1 (`conf/battle/monster.conf:266`), a mesma regra do Corredor
+Fantasma. E mochila cheia larga no chão, o que aqui é o comportamento certo.
+
+**O evento não passa pelo mapflag**, e isso foi conferido no código antes de
+escrever: o `nomobloot` guarda só o bloco de drop (`mob.cpp:3253`), enquanto o
+`npc_event` roda mais adiante (`mob.cpp:3594`), independente.
+
+### A regra do labirinto ficou uma só
+
+Antes eram duas: "sem drop nos andares 1 e 2, e o 3º fica com drop porque
+precisa da Mente". Agora é **sem drop em lugar nenhum**, e a Mente é a única
+coisa que sai de lá — por construção, não por exceção.
+
+### E o número mudou de casa
+
+A chance de 25% morava em `db/guerra/mob_db_guerra.yml`, como `Rate: 2500` nos
+seis. **O override foi removido**: com o mapflag no ar ele não alcançava mais
+nada, e deixar os 25% nos dois lugares seria a segunda fonte que diverge da
+primeira. Hoje o número está em `MENTE_CHANCE`, no
+`ferramentas/monta_labirinto.py`, e o arquivo do `mob_db` guarda a nota
+dizendo para onde ele foi.

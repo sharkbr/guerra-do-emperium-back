@@ -3826,3 +3826,139 @@ Não foi feito junto com a Sombria de propósito: mexer no `.gitignore` no mesmo
 commit que estreia uma exceção nele misturaria duas coisas que precisam ser
 lidas separadas se alguma der errado.
 
+
+## 1ab. O Labirinto das Valquírias — o calabouço está de pé, a economia não (2026-09-01)
+
+O calabouço inteiro foi escrito e sobe limpo (`HISTORICO.md`, seção de
+2026-09-01). **Nada disto foi visto em jogo ainda**, e a metade da economia do
+evento não existe.
+
+### Falta ver na tela — terceira volta
+
+O 1º andar foi jogado duas vezes em 2026-09-01 e rendeu seis correções. As
+quatro da segunda volta (monstro aleatório, volume ×4, renascimento de 30/60s
+e portal fora da parede) e as duas da terceira:
+
+- **Os portais agora ficam em cima dos semicírculos de pedra.** É a correção
+  que mais muda a cara do lugar. Conferir sala a sala que não sobrou
+  semicírculo vazio e nem portal fora de um.
+- **Todas as salas do labirinto têm monstro**, inclusive a de chegada de cada
+  andar.
+
+E o que mudou de tamanho junto:
+
+- **O 1º andar tem 9 salas, não 13.** As quatro câmaras seladas saíram do
+  labirinto porque o mapa não tem arco em nenhuma delas — são as que se
+  enxerga de dentro do anel e não se alcança. O 3º andar perdeu a Câmara do
+  Sul pelo mesmo motivo, e ficou com 15.
+- **A escada do 1º andar mudou de lugar**: agora fica no Anel Sudeste
+  (`force_map1 156,26`), no arco. A do 2º saiu junto.
+- **634 monstros** — 246, 238 e 150.
+
+Ainda não visto nenhuma vez: **os andares 2 e 3**, o `@mobinfo 1799` (prova
+que a Mente está a 25% e não em drop duplo), e o par
+`nomobloot` (matar um `1634` aqui não larga nada, o mesmo `1634` em
+`lhz_dun03` larga como sempre).
+
+### A fiação: o 2º andar é o do bRO, o 1º e o 3º ainda são nossos
+
+**O 2º andar está resolvido.** Em 2026-09-01 o dono achou um print do minimapa
+do `force_map2` com o caminho desenhado em setas, e as onze salas casaram uma
+a uma com as nossas:
+
+```
+3 → 9 → 4 → 6 → 7 → 5 → 2 → 10 → 1 → 8 → 11
+```
+
+A sala 3 (Sala Sudoeste) é a única sem seta chegando, então é a **chegada** do
+andar — e não a 11, que era o que estávamos usando. A 11 (Vestíbulo) fecha a
+corrente, então é onde fica a **escada** para o 3º. As duas trocaram de papel.
+
+Onde a sala tinha mais de um arco, a escolha saiu da direção da seta; está
+registrada arco a arco no `ARCO_DA_CORRENTE` da ferramenta.
+
+**Os três andares têm o que dá para ter.** O 1º entrou logo em seguida, do mesmo jeito e no mesmo dia: o print dele traz "Começo" e "Fim" escritos, e a corrente é `1 → 6 → 3 → 8 → 5 → 9 → 4 → 7 → 2` — nove salas, nove elos. A entrada já era a nossa (Átrio da Estátua); o que mudou foi a escada, que saiu do Anel Sudeste para a Encruzilhada. Print equivalente entra na ferramenta do mesmo
+jeito — é `CORRENTE_MANUAL` mais `ARCO_DA_CORRENTE`, e leva minutos. O que
+serve: **minimapa do andar com setas de sala para sala**, como o do 2º. Não
+precisa de coordenada nenhuma; a sala se reconhece pelo formato.
+
+Do **3º andar** veio um terceiro print, e ele traz menos de propósito: a chegada (sala 1, a Grande Galeria Norte - o `110 188` do canto do minimapa cai dentro dela) e os dois portais que expulsam para Malangdo, `92,140` e `100,34`. A fiação dele fica livre, por decisão do dono.
+
+**O 1º andar passou a ser ditado célula a célula** em 2026-09-01, depois de percorrido em jogo: 28 portais, onze deles novos e de raio 2, cada um com a célula de destino escrita. Ele sai do `PORTAIS_MANUAIS` da ferramenta e não mais de `ARCOS` mais corrente. **Falta ver em jogo**, e há um ponto para olhar: o portal de `156,26` desembarca em `121,100`, a uma célula do gatilho do portal novo de `124,100` — um passo para leste e o jogador é levado embora.
+
+**O 2º andar passou a ter portal na parede** em 2026-09-02: o de ida na parede que dá para a sala seguinte e o de volta (raio 2) na que dá para a anterior, dez de cada. Os arcos do `.rsw` deixaram de ser usados nesse andar - as salas de lá têm um arco só, e quase nunca na parede certa.
+
+**E ele ficou sem portal de expulsão**, o que virou decisão em 2026-09-02: fica assim. Só o 1º andar tem expulsão, e são três.
+
+**Duas salas do 2º andar têm um portal fora de marcação**, e é por falta de marcação: a Sala Sudeste e o Vestíbulo têm **um arco só** e precisam de dois portais cada. Na Sudeste ficou de fora o de ida (parede norte, `173,40`); no Vestíbulo, a escada (parede oeste, `11,177`). Se incomodar em jogo, a saída é pôr os dois na mesma marcação em paredes opostas ou aceitar o portal solto.
+
+**O 3º andar ainda não recebeu o tratamento de posição.** Ele usa os arcos (agora corretos) com fiação sorteada, e a chegada dele ainda é uma por sala, não uma por travessia.
+
+**A Mente Maligna deixou de ser drop.** Desde 2026-09-02 o labirinto inteiro tem `nomobloot` — sem drop nos três andares, inclusive dos sete de Bio 4 — e a Mente vem do **evento de morte** dos seis heróis, a 25%. **Falta ver em jogo:** matar um dos seis no 3º andar e confirmar que a Mente cai (e que nada mais cai); e matar um de Bio 4 lá e confirmar que não larga nada. O número mora em `MENTE_CHANCE`, na ferramenta.
+
+**E a densidade do 3º andar dobrou:** 338 monstros, dos quais 156 com 1 a 1,6 milhão de HP. Nunca foi jogado — é o número mais provável de precisar de outra volta.
+
+**O que nenhum print vai dizer** é para onde vão os arcos que sobram — o
+desenho só traz o caminho que resolve. No 2º andar são nove arcos de ruído, e
+esses continuam sorteados com semente fixa.
+
+### A economia: as duas Valquírias estão escritas, o Gerente não
+
+**Valquíria Mega** (`malangdo 204,147`) e **Valquíria Cena** (`207,147`) foram
+escritas em 2026-09-01, em `npc/guerra/valquirias_de_malangdo.txt`, e os quatro
+itens `[MEGA]` que faltavam nasceram na décima leva de
+`db/guerra/item_db.yml`. **Nada disso foi visto em jogo.**
+
+O que precisa de teste, e é o tipo de coisa que só a tela mostra:
+
+- **A Mega transformando de verdade.** Vestir um dos dez originais no `+12`,
+  pagar, e conferir que a peça `[MEGA]` volta com **o mesmo refino, a mesma
+  carta, o mesmo grau de encanto e os mesmos bônus aleatórios**. É o caminho
+  `delequip` + `getitem4`, e é onde um campo esquecido some calado.
+- **A falha da Mega.** 15% de sucesso quer dizer que o caminho normal é
+  falhar: conferir que na falha a peça continua intacta e o pagamento some.
+- **A Cena empilhando os três encantos**, e que o `1º` sai da coluna 1, o `2º`
+  da 2 e o `3º` da 3 — e que nenhum deles come a cova 0, que é da carta.
+- **A Cena no `+13`.** É onde a tabela troca: Robe Gelado puxa a lista física
+  e Vestimenta de Seda / Vestes de Cardeal puxam a mágica. Um teste em cada
+  lado prova as duas metades.
+- **O reset cobrando com a peça limpa.** É regra do bRO e está mantida de
+  propósito; o que se quer ver é a NPC dizendo "0 encantos" **antes** de
+  cobrar.
+- **As quatro guardas.** Tirar a peça no meio do diálogo, ou trocá-la, tem de
+  cair numa das três `F_IsEquip*Hack` sem cobrar nada.
+- **Os quatro itens novos.** `@item 810012`, `510065`, `550074`, `590042` e
+  ler a descrição — vão aparecer **sem nome** até o patch de cliente.
+
+### O Gerente, que não foi escrito
+
+O terceiro NPC do bRO (`malangdo 206,145`) vendia *"armas por 150 Frutas dos
+Gatos"* e **nenhuma fonte diz quais armas** — nem a wiki, nem as três notícias
+arquivadas. Sem a lista não há o que escrever, e inventar uma vitrine é a
+regra 3 ao contrário.
+
+Se a ideia for abrir mesmo assim, a leitura que faz sentido é ele vender os
+**quatro originais** que a Mega transforma e que hoje só existem em vitrine de
+Prontera — Velho Rifle, Ninjaken, Vara Morta e Mangual Ogro. Mas isso é
+desenho nosso, não do bRO, e é decisão do dono.
+
+### Uma correção barata que ficou de fora
+
+O `AegisName` do **510064** aqui é `Ninjaken`, e o oficial (jRO, pelo
+Divine-Pride) é **`Spiritual_Dagger`** — foi palpite de uma leva anterior,
+quando o nome oficial não estava ao alcance. O mesmo vale para o **810011**,
+que aqui é `Old_Rifle` e lá é `Assault_Rifle_89`.
+
+Não foi trocado porque `AegisName` é o que scripts usam para achar o item, e a
+troca é mexida de risco por ganho nenhum hoje. Fica registrado porque agora
+sabemos o nome certo, e os quatro `[MEGA]` que entraram em 2026-09-01 já usam
+os oficiais.
+
+### Duas coisas para decidir quando isto for testado
+
+- **O pedágio de 3.000.000z** (1M por andar) é o do bRO, e a nossa economia não
+  é a dele — as lojas de Prontera vendem e recompram a 1 zeny justamente para
+  não fabricar dinheiro (§4.16). O número está em **um lugar só**, o `.Preco`
+  do `OnInit` de `npc/guerra/labirinto_das_valquirias.txt`.
+- **Não há `nopenalty`**: morrer lá custa EXP como em qualquer lugar, depois de
+  ter pago o pedágio. Foi decisão, e é uma linha ao lado das outras se mudar.

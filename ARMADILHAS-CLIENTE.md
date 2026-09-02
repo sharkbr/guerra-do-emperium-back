@@ -604,3 +604,36 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   **decodificar por força bruta** — a combinação que der Coreano com sentido é a
   resposta. E quando uma palavra fecha, **procurar essa palavra pelo cliente**:
   foi o contexto do arquivo, não o print, que derrubou a leitura errada.
+
+
+## O sinal do Z do `.rsw`, e o mapa simétrico que esconde o erro
+
+**Sintoma.** Os portais de um labirinto nasceram todos alguns metros ao lado
+das marcações de pedra que o próprio mapa desenha no chão — seis salas
+seguidas, cada uma com o portal deslocado entre 6 e 15 células. E no mapa
+anterior, com a mesma conta, estava tudo certo.
+
+**A conta.** Posição de modelo no `.rsw` para célula de `.gat`:
+
+```
+célula_x = largura/2 + pos.x / 5
+célula_y = altura/2  + pos.z / 5
+```
+
+O `pos.z` entra com **`+`**. Com `-` a tabela sai espelhada no eixo
+norte–sul.
+
+**Por que passou despercebido.** O primeiro mapa em que a conta foi usada, o
+`force_map1`, é **simétrico de cima para baixo**. O conjunto de marcações
+espelhado cai em cima de si mesmo: o que muda é só de que sala cada uma é
+(a 1 troca com a 5, a 6 com a 8, a 7 com a 9). Tudo parecia certo, e ficou
+certo o suficiente para a peça ser aprovada em jogo. No `force_map2`, que não
+é simétrico, o erro apareceu na primeira vez que alguém entrou.
+
+**A régua que decide, e ela vem no próprio arquivo:** os **pilares**. O mesmo
+`.rsw` traz 82 modelos de pilar no 1º andar e 72 no 2º, e pilar é célula
+**fechada** no `.gat`. Com `+` a conta acerta 82 de 82 e 72 de 72; com `-`,
+70 e 50. Não há o que discutir depois disso.
+
+E os dois sinais de `x` empatam no mapa simétrico (82 de 82 nos dois) — só o
+segundo mapa desempata. **Validar num mapa simétrico não valida nada.**

@@ -1,0 +1,923 @@
+//===== Guerra do Emperium ===================================
+//= Labirinto das Valquirias
+//===== ARQUIVO GERADO =======================================
+//= NAO EDITAR A MAO. Sai inteiro de ferramentas/monta_labirinto.py,
+//= e a proxima rodada reescreve tudo.
+//=
+//= Volume de monstro, renascimento, fiacao dos portais e
+//= pedagio sao cada um UMA constante no topo daquela
+//= ferramenta.
+//===== Onde =================================================
+//= A porta: malangdo 211,155 - o Portal, que se CLICA.
+//= 1o andar: force_map1  chegada  99,18  (Atrio da Estatua)
+//= 2o andar: force_map2  chegada  25,25  (Sala Sudoeste)
+//= 3o andar: force_map3  chegada  99,178 (Grande Galeria Norte)
+//= A volta, de toda saida: malangdo 210,150.
+//===== Descricao ============================================
+//= Tres andares de salas que NAO SE TOCAM. Nao ha corredor
+//= entre elas, nao ha porta: cada sala e uma ilha, e todo
+//= deslocamento e por portal. Alguns portais levam a outra
+//= sala, alguns devolvem o jogador para Malangdo, e um por
+//= andar leva ao andar de baixo - cobrando de novo.
+//=
+//= Andares 1 e 2: os monstros do Biolaboratorio 3. Dao EXP e
+//= NAO largam nada. Andar 3: os seis herois selados, que sao
+//= a unica fonte da Mente Maligna.
+//===== O PORTAL FICA EM CIMA DO ARCO ========================
+//= O mapa TRAZ os pontos de portal desenhados. O semicirculo
+//= de pedra que aparece no chao encostado nas paredes e um
+//= modelo 3D plantado no .rsw, e o nome dele em coreano
+//= significa, ao pe da letra, "dispositivo de warp
+//= semicircular". Sao 22 no 1o andar, 25 no 2o e 40 no 3o -
+//= o autor do mapa marcou onde cada warp devia ficar.
+//=
+//= As duas primeiras versoes deste arquivo escolhiam a celula
+//= por conta propria e erraram as duas: o portal caia no meio
+//= do chao liso com o semicirculo vazio a dez celulas dali.
+//= Agora cada portal esta EM CIMA de um arco, e a tabela de
+//= cada andar diz qual.
+//=
+//= AS SALAS SEM ARCO FICAM FORA DO LABIRINTO: as quatro
+//= camaras seladas do 1o andar (aquelas que se enxerga de
+//= dentro do anel e nao se alcanca) e a camara do sul do 3o.
+//= O autor do mapa nao plantou warp em nenhuma delas.
+//===== O QUE E DO bRO E O QUE E NOSSO =======================
+//= DO bRO, confirmado: o mapa (force_map1/2/3, identificado
+//= pelo minimapa de uma screenshot da noticia oficial de 2023
+//= comparada contra os 761 minimapas do GRF do bRO); os tres
+//= andares; o pedagio de 1.000.000z por andar; nao gravar
+//= Portal e nao teleportar; os portais que expulsam do mapa;
+//= e a Mente Maligna so no terceiro andar.
+//=
+//= DO MAPA, que e a fonte mais forte que existe para isto: a
+//= POSICAO de cada portal.
+//=
+//= NOSSO, e nao ha como ser diferente: A FIACAO - qual portal
+//= leva a qual sala. Isso morreu com o evento. Nem o wiki, nem
+//= as tres noticias oficiais arquivadas, nem o cliente
+//= guardam essa informacao, porque ela so existia no script do
+//= servidor do bRO, que fechou em 2026-07-29.
+//===== Como a fiacao daqui foi montada ======================
+//= Sorteio com SEMENTE FIXA, para o labirinto nao mudar a cada
+//= rodada da ferramenta.
+//=
+//= A CORRENTE E O QUE GARANTE QUE DA PARA SAIR: o primeiro
+//= arco de cada sala liga a proxima da corrente, e a corrente
+//= passa por TODAS as salas com arco a partir da entrada.
+//= Existe sempre um caminho, e ele atravessa o andar inteiro.
+//= O ultimo elo e a escada.
+//=
+//= Os arcos que sobram sao o ruido: levam a uma sala sorteada,
+//= e um em cada quatro expulsa para Malangdo. Sao eles que
+//= fazem o labirinto ser labirinto.
+//===== As tres arenas vazias ================================
+//= force_map1, force_map2 e force_map3 sao mapas que a Gravity
+//= desenhou e nunca usou. O rAthena os traz COMENTADOS em
+//= conf/maps_athena.conf (linhas 19-21). Quem os liga e
+//= conf/guerra/mapas_guerra.txt, por um `import:` no rodape
+//= daquele arquivo.
+//=
+//= NAO PRECISA DE PATCH DE CLIENTE: os tres mapas ja estao no
+//= data.grf deste cliente, minimapa incluso.
+//===== Onde o jogador desembarca ============================
+//= Na celula mais aberta da sala, e a pelo menos quatro
+//= celulas de qualquer portal dela. As duas exigencias vieram
+//= de relato em jogo: chegada colada na parede nao deixa ver
+//= para onde ir, e chegada ao lado de um portal faz o primeiro
+//= passo teleportar - "as vezes ao passar de um portal pro
+//= outro eu apareco quase no meio do novo portal".
+//===== As areas de spawn nao sao o retangulo obvio ==========
+//= `<xs>,<ys>` de spawn e RAIO+1, nao lado: o mob_spawn chama
+//= map_search_freecell com xs-1 (src/map/mob.cpp:1149). Cada
+//= area foi recortada para caber DENTRO da caixa da sala, e o
+//= centro de cada uma e celula andavel - nove salas tem pilar
+//= bem no meio da caixa.
+//=
+//= Os quatro aneis do 1o andar nascem em DOIS BRACOS cada um,
+//= porque area que cubra o anel inteiro poe monstro dentro da
+//= camara selada, que e outra sala: o map_search_freecell olha
+//= se a celula e andavel, nunca se da para chegar nela.
+//=
+//= E NAO SE USA `0,0`: os tres mapas tem uma moldura andavel de
+//= 399 celulas na borda, solta do resto.
+//===== O monstro e ALEATORIO, e esta em TODA sala ===========
+//= Os seis tipos entram em todas as salas do labirinto,
+//= inclusive a de chegada. O que muda de sala para sala e so a
+//= quantidade.
+//===== As duas regras que mudamos ===========================
+//= O bRO dizia "os monstros nao dao EXP e nem dropam nenhum
+//= outro item". Decisao do dono em 2026-09-01: EXP FICA nos
+//= tres andares; DROP SAI, mas so nos andares 1 e 2 e por
+//= MAPFLAG (`nomobloot`), nunca por mob_db - tirar o drop dos
+//= monstros de Biolaboratorio 3 no mob_db tiraria o drop em
+//= lhz_dun03 tambem (CLAUDE.md 4.16).
+//=
+//= O 3o andar NAO tem `nomobloot`, e nao pode ter: e ele que
+//= deixa a Mente Maligna cair, hoje a 25%.
+//===== As regras dos tres mapas =============================
+//=   nomemo  noteleport  nosave  nobranch  (+ nomobloot em 1 e 2)
+//=
+//= O `nosave` NAO E ENFEITE: sem ele, deslogar dentro e voltar
+//= depois pula o pedagio do andar.
+//===== O renascimento =======================================
+//= 30 segundos nos andares 1 e 2, 60 no 3o, sem variacao.
+//============================================================
+
+
+//============================================================
+// O controlador: o pedagio, o ponto de volta e a Mente Maligna
+//
+// A MENTE NAO E DROP. Os tres andares tem `nomobloot` - o
+// labirinto e sem drop, e isso vale tambem para os sete de Bio
+// 4, que fora daqui largam oito itens cada. Entao ela vem do
+// evento de morte dos seis herois, abaixo.
+//
+// QUEM RECEBE E QUEM DEU O ULTIMO GOLPE: o mob_npc_event_type
+// deste servidor e 1 (conf/battle/monster.conf:266). Mesma
+// regra do Corredor Fantasma.
+//
+// `rand(100) < 25` e 25% cravado - o rand(100) do rAthena
+// devolve 0..99.
+//
+// MOCHILA CHEIA LARGA NO CHAO: o `getitem` chama pc_additem e,
+// se nao couber, o item cai aos pes de quem matou. E o que se
+// quer aqui - melhor no chao do que evaporar.
+//============================================================
+-	script	labirinto_valquirias	-1,{
+	end;
+
+OnHeroiMorto:
+	if (rand(100) < .MenteChance)
+		getitem .MenteId, 1;
+	end;
+
+OnInit:
+	.Preco = 1000000;
+	.Volta$ = "malangdo";
+	.VoltaX = 210;
+	.VoltaY = 150;
+	.MenteId = 7583;
+	.MenteChance = 25;
+	end;
+}
+
+//============================================================
+// A porta, em Malangdo
+//
+// O bRO punha o Portal em malangdo 209,153 e mandava CLICAR
+// nele. Aquela celula e FECHADA no nosso map_cache; 211,155 e a
+// livre mais proxima com as nove vizinhas livres. Sprite
+// `PORTAL` (10007), e nao o 45, que e sprite de warp: este e
+// NPC de clicar.
+//============================================================
+malangdo,211,155,4	script	Portal das Valquírias	PORTAL,{
+	.@preco = getvariableofnpc(.Preco, "labirinto_valquirias");
+	mes "[Portal das Valquírias]";
+	mes "O ar range e se abre. Do outro lado há pedra escura, tochas presas em pedestais e um silêncio que não é deste lugar.";
+	next;
+	mes "[Portal das Valquírias]";
+	mes "As guerreiras de Asgard cobram pela passagem. " + callfunc("F_InsertComma", .@preco) + " zeny para pisar no primeiro andar.";
+	next;
+	mes "[Portal das Valquírias]";
+	mes "Uma coisa antes: lá dentro as salas não se tocam. Não há corredor, não há porta. Só portais — e eles não devem satisfação a ninguém sobre onde vão dar.";
+	next;
+	if (select("Pagar e atravessar:Ficar onde estou") == 2) {
+		mes "[Portal das Valquírias]";
+		mes "Sábio.";
+		close;
+	}
+	if (Zeny < .@preco) {
+		mes "[Portal das Valquírias]";
+		mes "Você não tem os " + callfunc("F_InsertComma", .@preco) + " zeny. O rasgo se fecha um pouco, como quem perde o interesse.";
+		close;
+	}
+	Zeny -= .@preco;
+	mes "[Portal das Valquírias]";
+	mes "Boa sorte. Você vai precisar.";
+	close2;
+	warp "force_map1", 99, 18;
+	end;
+}
+
+//============================================================
+// A descida para o segundo andar - fica na Encruzilhada (sala 2), em cima
+// de um arco, como todo portal deste labirinto. Sprite
+// `PORTAL`: tambem se clica.
+//============================================================
+force_map1,99,123,4	script	Escada para o Segundo Andar	PORTAL,{
+	.@preco = getvariableofnpc(.Preco, "labirinto_valquirias");
+	mes "[Escada]";
+	mes "Os degraus descem para o escuro.";
+	next;
+	mes "[Escada]";
+	mes "Descer custa mais " + callfunc("F_InsertComma", .@preco) + " zeny.";
+	next;
+	if (select("Descer:Voltar atrás") == 2) {
+		mes "[Escada]";
+		mes "Os degraus continuam aí.";
+		close;
+	}
+	if (Zeny < .@preco) {
+		mes "[Escada]";
+		mes "Faltam zeny. A escada não negocia.";
+		close;
+	}
+	Zeny -= .@preco;
+	close2;
+	warp "force_map2", 25, 25;
+	end;
+}
+
+//============================================================
+// A descida para o terceiro andar - fica na Vestibulo (sala 11), em cima
+// de um arco, como todo portal deste labirinto. Sprite
+// `PORTAL`: tambem se clica.
+//============================================================
+force_map2,11,177,4	script	Escada para o Terceiro Andar	PORTAL,{
+	.@preco = getvariableofnpc(.Preco, "labirinto_valquirias");
+	mes "[Escada]";
+	mes "Os degraus descem para o escuro.";
+	next;
+	mes "[Escada]";
+	mes "Descer custa mais " + callfunc("F_InsertComma", .@preco) + " zeny.";
+	next;
+	mes "[Escada]";
+	mes "Não há escada de volta. Do terceiro andar só se sai pelos portais que expulsam.";
+	next;
+	if (select("Descer:Voltar atrás") == 2) {
+		mes "[Escada]";
+		mes "Os degraus continuam aí.";
+		close;
+	}
+	if (Zeny < .@preco) {
+		mes "[Escada]";
+		mes "Faltam zeny. A escada não negocia.";
+		close;
+	}
+	Zeny -= .@preco;
+	close2;
+	warp "force_map3", 99, 178;
+	end;
+}
+
+//============================================================
+// As regras dos tres mapas. O `nomobloot` esta nos TRES: o
+// labirinto inteiro e sem drop. A Mente Maligna nao passa por
+// ele porque nao e drop - e o evento de morte dos seis herois,
+// no OnHeroiMorto la em cima.
+//============================================================
+force_map1	mapflag	nomemo
+force_map1	mapflag	noteleport
+force_map1	mapflag	nosave	malangdo,210,150
+force_map1	mapflag	nobranch
+force_map1	mapflag	nomobloot
+
+force_map2	mapflag	nomemo
+force_map2	mapflag	noteleport
+force_map2	mapflag	nosave	malangdo,210,150
+force_map2	mapflag	nobranch
+force_map2	mapflag	nomobloot
+
+force_map3	mapflag	nomemo
+force_map3	mapflag	noteleport
+force_map3	mapflag	nosave	malangdo,210,150
+force_map3	mapflag	nobranch
+force_map3	mapflag	nomobloot
+
+//============================================================
+// 1o ANDAR - force_map1
+//
+// PLANTA MANUAL: cada portal e cada destino foram ditados pelo
+// levantamento em jogo, celula por celula. Nao ha corrente
+// sorteada aqui.
+//
+// chegada do andar: 99,18
+//
+//   portal    raio  sala             ->  destino
+//    63,26     1   Atrio da Estatua ->   10,19   (sala 6)
+//   134,26     1   Atrio da Estatua ->   99,18   (sala 1)
+//   100,81     1   Encruzilhada     ->  173,10   (sala 7)
+//    99,123    1   Encruzilhada     ->  a ESCADA (NPC, nao e warp)
+//    26,66     1   Corredor Oeste   ->   99,18   (sala 1)
+//    26,134    1   Corredor Oeste   ->   26,161  (sala 8)
+//   174,66     1   Corredor Leste   ->  174,38   (sala 7)
+//   174,134    1   Corredor Leste   ->  EXPULSA para malangdo 210,150
+//    65,174    1   Galeria Norte    ->  173,10   (sala 7)
+//   134,174    1   Galeria Norte    ->  161,175  (sala 9)
+//    26,44     1   Anel Sudoeste    ->   26,72   (sala 3)
+//    44,26     1   Anel Sudoeste    ->   25,99   (sala 3)
+//   156,26     1   Anel Sudeste     ->  121,100  (sala 2)
+//   174,44     1   Anel Sudeste     ->  EXPULSA para malangdo 210,150
+//    26,156    1   Anel Noroeste    ->   99,18   (sala 1)
+//    44,174    1   Anel Noroeste    ->   71,174  (sala 5)
+//   156,174    1   Anel Nordeste    ->   19,158  (sala 8)
+//   174,156    1   Anel Nordeste    ->  174,128  (sala 4)
+//   192,26     2   Anel Sudeste     ->   26,161  (sala 8)
+//    74,100    2   Encruzilhada     ->   70,174  (sala 5)
+//   124,100    2   Encruzilhada     ->  130,26   (sala 1)
+//   100,54     2   Atrio da Estatua ->   99,18   (sala 1)
+//     7,27     2   Anel Sudoeste    ->   99,18   (sala 1)
+//     8,173    2   Anel Noroeste    ->   26,73   (sala 3)
+//    25,192    2   Anel Noroeste    ->   39,26   (sala 6)
+//   174,192    2   Anel Nordeste    ->   70,174  (sala 5)
+//   191,175    2   Anel Nordeste    ->   26,73   (sala 3)
+//    25,8      2   Anel Sudoeste    ->   99,18   (sala 1)
+//    99,11     2   Atrio da Estatua ->  EXPULSA para malangdo 210,150
+//============================================================
+force_map1,63,26,0	warp	lv1p00	1,1,force_map1,10,19
+force_map1,134,26,0	warp	lv1p01	1,1,force_map1,99,18
+force_map1,100,81,0	warp	lv1p02	1,1,force_map1,173,10
+force_map1,26,66,0	warp	lv1p04	1,1,force_map1,99,18
+force_map1,26,134,0	warp	lv1p05	1,1,force_map1,26,161
+force_map1,174,66,0	warp	lv1p06	1,1,force_map1,174,38
+force_map1,174,134,0	warp	lv1p07	1,1,malangdo,210,150
+force_map1,65,174,0	warp	lv1p08	1,1,force_map1,173,10
+force_map1,134,174,0	warp	lv1p09	1,1,force_map1,161,175
+force_map1,26,44,0	warp	lv1p10	1,1,force_map1,26,72
+force_map1,44,26,0	warp	lv1p11	1,1,force_map1,25,99
+force_map1,156,26,0	warp	lv1p12	1,1,force_map1,121,100
+force_map1,174,44,0	warp	lv1p13	1,1,malangdo,210,150
+force_map1,26,156,0	warp	lv1p14	1,1,force_map1,99,18
+force_map1,44,174,0	warp	lv1p15	1,1,force_map1,71,174
+force_map1,156,174,0	warp	lv1p16	1,1,force_map1,19,158
+force_map1,174,156,0	warp	lv1p17	1,1,force_map1,174,128
+force_map1,192,26,0	warp	lv1p18	2,2,force_map1,26,161
+force_map1,74,100,0	warp	lv1p19	2,2,force_map1,70,174
+force_map1,124,100,0	warp	lv1p20	2,2,force_map1,130,26
+force_map1,100,54,0	warp	lv1p21	2,2,force_map1,99,18
+force_map1,7,27,0	warp	lv1p22	2,2,force_map1,99,18
+force_map1,8,173,0	warp	lv1p23	2,2,force_map1,26,73
+force_map1,25,192,0	warp	lv1p24	2,2,force_map1,39,26
+force_map1,174,192,0	warp	lv1p25	2,2,force_map1,70,174
+force_map1,191,175,0	warp	lv1p26	2,2,force_map1,26,73
+force_map1,25,8,0	warp	lv1p27	2,2,force_map1,99,18
+force_map1,99,11,0	warp	lv1p28	2,2,malangdo,210,150
+
+// OS MONSTROS. Os seis tipos em TODA sala do labirinto - o
+// que muda e a quantidade. NAO PONHA COMENTARIO NO FIM
+// DESTAS LINHAS: o npc_parsesrcfile enche o w4 ate o fim da
+// linha e o comentario entra dentro do nome do evento.
+force_map1,99,32,37,23	monster	--ja--	1634,5,30000,0
+force_map1,99,32,37,23	monster	--ja--	1635,5,30000,0
+force_map1,99,32,37,23	monster	--ja--	1636,5,30000,0
+force_map1,99,32,37,23	monster	--ja--	1637,5,30000,0
+force_map1,99,32,37,23	monster	--ja--	1638,5,30000,0
+force_map1,99,32,37,23	monster	--ja--	1639,5,30000,0
+force_map1,99,103,27,23	monster	--ja--	1634,5,30000,0
+force_map1,99,103,27,23	monster	--ja--	1635,5,30000,0
+force_map1,99,103,27,23	monster	--ja--	1636,5,30000,0
+force_map1,99,103,27,23	monster	--ja--	1637,5,30000,0
+force_map1,99,103,27,23	monster	--ja--	1638,5,30000,0
+force_map1,99,103,27,23	monster	--ja--	1639,5,30000,0
+force_map1,25,99,7,35	monster	--ja--	1634,5,30000,0
+force_map1,25,99,7,35	monster	--ja--	1635,5,30000,0
+force_map1,25,99,7,35	monster	--ja--	1636,5,30000,0
+force_map1,25,99,7,35	monster	--ja--	1637,5,30000,0
+force_map1,25,99,7,35	monster	--ja--	1638,5,30000,0
+force_map1,25,99,7,35	monster	--ja--	1639,5,30000,0
+force_map1,173,99,7,35	monster	--ja--	1634,5,30000,0
+force_map1,173,99,7,35	monster	--ja--	1635,5,30000,0
+force_map1,173,99,7,35	monster	--ja--	1636,5,30000,0
+force_map1,173,99,7,35	monster	--ja--	1637,5,30000,0
+force_map1,173,99,7,35	monster	--ja--	1638,5,30000,0
+force_map1,173,99,7,35	monster	--ja--	1639,5,30000,0
+force_map1,99,173,35,7	monster	--ja--	1634,5,30000,0
+force_map1,99,173,35,7	monster	--ja--	1635,5,30000,0
+force_map1,99,173,35,7	monster	--ja--	1636,5,30000,0
+force_map1,99,173,35,7	monster	--ja--	1637,5,30000,0
+force_map1,99,173,35,7	monster	--ja--	1638,5,30000,0
+force_map1,99,173,35,7	monster	--ja--	1639,5,30000,0
+force_map1,11,25,5,19	monster	--ja--	1634,2,30000,0
+force_map1,11,25,5,19	monster	--ja--	1635,2,30000,0
+force_map1,11,25,5,19	monster	--ja--	1636,2,30000,0
+force_map1,11,25,5,19	monster	--ja--	1637,2,30000,0
+force_map1,11,25,5,19	monster	--ja--	1638,2,30000,0
+force_map1,11,25,5,19	monster	--ja--	1639,2,30000,0
+force_map1,40,25,5,19	monster	--ja--	1634,2,30000,0
+force_map1,40,25,5,19	monster	--ja--	1635,2,30000,0
+force_map1,40,25,5,19	monster	--ja--	1636,2,30000,0
+force_map1,40,25,5,19	monster	--ja--	1637,2,30000,0
+force_map1,40,25,5,19	monster	--ja--	1638,2,30000,0
+force_map1,40,25,5,19	monster	--ja--	1639,2,30000,0
+force_map1,159,25,5,19	monster	--ja--	1634,2,30000,0
+force_map1,159,25,5,19	monster	--ja--	1635,2,30000,0
+force_map1,159,25,5,19	monster	--ja--	1636,2,30000,0
+force_map1,159,25,5,19	monster	--ja--	1637,2,30000,0
+force_map1,159,25,5,19	monster	--ja--	1638,2,30000,0
+force_map1,159,25,5,19	monster	--ja--	1639,2,30000,0
+force_map1,188,25,5,19	monster	--ja--	1634,2,30000,0
+force_map1,188,25,5,19	monster	--ja--	1635,2,30000,0
+force_map1,188,25,5,19	monster	--ja--	1636,2,30000,0
+force_map1,188,25,5,19	monster	--ja--	1637,2,30000,0
+force_map1,188,25,5,19	monster	--ja--	1638,2,30000,0
+force_map1,188,25,5,19	monster	--ja--	1639,2,30000,0
+force_map1,11,173,5,19	monster	--ja--	1634,2,30000,0
+force_map1,11,173,5,19	monster	--ja--	1635,2,30000,0
+force_map1,11,173,5,19	monster	--ja--	1636,2,30000,0
+force_map1,11,173,5,19	monster	--ja--	1637,2,30000,0
+force_map1,11,173,5,19	monster	--ja--	1638,2,30000,0
+force_map1,11,173,5,19	monster	--ja--	1639,2,30000,0
+force_map1,40,173,5,19	monster	--ja--	1634,2,30000,0
+force_map1,40,173,5,19	monster	--ja--	1635,2,30000,0
+force_map1,40,173,5,19	monster	--ja--	1636,2,30000,0
+force_map1,40,173,5,19	monster	--ja--	1637,2,30000,0
+force_map1,40,173,5,19	monster	--ja--	1638,2,30000,0
+force_map1,40,173,5,19	monster	--ja--	1639,2,30000,0
+force_map1,159,173,5,19	monster	--ja--	1634,2,30000,0
+force_map1,159,173,5,19	monster	--ja--	1635,2,30000,0
+force_map1,159,173,5,19	monster	--ja--	1636,2,30000,0
+force_map1,159,173,5,19	monster	--ja--	1637,2,30000,0
+force_map1,159,173,5,19	monster	--ja--	1638,2,30000,0
+force_map1,159,173,5,19	monster	--ja--	1639,2,30000,0
+force_map1,188,173,5,19	monster	--ja--	1634,2,30000,0
+force_map1,188,173,5,19	monster	--ja--	1635,2,30000,0
+force_map1,188,173,5,19	monster	--ja--	1636,2,30000,0
+force_map1,188,173,5,19	monster	--ja--	1637,2,30000,0
+force_map1,188,173,5,19	monster	--ja--	1638,2,30000,0
+force_map1,188,173,5,19	monster	--ja--	1639,2,30000,0
+// 246 monstros neste andar
+
+//============================================================
+// 2o ANDAR - force_map2
+//
+// PLANTA MANUAL: cada portal e cada destino foram ditados pelo
+// levantamento em jogo, celula por celula. Nao ha corrente
+// sorteada aqui.
+//
+// chegada do andar: 25,25
+//
+//   portal    raio  sala             ->  destino
+//    40,26     1   Sala Sudoeste    ->   92,31   (sala 9)
+//   114,26     1   Sala do Sul      ->  165,20   (sala 4)
+//    86,26     2   Sala do Sul      ->   35,21   (sala 3)
+//   173,40     1   Sala Sudeste     ->  173,63   (sala 6)
+//   160,26     2   Sala Sudeste     ->  109,29   (sala 9)
+//   160,78     1   Sala Leste       ->  114,72   (sala 7)
+//   174,92     2   Sala Leste       ->  173,35   (sala 4)
+//    86,78     1   Sala do Centro   ->   34,77   (sala 5)
+//   114,78     2   Sala do Centro   ->  165,77   (sala 6)
+//    26,92     1   Sala Oeste       ->   32,122  (sala 2)
+//    40,78     2   Sala Oeste       ->   85,73   (sala 7)
+//    50,132    1   Salao Noroeste   ->   85,129  (sala 10)
+//    26,116    2   Salao Noroeste   ->   33,92   (sala 5)
+//   108,144    1   Sala Central-Nor ->  159,129  (sala 1)
+//    92,128    2   Sala Central-Nor ->   41,129  (sala 2)
+//   160,178    1   Grande Salao Nor ->  130,177  (sala 8)
+//   174,116    2   Grande Salao Nor ->  111,139  (sala 10)
+//    56,178    1   Galeria do Norte ->   26,174  (sala 11)
+//   136,178    2   Galeria do Norte ->  165,174  (sala 1)
+//    11,177    1   Vestibulo        ->  a ESCADA (NPC, nao e warp)
+//    32,178    2   Vestibulo        ->   61,177  (sala 8)
+//============================================================
+force_map2,40,26,0	warp	lv2p00	1,1,force_map2,92,31
+force_map2,114,26,0	warp	lv2p01	1,1,force_map2,165,20
+force_map2,86,26,0	warp	lv2p02	2,2,force_map2,35,21
+force_map2,173,40,0	warp	lv2p03	1,1,force_map2,173,63
+force_map2,160,26,0	warp	lv2p04	2,2,force_map2,109,29
+force_map2,160,78,0	warp	lv2p05	1,1,force_map2,114,72
+force_map2,174,92,0	warp	lv2p06	2,2,force_map2,173,35
+force_map2,86,78,0	warp	lv2p07	1,1,force_map2,34,77
+force_map2,114,78,0	warp	lv2p08	2,2,force_map2,165,77
+force_map2,26,92,0	warp	lv2p09	1,1,force_map2,32,122
+force_map2,40,78,0	warp	lv2p10	2,2,force_map2,85,73
+force_map2,50,132,0	warp	lv2p11	1,1,force_map2,85,129
+force_map2,26,116,0	warp	lv2p12	2,2,force_map2,33,92
+force_map2,108,144,0	warp	lv2p13	1,1,force_map2,159,129
+force_map2,92,128,0	warp	lv2p14	2,2,force_map2,41,129
+force_map2,160,178,0	warp	lv2p15	1,1,force_map2,130,177
+force_map2,174,116,0	warp	lv2p16	2,2,force_map2,111,139
+force_map2,56,178,0	warp	lv2p17	1,1,force_map2,26,174
+force_map2,136,178,0	warp	lv2p18	2,2,force_map2,165,174
+force_map2,32,178,0	warp	lv2p20	2,2,force_map2,61,177
+
+// OS MONSTROS. Os seis tipos em TODA sala do labirinto - o
+// que muda e a quantidade. NAO PONHA COMENTARIO NO FIM
+// DESTAS LINHAS: o npc_parsesrcfile enche o w4 ate o fim da
+// linha e o comentario entra dentro do nome do evento.
+force_map2,173,151,16,38	monster	--ja--	1634,4,30000,0
+force_map2,173,151,16,38	monster	--ja--	1635,4,30000,0
+force_map2,173,151,16,38	monster	--ja--	1636,4,30000,0
+force_map2,173,151,16,38	monster	--ja--	1637,4,30000,0
+force_map2,173,151,16,38	monster	--ja--	1638,4,30000,0
+force_map2,173,151,16,38	monster	--ja--	1639,4,30000,0
+force_map2,33,129,24,16	monster	--ja--	1634,4,30000,0
+force_map2,33,129,24,16	monster	--ja--	1635,4,30000,0
+force_map2,33,129,24,16	monster	--ja--	1636,4,30000,0
+force_map2,33,129,24,16	monster	--ja--	1637,4,30000,0
+force_map2,33,129,24,16	monster	--ja--	1638,4,30000,0
+force_map2,33,129,24,16	monster	--ja--	1639,4,30000,0
+force_map2,25,25,16,16	monster	--ja--	1634,3,30000,0
+force_map2,25,25,16,16	monster	--ja--	1635,3,30000,0
+force_map2,25,25,16,16	monster	--ja--	1636,3,30000,0
+force_map2,25,25,16,16	monster	--ja--	1637,3,30000,0
+force_map2,25,25,16,16	monster	--ja--	1638,3,30000,0
+force_map2,25,25,16,16	monster	--ja--	1639,3,30000,0
+force_map2,173,25,16,16	monster	--ja--	1634,3,30000,0
+force_map2,173,25,16,16	monster	--ja--	1635,3,30000,0
+force_map2,173,25,16,16	monster	--ja--	1636,3,30000,0
+force_map2,173,25,16,16	monster	--ja--	1637,3,30000,0
+force_map2,173,25,16,16	monster	--ja--	1638,3,30000,0
+force_map2,173,25,16,16	monster	--ja--	1639,3,30000,0
+force_map2,25,75,16,14	monster	--ja--	1634,3,30000,0
+force_map2,25,75,16,14	monster	--ja--	1635,3,30000,0
+force_map2,25,75,16,14	monster	--ja--	1636,3,30000,0
+force_map2,25,75,16,14	monster	--ja--	1637,3,30000,0
+force_map2,25,75,16,14	monster	--ja--	1638,3,30000,0
+force_map2,25,75,16,14	monster	--ja--	1639,3,30000,0
+force_map2,173,75,16,14	monster	--ja--	1634,3,30000,0
+force_map2,173,75,16,14	monster	--ja--	1635,3,30000,0
+force_map2,173,75,16,14	monster	--ja--	1636,3,30000,0
+force_map2,173,75,16,14	monster	--ja--	1637,3,30000,0
+force_map2,173,75,16,14	monster	--ja--	1638,3,30000,0
+force_map2,173,75,16,14	monster	--ja--	1639,3,30000,0
+force_map2,93,75,10,14	monster	--ja--	1634,2,30000,0
+force_map2,93,75,10,14	monster	--ja--	1635,2,30000,0
+force_map2,93,75,10,14	monster	--ja--	1636,2,30000,0
+force_map2,93,75,10,14	monster	--ja--	1637,2,30000,0
+force_map2,93,75,10,14	monster	--ja--	1638,2,30000,0
+force_map2,93,75,10,14	monster	--ja--	1639,2,30000,0
+force_map2,96,180,42,7	monster	--ja--	1634,2,30000,0
+force_map2,96,180,42,7	monster	--ja--	1635,2,30000,0
+force_map2,96,180,42,7	monster	--ja--	1636,2,30000,0
+force_map2,96,180,42,7	monster	--ja--	1637,2,30000,0
+force_map2,96,180,42,7	monster	--ja--	1638,2,30000,0
+force_map2,96,180,42,7	monster	--ja--	1639,2,30000,0
+force_map2,99,26,15,14	monster	--ja--	1634,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	1635,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	1636,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	1637,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	1638,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	1639,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	1634,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	1635,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	1636,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	1637,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	1638,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	1639,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	1634,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	1635,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	1636,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	1637,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	1638,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	1639,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2221,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2222,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2223,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2224,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2225,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2226,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2227,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2221,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2222,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2223,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2224,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2225,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2226,1,30000,0
+force_map2,33,129,24,16	monster	--ja--	2227,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2221,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2222,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2223,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2224,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2225,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2226,1,30000,0
+force_map2,25,25,16,16	monster	--ja--	2227,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2221,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2222,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2223,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2224,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2225,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2226,1,30000,0
+force_map2,173,25,16,16	monster	--ja--	2227,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2221,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2222,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2223,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2224,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2225,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2226,1,30000,0
+force_map2,25,75,16,14	monster	--ja--	2227,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2221,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2222,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2223,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2224,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2225,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2226,1,30000,0
+force_map2,173,75,16,14	monster	--ja--	2227,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2221,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2222,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2223,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2224,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2225,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2226,1,30000,0
+force_map2,93,75,10,14	monster	--ja--	2227,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2221,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2222,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2223,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2224,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2225,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2226,1,30000,0
+force_map2,96,180,42,7	monster	--ja--	2227,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2221,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2222,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2223,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2224,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2225,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2226,1,30000,0
+force_map2,99,26,15,14	monster	--ja--	2227,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2221,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2222,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2223,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2224,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2225,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2226,1,30000,0
+force_map2,99,129,16,16	monster	--ja--	2227,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2221,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2222,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2223,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2224,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2225,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2226,1,30000,0
+force_map2,21,177,12,12	monster	--ja--	2227,1,30000,0
+force_map2,173,151,16,38	monster	--ja--	2667,1,60000,0
+force_map2,33,129,24,16	monster	--ja--	2667,1,60000,0
+force_map2,25,25,16,16	monster	--ja--	2667,1,60000,0
+force_map2,173,25,16,16	monster	--ja--	2667,1,60000,0
+// 243 monstros neste andar
+
+//============================================================
+// 3o ANDAR - force_map3
+//
+// 16 salas no mapa, 16 no labirinto (as outras nao tem arco).
+// A corrente que resolve o andar: 1 -> 15 -> 2 -> 8 -> 7 -> 5 -> 3 -> 13 -> 16 -> 14 -> 12 -> 9 -> 4 -> 10 -> 11 -> 6
+//
+//  sala  nome                        chegada   portais (em cima do arco)
+//    1   Grande Galeria Norte        99,178   100,166 ->15  <- entrada
+//    2   Corredor Sudoeste           56,59    20,52 ->8 | 60,68 ->9 | 68,60 ->10
+//    3   Corredor Central-Sul        99,20    92,60 ->13 | 100,12 SOBE ao 2o | 108,60 ->14
+//    4   Corredor Sudeste           140,19    132,20 ->10 | 180,28 ->1
+//    5   Corredor Leste-Central     139,60    132,100 ->3 | 140,52 ->9 | 140,108 ->9
+//    6   Corredor Central            60,99    60,92 ->1 | 60,108 ->9 | 108,100 ->9
+//    7   Corredor Nordeste          140,137   132,138 ->5 | 140,146 ->10 | 180,130 ->3
+//    8   Corredor Oeste              19,100   12,100 ->7 | 20,146 ->1 | 28,100 ->14
+//    9   Camara do Centro            99,137   92,138 SOBE ao 2o | 100,130 ->4 | 100,146 ->8 | 108,138 ->10
+//   10   Camara do Sul (sem arco)    59,14    60,28 ->11 | 68,20 ->2
+//   11   Camara Leste-Sul           179,65    172,60 ->6 | 180,52 ->1
+//   12   Camara Sudoeste             14,19    20,12 ->9 | 20,28 ->15
+//   13   Camara Leste               185,99    172,100 ->16 | 180,92 ->9 | 180,108 ->1
+//   14   Camara Oeste-Norte          54,137   60,130 ->12 | 68,138 ->13
+//   15   Camara Noroeste             19,174   20,188 ->2 | 28,180 ->7
+//   16   Camara Nordeste            185,179   172,180 ->14 | 180,172 ->11
+//============================================================
+force_map3,100,166,0	warp	lv3s010	1,1,force_map3,19,174
+force_map3,20,52,0	warp	lv3s020	1,1,force_map3,19,100
+force_map3,60,68,0	warp	lv3s021	1,1,force_map3,99,137
+force_map3,68,60,0	warp	lv3s022	1,1,force_map3,59,14
+force_map3,92,60,0	warp	lv3s030	1,1,force_map3,185,99
+force_map3,100,12,0	warp	lv3s031	1,1,force_map2,25,25
+force_map3,108,60,0	warp	lv3s032	1,1,force_map3,54,137
+force_map3,132,20,0	warp	lv3s040	1,1,force_map3,59,14
+force_map3,180,28,0	warp	lv3s041	1,1,force_map3,99,178
+force_map3,132,100,0	warp	lv3s050	1,1,force_map3,99,20
+force_map3,140,52,0	warp	lv3s051	1,1,force_map3,99,137
+force_map3,140,108,0	warp	lv3s052	1,1,force_map3,99,137
+force_map3,60,92,0	warp	lv3s060	1,1,force_map3,99,178
+force_map3,60,108,0	warp	lv3s061	1,1,force_map3,99,137
+force_map3,108,100,0	warp	lv3s062	1,1,force_map3,99,137
+force_map3,132,138,0	warp	lv3s070	1,1,force_map3,139,60
+force_map3,140,146,0	warp	lv3s071	1,1,force_map3,59,14
+force_map3,180,130,0	warp	lv3s072	1,1,force_map3,99,20
+force_map3,12,100,0	warp	lv3s080	1,1,force_map3,140,137
+force_map3,20,146,0	warp	lv3s081	1,1,force_map3,99,178
+force_map3,28,100,0	warp	lv3s082	1,1,force_map3,54,137
+force_map3,92,138,0	warp	lv3s090	1,1,force_map2,25,25
+force_map3,100,130,0	warp	lv3s091	1,1,force_map3,140,19
+force_map3,100,146,0	warp	lv3s092	1,1,force_map3,19,100
+force_map3,108,138,0	warp	lv3s093	1,1,force_map3,59,14
+force_map3,60,28,0	warp	lv3s100	1,1,force_map3,179,65
+force_map3,68,20,0	warp	lv3s101	1,1,force_map3,56,59
+force_map3,172,60,0	warp	lv3s110	1,1,force_map3,60,99
+force_map3,180,52,0	warp	lv3s111	1,1,force_map3,99,178
+force_map3,20,12,0	warp	lv3s120	1,1,force_map3,99,137
+force_map3,20,28,0	warp	lv3s121	1,1,force_map3,19,174
+force_map3,172,100,0	warp	lv3s130	1,1,force_map3,185,179
+force_map3,180,92,0	warp	lv3s131	1,1,force_map3,99,137
+force_map3,180,108,0	warp	lv3s132	1,1,force_map3,99,178
+force_map3,60,130,0	warp	lv3s140	1,1,force_map3,14,19
+force_map3,68,138,0	warp	lv3s141	1,1,force_map3,185,99
+force_map3,20,188,0	warp	lv3s150	1,1,force_map3,56,59
+force_map3,28,180,0	warp	lv3s151	1,1,force_map3,140,137
+force_map3,172,180,0	warp	lv3s160	1,1,force_map3,54,137
+force_map3,180,172,0	warp	lv3s161	1,1,force_map3,179,65
+
+// OS MONSTROS. Os seis tipos em TODA sala do labirinto - o
+// que muda e a quantidade. NAO PONHA COMENTARIO NO FIM
+// DESTAS LINHAS: o npc_parsesrcfile enche o w4 ate o fim da
+// linha e o comentario entra dentro do nome do evento.
+force_map3,99,178,32,15	monster	--ja--	1799,3,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,178,32,15	monster	--ja--	1800,3,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,178,32,15	monster	--ja--	1801,3,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,178,32,15	monster	--ja--	1802,3,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,178,32,15	monster	--ja--	1803,3,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,178,32,15	monster	--ja--	1804,3,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,39,59,30,10	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,39,59,30,10	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,39,59,30,10	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,39,59,30,10	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,39,59,30,10	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,39,59,30,10	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,39,10,30	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,39,10,30	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,39,10,30	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,39,10,30	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,39,10,30	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,39,10,30	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,19,30,10	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,19,30,10	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,19,30,10	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,19,30,10	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,19,30,10	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,19,30,10	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,139,79,10,30	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,139,79,10,30	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,139,79,10,30	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,139,79,10,30	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,139,79,10,30	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,139,79,10,30	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,79,99,30,10	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,79,99,30,10	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,79,99,30,10	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,79,99,30,10	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,79,99,30,10	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,79,99,30,10	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,137,30,10	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,137,30,10	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,137,30,10	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,137,30,10	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,137,30,10	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,159,137,30,10	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,118,10,29	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,118,10,29	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,118,10,29	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,118,10,29	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,118,10,29	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,118,10,29	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,137,10,10	monster	--ja--	1799,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,137,10,10	monster	--ja--	1800,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,137,10,10	monster	--ja--	1801,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,137,10,10	monster	--ja--	1802,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,137,10,10	monster	--ja--	1803,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,137,10,10	monster	--ja--	1804,2,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,18,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,18,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,18,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,18,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,18,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,18,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,58,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,58,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,58,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,58,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,58,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,58,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,18,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,18,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,18,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,18,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,18,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,18,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,98,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,98,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,98,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,98,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,98,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,98,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,136,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,136,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,136,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,136,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,136,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,59,136,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,178,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,178,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,178,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,178,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,178,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,19,178,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,178,10,9	monster	--ja--	1799,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,178,10,9	monster	--ja--	1800,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,178,10,9	monster	--ja--	1801,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,178,10,9	monster	--ja--	1802,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,178,10,9	monster	--ja--	1803,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,179,178,10,9	monster	--ja--	1804,1,60000,0,"labirinto_valquirias::OnHeroiMorto"
+force_map3,99,178,32,15	monster	--ja--	2221,3,60000,0
+force_map3,99,178,32,15	monster	--ja--	2222,3,60000,0
+force_map3,99,178,32,15	monster	--ja--	2223,3,60000,0
+force_map3,99,178,32,15	monster	--ja--	2224,3,60000,0
+force_map3,99,178,32,15	monster	--ja--	2225,3,60000,0
+force_map3,99,178,32,15	monster	--ja--	2226,3,60000,0
+force_map3,99,178,32,15	monster	--ja--	2227,3,60000,0
+force_map3,39,59,30,10	monster	--ja--	2221,2,60000,0
+force_map3,39,59,30,10	monster	--ja--	2222,2,60000,0
+force_map3,39,59,30,10	monster	--ja--	2223,2,60000,0
+force_map3,39,59,30,10	monster	--ja--	2224,2,60000,0
+force_map3,39,59,30,10	monster	--ja--	2225,2,60000,0
+force_map3,39,59,30,10	monster	--ja--	2226,2,60000,0
+force_map3,39,59,30,10	monster	--ja--	2227,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2221,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2222,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2223,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2224,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2225,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2226,2,60000,0
+force_map3,99,39,10,30	monster	--ja--	2227,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2221,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2222,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2223,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2224,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2225,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2226,2,60000,0
+force_map3,159,19,30,10	monster	--ja--	2227,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2221,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2222,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2223,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2224,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2225,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2226,2,60000,0
+force_map3,139,79,10,30	monster	--ja--	2227,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2221,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2222,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2223,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2224,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2225,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2226,2,60000,0
+force_map3,79,99,30,10	monster	--ja--	2227,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2221,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2222,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2223,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2224,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2225,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2226,2,60000,0
+force_map3,159,137,30,10	monster	--ja--	2227,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2221,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2222,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2223,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2224,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2225,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2226,2,60000,0
+force_map3,19,118,10,29	monster	--ja--	2227,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2221,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2222,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2223,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2224,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2225,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2226,2,60000,0
+force_map3,99,137,10,10	monster	--ja--	2227,2,60000,0
+force_map3,59,18,10,9	monster	--ja--	2221,1,60000,0
+force_map3,59,18,10,9	monster	--ja--	2222,1,60000,0
+force_map3,59,18,10,9	monster	--ja--	2223,1,60000,0
+force_map3,59,18,10,9	monster	--ja--	2224,1,60000,0
+force_map3,59,18,10,9	monster	--ja--	2225,1,60000,0
+force_map3,59,18,10,9	monster	--ja--	2226,1,60000,0
+force_map3,59,18,10,9	monster	--ja--	2227,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2221,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2222,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2223,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2224,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2225,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2226,1,60000,0
+force_map3,179,58,10,9	monster	--ja--	2227,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2221,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2222,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2223,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2224,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2225,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2226,1,60000,0
+force_map3,19,18,10,9	monster	--ja--	2227,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2221,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2222,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2223,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2224,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2225,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2226,1,60000,0
+force_map3,179,98,10,9	monster	--ja--	2227,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2221,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2222,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2223,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2224,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2225,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2226,1,60000,0
+force_map3,59,136,10,9	monster	--ja--	2227,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2221,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2222,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2223,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2224,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2225,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2226,1,60000,0
+force_map3,19,178,10,9	monster	--ja--	2227,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2221,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2222,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2223,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2224,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2225,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2226,1,60000,0
+force_map3,179,178,10,9	monster	--ja--	2227,1,60000,0
+// 338 monstros neste andar

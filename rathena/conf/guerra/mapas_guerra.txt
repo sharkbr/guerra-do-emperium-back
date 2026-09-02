@@ -1,0 +1,27 @@
+//===== Guerra do Emperium ===================================
+//= Mapas que o vendor conhece mas NAO carrega
+//===========================================================
+//= Chamado por uma linha `import:` no rodape de
+//= conf/maps_athena.conf - o unico enxerto nosso naquele
+//= arquivo. O map_config_read (src/map/map.cpp:4166 e 4206)
+//= trata `map:` e `import:` no mesmo laco, entao esta lista
+//= vale exatamente como se estivesse la dentro.
+//=
+//= POR QUE UM ARQUIVO NOSSO, e nao descomentar as linhas do
+//= vendor: mapa ligado por descomentario volta a ficar
+//= comentado na proxima atualizacao do rAthena, calado, e o
+//= sintoma aparece longe daqui - o servidor sobe, o NPC
+//= carrega, e o `warp` responde "mapa nao encontrado".
+//===== force_map1, force_map2, force_map3 ==================
+//= As tres arenas vazias que a Gravity nunca usou e que o
+//= rAthena traz comentadas em conf/maps_athena.conf (linhas
+//= 19-21). Estao no db/map_index.txt, estao no map_cache.dat
+//= e estao no GRF do nosso cliente - so nao eram carregadas.
+//=
+//= Sao os tres andares do LABIRINTO DAS VALQUIRIAS
+//= (npc/guerra/labirinto_das_valquirias.txt). Nenhum outro
+//= script do servidor as toca: sem aquele NPC elas sobem
+//= vazias e inalcancaveis, o que custa memoria e mais nada.
+map: force_map1
+map: force_map2
+map: force_map3

@@ -4092,3 +4092,91 @@ mapa** é ruído do `.gat`, não sala — o `1@gl_he` tem um de 599 células em
 
 Foi ela que deu todas as coordenadas do `1@gl_he2`, que é planta para a qual não
 existe referência em lugar nenhum.
+
+
+## `monta_labirinto.py` — gera o Labirinto das Valquírias inteiro
+
+```
+python monta_labirinto.py              # grava o arquivo
+python monta_labirinto.py --conferir   # só relata, não grava
+python monta_labirinto.py --tabela     # imprime as salas e o grafo
+```
+
+Escreve `rathena/npc/guerra/labirinto_das_valquirias.txt` do zero: cabeçalho,
+o Portal de Malangdo, as duas escadas, os catorze mapflags, **78 portais** e
+**250 linhas de spawn**. O arquivo é gerado — editar à mão é perder na próxima
+rodada.
+
+**Por que gerado.** São 40 salas que não se tocam, e três números amarram uns
+aos outros:
+
+- o **destino** de cada portal é a célula de **chegada** da sala de destino.
+  Mover uma chegada obriga a mover todo portal que aponta para ela;
+- a chegada tem de ficar **a quatro células** dos portais da própria sala.
+  Não basta ficar fora da área de toque de 3×3: desembarcar ao lado dela
+  significa que o primeiro passo na direção errada teleporta o jogador antes
+  de ele ver onde caiu;
+- a **área de spawn** tem de caber dentro da sala — e nos quatro anéis do 1º
+  andar ela não pode cobrir a câmara selada do meio, porque
+  `map_search_freecell` olha se a célula é andável e nunca se dá para chegar
+  nela.
+
+Escrever isso à mão é a §4.11 do `CLAUDE.md` ao contrário: listas paralelas
+que divergem em silêncio. Aqui há uma fonte só — o `map_cache` do servidor
+mais a tabela `GRAFO` — e o arquivo sai dela.
+
+**Onde mexer**, e é para isso que a ferramenta existe:
+
+| constante | o quê |
+|---|---|
+| `GRAFO` | a fiação: que sala leva a que sala, quais expulsam, onde ficam as escadas |
+| `POR_TIPO` | quantos monstros **de cada tipo** por sala — é o volume |
+| `RENASCE` | o renascimento por andar, em ms |
+| `TIPOS` | quais monstros em cada andar |
+| `PRECO` | o pedágio de cada andar |
+
+**O portal vai em cima do arco, e é o mapa que diz onde.** O `force_map1/2/3`
+traz plantado no próprio `.rsw` o modelo cujo nome em coreano significa
+literalmente **"dispositivo de warp semicircular"** — é o semicírculo de pedra
+que aparece no chão encostado nas paredes. São **22 no 1º andar, 25 no 2º e 40
+no 3º**, e eles são os pontos de portal do mapa: quem desenhou a arena marcou
+onde cada warp devia ficar.
+
+Duas versões desta ferramenta escolheram a célula por conta própria — primeiro
+pelos extremos da sala, depois pela folga — e as duas erraram em jogo pelo
+mesmo motivo: o portal caía no meio do chão liso com o semicírculo vazio a dez
+células dali. A tabela `ARCOS` foi tirada do `.rsw` com o `rsw.py` e a conversão
+
+```
+célula_x = pos.x / 5 + largura/2
+célula_y = altura/2 - pos.z / 5
+```
+
+encaixada depois na célula andável mais próxima, porque parte dos arcos é
+desenhada meio dentro da parede. O `.rsw` sai do `data.grf` do **bRO** — no
+nosso ele tem flag DES e o `grf.py` recusa.
+
+**Sala sem arco fica fora do labirinto.** São as quatro câmaras seladas do 1º
+andar (aquelas que se enxerga de dentro do anel e não se alcança) e a câmara
+do sul do 3º. O autor do mapa não plantou warp em nenhuma; pôr um lá é voltar
+ao defeito.
+
+**A fiação é sorteada com semente fixa.** O primeiro arco de cada sala liga a
+próxima da corrente, e a corrente passa por todas as salas com arco a partir
+da entrada — então existe sempre um caminho, e ele atravessa o andar inteiro.
+O último elo é a escada. Os arcos que sobram levam a uma sala sorteada, e um
+em cada quatro expulsa para Malangdo. A semente é fixa para o labirinto não
+mudar a cada rodada da ferramenta.
+
+**Os seis tipos de monstro entram em TODAS as salas** — o que muda de sala
+para sala é só a quantidade. Também veio do teste: com um tipo por sala, *"se
+eu fizer sempre o mesmo caminho, vou encontrar sempre os mesmos"*, e sala com
+elenco fixo não é labirinto, é rota.
+
+**Depois de gerar:** mudança só de spawn ou de portal pega com
+`@reloadscript`. Se tiver mexido em mapflag, é reiniciar o map-server.
+
+**O que a ferramenta NÃO faz:** ligar os três mapas (isso é
+`conf/guerra/mapas_guerra.txt`), a taxa da Mente Maligna (`db/guerra/
+mob_db_guerra.yml`) e os NPCs de economia (`npc/guerra/valquirias_de_
+malangdo.txt`, escrito à mão).

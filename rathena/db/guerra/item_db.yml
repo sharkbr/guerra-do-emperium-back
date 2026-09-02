@@ -3433,3 +3433,251 @@ Body:
     #      nao ha o que espelhar: seria escrever quatro conjuntos do zero a
     #      partir de prosa. Conjunto pela metade da bonus fantasma, e e a
     #      mesma razao dos TODOs das levas anteriores.
+
+# -------------------------------------------------------------------------
+# DECIMA LEVA - os quatro [MEGA] do Labirinto das Valquirias (2026-09-01)
+# -------------------------------------------------------------------------
+#
+# Mesma categoria e mesmo metodo das nove de cima: item REAL do bRO que o
+# nosso vendor nao conhece, no ID oficial dele, com os bonus lidos da
+# descricao do `iteminfo_new.lub`.
+#
+# O QUE MUDA NESTA LEVA, e e uma melhora: os `AegisName` NAO SAO PALPITE.
+# Os quatro vieram do Divine-Pride, que os traz como itens de jRO -
+# `Assault_Rifle_89_`, `Spiritual_Dagger_`, `Shinboku_Wand_` e
+# `God_Ogre_Frail_`. O `_` no fim e a convencao da propria Gravity para
+# "versao melhorada", e ela casa com o par de cada um.
+#
+# DE ONDE VEIO O PEDIDO: sao quatro das dez transformacoes da Valquiria
+# Mega (npc/guerra/valquirias_de_malangdo.txt). Das dez, seis ja tinham os
+# dois lados no servidor; nestas quatro faltava o lado [MEGA], e sem ele o
+# NPC nao teria o que entregar.
+#
+# CADA UM COPIA O PROPRIO PAR, campo a campo, e muda so o que a descricao
+# do bRO manda mudar - ATQ, ATQM e os bonus. Peso, alcance, cova, nivel de
+# arma, nivel minimo e `Jobs:` sao identicos ao original, que ja esta neste
+# arquivo (810011, 510064, 550073 e 590041, oitava e nona levas). Nao ha
+# `View:` em nenhum, pela mesma razao do 810011: para arma quem escolhe o
+# sprite e o `SubType`.
+#
+# AS EQUIVALENCIAS DE BONUS novas nesta leva, todas com testemunha no
+# vendor:
+#
+#   "Esquiva perfeita +N"            -> bonus bFlee2,N        (2094, 2244)
+#   "Conjuracao fixa de [X] -N%"     -> bonus2 bFixedCastrate,"<SKID>",-N
+#                                       (item_db_equip.yml:17617)
+#   "Dano magico contra todos os
+#    Tamanhos +N%"                   -> bonus2 bMagicAddSize,Size_All,N
+#   "Dano fisico contra todos os
+#    tamanhos +N%"                   -> bonus2 bAddSize,Size_All,N
+#   "Ao atacar, N% de chance de
+#    ativar [X]"                     -> bonus3 bAutoSpell,"<SKID>",1,N*10
+#                                       (o terceiro campo e N/10 por cento,
+#                                        doc/item_bonus.txt:388)
+#
+# OS NOMES DE HABILIDADE saem do `skillinfolist.lub` DO bRO, e nao do
+# nosso: as tres de Justiceiro sao posteriores ao cliente de 2021-11-03,
+# como ja acontecia com [Execucao] na nona leva. E foi preciso ler o
+# BYTECODE: o bRO entrega tambem um `skillinfolist.lua` legivel, e ele esta
+# VELHO - 1062 habilidades contra 1253 no `.lub`, e as tres de Justiceiro
+# so estao no segundo. Ler o legivel teria devolvido "nao existe" para as
+# tres, que e resposta plausivel e errada.
+#
+#   [Espiral Perfurante]    = RL_MASS_SPIRAL
+#   [Explosao Antimateria]  = RL_AM_BLAST
+#   [Execucao]              = RL_HAMMER_OF_GOD
+#   [Descarga Eletrica]     = NJ_RAIGEKISAI
+#   [Escudo de Chamas]      = NJ_KAENSIN
+#   [Brisa Cortante]        = NJ_KAMAITACHI
+#   [Grande Floco de Neve]  = NJ_HYOUSYOURAKU
+#   [Dragao Explosivo]      = NJ_BAKUENRYU
+#   [Petalas Flamejantes]   = NJ_KOUENKA
+#   [Lanca Congelante]      = NJ_HYOUSENSOU
+#   [Lamina de Vento]       = NJ_HUUJIN
+#   [Protecao Arcana]       = MG_ENERGYCOAT
+#
+# FALTA A ENTRADA DE CLIENTE DOS QUATRO. Sem ela aparecem sem nome e sem
+# icone na mochila - `completa_iteminfo.py` importa do bRO, e depois e
+# patch (CLAUDE.md 4.18). Esta em PENDENCIAS.md.
+#
+# NAO ENTRAM EM VITRINE NENHUMA, entao nem o `zera_revenda_das_lojas.py`
+# nem o `marca_indestrutiveis.py` os alcancam - os quatro ja trazem o
+# `bonus bUnbreakableWeapon` no proprio Script, que e o que a descricao
+# promete.
+
+  - Id: 810012
+    AegisName: Assault_Rifle_89_
+    Name: "[MEGA] A.R.-89"
+    # O par melhorado do 810011 (Velho Rifle). Identico a ele em peso,
+    # alcance, cova, nivel de arma e nivel minimo; muda o ATQ (110 -> 170)
+    # e ganha quatro bonus.
+    #
+    # O bloco de [Execucao] e COPIA do 810011: a descricao do bRO repete os
+    # dois paragrafos inteiros na versao [MEGA], nao os substitui.
+    Type: Weapon
+    SubType: Rifle
+    Weight: 850
+    Attack: 170
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,40;
+      bonus2 bSubRace,RC_Player_Doram,40;
+      bonus2 bAddClass,Class_All,10*min(.@r,10);
+      if (.@r>=7)
+         bonus2 bSkillAtk,"RL_MASS_SPIRAL",100;
+      if (.@r>=9)
+         bonus2 bFixedCastrate,"RL_AM_BLAST",-100;
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7*(readparam(bInt)/10);
+      if (readparam(bInt)>=110)
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+    # O `min(.@r,10)` e o "ate o +10" da descricao, igual ao do 810011.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  - Id: 510065
+    AegisName: Spiritual_Dagger_
+    Name: "[MEGA] Totsuka"
+    # O par melhorado do 510064 (Ninjaken). ATQ 80 -> 120, ATQM 120 -> 180.
+    #
+    # A resistencia a Humano e Doram continua 10%, e nao sobe: a descricao
+    # do [MEGA] repete o mesmo numero do original. Foi conferido nas duas
+    # descricoes lado a lado - o rifle sobe (10 -> 40), esta nao.
+    #
+    # O "a cada refino ate o +10" mudou de alvo entre as duas versoes: no
+    # Ninjaken e `bMatkRate` (dano magico), aqui e
+    # `bMagicAddSize,Size_All` (dano magico contra todos os Tamanhos). Sao
+    # bonus diferentes e a descricao diz os dois com todas as letras.
+    Type: Weapon
+    SubType: Dagger
+    Weight: 600
+    Attack: 120
+    MagicAttack: 180
+    Range: 1
+    Slots: 1
+    Jobs:
+      Ninja: true
+      KagerouOboro: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bMagicAddSize,Size_All,5*min(.@r,10);
+      if (.@r>=10) {
+         bonus2 bSkillAtk,"NJ_RAIGEKISAI",30;
+         bonus2 bSkillAtk,"NJ_KAENSIN",30;
+      }
+      if (.@r>=12) {
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",30;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",30;
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",30;
+      }
+      bonus2 bSkillAtk,"NJ_KOUENKA",BaseLevel/10;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",BaseLevel/10;
+      bonus2 bSkillAtk,"NJ_HUUJIN",BaseLevel/10;
+    # "A cada 10 niveis de base: +1%" e divisao inteira sobre `BaseLevel`,
+    # a mesma forma que a nona leva usou para `readparam(bInt)/10`.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  - Id: 550074
+    AegisName: Shinboku_Wand_
+    Name: "[MEGA] Vara"
+    # O par melhorado do 550073 (Vara Morta). ATQ 60 -> 100, ATQM 160 ->
+    # 180, e a cura por refino triplica (2% -> 6%).
+    #
+    # O NOME E "[MEGA] Vara", e nao "[MEGA] Mega Vara": a tabela do wiki do
+    # bRO diz "Mega Vara", mas quem manda e o `iteminfo_new.lub`, que e a
+    # tabela que o JOGO le (regra 4.12), e la esta "[MEGA] Vara". A noticia
+    # oficial de 2024 concorda com o iteminfo.
+    Type: Weapon
+    SubType: Staff
+    Weight: 100
+    Attack: 100
+    MagicAttack: 180
+    Range: 1
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bFlee2,20;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bHealPower,6*.@r;
+      if (.@r>=7)
+         bonus bAllStats,10;
+      if (.@r>=9)
+         bonus bAllStats,10;
+    # Os dois `bAllStats,10` SOMAM no +9 ou mais, dando +20 - e o que a
+    # descricao promete, porque ela nao diz "no lugar de" e sim dois
+    # patamares separados. E o mesmo desenho do 590042 abaixo.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  - Id: 590042
+    AegisName: God_Ogre_Frail_
+    Name: "[MEGA] Mangual do Demônio"
+    # O par melhorado do 590041 (Mangual Ogro). ATQ 150 -> 300.
+    #
+    # O "a cada 4 refinos" mudou de alvo, como no Totsuka: no Mangual Ogro
+    # e `bAddClass,Class_All` (dano fisico), aqui e `bAddSize,Size_All`
+    # (dano fisico contra todos os tamanhos).
+    #
+    # "DESEQUIPAR O ITEM CANCELA O EFEITO DE [PROTECAO ARCANA]" NAO FOI
+    # IMPLEMENTADO, e e divergencia conhecida: `bonus3 bAutoSpell` nao tem
+    # gancho de desequipar, e o `UnEquipScript` rodaria `sc_end
+    # SC_ENERGYCOAT` tambem quando o efeito tivesse vindo da magia do
+    # proprio jogador - tiraria um buff que nao e nosso. O efeito dura 30
+    # segundos e acaba sozinho; a diferenca so aparece em quem troca de
+    # arma no meio deles.
+    Type: Weapon
+    SubType: Mace
+    Weight: 4000
+    Attack: 300
+    Range: 1
+    Slots: 1
+    Jobs:
+      Merchant: true
+      Blacksmith: true
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus3 bAutoSpell,"MG_ENERGYCOAT",1,30;
+      bonus2 bAddSize,Size_All,10*(.@r/4);
+      if (.@r>=11)
+         bonus bAllStats,10;
+      if (.@r>=13)
+         bonus bAllStats,10;
+    # O `30` do bAutoSpell e 3,0% - o terceiro campo e decimo de por cento
+    # (doc/item_bonus.txt:388). Nao e 30%.
+    # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.

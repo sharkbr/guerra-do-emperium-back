@@ -181,3 +181,22 @@ Body:
     DamageTaken: 10
     Ai: 21
     Class: Normal
+
+###### OS SEIS HEROIS DO LABIRINTO DAS VALQUIRIAS - O QUE SAIU DAQUI ########
+#
+# Ate 2026-09-02 este arquivo baixava a taxa da Mente Maligna (7583) de 50%
+# para 25% nos Ids 1799..1804. O OVERRIDE FOI REMOVIDO, e o motivo e que ele
+# deixou de ter efeito:
+#
+# O labirinto inteiro passou a ter `nomobloot` nos tres andares - regra do
+# dono, "sem drop, precisamos manter isso". O mapflag mata TODO drop do mapa,
+# a Mente inclusive, e como aqueles seis monstros nao nascem em nenhum outro
+# lugar do servidor, a taxa deles no mob_db nao alcanca mais nada.
+#
+# A MENTE AGORA VEM DE EVENTO DE MORTE, e a chance mora em UM lugar so: o
+# `MENTE_CHANCE` de ferramentas/monta_labirinto.py, que a escreve no
+# OnHeroiMorto de npc/guerra/labirinto_das_valquirias.txt. Deixar os 25% aqui
+# tambem seria a segunda fonte que diverge da primeira (CLAUDE.md 4.11) - e a
+# que alguem leria seria a errada.
+#
+###########################################################################
