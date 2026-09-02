@@ -82,11 +82,19 @@ Na prática: `/etc/guerra/fantasma.txt` é o `conf/import/` deste bot.
 
 ## Como isto chega ao servidor
 
-**Na primeira vez**, o provisionamento completo:
+**Na primeira vez**, do Mac:
 
 ```
-ssh libraro 'bash -s' < ferramentas/configura_fantasma.sh
+ferramentas/implanta.sh              # leva o repositorio ao servidor
+ferramentas/implanta_fantasma.sh     # instala e configura o bot
 ```
+
+O `implanta_fantasma.sh` e um wrapper fino: o trabalho esta no
+`configura_fantasma.sh`, que roda **no servidor** e viaja pelo stdin do
+`ssh`. Esse `< arquivo` e facil de errar, e errar significa executar o
+script no Mac — foi o que aconteceu em 2026-09-02. O wrapper torna a
+forma certa a forma curta, e ainda confere antes se o servidor ja tem o
+delta e se esta no mesmo commit.
 
 Ele instala as dependências, clona o openkore no commit fixado, compila o
 `XSTools`, aplica o `instala.sh`, cria o segredo e escreve a unit — e
