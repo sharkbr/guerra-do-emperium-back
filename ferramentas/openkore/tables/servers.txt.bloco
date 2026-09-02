@@ -1,0 +1,27 @@
+# Guerra do Emperium - servidor local (rAthena, PACKETVER 20211103).
+#
+# serverType casa com o PACKETVER de src/custom/defines_pre.hpp: existe
+# src/Network/{Send,Receive}/kRO/RagexeRE_2021_11_03.pm no openkore.
+#
+# charBlockSize 175 e o sizeof da struct CHARACTER_INFO de
+# src/common/packets.hpp para este PACKETVER - em 20211103 hp/maxhp/sp/
+# maxsp viraram int64 e o bloco saiu de 155 para 175 bytes. Errar este
+# numero trava exatamente na tela de selecao de personagem.
+[Guerra do Emperium - Local]
+ip 127.0.0.1
+port 6900
+private 1
+master_version 1
+version 1
+serverType kRO_RagexeRE_2021_11_03
+serverEncoding Western
+addTableFolders kRO/Ragexe_2021_11_03;kRO
+charBlockSize 175
+secureLogin 0
+pinCode 1
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+ignoreAntiCheatWarning 1
+

@@ -86,6 +86,11 @@ REPO="https://github.com/sharkbr/guerra-do-emperium-back.git"
 RAMO="main"
 EMULADOR="$RAIZ/rathena"
 
+# O openkore mora FORA do repositorio, de proposito: /opt/guerra-do-emperium
+# e um clone git em que este script da "reset --hard", e uma arvore de
+# terceiros ali dentro viraria lixo nao rastreado que o reset destroi.
+OPENKORE="/opt/openkore"
+
 # Os quatro binarios do alvo 'server' do Makefile. A ordem e' a mesma que o
 # ferramentas/servidor.py ja' conhece: login -> char -> web -> map.
 BINARIOS=(login-server char-server web-server map-server)
@@ -137,6 +142,7 @@ fi
 # mesma coisa.
 CARIMBO_JOGO="$RAIZ/.carimbo-jogo"
 CARIMBO_SITE="$RAIZ/.carimbo-site"
+CARIMBO_FANTASMA="$RAIZ/.carimbo-fantasma"
 
 le_carimbo() {
     local arquivo="$1" valor=""
@@ -360,6 +366,7 @@ fi
 # ele NAO e' tocado, e e' essa linha que faz a mudanca de NPC que chegou
 # junto continuar pendente para o proximo deploy completo.
 AVANCA_CARIMBO_JOGO=0
+AVANCA_CARIMBO_FANTASMA=0
 
 if [ "$SO_SITE" = "1" ]; then
     pula "modo --so-site - os quatro seguem no ar, ninguem foi derrubado"
@@ -383,6 +390,44 @@ else
 fi
 
 # =====================================================================
+# 6b. O bot fantasma
+# =====================================================================
+# CARIMBO PROPRIO, e a razao importa: o fantasma tem ritmo diferente do
+# jogo. Reinicia-lo nao derruba ninguem - ele so' se desconecta e volta -,
+# entao amarra-lo ao .carimbo-jogo faria uma correcao de plugin esperar
+# pela proxima janela de manutencao sem nenhum motivo. E' a mesma logica
+# que separou o site do emulador, aplicada de novo.
+#
+# Ele so' age se a unit ja' existir: enquanto o configura_fantasma.sh nao
+# tiver rodado, esta secao inteira e' um pula.
+if systemctl list-unit-files 'guerra-fantasma.service' --no-legend 2>/dev/null | grep -q guerra-fantasma; then
+    passo "Bot fantasma"
+    BASE_FANTASMA="$(le_carimbo "$CARIMBO_FANTASMA")"
+    if [ -z "$BASE_FANTASMA" ] || \
+       ! como_jogo git -C "$RAIZ" diff --quiet "$BASE_FANTASMA" "$DEPOIS" -- ferramentas/openkore 2>/dev/null; then
+        if [ -d "$OPENKORE" ]; then
+            como_jogo "$RAIZ/ferramentas/openkore/instala.sh" "$OPENKORE"
+            # Restart e' seguro mesmo com o servico parado: se estiver
+            # inativo, o systemd apenas o inicia. Se o dono o tiver
+            # desabilitado de proposito, o disable e' que manda - e um
+            # servico disabled+stopped nao volta por causa disto.
+            if systemctl is-enabled guerra-fantasma >/dev/null 2>&1; then
+                systemctl restart guerra-fantasma
+                ok "guerra-fantasma reiniciado com o plugin novo"
+            else
+                pula "guerra-fantasma esta' desabilitado - arquivos atualizados, servico nao foi ligado"
+            fi
+            AVANCA_CARIMBO_FANTASMA=1
+        else
+            aviso "$OPENKORE nao existe - rode o configura_fantasma.sh"
+        fi
+    else
+        pula "ferramentas/openkore/ nao mudou"
+        AVANCA_CARIMBO_FANTASMA=1
+    fi
+fi
+
+# =====================================================================
 # 7. Carimbos e pendencia
 # =====================================================================
 # Escritos no FIM, e so' agora: um carimbo gravado antes do passo que ele
@@ -390,6 +435,7 @@ fi
 # erro (set -e), entao nao chegar aqui e' a forma de nao carimbar.
 [ "$AVANCA_CARIMBO_JOGO" = "1" ] && grava_carimbo "$CARIMBO_JOGO" "$DEPOIS"
 grava_carimbo "$CARIMBO_SITE" "$DEPOIS"
+[ "$AVANCA_CARIMBO_FANTASMA" = "1" ] && grava_carimbo "$CARIMBO_FANTASMA" "$DEPOIS"
 
 # O que chegou ao disco e ainda NAO esta' no ar. So' acontece no --so-site,
 # e e' a unica coisa que impede aquele modo de ser uma perda calada: sem
