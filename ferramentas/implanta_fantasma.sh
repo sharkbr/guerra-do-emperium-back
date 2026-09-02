@@ -101,7 +101,13 @@ fi
 # Nao basta existir: pode estar atrasado. Comparar o commit dos dois lados
 # e' o que evita instalar um plugin de tres deploys atras sem perceber.
 LOCAL="$(git -C "$RAIZ" rev-parse HEAD)"
-REMOTO="$(ssh "$SERVIDOR" 'git -C /opt/guerra-do-emperium rev-parse HEAD 2>/dev/null || echo desconhecido')"
+# Lido como ragnarok, e nao como root: a arvore e' dele, e o git recusa
+# repositorio de outro dono com "detected dubious ownership" - saindo 128
+# sem imprimir o commit. O 2>/dev/null engolia a explicacao e o aviso
+# dizia so' "nao consegui ler", desarmando a trava de versao calado.
+# Aconteceu em 2026-09-02. E' o mesmo runuser que o atualiza_servidor.sh
+# usa para todo comando de git.
+REMOTO="$(ssh "$SERVIDOR" 'runuser -u ragnarok -- git -C /opt/guerra-do-emperium rev-parse HEAD 2>/dev/null || echo desconhecido')"
 if [ "$REMOTO" = "desconhecido" ]; then
     aviso "nao consegui ler o commit do servidor - seguindo assim mesmo"
 elif [ "$LOCAL" != "$REMOTO" ]; then

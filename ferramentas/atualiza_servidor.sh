@@ -406,7 +406,9 @@ if systemctl list-unit-files 'guerra-fantasma.service' --no-legend 2>/dev/null |
     if [ -z "$BASE_FANTASMA" ] || \
        ! como_jogo git -C "$RAIZ" diff --quiet "$BASE_FANTASMA" "$DEPOIS" -- ferramentas/openkore 2>/dev/null; then
         if [ -d "$OPENKORE" ]; then
-            como_jogo "$RAIZ/ferramentas/openkore/instala.sh" "$OPENKORE"
+            # O "bash" explicito e' pelo mesmo motivo do configura_fantasma.sh:
+            # bit de execucao perdido no git nao pode derrubar o deploy.
+            como_jogo bash "$RAIZ/ferramentas/openkore/instala.sh" "$OPENKORE"
             # Restart e' seguro mesmo com o servico parado: se estiver
             # inativo, o systemd apenas o inicia. Se o dono o tiver
             # desabilitado de proposito, o disable e' que manda - e um

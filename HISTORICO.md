@@ -16526,3 +16526,71 @@ O `itemInfo.lua` e os quatro arquivos de arte do 810012 moram em
 `C:\GuerraDoEmperium\cliente\` e **não chegam ao jogador pelo deploy**
 (§4.18). O patch está anotado no `PENDENCIAS.md` §1ab, junto com o resto do
 Labirinto, que ainda não foi visto em jogo por inteiro.
+## O fantasma não subiu por dois bits, e o segundo era pior (2026-09-02)
+
+A primeira execução do `ferramentas/implanta_fantasma.sh` morreu no passo 4 de
+6, depois de instalar as dependências de build, clonar os 233 MB do openkore e
+compilar o `XSTools.so`:
+
+```
+runuser: failed to execute /opt/guerra-do-emperium/ferramentas/openkore/instala.sh: Permission denied
+```
+
+### O bit de execução, pela terceira vez
+
+Os três arquivos do fantasma entraram no git como `100644` — a ferramenta de
+edição do assistente grava assim, e os nove `.sh` mais velhos de `ferramentas/`
+estão `100755`, então a divergência não salta aos olhos num `ls`. Dois dos três
+não deram sinal: o `implanta_fantasma.sh` é chamado como `bash <arquivo>` e o
+`configura_fantasma.sh` viaja pelo *stdin* do `ssh`, e nenhuma dessas formas
+consulta o bit. Quebrou o terceiro, o `instala.sh`, que é o único invocado pelo
+caminho puro — e de dentro de outro script, nunca por gente.
+
+É a mesma armadilha de 2026-08-14 (vendor) e 2026-08-17 (`publica_patch.sh`),
+com um agravante novo em cada ponta: a falha chega **depois** de todo o
+trabalho caro, e a conferência que a entrada antiga prescrevia — *"só se
+descobre ao rodar o script pela primeira vez de outra máquina"* — não alcança
+um arquivo que não tem primeira vez.
+
+Por isso a saída foi dupla. O `git update-index --chmod=+x` nos três, que é o
+que conserta o arquivo para quem o chame direto; e os dois chamadores
+(`configura_fantasma.sh` §4 e `atualiza_servidor.sh` §6b) passaram a invocá-lo
+como `como_jogo bash <caminho>`, tirando o bit do caminho crítico de vez.
+
+### E o aviso amarelo que ninguém devia ter deixado passar
+
+Vinte linhas antes do erro, o mesmo log dizia:
+
+```
+!! nao consegui ler o commit do servidor - seguindo assim mesmo
+```
+
+A causa é o git recusando árvore de outro dono: o `/opt/guerra-do-emperium` é
+do `ragnarok`, o `ssh` entra como root, e o `rev-parse` sai 128 com *detected
+dubious ownership* sem imprimir commit nenhum. O `2>/dev/null` engolia a
+explicação. Corrigido com o mesmo `runuser -u ragnarok` que todo comando de git
+do `atualiza_servidor.sh` já usava.
+
+**O que esse aviso escondia é o achado de verdade:** o servidor estava em
+`694f38d`, **três commits atrás**, e os três eram exatamente do fantasma —
+`configura_fantasma.sh`, o `LEIAME.md` e o `control/config.txt`. A comparação de
+commits do `implanta_fantasma.sh` existe para barrar isso, e teria barrado; ela
+não falhou, apenas nunca chegou a ser consultada. Se o bit de execução
+estivesse certo, a instalação teria terminado com "ok" aplicando um
+`config.txt` velho — que é a falha calada que aquela trava foi escrita para
+impedir.
+
+A lição ficou registrada no `ARMADILHAS-INFRA.md` como regra de sonda:
+degradar para *"seguindo assim mesmo"* só é honesto quando o que se perdeu é
+dispensável. Se a leitura é o que arma uma trava, o certo é o erro aparecer e o
+script parar.
+
+### Ordem para retomar
+
+O deploy normal primeiro — é ele que leva os três commits e o bit novo para o
+servidor —, e só então o fantasma:
+
+```
+ferramentas/implanta.sh
+ferramentas/implanta_fantasma.sh
+```

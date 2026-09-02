@@ -188,7 +188,12 @@ fi
 
 # ---------------------------------------------------------------------
 passo "4/7  Aplicando o nosso delta"
-como_jogo "$RAIZ_REPO/ferramentas/openkore/instala.sh" "$OPENKORE"
+# Chamado por "bash <caminho>", e nao pelo caminho sozinho: o bit de
+# execucao viaja no git, mas basta um arquivo entrar como 100644 (foi o
+# que aconteceu em 2026-09-02) para o runuser morrer com "Permission
+# denied" no meio da instalacao, depois de 233 MB clonados e do XSTools
+# compilado. Com o bash explicito o bit deixa de decidir.
+como_jogo bash "$RAIZ_REPO/ferramentas/openkore/instala.sh" "$OPENKORE"
 
 # ---------------------------------------------------------------------
 passo "5/7  O segredo da conta"

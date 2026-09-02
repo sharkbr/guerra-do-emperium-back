@@ -655,7 +655,8 @@ SSH, Ubuntu, MariaDB, DigitalOcean, DNS, cache HTTP, deploy, Atualizador e patch
 - No `sshd_config` o PRIMEIRO valor vence, não o último — e isso inverte o sentido do número no nome do arquivo em `sshd_config.d/`
 - Sessão SSH já aberta não prova endurecimento nenhum. Ela foi autenticada antes da mudança e continua viva de propósito — é o que impede o tiro no pé
 - O `needrestart` do Ubuntu 24.04 reinicia serviço sozinho durante o `apt`, e o `ssh.service` está na lista dele
-- O bit de execução do `rathena/` NÃO está no git, e no Linux isso vira `Permission denied`
+- O bit de execução NÃO está no git — no vendor `rathena/` e também em script NOSSO recém-criado, que nasce `100644` — e no Linux isso vira `Permission denied`, inclusive num script que ninguém roda à mão
+- `git` como root em árvore de outro dono sai 128 com *dubious ownership* e não lê commit nenhum. Pior que o erro é o `|| echo desconhecido` que o transforma em aviso brando e desarma a trava de versão calado
 - `libmariadb-dev` não basta para compilar o rAthena — falta o `libmariadb-dev-compat`
 - A senha da conta de comunicação entre servidores tem teto de 23 caracteres, e passar disso falha CALADO — apontando para o lugar errado
 - `StretchDIBits` falha de vez em quando, e mente no `GetLastError`. Duas execuções do mesmo binário devolveram 630 linhas (sucesso) e a terceira…

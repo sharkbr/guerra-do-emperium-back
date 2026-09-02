@@ -65,6 +65,62 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   `git update-index --chmod=+x <arquivo>`, e commitar. Fica valendo para as
   três máquinas. Conferência: `git ls-files -s ferramentas/*.sh`.
 
+  **Reincidiu em 2026-09-02, e o modo novo é o que interessa: o script que
+  falhou não é rodado por gente.** Os três arquivos do bot fantasma
+  (`configura_fantasma.sh`, `implanta_fantasma.sh` e
+  `ferramentas/openkore/instala.sh`) entraram no git como `100644`. Os dois
+  primeiros não deram sinal — um é chamado como `bash <arquivo>` e o outro
+  viaja pelo *stdin* do `ssh`, e nenhuma dessas formas consulta o bit. Quem
+  quebrou foi o terceiro, o único invocado pelo caminho puro, de dentro de
+  outro script: `runuser: failed to execute
+  /opt/guerra-do-emperium/ferramentas/openkore/instala.sh: Permission denied`.
+
+  Duas coisas pioram esse caso em relação ao de 2026-08-17. A primeira é
+  **quando** ele aparece: no passo 4 de 6, depois de instalar as dependências
+  de build, clonar 233 MB de openkore e compilar o `XSTools.so` — todo o
+  trabalho caro é feito antes de a falha existir. A segunda é que a
+  conferência prescrita acima (*"só se descobre ao rodar o script pela
+  primeira vez de outra máquina"*) **não alcança este arquivo**: ninguém o
+  roda à mão em máquina nenhuma, então não há primeira vez.
+
+  Por isso a saída agora é **dupla**, e não só o `--chmod=+x`: os dois
+  chamadores (`configura_fantasma.sh` §4 e `atualiza_servidor.sh` §6b) passaram
+  a invocá-lo como `como_jogo bash <caminho>`. Com o interpretador explícito o
+  bit deixa de ser ponto único de falha, do mesmo jeito que o `sh configure`
+  resolve o lado do vendor. O `git update-index --chmod=+x` continua sendo
+  feito — é ele que conserta o arquivo para quem o chamar direto —, mas deixou
+  de ser a única coisa entre o deploy e o `Permission denied`.
+
+  **A regra que sai daqui: script novo NOSSO nasce sem o bit** (a ferramenta de
+  edição do assistente grava `100644`), e a hora de conferir é ao criá-lo, não
+  ao rodá-lo. `git ls-files -s ferramentas/**/*.sh` mostra os dois modos lado a
+  lado, e o que destoa da coluna `100755` é o novo.
+
+- **`git` rodado como root numa árvore de outro dono sai 128 sem ler nada — e
+  um `2>/dev/null || echo desconhecido` transforma isso num aviso brando que
+  DESARMA a trava.** O `/opt/guerra-do-emperium` pertence ao `ragnarok`; o
+  `ssh libraro` entra como root. Qualquer `git -C /opt/guerra-do-emperium
+  rev-parse HEAD` daí responde *"fatal: detected dubious ownership in
+  repository"* e **não** imprime commit nenhum — é a proteção que o git ganhou
+  em 2.35.2, e não tem nada a ver com permissão de arquivo. Por isso todo
+  comando de git do `atualiza_servidor.sh` passa por `runuser -u ragnarok`.
+
+  O estrago mora no tratamento do erro, e não no erro. O
+  `implanta_fantasma.sh` compara o commit dos dois lados para não instalar um
+  delta atrasado; ao não conseguir ler o remoto ele avisava *"nao consegui ler
+  o commit do servidor - seguindo assim mesmo"* e seguia. Em 2026-09-02 isso
+  aconteceu com o servidor **três commits atrás**, e os três eram do fantasma:
+  a instalação ia aplicar um `control/config.txt` velho, que é exatamente o que
+  aquela comparação existe para impedir. A trava não falhou — ela nunca chegou
+  a ser consultada, e disse isso numa linha amarela no meio de duzentas linhas
+  de `apt` e `g++`.
+
+  Duas lições, e a segunda vale para qualquer sonda: ler repositório do
+  servidor é `runuser -u ragnarok -- git …`, nunca git direto; e **degradar
+  para "seguindo assim mesmo" só é honesto quando o que se perdeu é
+  dispensável** — se a leitura era o que arma uma trava, o certo é o `2>&1`
+  aparecer e o script parar.
+
 - **`libmariadb-dev` não basta para compilar o rAthena — falta o
   `libmariadb-dev-compat`.** O `configure` procura os nomes do **MySQL**
   (`mysql_config`, `mysql.h`, `-lmysqlclient`) e o pacote do Ubuntu instala tudo
