@@ -57,6 +57,22 @@ diretório do arquivo pai, sem testar se o caminho é absoluto — um
 *"File does not exist"*. Por isso o include é relativo e quem aponta para
 `/etc/guerra` é o link. Testado com o parser real.
 
+### O include é a última palavra, e isso é de propósito
+
+Ele fica no **fim** do bloco de login, depois do `char`. No parser do
+openkore a última atribuição de uma chave vence, então
+`/etc/guerra/fantasma.txt` pode sobrescrever **qualquer coisa** do
+`config.txt` — não só a senha.
+
+O caso que importa é o **slot do personagem**. Ele é estado da máquina,
+mas o `config.txt` é versionado e o `instala.sh` o sobrescreve a cada
+deploy. Sem o include no fim, quem ajustasse o `char N` no servidor veria
+o valor voltar sozinho no próximo `implanta.sh`, e o bot entraria com
+outro personagem sem reclamar. Com ele no fim, basta pôr `char 3` no
+arquivo da máquina.
+
+Na prática: `/etc/guerra/fantasma.txt` é o `conf/import/` deste bot.
+
 > **O que o include NÃO protege.** Se o `configModify` disparar — senha
 > errada, o openkore pergunta no console e grava a resposta —, ele não
 > reescreve o arquivo incluído, mas **anexa o valor novo ao próprio

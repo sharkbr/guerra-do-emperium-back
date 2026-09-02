@@ -172,6 +172,14 @@ else
 #
 #     UPDATE login SET user_pass = MD5('a-senha') WHERE userid='fantasma';
 #
+# E aqui tambem entra qualquer coisa que seja DESTA MAQUINA e nao do
+# repositorio, porque o include e a ultima palavra do config.txt. O caso
+# que importa e o slot do personagem: se ele nao nascer no slot 1,
+# descomente a linha abaixo em vez de editar o config.txt - aquele arquivo
+# e versionado e o instala.sh o sobrescreve a cada deploy.
+#
+#   char 3
+#
 password TROQUE-ME
 loginPinCode 0000
 FIM

@@ -33,9 +33,23 @@ username fantasma
 # config.txt, que e' versionado (writeDataFileIntact, FileParsers.pm:1931).
 # Ou seja: o include tira o segredo do git, e nada mais. Quem impede o
 # episodio inteiro continua sendo o ignoreInvalidLogin 1 la' embaixo.
-!include fantasma.txt
 char 1
 otpSeed
+
+# O include vem por ULTIMO de proposito, e isto nao e' arrumacao: no parser
+# do openkore a ULTIMA atribuicao de uma chave vence (conferido em
+# 2026-09-02). Com o include aqui embaixo, o arquivo da maquina pode
+# sobrescrever QUALQUER coisa acima - inclusive o "char N".
+#
+# Sem isso havia uma regressao calada esperando para acontecer: o slot do
+# personagem de producao e' estado de maquina, mas o config.txt e'
+# versionado e o instala.sh o sobrescreve a cada deploy. Quem ajustasse o
+# "char N" no servidor veria o valor voltar sozinho no proximo
+# implanta.sh, e o bot entraria com outro personagem sem reclamar.
+#
+# Entao /etc/guerra/fantasma.txt e' o "conf/import/" deste bot: senha, PIN
+# e o que mais for daquela maquina e nao do repositorio.
+!include fantasma.txt
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
