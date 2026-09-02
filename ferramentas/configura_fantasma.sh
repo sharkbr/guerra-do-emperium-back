@@ -79,9 +79,34 @@ erro()   { printf '\n\033[1;31mERRO: %s\033[0m\n' "$*" >&2; exit 1; }
 
 como_jogo() { runuser -u "$USUARIO" -- "$@"; }
 
+# ---------------------------------------------------------------------
+# "ESTOU NA MAQUINA CERTA?" - a primeira pergunta, e nao a terceira.
+#
+# Este script roda NO SERVIDOR. Rodado no Mac ele passa pela checagem de
+# root (com sudo) e so' quebra la' na frente, num comando de systemd que
+# o macOS nao tem - e a mensagem resultante manda consertar a coisa
+# errada. Aconteceu em 2026-09-02: a checagem de usuario abaixo dizia
+# "rode o provisiona.sh antes", o provisiona.sh foi rodado no Mac, e
+# morreu em "timedatectl: command not found". Duas mensagens, nenhuma
+# apontando para a verdadeira causa.
+[ "$(uname -s)" = "Linux" ] || erro "isto roda no SERVIDOR, nao nesta maquina ($(uname -s)).
+       Do Mac:  ssh libraro 'bash -s' < ferramentas/configura_fantasma.sh"
+command -v systemctl >/dev/null 2>&1 || erro "nao ha systemd aqui - esta maquina nao e' o servidor.
+       Do Mac:  ssh libraro 'bash -s' < ferramentas/configura_fantasma.sh"
+
 [ "$(id -u)" = "0" ] || erro "rode como root"
-id "$USUARIO" >/dev/null 2>&1 || erro "usuario $USUARIO nao existe - rode o provisiona.sh antes"
-[ -d "$RAIZ_REPO/ferramentas/openkore" ] || erro "$RAIZ_REPO/ferramentas/openkore nao existe - o repositorio esta' desatualizado, rode o atualiza_servidor.sh antes"
+
+# Se o ragnarok nao existe numa maquina que JA' passou nas duas checagens
+# acima, entao ou e' um servidor novo, ou e' o servidor errado. O
+# provisiona.sh so' entra no primeiro caso - e nunca de novo no servidor
+# que ja' esta' no ar, porque ele mexe em usuario, firewall e SSH.
+id "$USUARIO" >/dev/null 2>&1 || erro "usuario $USUARIO nao existe.
+       Se esta e' a maquina de producao que ja' esta' no ar, algo esta' muito errado -
+       NAO rode o provisiona.sh nela. Se e' uma maquina nova, ai' sim:
+       ssh <maquina> 'bash -s' < ferramentas/provisiona.sh"
+
+[ -d "$RAIZ_REPO/ferramentas/openkore" ] || erro "$RAIZ_REPO/ferramentas/openkore nao existe.
+       O repositorio no servidor esta' desatualizado: rode o ferramentas/implanta.sh antes."
 
 # ---------------------------------------------------------------------
 passo "1/6  Dependencias de build"
