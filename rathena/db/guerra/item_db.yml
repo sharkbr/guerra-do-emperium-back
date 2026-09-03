@@ -3681,3 +3681,67 @@ Body:
     # O `30` do bAutoSpell e 3,0% - o terceiro campo e decimo de por cento
     # (doc/item_bonus.txt:388). Nao e 30%.
     # NAO ESTA EM CONJUNTO NENHUM, conferido em db/re/item_combos.yml.
+
+  # ------------------------------------------------------------------
+  # AS SEIS ALMAS DE CLASSE - 2026-09-02
+  #
+  # Sao a moeda do Laboratorio Pesadelo (npc/re/merchants/nightmare_biolab.txt,
+  # linha 576: o setarray com os seis ids). O jogador acumula alma que nao usa
+  # e nao tinha como se livrar dela: o vendor as marca `NoDrop: true`, e com
+  # `NoTrade`, `NoSell` e `NoCart` juntos a alma so tinha um destino, o
+  # armazem - `NoStorage` e o unico que ela NAO tem.
+  #
+  # Pedido do dono em 2026-09-02: "poder jogar fora as Almas de classe".
+  # O override abaixo mexe em UM campo so, `NoDrop`, e deixa as outras seis
+  # travas de pe. Quem recusa o descarte e o `pc_candrop`, que chama o
+  # `itemdb_isdropable` (src/map/itemdb.hpp) - so o bit de drop importa ali.
+  #
+  # `NoDrop: false` EXPLICITO e obrigatorio: o `parseBodyNode` do item_db le
+  # o no `Trade:` campo a campo (`if (this->nodeExists(tradeNode, "NoDrop"))`),
+  # entao omitir a linha nao apaga a trava do vendor - ela sobrevive. E a
+  # mesma razao do `false` explicito dos overrides de `Locations:` (CLAUDE.md
+  # secao 4.14).
+  #
+  # CUIDADO AO TESTAR: a conta de teste e grupo 99 e SENTE a trava (o
+  # `Override` do item e 100). Entao antes desta mudanca ela tambem nao
+  # conseguia largar - o teste vale.
+  #
+  # Depois de mexer aqui: `@reloaditemdb`. Nao e `@reloadscript`.
+  # ------------------------------------------------------------------
+
+  - Id: 6814
+    AegisName: Soul_Of_Swordman
+    # Alma de Espadachim
+    Trade:
+      NoDrop: false
+
+  - Id: 6815
+    AegisName: Soul_Of_Merchant
+    # Alma de Mercador
+    Trade:
+      NoDrop: false
+
+  - Id: 6816
+    AegisName: Soul_Of_Thief
+    # Alma de Gatuno
+    Trade:
+      NoDrop: false
+
+  - Id: 6817
+    AegisName: Soul_Of_Magicion
+    # Alma de Mago
+    Trade:
+      NoDrop: false
+
+  - Id: 6818
+    AegisName: Soul_Of_Archer
+    # Alma de Arqueiro
+    Trade:
+      NoDrop: false
+
+  - Id: 6819
+    AegisName: Soul_Of_Acolyte
+    # Alma de Novico (Novico com cedilha no item_db do vendor; aqui sem, para
+    # o arquivo nao depender de byte acentuado num comentario)
+    Trade:
+      NoDrop: false

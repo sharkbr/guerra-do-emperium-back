@@ -16681,3 +16681,44 @@ plantado copiou o status no momento do spawn — ele é um dos monstros que
 ganham `base_status` próprio (`src/map/status.cpp:2802`) — então o que estiver
 no mapa continua sagrado até nascer de novo, no `OnAgitStart` seguinte
 (`npc/guild/agit_main.txt:97`).
+
+
+## As seis Almas de classe deixam de ser lixo permanente na mochila (2026-09-02)
+
+Pedido do dono: *"poder jogar fora as Almas de classe: Alma de Espadachim
+6814, Alma de Mercador 6815, Alma de Gatuno 6816 e assim por diante (a todas
+as almas)"*.
+
+São seis, e não mais: 6814 Espadachim, 6815 Mercador, 6816 Gatuno, 6817 Mago,
+6818 Arqueiro e 6819 Noviço. São a moeda do Laboratório Pesadelo — o
+`npc/re/merchants/nightmare_biolab.txt` as consome no `callsub S_Make` de cada
+peça, e a lista fechada está na linha 576 daquele arquivo, num `setarray` com
+os seis ids. Não existe alma de classe fora dessa faixa; o `Soul_Of_Tree`, o
+`Soul_Of_Ahat` e os quinze `Soul_Of_*` do baú de clã são outra família.
+
+O vendor as trazia com sete travas de uma vez: `NoDrop`, `NoTrade`, `NoSell`,
+`NoCart`, `NoGuildStorage`, `NoMail` e `NoAuction`. A única que faltava era
+`NoStorage` — ou seja, a alma que o jogador não ia gastar tinha exatamente um
+destino no mundo, o armazém, e ocupava espaço lá para sempre.
+
+**A correção mexe em um campo só.** `db/guerra/item_db.yml` ganhou seis
+overrides com `Trade:` / `NoDrop: false`, e as outras seis travas ficam de pé:
+a alma continua sem poder ser vendida, trocada, posta no carrinho, mandada por
+RoDEX ou leiloada. Quem recusava o descarte era o `pc_candrop`
+(`src/map/pc.cpp:11365`), que delega ao `itemdb_isdropable` — e ali só o bit de
+drop é consultado.
+
+**O `false` tinha de ser explícito.** O `parseBodyNode` do item_db lê o nó
+`Trade:` campo a campo (`src/map/itemdb.cpp:938`): cada trava tem seu próprio
+teste de existência, e o ramo que zera só roda quando o item **não existia
+antes**. Omitir a linha num override, portanto, não apaga a trava do vendor —
+ela sobrevive intacta. É o mesmo `false` explícito que os overrides de
+`Locations:` já exigiam (CLAUDE.md §4.14).
+
+Uma nota sobre o teste, porque desta vez ele vale: o `Override` das almas é 100
+e a conta de teste é grupo 99, então **ela sentia a trava** — antes desta
+mudança nem o GM de teste conseguia largar uma alma no chão. Não é o falso
+negativo da §4.7.
+
+Recarregador: `@reloaditemdb`. Não é `@reloadscript` — o que mudou foi campo de
+item, e nenhum NPC foi tocado.
