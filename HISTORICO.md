@@ -16722,3 +16722,43 @@ negativo da §4.7.
 
 Recarregador: `@reloaditemdb`. Não é `@reloadscript` — o que mudou foi campo de
 item, e nenhum NPC foi tocado.
+
+## A porta da arena desce duas células a oeste e uma ao sul (2026-09-03)
+
+Pedido do dono: *"o NPC 'Arena de Combate' de Prontera deve ir 2 células pra
+esquerda e uma pra baixo"*. De `prontera 147,180` para **`145,179`**, facing
+inalterado (6, leste).
+
+**A célula de destino foi conferida antes**, com
+`ferramentas/confere_celula.py prontera 145,179`: andável, as nove células em
+volta livres, e nenhum NPC — do rAthena ou nosso — a menos de três células. Isso
+importa porque a porta é o caso que já custou um `disablenpc` em 2026-08-12:
+NPC empilhado em célula ocupada não dá erro nenhum, só some por baixo do outro.
+Como 145,179 também é vazia, **nada volta a ser desligado**.
+
+**O que ela deixa de dividir.** A porta e o Placar da Arena (`142,180`)
+dividiam a fileira `y=180` desde 2026-08-13; agora a porta ficou uma célula ao
+sul, três a leste do Placar. E ela passa a ser o NPC mais próximo do Placar,
+tomando o lugar do Clan Helper do rAthena (`138,183`) — os dois cabeçalhos
+foram acertados.
+
+**A marca do mini-mapa é a metade funcional que não está no arquivo da porta.**
+O Guia de Prontera carrega as trinta marcas num `setarray .marcas$[]`, e a
+segunda delas era `"147 180"` — o link "Arena de Combate" do menu dele leva a
+essa coordenada. Coordenada velha ali não dá erro: pinta o ponto na célula
+errada e o jogador anda até um lugar sem NPC. É a §4.11 outra vez, do lado dos
+dados: quem move um NPC tem de procurar quem mais escreveu a coordenada dele.
+
+### O que ficou
+
+| arquivo | o quê |
+| --- | --- |
+| `rathena/npc/guerra/arena_de_combate.txt` | a linha do NPC e o cabeçalho (a seção "Onde", a terceira mudança de célula, a distância até o ponto de retorno e o comentário do `OnInit`) |
+| `rathena/npc/guerra/guia_de_prontera.txt` | `"145 179"` no `.marcas$[]` — **funcional** — e o cabeçalho |
+| `rathena/npc/guerra/honra_de_combate.txt` | o cabeçalho do Placar: a distância até a porta e qual é o NPC mais próximo |
+| `rathena/npc/guerra/scripts_guerra.conf` | os dois parágrafos do índice narrado |
+| `ferramentas/traduz_ptbr.py` | o comentário da entrada de `pvp_n_1-5` |
+| `PENDENCIAS.md` | as três menções à coordenada |
+
+Recarregador: `@reloadscript`. Vai por deploy e só por deploy — não há nada de
+cliente aqui (`RECEITAS.md` §0).

@@ -103,7 +103,7 @@ sem confirmação in-game.
 | Tranqueiras (55 materiais pelo preço de compra) — **e o sprite de classe** | `prontera 151,131` | 2026-08-12 |
 | Chapeleiro sem a Boina Alada (10 itens, era 11) | `prontera 151,173` | 2026-08-12 |
 | **31 peças de cabeça nas três lojas da fileira de cima, e o preço novo** | `prontera`, y=173 | 2026-08-12 |
-| Arena de Combate com a Morte (`4_M_DEATH`), virada para leste | `prontera 147,180` | 2026-08-12 |
+| Arena de Combate com a Morte (`4_M_DEATH`), virada para leste | `prontera 145,179` — mudou de `147,180` em 2026-09-03 | 2026-08-12 |
 | Regra nova da arena: sem anti-conluio, com piso de -10 | `pvp_n_1-5` | 2026-08-13 |
 | "Arena de Prontera" no minimapa **e** no letreiro de entrada | cliente, sem NPC | 2026-08-13 |
 | Guia de Prontera de volta ao ar | `prontera 154,187` | 2026-08-12 |
@@ -228,9 +228,9 @@ e está em `ferramentas/levanta_sprite_npc.py`.
   Nevada** (480097) não veste manto nenhum e não é falha: ela é efeito de tela.
 
 - **Arena, Área de Treinamento e Placar:** os três já trocaram de célula três
-  vezes, e desde 2026-08-13 **não estão mais na mesma fileira**: a placa em
-  `142,180` e a porta da arena em `147,180` dividem o `y=180`, e a porta do
-  treino ficou sozinha em `157,187`. Nenhum dos dois arquivos da arena desliga
+  vezes, e desde 2026-08-13 **não estão mais na mesma fileira**: a placa ficou
+  em `142,180` e a porta do treino sozinha em `157,187`. A porta da arena
+  dividiu o `y=180` com a placa até 2026-09-03, quando desceu para `145,179`. Nenhum dos dois arquivos da arena desliga
   NPC do rAthena hoje — o `disablenpc` saiu em 2026-08-12 —, então o sintoma
   antigo (NPC empilhado, sem erro no log) já não se aplica a eles; o do campo
   de treino ainda usa a receita e ainda imprime `debugmes` se errar o alvo. O
@@ -1375,7 +1375,7 @@ Em ordem de risco:
 - **Se cada linha do menu leva ao lugar que promete.** É o risco que a regra
   §4.11 existe para cobrir, e o `debugmes` do `OnInit` só pega desalinhamento
   de tamanho, não de conteúdo. Os três de "Serviços Principais" são os que
-  ninguém mais conferiu: Centro da Ordem 165,168, Arena 147,180, Máquina
+  ninguém mais conferiu: Centro da Ordem 165,168, Arena 145,179, Máquina
   167,199.
 - **Se as trinta marcas cabem.** Trinta é o que o Guia do rAthena já usava,
   mas ele nunca marcou trinta *de uma vez* numa sessão. Abrir tudo, categoria

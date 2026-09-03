@@ -701,7 +701,7 @@ NOSSOS_MAPAS = {
         'displayName': u'Centro da Ordem',
     },
 
-    # A arena de PvP, alcancada pela porta de prontera 147,180
+    # A arena de PvP, alcancada pela porta de prontera 145,179
     # (npc/guerra/arena_de_combate.txt). No kRO e uma das cinco "Salas"
     # numeradas de PvP e se chama "Sala Bussola"; aqui e A arena, a unica que
     # abrimos, e o nome de origem nao dizia isso a ninguem. Renomeada a pedido

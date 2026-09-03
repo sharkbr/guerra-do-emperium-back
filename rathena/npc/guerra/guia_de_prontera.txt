@@ -105,7 +105,7 @@
 //= 3) ENTROU UMA TERCEIRA, no TOPO: "Servicos Principais",
 //=    com as tres portas que sao nossas e nao do rAthena -
 //=    o Centro da Ordem (165,168), a Arena de Combate
-//=    (147,180) e a Maquina (167,199).
+//=    (145,179) e a Maquina (167,199).
 //=
 //= 4) O HIPNOTIZADOR SAIU E A MESMERITA ENTROU no lugar. O
 //=    do rAthena era uma linha de menu que nao marcava nada:
@@ -279,7 +279,7 @@ OnInit:
 
 	setarray .marcas$[0],
 		"165 168",
-		"147 180",
+		"145 179",
 		"167 199",
 		"134 221",
 		"175 220",

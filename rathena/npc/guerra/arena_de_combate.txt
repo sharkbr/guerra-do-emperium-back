@@ -1,19 +1,20 @@
 //===== Guerra do Emperium ===================================
 //= Arena de Combate
 //===== Onde =================================================
-//= prontera 147,180 - celula VAZIA, cinco celulas a leste do
-//= Placar da Arena (142,180) e na MESMA fileira que ele, sete
-//= passos a sudoeste da porta do campo de treino (157,187).
-//= Conferida no .gat DESTE cliente: tipo 0, andavel, altura
-//= 1,00 nos quatro cantos, e sem NPC nenhum - do rAthena ou
-//= nosso - a menos de tres celulas.
+//= prontera 145,179 - celula VAZIA, tres celulas a leste e uma
+//= ao sul do Placar da Arena (142,180), doze a oeste e oito ao
+//= sul da porta do campo de treino (157,187).
+//= Conferida no map_cache DESTE servidor, com o
+//= ferramentas/confere_celula.py: andavel, as nove celulas em
+//= volta livres, e nenhum NPC - do rAthena ou nosso - a menos
+//= de tres celulas. O mais proximo e o Placar.
 //=
 //= A PLACA E QUE VEIO PARA CA, e nao o contrario: ela estava em
 //= 152,187 e desceu para 142,180 em 2026-08-13, no mesmo pedido
-//= que trocou o sprite desta porta. As duas dividem a fileira
-//= y=180 desde entao.
+//= que trocou o sprite desta porta. As duas dividiram a fileira
+//= y=180 ate 2026-09-03, quando esta porta desceu para y=179.
 //=
-//= ELA ANDOU DUAS VEZES, e a segunda desfez a heranca da
+//= ELA ANDOU TRES VEZES, e a segunda desfez a heranca da
 //= primeira:
 //=
 //=   ate 2026-08-08   prontera 157,187
@@ -31,6 +32,9 @@
 //=                    `disablenpc` saiu do OnInit e o GUIA DE
 //=                    PRONTERA VOLTOU a 154,187, onde estava
 //=                    antes de 2026-08-08.
+//=   2026-09-03       prontera 145,179, a pedido: duas celulas
+//=                    a oeste e uma ao sul. Celula vazia
+//=                    tambem, entao nada volta a ser desligado.
 //=
 //= A licao que sobra: `disablenpc` daqui e consequencia da
 //= CELULA, nao deste NPC. Se um dia esta porta voltar a pousar
@@ -95,8 +99,9 @@
 //=
 //= ELE NAO SEGUE A PORTA. Ate 2026-08-12 os dois eram vizinhos -
 //= a porta em 154,187, o retorno quatro celulas ao sul -, e a
-//= mudanca para 147,180 afastou um do outro (oito celulas a leste
-//= e tres ao norte). Foi mantido de proposito: o ponto de retorno
+//= mudanca para 147,180 afastou um do outro, e a de 2026-09-03
+//= mais um pouco: hoje o retorno fica DEZ celulas a leste e
+//= QUATRO ao norte da porta. Foi mantido de proposito: o ponto de retorno
 //= e onde o Warper desembarca, nao a soleira desta porta, e mudar
 //= um por causa do outro so acoplaria as duas coisas.
 //=
@@ -310,7 +315,7 @@
 //= Mudanca neste arquivo pega com @reloadscript.
 //============================================================
 
-prontera,147,180,6	script	Arena de Combate	10028,{
+prontera,145,179,6	script	Arena de Combate	10028,{
 	mes "[Arena de Combate]";
 	mes "Deseja entrar na gloriosa e";
 	mes "eterna arena de combate?";
@@ -343,8 +348,9 @@ OnInit:
 	.Caveira = 1869;
 
 	// Nao ha `disablenpc` nenhum aqui desde 2026-08-12, e a ausencia e
-	// deliberada: 147,180 e celula vazia. Ate aquele dia esta porta
-	// ficava em 154,187, em cima do Guia de Prontera, e precisava
+	// deliberada: a celula em que esta porta pousa e vazia - 147,180
+	// ate 2026-09-03, 145,179 desde entao. Ate 2026-08-12 ela ficava
+	// em 154,187, em cima do Guia de Prontera, e precisava
 	// desliga-lo. Ver a secao "Este arquivo nao toca NPC de terceiros"
 	// no cabecalho antes de por um de volta.
 	end;

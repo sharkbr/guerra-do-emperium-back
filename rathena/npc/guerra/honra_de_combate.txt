@@ -1,8 +1,10 @@
 //===== Guerra do Emperium ===================================
 //= Honra de Combate - a reputação de PvP da Arena de Combate
 //===== Onde =================================================
-//= prontera 142,180 - a placa do placar, CINCO células a oeste
-//= da porta da arena (147,180) e na mesma fileira que ela.
+//= prontera 142,180 - a placa do placar, TRÊS células a oeste
+//= e uma ao norte da porta da arena (145,179). As duas
+//= dividiram a fileira y=180 de 2026-08-13 a 2026-09-03,
+//= quando a porta desceu uma célula a pedido.
 //=
 //= ELA ANDOU DUAS VEZES:
 //=
@@ -15,9 +17,10 @@
 //=                    em que a pontuação perdeu o anti-conluio
 //=
 //= A célula de hoje foi conferida no .gat DESTE cliente: tipo 0,
-//= andável, e sem NPC ligado a menos de quatro células. O mais
-//= perto é o Clan Helper do rAthena (npc/re/other/clans.txt),
-//= em 138,183. O Lottery e o Stock Market de npc/custom/, que
+//= andável, e sem NPC ligado a menos de três células. Desde
+//= 2026-09-03 o mais perto é a própria porta da arena, em
+//= 145,179, a três células; depois dela vem o Clan Helper do
+//= rAthena (npc/re/other/clans.txt), em 138,183. O Lottery e o Stock Market de npc/custom/, que
 //= ficariam em 141,182 e 140,181, estão os dois comentados no
 //= scripts_custom.conf e não nascem.
 //===== Descrição ============================================
