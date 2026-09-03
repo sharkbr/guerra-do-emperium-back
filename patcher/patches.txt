@@ -29,3 +29,4 @@
 0015	0015-icones-de-status-em-portugues.zip	bf652ecf8c23c3e85589f4b544e17123d028730f98c85db04cbc2f24b595529b	24777	Icones de status em portugues
 0016	0016-descricao-da-caveira-humana.zip	a2a2fc121e24cf70b758812e80597f618084757dcfcbae9bb3eae066f6eb6152	2569356	Descricao da Caveira Humana
 0017	0017-itens-mega-das-valquirias-em-portugues.zip	aea22584919f3ec0c2b13096871b9c79ad01bfc08e855d7c572fe8714fba96c0	2579755	Itens MEGA das Valquirias em portugues
+0018	0018-cova-nas-quinze-armas-brutais.zip	c8ccabb78bdcb2ca5b1740da00daf2593bd99d5876991dba58025d7a0dfcd400	2571500	Cova nas quinze Armas Brutais

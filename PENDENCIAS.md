@@ -3977,11 +3977,12 @@ os oficiais.
 
 ---
 
-## 1ac. As Armas Brutais ganharam cova — falta ver em jogo, o patch e o deploy (2026-09-03)
+## 1ac. As Armas Brutais ganharam cova — falta o deploy (2026-09-03)
 
 Feito em 2026-09-03 (`HISTORICO.md`, "As quinze Armas Brutais ganharam a cova
-que o bRO sempre deu"). As duas metades estão gravadas nesta máquina; o que
-falta é a conferência em tela e os dois caminhos de entrega.
+que o bRO sempre deu"). As duas metades estão gravadas, e a do cliente já foi
+publicada: **patch 0018, "Cova nas quinze Armas Brutais"**, no ar desde
+2026-09-03. Falta o deploy do lado do servidor.
 
 **Como conferir, nesta ordem:**
 
@@ -4000,13 +4001,11 @@ falta é a conferência em tela e os dois caminhos de entrega.
    `inventory_data[i]->slots`, ou seja do servidor: se ela abrir e a carta
    entrar, as duas metades estão de acordo.
 
-**O que falta entregar:**
-
-- **patch de cliente** (`ferramentas/monta_patch.py` + `publica_patch.sh`) — o
-  `itemInfo.lua` mora em `C:\GuerraDoEmperium\cliente\` e não sai daqui pelo
-  deploy. Sem ele o jogador encaixa carta numa arma cujo nome não mostra a
-  cova (`CLAUDE.md` §4.18);
-- **deploy** (`implanta.sh`, do Mac) — o `db/guerra/item_db.yml`.
+**O que falta entregar: o deploy** (`implanta.sh`, do Mac), que leva o
+`db/guerra/item_db.yml`. O patch 0018 já subiu o `itemInfo.lua`, e as duas
+metades ficarem defasadas nesse intervalo é inofensivo por desenho: quem
+receber o patch antes do deploy vê o `[1]` no nome e a carta ainda não entra —
+o contrário (servidor primeiro) é que deixaria a cova invisível.
 
 ### As 16 covas em que cliente e servidor discordam — decisão do dono
 

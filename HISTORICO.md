@@ -16857,3 +16857,11 @@ mesmo Senhor das Armas, mostra `[2]` e o servidor dá 1.
 Recarregador: `@reloaditemdb` — e **fechar e reabrir o cliente**, sem o que o
 nome continua sem o `[1]` com o servidor já certo. Vai por deploy **e** por
 patch: as duas metades têm destinos diferentes (`RECEITAS.md` §0).
+
+A metade do cliente saiu no mesmo dia: **patch 0018, "Cova nas quinze Armas
+Brutais"** — 22,87 MB crus, 2,45 MB no zip, um arquivo só
+(`SystemEN/LuaFiles514/itemInfo.lua`). Zip primeiro, `lista.txt` depois, que é
+a única coisa delicada daquele caminho. Falta o deploy do `item_db.yml`, e a
+defasagem nesse intervalo é inofensiva por desenho: quem receber o patch antes
+do deploy vê o `[1]` e a carta ainda não entra — o contrário é que deixaria a
+cova invisível.
