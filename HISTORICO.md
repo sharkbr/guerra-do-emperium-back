@@ -16762,3 +16762,98 @@ dados: quem move um NPC tem de procurar quem mais escreveu a coordenada dele.
 
 Recarregador: `@reloadscript`. Vai por deploy e só por deploy — não há nada de
 cliente aqui (`RECEITAS.md` §0).
+
+---
+
+## As quinze Armas Brutais ganham a cova que o bRO sempre deu (2026-09-03)
+
+Pedido do dono: *"hoje as vendidas em Prontera não têm slot, precisamos trocar
+pelas versões com slot"*. **Não havia versão com slot para trocar** — e é essa
+a parte que vale registrar, porque o pedido descreve o remédio de RO clássico
+(a peça com cova é *outro* item, `Sword_` e não `Sword`) e aqui esse item não
+existe de nenhum lado.
+
+Procurei "Brutal" nos 18845 itens do `iteminfo_new.lub` do bRO: **quinze**.
+Procurei `Blut_*` no nosso `item_db`: **quinze**, os mesmos IDs. Não há segundo
+ID para nenhuma delas. O que o `estado_item.py` mostrou é que a divergência era
+outra, e estava nos dois lados de casa:
+
+```
+=== 1328  Machado Brutal
+  servidor  db/re/item_db_equip.yml      Blut_Axe  Right_Hand
+  cliente   itemInfo.lua                 "Machado Brutal"  0 cova(s)
+  bRO       iteminfo_new.lub             "Machado Brutal"  1 cova(s)
+```
+
+**Nas quinze, o bRO dá `slotCount = 1` e nós dávamos 0 — no servidor e no
+cliente.** A família nasceu sem cova aqui por herança: as duas que o vendor já
+tinha (1328 Machado e 32014 Lança) são sem cova no rAthena, e as treze que
+escrevemos em 2026-08-01 foram moldadas nelas, campo por campo. O cabeçalho da
+linha Brutal chegou a registrar *"Todas: peso 0, nível de arma 4, nível mínimo
+100, sem slot"* — descrevia fielmente o que tínhamos, e o que tínhamos estava
+errado.
+
+Então não houve troca de ID: as quinze passaram a ter a cova que sempre
+tiveram lá.
+
+### A cova mora em dois lugares, e um deles é o cliente
+
+É a `CLAUDE.md` §4.9 outra vez, e a divisão não é a que se imagina:
+
+| metade | onde | o que decide |
+|---|---|---|
+| servidor | `Slots:` no `item_db` | se a carta **entra** — a janela de encaixe é montada em `clif_use_card` a partir do `slots` |
+| cliente | `slotCount` no `itemInfo.lua` | se o nome mostra **`[1]`** — o cliente desenha o sufixo sozinho, sem perguntar nada |
+
+Só o servidor deixaria um item que **aceita carta e não parece aceitar**: o
+jogador não tenta, e nada dá erro. Só o cliente seria pior — prometeria uma
+cova que o servidor recusa. As duas entraram no mesmo dia.
+
+Do lado do servidor, treze são nossas e receberam `Slots: 1` direto; as duas do
+vendor (1328 e 32014) receberam **override de campo único** na seção de
+OVERRIDES do `db/guerra/item_db.yml`, que é a única forma de mexer em item do
+rAthena sem editar arquivo deles (§2). Aqui a armadilha do `Locations` — que é
+OR e não atribuição — não pega: `Slots` é escalar, e o `parseBodyNode` mantém
+todo o resto da entrada do `db/re/` (Attack 150, WeaponLevel 4, EquipLevelMin
+100, o `Script:` com o `bUnbreakableWeapon`).
+
+### A ferramenta nova, e por que a lista dela é escrita à mão
+
+O lado do cliente virou `ferramentas/ajusta_covas_do_cliente.py`, que lê o
+`Slots:` do servidor e grava o `slotCount` do `itemInfo.lua`. **A fonte da
+verdade é o servidor, não o bRO** — o nosso `item_db` pode discordar do bRO por
+decisão nossa, e o que o jogador precisa é que a tela diga o que o servidor
+faz.
+
+Ele não podia ser o `completa_iteminfo.py`: aquele importa a entrada inteira de
+um item que o cliente **não tem**, e por desenho não toca entrada existente.
+Aqui o que se muda é um campo de entrada que já existe. Resultado medido: 15
+trocas de **um byte cada** (`0` → `1`), arquivo do mesmo tamanho, e o
+`luac.exe -p` do ROenglishRE compilando os 22 MB depois.
+
+A lista de IDs é uma constante escrita à mão, e a alternativa foi medida antes
+de ser descartada: varrer as vitrines e alinhar tudo daria **16 divergências**
+entre os 3396 itens de loja, e em **treze** delas quem promete a cova é o
+cliente enquanto o servidor não a dá. Alinhar essas treze tiraria da tela uma
+cova que o jogador já vê — decisão do dono, não consequência de script. Ficaram
+no `PENDENCIAS.md` §1ac, com os dois consertos possíveis nomeados.
+
+Uma delas está na vitrine ao lado das Brutais: a **Cauda Arco-Íris (26163)**, no
+mesmo Senhor das Armas, mostra `[2]` e o servidor dá 1.
+
+### O que ficou
+
+| arquivo | o quê |
+| --- | --- |
+| `rathena/db/guerra/item_db.yml` | `Slots: 1` nas treze nossas, override de `Slots` para 1328 e 32014, e o cabeçalho da linha Brutal reescrito |
+| `rathena/npc/guerra/mercado_contemporaneo.txt` | o parágrafo da vitrine: por que nenhum ID mudou, e onde moram as duas metades |
+| `ferramentas/ajusta_covas_do_cliente.py` | **novo** — o lado do cliente, com `--conferir` |
+| `ferramentas/LEIAME.md` | a seção da ferramenta |
+| `CLAUDE.md` | §4.9 ganhou o quarto caso vivo |
+| `ARQUITETURA.md` | §4 ganhou "A COVA de um item vive em 2 lugares" |
+| `PENDENCIAS.md` | §1ac — conferir em jogo, o patch, o deploy e as 16 divergências |
+| `C:\GuerraDoEmperium\cliente\...\itemInfo.lua` | **fora do git** — 15 bytes, reproduzível pelo script |
+
+Recarregador: `@reloaditemdb` — e **fechar e reabrir o cliente**, sem o que o
+nome continua sem o `[1]` com o servidor já certo. Vai por deploy **e** por
+patch: as duas metades têm destinos diferentes (`RECEITAS.md` §0).

@@ -182,6 +182,32 @@ se alguma discordar. É a trava — não o comentário no cabeçalho da loja
 próprio `item_db`, e é por isso que as duas metades dela nunca podem divergir:
 são o mesmo número. Ver `CLAUDE.md` §4.16.
 
+### A COVA de um item vive em 2 lugares, e o segundo é o cliente
+
+| # | Onde | O que decide |
+|---|---|---|
+| 1 | `Slots:` no `item_db` (nosso ou o do vendor) | se a carta **entra** — a janela de encaixe é montada em `clif_use_card` a partir do `slots` do servidor |
+| 2 | `slotCount` no `itemInfo.lua` do cliente | se o nome mostra **`[1]`** — o cliente desenha o sufixo sozinho e não pergunta nada ao servidor |
+
+**As duas metades falham caladas, e em direções opostas.** Só o servidor: o
+item aceita carta e não parece aceitar — o jogador não tenta, e nada dá erro.
+Só o cliente: a tela promete uma cova que o servidor recusa.
+
+A segunda metade é escrita por `ferramentas/ajusta_covas_do_cliente.py`, que lê
+o `Slots:` do servidor e grava o `slotCount` — **a fonte da verdade é o
+servidor, não o bRO**, porque o nosso `item_db` pode discordar do bRO por
+decisão nossa (a seção de OVERRIDES do `db/guerra/item_db.yml`). O
+`--conferir` sai com erro quando uma das metades ficou para trás.
+
+Como o `itemInfo.lua` mora em `C:\GuerraDoEmperium\cliente\`, essa metade **só
+chega ao jogador por patch** — ver "Uma mudança de cliente vive em 3 lugares",
+mais abaixo, e `CLAUDE.md` §4.18.
+
+Caso vivo: a linha Brutal (as 15 armas do Senhor das Armas) ganhou a cova que o
+bRO sempre deu a ela em 2026-09-03, e a mudança foram os dois lados no mesmo
+dia. O `estado_item.py --id <n>` imprime os três — servidor, cliente e bRO —
+numa tela só, e foi ele que mostrou que os três discordavam.
+
 ### Um drop de MAPA vive em 2 lugares, e o segundo é gerado do primeiro
 
 | # | Onde | O que decide |

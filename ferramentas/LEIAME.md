@@ -617,6 +617,57 @@ Idempotente: item que já tenha entrada não é tocado — nem para conferir se 
 igual, porque a entrada existente pode ser a do ROenglishRE, em inglês, e
 trocá-la por uma nossa sem descrição seria piorar.
 
+## `ajusta_covas_do_cliente.py` — o `[1]` no nome igual ao `Slots:` do servidor
+
+```
+python ajusta_covas_do_cliente.py             # aplica (faz backup antes)
+python ajusta_covas_do_cliente.py --conferir  # só relata; sai 1 se faltar
+python ajusta_covas_do_cliente.py --id 1328   # só estes (lista com vírgula)
+```
+
+Cova de item é mais um caso de **metade da configuração no cliente**
+(`CLAUDE.md` §4.9), e a divisão não é a que se imagina:
+
+- quem decide se a carta **entra** é o servidor — a janela de encaixe é montada
+  em `clif_use_card` a partir do `slots` do `item_db`, então `Slots: 1` no `db/`
+  já basta para o jogador encaixar;
+- quem desenha o **`[1]` no nome da arma** é o `slotCount` do `itemInfo.lua`, do
+  lado do cliente, e ele não pergunta nada ao servidor.
+
+Mexer só no `db/` deixa um item que **aceita carta e não parece aceitar** — o
+jogador não tenta, e nada dá erro. Mexer só no cliente é pior: promete uma cova
+que o servidor recusa.
+
+**A fonte da verdade aqui é o SERVIDOR, não o bRO**, e é de propósito: o nosso
+`item_db` pode discordar do bRO por decisão nossa (a seção de OVERRIDES do
+`db/guerra/item_db.yml` existe para isso), e o que o jogador precisa é que a
+tela diga o que o servidor faz. Para ver os três lados de uma vez —
+servidor, cliente e bRO — é o `estado_item.py --id <n>`.
+
+**Vizinho de prateleira do `completa_iteminfo.py`, e a diferença importa:**
+aquele *importa* a entrada inteira de um item que o cliente não tem, e por
+desenho não toca entrada que já exista. Este mexe num **campo** de entrada que
+já existe, e não olha para o bRO.
+
+**A lista `COVAS` é escrita à mão, e isso foi medido.** A alternativa — varrer
+as vitrines e alinhar tudo — daria 16 divergências entre os 3396 itens de loja
+(2026-09-03), e em **13 delas quem promete a cova é o cliente** (entrada de
+2021) enquanto o servidor não a dá. Alinhar esses 13 tiraria da tela uma cova
+que o jogador já vê, e isso é decisão do dono, não consequência de script — os
+16 estão anotados no `PENDENCIAS.md`. **Ao mudar `Slots:` de um item,
+acrescentar o ID à lista e rodar.**
+
+Estreou em 2026-09-03 com as 15 Armas Brutais do Senhor das Armas: 15 trocas de
+um byte cada (`slotCount = 0` → `= 1`), arquivo do mesmo tamanho, e o
+`luac.exe -p` do ROenglishRE compilando o resultado. Tudo `rb`/`wb`, byte a
+byte, sem decodificar nada — a mesma regra do `instala_item.py`, e a razão é a
+mesma: os `resourceName` daquele arquivo são bytes CP949 coreanos.
+
+Como o `itemInfo.lua` mora em `C:\GuerraDoEmperium\cliente\`, **rodar este
+script não leva a mudança a ninguém**: o cliente lê o arquivo só na
+inicialização (fechar e reabrir), e o jogador só a recebe por patch
+(`CLAUDE.md` §4.18).
+
 ## `nomes_pt_item_db.py` — o `Name` do servidor igual ao nome que o cliente desenha
 
 ```

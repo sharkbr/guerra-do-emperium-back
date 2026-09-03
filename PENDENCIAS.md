@@ -3974,3 +3974,73 @@ os oficiais.
   do `OnInit` de `npc/guerra/labirinto_das_valquirias.txt`.
 - **Não há `nopenalty`**: morrer lá custa EXP como em qualquer lugar, depois de
   ter pago o pedágio. Foi decisão, e é uma linha ao lado das outras se mudar.
+
+---
+
+## 1ac. As Armas Brutais ganharam cova — falta ver em jogo, o patch e o deploy (2026-09-03)
+
+Feito em 2026-09-03 (`HISTORICO.md`, "As quinze Armas Brutais ganharam a cova
+que o bRO sempre deu"). As duas metades estão gravadas nesta máquina; o que
+falta é a conferência em tela e os dois caminhos de entrega.
+
+**Como conferir, nesta ordem:**
+
+1. `@reloaditemdb` no map-server local — pega os quinze `Slots: 1`.
+2. **Fechar e reabrir o cliente.** O `itemInfo.lua` só é lido na
+   inicialização, e sem isso o nome continua sem o `[1]` mesmo com o servidor
+   já certo — que é exatamente a metade que este trabalho existiu para
+   fechar.
+3. No Senhor das Armas (prontera 151,167): o nome na vitrine tem de mostrar
+   `[1]`.
+4. Comprar uma, comprar uma carta de arma qualquer e **encaixar** — com a arma
+   **na mochila, não equipada**: o `clif_use_card` pula item já equipado
+   (`clif.cpp:7128`), e a janela não abre se a única arma compatível estiver
+   no corpo. É a armadilha já registrada em `ARMADILHAS-RATHENA.md`, e aqui
+   ela pareceria "a cova não pegou". A janela é montada a partir do
+   `inventory_data[i]->slots`, ou seja do servidor: se ela abrir e a carta
+   entrar, as duas metades estão de acordo.
+
+**O que falta entregar:**
+
+- **patch de cliente** (`ferramentas/monta_patch.py` + `publica_patch.sh`) — o
+  `itemInfo.lua` mora em `C:\GuerraDoEmperium\cliente\` e não sai daqui pelo
+  deploy. Sem ele o jogador encaixa carta numa arma cujo nome não mostra a
+  cova (`CLAUDE.md` §4.18);
+- **deploy** (`implanta.sh`, do Mac) — o `db/guerra/item_db.yml`.
+
+### As 16 covas em que cliente e servidor discordam — decisão do dono
+
+Medido na mesma sessão, com o comparador que virou
+`ferramentas/ajusta_covas_do_cliente.py`: dos **3396** itens das vitrines,
+**16** têm `Slots:` no servidor diferente do `slotCount` no cliente. **Não é
+bug novo** — é o estado desde sempre, e nenhum deles dá erro.
+
+Em **três** quem tem a cova é o servidor e o cliente não a mostra (o jogador
+não sabe que pode encaixar):
+
+| item | servidor | cliente | loja |
+|---|---|---|---|
+| Morango Cristalizado (2979) | 1 | 0 | Acessorista |
+| Capa Ajeitadinha (20993) | 1 | 0 | Capeiro |
+| Escudo de Carvão (460046) | 1 | 0 | Escudeiro |
+
+Nos **treze** restantes é o contrário, e é o caso delicado: **o cliente promete
+cova que o servidor não dá** — 18676 Digimáculos, 18853 Chapéu de Moranguinho,
+20925 Capa do Comandante, 28572 Celine's Brooch, 410130 Orelhas Fantasmagóricas,
+480075 Avental de Porquinho, 480188 Asas da Valquíria Caída, 480278 Asas de
+Garuda, 480446 Som do Luar, 490290 Anel de Ameretat, 490336 Núcleo de Verus e
+490337 Amuleto Mitológico, todos com 1 no cliente e 0 no servidor, mais a
+**Cauda Arco-Íris (26163)**, que é o único de grau: o cliente mostra **2** e o
+servidor dá **1**. Esse está na vitrine do Senhor das Armas, ao lado das
+Brutais.
+
+**Não foram tocados de propósito.** Há dois consertos possíveis e eles são
+opostos: alinhar o cliente ao servidor **tira da tela** uma cova que o jogador
+já vê, e alinhar o servidor ao cliente **dá uma cova** a treze peças de
+vitrine. Qual dos dois é decisão do dono, não consequência de script — e é por
+isso que a lista `COVAS` daquela ferramenta é escrita à mão em vez de varrer as
+lojas.
+
+Escolhido o lado, o caminho é curto: `Slots:` por override em
+`db/guerra/item_db.yml` (servidor) ou o ID acrescentado à `COVAS` e o script
+rodado (cliente).

@@ -206,6 +206,14 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
    missões.** Quest que o cliente não conhece **derruba o cliente**, não
    aparece sem título — ver §5. As missões da Ordem são geradas dos dois
    lados por `ferramentas/monta_missoes_da_ordem.py`.
+   **Quarto caso vivo: a COVA do item.** Quem decide se a carta *entra* é o
+   `Slots:` do `item_db`; quem desenha o `[1]` no nome é o `slotCount` do
+   `itemInfo.lua`, e o cliente não pergunta nada ao servidor. Mexer só no
+   `db/` deixa um item que **aceita carta e não parece aceitar** — o jogador
+   não tenta, e nada dá erro. A segunda metade é gerada da primeira por
+   `ferramentas/ajusta_covas_do_cliente.py`, e como mora no cliente **só
+   chega ao jogador por patch** (§4.18). Caso vivo: as 15 Armas Brutais,
+   2026-09-03.
 10. **Loja que cobra em ITEM é `barter`, não `itemshop`.** São os dois tipos que
     parecem servir, e só um funciona aqui: o `itemshop` passa a moeda por
     `pc_can_sell_item`, que **recusa item `NoSell`** enquanto

@@ -1281,6 +1281,27 @@ OnInit:
 // Blut_Spear). Os outros 13 sao placeholder sem bonus. O
 // "Rifle bla bla" da lista virou o 28245, Rifle Brutal, que
 // fecha a familia.
+//
+// AS QUINZE GANHARAM UMA COVA EM 2026-09-03, a pedido do dono:
+// "hoje as vendidas em Prontera nao tem slot, precisamos trocar
+// pelas versoes com slot".
+//
+// NAO EXISTE VERSAO COM SLOT, e e por isso que nenhum ID mudou
+// aqui. Procurei "Brutal" nos 18845 itens do iteminfo_new.lub do
+// bRO e nos `Blut_*` do nosso item_db: sao QUINZE dos dois lados,
+// sem um segundo ID para nenhuma. E o bRO ja da `slotCount = 1` as
+// quinze - quem estava sem cova eramos nos, e nos DOIS lados. A
+// familia so voltou ao que ela e la.
+//
+// Onde a mudanca mora, e as duas metades sao obrigatorias
+// (CLAUDE.md secao 4.9): `Slots: 1` no db/guerra/item_db.yml - nas
+// treze nossas, mais override para o Machado e a Lanca, que sao do
+// vendor - e `slotCount = 1` no itemInfo.lua do cliente, gravado
+// por ferramentas/ajusta_covas_do_cliente.py. Sem a metade do
+// servidor a carta nao entra; sem a do cliente ela entra e o nome
+// nao mostra o "[1]". A metade do cliente so chega ao jogador por
+// patch (secao 4.18).
+//
 // O Ceuci (510155) e exclusivo do bRO e nunca vai vir do
 // rAthena - o placeholder dele e permanente.
 //

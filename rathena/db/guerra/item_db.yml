@@ -683,7 +683,24 @@ Body:
   #   bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
   #   +8: mais 35   |   +9: mais 20   |   +10: HP e SP max +15%
   #
-  # Todas: peso 0, nivel de arma 4, nivel minimo 100, sem slot.
+  # Todas: peso 0, nivel de arma 4, nivel minimo 100, UMA COVA.
+  #
+  # A COVA ENTROU EM 2026-09-03, e nao e mudanca de balanceamento: e a
+  # familia voltando ao que o bRO diz. As quinze nasceram sem cova aqui
+  # porque as duas que o vendor ja tinha (1328 Machado e 32014 Lanca) sao
+  # sem cova e as treze de baixo foram moldadas nelas - mas o
+  # `iteminfo_new.lub` do bRO da `slotCount = 1` para as QUINZE, e o
+  # `estado_item.py --id <n>` mostra isso numa linha. Quem notou foi o dono,
+  # na vitrine do Senhor das Armas. As duas do vendor ganharam override na
+  # secao de OVERRIDES, la embaixo - nao da para editar o db/re/.
+  #
+  # A OUTRA METADE DESTA MUDANCA MORA NO CLIENTE, e sozinha esta aqui nao
+  # basta: quem desenha o sufixo "[1]" no nome da arma e o `slotCount` do
+  # `itemInfo.lua`, nao o servidor. Sem o outro lado a carta ENTRA (a janela
+  # de encaixe le o item_db, no servidor) e a arma continua parecendo sem
+  # cova - a armadilha do CLAUDE.md secao 4.9. Quem grava aquele lado e
+  # `ferramentas/ajusta_covas_do_cliente.py`, e ele so chega ao jogador por
+  # patch (secao 4.18).
   #
   # O 28248 (Lanca-Granadas) e o unico SEM `bUnbreakableWeapon`, e nao e
   # esquecimento meu: a descricao do bRO nao traz a linha "Indestrutivel
@@ -696,6 +713,7 @@ Body:
     SubType: Revolver
     Attack: 70
     Range: 7
+    Slots: 1
     Jobs:
       Gunslinger: true
       Rebellion: true
@@ -736,6 +754,7 @@ Body:
     Attack: 150
     MagicAttack: 160
     Range: 1
+    Slots: 1
     Jobs:
       Ninja: true
       KagerouOboro: true
@@ -775,6 +794,7 @@ Body:
     SubType: Mace
     Attack: 120
     Range: 1
+    Slots: 1
     # "Espadachins, Novicos, Mercadores e evolucoes". As evolucoes de 2a
     # classe entram na lista uma a uma - no rAthena cada uma e uma chave
     # propria; o `Classes` abaixo e que cobre 3a e 4a.
@@ -821,6 +841,7 @@ Body:
     SubType: Bow
     Attack: 160
     Range: 5
+    Slots: 1
     # "Arqueiros, Arruaceiros e evolucoes" - Arruaceiro e o Rogue, nao o
     # Gatuno (Thief). Por isso Thief NAO entra: a descricao nomeia o
     # Rogue diretamente, e ele ja e uma evolucao.
@@ -866,6 +887,7 @@ Body:
     Attack: 60
     MagicAttack: 180
     Range: 1
+    Slots: 1
     Jobs:
       Novice: true
       SuperNovice: true
@@ -911,6 +933,7 @@ Body:
     Attack: 150
     MagicAttack: 120
     Range: 2
+    Slots: 1
     # "Musas" e a Dancer. No rAthena Bardo e Musa dividem a mesma chave
     # (`BardDancer`); quem separa na pratica e o tipo da arma, que so a
     # Musa equipa.
@@ -950,6 +973,7 @@ Body:
     SubType: Katar
     Attack: 150
     Range: 1
+    Slots: 1
     Jobs:
       Assassin: true
     Classes:
@@ -1007,6 +1031,7 @@ Body:
     SubType: Rifle
     Attack: 170
     Range: 9
+    Slots: 1
     Jobs:
       Gunslinger: true
       Rebellion: true
@@ -1049,6 +1074,7 @@ Body:
     SubType: Gatling
     Attack: 120
     Range: 9
+    Slots: 1
     Jobs:
       Gunslinger: true
       Rebellion: true
@@ -1091,6 +1117,7 @@ Body:
     SubType: Shotgun
     Attack: 180
     Range: 9
+    Slots: 1
     Jobs:
       Gunslinger: true
       Rebellion: true
@@ -1138,6 +1165,7 @@ Body:
     SubType: Grenade
     Attack: 210
     Range: 9
+    Slots: 1
     Jobs:
       Gunslinger: true
       Rebellion: true
@@ -1184,6 +1212,7 @@ Body:
     SubType: Dagger
     Attack: 120
     Range: 1
+    Slots: 1
     Jobs:
       Swordman: true
       Knight: true
@@ -1238,6 +1267,7 @@ Body:
     Attack: 150
     MagicAttack: 120
     Range: 1
+    Slots: 1
     Jobs:
       BardDancer: true
     Classes:
@@ -2471,6 +2501,35 @@ Body:
       NoConsume: true
     Script: |
       callfunc "F_AlbumDeTaro";
+
+  # ------------------------------------------------------------------
+  # AS DUAS ARMAS BRUTAIS DO VENDOR - 2026-09-03
+  #
+  # A linha Brutal inteira tem UMA COVA no bRO. As treze que sao nossas ja
+  # nascem com ela la em cima; estas duas sao do rAthena, entao a cova so
+  # entra por override - e sao as duas unicas da familia que precisam de um.
+  # O porque, a data e a metade que mora no cliente estao no cabecalho da
+  # linha Brutal, na secao dos placeholders do Mercado Contemporaneo.
+  #
+  # Override de campo unico: `Slots` nao e OR nem lista (a armadilha do
+  # `Locations` nao pega aqui), e a mesclagem do parseBodyNode mantem todo o
+  # resto da entrada do db/re/ - Attack 150, WeaponLevel 4, EquipLevelMin
+  # 100 e o `Script:` com o bUnbreakableWeapon.
+  #
+  # `AegisName` e `Name` sao redundantes e estao aqui pela mesma razao da
+  # Piscadela de Freya, la em cima: quem le o bloco tem de saber de que peca
+  # se trata sem abrir outro arquivo.
+  # ------------------------------------------------------------------
+
+  - Id: 1328
+    AegisName: Blut_Axe
+    Name: "Machado Brutal"
+    Slots: 1
+
+  - Id: 32014
+    AegisName: Blut_Spear
+    Name: "Lança Brutal"
+    Slots: 1
 
 # -------------------------------------------------------------------------
 # QUINTA LEVA DE PLACEHOLDERS - 2026-08-18
