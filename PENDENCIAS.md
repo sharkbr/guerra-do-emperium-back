@@ -4182,29 +4182,22 @@ quem já cadastrou senha inválida** — para esses, só reset. Vale uma consult
 antes, para saber quantas contas estão nessa situação; não dá para descobrir
 pelo hash, só perguntando a quem não consegue entrar.
 
-## O painel de novidades está pronto e NÃO está no ar (2026-09-06)
+## O painel de novidades está no ar — falta vê-lo na tela de um jogador (2026-09-06)
 
-O changelog do Atualizador (`HISTORICO.md`, "O changelog: o painel NOVIDADES e
-a mensagem do grupo") foi escrito, compilado e conferido em tela nesta máquina.
-**Nenhum jogador o tem**, e são dois passos, nesta ordem:
+Publicado no mesmo dia: `Jogar-4.exe` mais o `patcher.txt` que o aponta, e o
+`novidades.txt` ao lado da `lista.txt`. Quem tem o Atualizador 3 troca sozinho
+na próxima abertura e só então vê o painel — **ele mora no exe, não no
+cliente**, então patch comum não o entrega e não há nada a fazer do lado do
+servidor de jogo.
 
-```
-ferramentas/publica_patch.sh --atualizador   # o Jogar.exe versão 4
-ferramentas/publica_patch.sh                 # sobe o novidades.txt
-```
+O que fica em aberto:
 
-**O painel mora no exe, não no cliente** — patch comum não o entrega. Quem tem
-o Atualizador 3 troca sozinho na abertura seguinte à publicação, e só então vê
-o painel. A ordem importa pouco aqui (o Atualizador 3 ignora o `novidades.txt`,
-e o 4 sem arquivo cai nos nomes da lista), mas publicar o exe primeiro evita a
-janela em que ninguém tem nem uma coisa nem outra.
-
-Duas coisas ficam para a primeira vez que isto for usado de verdade:
-
-- **os vinte blocos antigos não têm pontos.** Eles são anteriores ao arquivo, e
-  a data de cada um veio do `git log`. Se algum patch de loja merecer a lista
-  dos itens em retrospecto, é editar o bloco à mão e republicar — não precisa de
-  patch novo.
 - **falta ver o painel na tela de um JOGADOR**, e não na desta máquina: o teste
-  aqui foi com um servidor HTTP local. O que muda lá é só a origem do arquivo,
-  mas é o mesmo tipo de conferência que a §1u pediu para o Atualizador 3.
+  aqui foi contra um servidor HTTP local. O que muda lá é só a origem do
+  arquivo, mas é o mesmo tipo de conferência que a §1u pediu para o Atualizador
+  3 — e a troca de exe pelo canal próprio é a parte que nunca foi vista de
+  fora daqui com uma versão nova.
+- **os vinte blocos antigos não têm pontos.** São anteriores ao arquivo, e a
+  data de cada um veio do `git log`. Se algum patch de loja merecer a lista dos
+  itens em retrospecto, é editar o bloco à mão e rodar o `publica_patch.sh` —
+  não precisa de patch novo.

@@ -17151,6 +17151,16 @@ Três decisões que valem para além deste painel:
   Atualizador pode impedir alguém de entrar no jogo, e um changelog é a última
   coisa que teria direito a isso.
 
-O Atualizador foi para a **versão 4**: quem já tem o 3 troca sozinho na próxima
-abertura, mas só depois de o exe novo ser publicado (`RECEITAS.md` §11b) — o
-painel não chega a ninguém pelo patch comum.
+O Atualizador foi para a **versão 4**, e foi publicado no mesmo dia:
+`Jogar-4.exe` mais o `patcher.txt` que o aponta, e o `novidades.txt` ao lado da
+`lista.txt`. Quem já tem o 3 troca sozinho na próxima abertura. **O painel mora
+no exe**, não no cliente — patch comum não o entregaria —, e nada disso toca o
+servidor de jogo: não houve deploy nem reinício.
+
+E uma regra saiu daqui, a §4.24 do `CLAUDE.md`: **a lista de itens é escrita
+por quem monta o patch**, e não pedida ao dono. O pedido dele foi explícito —
+*"isso não pode ser um passo a mais pra mim"* —, e o raciocínio é o que
+sustenta a regra: a lista já está na mão de quem acabou de pôr os itens na
+loja, e devolvê-la ao dono é garantir que o campo fique vazio. Com ele vazio, o
+anúncio do dia volta a ser a frase que não informa nada, que é o defeito que
+este trabalho existiu para consertar.
