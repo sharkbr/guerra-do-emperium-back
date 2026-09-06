@@ -3804,3 +3804,409 @@ Body:
     # o arquivo nao depender de byte acentuado num comentario)
     Trade:
       NoDrop: false
+
+  # ------------------------------------------------------------------
+  # AS SEIS ARMAS DE XANGO - o quarto elemento do Festival de Brasilis
+  #
+  # Os equipamentos do Festival de Brasilis vem em quatro grupos, um por
+  # orixa, e o nosso vendor tinha TRES: Iansa (vento, `*_of_Trust`),
+  # Oxossi (terra, `Unrivaled*`) e Oxum (agua, `Blue_*`). O grupo do
+  # FOGO nao existia em item_db nenhum - so no itemInfo.lua do cliente,
+  # que ja traz os seis com nome, descricao e ClassNum em portugues.
+  #
+  # Ou seja: tres dos quatro elementos tinham arma e o fogo nao tinha.
+  # Sem estas seis entradas o Festival entregaria chapeu, escudo, capa e
+  # sapato do fogo e nenhuma arma - e `@item 13143` falharia.
+  #
+  # DE ONDE SAIU CADA NUMERO. A estrutura (SubType, Range, Jobs,
+  # Locations, WeaponLevel, Buy) e espelhada da IRMA de Oxum, que e a
+  # mesma arma noutro elemento: 13139 Blue_Gun, 16057 Blue_Mace, 18144
+  # Blue_Bow, 26104 Blue_Staff, 28720 Blue_Dagger e 32000 Blue_Spear. Os
+  # numeros de combate (ATQ, ATQM, peso, nivel, refino) saem da
+  # descricao do bRO, que e a mesma que o nosso cliente ja desenha.
+  #
+  # As descricoes de Xango e de Oxum sao IDENTICAS palavra por palavra
+  # fora o elemento - por isso espelhar a irma nao inventa nada.
+  #
+  # A RACA E O ELEMENTO ALVO seguem o desenho do conjunto: cada arma
+  # bate no elemento que o seu vence. Oxum (agua) bate em Fogo; Iansa
+  # (vento) bate em Agua; Xango (fogo) bate em Agua e Terra, e nas racas
+  # Inseto e Humanoide, como a descricao diz.
+  #
+  # RC_DemiHuman e NAO RC_Player_Human, de proposito: "Humanoide" na
+  # tabela do cliente e a raca de MONSTRO. Por RC_Player_Human as seis
+  # dariam +30% contra jogador no +9, que nenhuma das outras dezoito
+  # armas do conjunto da (elas batem em Demonio, Amorfo e Bruto, que nao
+  # tem equivalente de jogador). Ver ARMADILHAS-COMBATE.md.
+  #
+  # AegisName `Red_*`: o vendor nao tem estes seis, entao o nome e
+  # nosso. `Red_` segue o `Blue_` da familia de Oxum, e nenhum dos seis
+  # colide com AegisName do vendor (conferido em 2026-09-05).
+  #
+  # O PESO E 10x O DA IRMA, e nao e engano: peso do item_db e em
+  # decimos. A descricao diz "Peso: 200" para a Clava, e a irma de Oxum
+  # traz `Weight: 2000` - o mesmo. A UNICA que nao fecha e o revolver:
+  # 13139 Blue_Gun tem `Weight: 100` para uma descricao que diz 100, ou
+  # seja o vendor pos 10.0 onde cabia 100.0. E erro do vendor, corrigido
+  # por override logo abaixo, para que os dois revolveres do Festival
+  # nao pesem 10x um do outro.
+  #
+  # `bonus bAtkEle` so nas QUATRO corpo a corpo. Revolver e arco ficam
+  # sem, igual as irmas: em arma de projetil quem manda no elemento e a
+  # municao. O bRO resolve isso encantando a municao por 180 minutos ao
+  # equipar, o que o rAthena nao implementou em NENHUMA das quatro
+  # familias - as irmas de Oxum carregam um `/*Todo*/` no lugar. Fica
+  # igual aqui, para os quatro grupos se comportarem do mesmo jeito.
+  #
+  # CLAVA E CETRO PROMETEM "Indestrutivel em batalha" NA DESCRICAO E
+  # NAO LEVAM `bonus bUnbreakableWeapon` - de proposito, e conferido
+  # no C++ antes de decidir. O `skill_break_equip`
+  # (src/map/skill.cpp:1973) tira o EQP_WEAPON da conta por TIPO DE
+  # ARMA: punho, machado, maca, cajado, livro e huuma nunca quebram,
+  # com bonus ou sem. Maca e cajado estao nessa lista, entao a
+  # promessa da descricao ja e verdade para as duas.
+  #
+  # E o mesmo motivo pelo qual o `marca_indestrutiveis.py` deixa 241
+  # armas de fora - se um dia ele passar a acusar estas duas, e sinal
+  # de que a lista do C++ mudou, e ai o bonus volta.
+  #
+  # As outras quatro (punhal, lanca, arco, revolver) nao prometem
+  # indestrutibilidade na descricao, entao tambem nao levam nada.
+  #
+  # Recarregar: @reloaditemdb.
+  # ------------------------------------------------------------------
+
+  - Id: 13143
+    AegisName: Red_Gun
+    Name: "Revólver de Xangô"
+    Type: Weapon
+    SubType: Revolver
+    Buy: 20
+    Weight: 1000
+    Attack: 60
+    Range: 7
+    Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bAddEle,Ele_Water,10;
+         bonus2 bAddEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Insect,15;
+         bonus2 bAddRace,RC_DemiHuman,15;
+         bonus2 bAddEle,Ele_Water,15;
+         bonus2 bAddEle,Ele_Earth,15;
+      }
+      /* A descricao promete encantar a municao de Fogo por 180 min ao
+         equipar. Nao implementado - igual as tres irmas do vendor. */
+
+  - Id: 16066
+    AegisName: Red_Mace
+    Name: "Clava de Xangô"
+    Type: Weapon
+    SubType: Mace
+    Buy: 20
+    Weight: 2000
+    Attack: 130
+    Range: 1
+    Slots: 3
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      Priest: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Fire;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bAddEle,Ele_Water,10;
+         bonus2 bAddEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Insect,15;
+         bonus2 bAddRace,RC_DemiHuman,15;
+         bonus2 bAddEle,Ele_Water,15;
+         bonus2 bAddEle,Ele_Earth,15;
+      }
+
+  - Id: 18152
+    AegisName: Red_Bow
+    Name: "Arco de Xangô"
+    Type: Weapon
+    SubType: Bow
+    Buy: 20
+    Weight: 1500
+    Attack: 120
+    Range: 5
+    Slots: 2
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+      Thief: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bAddEle,Ele_Water,10;
+         bonus2 bAddEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Insect,15;
+         bonus2 bAddRace,RC_DemiHuman,15;
+         bonus2 bAddEle,Ele_Water,15;
+         bonus2 bAddEle,Ele_Earth,15;
+      }
+      /* A descricao tambem promete um conjunto com Flecha comum, que
+         nenhuma das tres irmas do vendor implementa. Fica de fora
+         pelo mesmo motivo do encantamento de municao. */
+
+  - Id: 26113
+    AegisName: Red_Staff
+    Name: "Cetro de Xangô"
+    Type: Weapon
+    SubType: Staff
+    Buy: 20
+    Weight: 1000
+    Attack: 160
+    MagicAttack: 145
+    Range: 1
+    Slots: 2
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Fire;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Insect,10;
+         bonus2 bMagicAddRace,RC_DemiHuman,10;
+         bonus2 bMagicAddEle,Ele_Water,10;
+         bonus2 bMagicAddEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAddRace,RC_Insect,15;
+         bonus2 bMagicAddRace,RC_DemiHuman,15;
+         bonus2 bMagicAddEle,Ele_Water,15;
+         bonus2 bMagicAddEle,Ele_Earth,15;
+      }
+
+  - Id: 28727
+    AegisName: Red_Dagger
+    Name: "Punhal de Xangô"
+    Type: Weapon
+    SubType: Dagger
+    Buy: 20
+    Weight: 1000
+    Attack: 150
+    Range: 1
+    Slots: 3
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Fire;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bAddEle,Ele_Water,10;
+         bonus2 bAddEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Insect,15;
+         bonus2 bAddRace,RC_DemiHuman,15;
+         bonus2 bAddEle,Ele_Water,15;
+         bonus2 bAddEle,Ele_Earth,15;
+      }
+
+  - Id: 32006
+    AegisName: Red_Spear
+    Name: "Lança de Xangô"
+    Type: Weapon
+    SubType: 1hSpear
+    Buy: 20
+    Weight: 2000
+    Attack: 140
+    Range: 3
+    Slots: 3
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Fire;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bAddEle,Ele_Water,10;
+         bonus2 bAddEle,Ele_Earth,10;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Insect,15;
+         bonus2 bAddRace,RC_DemiHuman,15;
+         bonus2 bAddEle,Ele_Water,15;
+         bonus2 bAddEle,Ele_Earth,15;
+      }
+
+  # ------------------------------------------------------------------
+  # O PESO DO REVOLVER DE OXUM - override de um campo so
+  #
+  # 13139 Blue_Gun nasceu no vendor com `Weight: 100`, ou seja 10.0 de
+  # peso, para uma descricao que diz 100. As outras cinco armas de Oxum
+  # fecham com a descricao (Peso 200 -> Weight 2000). E o unico dos 26
+  # itens do conjunto fora da conta.
+  #
+  # Ficou visivel agora porque o 13143, irmao dele, entrou nesta mesma
+  # entrega com o peso certo: sem este override os dois revolveres do
+  # Festival pesariam 10x um do outro, na mesma loja de troca.
+  # ------------------------------------------------------------------
+
+  - Id: 13139
+    AegisName: Blue_Gun
+    Weight: 1000
+
+  # ------------------------------------------------------------------
+  # OS DOZE ITENS DO FESTIVAL DE BRASILIS QUE ESTAVAM EM INGLES
+  #
+  # Os quatro Cartoes de Liga, as quatro Insignias e as quatro cartas de
+  # encanto "Poder de <orixa>" existem no vendor desde sempre - com o
+  # nome em ingles e um `# !todo check english name` ao lado, que e como
+  # o rAthena marca item que ele so conhece de nome. Sao itens
+  # EXCLUSIVOS DO bRO (os sufixos `_BZ` e `_BR` dizem isso), e o kRO
+  # nunca os teve.
+  #
+  # O nome do servidor importa em dois lugares e nenhum deles e a bolsa:
+  # `getitemname()` dentro de dialogo de NPC, e o `@item <nome>`. Quem
+  # desenha o nome na bolsa E NA JANELA DE TROCA e o itemInfo.lua do
+  # cliente (CLAUDE.md 4.9), que ganhou os doze nesta mesma entrega.
+  #
+  # POR QUE OVERRIDE E NAO `nomes_pt_item_db.py`: aquela ferramenta e do
+  # tipo tudo-ou-nada e hoje acusa 16755 trocas pendentes nos tres
+  # item_db do vendor - um trabalho inteiro, de outra sessao. Doze
+  # linhas aqui nao esperam por ele.
+  #
+  # Os nomes sao os que o cliente ja desenha, que e a regra: manda o
+  # arquivo que o cliente le.
+  # ------------------------------------------------------------------
+
+  - Id: 25482
+    AegisName: Earth_Card_BZ
+    Name: "Cartão da Liga da Terra"
+
+  - Id: 25483
+    AegisName: Fire_Card_BZ
+    Name: "Cartão da Liga do Fogo"
+
+  - Id: 25484
+    AegisName: Water_Card_BZ
+    Name: "Cartão da Liga da Água"
+
+  - Id: 25485
+    AegisName: Wind_Card_BZ
+    Name: "Cartão da Liga do Vento"
+
+  - Id: 25486
+    AegisName: Fire_Badge_BZ
+    Name: "Insígnia do Orgulho Vermelho"
+
+  - Id: 25487
+    AegisName: Water_Badge_BZ
+    Name: "Insígnia do Orgulho Azul"
+
+  - Id: 25488
+    AegisName: Wind_Badge_BZ
+    Name: "Insígnia do Orgulho Verde"
+
+  - Id: 25489
+    AegisName: Earth_Badge_BZ
+    Name: "Insígnia do Orgulho Amarelo"
+
+  - Id: 27413
+    AegisName: Big_Fire_BR
+    Name: "Poder de Xangô"
+
+  - Id: 27414
+    AegisName: Sky_Ground_BR
+    Name: "Poder de Oxóssi"
+
+  - Id: 27415
+    AegisName: Storm_BR
+    Name: "Poder de Iansã"
+
+  - Id: 27416
+    AegisName: Water_Sky_BR
+    Name: "Poder de Oxum"

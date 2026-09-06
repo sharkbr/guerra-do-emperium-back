@@ -454,6 +454,16 @@ nenhum mob a dropa, nenhuma loja nossa a vendia, e o próprio Coin Exchanger de
 Malangdo recusa trocar por ela (`coin_exchange.txt:75`). A metade que faltava
 virou uma linha no barter da Máquina de Prontera, a 1 Moeda Nova cada.
 
+**Segundo caso vivo, e a fonte nem é uma loja: o Festival de Brasilis**
+(2026-09-05). As quatro barracas cobram em Insígnia do Orgulho
+(25486–25489), e a única fonte das quatro é um `OnNPCKillEvent` em
+`npc/guerra/festival_de_brasilis.txt`, que só solta a insígnia **da Liga em
+que o jogador está inscrito** — uma variável de personagem. São três metades,
+não duas: o gasto (o barter), a fonte (o evento de morte) e **a inscrição**,
+sem a qual o evento nunca solta nada. Desligar a linha do NPC no
+`scripts_guerra.conf` tira as três de uma vez, o que é o comportamento certo;
+mas mexer só no barter, ou só na chance de drop, mexe em meia mecânica.
+
 Regra prática: **ao escrever NPC que cobra em item, procurar quem entrega aquele
 item** — `grep` por `getitem <id>` em `npc/`, pelo AegisName em
 `db/re/item_group_db.yml` e pelo drop no `mob_db`. Se nada devolver, o serviço

@@ -1015,3 +1015,327 @@ Body:
           - Index: 0
             Item: Moeda_Nova
             Amount: 1
+
+  #####################################################################
+  # AS QUATRO BARRACAS DO FESTIVAL DE BRASILIS
+  #####################################################################
+  #
+  # Quatro lojas, uma por elemento, e a moeda de cada uma e a INSIGNIA
+  # daquele elemento - que so cai para quem esta inscrito na Liga dele
+  # (npc/guerra/festival_de_brasilis.txt). E o que faz os quatro grupos
+  # existirem: quem quiser os quatro conjuntos passa pelas quatro Ligas.
+  #
+  # As quatro sao FLUTUANTES, sem `Map`, pelo mesmo motivo da loja da
+  # Maquina: quem esta no mapa e o NPC de script, que dialoga, confere a
+  # Liga e so entao chama a loja com `callshop`. Loja de barter nao roda
+  # script nenhum, entao sozinha ela perderia a fala inteira.
+  #
+  # POR QUE BARTER E NAO `itemshop`: a Insignia e `NoSell: true`, e o
+  # itemshop passa a moeda por `pc_can_sell_item`, que recusa item
+  # NoSell enquanto `allow_bound_sell` for 0x0 - a loja abriria e a
+  # compra falharia com a moeda na mao do jogador. O barter nao faz essa
+  # checagem. E a mesma razao da Moeda Nova, la em cima, e esta escrita
+  # por extenso no cabecalho deste arquivo.
+  #
+  # AS QUATRO CAPAS NAO ESTAO AQUI, E E DE PROPOSITO. Capa do Vento
+  # (20734), Capa Flamejante (20735), Capa Mistica (20745) e Capa
+  # Grandiosa (20747) sao vendidas pelo Capeiro de Prontera a 1 zeny.
+  # Cobrar 25 insignias por peca que custa 1 zeny na cidade ao lado
+  # seria armadilha, nao preco. Se um dia elas sairem do Capeiro, e aqui
+  # que elas entram - uma linha por grupo, no lugar do escudo.
+  #
+  # OS SAPATOS E O BRACELETE REPETEM NAS QUATRO. Sao as duas pecas
+  # neutras do conjunto: os Sapatos Luxuosos dao resistencia aos cinco
+  # elementos, e o Bracelete Suntuoso e o que fecha o conjunto dos
+  # chapeus e dos escudos (db/re/item_combos.yml, Shining_Trapezohedron).
+  # Repetir nas quatro e o que permite ao jogador de qualquer Liga
+  # chegar neles sem trocar de Liga.
+  #
+  # AS CARTAS "PODER DE <ORIXA>" (27413-27416) NAO SE VENDEM AQUI, e o
+  # motivo e mecanico: sao `Type: Card` com `SubType: Enchant` e sem
+  # `Locations:`, entao o `pc_insert_card` do cliente nao as aceita - o
+  # jogador teria na bolsa uma carta que nao consegue encaixar em lugar
+  # nenhum. Quem as aplica e a Mae de Santo, por script, direto no
+  # Bracelete. Ver o cabecalho do festival_de_brasilis.txt.
+  #
+  # PRECO: chapeu 30, escudo 25, arma 40, anel 40, sapatos 35,
+  # bracelete 30. Um conjunto elemental inteiro (chapeu + escudo + arma
+  # + sapatos + bracelete) sai por 160 insignias.
+  #
+  # Fogo e Agua NAO TEM ANEL, e nao e falta nossa: o bRO so fez dois,
+  # o de Iansa (490022) e o de Oxossi (32234).
+  #
+  # Mudanca aqui pega com `@reloadbarterdb`, e NAO com @reloadscript.
+  #####################################################################
+
+  # ----- Barraca do Fogo (Xango) -------------------------------
+  # Moeda: 25486 Insignia do Orgulho Vermelho
+  - Name: FestivalFogo#loja
+    Items:
+      - Index: 0
+        Item: 10_Gallon_Hat_Of_Flame   # 18940 Chapeu das Chamas [1]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 30
+      - Index: 1
+        Item: Shield_Of_Flame          # 28906 Escudo do Fogo [1]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 25
+      - Index: 2
+        Item: Red_Dagger               # 28727 Punhal de Xango [3]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 40
+      - Index: 3
+        Item: Red_Spear                # 32006 Lanca de Xango [3]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 40
+      - Index: 4
+        Item: Red_Mace                 # 16066 Clava de Xango [3]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 40
+      - Index: 5
+        Item: Red_Staff                # 26113 Cetro de Xango [2]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 40
+      - Index: 6
+        Item: Red_Bow                  # 18152 Arco de Xango [2]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 40
+      - Index: 7
+        Item: Red_Gun                  # 13143 Revolver de Xango [2]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 40
+      - Index: 8
+        Item: Polyhedron_Shoes         # 22082 Sapatos Luxuosos [1]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 35
+      - Index: 9
+        Item: Shining_Trapezohedron    # 2998 Bracelete Suntuoso [1]
+        RequiredItems:
+          - Index: 0
+            Item: Fire_Badge_BZ
+            Amount: 30
+
+  # ----- Barraca do Agua (Oxum) -------------------------------
+  # Moeda: 25487 Insignia do Orgulho Azul
+  - Name: FestivalAgua#loja
+    Items:
+      - Index: 0
+        Item: Knit_Cap_Of_Water        # 18942 Gorro Frigido [1]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 30
+      - Index: 1
+        Item: BIgShield_Of_Water       # 28908 Escudo da Agua [1]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 25
+      - Index: 2
+        Item: Blue_Dagger              # 28720 Punhal de Oxum [3]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 40
+      - Index: 3
+        Item: Blue_Spear               # 32000 Lanca de Oxum [3]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 40
+      - Index: 4
+        Item: Blue_Mace                # 16057 Clava de Oxum [3]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 40
+      - Index: 5
+        Item: Blue_Staff               # 26104 Cetro de Oxum [2]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 40
+      - Index: 6
+        Item: Blue_Bow                 # 18144 Arco de Oxum [2]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 40
+      - Index: 7
+        Item: Blue_Gun                 # 13139 Revolver de Oxum [2]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 40
+      - Index: 8
+        Item: Polyhedron_Shoes         # 22082 Sapatos Luxuosos [1]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 35
+      - Index: 9
+        Item: Shining_Trapezohedron    # 2998 Bracelete Suntuoso [1]
+        RequiredItems:
+          - Index: 0
+            Item: Water_Badge_BZ
+            Amount: 30
+
+  # ----- Barraca do Vento (Iansa) -------------------------------
+  # Moeda: 25488 Insignia do Orgulho Verde
+  - Name: FestivalVento#loja
+    Items:
+      - Index: 0
+        Item: Hunting_Cap_Of_Gust      # 18941 Boina do Zefiro [1]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 30
+      - Index: 1
+        Item: Shield_Of_Gust           # 28907 Escudo do Vento [1]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 25
+      - Index: 2
+        Item: Dagger_of_Trust          # 28708 Punhal de Iansa [3]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 3
+        Item: Spear_of_Trust           # 1444 Lanca de Iansa [3]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 4
+        Item: Mace_of_Trust            # 16049 Clava de Iansa [3]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 5
+        Item: Staff_of_Trust           # 1688 Cetro de Iansa [2]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 6
+        Item: Bow_of_Trust             # 18133 Arco de Iansa [2]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 7
+        Item: Gun_of_Trust             # 13130 Revolver de Iansa [2]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 8
+        Item: TrustRing                # 490022 Anel de Iansa [1]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 40
+      - Index: 9
+        Item: Polyhedron_Shoes         # 22082 Sapatos Luxuosos [1]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 35
+      - Index: 10
+        Item: Shining_Trapezohedron    # 2998 Bracelete Suntuoso [1]
+        RequiredItems:
+          - Index: 0
+            Item: Wind_Badge_BZ
+            Amount: 30
+
+  # ----- Barraca do Terra (Oxossi) -------------------------------
+  # Moeda: 25489 Insignia do Orgulho Amarelo
+  - Name: FestivalTerra#loja
+    Items:
+      - Index: 0
+        Item: Silk_Hat_Of_Earth        # 18943 Cartola da Natureza [1]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 30
+      - Index: 1
+        Item: Shield_Of_Earth          # 28909 Escudo da Terra [1]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 25
+      - Index: 2
+        Item: UnrivaledDagger          # 28715 Punhal de Oxossi [3]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 3
+        Item: UnrivaledSpear           # 1448 Lanca de Oxossi [3]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 4
+        Item: UnrivaledMace            # 16055 Clava de Oxossi [3]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 5
+        Item: UnrivaledStaff           # 26102 Cetro de Oxossi [2]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 6
+        Item: UnrivaledBow             # 18142 Arco de Oxossi [2]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 7
+        Item: UnrivaledGun             # 13133 Revolver de Oxossi [2]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 8
+        Item: UnrivaledRing            # 32234 Anel de Oxossi [1]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 40
+      - Index: 9
+        Item: Polyhedron_Shoes         # 22082 Sapatos Luxuosos [1]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 35
+      - Index: 10
+        Item: Shining_Trapezohedron    # 2998 Bracelete Suntuoso [1]
+        RequiredItems:
+          - Index: 0
+            Item: Earth_Badge_BZ
+            Amount: 30

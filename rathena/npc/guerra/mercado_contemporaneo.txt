@@ -180,10 +180,19 @@
 //= de Rockridge, e o dono do projeto mandou po-lo no lugar em
 //= 2026-08-04. Foi o que entrou no Chapeleiro.
 //=
-//= Sobre a "Capa da Terra": a familia existe, mas nao tem terra.
-//= Sao tres, e o terceiro e gelo - 20734 Capa do Vento, 20735
-//= Capa Flamejante e 20745 Capa Mistica. Pus a Mistica no lugar
-//= para o trio ficar completo.
+//= Sobre a "Capa da Terra": ela EXISTE, e esta nota dizia que
+//= nao. A familia e de QUATRO - 20734 Capa do Vento, 20735 Capa
+//= Flamejante, 20745 Capa Mistica (agua) e 20747 CAPA
+//= GRANDIOSA, que e a de terra: `Manteau_Great_Nature`, no
+//= item_db_equip.yml do vendor, no itemInfo.lua deste cliente e
+//= com arte 4/4. Em 2026-08-04 entraram tres e a Mistica foi
+//= posta "no lugar" da que faltava; a quarta entrou em
+//= 2026-09-05, quando o levantamento do Festival de Brasilis
+//= esbarrou nela.
+//=
+//= Fica de licao, e e a secao 4.17 do CLAUDE.md: o cabecalho
+//= afirmava um fato sobre o mundo, ninguem conferiu, e a
+//= afirmacao sobreviveu um mes. Comentario nao e trava.
 //=
 //= ------------------------------------------------------------
 //= SPRITES
@@ -1503,8 +1512,16 @@ OnInit:
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
-// Capas. O 20745 (Capa Mistica) entrou no lugar da "Capa da
-// Terra" pedida, que nao existe - ver a nota la em cima.
+// Capas. As QUATRO elementais estao aqui desde 2026-09-05:
+// 20734 Vento, 20735 Flamejante, 20745 Mistica (agua) e 20747
+// Grandiosa (terra). A Grandiosa e a "Capa da Terra" que o
+// pedido de 2026-08-04 queria e que a nota la em cima dava como
+// inexistente - ver la.
+//
+// AS QUATRO SAO DO CONJUNTO DO FESTIVAL DE BRASILIS, e e por
+// isso que as quatro barracas do Festival NAO as vendem: cobrar
+// 25 insignias por peca que custa 1 zeny aqui seria armadilha.
+// Se um dia elas sairem desta loja, e la que elas entram.
 //
 // DUAS ENTRARAM em 2026-08-07, e a loja foi de nove para onze:
 //   20952  Echarpe Escarlate [1]   inteira, do rAthena de sempre
@@ -1618,7 +1635,7 @@ OnInit:
 	placadevenda "Capas";
 	end;
 }
--	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1,2589:1,20939:1,20940:1,480088:1,480154:1,480025:1,480134:1
+-	shop	Capeiro#loja	-1,20734:1,20735:1,20745:1,20747:1,20925:1,20952:1,20991:1,480045:1,480064:1,480075:1,480077:1,480081:1,480084:1,480094:1,480114:1,480188:1,480220:1,480228:1,480251:1,20986:1,480085:1,480319:1,480446:1,480278:1,480023:1,20904:1,20993:1,2589:1,20939:1,20940:1,480088:1,480154:1,480025:1,480134:1
 
 // Sapatos. Fora: "Grevas de Fafnir", que nao existe - a linha
 // Fafnir tem elmo, manto, armadura, mascara e orelhas, mas

@@ -412,3 +412,28 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   de sprite não aparece pelo nome no `grep`**, porque o `export_constant_npc`
   corta o prefixo (`JT_WARPNPC` vira `WARPNPC` em tempo de execução). Procurar
   `\bWARPNPC\b` devolve zero sobre uma constante que existe.
+
+- **O quinto campo de uma linha de spawn É o `eventname`, mas `0` e `1` não
+  contam — e é por isso que `OnNPCKillEvent` DISPARA para os MVPs do vendor.**
+  A conclusão natural é a oposta, e ela derruba um evento inteiro em silêncio:
+  as 74 linhas de `boss_monster` de `npc/re/mobs/` terminam em `,0` ou `,1`, o
+  `npc_parse_mob` lê esse campo com `%77[^,]` para dentro de `mob.eventname`
+  (`src/map/npc.cpp:5235`), e o `mob_dead` só roda o evento global quando
+  `md->npc_event` está vazio (`src/map/mob.cpp:3594`). Pelo caminho de leitura,
+  todo MVP teria evento próprio e nenhum deles pontuaria.
+
+  O que salva é uma guarda de **comprimento**, três arquivos adiante: o
+  `mob_spawn_dataset` só copia o evento para o monstro se ele tiver **4
+  caracteres ou mais** (`src/map/mob.cpp:486`), justamente para descartar esse
+  `0`/`1` de legado do eAthena. Então `md->npc_event` fica vazio e o
+  `OnNPCKillEvent` roda — para o Boitatá inclusive.
+
+  **Isto NÃO contradiz a armadilha do chefe de instância**, que é real e está
+  no cabeçalho do `npc/guerra/ordem_dos_exploradores.txt`: lá o evento é
+  `instance_npcname(...)+"::OnMyMobDead"`, tem muito mais de 4 caracteres, e
+  come o evento global de verdade. As duas convivem, e a regra que decide é o
+  **comprimento do que está no quinto campo**, não a presença dele.
+
+  Medido em 2026-09-05, lendo o código, ao desenhar o drop de insígnia do
+  Festival de Brasilis (`npc/guerra/festival_de_brasilis.txt`), que depende do
+  evento global disparar para o chefe de `bra_dun02`.
