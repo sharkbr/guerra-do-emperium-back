@@ -31,6 +31,7 @@ pronto.
 |---|---|---|
 | **o gerador** | `ferramentas/monta_patch.py` | nós, no Windows |
 | **o registro** | `patcher/patches.txt` — **versionado** | o gerador |
+| **o changelog** | `patcher/novidades.txt` — **versionado** | o gerador, e a mão (§4d) |
 | **o publicador** | `ferramentas/publica_patch.sh` | nós, no Windows |
 | **os zips** | `C:\GuerraDoEmperium\patches\` — fora do git | o gerador |
 | **o servidor** | `libraro:/var/www/patch/`, servido pelo Apache | o publicador |
@@ -46,12 +47,16 @@ e duas máquinas não inventam o mesmo número de patch.
 # 1. o arquivo já está no cliente, testado em jogo (é sempre esta a ordem)
 python ferramentas/monta_patch.py --nome "IA do homunculo" AI_sakray
 
+# 1b. patch que ACRESCENTA coisa leva a lista do que entrou, um --nota cada
+python ferramentas/monta_patch.py --nome "Cinco chapeus novos" \
+    --nota "Chapeu de Palha" --nota "Tiara de Prata" data/...
+
 # 2. confere o que vai no zip — a lista impressa é a hora de perceber engano
 # 3. publica
 ferramentas/publica_patch.sh
 
-# 4. commita o registro
-git add patcher/patches.txt && git commit
+# 4. commita o registro E o changelog
+git add patcher/patches.txt patcher/novidades.txt && git commit
 ```
 
 O `--desde 2026-08-14` varre o cliente por data de modificação, para quando a
@@ -317,11 +322,75 @@ Nos tamanhos até 64 o ícone vai como BMP, e o 256 vai como PNG: PNG dentro de
 no 7 — mas nenhum Windows mostra 256x256 num contexto que não entenda PNG, e o
 BMP daquele tamanho custaria 256 KB contra 13 do PNG.
 
+## 4d. O painel de novidades — o changelog na janela e no grupo
+
+Existe desde 2026-09-06, e são **duas** perguntas respondidas pela mesma peça:
+o jogador quer saber o que mudou, e quem publica quer uma mensagem pronta para
+o grupo do WhatsApp.
+
+```
+patcher/novidades.txt      o texto, versionado, gerado pelo monta_patch.py
+  -> novidades.txt         no servidor, ao lado da lista.txt
+  -> painel NOVIDADES      na janela do Atualizador (patcher/novidades.go)
+```
+
+**O formato é um bloco por patch**, e o arquivo é lido de baixo para cima — o
+painel mostra o mais novo em cima:
+
+```
+[0021] 2026-09-06  Cinco chapéus novos nas lojas de Prontera
+- Chapéu de Palha
+- Tiara de Prata
+```
+
+**Cada bloco é uma célula da lista, e cada célula tem o seu botão de copiar**,
+que aparece quando o ponteiro passa por cima. O que ele põe na área de
+transferência é a mensagem daquele patch, com a data no cabeçalho:
+
+```
+LibraRO updates 06/09/2026
+
+Cinco chapéus novos nas lojas de Prontera
+- Chapéu de Palha
+- Tiara de Prata
+```
+
+**A data está no cabeçalho, e não no fim, por causa de como a mensagem é
+usada:** copiam-se vários blocos seguidos e colam-se em sequência, e é ela que
+diz qual é de qual dia. Um botão só, no alto do painel, obrigaria a escolher
+entre "copia tudo" e "copia o último" — com um por célula, quem publica escolhe
+patch a patch.
+
+Quatro decisões que não são óbvias:
+
+- **A leitura do arquivo é TOLERANTE**, ao contrário da `lista.txt`. Lá, uma
+  linha torta significa um patch que o jogador vai ou não vai receber, e parar é
+  o certo; aqui o pior caso é um texto feio na tela. Bloco sem data passa, linha
+  sem traço vira ponto, cabeçalho torto é pulado e os blocos ao redor
+  sobrevivem.
+- **O arquivo pode ser editado à mão depois de publicado.** É o único do canal
+  em que isso vale: corrigir a redação de um patch antigo é mexer nele e rodar o
+  `publica_patch.sh` de novo — que o envia em toda rodada, mesmo quando nenhum
+  zip novo subiu. Sem patch novo, sem número queimado.
+- **Sem `novidades.txt` no servidor o painel não some:** ele cai nos nomes que a
+  própria `lista.txt` já traz, um por célula, sem pontos e sem data. É a mesma
+  regra do resto do programa — nada aqui pode impedir alguém de jogar.
+- **O layout do texto é medido uma vez e guardado.** Rolar não remede nada; só a
+  chegada de um changelog novo joga o layout fora. O desenho é recortado na área
+  da lista (`IntersectClipRect`), que é o que faz a primeira e a última linha
+  saírem cortadas ao meio em vez de sumirem inteiras — é assim que o olho
+  percebe que há mais coisa para rolar.
+
+Rola com a roda do mouse, arrastando o polegar ou clicando no trilho. **A roda
+vai para a janela com FOCO**, e não para a que está sob o ponteiro: é por isso
+que o código não testa posição nenhuma ao tratá-la.
+
 ## 5. O que falta
 
 - **Assinatura dos patches.** Hoje a garantia é o sha256 do registro servido
   por HTTPS — quem controlasse o servidor poderia trocar os dois. Assinar com
   chave nossa e conferir no Atualizador é o próximo degrau.
-- **Painel de notícias.** Foi decidido fora da v1 (2026-08-15). O skin do
-  `PatchClient\` do kRO, na raiz do cliente, tem os botões desenhados se um dia
-  for a hora.
+- **Recado do servidor no painel.** O painel de novidades (§4d) resolveu o que
+  MUDOU; falta o aviso do dia — manutenção marcada, evento que começa às oito.
+  Hoje isso só existe no Discord. Caberia como um bloco fixo no alto do mesmo
+  painel, vindo de um arquivo à parte, para não se confundir com o changelog.

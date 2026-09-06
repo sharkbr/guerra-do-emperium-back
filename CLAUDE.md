@@ -38,6 +38,7 @@ lidos **por seção**, nunca inteiros.
 | Override do cliente | `C:\GuerraDoEmperium\cliente\data\` | **não** |
 | **O Atualizador** (patcher, em Go) | `patcher/` | sim |
 | Registro dos patches publicados | `patcher/patches.txt` | sim |
+| Changelog dos patches (o painel do Atualizador) | `patcher/novidades.txt` | sim |
 | Os `.zip` de patch | `C:\GuerraDoEmperium\patches\` | **não** |
 | Registro da BASE (primeiro download) | `patcher/base.txt` | sim |
 | Os pedaços da base | `C:\GuerraDoEmperium\instalador\` | **não** |
@@ -535,6 +536,30 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
       adivinha derrubariam a ligação entre os servidores por 15 minutos — e o
       sintoma apareceria longe, com o jogador preso no login e nada de errado
       no map-server.
+
+24. **Patch que ACRESCENTA coisa sai com a lista do que entrou, e quem a
+    escreve é quem monta o patch.** Um `--nota` por item no
+    `ferramentas/monta_patch.py`, na mesma linha de comando do `--nome` — não é
+    um segundo passo, e não é passo do dono. Decisão dele em 2026-09-06, ao
+    receber o painel de novidades: *"a única coisa que te pedi a mais é a
+    inclusão dos itens listados. Mas isso não pode ser um passo a mais pra
+    mim."*
+
+    O motivo é que a lista **já está na mão de quem monta**: acabou de pôr os
+    itens na loja, tem os nomes na tela. Pedi-la ao dono é devolver a ele um
+    trabalho que já foi feito, e o resultado previsível é o campo ficar vazio.
+
+    O que se perde quando fica vazio não é um enfeite. O nome do patch é uma
+    linha só — *"Quarenta e sete itens nas lojas de Prontera"* — e ele é
+    exatamente o que **não** responde à pergunta de quem joga, que é *quais*. O
+    painel NOVIDADES do Atualizador e a mensagem do grupo saem os dois desse
+    campo (`patcher/LEIAME.md` §4d), então sem ele o anúncio do dia é uma frase
+    que não informa nada.
+
+    A ferramenta avisa quando o patch vai sem nota nenhuma, e o aviso é só
+    aviso: patch que **conserta** alguma coisa não tem o que listar, e é o caso
+    legítimo. A pergunta a fazer antes de publicar é "isto acrescenta alguma
+    coisa que o jogador vai procurar?" — se sim, ela precisa estar escrita.
 
 ## 5. Armadilhas deste ambiente
 

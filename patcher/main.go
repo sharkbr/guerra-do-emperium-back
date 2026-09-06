@@ -29,7 +29,7 @@ import (
 
 // VERSAO é o número que o canal de auto-atualização compara. Sobe de um a cada
 // Atualizador novo publicado — ver auto.go e `patcher/LEIAME.md`.
-const VERSAO = 3
+const VERSAO = 4
 
 // Os valores padrão existem para o caso de o `Atualizador.ini` não vir no
 // pacote ou ser apagado: sem ini, o Atualizador ainda funciona na produção.
@@ -148,6 +148,7 @@ func main() {
 
 	j := Abre("Guerra do Emperium")
 	j.Jogar = func() error { return jogar(raiz, cfg.jogo) }
+	go carregaNovidades(j, cfg)
 	go trabalha(j, raiz, trabalho, cfg)
 	j.Laco()
 }
@@ -158,6 +159,10 @@ func main() {
 func instalacao(exe string, cfg config) {
 	j := Abre("Guerra do Emperium")
 	j.Pergunta(destinoPadrao, true)
+
+	// O changelog não espera a instalação: quem está escolhendo a pasta tem 3,4
+	// GB pela frente e nada para ler enquanto isso.
+	go carregaNovidades(j, cfg)
 
 	// A raiz final só existe depois que o jogador confirma, e o botão JOGAR
 	// precisa dela quando aparecer no fim. As duas atribuições acontecem na
@@ -219,6 +224,19 @@ func trabalha(j *Janela, raiz, trabalho string, cfg config) {
 	aplicaPatches(j, raiz, trabalho, cfg)
 }
 
+// carregaNovidades põe o changelog no painel da janela. Roda em goroutine
+// própria e à parte do trabalho: ele não decide nada — nem o que se baixa, nem
+// se o botão acende —, e por isso não pode segurar a rodada. Falhar aqui deixa
+// o painel escondido e mais nada.
+func carregaNovidades(j *Janela, cfg config) {
+	lista, err := baixaNovidades(cfg.url)
+	if err != nil {
+		anota("novidades: %v", err)
+		return
+	}
+	j.Novidades(lista)
+}
+
 // recuperaPanico existe porque pânico numa goroutine de trabalho viraria uma
 // janela morta, sem explicação nenhuma na tela. O jogador merece o botão Jogar
 // mesmo quando o Atualizador se atrapalha.
@@ -241,6 +259,13 @@ func aplicaPatches(j *Janela, raiz, trabalho string, cfg config) {
 		j.Status("Não consegui conferir as atualizações. Você pode jogar assim mesmo.")
 		j.Libera()
 		return
+	}
+
+	// O painel sem `novidades.txt`: os nomes que a própria lista traz. Só entra
+	// se o changelog de verdade não tiver chegado — as duas vias correm em
+	// goroutines diferentes, e a boa, quando vem, vem por cima.
+	if j.SemNovidades() {
+		j.Novidades(deLista(lista))
 	}
 
 	// Um patch só conta como aplicado quando o NÚMERO e o SHA batem. O número

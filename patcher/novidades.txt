@@ -1,0 +1,63 @@
+# Guerra do Emperium - o changelog dos patches.
+#
+# GERADO por ferramentas/monta_patch.py (a cada `--nome`, com os `--nota`), e o
+# publica_patch.sh o envia ao servidor como
+# https://libraro.filiponegrao.com.br/patch/novidades.txt, sem traducao.
+#
+# E o unico arquivo deste canal que PODE ser editado a mao depois de publicado:
+# ele nao decide o que o jogador baixa - so o que ele le no painel NOVIDADES do
+# Atualizador. Corrigir a redacao de um patch antigo e mexer aqui e rodar o
+# publica_patch.sh de novo; nao precisa de patch novo.
+#
+# Um bloco por patch, na ordem em que sairam (o painel os mostra de tras para
+# frente). O cabecalho e `[numero] AAAA-MM-DD  Titulo`; as linhas com `-`
+# embaixo dele sao os pontos, e e ai que entram os itens de um patch de loja.
+# Bloco sem ponto nenhum e o normal do patch que so conserta alguma coisa.
+#
+# O botao de copiar de cada bloco leva para a area de transferencia o titulo e
+# os pontos, com o cabecalho "LibraRO updates <data>" - a mensagem pronta para
+# o grupo. A data no cabecalho e o que faz varias delas coladas em sequencia
+# continuarem se distinguindo.
+#
+# Os vinte primeiros nasceram sem pontos, e nao e engano: eles foram publicados
+# antes de este arquivo existir, e a data de cada um veio do git.
+
+[0001] 2026-08-16  IA do homúnculo e do mercenário
+
+[0002] 2026-08-16  Sem censura de palavras
+
+[0003] 2026-08-17  Itens novos nas lojas de Prontera
+
+[0004] 2026-08-17  Visual de GM na produção
+
+[0005] 2026-08-18  Trinta e três itens nas lojas de Prontera
+
+[0006] 2026-08-18  Encantamento em português
+
+[0007] 2026-08-18  Vinte e nove itens nas lojas de Prontera
+
+[0008] 2026-08-20  Quarenta e um itens nas lojas de Prontera
+
+[0009] 2026-08-26  Quarenta e sete itens nas lojas de Prontera
+
+[0010] 2026-08-27  Placas mortas fora do cliente
+
+[0011] 2026-08-27  Vinte e um itens nas lojas de Prontera
+
+[0012] 2026-08-27  Tinta para Parede Infinita
+
+[0013] 2026-08-28  Pincel do Infinito
+
+[0014] 2026-08-28  Caixa de Primeiros Socorros em português
+
+[0015] 2026-08-28  Ícones de status em português
+
+[0016] 2026-08-30  Descrição da Caveira Humana
+
+[0017] 2026-09-02  Itens MEGA das Valquírias em português
+
+[0018] 2026-09-03  Cova nas quinze Armas Brutais
+
+[0019] 2026-09-06  Festival de Brasilis
+
+[0020] 2026-09-06  Aviso da trava de conta na tela de login

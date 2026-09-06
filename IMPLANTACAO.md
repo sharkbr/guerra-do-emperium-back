@@ -848,6 +848,7 @@ Base: `https://libraro.filiponegrao.com.br/patch/`
 |---|---|---|
 | `lista.txt` | o índice dos patches | o Atualizador avisa e **libera o botão Jogar** |
 | `<numero>-<apelido>.zip` | um patch | falha aquele patch; os anteriores continuam válidos |
+| `novidades.txt` | o changelog do painel NOVIDADES | o painel cai nos nomes da `lista.txt`; nada mais muda |
 | `patcher.txt` | canal de auto-atualização do próprio Atualizador | **normal** — é o estado enquanto não há versão nova |
 
 **`lista.txt`** — UTF-8, uma linha por patch, **cinco campos separados por

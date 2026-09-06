@@ -17106,3 +17106,51 @@ Uma coisa foi conferida e vale ficar escrita, porque a dúvida era razoável: o
 `atualiza_servidor.sh` reinicia os **quatro** serviços quando o binário é
 recompilado, e o `guerra-login` está entre eles. Deploy que reiniciasse só o
 map deixaria a trava compilada e sem efeito, sem nada denunciando.
+
+## O changelog: o painel NOVIDADES e a mensagem do grupo (2026-09-06)
+
+Vinte patches publicados, e o jogador nunca soube o que veio em nenhum deles. A
+`lista.txt` sempre teve um nome por patch — mas ele passa voando na barra de
+estado enquanto o zip é aplicado, e *"Quarenta e sete itens nas lojas de
+Prontera"* não diz **quais**, que é a única coisa que quem joga quer saber. Do
+outro lado, quem publica reescrevia o anúncio do WhatsApp à mão toda vez.
+
+As duas pontas viraram a mesma peça, pedida pelo dono nestes termos: uma lista
+de células, uma por patch, com os itens embaixo do título quando houver, **um
+botão de copiar por célula** que aparece ao passar o ponteiro, e o cabeçalho
+`LibraRO updates <data>` — a data no cabeçalho justamente porque se colam
+várias mensagens em sequência, e é ela que diz qual é de qual dia.
+
+**O texto mora em `patcher/novidades.txt`**, versionado ao lado do
+`patches.txt`, gerado pelos `--nota` do `monta_patch.py` e publicado pelo
+`publica_patch.sh` como `novidades.txt`. Os vinte blocos já publicados foram
+semeados com a data que o `git log` sabia de cada linha do registro, e sem
+pontos — eles são anteriores ao arquivo.
+
+**No Atualizador é a coluna da direita, sobre a arte** (`patcher/novidades.go`
+mais o painel em `janela.go`), à maneira do patcher de RO. Rola com a roda, com
+o polegar ou clicando no trilho; o layout é medido uma vez e guardado, e o
+desenho é recortado com `IntersectClipRect` — é o corte ao meio da primeira e
+da última linha que diz ao olho que há mais coisa ali. Conferido em tela: título
+longo quebra em duas linhas, item longo quebra com o recuo alinhado à primeira,
+o botão vira "copiado!" por um segundo e meio, e o texto chega inteiro na área
+de transferência (clique automatizado, `Get-Clipboard`).
+
+Três decisões que valem para além deste painel:
+
+- **A leitura do `novidades.txt` é tolerante, e a da `lista.txt` continua não
+  sendo.** São perguntas diferentes: uma linha torta na lista significa um patch
+  que o jogador vai ou não vai receber; aqui, o pior caso é um texto feio. Bloco
+  sem data passa, linha sem traço vira ponto, cabeçalho torto é pulado e os
+  vizinhos sobrevivem.
+- **É o único arquivo do canal que se edita à mão depois de publicado.** O
+  `publica_patch.sh` o envia em toda rodada, mesmo sem zip novo — corrigir a
+  redação de um patch antigo deixou de exigir um patch novo, e o `monta_patch`
+  escreve por acréscimo justamente para não apagar essas edições.
+- **Sem o arquivo o painel não some**, cai nos nomes da `lista.txt`. Nada no
+  Atualizador pode impedir alguém de entrar no jogo, e um changelog é a última
+  coisa que teria direito a isso.
+
+O Atualizador foi para a **versão 4**: quem já tem o 3 troca sozinho na próxima
+abertura, mas só depois de o exe novo ser publicado (`RECEITAS.md` §11b) — o
+painel não chega a ninguém pelo patch comum.

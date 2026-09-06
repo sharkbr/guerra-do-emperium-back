@@ -33,6 +33,7 @@ DESTINO="${DESTINO:-/var/www/patch}"
 PATCHES="${PATCHES:-/c/GuerraDoEmperium/patches}"
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 REGISTRO="$RAIZ/patcher/patches.txt"
+NOVIDADES="$RAIZ/patcher/novidades.txt"
 
 azul() { printf '\n\033[1;34m%s\033[0m\n' "$*"; }
 erro() { printf '\n\033[1;31mERRO: %s\033[0m\n' "$*" >&2; exit 1; }
@@ -68,6 +69,19 @@ publica_patches() {
         scp "$local_zip" "$SERVIDOR:$DESTINO/"
         enviados=$((enviados + 1))
     done < <(linhas)
+
+    # O changelog vai junto, e vai SEMPRE - inclusive quando nenhum zip novo
+    # subiu. E' o que permite corrigir a redacao de um patch ja publicado sem
+    # montar patch nenhum: mexe-se no arquivo e roda-se isto de novo.
+    #
+    # Ele nao decide nada do que o jogador baixa, entao a ausencia nao para a
+    # publicacao: sem ele o painel do Atualizador cai nos nomes da lista.
+    azul "== As novidades (o changelog) =="
+    if [ -f "$NOVIDADES" ]; then
+        scp "$NOVIDADES" "$SERVIDOR:$DESTINO/novidades.txt"
+    else
+        printf '  sem %s - o painel do jogador vai mostrar so os nomes da lista\n' "$NOVIDADES"
+    fi
 
     azul "== A lista, por ultimo =="
     scp "$REGISTRO" "$SERVIDOR:$DESTINO/lista.txt"

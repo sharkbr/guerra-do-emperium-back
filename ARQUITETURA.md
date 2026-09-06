@@ -576,13 +576,21 @@ outros todos se resolvem com arquivos que estão aqui.
 |---|---|---|
 | `C:\GuerraDoEmperium\cliente\` | o arquivo mudado — arte, `.lub`, `itemInfo.lua`, sprite, exe | as ferramentas, aqui |
 | `patcher/patches.txt` + `C:\GuerraDoEmperium\patches\*.zip` | o patch: o registro versionado e o zip | `ferramentas/monta_patch.py` |
-| `libraro:/var/www/patch/` | `lista.txt` + os zips, servidos pelo Apache | `ferramentas/publica_patch.sh` |
+| `patcher/novidades.txt` | o changelog: o que o jogador lê no painel do Atualizador | `ferramentas/monta_patch.py` (`--nota`), e a mão |
+| `libraro:/var/www/patch/` | `lista.txt` + `novidades.txt` + os zips, servidos pelo Apache | `ferramentas/publica_patch.sh` |
 
 A quarta ponta é o `patch\aplicados.txt` **no computador de cada jogador**, que
 o Atualizador escreve. É o único estado do sistema que não está sob o nosso
 alcance — e é por isso que o formato é extração de zip por cima, idempotente:
 com ele, "apagar o `aplicados.txt`" é um conserto completo que o jogador
 consegue executar sozinho pelo Discord.
+
+**E a mensagem do grupo é montada nos dois lados.** O `--nota` do
+`monta_patch.py` imprime o texto pronto no terminal de quem publica; o botão de
+copiar do painel do Atualizador monta o mesmo texto na máquina do jogador
+(`patcher/novidades.go`, `mensagem()`). São o `CABECALHO_COPIA` do Python e o
+`cabecalhoCopia` do Go — **mudar um sem o outro faz as duas mensagens
+divergirem**, e nada denuncia: as duas continuam saindo, cada uma do seu jeito.
 
 **O deploy e o patch são caminhos independentes e não se cruzam.** Mudança que
 tem as duas metades — item novo, por exemplo: o `item_db` do servidor e o

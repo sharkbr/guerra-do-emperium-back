@@ -3,8 +3,15 @@ u"""Monta um patch do cliente: um .zip numerado mais a linha do registro.
 
     python monta_patch.py --nome "IA do homunculo" AI_sakray data\\sclientinfo.xml
     python monta_patch.py --nome "Arte nova da Ordem" --desde 2026-08-14
+    python monta_patch.py --nome "Cinco chapeus" --nota "Chapeu de Palha" ...
     python monta_patch.py --lista          # mostra o que ja foi montado
     python monta_patch.py --confere        # confere o registro contra os .zip
+
+O `--nota` (repetivel) e o que o JOGADOR vai ler: cada um vira um ponto no
+painel NOVIDADES do Atualizador, e entra na mensagem que o botao de copiar poe
+na area de transferencia, pronta para o grupo. Patch que so conserta alguma
+coisa nao precisa de nota nenhuma; patch que acrescenta item precisa da lista
+dos itens, porque "Quarenta e sete itens nas lojas" nao diz QUAIS.
 
 O patch e um zip com caminhos RELATIVOS A RAIZ DO CLIENTE, aplicado por
 extracao por cima. Nao ha diff binario e nao ha GRF: o cliente tem
@@ -53,6 +60,12 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__))).decode('mbcs'
 CLIENTE = ur'C:\GuerraDoEmperium\cliente'
 SAIDA = ur'C:\GuerraDoEmperium\patches'
 REGISTRO = os.path.join(RAIZ, u'patcher', u'patches.txt')
+NOVIDADES = os.path.join(RAIZ, u'patcher', u'novidades.txt')
+
+# O cabecalho da mensagem que se cola no grupo. TEM DE SER IGUAL ao
+# `cabecalhoCopia` do `patcher/novidades.go`: os dois montam o mesmo texto, um
+# para o terminal de quem publica e outro para o botao de copiar do jogador.
+CABECALHO_COPIA = u'LibraRO updates'
 
 # O nome do arquivo dentro do zip que lista o que APAGAR do cliente. Comeca com
 # `_` e nao existe no cliente de verdade, entao nao ha como colidir com arquivo
@@ -195,6 +208,61 @@ def grava_registro(patches):
         f.write(u'\n'.join(L))
 
 
+def cabecalho_das_novidades():
+    u"""O cabecalho do `novidades.txt`, escrito so quando o arquivo nao existe.
+
+    Ele nasce curto de proposito: o arquivo versionado ja tem o cabecalho
+    inteiro, e este aqui e o que sobra numa maquina que o perdeu."""
+    return u'\n'.join([
+        u'# Guerra do Emperium - o changelog dos patches.',
+        u'#',
+        u'# GERADO por ferramentas/monta_patch.py (os `--nota`), publicado pelo',
+        u'# publica_patch.sh como novidades.txt e lido pelo painel NOVIDADES do',
+        u'# Atualizador. Pode ser editado a mao depois de publicado: ele nao',
+        u'# decide o que o jogador baixa, so o que ele le.',
+        u'#',
+        u'# Um bloco por patch:',
+        u'#     [0021] 2026-09-06  Cinco chapeus novos',
+        u'#     - Chapeu de Palha',
+        u'',
+    ])
+
+
+def grava_novidade(numero, nome, notas):
+    u"""Acrescenta o bloco deste patch ao `novidades.txt`.
+
+    Por ACRESCIMO, e nao reescrevendo o arquivo como o `grava_registro` faz com
+    o `patches.txt`. A diferenca e proposital: este arquivo e para ser editado a
+    mao (corrigir a redacao de um patch publicado nao deveria exigir um patch
+    novo), e reescreve-lo inteiro a partir do que a ferramenta entende dele
+    apagaria toda edicao que ela nao soubesse reproduzir."""
+    linhas = [u'[%04d] %s  %s' % (numero, time.strftime('%Y-%m-%d'), nome)]
+    for nota in notas:
+        linhas.append(u'- %s' % nota)
+
+    antigo = cabecalho_das_novidades()
+    if os.path.exists(NOVIDADES):
+        with io.open(NOVIDADES, 'r', encoding='utf-8') as f:
+            antigo = f.read()
+    if antigo and not antigo.endswith(u'\n'):
+        antigo += u'\n'
+
+    with io.open(NOVIDADES, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(antigo + u'\n' + u'\n'.join(linhas) + u'\n')
+
+
+def mensagem_do_grupo(numero, nome, notas):
+    u"""O texto que o botao de copiar do Atualizador poe na area de
+    transferencia, montado aqui tambem para quem publica poder anunciar sem
+    abrir o Atualizador. A forma vem do `mensagem()` do `patcher/novidades.go`,
+    e as duas tem de continuar iguais."""
+    dia = time.strftime('%d/%m/%Y')
+    linhas = [u'%s %s' % (CABECALHO_COPIA, dia), u'', nome]
+    for nota in notas:
+        linhas.append(u'- %s' % nota)
+    return u'\n'.join(linhas)
+
+
 def sha256(caminho):
     h = hashlib.sha256()
     with open(caminho, 'rb') as f:
@@ -274,7 +342,7 @@ def desde(data):
     return achados
 
 
-def monta(nome, alvos, apagar):
+def monta(nome, alvos, apagar, notas):
     patches = le_registro()
     numero = (patches[-1]['numero'] + 1) if patches else 1
     arquivos = junta(alvos) if alvos else []
@@ -322,6 +390,7 @@ def monta(nome, alvos, apagar):
     patches.append({'numero': numero, 'arquivo': os.path.basename(destino),
                     'sha': marca, 'bytes': tamanho, 'nome': nome})
     grava_registro(patches)
+    grava_novidade(numero, nome, notas)
 
     print u'-' * 60
     print u'  %d arquivo(s), %.2f MB crus -> %.2f MB no zip' % (
@@ -329,7 +398,17 @@ def monta(nome, alvos, apagar):
     print u'  %s' % destino
     print u'  sha256 %s' % marca
     print u''
-    print u'Registro atualizado: patcher/patches.txt'
+    print u'Registro atualizado:  patcher/patches.txt'
+    print u'Novidades:            patcher/novidades.txt'
+    if not notas:
+        print u'  (sem --nota: o painel do jogador mostra so o titulo. Patch'
+        print u'   que acrescenta item quer a lista dos itens.)'
+    print u''
+    print u'A mensagem do grupo - a mesma que o botao copiar do Atualizador da:'
+    print u'-' * 60
+    print mensagem_do_grupo(numero, nome, notas)
+    print u'-' * 60
+    print u''
     print u'Publicar com:  ferramentas/publica_patch.sh'
 
 
@@ -380,6 +459,7 @@ def main(argv):
     nome = None
     alvos = []
     apagar = []
+    notas = []
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -392,6 +472,10 @@ def main(argv):
         elif a == '--nome':
             i += 1
             nome = argv[i].decode('mbcs') if isinstance(argv[i], str) else argv[i]
+        elif a == '--nota':
+            i += 1
+            notas.append(argv[i].decode('mbcs')
+                         if isinstance(argv[i], str) else argv[i])
         elif a == '--apagar':
             i += 1
             apagar.append(relativo(argv[i]))
@@ -407,7 +491,7 @@ def main(argv):
     if not nome:
         print __doc__
         return
-    monta(nome, alvos, apagar)
+    monta(nome, alvos, apagar, notas)
 
 
 if __name__ == '__main__':

@@ -33,7 +33,7 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | **Atualizador (patcher)** | `cliente\Jogar.exe` — é o que o jogador clica (o jogo, `GuerraDoEmperium.exe`, quem abre é ele); código em `patcher/`, doc em `patcher/LEIAME.md` |
 | Executáveis do kRO que não se clica | `cliente\_extras\` — movidos para lá em 2026-08-16 por `ferramentas/limpa_cliente.py` |
 | Backups que as ferramentas deixam | `C:\GuerraDoEmperium\_backups_removidos\` — inclui as duas cópias do exe **antes** dos nossos patches |
-| **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, os `.zip`, `patcher.txt`) |
+| **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, `novidades.txt`, os `.zip`, `patcher.txt`) |
 | Montar / publicar patch | `python ferramentas/monta_patch.py --nome "..." <caminhos>` e `ferramentas/publica_patch.sh` (`RECEITAS.md` §11) |
 | Publicar um `Jogar.exe` novo | **dois destinos, e um só não basta**: `publica_patch.sh --atualizador` (alcança quem já instalou) **e** o `rclone` para o bucket (de onde o site serve o botão Baixar). Passo a passo e a conferência de sha256 em `RECEITAS.md` §11b |
 | Site: URL do botão Baixar | `SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe` — o mesmo bucket da base, arquivo na raiz |

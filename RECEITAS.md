@@ -374,12 +374,34 @@ corrige com patch novo por cima.
    Sai a lista do que entrou no zip. **É aqui que se percebe engano** — o
    `--desde 2026-08-14`, que varre o cliente por data, costuma trazer junto o
    que foi tocado por acidente.
-3. `ferramentas/publica_patch.sh` — envia os zips e, **por último**, a lista.
-4. `git add patcher/patches.txt` e commitar: o registro é a fonte da
-   `lista.txt` que o servidor serve.
+3. **Se o patch ACRESCENTA coisa, dizer o que é** — um `--nota` por item, na
+   mesma linha do `--nome`. **É passo de quem monta o patch, e não do dono**
+   (`CLAUDE.md` §4.24): a lista já está na mão de quem acabou de pôr os itens
+   na loja.
+
+   ```
+   python ferramentas/monta_patch.py --nome "Cinco chapeus novos" \
+       --nota "Chapeu de Palha" --nota "Tiara de Prata" data/...
+   ```
+
+   Cada nota vira um ponto do bloco daquele patch em `patcher/novidades.txt`, e
+   é o que o jogador lê no painel **NOVIDADES** do Atualizador. O nome do patch
+   é uma linha só e não diz **quais** itens entraram — que é a única coisa que
+   quem joga quer saber. A ferramenta imprime no fim a mensagem pronta para o
+   grupo, a mesma que o botão de copiar do painel dá.
+4. `ferramentas/publica_patch.sh` — envia os zips, o changelog e, **por
+   último**, a lista.
+5. `git add patcher/patches.txt patcher/novidades.txt` e commitar: o registro é
+   a fonte da `lista.txt` que o servidor serve, e o changelog é o painel.
 
 O jogador não faz nada: o `Jogar.exe`, que é o que ele clica para jogar,
 aplica sozinho na próxima abertura.
+
+**Errou a redação de um patch já publicado?** Não monte patch novo por causa
+disso: edite o bloco em `patcher/novidades.txt` e rode o `publica_patch.sh` de
+novo. Ele envia o changelog em toda rodada, mesmo sem zip novo — e aquele
+arquivo não decide o que o jogador baixa, só o que ele lê (`patcher/LEIAME.md`
+§4d).
 
 **Para apagar arquivo do cliente do jogador:** `--apagar data/algum.lub`.
 

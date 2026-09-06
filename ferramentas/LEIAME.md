@@ -3552,6 +3552,7 @@ Conferido em 2026-08-18: a ida e a volta são idênticas byte a byte, e o
 ```
 python monta_patch.py --nome "IA do homunculo" AI_sakray data/sclientinfo.xml
 python monta_patch.py --nome "Arte nova" --desde 2026-08-14
+python monta_patch.py --nome "Cinco chapeus" --nota "Chapeu de Palha" --nota ...
 python monta_patch.py --lista      # o que já foi montado
 python monta_patch.py --confere    # o registro contra os .zip desta máquina
 ```
@@ -3560,6 +3561,27 @@ Monta `C:\GuerraDoEmperium\patches\NNNN-apelido.zip` com os arquivos indicados,
 **relativos à raiz do cliente**, e acrescenta a linha em `patcher/patches.txt` —
 que é o registro versionado e, sem tradução nenhuma, a `lista.txt` que o
 servidor serve. Publicar é outro passo (`publica_patch.sh`).
+
+**O `--nome` fala com a máquina; o `--nota` fala com o jogador.** O nome é uma
+linha só, vai para o registro e aparece na barra de estado do Atualizador
+enquanto o patch é aplicado. Os `--nota` (quantos forem) viram os pontos do
+bloco daquele patch em `patcher/novidades.txt`, que é o que o painel
+**NOVIDADES** desenha e o que o botão de copiar leva para a área de
+transferência. É por isso que patch de loja precisa deles: *"Quarenta e sete
+itens nas lojas de Prontera"* não diz **quais**, e essa é justamente a pergunta
+de quem joga.
+
+A ferramenta imprime a mensagem pronta do grupo no fim da montagem — a mesma
+que o botão de copiar dá —, então dá para anunciar sem abrir o Atualizador.
+Patch que só conserta alguma coisa não precisa de nota nenhuma; nesse caso ela
+avisa que o painel vai mostrar só o título.
+
+**O `novidades.txt` é escrito por ACRÉSCIMO**, e não reescrito como o
+`patches.txt`. A diferença é proposital: aquele arquivo é para ser editado à
+mão — corrigir a redação de um patch já publicado é mexer nele e rodar o
+`publica_patch.sh` de novo, sem patch novo — e reescrevê-lo inteiro a partir do
+que a ferramenta entende dele apagaria toda edição que ela não soubesse
+reproduzir.
 
 **O `--desde` é a via preguiçosa e a mais perigosa.** Ele varre o cliente por
 data de modificação e traz junto o que foi tocado por acidente; a lista impressa
@@ -3619,6 +3641,12 @@ que só existe aqui. Precisa de acesso SSH ao servidor (`SERVIDOR=libraro`).
 Atualizador no intervalo pediria um arquivo que ainda não existe. E **zip antigo
 não se apaga do servidor**: quem instalou o cliente ontem ainda vai baixar o
 patch 0001 amanhã.
+
+**O `novidades.txt` sobe junto, e sobe SEMPRE** — inclusive numa rodada em que
+nenhum zip novo apareceu. É o que permite corrigir o texto de um patch já
+publicado sem montar patch nenhum. Ele não decide nada do que o jogador baixa,
+então a ausência não para a publicação: sem ele o painel do Atualizador cai nos
+nomes da própria lista.
 
 Confere o sha256 de cada zip contra o registro antes de enviar. Divergência aí é
 zip remontado com o mesmo nome e conteúdo diferente — o jeito silencioso de o
