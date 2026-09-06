@@ -98,8 +98,10 @@
 #include <map>
 #include <string>
 
-#include "../common/showmsg.hpp"
-#include "../login/account.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/showmsg.hpp>
+
+#include <login/account.hpp>
 
 // Quantas senhas erradas suspendem a conta. A setima e a que trava: a contagem
 // inclui a tentativa em curso, porque o trava_de_conta_erro roda depois de o
