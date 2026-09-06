@@ -257,7 +257,11 @@ def mensagem_do_grupo(numero, nome, notas):
     abrir o Atualizador. A forma vem do `mensagem()` do `patcher/novidades.go`,
     e as duas tem de continuar iguais."""
     dia = time.strftime('%d/%m/%Y')
-    linhas = [u'%s %s' % (CABECALHO_COPIA, dia), u'', nome]
+    titulo = u'%04d - %s' % (numero, nome)
+    if not notas:
+        return u'\n'.join([u'%s %s:' % (CABECALHO_COPIA, dia), u'',
+                           titulo + u';'])
+    linhas = [u'%s %s:' % (CABECALHO_COPIA, dia), u'', titulo + u':']
     for nota in notas:
         linhas.append(u'- %s' % nota)
     return u'\n'.join(linhas)

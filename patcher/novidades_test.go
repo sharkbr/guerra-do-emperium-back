@@ -72,16 +72,23 @@ func TestLeNovidadesTolerante(t *testing.T) {
 func TestMensagem(t *testing.T) {
 	n := novidade{Numero: 21, Data: "2026-09-06", Titulo: "Cinco chapéus novos",
 		Pontos: []string{"Chapéu de Palha", "Tiara de Prata"}}
-	esperado := "LibraRO updates 06/09/2026\n\nCinco chapéus novos\n" +
+	esperado := "LibraRO updates 06/09/2026:\n\n0021 - Cinco chapéus novos:\n" +
 		"- Chapéu de Palha\n- Tiara de Prata"
 	if got := n.mensagem(); got != esperado {
 		t.Fatalf("mensagem errada:\n%s\n--- esperava ---\n%s", got, esperado)
 	}
 
-	// Sem data o cabeçalho não pode sair com um espaço pendurado no fim — é o
-	// que aconteceria com um `Sprintf` de campo sempre presente.
+	// Bloco sem itens fecha com ponto e vírgula: não há lista para os dois
+	// pontos anunciarem.
+	so := novidade{Numero: 19, Data: "2026-09-06", Titulo: "Festival de Brasilis"}
+	if got := so.mensagem(); got != "LibraRO updates 06/09/2026:\n\n0019 - Festival de Brasilis;" {
+		t.Fatalf("mensagem sem itens errada: %q", got)
+	}
+
+	// Sem data o cabeçalho não pode sair com um espaço pendurado antes dos dois
+	// pontos — é o que aconteceria com um `Sprintf` de campo sempre presente.
 	sem := novidade{Numero: 1, Titulo: "Sem data"}
-	if got := sem.mensagem(); got != "LibraRO updates\n\nSem data" {
+	if got := sem.mensagem(); got != "LibraRO updates:\n\n0001 - Sem data;" {
 		t.Fatalf("mensagem sem data errada: %q", got)
 	}
 }
@@ -128,7 +135,7 @@ func TestDeLista(t *testing.T) {
 		t.Fatalf("a reserva não inventa data nem pontos: %+v", lista[0])
 	}
 	// E a mensagem continua copiável, só que sem data no cabeçalho.
-	if got := lista[0].mensagem(); got != "LibraRO updates\n\nSem censura de palavras" {
+	if got := lista[0].mensagem(); got != "LibraRO updates:\n\n0002 - Sem censura de palavras;" {
 		t.Fatalf("mensagem da reserva errada: %q", got)
 	}
 }

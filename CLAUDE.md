@@ -561,6 +561,31 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     legítimo. A pergunta a fazer antes de publicar é "isto acrescenta alguma
     coisa que o jogador vai procurar?" — se sim, ela precisa estar escrita.
 
+25. **Teste que mexe no MOUSE ou no TECLADO da máquina se avisa ANTES, e o
+    aviso diz quanto tempo dura.** Esta máquina é a mesma em que o dono está
+    trabalhando: `SetCursorPos` e `mouse_event` não abrem uma janela isolada —
+    eles tomam o ponteiro dele no meio do que estiver fazendo. Pedido dele em
+    2026-09-06: *"esses testes interativos você precisa avisar, pra eu não mexer
+    no PC"*.
+
+    O estrago não é o incômodo, é a **confusão de causa**: naquele dia um roteiro
+    de captura clicou com o retângulo da janela zerado, o clique caiu na área de
+    trabalho, um diálogo de pasta se abriu sozinho e o dono viu um atalho
+    quebrado — e passou a suspeitar de que o teste tinha apagado um arquivo. Não
+    tinha (era um atalho velho, ver `HISTORICO.md`), mas provar isso custou mais
+    que o teste inteiro.
+
+    Na prática, três regras que valem juntas:
+    - **avisar antes e esperar.** "Vou abrir a janela e clicar sozinho por uns
+      20 segundos — não mexa no mouse."
+    - **provar a janela antes de clicar.** O roteiro espera o `MainWindowHandle`
+      aparecer e confere que o `GetWindowRect` bate com o tamanho esperado; se
+      não bater, ele **desiste** em vez de clicar em coordenada de tela nenhuma.
+      Clique às cegas em máquina de gente é o mesmo que `rm` com curinga.
+    - **preferir a versão que só fotografa.** Conferir desenho não precisa de
+      clique: abrir, tirar a foto e fechar não tira o mouse de ninguém. O
+      roteiro com clique só entra quando o que se testa **é** o clique.
+
 ## 5. Armadilhas deste ambiente
 
 **Cada linha abaixo já custou horas.** O caso inteiro — sintoma, causa

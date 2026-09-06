@@ -29,7 +29,7 @@ import (
 
 // VERSAO é o número que o canal de auto-atualização compara. Sobe de um a cada
 // Atualizador novo publicado — ver auto.go e `patcher/LEIAME.md`.
-const VERSAO = 4
+const VERSAO = 5
 
 // Os valores padrão existem para o caso de o `Atualizador.ini` não vir no
 // pacote ou ser apagado: sem ini, o Atualizador ainda funciona na produção.

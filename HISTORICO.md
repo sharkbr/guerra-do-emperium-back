@@ -17164,3 +17164,40 @@ sustenta a regra: a lista já está na mão de quem acabou de pôr os itens na
 loja, e devolvê-la ao dono é garantir que o campo fique vazio. Com ele vazio, o
 anúncio do dia volta a ser a frase que não informa nada, que é o defeito que
 este trabalho existiu para consertar.
+
+### Os dois ajustes do dono, e o susto do atalho (2026-09-06, noite)
+
+Ele abriu o Atualizador em produção, o exe se trocou sozinho pelo 4 e o painel
+apareceu. Dois pedidos vieram da tela:
+
+- **o fundo do painel a 65%**, para a cidade em chamas continuar aparecendo por
+  baixo do texto. Sem `AlphaBlend` — a `msimg32.dll` continua fora do binário
+  pelo mesmo motivo de sempre: a arte é fixa e o painel não sai do lugar, então
+  a mistura de cada pixel é sempre a mesma conta, feita uma vez no carregamento
+  e guardada em dois bitmaps prontos (o fundo e o da célula realçada). De
+  quebra, a linha do número e da data ganhou um cinza mais claro: com a arte
+  aparecendo por trás, o tom do crédito do rodapé sumia sobre as partes claras.
+- **o número do patch na mensagem copiada**: `0021 - Cinco chapéus novos:`. A
+  razão é a mesma da data no cabeçalho, um degrau adiante — dois patches do
+  mesmo dia teriam cabeçalhos idênticos, e o número é o que o jogador tem para
+  dizer "estou no 0019" quando pedir ajuda.
+
+Atualizador na **versão 5**, publicado no mesmo dia.
+
+**E ficou uma regra cara, a §4.25:** um roteiro de captura clicou com o
+retângulo da janela zerado — a janela ainda não tinha nascido —, o clique caiu
+na área de trabalho e abriu um diálogo de pasta sozinho. O dono, que estava na
+frente da máquina, viu aquilo e um atalho de `Ragnarok.exe` quebrado, e
+perguntou se o teste tinha apagado o exe do jogo.
+
+**Não tinha, e a apuração é o que vale ficar escrito:** a lixeira não tinha nada
+daquele dia, a pasta do cliente não era escrita desde 2026-08-17, e o atalho
+`C:\Users\Public\Desktop\Ragnarok.exe.lnk` (de 2026-07-30) apontava para
+`cliente\Ragnarok.exe` — nome que o exe do jogo deixou de ter quando virou
+`GuerraDoEmperium.exe`, em agosto. O atalho estava quebrado havia três semanas;
+o que mudou foi alguém ter olhado para ele.
+
+O estrago do clique às cegas, portanto, não foi apagar nada — foi **fazer
+suspeitar**. Provar que nada tinha acontecido custou mais que o teste inteiro, e
+é por isso que a regra tem três partes: avisar antes, provar a janela antes de
+clicar, e preferir o roteiro que só fotografa.

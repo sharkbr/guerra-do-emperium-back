@@ -345,21 +345,27 @@ painel mostra o mais novo em cima:
 
 **Cada bloco é uma célula da lista, e cada célula tem o seu botão de copiar**,
 que aparece quando o ponteiro passa por cima. O que ele põe na área de
-transferência é a mensagem daquele patch, com a data no cabeçalho:
+transferência é a mensagem daquele patch, com a data no cabeçalho e o número na
+linha do título:
 
 ```
-LibraRO updates 06/09/2026
+LibraRO updates 06/09/2026:
 
-Cinco chapéus novos nas lojas de Prontera
+0021 - Cinco chapéus novos nas lojas de Prontera:
 - Chapéu de Palha
 - Tiara de Prata
 ```
 
+Bloco sem itens fecha com ponto e vírgula (`0019 - Festival de Brasilis;`): os
+dois pontos existem para anunciar a lista, e sem lista eles ficariam pendurados.
+
 **A data está no cabeçalho, e não no fim, por causa de como a mensagem é
 usada:** copiam-se vários blocos seguidos e colam-se em sequência, e é ela que
-diz qual é de qual dia. Um botão só, no alto do painel, obrigaria a escolher
-entre "copia tudo" e "copia o último" — com um por célula, quem publica escolhe
-patch a patch.
+diz qual é de qual dia. **O número está na linha do título pelo mesmo motivo, um
+degrau adiante** — dois patches do mesmo dia teriam cabeçalhos idênticos, e o
+número é o que o jogador tem para dizer "estou no 0019" quando pedir ajuda. Um
+botão só, no alto do painel, obrigaria a escolher entre "copia tudo" e "copia o
+último"; com um por célula, quem publica escolhe patch a patch.
 
 Quatro decisões que não são óbvias:
 
@@ -380,6 +386,12 @@ Quatro decisões que não são óbvias:
   da lista (`IntersectClipRect`), que é o que faz a primeira e a última linha
   saírem cortadas ao meio em vez de sumirem inteiras — é assim que o olho
   percebe que há mais coisa para rolar.
+- **O fundo do painel é translúcido (65%) sem `AlphaBlend`.** A arte é fixa e o
+  painel não sai do lugar, então a mistura de cada pixel é sempre a mesma conta:
+  ela é feita uma vez, no carregamento, e vira um bitmap pronto que o desenho só
+  copia (`misturaComArte`). São dois — o fundo e o da célula realçada —, e é o
+  mesmo motivo pelo qual o `gradiente` não usa o `GradientFill`: não valia trazer
+  a `msimg32.dll` para dentro de um binário que vai para a máquina dos outros.
 
 Rola com a roda do mouse, arrastando o polegar ou clicando no trilho. **A roda
 vai para a janela com FOCO**, e não para a que está sob o ponteiro: é por isso

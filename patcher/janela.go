@@ -133,6 +133,7 @@ var (
 	corBrilho   = rgb(240, 216, 144) // o topo do gradiente da barra
 	corTexto    = rgb(232, 220, 192) // creme, para o estado
 	corApagado  = rgb(122, 106, 80)  // o crédito lá embaixo
+	corSelo     = rgb(176, 156, 116) // o número e a data de cada novidade
 	corTrilho   = rgb(14, 11, 8)     // o fundo da barra de progresso
 	corVerde    = rgb(38, 105, 66)   // o verde do Emperium, base do botão
 	corVerdeAlt = rgb(72, 168, 106)  // o mesmo verde, aceso — topo e hover
@@ -179,6 +180,12 @@ const (
 	margemNov    = 18
 	recuoNov     = 14 // o respiro entre a moldura e o texto
 	alturaCabNov = 32
+
+	// A opacidade do fundo do painel, em porcentagem. Em 100 ele é uma tapadeira
+	// e a arte some atrás dele; em 65 a cidade em chamas continua aparecendo por
+	// baixo do texto, que foi o que o dono pediu em 2026-09-06. Abaixo disso o
+	// dourado do título começa a disputar com o laranja do fundo.
+	opacidadeNov = 65
 )
 
 var (
@@ -299,6 +306,13 @@ type Janela struct {
 	arteDC      uintptr
 	buffer      uintptr
 	bufferDC    uintptr
+
+	// O fundo do painel de novidades e o da célula realçada, os dois já
+	// MISTURADOS com a arte que fica atrás deles (ver `misturaComArte`). São
+	// bitmaps prontos porque a arte não muda: a mistura acontece uma vez, no
+	// carregamento, e o desenho vira uma cópia de retângulo.
+	fundoNovDC  uintptr
+	realceNovDC uintptr
 
 	// Jogar é chamado quando o botão é clicado. Devolver erro mantém a janela
 	// aberta com a mensagem na tela — é o que acontece se o exe do jogo sumir.
@@ -466,22 +480,37 @@ func (j *Janela) preparaArte() {
 	pixels := reduz(origem, cobre(img.Bounds(), larguraJanela, alturaArte),
 		larguraJanela, alturaArte)
 
-	// O bitmap é criado com CreateDIBSection e os pixels são COPIADOS na memória
-	// dele. Não há conversão de formato, não há escala, não há chamada que possa
-	// falhar por motivo obscuro: o Windows devolve um ponteiro e nós escrevemos.
-	//
-	// A alternativa natural — `StretchDIBits` — foi tentada primeiro e falha de
-	// forma intermitente nesta máquina: devolve 0 (erro) com `GetLastError`
-	// dizendo "operação concluída com êxito", umas vezes sim e outras não, no
-	// mesmo binário. Com HALFTONE, sem HALFTONE, com escala e sem escala. O
-	// sintoma é a janela nascer com o retângulo da arte preto, e nada além do
-	// log dizer o que houve. Ver `CLAUDE.md` §5.
-	//
+	j.arte, j.arteDC = criaBitmap(pixels, larguraJanela, alturaArte)
+	if j.arteDC == 0 {
+		return
+	}
+
+	// Os fundos do painel saem daqui, e não do WM_PAINT, porque precisam DESTES
+	// pixels: é a arte já reduzida no tamanho da janela, que só existe neste
+	// ponto do programa.
+	j.preparaFundosDoPainel(pixels)
+}
+
+// criaBitmap põe os pixels (BGRA, de cima para baixo) num bitmap de memória e
+// devolve o bitmap e um DC com ele selecionado. Devolve 0,0 se falhar — sem
+// arte a janela fica escura, e o jogador ainda joga.
+//
+// É CreateDIBSection com cópia direta na memória que o Windows devolve: não há
+// conversão de formato, não há escala, não há chamada que possa falhar por
+// motivo obscuro.
+//
+// A alternativa natural — `StretchDIBits` — foi tentada primeiro e falha de
+// forma intermitente nesta máquina: devolve 0 (erro) com `GetLastError` dizendo
+// "operação concluída com êxito", umas vezes sim e outras não, no mesmo
+// binário. Com HALFTONE, sem HALFTONE, com escala e sem escala. O sintoma é a
+// janela nascer com o retângulo da arte preto, e nada além do log dizer o que
+// houve. Ver `CLAUDE.md` §5.
+func criaBitmap(pixels []byte, largura, altura int32) (uintptr, uintptr) {
 	// Altura negativa: os nossos pixels vão de cima para baixo, e o padrão do
 	// Windows é o contrário.
 	cabecalho := bitmapInfoHeader{
 		tamanho: uint32(unsafe.Sizeof(bitmapInfoHeader{})),
-		largura: larguraJanela, altura: -alturaArte,
+		largura: largura, altura: -altura,
 		planos: 1, bits: 32,
 	}
 
@@ -498,14 +527,66 @@ func (j *Janela) preparaArte() {
 		uintptr(unsafe.Pointer(&cabecalho)), 0, // DIB_RGB_COLORS
 		uintptr(unsafe.Pointer(&bits)), 0, 0)
 	if bmp == 0 || bits == nil {
-		anota("arte: CreateDIBSection falhou (%v)", erroGDI)
-		return
+		anota("bitmap %dx%d: CreateDIBSection falhou (%v)", largura, altura, erroGDI)
+		return 0, 0
 	}
 	copy(unsafe.Slice((*byte)(bits), len(pixels)), pixels)
 
-	j.arte = bmp
-	j.arteDC, _, _ = pCreateCompatibleDC.Call(tela)
-	pSelectObject.Call(j.arteDC, j.arte)
+	dc, _, _ := pCreateCompatibleDC.Call(tela)
+	pSelectObject.Call(dc, bmp)
+	return bmp, dc
+}
+
+// preparaFundosDoPainel mistura a cor do painel com a arte que fica atrás dele
+// e guarda o resultado em dois bitmaps: o fundo normal e o da célula realçada.
+//
+// É assim que o painel fica translúcido SEM a `msimg32.dll` (onde moram o
+// `AlphaBlend` e o `GradientFill`): a arte é fixa e o painel não sai do lugar,
+// então a mistura de cada pixel é sempre a mesma conta — fazê-la a cada
+// WM_PAINT seria repetir 160 mil multiplicações por quadro para chegar ao mesmo
+// bitmap.
+func (j *Janela) preparaFundosDoPainel(arte []byte) {
+	j.fundoNovDC = misturaComArte(arte, corFundo, opacidadeNov)
+	// A célula sob o ponteiro é a mesma mistura com uma cor um pouco mais
+	// clara. Fosse um retângulo opaco por cima, o realce apagaria a arte
+	// justamente na parte do painel que se está olhando.
+	j.realceNovDC = misturaComArte(arte, rgb(58, 47, 32), opacidadeNov)
+}
+
+// misturaComArte devolve um DC do tamanho do painel, pintado com `cor` sobre a
+// arte na opacidade dada (em porcentagem: 100 é cor pura, 0 é só arte).
+func misturaComArte(arte []byte, cor uintptr, opacidade int) uintptr {
+	largura := int(areaNovidades.direita - areaNovidades.esquerda)
+	altura := int(areaNovidades.base - areaNovidades.topo)
+	if len(arte) < larguraJanela*alturaArte*4 {
+		return 0 // sem arte não há o que misturar; o painel cai na cor cheia
+	}
+
+	// A ordem é BGRA, e a `cor` vem do `rgb()`, que empacota ao contrário — daí
+	// o vermelho sair do byte baixo e ir para o terceiro.
+	r := int(cor & 0xFF)
+	g := int((cor >> 8) & 0xFF)
+	b := int((cor >> 16) & 0xFF)
+	mistura := func(fundo byte, frente int) byte {
+		return byte((int(fundo)*(100-opacidade) + frente*opacidade) / 100)
+	}
+
+	pixels := make([]byte, largura*altura*4)
+	for y := 0; y < altura; y++ {
+		// A arte é desenhada abaixo da barra de cima, então a linha do painel
+		// na janela não é a mesma linha dentro do bitmap da arte.
+		naArte := ((y+int(areaNovidades.topo)-alturaBarra)*larguraJanela +
+			int(areaNovidades.esquerda)) * 4
+		naLinha := y * largura * 4
+		for x := 0; x < largura; x++ {
+			i, k := naLinha+x*4, naArte+x*4
+			pixels[i] = mistura(arte[k], b)
+			pixels[i+1] = mistura(arte[k+1], g)
+			pixels[i+2] = mistura(arte[k+2], r)
+		}
+	}
+	_, dc := criaBitmap(pixels, int32(largura), int32(altura))
+	return dc
 }
 
 // cobre devolve o maior retângulo da imagem que tem a proporção do destino,
@@ -1111,7 +1192,14 @@ func (j *Janela) pintaNovidades(b uintptr) {
 		return
 	}
 
-	preenche(b, areaNovidades, corFundo)
+	if j.fundoNovDC != 0 {
+		pBitBlt.Call(b, uintptr(areaNovidades.esquerda), uintptr(areaNovidades.topo),
+			uintptr(areaNovidades.direita-areaNovidades.esquerda),
+			uintptr(areaNovidades.base-areaNovidades.topo),
+			j.fundoNovDC, 0, 0, 0x00CC0020)
+	} else {
+		preenche(b, areaNovidades, corFundo)
+	}
 	moldura(b, areaNovidades, corLinha)
 	preenche(b, rect{areaNovCab.esquerda, areaNovCab.base - 1, areaNovCab.direita,
 		areaNovCab.base}, corLinha)
@@ -1135,8 +1223,8 @@ func (j *Janela) pintaNovidades(b uintptr) {
 		}
 		realce := i == sobre || i == copiada
 		if realce {
-			preenche(b, rect{areaNovLista.esquerda + 4, topo, areaNovLista.direita - 4, base},
-				rgb(40, 32, 22))
+			j.realcaCelula(b, rect{areaNovLista.esquerda + 4, topo,
+				areaNovLista.direita - 4, base})
 		}
 		if i > 0 {
 			preenche(b, rect{areaNovLista.esquerda + recuoNov, topo - 8,
@@ -1173,6 +1261,32 @@ func (j *Janela) pintaNovidades(b uintptr) {
 	}
 }
 
+// realcaCelula pinta o fundo da célula sob o ponteiro copiando o pedaço
+// correspondente do bitmap de realce — a mesma mistura do fundo, um tom acima.
+//
+// O retângulo é APARADO na área visível antes da cópia: o recorte do desenho
+// cuidaria do destino, mas a origem sairia do bitmap e o BitBlt leria fora dele
+// (célula meio rolada para fora é o caso normal, não a exceção).
+func (j *Janela) realcaCelula(b uintptr, r rect) {
+	if r.topo < areaNovLista.topo {
+		r.topo = areaNovLista.topo
+	}
+	if r.base > areaNovLista.base {
+		r.base = areaNovLista.base
+	}
+	if r.base <= r.topo {
+		return
+	}
+	if j.realceNovDC == 0 {
+		preenche(b, r, rgb(40, 32, 22))
+		return
+	}
+	pBitBlt.Call(b, uintptr(r.esquerda), uintptr(r.topo),
+		uintptr(r.direita-r.esquerda), uintptr(r.base-r.topo), j.realceNovDC,
+		uintptr(r.esquerda-areaNovidades.esquerda),
+		uintptr(r.topo-areaNovidades.topo), 0x00CC0020)
+}
+
 // montaNovidades mede e quebra o changelog inteiro de uma vez, guardando linhas
 // já posicionadas em coordenadas de conteúdo. SUPÕE O MUTEX PRESO, e é chamada
 // do WM_PAINT porque medir texto exige um DC com a fonte selecionada.
@@ -1191,7 +1305,10 @@ func (j *Janela) montaNovidades(hdc uintptr) {
 		if d := n.dataCurta(); d != "" {
 			selo += "   ·   " + d
 		}
-		j.linhasNov = append(j.linhasNov, linhaNov{selo, x, y, 15, j.fonteMin, corApagado})
+		// A linha do número e da data usa um cinza mais claro que o do crédito
+		// do rodapé: com o painel translúcido, ela cai sobre a parte clara da
+		// arte de vez em quando, e o `corApagado` some ali.
+		j.linhasNov = append(j.linhasNov, linhaNov{selo, x, y, 15, j.fonteMin, corSelo})
 		celula.botao = rect{areaTrilhoNov.esquerda - 8 - 62, y - 1,
 			areaTrilhoNov.esquerda - 8, y + 16}
 		y += 18

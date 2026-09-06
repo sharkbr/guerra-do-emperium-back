@@ -157,14 +157,30 @@ func (n novidade) dataCurta() string {
 }
 
 // mensagem é o que vai para a área de transferência — o texto pronto para o
-// grupo. A data entra no cabeçalho, e não no fim, porque é assim que várias
-// mensagens coladas em sequência continuam se distinguindo.
+// grupo:
+//
+//	LibraRO updates 06/09/2026:
+//
+//	0019 - Festival de Brasilis;
+//
+// A data entra no cabeçalho, e não no fim, porque é assim que várias mensagens
+// coladas em sequência continuam se distinguindo. **O número do patch vem na
+// linha do título** pelo mesmo motivo, um degrau adiante: dois patches do mesmo
+// dia teriam cabeçalhos idênticos, e o número é o que o jogador tem para dizer
+// "estou no 0019" quando pedir ajuda.
+//
+// A pontuação final segue o que ela introduz: ponto e vírgula quando o bloco
+// acaba ali, dois pontos quando vem a lista de itens embaixo.
 func (n novidade) mensagem() string {
 	cabecalho := cabecalhoCopia
 	if d := n.dataCurta(); d != "" {
 		cabecalho += " " + d
 	}
-	linhas := []string{cabecalho, "", n.Titulo}
+	titulo := fmt.Sprintf("%04d - %s", n.Numero, n.Titulo)
+	if len(n.Pontos) == 0 {
+		return strings.Join([]string{cabecalho + ":", "", titulo + ";"}, "\n")
+	}
+	linhas := []string{cabecalho + ":", "", titulo + ":"}
 	for _, p := range n.Pontos {
 		linhas = append(linhas, "- "+p)
 	}
