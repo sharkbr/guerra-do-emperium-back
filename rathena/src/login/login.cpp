@@ -352,6 +352,21 @@ int32 login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 0; // 0 = Unregistered ID
 	}
 
+	// Guerra do Emperium: a suspensao e testada ANTES da senha, e so para
+	// jogador. O rAthena testa o unban_time depois (o bloco original continua
+	// logo abaixo, e e ele que atende o char/map-server), e naquela ordem quem
+	// esta suspenso e nao lembra a senha ve "senha incorreta" nas duas semanas
+	// seguintes sem nunca descobrir que ha uma suspensao correndo - a trava
+	// ficaria sem como se explicar (CLAUDE.md secao 4.21). Aqui ele ve o erro
+	// 6, que e a unica recusa com data na tela. Acrescimo, nao substituicao.
+	// Quem escreve o unban_time e src/custom/trava_de_conta.hpp.
+	if( !isServer && acc.unban_time != 0 && acc.unban_time > time(nullptr) ){
+		char tmpstr[24];
+		timestamp2string(tmpstr, sizeof(tmpstr), acc.unban_time, login_config.date_format);
+		ShowNotice("Connection refused (account: %s, suspensa ate %s, ip: %s)\n", sd->userid, tmpstr, ip);
+		return 6; // 6 = You are prohibited to log in until %s
+	}
+
 	if( !login_check_password( *sd, acc ) ) {
 		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password

@@ -22,6 +22,10 @@
 #include "loginchrif.hpp"
 #include "loginlog.hpp"
 
+// Guerra do Emperium - trava de conta por senha errada, no lugar do ban
+// dinamico de IP do rAthena (desligado em conf/guerra/login_guerra.txt).
+#include "../custom/trava_de_conta.hpp"
+
 /**
  * Transmit auth result to client.
  * @param fd: client file desciptor link
@@ -47,6 +51,9 @@ static void logclif_sent_auth_result(int32 fd,char result){
 static void logclif_auth_ok(struct login_session_data* sd) {
 	int32 fd = sd->fd;
 	uint32 ip = session[fd]->client_addr;
+
+	// Guerra do Emperium: acertar a senha desfaz a contagem de erradas.
+	trava_de_conta_esquece( sd->userid );
 
 	uint8 server_num, n;
 	uint32 subnet_char_ip;
@@ -172,7 +179,15 @@ static void logclif_auth_failed( int32 fd, int32 result, const char* unblock_tim
 
 	p.packetType = HEADER_AC_REFUSE_LOGIN;
 	p.error = result;
-	safestrncpy( p.unblock_time, "", sizeof( p.unblock_time ) );
+	// Guerra do Emperium - CORRECAO, e e SUBSTITUICAO de linha do rAthena: o
+	// original copiava "" para ca e jogava fora o parametro unblock_time, que
+	// o chamador calcula logo acima. O erro 6 e a unica recusa que o cliente
+	// desenha com data ("...until %s"), e sem isto o %s sai vazio - a frase
+	// aparece pela metade, sem dizer a que horas o jogador pode voltar. E o
+	// que a trava de conta (src/custom/trava_de_conta.hpp) usa para se
+	// explicar. Se um merge do vendor trouxer o "" de volta, a frase volta a
+	// sair truncada e nada denuncia.
+	safestrncpy( p.unblock_time, unblock_time, sizeof( p.unblock_time ) );
 
 	socket_send( fd, p );
 }
@@ -221,6 +236,13 @@ static void logclif_auth_failed(struct login_session_data* sd, int32 result) {
 
 	if( (result == 0 || result == 1) && login_config.dynamic_pass_failure_ban )
 		ipban_log(ip); // log failed password attempt
+
+	// Guerra do Emperium: a mesma falha conta tambem PARA A CONTA, e e essa
+	// contagem que trava hoje - o ipban_log acima esta desligado por
+	// conf/guerra/login_guerra.txt. Fica depois do login_log de proposito: a
+	// tentativa em curso ja esta registrada, entao a setima e a que suspende.
+	if( result == 0 || result == 1 )
+		trava_de_conta_erro( login_get_accounts_db(), sd->userid );
 
 	// 6 = You are prohibited to log in until %s
 	if( result == 6 ){

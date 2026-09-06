@@ -31,3 +31,4 @@
 0017	0017-itens-mega-das-valquirias-em-portugues.zip	aea22584919f3ec0c2b13096871b9c79ad01bfc08e855d7c572fe8714fba96c0	2579755	Itens MEGA das Valquirias em portugues
 0018	0018-cova-nas-quinze-armas-brutais.zip	c8ccabb78bdcb2ca5b1740da00daf2593bd99d5876991dba58025d7a0dfcd400	2571500	Cova nas quinze Armas Brutais
 0019	0019-festival-de-brasilis.zip	f9562aa307f6a8f2fa7107cdfeef9c5b66d50b41603c4e3c0e250bfd002ecf67	2623996	Festival de Brasilis
+0020	0020-aviso-da-trava-de-conta-na-tela-de-login.zip	c5e3a24e33bae300ae1d5f1ce915f456f099845344fec4adcf8c531817430217	47463	Aviso da trava de conta na tela de login

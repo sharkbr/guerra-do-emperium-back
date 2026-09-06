@@ -99,6 +99,8 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `src/map/pc.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `estilo_de_corpo_resolve` no topo do `case LOOK_BODY2:` do `pc_changelook`, **antes** do `job_db.exists`. Acréscimo, não substituição. Traduz o valor legado 0/1 que o `db/re/stylist.yml` ainda manda para o Id do trabalho do visual alternativo — sem ela a UI de estilista come o Cupom de Roupa e não muda nada (`src/custom/estilo_de_corpo.hpp`) |
 | `src/map/mob.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `habilidade_de_monstro_proibida` no topo do laço do `mobskill_use`, **antes** do teste de recarga — monstro em mapa listado se comporta como se não tivesse aquela linha do `mob_skill_db`. Acréscimo, não substituição. Hoje a tabela tem uma entrada só: Instinto de Defesa (`ST_REJECTSWORD`) no Corredor Fantasma (`vis_h01`), que refletia 50% do dano do jogador sem passar por redução nenhuma (`src/custom/habilidade_proibida.hpp`) |
 | `src/map/skill.cpp` | **dois** includes de `src/custom/` + **uma** chamada (um `if` com duas funções), comentada no arquivo, dentro do `skill_get_requirement`, na linha seguinte à do Magic Gear Fuel. `tinta_infinita_dispensa` zera o requisito de **Tinta para Parede** (6123) para quem carrega a **Tinta para Parede Infinita** (30993); `pincel_do_infinito_dispensa` zera os de **Pincel de Maquiagem** (6121), **Pincel de Grafite** (6122) e **Tinta para Pele** (6120) para quem carrega o **Pincel do Infinito** (30992). Com o requisito zerado a habilidade passa na checagem **e** nada é consumido. Acréscimo, não substituição, e usa a mesma forma que o rAthena já usa duas linhas acima (`req.itemid[i] = req.amount[i] = 0`). **Um ponto só basta porque o `skill_get_requirement` é a fonte única dos três caminhos** — `skill_check_condition_castbegin` (é quem recusa o lance), `..._castend` e `skill_consume_requirement` (é quem apaga o item). E ele resolve **ferramenta** (`Amount: 0`) junto com insumo: o castbegin reprova por `index[i] < 0` antes de olhar a quantidade, então pincel que falta na mochila derruba a habilidade igual a tinta que falta. Alcança as treze habilidades de Trapaceiro/Renegado envolvidas porque a condição olha o **insumo** e não uma lista de habilidades (`src/custom/tinta_infinita.hpp`, `src/custom/pincel_do_infinito.hpp`) |
+| `src/login/loginclif.cpp` | um include de `src/custom/` + **duas** chamadas e **uma substituição**, todas comentadas no arquivo, todas de `trava_de_conta.hpp` (a trava de conta por senha errada — §4.23). `trava_de_conta_esquece` no topo do `logclif_auth_ok` (acertar a senha zera a contagem) e `trava_de_conta_erro` no `logclif_auth_failed`, ao lado do `ipban_log` e **depois** do `login_log`, que é o que faz a sétima errada ser a que trava. A substituição é a **segunda do projeto** e é correção de bug do vendor: o `logclif_auth_failed(fd, result, unblock_time)` copiava `""` para o `p.unblock_time` e jogava fora o parâmetro que o chamador acabara de calcular — o erro 6 é a única recusa que o cliente desenha com data, e sem isso o `%s` sai vazio. **Não sobrevive a merge por si**: se o `""` voltar, a frase volta a sair pela metade e nada denuncia |
+| `src/login/login.cpp` | **uma** chamada, comentada no arquivo, e nenhum include: um `if` de `unban_time` no `login_mmo_auth` **antes** do `login_check_password`, só para jogador (`!isServer`). Acréscimo — o bloco original do rAthena continua logo abaixo e é ele que atende o char/map-server. Existe porque na ordem do vendor a senha é testada primeiro, e aí quem está suspenso **e** não lembra a senha vê "senha incorreta" pelos quinze minutos inteiros sem descobrir que há uma suspensão correndo (§4.21) |
 | `rathena/.gitignore` | duas coisas. **(a)** `!/src/custom/` — o upstream ignora essa pasta inteira. **(b)** `/db/import` virou **`/db/import/*`** mais um `!/db/import/mob_skill_db.txt`: as habilidades dos monstros da Glast Heim Sombria só podem morar ali, porque o `mob_skill_db.txt` não é YAML (não tem rodapé de import) e o `mob_readskilldb` (`src/map/mob.cpp:7184`) lê de `db/re/` e `db/import/` e mais nada. **A barra-asterisco é o que faz funcionar** — pasta excluída o git nem abre, então negar um arquivo dentro dela não teria efeito; excluir o CONTEÚDO deixa a pasta visível e a negação passa a valer. Os outros ~60 arquivos de `db/import` continuam fora do git, que é onde devem ficar |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
@@ -493,6 +495,46 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
       (§5). Para recuar uma lista, caractere visível (`- `, `. `).
     - O cliente **não** dobra `mes` sem espaços (um nome de item colado num
       código de cor, por exemplo) — aí a linha estoura a janela.
+23. **Trava de força bruta pune a CONTA, nunca a faixa de IP — e toda recusa
+    de login tem de dizer o que é e por quanto tempo.** Decisão do dono em
+    2026-09-05, depois de o caso aparecer em produção.
+
+    O rAthena vinha punindo o lugar errado: sete senhas erradas em cinco
+    minutos inseriam na `ipbanlist` a faixa `x.y.z.*` — o **/24 inteiro**, até
+    254 endereços (`ipban.cpp:83`). Quem caísse nela levava *Rejected from
+    Server* **antes de o login ser lido**: não importava a conta, a senha, nem
+    se a pessoa tinha acabado de chegar. Num provedor brasileiro, vizinho de
+    rua e celular na mesma saída NAT dividem esse /24.
+
+    E a mensagem era o segundo defeito. *"Rejected from the Server (3)"* não
+    diz que é o IP, não diz por quanto tempo, e **não é a mesma frase que
+    aparece quando a senha está errada** — do lado de lá parece conta banida.
+    O jogador que abriu o caso tinha errado a própria senha sete vezes e
+    relatou a mensagem achando que fora bloqueado.
+
+    A trava hoje é `src/custom/trava_de_conta.hpp`: sete erradas suspendem
+    **aquela conta** por 15 minutos, gravadas no `unban_time`, e o jogador vê
+    o erro 6 — a única recusa que o cliente desenha **com data**. O ban
+    dinâmico de IP está desligado em `conf/guerra/login_guerra.txt`; o
+    `ipban_enable` continua ligado, porque é ele que permite banir um IP à mão.
+
+    As três coisas que a decisão obriga, e que valem para qualquer trava
+    futura:
+    - **expirar sozinha.** Trava por conta tem uma fraqueza que a de IP não
+      tem — quem souber o nome de uma conta a suspende de propósito, e nome
+      de conta não é segredo. O que torna isso aceitável é o prazo curto que
+      volta sem ninguém: o estrago máximo é o quarto de hora, e não há nada
+      para destravar. Trava permanente transforma o mesmo incômodo em dano
+      indefinido e cada esquecimento de senha num chamado.
+    - **nunca encurtar um bloqueio que já exista.** O `unban_time` é o mesmo
+      campo do `@block`/`@ban`; escrever por cima apagaria o castigo de um GM.
+      Só se grava quando o valor novo é maior.
+    - **a conta de sexo `S` fica de fora.** É com ela que o char e o
+      map-server se conectam ao login, e ela passa pelo mesmo caminho de
+      autenticação. Sem a guarda, sete chutes contra um nome que qualquer um
+      adivinha derrubariam a ligação entre os servidores por 15 minutos — e o
+      sintoma apareceria longe, com o jogador preso no login e nada de errado
+      no map-server.
 
 ## 5. Armadilhas deste ambiente
 
@@ -613,6 +655,7 @@ Comandos de script, variáveis e arrays, spawn, instância, unidades, sintaxe do
 - `strnpcinfo(2)` lê o nome de EXIBIÇÃO, não o nome único — e há script do rAthena que guarda dado no sufixo `#`. São campos diferentes
 - `getunitdata` NÃO é função: é comando que PREENCHE UM ARRAY — e usado como função devolve zero, calado na tela
 - `setunitdata UMOB_MAXHP` para BAIXAR o máximo CORROMPE o HP — é underflow `uint32` no rAthena, e o servidor cura em vez de reduzir
+- O quinto campo de uma linha de spawn é o `eventname`, e os `,0`/`,1` dos 74 `boss_monster` do vendor PARECEM ocupá-lo — mas uma guarda de comprimento (>= 4) os descarta, e o `OnNPCKillEvent` dispara para os MVPs
 - Comando de script que "existe no rAthena" pode não existir NESTE rAthena, e o erro do parser aponta para o lugar errado
 
 ### `ARMADILHAS-RATHENA.md` — db/, conf/ e C++ do rAthena
@@ -641,6 +684,8 @@ Bancos em YAML, recarregadores, item_db, guardas do C++, operação dos quatro s
 - O corpo de uma habilidade NÃO está mais no `skill.cpp` — cada uma tem classe própria em `src/map/skills/`
 - Parar SÓ o map-server para recompilar deixa o jogador travado no login, e a mensagem culpa o cliente
 - Subir o servidor a partir de um shell que pode ser encerrado deixa os quatro processos órfãos
+- Mais de 5 conexões em 3 segundos do mesmo IP e o rAthena fecha a conexão **sem mandar pacote nenhum**, por 10 minutos — é o `ddos_count` do `packet_athena.conf`, e não há mensagem, log nem erro em lugar nenhum
+- O rAthena CALCULA a data do desbloqueio e a JOGA FORA: o `logclif_auth_failed` copiava `""` para o `unblock_time` do pacote, e a única recusa que o cliente desenha com data saía pela metade
 
 ### `ARMADILHAS-COMBATE.md` — Combate e números
 

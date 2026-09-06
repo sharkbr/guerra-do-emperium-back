@@ -16865,3 +16865,219 @@ a única coisa delicada daquele caminho. Falta o deploy do `item_db.yml`, e a
 defasagem nesse intervalo é inofensiva por desenho: quem receber o patch antes
 do deploy vê o `[1]` e a carta ainda não entra — o contrário é que deixaria a
 cova invisível.
+
+## O Festival de Brasilis existe, e as quatro Ligas com ele (2026-09-05)
+
+Brasilis era uma cidade de passagem: o mapa está no GRF desde sempre, a
+Teletransportadora leva lá desde o primeiro dia, os monstros já têm nome em
+português — e **as 40 peças do conjunto do Festival não tinham como ser
+obtidas**. Existiam no `item_db`, existiam no cliente, com arte completa, e
+nenhum NPC, drop, `item_group` ou tabela de encante citava uma só delas.
+
+O levantamento que abriu a sessão respondeu por que: o **Festival da
+Diversidade de Brasilis é evento exclusivo do bRO**, e o rAthena nunca o
+implementou — nem no master. O vendor herdou as peças soltas e mais nada.
+
+### O que o bRO tinha, e em que estado chegou aqui
+
+Duas coisas com o mesmo nome, e as descrições do bRO as separam. O **evento**
+divide a cidade em quatro Ligas — Fogo, Água, Vento e Terra —, cada uma com um
+`Cartão da Liga` (25482–25485) e uma `Insígnia do Orgulho` (25486–25489). O
+**conjunto** é a recompensa: 17 peças nomeadas na descrição do Cubo de Refino
+de Brasilis (102590), organizadas nos mesmos quatro elementos, com as armas
+batizadas de orixás — Xangô (fogo), Oxum (água), Iansã (vento) e Oxóssi
+(terra).
+
+O inventário, medido item a item:
+
+| | estava no servidor | estava no cliente |
+|---|---|---|
+| 4 chapéus, 4 escudos, 4 capas, sapatos, bracelete | sim | sim, arte ok |
+| 18 armas e 2 anéis (Oxum, Iansã, Oxóssi) | sim | sim, arte ok |
+| **6 armas de Xangô** | **não, em item_db nenhum** | sim (2 sem arte) |
+| 8 itens de Liga/Insígnia (`_BZ`) | sim, em inglês com `!todo` | **não** |
+| 4 cartas "Poder de <orixá>" (`_BR`) | sim, em inglês com `!todo` | **não** |
+
+Ou seja: três dos quatro elementos tinham arma e o **fogo não tinha**.
+
+### O que entrou
+
+**As seis armas de Xangô**, em `db/guerra/item_db.yml` — 13143, 16066, 18152,
+26113, 28727 e 32006. A estrutura é espelhada da irmã de Oxum, que é a mesma
+arma noutro elemento; os números de combate saem da descrição do bRO, que é
+palavra por palavra a mesma fora o elemento. Bate em Água e Terra, e nas raças
+Inseto e Humanoide, como a descrição promete — **`RC_DemiHuman` e não
+`RC_Player_Human`**, para as seis não ficarem sozinhas com +30% contra jogador
+no +9.
+
+**O `Name` em português dos 12 itens** que estavam em inglês no vendor, por
+override no mesmo arquivo. Não foi com o `nomes_pt_item_db.py`: aquele é
+tudo-ou-nada e hoje acusa 16755 trocas pendentes nos três `item_db` — trabalho
+inteiro, de outra sessão.
+
+**As quatro barracas de troca**, em `npc/guerra/barters_guerra.yml`, 42 linhas.
+Barter e não `itemshop` pelo motivo de sempre: a Insígnia é `NoSell`, e o
+`itemshop` passa a moeda por `pc_can_sell_item`.
+
+**O NPC**, `npc/guerra/festival_de_brasilis.txt`: a Mãe de Santo em
+`brasilis 205,222` e um motor de caçada flutuante. A célula foi conferida no
+`map_cache.dat` antes — o `.gat` do nosso GRF está cifrado e o `grf.py` recusa,
+mas o servidor tem a mesma grade.
+
+**A Capa Grandiosa (20747) no Capeiro de Prontera**, e é o achado de brinde da
+sessão. O cabeçalho do `mercado_contemporaneo.txt` afirmava desde 2026-08-04
+que *"a família existe, mas não tem terra. São três, e o terceiro é gelo"* — e
+a capa de terra existe, com arte 4/4, no vendor e no cliente. A Mística tinha
+entrado *"no lugar"* de uma peça que nunca faltou. É a §4.17 outra vez, do lado
+do fato: comentário não é trava.
+
+### As decisões do dono, nesta sessão
+
+Três, todas em 2026-09-05: a mecânica é **caçar e trocar por insígnia** (e não
+missão nem caixa); o escopo é **tudo** (armas, cliente, arte, NPC e capa); e
+**trocar de Liga é livre**, com a Liga decidindo qual insígnia cai. A última é
+o que faz os quatro grupos existirem em vez de serem quatro cores da mesma
+coisa: quem quiser os quatro conjuntos passa pelas quatro Ligas.
+
+### O que custou leitura de código, e o que ficou na lista de armadilhas
+
+O drop depende de `OnNPCKillEvent` disparar para o Boitatá, e a leitura direta
+diz que não dispara: as 74 linhas de `boss_monster` do vendor terminam em `,0`
+ou `,1`, o quinto campo do spawn **é** o `eventname`, e mob com evento próprio
+não roda o evento global. Salva uma guarda de comprimento três arquivos
+adiante — o `mob_spawn_dataset` só copia evento com 4 caracteres ou mais
+(`mob.cpp:486`). Está na §5 e no `ARMADILHAS-SCRIPT.md`.
+
+A Bênção do Orixá é o único lugar que usa as quatro cartas de encante, e é o
+único caminho arriscado do arquivo: `delitemidx` + `getitem2` perde vínculo,
+grau e opção aleatória. Por isso o NPC **recusa** Bracelete com qualquer uma
+dessas três coisas, em vez de tentar e destruir.
+
+E duas linhas de `bonus bUnbreakableWeapon` foram escritas e depois apagadas: a
+Clava e o Cetro prometem "Indestrutível em batalha", mas o `skill_break_equip`
+(`skill.cpp:1973`) isenta maça e cajado **por tipo de arma**, com bônus ou sem.
+É o mesmo motivo pelo qual o `marca_indestrutiveis.py` deixa 241 armas de fora.
+
+### Estado
+
+O servidor local reiniciou sem um erro de parse nos quatro arquivos novos, e as
+duas travas passam: `zera_revenda_das_lojas.py --conferir` diz OK nas 23 lojas
+(1775 itens, a Capa Grandiosa entre eles), e `marca_indestrutiveis.py
+--conferir` continua nos mesmos 30, sem acusar nenhuma das seis armas novas.
+
+A metade do cliente saiu no mesmo dia: **patch 0019, "Festival de Brasilis"** —
+21 arquivos, 23,00 MB crus, 2,50 MB no zip (o `itemInfo.lua` mais a arte de
+cinco itens: as três insígnias que faltavam e o Arco e o Punhal de Xangô). Zip
+primeiro, `lista.txt` depois.
+
+**Nada disto foi visto em jogo**, e o deploy não saiu — os dois estão no
+`PENDENCIAS.md`.
+
+## O jogador recusado, e a trava que passou a punir a conta (2026-09-05)
+
+Um jogador relatou que ao tentar entrar recebia **"Rejected from the Server
+(3)"**, enquanto os outros entravam normalmente. O diagnóstico saiu do
+`loginlog` de produção, e a resposta não era a que o relato sugeria.
+
+### O que o banco contou
+
+O IP era `179.113.122.223`, dono de duas contas criadas pelo site em 30 e
+31/08 — `lucas7679` (2000035) e `lucas9094` (2000036). A linha do tempo:
+
+| Quando | O quê |
+|---|---|
+| 02, 03 e 04/09 | seis logins bem-sucedidos nas duas contas, o último em 04/09 20:58 |
+| 05/09 13:09–13:12 | sete `Incorrect Password` seguidos, alternando entre as contas |
+| **05/09 13:16–13:17** | **sete `ip banned`** — é aqui que ele viu o erro 3 |
+| 05/09 13:19–13:43 | mais seis `Incorrect Password` |
+
+Ou seja: **ele não estava bloqueado; a faixa dele estava**, pelo ban dinâmico
+do próprio rAthena, disparado pelas tentativas dele. Quando o relato chegou,
+o ban de cinco minutos já tinha expirado — a `ipbanlist` estava vazia.
+
+As outras quatro causas de erro 3 foram descartadas com dado, e todas de uma
+vez: nenhuma conta com `state != 0`, `new_account: no` em produção,
+`use_dnsbl: no`, e as 36 contas do servidor **todas** em MD5 (nenhuma sobrou
+em texto puro desde a conversão de 2026-08-14).
+
+O que sobrou em aberto é a senha, não o ban: as duas contas pararam de aceitar
+a senha no mesmo dia, depois de quatro dias entrando. Fica no `PENDENCIAS.md`,
+junto com os dois defeitos do site que produzem exatamente isso.
+
+### As duas coisas erradas, e elas eram independentes
+
+**A primeira era o alvo.** O `ipban_log` (`ipban.cpp:71`) contava as falhas
+por IP e inseria na `ipbanlist` a faixa `x.y.z.*` — o /24 inteiro, até 254
+endereços. Quem caísse nela levava a recusa **antes de o login ser lido**: não
+importava a conta, a senha, nem se a pessoa tinha acabado de chegar. Num
+provedor brasileiro, vizinho de rua e celular na mesma saída NAT dividem esse
+/24.
+
+**A segunda era a mensagem**, e é a que fez o relato chegar errado. *"Rejected
+from the Server (3)"* não diz que é o IP, não diz por quanto tempo, e não é a
+mesma frase que aparece quando a senha está errada — do lado de lá parece
+conta banida. Ele achou que tinha sido bloqueado.
+
+### A decisão do dono
+
+Trocar o alvo: **sete senhas erradas suspendem AQUELA conta por 15 minutos**,
+e o ban automático de IP sai. As três decisões que vieram junto — punir a
+conta, expirar sozinha em 15 minutos, e não mexer na conta do jogador — estão
+na §4.23 do `CLAUDE.md`, que é onde a regra passou a morar.
+
+### Como ficou
+
+`src/custom/trava_de_conta.hpp` conta as erradas por conta, em memória, numa
+janela de cinco minutos, e no limite grava `unban_time = agora + 15min`. Usar
+o `unban_time` — o campo que o `@block`/`@ban` já usa — deu três coisas de
+graça: o `login_mmo_auth` já o testa e devolve o **erro 6**, que é a única
+recusa que o cliente desenha **com data**; o char e o map-server já o
+respeitam; e não houve coluna, tabela nem migração.
+
+Três guardas que o desenho exigiu, e nenhuma é decorativa:
+
+- **nunca encurtar bloqueio existente** — o campo é o mesmo do GM, e escrever
+  por cima apagaria o castigo dele;
+- **a conta de sexo `S` fica de fora** — é com ela que o char e o map-server
+  se conectam ao login, pelo mesmo caminho de autenticação; sem a guarda, sete
+  chutes contra um nome adivinhável derrubariam a ligação entre os servidores;
+- **acertar a senha zera a contagem** — senão quem erra três vezes hoje e
+  quatro amanhã acabaria suspenso sem nunca ter errado sete seguidas.
+
+Os enxertos ficaram em dois arquivos do vendor, os dois na tabela da §2. E um
+deles é **substituição**, a segunda do projeto: o `logclif_auth_failed`
+calculava a data do desbloqueio e a jogava fora, copiando `""` para o pacote.
+Sem essa correção a trava não teria como se explicar — o `%s` do erro 6 sairia
+vazio, e o jogador saberia que está bloqueado sem saber até quando.
+
+### O cliente passou a explicar a regra antes de ela morder
+
+Pedido do dono na mesma sessão. O login-server não manda texto: o pacote
+`AC_REFUSE_LOGIN` leva um código, e quem escolhe a frase é o
+`msgstringtable.txt` — que é **nosso**. Três frases reescritas, em cp1252, sem
+mexer na contagem de linhas (4023, e mexer nisso deslocaria todos os ids):
+
+| id | antes | agora |
+|---|---|---|
+| 7 | *Incorrect User ID or Password. Please try again.* | Usuário ou senha incorretos. **Após 7 tentativas erradas a conta fica suspensa por 15 minutos.** |
+| 9 | *Rejected from Server.* | Acesso recusado pelo servidor. Se continuar, fale com a administração. |
+| 449 | *You are prohibited to log in until %s.* | Sua conta está suspensa até %s. Isso acontece após 7 senhas erradas seguidas, e ela volta sozinha. |
+
+O aviso aparece **nas seis primeiras**, que é onde ele serve. Isso mora no
+cliente, então só chega por patch (§4.18) — e o patch tem de sair **depois**
+do deploy, senão a frase promete uma regra que o servidor ainda não tem.
+
+### A prova
+
+Duas, no servidor local, falando o protocolo direto no socket:
+
+1. sete senhas erradas → suspensa; a senha **certa** em seguida devolve erro 6
+   com `ate '2026-09-05 14:39:32'` preenchido, e a `ipbanlist` fica vazia;
+2. seis erradas → senha certa (entra, pacote `0x0ac4`) → mais seis erradas →
+   `unban_time` continua **zerado**.
+
+O primeiro teste falhou antes de passar, e o motivo virou armadilha: as sete
+conexões saíam em um segundo e a sétima levava `[Errno 10054]` — não era a
+trava nem o servidor caindo, era o `ddos_count: 5` em `ddos_interval: 3000` do
+`packet_athena.conf`, que fecha a conexão **sem mandar pacote nenhum** por dez
+minutos. As duas armadilhas estão no `ARMADILHAS-RATHENA.md`.

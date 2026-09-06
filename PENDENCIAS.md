@@ -4043,3 +4043,143 @@ lojas.
 Escolhido o lado, o caminho é curto: `Slots:` por override em
 `db/guerra/item_db.yml` (servidor) ou o ID acrescentado à `COVAS` e o script
 rodado (cliente).
+
+## 1ad. O Festival de Brasilis — falta ver em jogo e falta o deploy (2026-09-05)
+
+O que foi feito e por quê está no `HISTORICO.md`, *"O Festival de Brasilis
+existe, e as quatro Ligas com ele"*. Aqui fica só o que falta.
+
+**O patch 0019 já está no ar** e o servidor local já carregou tudo sem erro de
+parse. O que falta é o outro lado e o teste.
+
+### O que falta, em ordem
+
+1. **Ver em jogo.** Nada desta entrega foi jogado. O roteiro mínimo, que cobre
+   os quatro caminhos novos:
+   - falar com a Mãe de Santo em `brasilis 205,222`, entrar numa Liga e
+     conferir que o Cartão chega com nome e ícone;
+   - matar qualquer coisa em `bra_fild01` e ver a Insígnia cair com a mensagem
+     do total (30% por morte — pode levar algumas);
+   - abrir as quatro barracas e conferir que a janela de troca desenha **nome
+     e ícone** em todas as linhas (é o §4.9: quem desenha ali é o cliente);
+   - comprar uma arma de Xangô e equipar (as seis são novas no servidor);
+   - comprar um Bracelete e pedir a Bênção do Orixá — conferir que o refino
+     sobrevive e que a descrição mostra o Poder do orixá.
+2. **Deploy.** Sai do Mac, `ferramentas/implanta.sh`. Leva os quatro arquivos
+   de servidor: `db/guerra/item_db.yml`, `db/guerra/item_db_lojas.yml`,
+   `npc/guerra/festival_de_brasilis.txt`, `npc/guerra/barters_guerra.yml`,
+   `npc/guerra/mercado_contemporaneo.txt` e `npc/guerra/scripts_guerra.conf`.
+3. **Commit.** Nada foi commitado nesta sessão — inclusive o
+   `patcher/patches.txt`, que já tem a linha do 0019 **e cujo `lista.txt` já
+   está publicado**. Enquanto não commitar, o registro no git está atrás do que
+   o servidor serve.
+
+### Três coisas que a sessão levantou e não resolveu
+
+- **`nomes_pt_item_db.py` acusa 16755 trocas pendentes** nos três `item_db` do
+  vendor. É estado anterior a esta sessão (a árvore estava limpa ao começar), e
+  é uma sessão inteira por si. Os 12 itens do Festival foram resolvidos por
+  override para não esperar por ele.
+- **`instala_visual.py` para em item que não é equipamento.** Ele tira
+  `view_cabeca` do `item_db_equip.yml`, e item `Etc`/`Card` não está lá — sai
+  *"nao esta no item_db_equip.yml"* e não copia nada, mesmo quando os quatro
+  caminhos da arte dependem só do `identifiedResourceName`. As três insígnias
+  desta entrega foram copiadas por um script de fora, à parte. São umas três
+  linhas na ferramenta.
+- **O Logue e Ganhe está desligado desde 2026-08-31**, e ninguém pediu: o
+  map-server reclama *"Node "End" date 20260831 has already passed, skipping"*
+  na subida. Achado de raspão no log desta sessão. Renovar os ciclos é
+  `ferramentas/monta_logue_e_ganhe.py` (`RECEITAS.md` §10).
+
+### Uma divergência de número, levantada e não resolvida sozinha
+
+O **Revólver de Oxum (13139)** nasceu no vendor com `Weight: 100` para uma
+descrição que diz 100 — ou seja 10.0 de peso onde cabiam 100.0. As outras cinco
+armas de Oxum fecham com a descrição. Como o irmão dele de Xangô entrou nesta
+entrega com o peso certo, os dois pesariam 10x um do outro na mesma loja; a
+correção entrou como **override de um campo** em `db/guerra/item_db.yml`, ao
+lado das seis armas novas. É mudança em número de item do vendor, e por isso
+está escrita aqui.
+
+---
+
+## A trava de conta de 2026-09-05 — o que falta para chegar ao jogador
+
+A trava está escrita, compilada e **provada no servidor local**; o que falta é
+sair daqui. O caso inteiro está no `HISTORICO.md`, e a regra na §4.23 do
+`CLAUDE.md`.
+
+### a) O deploy — ABERTO, e sai do Mac
+
+Mudou `src/` (dois arquivos do vendor mais `src/custom/trava_de_conta.hpp`) e
+`conf/guerra/login_guerra.txt`. Exige **recompilar no servidor de produção e
+reiniciar o login-server**, o que derruba quem estiver conectado — então é
+pedido explícito do dono (§4.20). O char e o map podem ficar de pé; só o login
+precisa voltar.
+
+**Enquanto o deploy não sai, produção continua banindo o /24 por senha
+errada.** É o comportamento de hoje, e é o que gerou o relato.
+
+### b) O patch do cliente — ABERTO, e vai DEPOIS do deploy
+
+As três frases do `msgstringtable.txt` (ids 7, 9 e 449) estão reescritas em
+`C:\GuerraDoEmperium\cliente\data\`, com backup ao lado
+(`msgstringtable.txt.BACKUP-antes-da-trava`). Falta `ferramentas/monta_patch.py`
++ `publica_patch.sh` (`RECEITAS.md` §11).
+
+**A ordem importa e é o único jeito de errar aqui:** a frase nova promete "após
+7 tentativas erradas a conta fica suspensa por 15 minutos". Publicada antes do
+deploy, ela mente — o servidor ainda estará banindo o IP.
+
+## O jogador que não consegue entrar, e os dois defeitos do site (2026-09-05)
+
+### a) As duas contas dele — ABERTO, esperando resposta
+
+`lucas7679` e `lucas9094`, do mesmo jogador, entraram normalmente em 02, 03 e
+04/09 e **pararam de aceitar a senha em 05/09**, as duas no mesmo dia. Não é
+ban, não é `state`, não é senha em texto puro — tudo isso foi descartado com
+consulta ao banco.
+
+Decisão do dono: **não tocar na conta**; ele fala com o jogador primeiro. As
+duas perguntas que separam tudo:
+
+1. **a mesma senha entra no site?** Se entra no site e não no jogo, é um dos
+   dois defeitos abaixo, confirmado;
+2. **quantos caracteres tem, e tem acento?** Mais de 23, ou qualquer acento →
+   causa achada.
+
+Se for isso, o conserto para ele é reset de senha — não há como recuperar,
+porque o que está guardado é o MD5 de uma senha que o cliente não consegue
+enviar.
+
+### b) O site aceita senha que o cliente NÃO CONSEGUE MANDAR — ABERTO
+
+```go
+// site/api.go:22
+maxSenha = 32
+```
+```cpp
+// rathena/src/common/packets.hpp:111 + mmo.hpp:154
+char password[NAME_LENGTH];   // NAME_LENGTH = 23 + 1
+```
+
+Senha de **24 a 32 caracteres** é aceita e guardada inteira pelo site, mas o
+pacote `CA_LOGIN` corta em 23 — o MD5 nunca bate. A conta funciona no site e é
+**impossível de logar no jogo**, sem erro em lugar nenhum.
+
+### c) O site não exige ASCII na senha — só no usuário — ABERTO
+
+O `validaCadastro` (`site/api.go:63`) rejeita acento no **nome de usuário**, com
+um comentário que explica exatamente o motivo ("o cliente de RO manda o usuário
+num campo de bytes"). O mesmo raciocínio nunca foi aplicado à senha, três linhas
+abaixo. O `md5hex` hasheia os bytes **UTF-8** que vieram do navegador; o cliente
+manda os bytes **cp1252** do que foi digitado. Senha com `á`, `ç` ou emoji gera
+hashes diferentes — mesmo sintoma, mesma mudez.
+
+### Como fechar (b) e (c)
+
+Duas linhas em `site/api.go`: `maxSenha = 23` e a mesma varredura de ASCII do
+usuário aplicada à senha, com mensagem de formulário à altura. **Não conserta
+quem já cadastrou senha inválida** — para esses, só reset. Vale uma consulta
+antes, para saber quantas contas estão nessa situação; não dá para descobrir
+pelo hash, só perguntando a quem não consegue entrar.

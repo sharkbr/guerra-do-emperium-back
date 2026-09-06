@@ -46,3 +46,31 @@
 // nao ha como voltar ao texto, que e o ponto.
 //--------------------------------------------------------------
 use_MD5_passwords: yes
+
+//--------------------------------------------------------------
+// Forca bruta trava a CONTA, nao o IP.
+//
+// O rAthena bane o IP: sete senhas erradas em cinco minutos
+// inseriam na ipbanlist a faixa x.y.z.* - o /24 INTEIRO, ate
+// 254 enderecos (src/login/ipban.cpp:83). Quem caisse na faixa
+// levava "Rejected from Server" antes de o login sequer ser
+// lido, sem importar a conta, a senha, ou se tinha acabado de
+// chegar.
+//
+// Em 2026-09-05 isso aconteceu com um jogador que errou a
+// propria senha sete vezes; ele relatou "Rejected from the
+// Server (3)", e nada na tela ligava aquilo a senha errada. Num
+// provedor brasileiro, vizinho de rua e celular na mesma saida
+// NAT dividem o mesmo /24 - o dano colateral e real.
+//
+// A trava passou a ser por conta, em
+// src/custom/trava_de_conta.hpp: sete erradas suspendem AQUELA
+// conta por 15 minutos, gravadas no unban_time, e o jogador ve
+// o erro 6 - a unica recusa que o cliente desenha com data.
+//
+// O ipban continua LIGADO (ipban_enable, la em cima no
+// login_athena.conf): e ele que permite banir um IP a mao pela
+// tabela ipbanlist quando for preciso. O que sai daqui e so a
+// parte automatica.
+//--------------------------------------------------------------
+ipban_dynamic_pass_failure_ban: no

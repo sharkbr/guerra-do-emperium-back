@@ -298,3 +298,51 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   Group-Object ProcessName` tem de dar 1 em cada. O `status` do `servidor.py`
   responde pela **porta**, e porta ocupada por uma das duas cópias parece
   saudável. Medido em 2026-08-27.
+
+- **Mais de 5 conexões em 3 segundos do mesmo IP e o rAthena fecha a conexão
+  SEM MANDAR PACOTE NENHUM, por 10 minutos.** É o `connect_check` do
+  `src/common/socket.cpp`, configurado em `conf/packet_athena.conf`:
+  `ddos_count: 5`, `ddos_interval: 3000` (ms) e `ddos_autoreset: 600000` (ms).
+  O IP entra numa tabela **em memória** — reiniciar o login-server é o que a
+  limpa; não há linha em banco para consultar nem para apagar.
+
+  **O que torna isto caro é a mudez.** Não sai mensagem para o cliente, não
+  entra linha no `loginlog` (a conexão morre antes de o `login_log` rodar) e o
+  jogador não vê recusa nenhuma — vê o cliente pendurado ou um "falha ao
+  conectar", que é o que se diz quando a internet caiu. Do lado de cá, o
+  `loginlog` mostra as tentativas anteriores e simplesmente **para**, o que
+  parece o jogador ter desistido.
+
+  Achado em 2026-09-05 ao testar a trava de conta: um script que abria sete
+  conexões em um segundo levava `[Errno 10054]` na sétima, e a leitura
+  imediata foi "o login-server caiu" — ele não tinha caído, e o processo
+  seguia no ar com o mesmo PID. A prova só passou com **3,3 segundos entre as
+  tentativas**.
+
+  Vale para teste automatizado e vale para gente: quem clica em Entrar em
+  sequência depois de uma senha errada bate nisso, e a partir daí não
+  consegue mais nem chegar à tela de erro. É primo da entrada acima, que
+  chega no mesmo `connect_check` pelo outro lado — lá quem enche o contador
+  são dois char-servers duplicados.
+
+- **O rAthena CALCULA a data do desbloqueio e a JOGA FORA.** O
+  `logclif_auth_failed` de `src/login/loginclif.cpp` recebe `unblock_time` do
+  chamador — que o formatou com `timestamp2string` logo antes, de propósito —
+  e escreve no pacote outra coisa:
+
+  ```cpp
+  static void logclif_auth_failed( int32 fd, int32 result, const char* unblock_time = "" ){
+      ...
+      safestrncpy( p.unblock_time, "", sizeof( p.unblock_time ) );  // o parametro nunca e usado
+  ```
+
+  O erro 6 (*"You are prohibited to log in until %s"*) é a **única** recusa de
+  login que o cliente desenha com data. Sem o campo, o `%s` sai vazio e a
+  frase aparece pela metade: o jogador é informado de que está bloqueado e não
+  de até quando — que é a única informação que ele precisava.
+
+  Não dá erro, não dá aviso, e o código do chamador *parece* correto: ele
+  calcula a data e passa adiante. A divergência está uma função abaixo.
+  Corrigido em 2026-09-05, e é a **segunda substituição de linha do rAthena**
+  do projeto (`CLAUDE.md` §2) — se um merge do vendor trouxer o `""` de volta,
+  a frase volta a sair truncada calada.
