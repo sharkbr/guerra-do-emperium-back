@@ -4103,33 +4103,31 @@ está escrita aqui.
 
 ---
 
-## A trava de conta de 2026-09-05 — o que falta para chegar ao jogador
+## A trava de conta de 2026-09-05 — falta só o deploy
 
-A trava está escrita, compilada e **provada no servidor local**; o que falta é
-sair daqui. O caso inteiro está no `HISTORICO.md`, e a regra na §4.23 do
-`CLAUDE.md`.
+A trava está escrita, compilada, **provada no servidor local**, commitada e com
+o patch do cliente publicado. O caso inteiro está no `HISTORICO.md`, e a regra
+na §4.23 do `CLAUDE.md`.
 
-### a) O deploy — ABERTO, e sai do Mac
+### O deploy — ABERTO, e sai do Mac
+
+Tudo o mais está feito: código commitado e no GitHub (`8596da4` e `03012f7`),
+e o **patch 0020 publicado em 2026-09-06**. Falta só o deploy.
 
 Mudou `src/` (dois arquivos do vendor mais `src/custom/trava_de_conta.hpp`) e
-`conf/guerra/login_guerra.txt`. Exige **recompilar no servidor de produção e
-reiniciar o login-server**, o que derruba quem estiver conectado — então é
-pedido explícito do dono (§4.20). O char e o map podem ficar de pé; só o login
-precisa voltar.
+`conf/guerra/login_guerra.txt`. É `ferramentas/implanta.sh`, do Mac. Conferido
+no `atualiza_servidor.sh`: mudança dentro de `rathena/` faz recompilar, e o
+recompilar dispara `systemctl restart` nos **quatro** serviços — o
+`guerra-login` está entre eles, que é o que importa aqui. Como derruba quem
+estiver conectado, é pedido explícito do dono (§4.20).
 
-**Enquanto o deploy não sai, produção continua banindo o /24 por senha
-errada.** É o comportamento de hoje, e é o que gerou o relato.
-
-### b) O patch do cliente — ABERTO, e vai DEPOIS do deploy
-
-As três frases do `msgstringtable.txt` (ids 7, 9 e 449) estão reescritas em
-`C:\GuerraDoEmperium\cliente\data\`, com backup ao lado
-(`msgstringtable.txt.BACKUP-antes-da-trava`). Falta `ferramentas/monta_patch.py`
-+ `publica_patch.sh` (`RECEITAS.md` §11).
-
-**A ordem importa e é o único jeito de errar aqui:** a frase nova promete "após
-7 tentativas erradas a conta fica suspensa por 15 minutos". Publicada antes do
-deploy, ela mente — o servidor ainda estará banindo o IP.
+**E há uma janela aberta enquanto ele não sai.** O patch já está na mão dos
+jogadores, e a frase nova promete "após 7 tentativas erradas a conta fica
+suspensa por 15 minutos" — mas produção continua com o ban de IP até o deploy.
+Nesse intervalo a promessa está errada: quem errar sete vezes ainda leva a
+faixa /24 banida por 5 minutos, agora com o texto "Acesso recusado pelo
+servidor". Publicar antes foi decisão do dono em 2026-09-06; a janela fecha no
+deploy.
 
 ## O jogador que não consegue entrar, e os dois defeitos do site (2026-09-05)
 

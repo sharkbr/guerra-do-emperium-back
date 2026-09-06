@@ -17081,3 +17081,28 @@ conexões saíam em um segundo e a sétima levava `[Errno 10054]` — não era a
 trava nem o servidor caindo, era o `ddos_count: 5` em `ddos_interval: 3000` do
 `packet_athena.conf`, que fecha a conexão **sem mandar pacote nenhum** por dez
 minutos. As duas armadilhas estão no `ARMADILHAS-RATHENA.md`.
+
+### O patch saiu antes do deploy, por decisão (2026-09-06)
+
+**Patch 0020, "Aviso da trava de conta na tela de login"** — um arquivo
+(`data/msgstringtable.txt`), 136,1 KB crus, 0,05 MB no zip. Zip primeiro,
+`lista.txt` depois, como sempre.
+
+A recomendação era publicar **depois** do deploy, porque a frase nova promete
+uma regra que produção ainda não tem. O dono mandou publicar junto, e a
+consequência está escrita no `PENDENCIAS.md`: até o deploy sair, quem errar
+sete senhas ainda leva a faixa /24 banida por cinco minutos — só que agora com
+o texto novo do id 9 ("Acesso recusado pelo servidor"), que é melhor que o
+"Rejected from Server" de antes. O aviso do id 7 é o único que fica impreciso
+nessa janela, e ela fecha no deploy.
+
+Os três commits: `631fd3a` (o Festival, que estava pronto e sem commit desde
+2026-09-05), `8596da4` (a trava) e `03012f7` — este último trocando o caminho
+relativo dos includes do cabeçalho novo pelo `<common/...>` que os outros oito
+de `src/custom` usam. Funcionava no MSVC daqui; o servidor compila com `make` e
+GCC, e não era hora de descobrir a diferença no meio de um deploy.
+
+Uma coisa foi conferida e vale ficar escrita, porque a dúvida era razoável: o
+`atualiza_servidor.sh` reinicia os **quatro** serviços quando o binário é
+recompilado, e o `guerra-login` está entre eles. Deploy que reiniciasse só o
+map deixaria a trava compilada e sem efeito, sem nada denunciando.
