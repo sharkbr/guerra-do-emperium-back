@@ -415,7 +415,7 @@ Brasilis existe uma **terceira** peça, e ela é a que se perde calada.
 |---|---|---|
 | `npc/guerra/traducao/brasilis.cat` | o **diálogo** | `traduz_npcs.py --aplicar brasilis` |
 | `npc/{cities,quests,re/guides}/*brasilis*.txt` | o resultado | idem |
-| `ferramentas/renomeia_npcs_brasilis.py` | o **nome exibido** de 30 NPCs | `renomeia_npcs_brasilis.py` |
+| `ferramentas/renomeia_npcs_brasilis.py` | o **nome exibido** de 31 NPCs (30 em Brasilis + a duplicata em Alberta) | `renomeia_npcs_brasilis.py` |
 
 O nome do NPC mora na linha de declaração, **fora de aspas**, então o
 catálogo não o alcança. Aqui isso não é cosmético: o bRO renomeia três

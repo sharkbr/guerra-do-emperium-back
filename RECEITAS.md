@@ -235,7 +235,7 @@ Grupos: `brasilis`, `campal`, `cidades`, `classe1`, `classe2`, `glossario`,
 **O grupo `brasilis` tem um passo a mais, e ele não é opcional:**
 
 ```
-python renomeia_npcs_brasilis.py             # o nome exibido dos 30 NPCs
+python renomeia_npcs_brasilis.py             # o nome exibido dos 31 NPCs
 python renomeia_npcs_brasilis.py --conferir  # prova que nenhum ficou em inglês
 ```
 

@@ -17365,7 +17365,11 @@ coordenada. É de lá que vêm os três que ninguém adivinharia — o fantasma 
 museu é a **Loira do Banheiro**, o `Recluse` é o **Ermitão**, e a `Lucia`
 aparece como **Bióloga Marinha**.
 
-São 30 NPCs e 74 trocas, em `ferramentas/renomeia_npcs_brasilis.py`. O risco
+São 31 NPCs e 75 trocas, em `ferramentas/renomeia_npcs_brasilis.py`. O
+trigésimo-primeiro não fica em Brasilis: é a duplicata do Marinheiro que
+espera em **Alberta**, e ela entrou porque os dois compartilham o mesmo
+bloco de diálogo (`::Crewman_bra2`) — traduzir Brasilis já o fez falar
+português lá, e o nome em inglês por cima seria meia língua no mesmo NPC. O risco
 que travava a pendência foi medido antes: **nenhum dos nomes é referenciado
 fora dos três arquivos** — a varredura por `npc/`, `db/` e `conf/` deu zero. O
 único vizinho é o `Crewman_bra2`, que é nome **único** (depois do `::`) e é

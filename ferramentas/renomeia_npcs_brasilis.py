@@ -35,9 +35,11 @@ Linha de comentario do vendor fica intocada, de proposito: o cabecalho do
 arquivo continua dizendo o nome original, que e por onde se acha o script no
 upstream.
 
-O que NAO se renomeia, e o motivo: `Crewman_bra2` (o nome unico depois do
-`::`, e ele e chamado por `getnpcid` de dois outros arquivos, um deles
-nosso), `inbathroom#bra` e `#Monkeybra` (nome vazio ou puramente tecnico), e
+O que NAO se renomeia, e o motivo: `Crewman_bra2` (e o nome UNICO, depois do
+`::`, e o `getnpcid` de dois outros arquivos o chama - um deles nosso, o
+`npc/guerra/teletransportadora.txt`; o que se renomeia sao os dois nomes
+EXIBIDOS, `Crewman#bra1` e `Crewman#bra2`), `inbathroom#bra` e `#Monkeybra`
+(nome vazio ou puramente tecnico), e
 os nomes proprios que o bRO manteve - Angelo, Pedro, Mariana, Fabio, Daniel,
 Poring, Iara.
 
@@ -50,6 +52,12 @@ import sys
 # nome antigo -> nome novo, na forma em que aparecem no arquivo.
 MAPA = [
     (u'Crewman#bra1',          u'Marinheiro#bra1'),
+    # O IRMAO DELE, E ELE NAO FICA EM BRASILIS: e a duplicata que espera em
+    # Alberta, no npc/re/cities/alberta.txt. Entra aqui porque o dialogo dos
+    # dois e o MESMO bloco (`::Crewman_bra2`, no npc/cities/brasilis.txt) - ou
+    # seja, traduzir Brasilis ja o fez falar portugues em Alberta. Deixar o
+    # nome dele em ingles seria uma metade em cada lingua no mesmo NPC.
+    (u'Crewman#bra2',          u'Marinheiro#bra2'),
     (u'Signpost#bra',          u'Placa#bra'),
     (u'Ice-Cream Maker',       u'Vendedor de Sorvete'),
     (u'Brasilis Guide',        u'Guia de Brasilis'),
@@ -83,7 +91,12 @@ MAPA = [
 
 ARQUIVOS = ['npc/cities/brasilis.txt',
             'npc/re/guides/guides_brasilis.txt',
-            'npc/quests/quests_brasilis.txt']
+            'npc/quests/quests_brasilis.txt',
+            # Fora do grupo `brasilis` de proposito: aqui mora UMA linha, a
+            # duplicata do Marinheiro que espera em Alberta. Ela nao tem
+            # `.INGLES` e nenhum `--aplicar` a toca, mas entra na varredura
+            # para o `--conferir` cobrir os dois lados do mesmo NPC.
+            'npc/re/cities/alberta.txt']
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RATHENA = os.path.join(REPO, 'rathena')

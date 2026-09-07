@@ -1576,8 +1576,9 @@ python renomeia_npcs_brasilis.py --conferir  # só mede; sai 1 se faltar
 ```
 
 Entrou em 2026-09-07, junto com o grupo `brasilis` do `traduz_npcs.py`.
-Troca o **nome exibido** de 30 NPCs de Brasilis e todas as referências a
-eles — 74 trocas nos três arquivos do grupo.
+Troca o **nome exibido** de 31 NPCs e todas as referências a eles — 75
+trocas: 74 nos três arquivos do grupo, mais uma no
+`npc/re/cities/alberta.txt`.
 
 **O `traduz_npcs.py` não alcança isto, e não é descuido dele:** o nome do NPC
 mora na *linha de declaração*, fora de aspas, e o catálogo só troca literal.
@@ -1607,11 +1608,20 @@ uma vez:** `Puppy#` pega o base, os 12 `duplicate` e o
 intocada de propósito — o cabeçalho continua dizendo o nome original, que é
 por onde se acha o script no upstream.
 
-**O que não se renomeia, e por quê:** `Crewman_bra2` (é o nome **único**
-depois do `::`, e o `getnpcid` de dois outros arquivos o chama, um deles
-nosso — `npc/guerra/teletransportadora.txt`); `inbathroom#bra` e `#Monkeybra`
-(nome vazio ou puramente técnico); e os nomes próprios que o próprio bRO
-manteve — Angelo, Pedro, Mariana, Fabio, Daniel, Poring, Iara.
+**A linha em Alberta não é desvio de escopo.** O Marinheiro de Brasilis e o
+que espera em Alberta são o **mesmo bloco de diálogo** (`::Crewman_bra2`, no
+`npc/cities/brasilis.txt`), então traduzir Brasilis já fez o de Alberta
+falar português. Deixar o nome dele em inglês seria meia língua no mesmo
+NPC. Aquele arquivo não tem `.INGLES` e nenhum `--aplicar` o toca — ele
+entra na varredura só para o `--conferir` cobrir os dois lados.
+
+**O que não se renomeia, e por quê:** `Crewman_bra2` — esse é o nome
+**único**, depois do `::`, e o `getnpcid` de dois outros arquivos o chama,
+um deles nosso (`npc/guerra/teletransportadora.txt`); o que se renomeia são
+os dois nomes **exibidos**, `Crewman#bra1` e `Crewman#bra2`. Também ficam
+`inbathroom#bra` e `#Monkeybra` (nome vazio ou puramente técnico), e os
+nomes próprios que o próprio bRO manteve — Angelo, Pedro, Mariana, Fabio,
+Daniel, Poring, Iara.
 
 ## `planta_adereco.py` — copia um adereço de um mapa para outro
 
