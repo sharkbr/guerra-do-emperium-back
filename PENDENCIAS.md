@@ -4103,6 +4103,74 @@ está escrita aqui.
 
 ---
 
+### Atualização de 2026-09-06 — o Festival foi refeito contra o bROWiki
+
+O dono trouxe a página do evento no bROWiki, e boa parte do que estava escrito
+acima mudou. **O roteiro de teste da seção anterior está desatualizado em três
+pontos** (o drop não é mais 30%, a Mãe de Santo não é mais a única porta, e a
+loja saiu dela). Vale o de baixo.
+
+**O que mudou:**
+
+| | antes (2026-09-05) | agora |
+|---|---|---|
+| inscrição | Mãe de Santo, troca livre | 4 **Agentes da Liga**, sem troca |
+| loja | menu da Mãe de Santo | **Máquina da Diversidade**, NPC próprio |
+| preços | nossos (30/25/40/35/30) | os do bRO (5/10/15/20/25/35/40/50) |
+| conteúdo | 42 linhas | **58** — entraram papiros, malhas sombrias e amuletos |
+| drop por morte | 30% | **5%** (as tarefas passam a ser a fonte) |
+| capas | no Capeiro a 1 zeny | **só na Máquina**, a 40 insígnias |
+
+Os quatro Agentes ficam em `brasilis` 125,333 (Fogo), 121,333 (Água), 117,333
+(Vento) e 113,333 (Terra); a Máquina em 129,333. Os sprites são de monstro
+(10071/10074/10072/10075) e foram conferidos no `npcidentity.lub` deste
+cliente antes de entrar.
+
+**Roteiro de teste que vale agora:**
+
+- falar com um Agente e jurar — conferir que o Cartão chega **com nome e
+  ícone** (é patch 0019; sem ele aparece sem nome);
+- voltar ao mesmo Agente e a outro: os dois têm de **recusar a troca**, com
+  textos diferentes;
+- abrir a Máquina sem Liga (tem de recusar) e com Liga (tem de abrir as
+  quatro gavetas);
+- comprar na gaveta do **seu** elemento e tentar na de outro — a segunda tem
+  de não aceitar a insígnia que você tem;
+- comprar uma arma de Xangô e equipar (as seis são novas no servidor);
+- matar em `bra_fild01` até cair uma insígnia (5% — leva umas 20 mortes);
+- a Bênção do Orixá na Mãe de Santo, conferindo que o refino sobrevive.
+
+### O Festival ficou inteiro em 2026-09-07
+
+As quatro coisas que faltavam nesta seção foram escritas: as cinco tarefas
+(`festival_de_brasilis_tarefas.txt`), os quatro Bonecos de Neve e o Morador
+(`festival_de_brasilis_encantes.txt`), e o inventário das pedras — que era o
+que decidia se a tabela do bRO cabia aqui. **Cabe: as 45 pedras existem todas
+no servidor**, com nome PT e entrada de cliente, e nenhuma precisou ser criada.
+A única sem equivalente é o "SP +10" do acessório físico, trocado pelo SP +50
+(4800), que é onde a família começa.
+
+Duas decisões se resolveram no caminho:
+
+- **A Bênção do Orixá saiu da Mãe de Santo.** Era nossa, punha o Poder no
+  Bracelete por 50 insígnias, e virou concorrente do sistema de verdade: no
+  bRO o Poder vem do Boneco de Neve, na **capa**, na cova 2 e só no +9. Manter
+  as duas deixaria a mesma carta entrando por dois caminhos, e no Bracelete
+  ela ainda brigaria pela cova 4 com o encante do Morador.
+- **O Coco não precisou de fonte nova.** O `Fruit Gardener#bra` (brasilis
+  221,128), NPC do vendor, já o vende a 1500z — 50 Cocos = 75.000z por
+  tentativa.
+
+**O que falta é só o teste em jogo e o deploy**, para o Festival inteiro. O
+roteiro da seção anterior continua valendo, mais: encantar uma capa nos quatro
+refinos (+0, +7, +9), resetar por 10.000.000z, e encantar chapéu, bracelete e
+arma no Morador — conferindo em todos que **o refino e a carta sobrevivem**,
+que é o que o caminho `delitemidx` + `getitem2` põe em risco.
+
+Um número continua sendo nosso e sem fonte oficial: a **chance de 25%** de sair
+a pedra forte na cova 2 no +9, que o bROWiki não publica.
+
+
 ## A trava de conta de 2026-09-05 — falta só o deploy
 
 A trava está escrita, compilada, **provada no servidor local**, commitada e com
@@ -4201,3 +4269,53 @@ O que fica em aberto:
   data de cada um veio do `git log`. Se algum patch de loja merecer a lista dos
   itens em retrospecto, é editar o bloco à mão e rodar o `publica_patch.sh` —
   não precisa de patch novo.
+
+## 1ae. A tradução de monstros não chega à tela (achado em 2026-09-07)
+
+`db/guerra/mob_db.yml` traduz **1061 monstros** e é gerado por
+`traduz_ptbr.py monstros`. Em jogo, quase nada dele aparece.
+
+**A causa** está no `ARMADILHAS-SCRIPT.md` e no gatilho da §5: com
+`override_mob_names: 0` (o nosso, em `conf/battle/monster.conf:123`), quem
+nomeia o monstro na tela é a **terceira coluna da linha de spawn**
+(`npc.cpp:5371`); o `mob_db` só é consultado quando essa coluna é `--en--` ou
+`--ja--` (`mob.cpp:456`). **Medido: 3546 linhas do vendor escrevem o nome à
+mão, 32 usam `--ja--`.**
+
+### A decisão é do dono, e são duas linhas de trabalho diferentes
+
+- **Ligar `override_mob_names: 2`** em `conf/guerra/battle_guerra.txt` — uma
+  linha, e a tradução inteira passa a valer de uma vez, em todo o servidor.
+- **O preço:** ela passa a valer onde está errada também. O arquivo gerado
+  chama a Piranha (2070) de *"Espírito da Água"*, o Jaguar (2072) de *"Espírito
+  da Terra"* e o Toucan (2073) de *"Espírito do Vento"* — nomes que o bRO usou
+  durante o Festival e que não descrevem os sprites (são uma piranha, uma
+  onça e um tucano). Com a chave ligada, os três passam a aparecer assim.
+- **Antes de ligar**, portanto, vale uma varredura do `mob_db.yml` gerado
+  atrás de nomes de evento como esses três. Quantos são é desconhecido.
+
+### O que JÁ foi feito
+
+Nada disso foi ligado. O único monstro consertado foi o **2081**, e por
+caminho pontual (linha do vendor comentada + spawn nosso com `--ja--`), porque
+a tarefa do Festival precisava do nome certo. Ver `CLAUDE.md` §2.
+
+## 1af. O Festival está pronto e o deploy está SEGURADO (2026-09-07)
+
+O Festival de Brasilis está inteiro e testado em jogo: sete NPCs, cinco
+tarefas, a Máquina e os dois sistemas de encante. O que foi feito está no
+`HISTORICO.md`, *"O Festival de Brasilis vira evento de verdade"*.
+
+**O deploy NÃO deve sair ainda, e isso é decisão do dono (2026-09-07):** ele
+quer subir o Festival junto com a **tradução dos NPCs de Brasilis**, que será
+feita na próxima sessão. Os NPCs do vendor em Brasilis (a cidade, as ~37 quests,
+o `Fruit Gardener` para onde o Morador aponta) continuam em inglês, e subir o
+evento em português no meio deles ficaria pela metade.
+
+Ou seja: **está commitado e empurrado, mas não implantado.** Quem rodar o
+`implanta.sh` antes da tradução leva o Festival junto — o que não quebra nada,
+mas antecipa o que o dono decidiu adiar.
+
+O lado do cliente **já saiu**: patches 0019 e 0021 estão publicados. Isso é
+inofensivo por desenho — são entradas de item e sprites que ninguém alcança
+enquanto o servidor não tiver os NPCs.

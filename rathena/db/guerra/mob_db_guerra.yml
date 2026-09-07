@@ -239,3 +239,30 @@ Body:
 # que alguem leria seria a errada.
 #
 ###########################################################################
+
+  # ------------------------------------------------------------------
+  # 2081 E_HYDRA - o bicho da praia de Brasilis
+  #
+  # O vendor o chama de "Strange Hydra" (Name) e "Suspicious Hydra"
+  # (JapaneseName); o nosso mob_db.yml gerado o traduziu como "Anemona".
+  # Nenhum dos tres aparecia em jogo, e o motivo e a armadilha da
+  # CLAUDE.md secao 5: com `override_mob_names: 0` (o nosso), quem nomeia
+  # o monstro na tela e a TERCEIRA COLUNA DA LINHA DE SPAWN
+  # (npc.cpp:5371), nao o mob_db. As quatro linhas do vendor em
+  # npc/re/mobs/towns.txt traziam "Strange Hydra" escrito a mao, e era
+  # isso que o jogador lia.
+  #
+  # Agora as quatro linhas do vendor estao comentadas e as nossas, no
+  # festival_de_brasilis_tarefas.txt, spawnam com `--ja--` - que manda o
+  # servidor usar o JapaneseName daqui (mob.cpp:458). Ou seja o nome
+  # passou a ter UM lugar so, e e este.
+  #
+  # Este arquivo vence o db/guerra/mob_db.yml porque vem depois dele no
+  # rodape de db/re/mob_db.yml.
+  #
+  # Recarregar: @reloadmobdb.
+  # ------------------------------------------------------------------
+
+  - Id: 2081
+    AegisName: E_HYDRA
+    JapaneseName: "Carrapato de Tentáculo"

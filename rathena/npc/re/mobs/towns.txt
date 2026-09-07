@@ -16,10 +16,23 @@
 //==================================================
 // Brasilis, Strange Hydras
 //==================================================
-brasilis,283,88,6,6	monster	Strange Hydra	2081,5,5000
-brasilis,284,104,6,6	monster	Strange Hydra	2081,4,5000
-brasilis,215,80,6,6	monster	Strange Hydra	2081,4,5000
-brasilis,96,50,8,8	monster	Strange Hydra	2081,5,5000
+// GUERRA DO EMPERIUM: as quatro linhas abaixo estao comentadas de
+// proposito, e as nossas estao em npc/guerra/festival_de_brasilis_tarefas.txt.
+//
+// O motivo e o NOME. Com `override_mob_names: 0`, quem nomeia o monstro na
+// tela e a terceira coluna DESTA linha (npc.cpp:5371), e nao o mob_db - entao
+// enquanto estas linhas existissem o bicho se chamaria "Strange Hydra" em
+// jogo, por cima de qualquer traducao nossa. As nossas spawnam com `--ja--`,
+// que manda usar o JapaneseName do mob_db, e la ele e "Carrapato de
+// Tentaculo" (db/guerra/mob_db_guerra.yml).
+//
+// Mesma quantidade, mesmas coordenadas e mesmo respawn (5s) - so o nome muda.
+// Para devolver o comportamento do vendor: descomentar as quatro e comentar a
+// linha do nosso arquivo no scripts_guerra.conf.
+//brasilis,283,88,6,6	monster	Strange Hydra	2081,5,5000
+//brasilis,284,104,6,6	monster	Strange Hydra	2081,4,5000
+//brasilis,215,80,6,6	monster	Strange Hydra	2081,4,5000
+//brasilis,96,50,8,8	monster	Strange Hydra	2081,5,5000
 
 //==================================================
 // Alberta Ship, Swapping the Deck

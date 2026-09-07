@@ -17201,3 +17201,94 @@ O estrago do clique às cegas, portanto, não foi apagar nada — foi **fazer
 suspeitar**. Provar que nada tinha acontecido custou mais que o teste inteiro, e
 é por isso que a regra tem três partes: avisar antes, provar a janela antes de
 clicar, e preferir o roteiro que só fotografa.
+
+## O Festival de Brasilis vira evento de verdade (2026-09-06 e 07)
+
+A versão de 2026-09-05, contada na seção acima, tinha uma NPC que fazia tudo,
+preços inventados por mim e troca de Liga livre. No dia seguinte o dono trouxe
+a página do evento no bROWiki, e o Festival foi **refeito contra ela**. O que
+segue é o estado final, testado em jogo.
+
+### Os sete NPCs, e por que as coordenadas do bRO serviram
+
+O bRO leva o jogador para o `brz_n`, um mapa só do Festival. **Não temos esse
+mapa e não vamos ter** — tudo acontece na própria Brasilis. Isso deveria ter
+invalidado todas as coordenadas do bROWiki, e quase invalidou: as dos quatro
+Agentes vieram do dono. Mas as outras nove foram testadas uma a uma no
+`map_cache.dat` e **as nove caem em chão andável na Brasilis**, sem NPC do
+vendor por cima. Ficaram como estavam — quem conhece o evento procura no lugar
+certo. Só a Montoeira de Sujeira (241,197) é coordenada nossa.
+
+| | onde | o que faz |
+|---|---|---|
+| 4 Agentes da Liga | 113..125,333 | o juramento, **sem troca depois** |
+| Máquina da Diversidade | 199,146 | 58 linhas de troca, o preço do bRO |
+| Mãe de Santo | 205,222 | guia do Festival, inscrição de reserva |
+| 5 tarefas | espalhadas | a fonte principal de insígnia, 3h de descanso |
+| 4 Bonecos de Neve | 253..265,101 | encante de capa, de graça, resetável |
+| Morador | 205,147 | encante do resto, 50 Cocos, sem reset |
+
+### Três coisas que a leitura do código mudou
+
+**O nome do monstro não vem do `mob_db`.** O bicho da praia se chamava "Strange
+Hydra" em jogo apesar de a nossa tradução o chamar de "Anêmona": com
+`override_mob_names: 0`, quem nomeia é a terceira coluna da linha de spawn
+(`npc.cpp:5371`). Medido: **3546 linhas do vendor escrevem o nome à mão, 32
+usam `--ja--`** — ou seja a tradução de 1061 monstros praticamente não chega à
+tela. O 2081 foi consertado pontualmente (linha do vendor comentada + spawn
+nosso com `--ja--`) e virou **Carrapato de Tentáculo**; o problema geral está
+no `PENDENCIAS.md` §1ae, porque a alavanca é uma linha e o preço é alto.
+
+**Ter o sprite de monstro não é ter o sprite de NPC.** Os quatro Agentes deram
+caixa de erro no cliente do dono: view id de NPC resolve para
+`sprite\npc\4_<nome>.spr`, e o nosso GRF só tinha a versão de monstro, noutra
+pasta e sem o prefixo. Vieram 8 arquivos do GRF do bRO, no patch 0021. Os
+outros sete sprites do Festival passaram na mesma conferência.
+
+**O quinto campo de um spawn parece um evento e não é.** As 74 linhas de
+`boss_monster` do vendor terminam em `,0`/`,1`, o que faria o `OnNPCKillEvent`
+não disparar para MVP nenhum — se não fosse uma guarda de comprimento três
+arquivos adiante (`mob.cpp:486`). O drop do Boitatá depende disso.
+
+### O encante, que é a parte perigosa
+
+As duas tabelas do bRO somam 45 pedras, e **as 45 existem neste servidor**, com
+nome PT e entrada de cliente — nenhuma precisou ser criada, o que só se soube
+depois de conferir uma a uma. A única sem equivalente é o "SP +10", trocado
+pelo SP +50 (4800).
+
+Não existe comando que acrescente cova a um item: o caminho é `delitemidx` +
+`getitem2`, que **perde vínculo, prazo, grau de encanto e opção aleatória**. Os
+NPCs recusam peça com qualquer uma dessas coisas em vez de aceitar e destruir,
+e a busca e a refeitura moram em **duas funções e nenhuma cópia**.
+
+Duas regras vieram do teste em jogo, no dia 7: **a peça tem de estar
+equipada** (com N cópias iguais na bolsa, "a capa" não identifica nada, e a
+escolha seria do script), e **ela não volta ao corpo** — sai encantada na
+bolsa. Reequipar por script seria impreciso, porque o `equip` acha pelo
+primeiro slot com aquele id e não pelo índice.
+
+A Bênção do Orixá da Mãe de Santo, que era invenção minha, saiu: o Poder do
+orixá passou a vir de onde vem no bRO, do Boneco de Neve, na capa, na cova 2 e
+só no +9.
+
+### O que mais mudou de rumo
+
+- **As quatro capas saíram do Capeiro de Prontera** e a Máquina virou a fonte
+  delas, a 40 insígnias. Ficaram um dia à venda nos dois lugares.
+- **O drop por morte caiu de 30% para 5%**, porque as tarefas passaram a ser a
+  fonte principal e 30% as tornaria decorativas.
+- **Os Sharkiras viraram Carrapatos de Tentáculo** e a caça saiu das cavernas
+  para a praia da própria cidade. O Guarda diz na fala que não são os bichos de
+  antes, a pedido do dono.
+- **A Máscara Branca saiu** de Criar Fantasias: não existe com esse nome aqui, e
+  como se escolhem 2 de 5, sobraram 4 opções.
+- **O Coco não precisou de fonte nova.** O `Fruit Gardener#bra` (221,128) já o
+  vendia — e eu quase criei uma vendedora por ter varrido só `npc/guerra/`.
+
+### Estado
+
+Tudo testado em jogo pelo dono. Do lado do cliente saíram os patches **0019**
+(as 12 entradas e a arte de 5 itens) e **0021** (os sprites dos Agentes). O
+lado do servidor está commitado e **o deploy foi segurado de propósito** — ver
+`PENDENCIAS.md`.

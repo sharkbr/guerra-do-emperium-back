@@ -1,0 +1,637 @@
+//===== Guerra do Emperium ===================================
+//= Festival de Brasilis - os dois encantamentos
+//===== Onde ================================================
+//= Festie (fogo)      brasilis 253,101   Capa Flamejante
+//= Winter (agua)      brasilis 257,101   Capa Mistica
+//= Flora (vento)      brasilis 261,101   Capa do Vento
+//= Snow (terra)       brasilis 265,101   Capa Grandiosa
+//= Morador            brasilis 205,147   o resto do conjunto
+//=
+//= O Coco que o Morador cobra sai do `Fruit Gardener#bra`, em
+//= brasilis 221,128 - NPC do vendor, que ja o vendia.
+//===========================================================
+//= SAO DOIS SISTEMAS DIFERENTES, e a diferenca importa:
+//=
+//=   BONECOS DE NEVE   so capa | de graca | ate 3 encantes
+//=                     categoria ESCOLHIDA, pedra sorteada
+//=                     RESETAVEL por 10.000.000z
+//=
+//=   MORADOR           chapeu, calcado, acessorio e arma
+//=                     50 Cocos por tentativa | tudo sorteado
+//=                     NAO tem reset
+//=
+//= Os dois sao do bRO e as tabelas sao as de la, pedra por
+//= pedra. As 45 pedras existem todas neste servidor, com nome em
+//= portugues e entrada de cliente - nenhuma precisou ser criada.
+//= A UNICA que nao tem equivalente e o "SP +10" da tabela de
+//= acessorio fisico: a familia do servidor comeca em SP +50
+//= (4800), e foi esse que entrou.
+//===========================================================
+//= EM QUE COVA O ENCANTE ENTRA, e por que isso nao e detalhe
+//=
+//= Encante nao e carta: ele mora nas covas 2, 3 e 4, ALEM do
+//= `Slots:` do item, e a cova 1 fica livre para a carta de
+//= verdade. E o que o proprio rAthena faz, e o `status_calc_pc_`
+//= roda o script das quatro covas de qualquer jeito.
+//=
+//= A ORDEM DE PREENCHIMENTO E 4 -> 3 -> 2, e nao o contrario:
+//= no bRO a cova 2 e a ultima e a melhor (e a que ganha a chance
+//= extra no +9). Preencher na ordem crescente inverteria o
+//= sentido da tabela sem dar erro nenhum.
+//=
+//=   capa      ate 3, conforme o refino (+0..6=1, +7/8=2, +9=3)
+//=   chapeu    2   covas 4 e 3
+//=   calcado   2   covas 4 e 3
+//=   acessorio 3   covas 4, 3 e 2
+//=   arma      1   cova 4
+//===========================================================
+//= O QUE ESTE CAMINHO PERDE, e por isso os NPCs RECUSAM
+//=
+//= Nao existe comando de script que acrescente uma cova a um
+//= item existente. O jeito e apagar e refazer - `delitemidx` +
+//= `getitem2` -, e isso devolve o item SEM vinculo, SEM prazo,
+//= SEM grau de encanto e SEM opcao aleatoria (CLAUDE.md secao 5).
+//= Refino e as cartas o `getitem2` sabe devolver, e devolve.
+//=
+//= Entao os dois NPCs recusam peca com vinculo, com grau ou com
+//= opcao aleatoria, em vez de aceitar e destruir.
+//=
+//= E A PECA TEM DE ESTAR EQUIPADA. Foi decisao do dono em
+//= 2026-09-07, testando em jogo, e o motivo e bom: com N copias
+//= iguais na bolsa, "a capa" nao identifica nada - o script
+//= pegaria a primeira que achasse, e o jogador nao teria como
+//= dizer qual queria. Equipada so ha uma, e a escolha volta a
+//= ser dele.
+//=
+//= Isso funciona porque o `delitemidx` DESEQUIPA antes de apagar
+//= (`pc_delitem`, src/map/pc.cpp:6118).
+//=
+//= E ELA NAO VOLTA AO CORPO: sai encantada na bolsa, e quem
+//= reveste e o jogador. Tambem por decisao do dono, e tambem
+//= porque reequipar por script seria impreciso - o `equip` acha
+//= pelo primeiro slot com aquele id, nao pelo indice, e com
+//= copias soltas devolveria a errada.
+//=
+//= A busca e a refeitura moram em DUAS FUNCOES, `FestivalAcha` e
+//= `FestivalRefaz`, e nao ha uma terceira copia em lugar nenhum:
+//= a hora de duplicar isso e a hora de destruir item de jogador
+//= por divergencia.
+//=
+//= `FestivalAcha` devolve pelas variaveis `@fe_*`, que sao
+//= temporarias DE PERSONAGEM e por isso atravessam o `callfunc`
+//= - as `.@` nao atravessariam, porque callfunc abre escopo novo
+//= e vazio (CLAUDE.md secao 5).
+//=
+//= E ELA E CHAMADA DUAS VEZES em todo caminho que tem `next` no
+//= meio: entre uma janela e outra o jogador pode mexer na bolsa,
+//= e o indice guardado ficaria velho. Refazer pelo indice errado
+//= apagaria outra coisa.
+//===========================================================
+//= OS NUMEROS QUE SAO NOSSOS
+//=
+//= O bROWiki diz que no +9 "sera incluida uma chance adicional
+//= de receber um encanto mais forte" e nao publica a chance.
+//= Aqui ela e 25%, no `.ChanceBonus` da tabela. Se um dia o
+//= numero oficial aparecer, e uma linha.
+//=
+//= O resto e do bRO: 3 encantes por refino, 10.000.000z de
+//= reset, 50 Cocos por tentativa, e 94/85/58% de sucesso nas
+//= tres tentativas do acessorio (o unico item que pode falhar -
+//= e falhando, so os Cocos se perdem).
+//===========================================================
+//= DE ONDE VEM O COCO. O `Fruit Gardener#bra`, em brasilis
+//= 221,128 (npc/merchants/shops.txt), ja o vende a 1500z - o
+//= `Buy` do proprio item -, junto com Banana e Agua de Coco. Nao
+//= foi preciso criar fonte nenhuma.
+//=
+//= Na pratica: 50 Cocos = 75.000z por tentativa de encante. A
+//= revenda do Coco e 750, entao comprar e revender da prejuizo -
+//= nao ha o que farmar ali.
+//=
+//= FICA O AVISO, porque a checagem quase saiu errada: uma
+//= varredura por `11515` limitada a npc/guerra/ nao acha este
+//= vendedor, e linha de `shop` usa ID e nao nome - procurar por
+//= "Coconut" tambem nao acha. Servico que cobra em item se
+//= confere procurando o ID em `npc/` INTEIRO (ARQUITETURA.md
+//= secao 4).
+//===========================================================
+//= A BENCAO DO ORIXA SAIU DA MAE DE SANTO por causa deste
+//= arquivo. Ela era nossa, punha o Poder do orixa no Bracelete
+//= por 50 insignias, e era o unico uso das quatro cartas `_BR`.
+//= No bRO o Poder vem DAQUI: do Boneco de Neve, na CAPA, na cova
+//= 2, e so com refino +9. Manter os dois deixaria a mesma carta
+//= entrando por dois caminhos com regras diferentes - e no
+//= Bracelete ela ainda brigaria pela cova 4 com o encante do
+//= Morador.
+//===========================================================
+//= Recarregar: @reloadscript.
+//===========================================================
+
+// ---------------------------------------------------------------
+// As duas funcoes que mexem no item. Um lugar so, de proposito.
+// ---------------------------------------------------------------
+function	script	FestivalAcha	{
+	// getarg(0) = id do item. Devolve 1 e preenche @fe_idx,
+	// @fe_refino e @fe_c1..@fe_c4; devolve 0 e preenche @fe_erro$.
+	.@alvo = getarg(0);
+	.@tinha = 0;
+	@fe_idx = -1;
+
+	getinventorylist;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_id[.@i] != .@alvo)
+			continue;
+		.@tinha = 1;
+		// A PECA TEM DE ESTAR EQUIPADA. Ver o cabecalho: com N
+		// copias iguais na bolsa, qual delas encantar seria uma
+		// escolha do script, e nao do jogador.
+		if (@inventorylist_equip[.@i] == 0)
+			continue;
+		if (@inventorylist_bound[.@i] != 0)
+			continue;
+		if (@inventorylist_enchantgrade[.@i] != 0)
+			continue;
+		if (@inventorylist_option_id1[.@i] != 0)
+			continue;
+		@fe_idx = @inventorylist_idx[.@i];
+		@fe_refino = @inventorylist_refine[.@i];
+		@fe_c1 = @inventorylist_card1[.@i];
+		@fe_c2 = @inventorylist_card2[.@i];
+		@fe_c3 = @inventorylist_card3[.@i];
+		@fe_c4 = @inventorylist_card4[.@i];
+		return 1;
+	}
+
+	if (.@tinha)
+		@fe_erro$ = "Essa peça eu não posso tocar: ou não está no seu corpo, ou carrega vínculo, grau de encanto ou opção aleatória — e isso eu não sei devolver. Vista a peça que você quer encantar e volte.";
+	else
+		@fe_erro$ = "Você não está com essa peça vestida. É a que estiver no corpo que eu encanto — vista e volte.";
+	return 0;
+}
+
+function	script	FestivalRefaz	{
+	// getarg(0) = id, getarg(1..4) = cartas 1 a 4. Apaga pelo
+	// indice achado e devolve com o refino e as cartas.
+	//
+	// A peca entra EQUIPADA e sai NA BOLSA, e isso nao e descuido:
+	// o `delitemidx` desequipa sozinho antes de apagar
+	// (`pc_delitem`, src/map/pc.cpp:6118) e o `getitem2` devolve
+	// para a bolsa. Nao se reequipa de proposito - o `equip` do
+	// script acha pelo PRIMEIRO slot com aquele id
+	// (`buildin_equip`, script.cpp:16972), e quem tem copias
+	// soltas receberia outra de volta ao corpo. Deixar na bolsa e
+	// sem ambiguidade: a encantada e a que acabou de chegar.
+	delitemidx @fe_idx, 1;
+	getitem2 getarg(0), 1, 1, @fe_refino, 0, getarg(1), getarg(2), getarg(3), getarg(4);
+	return;
+}
+
+// ---------------------------------------------------------------
+// A TABELA DOS BONECOS. Flutuante, sem mapa: os quatro bonecos e
+// a funcao do dialogo leem tudo daqui por getvariableofnpc, do
+// mesmo jeito que o Festival le a tabela das Ligas do FestivalMae.
+//
+// `.Pedra` e uma tabela de TRES POR CATEGORIA, lida como
+// `.Pedra[cat * 3 + sorteio]`. `.Bonus` tem uma por categoria e
+// para na setima de proposito - a oitava, a especial, tem por
+// bonus o Poder do orixa DAQUELE boneco, que esta em `.Poder`.
+// ---------------------------------------------------------------
+-	script	#festival_encantes::FestivalEncanteDB	-1,{
+	end;
+
+OnInit:
+	.ChanceBonus = 25;   // % de sair a pedra forte na cova 2, no +9
+
+	// Os quatro bonecos, na ordem em que os NPCs os chamam.
+	setarray .Boneco$[0], "Festie", "Winter", "Flora", "Snow";
+	setarray .Capa[0],    20735, 20745, 20734, 20747;
+	setarray .Poder[0],   27413, 27416, 27415, 27414;
+
+	// As oito categorias. A ultima e a especial.
+	setarray .Cat$[0],
+		"Dano físico", "Dano mágico", "Mira Apurada", "Pedra de Crítico",
+		"Faro Aguçado", "Arcebispo", "Resistência", "Especial";
+	.Categorias = getarraysize(.Cat$);
+
+	// Tres pedras por categoria, na mesma ordem das categorias.
+	setarray .Pedra[0],
+		4819, 4766, 4767,      // ATQ +1%, +2%, +3%
+		4760, 4761, 4806,      // ATQM +1%, +2%, +3%
+		4832, 4833, 4834,      // Pedra da Mira Apurada 1, 2, 3
+		4818, 4817, 4816,      // Pedra de Critico 1, 2, 3
+		29135, 29136, 29137,   // Faro Agucado 1, 2, 3
+		4805, 4850, 4804,      // Fator de Cura 1, 2, Catolicismo 1
+		4744, 4787, 4935,      // VIT +5, DEFM +4, Neutralidade 3
+		4857, 4854, 4858;      // Super DES, Super AGI, Super SOR
+
+	// A pedra forte de cada categoria, na cova 2 e so no +9. Sao
+	// SETE: a oitava categoria usa o Poder do orixa do boneco.
+	setarray .Bonus[0],
+		4824,    // Espirito do Lutador 9
+		4830,    // Pedra de Encantamento 9
+		4835,    // Pedra da Mira Apurada 4
+		4843,    // Pedra de Critico 4
+		29138,   // Faro Agucado 4
+		4803,    // Cura 1
+		4849;    // Reducao Humanoide 1
+
+	// A trava da secao 4.11: se uma coluna crescer sozinha, o
+	// sorteio passa a ler lixo. Contagem segura, comentario nao.
+	if (getarraysize(.Pedra) != .Categorias * 3 ||
+	    getarraysize(.Bonus) != .Categorias - 1 ||
+	    getarraysize(.Capa) != getarraysize(.Boneco$) ||
+	    getarraysize(.Poder) != getarraysize(.Boneco$))
+		debugmes "FESTIVAL DE BRASILIS: a tabela de encante das capas esta desalinhada - categoria, pedra e bonus tem de andar juntas.";
+	end;
+}
+
+// ---------------------------------------------------------------
+// OS QUATRO BONECOS DE NEVE
+//
+// Tres linhas cada: o corpo do dialogo e a funcao abaixo, e o
+// indice e a unica coisa que os diferencia.
+// ---------------------------------------------------------------
+brasilis,253,101,4	script	Festie::FestivalFestie	10282,{
+	callfunc "FestivalBoneco", 0;
+	end;
+}
+
+brasilis,257,101,4	script	Winter::FestivalWinter	10281,{
+	callfunc "FestivalBoneco", 1;
+	end;
+}
+
+brasilis,261,101,4	script	Flora::FestivalFlora	10283,{
+	callfunc "FestivalBoneco", 2;
+	end;
+}
+
+brasilis,265,101,4	script	Snow::FestivalSnow	710,{
+	callfunc "FestivalBoneco", 3;
+	end;
+}
+
+function	script	FestivalBoneco	{
+	.@e = getarg(0);
+	.@nome$ = getvariableofnpc(.Boneco$[.@e], "FestivalEncanteDB");
+	.@capa = getvariableofnpc(.Capa[.@e], "FestivalEncanteDB");
+	.@poder = getvariableofnpc(.Poder[.@e], "FestivalEncanteDB");
+	.@n = getvariableofnpc(.Categorias, "FestivalEncanteDB");
+
+	mes "[" + .@nome$ + "]";
+	mes "Eu só sei fazer uma coisa nesta vida, e faço bem: sopro encanto em " + getitemname(.@capa) + ". Não cobro nada — sou um boneco de neve, o que eu faria com dinheiro?";
+	next;
+
+	switch (select("Encantar a minha capa",
+		"Apagar os encantos (10.000.000z)",
+		"Como isso funciona?",
+		"Nada, obrigado")) {
+
+	case 3:
+		mes "[" + .@nome$ + "]";
+		mes "O refino da capa decide quantos encantos ela aguenta: até +6, um só; +7 ou +8, dois; +9 para cima, três. Isso não muda, e eu não tenho como forçar.";
+		next;
+		mes "[" + .@nome$ + "]";
+		mes "Você escolhe a ^0000FFcategoria^000000, mas não o encanto — isso é comigo e com a sorte. E se a capa estiver no +9, o último encanto tem uma chance a mais de sair mais forte do que o normal. É só nesse que eu consigo soprar o " + getitemname(.@poder) + ".";
+		next;
+		mes "[" + .@nome$ + "]";
+		mes "Não há risco: você não perde a capa, não perde o refino e não perde a carta que estiver nela. E se não gostar do resultado, eu apago tudo por dez milhões e a gente recomeça.";
+		close;
+
+	case 4:
+		mes "[" + .@nome$ + "]";
+		mes "Frio como estou, não tenho pressa.";
+		close;
+
+	case 2:
+		if (!callfunc("FestivalAcha", .@capa)) {
+			mes "[" + .@nome$ + "]";
+			mes @fe_erro$;
+			close;
+		}
+		if (@fe_c2 == 0 && @fe_c3 == 0 && @fe_c4 == 0) {
+			mes "[" + .@nome$ + "]";
+			mes "Essa capa não tem encanto nenhum para apagar.";
+			close;
+		}
+		mes "[" + .@nome$ + "]";
+		mes "Dez milhões de zeny e ela volta a ser uma capa lisa — com o refino e a carta intactos, isso eu garanto.";
+		next;
+		if (select("Pode apagar:Deixa quieto") == 2) {
+			mes "[" + .@nome$ + "]";
+			mes "Também acho.";
+			close;
+		}
+		if (Zeny < 10000000) {
+			mes "[" + .@nome$ + "]";
+			mes "Não são dez milhões que você tem aí.";
+			close;
+		}
+		// Achar DE NOVO: houve `next` no meio, e a bolsa pode ter
+		// mudado. O indice guardado ficaria velho.
+		if (!callfunc("FestivalAcha", .@capa)) {
+			mes "[" + .@nome$ + "]";
+			mes @fe_erro$;
+			close;
+		}
+		Zeny -= 10000000;
+		callfunc "FestivalRefaz", .@capa, @fe_c1, 0, 0, 0;
+		mes "[" + .@nome$ + "]";
+		mes "Pronto, lisinha — e caída na sua bolsa, que é onde ela para quando eu trabalho. Vista de novo quando quiser tentar outra vez.";
+		close;
+	}
+
+	// ----- caso 1: encantar -----
+	if (!callfunc("FestivalAcha", .@capa)) {
+		mes "[" + .@nome$ + "]";
+		mes @fe_erro$;
+		close;
+	}
+
+	.@max = 1;
+	if (@fe_refino >= 7)
+		.@max = 2;
+	if (@fe_refino >= 9)
+		.@max = 3;
+
+	.@feitos = 0;
+	if (@fe_c4 != 0)
+		.@feitos = .@feitos + 1;
+	if (@fe_c3 != 0)
+		.@feitos = .@feitos + 1;
+	if (@fe_c2 != 0)
+		.@feitos = .@feitos + 1;
+
+	if (.@feitos >= .@max) {
+		mes "[" + .@nome$ + "]";
+		mes "Essa capa já tem " + .@feitos + ", que é tudo que o refino +" + @fe_refino + " dela aguenta. Refine mais e volte, ou me peça para apagar.";
+		close;
+	}
+
+	// A ordem e 4 -> 3 -> 2. A cova 2 e a ultima e a melhor.
+	.@slot = 2;
+	if (@fe_c4 == 0)
+		.@slot = 4;
+	else if (@fe_c3 == 0)
+		.@slot = 3;
+
+	mes "[" + .@nome$ + "]";
+	mes "Essa capa aguenta " + .@max + " e já tem " + .@feitos + ". Escolha a categoria — o encanto em si quem escolhe sou eu.";
+	next;
+
+	// O menu sai do mesmo array das pedras, montado num laco.
+	.@lista$ = "";
+	for (.@i = 0; .@i < .@n; .@i++) {
+		if (.@i > 0)
+			.@lista$ = .@lista$ + ":";
+		.@rot$ = getvariableofnpc(.Cat$[.@i], "FestivalEncanteDB");
+		if (.@i == .@n - 1)
+			.@rot$ = .@rot$ + " (" + getitemname(.@poder) + " no +9)";
+		.@lista$ = .@lista$ + .@rot$;
+	}
+	.@cat = select(.@lista$) - 1;
+
+	.@pedra = getvariableofnpc(.Pedra[.@cat * 3 + rand(3)], "FestivalEncanteDB");
+	.@forte = 0;
+	if (.@slot == 2 && @fe_refino >= 9 &&
+	    rand(100) < getvariableofnpc(.ChanceBonus, "FestivalEncanteDB")) {
+		.@forte = 1;
+		if (.@cat == .@n - 1)
+			.@pedra = .@poder;
+		else
+			.@pedra = getvariableofnpc(.Bonus[.@cat], "FestivalEncanteDB");
+	}
+
+	// Achar DE NOVO: houve `next` entre a primeira busca e aqui.
+	if (!callfunc("FestivalAcha", .@capa)) {
+		mes "[" + .@nome$ + "]";
+		mes @fe_erro$;
+		close;
+	}
+
+	if (.@slot == 4)
+		callfunc "FestivalRefaz", .@capa, @fe_c1, @fe_c2, @fe_c3, .@pedra;
+	else if (.@slot == 3)
+		callfunc "FestivalRefaz", .@capa, @fe_c1, @fe_c2, .@pedra, @fe_c4;
+	else
+		callfunc "FestivalRefaz", .@capa, @fe_c1, .@pedra, @fe_c3, @fe_c4;
+
+	mes "[" + .@nome$ + "]";
+	if (.@forte)
+		mes "Ooh! Saiu ^0000FF" + getitemname(.@pedra) + "^000000 — desse eu não faço sempre; foi o +9 que abriu a porta.";
+	else
+		mes "Saiu ^0000FF" + getitemname(.@pedra) + "^000000.";
+	next;
+	mes "[" + .@nome$ + "]";
+	mes "A capa caiu do seu corpo enquanto eu soprava — está na bolsa, encantada. Vista de novo.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// O MORADOR - encante do resto do conjunto
+//
+// 50 Cocos por tentativa, sem reset. Chapeu e calcado levam 2
+// encantes (covas 4 e 3), acessorio leva 3 (4, 3 e 2) e arma leva
+// 1 (cova 4).
+//
+// SO O ACESSORIO PODE FALHAR: 94% na primeira, 85% na segunda,
+// 58% na terceira. Falhando, perde-se so os Cocos - a peca, o
+// refino e os encantes que ja estavam ficam.
+//
+// "As pedras mais fortes so na segunda tentativa" do bRO e o que
+// separa `.Slot4` de `.Slot3`: o primeiro encante de chapeu e
+// calcado sai da lista fraca, o segundo da forte.
+// ---------------------------------------------------------------
+brasilis,205,147,4	script	Morador::FestivalMorador	473,{
+	mes "[Morador]";
+	mes "Eu encanto o que o Festival entrega — chapéu, calçado, bracelete e as armas dos orixás. Capa não: capa é com os bonecos de neve, lá na praça.";
+	next;
+	mes "[Morador]";
+	mes "Cobro ^0000FF" + .Custo + " Cocos^000000 por tentativa, e aviso desde já: ^ff0000o que eu ponho não sai mais^000000. Não tem apagar e refazer, diferente da capa.";
+	next;
+
+	.@tipo = -1;
+	switch (select("Encantar um chapéu",
+		"Encantar os Sapatos Luxuosos",
+		"Encantar o Bracelete Suntuoso",
+		"Encantar uma arma de orixá",
+		"Deixa para depois")) {
+	case 5:
+		mes "[Morador]";
+		mes "O coco não estraga. Volte quando quiser.";
+		close;
+
+	case 1:
+		.@lista$ = "";
+		for (.@i = 0; .@i < getarraysize(.Chapeu); .@i++) {
+			if (.@i > 0)
+				.@lista$ = .@lista$ + ":";
+			.@lista$ = .@lista$ + getitemname(.Chapeu[.@i]);
+		}
+		mes "[Morador]";
+		mes "Qual deles?";
+		next;
+		.@alvo = .Chapeu[select(.@lista$) - 1];
+		.@tipo = 0;
+		.@limite = 2;
+		break;
+
+	case 2:
+		.@alvo = .Sapatos;
+		.@tipo = 0;
+		.@limite = 2;
+		break;
+
+	case 3:
+		.@alvo = .Bracelete;
+		.@tipo = 1;
+		.@limite = 3;
+		break;
+
+	case 4:
+		.@lista$ = "";
+		for (.@i = 0; .@i < getarraysize(.Arma); .@i++) {
+			if (.@i > 0)
+				.@lista$ = .@lista$ + ":";
+			.@lista$ = .@lista$ + getitemname(.Arma[.@i]);
+		}
+		mes "[Morador]";
+		mes "Qual arma?";
+		next;
+		.@alvo = .Arma[select(.@lista$) - 1];
+		.@tipo = 2;
+		.@limite = 1;
+		break;
+	}
+
+	if (!callfunc("FestivalAcha", .@alvo)) {
+		mes "[Morador]";
+		mes @fe_erro$;
+		close;
+	}
+
+	.@feitos = 0;
+	if (@fe_c4 != 0)
+		.@feitos = .@feitos + 1;
+	if (@fe_c3 != 0)
+		.@feitos = .@feitos + 1;
+	if (@fe_c2 != 0)
+		.@feitos = .@feitos + 1;
+
+	if (.@feitos >= .@limite) {
+		mes "[Morador]";
+		mes "Essa peça já tem os encantos que ela aceita — " + .@limite + ". Não há o que eu faça.";
+		close;
+	}
+
+	.@slot = 2;
+	if (@fe_c4 == 0)
+		.@slot = 4;
+	else if (@fe_c3 == 0)
+		.@slot = 3;
+
+	// O acessorio e o unico que falha, e a chance piora a cada
+	// encante que ele ja tem.
+	.@chance = 100;
+	if (.@tipo == 1)
+		.@chance = .Acerto[.@feitos];
+
+	// O bracelete tem duas tabelas, e essa e a unica escolha que o
+	// jogador faz no Morador. O resto e sorte.
+	.@via = 0;
+	if (.@tipo == 1) {
+		mes "[Morador]";
+		mes "Bracelete é peça de dois caminhos. Você quer o encanto do braço que bate ou o da cabeça que pensa?";
+		next;
+		.@via = select("Físico:Mágico");
+	}
+
+	mes "[Morador]";
+	mes "Vai ser o encanto número " + (.@feitos + 1) + " dessa peça, e custa " + .Custo + " Cocos.";
+	if (.@chance < 100)
+		mes "E esse eu não garanto: a chance de pegar é de ^ff0000" + .@chance + "%^000000. Falhando, você perde os Cocos e mais nada.";
+	next;
+	if (select("Pode encantar:Melhor não") == 2) {
+		mes "[Morador]";
+		mes "Pensar antes é de graça.";
+		close;
+	}
+
+	if (countitem(.Coco) < .Custo) {
+		mes "[Morador]";
+		mes "Faltam Cocos. Você tem " + countitem(.Coco) + " e eu preciso de " + .Custo + ". O jardineiro das frutas vende, ali no meio da cidade.";
+		close;
+	}
+
+	// Achar DE NOVO depois do `next`: a bolsa pode ter mudado, e
+	// refazer pelo indice velho apagaria outra coisa.
+	if (!callfunc("FestivalAcha", .@alvo)) {
+		mes "[Morador]";
+		mes @fe_erro$;
+		close;
+	}
+
+	delitem .Coco, .Custo;
+
+	if (rand(100) >= .@chance) {
+		mes "[Morador]";
+		mes "Não pegou. A peça está inteira, com tudo que tinha — só os Cocos que se foram. Acontece.";
+		close;
+	}
+
+	// Chapeu e calcado: a lista FORTE so na segunda tentativa.
+	if (.@tipo == 0) {
+		if (.@slot == 4)
+			.@pedra = .Slot4[rand(getarraysize(.Slot4))];
+		else
+			.@pedra = .Slot3[rand(getarraysize(.Slot3))];
+	} else if (.@tipo == 1) {
+		if (.@via == 1)
+			.@pedra = .AcessF[rand(getarraysize(.AcessF))];
+		else
+			.@pedra = .AcessM[rand(getarraysize(.AcessM))];
+	} else {
+		.@pedra = .ArmaP[rand(getarraysize(.ArmaP))];
+	}
+
+	if (.@slot == 4)
+		callfunc "FestivalRefaz", .@alvo, @fe_c1, @fe_c2, @fe_c3, .@pedra;
+	else if (.@slot == 3)
+		callfunc "FestivalRefaz", .@alvo, @fe_c1, @fe_c2, .@pedra, @fe_c4;
+	else
+		callfunc "FestivalRefaz", .@alvo, @fe_c1, .@pedra, @fe_c3, @fe_c4;
+
+	mes "[Morador]";
+	mes "Pegou: ^0000FF" + getitemname(.@pedra) + "^000000. Guarde bem, que esse não sai mais.";
+	next;
+	mes "[Morador]";
+	mes "A peça saiu do corpo no processo — está na sua bolsa. Vista de novo antes de sair por aí.";
+	close;
+
+OnInit:
+	.Coco = 11515;      // Coco
+	.Custo = 50;        // Cocos por tentativa
+	.Bracelete = 2998;  // Bracelete Suntuoso
+	.Sapatos = 22082;   // Sapatos Luxuosos
+
+	setarray .Chapeu[0], 18942, 18940, 18943, 18941;
+
+	// As 24 armas dos quatro orixas, na ordem Agua, Fogo, Terra,
+	// Vento - a mesma ordem das gavetas da Maquina.
+	setarray .Arma[0],
+		28720, 32000, 16057, 18144, 13139, 26104,
+		28727, 32006, 16066, 18152, 13143, 26113,
+		28715, 1448, 16055, 18142, 13133, 26102,
+		28708, 1444, 16049, 18133, 13130, 1688;
+
+	// 94 / 85 / 58 por encante que o acessorio JA tem (0, 1 e 2).
+	setarray .Acerto[0], 94, 85, 58;
+
+	// As quatro tabelas do bRO, pedra por pedra.
+	setarray .ArmaP[0],  29361, 4881, 4825, 29446, 4831, 4841;
+	setarray .AcessF[0], 4702, 4732, 4752, 4819, 4799, 4800, 4792, 4846;
+	setarray .AcessM[0], 4712, 4722, 4742, 4760, 4795, 4802, 4788, 4846;
+	setarray .Slot3[0],  4866, 4881, 4824, 4830, 4836, 4849, 4992, 4993;
+	setarray .Slot4[0],  4702, 4742, 4712, 4722, 4752, 4790, 4992, 4993;
+	end;
+}

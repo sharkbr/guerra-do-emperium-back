@@ -1,13 +1,13 @@
 //===== Guerra do Emperium ===================================
 //= Festival de Brasilis - as quatro Ligas elementais
 //===== Onde ================================================
-//= Mae de Santo   brasilis 205,222   (praca, ao lado do Warper)
+//= Agente da Liga do Fogo    brasilis 125,333
+//= Agente da Liga da Agua    brasilis 121,333
+//= Agente da Liga do Vento   brasilis 117,333
+//= Agente da Liga da Terra   brasilis 113,333
+//= Maquina da Diversidade    brasilis 199,146
+//= Mae de Santo              brasilis 205,222  (praca, no Warper)
 //= O motor da cacada nao esta em mapa nenhum (NPC flutuante).
-//===== O que faz ===========================================
-//= O jogador se inscreve numa das quatro Ligas - Fogo, Agua,
-//= Vento ou Terra -, caca nos tres mapas de Brasilis, e as
-//= mortes soltam a INSIGNIA da Liga dele. A insignia compra,
-//= nas quatro barracas, o conjunto daquele elemento.
 //===========================================================
 //= DE ONDE VEIO ISTO. O "Festival da Diversidade de Brasilis"
 //= e evento EXCLUSIVO DO bRO - o rAthena nunca o implementou,
@@ -26,36 +26,63 @@
 //=
 //= As 6 que faltavam sao as armas de XANGO, o grupo do fogo,
 //= que nao estava em item_db nenhum - so no itemInfo.lua do
-//= cliente. Entraram em db/guerra/item_db.yml nesta mesma
-//= entrega; o cabecalho delas la explica cada numero.
+//= cliente. Entraram em db/guerra/item_db.yml em 2026-09-05; o
+//= cabecalho delas la explica cada numero.
+//===========================================================
+//= O QUE E ADAPTACAO, E O QUE E DO bRO
+//=
+//= O bRO tem um mapa SO DO FESTIVAL, o `brz_n`, e manda o
+//= jogador para la por um teleporte em brasilis 116,316. Nos
+//= NAO TEMOS esse mapa e nao vamos ter (decisao do dono em
+//= 2026-09-06): tudo acontece na propria Brasilis.
+//=
+//= Isso muda as coordenadas de TODO NPC do evento - as do
+//= bROWiki sao de `brz_n` e nao servem de nada aqui. As quatro
+//= dos Agentes foram dadas pelo dono; as demais sao nossas, e
+//= cada uma foi conferida no `map_cache.dat` antes de entrar
+//= (o `.gat` do nosso GRF esta cifrado e o grf.py recusa).
+//=
+//= Os quatro Agentes DIZEM que mudaram de lugar. E de proposito
+//= e e para quem conhece o evento do bRO: la eles ficavam em
+//= brasilis 131,332, todos juntos, e o jogador procuraria ali.
+//=
+//= A UNICA coordenada do bROWiki que sobreviveu e a da Maquina:
+//= 199,146. La ela e do `brz_n`; aqui e da propria Brasilis, e
+//= por acaso a celula existe e e andavel (conferida no
+//= map_cache). Decisao do dono em 2026-09-06.
+//=
+//= Isso deixa a Maquina LONGE dos Agentes - eles no extremo
+//= norte (y=333), ela no meio da cidade (y=146). Nenhum dos
+//= dois pode dizer que o outro fica "aqui do lado", e as falas
+//= de todos os NPCs deste arquivo foram escritas sabendo
+//= disso.
 //===========================================================
 //= OS QUATRO GRUPOS, e por que a Liga importa
 //=
-//=   Fogo   Xango    insignia 25486 (Vermelha)
-//=   Agua   Oxum     insignia 25487 (Azul)
-//=   Vento  Iansa    insignia 25488 (Verde)
-//=   Terra  Oxossi   insignia 25489 (Amarela)
+//=   Fogo   Xango    insignia 25486 (Vermelha)   agente aira
+//=   Agua   Oxum     insignia 25487 (Azul)       agente lune
+//=   Vento  Iansa    insignia 25488 (Verde)      agente ezella
+//=   Terra  Oxossi   insignia 25489 (Amarela)    agente mallina
 //=
 //= So cai a insignia da Liga em que o jogador esta inscrito, e
-//= cada barraca so aceita a insignia dela. Ou seja: quem
-//= quiser os quatro conjuntos passa pelas quatro Ligas. E o
-//= que faz os quatro grupos existirem em vez de serem quatro
-//= cores da mesma coisa.
+//= cada gaveta da Maquina so aceita a insignia dela.
 //=
-//= Trocar de Liga e LIVRE e nao custa nada - decisao do dono
-//= em 2026-09-05. O bRO travava a escolha; num servidor
-//= pequeno isso trancaria o jogador em um quarto do conteudo.
-//= As insignias ja ganhas NAO se perdem na troca: continuam
-//= valendo na barraca do elemento delas.
+//= NAO SE TROCA DE LIGA. A escolha e para o Festival inteiro,
+//= como no bRO ("Voce nao pode mudar de Liga"). Decisao do dono
+//= em 2026-09-06, que DESFEZ a de 2026-09-05 - por um dia a
+//= troca foi livre. Quem ja tinha Liga continua com a dela.
+//=
+//= Por isso a inscricao pergunta duas vezes: menu de quatro e
+//= clique errado acontece, e aqui clique errado nao tem volta.
 //===========================================================
-//= UMA TABELA SO, LIDA PELOS DOIS NPCs
+//= UMA TABELA SO, LIDA POR TODOS OS NPCs DESTE ARQUIVO
 //=
-//= Elemento, orixa, cartao, insignia, carta de encante e nome
-//= da loja moram em SEIS arrays paralelos no `OnInit` da Mae
-//= de Santo, e o menu e MONTADO NUM LACO a partir deles. O
-//= motor da cacada le os mesmos arrays por
-//= `getvariableofnpc(...,"FestivalMae")` em vez de ter copia
-//= propria.
+//= Elemento, orixa, cartao, insignia e nome da loja moram em
+//= CINCO arrays paralelos no `OnInit` da Mae
+//= de Santo. Todo o resto - os quatro Agentes, a Maquina e o
+//= motor da cacada - le os mesmos arrays por
+//= `getvariableofnpc(...,"FestivalMae")`, e os menus sao
+//= MONTADOS NUM LACO a partir deles.
 //=
 //= Isso e a secao 4.11 do CLAUDE.md, e ela custou os catorze
 //= destinos errados do Teleportador em 2026-08-08: menu escrito
@@ -64,12 +91,39 @@
 //= errada. Por isso tambem o `OnInit` compara os tamanhos dos
 //= seis arrays e grita com `debugmes` se algum destoar.
 //=
-//= O nome unico dos dois NPCs e ASCII de proposito
-//= (`::FestivalMae`, `::FestivalCacada`): o
-//= `getvariableofnpc` procura por string, e nome com acento
-//= atravessando conversao de encoding e risco que nao precisa
-//= existir. Quem tem acento e o nome DE TELA, que e o que vem
-//= antes do `::` (CLAUDE.md secao 5).
+//= E POR ISSO OS AGENTES SAO UMA FUNCAO SO. Os quatro fazem a
+//= mesma coisa com um indice diferente, entao o corpo mora em
+//= `function script FestivalInscreve` e cada Agente e tres
+//= linhas que chamam `callfunc` com o indice dele. Quatro
+//= copias do mesmo dialogo divergiriam na primeira correcao.
+//=
+//= O nome unico de cada NPC e ASCII de proposito
+//= (`::FestivalMae` e irmaos): o `getvariableofnpc` procura por
+//= string, e nome com acento atravessando conversao de encoding
+//= e risco que nao precisa existir. Quem tem acento e o nome DE
+//= TELA, que e o que vem antes do `::` (CLAUDE.md secao 5).
+//===========================================================
+//= OS SPRITES, e por que estes numeros
+//=
+//= Os quatro Agentes usam os personagens aira (10071), lune
+//= (10074), ezella (10072) e mallina (10075). Os numeros vieram
+//= do dono e foram CONFERIDOS no `npcidentity.lub` deste
+//= cliente antes de entrar - 10071 e `JT_4_AIRA`, 10072 e
+//= `JT_4_EZELLA`, 10074 e `JT_4_LUNE`, 10075 e `JT_4_MALLINA`.
+//= Trocar dois de lugar seria erro sem erro: o NPC nasce, fala
+//= e inscreve na Liga errada.
+//=
+//= E OS QUATRO SPRITES NAO ESTAVAM NESTE CLIENTE, apesar de os
+//= quatro bichos existirem nele. View id de NPC resolve para
+//= `data\sprite\npc\4_<nome>.spr`; o mob mora em
+//= `data\sprite\<coreano>\<nome>.spr`, outra pasta e sem o
+//= prefixo. Ter um nao da o outro, e o cliente abre caixa de
+//= erro ao desenhar ("Cannot find File : sprite\npc\
+//= 4_mallina.spr"). Os 8 arquivos vieram do GRF do bRO em
+//= 2026-09-06 e saem no patch 0021. Ver CLAUDE.md secao 5.
+//=
+//= A Maquina e 564 (`JT_2_VENDING_MACHINE1`), a mesma maquina
+//= de refrigerante do bRO.
 //===========================================================
 //= O DROP: OnNPCKillEvent, e por que aqui ele PODE
 //=
@@ -98,68 +152,213 @@
 //= contando com curto-circuito - `&&` e `||` no script do
 //= rAthena NAO fazem curto-circuito (CLAUDE.md secao 5), os
 //= dois lados sao sempre avaliados.
-//=
-//= O motor e NPC PROPRIO, e nao um label dentro da Mae de
-//= Santo, de proposito: evento que chega a um NPC com o
-//= jogador em dialogo aberto entra na fila dele em vez de
-//= rodar. Separado, a conversa e a cacada nunca se cruzam.
 //===========================================================
-//= A BENCAO DO ORIXA - o unico lugar que usa as 4 cartas
+//= DE ONDE VEM A INSIGNIA
 //=
-//= As cartas 27413-27416 ("Poder de Xango" e irmas) sao
-//= `Type: Card` com `SubType: Enchant` e SEM `Locations:`, o
-//= que faz o `pc_insert_card` recusa-las: o jogador nao
-//= consegue encaixar nenhuma delas em nada. Por isso elas nao
-//= se vendem em lugar nenhum - quem as aplica e este NPC, por
-//= script, direto no Bracelete Suntuoso (2998).
+//= As cinco tarefas do Festival, que dao 1 ou 2 cada e repetem
+//= a cada 3 horas, sao a fonte principal - e sao a unica fonte
+//= no bRO. Aqui cai TAMBEM 5% por morte comum nos tres mapas de
+//= Brasilis, mais 25 de uma vez no Boitata (chefe de bra_dun02,
+//= respawn de 2h).
 //=
-//= A carta entra no CARD4, e nao no card1: o Bracelete tem uma
-//= cova so, e ocupa-la com o encante tiraria do jogador a cova
-//= de verdade. Encante em slot alem do `Slots:` e como o
-//= proprio rAthena faz, e o `status_calc_pc_` roda o script
-//= dos quatro slots de qualquer jeito.
-//=
-//= O QUE ESTE CAMINHO PERDE, e por isso o NPC RECUSA em vez de
-//= tentar: `delitemidx` + `getitem2` devolve o item sem
-//= vinculo, sem prazo e sem grau de encanto (CLAUDE.md secao
-//= 5), e getitem2 tambem nao carrega opcao aleatoria. Entao o
-//= NPC so aceita Bracelete SEM vinculo, SEM grau e SEM opcao
-//= aleatoria. Refino e as tres cartas de verdade sao
-//= preservados, porque esses o getitem2 sabe devolver.
-//=
-//= Bracelete EQUIPADO tambem e recusado, e nao por capricho: a
-//= janela de encaixe nem enxerga equipamento equipado
-//= (CLAUDE.md secao 5), e mexer no que esta no corpo e como se
-//= perde peca.
+//= Os 5% sao nossos e existem para que cacar entre um ciclo de
+//= tarefas e outro nao seja tempo morto. Comecaram em 30% em
+//= 2026-09-05, quando as tarefas ainda nao existiam e a caca era
+//= a unica fonte; com as tarefas no lugar, 30% tornaria as cinco
+//= decorativas. Decisao do dono em 2026-09-06.
 //===========================================================
-//= PRECO
-//=   chapeu 30 | escudo 25 | arma 40 | anel 40
-//=   sapatos 35 | bracelete 30 | Bencao do Orixa 50
-//= Um conjunto elemental inteiro sai por 160 insignias.
+//= PRECO - a tabela e a do bRO, e mora no barter
+//=   papiro 5 | bracelete 10 | arma 10 | sapatos 15
+//=   chapeu 20 | malha sombria 25 | escudo 35 | capa 40
+//=   amuleto 50 | anel 40 (este e nosso, o bRO nao vende)
 //=
-//= Chance de insignia por morte: 30%. Boitata (o chefe de
-//= bra_dun02, respawn de 2h) da 25 de uma vez.
-//=
-//= Os numeros ficam nos `.` do OnInit dos dois NPCs, num lugar
-//= so cada um - mudar preco de peca e mexer no barter
-//= (npc/guerra/barters_guerra.yml) e dar @reloadbarterdb;
-//= mudar chance ou premio do chefe e aqui, com @reloadscript.
+//= Um conjunto elemental inteiro (papiro, bracelete, arma,
+//= sapatos, chapeu, malha, escudo e amuleto) sai por 170.
 //===========================================================
-//= AS QUATRO CAPAS NAO SAO VENDIDAS AQUI. Capa do Vento,
-//= Flamejante, Mistica e Grandiosa estao no Capeiro de
-//= Prontera a 1 zeny. Cobrar 25 insignias por elas seria
-//= armadilha. Esta escrito tambem no barters_guerra.yml.
+//= OS ENCANTES NAO ESTAO AQUI. Ate 2026-09-07 a Mae de Santo
+//= punha o Poder do orixa no Bracelete Suntuoso por 50
+//= insignias - a "Bencao do Orixa", que era nossa e nao existia
+//= no bRO. Ela saiu quando os encantes de verdade entraram, em
+//= npc/guerra/festival_de_brasilis_encantes.txt: la o Poder vem
+//= de onde vem no bRO, do Boneco de Neve, aplicado na CAPA, na
+//= cova 2 e so com refino +9.
+//=
+//= Manter as duas deixaria a mesma carta entrando por dois
+//= caminhos com regras diferentes - e no Bracelete ela ainda
+//= brigaria pela cova 4 com o encante do Morador.
+//===========================================================
+//= AS QUATRO CAPAS SAIRAM DO CAPEIRO DE PRONTERA em 2026-09-06
+//= e a Maquina passou a ser a fonte delas, a 40 insignias, como
+//= no bRO. Elas ficaram um dia a venda nos dois lugares - 1
+//= zeny la, 40 insignias aqui -, o que deixava as quatro linhas
+//= do barter sem sentido. Decisao do dono no mesmo dia.
 //===========================================================
 //= Desligar o Festival inteiro: comentar a linha deste arquivo
 //= no scripts_guerra.conf. As pecas continuam existindo (elas
 //= sao do item_db), so deixam de ter como ser obtidas.
 //===========================================================
 
+// ---------------------------------------------------------------
+// A INSCRICAO, uma vez so para os cinco NPCs que inscrevem.
+//
+//   getarg(0)  indice do elemento na tabela (0..3)
+//
+// `callfunc` abre escopo `.@` novo e vazio (CLAUDE.md secao 5),
+// entao nada daqui depende do chamador - o indice chega por
+// argumento, e a tabela vem do FestivalMae por getvariableofnpc.
+// Quem chama ja deixou a janela aberta com o cabecalho do nome.
+// ---------------------------------------------------------------
+function	script	FestivalInscreve	{
+	.@e = getarg(0);
+	.@elemento$ = getvariableofnpc(.Elemento$[.@e], "FestivalMae");
+	.@orixa$ = getvariableofnpc(.Orixa$[.@e], "FestivalMae");
+	.@cartao = getvariableofnpc(.Cartao[.@e], "FestivalMae");
+
+	// Ja tem Liga: nao se troca, e o texto muda conforme seja
+	// ESTA Liga ou outra.
+	if (festival_liga > 0) {
+		.@dele = festival_liga - 1;
+		mes "Você já jurou a " + getvariableofnpc(.Orixa$[.@dele], "FestivalMae") + ", da Liga do " + getvariableofnpc(.Elemento$[.@dele], "FestivalMae") + ".";
+		if (.@dele == .@e)
+			mes "É a minha Liga, então você é dos nossos. Vá cumprir as tarefas do Festival e traga as insígnias para a Máquina.";
+		else
+			mes "E não se troca de Liga no meio do Festival — nem eu nem ninguém desfaz um juramento desses. Procure o Agente da sua Liga.";
+		close;
+	}
+
+	mes "Jurar à Liga do " + .@elemento$ + " é ficar sob a proteção de " + .@orixa$ + " pelo Festival inteiro. Não custa nada, e não tem volta: depois de escolher, não dá para mudar de Liga.";
+	next;
+	mes "A partir daí, tudo que você fizer pelo Festival te paga em Insígnia do " + .@elemento$ + " — e é com ela que a Máquina da Diversidade entrega o conjunto do nosso elemento.";
+	next;
+	if (select("Quero jurar à Liga do " + .@elemento$ + ":Deixa eu pensar melhor") == 2) {
+		mes "Pense com calma. O Festival não vai embora hoje.";
+		close;
+	}
+
+	// checkweight ANTES de gravar: `getitem` com a mochila cheia
+	// LARGA O ITEM NO CHAO (CLAUDE.md secao 5), e cartao de Liga no
+	// chao e cartao perdido.
+	if (!checkweight(.@cartao, 1)) {
+		mes "Sua bolsa está cheia demais até para um cartão. Faça espaço e volte aqui.";
+		close;
+	}
+	festival_liga = .@e + 1;
+	getitem .@cartao, 1;
+
+	mes "Está feito. Você é da Liga do " + .@elemento$ + ", e " + .@orixa$ + " olha por você daqui em diante.";
+	next;
+	mes "Agora é trabalhar pelo Festival. As tarefas estão espalhadas pela cidade e podem ser refeitas a cada três horas — cada uma paga em insígnia. Caçar pelos arredores também rende, de vez em quando.";
+	next;
+	mes "Quando tiver insígnias na mão, desça para o meio da cidade e procure a Máquina da Diversidade — uma máquina de refrigerante que não vende refrigerante nenhum. É ela que troca insígnia por equipamento.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// OS QUATRO AGENTES DA LIGA
+//
+// Tres linhas cada, porque o corpo e a funcao acima. O indice
+// passado no `callfunc` e a UNICA coisa que os diferencia, e ele
+// e o mesmo indice da tabela do FestivalMae - trocar dois aqui
+// inscreve na Liga errada, sem erro nenhum.
+// ---------------------------------------------------------------
+brasilis,125,333,4	script	Agente da Liga do Fogo::FestivalAgenteFogo	10071,{
+	mes "[Agente da Liga do Fogo]";
+	mes "Não se assuste, você não errou o caminho: o Festival é aqui mesmo. Nos anos passados a gente armava as barracas mais para o meio da praça, e este ano viemos para esta beirada — mas é o mesmo Festival das Ligas Elementais de sempre.";
+	next;
+	mes "[Agente da Liga do Fogo]";
+	callfunc "FestivalInscreve", 0;
+	end;
+}
+
+brasilis,121,333,4	script	Agente da Liga da Água::FestivalAgenteAgua	10074,{
+	mes "[Agente da Liga da Água]";
+	mes "Se você procurava as barracas onde elas ficavam antes, estamos aqui agora — mudamos um pouco de lugar este ano. O Festival das Ligas Elementais continua o mesmo.";
+	next;
+	mes "[Agente da Liga da Água]";
+	callfunc "FestivalInscreve", 1;
+	end;
+}
+
+brasilis,117,333,4	script	Agente da Liga do Vento::FestivalAgenteVento	10072,{
+	mes "[Agente da Liga do Vento]";
+	mes "Mudamos de canto este ano, mas é o mesmo Festival das Ligas Elementais — quem já brincou nos outros anos costuma nos procurar mais para o meio da praça.";
+	next;
+	mes "[Agente da Liga do Vento]";
+	callfunc "FestivalInscreve", 2;
+	end;
+}
+
+brasilis,113,333,4	script	Agente da Liga da Terra::FestivalAgenteTerra	10075,{
+	mes "[Agente da Liga da Terra]";
+	mes "Este ano as barracas vieram para cá, um pouco mais para o lado do que de costume. O Festival das Ligas Elementais é este, e eu sou quem fala pela Terra.";
+	next;
+	mes "[Agente da Liga da Terra]";
+	callfunc "FestivalInscreve", 3;
+	end;
+}
+
+// ---------------------------------------------------------------
+// A MAQUINA DA DIVERSIDADE
+//
+// Quatro gavetas atras de um NPC so. As quatro abrem para
+// qualquer um de proposito: quem trava a compra e a INSIGNIA, que
+// e por elemento - abrir a gaveta errada nao compra nada, e
+// fechar a porta so esconderia isso do jogador.
+//
+// O menu sai do mesmo array do FestivalMae, montado num laco.
+// ---------------------------------------------------------------
+brasilis,199,146,4	script	Máquina da Diversidade::FestivalMaquina	564,{
+	mes "^0000FF[Máquina da Diversidade]^000000";
+	if (festival_liga < 1) {
+		mes "A máquina pisca e não abre. Uma etiqueta colada no vidro avisa: ^777777só atende quem estiver jurado a uma das quatro Ligas^000000.";
+		next;
+		mes "^0000FF[Máquina da Diversidade]^000000";
+		mes "Os Agentes das Ligas ficam lá em cima, na beirada norte da praça. É com um deles que se jura.";
+		close;
+	}
+	.@e = festival_liga - 1;
+	.@ins = getvariableofnpc(.Insignia[.@e], "FestivalMae");
+	mes "A máquina acorda com um estalo. No visor: ^777777" + countitem(.@ins) + " " + getitemname(.@ins) + "^000000.";
+	next;
+	mes "^0000FF[Máquina da Diversidade]^000000";
+	mes "Cada gaveta troca a insígnia de um elemento. A sua é a do " + getvariableofnpc(.Elemento$[.@e], "FestivalMae") + " — as outras abrem, mas não vão aceitar o que você tem na mão.";
+	next;
+	.@n = getvariableofnpc(.Ligas, "FestivalMae");
+	.@lista$ = "";
+	for (.@i = 0; .@i < .@n; .@i++) {
+		if (.@i > 0)
+			.@lista$ = .@lista$ + ":";
+		.@lista$ = .@lista$ + "Gaveta do " + getvariableofnpc(.Elemento$[.@i], "FestivalMae");
+	}
+	.@escolha = select(.@lista$) - 1;
+	close2;
+	callshop getvariableofnpc(.Loja$[.@escolha], "FestivalMae"), 0;
+	end;
+}
+
+// ---------------------------------------------------------------
+// A MAE DE SANTO - o guia do Festival
+//
+// Ela e NOSSA e nao existe no bRO. Nasceu em 2026-09-05 fazendo
+// tudo (inscricao, loja e bencao); com os Agentes e a Maquina no
+// lugar, virou o que faltava ao evento do bRO: alguem que explica
+// o Festival e diz ONDE fica cada coisa.
+//
+// Ela mantem a inscricao como RESERVA - decisao do dono em
+// 2026-09-06. Duas portas para a mesma coisa e redundancia de
+// proposito: quem nao achar os Agentes na beira da praca ainda
+// entra no evento. As duas portas chamam a MESMA funcao.
+//
+// A TABELA DO FESTIVAL MORA NO `OnInit` DESTE NPC, e todos os
+// outros a leem por getvariableofnpc. Desligar este NPC sozinho
+// deixa os outros sem tabela - se for para desligar, e a linha
+// do arquivo inteiro no scripts_guerra.conf.
+// ---------------------------------------------------------------
 brasilis,205,222,4	script	Mãe de Santo::FestivalMae	4_F_BRZ_INDOLD,{
 
 	mes "[Mãe de Santo]";
 	if (festival_liga < 1) {
-		mes "Bem-vindo ao Festival de Brasilis, filho. Aqui a cidade inteira se divide em quatro Ligas, cada uma sob a bênção de um orixá, e a sua ainda não escolhi.";
+		mes "Bem-vindo ao Festival de Brasilis, filho. A cidade inteira se divide em quatro Ligas nesta época, cada uma sob a bênção de um orixá, e a sua eu ainda não vi.";
 		next;
 	} else {
 		.@liga = festival_liga - 1;
@@ -171,21 +370,17 @@ S_Menu:
 	mes "[Mãe de Santo]";
 	mes "O que você quer de mim?";
 	next;
-	.@entrar$ = "Quero entrar numa Liga";
-	if (festival_liga > 0)
-		.@entrar$ = "Quero trocar de Liga";
-	switch (select(.@entrar$,
-		"Visitar as barracas do Festival",
-		"A Bênção do Orixá",
+	switch (select("Quero entrar numa Liga",
+		"Onde fica cada coisa do Festival?",
 		"Como funciona o Festival?",
 		"Nada, obrigado")) {
 
 	case 1:
 		mes "[Mãe de Santo]";
-		mes "Cada Liga caça sob um orixá, e só a insígnia da sua Liga cai para você. Trocar não custa nada, e as insígnias que você já tem continuam valendo na barraca delas.";
+		mes "Quem toma o juramento das Ligas são os quatro Agentes, na beirada da praça — mas se você não os achou, eu mesma tomo o seu. Qual dos quatro orixás vai olhar por você?";
 		next;
-		// O menu sai do MESMO array que o resto do arquivo usa - ver o
-		// cabecalho. Montado num laco, nunca escrito a mao.
+		// O menu sai do MESMO array que o resto do arquivo usa, montado
+		// num laco - CLAUDE.md 4.11.
 		.@lista$ = "";
 		for (.@i = 0; .@i < .Ligas; .@i++) {
 			if (.@i > 0)
@@ -193,178 +388,69 @@ S_Menu:
 			.@lista$ = .@lista$ + "Liga do " + .Elemento$[.@i] + " (" + .Orixa$[.@i] + ")";
 		}
 		.@escolha = select(.@lista$) - 1;
-
-		if (festival_liga == .@escolha + 1) {
-			mes "[Mãe de Santo]";
-			mes "Você já é dessa Liga, filho. Vá caçar.";
-			close;
-		}
-		// O checkweight vem ANTES do delitem, e a ordem importa: se
-		// coubesse depois e falhasse, o jogador ficaria sem o cartao
-		// antigo e sem o novo. Conferir antes e conservador - apagar o
-		// antigo so abre espaco, nunca fecha.
-		if (!checkweight(.Cartao[.@escolha], 1)) {
-			mes "[Mãe de Santo]";
-			mes "Sua bolsa está cheia demais para carregar até um cartão, filho. Faça espaço e volte.";
-			close;
-		}
-		// O cartao e so o simbolo; quem manda e a variavel. Tirar o
-		// antigo antes de dar o novo e o que impede o jogador de andar
-		// com dois.
-		for (.@i = 0; .@i < .Ligas; .@i++)
-			if (countitem(.Cartao[.@i]) > 0)
-				delitem .Cartao[.@i], countitem(.Cartao[.@i]);
-		festival_liga = .@escolha + 1;
-		getitem .Cartao[.@escolha], 1;
 		mes "[Mãe de Santo]";
-		mes "Feito. Você agora é da Liga do " + .Elemento$[.@escolha] + ", e " + .Orixa$[.@escolha] + " olha por você.";
-		next;
-		mes "[Mãe de Santo]";
-		mes "Cace na Floresta de Brasilis, na Caverna das Cataratas ou nas Profundezas. A insígnia cai de qualquer bicho de lá, e o Boitatá das Profundezas dá " + getvariableofnpc(.Chefe, "FestivalCacada") + " de uma vez.";
-		close;
+		callfunc "FestivalInscreve", .@escolha;
+		end;
 
 	case 2:
-		mes "[Mãe de Santo]";
-		mes "As quatro barracas ficam abertas para todo mundo. O que separa uma da outra é a insígnia que cada uma aceita — e essa você só consegue caçando pela Liga dela.";
-		next;
-		.@lista$ = "";
-		for (.@i = 0; .@i < .Ligas; .@i++) {
-			if (.@i > 0)
-				.@lista$ = .@lista$ + ":";
-			.@lista$ = .@lista$ + "Barraca do " + .Elemento$[.@i];
-		}
-		.@barraca = select(.@lista$) - 1;
-		close2;
-		callshop .Loja$[.@barraca], 0;
-		end;
-
-	case 3:
-		callsub S_Bencao;
-		end;
-
-	case 4:
 		// Um `mes` por PARAGRAFO, nunca um por linha de tela: quem
-		// quebra a linha e o cliente, e paragrafo ja quebrado aparece
-		// quebrado duas vezes (CLAUDE.md 4.22).
+		// quebra a linha e o cliente (CLAUDE.md 4.22).
 		mes "[Mãe de Santo]";
-		mes "Brasilis se divide em quatro Ligas: Fogo, Água, Vento e Terra. Você entra numa delas comigo, de graça, e pode trocar quando quiser.";
+		mes "Os quatro Agentes das Ligas ficam lá no alto, na beirada norte da praça, um do lado do outro — é com eles que se jura. A Máquina da Diversidade não fica com eles: está aqui no meio da cidade, um pouco ao sul de onde eu estou.";
 		next;
 		mes "[Mãe de Santo]";
-		mes "Enquanto estiver numa Liga, os bichos de Brasilis deixam cair a insígnia dela. É com insígnia que se paga nas barracas — cada uma vende o conjunto do elemento dela: o chapéu, o escudo e as seis armas do orixá.";
+		mes "As tarefas do Festival estão espalhadas pela cidade, e cada uma pode ser refeita a cada três horas. É delas que vem quase toda insígnia; caçar pelos arredores de Brasilis rende de vez em quando, mas devagar.";
 		next;
 		mes "[Mãe de Santo]";
-		mes "Duas peças não são de elemento nenhum e as quatro barracas vendem: os Sapatos Luxuosos, que protegem dos cinco elementos, e o Bracelete Suntuoso, que é o que desperta o conjunto inteiro.";
-		next;
-		mes "[Mãe de Santo]";
-		mes "E quando você tiver o Bracelete na mão, eu ponho nele a bênção do seu orixá. Isso custa " + .Bencao + " insígnias e vale por toda a vida da peça.";
+		mes "Os encantos são noutro canto: os bonecos de neve, na praça, sopram encanto nas capas de graça, e o morador do meio da cidade encanta chapéu, calçado, bracelete e arma por Cocos. E eu fico aqui, para tirar dúvida de quem chega perdido.";
 		next;
 		goto S_Menu;
 
-	case 5:
+	case 3:
+		mes "[Mãe de Santo]";
+		mes "Brasilis se divide em quatro Ligas: Fogo, Água, Vento e Terra. Você escolhe a sua com um dos Agentes da Liga, de graça — e a escolha é para o Festival inteiro, não tem troca.";
+		next;
+		mes "[Mãe de Santo]";
+		mes "Enquanto estiver numa Liga, tudo que você fizer pelo Festival paga na insígnia dela. É com insígnia que se compra na Máquina — e cada gaveta vende o conjunto de um elemento: o papiro, o bracelete, as seis armas do orixá, o chapéu, a malha, o escudo, a capa e o amuleto.";
+		next;
+		mes "[Mãe de Santo]";
+		mes "Duas peças não são de elemento nenhum e as quatro gavetas vendem: os Sapatos Luxuosos, que protegem dos cinco elementos, e o Bracelete Suntuoso, que é o que desperta o conjunto inteiro.";
+		next;
+		mes "[Mãe de Santo]";
+		mes "E quando a peça estiver na sua mão, ela ainda pode ser encantada: as capas com os bonecos de neve, de graça, e o resto com o morador, por Cocos. Só a bênção dos orixás é mais difícil — ela só assenta em capa refinada ao máximo.";
+		next;
+		goto S_Menu;
+
+	case 4:
 		mes "[Mãe de Santo]";
 		mes "Vá com os orixás, filho.";
 		close;
 	}
 	end;
 
-// ---------------------------------------------------------------
-// A Bencao do Orixa: poe a carta de encante no card4 do Bracelete.
-// As recusas sao todas ANTES de qualquer delitem - nada e cobrado
-// de um pedido que nao vai ser atendido.
-// ---------------------------------------------------------------
-S_Bencao:
-	if (festival_liga < 1) {
-		mes "[Mãe de Santo]";
-		mes "Bênção de orixá é para quem tem orixá, filho. Entre numa Liga primeiro.";
-		close;
-	}
-	.@liga = festival_liga - 1;
-	.@ins = .Insignia[.@liga];
-	.@poder = .Poder[.@liga];
-
-	mes "[Mãe de Santo]";
-	mes "Traga o Bracelete Suntuoso e " + .Bencao + " " + getitemname(.@ins) + ", e eu ponho nele o Poder de " + .Orixa$[.@liga] + ".";
-	next;
-	mes "[Mãe de Santo]";
-	mes "Só trabalho com Bracelete limpo: fora do corpo, sem vínculo, sem grau de encanto e sem opção aleatória. Refino e as cartas que já estiverem nele eu devolvo como estavam.";
-	next;
-	if (select("Pode fazer:Agora não") == 2) {
-		mes "[Mãe de Santo]";
-		mes "Quando quiser.";
-		close;
-	}
-
-	if (countitem(.@ins) < .Bencao) {
-		mes "[Mãe de Santo]";
-		mes "Faltam insígnias. Você tem " + countitem(.@ins) + " e eu preciso de " + .Bencao + ".";
-		close;
-	}
-
-	getinventorylist;
-	.@achou = -1;
-	.@tinha = 0;
-	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
-		if (@inventorylist_id[.@i] != .Bracelete) continue;
-		.@tinha = 1;
-		if (@inventorylist_equip[.@i] != 0) continue;
-		if (@inventorylist_bound[.@i] != 0) continue;
-		if (@inventorylist_enchantgrade[.@i] != 0) continue;
-		if (@inventorylist_option_id1[.@i] != 0) continue;
-		if (@inventorylist_card4[.@i] != 0) continue;
-		.@achou = .@i;
-		break;
-	}
-
-	if (.@achou < 0) {
-		mes "[Mãe de Santo]";
-		if (.@tinha)
-			mes "Esse Bracelete eu não posso tocar: ou está no seu corpo, ou já tem bênção, ou carrega vínculo, grau ou opção que eu não sei devolver. Traga um limpo e fora do corpo.";
-		else
-			mes "Você não tem nenhum Bracelete Suntuoso na bolsa. Compre um em qualquer barraca do Festival e volte.";
-		close;
-	}
-
-	// Copiado ANTES de apagar - depois do delitemidx o array e passado.
-	.@r = @inventorylist_refine[.@achou];
-	.@c1 = @inventorylist_card1[.@achou];
-	.@c2 = @inventorylist_card2[.@achou];
-	.@c3 = @inventorylist_card3[.@achou];
-
-	delitem .@ins, .Bencao;
-	delitemidx @inventorylist_idx[.@achou], 1;
-	getitem2 .Bracelete, 1, 1, .@r, 0, .@c1, .@c2, .@c3, .@poder;
-
-	mes "[Mãe de Santo]";
-	mes "Está feito. O Poder de " + .Orixa$[.@liga] + " mora nesse bracelete agora — olhe a descrição dele.";
-	close;
-
 OnInit:
 	// A TABELA. Seis colunas paralelas, e tudo neste arquivo sai
-	// daqui: o menu, o drop, a barraca e a bencao.
+	// daqui: os Agentes, a Maquina, o drop e a bencao.
 	setarray .Elemento$[0], "Fogo", "Água", "Vento", "Terra";
 	setarray .Orixa$[0],    "Xangô", "Oxum", "Iansã", "Oxóssi";
 	setarray .Cartao[0],    25483, 25484, 25485, 25482;
 	setarray .Insignia[0],  25486, 25487, 25488, 25489;
-	setarray .Poder[0],     27413, 27416, 27415, 27414;
 	setarray .Loja$[0],     "FestivalFogo#loja", "FestivalAgua#loja", "FestivalVento#loja", "FestivalTerra#loja";
 
 	.Ligas = getarraysize(.Elemento$);
-	.Bracelete = 2998;   // Bracelete Suntuoso, o alvo da Bencao
-	.Bencao = 50;        // insignias que a Bencao custa
 
 	// A trava da secao 4.11: comentario nao segura ordem, contagem
 	// segura. Se uma coluna crescer sozinha, isto grita no console.
 	if (getarraysize(.Orixa$) != .Ligas || getarraysize(.Cartao) != .Ligas ||
-	    getarraysize(.Insignia) != .Ligas || getarraysize(.Poder) != .Ligas ||
-	    getarraysize(.Loja$) != .Ligas)
+	    getarraysize(.Insignia) != .Ligas || getarraysize(.Loja$) != .Ligas)
 		debugmes "FESTIVAL DE BRASILIS: as seis colunas da tabela nao tem o mesmo tamanho - menu e destino vao divergir.";
 	end;
 }
 
 // ---------------------------------------------------------------
 // O motor da cacada. Sem mapa, sem sprite: so o evento global de
-// morte. NPC proprio, e nao um label da Mae de Santo - evento que
-// chega a NPC com dialogo aberto entra na fila em vez de rodar.
+// morte. NPC proprio, e nao um label dentro de outro: evento que
+// chega a um NPC com dialogo aberto entra na fila em vez de rodar.
 // ---------------------------------------------------------------
 -	script	#festival_cacada::FestivalCacada	-1,{
 	end;
@@ -409,7 +495,7 @@ OnNPCKillEvent:
 	end;
 
 OnInit:
-	.Chance = 30;       // % de insignia por morte comum
+	.Chance = 5;        // % de insignia por morte comum
 	.Chefe = 25;        // insignias que o chefe da de uma vez
 	.Chefe_id = 2068;   // Boitata, o chefe de bra_dun02
 	end;

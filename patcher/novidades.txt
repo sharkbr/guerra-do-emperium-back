@@ -61,3 +61,5 @@
 [0019] 2026-09-06  Festival de Brasilis
 
 [0020] 2026-09-06  Aviso da trava de conta na tela de login
+
+[0021] 2026-09-06  Sprites dos Agentes da Liga

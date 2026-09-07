@@ -103,6 +103,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `src/login/loginclif.cpp` | um include de `src/custom/` + **duas** chamadas e **uma substituição**, todas comentadas no arquivo, todas de `trava_de_conta.hpp` (a trava de conta por senha errada — §4.23). `trava_de_conta_esquece` no topo do `logclif_auth_ok` (acertar a senha zera a contagem) e `trava_de_conta_erro` no `logclif_auth_failed`, ao lado do `ipban_log` e **depois** do `login_log`, que é o que faz a sétima errada ser a que trava. A substituição é a **segunda do projeto** e é correção de bug do vendor: o `logclif_auth_failed(fd, result, unblock_time)` copiava `""` para o `p.unblock_time` e jogava fora o parâmetro que o chamador acabara de calcular — o erro 6 é a única recusa que o cliente desenha com data, e sem isso o `%s` sai vazio. **Não sobrevive a merge por si**: se o `""` voltar, a frase volta a sair pela metade e nada denuncia |
 | `src/login/login.cpp` | **uma** chamada, comentada no arquivo, e nenhum include: um `if` de `unban_time` no `login_mmo_auth` **antes** do `login_check_password`, só para jogador (`!isServer`). Acréscimo — o bloco original do rAthena continua logo abaixo e é ele que atende o char/map-server. Existe porque na ordem do vendor a senha é testada primeiro, e aí quem está suspenso **e** não lembra a senha vê "senha incorreta" pelos quinze minutos inteiros sem descobrir que há uma suspensão correndo (§4.21) |
 | `rathena/.gitignore` | duas coisas. **(a)** `!/src/custom/` — o upstream ignora essa pasta inteira. **(b)** `/db/import` virou **`/db/import/*`** mais um `!/db/import/mob_skill_db.txt`: as habilidades dos monstros da Glast Heim Sombria só podem morar ali, porque o `mob_skill_db.txt` não é YAML (não tem rodapé de import) e o `mob_readskilldb` (`src/map/mob.cpp:7184`) lê de `db/re/` e `db/import/` e mais nada. **A barra-asterisco é o que faz funcionar** — pasta excluída o git nem abre, então negar um arquivo dentro dela não teria efeito; excluir o CONTEÚDO deixa a pasta visível e a negação passa a valer. Os outros ~60 arquivos de `db/import` continuam fora do git, que é onde devem ficar |
+| `npc/re/mobs/towns.txt` | **quatro linhas de spawn comentadas** — os Carrapatos de Tentáculo (Id 2081) da praia de Brasilis, que o vendor nascia com o nome **"Strange Hydra" escrito à mão na terceira coluna**. Com `override_mob_names: 0` é essa coluna que nomeia o monstro na tela (`npc.cpp:5371`), e não o `mob_db` — então enquanto elas existissem, nenhuma tradução nossa alcançaria o bicho. As nossas estão em `npc/guerra/festival_de_brasilis_tarefas.txt` e usam `--ja--`, que manda usar o `JapaneseName` do `mob_db` (`mob.cpp:458`). Mesma quantidade, mesmas coordenadas, mesmo respawn — só o nome muda |
 
 **Qualquer outro diff em `rathena/` fora de `npc/guerra`, `db/guerra`,
 `src/custom`, `conf/guerra` é alteração em código de terceiros e precisa de
@@ -654,6 +655,7 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 - Ferramenta que consulta tabela do cliente tem de ler `cliente\data\` ANTES do GRF
 - Sprite de NPC "enterrado no chão" é o `.act`, não o mapa. O `.act` diz a que altura o desenho é colado em relação à célula
 - Bandeira de `CTRL+<n>` não está no `emotionlist.lub`, está no EXE — e o que ela vale depende do `<servicetype>`
+- Ter o sprite de MONSTRO não é ter o de NPC: view id de NPC resolve para `sprite\npc\<constante>.spr`, com prefixo, e o do mob mora noutra pasta sem ele — caixa de erro apontando um caminho que ninguém digitou
 - O NOME do sprite não descreve a arte, e neste cliente NÃO EXISTE aura de chão colorida. O `4_PURPLE_WARP` (10237) não tem nada de roxo
 - Quest que o cliente não conhece DERRUBA O CLIENTE. Não é "aparece sem título" — é caixa de erro de Lua, uma por missão e por atualização da janela…
 - O cabeçalho do `map_cache.dat` tem 8 bytes, não 6. É `uint32 file_size; uint16 map_count;` e o compilador o alinha em 8
@@ -677,6 +679,7 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 
 Comandos de script, variáveis e arrays, spawn, instância, unidades, sintaxe do parser.
 
+- O nome do monstro na tela vem da TERCEIRA COLUNA DA LINHA DE SPAWN, não do `mob_db` — e 3546 das 3578 linhas do vendor escrevem esse nome à mão, o que deixa a nossa tradução de monstro invisível
 - `setwall` com tamanho maior que 1 pode sair mais curto do que o pedido, e não avisa
 - Comentário no fim de uma linha de spawn entra DENTRO do nome do evento. O `npc_parsesrcfile` enche o `w4` *"to end of line"* (`src/map/npc.cpp`)
 - Uma linha ruim mata o ARQUIVO INTEIRO, não a linha — inclusive linha de comentário

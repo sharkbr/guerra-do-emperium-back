@@ -1,0 +1,521 @@
+//===== Guerra do Emperium ===================================
+//= Festival de Brasilis - as cinco tarefas
+//===== Onde ================================================
+//= Costureira          brasilis 142,258   Criar Fantasias
+//= Pai Desesperado     brasilis 291,203   Moleque perdido
+//= Guarda Salva-Vidas  brasilis 263,56    Invasao de Tubaroes
+//= Tereza Limpeza      brasilis 243,197   Limpando a cidade
+//= Montoeira de Sujeira brasilis 241,197  (da tarefa da Tereza)
+//= Chef                brasilis 343,243   Estoque de Comida
+//= Crianca             brasilis 207,216 / 178,229 / 202,270
+//===========================================================
+//= ESTE ARQUIVO E A FONTE PRINCIPAL DE INSIGNIA, e sem ele o
+//= Festival nao tem economia: a Maquina cobra de 5 a 50 por
+//= peca, e o drop por morte e de 5%. O par deste arquivo e o
+//= `festival_de_brasilis.txt`, que tem os Agentes, a Maquina, a
+//= Mae de Santo e a TABELA - a insignia de cada Liga sai de la,
+//= por `getvariableofnpc(...,"FestivalMae")`.
+//=
+//= Os dois sao uma peca so: desligar um sem o outro deixa ou o
+//= evento sem economia, ou tarefas que pagam numa moeda que nao
+//= tem onde ser gasta.
+//===========================================================
+//= AS COORDENADAS SAO AS DO bRO, e isso e sorte, nao projeto.
+//= A tabela do bROWiki da as cinco tarefas em `brz_n`, o mapa
+//= exclusivo do Festival que nao temos e nao vamos ter - tudo
+//= aqui acontece na propria Brasilis (decisao do dono). As oito
+//= coordenadas de la (cinco NPCs mais os tres esconderijos da
+//= crianca) foram testadas uma a uma no `map_cache.dat` e as
+//= OITO caem em chao andavel na Brasilis, sem NPC do vendor por
+//= cima. Entao ficaram como estao: quem conhece o evento do bRO
+//= procura no lugar certo.
+//=
+//= A unica coordenada inventada e a da Montoeira de Sujeira
+//= (241,197), que o bROWiki nao da - fica coladinha na Tereza.
+//= As tres celulas ao lado (247,197 / 240,200 / 246,194) sao
+//= bloqueadas; esta nao.
+//===========================================================
+//= DUAS ADAPTACOES, e as duas sao visiveis em jogo
+//=
+//= 1. OS SHARKIRAS VIRARAM CARRAPATOS DE TENTACULO, e a caca
+//=    saiu das cavernas para a PRAIA DA PROPRIA CIDADE. O bicho
+//=    da tarefa original nao existe no nosso mob_db - e mob
+//=    exclusivo do bRO. O substituto e o Id 2081, que o vendor
+//=    ja nasce na orla de brasilis, de oeste a leste, e que
+//=    parece uma copia de Hidra. O Guarda DIZ que nao sao os
+//=    Sharkiras de antes, a pedido do dono.
+//=
+//=    O 2081 SE CHAMAVA "Strange Hydra" EM JOGO, e nao pelo
+//=    mob_db: com `override_mob_names: 0` quem nomeia o monstro
+//=    na tela e a terceira coluna da linha de spawn
+//=    (npc.cpp:5371). As quatro linhas do vendor traziam o nome
+//=    em ingles escrito a mao e venciam a traducao. Por isso
+//=    elas estao comentadas em npc/re/mobs/towns.txt e as
+//=    nossas, no fim deste arquivo, spawnam com `--ja--` - que
+//=    manda usar o JapaneseName do mob_db, onde ele e "Carrapato
+//=    de Tentaculo" (db/guerra/mob_db_guerra.yml). Nome em um
+//=    lugar so.
+//=
+//=    Mesma quantidade (18), mesmas coordenadas e mesmo respawn
+//=    (5 segundos, acima do `mob_respawn_time: 1000`, entao nao
+//=    e truncado) do vendor - so o nome mudou.
+//=
+//= 2. A MASCARA BRANCA SAIU de Criar Fantasias. Ela e um dos
+//=    cinco materiais opcionais do bRO e nao existe com esse
+//=    nome no nosso item_db nem no cliente. Como o jogador
+//=    escolhe DOIS dos cinco, sobraram quatro opcoes e a tarefa
+//=    continua inteira - inventar um item seria pior.
+//===========================================================
+//= OS SPRITES foram escolhidos pelo dono e CONFERIDOS um a um
+//= antes de entrar: Costureira 4_F_BRZ_WOMAN, Pai Desesperado
+//= 4_M_BARYO_MAN, Guarda Salva-Vidas 4_M_LAZY, Tereza
+//= 4_F_HUWOMAN, Chef 4_M_BRZ_MAN1, Crianca 4_M_KID1 e a
+//= Montoeira 4_SOIL.
+//=
+//= CONFERIR NAO E CAPRICHO: view id de NPC resolve para
+//= `data\sprite\npc\<constante em minusculas>.spr`, e ter o
+//= sprite de MONSTRO de mesmo nome nao adianta - e outra pasta
+//= e outro nome. Faltando o arquivo, o cliente abre caixa de
+//= erro ao desenhar. Foi o que aconteceu com os quatro Agentes
+//= em 2026-09-06 (CLAUDE.md secao 5). Os sete daqui estao todos
+//= no nosso GRF, entao nenhum precisou de patch.
+//=
+//= Do lado do servidor os sete existem como `JT_*` em
+//= src/map/npc.hpp e sao exportados por script_constants.hpp -
+//= e por isso da para escrever o NOME no script em vez do
+//= numero. Constante que nao esteja la nao compila no parser e
+//= o arquivo INTEIRO morre (CLAUDE.md secao 5).
+//===========================================================
+//= O DESCANSO DE 3 HORAS mora em `festival_tarefa[0..4]`, uma
+//= variavel permanente de personagem, e o que se guarda ali e o
+//= INSTANTE em que a tarefa libera (`gettimetick(2)` + 10800),
+//= nao o instante em que foi feita. Assim a conta que o NPC faz
+//= na tela e uma subtracao so.
+//=
+//= CUIDADO AO MEXER: zero numa posicao de array APAGA a entrada
+//= (CLAUDE.md secao 5). Aqui isso e inofensivo porque so se
+//= grava tempo futuro, que nunca e zero - mas nao transformar
+//= isto num contador que decresce.
+//===========================================================
+//= AS DUAS FUNCOES sao o que impede as cinco tarefas de
+//= divergirem. `FestivalCheca` recusa quem nao tem Liga, quem
+//= esta no descanso e quem esta sem espaco na bolsa - e recusa
+//= ANTES de qualquer `delitem`, que e o que garante que nenhuma
+//= tarefa cobra sem pagar. `FestivalPaga` da a insignia da Liga
+//= do jogador e liga o descanso.
+//=
+//= As duas fecham o dialogo por conta propria quando recusam
+//= (`close` dentro de `callfunc` encerra o script inteiro),
+//= entao quem chama nao precisa testar retorno nenhum.
+//===========================================================
+//= O CONTADOR DE PIRANHAS e um `OnNPCKillEvent` SEPARADO do que
+//= ja existe no festival_de_brasilis.txt, e os dois rodam: o
+//= `npc_script_event` percorre TODOS os NPCs registrados com
+//= aquele label (src/map/npc.cpp), nao so o primeiro. Um cuida
+//= da insignia por morte, o outro da tarefa - misturar os dois
+//= faria a tarefa depender da chance de drop.
+//===========================================================
+//= Recarregar: @reloadscript.
+//===========================================================
+
+// ---------------------------------------------------------------
+// As duas funcoes compartilhadas.
+// ---------------------------------------------------------------
+function	script	FestivalCheca	{
+	.@i = getarg(0);
+
+	if (festival_liga < 1) {
+		mes "Isso é coisa do Festival, e o Festival é das Ligas. Jure a uma delas com um dos Agentes, lá na beirada norte da praça, e depois volte aqui.";
+		close;
+	}
+
+	.@falta = festival_tarefa[.@i] - gettimetick(2);
+	if (.@falta > 0) {
+		.@h = .@falta / 3600;
+		.@m = (.@falta % 3600) / 60;
+		if (.@h > 0)
+			mes "Você já me ajudou faz pouco. Volte daqui a " + .@h + "h" + .@m + "min.";
+		else
+			mes "Você já me ajudou faz pouco. Volte daqui a " + .@m + " minutos.";
+		close;
+	}
+
+	// O espaco e conferido AQUI, antes de qualquer delitem: tarefa
+	// que cobra o material e nao consegue entregar a insignia seria
+	// roubo. Dois e o maximo que uma tarefa paga.
+	.@ins = getvariableofnpc(.Insignia[festival_liga - 1], "FestivalMae");
+	if (!checkweight(.@ins, 2)) {
+		mes "Sua bolsa está tão cheia que não cabe nem uma insígnia. Faça espaço e volte.";
+		close;
+	}
+	return;
+}
+
+function	script	FestivalPaga	{
+	.@i = getarg(0);
+	.@n = getarg(1);
+	.@ins = getvariableofnpc(.Insignia[festival_liga - 1], "FestivalMae");
+	getitem .@ins, .@n;
+	festival_tarefa[.@i] = gettimetick(2) + 10800;   // 3 horas
+	return;
+}
+
+// ---------------------------------------------------------------
+// 1. CRIAR FANTASIAS - Costureira
+//
+// Dois materiais de uma lista de quatro, dez de cada. O menu sai
+// do MESMO array de ids que o `delitem` usa, e o nome de cada
+// linha vem de `getitemname()` - assim nao existe segunda lista
+// de nomes para divergir da primeira (CLAUDE.md 4.11).
+// ---------------------------------------------------------------
+brasilis,142,258,4	script	Costureira::FestivalCostureira	4_F_BRZ_WOMAN,{
+	mes "[Costureira]";
+	callfunc "FestivalCheca", 0;
+
+	mes "As fantasias do Festival não se costuram sozinhas, e o pano acaba antes da festa. Me traga ^0000FFdez unidades de dois materiais^000000 quaisquer da minha lista e eu te pago com uma insígnia da sua Liga.";
+	next;
+
+	setarray .@id[0], 7030, 7196, 7219, 7267;
+	.@quantos = getarraysize(.@id);
+
+	mes "[Costureira]";
+	mes "Escolha o primeiro.";
+	next;
+	.@lista$ = "";
+	for (.@i = 0; .@i < .@quantos; .@i++) {
+		if (.@i > 0)
+			.@lista$ = .@lista$ + ":";
+		.@lista$ = .@lista$ + getitemname(.@id[.@i]) + " (" + countitem(.@id[.@i]) + "/10)";
+	}
+	.@a = select(.@lista$) - 1;
+
+	// A segunda lista pula o que ja foi escolhido. O indice
+	// original vai guardado +1 de proposito: zero numa posicao de
+	// array apaga a entrada (CLAUDE.md secao 5).
+	.@n2 = 0;
+	.@lista2$ = "";
+	for (.@i = 0; .@i < .@quantos; .@i++) {
+		if (.@i == .@a)
+			continue;
+		if (.@n2 > 0)
+			.@lista2$ = .@lista2$ + ":";
+		.@lista2$ = .@lista2$ + getitemname(.@id[.@i]) + " (" + countitem(.@id[.@i]) + "/10)";
+		.@orig[.@n2] = .@i + 1;
+		.@n2++;
+	}
+	mes "[Costureira]";
+	mes "E o segundo.";
+	next;
+	.@b = .@orig[select(.@lista2$) - 1] - 1;
+
+	if (countitem(.@id[.@a]) < 10 || countitem(.@id[.@b]) < 10) {
+		mes "[Costureira]";
+		mes "Não está tudo aí, meu bem. Preciso de dez de " + getitemname(.@id[.@a]) + " e dez de " + getitemname(.@id[.@b]) + " — você tem " + countitem(.@id[.@a]) + " e " + countitem(.@id[.@b]) + ".";
+		close;
+	}
+
+	delitem .@id[.@a], 10;
+	delitem .@id[.@b], 10;
+	callfunc "FestivalPaga", 0, 1;
+
+	mes "[Costureira]";
+	mes "Perfeito. Com isso eu visto meia dúzia de foliões. Tome a sua insígnia — e volte daqui a uma três horas, que pano nunca é demais.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// 2. MOLEQUE PERDIDO - Pai Desesperado + tres Criancas
+//
+// O esconderijo e sorteado na hora de aceitar e fica em
+// `festival_moleque` (1..3). As tres Criancas sao o MESMO
+// dialogo com um indice diferente, e so a sorteada entrega.
+//
+// As tres ficam visiveis de proposito: "ache a crianca em 1 dos
+// 3 lugares" e a tarefa, e o bRO faz assim. Quem quiser clicar
+// nas tres consegue - o que se ganha e o passeio, nao o segredo.
+// ---------------------------------------------------------------
+brasilis,291,203,4	script	Pai Desesperado::FestivalPai	4_M_BARYO_MAN,{
+	mes "[Pai Desesperado]";
+	if (festival_moleque > 0) {
+		mes "Meu moleque continua sumido! Procure nos lugares de sempre — ele só conhece três esconderijos nesta cidade, e está em um deles.";
+		close;
+	}
+	callfunc "FestivalCheca", 1;
+
+	mes "Meu filho sumiu de novo! Não é maldade, é festa demais para uma criança só — ele se empolga e some.";
+	next;
+	mes "[Pai Desesperado]";
+	mes "Ele só conhece três esconderijos nesta cidade. Dê uma volta e me traga notícia dele, que eu te recompenso.";
+	next;
+	if (select("Vou procurar:Agora não") == 2) {
+		mes "[Pai Desesperado]";
+		mes "Alguém tem que ir...";
+		close;
+	}
+
+	// rand(3) e 0..2. Nunca rand(1), que MATA o script
+	// (CLAUDE.md secao 5).
+	festival_moleque = rand(3) + 1;
+	mes "[Pai Desesperado]";
+	mes "Que os orixás te guiem. Ele é pequeno, de cabelo espetado, e ri quando é achado.";
+	close;
+}
+
+// As tres Criancas. O `duplicate` nao serve aqui porque cada uma
+// precisa saber QUAL das tres e - e o indice esta no `callfunc`.
+brasilis,207,216,4	script	Criança#festival1::FestivalCrianca1	4_M_KID1,{
+	callfunc "FestivalMoleque", 1;
+	end;
+}
+
+brasilis,178,229,4	script	Criança#festival2::FestivalCrianca2	4_M_KID1,{
+	callfunc "FestivalMoleque", 2;
+	end;
+}
+
+brasilis,202,270,4	script	Criança#festival3::FestivalCrianca3	4_M_KID1,{
+	callfunc "FestivalMoleque", 3;
+	end;
+}
+
+function	script	FestivalMoleque	{
+	.@eu = getarg(0);
+
+	mes "[Criança]";
+	if (festival_moleque < 1) {
+		mes "Tô brincando de esconde-esconde. Shhh!";
+		close;
+	}
+	if (festival_moleque != .@eu) {
+		mes "Eu não! Meu pai nem sabe que eu saí de casa. Procura mais pra lá.";
+		close;
+	}
+
+	mes "Ah, não! Me achou!";
+	next;
+	mes "[Criança]";
+	mes "Tá bom, tá bom, eu volto pra casa. Mas leva umas balas, que eu peguei um monte lá na barraca e não vou conseguir comer tudo.";
+	next;
+
+	festival_moleque = 0;
+	getitem 12414, 10;                 // Bala de Guarana
+	callfunc "FestivalPaga", 1, 1;
+
+	mes "[Criança]";
+	mes "Fala pro meu pai que eu já tô indo!";
+	close;
+}
+
+// ---------------------------------------------------------------
+// 3. INVASAO DE TUBAROES - Guarda Salva-Vidas
+//
+// Tres Piranhas no lugar dos Sharkiras do bRO, e o Guarda diz
+// isso com todas as letras (pedido do dono): o bicho de la nao
+// existe no nosso mob_db.
+//
+// Quem conta e o OnNPCKillEvent do fim deste arquivo.
+// ---------------------------------------------------------------
+brasilis,263,56,4	script	Guarda Salva-Vidas::FestivalGuarda	4_M_LAZY,{
+	mes "[Guarda Salva-Vidas]";
+
+	if (festival_tubarao == 1 && festival_piranhas >= 3) {
+		mes "Daqui eu vejo a areia limpa. Três a menos já dá para abrir a temporada de banho outra vez.";
+		next;
+		festival_tubarao = 0;
+		festival_piranhas = 0;
+		getitem 22822, 1;              // Bolsa com Roupa de Banho
+		callfunc "FestivalPaga", 2, 1;
+		mes "[Guarda Salva-Vidas]";
+		mes "Toma a bolsa de praia e a insígnia. Bom mergulho — e sem passar da boia.";
+		close;
+	}
+
+	if (festival_tubarao == 1) {
+		mes "Ainda tem bicho grudado na areia. Você tirou " + festival_piranhas + " de 3.";
+		close;
+	}
+
+	callfunc "FestivalCheca", 2;
+
+	mes "Todo ano nesta época alguém chega correndo da areia gritando ^ff0000tubarão^000000. Vou te dizer de uma vez, para você não sair caçando fantasma: ^0000FFnão são os Sharkiras de antigamente^000000 — aqueles sumiram destas águas faz tempo e não voltaram.";
+	next;
+	mes "[Guarda Salva-Vidas]";
+	mes "O que grudou na nossa praia agora são os ^0000FFCarrapatos de Tentáculo^000000. De longe parecem hidra, e é por isso que assustam — mas são bicho de beira da água, e é justamente por isso que dão trabalho: ficam onde as crianças brincam.";
+	next;
+	mes "[Guarda Salva-Vidas]";
+	mes "E o pior: ^0000FFnão precisa sair da cidade^000000. É aqui mesmo, na nossa Brasilis, descendo até a orla — eles estão espalhados pela praia inteira, de ponta a ponta, de oeste a leste. Me tire ^0000FFtrês^000000 de circulação e eu reabro a temporada de banho.";
+	next;
+	if (select("Pode deixar comigo:Não sei nadar") == 2) {
+		mes "[Guarda Salva-Vidas]";
+		mes "Então fique na areia mesmo.";
+		close;
+	}
+
+	festival_tubarao = 1;
+	festival_piranhas = 0;
+	mes "[Guarda Salva-Vidas]";
+	mes "Desça até a areia e olhe bem na beira da água. Eles estão pela orla toda — não tem como não achar. Volte aqui para eu conferir.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// 4. LIMPANDO A CIDADE - Tereza Limpeza + a Montoeira
+//
+// A Montoeira so responde com a tarefa aceita, e para de dar
+// lixo quando o jogador ja tem os cinco. Sem isso ela viraria
+// uma fonte infinita de Pedra.
+// ---------------------------------------------------------------
+brasilis,243,197,4	script	Tereza Limpeza::FestivalTereza	4_F_HUWOMAN,{
+	mes "[Tereza Limpeza]";
+
+	if (festival_lixo == 1 && countitem(7631) >= 5) {
+		mes "Ora, você trouxe mesmo. Cinco restos de lixo, contadinhos.";
+		next;
+		delitem 7631, 5;               // Restos de Lixo
+		festival_lixo = 0;
+		callfunc "FestivalPaga", 3, 2;
+		mes "[Tereza Limpeza]";
+		mes "Duas insígnias, que essa é a tarefa que ninguém quer fazer. A cidade agradece.";
+		close;
+	}
+
+	if (festival_lixo == 1) {
+		mes "Ainda falta. Vasculhe aquela montoeira ali do lado até juntar ^0000FFcinco Restos de Lixo^000000 — às vezes só sai pedra, tenha paciência. Você tem " + countitem(7631) + ".";
+		close;
+	}
+
+	callfunc "FestivalCheca", 3;
+
+	mes "Festa bonita, cidade suja. Todo ano é a mesma coisa: a folia passa e quem varre sou eu.";
+	next;
+	mes "[Tereza Limpeza]";
+	mes "Me ajuda? Vasculhe aquela montoeira de sujeira ali do lado e junte ^0000FFcinco Restos de Lixo^000000. Às vezes só sai pedra — é sujeira, não é baú de tesouro.";
+	next;
+	if (select("Pode contar comigo:Prefiro a folia") == 2) {
+		mes "[Tereza Limpeza]";
+		mes "Todo mundo prefere.";
+		close;
+	}
+
+	festival_lixo = 1;
+	mes "[Tereza Limpeza]";
+	mes "Bendito seja. A montoeira está bem ali.";
+	close;
+}
+
+brasilis,241,197,4	script	Montoeira de Sujeira::FestivalMontoeira	4_SOIL,{
+	if (festival_lixo != 1) {
+		mes "^777777Uma montoeira de sujeira da festa. Não parece haver nada de útil aí — e ninguém pediu para você mexer.^000000";
+		close;
+	}
+	if (countitem(7631) >= 5) {
+		mes "^777777Você já tem os cinco restos que a Tereza pediu. Melhor levá-los antes que ela mude de ideia.^000000";
+		close;
+	}
+
+	mes "^777777Você remexe a montoeira...^000000";
+	next;
+	if (rand(2) == 0) {
+		getitem 7049, 1;               // Pedra
+		mes "^777777...e tira uma pedra. Só uma pedra.^000000";
+	} else {
+		getitem 7631, 5;               // Restos de Lixo
+		mes "^777777...e tira um punhado de restos de lixo. Cinco pedaços aproveitáveis — para quem aproveita lixo.^000000";
+	}
+	close;
+}
+
+// ---------------------------------------------------------------
+// 5. ESTOQUE DE COMIDA - Chef
+//
+// Aceita QUALQUER prato de culinaria: a faixa 12041..12070 e a
+// dos `Str_Dish01..05` e irmaos, os seis atributos vezes cinco
+// niveis, que e o que o sistema de culinaria do RO produz.
+// ---------------------------------------------------------------
+brasilis,343,243,4	script	Chef::FestivalChef	4_M_BRZ_MAN1,{
+	mes "[Chef]";
+	callfunc "FestivalCheca", 4;
+
+	mes "A barraca de comida do Festival não para, e a minha despensa não acompanha. Me traga ^0000FFum prato de culinária^000000, qualquer um, e a insígnia é sua.";
+	next;
+
+	getinventorylist;
+	.@achou = 0;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_id[.@i] < 12041)
+			continue;
+		if (@inventorylist_id[.@i] > 12070)
+			continue;
+		.@achou = @inventorylist_id[.@i];
+		break;
+	}
+
+	if (.@achou == 0) {
+		mes "[Chef]";
+		mes "Você não está com prato nenhum. Qualquer coisa que tenha saído de uma panela de verdade serve — dessas que dão força, inteligência, o que for.";
+		close;
+	}
+
+	mes "[Chef]";
+	mes "Um " + getitemname(.@achou) + "! Isso me salva o almoço da barraca.";
+	next;
+	delitem .@achou, 1;
+	callfunc "FestivalPaga", 4, 1;
+
+	mes "[Chef]";
+	mes "Tome a insígnia. E se sobrar panela em casa, volte daqui a três horas.";
+	close;
+}
+
+// ---------------------------------------------------------------
+// O contador de Piranhas da tarefa do Guarda.
+//
+// E um OnNPCKillEvent SEPARADO do que da a insignia por morte, e
+// os dois rodam: o `npc_script_event` percorre todos os NPCs
+// registrados com o label. Misturar os dois faria a tarefa
+// depender da chance de drop.
+// ---------------------------------------------------------------
+-	script	#festival_tarefas::FestivalTarefas	-1,{
+	end;
+
+OnNPCKillEvent:
+	// A linha mais barata primeiro: o servidor inteiro passa por
+	// aqui a cada monstro morto.
+	if (festival_tubarao != 1) end;
+	if (killedrid != 2081) end;          // Carrapato de Tentaculo
+	if (festival_piranhas >= 3) end;
+
+	festival_piranhas = festival_piranhas + 1;
+	message strcharinfo(0), "Carrapatos de Tentáculo removidos: " + festival_piranhas + "/3.";
+	if (festival_piranhas >= 3)
+		message strcharinfo(0), "A praia está limpa. Volte ao Guarda Salva-Vidas.";
+	end;
+}
+// ---------------------------------------------------------------
+// OS CARRAPATOS DE TENTACULO DA PRAIA
+//
+// Sao os quatro spawns do vendor (npc/re/mobs/towns.txt), copiados
+// para ca com UMA diferenca: o nome e `--ja--` em vez de "Strange
+// Hydra".
+//
+// `--ja--` manda o servidor usar o JapaneseName do mob_db
+// (mob.cpp:458) em vez do texto desta linha. E o que faz o nome do
+// bicho ter UM lugar so - db/guerra/mob_db_guerra.yml, onde ele e
+// "Carrapato de Tentaculo". Com o nome escrito aqui, mexer na
+// traducao nao mudaria nada em jogo, e foi exatamente isso que
+// escondeu a traducao ate 2026-09-07.
+//
+// Quantidade, coordenadas e respawn sao os do vendor: 18 bichos em
+// quatro pontos da orla, 5 segundos para renascer. O minimo do
+// servidor e `mob_respawn_time: 1000`, entao 5000 passa inteiro,
+// sem truncamento e sem aviso do parser.
+//
+// As quatro linhas do vendor estao COMENTADAS. Se um dia forem
+// descomentadas, o mapa passa a ter 36 bichos e metade deles volta
+// a se chamar "Strange Hydra".
+// ---------------------------------------------------------------
+brasilis,283,88,6,6	monster	--ja--	2081,5,5000
+brasilis,284,104,6,6	monster	--ja--	2081,4,5000
+brasilis,215,80,6,6	monster	--ja--	2081,4,5000
+brasilis,96,50,8,8	monster	--ja--	2081,5,5000
+

@@ -637,3 +637,34 @@ certo o suficiente para a peça ser aprovada em jogo. No `force_map2`, que não
 
 E os dois sinais de `x` empatam no mapa simétrico (82 de 82 nos dois) — só o
 segundo mapa desempata. **Validar num mapa simétrico não valida nada.**
+
+- **Ter o sprite de MONSTRO não é ter o sprite de NPC, e o view id resolve
+  para outra pasta e outro nome.** O bicho aparece no mundo, o `.spr` está no
+  nosso GRF, e mesmo assim o NPC com aquele view id abre caixa de erro ao ser
+  desenhado:
+
+  ```
+  Spr :: Cannot find File : sprite\npc\4_mallina.spr
+  ```
+
+  São dois arquivos diferentes para o mesmo personagem: o de monstro mora em
+  `data\sprite\<coreano de "monstro">\mallina.spr`, e o de NPC em
+  `data\sprite\npc\**4_**mallina.spr` — outra pasta **e** com o prefixo do
+  nome da constante (`JT_4_MALLINA` → `4_mallina`). Ter um não dá o outro.
+
+  Foi o que aconteceu em 2026-09-06 com os quatro Agentes da Liga do Festival
+  de Brasilis: os view ids (10071/10072/10074/10075) estavam certos, conferidos
+  no `npcidentity.lub`, e o nosso GRF tinha os quatro sprites — **na pasta de
+  monstro**, porque os quatro existem como mob. A pasta `npc\` só os tem no GRF
+  do bRO. Medido: 8 arquivos (`.spr` + `.act` de cada) copiados de lá.
+
+  **Isto não falha calado, e ainda assim engana**, porque a caixa de erro
+  aponta para um caminho que ninguém escreveu em lugar nenhum — quem escolheu
+  o view id nunca digitou `4_mallina`. A ponte entre os dois é o
+  `npcidentity.lub`/`jobname.lub`, e ela não está à vista.
+
+  A conferência é barata e vale antes de plantar qualquer NPC com view id
+  novo: procurar `data\sprite\npc\<constante em minúsculas sem o JT_>.spr`
+  nos dois GRFs e no `cliente\data\`. Os quatro Bonecos de Neve, a Máquina
+  e o Morador do mesmo Festival passaram nessa checagem — esses o nosso GRF
+  tem na pasta certa.

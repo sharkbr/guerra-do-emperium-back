@@ -1688,14 +1688,6 @@ Body:
     Buy: 1                # C_Invisible_Manteau
   - Id: 20612
     Buy: 1                # C_Ten_G_Shield_TW
-  - Id: 20734
-    Buy: 1                # Manteau_Of_Leafwind
-  - Id: 20735
-    Buy: 1                # Manteau_Of_Flame_Heart
-  - Id: 20745
-    Buy: 1                # Manteau_Of_Mistic_Froz
-  - Id: 20747
-    Buy: 1                # Manteau_Great_Nature
   - Id: 20798
     Buy: 1                # GrimReaper_Protection
   - Id: 20904

@@ -437,3 +437,36 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   Medido em 2026-09-05, lendo o código, ao desenhar o drop de insígnia do
   Festival de Brasilis (`npc/guerra/festival_de_brasilis.txt`), que depende do
   evento global disparar para o chefe de `bra_dun02`.
+
+- **O nome que o jogador lê no monstro vem da LINHA DE SPAWN, não do
+  `mob_db` — e isso torna a nossa tradução de monstros invisível em quase
+  todo lugar.** O `npc_parse_mob` copia a **terceira coluna** da linha de spawn
+  para `mob.name` (`src/map/npc.cpp:5371`), e o `mob_spawn_dataset` só vai ao
+  `mob_db` quando essa coluna é exatamente `--en--` ou `--ja--`
+  (`src/map/mob.cpp:456-458`). Fora esses dois casos, o texto da linha vence
+  qualquer coisa que esteja no banco.
+
+  **Medido em 2026-09-07:** das linhas de spawn de `npc/re/mobs` e `npc/mobs`,
+  **3546 escrevem o nome à mão e apenas 32 usam `--ja--`**. Ou seja o
+  `db/guerra/mob_db.yml`, que traduz 1061 monstros e é gerado por
+  `traduz_ptbr.py monstros`, praticamente **não chega à tela** — o jogador lê
+  o inglês do vendor.
+
+  O caso que revelou isso: o Id 2081 da praia de Brasilis. O vendor o chama de
+  `Strange Hydra` (Name) e `Suspicious Hydra` (JapaneseName), o nosso arquivo
+  gerado o traduziu como **"Anêmona"**, e o que aparecia em jogo era
+  **"Strange Hydra"** — o texto da linha de spawn de `npc/re/mobs/towns.txt`.
+
+  **Isto falha calado e ao contrário do que a intuição diz:** mexer no
+  `mob_db` parece a coisa certa, o `@reloadmobdb` aceita, o servidor sobe sem
+  reclamar, e nada muda na tela.
+
+  **Duas saídas, e a segunda é uma decisão de dono, não um conserto.** Pontual:
+  comentar a linha do vendor e spawnar do nosso lado com `--ja--`, que é o que
+  foi feito com o 2081 (ver `CLAUDE.md` §2). Geral: `override_mob_names: 2` no
+  `conf/guerra/battle_guerra.txt`, que faz **todo** spawn do servidor usar o
+  `JapaneseName` — uma linha, e a tradução inteira passa a valer. O preço é
+  que ela passa a valer **também onde está errada**: o mesmo arquivo gerado
+  chama a Piranha (2070) de "Espírito da Água", o Jaguar (2072) de "Espírito
+  da Terra" e o Toucan (2073) de "Espírito do Vento", que são nomes do evento
+  do bRO e não descrevem os sprites. Está no `PENDENCIAS.md`.
