@@ -403,7 +403,31 @@ O catálogo (`npc/guerra/traducao/*.cat`) é a **fonte**; o arquivo `.txt` do
 rAthena é o **resultado**, reescrito por `traduz_npcs.py`. Editar o `.txt` à mão
 é perder o trabalho na próxima passada. Grupos hoje: `campal`, `cidades`,
 `classe1`, `classe2`, `glossario`, `guerra`, `kafra`, `novico`, `pvp`, `servico`,
-mais um por instância (`monarca`, `magoas`, `orcs`, `sarah`, …).
+mais `brasilis` (a cidade inteira) e um grupo por instância
+(`monarca`, `magoas`, `orcs`, `sarah`, …).
+
+### Um NPC de Brasilis vive em 3 lugares, e o terceiro não é o catálogo
+
+O caso geral está logo acima: catálogo é fonte, `.txt` é resultado. Em
+Brasilis existe uma **terceira** peça, e ela é a que se perde calada.
+
+| peça | o que guarda | quem escreve |
+|---|---|---|
+| `npc/guerra/traducao/brasilis.cat` | o **diálogo** | `traduz_npcs.py --aplicar brasilis` |
+| `npc/{cities,quests,re/guides}/*brasilis*.txt` | o resultado | idem |
+| `ferramentas/renomeia_npcs_brasilis.py` | o **nome exibido** de 30 NPCs | `renomeia_npcs_brasilis.py` |
+
+O nome do NPC mora na linha de declaração, **fora de aspas**, então o
+catálogo não o alcança. Aqui isso não é cosmético: o bRO renomeia três
+personagens e a tradução do diálogo os segue — Cherto→**Paulão**,
+Marta→**Jurema**, Karmen→**Carmen**. Diálogo traduzido com nome em inglês
+manda o jogador procurar alguém que a tela não mostra.
+
+**O acoplamento, e o que o quebra:** o `--extrair` lê do `.INGLES`, que é o
+inglês cru. Restaurar o vendor e reaplicar o catálogo devolve o diálogo e
+**apaga os nomes** — sem erro, sem aviso, e com o diálogo continuando a
+mandar procurar o Paulão. Por isso `--aplicar brasilis` **sempre** é seguido
+de `renomeia_npcs_brasilis.py`, e o `--conferir` dele sai 1 quando falta.
 
 ### Um NPC do rAthena BIFURCADO vive em 3 lugares, e o terceiro é um instantâneo
 

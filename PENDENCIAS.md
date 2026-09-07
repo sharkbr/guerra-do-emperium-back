@@ -2953,6 +2953,7 @@ fechada, e é a maior: **19.260 falas**, das quais 10.903 distintas.
 | `classe1` | 13/1518 | 1% | **não começou** |
 | `classe2` | 235/12489 | 2% | **não começou** |
 | `jitterbug` | 1073/2406 | 45% | Sonho Sombrio — **começado, NÃO aplicado** |
+| `brasilis` | 1501/1625 | 92% | Brasilis — **fechado e aplicado** em 2026-09-07 |
 
 **As instâncias entraram na frente em 2026-08-09**, com um desenho próprio:
 **um grupo por instância**, não um grupo `instancias` único — porque só se
@@ -3023,13 +3024,23 @@ O `ferramentas/LEIAME.md` tem o detalhe das travas e do formato. Duas regras que
 
 ### O que também ficou pendente
 
-- **Nomes de NPC.** Foram pedidos junto com as falas e não foram feitos. É a
-  parte com risco real: no rAthena o nome exibido faz parte do identificador
-  único, e `duplicate()`, `enablenpc` e `donpcevent` de outros arquivos
-  referenciam por ele. Renomear exige construir a tabela nome-antigo →
-  nome-novo e reescrever toda referência do `npc/` — errar faz NPC sumir do
-  mapa, e o erro só aparece no jogo. Os nomes em português existem no
-  `navi_npc_br.lub` do GRF do bRO, por mapa e coordenada.
+- **Nomes de NPC — feito em Brasilis, aberto no resto.** É a parte com risco
+  real: no rAthena o nome exibido faz parte do identificador único, e
+  `duplicate()`, `enablenpc` e `donpcevent` de outros arquivos referenciam por
+  ele. Renomear exige construir a tabela nome-antigo → nome-novo e reescrever
+  toda referência do `npc/` — errar faz NPC sumir do mapa, e o erro só aparece
+  no jogo. Os nomes em português existem no `navi_npc_br.lub` do GRF do bRO,
+  por mapa e coordenada.
+
+  **Em 2026-09-07 isso foi feito para os 30 NPCs de Brasilis**, e o caminho
+  ficou provado: ler o `navi_npc_br.lub` por mapa e coordenada, varrer `npc/`,
+  `db/` e `conf/` atrás de referência externa (lá deu **zero**), e gravar a
+  tabela numa ferramenta própria — `ferramentas/renomeia_npcs_brasilis.py` —
+  porque restaurar do `.INGLES` apaga os nomes calado. Ver `ARQUITETURA.md`
+  §4. **O que empurrou foi a necessidade, e não a coragem:** o bRO renomeia
+  três personagens de Brasilis, então o diálogo traduzido já os chamava de
+  Paulão, Jurema e Carmen. Nas outras cidades esse empurrão pode não existir,
+  e aí o custo/benefício é outro.
 - **`guerra` parado em 67%** não é por falta de tempo: os 469 que faltam são
   fragmentos de frase quebrada em várias linhas de `mes` do WoE:SE, que
   dependem do vizinho para ficar natural. Fechar exige olhar bloco a bloco, não
@@ -4300,22 +4311,26 @@ Nada disso foi ligado. O único monstro consertado foi o **2081**, e por
 caminho pontual (linha do vendor comentada + spawn nosso com `--ja--`), porque
 a tarefa do Festival precisava do nome certo. Ver `CLAUDE.md` §2.
 
-## 1af. O Festival está pronto e o deploy está SEGURADO (2026-09-07)
+## 1af. O Festival está pronto e o deploy DESTRAVOU — falta rodá-lo (2026-09-07)
 
 O Festival de Brasilis está inteiro e testado em jogo: sete NPCs, cinco
 tarefas, a Máquina e os dois sistemas de encante. O que foi feito está no
 `HISTORICO.md`, *"O Festival de Brasilis vira evento de verdade"*.
 
-**O deploy NÃO deve sair ainda, e isso é decisão do dono (2026-09-07):** ele
-quer subir o Festival junto com a **tradução dos NPCs de Brasilis**, que será
-feita na próxima sessão. Os NPCs do vendor em Brasilis (a cidade, as ~37 quests,
-o `Fruit Gardener` para onde o Morador aponta) continuam em inglês, e subir o
-evento em português no meio deles ficaria pela metade.
+**A condição que segurava o deploy foi cumprida no mesmo dia.** O dono queria
+subir o Festival junto com a tradução dos NPCs de Brasilis, e ela está feita —
+diálogo e nome de NPC, os três arquivos do vendor, ver `HISTORICO.md`,
+*"Brasilis inteira em português"*. Não há mais motivo para segurar.
 
-Ou seja: **está commitado e empurrado, mas não implantado.** Quem rodar o
-`implanta.sh` antes da tradução leva o Festival junto — o que não quebra nada,
-mas antecipa o que o dono decidiu adiar.
+**O que falta é só rodar o deploy, e ele não sai do Windows.** O
+`ferramentas/implanta.sh` roda no **Mac** (`CLAUDE.md` §9, `IMPLANTACAO.md`).
+Ele leva de uma vez o Festival, a trava de conta por senha errada e a tradução
+de Brasilis — tudo que está commitado e ainda não implantado.
 
-O lado do cliente **já saiu**: patches 0019 e 0021 estão publicados. Isso é
-inofensivo por desenho — são entradas de item e sprites que ninguém alcança
-enquanto o servidor não tiver os NPCs.
+Depois do deploy, e só depois, o Festival passa a existir para quem joga: o
+lado do cliente **já saiu** (patches 0019 e 0021), e é inofensivo por desenho —
+são entradas de item e sprites que ninguém alcança enquanto o servidor não
+tiver os NPCs.
+
+**Não há patch a montar por causa da tradução.** Diálogo e nome de NPC são os
+dois do lado do servidor.

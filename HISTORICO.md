@@ -17292,3 +17292,99 @@ Tudo testado em jogo pelo dono. Do lado do cliente saíram os patches **0019**
 (as 12 entradas e a arte de 5 itens) e **0021** (os sprites dos Agentes). O
 lado do servidor está commitado e **o deploy foi segurado de propósito** — ver
 `PENDENCIAS.md`.
+
+## Brasilis inteira em português — diálogo e nome de NPC (2026-09-07)
+
+O Festival estava pronto e o deploy dele **segurado de propósito**: o dono
+queria subir o evento junto com a cidade em volta, e não no meio de trinta
+NPCs em inglês. Esta é a sessão que destrava aquilo.
+
+Pedido: *"vamos traduzir os NPCs da cidade de brasilis. Assim como os de
+bra_in01"*.
+
+### O recorte, e por que ele deu três arquivos
+
+O `bra_in01` **não tem arquivo próprio**. O Paulão, a Jurema, o Curador do
+museu, os cinco objetos assombrados e os dois fantasmas moram todos no
+`npc/quests/quests_brasilis.txt`, junto com a cidade, o campo (`bra_fild01`) e
+a caverna (`bra_dun01/02`). Como só se aplica **grupo inteiro**, o recorte que
+atende o pedido é o grupo `brasilis` novo do `traduz_npcs.py`, com três
+arquivos:
+
+| arquivo | o que responde |
+|---|---|
+| `npc/cities/brasilis.txt` | o Marinheiro do porto, as cinco placas, o Sorveteiro |
+| `npc/re/guides/guides_brasilis.txt` | a Guia que marca o mini-mapa |
+| `npc/quests/quests_brasilis.txt` | as missões — 2.940 linhas, o miolo |
+
+O Recepcionista do Hotel já estava traduzido: ele mora no
+`npc/merchants/inn.txt`, do grupo `servico`.
+
+**1.625 pares, 999 textos distintos a traduzir, 1.501 aplicados.** Os 124 que
+sobram são técnicos e ficam em branco de propósito — o `--estado` marca 92,4%,
+que aqui quer dizer completo.
+
+### Três coisas que quase saíram erradas
+
+**O monstro da praia não se chama Anêmona.** O `Strange Hydra` do vendor é o Id
+2081, e o `db/guerra/mob_db.yml` (gerado do bRO) o chama de *Anêmona* — o mesmo
+nome que a descrição da Esfera de Captura ainda usa no cliente. Só que o
+`db/guerra/mob_db_guerra.yml` vem **depois** no rodapé do `mob_db.yml` e o
+renomeia para **Carrapato de Tentáculo**, que foi a decisão de 2026-09-06.
+Quem manda é o que flutua sobre o bicho. A tradução saiu com "Anêmona" nas
+nove falas da Lucia, foi pega na conferência contra o `HISTORICO.md` e
+corrigida antes do commit. **A tabela certa é a última do rodapé, não a
+primeira.**
+
+**As palavras mágicas do enigma do banheiro aparecem duas vezes.** As crianças
+mostram `'^3131FFMother the door won't open!^000000'` e o `Door#bra` guarda
+`.@braspell$ = "Mother the door won't open!"`, que ele compara com o que o
+jogador **digita**. São strings distintas no catálogo: traduzir uma e não a
+outra, ou traduzir as duas com palavras diferentes, faria o jogador digitar o
+que leu e o enigma nunca abrir — sem erro nenhum. São cinco pares assim. O
+`compare` é por substring, então digitar um pedaço basta, o que também salva
+quem não puser o acento.
+
+**A Guia guarda coordenada dentro de `mes`.** Ela monta a frase com
+`F_Navi("<rótulo>","<mapa>,<x>,<y>")`, e o segundo argumento cai no catálogo
+porque a chamada inteira está dentro de um `mes` — o `RE_TECNICO` não o cobre,
+porque `F_Navi` não é `callfunc`. Traduzir um deles apagaria a marca do
+mini-mapa calado. São cinco dos brancos.
+
+### O nome do NPC saiu do papel, e virou ferramenta
+
+O nome exibido era pendência antiga (`PENDENCIAS.md` §3) e ficou de fora de
+todos os grupos até aqui, porque ele mora na **linha de declaração**, fora de
+aspas, e o catálogo só troca literal. Em Brasilis deixou de ser opcional: o
+bRO **renomeia três personagens**, e a tradução do diálogo os segue —
+Cherto→**Paulão**, Marta→**Jurema**, Karmen→**Carmen**. Com o nome flutuante
+em inglês, a Doceira mandaria procurar o "Paulão" e o museu teria um "Cherto".
+
+A fonte não foi invenção: **`navi_npc_br.lub`, do GRF do bRO**, lido por mapa e
+coordenada. É de lá que vêm os três que ninguém adivinharia — o fantasma do
+museu é a **Loira do Banheiro**, o `Recluse` é o **Ermitão**, e a `Lucia`
+aparece como **Bióloga Marinha**.
+
+São 30 NPCs e 74 trocas, em `ferramentas/renomeia_npcs_brasilis.py`. O risco
+que travava a pendência foi medido antes: **nenhum dos nomes é referenciado
+fora dos três arquivos** — a varredura por `npc/`, `db/` e `conf/` deu zero. O
+único vizinho é o `Crewman_bra2`, que é nome **único** (depois do `::`) e é
+chamado por `getnpcid` de dois arquivos, um deles nosso; ele ficou intocado.
+
+**Por que é ferramenta e não um `sed`:** o `--extrair` lê do `.INGLES`. Quem
+restaurar o vendor e reaplicar o catálogo recupera o diálogo e **perde os
+nomes**, calado, com o diálogo continuando a mandar procurar o Paulão. O
+acoplamento está no `ARQUITETURA.md` §4 e o `--conferir` sai 1 quando falta.
+
+### Conferência
+
+Servidor local reiniciado com os três arquivos no lugar: **nenhuma linha de
+erro** — sem `npc_parse`, sem *Duplicate unique name*, sem *name too long*
+(o `NPC_NAME_LENGTH` é 50, e o maior nome novo tem 24). Os três arquivos
+passam em cp1252 e não têm um só U+FFFD.
+
+### O que isto destrava
+
+O deploy do Festival, que estava segurado desde 2026-09-05. Nada aqui é do
+cliente — diálogo e nome de NPC são os dois do servidor —, então **não há
+patch a montar**: os patches 0019 e 0021 já cobriram a metade do cliente.

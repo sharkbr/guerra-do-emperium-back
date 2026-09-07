@@ -1354,6 +1354,42 @@ escrever — `skillinfolist.lub` para habilidade, `mapnametable.txt` para mapa,
 São **19.260 falas** em centenas de arquivos. Editar arquivo a arquivo não
 termina, não dá para revisar e não sobrevive a uma atualização do vendor.
 
+### O grupo `brasilis` — a cidade inteira, e não só as missões
+
+Entrou em 2026-09-07, por pedido do dono: o Festival de Brasilis estava
+pronto e em português, e o **deploy dele foi segurado** justamente até a
+cidade em volta falar a mesma língua. São três arquivos e 1.625 pares:
+
+| arquivo | o que responde |
+|---|---|
+| `npc/cities/brasilis.txt` | o Marinheiro do porto, as cinco placas, o Sorveteiro |
+| `npc/re/guides/guides_brasilis.txt` | a Guia (a que marca o mini-mapa) |
+| `npc/quests/quests_brasilis.txt` | o miolo — as missões da cidade, do Hotel (`bra_in01`), do campo (`bra_fild01`) e da caverna (`bra_dun01/02`) |
+
+O **`bra_in01` não tem arquivo próprio**: o Paulão, a Jurema, o Curador do
+museu, os cinco objetos assombrados e os dois fantasmas moram todos no
+`quests_brasilis.txt`. O Recepcionista do Hotel é a exceção, e já estava
+traduzido — mora no `npc/merchants/inn.txt`, do grupo `servico`.
+
+**Duas armadilhas próprias deste grupo:**
+
+- **A Guia monta a frase com `F_Navi("<rótulo>","<mapa>,<x>,<y>")`, e o
+  segundo argumento é coordenada.** Ele cai no catálogo porque a chamada
+  inteira está dentro de um `mes`, e o `RE_TECNICO` não o cobre (`F_Navi`
+  não é `callfunc`). São os cinco pares deixados em branco de propósito —
+  traduzir um deles apagaria a marca do mini-mapa **sem erro nenhum**.
+- **As palavras mágicas do enigma do banheiro aparecem DUAS vezes, e as
+  duas têm de dizer a mesma frase.** As crianças mostram
+  `'^3131FFMother the door won't open!^000000'`; o `Door#bra` guarda
+  `.@braspell$ = "Mother the door won't open!"` e o compara com o que o
+  jogador **digita** (`compare()`). São strings distintas no catálogo: se
+  divergirem, o jogador digita o que leu e o enigma nunca abre. São cinco
+  pares assim, e o `compare` é por **substring** — digitar um pedaço basta,
+  o que também salva quem não puser o acento.
+
+**O nome exibido do NPC é outra ferramenta**, e é obrigatória depois de todo
+`--aplicar brasilis`: `renomeia_npcs_brasilis.py`, abaixo.
+
 ### Fonte separada de resultado
 
 Há um conflito com a CONVENÇÃO DE CUSTOMIZAÇÃO: diálogo traduzido não tem como
@@ -1531,6 +1567,51 @@ parênteses, e inventar isso é como se perde informação.
 é a de primeira aparição no catálogo, que é a ordem do arquivo — o diálogo vem
 em sequência, e é o que torna possível traduzir uma conversa inteira sem pular
 de um lado para o outro.
+
+## `renomeia_npcs_brasilis.py` — o nome que flutua sobre o NPC de Brasilis
+
+```
+python renomeia_npcs_brasilis.py             # aplica
+python renomeia_npcs_brasilis.py --conferir  # só mede; sai 1 se faltar
+```
+
+Entrou em 2026-09-07, junto com o grupo `brasilis` do `traduz_npcs.py`.
+Troca o **nome exibido** de 30 NPCs de Brasilis e todas as referências a
+eles — 74 trocas nos três arquivos do grupo.
+
+**O `traduz_npcs.py` não alcança isto, e não é descuido dele:** o nome do NPC
+mora na *linha de declaração*, fora de aspas, e o catálogo só troca literal.
+Enquanto o nome era só decoração, isso era uma pendência antiga
+(`PENDENCIAS.md` §3, "Nomes de NPC"). Em Brasilis deixou de ser: o bRO
+**renomeia três personagens**, e a tradução do diálogo os segue — o Cherto
+virou **Paulão**, a Marta virou **Jurema**, a Karmen virou **Carmen**. Com o
+nome flutuante em inglês, a Doceira mandaria o jogador procurar o "Paulão" e
+o museu teria um NPC chamado "Cherto".
+
+**A fonte é o `navi_npc_br.lub` do GRF do bRO**, lido por mapa e coordenada —
+não invenção nossa (`CLAUDE.md` §4.3 e §4.12). É de lá que vêm os três nomes
+que ninguém adivinharia: o fantasma do museu é a **Loira do Banheiro**, o
+`Recluse` é o **Ermitão**, e a Lucia aparece como **Bióloga Marinha**.
+
+**Por que é ferramenta e não um `sed` de uma vez só.** O `.INGLES` ao lado de
+cada arquivo é o inglês cru, e é dele que o `--extrair` lê. Quem restaurar o
+vendor e reaplicar o catálogo recupera o **diálogo** e **perde os nomes** —
+sem erro nenhum, com o diálogo mandando procurar o Paulão e o NPC de novo
+chamado Cherto. Rodar isto depois de todo `--aplicar brasilis` fecha o
+buraco, e o `--conferir` prova que está fechado. Ver `ARQUITETURA.md` §4.
+
+**A troca é por substring, e cada chave pega a declaração E as referências de
+uma vez:** `Puppy#` pega o base, os 12 `duplicate` e o
+`donpcevent "Puppy#"+…`; `Ghost#bra` pega também o `Ghost#bra_end`;
+`Pipe#bra` pega também o `Pipe#brafild`. Linha de comentário do vendor fica
+intocada de propósito — o cabeçalho continua dizendo o nome original, que é
+por onde se acha o script no upstream.
+
+**O que não se renomeia, e por quê:** `Crewman_bra2` (é o nome **único**
+depois do `::`, e o `getnpcid` de dois outros arquivos o chama, um deles
+nosso — `npc/guerra/teletransportadora.txt`); `inbathroom#bra` e `#Monkeybra`
+(nome vazio ou puramente técnico); e os nomes próprios que o próprio bRO
+manteve — Angelo, Pedro, Mariana, Fabio, Daniel, Poring, Iara.
 
 ## `planta_adereco.py` — copia um adereço de um mapa para outro
 

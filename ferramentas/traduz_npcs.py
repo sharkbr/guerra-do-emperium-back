@@ -264,6 +264,38 @@ for _apelido, _arq in [
 GRUPOS['fenda'] = ['npc/re/other/dimensional_gap.txt',
                    'npc/re/merchants/ghost_palace_exchange.txt']
 
+# BRASILIS - a cidade inteira, e nao so os NPCs de missao.
+#
+# Entrou em 2026-09-07, por pedido do dono: o Festival de Brasilis
+# (npc/guerra/festival_de_brasilis*.txt) esta pronto e em portugues, e o
+# deploy dele esta SEGURADO justamente ate a cidade em volta falar a mesma
+# lingua. Evento em portugues no meio de trinta NPCs em ingles fica pela
+# metade - e a mesma razao da regra de so aplicar grupo INTEIRO.
+#
+# Sao TRES arquivos, e cada um responde por uma parte do que o jogador ve:
+#
+#   npc/cities/brasilis.txt            o Marinheiro do porto, as cinco placas
+#                                      e o Sorveteiro
+#   npc/re/guides/guides_brasilis.txt  a Guia (a que marca o mini-mapa)
+#   npc/quests/quests_brasilis.txt     o miolo - as missoes da cidade, do
+#                                      Hotel (bra_in01), do campo (bra_fild01)
+#                                      e da caverna (bra_dun01/02)
+#
+# O `bra_in01` que o dono pediu junto NAO tem arquivo proprio: os NPCs dele
+# (Cherto, Marta, o Curador do museu, os cinco objetos assombrados e os dois
+# Fantasmas) moram no mesmo `quests_brasilis.txt`. O Recepcionista do Hotel
+# e a excecao e ja esta traduzido - ele mora no `npc/merchants/inn.txt`, do
+# grupo `servico`.
+#
+# O QUE FICA EM BRANCO DE PROPOSITO aqui e maior que o normal: a Guia monta
+# as frases com `F_Navi("<rotulo>","<mapa>,<x>,<y>")`, e o SEGUNDO argumento
+# e coordenada - ele cai no catalogo porque a chamada inteira esta dentro de
+# um `mes`, e o RE_TECNICO nao o cobre (F_Navi nao e `callfunc`). Traduzir
+# um desses apagaria a marca do mini-mapa sem erro nenhum.
+GRUPOS['brasilis'] = ['npc/cities/brasilis.txt',
+                      'npc/re/guides/guides_brasilis.txt',
+                      'npc/quests/quests_brasilis.txt']
+
 
 class Erro(Exception):
     pass

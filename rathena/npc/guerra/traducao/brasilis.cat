@@ -1,0 +1,4891 @@
+# Catalogo de traducao PT-BR - grupo "brasilis"
+#
+# GERADO por ferramentas/traduz_npcs.py --extrair, e depois EDITADO A MAO.
+# Editar apenas as linhas `+`. Re-extrair preserva o que ja foi traduzido.
+#
+#   #: <arquivo>#<indice> (<contexto>)
+#   - "<original em ingles>"     <- trava: se o upstream mudar, recusa
+#   + "<traducao>"               <- vazio quer dizer "deixa em ingles"
+#
+# Arquivo em Latin-1 (ISO-8859-1). Ver PENDENCIAS.md, "Acentuacao no dialogo".
+
+### npc/cities/brasilis.txt  (64 textos)
+#: npc/cities/brasilis.txt#1 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#2 (mes)
+- "Hey, have you heard of a place called Brasilis?"
++ "Ei, você já ouviu falar de um lugar chamado Brasilis?"
+#: npc/cities/brasilis.txt#3 (mes)
+- "It's a tropical city that's hot like the desert but also rainy. It is a very mysterious place."
++ "É uma cidade tropical, quente como o deserto e chuvosa ao mesmo tempo. Um lugar muito misterioso."
+#: npc/cities/brasilis.txt#4 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#5 (mes)
+- "We recently found a new ocean route to get there easily."
++ "Descobrimos faz pouco tempo uma nova rota marítima para chegar lá com facilidade."
+#: npc/cities/brasilis.txt#6 (mes)
+- "It's just 10,000 zeny for a round trip, and 1,000 for VIP! So do you want to go?"
++ "São só 10.000 zeny pela ida e volta, e 1.000 para VIP! E aí, quer ir?"
+#: npc/cities/brasilis.txt#7 (mes)
+- "It's just 10,000 zeny for a round trip! So do you want to go?"
++ "São só 10.000 zeny pela ida e volta! E aí, quer ir?"
+#: npc/cities/brasilis.txt#8 (select)
+- "Take me to Brasilis!:I'll stay here."
++ "Me leve para Brasilis!:Vou ficar por aqui."
+#: npc/cities/brasilis.txt#9 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#10 (mes)
+- "I said "
++ "Eu disse "
+#: npc/cities/brasilis.txt#11 (mes)
+- "F_InsertComma"
++ ""
+#: npc/cities/brasilis.txt#12 (mes)
+- " zeny."
++ " zeny."
+#: npc/cities/brasilis.txt#13 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#14 (mes)
+- "Cool~!! Let's go~!"
++ "Beleza~!! Vamos nessa~!"
+#: npc/cities/brasilis.txt#16 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#17 (mes)
+- "Well if you're ever interested, let me know and I can take you there."
++ "Se um dia se interessar, é só me avisar que eu te levo lá."
+#: npc/cities/brasilis.txt#18 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#19 (mes)
+- "My ship is going to back to Alberta, do you want to join us?"
++ "Meu navio está voltando para Alberta, quer vir junto?"
+#: npc/cities/brasilis.txt#20 (select)
+- "Go back to Alberta.:Not yet~."
++ "Voltar para Alberta.:Ainda não~."
+#: npc/cities/brasilis.txt#21 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#22 (mes)
+- "I sure do miss home."
++ "Ah, como eu sinto falta de casa."
+#: npc/cities/brasilis.txt#25 (mes)
+- "[Crewman]"
++ "[Marinheiro]"
+#: npc/cities/brasilis.txt#26 (mes)
+- "Ok, suit yourself. We'll see you when we get back then."
++ "Tudo bem, você que sabe. A gente se vê quando voltarmos, então."
+#: npc/cities/brasilis.txt#27 (mes)
+- ":: Art Museum ::"
++ ":: Museu de Arte ::"
+#: npc/cities/brasilis.txt#28 (mes)
+- ":: Verass Monument ::"
++ ":: Monumento de Verass ::"
+#: npc/cities/brasilis.txt#29 (mes)
+- ":: Market ::"
++ ":: Mercado ::"
+#: npc/cities/brasilis.txt#31 (mes)
+- "- For your Potions and Weaponry -"
++ "- Poções e armas para a sua jornada -"
+#: npc/cities/brasilis.txt#32 (mes)
+- ":: Jungle Cable ::"
++ ":: Teleférico da Selva ::"
+#: npc/cities/brasilis.txt#33 (mes)
+- "- Not for the faint of heart -"
++ "- Não é para os fracos de coração -"
+#: npc/cities/brasilis.txt#34 (mes)
+- ":: Brasilis Hotel ::"
++ ":: Hotel Brasilis ::"
+#: npc/cities/brasilis.txt#35 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#36 (mes)
+- "Come~come~"
++ "Chega~chega~"
+#: npc/cities/brasilis.txt#37 (mes)
+- "Ice cream is the perfect snack for a hot day~"
++ "Sorvete é o lanche perfeito para um dia quente~"
+#: npc/cities/brasilis.txt#38 (mes)
+- "It's just ^3355FF100 Zeny^000000~"
++ "São só ^3355FF100 zeny^000000~"
+#: npc/cities/brasilis.txt#39 (mes)
+- "Ice Cream~"
++ "Sorvete~"
+#: npc/cities/brasilis.txt#40 (mes)
+- "Get 'yer Ice Cream!"
++ "Olha o sorvete!"
+#: npc/cities/brasilis.txt#41 (select)
+- "Give me one!:Ice Cream?:Cancel."
++ "Quero um!:Sorvete?:Cancelar."
+#: npc/cities/brasilis.txt#42 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#43 (mes)
+- "Since there are so many people want to get a cool ice cream you can order only 5 at a time."
++ "Como tem muita gente querendo um sorvete geladinho, dá para pedir só 5 de cada vez."
+#: npc/cities/brasilis.txt#44 (mes)
+- "So how many d'ya want?"
++ "E aí, quantos você quer?"
+#: npc/cities/brasilis.txt#45 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#46 (mes)
+- "None?"
++ "Nenhum?"
+#: npc/cities/brasilis.txt#47 (mes)
+- "Fine get outta the way, I have customers to serve."
++ "Então sai da frente, que eu tenho fregueses para atender."
+#: npc/cities/brasilis.txt#48 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#49 (mes)
+- "Wow."
++ "Uau."
+#: npc/cities/brasilis.txt#50 (mes)
+- "You ordered too much."
++ "Você pediu demais."
+#: npc/cities/brasilis.txt#51 (mes)
+- "If you eat over 5 you might need to fight with a monster in your stomach. Calm down buddy."
++ "Se comer mais de 5 vai acabar lutando com um monstro dentro da barriga. Calma aí, amigo."
+#: npc/cities/brasilis.txt#52 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#53 (mes)
+- "Dood~! You don't have enough money."
++ "Poxa~! Seu dinheiro não dá."
+#: npc/cities/brasilis.txt#54 (mes)
+- "It's only ^3355FF100 Zeny^000000~ Seriously!"
++ "São só ^3355FF100 zeny^000000~ Fala sério!"
+#: npc/cities/brasilis.txt#55 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#56 (mes)
+- "You seem to have too much stuff."
++ "Parece que você está carregando coisa demais."
+#: npc/cities/brasilis.txt#57 (mes)
+- "Lighten your pack before buying this."
++ "Alivie a mochila antes de comprar."
+#: npc/cities/brasilis.txt#58 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#59 (mes)
+- "'Ice cream is..."
++ "'Sorvete é..."
+#: npc/cities/brasilis.txt#60 (mes)
+- "Wait, don't you know"
++ "Espera, você não sabe"
+#: npc/cities/brasilis.txt#61 (mes)
+- "what Ice Cream is?"
++ "o que é sorvete?"
+#: npc/cities/brasilis.txt#62 (mes)
+- "What rock have you"
++ "Debaixo de que pedra"
+#: npc/cities/brasilis.txt#63 (mes)
+- "been living under?"
++ "você estava vivendo?"
+#: npc/cities/brasilis.txt#64 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#65 (mes)
+- "I'm not going to even start with how weird that sounds."
++ "Nem vou começar a falar de como isso soa estranho."
+#: npc/cities/brasilis.txt#66 (mes)
+- "Anyway, get 'yer Ice Cream right here while it's nice and cold."
++ "Enfim, leve o seu sorvete aqui mesmo, enquanto está bem geladinho."
+#: npc/cities/brasilis.txt#67 (mes)
+- "[Ice Cream Maker]"
++ "[Vendedor de Sorvete]"
+#: npc/cities/brasilis.txt#68 (mes)
+- "Don't miss your chance to eat the greatest Ice Cream in all the land~!"
++ "Não perca a chance de comer o melhor sorvete de todas as terras~!"
+
+### npc/re/guides/guides_brasilis.txt  (42 textos)
+#: npc/re/guides/guides_brasilis.txt#1 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#2 (mes)
+- "Welcome to ^8B4513Brasilis^000000, a country as passionate as the sun."
++ "Bem-vindo a ^8B4513Brasilis^000000, uma terra tão apaixonada quanto o sol."
+#: npc/re/guides/guides_brasilis.txt#3 (mes)
+- "If you have any questions, please ask me."
++ "Se tiver alguma dúvida, é só perguntar."
+#: npc/re/guides/guides_brasilis.txt#5 (select)
+- "Ask about locations:Remove Marks from Mini-Map:Cancel"
++ "Perguntar sobre lugares:Limpar as marcas do mini-mapa:Cancelar"
+#: npc/re/guides/guides_brasilis.txt#6 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#7 (mes)
+- "Where can I guide you?"
++ "Para onde posso te guiar?"
+#: npc/re/guides/guides_brasilis.txt#8 (select)
+- "[ Hotel ]:[ Jungle Cable ]:[ Art Museum ]:[ Market ]:[ Verass Monument ]"
++ "[ Hotel ]:[ Teleférico da Selva ]:[ Museu de Arte ]:[ Mercado ]:[ Monumento de Verass ]"
+#: npc/re/guides/guides_brasilis.txt#9 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#10 (mes)
+- "The "
++ "O "
+#: npc/re/guides/guides_brasilis.txt#11 (mes)
+- "Brasilis Hotel"
++ "Hotel Brasilis"
+#: npc/re/guides/guides_brasilis.txt#12 (mes)
+- "brasilis,274,151"
++ ""
+#: npc/re/guides/guides_brasilis.txt#13 (mes)
+- " is located just above, ^FF3355+^000000."
++ " fica logo acima, no ^FF3355+^000000."
+#: npc/re/guides/guides_brasilis.txt#14 (mes)
+- "Is there anything else I can do for you?"
++ "Posso ajudar em mais alguma coisa?"
+#: npc/re/guides/guides_brasilis.txt#15 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#16 (mes)
+- "Do you want to go through the rough jungle? You can take a "
++ "Quer atravessar a selva bruta? Você pode pegar o "
+#: npc/re/guides/guides_brasilis.txt#17 (mes)
+- "Jungle Cable"
++ "Teleférico da Selva"
+#: npc/re/guides/guides_brasilis.txt#18 (mes)
+- "brasilis,308,335"
++ ""
+#: npc/re/guides/guides_brasilis.txt#19 (mes)
+- " here ^CE6300+^000000."
++ " aqui, no ^CE6300+^000000."
+#: npc/re/guides/guides_brasilis.txt#20 (mes)
+- "Is there anything else I can do for you?"
++ "Posso ajudar em mais alguma coisa?"
+#: npc/re/guides/guides_brasilis.txt#21 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#22 (mes)
+- "The pride of Brasilis, the world scale "
++ "O orgulho de Brasilis, o mundialmente famoso "
+#: npc/re/guides/guides_brasilis.txt#23 (mes)
+- "Art Museum"
++ "Museu de Arte"
+#: npc/re/guides/guides_brasilis.txt#24 (mes)
+- "brasilis,137,167"
++ ""
+#: npc/re/guides/guides_brasilis.txt#25 (mes)
+- " is at ^A5BAAD+^000000."
++ ", fica no ^A5BAAD+^000000."
+#: npc/re/guides/guides_brasilis.txt#26 (mes)
+- "Is there anything else I can do for you?"
++ "Posso ajudar em mais alguma coisa?"
+#: npc/re/guides/guides_brasilis.txt#27 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#28 (mes)
+- "You can buy items for hunting at the "
++ "Você compra itens de caçada no "
+#: npc/re/guides/guides_brasilis.txt#29 (mes)
+- "Market"
++ "Mercado"
+#: npc/re/guides/guides_brasilis.txt#30 (mes)
+- "brasilis,254,248"
++ ""
+#: npc/re/guides/guides_brasilis.txt#31 (mes)
+- " here ^55FF33+^000000."
++ " aqui, no ^55FF33+^000000."
+#: npc/re/guides/guides_brasilis.txt#32 (mes)
+- "Is there anything else I can do for you?"
++ "Posso ajudar em mais alguma coisa?"
+#: npc/re/guides/guides_brasilis.txt#33 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#34 (mes)
+- "The iconic monument of Brasilis, the "
++ "O monumento mais conhecido de Brasilis, o "
+#: npc/re/guides/guides_brasilis.txt#35 (mes)
+- "Verass Monument"
++ "Monumento de Verass"
+#: npc/re/guides/guides_brasilis.txt#36 (mes)
+- "brasilis,195,222"
++ ""
+#: npc/re/guides/guides_brasilis.txt#37 (mes)
+- " stands at ^3355FF+^000000."
++ ", está no ^3355FF+^000000."
+#: npc/re/guides/guides_brasilis.txt#38 (mes)
+- "Is there anything else I can do for you?"
++ "Posso ajudar em mais alguma coisa?"
+#: npc/re/guides/guides_brasilis.txt#39 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#40 (mes)
+- "I'll remove all marks from your mini-map."
++ "Vou limpar todas as marcas do seu mini-mapa."
+#: npc/re/guides/guides_brasilis.txt#41 (mes)
+- "Is there anything else I can do for you?"
++ "Posso ajudar em mais alguma coisa?"
+#: npc/re/guides/guides_brasilis.txt#42 (mes)
+- "[Brasilis Guide]"
++ "[Guia de Brasilis]"
+#: npc/re/guides/guides_brasilis.txt#43 (mes)
+- "Wandering on your own is always the best way to explore. Anyway, take care."
++ "Se embrenhar por conta própria é sempre a melhor forma de explorar. De qualquer jeito, se cuide."
+
+### npc/quests/quests_brasilis.txt  (1519 textos)
+#: npc/quests/quests_brasilis.txt#1 (mes)
+- "[Angelo]"
++ "[Angelo]"
+#: npc/quests/quests_brasilis.txt#2 (mes)
+- "Pets went out the village~!!"
++ "Meus bichinhos fugiram da vila~!!"
+#: npc/quests/quests_brasilis.txt#3 (mes)
+- "Gosh... what can I do... ?"
++ "Nossa... o que eu faço...?"
+#: npc/quests/quests_brasilis.txt#4 (mes)
+- "[Angelo]"
++ "[Angelo]"
+#: npc/quests/quests_brasilis.txt#5 (mes)
+- "The day is not finished yet."
++ "O dia ainda não acabou."
+#: npc/quests/quests_brasilis.txt#6 (mes)
+- "You can only help once a day. Hehe."
++ "Você só pode ajudar uma vez por dia. Rerê."
+#: npc/quests/quests_brasilis.txt#7 (mes)
+- "[Angelo]"
++ "[Angelo]"
+#: npc/quests/quests_brasilis.txt#8 (mes)
+- "My pets are in the field outside of the village."
++ "Meus bichinhos estão no campo, fora da vila."
+#: npc/quests/quests_brasilis.txt#9 (mes)
+- "Why did they leave? Please find them."
++ "Por que será que fugiram? Por favor, encontre eles."
+#: npc/quests/quests_brasilis.txt#10 (mes)
+- "[Angelo]"
++ "[Angelo]"
+#: npc/quests/quests_brasilis.txt#11 (mes)
+- "Oh, thank you. You found all of 3 puppies."
++ "Ah, obrigado. Você achou os 3 filhotes."
+#: npc/quests/quests_brasilis.txt#12 (mes)
+- "Thanks a lot."
++ "Muito obrigado mesmo."
+#: npc/quests/quests_brasilis.txt#13 (mes)
+- "I hope this is useful to you. hoho."
++ "Espero que isto lhe seja útil. Rorô."
+#: npc/quests/quests_brasilis.txt#14 (mes)
+- "[Angelo]"
++ "[Angelo]"
+#: npc/quests/quests_brasilis.txt#15 (mes)
+- "Are you an adventurer? You came here right on time."
++ "Você é aventureiro? Chegou bem na hora."
+#: npc/quests/quests_brasilis.txt#16 (mes)
+- "Puppies have been disappearing."
++ "Os filhotes andam sumindo."
+#: npc/quests/quests_brasilis.txt#17 (mes)
+- "And someone said that they saw them out on the field just outside the village...."
++ "E disseram que viram eles no campo, logo depois da vila..."
+#: npc/quests/quests_brasilis.txt#18 (mes)
+- "[Angelo]"
++ "[Angelo]"
+#: npc/quests/quests_brasilis.txt#19 (mes)
+- "It's pretty difficult and dangerous to find 'em."
++ "É bem difícil e perigoso encontrar eles."
+#: npc/quests/quests_brasilis.txt#20 (mes)
+- "You have to find ^0000FF3 puppies^000000."
++ "Você precisa achar ^0000FF3 filhotes^000000."
+#: npc/quests/quests_brasilis.txt#22 (mes)
+- "[Puppy]"
++ "[Filhote]"
+#: npc/quests/quests_brasilis.txt#23 (mes)
+- "bow! wow wow!"
++ "au! au au!"
+#: npc/quests/quests_brasilis.txt#24 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#25 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#26 (mes)
+- "Good. I found all 3 puppies."
++ "Ótimo. Achei os 3 filhotes."
+#: npc/quests/quests_brasilis.txt#27 (mes)
+- "Now I need to go tell Angelo."
++ "Agora preciso avisar o Angelo."
+#: npc/quests/quests_brasilis.txt#28 (mes)
+- "Ah... who's a good puppy?"
++ "Ah... quem é o filhote bonzinho?"
+#: npc/quests/quests_brasilis.txt#29 (mes)
+- "Ok, where are the others?"
++ "Certo, cadê os outros?"
+#: npc/quests/quests_brasilis.txt#35 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#36 (mes)
+- "Hello."
++ "Olá."
+#: npc/quests/quests_brasilis.txt#37 (mes)
+- "I'm worried about ^FF0000Strange Hydra^000000's on"
++ "Estou preocupada com os ^FF0000Carrapatos de Tentáculo^000000"
+#: npc/quests/quests_brasilis.txt#38 (mes)
+- "the south beach."
++ "da praia ao sul."
+#: npc/quests/quests_brasilis.txt#39 (mes)
+- "I hope some experienced adventurers"
++ "Tomara que apareçam aventureiros experientes"
+#: npc/quests/quests_brasilis.txt#40 (mes)
+- "will come to help."
++ "para nos ajudar."
+#: npc/quests/quests_brasilis.txt#41 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#42 (mes)
+- "Hello."
++ "Olá."
+#: npc/quests/quests_brasilis.txt#43 (mes)
+- "Have you come here to hunt ^FF0000Strange Hydra^000000s?"
++ "Você veio caçar ^FF0000Carrapatos de Tentáculo^000000?"
+#: npc/quests/quests_brasilis.txt#44 (select)
+- "Yes.:No.:^006400What is happening here?^000000"
++ "Sim.:Não.:^006400O que está acontecendo aqui?^000000"
+#: npc/quests/quests_brasilis.txt#45 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#46 (mes)
+- "Here, take this ^006400Hydra Ball^000000."
++ "Tome, leve esta ^006400Esfera de Captura^000000."
+#: npc/quests/quests_brasilis.txt#47 (mes)
+- "Use it to capture a ^FF0000Strange Hydra^8B4513.^000000"
++ "Use-a para capturar um ^FF0000Carrapato de Tentáculo^8B4513.^000000"
+#: npc/quests/quests_brasilis.txt#48 (mes)
+- "I hope you can do it~!"
++ "Torço para que consiga~!"
+#: npc/quests/quests_brasilis.txt#49 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#50 (mes)
+- "Ah, I misunderstood."
++ "Ah, eu entendi errado."
+#: npc/quests/quests_brasilis.txt#51 (mes)
+- "See you then."
++ "Até mais, então."
+#: npc/quests/quests_brasilis.txt#52 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#53 (mes)
+- "One day ^FF0000Strange Hydra^000000s"
++ "Um belo dia os ^FF0000Carrapatos de Tentáculo^000000"
+#: npc/quests/quests_brasilis.txt#54 (mes)
+- "came here and surrounded the town."
++ "chegaram e cercaram a cidade."
+#: npc/quests/quests_brasilis.txt#55 (mes)
+- "We're not sure what attracted them but some say that it's because of you adventurers."
++ "Não sabemos o que as atraiu, mas tem gente dizendo que a culpa é de vocês, aventureiros."
+#: npc/quests/quests_brasilis.txt#56 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#57 (mes)
+- "In any case, to contain the ^FF0000Strange Hydra^000000s,"
++ "De todo jeito, para conter os ^FF0000Carrapatos de Tentáculo^000000,"
+#: npc/quests/quests_brasilis.txt#58 (mes)
+- "you have to use this specially designed tool a.k.a. a ^8B4513Hydra Ball^000000"
++ "é preciso usar uma ferramenta feita para isso, a ^8B4513Esfera de Captura^000000"
+#: npc/quests/quests_brasilis.txt#59 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#60 (mes)
+- "If you still have the ^006400Hydra Ball^000000,"
++ "Se você ainda tiver a ^006400Esfera de Captura^000000,"
+#: npc/quests/quests_brasilis.txt#61 (mes)
+- "please use it on the ^FF0000Strange Hydra^000000s that"
++ "use-a nos ^FF0000Carrapatos de Tentáculo^000000 que"
+#: npc/quests/quests_brasilis.txt#62 (mes)
+- "you can find at the beach."
++ "você encontra na praia."
+#: npc/quests/quests_brasilis.txt#63 (mes)
+- "If you are lucky, the tool will work perfectly."
++ "Com um pouco de sorte, a ferramenta funciona direitinho."
+#: npc/quests/quests_brasilis.txt#64 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#65 (mes)
+- "I hope many adventurers"
++ "Tomara que muitos aventureiros"
+#: npc/quests/quests_brasilis.txt#66 (mes)
+- "volunteer for this job."
++ "se voluntariem para esta tarefa."
+#: npc/quests/quests_brasilis.txt#68 (mes)
+- "I really hate Hydra!"
++ "Eu detesto esses Carrapatos!"
+#: npc/quests/quests_brasilis.txt#69 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#70 (mes)
+- "Hello, you really did it!"
++ "Olá, você conseguiu mesmo!"
+#: npc/quests/quests_brasilis.txt#72 (mes)
+- "I hope you will come"
++ "Espero que você volte"
+#: npc/quests/quests_brasilis.txt#73 (mes)
+- "again to help me."
++ "outras vezes para me ajudar."
+#: npc/quests/quests_brasilis.txt#74 (mes)
+- "Have a nice day~!"
++ "Tenha um bom dia~!"
+#: npc/quests/quests_brasilis.txt#76 (mes)
+- "I'd like to reward you,"
++ "Eu gostaria de recompensar você,"
+#: npc/quests/quests_brasilis.txt#77 (mes)
+- "however your bags are full."
++ "mas a sua mochila está cheia."
+#: npc/quests/quests_brasilis.txt#78 (mes)
+- "Please make room and come back!"
++ "Abra espaço e volte aqui!"
+#: npc/quests/quests_brasilis.txt#79 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#80 (mes)
+- "Did you need another ^006400Hydra Ball^000000?"
++ "Precisa de outra ^006400Esfera de Captura^000000?"
+#: npc/quests/quests_brasilis.txt#81 (mes)
+- "I will give you one more."
++ "Vou lhe dar mais uma."
+#: npc/quests/quests_brasilis.txt#82 (mes)
+- "Any problems?"
++ "Algum problema?"
+#: npc/quests/quests_brasilis.txt#83 (select)
+- "No.:^006400Tell me again what happened^000000"
++ "Não.:^006400Conte de novo o que aconteceu^000000"
+#: npc/quests/quests_brasilis.txt#84 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#85 (mes)
+- "Ok, please do me a favor."
++ "Certo, faça-me esse favor."
+#: npc/quests/quests_brasilis.txt#86 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#87 (mes)
+- "Oh, ^0000FF"
++ "Ah, ^0000FF"
+#: npc/quests/quests_brasilis.txt#88 (mes)
+- "^000000 you're back."
++ "^000000, você voltou."
+#: npc/quests/quests_brasilis.txt#89 (mes)
+- "I'm so grateful for your help."
++ "Sou muito grata pela sua ajuda."
+#: npc/quests/quests_brasilis.txt#90 (mes)
+- "Each ^006400Hydra Ball^000000 is provided ^006400every 24 hours^000000"
++ "Cada ^006400Esfera de Captura^000000 é entregue ^006400a cada 24 horas^000000"
+#: npc/quests/quests_brasilis.txt#91 (mes)
+- "Please come at the appropriate time."
++ "Volte no momento certo, por favor."
+#: npc/quests/quests_brasilis.txt#92 (mes)
+- "Did you come here to hunt ^FF0000Strange Hydra^000000s?"
++ "Você veio caçar ^FF0000Carrapatos de Tentáculo^000000?"
+#: npc/quests/quests_brasilis.txt#93 (select)
+- "Yes.:No.:^006400What is happening here?^000000"
++ "Sim.:Não.:^006400O que está acontecendo aqui?^000000"
+#: npc/quests/quests_brasilis.txt#94 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#95 (mes)
+- "Here, take this ^006400Hydra Ball^000000."
++ "Tome, leve esta ^006400Esfera de Captura^000000."
+#: npc/quests/quests_brasilis.txt#96 (mes)
+- "Use it to capture a ^FF0000Strange Hydra^8B4513.^000000"
++ "Use-a para capturar um ^FF0000Carrapato de Tentáculo^8B4513.^000000"
+#: npc/quests/quests_brasilis.txt#97 (mes)
+- "I hope you can do it~!"
++ "Torço para que consiga~!"
+#: npc/quests/quests_brasilis.txt#98 (mes)
+- "[Lucia]"
++ "[Lúcia]"
+#: npc/quests/quests_brasilis.txt#99 (mes)
+- "Ah, I misunderstood."
++ "Ah, eu entendi errado."
+#: npc/quests/quests_brasilis.txt#100 (mes)
+- "See you then."
++ "Até mais, então."
+#: npc/quests/quests_brasilis.txt#101 (mes)
+- "- You can't start the quest. Please reduce the weight in your inventory. -"
++ "- Você não consegue começar a missão. Alivie o peso da sua mochila. -"
+#: npc/quests/quests_brasilis.txt#102 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#103 (mes)
+- "Yo, do you know a berry called ^FF0000Guarana^000000?"
++ "E aí, você conhece uma fruta chamada ^FF0000Guaraná^000000?"
+#: npc/quests/quests_brasilis.txt#104 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#105 (mes)
+- "Guarana is a really special berry raised in a specific area, it relieves physical fatigue, and gives power to the body. It even detoxes waste from the body."
++ "O guaraná é uma fruta muito especial, criada só por aqui. Alivia o cansaço do corpo, dá força e ainda ajuda a limpar o organismo."
+#: npc/quests/quests_brasilis.txt#106 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#107 (mes)
+- "I used to sell the candy made of it back in the day."
++ "Antigamente eu vendia bala feita dele."
+#: npc/quests/quests_brasilis.txt#108 (mes)
+- "I got a prize sometimes every year in the <annual best product contest>. Those were the good 'ol days."
++ "Ganhei prêmio quase todo ano no <concurso do melhor produto do ano>. Que tempos bons."
+#: npc/quests/quests_brasilis.txt#109 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#110 (mes)
+- "Since then, the output of that fruit has reduced and the price has gone up so now candy ingredients were changed to coconuts or other tropical fruits instead. I miss the guarana candy."
++ "De lá para cá a colheita da fruta caiu, o preço subiu, e a bala passou a ser feita de coco e de outras frutas tropicais. Sinto falta da bala de guaraná."
+#: npc/quests/quests_brasilis.txt#111 (select)
+- "How can I taste this guarana candy?:End conversation."
++ "Como faço para provar essa bala de guaraná?:Encerrar a conversa."
+#: npc/quests/quests_brasilis.txt#112 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#113 (mes)
+- "Hmm? I already sold out of all my old supply."
++ "Hmm? Já vendi tudo o que tinha guardado."
+#: npc/quests/quests_brasilis.txt#114 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#115 (mes)
+- "But if you can find some guarana, I can make it for you."
++ "Mas se você me arrumar guaraná, eu faço para você."
+#: npc/quests/quests_brasilis.txt#116 (select)
+- "How do I find guarana?:End conversation."
++ "Como eu encontro guaraná?:Encerrar a conversa."
+#: npc/quests/quests_brasilis.txt#117 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#118 (mes)
+- "Will you find the guarana?? Hoooooh~"
++ "Você vai atrás do guaraná?? Rôôôô~"
+#: npc/quests/quests_brasilis.txt#119 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#120 (mes)
+- "Can you find it?"
++ "Será que consegue?"
+#: npc/quests/quests_brasilis.txt#121 (mes)
+- "It's probably very expensive."
++ "Deve ser caríssimo."
+#: npc/quests/quests_brasilis.txt#122 (mes)
+- "Trading isn't my thing. Let me think."
++ "Negociar não é comigo. Deixa eu pensar."
+#: npc/quests/quests_brasilis.txt#123 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#124 (mes)
+- "Let me introduce you to someone with whom I used to do guarana business with."
++ "Vou lhe apresentar uma pessoa com quem eu fazia negócio de guaraná."
+#: npc/quests/quests_brasilis.txt#125 (mes)
+- "He might still be dealing it."
++ "Pode ser que ainda mexa com isso."
+#: npc/quests/quests_brasilis.txt#126 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#127 (mes)
+- "His name is Cherto."
++ "O nome dele é Paulão."
+#: npc/quests/quests_brasilis.txt#128 (mes)
+- "If you can't find him in the city, go to museum."
++ "Se não achar ele na cidade, vá até o museu."
+#: npc/quests/quests_brasilis.txt#129 (mes)
+- "He's a vain person so he likes to act big."
++ "É um homem vaidoso, gosta de se achar."
+#: npc/quests/quests_brasilis.txt#130 (mes)
+- "He's probably wandering in the museum trying to show off to someone for sure."
++ "Deve estar rondando o museu tentando se exibir para alguém, isso é certo."
+#: npc/quests/quests_brasilis.txt#131 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#132 (mes)
+- "Don't you want to try the guarana candy?"
++ "Não quer provar a bala de guaraná?"
+#: npc/quests/quests_brasilis.txt#133 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#134 (mes)
+- "Those were the good 'ole days..."
++ "Aqueles tempos é que eram bons..."
+#: npc/quests/quests_brasilis.txt#135 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#136 (mes)
+- "If you want to get the guarana, find Cherto."
++ "Se quiser o guaraná, procure o Paulão."
+#: npc/quests/quests_brasilis.txt#137 (mes)
+- "Maybe he will be in the museum."
++ "Talvez ele esteja no museu."
+#: npc/quests/quests_brasilis.txt#138 (mes)
+- "- The guarana that I had has disappeared. -"
++ "- O guaraná que eu tinha desapareceu. -"
+#: npc/quests/quests_brasilis.txt#139 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#140 (mes)
+- "Did you get the guarana?"
++ "Conseguiu o guaraná?"
+#: npc/quests/quests_brasilis.txt#141 (mes)
+- "- You give the guarana to him. -"
++ "- Você entrega o guaraná a ela. -"
+#: npc/quests/quests_brasilis.txt#142 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#143 (mes)
+- "Wow! You have special talent."
++ "Uau! Você tem um talento e tanto."
+#: npc/quests/quests_brasilis.txt#144 (mes)
+- "It's the best thing I have ever seen so far. Cool~!"
++ "É a coisa mais linda que eu já vi. Que beleza~!"
+#: npc/quests/quests_brasilis.txt#145 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#146 (mes)
+- "Good, let's make the candy~!"
++ "Muito bem, vamos fazer a bala~!"
+#: npc/quests/quests_brasilis.txt#147 (mes)
+- "Long time no see my wonderful guarana candy..."
++ "Há quanto tempo, minha maravilhosa bala de guaraná..."
+#: npc/quests/quests_brasilis.txt#148 (mes)
+- "- hash hash hash hash hash hash -"
++ "- tchic tchic tchic tchic tchic tchic -"
+#: npc/quests/quests_brasilis.txt#149 (mes)
+- "- hash hash hash hash hash hash -"
++ "- tchic tchic tchic tchic tchic tchic -"
+#: npc/quests/quests_brasilis.txt#150 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#151 (mes)
+- "Look! It's the popular guarana candy."
++ "Olhe só! A famosa Bala de Guaraná."
+#: npc/quests/quests_brasilis.txt#152 (mes)
+- "Try to savor its amazing taste hey~ take it easy. hahaha!!"
++ "Prove com calma esse sabor incrível, ei~ devagar. Rarará!!"
+#: npc/quests/quests_brasilis.txt#153 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#154 (mes)
+- "Guarana candy. That was the most unique masterpiece in my life for sure!"
++ "Bala de Guaraná. A obra-prima mais única da minha vida, sem dúvida!"
+#: npc/quests/quests_brasilis.txt#155 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#156 (mes)
+- "Since you helped me, guarana supply has been steadily rising."
++ "Depois que você me ajudou, o guaraná voltou a aparecer aos poucos."
+#: npc/quests/quests_brasilis.txt#157 (mes)
+- "So, naturally I'm back to making guarana candy."
++ "E aí, naturalmente, voltei a fazer bala de guaraná."
+#: npc/quests/quests_brasilis.txt#158 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#159 (mes)
+- "What about it? Wanna buy some?"
++ "O que me diz? Quer comprar umas?"
+#: npc/quests/quests_brasilis.txt#160 (mes)
+- "It's 4000 zeny each."
++ "Custa 4000 zeny cada."
+#: npc/quests/quests_brasilis.txt#161 (select)
+- "Buy a Guarana Candy.:Cancel."
++ "Comprar uma Bala de Guaraná.:Cancelar."
+#: npc/quests/quests_brasilis.txt#162 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#163 (mes)
+- "Here is a delicious guarana candy."
++ "Aqui está uma deliciosa bala de guaraná."
+#: npc/quests/quests_brasilis.txt#164 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#165 (mes)
+- "What? You should say before if you don't have money!"
++ "O quê? Devia ter avisado antes que estava sem dinheiro!"
+#: npc/quests/quests_brasilis.txt#166 (mes)
+- "Even if you are poor, I can't give this away for free."
++ "Mesmo que você seja pobre, não posso dar isto de graça."
+#: npc/quests/quests_brasilis.txt#167 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#168 (mes)
+- "Sometimes some people don't like it due to it's arousal effect."
++ "Tem gente que não gosta por causa do efeito estimulante."
+#: npc/quests/quests_brasilis.txt#169 (mes)
+- "[Candy Maker]"
++ "[Doceira]"
+#: npc/quests/quests_brasilis.txt#170 (mes)
+- "Guarana candy. That was the most unique masterpiece in my life for sure!"
++ "Bala de Guaraná. A obra-prima mais única da minha vida, sem dúvida!"
+#: npc/quests/quests_brasilis.txt#171 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#172 (mes)
+- "Hmm... hey man, you are from outside, aren't you?"
++ "Hmm... ei, meu chapa, você é de fora, não é?"
+#: npc/quests/quests_brasilis.txt#173 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#174 (mes)
+- "Cherto can figure it out even if it's the first time. You can't trick Cherto."
++ "O Paulão descobre logo de cara, mesmo na primeira vez. Não dá para enganar o Paulão."
+#: npc/quests/quests_brasilis.txt#175 (mes)
+- "Cherto has sharp eyes like an eagle! Hahaha!"
++ "O Paulão tem olho de águia! Rarará!"
+#: npc/quests/quests_brasilis.txt#176 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#177 (mes)
+- "Ok, ok. Yes, yes. I see!"
++ "Tá, tá. Sim, sim. Já entendi!"
+#: npc/quests/quests_brasilis.txt#178 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#179 (mes)
+- "Anyway, you arrived in Brasilis but don't know what to do?"
++ "Enfim, você chegou em Brasilis e não sabe o que fazer?"
+#: npc/quests/quests_brasilis.txt#180 (mes)
+- "Am I right?"
++ "Estou certo?"
+#: npc/quests/quests_brasilis.txt#181 (mes)
+- "You don't know how fortunate you are to have found a really proper helper as myself."
++ "Você nem imagina a sorte que teve de encontrar um ajudante à altura como eu."
+#: npc/quests/quests_brasilis.txt#182 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#183 (mes)
+- "Cherto takes it by your expression that you want to say, ''You are a master!'' Right?"
++ "O Paulão vê pela sua cara que você quer dizer: ''Você é um mestre!'' Não é?"
+#: npc/quests/quests_brasilis.txt#184 (mes)
+- "Cherto, I can read and figure out all at once! That is written in your face!"
++ "O Paulão lê e entende tudo de uma vez! Está escrito na sua cara!"
+#: npc/quests/quests_brasilis.txt#185 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#186 (mes)
+- "Cherto would love to stay here and explain everything to you but he is a busy man."
++ "O Paulão adoraria ficar aqui explicando tudo para você, mas é um homem ocupado."
+#: npc/quests/quests_brasilis.txt#187 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#188 (mes)
+- "If you have a curious thing to ask to Cherto. Cherto will be kind enough to answer."
++ "Se tiver alguma curiosidade para perguntar ao Paulão, o Paulão terá a bondade de responder."
+#: npc/quests/quests_brasilis.txt#189 (select)
+- "Guarana?"
++ "Guaraná?"
+#: npc/quests/quests_brasilis.txt#190 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#191 (mes)
+- "What? Do you want to find a guarana?"
++ "O quê? Você quer encontrar guaraná?"
+#: npc/quests/quests_brasilis.txt#192 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#193 (mes)
+- "Guarana is only raised in this area, it has a soft inside and is coverd with a light fur."
++ "O guaraná só nasce por estas bandas. Por dentro é macio, e por fora é coberto de uma penugem fina."
+#: npc/quests/quests_brasilis.txt#194 (mes)
+- "It seems a little bit weird but the flower is really big and smells beautiful."
++ "Parece meio estranho, mas a flor é enorme e o cheiro é uma beleza."
+#: npc/quests/quests_brasilis.txt#195 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#196 (mes)
+- "A long time ago, guarana was used to relieve desease and thirst. But recently it's getting popular to revitalize body power and increase blood circulation."
++ "Há muito tempo o guaraná era usado para aliviar doença e matar a sede. Hoje em dia virou moda para dar energia ao corpo e melhorar a circulação."
+#: npc/quests/quests_brasilis.txt#197 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#198 (mes)
+- "Although it has such great effects, Cherto is sorry to inform you that we can't get it anymore."
++ "Apesar de todas essas qualidades, o Paulão lamenta informar que não se consegue mais guaraná."
+#: npc/quests/quests_brasilis.txt#199 (select)
+- "Whaaaat??"
++ "Quêêêê??"
+#: npc/quests/quests_brasilis.txt#200 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#201 (mes)
+- "For a while now, guarana berries haven't been growing here."
++ "Faz tempo que o guaraná não dá mais fruto por aqui."
+#: npc/quests/quests_brasilis.txt#202 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#203 (mes)
+- "Even if Cherto managed to find one, it will rot quickly."
++ "E mesmo que o Paulão conseguisse achar um, ele apodreceria rapidinho."
+#: npc/quests/quests_brasilis.txt#204 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#205 (mes)
+- "If only it didn't happen!"
++ "Ah, se isso nunca tivesse acontecido!"
+#: npc/quests/quests_brasilis.txt#206 (select)
+- "What are you talking about?"
++ "Do que você está falando?"
+#: npc/quests/quests_brasilis.txt#207 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#208 (mes)
+- "Quiet!!!!!!!!!!!!!!!!"
++ "Silêncio!!!!!!!!!!!!!!!!"
+#: npc/quests/quests_brasilis.txt#209 (mes)
+- "This story has been forbidden! Someone might be listening to our conversation..."
++ "Essa história é proibida! Pode ter alguém escutando a nossa conversa..."
+#: npc/quests/quests_brasilis.txt#210 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#211 (mes)
+- "If Cherto tells you, you might get us into trouble. But you look like you really wanna know so let me give you a tip."
++ "Se o Paulão contar, você pode nos meter em encrenca. Mas você parece querer muito saber, então vou lhe dar uma dica."
+#: npc/quests/quests_brasilis.txt#212 (mes)
+- "Come closer. Cherto will whisper so nobody can listen in."
++ "Chegue mais perto. O Paulão vai sussurrar para ninguém escutar."
+#: npc/quests/quests_brasilis.txt#213 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#214 (mes)
+- "A Guarana boy was born."
++ "Nasceu um menino do guaraná."
+#: npc/quests/quests_brasilis.txt#215 (select)
+- "Guarana kid?"
++ "Menino do guaraná?"
+#: npc/quests/quests_brasilis.txt#216 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#217 (mes)
+- "There was woman who was an expert botanist."
++ "Havia uma mulher que era botânica de mão cheia."
+#: npc/quests/quests_brasilis.txt#218 (mes)
+- "The woman was really popular to all living creatures."
++ "Essa mulher era querida por todos os seres vivos."
+#: npc/quests/quests_brasilis.txt#219 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#220 (mes)
+- "At around the time her baby was born, she started a guarana farm. For some reason, her brothers were jealous so they destroyed the farm and disappeared."
++ "Mais ou menos na época em que o filho dela nasceu, ela começou uma plantação de guaraná. Por algum motivo os irmãos dela ficaram com inveja, destruíram a plantação e sumiram."
+#: npc/quests/quests_brasilis.txt#221 (mes)
+- "That kind of story..."
++ "Uma história dessas..."
+#: npc/quests/quests_brasilis.txt#222 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#223 (mes)
+- "We can't be sure that baby was born in the world but since that time, all guarana in Brasilis disappeared."
++ "Não dá para ter certeza de que aquele bebê chegou a nascer, mas desde então todo o guaraná de Brasilis desapareceu."
+#: npc/quests/quests_brasilis.txt#224 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#225 (mes)
+- "Who is the guarana kid?"
++ "Quem é o menino do guaraná?"
+#: npc/quests/quests_brasilis.txt#226 (mes)
+- "Pedro who is famous as a greedy man?"
++ "O Pedro, aquele famoso por ser ganancioso?"
+#: npc/quests/quests_brasilis.txt#227 (mes)
+- "Meto who can't endure about all the fruits?"
++ "O Meto, que não resiste a fruta nenhuma?"
+#: npc/quests/quests_brasilis.txt#228 (mes)
+- "Hovenue who is gloomy?"
++ "O Hovenue, aquele carrancudo?"
+#: npc/quests/quests_brasilis.txt#229 (mes)
+- "They might know~!"
++ "Vai ver eles sabem~!"
+#: npc/quests/quests_brasilis.txt#230 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#231 (mes)
+- "What about you?"
++ "E você?"
+#: npc/quests/quests_brasilis.txt#232 (mes)
+- "Who is the guarana kid?"
++ "Quem é o menino do guaraná?"
+#: npc/quests/quests_brasilis.txt#233 (mes)
+- "Will you figure out it? hohohhhhh~"
++ "Vai descobrir? Rorororô~"
+#: npc/quests/quests_brasilis.txt#234 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#235 (mes)
+- "Can you find the guarana kid?"
++ "Consegue achar o menino do guaraná?"
+#: npc/quests/quests_brasilis.txt#236 (mes)
+- "Maybe yes? Maybe no?"
++ "Talvez sim? Talvez não?"
+#: npc/quests/quests_brasilis.txt#237 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#238 (mes)
+- "Did you find guarana kid?"
++ "Achou o menino do guaraná?"
+#: npc/quests/quests_brasilis.txt#239 (mes)
+- "- I tell Cherto about the kid making animal-like sounds. -"
++ "- Você conta ao Paulão sobre o menino que faz barulho de bicho. -"
+#: npc/quests/quests_brasilis.txt#240 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#241 (mes)
+- "Hoooh. That's unbelievable."
++ "Rôôôh. Isso é inacreditável."
+#: npc/quests/quests_brasilis.txt#242 (mes)
+- "That kid might be a guarana kid. Sure..."
++ "Esse menino pode ser o menino do guaraná. Com certeza..."
+#: npc/quests/quests_brasilis.txt#243 (mes)
+- "According to the story the kid can have conversations with animals."
++ "Segundo a história, o menino consegue conversar com os animais."
+#: npc/quests/quests_brasilis.txt#244 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#245 (mes)
+- "If he can make crying sounds of animals, they might be able to converse!"
++ "Se ele imita o som dos bichos, é bem capaz que consigam se entender!"
+#: npc/quests/quests_brasilis.txt#246 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#247 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#248 (mes)
+- "Now, what can I do?"
++ "E agora, o que eu faço?"
+#: npc/quests/quests_brasilis.txt#249 (mes)
+- "If he is the kid from the legend, is there any way to raise the guarana again?"
++ "Se ele é o menino da lenda, existe algum jeito de fazer o guaraná crescer de novo?"
+#: npc/quests/quests_brasilis.txt#250 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#251 (mes)
+- "Haha!! What'd Cherto say?"
++ "Rarará!! O que foi que o Paulão disse?"
+#: npc/quests/quests_brasilis.txt#252 (mes)
+- "Cherto knows all~!!"
++ "O Paulão sabe de tudo~!!"
+#: npc/quests/quests_brasilis.txt#253 (mes)
+- "Cherto's already thought"
++ "O Paulão já pensou"
+#: npc/quests/quests_brasilis.txt#254 (mes)
+- "of the next step."
++ "no próximo passo."
+#: npc/quests/quests_brasilis.txt#255 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#256 (mes)
+- "In Brasilis there is an expert Mage."
++ "Em Brasilis existe um mago experiente."
+#: npc/quests/quests_brasilis.txt#257 (mes)
+- "His name is Paje."
++ "O nome dele é Ubirajá."
+#: npc/quests/quests_brasilis.txt#258 (mes)
+- "Take this note over to him."
++ "Leve este bilhete até ele."
+#: npc/quests/quests_brasilis.txt#259 (mes)
+- "He will show the solution for you and the kid."
++ "Ele vai mostrar a solução para você e para o menino."
+#: npc/quests/quests_brasilis.txt#260 (mes)
+- "[Cherto]"
++ "[Paulão]"
+#: npc/quests/quests_brasilis.txt#261 (mes)
+- "hoho tickle~tickle~~~~!!!"
++ "rorô, cutuca~cutuca~~~~!!"
+#: npc/quests/quests_brasilis.txt#262 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#263 (mes)
+- "................"
++ "................"
+#: npc/quests/quests_brasilis.txt#264 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#265 (mes)
+- "................"
++ "................"
+#: npc/quests/quests_brasilis.txt#266 (select)
+- "Try to talk.:Pretend to pass by."
++ "Tentar conversar.:Fingir que está de passagem."
+#: npc/quests/quests_brasilis.txt#267 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#268 (mes)
+- "................"
++ "................"
+#: npc/quests/quests_brasilis.txt#269 (mes)
+- "What can I say to him?"
++ "O que eu posso dizer para ele?"
+#: npc/quests/quests_brasilis.txt#270 (select)
+- "What's your name?:How old are you?:What are you doing?:End conversation."
++ "Qual é o seu nome?:Quantos anos você tem?:O que você está fazendo?:Encerrar a conversa."
+#: npc/quests/quests_brasilis.txt#271 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#272 (mes)
+- "Kaaaaaaao~"
++ "Miaaaaaaaau~"
+#: npc/quests/quests_brasilis.txt#273 (mes)
+- "Grrrrrrrrr - kaaan-"
++ "Grrrrrrrrr - grrrán-"
+#: npc/quests/quests_brasilis.txt#274 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#275 (mes)
+- "Booooowoooooo-"
++ "Uuuuuuuuuuuu-"
+#: npc/quests/quests_brasilis.txt#276 (mes)
+- "Booooowoooooo- -"
++ "Uuuuuuuuuuuu- -"
+#: npc/quests/quests_brasilis.txt#277 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#278 (mes)
+- "chamber pot braeee chamber pot brae chamber pot brae -"
++ "pinico braée pinico braé pinico braé -"
+#: npc/quests/quests_brasilis.txt#279 (mes)
+- "Bbeeeebbeee -"
++ "Bbeeeebbeee -"
+#: npc/quests/quests_brasilis.txt#280 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#281 (mes)
+- "Kaaaaaaao~"
++ "Miaaaaaaaau~"
+#: npc/quests/quests_brasilis.txt#282 (mes)
+- "Grrrrrrrrr - kaaan-"
++ "Grrrrrrrrr - grrrán-"
+#: npc/quests/quests_brasilis.txt#283 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#284 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#285 (mes)
+- "He makes strange sound like an animals."
++ "Ele faz barulhos estranhos, como um bicho."
+#: npc/quests/quests_brasilis.txt#286 (mes)
+- "Should I ask advice from Cherto?"
++ "Será que eu peço conselho ao Paulão?"
+#: npc/quests/quests_brasilis.txt#287 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#288 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#289 (mes)
+- "He makes strange sounds like an animal."
++ "Ele faz barulhos estranhos, como um bicho."
+#: npc/quests/quests_brasilis.txt#290 (mes)
+- "Should I ask advice from Cherto?"
++ "Será que eu peço conselho ao Paulão?"
+#: npc/quests/quests_brasilis.txt#291 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#292 (mes)
+- "Ah...? ah.....?"
++ "Ah...? ah.....?"
+#: npc/quests/quests_brasilis.txt#293 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#294 (mes)
+- "ah... ahah....."
++ "ah... ahah....."
+#: npc/quests/quests_brasilis.txt#295 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#296 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#297 (mes)
+- "I don't have a story but there are lots of friends waiting outside."
++ "Eu não tenho história para contar, mas tem um monte de amigos esperando lá fora."
+#: npc/quests/quests_brasilis.txt#298 (mes)
+- "- You give the feather, fresh meat and branch of grapes to the kid -"
++ "- Você entrega a pena, a carne fresca e o cacho de uvas ao menino -"
+#: npc/quests/quests_brasilis.txt#299 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#300 (mes)
+- "Ah............."
++ "Ah............."
+#: npc/quests/quests_brasilis.txt#301 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#302 (mes)
+- "Un, uhh...."
++ "Hum, ãhh...."
+#: npc/quests/quests_brasilis.txt#303 (mes)
+- "mooo... mommy....."
++ "muuu... mamãe....."
+#: npc/quests/quests_brasilis.txt#304 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#305 (mes)
+- "Ah.........."
++ "Ah.........."
+#: npc/quests/quests_brasilis.txt#306 (mes)
+- "bird...."
++ "passarinho...."
+#: npc/quests/quests_brasilis.txt#307 (mes)
+- "mon, mon, mon...key......"
++ "ma, ma, ma...ca...co......"
+#: npc/quests/quests_brasilis.txt#308 (mes)
+- "boo, booow..........."
++ "ca, cachor..........."
+#: npc/quests/quests_brasilis.txt#309 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#310 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#311 (mes)
+- "Dog?!"
++ "Cachorro?!"
+#: npc/quests/quests_brasilis.txt#312 (mes)
+- "kkk yes. Lots of friends want to meet you."
++ "kkk isso. Um monte de amigos quer te conhecer."
+#: npc/quests/quests_brasilis.txt#313 (mes)
+- "Don't be lonely anymore and be happy with your friends."
++ "Não fique mais sozinho, seja feliz com os seus amigos."
+#: npc/quests/quests_brasilis.txt#314 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#315 (mes)
+- "ah....he...hehe...."
++ "ah....he...hehe...."
+#: npc/quests/quests_brasilis.txt#316 (mes)
+- "- He starts to smile lightly and laughs. -"
++ "- Ele começa a sorrir de leve e depois ri. -"
+#: npc/quests/quests_brasilis.txt#317 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#318 (mes)
+- "Ye......yes......."
++ "Si......sim......."
+#: npc/quests/quests_brasilis.txt#319 (mes)
+- "tha... than......thank......yo.........you."
++ "o... obri......obri......ga.........do."
+#: npc/quests/quests_brasilis.txt#320 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#321 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#322 (mes)
+- "Alright such a cute smile!"
++ "Que sorriso lindo!"
+#: npc/quests/quests_brasilis.txt#323 (mes)
+- "Be a happy kid as always."
++ "Seja sempre um menino feliz."
+#: npc/quests/quests_brasilis.txt#324 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#325 (mes)
+- "Uh......"
++ "Ãh......"
+#: npc/quests/quests_brasilis.txt#326 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#327 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#328 (mes)
+- "what?"
++ "o quê?"
+#: npc/quests/quests_brasilis.txt#329 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#330 (mes)
+- "hey.........."
++ "ei.........."
+#: npc/quests/quests_brasilis.txt#331 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#332 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#333 (mes)
+- "Do you want to say anything?"
++ "Você quer dizer alguma coisa?"
+#: npc/quests/quests_brasilis.txt#334 (mes)
+- "- You get closer and pretend to take caution. -"
++ "- Você se aproxima devagar, com cuidado. -"
+#: npc/quests/quests_brasilis.txt#335 (mes)
+- "(kiss~)"
++ "(smack~)"
+#: npc/quests/quests_brasilis.txt#336 (mes)
+- "- The kid laughs again lightly then puts something in your hand. -"
++ "- O menino ri de leve outra vez e põe alguma coisa na sua mão. -"
+#: npc/quests/quests_brasilis.txt#337 (mes)
+- "- It's a fresh berry that's colored red and hard. -"
++ "- É uma fruta fresca, vermelha e dura. -"
+#: npc/quests/quests_brasilis.txt#338 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#339 (mes)
+- "ga...ra..........na..."
++ "gua...ra..........ná..."
+#: npc/quests/quests_brasilis.txt#340 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#341 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#342 (mes)
+- "Oops, guarana berry?"
++ "Opa, uma fruta de guaraná?"
+#: npc/quests/quests_brasilis.txt#343 (mes)
+- "Ah! Thank you very much!"
++ "Ah! Muito obrigado mesmo!"
+#: npc/quests/quests_brasilis.txt#344 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#345 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#346 (mes)
+- "If I have this, I can make a guarana candy."
++ "Com isto aqui eu posso mandar fazer uma bala de guaraná."
+#: npc/quests/quests_brasilis.txt#347 (mes)
+- "I better find that Candy Maker!"
++ "Preciso achar a Doceira!"
+#: npc/quests/quests_brasilis.txt#348 (mes)
+- "[Strange Kid]"
++ "[Garoto Estranho]"
+#: npc/quests/quests_brasilis.txt#349 (mes)
+- "He........."
++ "Ele........."
+#: npc/quests/quests_brasilis.txt#350 (mes)
+- "- The kid is smiling. -"
++ "- O menino está sorrindo. -"
+#: npc/quests/quests_brasilis.txt#351 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#352 (mes)
+- "Abracadabra~"
++ "Abracadabra~"
+#: npc/quests/quests_brasilis.txt#355 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#356 (mes)
+- "Ohoooh~!"
++ "Ôôôôh~!"
+#: npc/quests/quests_brasilis.txt#357 (mes)
+- "I have a guest."
++ "Tenho visita."
+#: npc/quests/quests_brasilis.txt#358 (mes)
+- "Good to see you."
++ "Que bom ver você."
+#: npc/quests/quests_brasilis.txt#359 (mes)
+- "I am the Mage Paje."
++ "Eu sou o Pajé Ubirajá."
+#: npc/quests/quests_brasilis.txt#360 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#361 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#362 (mes)
+- "Hello. Mr. Cherto told me to find you."
++ "Olá. O senhor Paulão mandou eu procurar o senhor."
+#: npc/quests/quests_brasilis.txt#363 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#364 (mes)
+- "Um.. Mr. Cherto? What's happened?"
++ "Hum.. o senhor Paulão? O que aconteceu?"
+#: npc/quests/quests_brasilis.txt#365 (mes)
+- "Have you come here to ask about lots of weird rumors?"
++ "Você veio perguntar sobre um monte de boato esquisito?"
+#: npc/quests/quests_brasilis.txt#366 (mes)
+- "- You give the note to Paje-"
++ "- Você entrega o bilhete a Ubirajá -"
+#: npc/quests/quests_brasilis.txt#367 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#368 (mes)
+- "Ohoooh~"
++ "Ôôôôh~"
+#: npc/quests/quests_brasilis.txt#369 (mes)
+- "Hmm gosh.. that's what happened."
++ "Hmm, nossa.. então foi isso que aconteceu."
+#: npc/quests/quests_brasilis.txt#370 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#371 (mes)
+- "I can't help you directly."
++ "Não posso lhe ajudar diretamente."
+#: npc/quests/quests_brasilis.txt#372 (mes)
+- "But I will give you simple magic so you can figure it out by yourself."
++ "Mas vou lhe dar uma magia simples para você mesmo resolver."
+#: npc/quests/quests_brasilis.txt#373 (select)
+- "What kind of magic?"
++ "Que tipo de magia?"
+#: npc/quests/quests_brasilis.txt#374 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#375 (mes)
+- "It's a magic that will make you appear as an animal to other animals. Pretty cool huh?"
++ "É uma magia que faz os animais enxergarem você como um deles. Bem legal, não é?"
+#: npc/quests/quests_brasilis.txt#376 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#377 (mes)
+- "Ok~ I will give you the magic."
++ "Pronto~ vou lhe dar a magia."
+#: npc/quests/quests_brasilis.txt#378 (mes)
+- "Most animals are really sensitive so they might be aware of it. Find a Toucan in the field that's oblivious to the spell. You'll know when you talk to it."
++ "Quase todo bicho é muito sensível e pode desconfiar. Procure no campo um Tucano que não perceba o feitiço. Você vai saber quando falar com ele."
+#: npc/quests/quests_brasilis.txt#379 (mes)
+- "[Mage Paje]"
++ "[Pajé Ubirajá]"
+#: npc/quests/quests_brasilis.txt#380 (mes)
+- "Good luck~!"
++ "Boa sorte~!"
+#: npc/quests/quests_brasilis.txt#381 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#382 (mes)
+- "Baaeecc!"
++ "Baaécc!"
+#: npc/quests/quests_brasilis.txt#383 (mes)
+- "I've never seen you before."
++ "Nunca vi você por aqui."
+#: npc/quests/quests_brasilis.txt#384 (mes)
+- "Baaeec!"
++ "Baaéc!"
+#: npc/quests/quests_brasilis.txt#385 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#386 (mes)
+- "It's the middle of the new and old continent... I know I've never seen you before but you seem familiar, like a woman dancing a samba. "
++ "Estamos no meio do continente novo e do velho... Sei que nunca vi você antes, mas parece familiar, como uma mulher dançando samba. "
+#: npc/quests/quests_brasilis.txt#387 (select)
+- "What are you talking about?"
++ "Do que você está falando?"
+#: npc/quests/quests_brasilis.txt#388 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#389 (mes)
+- "I can feel some similar power like guarana kid. bbaaaeeeccc!"
++ "Sinto em você uma força parecida com a do menino do guaraná. bbaaaééccc!"
+#: npc/quests/quests_brasilis.txt#390 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#391 (mes)
+- "That kid has had a really lonely time, baaecc! Perhaps you are a friend of him? Baaeec!!"
++ "Aquele menino passou um tempo muito solitário, baécc! Por acaso você é amigo dele? Baaéc!!"
+#: npc/quests/quests_brasilis.txt#392 (select)
+- "Not yet... but I want to be a friend."
++ "Ainda não... mas eu quero ser."
+#: npc/quests/quests_brasilis.txt#393 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#394 (mes)
+- "The kid who received care from guarana woman is also a friend of animals. Bbaaeecc!"
++ "O menino que foi cuidado pela mulher do guaraná também é amigo dos bichos. Bbaaéccc!"
+#: npc/quests/quests_brasilis.txt#395 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#396 (mes)
+- "I'd like to give the symbol of a toucan representative for the kid. Bbaaeecc!"
++ "Eu queria dar ao menino o símbolo do Tucano. Bbaaéccc!"
+#: npc/quests/quests_brasilis.txt#397 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#398 (mes)
+- "If you want to relieve his loneliness, can you help me?"
++ "Se você quer aliviar a solidão dele, pode me ajudar?"
+#: npc/quests/quests_brasilis.txt#399 (select)
+- "Absolutely!"
++ "Com certeza!"
+#: npc/quests/quests_brasilis.txt#400 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#401 (mes)
+- "It's my feather."
++ "É uma pena minha."
+#: npc/quests/quests_brasilis.txt#402 (mes)
+- "Send it to the kid."
++ "Leve para o menino."
+#: npc/quests/quests_brasilis.txt#403 (mes)
+- "We will keep our promise of friendship between guarana kid and Toucan forever. Bbaaeecc!"
++ "Vamos manter para sempre a promessa de amizade entre o menino do guaraná e o Tucano. Bbaaéccc!"
+#: npc/quests/quests_brasilis.txt#404 (mes)
+- "- You take a feather from Toucan. - "
++ "- Você recebe uma pena do Tucano. - "
+#: npc/quests/quests_brasilis.txt#405 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#406 (mes)
+- "There have to be others around here like me."
++ "Deve haver outros por aqui como eu."
+#: npc/quests/quests_brasilis.txt#407 (mes)
+- "Why don't you find a jaguar Bbaaeecc!"
++ "Por que não procura uma onça? Bbaaéccc!"
+#: npc/quests/quests_brasilis.txt#408 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#409 (mes)
+- "I will give a blessing from Toucan to you."
++ "Vou lhe dar a bênção do Tucano."
+#: npc/quests/quests_brasilis.txt#410 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#411 (mes)
+- "Fly fly far away. bbaaaeeeccckkk--!"
++ "Voe, voe bem longe. bbaaaééccckkk--!"
+#: npc/quests/quests_brasilis.txt#413 (mes)
+- "[Toucan]"
++ "[Tucano]"
+#: npc/quests/quests_brasilis.txt#414 (mes)
+- "Bbbaaeec~! Baaeec~!"
++ "Bbbaaéc~! Baaéc~!"
+#: npc/quests/quests_brasilis.txt#415 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#416 (mes)
+- "Hhooww..hhooww....."
++ "Rrrrronn..rrrronn....."
+#: npc/quests/quests_brasilis.txt#417 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#418 (mes)
+- "Smelling! This smell is from a human!"
++ "Que cheiro! Isto é cheiro de gente!"
+#: npc/quests/quests_brasilis.txt#419 (mes)
+- "Somewhere, a human!"
++ "Em algum lugar, gente!"
+#: npc/quests/quests_brasilis.txt#420 (mes)
+- "I got it. You are!!!"
++ "Achei. É você!!!"
+#: npc/quests/quests_brasilis.txt#422 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#423 (mes)
+- "Don't be afraid human."
++ "Não tenha medo, humano."
+#: npc/quests/quests_brasilis.txt#424 (mes)
+- "I don't have enough power to hunt humans, just waiting time to end my lifetime in this jungle."
++ "Já não tenho força para caçar gente, só espero o meu tempo acabar nesta selva."
+#: npc/quests/quests_brasilis.txt#425 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#426 (mes)
+- "Anyway you can talk with me, are you a guarana kid?"
++ "Enfim, você consegue falar comigo. Você é o menino do guaraná?"
+#: npc/quests/quests_brasilis.txt#427 (select)
+- "Yes? N...o......actually...."
++ "Sou? N...ão......na verdade...."
+#: npc/quests/quests_brasilis.txt#428 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#429 (mes)
+- "The son of guarana woman became our friend also."
++ "O filho da mulher do guaraná também virou nosso amigo."
+#: npc/quests/quests_brasilis.txt#430 (mes)
+- "They treated all life preciously."
++ "Eles tratavam toda vida como coisa preciosa."
+#: npc/quests/quests_brasilis.txt#431 (mes)
+- "I hope you are same the as her."
++ "Espero que você seja igual a ela."
+#: npc/quests/quests_brasilis.txt#432 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#433 (mes)
+- "Bird's chirpings informed me."
++ "O canto dos pássaros me contou."
+#: npc/quests/quests_brasilis.txt#434 (mes)
+- "The son of guarana woman has a diseased heart."
++ "O filho da mulher do guaraná está com o coração doente."
+#: npc/quests/quests_brasilis.txt#435 (mes)
+- "Her brothers made him lonely, don't you think?"
++ "Foram os irmãos dela que o deixaram sozinho, não acha?"
+#: npc/quests/quests_brasilis.txt#436 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#437 (mes)
+- "Here is fresh meat that I hunted just a few days ago."
++ "Aqui está uma carne fresca que eu cacei faz poucos dias."
+#: npc/quests/quests_brasilis.txt#438 (mes)
+- "Take it and give it to the poor kid."
++ "Leve e entregue ao pobre menino."
+#: npc/quests/quests_brasilis.txt#439 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#440 (mes)
+- "I can give this tiny thing to you so, don't forget it."
++ "É pouca coisa o que eu posso dar, então não se esqueça disto."
+#: npc/quests/quests_brasilis.txt#441 (mes)
+- "The jungle will welcome you whenever!"
++ "A selva vai receber você bem sempre que quiser!"
+#: npc/quests/quests_brasilis.txt#442 (mes)
+- "- You get fresh meat from Jaguar. -"
++ "- Você recebe a carne fresca da Onça. -"
+#: npc/quests/quests_brasilis.txt#443 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#444 (mes)
+- "Monkey, who's always meddling with others, wants to meet you."
++ "O Macaco, que vive se metendo na vida dos outros, quer conhecer você."
+#: npc/quests/quests_brasilis.txt#445 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#446 (mes)
+- "I will give you a Jaguar's high blessing."
++ "Vou lhe dar a bênção maior da Onça."
+#: npc/quests/quests_brasilis.txt#447 (mes)
+- "Go to monkey by flowing through the wind like a bee."
++ "Vá até o macaco levado pelo vento, como uma abelha."
+#: npc/quests/quests_brasilis.txt#448 (mes)
+- "Let's meet again my friend!"
++ "Até a próxima, meu amigo!"
+#: npc/quests/quests_brasilis.txt#449 (mes)
+- "[Jaguar]"
++ "[Onça]"
+#: npc/quests/quests_brasilis.txt#450 (mes)
+- "krrrrrr...."
++ "grrrrrr...."
+#: npc/quests/quests_brasilis.txt#451 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#452 (mes)
+- "What is it??!!"
++ "O que é isso??!!"
+#: npc/quests/quests_brasilis.txt#453 (mes)
+- "We don't tolerate humans? Get out~!!"
++ "Não aturamos humanos? Fora daqui~!!"
+#: npc/quests/quests_brasilis.txt#454 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#455 (mes)
+- "Nono... wait.... that scent!!"
++ "Nãonão... espera.... esse cheiro!!"
+#: npc/quests/quests_brasilis.txt#456 (mes)
+- "I can smell Jaguar from you, who are you?"
++ "Sinto cheiro de Onça em você. Quem é você?"
+#: npc/quests/quests_brasilis.txt#457 (mes)
+- "Gosh, maybe there's no jaguar without fur and weird shape!"
++ "Nossa, deve ser a única onça sem pelo e de formato esquisito!"
+#: npc/quests/quests_brasilis.txt#458 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#459 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#460 (mes)
+- "........................"
++ "........................"
+#: npc/quests/quests_brasilis.txt#461 (mes)
+- "Are you saying that I look like an animal?!?!"
++ "Você está dizendo que eu pareço um bicho?!?!"
+#: npc/quests/quests_brasilis.txt#462 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#463 (mes)
+- "Uh? Aren't you a jaguar?"
++ "Ãh? Você não é uma onça?"
+#: npc/quests/quests_brasilis.txt#464 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#465 (mes)
+- "Ahhha. Jaguar send you to me, right?? kkkikkki"
++ "Aaarrá. A Onça mandou você até mim, né?? kkikkki"
+#: npc/quests/quests_brasilis.txt#466 (mes)
+- "But you don't look like guarana kid."
++ "Mas você não tem cara de menino do guaraná."
+#: npc/quests/quests_brasilis.txt#467 (select)
+- "I've come here to help him."
++ "Eu vim aqui para ajudar ele."
+#: npc/quests/quests_brasilis.txt#468 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#469 (mes)
+- "I heard guarana kid became lonely, is he?"
++ "Ouvi dizer que o menino do guaraná ficou sozinho. É verdade?"
+#: npc/quests/quests_brasilis.txt#470 (mes)
+- "We are experts in acrobatic acts, does kid like it?? kkkickkksk!"
++ "Somos mestres em acrobacia. Será que o menino gosta?? kkikkksk!"
+#: npc/quests/quests_brasilis.txt#471 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#472 (mes)
+- "Give this branch of grapes to guarana kid."
++ "Entregue este cacho de uvas ao menino do guaraná."
+#: npc/quests/quests_brasilis.txt#473 (mes)
+- "We will make him have fun during the whole night whenever he comes to us!! kkkickkksk!"
++ "Vamos divertir ele a noite inteira toda vez que ele vier até nós!! kkikkksk!"
+#: npc/quests/quests_brasilis.txt#474 (mes)
+- "- You get a bunch of grapes from Monkey. -"
++ "- Você recebe um cacho de uvas do Macaco. -"
+#: npc/quests/quests_brasilis.txt#475 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#476 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#477 (mes)
+- "Good~ Now it's time to go back to the kid~!!"
++ "Beleza~ Agora é hora de voltar até o menino~!!"
+#: npc/quests/quests_brasilis.txt#478 (mes)
+- "[Monkey]"
++ "[Macaco]"
+#: npc/quests/quests_brasilis.txt#479 (mes)
+- "kkkickkksk!"
++ "kkikkksk!"
+#: npc/quests/quests_brasilis.txt#480 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#481 (mes)
+- "Brasilis' climate is special."
++ "O clima de Brasilis é especial."
+#: npc/quests/quests_brasilis.txt#482 (mes)
+- "This climate offers special cases in botany classes different from any other regions of the world."
++ "Este clima cria casos únicos na botânica, diferentes de qualquer outra região do mundo."
+#: npc/quests/quests_brasilis.txt#483 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#484 (mes)
+- "The plants here have robust frames and are clear and colorful."
++ "As plantas daqui têm caule robusto e são nítidas e coloridas."
+#: npc/quests/quests_brasilis.txt#485 (mes)
+- "Here the plants are really huge and we can feel their presence."
++ "Aqui as plantas são enormes, dá para sentir a presença delas."
+#: npc/quests/quests_brasilis.txt#486 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#487 (mes)
+- "One of them, a Water Lily, is a really gorgeous and unique plant."
++ "Uma delas, a Vitória-Régia, é uma planta esplêndida e única."
+#: npc/quests/quests_brasilis.txt#488 (mes)
+- "This flower is quite sensitive so it doesn't bloom everywhere."
++ "Essa flor é bem sensível, então não desabrocha em qualquer lugar."
+#: npc/quests/quests_brasilis.txt#489 (select)
+- "Interesting.:End conversation."
++ "Interessante.:Encerrar a conversa."
+#: npc/quests/quests_brasilis.txt#490 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#491 (mes)
+- "I guess you aren't interested in botany."
++ "Acho que você não se interessa por botânica."
+#: npc/quests/quests_brasilis.txt#492 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#493 (mes)
+- "It doesn't appear easily and it is a mysterious flower even to the natives, so the Brasilis people believe that a person will get great luck if someone finds it."
++ "Ela não aparece com facilidade e é uma flor misteriosa até para os nativos, então o povo de Brasilis acredita que quem a encontra recebe grande sorte."
+#: npc/quests/quests_brasilis.txt#494 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#495 (mes)
+- "As a botanist, I have been hanging around here to find the lucky flower but as I expected, it hasn't shown itself yet."
++ "Como botânica, eu ando por aqui atrás dessa flor da sorte, mas, como eu esperava, ela ainda não se mostrou."
+#: npc/quests/quests_brasilis.txt#496 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#497 (mes)
+- "I believe that with enough perseverence, this flower will show me it's beautiful brilliance."
++ "Acredito que, com bastante persistência, essa flor vai me mostrar todo o seu brilho."
+#: npc/quests/quests_brasilis.txt#498 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#499 (mes)
+- "Ah, if you are interested more in the Water Lily story, find someone named Marta."
++ "Ah, se você quiser saber mais sobre a Vitória-Régia, procure uma pessoa chamada Jurema."
+#: npc/quests/quests_brasilis.txt#500 (mes)
+- "She is wise and knows lots of stories here in Brasilis."
++ "Ela é sábia e conhece um monte de histórias daqui de Brasilis."
+#: npc/quests/quests_brasilis.txt#501 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#502 (mes)
+- "Ah, if you are interested more in the Water Lily story, find someone named Marta."
++ "Ah, se você quiser saber mais sobre a Vitória-Régia, procure uma pessoa chamada Jurema."
+#: npc/quests/quests_brasilis.txt#503 (mes)
+- "She is wise and knows lots of stories here in Brasilis."
++ "Ela é sábia e conhece um monte de histórias daqui de Brasilis."
+#: npc/quests/quests_brasilis.txt#504 (mes)
+- "- You show a lotus flower to Karmen and talk about the story so far. -"
++ "- Você mostra uma Flor de Vitória-Régia a Carmen e conta tudo o que aconteceu. -"
+#: npc/quests/quests_brasilis.txt#505 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#506 (mes)
+- "Wow!! You had a really good experience."
++ "Uau!! Você viveu uma experiência e tanto."
+#: npc/quests/quests_brasilis.txt#507 (mes)
+- "So~~~ the water lily lives in the depths of brasilis, right?"
++ "Então~~~ a vitória-régia vive nas profundezas de Brasilis, é isso?"
+#: npc/quests/quests_brasilis.txt#508 (mes)
+- "I wil try to find it again by myself, I won't give up!!"
++ "Vou tentar encontrá-la de novo por mim mesma, não vou desistir!!"
+#: npc/quests/quests_brasilis.txt#509 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#510 (mes)
+- "I am so grateful that I met you."
++ "Sou muito grata por ter conhecido você."
+#: npc/quests/quests_brasilis.txt#511 (mes)
+- "The water lily must truly be a lucky flower. hahaha"
++ "A vitória-régia é mesmo uma flor da sorte. Rarará"
+#: npc/quests/quests_brasilis.txt#512 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#513 (mes)
+- "This climate offers special cases in botany classes different from any other regions of the world."
++ "Este clima cria casos únicos na botânica, diferentes de qualquer outra região do mundo."
+#: npc/quests/quests_brasilis.txt#514 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#515 (mes)
+- "The plants here have robust frames and are clear and colorful."
++ "As plantas daqui têm caule robusto e são nítidas e coloridas."
+#: npc/quests/quests_brasilis.txt#516 (mes)
+- "Here the plants are really huge and we can feel their presence."
++ "Aqui as plantas são enormes, dá para sentir a presença delas."
+#: npc/quests/quests_brasilis.txt#517 (mes)
+- "[Karmen]"
++ "[Carmen]"
+#: npc/quests/quests_brasilis.txt#518 (mes)
+- "It's a botanist's dream."
++ "É o sonho de qualquer botânico."
+#: npc/quests/quests_brasilis.txt#519 (mes)
+- "[Brasilis Boy]"
++ "[Menino]"
+#: npc/quests/quests_brasilis.txt#520 (mes)
+- "Grandma! That person has a weird smell."
++ "Vovó! Essa pessoa tem um cheiro esquisito."
+#: npc/quests/quests_brasilis.txt#521 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#522 (mes)
+- "This person isn't from here."
++ "Esta pessoa não é daqui."
+#: npc/quests/quests_brasilis.txt#523 (mes)
+- "Say hello to our guest."
++ "Cumprimente o nosso visitante."
+#: npc/quests/quests_brasilis.txt#524 (mes)
+- "[Brasilis Boy]"
++ "[Menino]"
+#: npc/quests/quests_brasilis.txt#525 (mes)
+- "heee~ hi!!"
++ "heee~ oi!!"
+#: npc/quests/quests_brasilis.txt#526 (mes)
+- "I am Kaka!!"
++ "Eu sou o Kaká!!"
+#: npc/quests/quests_brasilis.txt#527 (mes)
+- "Whats your name?"
++ "Qual é o seu nome?"
+#: npc/quests/quests_brasilis.txt#528 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#529 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#530 (mes)
+- "I am "
++ "Eu sou "
+#: npc/quests/quests_brasilis.txt#531 (mes)
+- "."
++ "."
+#: npc/quests/quests_brasilis.txt#532 (mes)
+- "[Brasilis Boy]"
++ "[Menino]"
+#: npc/quests/quests_brasilis.txt#533 (mes)
+- "The outsider has a weird name!"
++ "O forasteiro tem um nome esquisito!"
+#: npc/quests/quests_brasilis.txt#534 (mes)
+- "Thas ok! If we keep talking we'll be friends! Cheer up!"
++ "Tudo bem! Se a gente conversar mais, vira amigo! Ânimo!"
+#: npc/quests/quests_brasilis.txt#535 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#536 (mes)
+- "Hehe..."
++ "Rerê..."
+#: npc/quests/quests_brasilis.txt#537 (mes)
+- "So, why have you come here stranger~?"
++ "E então, por que você veio até aqui, forasteiro~?"
+#: npc/quests/quests_brasilis.txt#538 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#539 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#540 (mes)
+- "I heard you knows lots of stories, is that true?"
++ "Ouvi dizer que a senhora conhece um monte de histórias. É verdade?"
+#: npc/quests/quests_brasilis.txt#541 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#542 (mes)
+- "Wooo! how you know my grandma knows lots of stories, amazing~?"
++ "Uau! Como você sabe que a minha vovó conhece um monte de história, hein~?"
+#: npc/quests/quests_brasilis.txt#543 (mes)
+- "Grandma is really wise and kind so, I heard lotsa things."
++ "A vovó é muito sábia e boazinha, então eu escuto um montão de coisa."
+#: npc/quests/quests_brasilis.txt#544 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#545 (mes)
+- "Hehe. Kaka always listens to many stories every night, he really likes my stories."
++ "Rerê. O Kaká escuta muitas histórias toda noite, ele gosta demais das minhas histórias."
+#: npc/quests/quests_brasilis.txt#546 (mes)
+- "Kaka always makes me happy because he asks so many curious things. That is pure happiness."
++ "O Kaká sempre me alegra, porque pergunta um monte de coisa curiosa. Isso é felicidade pura."
+#: npc/quests/quests_brasilis.txt#547 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#548 (mes)
+- "Ok, Kaka why don't you invite our guest today to our small meeting?"
++ "Então, Kaká, por que você não convida o nosso visitante para a nossa rodinha de hoje?"
+#: npc/quests/quests_brasilis.txt#549 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#550 (mes)
+- "Ok grandma~!!"
++ "Tá bom, vovó~!!"
+#: npc/quests/quests_brasilis.txt#551 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#552 (mes)
+- "Hey~ do you have special story that you want to listen to?"
++ "Ei~ você tem alguma história especial que queira ouvir?"
+#: npc/quests/quests_brasilis.txt#553 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#554 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#555 (mes)
+- "About the mysterious water lily?"
++ "Sobre a misteriosa vitória-régia?"
+#: npc/quests/quests_brasilis.txt#556 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#557 (mes)
+- "Water lily...."
++ "A vitória-régia...."
+#: npc/quests/quests_brasilis.txt#558 (mes)
+- "It's from a long long time ago."
++ "Faz muito, muito tempo."
+#: npc/quests/quests_brasilis.txt#559 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#560 (mes)
+- "Before Brasilis was established."
++ "Antes mesmo de Brasilis existir."
+#: npc/quests/quests_brasilis.txt#561 (mes)
+- "A tribe that lived with the giant waterfall and jungle as friends spent their whole time with nature."
++ "Uma tribo que vivia com a grande cachoeira e com a selva como amigas passava todo o tempo junto da natureza."
+#: npc/quests/quests_brasilis.txt#562 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#563 (mes)
+- "One of tribe chiefs had a pretty daughter called 'Naia'."
++ "Um dos chefes da tribo tinha uma filha bonita chamada 'Naia'."
+#: npc/quests/quests_brasilis.txt#564 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#565 (mes)
+- "Naia liked listening to stories like Kaka so, her mom told her stories every night about nature and gods."
++ "A Naia gostava de ouvir histórias, igual ao Kaká. Então a mãe dela contava histórias toda noite, sobre a natureza e sobre os deuses."
+#: npc/quests/quests_brasilis.txt#566 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#567 (mes)
+- "Woooa, she's just like me!"
++ "Uau, ela era igualzinha a mim!"
+#: npc/quests/quests_brasilis.txt#568 (mes)
+- "Maybe she would be pretty... hehe."
++ "Vai ver ela era bonita... rerê."
+#: npc/quests/quests_brasilis.txt#569 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#570 (mes)
+- "According to her mother..."
++ "Segundo a mãe dela..."
+#: npc/quests/quests_brasilis.txt#571 (mes)
+- "If the moon in the sky loves some woman in the earth, he turns her into a star so that they can stay together forever."
++ "Se Jaci, a lua, ama alguma mulher da terra, ele a transforma em estrela para que os dois fiquem juntos para sempre."
+#: npc/quests/quests_brasilis.txt#572 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#573 (mes)
+- "After Naia heard this story, she went to her dad to ask if it was true or not."
++ "Depois que a Naia ouviu essa história, foi perguntar ao pai se aquilo era verdade."
+#: npc/quests/quests_brasilis.txt#574 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#575 (mes)
+- "So, what did he say?"
++ "E o que ele disse?"
+#: npc/quests/quests_brasilis.txt#576 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#577 (mes)
+- "^3131FF'My dear, Naia the moon is one of the bravest men. But he can no longer have a bride. So you can't become a star... Sorry~.^000000"
++ "^3131FF'Minha querida Naia, Jaci é um dos homens mais valentes que existem. Mas ele já não pode ter noiva. Então você não pode virar estrela... Sinto muito~.^000000"
+#: npc/quests/quests_brasilis.txt#578 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#579 (mes)
+- "Did Naia wants to be the bride of the man?"
++ "A Naia queria ser a noiva dele?"
+#: npc/quests/quests_brasilis.txt#580 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#581 (mes)
+- "Yes Kaka, imagine the moon how beautiful and mysterious, that's just ideal for girls."
++ "Queria, Kaká. Imagine só como a lua é bonita e misteriosa; é o sonho de qualquer menina."
+#: npc/quests/quests_brasilis.txt#582 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#583 (mes)
+- "But the moon doesn't meet a human as his wife anymore? What was going on with Naia?"
++ "Mas Jaci não aceita mais uma humana como esposa? E o que aconteceu com a Naia?"
+#: npc/quests/quests_brasilis.txt#584 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#585 (mes)
+- "Naia was really a nice girl."
++ "A Naia era mesmo uma boa menina."
+#: npc/quests/quests_brasilis.txt#586 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#587 (mes)
+- "Although her parents tried to prevent her, she still went to the forest to meet the moon every night."
++ "Mesmo com os pais tentando impedir, ela ia à floresta todas as noites para encontrar a lua."
+#: npc/quests/quests_brasilis.txt#588 (mes)
+- "Sadly, even with all of her effort, the moon didn't show any reaction to her."
++ "Infelizmente, apesar de todo o esforço dela, a lua não deu sinal nenhum."
+#: npc/quests/quests_brasilis.txt#589 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#590 (mes)
+- "One day she also went to the top of the mountain to be closer to him. She decided to take a rest for a while around the lake."
++ "Um dia ela subiu até o alto da montanha para ficar mais perto dele. E resolveu descansar um pouco à beira do lago."
+#: npc/quests/quests_brasilis.txt#591 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#592 (mes)
+- "That's when.. Naia saw it."
++ "Foi aí que.. a Naia viu."
+#: npc/quests/quests_brasilis.txt#593 (mes)
+- "It was the moon he was shining beautifully over the waving lake lightly."
++ "Era a lua, brilhando linda sobre a água ondulando de leve."
+#: npc/quests/quests_brasilis.txt#594 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#595 (mes)
+- "I know, it's just the moon reflecting on the water. Right?!"
++ "Eu sei, era só a lua refletida na água. Né?!"
+#: npc/quests/quests_brasilis.txt#596 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#597 (mes)
+- "Yes, but to her, the image made her fall into the lake without hesitating and drowned."
++ "Era, mas para ela aquela imagem foi tão forte que ela se jogou no lago sem hesitar e se afogou."
+#: npc/quests/quests_brasilis.txt#598 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#599 (mes)
+- "Oh no."
++ "Ah, não."
+#: npc/quests/quests_brasilis.txt#600 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#601 (mes)
+- "The moon was also watching her from the sky."
++ "Jaci também a observava do céu."
+#: npc/quests/quests_brasilis.txt#602 (mes)
+- "He felt sad and pitied her. So he decided to turn her into a beautiful flower to thank her for her love."
++ "Ele ficou triste e teve pena dela. Então resolveu transformá-la numa flor linda, para agradecer o amor que ela sentia."
+#: npc/quests/quests_brasilis.txt#603 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#604 (mes)
+- "That is the story of the mysterious flower people called the Brasilis Water Flower."
++ "É essa a história da flor misteriosa que o povo chamou de Vitória-Régia de Brasilis."
+#: npc/quests/quests_brasilis.txt#605 (mes)
+- "This Naia flower appears as light white during daytime but in the night turns into red due to it's love connection to the moon."
++ "Essa flor de Naia é de um branco claro durante o dia, mas à noite fica vermelha por causa do amor que a prende à lua."
+#: npc/quests/quests_brasilis.txt#606 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#607 (mes)
+- "How sad but beautiful!"
++ "Que triste, mas que bonito!"
+#: npc/quests/quests_brasilis.txt#608 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#609 (mes)
+- "How about you stranger?"
++ "E você, forasteiro?"
+#: npc/quests/quests_brasilis.txt#610 (mes)
+- "Did you enjoy this story?"
++ "Gostou da história?"
+#: npc/quests/quests_brasilis.txt#611 (mes)
+- "If you want to listen to another story, just come to me."
++ "Se quiser ouvir outra história, é só vir até mim."
+#: npc/quests/quests_brasilis.txt#612 (mes)
+- "If you don't mind playing with my grandson a ~ little. hoohoo."
++ "Contanto que brinque um ~ pouquinho com o meu neto. Rorrô."
+#: npc/quests/quests_brasilis.txt#613 (mes)
+- "[Kaka]"
++ "[Kaká]"
+#: npc/quests/quests_brasilis.txt#614 (mes)
+- "My grandma is really a bit tired doing some tribe stuff!"
++ "A minha vovó está um pouco cansada com as coisas da tribo!"
+#: npc/quests/quests_brasilis.txt#615 (mes)
+- "Could you come another day?"
++ "Você pode voltar outro dia?"
+#: npc/quests/quests_brasilis.txt#616 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#617 (mes)
+- "You are not from around here."
++ "Você não é daqui."
+#: npc/quests/quests_brasilis.txt#618 (mes)
+- "I can sense a strange earth smell."
++ "Sinto em você um cheiro estranho de terra."
+#: npc/quests/quests_brasilis.txt#619 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#620 (mes)
+- "But your eyes shine with strength."
++ "Mas os seus olhos brilham com força."
+#: npc/quests/quests_brasilis.txt#621 (mes)
+- "Indeed you are spreading out spirit and will from your whole body."
++ "De fato, você espalha espírito e vontade pelo corpo inteiro."
+#: npc/quests/quests_brasilis.txt#622 (mes)
+- "[Marta]"
++ "[Jurema]"
+#: npc/quests/quests_brasilis.txt#623 (mes)
+- "If you work at it you will be a great person someday."
++ "Se você se dedicar, um dia vai ser uma grande pessoa."
+#: npc/quests/quests_brasilis.txt#624 (mes)
+- "- wait a second!! -"
++ "- espere um instante!! -"
+#: npc/quests/quests_brasilis.txt#625 (mes)
+- "- you have too many items -"
++ "- você está com itens demais -"
+#: npc/quests/quests_brasilis.txt#626 (mes)
+- "- so you can't get any more items. -"
++ "- então não pode receber mais nada. -"
+#: npc/quests/quests_brasilis.txt#627 (mes)
+- "- make your body lighter -"
++ "- alivie o seu corpo -"
+#: npc/quests/quests_brasilis.txt#628 (mes)
+- "- then try again. -"
++ "- e tente de novo. -"
+#: npc/quests/quests_brasilis.txt#629 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#630 (mes)
+- "Jasira!!!"
++ "Jacira!!!"
+#: npc/quests/quests_brasilis.txt#631 (mes)
+- "Where are you going again?!!"
++ "Aonde você vai de novo?!!"
+#: npc/quests/quests_brasilis.txt#632 (mes)
+- "come back~, please!!"
++ "volta aqui~, por favor!!"
+#: npc/quests/quests_brasilis.txt#633 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#634 (mes)
+- "Mom, I have to go out!!"
++ "Mãe, eu preciso sair!!"
+#: npc/quests/quests_brasilis.txt#635 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#636 (mes)
+- "No way~!! You shouldn't!!"
++ "De jeito nenhum~!! Você não vai!!"
+#: npc/quests/quests_brasilis.txt#637 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#638 (mes)
+- "Gosh.. today also failed."
++ "Poxa.. hoje também não deu."
+#: npc/quests/quests_brasilis.txt#639 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#640 (mes)
+- "......"
++ "......"
+#: npc/quests/quests_brasilis.txt#641 (mes)
+- "What's up? Why are you looking at me?"
++ "O que foi? Por que está olhando para mim?"
+#: npc/quests/quests_brasilis.txt#642 (mes)
+- "I don't want to be a showgirl!! Get out!!"
++ "Eu não quero ser dançarina!! Sai daqui!!"
+#: npc/quests/quests_brasilis.txt#643 (select)
+- "Nothing, sorry.:What's wrong?"
++ "Nada, desculpe.:O que aconteceu?"
+#: npc/quests/quests_brasilis.txt#644 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#645 (mes)
+- "I am so sad!!!"
++ "Estou tão triste!!!"
+#: npc/quests/quests_brasilis.txt#646 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#647 (mes)
+- "It's not your business."
++ "Não é da sua conta."
+#: npc/quests/quests_brasilis.txt#648 (mes)
+- "You are just an outsider!"
++ "Você é só um forasteiro!"
+#: npc/quests/quests_brasilis.txt#649 (select)
+- "How rude!:Just trying to help."
++ "Que grosseria!:Só quero ajudar."
+#: npc/quests/quests_brasilis.txt#650 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#651 (mes)
+- "What's it matter to you that I'm rude??!!"
++ "E o que você tem a ver com eu ser grossa??!!"
+#: npc/quests/quests_brasilis.txt#652 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#653 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#654 (mes)
+- "I know that I'm just passing by but I might be able to help you. What do you think?"
++ "Eu sei que só estou de passagem, mas talvez eu possa ajudar. O que você acha?"
+#: npc/quests/quests_brasilis.txt#655 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#656 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#657 (mes)
+- "This kind of meeting could be more than just a coincidence."
++ "Um encontro desses pode ser mais do que coincidência."
+#: npc/quests/quests_brasilis.txt#658 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#659 (mes)
+- "......................"
++ "......................"
+#: npc/quests/quests_brasilis.txt#660 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#661 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#662 (mes)
+- "Hmm can you tell me your name?"
++ "Hmm, pode me dizer o seu nome?"
+#: npc/quests/quests_brasilis.txt#663 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#664 (mes)
+- "ja..."
++ "ja..."
+#: npc/quests/quests_brasilis.txt#665 (mes)
+- "Jasira."
++ "Jacira."
+#: npc/quests/quests_brasilis.txt#666 (mes)
+- "My name is Jasira."
++ "Meu nome é Jacira."
+#: npc/quests/quests_brasilis.txt#667 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#668 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#669 (mes)
+- "Nice name~."
++ "Nome bonito~."
+#: npc/quests/quests_brasilis.txt#670 (mes)
+- "Jasira what's going on?"
++ "Jacira, o que está acontecendo?"
+#: npc/quests/quests_brasilis.txt#671 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#672 (mes)
+- "............."
++ "............."
+#: npc/quests/quests_brasilis.txt#673 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#674 (mes)
+- "I have to meet 'Jasi' but I can't go out...."
++ "Eu preciso encontrar o 'Jaci', mas não posso sair...."
+#: npc/quests/quests_brasilis.txt#675 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#676 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#677 (mes)
+- "who is Jasi?"
++ "quem é Jaci?"
+#: npc/quests/quests_brasilis.txt#678 (mes)
+- "Your.... lover?"
++ "Seu.... namorado?"
+#: npc/quests/quests_brasilis.txt#679 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#680 (mes)
+- "l...o...v...e...lover??!!"
++ "n...a...m...o...namorado??!!"
+#: npc/quests/quests_brasilis.txt#681 (mes)
+- "No way~"
++ "De jeito nenhum~"
+#: npc/quests/quests_brasilis.txt#682 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#683 (mes)
+- "If he is my lover, it would be great... but..."
++ "Se ele fosse meu namorado seria ótimo... mas..."
+#: npc/quests/quests_brasilis.txt#684 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#685 (mes)
+- "Jasi is......"
++ "O Jaci é......"
+#: npc/quests/quests_brasilis.txt#686 (mes)
+- "the great moon."
++ "a grande lua."
+#: npc/quests/quests_brasilis.txt#687 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#688 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#689 (mes)
+- "The moon?"
++ "A lua?"
+#: npc/quests/quests_brasilis.txt#690 (mes)
+- "Maybe... are you talking about the moon from the story?"
++ "Espere... você está falando da lua daquela história?"
+#: npc/quests/quests_brasilis.txt#691 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#692 (mes)
+- "Yeah!"
++ "Isso!"
+#: npc/quests/quests_brasilis.txt#693 (mes)
+- "Dear Jasi is from the moon from the sky!"
++ "O meu querido Jaci é a lua que vem do céu!"
+#: npc/quests/quests_brasilis.txt#694 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#695 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#696 (mes)
+- "Why are you thinking like that?"
++ "Por que você pensa assim?"
+#: npc/quests/quests_brasilis.txt#697 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#698 (mes)
+- "Cuz' Jasi is really gorgeous and the most important thing is he is taking care of the water lily in Brasilis."
++ "Porque o Jaci é lindo, e o mais importante: é ele quem cuida da vitória-régia de Brasilis."
+#: npc/quests/quests_brasilis.txt#699 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#700 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#701 (mes)
+- "Brasilis water lily??!!"
++ "A vitória-régia de Brasilis??!!"
+#: npc/quests/quests_brasilis.txt#702 (mes)
+- "Isn't it the uniqe flower?"
++ "Não é aquela flor única?"
+#: npc/quests/quests_brasilis.txt#703 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#704 (mes)
+- "Right. It's a really mysterious flower and difficult to find."
++ "Exatamente. É uma flor muito misteriosa e difícil de achar."
+#: npc/quests/quests_brasilis.txt#705 (mes)
+- "But around Jasi there are lots of water lilies."
++ "Mas em volta do Jaci tem um monte de vitórias-régias."
+#: npc/quests/quests_brasilis.txt#706 (mes)
+- "That's why I believe Jasi is the moon."
++ "É por isso que eu acredito que o Jaci é a lua."
+#: npc/quests/quests_brasilis.txt#707 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#708 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#709 (mes)
+- "Where is Jasi?"
++ "Onde está o Jaci?"
+#: npc/quests/quests_brasilis.txt#710 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#711 (mes)
+- "He is deep inside the Jungle."
++ "Ele está lá no fundo da selva."
+#: npc/quests/quests_brasilis.txt#712 (mes)
+- "As you can see I am so weak so, I've been staying home. But once, I was strong enough to leave this village."
++ "Como você vê, eu sou fraquinha, então fico em casa. Mas houve um tempo em que eu era forte o bastante para sair da vila."
+#: npc/quests/quests_brasilis.txt#713 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#714 (mes)
+- "I just wandered the jungle and fell down somewhere and that's where I saw him."
++ "Eu andei sem rumo pela selva, caí em algum lugar e foi lá que eu o vi."
+#: npc/quests/quests_brasilis.txt#715 (mes)
+- "He was so nice. He helped heal me and guided me back home."
++ "Ele foi muito gentil. Cuidou dos meus ferimentos e me trouxe de volta para casa."
+#: npc/quests/quests_brasilis.txt#716 (mes)
+- "That was really really great time."
++ "Foi um tempo muito, muito bom."
+#: npc/quests/quests_brasilis.txt#717 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#718 (mes)
+- "Since I came back home, my parents punished me."
++ "Desde que eu voltei para casa, os meus pais me puseram de castigo."
+#: npc/quests/quests_brasilis.txt#719 (mes)
+- "I can understand why they are worrying but i missed Jasi a lot!"
++ "Eu entendo a preocupação deles, mas eu sinto muita falta do Jaci!"
+#: npc/quests/quests_brasilis.txt#720 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#721 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#722 (mes)
+- "Why don't you meet him after recovering your strength?"
++ "Por que você não vai encontrar ele depois de recuperar as forças?"
+#: npc/quests/quests_brasilis.txt#723 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#724 (mes)
+- "................."
++ "................."
+#: npc/quests/quests_brasilis.txt#725 (mes)
+- "I wanna see him right now..."
++ "Eu quero ver ele agora..."
+#: npc/quests/quests_brasilis.txt#726 (select)
+- "Help Jasira.:Ignore her."
++ "Ajudar a Jacira.:Ignorar."
+#: npc/quests/quests_brasilis.txt#727 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#728 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#729 (mes)
+- "Sorry I can't help you. Cheer up!"
++ "Desculpe, não posso ajudar. Ânimo!"
+#: npc/quests/quests_brasilis.txt#730 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#731 (mes)
+- "Crying........"
++ "Chorando........"
+#: npc/quests/quests_brasilis.txt#732 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#733 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#734 (mes)
+- "Jasira I came here to find the Brasilis water lily."
++ "Jacira, eu vim até aqui atrás da vitória-régia de Brasilis."
+#: npc/quests/quests_brasilis.txt#735 (mes)
+- "Don't you think fate has brought us together?"
++ "Você não acha que o destino nos juntou?"
+#: npc/quests/quests_brasilis.txt#736 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#737 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#738 (mes)
+- "If you tell me how to find Jasi, I can help you."
++ "Se você me disser como achar o Jaci, eu posso ajudar."
+#: npc/quests/quests_brasilis.txt#739 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#740 (mes)
+- "Really? But I don't know exactly how to get there. I was just wandering around when I met him."
++ "Sério? Mas eu não sei bem o caminho. Eu estava andando sem rumo quando o encontrei."
+#: npc/quests/quests_brasilis.txt#741 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#742 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#743 (mes)
+- "Can't you remember anything?"
++ "Você não lembra de nada?"
+#: npc/quests/quests_brasilis.txt#744 (mes)
+- "If you know something you've gotta tell me."
++ "Se souber alguma coisa, precisa me contar."
+#: npc/quests/quests_brasilis.txt#745 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#746 (mes)
+- "Let's see... I was wandering around a waterfall then fell down into the water then I was sucked into somewhere."
++ "Deixa eu ver... eu estava andando perto de uma cachoeira, caí na água e fui sugada para algum lugar."
+#: npc/quests/quests_brasilis.txt#747 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#748 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#749 (mes)
+- "Good, that's better than nothing! I will look for a similar place."
++ "Ótimo, já é melhor do que nada! Vou procurar um lugar parecido."
+#: npc/quests/quests_brasilis.txt#750 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#751 (mes)
+- "I gave you your information, so can you do me a favor?"
++ "Eu te dei a minha informação, então você pode me fazer um favor?"
+#: npc/quests/quests_brasilis.txt#752 (mes)
+- "It's really simple..."
++ "É bem simples..."
+#: npc/quests/quests_brasilis.txt#753 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#754 (mes)
+- "I'd like to give a delicious fruit."
++ "Eu queria mandar uma fruta gostosa."
+#: npc/quests/quests_brasilis.txt#755 (mes)
+- "The place where Jas seemed cozy but I didn't see any food around... So if he sees a yummy fruit he will be happy!"
++ "O lugar onde o Jaci vive parecia aconchegante, mas eu não vi comida nenhuma por lá... Se ele vir uma fruta gostosa, vai ficar feliz!"
+#: npc/quests/quests_brasilis.txt#756 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#757 (mes)
+- "Give him 10 Banana and tell him that I really miss him."
++ "Dê 10 Bananas a ele e diga que eu sinto muita saudade."
+#: npc/quests/quests_brasilis.txt#758 (mes)
+- "Sorry for ignoring you before. Please, only you can help me!"
++ "Desculpe por ter ignorado você antes. Por favor, só você pode me ajudar!"
+#: npc/quests/quests_brasilis.txt#759 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#760 (mes)
+- "If you meet Jasi, give him 10 Bananas."
++ "Quando encontrar o Jaci, dê 10 Bananas a ele."
+#: npc/quests/quests_brasilis.txt#761 (mes)
+- "Let's see... I was wandering around a waterfall then fell down into the water then I was sucked into somewhere."
++ "Deixa eu ver... eu estava andando perto de uma cachoeira, caí na água e fui sugada para algum lugar."
+#: npc/quests/quests_brasilis.txt#762 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#763 (mes)
+- "If you can't find the way, go up to the waterfall and ask the kids in Brasilis village."
++ "Se não achar o caminho, suba até a cachoeira e pergunte às crianças da vila de Brasilis."
+#: npc/quests/quests_brasilis.txt#764 (mes)
+- "I heard one of the children went to a strange place before. He might've gone to the same place as me!"
++ "Ouvi dizer que uma delas foi parar num lugar estranho. Pode ser o mesmo lugar em que eu estive!"
+#: npc/quests/quests_brasilis.txt#765 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#766 (mes)
+- "Did you meet Jasi?"
++ "Você encontrou o Jaci?"
+#: npc/quests/quests_brasilis.txt#767 (mes)
+- "Did you talk about me?"
++ "Falou de mim?"
+#: npc/quests/quests_brasilis.txt#768 (mes)
+- "You didn't? Uh? Stupid! Gosh~!"
++ "Não falou? Ãh? Bobo! Poxa~!"
+#: npc/quests/quests_brasilis.txt#769 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#770 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#771 (mes)
+- "Hey girl~ you've got a short temper."
++ "Ei, menina~ você tem o pavio bem curto."
+#: npc/quests/quests_brasilis.txt#772 (mes)
+- "I did see him and I talked about you!"
++ "Eu vi ele sim, e falei de você!"
+#: npc/quests/quests_brasilis.txt#773 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#774 (mes)
+- "Did you?"
++ "Falou mesmo?"
+#: npc/quests/quests_brasilis.txt#775 (mes)
+- "What did he say?"
++ "E o que ele disse?"
+#: npc/quests/quests_brasilis.txt#776 (mes)
+- "Does he remember me?"
++ "Ele lembra de mim?"
+#: npc/quests/quests_brasilis.txt#777 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#778 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#779 (mes)
+- "That you have a really good heart~"
++ "Que você tem um coração muito bom~"
+#: npc/quests/quests_brasilis.txt#780 (mes)
+- "I told him that you will try to meet him when your condition gets better."
++ "Eu disse a ele que você vai tentar encontrá-lo quando estiver melhor."
+#: npc/quests/quests_brasilis.txt#781 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#782 (mes)
+- "Yeahhhhh!!"
++ "Ebaaaaa!!"
+#: npc/quests/quests_brasilis.txt#783 (mes)
+- "Thank you! You are more reliable than I thought you would be."
++ "Obrigada! Você é mais confiável do que eu imaginava."
+#: npc/quests/quests_brasilis.txt#784 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#785 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#786 (mes)
+- "Anyway, I'm looking for a fruit that's brown and has a hard shell."
++ "Aliás, eu estou procurando uma fruta marrom, de casca dura."
+#: npc/quests/quests_brasilis.txt#787 (mes)
+- "It has juice inside and can be used as a cup to drink out of."
++ "Tem suco dentro e a casca serve de copo para beber."
+#: npc/quests/quests_brasilis.txt#788 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#789 (mes)
+- "Duh! You mean a coconut right?!"
++ "Ora! Você está falando de um coco, né?!"
+#: npc/quests/quests_brasilis.txt#790 (mes)
+- "They're everywhere here in Brasilis."
++ "Tem coco por toda parte aqui em Brasilis."
+#: npc/quests/quests_brasilis.txt#791 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#792 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#793 (mes)
+- "Thanks Jasira!"
++ "Obrigado, Jacira!"
+#: npc/quests/quests_brasilis.txt#794 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#795 (mes)
+- "I should take care of my strength by myself!"
++ "Eu preciso cuidar das minhas forças por mim mesma!"
+#: npc/quests/quests_brasilis.txt#796 (mes)
+- "I can't just lie in my bed forever. Don't you agree?"
++ "Não posso ficar deitada para sempre. Você não concorda?"
+#: npc/quests/quests_brasilis.txt#797 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#798 (mes)
+- "Uh? Why have you come back?"
++ "Ãh? Por que você voltou?"
+#: npc/quests/quests_brasilis.txt#799 (mes)
+- "- You tell her what Jasi told you to tell her -"
++ "- Você conta a ela o que o Jaci mandou dizer -"
+#: npc/quests/quests_brasilis.txt#800 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#801 (mes)
+- "Oh... really?"
++ "Ah... sério?"
+#: npc/quests/quests_brasilis.txt#802 (mes)
+- "Did he say that?"
++ "Ele disse isso?"
+#: npc/quests/quests_brasilis.txt#803 (mes)
+- "Gosh! Gosh!!!"
++ "Nossa! Nossa!!!"
+#: npc/quests/quests_brasilis.txt#804 (mes)
+- "Kkkkkaaaaa - !!"
++ "Iiiiiaaaaa - !!"
+#: npc/quests/quests_brasilis.txt#805 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#806 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#807 (mes)
+- "Thanks to you, I was able to get a flower."
++ "Graças a você eu consegui uma flor."
+#: npc/quests/quests_brasilis.txt#808 (mes)
+- "Thanks a lot!!"
++ "Muito obrigada!!"
+#: npc/quests/quests_brasilis.txt#809 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#810 (mes)
+- "Wooow. It's so beautiful."
++ "Uau. Que coisa mais linda."
+#: npc/quests/quests_brasilis.txt#811 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#812 (mes)
+- "Ah... can I see it for a second?"
++ "Ah... posso ver um pouquinho?"
+#: npc/quests/quests_brasilis.txt#813 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#814 (mes)
+- "Surprise~!!"
++ "Surpresa~!!"
+#: npc/quests/quests_brasilis.txt#815 (mes)
+- "I've been working on this hat while you were gone and now it's complete with the water lily flower!"
++ "Eu fiz este chapéu enquanto você estava fora, e agora ele está completo com a flor de vitória-régia!"
+#: npc/quests/quests_brasilis.txt#816 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#817 (mes)
+- "I know, I know! I'm the best..."
++ "Eu sei, eu sei! Eu sou a melhor..."
+#: npc/quests/quests_brasilis.txt#818 (mes)
+- "[Jasira]"
++ "[Jacira]"
+#: npc/quests/quests_brasilis.txt#819 (mes)
+- "I just need to get a little bit stronger!"
++ "Só preciso ficar um pouquinho mais forte!"
+#: npc/quests/quests_brasilis.txt#820 (mes)
+- "I can't just lie in bed forever. My Jasi is waiting for me~"
++ "Não posso ficar deitada para sempre. O meu Jaci está me esperando~"
+#: npc/quests/quests_brasilis.txt#821 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#822 (mes)
+- "Jasira!!!"
++ "Jacira!!!"
+#: npc/quests/quests_brasilis.txt#823 (mes)
+- "Where are you going again?!!"
++ "Aonde você vai de novo?!!"
+#: npc/quests/quests_brasilis.txt#824 (mes)
+- "Come back~, please!!"
++ "Volta aqui~, por favor!!"
+#: npc/quests/quests_brasilis.txt#825 (mes)
+- "[Brasilis Girl]"
++ "[Menina]"
+#: npc/quests/quests_brasilis.txt#826 (mes)
+- "Please mom~!"
++ "Por favor, mãe~!"
+#: npc/quests/quests_brasilis.txt#827 (mes)
+- "Please let me go!"
++ "Deixa eu ir!"
+#: npc/quests/quests_brasilis.txt#828 (mes)
+- "[Recluse]"
++ "[Ermitão]"
+#: npc/quests/quests_brasilis.txt#829 (mes)
+- "Oh, I haven't seen another person in such a long time."
++ "Ah, faz muito tempo que eu não via outra pessoa."
+#: npc/quests/quests_brasilis.txt#830 (select)
+- "Keep going.:Are you the moon?"
++ "Seguir em frente.:Você é a lua?"
+#: npc/quests/quests_brasilis.txt#831 (mes)
+- "[Recluse]"
++ "[Ermitão]"
+#: npc/quests/quests_brasilis.txt#832 (mes)
+- "You don't have specific business with me."
++ "Você não tem assunto comigo."
+#: npc/quests/quests_brasilis.txt#833 (mes)
+- "[Recluse]"
++ "[Ermitão]"
+#: npc/quests/quests_brasilis.txt#834 (mes)
+- "Moon?"
++ "A lua?"
+#: npc/quests/quests_brasilis.txt#835 (mes)
+- "My name is Jasi."
++ "Meu nome é Jaci."
+#: npc/quests/quests_brasilis.txt#836 (mes)
+- "My family has worked to take care of the water lily from generation to generation."
++ "A minha família cuida da vitória-régia de geração em geração."
+#: npc/quests/quests_brasilis.txt#837 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#838 (mes)
+- "Basically the Brasilis water lily is too shy to appear in front of people so, they only bloom in rare places. I guess they like it here, though, that's why I've been staying here for such a long time."
++ "A vitória-régia de Brasilis é tímida demais para aparecer diante das pessoas, então ela só floresce em lugares raros. Acho que ela gosta daqui, e é por isso que eu fico neste lugar há tanto tempo."
+#: npc/quests/quests_brasilis.txt#839 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#840 (mes)
+- "My family has taken care of the water lily calmly to prevent harm from people's hand or monsters."
++ "A minha família cuida da vitória-régia com calma, para que nem a mão das pessoas nem os monstros lhe façam mal."
+#: npc/quests/quests_brasilis.txt#841 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#842 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#843 (mes)
+- "Do you remember a girl named Jasi."
++ "Você lembra de uma moça chamada Jacira?"
+#: npc/quests/quests_brasilis.txt#844 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#845 (mes)
+- "Ja...si.........."
++ "Ja...ci.........."
+#: npc/quests/quests_brasilis.txt#846 (mes)
+- "Ah!! a hurry scurry girl. "
++ "Ah!! aquela moça afobada. "
+#: npc/quests/quests_brasilis.txt#847 (mes)
+- "Gosh.. I was in trouble due to that girl."
++ "Nossa.. eu me meti numa encrenca por causa dela."
+#: npc/quests/quests_brasilis.txt#848 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#849 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#850 (mes)
+- "Trouble?"
++ "Encrenca?"
+#: npc/quests/quests_brasilis.txt#851 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#852 (mes)
+- "One day a young lady appeared with lots of scars so I helped her. Then suddenly she tried to pick up the water lily and asked me to accept her as my wife or make her into a water lily what a nutcase!"
++ "Um dia apareceu uma moça cheia de ferimentos e eu a ajudei. Aí, de repente, ela tentou colher a vitória-régia e me pediu para aceitá-la como esposa ou transformá-la em vitória-régia. Que loucura!"
+#: npc/quests/quests_brasilis.txt#853 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#854 (mes)
+- "I was barely able to calm down and send her to the village."
++ "Foi difícil acalmá-la e mandá-la de volta para a vila."
+#: npc/quests/quests_brasilis.txt#855 (mes)
+- "My life is that water lily so I didn't want anything embarrassing to happen."
++ "A minha vida é esta flor, então eu não queria nenhum constrangimento."
+#: npc/quests/quests_brasilis.txt#856 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#857 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#858 (mes)
+- "This is a gift from Jasira to say sorry for that time."
++ "Este é um presente da Jacira, para se desculpar por aquele dia."
+#: npc/quests/quests_brasilis.txt#859 (mes)
+- "She is really sad that can't come here by herself due to private difficulties."
++ "Ela está muito triste por não poder vir até aqui por dificuldades pessoais."
+#: npc/quests/quests_brasilis.txt#860 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#861 (mes)
+- "What are you saying?"
++ "Do que você está falando?"
+#: npc/quests/quests_brasilis.txt#862 (mes)
+- "- Oh yeah, I forgot to bring 10 Bananas -"
++ "- Ah, é. Esqueci de trazer 10 Bananas -"
+#: npc/quests/quests_brasilis.txt#863 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#864 (mes)
+- "Ah! Bananas! Wow it's been a long time. She's pretty considerate isn't she?"
++ "Ah! Bananas! Nossa, faz tempo. Ela é bem atenciosa, não é?"
+#: npc/quests/quests_brasilis.txt#865 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#866 (mes)
+- "Anyway is that all the business you have with me?"
++ "Enfim, é só isso que você tinha para tratar comigo?"
+#: npc/quests/quests_brasilis.txt#867 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#868 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#869 (mes)
+- "Umm honestly I was wondering to find water lily and met you by coincidence. Jasira told me her sad story so that's what led me here."
++ "Hmm, para ser sincero, eu andava procurando a vitória-régia e encontrei você por acaso. A Jacira me contou a história triste dela, e foi isso que me trouxe até aqui."
+#: npc/quests/quests_brasilis.txt#870 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#871 (mes)
+- "I got it."
++ "Entendi."
+#: npc/quests/quests_brasilis.txt#872 (mes)
+- "As you can see, there are lots of Brasilis water lily around here."
++ "Como você vê, tem um monte de vitórias-régias de Brasilis por aqui."
+#: npc/quests/quests_brasilis.txt#873 (mes)
+- "If you make sure that you won't destroy them you can appreciate them as you wish."
++ "Se você prometer não destruí-las, pode apreciá-las à vontade."
+#: npc/quests/quests_brasilis.txt#874 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#875 (mes)
+- "Did you enjoy the water lily?"
++ "Gostou da vitória-régia?"
+#: npc/quests/quests_brasilis.txt#876 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#877 (mes)
+- "I forgot what the name of that fruit was..."
++ "Esqueci o nome daquela fruta..."
+#: npc/quests/quests_brasilis.txt#878 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#879 (mes)
+- "I forgot what the name of that fruit was..."
++ "Esqueci o nome daquela fruta..."
+#: npc/quests/quests_brasilis.txt#880 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#881 (mes)
+- "Did you find the fruit?"
++ "Você encontrou a fruta?"
+#: npc/quests/quests_brasilis.txt#882 (mes)
+- "Oh right this is....?"
++ "Ah, isto aqui é....?"
+#: npc/quests/quests_brasilis.txt#883 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#884 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#885 (mes)
+- "It's called a 'coconut'."
++ "Chama-se 'coco'."
+#: npc/quests/quests_brasilis.txt#886 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#887 (mes)
+- "Ahah! COCONUT!!"
++ "Aarrá! COCO!!"
+#: npc/quests/quests_brasilis.txt#888 (mes)
+- "Now I remember thank you very much. I can't remember the last time I had this fruit."
++ "Agora eu lembrei, muito obrigado. Nem lembro da última vez que eu comi esta fruta."
+#: npc/quests/quests_brasilis.txt#889 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#890 (mes)
+- "I guess I should keep my promise."
++ "Acho que devo cumprir a minha promessa."
+#: npc/quests/quests_brasilis.txt#891 (mes)
+- "You can take one Water lily."
++ "Você pode levar uma Vitória-Régia."
+#: npc/quests/quests_brasilis.txt#892 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#893 (mes)
+- "I hope the Brasilis water lily will understand me."
++ "Espero que a vitória-régia de Brasilis me perdoe."
+#: npc/quests/quests_brasilis.txt#894 (mes)
+- "You better grab the flower while you have a chance~"
++ "É melhor colher a flor enquanto você tem a chance~"
+#: npc/quests/quests_brasilis.txt#895 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#896 (mes)
+- "Oh, can you tell that girl Jasira something for me?"
++ "Ah, você pode dar um recado meu àquela moça, a Jacira?"
+#: npc/quests/quests_brasilis.txt#897 (mes)
+- "Tell her that I am not the moon from the story, but I want to become the moon to shine only for her."
++ "Diga a ela que eu não sou a lua da história, mas que eu quero ser a lua que brilha só para ela."
+#: npc/quests/quests_brasilis.txt#898 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#899 (mes)
+- "The flowers blooming from the Water lily today is wonderful."
++ "As flores que a Vitória-Régia abre hoje estão maravilhosas."
+#: npc/quests/quests_brasilis.txt#901 (mes)
+- "An unusual Water lily is blooming here. You can't stop staring at it, knowing that few people have seen this flower bloom."
++ "Uma Vitória-Régia rara está florescendo aqui. É impossível parar de olhar, sabendo que pouca gente viu esta flor abrir."
+#: npc/quests/quests_brasilis.txt#902 (select)
+- "Pick up the flower.:Keep gazing."
++ "Colher a flor.:Continuar admirando."
+#: npc/quests/quests_brasilis.txt#903 (mes)
+- "- You can't avoid staring at it's beauty. -"
++ "- Não dá para desviar os olhos de tanta beleza. -"
+#: npc/quests/quests_brasilis.txt#904 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#905 (mes)
+- "Uh! What are you doing??!!"
++ "Ãh! O que você está fazendo??!!"
+#: npc/quests/quests_brasilis.txt#906 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#907 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#908 (mes)
+- "There is a person who really needs this flower, can I just take one of 'em?"
++ "Tem uma pessoa que precisa muito desta flor. Eu posso levar só uma?"
+#: npc/quests/quests_brasilis.txt#909 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#910 (mes)
+- "As I said earlier, I am the guardian of this water lily."
++ "Como eu já disse, eu sou o guardião desta vitória-régia."
+#: npc/quests/quests_brasilis.txt#911 (mes)
+- "I can't just stand by here and watch you pluck even a single flower from it."
++ "Não posso ficar parado vendo você arrancar uma única flor que seja."
+#: npc/quests/quests_brasilis.txt#912 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#913 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#914 (mes)
+- "Hey man~ I brought these delicious fruits for you... try it! They are really well matured and fresh bananas."
++ "Ei, amigo~ eu trouxe estas frutas gostosas para você... prove! São bananas bem maduras e fresquinhas."
+#: npc/quests/quests_brasilis.txt#915 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#916 (mes)
+- "What are you saying?"
++ "Do que você está falando?"
+#: npc/quests/quests_brasilis.txt#917 (mes)
+- "- Oh yeah, I forgot to bring 10 Bananas -"
++ "- Ah, é. Esqueci de trazer 10 Bananas -"
+#: npc/quests/quests_brasilis.txt#918 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#919 (mes)
+- "Hmm... It's been so long since I've had this fruit."
++ "Hmm... faz tanto tempo que eu não como esta fruta."
+#: npc/quests/quests_brasilis.txt#920 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#921 (mes)
+- "I will just try one. That's all."
++ "Vou provar só uma. Só isso."
+#: npc/quests/quests_brasilis.txt#922 (mes)
+- "- munch -"
++ "- nhac -"
+#: npc/quests/quests_brasilis.txt#923 (mes)
+- "- mumble mumble mumble -"
++ "- nhame nhame nhame -"
+#: npc/quests/quests_brasilis.txt#925 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#926 (mes)
+- "Uh, this taste... is!"
++ "Ãh, esse sabor... é!"
+#: npc/quests/quests_brasilis.txt#927 (mes)
+- "I remember my mom baking these into a tasty bread!"
++ "Eu lembro da minha mãe assando isto num pão gostoso!"
+#: npc/quests/quests_brasilis.txt#928 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#929 (mes)
+- "It makes me miss my childhood."
++ "Isso me dá saudade da infância."
+#: npc/quests/quests_brasilis.txt#931 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#932 (mes)
+- "Hoho!!!!"
++ "Rorô!!!!"
+#: npc/quests/quests_brasilis.txt#933 (mes)
+- "I've been here for as long as I can remember..."
++ "Eu estou aqui desde que me entendo por gente..."
+#: npc/quests/quests_brasilis.txt#934 (mes)
+- "I don't have enough time to even do simple things like eat delicious fruit."
++ "Não tenho tempo nem para coisas simples, como comer uma fruta gostosa."
+#: npc/quests/quests_brasilis.txt#935 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#936 (mes)
+- "It was a really delicious banana."
++ "Foi uma banana realmente deliciosa."
+#: npc/quests/quests_brasilis.txt#937 (mes)
+- "But rules are rules!"
++ "Mas regra é regra!"
+#: npc/quests/quests_brasilis.txt#938 (mes)
+- "I must do my duty."
++ "Eu preciso cumprir o meu dever."
+#: npc/quests/quests_brasilis.txt#939 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#940 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#941 (mes)
+- "Please! I just need one flower~ What can I do to convince you?"
++ "Por favor! Eu só preciso de uma flor~ O que eu posso fazer para convencer você?"
+#: npc/quests/quests_brasilis.txt#942 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#943 (mes)
+- "Rules are rules, what do you want from me?"
++ "Regra é regra. O que você quer de mim?"
+#: npc/quests/quests_brasilis.txt#944 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#945 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#946 (mes)
+- "Didn't that banana remind you of your childhood? What can I get for you?"
++ "Aquela banana não trouxe de volta a sua infância? O que eu posso trazer para você?"
+#: npc/quests/quests_brasilis.txt#947 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#948 (mes)
+- "Now that you mention it, there is one fruit that I really miss."
++ "Agora que você falou, tem uma fruta de que eu sinto muita falta."
+#: npc/quests/quests_brasilis.txt#949 (mes)
+- "It was my favorite when I was young but I don't remember what it was called."
++ "Era a minha preferida quando eu era pequeno, mas eu não lembro o nome dela."
+#: npc/quests/quests_brasilis.txt#950 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#951 (mes)
+- "It's brown and has a hard shell around it. It has juice inside and you can use it as a cup when you're done eating the fruit."
++ "É marrom e tem uma casca dura em volta. Tem suco dentro, e a casca serve de copo depois que você come a fruta."
+#: npc/quests/quests_brasilis.txt#952 (mes)
+- "Do you know what it is?"
++ "Você sabe qual é?"
+#: npc/quests/quests_brasilis.txt#953 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#954 (mes)
+- "If you bring 5 of those things, I will reconsider your suggestion."
++ "Se você trouxer 5 dessas, eu reconsidero a sua proposta."
+#: npc/quests/quests_brasilis.txt#955 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#956 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#957 (mes)
+- "Ok so I have to bring 5 fruits with hard shells."
++ "Certo, então eu preciso trazer 5 frutas de casca dura."
+#: npc/quests/quests_brasilis.txt#958 (mes)
+- "Hmm what is it?"
++ "Hmm, o que será?"
+#: npc/quests/quests_brasilis.txt#959 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#960 (mes)
+- "It was my favorite when I was young but I don't remember what it was called."
++ "Era a minha preferida quando eu era pequeno, mas eu não lembro o nome dela."
+#: npc/quests/quests_brasilis.txt#961 (mes)
+- "[Jasi]"
++ "[Jaci]"
+#: npc/quests/quests_brasilis.txt#962 (mes)
+- "It's brown and has a hard shell around it. It has juice inside and you can use it as a cup when you're done eating the fruit."
++ "É marrom e tem uma casca dura em volta. Tem suco dentro, e a casca serve de copo depois que você come a fruta."
+#: npc/quests/quests_brasilis.txt#963 (mes)
+- "Do you know what it is?"
++ "Você sabe qual é?"
+#: npc/quests/quests_brasilis.txt#964 (mes)
+- "- wait a second!! -"
++ "- espere um instante!! -"
+#: npc/quests/quests_brasilis.txt#965 (mes)
+- "- you have too many items -"
++ "- você está com itens demais -"
+#: npc/quests/quests_brasilis.txt#966 (mes)
+- "- so you can't get any more items. -"
++ "- então não pode receber mais nada. -"
+#: npc/quests/quests_brasilis.txt#967 (mes)
+- "- make your body lighter -"
++ "- alivie o seu corpo -"
+#: npc/quests/quests_brasilis.txt#968 (mes)
+- "- then try again. -"
++ "- e tente de novo. -"
+#: npc/quests/quests_brasilis.txt#969 (mes)
+- "- You take a beautiful water lily carefully in your hands. -"
++ "- Você toma nas mãos, com cuidado, uma linda vitória-régia. -"
+#: npc/quests/quests_brasilis.txt#970 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#971 (mes)
+- "Wow it's really a great statue!"
++ "Uau, que estátua incrível!"
+#: npc/quests/quests_brasilis.txt#972 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#973 (mes)
+- "It is, isn't it?"
++ "É mesmo, não é?"
+#: npc/quests/quests_brasilis.txt#974 (mes)
+- "This statue is called Verass Monument."
++ "Esta estátua se chama Monumento de Verass."
+#: npc/quests/quests_brasilis.txt#975 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#976 (mes)
+- "A long time ago there was a really brave adventurer named Verass, thanks to his dedicated exploration, Brasilis was able to develop into this great city."
++ "Faz muito tempo existiu um aventureiro muito corajoso chamado Verass. Graças à dedicação dele nas explorações, Brasilis conseguiu virar esta grande cidade."
+#: npc/quests/quests_brasilis.txt#977 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#978 (mes)
+- "Awesome!!"
++ "Que demais!!"
+#: npc/quests/quests_brasilis.txt#979 (mes)
+- "i wanna become a real man like Verass."
++ "eu quero ser um homem de verdade, igual ao Verass."
+#: npc/quests/quests_brasilis.txt#980 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#981 (mes)
+- "Pedro, you can become whatever you want."
++ "Pedro, você pode ser o que você quiser."
+#: npc/quests/quests_brasilis.txt#982 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#983 (mes)
+- "Mariana is so smart, isn't she? hehe."
++ "A Mariana é muito inteligente, não é? rerê."
+#: npc/quests/quests_brasilis.txt#984 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#985 (mes)
+- "Ooooh! You love her don't you!"
++ "Ooooh! Você gosta dela, não gosta!"
+#: npc/quests/quests_brasilis.txt#986 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#987 (mes)
+- "Wooooaaaa Pedro and Mari sitting in a tree!"
++ "Uuuaaaa, o Pedro e a Mari estão namorando!"
+#: npc/quests/quests_brasilis.txt#988 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#989 (mes)
+- "Woooo k-i-s-s-i-n-g~!!!"
++ "Uuuuu, se beijandooo~!!"
+#: npc/quests/quests_brasilis.txt#990 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#991 (mes)
+- "Nya nya nya!"
++ "Nhá nhá nhá!"
+#: npc/quests/quests_brasilis.txt#992 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#993 (mes)
+- "Hahahahaha."
++ "Rarararará."
+#: npc/quests/quests_brasilis.txt#994 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#995 (mes)
+- "Stop acting like babies!"
++ "Parem de agir feito bebês!"
+#: npc/quests/quests_brasilis.txt#996 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#997 (mes)
+- "Boys~!"
++ "Meninos~!"
+#: npc/quests/quests_brasilis.txt#998 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#999 (mes)
+- "Yah yah..."
++ "Tá, tá..."
+#: npc/quests/quests_brasilis.txt#1000 (mes)
+- "Hey guys, did you hear that something happened a few days ago?"
++ "Ei, gente, vocês ouviram falar do que aconteceu uns dias atrás?"
+#: npc/quests/quests_brasilis.txt#1001 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1002 (mes)
+- "Oh yeah~ I heard that something really scary happened."
++ "Ah, sim~ ouvi dizer que aconteceu uma coisa bem assustadora."
+#: npc/quests/quests_brasilis.txt#1003 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1004 (mes)
+- "Uh, yeah that's why Mariana got scared of going ot the bathroom for 3 days and everything was stinky. Ewwww~"
++ "Ãh, é, foi por isso que a Mariana ficou com medo de ir ao banheiro por 3 dias e ficou tudo fedido. Eca~"
+#: npc/quests/quests_brasilis.txt#1005 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1006 (mes)
+- "Ha ha ha! Smelly Mari!"
++ "Rá rá rá! Mari fedida!"
+#: npc/quests/quests_brasilis.txt#1007 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1008 (mes)
+- "I hate you~!"
++ "Eu odeio vocês~!"
+#: npc/quests/quests_brasilis.txt#1009 (mes)
+- "Stop spreading rumors about me. I'm not scared of the bathroom."
++ "Parem de espalhar boato sobre mim. Eu não tenho medo de banheiro."
+#: npc/quests/quests_brasilis.txt#1010 (mes)
+- "Pedro, do you think that I stink?"
++ "Pedro, você acha que eu fedo?"
+#: npc/quests/quests_brasilis.txt#1011 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1012 (mes)
+- "Uh? Uh?"
++ "Ãh? Ãh?"
+#: npc/quests/quests_brasilis.txt#1013 (mes)
+- "N......no... no way."
++ "N......não... claro que não."
+#: npc/quests/quests_brasilis.txt#1014 (mes)
+- "Hey guys~ be nice to her~"
++ "Ei, gente~ sejam legais com ela~"
+#: npc/quests/quests_brasilis.txt#1015 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1016 (mes)
+- "kkkickkkkkkkkick"
++ "kkikkkkkkkkick"
+#: npc/quests/quests_brasilis.txt#1017 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1018 (mes)
+- "kkkickkkkkkkk"
++ "kkikkkkkkkk"
+#: npc/quests/quests_brasilis.txt#1019 (select)
+- "Walk by.:Ask about the gossip."
++ "Seguir em frente.:Perguntar sobre o boato."
+#: npc/quests/quests_brasilis.txt#1020 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1021 (mes)
+- "Mariana~ smells~ Nya nya~"
++ "A Mariana~ fede~ Nhá nhá~"
+#: npc/quests/quests_brasilis.txt#1022 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1023 (mes)
+- "Oh man you stink too~! Nya nya~"
++ "Você também fede~! Nhá nhá~"
+#: npc/quests/quests_brasilis.txt#1024 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1025 (mes)
+- "Haven't you heard?"
++ "Você não ficou sabendo?"
+#: npc/quests/quests_brasilis.txt#1026 (mes)
+- "The ghost story in the art museum."
++ "A história do fantasma no museu de arte."
+#: npc/quests/quests_brasilis.txt#1027 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1028 (mes)
+- "Ooohhhh! Scary~~~!"
++ "Uuuuh! Que medo~~~!"
+#: npc/quests/quests_brasilis.txt#1029 (select)
+- "Can you tell me more?"
++ "Você pode me contar mais?"
+#: npc/quests/quests_brasilis.txt#1030 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1031 (mes)
+- "A coupla days ago we went to the art museum for a picnic at school."
++ "Uns dias atrás a gente foi ao museu de arte para um piquenique da escola."
+#: npc/quests/quests_brasilis.txt#1032 (mes)
+- "You know nothing special, just a ordinary field trip."
++ "Sabe como é, nada de especial, só um passeio comum."
+#: npc/quests/quests_brasilis.txt#1033 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1034 (mes)
+- "Museums are boring so me and some friends snuck away from the group~!"
++ "Museu é chato, então eu e uns amigos escapamos do grupo~!"
+#: npc/quests/quests_brasilis.txt#1035 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1036 (mes)
+- "That's when we heard a scream echoing through the whole museum."
++ "Foi aí que a gente ouviu um grito ecoando pelo museu inteiro."
+#: npc/quests/quests_brasilis.txt#1037 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1038 (mes)
+- "kkakkakkaaaah!!"
++ "kkakkakkaaaah!!"
+#: npc/quests/quests_brasilis.txt#1039 (mes)
+- "kkieeeeeeh!"
++ "kkiiiiih!"
+#: npc/quests/quests_brasilis.txt#1040 (mes)
+- "kehkeh.."
++ "kehkeh.."
+#: npc/quests/quests_brasilis.txt#1041 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1042 (mes)
+- "I heard the scream too..."
++ "Eu também ouvi o grito..."
+#: npc/quests/quests_brasilis.txt#1043 (mes)
+- "You boys are always making noises where you're not supposed to."
++ "Vocês, meninos, vivem fazendo bagunça onde não devem."
+#: npc/quests/quests_brasilis.txt#1044 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1045 (mes)
+- "What else are we supposed to do? If we don't do it someone else will."
++ "E o que a gente ia fazer? Se a gente não fizer, alguém faz."
+#: npc/quests/quests_brasilis.txt#1047 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1048 (mes)
+- "Argh~ Boys are so frustrating sometimes."
++ "Argh~ Menino às vezes é muito irritante."
+#: npc/quests/quests_brasilis.txt#1049 (select)
+- "So then what happened?"
++ "E aí, o que aconteceu?"
+#: npc/quests/quests_brasilis.txt#1050 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1051 (mes)
+- "Daniel and me guessed something weird was goin' on so we ran to where we thought the screams were comin' from."
++ "Eu e o Daniel achamos que tinha coisa estranha, então a gente correu para onde os gritos pareciam vir."
+#: npc/quests/quests_brasilis.txt#1052 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1053 (mes)
+- "They were coming from the bathroom."
++ "Vinham do banheiro."
+#: npc/quests/quests_brasilis.txt#1054 (mes)
+- "Some kids got so scared that they started screaming too and closing their eyes. It got pretty bad."
++ "Umas crianças ficaram com tanto medo que começaram a gritar também e a fechar os olhos. Ficou bem feio."
+#: npc/quests/quests_brasilis.txt#1055 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1056 (mes)
+- "I think you pissed or pooped your pants. It smelled freakin' gross."
++ "Eu acho que você fez xixi ou cocô nas calças. O cheiro estava horrível."
+#: npc/quests/quests_brasilis.txt#1057 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1058 (mes)
+- "Nah uh~ Your mom pissed her pants~ Nyah!"
++ "Que nada~ A sua mãe é que fez xixi nas calças~ Nhá!"
+#: npc/quests/quests_brasilis.txt#1059 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1060 (mes)
+- "Nah uh~ You~ pissed your pants~"
++ "Que nada~ Você~ é que fez xixi nas calças~"
+#: npc/quests/quests_brasilis.txt#1061 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1062 (mes)
+- "Anyway, so yeah, anyway that's how the rumor of the ghost in the museum started."
++ "Enfim, foi assim que começou o boato do fantasma no museu."
+#: npc/quests/quests_brasilis.txt#1063 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1064 (mes)
+- "Liar, there's no such thing as ghosts~"
++ "Mentiroso, fantasma não existe~"
+#: npc/quests/quests_brasilis.txt#1065 (select)
+- "So was it a ghost?"
++ "Então era um fantasma?"
+#: npc/quests/quests_brasilis.txt#1066 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1067 (mes)
+- "How should I know?"
++ "Como é que eu vou saber?"
+#: npc/quests/quests_brasilis.txt#1068 (mes)
+- "No one could say they saw one and no one wanted to get in trouble from the teachers."
++ "Ninguém pôde dizer que viu, e ninguém queria arrumar encrenca com os professores."
+#: npc/quests/quests_brasilis.txt#1069 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1070 (mes)
+- "I heard if you say special magic words that the ghost will come out."
++ "Ouvi dizer que, se você falar umas palavras mágicas, o fantasma aparece."
+#: npc/quests/quests_brasilis.txt#1071 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1072 (mes)
+- "Quit butting into our conversation Pedro."
++ "Pare de se meter na nossa conversa, Pedro."
+#: npc/quests/quests_brasilis.txt#1073 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1074 (mes)
+- "Yah, what are you talking about, Pedro?"
++ "É, do que você está falando, Pedro?"
+#: npc/quests/quests_brasilis.txt#1075 (mes)
+- "So did you see the ghost?"
++ "Então você viu o fantasma?"
+#: npc/quests/quests_brasilis.txt#1076 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1077 (mes)
+- "N... no. I'm scared of ghosts."
++ "N... não. Eu tenho medo de fantasma."
+#: npc/quests/quests_brasilis.txt#1078 (mes)
+- "But my friends said they saw one and they're not liars."
++ "Mas os meus amigos disseram que viram, e eles não são mentirosos."
+#: npc/quests/quests_brasilis.txt#1079 (select)
+- "Did anyone tell you the magic words?"
++ "Alguém te contou as palavras mágicas?"
+#: npc/quests/quests_brasilis.txt#1080 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1081 (mes)
+- "I heard it in a kind of song."
++ "Eu ouvi numa espécie de música."
+#: npc/quests/quests_brasilis.txt#1082 (mes)
+- "the special magic words are..."
++ "as palavras mágicas são..."
+#: npc/quests/quests_brasilis.txt#1083 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1084 (mes)
+- "'^3131FFMother the door won't open!^000000'"
++ "'^3131FFMamãe, a porta não abre!^000000'"
+#: npc/quests/quests_brasilis.txt#1085 (mes)
+- "'^FF0000Turn the key as many times as there are colors in the rainbow.^000000'"
++ "'^FF0000Gire a chave tantas vezes quantas são as cores do arco-íris.^000000'"
+#: npc/quests/quests_brasilis.txt#1086 (mes)
+- "'^3131FFMother the water is flooding!^000000'"
++ "'^3131FFMamãe, a água está transbordando!^000000'"
+#: npc/quests/quests_brasilis.txt#1087 (mes)
+- "'^FF0000If the moon disappears 3 times, don't worry.^000000'"
++ "'^FF0000Se a lua sumir 3 vezes, não se preocupe.^000000'"
+#: npc/quests/quests_brasilis.txt#1088 (mes)
+- "'^3131FFMother the drought has started!^000000'"
++ "'^3131FFMamãe, começou a seca!^000000'"
+#: npc/quests/quests_brasilis.txt#1089 (mes)
+- "'^FF0000Don't worry, the waterfall will help it.^000000'"
++ "'^FF0000Não se preocupe, a cachoeira vai ajudar.^000000'"
+#: npc/quests/quests_brasilis.txt#1090 (mes)
+- "'^3131FFMother where are my friends?^000000'"
++ "'^3131FFMamãe, onde estão os meus amigos?^000000'"
+#: npc/quests/quests_brasilis.txt#1091 (mes)
+- "'^FF0000Your 7 friends are sleeping. now it's time to wake them.^000000'"
++ "'^FF0000Os seus 7 amigos estão dormindo. agora é hora de acordar eles.^000000'"
+#: npc/quests/quests_brasilis.txt#1092 (mes)
+- "'^3131FFWhere are you mom?^000000'"
++ "'^3131FFOnde você está, mamãe?^000000'"
+#: npc/quests/quests_brasilis.txt#1093 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1094 (mes)
+- "Umm it seems like a riddle."
++ "Hmm, parece um enigma."
+#: npc/quests/quests_brasilis.txt#1095 (select)
+- "Wanna help me find this ghost?"
++ "Quer me ajudar a achar esse fantasma?"
+#: npc/quests/quests_brasilis.txt#1096 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1097 (mes)
+- "You're on your own pal~."
++ "Você está por sua conta, amigo~."
+#: npc/quests/quests_brasilis.txt#1098 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1099 (mes)
+- "I don't like scary things!"
++ "Eu não gosto de coisa assustadora!"
+#: npc/quests/quests_brasilis.txt#1100 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1101 (mes)
+- "Pfft, I can't believe you're gonna believe that story."
++ "Pff, não acredito que você vai acreditar nessa história."
+#: npc/quests/quests_brasilis.txt#1102 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1103 (mes)
+- "I'll do whatever Fabio does, as always!"
++ "Eu faço o que o Fabio fizer, como sempre!"
+#: npc/quests/quests_brasilis.txt#1104 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1105 (mes)
+- "Maybe you're just scared..."
++ "Vai ver você é que está com medo..."
+#: npc/quests/quests_brasilis.txt#1106 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1107 (mes)
+- "Do you wanna hear the magic words again?"
++ "Você quer ouvir as palavras mágicas de novo?"
+#: npc/quests/quests_brasilis.txt#1108 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1109 (mes)
+- "'^3131FFMother the door won't open!^000000'"
++ "'^3131FFMamãe, a porta não abre!^000000'"
+#: npc/quests/quests_brasilis.txt#1110 (mes)
+- "'^FF0000Turn the key as many times as there are colors in the rainbow.^000000'"
++ "'^FF0000Gire a chave tantas vezes quantas são as cores do arco-íris.^000000'"
+#: npc/quests/quests_brasilis.txt#1111 (mes)
+- "'^3131FFMother the water is flooding!^000000'"
++ "'^3131FFMamãe, a água está transbordando!^000000'"
+#: npc/quests/quests_brasilis.txt#1112 (mes)
+- "'^FF0000If the moon disappears 3 times, don't worry.^000000'"
++ "'^FF0000Se a lua sumir 3 vezes, não se preocupe.^000000'"
+#: npc/quests/quests_brasilis.txt#1113 (mes)
+- "'^3131FFMother the drought has started!^000000'"
++ "'^3131FFMamãe, começou a seca!^000000'"
+#: npc/quests/quests_brasilis.txt#1114 (mes)
+- "'^FF0000Don't worry, the waterfall will help it.^000000'"
++ "'^FF0000Não se preocupe, a cachoeira vai ajudar.^000000'"
+#: npc/quests/quests_brasilis.txt#1115 (mes)
+- "'^3131FFMother where are my friends?^000000'"
++ "'^3131FFMamãe, onde estão os meus amigos?^000000'"
+#: npc/quests/quests_brasilis.txt#1116 (mes)
+- "'^FF0000Your 7 friends are sleeping. now it's time to wake them.^000000'"
++ "'^FF0000Os seus 7 amigos estão dormindo. agora é hora de acordar eles.^000000'"
+#: npc/quests/quests_brasilis.txt#1117 (mes)
+- "'^3131FFWhere are you mom?^000000'"
++ "'^3131FFOnde você está, mamãe?^000000'"
+#: npc/quests/quests_brasilis.txt#1118 (mes)
+- "[Pedro]"
++ "[Pedro]"
+#: npc/quests/quests_brasilis.txt#1119 (mes)
+- "I wonder what I need to do to have a statue made of me?"
++ "Fico pensando no que eu preciso fazer para ganhar uma estátua minha."
+#: npc/quests/quests_brasilis.txt#1121 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1122 (mes)
+- "Can you guys stop talking about the ghosts?"
++ "Dá para vocês pararem de falar de fantasma?"
+#: npc/quests/quests_brasilis.txt#1123 (mes)
+- "I've already got goosebumps all over."
++ "Eu já estou toda arrepiada."
+#: npc/quests/quests_brasilis.txt#1124 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1125 (mes)
+- "Why do Fabio and Daniel always bother us?"
++ "Por que o Fabio e o Daniel vivem enchendo a nossa paciência?"
+#: npc/quests/quests_brasilis.txt#1127 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1128 (mes)
+- "You still wasting your time with that ghost story?"
++ "Ainda perdendo tempo com essa história de fantasma?"
+#: npc/quests/quests_brasilis.txt#1129 (mes)
+- "[Fabio]"
++ "[Fabio]"
+#: npc/quests/quests_brasilis.txt#1130 (mes)
+- "Mariana, wanna see something cool?"
++ "Mariana, quer ver uma coisa legal?"
+#: npc/quests/quests_brasilis.txt#1131 (mes)
+- "[Mariana]"
++ "[Mariana]"
+#: npc/quests/quests_brasilis.txt#1132 (mes)
+- "kkkkkkkaaaaaacck!! Bugs!! Get 'em away!"
++ "kkkkkkaaaaack!! Bichos!! Tira isso de perto!"
+#: npc/quests/quests_brasilis.txt#1134 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1135 (mes)
+- "Nyah nyah nyah~"
++ "Nhá nhá nhá~"
+#: npc/quests/quests_brasilis.txt#1136 (mes)
+- "[Daniel]"
++ "[Daniel]"
+#: npc/quests/quests_brasilis.txt#1137 (mes)
+- "Keke Here~ I found more bugs~"
++ "Rerê Olha~ achei mais bicho~"
+#: npc/quests/quests_brasilis.txt#1138 (mes)
+- "- A key is inserted in the locked door.-"
++ "- Uma chave está enfiada na porta trancada.-"
+#: npc/quests/quests_brasilis.txt#1139 (select)
+- "Turn the key.:Ignore it."
++ "Girar a chave.:Ignorar."
+#: npc/quests/quests_brasilis.txt#1140 (mes)
+- "You start saying the first line of the magic words."
++ "Você começa a dizer a primeira linha das palavras mágicas."
+#: npc/quests/quests_brasilis.txt#1141 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1142 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1143 (atrib)
+- "Mother the door won't open!"
++ "Mamãe, a porta não abre!"
+#: npc/quests/quests_brasilis.txt#1144 (mes)
+- "Seems like you said something wrong."
++ "Parece que você disse alguma coisa errada."
+#: npc/quests/quests_brasilis.txt#1145 (mes)
+- "[Sobbing Voice]"
++ "[Voz Chorosa]"
+#: npc/quests/quests_brasilis.txt#1146 (mes)
+- "'^FF0000Turn the key as many times as there are colors in the rainbow.^000000'"
++ "'^FF0000Gire a chave tantas vezes quantas são as cores do arco-íris.^000000'"
+#: npc/quests/quests_brasilis.txt#1147 (select)
+- "Open the door:Knock on the door.:Turn the key.:Take the key out."
++ "Abrir a porta:Bater na porta.:Girar a chave.:Tirar a chave."
+#: npc/quests/quests_brasilis.txt#1148 (mes)
+- "The door is locked."
++ "A porta está trancada."
+#: npc/quests/quests_brasilis.txt#1149 (mes)
+- "So nothing happens."
++ "Então nada acontece."
+#: npc/quests/quests_brasilis.txt#1150 (mes)
+- "How many times should I try to knock?"
++ "Quantas vezes eu devo bater?"
+#: npc/quests/quests_brasilis.txt#1151 (mes)
+- "You knocked on the door "
++ "Você bateu na porta "
+#: npc/quests/quests_brasilis.txt#1152 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1153 (mes)
+- "But, nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1154 (mes)
+- "How many times should I turn the key?"
++ "Quantas vezes eu devo girar a chave?"
+#: npc/quests/quests_brasilis.txt#1155 (mes)
+- "You turn the key 7 times."
++ "Você gira a chave 7 vezes."
+#: npc/quests/quests_brasilis.txt#1156 (mes)
+- "Click! Click! Click!"
++ "Clique! Clique! Clique!"
+#: npc/quests/quests_brasilis.txt#1157 (mes)
+- "Click! Click! Click!"
++ "Clique! Clique! Clique!"
+#: npc/quests/quests_brasilis.txt#1158 (mes)
+- "Click...!"
++ "Clique...!"
+#: npc/quests/quests_brasilis.txt#1159 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1160 (mes)
+- "^FF0000kkkkhee- hihihihi!!!^000000"
++ "^FF0000kkkkhii- rirririri!!!^000000"
+#: npc/quests/quests_brasilis.txt#1161 (mes)
+- "You hear water flushing."
++ "Você ouve o barulho de uma descarga."
+#: npc/quests/quests_brasilis.txt#1162 (mes)
+- "Faint laughing can be heard off in the direction of the toilet."
++ "Um riso fraco vem da direção da privada."
+#: npc/quests/quests_brasilis.txt#1163 (mes)
+- "You turned over the key "
++ "Você girou a chave "
+#: npc/quests/quests_brasilis.txt#1164 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1165 (mes)
+- "But nothing doesn't happened."
++ "Mas não aconteceu nada."
+#: npc/quests/quests_brasilis.txt#1166 (mes)
+- "How many times should I insert the key into the door?"
++ "Quantas vezes eu devo enfiar a chave na porta?"
+#: npc/quests/quests_brasilis.txt#1167 (mes)
+- "You inserted the key "
++ "Você enfiou a chave "
+#: npc/quests/quests_brasilis.txt#1168 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1169 (mes)
+- "But nothing happened."
++ "Mas nada aconteceu."
+#: npc/quests/quests_brasilis.txt#1170 (mes)
+- "Mother the door won't open!"
++ "Mamãe, a porta não abre!"
+#: npc/quests/quests_brasilis.txt#1171 (mes)
+- "You do nothing."
++ "Você não faz nada."
+#: npc/quests/quests_brasilis.txt#1172 (mes)
+- "- A key is inserted in the locked door.-"
++ "- Uma chave está enfiada na porta trancada.-"
+#: npc/quests/quests_brasilis.txt#1173 (mes)
+- "- Looks like an ordinary toilet -"
++ "- Parece uma privada comum -"
+#: npc/quests/quests_brasilis.txt#1174 (select)
+- "Flush the toilet.:Doing nothing."
++ "Dar descarga.:Não fazer nada."
+#: npc/quests/quests_brasilis.txt#1175 (mes)
+- "After flushing the toilet, you suddenly feel dizzy and are suddenly swept away somewhere."
++ "Depois da descarga você sente uma tontura repentina e é arrastado para algum lugar."
+#: npc/quests/quests_brasilis.txt#1177 (mes)
+- "The water in the toilet looks gross."
++ "A água da privada está com uma cara nojenta."
+#: npc/quests/quests_brasilis.txt#1178 (select)
+- "Use the toilet:Ignore."
++ "Usar a privada:Ignorar."
+#: npc/quests/quests_brasilis.txt#1179 (mes)
+- "- What was the second line to that spell now? -"
++ "- Qual era mesmo a segunda linha daquele feitiço? -"
+#: npc/quests/quests_brasilis.txt#1180 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1181 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1182 (atrib)
+- "Mother the water is flooding!"
++ "Mamãe, a água está transbordando!"
+#: npc/quests/quests_brasilis.txt#1183 (mes)
+- "Seems like you said something wrong."
++ "Parece que você disse alguma coisa errada."
+#: npc/quests/quests_brasilis.txt#1184 (mes)
+- "[Sobbing Voice]"
++ "[Voz Chorosa]"
+#: npc/quests/quests_brasilis.txt#1185 (mes)
+- "^FF0000If the moon disappears 3 times... don't worry.....^000000"
++ "^FF0000Se a lua sumir 3 vezes... não se preocupe.....^000000"
+#: npc/quests/quests_brasilis.txt#1186 (select)
+- "Flush the toilet.:Close the lid."
++ "Dar descarga.:Fechar a tampa."
+#: npc/quests/quests_brasilis.txt#1187 (mes)
+- "How many times should I flush?"
++ "Quantas descargas eu devo dar?"
+#: npc/quests/quests_brasilis.txt#1188 (mes)
+- "You flush the toilet 3 times."
++ "Você dá 3 descargas."
+#: npc/quests/quests_brasilis.txt#1189 (mes)
+- "qwaaaaaaaaa!"
++ "quaaaaaaaaa!"
+#: npc/quests/quests_brasilis.txt#1190 (mes)
+- "kwaaaaaaaaaa!"
++ "kwaaaaaaaaaa!"
+#: npc/quests/quests_brasilis.txt#1191 (mes)
+- "kwaaaaaaaaaaaaaaaaaaa!"
++ "kwaaaaaaaaaaaaaaaaaaa!"
+#: npc/quests/quests_brasilis.txt#1192 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1193 (mes)
+- "^FF0000kkkkhee- hihihihi!!!^000000"
++ "^FF0000kkkkhii- rirririri!!!^000000"
+#: npc/quests/quests_brasilis.txt#1194 (mes)
+- "Suddenly the sink sounds like water is flowing freely from it."
++ "De repente a pia faz um barulho de água escorrendo solta."
+#: npc/quests/quests_brasilis.txt#1195 (mes)
+- "Faint laughing can be heard off in the direction of the faucet."
++ "Um riso fraco vem da direção da torneira."
+#: npc/quests/quests_brasilis.txt#1196 (mes)
+- "You flush the toilet "
++ "Você deu descarga "
+#: npc/quests/quests_brasilis.txt#1197 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1198 (mes)
+- "But nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1199 (mes)
+- "You close the lid of the toilet."
++ "Você fecha a tampa da privada."
+#: npc/quests/quests_brasilis.txt#1200 (mes)
+- "Nothing seems to be happening."
++ "Parece que nada vai acontecer."
+#: npc/quests/quests_brasilis.txt#1201 (mes)
+- "Nothing happens."
++ "Nada acontece."
+#: npc/quests/quests_brasilis.txt#1202 (mes)
+- "You do nothing."
++ "Você não faz nada."
+#: npc/quests/quests_brasilis.txt#1203 (mes)
+- "- Looks like an ordinary toilet -"
++ "- Parece uma privada comum -"
+#: npc/quests/quests_brasilis.txt#1204 (mes)
+- "- It seems like an ordinary faucet -"
++ "- Parece uma torneira comum -"
+#: npc/quests/quests_brasilis.txt#1205 (select)
+- "Examine it.:Ignore."
++ "Examinar.:Ignorar."
+#: npc/quests/quests_brasilis.txt#1206 (mes)
+- "- What was the next line to that spell now? -"
++ "- Qual era mesmo a linha seguinte daquele feitiço? -"
+#: npc/quests/quests_brasilis.txt#1207 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1208 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1209 (atrib)
+- "Mother the drought has started!"
++ "Mamãe, começou a seca!"
+#: npc/quests/quests_brasilis.txt#1210 (mes)
+- "Seems like you said something wrong."
++ "Parece que você disse alguma coisa errada."
+#: npc/quests/quests_brasilis.txt#1211 (mes)
+- "[Sobbing Voice]"
++ "[Voz Chorosa]"
+#: npc/quests/quests_brasilis.txt#1212 (mes)
+- "^FF0000Don't worry... the waterfall will help it....^000000"
++ "^FF0000Não se preocupe... a cachoeira vai ajudar....^000000"
+#: npc/quests/quests_brasilis.txt#1213 (select)
+- "Tap on the faucet.:Turn on the water."
++ "Bater na torneira.:Abrir a água."
+#: npc/quests/quests_brasilis.txt#1214 (mes)
+- "How many times will you tap the faucet?"
++ "Quantas vezes você vai bater na torneira?"
+#: npc/quests/quests_brasilis.txt#1215 (mes)
+- "You tap the faucet "
++ "Você bateu na torneira "
+#: npc/quests/quests_brasilis.txt#1216 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1217 (mes)
+- "But nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1218 (mes)
+- "How many times should I turn the water on?"
++ "Quantas vezes eu devo abrir a água?"
+#: npc/quests/quests_brasilis.txt#1219 (mes)
+- "You turn the faucet on once."
++ "Você abre a torneira uma vez."
+#: npc/quests/quests_brasilis.txt#1220 (mes)
+- "swwwaaaaaaa-"
++ "chuaaaaaaa-"
+#: npc/quests/quests_brasilis.txt#1221 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1222 (mes)
+- "^FF0000kkkkhee- hihihihi!!!^000000"
++ "^FF0000kkkkhii- rirririri!!!^000000"
+#: npc/quests/quests_brasilis.txt#1223 (mes)
+- "You see the carpet move."
++ "Você vê o tapete se mexer."
+#: npc/quests/quests_brasilis.txt#1224 (mes)
+- "Faint laughing can be heard off in the direction of the carpet."
++ "Um riso fraco vem da direção do tapete."
+#: npc/quests/quests_brasilis.txt#1225 (mes)
+- "You turn the faucet on "
++ "Você abriu a torneira "
+#: npc/quests/quests_brasilis.txt#1226 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1227 (mes)
+- "But nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1228 (mes)
+- "Nothing happens."
++ "Nada acontece."
+#: npc/quests/quests_brasilis.txt#1229 (mes)
+- "You do nothing."
++ "Você não faz nada."
+#: npc/quests/quests_brasilis.txt#1230 (mes)
+- "- It seems like an ordinary faucet -"
++ "- Parece uma torneira comum -"
+#: npc/quests/quests_brasilis.txt#1231 (mes)
+- "- A carpet with an intricate pattern on it -"
++ "- Um tapete com um padrão cheio de detalhes -"
+#: npc/quests/quests_brasilis.txt#1232 (select)
+- "Examine it.:Ignore."
++ "Examinar.:Ignorar."
+#: npc/quests/quests_brasilis.txt#1233 (mes)
+- "- What was the next line to that spell now? -"
++ "- Qual era mesmo a linha seguinte daquele feitiço? -"
+#: npc/quests/quests_brasilis.txt#1234 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1235 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1236 (atrib)
+- "Mother where are my friends?"
++ "Mamãe, onde estão os meus amigos?"
+#: npc/quests/quests_brasilis.txt#1237 (mes)
+- "Seems like you said something wrong."
++ "Parece que você disse alguma coisa errada."
+#: npc/quests/quests_brasilis.txt#1238 (mes)
+- "[Sobbing Voice]"
++ "[Voz Chorosa]"
+#: npc/quests/quests_brasilis.txt#1239 (mes)
+- "^FF0000your 7 friends....are...sleeping... now it...'s time ....to wake them........^000000"
++ "^FF0000os seus 7 amigos....estão...dormindo... agora é...hora ....de acordar eles........^000000"
+#: npc/quests/quests_brasilis.txt#1240 (select)
+- "Jump on the carpet.:Lie on the carpet.:Shake the carpet."
++ "Pular no tapete.:Deitar no tapete.:Sacudir o tapete."
+#: npc/quests/quests_brasilis.txt#1241 (mes)
+- "How many times should I jump?"
++ "Quantas vezes eu devo pular?"
+#: npc/quests/quests_brasilis.txt#1242 (mes)
+- "You jump on the carpet "
++ "Você pulou no tapete "
+#: npc/quests/quests_brasilis.txt#1243 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1244 (mes)
+- "But nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1245 (mes)
+- "How many times should I lie on the carpet?"
++ "Quantas vezes eu devo deitar no tapete?"
+#: npc/quests/quests_brasilis.txt#1246 (mes)
+- "You lie on the carpet "
++ "Você deitou no tapete "
+#: npc/quests/quests_brasilis.txt#1247 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1248 (mes)
+- "But nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1249 (mes)
+- "How many times should I shake the carpet?"
++ "Quantas vezes eu devo sacudir o tapete?"
+#: npc/quests/quests_brasilis.txt#1250 (mes)
+- "You shake the carpet 7 times."
++ "Você sacode o tapete 7 vezes."
+#: npc/quests/quests_brasilis.txt#1251 (mes)
+- "- fly~ fly~ fly~ fly~ fly~ fly~ fly~ -"
++ "- voa~ voa~ voa~ voa~ voa~ voa~ voa~ -"
+#: npc/quests/quests_brasilis.txt#1252 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1253 (mes)
+- "^FF0000kkkkhee- hihihihi!!!^000000"
++ "^FF0000kkkkhii- rirririri!!!^000000"
+#: npc/quests/quests_brasilis.txt#1254 (mes)
+- "Faint laughing can be heard off in the direction of the mirror."
++ "Um riso fraco vem da direção do espelho."
+#: npc/quests/quests_brasilis.txt#1255 (mes)
+- "You shake the carpet "
++ "Você sacudiu o tapete "
+#: npc/quests/quests_brasilis.txt#1256 (mes)
+- " times."
++ " vezes."
+#: npc/quests/quests_brasilis.txt#1257 (mes)
+- "But nothing happens."
++ "Mas nada acontece."
+#: npc/quests/quests_brasilis.txt#1258 (mes)
+- "Nothing happens."
++ "Nada acontece."
+#: npc/quests/quests_brasilis.txt#1259 (mes)
+- "You do nothing."
++ "Você não faz nada."
+#: npc/quests/quests_brasilis.txt#1260 (mes)
+- "- A carpet with an intricate pattern on it -"
++ "- Um tapete com um padrão cheio de detalhes -"
+#: npc/quests/quests_brasilis.txt#1261 (mes)
+- "- You can see a clean mirror without any marks or dust -"
++ "- Você vê um espelho limpo, sem marca nem poeira -"
+#: npc/quests/quests_brasilis.txt#1262 (select)
+- "Examine it.:Ignore."
++ "Examinar.:Ignorar."
+#: npc/quests/quests_brasilis.txt#1263 (mes)
+- "- What was the next line to that spell now? -"
++ "- Qual era mesmo a linha seguinte daquele feitiço? -"
+#: npc/quests/quests_brasilis.txt#1264 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1265 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1266 (atrib)
+- "Where are you mom?"
++ "Onde você está, mamãe?"
+#: npc/quests/quests_brasilis.txt#1267 (mes)
+- "Seems like you said something wrong."
++ "Parece que você disse alguma coisa errada."
+#: npc/quests/quests_brasilis.txt#1268 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1269 (mes)
+- "^FF0000kihe! hit! hit! hit! hit!^000000"
++ "^FF0000kirri! ri! ri! ri! ri!^000000"
+#: npc/quests/quests_brasilis.txt#1270 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1271 (mes)
+- "^FF0000kihe! hit! hit! hit! hit!^000000"
++ "^FF0000kirri! ri! ri! ri! ri!^000000"
+#: npc/quests/quests_brasilis.txt#1272 (mes)
+- "^FF0000kihe! hit! hit! hit! hit!^000000"
++ "^FF0000kirri! ri! ri! ri! ri!^000000"
+#: npc/quests/quests_brasilis.txt#1273 (mes)
+- "[Distant Sound]"
++ "[Som Distante]"
+#: npc/quests/quests_brasilis.txt#1274 (mes)
+- "Behind you..."
++ "Atrás de você..."
+#: npc/quests/quests_brasilis.txt#1276 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1277 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1278 (mes)
+- "The stories about the ghost are true~!"
++ "As histórias sobre o fantasma são verdadeiras~!"
+#: npc/quests/quests_brasilis.txt#1279 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1280 (mes)
+- "^FF0000my baby....^000000"
++ "^FF0000meu bebê....^000000"
+#: npc/quests/quests_brasilis.txt#1281 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1282 (mes)
+- "^FF0000I can't see.... my eye....^000000"
++ "^FF0000Não estou enxergando.... meu olho....^000000"
+#: npc/quests/quests_brasilis.txt#1283 (mes)
+- "^FF0000What's going on....?^000000"
++ "^FF0000O que está acontecendo....?^000000"
+#: npc/quests/quests_brasilis.txt#1284 (mes)
+- "- You take a deep breath and then look at the Ghost and notice it has an eye patch -"
++ "- Você respira fundo, olha para o fantasma e percebe que ele usa um tapa-olho -"
+#: npc/quests/quests_brasilis.txt#1285 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1286 (mes)
+- "^FF0000My eyes are so tight... can you take this off?^000000"
++ "^FF0000Os meus olhos estão tão apertados... você pode tirar isto?^000000"
+#: npc/quests/quests_brasilis.txt#1287 (mes)
+- "You step carefully towards the ghost."
++ "Você dá passos cuidadosos na direção do fantasma."
+#: npc/quests/quests_brasilis.txt#1288 (mes)
+- "His face was covered with dust making strange contortions with it's face."
++ "O rosto dele estava coberto de poeira, fazendo caretas estranhas."
+#: npc/quests/quests_brasilis.txt#1289 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1290 (mes)
+- "^FF0000Come on help mom.....^000000"
++ "^FF0000Vamos, ajude a mamãe.....^000000"
+#: npc/quests/quests_brasilis.txt#1291 (select)
+- "Take the eye bandage off.:Run away~."
++ "Tirar a venda do olho.:Fugir~."
+#: npc/quests/quests_brasilis.txt#1293 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1294 (mes)
+- "^FF0000Go away!^000000"
++ "^FF0000Vá embora!^000000"
+#: npc/quests/quests_brasilis.txt#1297 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1298 (mes)
+- "^FF0000Ahh!^000000"
++ "^FF0000Aah!^000000"
+#: npc/quests/quests_brasilis.txt#1299 (mes)
+- "The Ghost disappeared into the toilet."
++ "A Loira do Banheiro sumiu dentro da privada."
+#: npc/quests/quests_brasilis.txt#1302 (mes)
+- "You run away from the ghost."
++ "Você foge do fantasma."
+#: npc/quests/quests_brasilis.txt#1305 (mes)
+- "Nothing happens."
++ "Nada acontece."
+#: npc/quests/quests_brasilis.txt#1306 (mes)
+- "You do nothing."
++ "Você não faz nada."
+#: npc/quests/quests_brasilis.txt#1307 (mes)
+- "- You can see a clean mirror without any marks or dust -"
++ "- Você vê um espelho limpo, sem marca nem poeira -"
+#: npc/quests/quests_brasilis.txt#1309 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1310 (mes)
+- "I'm sorry but this area is under construction right now."
++ "Sinto muito, mas esta área está em obras no momento."
+#: npc/quests/quests_brasilis.txt#1311 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1312 (mes)
+- "What can I do for you?"
++ "O que posso fazer por você?"
+#: npc/quests/quests_brasilis.txt#1313 (select)
+- "I need to use the bathroom."
++ "Eu preciso usar o banheiro."
+#: npc/quests/quests_brasilis.txt#1314 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1315 (mes)
+- "Sorry we are remodeling inside right now so, it's closed."
++ "Desculpe, estamos reformando lá dentro, então está fechado."
+#: npc/quests/quests_brasilis.txt#1316 (mes)
+- "Please use the other one."
++ "Por favor, use o outro."
+#: npc/quests/quests_brasilis.txt#1317 (select)
+- "But I forgot something inside.:Give up."
++ "Mas eu esqueci uma coisa lá dentro.:Desistir."
+#: npc/quests/quests_brasilis.txt#1318 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1319 (mes)
+- "That's tooooo bad."
++ "Que peeeena."
+#: npc/quests/quests_brasilis.txt#1320 (mes)
+- "But my manager ordered me to stop anyone from entering this bathroom so, I should follow his orders."
++ "Mas o meu chefe mandou não deixar ninguém entrar neste banheiro, então eu preciso obedecer."
+#: npc/quests/quests_brasilis.txt#1321 (select)
+- "It's such a hot day!"
++ "Que dia quente!"
+#: npc/quests/quests_brasilis.txt#1322 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1323 (mes)
+- "It's always hot in Brasilis but today is ridiculously hot."
++ "Faz sempre calor em Brasilis, mas hoje o calor está ridículo."
+#: npc/quests/quests_brasilis.txt#1324 (mes)
+- "Maybe I need to drink some coconut juice to cool down."
++ "Talvez eu precise beber uma água de coco para refrescar."
+#: npc/quests/quests_brasilis.txt#1325 (mes)
+- "You give a coconut to the Curator."
++ "Você dá um coco ao Curador."
+#: npc/quests/quests_brasilis.txt#1326 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1327 (mes)
+- "Oh really can I have it?"
++ "Ah, sério, posso ficar com ele?"
+#: npc/quests/quests_brasilis.txt#1328 (mes)
+- "Thanks a lot!"
++ "Muito obrigado!"
+#: npc/quests/quests_brasilis.txt#1329 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1330 (mes)
+- "Pay it forward right?"
++ "Uma mão lava a outra, né?"
+#: npc/quests/quests_brasilis.txt#1331 (mes)
+- "Ok I'll let you through this one time."
++ "Está bem, eu deixo você passar desta vez."
+#: npc/quests/quests_brasilis.txt#1332 (mes)
+- "The curator looks around calmly then opens the door."
++ "O curador olha em volta com calma e então abre a porta."
+#: npc/quests/quests_brasilis.txt#1334 (mes)
+- "You give up trying to enter."
++ "Você desiste de entrar."
+#: npc/quests/quests_brasilis.txt#1335 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1336 (mes)
+- "What can I do for you?"
++ "O que posso fazer por você?"
+#: npc/quests/quests_brasilis.txt#1337 (select)
+- "I need to use the bathroom."
++ "Eu preciso usar o banheiro."
+#: npc/quests/quests_brasilis.txt#1338 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1339 (mes)
+- "Sorry we are remodeling inside right now so, it's closed."
++ "Desculpe, estamos reformando lá dentro, então está fechado."
+#: npc/quests/quests_brasilis.txt#1340 (mes)
+- "Please use the other one."
++ "Por favor, use o outro."
+#: npc/quests/quests_brasilis.txt#1341 (select)
+- "But I forgot something inside.:Give up."
++ "Mas eu esqueci uma coisa lá dentro.:Desistir."
+#: npc/quests/quests_brasilis.txt#1342 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1343 (mes)
+- "That's tooooo bad."
++ "Que peeeena."
+#: npc/quests/quests_brasilis.txt#1344 (mes)
+- "But my manager ordered me to stop anyone from entering this bathroom so, I should follow his orders."
++ "Mas o meu chefe mandou não deixar ninguém entrar neste banheiro, então eu preciso obedecer."
+#: npc/quests/quests_brasilis.txt#1345 (select)
+- "It's such a hot day!"
++ "Que dia quente!"
+#: npc/quests/quests_brasilis.txt#1346 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1347 (mes)
+- "It's always hot in Brasilis but today is ridiculously hot."
++ "Faz sempre calor em Brasilis, mas hoje o calor está ridículo."
+#: npc/quests/quests_brasilis.txt#1348 (mes)
+- "Maybe I need to drink some coconut juice to cool down."
++ "Talvez eu precise beber uma água de coco para refrescar."
+#: npc/quests/quests_brasilis.txt#1349 (mes)
+- "You give up trying to enter."
++ "Você desiste de entrar."
+#: npc/quests/quests_brasilis.txt#1350 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1351 (mes)
+- "Hey thanks for the Coconut earlier it really helped me cool down."
++ "Ei, obrigado pelo Coco de mais cedo, ele me refrescou de verdade."
+#: npc/quests/quests_brasilis.txt#1352 (mes)
+- "[Curator]"
++ "[Curador]"
+#: npc/quests/quests_brasilis.txt#1353 (mes)
+- "Is it just me? Or is it hotter than it's ever been today!"
++ "É impressão minha? Ou hoje está mais quente do que nunca!"
+#: npc/quests/quests_brasilis.txt#1355 (mes)
+- "The entrance has been blocked."
++ "A entrada foi bloqueada."
+#: npc/quests/quests_brasilis.txt#1357 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1358 (mes)
+- "I am a ghost who died while wandering the jungle many years ago."
++ "Eu sou um fantasma que morreu vagando pela selva, muitos anos atrás."
+#: npc/quests/quests_brasilis.txt#1359 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1360 (mes)
+- "I found a pipeline in the jungle and followed the voice of a man to this very spot."
++ "Eu achei um cano na selva e segui a voz de um homem até este lugar."
+#: npc/quests/quests_brasilis.txt#1361 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1362 (mes)
+- "That's also where I hurt one of my eyes while walking around in the dark."
++ "Foi aí também que eu machuquei um dos meus olhos, andando no escuro."
+#: npc/quests/quests_brasilis.txt#1363 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1364 (mes)
+- "I wandered these sewers for days until I found the end of this line connected to the toilet in the museum. I shouted forever begging for help but no one answered my calls."
++ "Eu vaguei por estes esgotos durante dias, até achar o fim desta linha, ligada à privada do museu. Gritei sem parar implorando por socorro, mas ninguém respondeu."
+#: npc/quests/quests_brasilis.txt#1365 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1366 (mes)
+- "You finally answered my call but it's already way too late. Thank you for at least checking. No one else has bothered to this day."
++ "Você finalmente respondeu ao meu chamado, mas já é tarde demais. Obrigado por pelo menos ter vindo ver. Ninguém mais se deu ao trabalho até hoje."
+#: npc/quests/quests_brasilis.txt#1367 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1368 (mes)
+- "There are many dangerous creatures at the end of this sewer."
++ "Tem muita criatura perigosa no fim deste esgoto."
+#: npc/quests/quests_brasilis.txt#1369 (mes)
+- "You seem brave though. I bet you wouldn't worry about the monsters there anyways."
++ "Mas você parece corajoso. Aposto que não se preocupa com os monstros de lá."
+#: npc/quests/quests_brasilis.txt#1370 (mes)
+- "[Ghost]"
++ "[Loira do Banheiro]"
+#: npc/quests/quests_brasilis.txt#1371 (mes)
+- "I guess now I can finally rest in peace."
++ "Acho que agora eu posso finalmente descansar em paz."
+#: npc/quests/quests_brasilis.txt#1372 (mes)
+- "Thank you friend."
++ "Obrigado, amigo."
+#: npc/quests/quests_brasilis.txt#1376 (mes)
+- "You see a rusty pipe. It seems to be linked to somewhere beneath the jungle."
++ "Você vê um cano enferrujado. Ele parece levar a algum lugar debaixo da selva."
+#: npc/quests/quests_brasilis.txt#1377 (select)
+- "Examine it:Ignore."
++ "Examinar:Ignorar."
+#: npc/quests/quests_brasilis.txt#1378 (mes)
+- "You swim through a gap in the pipe and are swept by a sudden rush of water."
++ "Você nada por uma fresta do cano e é levado por uma correnteza repentina."
+#: npc/quests/quests_brasilis.txt#1380 (mes)
+- "It might be dangerous, I better not act rashly."
++ "Pode ser perigoso, é melhor eu não agir sem pensar."
+#: npc/quests/quests_brasilis.txt#1381 (mes)
+- "You see a rusty pipe. It seems to be linked to somewhere beneath the jungle."
++ "Você vê um cano enferrujado. Ele parece levar a algum lugar debaixo da selva."
+#: npc/quests/quests_brasilis.txt#1383 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1384 (mes)
+- "I'm still preparing."
++ "Ainda estou me preparando."
+#: npc/quests/quests_brasilis.txt#1385 (mes)
+- "I don't require your help at this time."
++ "Não preciso da sua ajuda por enquanto."
+#: npc/quests/quests_brasilis.txt#1386 (mes)
+- "Please come back later..."
++ "Volte mais tarde, por favor..."
+#: npc/quests/quests_brasilis.txt#1387 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1388 (mes)
+- "To block Iara "
++ "Para impedir que a Iara "
+#: npc/quests/quests_brasilis.txt#1389 (mes)
+- "seducing the tribes"
++ "seduza os da tribo"
+#: npc/quests/quests_brasilis.txt#1390 (mes)
+- "we need a purifying potion..."
++ "precisamos de uma poção purificadora..."
+#: npc/quests/quests_brasilis.txt#1391 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1392 (mes)
+- "Did you bring the materials"
++ "Você trouxe os materiais"
+#: npc/quests/quests_brasilis.txt#1393 (mes)
+- "to make the purifying potion?"
++ "para fazer a Poção Puri?"
+#: npc/quests/quests_brasilis.txt#1394 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1395 (mes)
+- "Um... it seems to be okay."
++ "Hum... parece que está tudo certo."
+#: npc/quests/quests_brasilis.txt#1396 (mes)
+- "I'll make you a potion which will"
++ "Vou lhe fazer uma poção que"
+#: npc/quests/quests_brasilis.txt#1397 (mes)
+- "weaken Iara's power."
++ "enfraquece o poder da Iara."
+#: npc/quests/quests_brasilis.txt#1398 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1399 (mes)
+- "Let's see grind this..."
++ "Vejamos, moer isto..."
+#: npc/quests/quests_brasilis.txt#1400 (mes)
+- "and mix in that..."
++ "e misturar aquilo..."
+#: npc/quests/quests_brasilis.txt#1401 (mes)
+- "then add some magic..."
++ "depois acrescentar um pouco de magia..."
+#: npc/quests/quests_brasilis.txt#1402 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1403 (mes)
+- "Here, it's completed."
++ "Pronto, está terminada."
+#: npc/quests/quests_brasilis.txt#1404 (mes)
+- "Take this."
++ "Leve isto."
+#: npc/quests/quests_brasilis.txt#1405 (mes)
+- "It will make Iara stop"
++ "Isto vai fazer a Iara parar"
+#: npc/quests/quests_brasilis.txt#1406 (mes)
+- "training at the cave"
++ "de treinar na caverna"
+#: npc/quests/quests_brasilis.txt#1407 (mes)
+- "for a while."
++ "por um tempo."
+#: npc/quests/quests_brasilis.txt#1408 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1409 (mes)
+- "Please block the Iara threatening the security of the tribe."
++ "Por favor, detenha a Iara, que ameaça a segurança da tribo."
+#: npc/quests/quests_brasilis.txt#1410 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1411 (mes)
+- "You haven't brought enough materials yet."
++ "Você ainda não trouxe material suficiente."
+#: npc/quests/quests_brasilis.txt#1412 (mes)
+- "We cannot make the purification potion with only these."
++ "Não dá para fazer a Poção Puri só com isto."
+#: npc/quests/quests_brasilis.txt#1413 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1414 (mes)
+- "Ah... we need a strong adventurer."
++ "Ah... precisamos de um aventureiro forte."
+#: npc/quests/quests_brasilis.txt#1415 (mes)
+- "The tribe is facing a major threat."
++ "A tribo enfrenta uma grande ameaça."
+#: npc/quests/quests_brasilis.txt#1416 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1417 (mes)
+- "you are..."
++ "você é..."
+#: npc/quests/quests_brasilis.txt#1418 (mes)
+- "the adventurer who came for the"
++ "o aventureiro que veio atrás da"
+#: npc/quests/quests_brasilis.txt#1419 (mes)
+- "purification potion..."
++ "Poção Puri..."
+#: npc/quests/quests_brasilis.txt#1420 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1421 (mes)
+- "Maybe because of the purification potion..."
++ "Talvez por causa da Poção Puri..."
+#: npc/quests/quests_brasilis.txt#1422 (mes)
+- "After that, the Iara stopped seducing tribesmen but the effect didn't last long."
++ "Depois daquilo a Iara parou de seduzir os homens da tribo, mas o efeito não durou muito."
+#: npc/quests/quests_brasilis.txt#1423 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1424 (mes)
+- "Could you get the same"
++ "Você poderia trazer os mesmos"
+#: npc/quests/quests_brasilis.txt#1425 (mes)
+- "materials as before..."
++ "materiais de antes..."
+#: npc/quests/quests_brasilis.txt#1426 (mes)
+- "I need your power."
++ "Eu preciso da sua força."
+#: npc/quests/quests_brasilis.txt#1427 (select)
+- "No.:Okay, I'll do it."
++ "Não.:Está bem, eu faço."
+#: npc/quests/quests_brasilis.txt#1428 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1429 (mes)
+- "This, ah..."
++ "Isto, ah..."
+#: npc/quests/quests_brasilis.txt#1430 (mes)
+- "There is no other way."
++ "Não há outro jeito."
+#: npc/quests/quests_brasilis.txt#1431 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1432 (mes)
+- "You are truly brave!"
++ "Você é mesmo corajoso!"
+#: npc/quests/quests_brasilis.txt#1433 (mes)
+- "I, on behalf of the tribe,"
++ "Eu, em nome da tribo,"
+#: npc/quests/quests_brasilis.txt#1434 (mes)
+- "offer you my thanks."
++ "lhe ofereço os meus agradecimentos."
+#: npc/quests/quests_brasilis.txt#1435 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1436 (mes)
+- "Materials are the same as before."
++ "Os materiais são os mesmos de antes."
+#: npc/quests/quests_brasilis.txt#1437 (mes)
+- "If you just get^ff0000 20 Hearts of Mermaids,"
++ "Se você trouxer^ff0000 20 Corações de Sereia,"
+#: npc/quests/quests_brasilis.txt#1438 (mes)
+- "10 Leopard Claws and"
++ "10 Garras de Leopardo e"
+#: npc/quests/quests_brasilis.txt#1439 (mes)
+- "3 Ancient Lips^000000,"
++ "3 Lábios Fossilizados^000000,"
+#: npc/quests/quests_brasilis.txt#1440 (mes)
+- "I will make you a potion that purifies evil spirits"
++ "eu lhe faço uma poção que purifica os espíritos malignos"
+#: npc/quests/quests_brasilis.txt#1441 (mes)
+- "by using a secret formula handed down to the tribe."
++ "usando uma fórmula secreta passada de geração em geração na tribo."
+#: npc/quests/quests_brasilis.txt#1442 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1443 (mes)
+- "The destiny of the tribe is up to you."
++ "O destino da tribo está nas suas mãos."
+#: npc/quests/quests_brasilis.txt#1444 (mes)
+- "please get the materials quickly."
++ "por favor, consiga os materiais depressa."
+#: npc/quests/quests_brasilis.txt#1445 (mes)
+- "I will be preparing to make"
++ "Eu vou ficar aqui mesmo me preparando"
+#: npc/quests/quests_brasilis.txt#1446 (mes)
+- "the purification potion right here."
++ "para fazer a Poção Puri."
+#: npc/quests/quests_brasilis.txt#1447 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1448 (mes)
+- "There are some people I haven't seen before around here."
++ "Tem gente por aqui que eu nunca vi antes."
+#: npc/quests/quests_brasilis.txt#1449 (mes)
+- "It's a good sign..."
++ "É um bom sinal..."
+#: npc/quests/quests_brasilis.txt#1450 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1451 (mes)
+- "Hey you..."
++ "Ei, você..."
+#: npc/quests/quests_brasilis.txt#1452 (mes)
+- "Could you listen to my stories for a moment."
++ "Você poderia escutar as minhas histórias por um instante."
+#: npc/quests/quests_brasilis.txt#1453 (mes)
+- "There's an emergency in our tribe."
++ "Há uma emergência na nossa tribo."
+#: npc/quests/quests_brasilis.txt#1454 (select)
+- "No.:Okay."
++ "Não.:Está bem."
+#: npc/quests/quests_brasilis.txt#1455 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1456 (mes)
+- "You are a heartless person..."
++ "Você é uma pessoa sem coração..."
+#: npc/quests/quests_brasilis.txt#1457 (mes)
+- "You don't seem the helpful type."
++ "Você não parece do tipo prestativo."
+#: npc/quests/quests_brasilis.txt#1458 (mes)
+- "Just keep on going your way."
++ "Siga o seu caminho."
+#: npc/quests/quests_brasilis.txt#1459 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1460 (mes)
+- "Thank you, I met a kind person."
++ "Obrigado, encontrei uma pessoa gentil."
+#: npc/quests/quests_brasilis.txt#1461 (mes)
+- "It's a secret of our tribe that"
++ "É um segredo da nossa tribo, e"
+#: npc/quests/quests_brasilis.txt#1462 (mes)
+- "you cannot tell anyone."
++ "você não pode contar a ninguém."
+#: npc/quests/quests_brasilis.txt#1463 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1464 (mes)
+- "Lately young men from"
++ "Ultimamente os rapazes"
+#: npc/quests/quests_brasilis.txt#1465 (mes)
+- "the tribe are disappearing."
++ "da tribo andam desaparecendo."
+#: npc/quests/quests_brasilis.txt#1466 (mes)
+- "Our entire tribe is being threatened."
++ "A nossa tribo inteira está ameaçada."
+#: npc/quests/quests_brasilis.txt#1467 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1468 (mes)
+- "It is likely because of a witch called Iara."
++ "Provavelmente é por causa de uma bruxa chamada Iara."
+#: npc/quests/quests_brasilis.txt#1469 (mes)
+- "She is a water nymph seducing the hearts of young tribesmen at a cave behind the waterfall."
++ "Ela é uma ninfa das águas que seduz o coração dos rapazes da tribo numa caverna atrás da cachoeira."
+#: npc/quests/quests_brasilis.txt#1470 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1471 (mes)
+- "How can I stop these young tribesmen?"
++ "Como eu posso deter esses rapazes?"
+#: npc/quests/quests_brasilis.txt#1472 (mes)
+- "But I discovered a way to make a purification potion to reverse the effects of the Iara's spells."
++ "Mas eu descobri um jeito de fazer uma Poção Puri que desfaz o efeito dos feitiços da Iara."
+#: npc/quests/quests_brasilis.txt#1473 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1474 (mes)
+- "This potion has been handed down from many generations in our tribe."
++ "Essa poção é passada de geração em geração na nossa tribo."
+#: npc/quests/quests_brasilis.txt#1475 (mes)
+- "This purification potion possesses the power to cleanse evil spirits."
++ "Esta Poção Puri tem o poder de limpar os espíritos malignos."
+#: npc/quests/quests_brasilis.txt#1476 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1477 (mes)
+- "If you could get the materials"
++ "Se você conseguir os materiais"
+#: npc/quests/quests_brasilis.txt#1478 (mes)
+- "I will make you"
++ "eu faço para você"
+#: npc/quests/quests_brasilis.txt#1479 (mes)
+- "the purification potion."
++ "a Poção Puri."
+#: npc/quests/quests_brasilis.txt#1480 (mes)
+- "Could you do that for me?"
++ "Você poderia fazer isso por mim?"
+#: npc/quests/quests_brasilis.txt#1481 (select)
+- "No.:Yes, I can."
++ "Não.:Sim, eu posso."
+#: npc/quests/quests_brasilis.txt#1482 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1483 (mes)
+- "Hm..."
++ "Hm..."
+#: npc/quests/quests_brasilis.txt#1484 (mes)
+- "Well, then."
++ "Pois bem, então."
+#: npc/quests/quests_brasilis.txt#1485 (mes)
+- "If you change your mind you can come to me again."
++ "Se mudar de ideia, pode voltar até mim."
+#: npc/quests/quests_brasilis.txt#1486 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1487 (mes)
+- "You shouldn't talk about"
++ "Você não deve falar"
+#: npc/quests/quests_brasilis.txt#1488 (mes)
+- "what you heard now to anyone"
++ "do que ouviu agora com ninguém"
+#: npc/quests/quests_brasilis.txt#1489 (mes)
+- "It's kind of embarrassing..."
++ "É meio constrangedor..."
+#: npc/quests/quests_brasilis.txt#1490 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1491 (mes)
+- "Oh! You are the savior"
++ "Oh! Você é mesmo o salvador"
+#: npc/quests/quests_brasilis.txt#1492 (mes)
+- "of our tribe indeed."
++ "da nossa tribo."
+#: npc/quests/quests_brasilis.txt#1493 (mes)
+- "On behalf of the tribe, I offer you my thanks."
++ "Em nome da tribo, eu lhe ofereço os meus agradecimentos."
+#: npc/quests/quests_brasilis.txt#1494 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1495 (mes)
+- "Well, what we need is this."
++ "Bem, o que precisamos é isto."
+#: npc/quests/quests_brasilis.txt#1496 (mes)
+- "It's all you can get from near here."
++ "É tudo o que dá para conseguir por aqui perto."
+#: npc/quests/quests_brasilis.txt#1497 (mes)
+- "Note down well."
++ "Anote direitinho."
+#: npc/quests/quests_brasilis.txt#1498 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1499 (mes)
+- "^ff0000 20 Hearts of Mermaids"
++ "^ff0000 20 Corações de Sereia"
+#: npc/quests/quests_brasilis.txt#1500 (mes)
+- "10 Leopard Claws"
++ "10 Garras de Leopardo"
+#: npc/quests/quests_brasilis.txt#1501 (mes)
+- "3 Ancient Lips^000000"
++ "3 Lábios Fossilizados^000000"
+#: npc/quests/quests_brasilis.txt#1502 (mes)
+- "are the only ones that are needed as the materials."
++ "são os únicos materiais necessários."
+#: npc/quests/quests_brasilis.txt#1503 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1504 (mes)
+- "When you get those, I will make you a potion that purifies evil spirits using a secret formula handed down to the tribe."
++ "Quando você conseguir tudo, eu lhe faço uma poção que purifica os espíritos malignos usando uma fórmula secreta passada de geração em geração na tribo."
+#: npc/quests/quests_brasilis.txt#1505 (mes)
+- "[Anori]"
++ "[Anori]"
+#: npc/quests/quests_brasilis.txt#1506 (mes)
+- "The destiny of the tribe is up to you."
++ "O destino da tribo está nas suas mãos."
+#: npc/quests/quests_brasilis.txt#1507 (mes)
+- "I hope you move quickly."
++ "Espero que você seja rápido."
+#: npc/quests/quests_brasilis.txt#1508 (mes)
+- "Even at this moment, the village men are being seduced and slipping way..."
++ "Neste exato momento os homens da vila estão sendo seduzidos e escapando..."
+#: npc/quests/quests_brasilis.txt#1509 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1510 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1511 (mes)
+- "Should I use a Purification Potion?"
++ "Devo usar uma Poção Puri?"
+#: npc/quests/quests_brasilis.txt#1512 (select)
+- "Yes.:No."
++ "Sim.:Não."
+#: npc/quests/quests_brasilis.txt#1513 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1514 (mes)
+- "Ah...this light is..."
++ "Ah...esta luz é..."
+#: npc/quests/quests_brasilis.txt#1515 (mes)
+- "It's like getting cleansed of evil thoughts"
++ "É como se os maus pensamentos fossem limpos"
+#: npc/quests/quests_brasilis.txt#1516 (mes)
+- "from deep within my heart."
++ "do fundo do meu coração."
+#: npc/quests/quests_brasilis.txt#1517 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1518 (mes)
+- "At last I can forget the curse that I placed on myself when I drowned in the water."
++ "Enfim eu consigo esquecer a maldição que eu lancei sobre mim mesma quando me afoguei nas águas."
+#: npc/quests/quests_brasilis.txt#1519 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1520 (mes)
+- "Do you think I can be born again as a kind water nymph?"
++ "Você acha que eu posso renascer como uma ninfa boa das águas?"
+#: npc/quests/quests_brasilis.txt#1521 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1522 (mes)
+- "Ah... Thank you for helping me recover my consciousness for a while."
++ "Ah... obrigada por me ajudar a recobrar a consciência por um instante."
+#: npc/quests/quests_brasilis.txt#1523 (mes)
+- "But... I think that the curse has been with me too long."
++ "Mas... eu acho que a maldição está comigo há tempo demais."
+#: npc/quests/quests_brasilis.txt#1524 (mes)
+- "Get away from me quickly."
++ "Afaste-se de mim, depressa."
+#: npc/quests/quests_brasilis.txt#1525 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1526 (mes)
+- "Ahhh~..."
++ "Aaah~..."
+#: npc/quests/quests_brasilis.txt#1527 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1528 (mes)
+- "The curse is too strong for me to keep contained."
++ "A maldição é forte demais para eu conseguir conter."
+#: npc/quests/quests_brasilis.txt#1529 (mes)
+- "Leave now while you are safe."
++ "Vá embora agora, enquanto você está a salvo."
+#: npc/quests/quests_brasilis.txt#1530 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1531 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1532 (mes)
+- "(I guess I should ignore her.)"
++ "(Acho melhor eu ignorar ela.)"
+#: npc/quests/quests_brasilis.txt#1533 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1534 (mes)
+- "Aaaaaaaaaaaaaaaaaaaaaah."
++ "Aaaaaaaaaaaaaaaaaaaaah."
+#: npc/quests/quests_brasilis.txt#1535 (mes)
+- "Eeeeeeeeeeeeeeeeeeeh."
++ "Iiiiiiiiiiiiiiiiiiih."
+#: npc/quests/quests_brasilis.txt#1536 (mes)
+- "Oooooooooooooooooh."
++ "Oooooooooooooooooh."
+#: npc/quests/quests_brasilis.txt#1537 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1538 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1539 (mes)
+- "Ugh! What's this strange voice?"
++ "Ugh! Que voz estranha é essa?"
+#: npc/quests/quests_brasilis.txt#1540 (mes)
+- "[Iara]"
++ "[Iara]"
+#: npc/quests/quests_brasilis.txt#1541 (mes)
+- "Aaaaaaaaaaaaaaaaaaaaaah."
++ "Aaaaaaaaaaaaaaaaaaaaah."
+#: npc/quests/quests_brasilis.txt#1542 (mes)
+- "Eeeeeeeeeeeeeeeeeeeh."
++ "Iiiiiiiiiiiiiiiiiiih."
+#: npc/quests/quests_brasilis.txt#1543 (mes)
+- "Oooooooooooooooooh."
++ "Oooooooooooooooooh."
+#: npc/quests/quests_brasilis.txt#1544 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1545 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1546 (mes)
+- "Ugh! What's this strange voice?"
++ "Ugh! Que voz estranha é essa?"
+#: npc/quests/quests_brasilis.txt#1547 (mes)
+- "[Native Warrior]"
++ "[Índio Guerreiro]"
+#: npc/quests/quests_brasilis.txt#1548 (mes)
+- "Ah... the face I would never forget even in my dreams."
++ "Ah... o rosto que eu não esqueceria nem em sonho."
+#: npc/quests/quests_brasilis.txt#1549 (mes)
+- "[Native Warrior]"
++ "[Índio Guerreiro]"
+#: npc/quests/quests_brasilis.txt#1550 (mes)
+- "When will she come out of the waterfall again...?"
++ "Quando será que ela vai sair da cachoeira outra vez...?"
+#: npc/quests/quests_brasilis.txt#1551 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1552 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1553 (mes)
+- "(Wh...what's this guy?)"
++ "(Q...que sujeito é esse?)"
+#: npc/quests/quests_brasilis.txt#1554 (mes)
+- "["
++ ""
+#: npc/quests/quests_brasilis.txt#1555 (mes)
+- "]"
++ ""
+#: npc/quests/quests_brasilis.txt#1556 (mes)
+- "(This guy will never"
++ "(Este aqui nunca vai"
+#: npc/quests/quests_brasilis.txt#1557 (mes)
+- "get over Iara's curse...)"
++ "se livrar da maldição da Iara...)"

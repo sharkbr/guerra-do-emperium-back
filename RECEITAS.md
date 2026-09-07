@@ -229,8 +229,21 @@ O catálogo (`npc/guerra/traducao/<grupo>.cat`) é a **fonte**; o `.txt` do rAth
 é o **resultado**. Editar o `.txt` à mão é perder o trabalho na próxima passada.
 A unidade de trabalho é o **texto**, não a ocorrência.
 
-Grupos: `campal`, `cidades`, `classe1`, `classe2`, `glossario`, `guerra`,
-`kafra`, `novico`, `pvp`, `servico`.
+Grupos: `brasilis`, `campal`, `cidades`, `classe1`, `classe2`, `glossario`,
+`guerra`, `kafra`, `novico`, `pvp`, `servico`, mais um por instância.
+
+**O grupo `brasilis` tem um passo a mais, e ele não é opcional:**
+
+```
+python renomeia_npcs_brasilis.py             # o nome exibido dos 30 NPCs
+python renomeia_npcs_brasilis.py --conferir  # prova que nenhum ficou em inglês
+```
+
+O nome do NPC mora na linha de declaração, fora de aspas, e o catálogo não o
+alcança. Como o diálogo traduzido chama as pessoas de Paulão, Jurema e Carmen
+— os nomes do bRO —, pular este passo manda o jogador procurar quem a tela não
+mostra. E restaurar do `.INGLES` apaga os nomes calado: rodar sempre depois do
+`--aplicar brasilis`. Ver `ARQUITETURA.md` §4.
 
 **`--extrair` num grupo já aplicado apagava o catálogo** — corrigido em
 2026-08-04, mas vale conferir o `git status` depois de extrair.
