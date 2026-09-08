@@ -4390,7 +4390,7 @@ hoje — o que está em aberto é só a **remoção**.
 ### c) O `/showname` — o padrão novo só alcança quem ainda não jogou
 
 O padrão de fábrica passou para a *Indicação de Nome 2*
-(`cliente\System\OptionInfo.lub`), e vai por patch. Mas quem **já abriu o jogo
+(`cliente\System\OptionInfo.lub`) e **já está no ar**, no patch 0022. Mas quem **já abriu o jogo
 uma vez** tem o `savedata\OptionInfo.lua` gravado com o valor antigo, e ele
 vence o padrão — essa pessoa continua na Indicação 1 até digitar `/showname`
 uma vez.
@@ -4401,6 +4401,22 @@ teclas do jogador, e mandá-lo por cima atropelaria tudo isso.
 **O que fazer:** avisar no grupo, junto do patch — *"quem já jogava, digite
 `/showname` uma vez"*. E lembrar que **isso não é sintoma de patch que não
 chegou**, que é a leitura errada mais provável quando alguém reclamar.
+
+### c2) O lado do SERVIDOR ainda não foi implantado
+
+O patch 0022 saiu (Shura e `/showname`), mas as três correções de servidor
+desta leva só existem aqui até o deploy rodar:
+
+- `rathena/db/guerra/item_db.yml` — as duas covas;
+- `rathena/db/guerra/status.yml` + o rodapé de `rathena/db/status.yml` — a
+  Runa Nauthiz;
+- `rathena/conf/guerra/char_guerra.txt` — o `_` no nome de grupo. **Este
+  exige reiniciar o char-server**, e não só o `git pull`: config de
+  char-server só é lida na inicialização.
+
+Está tudo commitado e no `main`. O deploy é o mesmo da §1af — uma rodada de
+`ferramentas/implanta.sh` no **Mac** leva isto junto do Festival, da trava
+de conta e da tradução de Brasilis.
 
 ### d) Os cinco relatos — falta ver em jogo
 
