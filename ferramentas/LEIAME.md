@@ -657,6 +657,15 @@ que o jogador já vê, e isso é decisão do dono, não consequência de script 
 16 estão anotados no `PENDENCIAS.md`. **Ao mudar `Slots:` de um item,
 acrescentar o ID à lista e rodar.**
 
+**A leva de 2026-09-07 acrescentou dois, e nos dois sentidos.** O Broche da
+Celine (28572) tinha a cova no cliente e não no servidor — *"não está
+carteando"* —, e o Morango Cristalizado (2979) tinha no servidor e não no
+cliente, que é o lado pior. Os dois foram acertados **do lado do servidor**,
+por decisão do dono (o Morango deixa de ser carteável aqui de propósito,
+contra o Divine Pride) — ou seja o `itemInfo.lua` não mudou e **não houve
+patch**. Rodar o `--conferir` depois de mexer em `Slots:` é o que denuncia
+a metade que ficou para trás.
+
 Estreou em 2026-09-03 com as 15 Armas Brutais do Senhor das Armas: 15 trocas de
 um byte cada (`slotCount = 0` → `= 1`), arquivo do mesmo tamanho, e o
 `luac.exe -p` do ROenglishRE compilando o resultado. Tudo `rb`/`wb`, byte a
@@ -3391,8 +3400,17 @@ O ASCII de sempre (letras, dígitos e o espaço) mais 48 acentuadas: as cinco
 vogais com crase, agudo, circunflexo, til e trema conforme o caso, mais `ç` e
 `ñ`, em minúscula e maiúscula.
 
-Só **letras**. Hífen e apóstrofo ficaram de fora de propósito — nome é chave em
-comando de GM, em sussurro e na janela de troca.
+Mais **três símbolos**, e só três: `*` e `-`, liberados a pedido do dono em
+2026-08-15, e `_`, em 2026-09-07. A demais pontuação continua de fora de
+propósito — nome é chave em comando de GM, em sussurro e na janela de troca.
+O `#` segue barrado pelo próprio rAthena (`char.cpp:1358`), que o reserva
+para o símbolo de canal: pô-lo na lista não adianta.
+
+**O `_` entrou por um relato do `/organize`**, e o caso vale por si: nome de
+grupo com sublinhado respondia *"Já existe um grupo com este nome"* para um
+nome que não existia. O `mapif_parse_CreateParty` usa a mesma resposta para
+nome repetido e para letra proibida (`ARMADILHAS-RATHENA.md`), então **toda**
+recusa por caractere chega ao jogador disfarçada de nome duplicado.
 
 ### Ele sozinho não resolve
 

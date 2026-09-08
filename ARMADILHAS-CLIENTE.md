@@ -668,3 +668,52 @@ segundo mapa desempata. **Validar num mapa simétrico não valida nada.**
   nos dois GRFs e no `cliente\data\`. Os quatro Bonecos de Neve, a Máquina
   e o Morador do mesmo Festival passaram nessa checagem — esses o nosso GRF
   tem na pasta certa.
+
+- **O padrão de fábrica das opções do cliente (`/showname` e os outros 36)
+  mora em BYTECODE, e o arquivo que se acha primeiro é o errado.** São dois
+  arquivos com nomes quase iguais e papéis opostos:
+
+  | arquivo | o que é | formato |
+  |---|---|---|
+  | `cliente\System\OptionInfo.lub` | o **padrão** — `CmdOnOffList`, `OptionInfoList` e `DefaultCmdOnOffList` | bytecode Lua 5.1 |
+  | `cliente\savedata\OptionInfo.lua` | o que **aquela máquina** escolheu | texto, escrito pelo cliente ao sair |
+
+  O `savedata` é lido depois e é literalmente uma lista de atribuições
+  (`CmdOnOffList["/showname"] = 0`) por cima das tabelas do primeiro. Duas
+  consequências:
+
+  - **editar o `savedata` conserta só esta máquina**, e mandá-lo por patch
+    atropelaria resolução, volume e teclas de todo jogador — ele não é
+    arquivo de configuração nossa, é arquivo do usuário;
+  - **mudar o padrão no `System\OptionInfo.lub` alcança só quem ainda não
+    jogou.** Quem já abriu o jogo uma vez tem o `savedata` gravado com o valor
+    antigo, e continua vendo o comportamento antigo até digitar o comando uma
+    vez ou apagar o arquivo. Isso **não** é sintoma de patch que não chegou.
+
+  E o padrão não se lê a olho, porque o `.lub` é bytecode: o
+  `ferramentas/luadis.py` mostra as linhas como
+  `SETTABLE … ; B="/showname" C=1.0`, e trocar o valor é trocar o operando
+  `C` da instrução (o índice da constante `1.0` pelo da `0.0`), não editar
+  texto. Feito assim em 2026-09-07, com `Tools\luac.exe -p` confirmando que
+  o arquivo continua compilando.
+
+- **O sentido de `/showname` é o INVERSO do que o nome sugere: 0 é o modo que
+  mostra mais.** Medido no `GuerraDoEmperium.exe` em 2026-09-07, no trecho que
+  alterna a opção e imprime a mensagem logo em seguida:
+
+  ```
+  cmp byte ptr [011D18C8], 0    ; o valor JA alternado
+  ...
+  jz  -> push 723               ; "Fonte foi diminuida e tambem mostra nome do Grupo [Indicacao de Nome 2]"
+      push 722                  ; "Fonte voltou a original [Indicacao de Nome 1]"
+  ```
+
+  Ou seja `CmdOnOffList["/showname"] = 1` é a *Indicação de Nome 1* (fonte
+  original, sem o nome do grupo) e `= 0` é a *2* (fonte menor, com o nome do
+  grupo — e é nela que o nome de clã aparece no lugar certo, porque o rAthena
+  manda o clã no campo `position_name` do pacote de nome,
+  `src/map/clif.cpp:9987`).
+
+  Chutar o sentido pelo nome do comando inverte o padrão do servidor inteiro,
+  e o erro só aparece na tela de quem instalar do zero — ninguém aqui o vê,
+  porque esta máquina tem `savedata` próprio.

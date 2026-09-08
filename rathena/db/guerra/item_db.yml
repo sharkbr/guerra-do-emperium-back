@@ -1486,6 +1486,11 @@ Body:
     Type: Armor
     Defense: 0
     Weight: 500
+    # UMA COVA, 2026-09-07, a pedido do dono: o Broche nao estava
+    # carteando. O cliente ja desenhava o [1] (o itemInfo.lua de 2021 da
+    # a cova) e so o servidor negava - ou seja, a metade que faltava era
+    # esta, e as duas ficam de acordo sem patch de cliente (CLAUDE.md 4.9).
+    Slots: 1
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -4210,3 +4215,23 @@ Body:
   - Id: 27416
     AegisName: Water_Sky_BR
     Name: "Poder de Oxum"
+
+  # ------------------------------------------------------------------
+  # MORANGO CRISTALIZADO (2979) SEM COVA - 2026-09-07
+  #
+  # O vendor da `Slots: 1` a este acessorio, e o Divine Pride concorda
+  # com ele. O nosso cliente NAO: o itemInfo.lua de 2021 desenha o item
+  # sem cova. Era a divergencia da CLAUDE.md 4.9 na direcao pior - a
+  # peca aceitava carta e nao parecia aceitar, entao ninguem tentava.
+  #
+  # Decisao do dono em 2026-09-07, com o caso na mao: aqui ele NAO se
+  # carteia. Zerar do lado do servidor poe as duas metades de acordo sem
+  # mexer no cliente, ou seja sem patch.
+  #
+  # `Slots: 0` explicito e nao omissao: campo omitido MANTEM o valor do
+  # db/re/ (ver o cabecalho desta secao), entao omitir deixaria a cova.
+  # ------------------------------------------------------------------
+
+  - Id: 2979
+    AegisName: Strawberry_Decoration
+    Slots: 0

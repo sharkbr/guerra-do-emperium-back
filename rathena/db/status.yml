@@ -51,4 +51,10 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/status.yml
     Mode: Renewal
+  # GUERRA DO EMPERIUM - ajuste nosso de efeito de status. Vem DEPOIS do
+  # db/re/ de proposito: o `StatusDatabase::parseBodyNode` mescla por
+  # `Status:` (find + sobrescreve so o que estiver escrito), e dentro de
+  # `Flags:` cada bandeira e set/reset por nome - entao o arquivo de la
+  # so lista aquilo em que discordamos.
+  - Path: db/guerra/status.yml
   - Path: db/import/status.yml

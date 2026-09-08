@@ -33,3 +33,4 @@
 0019	0019-festival-de-brasilis.zip	f9562aa307f6a8f2fa7107cdfeef9c5b66d50b41603c4e3c0e250bfd002ecf67	2623996	Festival de Brasilis
 0020	0020-aviso-da-trava-de-conta-na-tela-de-login.zip	c5e3a24e33bae300ae1d5f1ce915f456f099845344fec4adcf8c531817430217	47463	Aviso da trava de conta na tela de login
 0021	0021-sprites-dos-agentes-da-liga.zip	5042482d3c26a8f1790d5bd0940c28525c8974caf7982c1b456db663bb4e60cf	526671	Sprites dos Agentes da Liga
+0022	0022-nomes-de-habilidade-de-shura-e-o-nome-do.zip	6774b96d8794ed6bd088c9378fbef3559b336f534188b6bcc7c71791178adfa9	234837	Nomes de habilidade de Shura e o nome do cla na tela

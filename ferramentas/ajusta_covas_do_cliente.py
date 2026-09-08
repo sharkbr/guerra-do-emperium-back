@@ -81,9 +81,17 @@ ITEM_DB = [os.path.join(RATHENA, 'db', 're', 'item_db_usable.yml'),
 #   npc/guerra/mercado_contemporaneo.txt. O bRO da uma cova a familia
 #   inteira; o nosso vendor nao dava nenhuma, e o cliente de 2021 tambem
 #   nao. As duas metades entraram no mesmo dia.
+#
+#   Acessorios de 2026-09-07 - dois itens em que as metades ja divergiam
+#   e o dono decidiu por qual delas ficar. No Broche da Celine (28572) o
+#   cliente prometia a cova e o servidor negava ("nao esta carteando"); no
+#   Morango Cristalizado (2979) o servidor dava a cova e o cliente nao a
+#   desenhava, e a decisao foi TIRAR (o Divine Pride discorda de proposito).
+#   Nos dois casos quem mudou foi o servidor, entao nao houve patch.
 # -------------------------------------------------------------------------
 COVAS = [1328, 13147, 13342, 16082, 18171, 26141, 26206, 28033,
-         28245, 28246, 28247, 28248, 28746, 32014, 32100]
+         28245, 28246, 28247, 28248, 28746, 32014, 32100,
+         2979, 28572]
 
 
 class Erro(Exception):

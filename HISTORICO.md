@@ -17392,3 +17392,177 @@ passam em cp1252 e não têm um só U+FFFD.
 O deploy do Festival, que estava segurado desde 2026-09-05. Nada aqui é do
 cliente — diálogo e nome de NPC são os dois do servidor —, então **não há
 patch a montar**: os patches 0019 e 0021 já cobriram a metade do cliente.
+
+
+## Cinco correções de relato: covas, nomes de Shura, Nauthiz, `/organize` e `/showname` (2026-09-07)
+
+Uma leva de observações do dono, todas vindas de jogo. Elas não têm assunto em
+comum, mas **três das cinco são a mesma família**: um lado da configuração
+prometia uma coisa e o outro entregava outra, sem que nada desse erro.
+
+### As duas covas (28572 e 2979)
+
+*"Broche da Celine (28572): não está carteando."* e *"Morango Cristalizado
+(2979): está aparecendo como item sem slot mas é possível carteá-lo."*
+
+São o mesmo defeito nos dois sentidos, e é a §4.9 quarta entrada: quem decide
+se a carta **entra** é o `Slots:` do `item_db`; quem desenha o `[1]` no nome é
+o `slotCount` do `itemInfo.lua`, e o cliente não pergunta nada ao servidor.
+
+O `ajusta_covas_do_cliente.py --conferir` mediu os dois numa linha:
+
+```
+[troca] 28572  Celine's Brooch (BR)   1 -> 0 cova(s)     (cliente 1, servidor 0)
+[troca] 2979   Morango Cristalizado   0 -> 1 cova(s)     (cliente 0, servidor 1)
+```
+
+Ou seja: o Broche prometia a cova na tela e o servidor negava; o Morango dava a
+cova e a tela não a mostrava — **o pior dos dois**, porque o jogador não tenta
+o que não vê.
+
+A decisão do dono foi por lados opostos, e num deles contra o Divine Pride, de
+propósito: *"No Divine Pride ele deveria mesmo ser carteável. Mas aqui ele não
+deve ser carteado."* Então o Broche ganhou `Slots: 1` e o Morango ganhou um
+override com `Slots: 0` — explícito, porque campo omitido **mantém** o valor do
+`db/re/`.
+
+**Os dois foram resolvidos do lado do servidor, e isso importa:** depois das
+duas mudanças o cliente e o servidor concordam sem que uma única linha do
+`itemInfo.lua` mude, ou seja **não houve patch**. Os dois IDs entraram na lista
+`COVAS` do `ajusta_covas_do_cliente.py`, que é o `--conferir` que denuncia se
+uma das metades andar sozinha depois.
+
+### Os três nomes de habilidade de Shura
+
+*"Pancada Corporal está nomeada como Investida de Shura"*, e o mesmo para
+*Tempestade Espiritual* (aparecia como "Cavalgar Relâmpago") e *Combo Rápido*
+("Flash Combo").
+
+A conferência caiu direto na armadilha já anotada: **o bRO entrega o mesmo
+arquivo em `.lua` e em `.lub`, e o legível está velho.** O `skillinfolist.lua`
+do GRF do bRO ainda traz os três nomes ANTIGOS — os nossos —, o que faria a
+conclusão ser "já está certo". Foi preciso desmontar o `.lub` (bytecode) com o
+`ferramentas/luadis.py` para ver os nomes de hoje, e lá estão os três, cada um
+ao lado da própria constante:
+
+```
+LOADK ; "SR_KNUCKLEARROW"     LOADK ; "Pancada Corporal"
+LOADK ; "SR_RIDEINLIGHTNING"  LOADK ; "Tempestade Espiritual"
+LOADK ; "SR_FLASHCOMBO"       LOADK ; "Combo Rápido"
+```
+
+Trocados nos **dois** arquivos do cliente que desenham nome de habilidade: o
+`skillinfolist.lub` (a janela de habilidades) e o título do bloco no
+`skilldescript.lub` (a dica). O `SR_RIDEINLIGHTNING` já estava "Tempestade
+Espiritual" na descrição e "Cavalgar Relâmpago" na lista — as duas metades já
+divergiam entre si, o que confirma a direção da correção.
+
+Os dois passaram no `Tools\luac.exe -p` depois de gravados.
+
+### A Runa Nauthiz e o congelamento
+
+*"A Runa Nauthiz não está removendo o efeito negativo congelamento."*
+
+A runa (12725) é uma casca: o `Script:` dela chama
+`unitskilluseid … "RK_REFRESH",1`, e quem trabalha é o SC_REFRESH — cura 25% e
+chama `status_change_clear_buffs(bl, SCCB_REFRESH)` (`status.cpp:11863`). Esse
+`clear_buffs` percorre o status_db inteiro e encerra **só** o que tiver a
+bandeira `SCF_REMOVEONREFRESH`.
+
+O `SC_FREEZE` do vendor não tem essa bandeira. Tem `Fail: Refresh: true`, que é
+a **outra metade** da promessa — enquanto o SC_REFRESH estiver de pé não dá
+para congelar de novo. A imunidade funcionava; a remoção nunca existiu.
+
+E nada denunciava: o jogador congelado **consegue** usar a runa (o
+`status_check_skilluse` abre exceção explícita para RK_REFRESH,
+`status.cpp:2109`), a habilidade sai, o HP sobe 25% — e o gelo fica.
+
+A correção é um enxerto novo, o primeiro em `db/status.yml`: aquele arquivo já
+tinha `Footer: Imports:` (é o despachante; o `db/re/status.yml` é só mais um
+import dele), então bastou uma linha apontando para `db/guerra/status.yml`. A
+mescla é fina o bastante para o arquivo novo ter quatro linhas de conteúdo: o
+`parseBodyNode` acha o `Status:` antes de criar, e dentro de `Flags:` cada
+bandeira é `set()`/`reset()` **pelo nome**.
+
+**Provado que é lido**, e não por leitura de código: uma bandeira inventada foi
+posta no arquivo de propósito e o map-server respondeu *"Flag
+SondaQueNaoExiste is invalid … db/guerra/status.yml on line 107"*. A sonda saiu
+em seguida. É a resposta para a armadilha do arquivo órfão — formato certo,
+conteúdo certo, e ninguém o lê.
+
+**O que ficou de fora, e por quê.** A descrição que o cliente desenha promete
+**dezesseis** efeitos nomeados, mais *"algumas Toxinas de Sicário"*, que já
+estavam cobertas. Medidos contra o `db/re/status.yml`: **seis** têm
+`RemoveOnRefresh` (Sono Profundo, Hipotermia, Cristalização, Incêndio, Grito da
+Mandrágora, Pântano de Nifflheim) e **dez** não tinham — mas **os dezesseis**
+têm `Fail: Refresh: true`. O padrão é claro demais para ser coincidência: o
+vendor escreveu a metade da imunidade para a lista inteira e a metade da
+remoção só para uma parte.
+
+Entrou hoje só o Congelamento, que foi o pedido. Os outros nove (Atordoamento,
+Sono, Maldição, Petrificação, Envenenamento, Cegueira, Sangramento, Silêncio,
+Caos) estão escritos no arquivo, **comentados**, com o motivo: ligar efeito de
+combate que ninguém pediu é decisão do dono — tirar Atordoamento e
+Petrificação do jogo com um item de 2 minutos de recarga muda PvP. Descomentar
+e `@reloadstatusdb`.
+
+### O `/organize` e a mensagem que mente
+
+*"O comando /organize não aceita grupos com espaço mesmo com o nome entre
+aspas. Já com sublinhado diz que o grupo com esse nome já existe."*
+
+A segunda metade era nossa e está corrigida. O `_` não estava no
+`char_name_letters`, e o `mapif_parse_CreateParty` (`src/char/int_party.cpp:505`)
+usa **a mesma resposta** para nome repetido e para letra proibida — as duas
+viram `mapif_party_created(…, nullptr)`, que o map-server traduz no
+`clif_party_created(sd, 1)`, que é a `msgstringtable` 78, *"Já existe um grupo
+com este nome."* O `SELECT name FROM party` do banco tinha duas linhas naquele
+momento, nenhuma parecida com a que o dono tentava — a mensagem estava
+mentindo.
+
+O `_` entrou pelo `ferramentas/gera_char_guerra.py`, junto do `*` e do `-` que
+já estavam lá desde 2026-08-15, e vale de uma vez para nome de personagem,
+clã, grupo e homúnculo — são quatro checagens lendo a mesma variável.
+
+**A metade do espaço não é nossa, e isso está medido:** o espaço **está** na
+lista (é o byte entre o `z` e o `A`), e essa é a única peneira que um nome de
+grupo atravessa nos dois servidores. Do lado do map-server o `party_create` só
+recusa nome vazio, e em silêncio. Sobra o analisador do `/organize`, que mora
+dentro do exe do cliente. Ficou anotado no `PENDENCIAS.md` com o teste que
+decide.
+
+### O `/showname` e o nome do clã
+
+*"O nome do clã não aparece. Só está aparecendo o cargo do personagem. E as
+posições estão trocadas."* — com o diagnóstico do próprio dono junto: *"isso
+acontece por causa do /showname; precisamos que o default seja o Indicação de
+Nome 2."*
+
+Duas coisas se juntam aqui. A primeira é do rAthena e explica o "cargo": para
+quem está em clã e **não** em guilda, o `clif_blname_ack`
+(`src/map/clif.cpp:9987`) manda o nome do clã no campo `position_name` do
+pacote — o campo do cargo. Não há nome de clã em campo próprio.
+
+A segunda é o padrão do cliente, e é onde estava o conserto. O padrão de
+fábrica das 37 opções mora em **bytecode**, no `cliente\System\OptionInfo.lub`
+(tabelas `CmdOnOffList`, `OptionInfoList` e `DefaultCmdOnOffList`); o
+`savedata\OptionInfo.lua` é do jogador e vence por cima. O padrão de fábrica
+estava `/showname = 1`.
+
+O sentido do valor foi medido no exe, e é o **inverso** do que o nome sugere:
+
+```
+cmp byte ptr [011D18C8], 0    ; o valor JA alternado pelo comando
+jz  -> push 723               ; "[Indicacao de Nome 2]"  (fonte menor, com o nome do grupo)
+    push 722                  ; "[Indicacao de Nome 1]"  (fonte original)
+```
+
+Ou seja `1` é a Indicação 1 e `0` é a 2. O padrão passou a `0` nas duas
+tabelas — troca de um operando de instrução Lua 5.1 (o índice da constante
+`1.0` pelo da `0.0`), com o `luac -p` confirmando que o arquivo continua
+compilando.
+
+**A ressalva que vai com isso:** padrão é padrão. Quem já abriu o jogo uma vez
+tem o `savedata\OptionInfo.lua` gravado e continua na Indicação 1 até digitar
+`/showname` uma vez. Mandar o `savedata` por patch atropelaria resolução,
+volume e teclas de todo mundo — não é arquivo nosso, é do usuário.

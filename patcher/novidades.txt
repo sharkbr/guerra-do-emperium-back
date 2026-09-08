@@ -63,3 +63,7 @@
 [0020] 2026-09-06  Aviso da trava de conta na tela de login
 
 [0021] 2026-09-06  Sprites dos Agentes da Liga
+
+[0022] 2026-09-07  Nomes de habilidade de Shura e o nome do cla na tela
+- Pancada Corporal, Tempestade Espiritual e Combo Rapido (Shura) agora aparecem com o nome certo na janela de habilidades
+- O nome do cla volta a aparecer sobre o personagem: a Indicacao de Nome 2 passa a ser o padrao. Quem ja jogava precisa digitar /showname uma vez

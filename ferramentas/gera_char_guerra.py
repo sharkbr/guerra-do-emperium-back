@@ -22,10 +22,13 @@ MAIUSCULAS = ('\xc0\xc1\xc2\xc3\xc4'
 
 ASCII = 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 
-# Simbolos liberados a pedido do dono em 2026-08-15. A lista e lida byte a
-# byte por strchr, nao e regex: o '-' aqui nao tem sentido de intervalo e
-# pode ficar em qualquer posicao.
-SIMBOLOS = '*-'
+# Simbolos liberados a pedido do dono. A lista e lida byte a byte por
+# strchr, nao e regex: o '-' aqui nao tem sentido de intervalo e pode ficar
+# em qualquer posicao.
+#
+#   '*' e '-'  2026-08-15
+#   '_'        2026-09-07, junto com o relato do /organize (ver o cabecalho)
+SIMBOLOS = '*-_'
 
 CABECALHO = """\
 //--------------------------------------------------------------
@@ -56,13 +59,21 @@ CABECALHO = """\
 // quatro pontos de checagem (char.cpp, int_guild.cpp,
 // int_party.cpp, int_homun.cpp) leem esta mesma variavel.
 //
-// Alem das letras entram DOIS simbolos, '*' e '-', liberados a
-// pedido do dono em 2026-08-15. A demais pontuacao continua de
-// fora de proposito: nome e usado como chave em comando de GM e
-// em sussurro, e simbolo ali complica sem ganho. O '#' segue
-// barrado pelo proprio rAthena (char.cpp:1358, primeira letra),
-// que o reserva para o simbolo de canal - por a-lo na lista nao
-// adianta.
+// Alem das letras entram TRES simbolos: '*' e '-', liberados a
+// pedido do dono em 2026-08-15, e '_', em 2026-09-07. A demais
+// pontuacao continua de fora de proposito: nome e usado como
+// chave em comando de GM e em sussurro, e simbolo ali complica
+// sem ganho. O '#' segue barrado pelo proprio rAthena
+// (char.cpp:1358, primeira letra), que o reserva para o simbolo
+// de canal - po-lo na lista nao adianta.
+//
+// O '_' entrou por um relato de 2026-09-07: `/organize` com
+// sublinhado respondia "Ja existe um grupo com este nome"
+// (msgstringtable 78) para um nome que nao existia. A mensagem e
+// uma MENTIRA do vendor - o int_party.cpp:523 usa o mesmo
+// `mapif_party_created(..., nullptr)` para "ja existe" e para
+// "letra proibida", entao toda recusa por caractere chega ao
+// jogador como nome repetido. Nada denuncia a diferenca.
 //
 // A outra metade da correcao mora em conf/guerra/inter_guerra.txt
 // (default_codepage). Sem ela o filtro deixa passar e o INSERT

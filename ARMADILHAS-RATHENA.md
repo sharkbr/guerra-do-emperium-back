@@ -346,3 +346,30 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   Corrigido em 2026-09-05, e é a **segunda substituição de linha do rAthena**
   do projeto (`CLAUDE.md` §2) — se um merge do vendor trouxer o `""` de volta,
   a frase volta a sair truncada calada.
+
+- **Toda recusa de nome de GRUPO chega ao jogador como "já existe um grupo com
+  este nome", inclusive quando o nome está livre.** O
+  `mapif_parse_CreateParty` (`src/char/int_party.cpp:505`) tem três saídas de
+  erro — nome repetido (linha 510), letra fora do `char_name_letters` (linha
+  523) e falha ao gravar no banco — e as **três** chamam o mesmo
+  `mapif_party_created(fd, …, nullptr)`. O map-server traduz esse `nullptr`
+  num `clif_party_created(sd, 1)`, e o 1 é o índice fixo da
+  `msgstringtable` 78, *"Já existe um grupo com este nome."*
+
+  O diagnóstico que isso induz é o pior possível: procura-se o nome repetido.
+  Em 2026-09-07 o `SELECT name FROM party` tinha duas linhas, nenhuma parecida
+  com a que o dono tentava — o que fazia a mensagem parecer defeito do banco.
+  A causa era o `_`, que não estava na lista de letras permitidas.
+
+  Duas coisas para lembrar:
+
+  - **a lista é a MESMA do nome de personagem** (`char_name_letters`, em
+    `conf/guerra/char_guerra.txt`), e ela vale para personagem, clã, grupo e
+    homúnculo — quatro pontos de checagem lendo uma variável só.
+  - **a checagem é byte a byte, por `strchr`** — não é regex e não tem
+    conceito de intervalo. Símbolo que não esteja escrito ali, literalmente,
+    derruba a criação.
+
+  Quando alguém relatar "diz que o grupo já existe" e o nome **não** existir,
+  a primeira medição é comparar os bytes do nome com essa lista, não consultar
+  a tabela `party`.

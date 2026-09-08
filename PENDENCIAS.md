@@ -4334,3 +4334,85 @@ tiver os NPCs.
 
 **Não há patch a montar por causa da tradução.** Diálogo e nome de NPC são os
 dois do lado do servidor.
+
+
+## 1ag. Os cinco relatos de 2026-09-07 — o que ficou em aberto
+
+O que foi feito está no `HISTORICO.md`, *"Cinco correções de relato"*. Aqui
+fica só o que continua em aberto, e são **quatro** coisas.
+
+### a) O `/organize` com espaço — falta a medição em jogo
+
+O `_` já passa. O **espaço** não foi resolvido, e o que se sabe está medido:
+
+- o espaço **está** no `char_name_letters` (é o byte entre o `z` e o `A` da
+  lista de `conf/guerra/char_guerra.txt`), e essa é a única peneira de nome
+  que o char-server aplica a grupo (`int_party.cpp:515`);
+- do lado do map-server o `party_create` só recusa nome **vazio**, e recusa
+  **em silêncio** — sem mensagem nenhuma;
+- não havia, no banco, nenhum grupo com espaço nem parecido com o que o dono
+  tentava.
+
+Ou seja: se o cliente mandasse o nome inteiro, o grupo nasceria. Sobra o
+analisador do `/organize`, que mora dentro do `GuerraDoEmperium.exe` e não é
+nosso.
+
+**O teste que decide, e ele é de uma linha:** tentar `/organize Nome Com
+Espaco` em jogo e dizer **qual** das três coisas acontece.
+
+| o que aparece | o que significa |
+|---|---|
+| *"Já existe um grupo com este nome"* | o char-server recusou — é peneira nossa, e aí a lista de letras é o lugar |
+| *"O personagem já está em um grupo"* | o personagem estava em grupo; sair e repetir |
+| **nada** | o cliente mandou nome vazio — é o analisador do exe, e não há conserto pelo servidor |
+
+Se cair no terceiro caso, o caminho que sobra é a janela de grupo do cliente
+(o botão de criar), que digita o nome num campo em vez de numa linha de
+comando — e o `_`, que passou a funcionar hoje.
+
+### b) A Runa Nauthiz — os outros nove efeitos, à espera de decisão
+
+A descrição do item promete dezesseis efeitos nomeados. Seis já eram, o
+Congelamento entrou hoje, e **nove** continuam de fora: Atordoamento, Sono,
+Maldição, Petrificação, Envenenamento, Cegueira, Sangramento, Silêncio e
+Caos.
+
+Os nove **já estão escritos**, comentados, no fim de
+`rathena/db/guerra/status.yml`. Ligar é descomentar e `@reloadstatusdb` — não
+exige reiniciar.
+
+**Por que não entraram sozinhos:** é decisão de jogo, não consequência de
+leitura de código. Tirar Atordoamento e Petrificação com um item de 2 minutos
+de recarga muda PvP, e ninguém pediu isso. Os dezessete têm
+`Fail: Refresh: true` no vendor, ou seja a imunidade de todos já funciona
+hoje — o que está em aberto é só a **remoção**.
+
+### c) O `/showname` — o padrão novo só alcança quem ainda não jogou
+
+O padrão de fábrica passou para a *Indicação de Nome 2*
+(`cliente\System\OptionInfo.lub`), e vai por patch. Mas quem **já abriu o jogo
+uma vez** tem o `savedata\OptionInfo.lua` gravado com o valor antigo, e ele
+vence o padrão — essa pessoa continua na Indicação 1 até digitar `/showname`
+uma vez.
+
+Não há conserto limpo por patch: o `savedata` guarda resolução, volume e
+teclas do jogador, e mandá-lo por cima atropelaria tudo isso.
+
+**O que fazer:** avisar no grupo, junto do patch — *"quem já jogava, digite
+`/showname` uma vez"*. E lembrar que **isso não é sintoma de patch que não
+chegou**, que é a leitura errada mais provável quando alguém reclamar.
+
+### d) Os cinco relatos — falta ver em jogo
+
+Nada aqui foi conferido na tela; tudo foi medido em arquivo, e a leitura de
+código não substitui o teste. Falta:
+
+- **Broche da Celine (28572)** — abrir a janela de encaixe e pôr uma carta;
+- **Morango Cristalizado (2979)** — a janela de encaixe **não** deve oferecer
+  a peça, e o nome continua sem `[1]`;
+- **os três nomes de Shura** — a janela de habilidades e a dica de cada uma,
+  depois de fechar e reabrir o cliente;
+- **a Runa Nauthiz** — congelar-se e usar a runa; o gelo tem de quebrar e o HP
+  subir 25% na mesma ação;
+- **o `/showname`** — numa pasta de cliente **sem** `savedata`, o jogo tem de
+  abrir já na Indicação de Nome 2, com o nome do clã no lugar certo.

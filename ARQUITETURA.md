@@ -556,6 +556,58 @@ num mapa cujo bloco não tem `signName` não dá erro nem efeito, fica inerte. E
 trocar só o `displayName` deixa **metade do nome velho na tela** — foi o
 letreiro, e não o minimapa, que ainda dizia "PvP Sala Bússola".
 
+### O nome de uma HABILIDADE vive em 2 arquivos do cliente, e o servidor não tem opinião
+
+Nome de habilidade não trafega na rede: o pacote leva o id, e quem desenha o
+nome é o cliente. São **dois** arquivos, na mesma pasta, e um pedido de
+renomear quer os dois:
+
+| metade | arquivo | o campo |
+|---|---|---|
+| a janela de habilidades | `cliente\data\luafiles514\lua files\skillinfoz\skillinfolist.lub` | `SkillName = "…"` do bloco `[SKID.<X>]` |
+| o título da dica | `…\skillinfoz\skilldescript.lub` | a **primeira** string da lista `[SKID.<X>] = { … }` |
+
+Os dois são **texto** no nosso cliente (foram traduzidos), então a edição é
+direta — mas a busca tem de acontecer **dentro do bloco daquele `SKID`**: o
+mesmo nome aparece solto em descrição de outras habilidades que citam esta.
+
+**As duas metades divergem sozinhas, e nada avisa.** Em 2026-09-07 o
+`SR_RIDEINLIGHTNING` estava "Tempestade Espiritual" na descrição e "Cavalgar
+Relâmpago" na lista — o jogador via um nome na janela e outro na dica do mesmo
+ícone.
+
+**A fonte é o `skillinfolist.lub` do bRO, e é o `.lub`, não o `.lua`.** Aquele
+GRF entrega os dois, e o legível está velho: em 2026-09-07 o `.lua` ainda
+tinha os três nomes antigos de Shura e o `.lub` já tinha os novos. Ler o
+legível responde "já está certo" com confiança total. O desmonte é
+`ferramentas/luadis.py`, e o par `SKID` → nome sai de dois `LOADK` seguidos.
+
+Depois de gravar, `Tools\luac.exe -p` nos dois — e o arquivo é do cliente,
+logo só chega ao jogador por **patch** (`CLAUDE.md` §4.18).
+
+### Um efeito de status ajustado vive em 2 lugares, e um deles é o rodapé do vendor
+
+Mudar o que uma habilidade limpa, o que um status impede ou por quanto tempo
+ele dura não se faz editando o `db/re/status.yml`: é arquivo de terceiros.
+
+| metade | arquivo | o que é |
+|---|---|---|
+| o ponteiro | `rathena/db/status.yml` | um `- Path: db/guerra/status.yml` no `Footer: Imports:`, **entre** o `db/re/` e o `db/import/` |
+| o ajuste | `rathena/db/guerra/status.yml` | só os campos em que discordamos |
+
+**O `db/status.yml` da raiz é o despachante, não uma cópia velha** — é ele que
+o `StatusDatabase::getDefaultLocation()` devolve (`src/map/status.cpp:15894`),
+e o `db/re/status.yml` é só mais um import dele. Procurar rodapé no arquivo do
+`re/` não acha nada, porque ele não tem.
+
+A mescla é fina: o `parseBodyNode` (`status.cpp:15903`) procura o `Status:`
+antes de criar e só sobrescreve o que estiver escrito; dentro de `Flags:` cada
+bandeira é `set()`/`reset()` **pelo nome**, então listar uma não apaga as
+outras. É por isso que o nosso arquivo tem quatro linhas de conteúdo.
+
+Recarregador: **`@reloadstatusdb`** — não é `@reloaditemdb` nem
+`@reloadscript`, e não exige reiniciar.
+
 ### Uma placa sobre a cabeça de NPC
 
 `src/custom/placa_de_venda.hpp` + duas linhas em `src/map/clif.cpp` + o comando

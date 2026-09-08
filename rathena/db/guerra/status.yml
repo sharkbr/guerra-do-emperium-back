@@ -1,0 +1,107 @@
+###########################################################################
+# Guerra do Emperium - AJUSTE DE EFEITO DE STATUS
+#
+# Escrito a mao. Importado pelo rodape de db/status.yml, DEPOIS do
+# db/re/status.yml - o `StatusDatabase::parseBodyNode`
+# (src/map/status.cpp:15903) faz `find(status_id)` e, se o status ja
+# existe, reaproveita a entrada e so sobrescreve os campos escritos aqui.
+# Dentro de `Flags:` a mescla e ainda mais fina: cada bandeira e
+# `set()`/`reset()` pelo nome (linha 15914 e adiante do mesmo arquivo),
+# entao listar uma nao apaga as outras.
+#
+# Recarregador: `@reloadstatusdb` (chama `status_readdb(true)`,
+# src/map/atcommand.cpp:4481). NAO e `@reloaditemdb` nem `@reloadscript`,
+# e nao exige reiniciar o map-server.
+#
+# =========================================================================
+# A RUNA NAUTHIZ E O CONGELAMENTO - 2026-09-07
+# =========================================================================
+#
+# Relato do dono: a Runa Nauthiz (12725) nao quebrava o congelamento.
+#
+# A runa e so uma casca - o `Script:` dela chama
+# `unitskilluseid ... "RK_REFRESH",1`, e quem faz o trabalho e o
+# SC_REFRESH: `status_heal` de 25% e um
+# `status_change_clear_buffs(bl, SCCB_REFRESH)` (status.cpp:11863). Esse
+# `clear_buffs` percorre o status_db inteiro e so encerra o que tiver a
+# bandeira `SCF_REMOVEONREFRESH` (status.cpp:15379).
+#
+# O SC_FREEZE do vendor NAO tem essa bandeira. Tem `Fail: Refresh: true`,
+# que e a OUTRA metade da promessa - enquanto o SC_REFRESH estiver de pe
+# nao da para congelar de novo. Ou seja: a imunidade funcionava e a
+# remocao nunca existiu, e as duas metades sao campos diferentes.
+#
+# Nao ha nada que denuncie isso: o jogador congelado consegue usar a runa
+# (o `status_check_skilluse` abre excecao explicita para RK_REFRESH,
+# status.cpp:2109), a habilidade sai, o HP sobe 25% - e o gelo fica. Do
+# lado de ca tudo parece certo.
+#
+# ------------------------------------------- o que a descricao promete
+#
+# A descricao do bRO que o nosso cliente desenha lista os efeitos que a
+# runa deveria remover:
+#
+#   Atordoamento, Sono, Sono Profundo, Maldicao, Petrificacao,
+#   Envenenamento, Cegueira, Sangramento, Silencio, Caos, Congelamento,
+#   Hipotermia, Cristalizacao, Incendio, Grito da Mandragora, Pantano de
+#   Nifflheim e algumas Toxinas de Sicario.
+#
+# Sao DEZESSEIS efeitos nomeados, mais o grupo "algumas Toxinas de Sicario"
+# (esse ja esta coberto - o Toxin tem a bandeira).
+#
+# Medido em 2026-09-07 contra o db/re/status.yml: dos dezesseis, SEIS tem
+# `RemoveOnRefresh` (Deepsleep, Freezing, Crystalize, Burning, Mandragora,
+# Marshofabyss) e os OUTROS DEZ nao tinham - mas TODOS OS DEZESSEIS tem
+# `Fail: Refresh: true`. O padrao e claro demais para ser coincidencia: o
+# vendor escreveu a metade da imunidade para a lista inteira e a metade da
+# remocao so para uma parte dela.
+#
+# Entrou HOJE so o Congelamento, que foi o pedido. Os outros nove estao
+# escritos abaixo, comentados, porque ligar efeito de combate que ninguem
+# pediu e decisao do dono e nao consequencia de leitura de codigo -
+# tirar Atordoamento e Petrificacao do jogo com um item de 2 minutos de
+# recarga muda PvP. Descomentar e `@reloadstatusdb`.
+#
+# =========================================================================
+
+Header:
+  Type: STATUS_DB
+  Version: 4
+
+Body:
+  # Congelamento. Pedido do dono em 2026-09-07.
+  - Status: Freeze
+    Flags:
+      RemoveOnRefresh: true
+
+  # Os outros nove da descricao, DESLIGADOS a espera de decisao. Cada um
+  # ja tem `Fail: Refresh: true` no db/re/ - falta so a remocao.
+  #
+  # - Status: Stun          # Atordoamento
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Sleep         # Sono
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Curse         # Maldicao
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Stone         # Petrificacao
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Poison        # Envenenamento
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Blind         # Cegueira
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Bleeding      # Sangramento
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Silence       # Silencio
+  #   Flags:
+  #     RemoveOnRefresh: true
+  # - Status: Confusion     # Caos
+  #   Flags:
+  #     RemoveOnRefresh: true
+
