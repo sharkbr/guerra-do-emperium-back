@@ -3692,6 +3692,15 @@ mão — corrigir a redação de um patch já publicado é mexer nele e rodar o
 que a ferramenta entende dele apagaria toda edição que ela não soubesse
 reproduzir.
 
+**E o número do próximo patch sai do MAIOR dos dois arquivos, não só do
+`patches.txt`.** O `novidades.txt` pode ganhar bloco à mão — é assim que se
+anuncia uma correção que foi só de **servidor** e não tem zip nenhum para
+registrar (o 0023, a Runa Nauthiz, é o primeiro; ver `patcher/LEIAME.md`
+§4d). Antes de 2026-09-08 a ferramenta lia só o registro, e o patch seguinte
+reusaria aquele número: o painel passaria a mostrar **dois** blocos `[0023]`,
+um dizendo uma coisa e o download fazendo outra. Nada erraria — a leitura do
+changelog é tolerante de propósito e a `lista.txt` nem olha para ele.
+
 **O `--desde` é a via preguiçosa e a mais perigosa.** Ele varre o cliente por
 data de modificação e traz junto o que foi tocado por acidente; a lista impressa
 antes de gravar existe para isso ser visto.

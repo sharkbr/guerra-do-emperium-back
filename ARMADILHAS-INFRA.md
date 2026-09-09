@@ -318,3 +318,26 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   **Cache já envenenado não se conserta do servidor**: quem carregou a página
   antes só vê o novo com recarga forçada (Cmd+Shift+R) ou quando o prazo
   heurístico vencer.
+
+- **O número de patch é compartilhado por DOIS arquivos, e a ferramenta lia só
+  um.** O `monta_patch.py` escolhia o próximo número com
+  `patches[-1]['numero'] + 1`, lendo apenas o `patcher/patches.txt`. Mas o
+  `patcher/novidades.txt` também gasta número, e **pode ganhar bloco à mão**:
+  é assim que se anuncia um conserto que foi só de servidor e não tem zip
+  nenhum para registrar (o 0023, a Runa Nauthiz, em 2026-09-08).
+
+  Com o bloco morando só no changelog, o patch seguinte reusaria aquele
+  número e o painel do Atualizador passaria a mostrar **dois blocos `[0023]`**
+  — um dizendo uma coisa e o download fazendo outra.
+
+  **E nada erraria.** As duas metades são tolerantes de propósito e em
+  direções opostas: o `leNovidades` do Go engole cabeçalho repetido sem
+  reclamar (lá o pior caso é texto feio na tela), e a `lista.txt`, que é quem
+  decide o que o jogador baixa, **nem olha** para o `novidades.txt` — são
+  goroutines diferentes no `main.go`. O sintoma seria só visual, e apareceria
+  na máquina do jogador.
+
+  Corrigido com o `maior_numero_anunciado()`, que faz o número sair do maior
+  dos dois. A regra geral: **espaço de numeração com dois donos se consulta
+  nos dois**, e a ferramenta que escreve num deles é justamente a que não
+  enxerga o outro.

@@ -67,3 +67,15 @@
 [0022] 2026-09-07  Nomes de habilidade de Shura e o nome do cla na tela
 - Pancada Corporal, Tempestade Espiritual e Combo Rapido (Shura) agora aparecem com o nome certo na janela de habilidades
 - O nome do cla volta a aparecer sobre o personagem: a Indicacao de Nome 2 passa a ser o padrao. Quem ja jogava precisa digitar /showname uma vez
+
+# O 0023 e um bloco SEM ZIP: a correcao foi so de servidor (db/guerra/
+# status.yml) e chegou pelo deploy, nao por download. O painel le este
+# arquivo direto e nao pergunta nada a lista.txt, entao o jogador le o
+# que mudou sem ter o que baixar. O numero foi gasto de proposito, e o
+# monta_patch.py passou a olhar para ca ao escolher o proximo.
+
+[0023] 2026-09-08  A Runa Nauthiz cumpre a descricao inteira
+- A Runa Nauthiz volta a remover TODOS os efeitos negativos que a descricao dela promete: Atordoamento, Sono, Sono Profundo, Maldicao, Petrificacao, Envenenamento, Cegueira, Sangramento, Silencio, Caos, Congelamento, Hipotermia, Cristalizacao, Incendio, Grito da Mandragora e Pantano de Nifflheim
+- Antes ela so quebrava seis deles. Congelamento e Petrificacao, os dois mais pedidos, estavam de fora
+- Usar a runa durante a contagem da Petrificacao agora interrompe a contagem: nao vira pedra
+- Nada para baixar: esta correcao e do servidor e ja esta valendo

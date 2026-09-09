@@ -367,6 +367,28 @@ número é o que o jogador tem para dizer "estou no 0019" quando pedir ajuda. Um
 botão só, no alto do painel, obrigaria a escolher entre "copia tudo" e "copia o
 último"; com um por célula, quem publica escolhe patch a patch.
 
+**Um bloco pode existir SEM ZIP, e isso é de propósito.** O painel lê o
+`novidades.txt` direto do servidor e não pergunta nada à `lista.txt` — as duas
+vêm por goroutines diferentes (`carregaNovidades` e `aplicaPatches` em
+`main.go`). Então dá para anunciar uma correção que foi **só de servidor** e
+chegou pelo deploy: o jogador lê o que mudou e não baixa nada. O primeiro
+assim é o **0023**, a Runa Nauthiz, em 2026-09-08 — aquele conserto mora em
+`db/guerra/status.yml` e um zip dele sairia vazio.
+
+Duas coisas andam junto com isso, e a segunda é uma armadilha que já foi
+fechada:
+
+- **o bloco gasta um número de patch de verdade**, porque o número é o que o
+  jogador tem para dizer "estou no 0023". O `monta_patch.py` passou a
+  escolher o próximo pelo maior dos **dois** arquivos
+  (`maior_numero_anunciado`); antes ele lia só o `patches.txt` e o patch
+  seguinte reusaria o número, deixando dois blocos `[0023]` no painel — um
+  dizendo uma coisa e o download fazendo outra, sem que nada errasse,
+  porque a leitura daqui é tolerante e a `lista.txt` nem olha para cá;
+- **o texto fala no presente**, então o bloco só deve subir quando o deploy
+  correspondente já tiver rodado — ou o jogador lê uma correção que o
+  servidor ainda não tem. É a única ordem que importa neste caminho.
+
 Quatro decisões que não são óbvias:
 
 - **A leitura do arquivo é TOLERANTE**, ao contrário da `lista.txt`. Lá, uma

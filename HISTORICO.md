@@ -17581,3 +17581,54 @@ compilando.
 tem o `savedata\OptionInfo.lua` gravado e continua na Indicação 1 até digitar
 `/showname` uma vez. Mandar o `savedata` por patch atropelaria resolução,
 volume e teclas de todo mundo — não é arquivo nosso, é do usuário.
+
+## O 0023 é um bloco sem zip: como se anuncia conserto de servidor (2026-09-08)
+
+A correção da Runa Nauthiz é inteira de `db/`, e o dono pediu que ela saísse
+*"em um patch separado"*. **Não dá — e a razão vale a pena guardar:** um patch
+é um zip de arquivos do cliente, e essa mudança não tem metade de cliente
+nenhuma. O zip sairia vazio.
+
+O que dá, e foi o que se fez, é separar o **anúncio**. O painel NOVIDADES lê o
+`novidades.txt` direto do servidor e não pergunta nada à `lista.txt` — são
+duas goroutines diferentes no `main.go` do Atualizador. Então um bloco sem zip
+aparece no painel, tem o próprio botão de copiar, e não manda ninguém baixar
+nada. O `publica_patch.sh` envia o changelog em toda rodada, mesmo sem zip
+novo: `0 zip(s) enviado(s); a lista esta no ar.`
+
+### A armadilha que apareceu antes de o bloco existir
+
+O bloco gasta um número de patch de verdade — o número é o que o jogador tem
+para dizer *"estou no 0023"*. E o `monta_patch.py` escolhia o próximo lendo
+**só** o `patches.txt`:
+
+```python
+numero = (patches[-1]['numero'] + 1) if patches else 1
+```
+
+Com o 0023 morando apenas no `novidades.txt`, o próximo patch de verdade
+reusaria o 0023. O painel passaria a mostrar **dois blocos com o mesmo
+número**, um dizendo uma coisa e o download fazendo outra — e **nada
+erraria**: a leitura do changelog é tolerante de propósito, e a `lista.txt`,
+que é quem decide o que se baixa, nem olha para aquele arquivo.
+
+A correção é uma função de dez linhas, `maior_numero_anunciado`, e o número
+passou a sair do maior dos dois. O espaço de numeração é compartilhado; só um
+dos donos dele estava sendo consultado.
+
+### A ordem que importa
+
+O texto do bloco fala no presente (*"já está valendo"*), então ele só deveria
+subir depois do deploy correspondente. Este subiu antes — o deploy sai do Mac
+e ainda não rodou —, e fica anotado no `PENDENCIAS.md` como a única coisa
+desta leva em que a ordem tem consequência: até lá, quem abrir o Atualizador lê
+uma correção que o servidor de produção ainda não tem.
+
+### E os cinco relatos foram dados por resolvidos
+
+Decisão do dono no mesmo dia: *"marca como resolvido, se tiver algum problema
+em prd eu te reporto futuramente."* A conferência em tela, que estava escrita
+como pendência nossa, virou observação em produção — e o `PENDENCIAS.md`
+encolheu para o que ainda é trabalho: o deploy, mais duas notas do que **não**
+é nosso (o `/organize` com espaço, que é do exe, e o `savedata` do jogador, que
+faz o padrão novo do `/showname` não alcançar quem já jogou).

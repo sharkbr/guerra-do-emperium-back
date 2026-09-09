@@ -4336,93 +4336,58 @@ tiver os NPCs.
 dois do lado do servidor.
 
 
-## 1ag. Os cinco relatos de 2026-09-07 — o que ficou em aberto
+## 1ag. Os cinco relatos de 2026-09-07 — só falta o deploy
 
-O que foi feito está no `HISTORICO.md`, *"Cinco correções de relato"*. Aqui
-fica só o que continua em aberto, e são **quatro** coisas.
+**Os cinco estão dados como resolvidos**, por decisão do dono em 2026-09-08:
+*"marca como resolvido, se tiver algum problema em prd eu te reporto
+futuramente."* Ou seja, a conferência em tela deixou de ser uma pendência
+nossa e passou a ser observação em produção. O que foi feito está no
+`HISTORICO.md`, *"Cinco correções de relato"*.
 
-### a) O `/organize` com espaço — falta a medição em jogo
+Sobram **duas** coisas, e nenhuma delas é conferência.
 
-O `_` já passa. O **espaço** não foi resolvido, e o que se sabe está medido:
+### a) O lado do SERVIDOR ainda não foi implantado
 
-- o espaço **está** no `char_name_letters` (é o byte entre o `z` e o `A` da
-  lista de `conf/guerra/char_guerra.txt`), e essa é a única peneira de nome
-  que o char-server aplica a grupo (`int_party.cpp:515`);
-- do lado do map-server o `party_create` só recusa nome **vazio**, e recusa
-  **em silêncio** — sem mensagem nenhuma;
-- não havia, no banco, nenhum grupo com espaço nem parecido com o que o dono
-  tentava.
+O que saiu já saiu pelo cliente — patch 0022 (nomes de Shura e o padrão do
+`/showname`) e o bloco 0023 do painel, que é só anúncio. Mas as três correções
+de servidor desta leva só existem aqui até o deploy rodar:
 
-Ou seja: se o cliente mandasse o nome inteiro, o grupo nasceria. Sobra o
-analisador do `/organize`, que mora dentro do `GuerraDoEmperium.exe` e não é
-nosso.
-
-**O teste que decide, e ele é de uma linha:** tentar `/organize Nome Com
-Espaco` em jogo e dizer **qual** das três coisas acontece.
-
-| o que aparece | o que significa |
-|---|---|
-| *"Já existe um grupo com este nome"* | o char-server recusou — é peneira nossa, e aí a lista de letras é o lugar |
-| *"O personagem já está em um grupo"* | o personagem estava em grupo; sair e repetir |
-| **nada** | o cliente mandou nome vazio — é o analisador do exe, e não há conserto pelo servidor |
-
-Se cair no terceiro caso, o caminho que sobra é a janela de grupo do cliente
-(o botão de criar), que digita o nome num campo em vez de numa linha de
-comando — e o `_`, que passou a funcionar hoje.
-
-### b) A Runa Nauthiz — RESOLVIDA em 2026-09-08, falta ver em jogo
-
-O dono mandou ligar os nove que faltavam, e estão ligados — com o `StoneWait`
-junto, que é a primeira metade da Petrificação e não um efeito a mais. A lista
-de dezesseis da descrição está inteira. Detalhe no `HISTORICO.md`.
-
-O que sobra é a conferência da alínea (d), e ela ganhou um caso a mais: usar a
-runa **durante a contagem da Petrificação** e ver o ícone sumir sem virar pedra.
-
-### c) O `/showname` — o padrão novo só alcança quem ainda não jogou
-
-O padrão de fábrica passou para a *Indicação de Nome 2*
-(`cliente\System\OptionInfo.lub`) e **já está no ar**, no patch 0022. Mas quem **já abriu o jogo
-uma vez** tem o `savedata\OptionInfo.lua` gravado com o valor antigo, e ele
-vence o padrão — essa pessoa continua na Indicação 1 até digitar `/showname`
-uma vez.
-
-Não há conserto limpo por patch: o `savedata` guarda resolução, volume e
-teclas do jogador, e mandá-lo por cima atropelaria tudo isso.
-
-**O que fazer:** avisar no grupo, junto do patch — *"quem já jogava, digite
-`/showname` uma vez"*. E lembrar que **isso não é sintoma de patch que não
-chegou**, que é a leitura errada mais provável quando alguém reclamar.
-
-### c2) O lado do SERVIDOR ainda não foi implantado
-
-O patch 0022 saiu (Shura e `/showname`), mas as três correções de servidor
-desta leva só existem aqui até o deploy rodar:
-
-- `rathena/db/guerra/item_db.yml` — as duas covas;
+- `rathena/db/guerra/item_db.yml` — as duas covas (28572 e 2979);
 - `rathena/db/guerra/status.yml` + o rodapé de `rathena/db/status.yml` — a
-  Runa Nauthiz;
+  Runa Nauthiz, com os dezesseis efeitos;
 - `rathena/conf/guerra/char_guerra.txt` — o `_` no nome de grupo. **Este
   exige reiniciar o char-server**, e não só o `git pull`: config de
   char-server só é lida na inicialização.
 
 Está tudo commitado e no `main`. O deploy é o mesmo da §1af — uma rodada de
-`ferramentas/implanta.sh` no **Mac** leva isto junto do Festival, da trava
-de conta e da tradução de Brasilis.
+`ferramentas/implanta.sh` no **Mac** leva isto junto do Festival, da trava de
+conta e da tradução de Brasilis.
 
-### d) Os cinco relatos — falta ver em jogo
+**O 0023 já está publicado e fala no presente** (*"já está valendo"*). Se o
+deploy demorar, o jogador lê no painel uma correção que o servidor ainda não
+tem. É o único lugar em que a ordem importa aqui.
 
-Nada aqui foi conferido na tela; tudo foi medido em arquivo, e a leitura de
-código não substitui o teste. Falta:
+### b) Duas coisas que não são nossas, e ficam anotadas para reconhecer
 
-- **Broche da Celine (28572)** — abrir a janela de encaixe e pôr uma carta;
-- **Morango Cristalizado (2979)** — a janela de encaixe **não** deve oferecer
-  a peça, e o nome continua sem `[1]`;
-- **os três nomes de Shura** — a janela de habilidades e a dica de cada uma,
-  depois de fechar e reabrir o cliente;
-- **a Runa Nauthiz** — congelar-se e usar a runa; o gelo tem de quebrar e o HP
-  subir 25% na mesma ação. E, com os dez ligados, mais dois casos: um efeito
-  qualquer da lista (Atordoamento é o mais fácil de provocar) e a contagem da
-  **Petrificação**, que tem de sumir sem virar pedra;
-- **o `/showname`** — numa pasta de cliente **sem** `savedata`, o jogo tem de
-  abrir já na Indicação de Nome 2, com o nome do clã no lugar certo.
+Nenhuma das duas é trabalho pendente — são leituras erradas prováveis quando
+alguém reclamar.
+
+**O `/organize` com espaço não passa, e a peneira não é do servidor.** O
+espaço **está** no `char_name_letters` (é o byte entre o `z` e o `A`), e essa é
+a única peneira que um nome de grupo atravessa nos dois servidores
+(`int_party.cpp:515`); do lado do map-server o `party_create` só recusa nome
+vazio, e em silêncio. Sobra o analisador do `/organize`, dentro do
+`GuerraDoEmperium.exe`. O caminho que funciona é o `_`, que passou a valer, ou
+o botão de criar da janela de grupo, que digita o nome num campo em vez de
+numa linha de comando.
+
+Se voltar a aparecer, o que decide é **qual** mensagem sai: *"Já existe um
+grupo com este nome"* é peneira nossa (a lista de letras); *"O personagem já
+está em um grupo"* é o jogador já estar em grupo; **nada** é o exe mandando
+nome vazio, e aí não há conserto pelo servidor.
+
+**O `/showname` novo só alcança quem ainda não jogou.** Quem já abriu o jogo
+uma vez tem o `savedata\OptionInfo.lua` gravado e continua na Indicação de
+Nome 1 até digitar `/showname` uma vez. **Isso não é sintoma de patch que não
+chegou**, que é justamente a conclusão errada mais provável. Não há conserto
+limpo por patch: aquele arquivo guarda resolução, volume e teclas do jogador.

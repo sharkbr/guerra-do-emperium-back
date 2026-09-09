@@ -781,6 +781,7 @@ SSH, Ubuntu, MariaDB, DigitalOcean, DNS, cache HTTP, deploy, Atualizador e patch
 - `go build` sem `GOOS`/`GOARCH` explícitos num script que PUBLICA binário é uma bomba de fuso horário de máquina. O `-o Jogar.exe` decide só o nome
 - O deploy NÃO sai do Windows, e o pré-voo reprova aqui por um motivo que não existe no servidor. Duas coisas separadas
 - `UPDATE` na tabela `char` com o jogador CONECTADO é desfeito na saída dele, e o comando não erra
+- O número de patch é compartilhado por DOIS arquivos, e o `monta_patch.py` lia só um: bloco escrito à mão no `novidades.txt` (o anúncio de um conserto que foi só de servidor) fazia o patch seguinte reusar aquele número, e o painel mostrava dois blocos iguais sem que nada errasse — CORRIGIDO em 2026-09-08
 - Resposta HTTP sem `Cache-Control` NÃO fica sem cache: o navegador inventa um — e quanto mais VELHO o arquivo, mais tempo a cópia velha vale
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede

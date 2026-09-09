@@ -346,9 +346,35 @@ def desde(data):
     return achados
 
 
+def maior_numero_anunciado():
+    u"""O maior [NNNN] do `novidades.txt`, ou 0.
+
+    O numero de patch e compartilhado por DOIS arquivos, e so um deles e
+    escrito por esta ferramenta. O `novidades.txt` pode ganhar bloco a mao -
+    e o caso do anuncio de uma mudanca que foi so de SERVIDOR, que nao tem
+    zip nenhum para registrar no `patches.txt` e ainda assim precisa aparecer
+    no painel do jogador.
+
+    Sem esta leitura o proximo patch de verdade reusaria aquele numero, e o
+    painel passaria a mostrar DOIS blocos com o mesmo `[NNNN]` - o de cima
+    dizendo uma coisa e o download fazendo outra. Nada erraria: o
+    `leNovidades` do Go e tolerante de proposito, e o `lista.txt` nem olha
+    para este arquivo."""
+    if not os.path.exists(NOVIDADES):
+        return 0
+    maior = 0
+    with io.open(NOVIDADES, 'r', encoding='utf-8') as f:
+        for linha in f:
+            m = re.match(ur'\s*\[(\d+)\]', linha)
+            if m:
+                maior = max(maior, int(m.group(1)))
+    return maior
+
+
 def monta(nome, alvos, apagar, notas):
     patches = le_registro()
-    numero = (patches[-1]['numero'] + 1) if patches else 1
+    numero = max((patches[-1]['numero'] if patches else 0),
+                 maior_numero_anunciado()) + 1
     arquivos = junta(alvos) if alvos else []
 
     for interno, _cheio in arquivos:
