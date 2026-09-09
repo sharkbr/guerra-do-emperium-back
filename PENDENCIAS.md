@@ -4416,6 +4416,10 @@ e a arte de 39 itens que **nenhuma loja vende ainda**. Não quebra nada — o
 sintoma é a vitrine sem os itens que o painel NOVIDADES acabou de anunciar.
 
 É o mesmo deploy da §1af e da §1ag, e sai do **Mac**: uma rodada de
-`ferramentas/implanta.sh` leva tudo junto. Depois dele, `@reloaditemdb` **antes**
-de `@reloadscript` — item novo sem o primeiro some da vitrine calado
-(`CLAUDE.md` §5).
+`ferramentas/implanta.sh` leva tudo junto. **Nada aqui mexeu em `src/`**, então
+não há os ~67 minutos de recompilação — é `git pull` mais o reinício dos quatro.
+
+E o reinício é o que dispensa recarregador nenhum: o `@reloaditemdb` **antes** do
+`@reloadscript` só seria preciso para aplicar isto com o servidor no ar (item
+novo sem o primeiro some da vitrine calado, `CLAUDE.md` §5). Pelo
+`implanta.sh` os quatro sobem do zero e leem tudo.
