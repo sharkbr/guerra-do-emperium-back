@@ -1040,8 +1040,6 @@ Body:
     Buy: 1                # Hell_Apocalips_Card
   - Id: 4478
     Buy: 1                # Light_Up_Card3
-  - Id: 4479
-    Buy: 1                # Light_Up_Card4
   - Id: 4480
     Buy: 1                # Sealed_Kiel_Card
   - Id: 4481
@@ -1448,10 +1446,56 @@ Body:
     Buy: 1                # Fortune3
   - Id: 5388
     Buy: 1                # Snake_Head
+  - Id: 5512
+    Buy: 1                # Aquarius_Diadem
+  - Id: 5513
+    Buy: 1                # Aquarius_Crown
+  - Id: 5514
+    Buy: 1                # Pisces_Diadem
+  - Id: 5515
+    Buy: 1                # Pisces_Crown
   - Id: 5539
     Buy: 1                # Jaguar_Hat
+  - Id: 5545
+    Buy: 1                # Aries_Diadem
+  - Id: 5546
+    Buy: 1                # Aries_Crown
+  - Id: 5549
+    Buy: 1                # Taurus_Diadem
+  - Id: 5550
+    Buy: 1                # Taurus_Crown
+  - Id: 5569
+    Buy: 1                # Gemini_Diadem
+  - Id: 5581
+    Buy: 1                # Cancer_Diadem
+  - Id: 5582
+    Buy: 1                # Cancer_Crown
+  - Id: 5588
+    Buy: 1                # Leo_Crown
+  - Id: 5589
+    Buy: 1                # Leo_Diadem
   - Id: 5592
     Buy: 1                # Sigrun's_Wing
+  - Id: 5598
+    Buy: 1                # Virgo_Crown
+  - Id: 5599
+    Buy: 1                # Virgo_Diadem
+  - Id: 5662
+    Buy: 1                # Libra_Crown
+  - Id: 5663
+    Buy: 1                # Libra_Diadem
+  - Id: 5676
+    Buy: 1                # Scorpio_Crown
+  - Id: 5677
+    Buy: 1                # Scorpio_Diadem
+  - Id: 5739
+    Buy: 1                # Sagittarius_Crown
+  - Id: 5740
+    Buy: 1                # Sagittarius_Diadem
+  - Id: 5744
+    Buy: 1                # Capricon_Crown
+  - Id: 5745
+    Buy: 1                # Capricon_Diadem
   - Id: 5978
     Buy: 1                # Toy_Syringe
   - Id: 5983
@@ -1468,6 +1512,8 @@ Body:
     Buy: 1                # Necklace_Rosary
   - Id: 15169
     Buy: 1                # Kardui_Robe
+  - Id: 15205
+    Buy: 1                # Holy_Coat
   - Id: 15371
     Buy: 1                # Antonio_Christmas_Suit
   - Id: 15374
@@ -1476,8 +1522,20 @@ Body:
     Buy: 1                # Time_Overload_Robe
   - Id: 15405
     Buy: 1                # Fafnir_Scale_J
+  - Id: 15408
+    Buy: 1                # Leo_Mail_J
+  - Id: 15412
+    Buy: 1                # Cancer_Mail_J
+  - Id: 15418
+    Buy: 1                # Libra_Mail_J
   - Id: 15421
     Buy: 1                # Triad_God_Mail_J_
+  - Id: 15424
+    Buy: 1                # Scorpio_Mail_J
+  - Id: 15425
+    Buy: 1                # Taurus_Mail_J
+  - Id: 15426
+    Buy: 1                # Aquarius_Mail_J
   - Id: 15825
     Buy: 1                # C_Black_Musang_J
   - Id: 15838
@@ -1576,6 +1634,10 @@ Body:
     Buy: 1                # Garden_Of_Eden
   - Id: 19288
     Buy: 1                # C_Gigant_Helm
+  - Id: 19299
+    Buy: 1                # Tree_Of_Sprout_JP
+  - Id: 19306
+    Buy: 1                # Heart_Card_In_Mouth
   - Id: 19311
     Buy: 1                # Greater_Dracul_Horn
   - Id: 19317
@@ -1590,6 +1652,8 @@ Body:
     Buy: 1                # Protect_cloth
   - Id: 19390
     Buy: 1                # Mira_Tower_Hat
+  - Id: 19393
+    Buy: 1                # Magic_Star_TW
   - Id: 19409
     Buy: 1                # Black_Feather
   - Id: 19426
@@ -1698,8 +1762,20 @@ Body:
     Buy: 1                # Time_Overload_Hood
   - Id: 20940
     Buy: 1                # Violet_Halo
+  - Id: 20951
+    Buy: 1                # Leo_Mantle_J
   - Id: 20952
     Buy: 1                # Anony_As_Muffler
+  - Id: 20954
+    Buy: 1                # Cancer_Manteau_J
+  - Id: 20970
+    Buy: 1                # Libra_Manteau_J
+  - Id: 20971
+    Buy: 1                # Taurus_Manteau_J
+  - Id: 20972
+    Buy: 1                # Aquarius_Manteau_J
+  - Id: 20976
+    Buy: 1                # Scorpio_Manteau_J
   - Id: 20986
     Buy: 1                # Scientist_Mantle
   - Id: 20991
@@ -1730,16 +1806,30 @@ Body:
     Buy: 1                # Anony_Sm_Shoes
   - Id: 22191
     Buy: 1                # Nergal_Shoes_TW
+  - Id: 22195
+    Buy: 1                # Booster_shoes
   - Id: 22203
     Buy: 1                # Space_shoes_JP
   - Id: 22204
     Buy: 1                # Time_Overload_Boots
+  - Id: 22213
+    Buy: 1                # Leo_Shoes_J
+  - Id: 22216
+    Buy: 1                # Cancer_Shoes_J
   - Id: 22221
     Buy: 1                # Demonist_Shoes_
   - Id: 22224
     Buy: 1                # Fluffy_FishShoes
   - Id: 22225
     Buy: 1                # Shoes_Of_Punishment_
+  - Id: 22227
+    Buy: 1                # Libra_Shoes_J
+  - Id: 22230
+    Buy: 1                # Taurus_Shoes_J
+  - Id: 22231
+    Buy: 1                # Aquarius_Shoes_J
+  - Id: 22233
+    Buy: 1                # Scorpio_Shoes_J
   - Id: 22243
     Buy: 1                # Mamaragan
   - Id: 23073
@@ -2088,12 +2178,8 @@ Body:
     Buy: 1                # ReaperAnkou_Card
   - Id: 27328
     Buy: 1                # LivingDeath_Card
-  - Id: 27330
-    Buy: 1                # Kronecker_Card
   - Id: 27331
     Buy: 1                # S_Kronecker_Card
-  - Id: 27332
-    Buy: 1                # Skia_Card
   - Id: 27333
     Buy: 1                # S_Skia_Card
   - Id: 27334
@@ -2152,18 +2238,12 @@ Body:
     Buy: 1                # Polluted_Spi_Q_Card
   - Id: 27363
     Buy: 1                # Polluted_Dark_L_Card
-  - Id: 27389
-    Buy: 1                # Wolf_Card_EV
   - Id: 27390
     Buy: 1                # S_Wolf_Card_E
   - Id: 27392
     Buy: 1                # S_Poe_Card_E
-  - Id: 27393
-    Buy: 1                # Kathryn_Card
   - Id: 27394
     Buy: 1                # S_Kathryn_Card
-  - Id: 27395
-    Buy: 1                # Isaac_Card
   - Id: 27396
     Buy: 1                # S_Issac_Card
   - Id: 28025
@@ -2418,18 +2498,34 @@ Body:
     Buy: 1                # Prta_Mil_Glove
   - Id: 32221
     Buy: 1                # Time_Overload_Ring
+  - Id: 32243
+    Buy: 1                # Star_Force_Ring_TW
+  - Id: 32247
+    Buy: 1                # Leo_Ring_J
+  - Id: 32253
+    Buy: 1                # Cancer_Ring_J
   - Id: 32258
     Buy: 1                # RingofJupiter
+  - Id: 32261
+    Buy: 1                # Libra_Ring_J
   - Id: 32262
     Buy: 1                # Ball_Of_RasenHuuma
   - Id: 32263
     Buy: 1                # Shield_Ring
+  - Id: 32264
+    Buy: 1                # Taurus_Ring_J
   - Id: 32265
     Buy: 1                # Tip_Of_Thief_Vol2
+  - Id: 32266
+    Buy: 1                # Aquarius_Ring_J
+  - Id: 32267
+    Buy: 1                # Scorpio_Ring_J
   - Id: 32295
     Buy: 1                # Crystal_Blade_Necklace
   - Id: 100100
     Buy: 1                # Temporal_Manteau_Box
+  - Id: 100273
+    Buy: 1                # Remodel_Hero_Boots
   - Id: 100437
     Buy: 1                # Hero_Weapon_Cube
   - Id: 100547
@@ -2536,24 +2632,14 @@ Body:
     Buy: 1                # ILL_Vitata_Card
   - Id: 300239
     Buy: 1                # ILL_Maya_Card
-  - Id: 300307
-    Buy: 1                # Meyer_Card
   - Id: 300308
     Buy: 1                # S_Meyer_Card
-  - Id: 300309
-    Buy: 1                # Helmut_Card
   - Id: 300310
     Buy: 1                # S_Helmut_Card
-  - Id: 300421
-    Buy: 1                # Catherine_Card
   - Id: 300422
     Buy: 1                # S_Catherine_Card
-  - Id: 300423
-    Buy: 1                # Friedrich_Card
   - Id: 300424
     Buy: 1                # S_Friedrich_Card
-  - Id: 300425
-    Buy: 1                # Crux_Card
   - Id: 300426
     Buy: 1                # S_Crux_Card
   - Id: 300547
@@ -3276,10 +3362,18 @@ Body:
     Buy: 1                # C_Dr_Eggman_Mask
   - Id: 450010
     Buy: 1                # Europa_Robe_J
+  - Id: 450015
+    Buy: 1                # Virgo_Mail_J
   - Id: 450120
     Buy: 1                # Sturdy_Armor_Guerra
+  - Id: 450129
+    Buy: 1                # Aries_Mail_J
   - Id: 450132
     Buy: 1                # Magical_Cloth
+  - Id: 450133
+    Buy: 1                # Pisces_Mail_J
+  - Id: 450140
+    Buy: 1                # Sagittarius_Mail_J
   - Id: 450163
     Buy: 1                # White_Lily_Robe_
   - Id: 450165
@@ -3322,6 +3416,8 @@ Body:
     Buy: 1                # aegis_450417
   - Id: 460000
     Buy: 1                # Divinity_Aegis
+  - Id: 460002
+    Buy: 1                # Aries_Shield_J
   - Id: 460003
     Buy: 1                # Feather_Shield
   - Id: 460004
@@ -3346,14 +3442,26 @@ Body:
     Buy: 1                # Imperial_Boots_
   - Id: 470007
     Buy: 1                # Sniping_Shoes_J_
+  - Id: 470010
+    Buy: 1                # Capricon_Shoes_J
+  - Id: 470014
+    Buy: 1                # Virgo_Shoes_J
+  - Id: 470024
+    Buy: 1                # Aries_Shoes_J
   - Id: 470026
     Buy: 1                # Pretty_PigShoes_
   - Id: 470028
     Buy: 1                # Juggernaut_
+  - Id: 470032
+    Buy: 1                # Gemini_Shoes_J
   - Id: 470033
     Buy: 1                # Elemental_BootsK
   - Id: 470037
     Buy: 1                # Military_Boots_IL_
+  - Id: 470038
+    Buy: 1                # Pisces_Shoes_J
+  - Id: 470045
+    Buy: 1                # Sagittarius_Shoes_J
   - Id: 470048
     Buy: 1                # Striking_Shoes
   - Id: 470057
@@ -3388,12 +3496,20 @@ Body:
     Buy: 1                # aegis_470318
   - Id: 470321
     Buy: 1                # Phantom_Shoes
+  - Id: 480009
+    Buy: 1                # Virgo_Manteau_J
+  - Id: 480022
+    Buy: 1                # Aries_Manteau_J
   - Id: 480023
     Buy: 1                # Arabian_Manteau
   - Id: 480025
     Buy: 1                # Owl_Baron_Mantle
+  - Id: 480041
+    Buy: 1                # Pisces_Manteau_J
   - Id: 480045
     Buy: 1                # Guardian_Soul
+  - Id: 480050
+    Buy: 1                # Sagittarius_Manteau_J
   - Id: 480055
     Buy: 1                # C_Wing_Of_Angel_Move_RD
   - Id: 480056
@@ -3478,14 +3594,26 @@ Body:
     Buy: 1                # Divine_Phoenix
   - Id: 480446
     Buy: 1                # Moonlight_Bell_TH
+  - Id: 490009
+    Buy: 1                # Capricon_Ring_J
+  - Id: 490010
+    Buy: 1                # Virgo_Ring_J
   - Id: 490013
     Buy: 1                # Devil_Ring
+  - Id: 490028
+    Buy: 1                # Aries_Ring_J
   - Id: 490029
     Buy: 1                # Geffenia_Magictool_Ice
+  - Id: 490032
+    Buy: 1                # Gemini_Ring_J
+  - Id: 490034
+    Buy: 1                # Pisces_Ring_J
   - Id: 490037
     Buy: 1                # Dark_Ring
   - Id: 490038
     Buy: 1                # Sixth_Sense_Ring
+  - Id: 490041
+    Buy: 1                # Sagittarius_Ring_J
   - Id: 490043
     Buy: 1                # HalfBlood_Princess_Ring
   - Id: 490068

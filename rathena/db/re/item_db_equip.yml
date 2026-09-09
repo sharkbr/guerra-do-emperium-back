@@ -6125,7 +6125,7 @@ Body:
     Refineable: true
   - Id: 1328
     AegisName: Blut_Axe
-    Name: "Machado Brutal"
+    Name: Brute Cleaver
     Type: Weapon
     SubType: 1hAxe
     Attack: 150
@@ -40474,7 +40474,7 @@ Body:
       bonus2 bHPRegenRate,300,10000;
   - Id: 2979
     AegisName: Strawberry_Decoration
-    Name: "Morango Cristalizado"
+    Name: Strawberry Decoration
     Type: Armor
     Buy: 20
     Weight: 500
@@ -63391,7 +63391,7 @@ Body:
       }
   - Id: 13139
     AegisName: Blue_Gun
-    Name: "Revólver de Oxum"
+    Name: Blue Gun
     Type: Weapon
     SubType: Revolver
     Buy: 20
@@ -75454,7 +75454,7 @@ Body:
          bonus bNoWalkDelay;
   - Id: 15408
     AegisName: Leo_Mail_J
-    Name: Leo Mail
+    Name: "Armadura de Leão"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -75525,7 +75525,7 @@ Body:
       bonus bMaxSP,100;
   - Id: 15412
     AegisName: Cancer_Mail_J
-    Name: Cancer Mail
+    Name: "Armadura de Câncer"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -75580,7 +75580,7 @@ Body:
       }
   - Id: 15418
     AegisName: Libra_Mail_J
-    Name: Libra Mail
+    Name: "Armadura de Libra"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -75693,7 +75693,7 @@ Body:
          bonus2 bAddRace,RC_All,10;
   - Id: 15424
     AegisName: Scorpio_Mail_J
-    Name: Scorpio Mail
+    Name: "Armadura de Escorpião"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -75719,7 +75719,7 @@ Body:
       }
   - Id: 15425
     AegisName: Taurus_Mail_J
-    Name: Taurus Mail
+    Name: "Armadura de Touro"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -75744,7 +75744,7 @@ Body:
       }
   - Id: 15426
     AegisName: Aquarius_Mail_J
-    Name: Aquarius Mail
+    Name: "Armadura de Aquário"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -115599,7 +115599,7 @@ Body:
       }
   - Id: 20951
     AegisName: Leo_Mantle_J
-    Name: Leo Manteau
+    Name: "Manto de Leão"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -115681,7 +115681,7 @@ Body:
       bonus bHit,10;
   - Id: 20954
     AegisName: Cancer_Manteau_J
-    Name: Cancer Manteau
+    Name: "Manto de Câncer"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -115995,7 +115995,7 @@ Body:
       }
   - Id: 20970
     AegisName: Libra_Manteau_J
-    Name: Libra Manteau
+    Name: "Manto de Libra"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -116022,7 +116022,7 @@ Body:
       }
   - Id: 20971
     AegisName: Taurus_Manteau_J
-    Name: Taurus Manteau
+    Name: "Manto de Touro"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -116048,7 +116048,7 @@ Body:
       }
   - Id: 20972
     AegisName: Aquarius_Manteau_J
-    Name: Aquarius Manteau
+    Name: "Manto de Aquário"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -116104,7 +116104,7 @@ Body:
       }
   - Id: 20976
     AegisName: Scorpio_Manteau_J
-    Name: Scorpio Manteau
+    Name: "Manto de Escorpião"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -122017,7 +122017,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Undead,2*.@r;
   - Id: 22213
     AegisName: Leo_Shoes_J
-    Name: Leo Shoes
+    Name: "Sapatos de Leão"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -122085,7 +122085,7 @@ Body:
       bonus bBaseAtk,15;
   - Id: 22216
     AegisName: Cancer_Shoes_J
-    Name: Cancer Shoes
+    Name: "Sapatos de Câncer"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -122206,7 +122206,7 @@ Body:
       }
   - Id: 22227
     AegisName: Libra_Shoes_J
-    Name: Libra Shoes
+    Name: "Sapatos de Libra"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -122254,7 +122254,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Dark,50;
   - Id: 22230
     AegisName: Taurus_Shoes_J
-    Name: Taurus Shoes
+    Name: "Sapatos de Touro"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -122280,7 +122280,7 @@ Body:
       }
   - Id: 22231
     AegisName: Aquarius_Shoes_J
-    Name: Aquarius Shoes
+    Name: "Sapatos de Aquário"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -122306,7 +122306,7 @@ Body:
       }
   - Id: 22233
     AegisName: Scorpio_Shoes_J
-    Name: Scorpio Shoes
+    Name: "Sapatos de Escorpião"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -161563,7 +161563,7 @@ Body:
       }
   - Id: 32014
     AegisName: Blut_Spear
-    Name: "Lança Brutal"
+    Name: Brute Spear
     Type: Weapon
     SubType: 1hSpear
     Attack: 150
@@ -163018,7 +163018,7 @@ Body:
       bonus bAllStats,1;
   - Id: 32261
     AegisName: Libra_Ring_J
-    Name: Libra Ring
+    Name: "Anel de Libra"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -163178,7 +163178,7 @@ Body:
       }
   - Id: 32267
     AegisName: Scorpio_Ring_J
-    Name: Scorpio Ring
+    Name: "Anel de Escorpião"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -190910,7 +190910,7 @@ Body:
       }
   - Id: 450015
     AegisName: Virgo_Mail_J
-    Name: Virgo Mail
+    Name: "Armadura de Virgem"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -194408,7 +194408,7 @@ Body:
       }
   - Id: 450129
     AegisName: Aries_Mail_J
-    Name: Aries Mail
+    Name: "Armadura de Áries"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -194530,7 +194530,7 @@ Body:
       }
   - Id: 450133
     AegisName: Pisces_Mail_J
-    Name: Pisces Mail
+    Name: "Armadura de Peixes"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -194581,7 +194581,7 @@ Body:
          bonus bUnbreakableArmor;
   - Id: 450140
     AegisName: Sagittarius_Mail_J
-    Name: Sagittarius Mail
+    Name: "Armadura de Sagitário"
     Type: Armor
     Buy: 20
     Weight: 1000
@@ -200635,7 +200635,7 @@ Body:
       }
   - Id: 460002
     AegisName: Aries_Shield_J
-    Name: Aries Shield
+    Name: "Escudo de Áries"
     Type: Armor
     Buy: 20
     Weight: 4000
@@ -202555,7 +202555,7 @@ Body:
       }
   - Id: 470010
     AegisName: Capricon_Shoes_J
-    Name: Capricon Shoes
+    Name: "Sapatos de Capricórnio"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -202685,7 +202685,7 @@ Body:
       }
   - Id: 470014
     AegisName: Virgo_Shoes_J
-    Name: Virgo Shoes
+    Name: "Sapatos de Virgem"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -202912,7 +202912,7 @@ Body:
       }
   - Id: 470024
     AegisName: Aries_Shoes_J
-    Name: Aries Shoes
+    Name: "Sapatos de Áries"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -203158,7 +203158,7 @@ Body:
       }
   - Id: 470032
     AegisName: Gemini_Shoes_J
-    Name: Gemini Shoes
+    Name: "Sapatos de Gêmeos"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -203336,7 +203336,7 @@ Body:
       }
   - Id: 470038
     AegisName: Pisces_Shoes_J
-    Name: Pisces Shoes
+    Name: "Sapato de Peixes"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -203366,7 +203366,7 @@ Body:
       }
   - Id: 470045
     AegisName: Sagittarius_Shoes_J
-    Name: Sagittarius Shoes
+    Name: "Sapato de Sagitário"
     Type: Armor
     Buy: 20
     Weight: 400
@@ -210794,7 +210794,7 @@ Body:
       }
   - Id: 480009
     AegisName: Virgo_Manteau_J
-    Name: Virgo Manteau
+    Name: "Manto de Virgem"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -211074,7 +211074,7 @@ Body:
       }
   - Id: 480022
     AegisName: Aries_Manteau_J
-    Name: Aries Manteau
+    Name: "Manto de Áries"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -211213,7 +211213,7 @@ Body:
       }
   - Id: 480041
     AegisName: Pisces_Manteau_J
-    Name: Pisces Manteau
+    Name: "Manto de Peixes"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -211274,7 +211274,7 @@ Body:
       bonus2 bSubEle,Ele_Wind,.@c*7;
   - Id: 480050
     AegisName: Sagittarius_Manteau_J
-    Name: Sagittarius Manteau
+    Name: "Manto de Sagitário"
     Type: Armor
     Buy: 20
     Weight: 300
@@ -220032,7 +220032,7 @@ Body:
       bonus bLongAtkRate,2;
   - Id: 490009
     AegisName: Capricon_Ring_J
-    Name: Capricon Ring
+    Name: "Anel de Capricórnio"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -220330,7 +220330,7 @@ Body:
       bonus bMaxSPrate,5;
   - Id: 490028
     AegisName: Aries_Ring_J
-    Name: Aries Ring
+    Name: "Anel de Áries"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -220410,7 +220410,7 @@ Body:
       bonus bCriticalLong,5;
   - Id: 490032
     AegisName: Gemini_Ring_J
-    Name: Gemini Ring
+    Name: "Anel de Gêmeos"
     Type: Armor
     Buy: 20
     Weight: 100
@@ -220446,7 +220446,7 @@ Body:
       bonus bHit,15;
   - Id: 490034
     AegisName: Pisces_Ring_J
-    Name: Pisces Ring
+    Name: "Anel de Peixes"
     Type: Armor
     Buy: 20
     Weight: 100

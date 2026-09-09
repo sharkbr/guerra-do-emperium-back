@@ -1,17 +1,18 @@
 # Catálogo de cartas — Mercado de Cartas
 
-As 964 cartas à venda a 1 zeny no quarteirão ao sul do Mercado de
+As 953 cartas à venda a 1 zeny no quarteirão ao sul do Mercado de
 Visuais, em Prontera. Gerado por `ferramentas/varre_cartas.py`;
 a loja em `rathena/npc/guerra/mercado_de_cartas.txt`.
 
 **Só entra carta com nome em português.** Das 1545 que têm encaixe,
-581 ficaram de fora, e a soma fecha assim:
+592 ficaram de fora, e a soma fecha assim:
 
 | motivo | quantas |
 |---|---|
 | nunca saiu do inglês — o bRO não a implementou | 392 |
 | aparece em coreano — nem o bRO a traduziu | 54 |
 | sem entrada nenhuma no `itemInfo.lua` — sai sem nome | 135 |
+| retirada a pedido do dono — ver `FORA_DA_LOJA` | 11 |
 
 O nome abaixo é o que o cliente **desenha na loja** — sai do
 `identifiedDisplayName` do `itemInfo.lua`, não do `Name` do
@@ -321,7 +322,7 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 4445 | Carta Vespa Vagalume |
 | 4641 | Carta Zumbi da Guarda |
 
-## Carta de Armadura (117 cartas)
+## Carta de Armadura (115 cartas)
 
 `prontera 159,149` — sprite `4_M_KY_KNT`
 
@@ -342,8 +343,6 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 27027 | Carta Arenoso de Fogo |
 | 4114 | Carta Argiope |
 | 31016 | Carta Árvore Maldita Decorada |
-| 300309 | Carta Autógrafo de Helmut |
-| 300307 | Carta Autógrafo de Meyer |
 | 27334 | Carta Bafomé Caótico |
 | 4450 | Carta Banshee Master |
 | 4119 | Carta Bathory |
@@ -445,7 +444,7 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 300013 | Carta Valquíria Reginleif |
 | 4369 | Carta Venatu |
 
-## Carta de Capacete (84 cartas)
+## Carta de Capacete (82 cartas)
 
 `prontera 151,143` — sprite `4_M_SAGE_A`
 
@@ -455,8 +454,6 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 4379 | Carta Acidus Azul |
 | 4260 | Carta Artilheiro Wootan |
 | 4278 | Carta Árvore Maldita |
-| 27395 | Carta Autógrafo de Isaac |
-| 27393 | Carta Autógrafo de Katrin |
 | 27088 | Carta Aventureiro |
 | 4438 | Carta Banshee |
 | 4311 | Carta Batedor |
@@ -536,7 +533,7 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 300238 | Carta Vitata Diligente |
 | 4271 | Carta Zangão Gigante |
 
-## Carta de Capa (74 cartas)
+## Carta de Capa (70 cartas)
 
 `prontera 155,143` — sprite `4_F_ALCHE`
 
@@ -549,9 +546,6 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 4596 | Carta Antigo Livro Danificado |
 | 300201 | Carta Aranha Rainha Selada |
 | 27296 | Carta Arqueiro Wootan |
-| 300421 | Carta Autógrafo de Catherine |
-| 300425 | Carta Autógrafo de Crux Findel |
-| 300423 | Carta Autógrafo de Friedrich |
 | 4129 | Carta Bafomé Jr. |
 | 300422 | Carta Catherine Gaebolg |
 | 4568 | Carta Celia |
@@ -564,7 +558,6 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 4174 | Carta Deviling |
 | 27295 | Carta Disparador de Pedras |
 | 4373 | Carta Donzela Verde |
-| 4479 | Carta Falquíria |
 | 300149 | Carta Fen Abismal |
 | 4375 | Carta Filhote de Orc |
 | 4570 | Carta Flamel |
@@ -702,7 +695,7 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 29149 | Gema de Peixes |
 | 29153 | Gema de Touro |
 
-## Carta de Acessorio (106 cartas)
+## Carta de Acessorio (103 cartas)
 
 `prontera 151,137` — sprite `4_F_JOB_HUNTER`
 
@@ -714,9 +707,6 @@ O nome abaixo é o que o cliente **desenha na loja** — sai do
 | 4331 | Carta Aquecedor |
 | 27116 | Carta Aquecedor Ominoso |
 | 4347 | Carta Armeyer Dinze |
-| 27330 | Carta Autógrafo de Kronecker |
-| 27332 | Carta Autógrafo de Skia |
-| 27389 | Carta Autógrafo de Wolf |
 | 4356 | Carta Beholder |
 | 4486 | Carta Belzebu Selada |
 | 4212 | Carta Bongun |

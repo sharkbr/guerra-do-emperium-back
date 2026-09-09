@@ -123,6 +123,35 @@ LOJAS = [
     ('chefe',     159, 137, u'Carta de Chefe',     '4_M_ROGUE',       u'Cartas de chefe'),
 ]
 
+# ---------------------------------------------------------- o que NAO entra
+#
+# Carta que passa nos dois filtros e mesmo assim fica de fora, por PEDIDO do
+# dono. E o unico jeito de tirar uma carta desta loja: o arquivo e gerado, e
+# apagar a mao a linha do `shop` some no proximo `--gerar`, calado.
+#
+# O motivo fica escrito porque ele nao se deduz da carta: as onze de
+# 2026-09-09 nao tem defeito de nome, de arte nem de tabela - o dono e que
+# nao as quis a venda. Sem esta coluna, a rodada seguinte as poria de volta
+# achando que a ausencia era um bug.
+FORA_DA_LOJA = {
+    # Pedido do dono em 2026-09-09. As dez primeiras sao a familia das
+    # CARTAS AUTOGRAFO - as testemunhas dos eventos do bRO, uma por
+    # personagem -, e a decima primeira e a Falquiria. As onze estavam nas
+    # lojas por merecimento: nome em portugues, arte ok, `Locations:` certo.
+    300421: u'Carta Autografo de Catherine',
+    300425: u'Carta Autografo de Crux Findel',
+    300423: u'Carta Autografo de Friedrich',
+    27395:  u'Carta Autografo de Isaac',
+    27393:  u'Carta Autografo de Katrin',
+    27330:  u'Carta Autografo de Kronecker',
+    27332:  u'Carta Autografo de Skia',
+    27389:  u'Carta Autografo de Wolf',
+    300309: u'Carta Autografo de Helmut',
+    300307: u'Carta Autografo de Meyer',
+    4479:   u'Carta Falquiria',
+}
+
+
 # O parser do rAthena copia o quarto campo para um `char w4[2048]` e **trunca
 # com aviso** se nao couber (`npc.cpp`, npc_parsesrcfile). Uma loja grande
 # passa disso: a de arma da 2804 caracteres. O corpo de um `script`, esse nao
@@ -351,9 +380,10 @@ def varre():
 
 
 def na_loja(linhas):
-    u"""As que entram na loja: arte que o cliente desenha E nome em portugues."""
+    u"""As que entram: arte que o cliente desenha, nome em portugues, e nao
+    estar na `FORA_DA_LOJA` - a lista do que o dono mandou tirar."""
     return [(c, loja) for c, loja, est, _m, nome in linhas
-            if est == 'ok' and nome == 'pt']
+            if est == 'ok' and nome == 'pt' and c['id'] not in FORA_DA_LOJA]
 
 
 def ordem_alfabetica(nomes):
@@ -438,10 +468,11 @@ CABECALHO = u"""\
 //= ------------------------------------------------------------
 //= SÓ ENTRA CARTA COM NOME EM PORTUGUÊS
 //=
-//= Das %(com_slot)d com encaixe, só %(nome_pt)d entram. O que decide é o
-//= nome que o cliente desenha na lista da loja:
+//= Das %(com_slot)d com encaixe, %(nome_pt)d têm nome em português e %(total)d
+//= entram - a diferença são as %(retiradas)d que o dono mandou tirar, mais
+//= abaixo. O que decide o resto é o nome que o cliente desenha na lista:
 //=
-//=   em português  %(nome_pt)4d   entram
+//=   em português  %(nome_pt)4d   entram, menos as %(retiradas)d retiradas
 //=   em inglês     %(nome_ingles)4d   fora: o bRO nunca as implementou
 //=   em coreano    %(nome_coreano)4d   fora: nem o bRO as traduziu
 //=   sem nome      %(nome_ausente)4d   fora: sem entrada no itemInfo.lua
@@ -459,6 +490,17 @@ CABECALHO = u"""\
 //= então "byte alto = coreano" acusaria `Carta Lunático`. O que
 //= vale é byte alto FORA do conjunto de acentos da fase PT-BR.
 //=
+//= ------------------------------------------------------------
+//= E %(retiradas)d SAÍRAM A PEDIDO, sem ter defeito nenhum
+//=
+//= Estas passavam nos dois filtros - nome em português, arte ok,
+//= `Locations:` certo - e mesmo assim não estão à venda. Quem as
+//= tirou foi o dono, e é a única forma de tirar carta daqui: a
+//= lista `FORA_DA_LOJA` do ferramentas/varre_cartas.py. Apagar a
+//= linha do `shop` à mão não adianta - este arquivo é gerado, e o
+//= próximo `--gerar` a poria de volta.
+//=
+%(lista_retiradas)s//=
 //= ------------------------------------------------------------
 //= O FILTRO DE ARTE NÃO SEGURA NADA AQUI
 //=
@@ -656,6 +698,11 @@ def gera(linhas):
         'nome_pt': conta_nome('pt'), 'nome_ingles': conta_nome('ingles'),
         'nome_coreano': conta_nome('coreano'), 'nome_ausente': conta_nome('ausente'),
         'fora': len(linhas) - total,
+        'retiradas': len(FORA_DA_LOJA),
+        'lista_retiradas': u'\n'.join(
+            u'//=   %6d  %s' % (iid, nome)
+            for iid, nome in sorted(FORA_DA_LOJA.items(),
+                                    key=lambda kv: (kv[1], kv[0]))) + u'\n',
         'arte_ok': len([l for l in linhas if l[2] == 'ok']),
     }) + u'\n' + u'\n'.join(corpo)
     with io.open(NPC, 'wb') as fp:
@@ -679,6 +726,8 @@ def gera(linhas):
            % conta_nome('coreano'),
            u'| sem entrada nenhuma no `itemInfo.lua` — sai sem nome | %d |'
            % conta_nome('ausente'),
+           u'| retirada a pedido do dono — ver `FORA_DA_LOJA` | %d |'
+           % len(FORA_DA_LOJA),
            u'',
            u'O nome abaixo é o que o cliente **desenha na loja** — sai do',
            u'`identifiedDisplayName` do `itemInfo.lua`, não do `Name` do',

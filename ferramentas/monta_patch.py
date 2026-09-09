@@ -4,8 +4,16 @@ u"""Monta um patch do cliente: um .zip numerado mais a linha do registro.
     python monta_patch.py --nome "IA do homunculo" AI_sakray data\\sclientinfo.xml
     python monta_patch.py --nome "Arte nova da Ordem" --desde 2026-08-14
     python monta_patch.py --nome "Cinco chapeus" --nota "Chapeu de Palha" ...
+    python monta_patch.py --nome "..." --desde 2026-09-09 --verificar
     python monta_patch.py --lista          # mostra o que ja foi montado
     python monta_patch.py --confere        # confere o registro contra os .zip
+
+**Rodar sem `--verificar` MONTA.** Nao ha ensaio implicito: uma chamada com
+`--nome` escreve o zip, gasta o numero do patch e acrescenta a linha em
+patcher/patches.txt e o bloco em patcher/novidades.txt - inclusive quando a
+intencao era so ver o que entraria. Numero de patch nao se reaproveita, entao
+desfazer e `git checkout` nos dois arquivos mais apagar o zip a mao. O
+`--verificar` existe para essa pergunta e nao grava byte nenhum.
 
 O `--nota` (repetivel) e o que o JOGADOR vai ler: cada um vira um ponto no
 painel NOVIDADES do Atualizador, e entra na mensagem que o botao de copiar poe
@@ -371,7 +379,7 @@ def maior_numero_anunciado():
     return maior
 
 
-def monta(nome, alvos, apagar, notas):
+def monta(nome, alvos, apagar, notas, ensaio=False):
     patches = le_registro()
     numero = max((patches[-1]['numero'] if patches else 0),
                  maior_numero_anunciado()) + 1
@@ -390,6 +398,29 @@ def monta(nome, alvos, apagar, notas):
         morre(u'nada a empacotar')
 
     destino = os.path.join(SAIDA, '%04d-%s.zip' % (numero, apelido(nome)))
+    if ensaio:
+        print u''
+        print u'Patch %04d - %s   (ENSAIO)' % (numero, nome)
+        print u'-' * 60
+        bruto = 0
+        for interno, cheio in arquivos:
+            tamanho = os.path.getsize(cheio)
+            bruto += tamanho
+            print u'  + %-58s %8.1f KB' % (interno, tamanho / 1024.0)
+        for caminho in apagar:
+            print u'  - %s' % caminho
+        print u'-' * 60
+        print u'  %d arquivo(s), %.2f MB crus' % (len(arquivos),
+                                                  bruto / 1048576.0)
+        print u'  seria %s' % destino
+        for nota in notas:
+            print u'  nota: %s' % nota
+        if not notas:
+            print u'  (sem --nota: o painel do jogador mostraria so o titulo)'
+        print u''
+        print u'--verificar: nenhum byte foi gravado, e o numero %04d' % numero
+        print u'continua livre.'
+        return
     if not os.path.isdir(SAIDA):
         os.makedirs(SAIDA)
     if os.path.exists(destino):
@@ -490,6 +521,7 @@ def main(argv):
     alvos = []
     apagar = []
     notas = []
+    ensaio = False
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -499,6 +531,8 @@ def main(argv):
         elif a == '--confere':
             confere()
             return
+        elif a == '--verificar':
+            ensaio = True
         elif a == '--nome':
             i += 1
             nome = argv[i].decode('mbcs') if isinstance(argv[i], str) else argv[i]
@@ -521,7 +555,7 @@ def main(argv):
     if not nome:
         print __doc__
         return
-    monta(nome, alvos, apagar, notas)
+    monta(nome, alvos, apagar, notas, ensaio)
 
 
 if __name__ == '__main__':

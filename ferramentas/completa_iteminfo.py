@@ -153,6 +153,53 @@ ITENS = [
     510065,   # [MEGA] Totsuka
     550074,   # [MEGA] Vara
     590042,   # [MEGA] Mangual do Demonio
+    # --- O ZODIACO, pedido do dono em 2026-09-09: 75 pecas para as lojas do
+    # quarteirao, das quais 36 ja tinham entrada aqui. Estas 39 nao tinham, e
+    # sem elas a peca sai da vitrine SEM NOME e SEM ICONE. As doze familias
+    # nao sao completas no vendor - Gemeos tem tres pecas, Capricornio quatro,
+    # Aries sete -, entao a lista abaixo e a intersecao do pedido com o que
+    # existe, e nao um produto de 12 x 7.
+    15408,    # Armadura de Leao
+    15412,    # Armadura de Cancer
+    15418,    # Armadura de Libra
+    15424,    # Armadura de Escorpiao
+    15425,    # Armadura de Touro
+    15426,    # Armadura de Aquario
+    450015,   # Armadura de Virgem
+    450129,   # Armadura de Aries
+    450133,   # Armadura de Peixes
+    450140,   # Armadura de Sagitario
+    460002,   # Escudo de Aries          (o unico escudo do pedido)
+    20951,    # Manto de Leao
+    20954,    # Manto de Cancer
+    20970,    # Manto de Libra
+    20971,    # Manto de Touro
+    20972,    # Manto de Aquario
+    20976,    # Manto de Escorpiao
+    480009,   # Manto de Virgem
+    480022,   # Manto de Aries
+    480041,   # Manto de Peixes
+    480050,   # Manto de Sagitario
+    22213,    # Sapatos de Leao
+    22216,    # Sapatos de Cancer
+    22227,    # Sapatos de Libra
+    22230,    # Sapatos de Touro
+    22231,    # Sapatos de Aquario       (o pedido trazia 32266 aqui, que e o
+              #                           Anel de Aquario - ver o cabecalho de
+              #                           mercado_contemporaneo.txt)
+    22233,    # Sapatos de Escorpiao
+    470010,   # Sapatos de Capricornio
+    470014,   # Sapatos de Virgem
+    470024,   # Sapatos de Aries
+    470032,   # Sapatos de Gemeos
+    470038,   # Sapato de Peixes         (o bRO escreve no singular)
+    470045,   # Sapato de Sagitario      (idem)
+    32261,    # Anel de Libra
+    32267,    # Anel de Escorpiao
+    490009,   # Anel de Capricornio
+    490028,   # Anel de Aries
+    490032,   # Anel de Gemeos
+    490034,   # Anel de Peixes
 ]
 
 

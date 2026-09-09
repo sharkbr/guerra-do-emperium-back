@@ -188,4 +188,19 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   negação e sai 0 dos dois jeitos: é `git status --short --untracked-files=all
   <pasta>`, que só lista o que o git realmente enxerga.
 
+- **`npc/guerra/*.txt` NÃO tem uma quebra de linha só: são 21 arquivos em
+  CRLF e 37 em LF** (medido em 2026-09-09), e não há regra que diga qual é
+  qual — depende de que ferramenta escreveu o arquivo por último. Script que
+  edite NPC assumindo um dos dois trabalha sobre um `split` que devolve o
+  arquivo inteiro num elemento só, e o sintoma é "não achei a linha do
+  `shop`" num arquivo em que ela está à vista.
+
+  **O `.gitattributes` da raiz normaliza tudo para LF no repositório**
+  (`* text=auto`), então o repositório e o deploy nunca veem essa mistura —
+  ela existe só na cópia de trabalho, e é por isso que ninguém a percebe até
+  escrever um script. A saída é ler o arquivo em binário e **detectar**:
+  `NL = u'\r\n' if u'\r\n' in d else u'\n'`. Escrever a quebra errada não
+  quebra nada no jogo (o `npc_parsesrcfile` aceita as duas) nem no git — só
+  produz um arquivo de trabalho com as duas misturadas.
+
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).

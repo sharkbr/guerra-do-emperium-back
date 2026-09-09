@@ -4391,3 +4391,31 @@ uma vez tem o `savedata\OptionInfo.lua` gravado e continua na Indicação de
 Nome 1 até digitar `/showname` uma vez. **Isso não é sintoma de patch que não
 chegou**, que é justamente a conclusão errada mais provável. Não há conserto
 limpo por patch: aquele arquivo guarda resolução, volume e teclas do jogador.
+
+---
+
+## 1ah. O Zodíaco está no ar pela metade — falta o deploy (2026-09-09)
+
+**A metade de cliente já chegou ao jogador:** o patch **0024** foi montado e
+publicado, com o `itemInfo.lua` (39 entradas novas e as duas covas de
+Sagitário) mais 140 arquivos de arte. Quem abrir o `Jogar.exe` já baixa.
+
+**A metade de servidor só existe nesta máquina até o deploy rodar**, e é ela
+que faz os itens aparecerem na vitrine:
+
+- `rathena/npc/guerra/mercado_contemporaneo.txt` — as oito lojas, 74 itens;
+- `rathena/npc/guerra/ze_do_caixao.txt` — o Cubo Reforçado das Botas;
+- `rathena/npc/guerra/mercado_de_cartas.txt` — regerado sem as onze cartas;
+- `rathena/db/guerra/item_db_lojas.yml` — regerado (1835 itens a `Buy: 1`);
+- `rathena/db/re/item_db_equip.yml` e `item_db_etc.yml` — os `Name:` em
+  português, pelo `nomes_pt_item_db.py`.
+
+**A ordem tem consequência aqui, e ela é a pior das duas.** O patch já está no
+ar e o servidor não: quem baixar antes do deploy passa a ter no cliente o nome
+e a arte de 39 itens que **nenhuma loja vende ainda**. Não quebra nada — o
+sintoma é a vitrine sem os itens que o painel NOVIDADES acabou de anunciar.
+
+É o mesmo deploy da §1af e da §1ag, e sai do **Mac**: uma rodada de
+`ferramentas/implanta.sh` leva tudo junto. Depois dele, `@reloaditemdb` **antes**
+de `@reloadscript` — item novo sem o primeiro some da vitrine calado
+(`CLAUDE.md` §5).

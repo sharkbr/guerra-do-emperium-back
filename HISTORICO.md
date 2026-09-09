@@ -17632,3 +17632,150 @@ como pendência nossa, virou observação em produção — e o `PENDENCIAS.md`
 encolheu para o que ainda é trabalho: o deploy, mais duas notas do que **não**
 é nosso (o `/organize` com espaço, que é do exe, e o `savedata` do jogador, que
 faz o padrão novo do `/showname` não alcançar quem já jogou).
+
+## O Zodíaco: 75 itens nas lojas e 11 cartas fora (2026-09-09)
+
+Pedido do dono em duas listas — uma de 75 números para entrar e outra de 11
+para sair. **As 75 entraram e as 11 saíram**, e o número que sobra da rodada é
+o do trabalho que não aparece na vitrine: 36 das 75 peças já estavam prontas
+dos dois lados e não custaram nada; as outras 39 precisaram das quatro
+ferramentas de cliente antes de a linha da loja poder existir.
+
+### O que era a lista
+
+Sete peças por signo, onde o vendor as tem: Anel, Armadura, Coroa, Diadema,
+Escudo, Manto e Sapatos. **Nenhuma família é completa, e isso é do rAthena,
+não do pedido** — Sapatos e Anéis têm os doze signos, Armadura e Manto têm
+dez (faltam Gêmeos e Capricórnio), Coroa tem onze (falta Gêmeos), Diadema tem
+os doze, e escudo existe só o de Áries. Não há o que repor: o que falta não
+existe em tabela nenhuma, nem no vendor nem no bRO.
+
+Mais sete peças soltas, que o pedido trouxe misturadas ao Zodíaco: Uniforme
+Cotidiano, Sapatos Inteligentes, Fragmento de Yggdrasil, Carta de Comodo, o
+par Anel + Pedra do Desbravador (que fazem conjunto entre si) e o Cubo
+Reforçado das Botas.
+
+Onde caiu cada uma, tudo decidido pelo `Locations:` e nada pelo nome:
+
+| loja | de | para | o que entrou |
+|---|---|---|---|
+| Chapeleiro | 33 | 56 | 11 Coroas + 12 Diademas |
+| Sapateiro | 36 | 49 | os 12 Sapatos + Sapatos Inteligentes |
+| Acessorista | 70 | 83 | os 12 Anéis + Anel do Desbravador |
+| Lorde das Armaduras | 29 | 40 | 10 Armaduras + Uniforme Cotidiano |
+| Capeiro | 30 | 40 | os 10 Mantos |
+| Retoqueiro | 24 | 26 | Fragmento de Yggdrasil, Carta de Comodo |
+| Escudeiro | 22 | 23 | Escudo de Áries |
+| Ocleiro | 42 | 43 | Pedra do Desbravador |
+| Zé do Caixão | 10 | 11 | Cubo Reforçado das Botas |
+
+Só o Senhor das Armas ficou de fora — o pedido não trouxe arma nenhuma.
+
+### Um número do pedido estava trocado, e seguir a lista custaria uma peça
+
+A linha **"32266 Sapatos de Aquário"** repete o ID que a linha **"32266 Anel de
+Aquário"** usa cinco linhas acima. O 32266 é o `Aquarius_Ring_J`, o anel; os
+Sapatos de Aquário são o **22231** (`Aquarius_Shoes_J`).
+
+Seguir o número deixaria Aquário como o único signo sem calçado e daria o
+mesmo anel duas vezes ao Acessorista — e **nada erraria**: a linha do `shop`
+aceita o ID repetido, a loja sobe, e o jogador vê um anel a mais numa lista de
+83. É a família da §4.11 (`comentário não é trava`) do outro lado: aqui quem
+mentia era o rótulo ao lado do número, e quem decidiu foi o `AegisName`.
+
+### O Cubo foi para o Zé do Caixão porque o dono mandou, e cabia
+
+*"coloca no ze do caixao"*, escrito ao lado do item. E é o lugar certo por
+regra também: o Cubo é `DelayConsume`, não equipamento, então vitrine nenhuma
+do quarteirão o receberia pelo `Locations:` (§4.14) — é o mesmo caso da Caixa
+de Mantos Temporais, em 2026-08-26.
+
+**Ele é a primeira peça daquela loja que não sorteia nada.** As dez de cima
+são `getgroupitem`; esta é `laphine_synthesis()`, e a receita mora em
+`db/re/laphine_synthesis.yml`: entra Botas Ancestrais (22171) com refino **+9
+ou mais**, sai Botas Primordiais (22238) no **+7 fixo**, sem sorteio (o grupo
+`REMODEL_HERO_BOOTS` é `Algorithm: All` com uma entrada só). O `MinimumRefine`
+é a pegadinha de quem compra: abaixo de +9 a bota não aparece na janela, e
+nada explica isso além da descrição do item.
+
+### As 39 que custaram trabalho, e as 36 que não custaram nada
+
+A conferência foi peça a peça, nas quatro tabelas, antes de qualquer linha de
+loja ser escrita:
+
+```
+36  prontas dos dois lados                    nada a fazer
+39  sem entrada no itemInfo.lua            -> completa_iteminfo.py
+35  sem os 4 arquivos de arte              -> instala_visual.py
+39  com o `Name` em inglês no servidor     -> nomes_pt_item_db.py
+ 2  com a cova só do lado do servidor      -> ajusta_covas_do_cliente.py
+```
+
+**Nenhuma precisou de entrada nova de `item_db`**, e é a primeira rodada
+grande em que isso acontece: as 75 existem inteiras no vendor, nenhuma virou
+placeholder de `db/guerra/item_db.yml`, e nenhuma precisou de receita à mão no
+`instala_item.py`. As 39 do bRO vieram com nome, recurso e descrição
+completos; as 35 sem arte tinham os quatro arquivos no `data.grf` do bRO, sem
+uma falta. Depois disso o `valida_visual.py` deu **0 faltando nas 75**.
+
+### As duas covas de Sagitário, e por que dessa vez quem mudou foi o cliente
+
+A Coroa (5739) e a Diadema (5740) são o único ponto das 75 em que as duas
+metades discordavam: o vendor dá uma cova às duas e a entrada de 2021 do
+cliente desenhava zero.
+
+É o **lado ruim** da divergência — a peça aceita carta e não *parece* aceitar,
+então o jogador nem tenta —, e por isso quem mudou foi o `itemInfo.lua`, como
+nas quinze Armas Brutais de 2026-09-03. Em 2026-09-07, no Morango
+Cristalizado, a decisão tinha sido a contrária: lá o servidor é que perdeu a
+cova, de propósito. Os dois IDs entraram na lista `COVAS` do
+`ajusta_covas_do_cliente.py`, que é a fonte de quem cuida disso.
+
+### As onze cartas que saíram, e a lista que passou a existir para elas
+
+Dez Cartas Autógrafo (Catherine, Crux Findel, Friedrich, Helmut, Isaac,
+Katrin, Kronecker, Meyer, Skia e Wolf) e a Carta Falquíria. **Nenhuma tinha
+defeito**: nome em português, arte ok, `Locations:` certo — passavam nos dois
+filtros do `varre_cartas.py` por merecimento. O dono simplesmente não as quis
+à venda.
+
+E é por isso que apagá-las à mão não serviria: o `mercado_de_cartas.txt` é
+**gerado**, e o próximo `--gerar` as poria de volta, calado, sem que ninguém
+soubesse que a ausência tinha sido uma decisão. A saída foi uma lista
+`FORA_DA_LOJA` no gerador, **com o motivo escrito ao lado de cada ID** — o
+motivo entra porque ele não se deduz da carta.
+
+O gerador passou a contar isso em três lugares: o filtro do `na_loja`, uma
+seção nova no cabeçalho do NPC gerado (que lista as onze pelo nome) e uma
+quarta linha na tabela do `CATALOGO-CARTAS.md`. A loja foi de 964 para **953**
+cartas.
+
+### A armadilha da rodada foi da ferramenta de patch, e custou dois números
+
+O `monta_patch.py` **não tinha ensaio**. Rodar com `--nome` para ver o que
+entraria monta o zip, gasta o número e escreve nos dois registros — e a lista
+de arquivos sai *depois* disso. Com 141 arquivos na tela, o reflexo de reler a
+saída com um `| tail` gastou o segundo número: nasceram um `0024-teste.zip` e
+um `0025-teste.zip` antes de o patch de verdade existir.
+
+Desfeito com `git checkout` nos dois registros mais um `rm` nos zip — o que só
+funciona porque os dois arquivos que ele toca são versionados. **Ganhou
+`--verificar` no mesmo dia**, que é o que o `RECEITAS.md` promete de toda
+ferramenta que grava. O caso inteiro está em `ARMADILHAS-INFRA.md`, com o
+gatilho na §5.
+
+### O que foi entregue, e por onde
+
+- **Servidor (deploy):** as oito lojas do `mercado_contemporaneo.txt`, o
+  `ze_do_caixao.txt`, o `mercado_de_cartas.txt` regerado, o
+  `item_db_lojas.yml` regerado (1846 → 1835 itens a `Buy: 1`) e os `Name:` em
+  português nos `db/re/item_db_*.yml`.
+- **Cliente (patch 0024, publicado):** o `itemInfo.lua` com as 39 entradas
+  novas e as duas covas, mais 140 arquivos de arte. 2,87 MB no zip.
+- O patch saiu com **14 notas**, uma por família e uma por peça solta, mais a
+  linha das cartas que saíram — a regra §4.24, que exige que o painel
+  NOVIDADES diga *quais* itens entraram.
+
+O `zera_revenda_das_lojas.py --conferir` e o `marca_indestrutiveis.py`
+fecharam sem nada a corrigir, e o map-server local subiu sem uma linha de erro
+de loja.

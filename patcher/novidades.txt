@@ -79,3 +79,19 @@
 - Antes ela so quebrava seis deles. Congelamento e Petrificacao, os dois mais pedidos, estavam de fora
 - Usar a runa durante a contagem da Petrificacao agora interrompe a contagem: nao vira pedra
 - Nada para baixar: esta correcao e do servidor e ja esta valendo
+
+[0024] 2026-09-09  Setenta e cinco itens nas lojas de Prontera
+- Doze Aneis do Zodiaco, no Acessorista: Aries, Touro, Gemeos, Cancer, Leao, Virgem, Libra, Escorpiao, Sagitario, Capricornio, Aquario e Peixes
+- Doze Sapatos do Zodiaco, no Sapateiro: os doze signos, de Aries a Peixes
+- Doze Diademas do Zodiaco, no Chapeleiro: os doze signos, de Aries a Peixes
+- Onze Coroas do Zodiaco, no Chapeleiro: todos os signos menos Gemeos
+- Dez Armaduras do Zodiaco, no Lorde das Armaduras: todos os signos menos Gemeos e Capricornio
+- Dez Mantos do Zodiaco, no Capeiro: todos os signos menos Gemeos e Capricornio
+- Escudo de Aries, no Escudeiro - o unico escudo do Zodiaco que existe
+- Cubo Reforcado das Botas, no Ze do Caixao: troca Botas Ancestrais +9 ou mais por Botas Primordiais +7, que combinam com as armas primordiais
+- Uniforme Cotidiano, no Lorde das Armaduras
+- Sapatos Inteligentes, no Sapateiro
+- Anel do Desbravador, no Acessorista, e Pedra do Desbravador, no Ocleiro - os dois fazem conjunto
+- Fragmento de Yggdrasil e Carta de Comodo, no Retoqueiro
+- As duas de Sagitario - a Coroa e a Diadema - passam a mostrar a cova que o servidor sempre deu: agora da para cartear
+- Sairam das lojas de carta as dez Cartas Autografo (Catherine, Crux Findel, Friedrich, Helmut, Isaac, Katrin, Kronecker, Meyer, Skia e Wolf) e a Carta Falquiria. Isso e do servidor: nao ha nada para baixar

@@ -216,6 +216,31 @@ conferir quanto ele revende antes de deixar passar.
 `char w4[2048]`. A loja de cartas de arma resolve carregando 256 na linha do
 `shop` e o resto por `npcshopadditem` no `OnInit`.
 
+## 3b. Tirar item de uma loja
+
+**Onde se apaga depende de a loja ser escrita ou gerada, e errar isso falha
+em silêncio.**
+
+| a loja | tirar é | o que acontece se errar |
+|---|---|---|
+| `mercado_contemporaneo.txt`, `mercado_de_visuais.txt`, `ze_do_caixao.txt`, `tranqueiras.txt` | apagar o `,<id>:1` da linha do `shop` | — |
+| `mercado_de_cartas.txt` | pôr o ID na `FORA_DA_LOJA` do `ferramentas/varre_cartas.py` e rodar `--gerar` | apagar à mão funciona **até o próximo `--gerar`**, que repõe a carta sem avisar |
+
+A `FORA_DA_LOJA` leva o **motivo** ao lado de cada ID, e não é enfeite: carta
+tirada a pedido passa nos dois filtros do gerador por merecimento, então sem
+essa linha a rodada seguinte lê a ausência como bug e a desfaz.
+
+Depois de tirar, nos dois casos:
+
+```
+python ferramentas/zera_revenda_das_lojas.py            # a lista encolhe junto
+python ferramentas/zera_revenda_das_lojas.py --conferir # tem que dizer OK
+```
+
+**O item continua existindo**, e é bom lembrar disso antes de prometer o
+contrário ao dono: quem já comprou fica com ele, e o `item_db` não muda. O que
+sai é só a vitrine.
+
 ## 4. Traduzir diálogo de NPC do rAthena
 
 ```
@@ -387,6 +412,15 @@ corrige com patch novo por cima.
    Sai a lista do que entrou no zip. **É aqui que se percebe engano** — o
    `--desde 2026-08-14`, que varre o cliente por data, costuma trazer junto o
    que foi tocado por acidente.
+
+   **Para só olhar a lista, `--verificar`.** Sem ele o comando **monta**: um
+   `--nome` escreve o zip, gasta o número e acrescenta a linha em
+   `patcher/patches.txt` e o bloco em `patcher/novidades.txt`, e a lista sai
+   depois disso. Rodar duas vezes para reler a saída gasta dois números.
+
+   ```
+   python ferramentas/monta_patch.py --nome "..." --desde 2026-09-09 --verificar
+   ```
 3. **Se o patch ACRESCENTA coisa, dizer o que é** — um `--nota` por item, na
    mesma linha do `--nome`. **É passo de quem monta o patch, e não do dono**
    (`CLAUDE.md` §4.24): a lista já está na mão de quem acabou de pôr os itens

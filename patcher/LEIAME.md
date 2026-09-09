@@ -44,6 +44,9 @@ e duas máquinas não inventam o mesmo número de patch.
 ## 2. O ciclo de um patch
 
 ```bash
+# 0. o ensaio: mostra o que entraria e que número seria, sem gravar nada
+python ferramentas/monta_patch.py --nome "IA do homunculo" AI_sakray --verificar
+
 # 1. o arquivo já está no cliente, testado em jogo (é sempre esta a ordem)
 python ferramentas/monta_patch.py --nome "IA do homunculo" AI_sakray
 
@@ -63,6 +66,12 @@ O `--desde 2026-08-14` varre o cliente por data de modificação, para quando a
 mudança foi espalhada. **É a via preguiçosa e a mais perigosa** — ela pega
 também o que foi tocado por engano —, por isso a lista sai impressa antes de
 qualquer coisa ser publicada.
+
+**E é com ele que o `--verificar` vale mais.** Sem a bandeira, o comando monta
+o zip e gasta o número **antes** de imprimir a lista — ou seja, a pergunta "o
+que o `--desde` traria?" custava um patch, e dois se a saída fosse relida com
+outro `| head`. Ganhou o ensaio em 2026-09-09, depois de gastar dois
+(`ARMADILHAS-INFRA.md`).
 
 Para apagar arquivo do cliente do jogador: `--apagar data/algum.lub`. Vai
 dentro do zip como `_patch_apagar.txt`, e o Atualizador processa depois de

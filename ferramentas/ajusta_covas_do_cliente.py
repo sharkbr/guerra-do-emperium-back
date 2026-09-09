@@ -88,10 +88,18 @@ ITEM_DB = [os.path.join(RATHENA, 'db', 're', 'item_db_usable.yml'),
 #   Morango Cristalizado (2979) o servidor dava a cova e o cliente nao a
 #   desenhava, e a decisao foi TIRAR (o Divine Pride discorda de proposito).
 #   Nos dois casos quem mudou foi o servidor, entao nao houve patch.
+#
+#   Sagitario (2026-09-09) - a Coroa (5739) e a Diadema (5740) entraram no
+#   Chapeleiro com o Zodiaco, e sao as duas unicas das 75 pecas daquele
+#   pedido em que as metades discordavam: o vendor da uma cova as duas e a
+#   entrada de 2021 do cliente desenhava zero. E o lado ruim da divergencia
+#   - a peca ACEITA carta e nao PARECE aceitar, entao o jogador nem tenta -,
+#   e por isso quem mudou foi o cliente, como nas quinze Armas Brutais.
 # -------------------------------------------------------------------------
 COVAS = [1328, 13147, 13342, 16082, 18171, 26141, 26206, 28033,
          28245, 28246, 28247, 28248, 28746, 32014, 32100,
-         2979, 28572]
+         2979, 28572,
+         5739, 5740]
 
 
 class Erro(Exception):

@@ -246,6 +246,31 @@
 //= item novo some da vitrine calado (CLAUDE.md secao 5).
 //============================================================
 
+// A DECIMA PRIMEIRA ENTROU EM 2026-09-09, no pedido do Zodiaco, e foi
+// o dono quem escolheu o lugar: "coloca no ze do caixao". Ela cabia
+// aqui por natureza - e `DelayConsume`, nao equipamento, entao vitrine
+// nenhuma do quarteirao a receberia por regra (4.14).
+//
+// E ELA NAO SORTEIA NADA, ao contrario das dez de cima. O `Script:`
+// dela e uma linha so - `laphine_synthesis()` -, e o que a linha faz e
+// TROCAR uma peca que o jogador ja tem por outra. A receita nao mora no
+// item: mora em db/re/laphine_synthesis.yml, e diz
+//
+//   entra  22171  Botas Ancestrais    refino +9 no minimo
+//   sai    22238  Botas Primordiais   refino +7 fixo
+//
+// (o grupo de saida e o REMODEL_HERO_BOOTS do item_group_db.yml, com
+// `Algorithm: All` - ou seja nao ha sorteio nenhum, a saida e uma so).
+// As Primordiais sao as que combinam com as armas primordiais, que e o
+// que o pedido do dono dizia por extenso.
+//
+// O `MinimumRefine: 9` E A PEGADINHA DE QUEM COMPRA: o cubo abre a
+// janela, mas a bota abaixo de +9 nao aparece nela. Nada explica isso
+// ao jogador alem da descricao do proprio item.
+//
+// ELA NAO DECLARA `Buy` NEM `Sell`, como as outras dez: o preco 1
+// escrito na linha vale e o lucro por clique e zero.
+//   + 100273  Cubo Reforçado das Botas
 prontera,159,131,4	script	Zé do Caixão	JOB_MERCHANT,{
 	callshop "Zé do Caixão#loja",0;
 	end;
@@ -267,9 +292,10 @@ OnInit:
 }
 
 // A ORDEM DESTA LISTA E A ORDEM DA JANELA, e e a ordem do pedido. O preco
-// e 1 zeny ESCRITO na linha, e nao `-1`: nenhuma das oito caixas declara
-// `Buy` no item_db, entao `-1` viraria zero e a loja daria tudo de graca.
-// O numero entre parenteses e quantos itens o grupo sorteia.
+// e 1 zeny ESCRITO na linha, e nao `-1`: nenhuma das onze declara `Buy`
+// no item_db, entao `-1` viraria zero e a loja daria tudo de graca.
+// O numero entre parenteses e quantos itens o grupo sorteia; o `(-)` da
+// ultima e porque ela nao sorteia - troca uma peca por outra.
 //
 //   100547  Caixa de Espólios           (12)
 //    23772  Caixa de Armas OS           (16)  NoDrop/NoTrade/NoSell/...
@@ -281,5 +307,6 @@ OnInit:
 //    23115  Cubo Sombrio de Classe      (90)
 //    23767  Caixa de Elmos Especiais     (5)  pesa 80
 //   100100  Caixa de Mantos Temporais    (6)  as capas Temporais
+//   100273  Cubo Reforçado das Botas     (-)  troca uma peca por outra
 //
--	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1,23767:1,100100:1
+-	shop	Zé do Caixão#loja	-1,100547:1,23772:1,23992:1,23073:1,23766:1,23806:1,100437:1,23115:1,23767:1,100100:1,100273:1

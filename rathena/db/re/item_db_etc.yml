@@ -22238,7 +22238,7 @@ Body:
       NoDrop: true
   - Id: 6814
     AegisName: Soul_Of_Swordman
-    Name: "Alma de Espadachim"
+    Name: Swordman Soul
     Type: Etc
     Buy: 10
     Weight: 10
@@ -22252,7 +22252,7 @@ Body:
       NoAuction: true
   - Id: 6815
     AegisName: Soul_Of_Merchant
-    Name: "Alma de Mercador"
+    Name: Merchant Soul
     Type: Etc
     Buy: 10
     Weight: 10
@@ -22266,7 +22266,7 @@ Body:
       NoAuction: true
   - Id: 6816
     AegisName: Soul_Of_Thief
-    Name: "Alma de Gatuno"
+    Name: Thief Soul
     Type: Etc
     Buy: 10
     Weight: 10
@@ -22280,7 +22280,7 @@ Body:
       NoAuction: true
   - Id: 6817
     AegisName: Soul_Of_Magicion
-    Name: "Alma de Mago"
+    Name: Mage Soul
     Type: Etc
     Buy: 10
     Weight: 10
@@ -22294,7 +22294,7 @@ Body:
       NoAuction: true
   - Id: 6818
     AegisName: Soul_Of_Archer
-    Name: "Alma de Arqueiro"
+    Name: Archer Soul
     Type: Etc
     Buy: 10
     Weight: 10
@@ -22308,7 +22308,7 @@ Body:
       NoAuction: true
   - Id: 6819
     AegisName: Soul_Of_Acolyte
-    Name: "Alma de Noviço"
+    Name: Acolyte Soul
     Type: Etc
     Buy: 10
     Weight: 10

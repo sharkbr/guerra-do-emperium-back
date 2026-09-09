@@ -341,3 +341,29 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   dos dois. A regra geral: **espaço de numeração com dois donos se consulta
   nos dois**, e a ferramenta que escreve num deles é justamente a que não
   enxerga o outro.
+
+- **O `monta_patch.py` não tinha ensaio: rodar para "ver o que entraria"
+  montava o zip e gastava o número.** Toda ferramenta que grava neste projeto
+  tem `--verificar` — está escrito no topo do `RECEITAS.md` —, e esta era a
+  exceção que ninguém tinha percebido, porque o uso normal (montar de
+  verdade) nunca esbarra nisso.
+
+  O que desarma é a própria saída: o comando **imprime a lista do que vai no
+  zip**, que é exatamente o que se quer olhar antes de decidir. Só que ele a
+  imprime *depois* de ter escrito o `.zip`, acrescentado a linha em
+  `patcher/patches.txt` e o bloco em `patcher/novidades.txt`. Quem rodar duas
+  vezes para reler a lista — uma com `| head`, outra com `| tail`, que é o
+  reflexo com 141 arquivos na tela — gasta **dois** números.
+
+  Aconteceu em 2026-09-09, na rodada do Zodíaco: nasceram um `0024-teste.zip`
+  e um `0025-teste.zip` antes de o patch de verdade existir. **O estrago é
+  reversível e não é calado** — `git checkout -- patcher/patches.txt
+  patcher/novidades.txt` mais apagar os dois zip à mão devolve tudo —, mas
+  só porque os dois arquivos que ele toca são versionados. Número de patch
+  não se reaproveita: publicado o zip, o buraco fica.
+
+  Corrigido no mesmo dia com um `--verificar` que imprime a lista, o número
+  que *seria* gasto e as notas, e não grava byte nenhum. **A pergunta "o que
+  entraria?" agora tem resposta de graça** — e o `--desde`, que é a via
+  preguiçosa e a que mais traz arquivo tocado por engano, é justamente a que
+  mais pede essa pergunta.
