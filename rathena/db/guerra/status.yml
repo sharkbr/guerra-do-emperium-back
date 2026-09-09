@@ -14,10 +14,11 @@
 # e nao exige reiniciar o map-server.
 #
 # =========================================================================
-# A RUNA NAUTHIZ E O CONGELAMENTO - 2026-09-07
+# A RUNA NAUTHIZ CUMPRE A PROPRIA DESCRICAO - 2026-09-07 e 2026-09-08
 # =========================================================================
 #
-# Relato do dono: a Runa Nauthiz (12725) nao quebrava o congelamento.
+# Relato do dono em 2026-09-07: a Runa Nauthiz (12725) nao quebrava o
+# congelamento.
 #
 # A runa e so uma casca - o `Script:` dela chama
 # `unitskilluseid ... "RK_REFRESH",1`, e quem faz o trabalho e o
@@ -26,9 +27,9 @@
 # `clear_buffs` percorre o status_db inteiro e so encerra o que tiver a
 # bandeira `SCF_REMOVEONREFRESH` (status.cpp:15379).
 #
-# O SC_FREEZE do vendor NAO tem essa bandeira. Tem `Fail: Refresh: true`,
-# que e a OUTRA metade da promessa - enquanto o SC_REFRESH estiver de pe
-# nao da para congelar de novo. Ou seja: a imunidade funcionava e a
+# O SC_FREEZE do vendor NAO tinha essa bandeira. Tinha `Fail: Refresh:
+# true`, que e a OUTRA metade da promessa - enquanto o SC_REFRESH estiver
+# de pe nao da para congelar de novo. Ou seja: a imunidade funcionava e a
 # remocao nunca existiu, e as duas metades sao campos diferentes.
 #
 # Nao ha nada que denuncie isso: o jogador congelado consegue usar a runa
@@ -49,18 +50,44 @@
 # Sao DEZESSEIS efeitos nomeados, mais o grupo "algumas Toxinas de Sicario"
 # (esse ja esta coberto - o Toxin tem a bandeira).
 #
-# Medido em 2026-09-07 contra o db/re/status.yml: dos dezesseis, SEIS tem
-# `RemoveOnRefresh` (Deepsleep, Freezing, Crystalize, Burning, Mandragora,
-# Marshofabyss) e os OUTROS DEZ nao tinham - mas TODOS OS DEZESSEIS tem
-# `Fail: Refresh: true`. O padrao e claro demais para ser coincidencia: o
-# vendor escreveu a metade da imunidade para a lista inteira e a metade da
-# remocao so para uma parte dela.
+# Medido em 2026-09-07 contra o db/re/status.yml: dos dezesseis, SEIS
+# tinham `RemoveOnRefresh` (Deepsleep, Freezing, Crystalize, Burning,
+# Mandragora, Marshofabyss) e os OUTROS DEZ nao tinham - mas TODOS OS
+# DEZESSEIS tem `Fail: Refresh: true`. O padrao e claro demais para ser
+# coincidencia: o vendor escreveu a metade da imunidade para a lista
+# inteira e a metade da remocao so para uma parte dela.
 #
-# Entrou HOJE so o Congelamento, que foi o pedido. Os outros nove estao
-# escritos abaixo, comentados, porque ligar efeito de combate que ninguem
-# pediu e decisao do dono e nao consequencia de leitura de codigo -
-# tirar Atordoamento e Petrificacao do jogo com um item de 2 minutos de
-# recarga muda PvP. Descomentar e `@reloadstatusdb`.
+# ----------------------------------------------- as duas decisoes, e a data
+#
+# Em 2026-09-07 entrou so o Congelamento, que era o pedido; os outros nove
+# ficaram escritos e comentados, porque ligar efeito de combate que ninguem
+# pediu e decisao do dono e nao consequencia de leitura de codigo - tirar
+# Atordoamento e Petrificacao do jogo com um item de 2 minutos de recarga
+# muda PvP.
+#
+# Em 2026-09-08 o dono mandou ligar os nove. Com isso a lista de dezesseis
+# esta inteira, e a runa passa a fazer o que a descricao dela diz - que era
+# o ponto desde o comeco.
+#
+# ----------------------------------------- por que sao DEZ entradas e nao nove
+#
+# O decimo e o `StoneWait`, e ele nao e um efeito a mais: e a PRIMEIRA
+# METADE da Petrificacao. O `SC_STONEWAIT` e a contagem regressiva, o
+# `SC_STONE` e a pedra. Limpar so o segundo deixa a runa sem efeito
+# visivel para quem a usa durante a contagem - o icone continua na tela
+# correndo para o mesmo fim.
+#
+# Ligar o StoneWait e seguro, e isso esta lido no codigo, nao suposto: o
+# `status_change_end` so inicia o `SC_STONE` quando a contagem expira
+# SOZINHA (`if (type == SC_STONEWAIT && tid != INVALID_TIMER)`,
+# status.cpp:14141). O `clear_buffs` encerra com `tid` invalido, entao
+# quebrar a contagem pela runa NAO petrifica.
+#
+# O que NAO precisou entrar foi um `Fail: Refresh` no StoneWait: a lista
+# `fail` e conferida antes e independentemente do `SCSTART_NOAVOID`
+# (status.cpp:10240), e o `SC_STONE` que nasceria da contagem ja e barrado
+# pelo `Fail: Refresh` que ELE tem. A imunidade da Petrificacao ja estava
+# inteira; faltava so a remocao.
 #
 # =========================================================================
 
@@ -69,39 +96,56 @@ Header:
   Version: 4
 
 Body:
-  # Congelamento. Pedido do dono em 2026-09-07.
-  - Status: Freeze
+  # -----------------------------------------------------------------
+  # Os dez que faltavam. Cada um ja tem `Fail: Refresh: true` no db/re/ -
+  # o que entra aqui e so a REMOCAO.
+  #
+  # A ordem e a da descricao do item, para que conferir uma contra a
+  # outra seja leitura e nao busca.
+  # -----------------------------------------------------------------
+
+  - Status: Stun            # Atordoamento
     Flags:
       RemoveOnRefresh: true
 
-  # Os outros nove da descricao, DESLIGADOS a espera de decisao. Cada um
-  # ja tem `Fail: Refresh: true` no db/re/ - falta so a remocao.
-  #
-  # - Status: Stun          # Atordoamento
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Sleep         # Sono
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Curse         # Maldicao
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Stone         # Petrificacao
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Poison        # Envenenamento
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Blind         # Cegueira
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Bleeding      # Sangramento
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Silence       # Silencio
-  #   Flags:
-  #     RemoveOnRefresh: true
-  # - Status: Confusion     # Caos
-  #   Flags:
-  #     RemoveOnRefresh: true
+  - Status: Sleep           # Sono
+    Flags:
+      RemoveOnRefresh: true
 
+  - Status: Curse           # Maldicao
+    Flags:
+      RemoveOnRefresh: true
+
+  # Petrificacao - as DUAS metades. Ver o cabecalho.
+  - Status: StoneWait       # Petrificacao (a contagem)
+    Flags:
+      RemoveOnRefresh: true
+
+  - Status: Stone           # Petrificacao (a pedra)
+    Flags:
+      RemoveOnRefresh: true
+
+  - Status: Poison          # Envenenamento
+    Flags:
+      RemoveOnRefresh: true
+
+  - Status: Blind           # Cegueira
+    Flags:
+      RemoveOnRefresh: true
+
+  - Status: Bleeding        # Sangramento
+    Flags:
+      RemoveOnRefresh: true
+
+  - Status: Silence         # Silencio
+    Flags:
+      RemoveOnRefresh: true
+
+  - Status: Confusion       # Caos
+    Flags:
+      RemoveOnRefresh: true
+
+  # Congelamento. Foi o pedido de 2026-09-07 e o primeiro a entrar.
+  - Status: Freeze          # Congelamento
+    Flags:
+      RemoveOnRefresh: true

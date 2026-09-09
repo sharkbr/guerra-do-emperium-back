@@ -17499,12 +17499,27 @@ têm `Fail: Refresh: true`. O padrão é claro demais para ser coincidência: o
 vendor escreveu a metade da imunidade para a lista inteira e a metade da
 remoção só para uma parte.
 
-Entrou hoje só o Congelamento, que foi o pedido. Os outros nove (Atordoamento,
-Sono, Maldição, Petrificação, Envenenamento, Cegueira, Sangramento, Silêncio,
-Caos) estão escritos no arquivo, **comentados**, com o motivo: ligar efeito de
-combate que ninguém pediu é decisão do dono — tirar Atordoamento e
-Petrificação do jogo com um item de 2 minutos de recarga muda PvP. Descomentar
-e `@reloadstatusdb`.
+Entrou naquele dia só o Congelamento, que foi o pedido; os outros nove ficaram
+escritos e **comentados**, porque ligar efeito de combate que ninguém pediu é
+decisão do dono e não consequência de leitura de código — tirar Atordoamento e
+Petrificação do jogo com um item de 2 minutos de recarga muda PvP.
+
+**Em 2026-09-08 o dono mandou ligar os nove**, e com isso a lista de dezesseis
+ficou inteira: a runa passa a fazer o que a descrição dela diz.
+
+São **dez** entradas, e não nove. O décimo é o `StoneWait`, que não é um efeito a
+mais: é a **primeira metade da Petrificação** — o `SC_STONEWAIT` é a contagem
+regressiva e o `SC_STONE` é a pedra. Limpar só o segundo deixaria a runa sem
+efeito visível para quem a usasse durante a contagem, que é a §4.21 de novo.
+
+E ligar o StoneWait é seguro, lido no código e não suposto: o
+`status_change_end` só inicia o `SC_STONE` quando a contagem expira **sozinha**
+(`if (type == SC_STONEWAIT && tid != INVALID_TIMER)`, `status.cpp:14141`), e o
+`clear_buffs` encerra com `tid` inválido — quebrar a contagem pela runa não
+petrifica. Não precisou de um `Fail: Refresh` no StoneWait: a lista `fail` é
+conferida antes e independentemente do `SCSTART_NOAVOID` (`status.cpp:10240`),
+e o `SC_STONE` que nasceria da contagem já é barrado pelo `Fail: Refresh` que
+**ele** tem. A imunidade da Petrificação já estava inteira; faltava a remoção.
 
 ### O `/organize` e a mensagem que mente
 

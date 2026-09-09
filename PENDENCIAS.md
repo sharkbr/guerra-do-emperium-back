@@ -4370,22 +4370,14 @@ Se cair no terceiro caso, o caminho que sobra é a janela de grupo do cliente
 (o botão de criar), que digita o nome num campo em vez de numa linha de
 comando — e o `_`, que passou a funcionar hoje.
 
-### b) A Runa Nauthiz — os outros nove efeitos, à espera de decisão
+### b) A Runa Nauthiz — RESOLVIDA em 2026-09-08, falta ver em jogo
 
-A descrição do item promete dezesseis efeitos nomeados. Seis já eram, o
-Congelamento entrou hoje, e **nove** continuam de fora: Atordoamento, Sono,
-Maldição, Petrificação, Envenenamento, Cegueira, Sangramento, Silêncio e
-Caos.
+O dono mandou ligar os nove que faltavam, e estão ligados — com o `StoneWait`
+junto, que é a primeira metade da Petrificação e não um efeito a mais. A lista
+de dezesseis da descrição está inteira. Detalhe no `HISTORICO.md`.
 
-Os nove **já estão escritos**, comentados, no fim de
-`rathena/db/guerra/status.yml`. Ligar é descomentar e `@reloadstatusdb` — não
-exige reiniciar.
-
-**Por que não entraram sozinhos:** é decisão de jogo, não consequência de
-leitura de código. Tirar Atordoamento e Petrificação com um item de 2 minutos
-de recarga muda PvP, e ninguém pediu isso. Os dezessete têm
-`Fail: Refresh: true` no vendor, ou seja a imunidade de todos já funciona
-hoje — o que está em aberto é só a **remoção**.
+O que sobra é a conferência da alínea (d), e ela ganhou um caso a mais: usar a
+runa **durante a contagem da Petrificação** e ver o ícone sumir sem virar pedra.
 
 ### c) O `/showname` — o padrão novo só alcança quem ainda não jogou
 
@@ -4429,6 +4421,8 @@ código não substitui o teste. Falta:
 - **os três nomes de Shura** — a janela de habilidades e a dica de cada uma,
   depois de fechar e reabrir o cliente;
 - **a Runa Nauthiz** — congelar-se e usar a runa; o gelo tem de quebrar e o HP
-  subir 25% na mesma ação;
+  subir 25% na mesma ação. E, com os dez ligados, mais dois casos: um efeito
+  qualquer da lista (Atordoamento é o mais fácil de provocar) e a contagem da
+  **Petrificação**, que tem de sumir sem virar pedra;
 - **o `/showname`** — numa pasta de cliente **sem** `savedata`, o jogo tem de
   abrir já na Indicação de Nome 2, com o nome do clã no lugar certo.
