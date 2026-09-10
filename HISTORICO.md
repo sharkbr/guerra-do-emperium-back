@@ -17779,3 +17779,105 @@ gatilho na §5.
 O `zera_revenda_das_lojas.py --conferir` e o `marca_indestrutiveis.py`
 fecharam sem nada a corrigir, e o map-server local subiu sem uma linha de erro
 de loja.
+---
+
+## O painel de usuários, e a trava que já não era mais de IP (2026-09-10)
+
+O pedido do dono foi direto: *"um jogador errou a senha novamente, algumas
+vezes e travou a conta. Gostaria de colocar na área logada do site, se o
+usuário for admin, uma seção de usuários, que eu consiga ver todas as contas, o
+status dela, e reativar caso seja necessário (assim como bloquear se for
+preciso)."*
+
+### O quase-erro que valeu a sessão inteira
+
+A primeira leitura foi feita numa cópia do repositório **dezenove commits
+atrasada**, e ali o `conf/login_athena.conf` do vendor ainda mandava: sete
+senhas erradas banindo a faixa `/24` no `ipbanlist`. O painel foi desenhado em
+cima disso, com uma lista inteira dedicada a explicar que *a conta nunca esteve
+bloqueada*, e a documentação escrita para combinar.
+
+Nada daquilo era verdade **desde 2026-09-06**. O `8596da4` já tinha trocado o
+alvo da trava — e pelo mesmo motivo, com o mesmo tipo de relato, quatro dias
+antes. O que denunciou foi o `git fetch` antes do push: no meio dos dezenove
+commits estava *"A forca bruta passa a travar a conta, e nao o bairro
+inteiro"*.
+
+É a §4.17 do `CLAUDE.md` num ângulo que ela ainda não tinha: lá o cabeçalho
+mente sobre o código ao lado; aqui o código estava certo e **a cópia é que
+estava velha**. A regra prática que sobra: *ler o `conf/guerra/` junto com o
+`conf/` do vendor — o import é que manda —, e dar `git fetch` antes de
+acreditar em qualquer leitura de código de terceiros.*
+
+### O que o painel ficou sendo
+
+Como a trava passou a ser **por conta**, o jogador que diz "travou a conta"
+travou mesmo, e o painel responde direto. Mas isso trouxe um problema que a
+versão antiga não tinha: **castigo de gente e trava de máquina moram na mesma
+coluna** (`unban_time`), e chegam à tela com a mesma cara. A trava não deixa
+marca nenhuma no banco — era justamente o que a dispensava de tabela e
+migração.
+
+Quem separa é o `travaAutomatica`, por dois sinais que só coincidem nela: prazo
+curto (a trava escreve exatamente 15 minutos) e erros de senha recentes o
+bastante para terem chegado ao limite. É palpite, e erra **para o lado seguro**:
+um administrador que suspenda alguém por 15 minutos vê o rótulo de trava e sabe
+o que fez; o contrário faria punir duas vezes quem só esqueceu a senha. Na tela
+vira a situação *"travada sozinha"*, em azul, com um aviso de que ninguém
+precisa fazer nada.
+
+A lista de bloqueios de endereço **ficou**, em segundo plano: o `ipban_enable`
+segue ligado para ban à mão, e ban de IP barra **antes do login**, sem que ficha
+nenhuma de conta denuncie.
+
+### As decisões
+
+**Quem manda é `group_id >= 99`** — o grupo `Admin` do `groups.yml`, o mesmo do
+`@` no jogo. Lido do banco a cada requisição, nunca do cookie; 404 para quem não
+tem, e não 403. Era a pergunta que o `PENDENCIAS.md` deixara em aberto desde
+2026-08-22 para o painel de chamados, e ele herda a resposta pronta.
+
+**Os três botões escrevem as duas colunas de estado**, deixando a conta num
+estado só. Sem isso, suspender por um dia quem estava bloqueado não soltaria
+ninguém no dia seguinte.
+
+**Bloquear não expulsa quem está jogando** — o pacote `0x2731` só sai pelo
+`@block`. Ficou assim, e o painel **diz**: mostra quem está no jogo e pede o
+`@kick`. É a §4.21 por outro ângulo — o número existia, e não contá-lo ao
+operador o tornaria inútil.
+
+**Três travas que não se tiram:** a conta de sexo `S` não se pune (derrubaria o
+jogo inteiro), nem outro administrador, nem a própria; e punir pede a senha de
+quem clica, reativar não — o que **devolve** acesso não pode ter atrito.
+
+**Nasceu a `guerra_site_admin_log`**, com de-que-estado-para-qual e o motivo
+escrito à mão. Se faltar, a moderação acontece igual e a falta vai para o log:
+tabela de auditoria não pode derrubar a punição que audita.
+
+### Três falhas caladas que só o teste de verdade pegou
+
+O painel foi exercitado contra um MariaDB descartável em contêiner, com o
+esquema do rAthena e contas semeadas em cada estado — inclusive as três que se
+parecem e não são (trava automática, castigo curto de gente, castigo longo).
+
+- **O `parseTime=true` sem `loc=Local`** deslocava toda data em três horas. O
+  DSN o trazia desde 2026-08-14 e nunca mordera, porque nenhuma consulta lia
+  data para dentro de um `time.Time`. Caso no `ARMADILHAS-INFRA.md`.
+- **O aviso de `@kick` nunca disparava**, e depois **o rótulo de trava também
+  não**: a ficha lida antes da escrita não trazia nem personagem conectado nem
+  tentativas de senha. A mesma falta, duas vezes, em dois campos diferentes.
+- **O e-mail da conta voltava com `U+FFFD`** no lugar do acento em
+  `/api/painel` — mais velho que o painel. O `Usuario` continua **sem**
+  conversão de propósito: ele volta ao banco como chave de consulta na
+  reconferência de senha.
+
+E uma quarta, que não é do código: **duas rodadas de teste correram contra um
+binário velho**, porque `kill %1` não alcança processo iniciado noutra invocação
+de shell. A sonda que resolve é `lsof -ti :<porta>`, e não o controle de jobs.
+
+### No ar
+
+Tabela aplicada à mão e `implanta_site.sh` rodado em 2026-09-10; os quatro
+servidores do jogo não foram tocados e ninguém caiu. Conferido em produção: as
+rotas `/api/admin/*` respondem 401 (antes 404), e o HTML servido em `/` traz a
+seção nova.

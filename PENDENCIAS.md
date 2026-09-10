@@ -15,6 +15,35 @@ Estado em 2026-08-08.
 
 ---
 
+## 0a. O painel de usuários — falta a conferência na tela do dono (2026-09-10)
+
+**Está no ar.** Tabela aplicada e `implanta_site.sh` rodado em 2026-09-10; as
+rotas `/api/admin/*` respondem 401 em vez de 404 e o HTML novo é servido. O que
+foi feito e por quê está no `HISTORICO.md`, seção *"O painel de usuários, e a
+trava que já não era mais de IP"*.
+
+**Falta uma coisa só: abrir com a conta certa e olhar.** O painel só aparece
+para `group_id >= 99`, e hoje **só a `librasupremo` (2000004)** tem isso — a
+`fantasma` é grupo 20. Entrar com qualquer outra conta não mostra o botão, e é
+o que aconteceu na primeira tentativa do dono.
+
+| o quê | o que tem de acontecer |
+|---|---|
+| o botão | **Usuários** no topo do painel, em dourado |
+| a lista | as contas do servidor, com o selo de situação em cada uma |
+| bloqueios de endereço | deve dizer que está vazia — o ban automático saiu em 2026-09-06 |
+| os números de tentativa | se **todos** derem 0, o `loginlog` está noutro banco (`log_db_db` do `conf/import/inter_conf.txt`) e o painel perdeu essa metade |
+| as datas | `último login` tem de bater com o horário de Brasília. Três horas a menos = o `loc=Local` não pegou |
+
+**O que ainda não se sabe:** nenhuma conta em produção estava travada na hora
+do deploy, então o rótulo *"travada sozinha"* — o que separa a trava de senha
+errada do castigo de gente — **ainda não foi visto com dado de verdade**. A
+lógica foi conferida contra os três casos que se parecem, mas em banco de
+teste. Da próxima vez que um jogador errar a senha sete vezes, é a hora de
+olhar: a ficha dele tem de sair em azul, dizendo que passa sozinha.
+
+---
+
 ## 0b. Os três relatos de 2026-08-17 — estilista, carta e janela de missões
 
 Três coisas relatadas pelo dono depois de jogar. **A primeira (o Cupom de Roupa)

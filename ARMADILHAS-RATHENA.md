@@ -373,3 +373,48 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   Quando alguém relatar "diz que o grupo já existe" e o nome **não** existir,
   a primeira medição é comparar os bytes do nome com essa lista, não consultar
   a tabela `party`.
+
+- **`login.state` e `login.unban_time` são colunas INDEPENDENTES, e o prazo
+  barra primeiro — então mexer só numa deixa o jogador de fora.** O
+  `login_mmo_auth` testa o `unban_time` (`src/login/login.cpp:365`) **antes**
+  do `state` (`:372`), e uma conta pode ter as duas coisas ao mesmo tempo:
+  bloqueada *e* com prazo. Dois estragos de tamanhos diferentes saem daí, e
+  nenhum dá erro:
+  - o pequeno: bloquear quem já estava suspenso responde sucesso e a ficha
+    continua marcada como suspensa, porque é o prazo que ainda barra — parece
+    que o comando não funcionou;
+  - o grande: **suspender por um dia quem estava bloqueado não solta ninguém
+    no dia seguinte.** O prazo vence, o `state = 5` continua lá, e o jogador
+    segue de fora — com o painel dizendo que a punição dele acabou.
+  A saída adotada no painel de usuários (2026-09-10) é escrever **sempre as
+  duas colunas**, deixando a conta num estado só: bloquear zera o prazo,
+  suspender zera o `state`, liberar zera os dois (`site/banco_admin.go`).
+  Visto na tela no mesmo dia.
+
+- **Escrever na `login` NÃO expulsa quem já está jogando — a punição só vale do
+  login seguinte em diante.** Quem derruba a sessão aberta é o pacote `0x2731`,
+  que o login-server manda aos outros servidores depois de gravar
+  (`src/login/loginchrif.cpp:335` e `:395`), e é isso que o `@block` e o `@ban`
+  fazem de diferente. Por `UPDATE` direto não há pacote nenhum: o `state = 5`
+  fica gravado e o jogador continua dentro até sair por conta própria. Falha
+  calada e do pior tipo, porque tudo do lado de cá indica sucesso — quem
+  bloqueia pelo site precisa dar `@kick` no jogo em seguida.
+  **E o mesmo caminho tem um tiro no pé maior:** a conta de **sexo `S`** é a
+  que o char-server e o map-server usam para falar com o login-server
+  (`login.cpp:310`), e suspendê-la ou bloqueá-la derruba o jogo para todo
+  mundo. É a mesma guarda que o `trava_de_conta.hpp` já precisou ter (§4.23) —
+  quem escrever qualquer coisa naquela tabela precisa dela também, e no
+  `WHERE` do próprio `UPDATE`, não só na leitura de antes.
+
+- **Uma conta suspensa pode ser castigo de gente OU trava de máquina, e as
+  duas moram na MESMA coluna.** Desde 2026-09-06 a trava de senha errada
+  (§4.23) grava no `unban_time` — de propósito, porque era o que dispensava
+  tabela e migração. O preço aparece na hora de **ler**: não há marca nenhuma
+  que diga qual das duas foi, e um painel que mostre só "suspensa" faz o
+  operador punir de novo quem apenas esqueceu a senha.
+  Não há como saber ao certo; dá para palpitar bem, e é o que o
+  `travaAutomatica` de `site/banco_admin.go` faz, com os dois sinais que só
+  coincidem na trava: prazo **curto** (ela escreve exatamente 15 minutos) e
+  erros de senha recentes o bastante para terem chegado ao limite. **Errar
+  para o lado seguro importa**: administrador que suspenda alguém por 15
+  minutos vê o rótulo de trava e sabe o que fez; o contrário é que custa caro.

@@ -367,3 +367,19 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   entraria?" agora tem resposta de graça** — e o `--desde`, que é a via
   preguiçosa e a que mais traz arquivo tocado por engano, é justamente a que
   mais pede essa pergunta.
+- **`parseTime=true` no driver do MySQL sem `loc=Local` desloca TODA data em
+  três horas, e a hora que sai é plausível.** Coluna `DATETIME` não guarda
+  fuso: ela guarda `2026-09-10 20:14:00` e mais nada. Com `parseTime` ligado o
+  `go-sql-driver/mysql` precisa escolher um fuso para montar o `time.Time`, e o
+  padrão dele é **UTC** — enquanto a máquina de produção roda em
+  `America/Sao_Paulo` desde 2026-08-16 (é nesse fuso que o `NOW()` grava). O
+  resultado é 20:14 virar 17:14 na tela, sem erro, sem aviso, e com cara de
+  hora certa: ninguém desconfia de um "último login às 17:14".
+  O DSN do site já trazia o `parseTime=true` desde 2026-08-14 e **nunca
+  mordeu**, porque nenhuma consulta lia coluna de data para dentro de um
+  `time.Time` — o painel de usuários (2026-09-10) leu quatro de uma vez
+  (`lastlogin`, `btime`, `rtime`, `criado_em`) e trouxe o problema junto.
+  A correção é uma linha no `abreCom` de `site/banco.go`: `&loc=Local`, posto
+  ali e não pedido ao operador, pela mesma regra do `charset`. **Os dois andam
+  juntos** — quem acrescentar `parseTime` em qualquer outro lugar tem de
+  acrescentar o `loc` na mesma linha.

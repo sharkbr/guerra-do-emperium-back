@@ -397,6 +397,30 @@ Teleportador) e ali é **rótulo**, não chave — a Ordem nunca chama
 `instance_create`. Divergir não quebra nada; só faz o jogador ler dois nomes
 para a mesma coisa.
 
+### Uma tabela nova do SITE vive em 2 lugares, e o deploy só leva um
+
+O `implanta_site.sh` e o `implanta.sh` fazem `git pull`, compilam e reiniciam.
+**Nenhum dos dois roda SQL** — não há passo de migração em lugar nenhum do
+projeto.
+
+| lugar | quem leva |
+|---|---|
+| `site/sql/site.sql` (o `CREATE TABLE`) | ninguém: **à mão**, e antes do deploy |
+| o código Go que a usa | o `implanta_site.sh` |
+
+A ordem importa e não é simétrica: **o SQL primeiro.** Subir o binário antes da
+tabela deixa o site de pé e a função quebrada; subir a tabela antes do binário
+não quebra nada — ela fica ali sem ninguém escrevendo.
+
+E o modo como a falta aparece é escolha de quem escreve o código, não do
+esquema. Vale repetir o padrão da `guerra_site_admin_log`: ela **deixa a
+moderação acontecer** e só registra `ATENCAO:` no log, porque uma tabela de
+auditoria não pode derrubar a punição que ela audita.
+
+```
+ssh libraro 'mysql guerra' < site/sql/site.sql     # é todo IF NOT EXISTS
+```
+
 ### Uma tradução de NPC vive em 2 lugares
 
 O catálogo (`npc/guerra/traducao/*.cat`) é a **fonte**; o arquivo `.txt` do

@@ -738,6 +738,9 @@ Bancos em YAML, recarregadores, item_db, guardas do C++, operação dos quatro s
 - Arquivo de `db/` do vendor pode estar ÓRFÃO — formato certo, conteúdo certo, e ninguém o lê
 - Guarda de validação do rAthena pode reprovar 100% dos valores válidos, e o chamador ainda relatar sucesso
 - Padrão idêntico numa coluna do banco é evidência, e não se parece com erro. O que denunciou a guarda acima foi uma consulta ao `char` em que todo…
+- `login.state` e `login.unban_time` são INDEPENDENTES e o prazo barra primeiro — suspender quem estava bloqueado não solta ninguém quando o prazo vencer, e nada avisa
+- Escrever na `login` NÃO expulsa quem já está jogando: quem derruba a sessão é o pacote `0x2731`, que só sai pelo `@block`. E a conta de sexo `S` derruba o jogo inteiro se for punida
+- Conta suspensa pode ser castigo de gente OU a trava de senha errada (§4.23) — é a MESMA coluna, sem marca que as separe, e confundi-las faz punir de novo quem só esqueceu a senha
 - Varredura por `nome_db.` NÃO acha quem itera o banco de dentro da própria classe
 - O corpo de uma habilidade NÃO está mais no `skill.cpp` — cada uma tem classe própria em `src/map/skills/`
 - Parar SÓ o map-server para recompilar deixa o jogador travado no login, e a mensagem culpa o cliente
@@ -784,6 +787,8 @@ SSH, Ubuntu, MariaDB, DigitalOcean, DNS, cache HTTP, deploy, Atualizador e patch
 - O número de patch é compartilhado por DOIS arquivos, e o `monta_patch.py` lia só um: bloco escrito à mão no `novidades.txt` (o anúncio de um conserto que foi só de servidor) fazia o patch seguinte reusar aquele número, e o painel mostrava dois blocos iguais sem que nada errasse — CORRIGIDO em 2026-09-08
 - Resposta HTTP sem `Cache-Control` NÃO fica sem cache: o navegador inventa um — e quanto mais VELHO o arquivo, mais tempo a cópia velha vale
 - O `monta_patch.py` não tinha ensaio: rodar com `--nome` para "ver o que entraria" MONTA o zip, gasta o número e escreve nos dois registros — rodar duas vezes para reler a lista gastava dois. Ganhou `--verificar` em 2026-09-09
+
+- `parseTime=true` no driver do MySQL sem `loc=Local` desloca toda data em três horas, e a hora que sai é plausível. Os dois andam SEMPRE juntos
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
 
