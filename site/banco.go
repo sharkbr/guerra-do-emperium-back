@@ -82,6 +82,23 @@ func abreCom(dsn, charset string, max, ocioso int) (*sql.DB, error) {
 	if !strings.Contains(dsn, "parseTime=") {
 		dsn += "&parseTime=true"
 	}
+	// loc=Local ANDA JUNTO com o parseTime, e esquece-lo desloca toda data
+	// em tres horas sem erro nenhum.
+	//
+	// Coluna DATETIME do MySQL nao guarda fuso: ela guarda "2026-09-10
+	// 20:14:00", e ponto. Com parseTime ligado, o driver precisa escolher um
+	// fuso para montar o time.Time - e o padrao dele e' UTC. Como a maquina
+	// de producao roda em America/Sao_Paulo desde 2026-08-16 (o MySQL grava
+	// NOW() nesse fuso), ler como UTC transforma 20:14 em 17:14 na tela, e
+	// nada denuncia: a hora e' plausivel, so' esta' errada.
+	//
+	// Nunca mordeu antes porque ate' 2026-09-10 nenhuma consulta do site
+	// lia coluna de data para dentro de um time.Time. O painel de usuarios
+	// le' quatro (lastlogin, btime, rtime, criado_em), e foi ele que trouxe
+	// o problema junto.
+	if !strings.Contains(dsn, "loc=") {
+		dsn += "&loc=Local"
+	}
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
@@ -133,13 +150,20 @@ var (
 	ErrNaoAchou       = errors.New("nao achou")
 )
 
-// Conta e' o pedaco da tabela login que o site enxerga. O resto (grupo,
-// banimento, VIP) e' assunto do jogo e o site nao toca.
+// Conta e' o pedaco da tabela login que o site enxerga.
+//
+// O `Grupo` (login.group_id) entrou em 2026-09-10 com o painel de
+// usuarios, e e' a UNICA coisa que distingue um administrador de um
+// jogador aqui dentro - ver grupoAdmin em admin.go. Ele e' lido do banco a
+// cada requisicao, junto com o resto da conta, e NAO viaja no cookie: tirar
+// o 99 de alguem no banco tem de fechar a porta na requisicao seguinte, e
+// nao daqui a sete dias, quando o cookie vencesse.
 type Conta struct {
 	ID      int64
 	Usuario string
 	Email   string
 	Pin     string
+	Grupo   int
 	Criada  time.Time
 }
 
@@ -247,24 +271,51 @@ func (b *Banco) CriaConta(usuario, senhaMD5, email, sexo, docHash, docTipo, ip s
 func (b *Banco) PorUsuarioESenha(usuario, senhaMD5 string) (*Conta, error) {
 	c := &Conta{}
 	err := b.db.QueryRow(
-		`SELECT account_id, userid, email, pincode FROM login
+		`SELECT account_id, userid, email, pincode, group_id FROM login
 		 WHERE userid = ? AND user_pass = ?`, usuario, senhaMD5).
-		Scan(&c.ID, &c.Usuario, &c.Email, &c.Pin)
+		Scan(&c.ID, &c.Usuario, &c.Email, &c.Pin, &c.Grupo)
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, ErrNaoAchou
 	}
+	deLatin1NaConta(c)
 	return c, err
 }
 
 func (b *Banco) PorID(id int64) (*Conta, error) {
 	c := &Conta{}
 	err := b.db.QueryRow(
-		`SELECT account_id, userid, email, pincode FROM login WHERE account_id = ?`, id).
-		Scan(&c.ID, &c.Usuario, &c.Email, &c.Pin)
+		`SELECT account_id, userid, email, pincode, group_id FROM login WHERE account_id = ?`, id).
+		Scan(&c.ID, &c.Usuario, &c.Email, &c.Pin, &c.Grupo)
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, ErrNaoAchou
 	}
+	deLatin1NaConta(c)
 	return c, err
+}
+
+// deLatin1NaConta converte o texto que veio da conexao latin1.
+//
+// Vale para o e-mail tambem, e nao so' para o nome: o formulario do site
+// exige ASCII no nome de usuario, mas o e-mail passa pelo mail.ParseAddress,
+// que aceita byte acentuado - e conta criada pelo console do emulador nao
+// passa por validacao nenhuma. Sem isto, o encoding/json troca cada byte
+// acentuado por U+FFFD e o painel mostra "jo�o@..." para o dono do
+// endereco. Medido em 2026-09-10, num banco de teste com um e-mail
+// acentuado; a mesma armadilha que o deLatin1 ja' resolvia so' na lista de
+// personagens.
+// O `Usuario` NAO e' convertido, e nao e' esquecimento: ele volta ao banco
+// como CHAVE DE CONSULTA (o trocaSenha e o recuperaPin reconferem a senha
+// por PorUsuarioESenha). Convertido para UTF-8, um nome acentuado deixaria
+// de casar com a coluna latin1 e a senha certa passaria a ser recusada. Na
+// pratica o campo e' sempre ASCII - o validaCadastro so' aceita letras,
+// numeros e _ -, entao a conversao nao mudaria nada e o risco nao se paga.
+// Onde o nome e' so' para a tela (a lista do painel de usuarios), ele e'
+// convertido - ver banco_admin.go.
+func deLatin1NaConta(c *Conta) {
+	if c == nil {
+		return
+	}
+	c.Email = deLatin1(c.Email)
 }
 
 func (b *Banco) TrocaSenha(id int64, novaMD5 string) error {

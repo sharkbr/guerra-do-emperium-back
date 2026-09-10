@@ -115,3 +115,55 @@ CREATE TABLE IF NOT EXISTS `guerra_site_chamado` (
   -- primeiro.
   KEY `fila` (`estado`, `criado_em`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------------
+-- O QUE O ADMINISTRADOR FEZ COM A CONTA DE ALGUEM
+--
+-- O painel de usuarios (2026-09-10) bloqueia, suspende e libera conta
+-- escrevendo direto na `login` do rAthena - que nao tem coluna nenhuma
+-- para "quem fez", "quando" e "por que". Sem esta tabela, o unico registro
+-- de um bloqueio seria a memoria de quem clicou.
+--
+-- E o MOTIVO importa mais do que parece: bloqueio sem motivo escrito vira
+-- discussao com o jogador tres semanas depois, sem ninguem para arbitrar.
+-- Ele e' o campo que o painel mostra de volta na ficha da conta.
+--
+-- POR QUE utf8mb4, e nao latin1 como a `login` ao lado: `motivo` e' texto
+-- livre digitado por gente, com acento. Mesma decisao - e mesma conexao
+-- (dbTexto) - da guerra_site_chamado; ver o cabecalho daquela tabela e o
+-- de banco.go.
+--
+-- A COPIA DO NOME nas duas pontas (admin_usuario, alvo_usuario) segue a
+-- regra do chamado: nome de conta nao muda, mas conta se apaga, e um
+-- registro que diga "bloqueou a conta 2000031" nao serve para nada depois
+-- que a 2000031 sumiu.
+--
+-- NAO HA ROTA QUE APAGUE LINHA DAQUI, e e' de proposito: registro de
+-- moderacao que o proprio moderador apaga nao e' registro.
+CREATE TABLE IF NOT EXISTS `guerra_site_admin_log` (
+  `id`            int(11) unsigned NOT NULL AUTO_INCREMENT,
+
+  `admin_id`      int(11) unsigned NOT NULL,
+  `admin_usuario` varchar(23)      NOT NULL DEFAULT '',
+
+  -- Nulo quando a acao nao e' sobre uma conta: liberar bloqueio de IP
+  -- alcanca uma FAIXA (a.b.c.*), e nao um jogador.
+  `alvo_id`       int(11) unsigned DEFAULT NULL,
+  `alvo_usuario`  varchar(23)      NOT NULL DEFAULT '',
+
+  `acao`          varchar(32)      NOT NULL,
+
+  -- O que a acao fez, em numeros: "state 0 -> 5", "suspensa por 120 min",
+  -- "faixa 187.12.3.*". E' o que permite reconstruir o estado de antes.
+  `detalhe`       varchar(255)     NOT NULL DEFAULT '',
+  `motivo`        varchar(255)     NOT NULL DEFAULT '',
+
+  `ip`            varchar(45)      NOT NULL DEFAULT '',
+  `criado_em`     datetime         NOT NULL,
+
+  PRIMARY KEY (`id`),
+
+  -- A consulta do painel: o historico de UMA conta, mais recente primeiro.
+  KEY `alvo` (`alvo_id`, `criado_em`),
+  KEY `quando` (`criado_em`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

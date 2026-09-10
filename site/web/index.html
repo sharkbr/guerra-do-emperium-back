@@ -178,6 +178,13 @@
       <p class="miudo" data-email></p>
 
       <div class="acoes">
+        <!-- Nasce ESCONDIDO e so' aparece quando /api/painel responde
+             admin:true. Esconder o botao nao e' a trava - a trava e' o
+             exigeAdmin de admin.go, que confere o group_id no banco a cada
+             requisicao e responde 404 para quem nao tem. Aqui e' so' para a
+             tela do jogador nao mostrar uma porta que nao abre. -->
+        <button class="botao so-admin escondido" data-ir="admin">Usuários</button>
+
         <!-- O Download vem primeiro de proposito: quem acabou de criar a
              conta cai direto nesta tela, e a proxima coisa que ele precisa
              fazer e' baixar o jogo. Antes disto o unico caminho ate o
@@ -272,6 +279,86 @@
         </label>
         <button class="botao" type="submit">Apagar meu PIN</button>
       </form>
+
+      <p class="recado" data-recado></p>
+    </div>
+  </section>
+
+  <!-- ============ 5. USUARIOS (so' para administrador) ============
+       Estreou em 2026-09-10, depois de um jogador errar a senha algumas
+       vezes e ficar sem conseguir entrar.
+
+       A TELA RESPONDE DUAS PERGUNTAS DIFERENTES, e por isso tem duas
+       listas: "essa conta esta' bloqueada?" (a lista de contas) e "essa
+       PESSOA consegue chegar ate' o login?" (a lista de bloqueios de IP).
+       Quem erra a senha cai na segunda, que nao aparece em coluna nenhuma
+       da conta - separar as duas era garantir que metade das buscas
+       terminasse em "a conta esta' normal, nao sei o que houve". -->
+  <section class="tela" id="tela-admin">
+    <div class="cartao largo">
+      <button class="voltar" data-ir="painel">&larr; Voltar</button>
+      <h2>Usuários</h2>
+
+      <!-- ---- contas ----
+           Vem PRIMEIRO desde que a trava de senha errada passou a ser por
+           conta (2026-09-06, CLAUDE.md §4.23): a resposta para "fulano nao
+           entra" esta' aqui, e nao mais na lista de IP la' embaixo. -->
+      <section class="bloco">
+        <h3>Contas</h3>
+        <p class="nota">
+          <strong>Errar a senha sete vezes trava a própria conta por 15
+          minutos</strong>, e ela se solta sozinha — o jogador vê no jogo a
+          hora em que pode voltar. Essas aparecem aqui como
+          <em>travada sozinha</em>, e não são castigo de ninguém: só valem um
+          <em>Reativar</em> se ele não puder esperar o quarto de hora.
+          <br>
+          <em>Suspensa</em> e <em>bloqueada</em>, essas sim, alguém decidiu —
+          o botão <em>Histórico</em> diz quem e por quê.
+        </p>
+
+        <form id="form-busca-contas" novalidate>
+          <label class="busca">
+            <input name="busca" type="search" autocomplete="off"
+                   placeholder="Nome, e-mail ou número da conta">
+          </label>
+        </form>
+
+        <p class="miudo" data-resumo-contas></p>
+        <div data-lista-contas class="contas">
+          <p class="miudo">Carregando…</p>
+        </div>
+
+        <div class="paginacao escondido" data-paginacao>
+          <button class="botao fantasma curto" type="button" data-pagina="-1">&larr; Anteriores</button>
+          <span class="miudo" data-pagina-atual></span>
+          <button class="botao fantasma curto" type="button" data-pagina="1">Próximas &rarr;</button>
+        </div>
+      </section>
+
+      <!-- ---- bloqueios de IP ----
+           Ficou em segundo plano de proposito. Ate' 2026-09-06 era aqui que
+           caia quem errava a senha, e o /24 inteiro junto; hoje o ban
+           automatico esta' desligado (login_guerra.txt) e esta lista so'
+           enche quando alguem bane um IP a mao. Continua na tela porque,
+           quando houver linha aqui, ela barra ANTES do login e nenhuma ficha
+           de conta denuncia isso. -->
+      <section class="bloco">
+        <h3>Bloqueios de endereço</h3>
+        <p class="nota">
+          Normalmente vazia. O bloqueio automático por senha errada foi
+          <strong>desligado em 2026-09-06</strong> — ele derrubava a faixa
+          inteira (<code>*</code> no fim: até 254 endereços), atingindo gente
+          que não tinha errado senha nenhuma. Hoje só entra aqui IP banido
+          <strong>à mão</strong>.
+          <br>
+          Se houver linha abaixo, ela barra <strong>antes do login</strong>: o
+          jogador vê <em>“Rejected from Server”</em> e a ficha da conta dele
+          não mostra nada de errado.
+        </p>
+        <div data-lista-ips class="lista-ips">
+          <p class="miudo">Carregando…</p>
+        </div>
+      </section>
 
       <p class="recado" data-recado></p>
     </div>

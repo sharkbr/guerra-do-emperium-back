@@ -260,7 +260,13 @@ body {
 /* ---------- formulario ---------- */
 label { display: block; margin-bottom: 15px; font-size: .85rem; color: var(--tinta-fraca); }
 
-input[type="text"], input[type="password"], input[type="email"], input:not([type]),
+/* O `search` entrou com o campo de busca do painel de usuarios
+   (2026-09-10). Ele NAO e' alcancado por `input:not([type])` nem pelos
+   outros da lista, e um campo de fora desta regra nao fica so' sem cor: ele
+   perde o `width: 100%` e nasce com a largura padrao do navegador, uns
+   150px no meio de um cartao de 940. */
+input[type="text"], input[type="password"], input[type="email"],
+input[type="search"], input:not([type]),
 select, textarea {
   display: block; width: 100%; margin-top: 6px;
   padding: 11px 13px;
@@ -399,4 +405,169 @@ small { display: block; margin-top: 5px; font-size: .74rem; color: #7d786c; }
   margin: 0;
   font-size: .7rem;
   color: #56534c;
+}
+
+/* ---------- painel de usuarios (so' para administrador) ----------
+ *
+ * A tela e' larga porque cada conta e' uma FICHA, e nao um item de lista:
+ * situacao, e-mail, personagens, ultimo acesso, tentativas erradas e a
+ * faixa de IP que a esteja barrando. Empilhar isso numa coluna de 460px
+ * daria seis linhas por conta e nenhuma leitura de conjunto - e a leitura
+ * de conjunto e' justamente o que faz o dono achar o problema sem procurar.
+ */
+#tela-admin.ativa { max-width: 940px; }
+
+/* O botao de Usuarios nao disputa o vermelho com o Baixar o jogo.
+ *
+ * O vermelho e' a cor de acao do site inteiro (decisao do dono em
+ * 2026-08-15), e o que ele ensina - "isto e' o que se clica" - so' funciona
+ * enquanto for um por tela. Dois vermelhos empilhados no painel do dono
+ * apagariam os dois. O ouro do Emperium marca este como "de outra
+ * natureza", que e' exatamente o que ele e': ninguem alem do dono o ve'. */
+.botao.so-admin {
+  background: rgba(217,180,92,.10);
+  color: var(--ouro-forte);
+  border-color: rgba(217,180,92,.5);
+}
+.botao.so-admin:hover { background: rgba(217,180,92,.18); border-color: var(--ouro); }
+
+.bloco { margin-top: 26px; }
+.bloco:first-of-type { margin-top: 18px; }
+.bloco h3 {
+  font-family: var(--serifa);
+  font-weight: 400;
+  font-size: 1.15rem;
+  margin: 0 0 10px;
+  color: var(--ouro);
+}
+
+.busca { margin-bottom: 14px; }
+.busca input { margin-top: 0; }
+
+/* ---------- ficha de conta ---------- */
+.contas { display: grid; gap: 10px; }
+
+.conta {
+  padding: 13px 15px;
+  background: rgba(0,0,0,.26);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px;
+}
+/* A borda esquerda e' a leitura de conjunto: percorrendo a lista com o
+   olho, o que salta e' a cor, nao o texto do rotulo. */
+.conta.situacao-bloqueada { border-left: 3px solid var(--perigo); }
+.conta.situacao-suspensa  { border-left: 3px solid var(--ouro); }
+.conta.situacao-expirada  { border-left: 3px solid var(--tinta-fraca); }
+.conta.situacao-servidor  { border-left: 3px solid #4f7fbf; opacity: .75; }
+
+.conta .cabeca {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.conta .cabeca strong { font-weight: 600; font-size: 1rem; }
+.conta .numero { font-size: .78rem; color: #7d786c; }
+
+.selo {
+  font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 8px; border-radius: 20px;
+  border: 1px solid currentColor;
+}
+.selo.ok        { color: #86c98a; }
+.selo.bloqueada { color: var(--perigo); }
+.selo.suspensa  { color: var(--ouro); }
+.selo.expirada  { color: var(--tinta-fraca); }
+.selo.servidor  { color: #6f9fdf; }
+.selo.online    { color: #86c98a; border-style: dashed; }
+.selo.admin     { color: var(--ouro-forte); }
+
+.conta .linhas { margin: 7px 0 0; }
+.conta .linhas p { margin: 2px 0; font-size: .8rem; color: var(--tinta-fraca); }
+
+/* O alerta de faixa barrada. E' a unica informacao desta tela que explica
+   um sintoma que o jogador CONSEGUE descrever ("nao entro") e que a ficha
+   da conta, sozinha, desmentiria ("esta' tudo normal"). */
+.conta .alerta {
+  margin: 8px 0 0; padding: 8px 11px;
+  background: rgba(224,122,95,.09);
+  border-left: 2px solid rgba(224,122,95,.5);
+  border-radius: 0 6px 6px 0;
+  font-size: .78rem; color: #edb7a5;
+}
+.conta .alerta code { color: var(--ouro-forte); }
+
+.conta .botoes { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+
+/* ---------- o formulario que cada acao abre ----------
+ * Fica DENTRO da ficha, e nao numa janela por cima: o motivo que se digita
+ * e' sobre aquela conta, e ler a ficha enquanto se escreve e' metade da
+ * decisao.
+ */
+.conta .acao {
+  margin-top: 11px; padding-top: 11px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.conta .acao label { margin-bottom: 10px; }
+.conta .acao .par { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 620px) {
+  .conta .acao .par { grid-template-columns: 1fr; gap: 0; }
+}
+
+.botao.curto.perigo {
+  color: var(--perigo);
+  border-color: rgba(224,122,95,.35);
+}
+.botao.curto.perigo:hover { border-color: var(--perigo); }
+
+/* ---------- bloqueios de IP ---------- */
+.lista-ips { display: grid; gap: 8px; }
+
+.ip-bloqueio {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 10px 13px;
+  background: rgba(224,122,95,.07);
+  border: 1px solid rgba(224,122,95,.25);
+  border-radius: 8px;
+}
+.ip-bloqueio .faixa {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .95rem; color: var(--ouro-forte);
+}
+.ip-bloqueio .miudo { margin: 2px 0 0; }
+
+@media (max-width: 560px) {
+  .ip-bloqueio { flex-direction: column; align-items: stretch; }
+  .ip-bloqueio .botao.curto { width: 100%; }
+}
+
+/* ---------- historico de moderacao ---------- */
+.historico { margin: 10px 0 0; display: grid; gap: 6px; }
+.historico .linha {
+  padding: 7px 10px;
+  background: rgba(0,0,0,.3);
+  border-radius: 6px;
+  font-size: .78rem; color: var(--tinta-fraca);
+}
+.historico .linha b { color: var(--tinta); font-weight: 600; }
+.historico .linha .motivo { color: var(--tinta); }
+
+/* ---------- paginacao ---------- */
+.paginacao {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin-top: 16px;
+}
+.paginacao.escondido { display: none; }
+
+/* A trava automática de senha errada (CLAUDE.md §4.23) usa a MESMA coluna do
+   castigo aplicado por gente, e por isso precisa de cor própria na lista: o
+   ouro do castigo ao lado do azul da trava é o que separa "alguém decidiu
+   isso" de "isso passa sozinho em quinze minutos". */
+.conta.situacao-trava { border-left: 3px solid #6f9fdf; }
+.selo.trava { color: #6f9fdf; }
+
+/* Alerta que informa em vez de assustar. O de cova avermelhada é para o que
+   exige ação; este é para o que exige justamente o contrário. */
+.conta .alerta.calmo {
+  background: rgba(111,159,223,.09);
+  border-left-color: rgba(111,159,223,.5);
+  color: #b9cdea;
 }

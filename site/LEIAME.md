@@ -1,8 +1,8 @@
 # O site — criação de conta e painel do jogador
 
-Um binário Go que serve quatro telas e nove chamadas de API. Escrito em
+Um binário Go que serve cinco telas e treze chamadas de API. Escrito em
 2026-08-14, para o beta; a área logada ganhou download, destravamento de
-personagem e chamados em 2026-08-22.
+personagem e chamados em 2026-08-22, e o painel de usuários em 2026-09-10.
 
 ## Por que Go, e não Node
 
@@ -34,10 +34,11 @@ de produção não seriam reconhecidas pelo limite depois.
 
 ## As tabelas
 
-`sql/site.sql` cria duas. A `guerra_site_cadastro`, cujo cabeçalho explica as
+`sql/site.sql` cria três: a `guerra_site_cadastro`, cujo cabeçalho explica as
 duas decisões que não são óbvias — por que guardamos **hash** de CPF/celular e
-não o número, e por que o `account_id` **nasce nulo** —, e a
-`guerra_site_chamado`, que é a dos tickets.
+não o número, e por que o `account_id` **nasce nulo**; a `guerra_site_chamado`,
+que é a dos tickets; e a `guerra_site_admin_log`, que é o registro de moderação
+do painel de usuários.
 
 **Nenhum dos dois deploys roda SQL.** Eles fazem `git pull`, compilam e
 reiniciam; não há passo de migração em lugar nenhum. Tabela nova é aplicada à
@@ -67,8 +68,10 @@ garante isso — `RECEITAS.md` §13).
 
 ## Duas conexões com o banco, e cada uma só encosta nas tabelas dela
 
-A `db` fala **latin1** e serve o que o jogo lê (`login`, `char`). A `dbTexto`
-fala **utf8mb4** e serve só a `guerra_site_chamado`.
+A `db` fala **latin1** e serve o que o jogo lê (`login`, `char`, e também o
+`loginlog` e o `ipbanlist` do painel de usuários). A `dbTexto` fala **utf8mb4** e
+serve as duas tabelas de texto escrito à mão: a `guerra_site_chamado` e a
+`guerra_site_admin_log`.
 
 Não há meio-termo: o charset é escolhido na **abertura** da conexão, e é ele que
 decide como o MySQL interpreta os bytes que chegam. Chamado é texto livre de
@@ -78,7 +81,9 @@ viraria mojibake ou a gravação seria recusada inteira, as duas caladas.
 
 **A volta do mesmo problema está na leitura**, e é a parte fácil de esquecer:
 nome de personagem chega em latin1, e o nosso `char_guerra.txt` permite acento
-em nome. Sem converter, o `encoding/json` troca cada byte acentuado por U+FFFD
+em nome. E não é só o nome de personagem — o **e-mail da conta** passava direto
+até 2026-09-10, porque o formulário exige ASCII no *usuário* mas o
+`mail.ParseAddress` aceita byte acentuado no endereço. Sem converter, o `encoding/json` troca cada byte acentuado por U+FFFD
 e o jogador não reconhece o próprio personagem. Quem converte é o `deLatin1` do
 `banco.go` — feito à mão, sem `golang.org/x/text`, e conferido nos 256 bytes
 contra o cp1252.
@@ -164,3 +169,110 @@ não é ajustar o negativo, é não usar negativo:** fundo `0`, véu `1`, conte�
 navegador e **não** funciona ali — o robô que lê a página não tem base para
 resolver. E falha calado: o cartão aparece, só que sem imagem.
 
+
+## O painel de usuários
+
+Estreou em 2026-09-10, depois de um jogador errar a senha algumas vezes e
+ficar sem conseguir entrar. Fica em `admin.go` e `banco_admin.go`, e aparece
+como um botão a mais no painel de quem é administrador.
+
+**Quem entra:** `login.group_id >= 99` — o grupo `Admin` do `conf/groups.yml`,
+o mesmo que dá o `@` no jogo. Não há um segundo conceito de "quem manda", de
+propósito: dois divergiriam no dia em que alguém ganhasse ou perdesse um deles.
+O grupo é lido do banco **a cada requisição**, e não guardado no cookie — tirar
+o 99 de alguém fecha a porta na requisição seguinte, e não daqui a sete dias.
+
+### A trava de senha errada é por CONTA, e o painel precisa dizer isso
+
+Desde 2026-09-06 (`CLAUDE.md` §4.23) errar a senha sete vezes suspende **aquela
+conta** por 15 minutos, gravadas no `unban_time`; o ban automático de faixa de
+IP está desligado em `conf/guerra/login_guerra.txt`. Ou seja: o jogador que diz
+que "travou a conta" travou mesmo, e a trava aparece na ficha.
+
+**O problema que isso cria para o painel:** castigo aplicado por gente e trava
+posta pela máquina moram na **mesma coluna**, e chegam aqui com a mesma cara. A
+trava não deixa marca nenhuma no banco — era justamente isso que a dispensava
+de tabela e migração. Sem separá-las, o operador lê "suspensa" na ficha de quem
+só esqueceu a senha e pune de novo.
+
+Quem separa é o `travaAutomatica` de `banco_admin.go`, e é **palpite
+fundamentado**, não certeza: dois sinais que só coincidem na trava — prazo
+curto (ela escreve exatamente 15 minutos) e erros de senha recentes o bastante
+para terem chegado ao limite. O erro é para o lado seguro: um administrador que
+suspenda alguém por 15 minutos vê o rótulo de trava e sabe o que fez; o
+contrário é que faria punir duas vezes.
+
+Na tela isso vira a situação **"travada sozinha"**, com cor própria e um aviso
+dizendo que não é castigo de ninguém e que passa sozinha.
+
+### Por que a lista de bloqueios de endereço continua ali
+
+Porque o `ipban_enable` continua **ligado** — só a parte automática saiu. Um IP
+banido à mão barra **antes do login**, o jogador vê "Rejected from Server", e
+**nenhuma ficha de conta denuncia isso**. Normalmente a lista está vazia; é
+quando não está que ela paga o espaço que ocupa.
+
+Para amarrar uma faixa ao jogador, a ficha usa o `loginlog` e não a
+`login.last_ip`: a `last_ip` só é escrita no login que **deu certo**, então ela
+é cega justamente em quem nunca conseguiu entrar.
+
+### Os três estados são exclusivos, e isso é escolha nossa
+
+O rAthena tem duas colunas independentes (`state` e `unban_time`), e uma conta
+pode ter as duas. Aqui cada botão escreve as **duas**, deixando a conta num
+estado só:
+
+| botão | `state` | `unban_time` |
+|---|---|---|
+| Bloquear | 5 | 0 |
+| Suspender | 0 | a data |
+| Reativar | 0 | 0 |
+
+Sem isso, suspender por um dia quem estava bloqueado não soltaria ninguém no
+dia seguinte — o prazo vence, o `state` fica, e o painel diz que a punição
+acabou. Ver `ARMADILHAS-RATHENA.md`.
+
+**Reativar também solta a trava automática**, e é o caminho rápido para o
+jogador que não pode esperar o quarto de hora. A resposta avisa de uma coisa
+que o banco não mostra: a contagem de erros vive **em RAM no login-server** e
+não é zerada por escrever no `unban_time` — quem zera é acertar a senha (ou
+cinco minutos sem erro novo). Reativar e errar de novo tranca outra vez.
+
+### O que ele NÃO faz: expulsar quem está jogando
+
+Bloquear escreve no banco, e escrever no banco não manda o pacote `0x2731` que
+derruba a sessão aberta — isso só o `@block` do jogo faz. **O bloqueio vale a
+partir do login seguinte.** Por isso a ficha mostra "N no jogo" e a resposta
+avisa para dar `@kick`. É a informação que evita o mal-entendido mais provável
+do painel.
+
+### As travas
+
+1. **A conta de sexo `S` não se bloqueia.** É com ela que o char-server e o
+   map-server falam com o login-server; bloqueá-la derruba o jogo para todo
+   mundo. A trava está na leitura **e** no `WHERE` de cada `UPDATE`, porque uma
+   só se esquece.
+2. **Não se bloqueia outro administrador, nem a si mesmo.** Um clique errado
+   ali tira do jogo justamente quem consertaria o clique errado.
+3. **Bloquear e suspender pedem a senha de quem está clicando; reativar não.**
+   Mesma regra do resto do painel: o que mexe em *acesso* pede senha, porque um
+   cookie roubado não pode bastar. Reativar **devolve** acesso — o pior que um
+   cookie roubado faz com ele é desfazer uma punição, que se refaz num clique.
+4. Sessenta ações por hora por administrador. Não é para conter o dono: é para
+   um cookie roubado não bloquear o servidor inteiro em dois minutos.
+5. Quem tem sessão e não é administrador recebe **404**, e não 403 — um 403
+   confirma que a rota existe.
+
+### O registro de moderação
+
+Toda ação vai para a `guerra_site_admin_log` com quem fez, o que mudou (**de**
+qual estado **para** qual — o "de" é o único lugar de onde o estado anterior
+ainda pode ser lido depois de sobrescrito) e o motivo escrito à mão. O motivo é
+obrigatório para bloquear e suspender, e volta na tela pelo botão *Histórico* —
+sem ele seria um campo que só se escreve.
+
+**Se a tabela não existir, a moderação acontece assim mesmo** e a falta vai
+para o log com `ATENCAO:` na frente. A alternativa seria a tabela de auditoria
+poder derrubar a moderação. O mesmo vale para o `loginlog` e o `ipbanlist`, que
+são do rAthena e podem estar noutro banco: o painel perde os números de
+tentativa e continua servindo para todo o resto.

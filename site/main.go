@@ -102,6 +102,12 @@ type Servidor struct {
 	banco    *Banco
 	verifica Verificador
 	limite   *Limitador
+
+	// Teto proprio para o painel de usuarios, e nao o `limite` de cima.
+	// Sao dez por hora ali, calibrados para desencorajar criacao de conta
+	// em massa; moderar de verdade estoura isso numa tarde e o dono
+	// ficaria trancado fora do proprio painel. Ver acoesAdminPorHora.
+	limiteAdmin *Limitador
 }
 
 func main() {
@@ -120,7 +126,8 @@ func main() {
 		verifica: NovoVerificador(cfg),
 		// Teto por IP na criacao de conta. Nao substitui o limite por
 		// documento - so' encarece a tentativa em massa.
-		limite: NovoLimitador(10, time.Hour),
+		limite:      NovoLimitador(10, time.Hour),
+		limiteAdmin: NovoLimitador(acoesAdminPorHora, time.Hour),
 	}
 
 	mux := http.NewServeMux()
@@ -140,6 +147,14 @@ func main() {
 	// (PENDENCIAS.md); ate' la' nao ha' rota que devolva chamado nenhum,
 	// nem o proprio.
 	mux.HandleFunc("POST /api/painel/chamado", s.abreChamado)
+
+	// PAINEL DE USUARIOS (2026-09-10). Todas guardadas por exigeAdmin, que
+	// le' o group_id do banco a cada requisicao e responde 404 - e nao 403 -
+	// para quem nao e' administrador. Ver o cabecalho de admin.go.
+	mux.HandleFunc("GET /api/admin/contas", s.adminContas)
+	mux.HandleFunc("GET /api/admin/conta/historico", s.adminHistorico)
+	mux.HandleFunc("POST /api/admin/conta/acao", s.adminAcao)
+	mux.HandleFunc("POST /api/admin/ip/libera", s.adminLiberaIP)
 
 	// Front estatico.
 	mux.Handle("/", semCache(http.FileServer(http.Dir("web"))))

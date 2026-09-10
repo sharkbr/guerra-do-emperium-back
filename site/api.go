@@ -294,6 +294,10 @@ func (s *Servidor) painel(w http.ResponseWriter, r *http.Request) {
 		"usuario": c.Usuario,
 		"email":   c.Email,
 		"tem_pin": c.Pin != "",
+		// O que faz o botao do painel de usuarios existir na tela. E' so'
+		// isso que ele faz: quem esconder o botao no navegador continua
+		// batendo no exigeAdmin de admin.go, que confere no banco.
+		"admin": c.Grupo >= grupoAdmin,
 	})
 }
 
