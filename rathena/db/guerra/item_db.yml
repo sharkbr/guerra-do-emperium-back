@@ -4235,3 +4235,34 @@ Body:
   - Id: 2979
     AegisName: Strawberry_Decoration
     Slots: 0
+
+  # ------------------------------------------------------------------
+  # AMULETO DE ZIEGFRIED (7621) PASSA A VIAJAR POR RODEX - 2026-09-10
+  #
+  # O vendor marca o Amuleto com sete travas de uma vez, e uma delas e
+  # `NoMail` - a unica que o RODEX consulta. Com ela ligada o
+  # `mail_setitem` devolve MAIL_ATTACH_UNTRADEABLE
+  # (src/map/mail.cpp:272) e o item nao entra no anexo. Do lado do
+  # jogador nao ha explicacao nenhuma: o item aparece na mochila, o
+  # clique nao gruda, e nada e dito.
+  #
+  # Decisao do dono em 2026-09-10: ele tem de poder ser enviado. Quem
+  # decide isso e so este flag (`itemdb_canmail`, itemdb.cpp:3307), e
+  # nao o `NoTrade` - RODEX e troca direta sao checagens separadas.
+  #
+  # `NoMail: false` ESCRITO e nao omitido: com o item ja existente, o
+  # parseBodyNode so mexe no flag que o override NOMEIA
+  # (itemdb.cpp:1022); campo ausente mantem o valor do vendor. E e por
+  # isso que as outras seis travas continuam de pe sem aparecerem
+  # aqui - o Amuleto segue sem cair no chao, sem troca, sem revenda,
+  # sem carrinho, sem armazem de cla e sem leilao.
+  #
+  # Cuidado ao testar: `Override` (padrao 100) e o group_id que ignora
+  # as travas. A conta de teste e group 99 e SENTE - que e o que
+  # permite conferir isto em jogo (CLAUDE.md secao 4.7).
+  # ------------------------------------------------------------------
+
+  - Id: 7621
+    AegisName: Token_Of_Siegfried
+    Trade:
+      NoMail: false

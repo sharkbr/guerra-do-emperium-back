@@ -17881,3 +17881,45 @@ Tabela aplicada à mão e `implanta_site.sh` rodado em 2026-09-10; os quatro
 servidores do jogo não foram tocados e ninguém caiu. Conferido em produção: as
 rotas `/api/admin/*` respondem 401 (antes 404), e o HTML servido em `/` traz a
 seção nova.
+
+## O Amuleto de Ziegfried não entrava no RODEX (2026-09-10)
+
+Relato do dono: *"O item 'Amuleto de Ziegfried' (7621) não está entrando no
+RODEX. Temos que conseguir enviar"*.
+
+A causa estava a uma linha de distância, no `db/re/item_db_etc.yml` do vendor:
+o Amuleto vem com **as sete travas de troca de uma vez**, e uma delas é
+`NoMail: true`. É a única que o RODEX consulta — o `mail_setitem`
+(`src/map/mail.cpp:272`) chama `itemdb_canmail` e devolve
+`MAIL_ATTACH_UNTRADEABLE`, que na tela do jogador é **nada**: o item está na
+mochila, o clique não gruda no anexo, e não há mensagem nem linha de log.
+`NoTrade` não tem parte nisso; RODEX e troca direta são checagens separadas.
+
+A correção é um override em `db/guerra/item_db.yml`:
+
+```yaml
+  - Id: 7621
+    AegisName: Token_Of_Siegfried
+    Trade:
+      NoMail: false
+```
+
+**O `false` é escrito, não omitido.** Com o item já existente, o
+`ItemDatabase::parseBodyNode` só mexe no flag que o override **nomeia**
+(`src/map/itemdb.cpp:1022` — cada bandeira tem um `else { if (!exists) … }`);
+campo ausente mantém o valor do vendor. É o mesmo motivo pelo qual as outras
+seis travas continuam de pé sem aparecerem no nosso arquivo: o Amuleto segue
+sem cair no chão, sem troca, sem revenda, sem carrinho, sem armazém de clã e
+sem leilão. Só o correio abriu.
+
+Recarregador: `@reloaditemdb`. Não exige reiniciar nem relogar — a trava é lida
+no instante do anexo, e não no carregamento do personagem (diferente do
+`Locations`, que deixa o item inequipável até o relog; ver `ARMADILHAS-RATHENA.md`).
+
+**O Amuleto não é o único.** Medido no mesmo dia sobre os 126 itens da gaveta
+da Máquina de Moedas (`npc/guerra/barters_guerra.yml`), **27 deles são
+`NoMail` no vendor** — as caixas de Elúnio e OriDecon Enriquecidos, os Bilhetes
+de Peso e de Traje, os cupons de estilista, a Goma de Mascar, as quatro
+Insígnias do Festival, as duas Cartas Seladas, os dois Cubos, o Cabresto. Todos
+falham do mesmo jeito calado. O Amuleto foi aberto porque foi o pedido; os
+outros 26 ficam como estão até haver decisão sobre eles.
