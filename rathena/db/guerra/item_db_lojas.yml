@@ -2866,6 +2866,8 @@ Body:
     Buy: 1                # C_Gold_Paeonia
   - Id: 400693
     Buy: 1                # C_Red_Paeonia
+  - Id: 400697
+    Buy: 1                # FullFaith_Crown_US
   - Id: 400703
     Buy: 1                # C_Altair_Hat
   - Id: 400708

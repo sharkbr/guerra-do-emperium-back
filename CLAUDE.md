@@ -655,6 +655,7 @@ Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, fe
 - `x += f()` em que `f` mexe em `x` perde o que `f` consumiu. O `+=` guarda o `x` de antes de avaliar a direita
 - No `.gitignore`, negar um arquivo dentro de pasta excluída NÃO tem efeito — e o `git status` não denuncia, porque o arquivo simplesmente continua…
 - Dois geradores que escrevem o MESMO arquivo se apagam em silêncio — o `db/import/mob_skill_db.txt` tem dois donos desde 2026-09-11, e monstro sem linha ali não conjura, sem erro nenhum
+- O `nomes_pt_item_db.py` DESFAZ o nome em português de item que ganhou bloco em `db/guerra/item_db.yml` depois: ele pula o balde `nossos` e reescreve o `db/re/` a partir do `.INGLES`, então o diálogo de NPC volta ao inglês do vendor — a bolsa continua em português e nada denuncia
 - Ferramentas rodam em Python 2.7 (`C:\Python27\python.exe`)
 
 ### `ARMADILHAS-CLIENTE.md` — O cliente de RO

@@ -582,6 +582,65 @@ ITENS = [
             u'Classes: ^777777Todas^000000',
         ],
     },
+    # 2026-09-12: a COROA DA FE PLENA (400697), pedida pelo dono para a
+    # vitrine do Chapeleiro. E o quinto caso do tipo "Chapeu do Eden" - item
+    # que existe inteiro no vendor e nao existe no cliente -, e o mais seco
+    # deles: o bRO NAO TEM o ID (`completa_iteminfo.py` responde
+    # `[SEM BRO]`), o ROenglishRE tambem nao, e nao ha entrada em lingua
+    # nenhuma para traduzir. O `FullFaith_Crown_US` e peca de iRO, e o unico
+    # que fala dela nesta maquina e o `Script:` do proprio item_db.
+    #
+    # POR ISSO A DESCRICAO SAI DO `Script:`, linha a linha, com o vocabulario
+    # que o bRO usa para cada bonus (medido no `iteminfo_new.lub`: 487
+    # "Pos-conjuracao -N%", 79 "Dano magico de todas as propriedades +N%", 39
+    # "Dano magico contra todas as racas +N%", 23 "Dano magico contra
+    # oponentes de todas as propriedades +N%", 669 "ATQM +N"). O `bonus bSpl`
+    # sai como `SPL +15` porque e assim que este cliente ja o escreve em 139
+    # outras descricoes - regra 4.12, manda a tabela que o JOGO le.
+    #
+    # A PRIMEIRA LINHA E NOSSA, e e a unica coisa aqui que nao foi copiada de
+    # lugar nenhum: nao existe texto de sabor desta peca ao nosso alcance.
+    #
+    # A ARTE VEM DA TIARA PAPAL (20489) por `arte_de`, e nao por `recurso`: o
+    # `identifiedResourceName` do 20489 e COREANO (`C교황의관`), entao ASCII
+    # nao serve. O 20489 e o IRMAO certo e nao um doador qualquer - ele e o
+    # unico outro item do vendor com `View: 1475`, ou seja e exatamente a
+    # coroa que o personagem vai vestir. E ele nao esta nesta receita, que e a
+    # condicao para a fonte nao virar o resultado da rodada anterior.
+    #
+    # `covas: 1` e `visual: 1475` batem com o `Slots:` e o `View:` do 400697
+    # em db/re/item_db_equip.yml.
+    {
+        'id': 400697,
+        'nome': u'Coroa da Fé Plena',
+        'arte_de': 20489,                   # a Tiara Papal, o outro View 1475
+        'covas': 1,
+        'visual': 1475,
+        'descricao': [
+            u'Coroa de quem entrega a fé inteira: quanto melhor lapidada a peça, mais poder ela devolve em magia.',
+            u'^0000ffATQM +20 a cada 2 níveis de refino.^000000',
+            u'^0000ffDano mágico de todas as propriedades +7% a cada 3 níveis de refino.^000000',
+            u'Refino +7 ou mais:',
+            u'^0000ffDano mágico +10%.^000000',
+            u'Refino +9 ou mais:',
+            u'^0000ffPós-conjuração -10%.^000000',
+            u'Refino +11 ou mais:',
+            u'^0000ffDano mágico contra todas as raças +15%.^000000',
+            u'Refino +12 ou mais:',
+            u'^0000ffDano mágico contra oponentes de todas as propriedades +15%.^000000',
+            u'Refino +13 ou mais:',
+            u'^0000ffConjuração fixa -0,5 segundos.^000000',
+            u'Refino +14 ou mais:',
+            u'^0000ffSPL +15.^000000',
+            u'^0000ffDano mágico +30% adicional.^000000',
+            u'Tipo: ^777777Equip. para Cabeça^000000',
+            u'Equipa em: ^777777Topo^000000',
+            u'DEF: ^77777770^000000 DEFM: ^7777770^000000',
+            u'Peso: ^77777770^000000',
+            u'Nível necessário: ^777777130^000000',
+            u'Classes: ^777777Todas^000000',
+        ],
+    },
 ]
 
 

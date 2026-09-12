@@ -4264,5 +4264,12 @@ Body:
 
   - Id: 7621
     AegisName: Token_Of_Siegfried
+    # O `Name:` NAO e enfeite aqui, e a contrapartida de o item ter
+    # ganho bloco neste arquivo: o ferramentas/nomes_pt_item_db.py
+    # pula todo id que aparece em db/guerra/item_db.yml ("nossos"),
+    # entao sem esta linha a proxima rodada dele devolve o db/re/ ao
+    # ingles do vendor e o dialogo de NPC volta a dizer "Token Of
+    # Siegfried". Medido em 2026-09-12.
+    Name: "Amuleto de Ziegfried"
     Trade:
       NoMail: false

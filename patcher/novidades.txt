@@ -98,3 +98,6 @@
 
 [0025] 2026-09-12  O configurador de video volta a abrir
 - Quem tem OUTRO Ragnarok instalado nao conseguia abrir o Setup, o programa que escolhe a placa de video e a resolucao: ele respondia com uma caixa vazia e fechava. Agora ele so reclama se o proprio Guerra do Emperium estiver aberto - e, quando reclama, diz o que fazer
+
+[0026] 2026-09-12  Coroa da Fe Plena no Chapeleiro
+- Coroa da Fe Plena, no Chapeleiro (Prontera 151,173) - elmo de topo com uma cova: ATQM que cresce com o refino, e no +14 ainda SPL +15 e dano magico +30%

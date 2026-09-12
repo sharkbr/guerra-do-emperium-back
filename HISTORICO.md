@@ -18349,3 +18349,110 @@ entra em cena quando ele falhou, aí com o binário já corrigido.
 entregando o Setup velho, e ele é substituído antes de importar. Refazer a base
 continua sendo uma opção, mas por outro motivo (encurtar a primeira abertura),
 e é decisão do dono — ela vira um retrato do cliente inteiro, não só do Setup.
+
+
+## A Coroa da Fé Plena entra no Chapeleiro, e a Stella Gratia fica de fora (2026-09-12)
+
+Pedido do dono, dois itens: **Costume Stella Gratia (480503)** e **Full Faith
+Crown [1] (400697)**. **Entrou um.** O outro não tem arte em lugar nenhum ao
+nosso alcance, e item sem arte entrega caixa de erro ao jogador (§4.4) — o
+caso está em `PENDENCIAS.md`, porque a saída que sobra é decisão do dono.
+
+### A Coroa da Fé Plena (400697), no Chapeleiro
+
+O `Locations:` decidiu a loja e não houve o que discutir (§4.14): é `Head_Top`
+com `Defense: 70`, peso, uma cova e refino — **equipamento**, não visual. Foi
+para o Chapeleiro (`prontera 151,173`), que passou de 56 para 57 itens.
+
+**Foi o caso mais seco de "item que o cliente não conhece" até aqui, e também
+o mais sem-rede:**
+
+| o que faltava | como se resolveu |
+|---|---|
+| entrada no `itemInfo.lua` | `instala_item.py`, receita escrita à mão |
+| `Name` do servidor em inglês | `nomes_pt_item_db.py` |
+| arte | nada a fazer — 8 de 8 no `valida_visual.py` |
+
+**Não havia de onde copiar uma palavra.** O bRO não tem o ID (o
+`completa_iteminfo.py` responde `[SEM BRO]`) e o ROenglishRE também não: o
+`FullFaith_Crown_US` é peça de iRO. É o quinto caso do tipo "Chapéu do Éden" e
+o primeiro em que **não existe entrada em língua nenhuma para traduzir** — nos
+quatro anteriores havia coreano ou inglês no arquivo.
+
+Então a descrição saiu do `Script:` do próprio `item_db`, linha a linha, com o
+vocabulário que o bRO usa para cada bônus — medido no `iteminfo_new.lub` dele
+e não escolhido a gosto: 487 ocorrências de *"Pós-conjuração -N%"*, 669 de
+*"ATQM +N"*, 79 de *"Dano mágico de todas as propriedades +N%"*, 39 de *"Dano
+mágico contra todas as raças +N%"*, 23 de *"Dano mágico contra oponentes de
+todas as propriedades +N%"*. O `bonus bSpl` saiu como **SPL +15** porque é
+assim que este cliente já o escreve em 139 outras descrições (§4.12 — manda a
+tabela que o jogo lê); o `iteminfo_new.lub` do bRO desta máquina não conhece
+nenhum dos seis atributos de quarta classe.
+
+**O nome e a primeira frase são nossos**, e são a única coisa aqui que não foi
+copiada de lugar nenhum: *"Coroa da Fé Plena"*.
+
+**A arte veio da Tiara Papal (20489) por `arte_de`, e o 20489 não é um doador
+qualquer:** é o **único** outro item do vendor com `View: 1475`, ou seja é
+exatamente a coroa que o personagem vai vestir. `recurso` não servia — o
+`identifiedResourceName` do 20489 é coreano (`C교황의관`) —, e o 20489 não está
+na receita do `instala_item.py`, que é a condição para a fonte não virar o
+resultado da rodada anterior.
+
+### A metade do cliente saiu no mesmo dia: patch 0026
+
+**Patch 0026, "Coroa da Fe Plena no Chapeleiro"** — o `itemInfo.lua` inteiro,
+22,93 MB crus em 2,46 MB de zip, sha256 `0826ad03…`. Publicado e conferido no
+ar: `lista.txt` com a linha, `novidades.txt` com o bloco e o zip respondendo
+200.
+
+A `--nota` foi escrita por quem montou o patch, como manda a §4.24 — o título
+diz *onde*, e o que o jogador quer saber é *o quê*: «Coroa da Fe Plena, no
+Chapeleiro (Prontera 151,173) - elmo de topo com uma cova: ATQM que cresce com
+o refino, e no +14 ainda SPL +15 e dano magico +30%».
+
+A outra metade — a linha da loja, o `item_db` e o `Buy: 1` — espera o deploy.
+
+### A Stella Gratia (480503) não existe em arte nenhuma
+
+Ela é `Costume_Garment` com `View: 248`, ou seja cairia no Manteleiro e
+passaria pela receita 2b (`RECEITAS.md`) — slot acima do teto de 120 deste
+cliente, doador a escolher entre os 28 que sobram. **Só que não há o que
+copiar para o doador.** Varridos os dois GRF desta máquina por `stellar`,
+`stella` e `gratia`:
+
+| | `data\sprite\로브\Stellar_Gratia\` (o manto) | os 4 arquivos de item |
+|---|---|---|
+| nosso `data.grf` | 0 arquivos | 0 |
+| `data.grf` do bRO | 0 arquivos | 0 |
+
+O que existe no bRO é o **nome** no `spriterobeid.lub` (a constante
+`ROBE_Stellar_Gratia`, View 248) — tabela sem arte, que é o pior dos dois: o
+`estende_robeid.py` recusa gravar justamente aí, porque entrada de tabela sem
+pasta troca "manto invisível e calado" por `Cannot find File` modal.
+
+É o mesmo estado da Ferramenta Mágica de Gelo (490029) em 2026-08-20, e a
+saída é a mesma: **não entra em loja nenhuma até alguém decidir dar a ela o
+desenho de outro item** — e isso é decisão do dono, não regra.
+
+### O que a rodada achou de passagem: um nome em português que tinha voltado ao inglês
+
+Rodar o `nomes_pt_item_db.py` mexeu em **duas** linhas, e só uma era a
+esperada. A outra devolvia o **Amuleto de Ziegfried (7621)** a *"Token Of
+Siegfried"*.
+
+A causa é a premissa do balde `nossos` do script: ele pula todo id que apareça
+em `db/guerra/item_db.yml`, porque "item nosso já nasce em português". Vale
+para item nosso; não vale para **override de item do vendor**, que é o que
+aquele arquivo passou a ter aos montes — 43 ids hoje, contra o 1 de quando o
+script foi escrito. O Amuleto ganhou bloco em 2026-09-10 (o `NoMail: false` do
+RODEX) e nenhuma das três linhas era `Name:`.
+
+Consertado com uma linha `Name: "Amuleto de Ziegfried"` no próprio bloco — que
+é o que os blocos de manto daquele arquivo já faziam por outro motivo. A
+armadilha subiu para o `ARMADILHAS-AMBIENTE.md` e para a §5.
+
+**E há mais oito no mesmo estado**, todos anteriores a esta rodada e nenhum
+tocado aqui: 6814–6819 (as seis Almas de classe), 13139 (Revólver de Oxum) e
+2979 (Morango Cristalizado). Estão em `PENDENCIAS.md` — mexer neles é decidir
+oito nomes, e não era o pedido.

@@ -901,6 +901,35 @@
 //= C:\GuerraDoEmperium\cliente\ e so chegam ao jogador por
 //= PATCH. So a linha da loja, o item_db e o item_combos andam
 //= pelo git.
+//= ------------------------------------------------------------
+//= RODADA DE 2026-09-12: 1 ITEM, SO NO CHAPELEIRO
+//=
+//= A COROA DA FE PLENA (400697), pedida pelo dono. Ela foi para o
+//= Chapeleiro pelo `Locations:` (regra 4.14): e `Head_Top` com
+//= Defense 70, peso, cova e refino, ou seja EQUIPAMENTO - e nao
+//= visual. A loja foi de 56 para 57.
+//=
+//= O QUE ELA CUSTOU, e por que e o caso mais seco ate aqui:
+//=
+//=   estava fora do itemInfo.lua   -> instala_item.py (receita a mao)
+//=   estava com o `Name` em ingles -> nomes_pt_item_db.py
+//=   arte                          -> nada a fazer, 8 de 8
+//=
+//= NAO HAVIA DE ONDE COPIAR O TEXTO. O bRO nao tem o ID (o
+//= completa_iteminfo.py responde [SEM BRO]) e o ROenglishRE tambem
+//= nao - o `FullFaith_Crown_US` e item de iRO. A descricao saiu do
+//= `Script:` do proprio item_db, linha a linha, com o vocabulario
+//= que o bRO usa para cada bonus; so a primeira frase, a de sabor,
+//= e nossa. O nome tambem: "Coroa da Fe Plena".
+//=
+//= A ARTE VEIO DA TIARA PAPAL (20489), que e o UNICO outro item do
+//= vendor com View 1475 - ou seja, a mesma coroa que o personagem
+//= veste. O `arte_de` e nao o `recurso` porque o recurso do 20489 e
+//= coreano.
+//=
+//= METADE DISTO E CLIENTE (regra 4.18): a entrada do itemInfo.lua so
+//= chega ao jogador por PATCH. So a linha da loja e o item_db andam
+//= pelo git.
 //=
 //=
 //============================================================
@@ -1047,6 +1076,21 @@
 //   + 5512    Diadema de Aquário
 //   + 5515    Coroa de Peixes
 //   + 5514    Diadema de Peixes
+// RODADA DE 2026-09-12: entrou 1, e a loja foi de 56 para 57.
+//   + 400697  Coroa da Fé Plena           [1]  (View 1475)
+//
+// A PECA NAO EXISTIA NO CLIENTE, e desta vez nao havia de onde
+// copiar: o bRO nao tem o ID (`completa_iteminfo.py` responde
+// [SEM BRO]) e o ROenglishRE tambem nao. O `FullFaith_Crown_US` e
+// item de iRO, e o unico que fala dele nesta maquina e o `Script:`
+// do proprio item_db - foi dele que saiu a descricao, linha a
+// linha, pelo ferramentas/instala_item.py. O `Name` do servidor,
+// que estava em ingles, foi sincronizado pelo nomes_pt_item_db.py.
+//
+// A ARTE VEIO DA TIARA PAPAL (20489) por `arte_de`, e o 20489 nao e
+// um doador qualquer: e o UNICO outro item do vendor com View 1475,
+// ou seja a mesma coroa que o personagem veste. Os 8 arquivos deram
+// ok no valida_visual.py sem instalar nada.
 prontera,151,173,4	script	Chapeleiro	1_M_MERCHANT,{
 	callshop "Chapeleiro#loja",0;
 	end;
@@ -1055,7 +1099,7 @@ OnInit:
 	placadevenda "Cabeça topo";
 	end;
 }
--	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1,19272:1,19426:1,19163:1,19453:1,19469:1,19409:1,18853:1,400566:1,19329:1,19311:1,5539:1,400486:1,19390:1,19317:1,5546:1,5545:1,5550:1,5549:1,5569:1,5582:1,5581:1,5588:1,5589:1,5598:1,5599:1,5662:1,5663:1,5676:1,5677:1,5739:1,5740:1,5744:1,5745:1,5513:1,5512:1,5515:1,5514:1
+-	shop	Chapeleiro#loja	-1,400006:1,2289:1,400687:1,400177:1,18849:1,400287:1,400213:1,400597:1,18878:1,400396:1,18728:1,400203:1,19262:1,19106:1,5388:1,18508:1,400308:1,400307:1,400194:1,19272:1,19426:1,19163:1,19453:1,19469:1,19409:1,18853:1,400566:1,19329:1,19311:1,5539:1,400486:1,19390:1,19317:1,5546:1,5545:1,5550:1,5549:1,5569:1,5582:1,5581:1,5588:1,5589:1,5598:1,5599:1,5662:1,5663:1,5676:1,5677:1,5739:1,5740:1,5744:1,5745:1,5513:1,5512:1,5515:1,5514:1,400697:1
 
 // Cabeca meio. Era a mais castigada da rodada de 2026-08-01: 3
 // dos 7 pedidos nao tinham arte e um nao existia em tabela

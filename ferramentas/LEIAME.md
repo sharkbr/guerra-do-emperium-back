@@ -540,6 +540,37 @@ linha erraria calada.
 Medido: 31 blocos trocados e só eles, 0 recursos alterados, 0 U+FFFD,
 `luac -p` compila, +3.153 bytes.
 
+### A entrada sem original: a Coroa da Fé Plena (2026-09-12)
+
+A tabela ganhou a entrada de **400697**, e ela é o quinto caso do tipo "Chapéu
+do Éden" — item que existe inteiro no vendor e não existe no cliente. O que a
+distingue dos quatro anteriores é que **não havia entrada em língua nenhuma
+para traduzir**: o bRO não tem o ID (`completa_iteminfo.py` responde
+`[SEM BRO]`) e o ROenglishRE também não, porque o `FullFaith_Crown_US` é peça
+de iRO. Nos quatro anteriores havia coreano ou inglês no arquivo; aqui não há
+arquivo.
+
+**Então a fonte foi só o `Script:` do vendor**, linha a linha, e a escolha de
+palavras foi medida e não gostada: cada bônus saiu com a expressão que o bRO
+usa para ele no `iteminfo_new.lub` desta máquina (487 *"Pós-conjuração -N%"*,
+669 *"ATQM +N"*, 79 *"Dano mágico de todas as propriedades +N%"*, 39 *"Dano
+mágico contra todas as raças +N%"*, 23 *"Dano mágico contra oponentes de todas
+as propriedades +N%"*). Só o nome e a frase de sabor são invenção.
+
+**O `bonus bSpl` não tem palavra no bRO**, e essa é a exceção: o
+`iteminfo_new.lub` de lá não conhece nenhum dos seis atributos de quarta
+classe. Foi escrito **`SPL +15`**, que é como este cliente já o escreve em 139
+outras descrições — §4.12, manda a tabela que o jogo lê, mesmo quando ela não
+traduziu.
+
+**O `arte_de` apontou para o IRMÃO DE VIEW, e não para um doador de gosto:** o
+20489 (Tiara Papal) é o único outro item do vendor com `View: 1475`, ou seja é
+exatamente a coroa que o personagem vai vestir — o ícone e o sprite de chão
+combinam com a cabeça por construção. `recurso` não servia porque o
+`identifiedResourceName` do 20489 é coreano. Quando um item de cabeça precisar
+de arte emprestada, **procurar quem mais usa o mesmo `View:` é o primeiro
+passo**, antes de procurar quem usa o mesmo recurso.
+
 ## `completa_iteminfo.py` — importa entradas do bRO para o `itemInfo.lua`
 
 ```
@@ -810,6 +841,25 @@ contra o próprio resultado.
 | nome já igual | 4094 | não vale gravação |
 | acima de 50 caracteres (`ITEM_NAME_LENGTH`) | 40 | o rAthena cortaria; todos estão em inglês no cliente também |
 | itens nossos (`db/guerra/item_db.yml`) | 1 | já nascem em português, com nome escolhido por nós |
+
+**A linha "itens nossos" envelheceu, e envelhecer nela CUSTA um nome.** O balde
+é "todo id que aparece em `db/guerra/item_db.yml`", e aquele arquivo deixou de
+ser só dos nossos itens: hoje tem **43** ids, a maioria *override de item do
+vendor* (uma trava, um `Locations:`, um `View:` de manto). Para esses a
+premissa não vale — eles **não** nascem em português —, e como o script
+reescreve o `db/re/` a partir do `.INGLES`, pulá-los **devolve o nome ao inglês
+do vendor**.
+
+Aconteceu em 2026-09-12 com o **Amuleto de Ziegfried (7621)**, que tinha ganho
+um bloco de três linhas dois dias antes (`NoMail: false`) e nenhuma delas era
+`Name:`. Uma rodada de rotina, feita por outro motivo, o devolveu a *"Token Of
+Siegfried"* — **calado**, porque a bolsa continua em português (quem desenha
+ali é o cliente) e só o diálogo de NPC muda.
+
+O remendo é `Name:` no próprio bloco daquele arquivo, e é o que os blocos de
+manto já faziam por outro motivo. O conserto de verdade é pular só quem
+**declara** `Name:` — em 2026-09-12 havia **oito** ids no estado ruim além do
+Amuleto, listados em `PENDENCIAS.md`.
 
 Os 4587 coreanos são **um buraco do cliente, não deste script**: o jogador vê
 coreano na bolsa deles também. `Claymore` (1190) é um exemplo — o bRO nunca os

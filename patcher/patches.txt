@@ -36,3 +36,4 @@
 0022	0022-nomes-de-habilidade-de-shura-e-o-nome-do.zip	6774b96d8794ed6bd088c9378fbef3559b336f534188b6bcc7c71791178adfa9	234837	Nomes de habilidade de Shura e o nome do cla na tela
 0024	0024-setenta-e-cinco-itens-nas-lojas-de-pront.zip	033d1fcd78724d5544086cd58ebebc8ce741641e40adc57c5509c47d5e2349e8	3013079	Setenta e cinco itens nas lojas de Prontera
 0025	0025-o-configurador-de-video-volta-a-abrir.zip	6821a214bb8b0e7be8f174a540f7928d065804b405bfaf050deabdc05b9df554	240452	O configurador de video volta a abrir
+0026	0026-coroa-da-fe-plena-no-chapeleiro.zip	0826ad0301094ed5c4edb993dbfaa291455fbff02b443a97158fe091659d0376	2576947	Coroa da Fe Plena no Chapeleiro

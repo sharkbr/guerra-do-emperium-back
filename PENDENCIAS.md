@@ -4563,3 +4563,83 @@ existiam. Agora existem. Enquanto ela estiver comentada, o **Terrian**
 linha do nosso lado (`db/guerra/quest_db.yml`), mas **quest que o cliente não
 conhece derruba o cliente** (§5) — então antes disso é preciso passar pelo
 `monta_missoes_da_ordem.py`, ou confirmar que este cliente já tem a 3465.
+
+
+## 1aj. A Coroa da Fé Plena — falta o patch, o deploy e ver em jogo (2026-09-12)
+
+Pedido do dono: dois itens. **Entrou um**, e o que falta dele são os três
+passos de sempre. O outro está parado por falta de arte, logo abaixo.
+
+**Pronto e no git:** a entrada do `itemInfo.lua` (`instala_item.py`), o `Name`
+do servidor em português (`nomes_pt_item_db.py`), a linha do Chapeleiro em
+`npc/guerra/mercado_contemporaneo.txt` e o `Buy: 1` do
+`db/guerra/item_db_lojas.yml`. Os 8 arquivos de arte já estavam no cliente.
+
+**Falta, na ordem:**
+
+1. **os dois recarregadores, nesta ordem** — `@reloaditemdb` e **depois**
+   `@reloadscript`. Invertido, o item novo some da vitrine sem erro nenhum
+   (§5);
+2. **fechar e reabrir o cliente** — o `itemInfo.lua` só é lido na
+   inicialização, e sem isso a peça aparece sem nome na própria loja;
+3. **o deploy** (`implanta.sh`, do Mac), para a linha da loja e o `item_db`.
+   É o único passo que falta para a peça aparecer na vitrine — o lado do
+   cliente já está no ar.
+
+**O patch JÁ FOI**, a pedido do dono no mesmo dia: **patch 0026**, *"Coroa da
+Fe Plena no Chapeleiro"*, 2.576.947 bytes, sha256 `0826ad03…`, publicado e
+conferido no ar — `lista.txt`, `novidades.txt` e o zip respondendo 200. Se a
+Stella Gratia for destravada depois, ela sai num patch novo: número não se
+reaproveita.
+
+**O nome e a frase de sabor são invenção nossa, e é o único ponto aberto de
+gosto.** *"Coroa da Fé Plena"* para o `FullFaith_Crown_US`. O bRO não tem o ID
+e o ROenglishRE também não — não havia entrada em língua nenhuma para
+traduzir, e é a primeira vez que isso acontece (ver `HISTORICO.md`). Os bônus
+da descrição saíram do `Script:` do vendor e não são gosto: cada linha foi
+escrita com a expressão que o bRO usa para aquele bônus.
+
+### A Stella Gratia (480503) está parada, e a decisão é do dono
+
+Ela é `Costume_Garment` (iria para o Manteleiro) e **não tem um arquivo de
+arte em GRF nenhum desta máquina** — nem o manto, nem os 4 arquivos de item.
+O bRO conhece só o nome da pasta (`ROBE_Stellar_Gratia`, View 248) e não tem a
+pasta. Pôr assim entrega caixa de erro ao jogador (§4.4).
+
+Sobram duas saídas, e as duas são decisão dele:
+
+- **dar a ela o desenho de outro manto** — é o que o `View:` de
+  `db/guerra/item_db.yml` já faz para os doze mantos reapontados, e o custo é
+  um dos 28 slots doadores que restam. A peça deixaria de parecer o que o nome
+  diz;
+- **deixá-la fora**, como está a Ferramenta Mágica de Gelo (490029) desde
+  2026-08-20, pelo mesmo motivo.
+
+Não há terceira: a arte não existe ao nosso alcance, e trazê-la de fora do bRO
+é o que a §4.3 proíbe.
+
+## 1ak. Oito itens com o nome em inglês só no servidor (achado em 2026-09-12)
+
+Achados de passagem ao rodar o `nomes_pt_item_db.py`. **Nenhum foi tocado** —
+mexer neles é decidir o nome de oito peças, e não era o pedido.
+
+Nos oito o cliente desenha português e o `item_db` responde inglês, então
+`getitemname()` num diálogo de NPC diz uma coisa e a bolsa do jogador diz
+outra:
+
+| id | servidor | cliente |
+|---|---|---|
+| 6814 | `Swordman Soul` | Alma de Espadachim |
+| 6815 | `Merchant Soul` | Alma de Mercador |
+| 6816 | `Thief Soul` | Alma de Gatuno |
+| 6817 | `Mage Soul` | Alma de Mago |
+| 6818 | `Archer Soul` | Alma de Arqueiro |
+| 6819 | `Acolyte Soul` | Alma de Noviço |
+| 13139 | `Blue Gun` | Revólver de Oxum |
+| 2979 | `Strawberry Decoration` | Morango Cristalizado |
+
+**A causa é a mesma do Amuleto de Ziegfried**, que foi consertado no mesmo dia
+(ver `HISTORICO.md` e a §5): os oito têm bloco em `db/guerra/item_db.yml` sem
+`Name:`, e o `nomes_pt_item_db.py` pula todo id daquele arquivo. O conserto é
+uma linha `Name:` em cada bloco — ou ensinar o script a pular só quem
+**declara** `Name:`, que resolveria os oito de uma vez e é a saída mais limpa.

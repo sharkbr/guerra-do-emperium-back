@@ -238,3 +238,27 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   de ninguém, e depois de os dois rodarem ele fica duplicado no arquivo — foi
   preciso apagá-lo à mão uma vez, e um `mob_skill_db` com linha repetida dá
   ao monstro a habilidade duas vezes, também sem erro.
+
+- **O `nomes_pt_item_db.py` DESFAZ o nome em português de um item que ganhou
+  bloco em `db/guerra/item_db.yml` depois.** Ele pula todo id que aparece
+  naquele arquivo — o balde `nossos` —, com a premissa de que item nosso "já
+  nasce em português, com nome escolhido por nós". A premissa vale para item
+  **nosso**; não vale para o **override de item do vendor**, que é o que
+  aquele arquivo passou a ter aos montes (43 ids em 2026-09-12, contra o 1 de
+  quando o script foi escrito).
+
+  Pulado, o id não recebe o português do cliente — e como o script reescreve o
+  `db/re/` a partir do `.INGLES`, o nome **volta para o inglês do vendor**. Em
+  2026-09-12 uma rodada de rotina devolveu o Amuleto de Ziegfried (7621) a
+  *"Token Of Siegfried"*: ele tinha ganho um bloco de três linhas em
+  2026-09-10 (o `NoMail: false` do RODEX) e nenhuma delas era `Name:`.
+
+  **Não dá erro e não aparece na bolsa** — quem desenha ali é o cliente, que
+  continua em português. Só o diálogo de NPC muda, porque `getitemname()` lê o
+  servidor.
+
+  A saída é escrever `Name:` no próprio bloco de `db/guerra/item_db.yml`, que
+  é o que os blocos de manto já faziam por outro motivo. **Ao dar bloco novo a
+  um item do vendor, a pergunta é "ele tem nome em português no `db/re/`?" —
+  se tem, o bloco precisa repeti-lo.** Rodar `nomes_pt_item_db.py --relatar` e
+  olhar o `git diff` do `db/re/` depois de gravar é o que denuncia.
