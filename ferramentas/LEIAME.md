@@ -4377,3 +4377,84 @@ elenco fixo não é labirinto, é rota.
 `conf/guerra/mapas_guerra.txt`), a taxa da Mente Maligna (`db/guerra/
 mob_db_guerra.yml`) e os NPCs de economia (`npc/guerra/valquirias_de_
 malangdo.txt`, escrito à mão).
+
+## `monta_ilusao_do_labirinto.py` — os 14 monstros e o mapa da Ilusão do Labirinto
+
+```
+python monta_ilusao_do_labirinto.py             # gera os três arquivos
+python monta_ilusao_do_labirinto.py --conferir  # sai 1 se algo divergir
+```
+
+Gera `db/guerra/mob_db_labirinto.yml` (os monstros), a seção `LABIRINTO` de
+`db/import/mob_skill_db.txt` (as habilidades) e
+`npc/guerra/ilusao_do_labirinto_mapa.txt` (os 61 portais e o povoamento das 25
+salas). A **mecânica** — a Fenda Retorcida, os quatro Noviços, o Bafomé
+Caótico — é escrita à mão em `npc/guerra/ilusao_do_labirinto.txt`.
+
+### O problema
+
+Os monstros da Ilusão do Labirinto — ids **20520 a 20533** — são *placeholder
+comentado* no `db/re/mob_db.yml` do vendor: duas linhas cada um, `Id` e
+`AegisName`, sem um status. O mapa `prt_mz03_i` já estava ligado e o cliente o
+tem inteiro; o que não existia era o conteúdo.
+
+**A diferença para a Glast Heim Sombria** (`monta_mobs_da_sombria.py`) é que lá
+havia regra de derivação — o `_H` é o monstro normal com Level +30, HP x2, EXP
+x2 — e aqui **não há**: são monstros próprios, de nível 172 a 178. Então os
+números não são derivados, são **medidos**, um a um, no divine-pride.
+
+### O que a ferramenta faz que não é copiar
+
+Três coisas, e são elas que justificam a ferramenta existir:
+
+1. **Inverte o `Attack` e o `Attack2`.** Ninguém publica esses campos — o
+   divine-pride mostra a faixa **já calculada**. A fórmula do renewal
+   (`status.cpp:2524` e `:2543`) é invertível e a inversão tem **solução
+   inteira única** nos catorze. A fórmula foi conferida antes num monstro que
+   existe dos dois lados (`ILL_MERMAN`, 20805). Ver `ARMADILHAS-RATHENA.md`.
+
+2. **Copia a fiação dos portais do `prt_maze03` e a valida.** O chão do
+   `prt_mz03_i` está partido em 26 pedaços que não se tocam; quem liga sala a
+   sala são 61 portais. A ferramenta lê o `map_cache.dat` do próprio servidor,
+   confere que origem **e** destino dos 61 são andáveis no mapa ilusional, e
+   que as 25 salas se alcançam a partir da entrada — e **recusa gerar** se
+   deixarem de valer. O povoamento é por sala, com o centro numa célula
+   andável de verdade (centro em parede faz o `mob_spawn` sortear no mapa
+   inteiro, `mob.cpp:1152`).
+
+3. **Conserta as invocações.** Copiar habilidade crua leva o id do escravo do
+   monstro **original**: o Ghostring Caótico herdou um `onspawn -> 1186` e
+   encheu o mapa de 250 Cochichos de nível 66. Aqui, escravo com contraparte
+   ilusional vira a contraparte (1101 → 20525, 1431 → 20533) e escravo sem
+   contraparte tem a linha descartada — o que bate com a aba Skills do kRO.
+
+### As três constantes que se mexe
+
+No topo do arquivo: `POR_SALA` (quantos de cada tipo comum por sala; 2 dá 400
+monstros no mapa), `RENASCE` (o renascimento em ms) e `ENTRADA`/`SAIDA_*` (por
+onde se entra e para onde a greta de volta leva).
+
+### Depois de rodar
+
+Reiniciar o map-server (ou `@reloadmobdb` + `@reloadscript`). O `--conferir`
+também cobra o `- Path:` no rodapé do `db/re/mob_db.yml`, as duas linhas `npc:`
+no `scripts_guerra.conf` e a exceção `!/db/import/mob_skill_db.txt` no
+`rathena/.gitignore`.
+
+## `secao_de_arquivo.py` — quando um arquivo gerado tem mais de um dono
+
+Módulo, não ferramenta de linha de comando. Duas funções, `le` e `troca`, que
+leem e substituem uma seção marcada:
+
+```
+//>>> INICIO SOMBRIA
+...
+//<<< FIM SOMBRIA
+```
+
+Existe por causa do `db/import/mob_skill_db.txt`, que desde 2026-09-11 é
+escrito por dois geradores — o da Sombria e o do Labirinto — e não tem para
+onde se dividir: o `mob_readskilldb` (`src/map/mob.cpp:7184`) lê `db/re/` e
+`db/import/` e mais nada. Cada gerador troca só a sua seção e preserva o resto
+byte a byte; o `--conferir` de cada um compara só a própria seção. Ver
+`ARMADILHAS-AMBIENTE.md` para o que acontece quando não se faz isso.

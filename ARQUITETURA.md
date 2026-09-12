@@ -840,3 +840,37 @@ A conta de memória por clone, para refazer: `cell` = `xs·ys·2` bytes
 `src/config/core.hpp:31`), mais `block` e `block_mob`, cada um
 `(xs/8)·(ys/8)·8` bytes. **Não inclui mobs nem NPCs da rodada**, que somam por
 cima e não foram medidos.
+
+### Um calabouço de labirinto vive em 4 lugares, e 3 deles são gerados do mapa
+
+Estreou com a Ilusão do Labirinto (`prt_mz03_i`) em 2026-09-11.
+
+| # | Onde | O que põe | Ferramenta |
+|---|---|---|---|
+| 1 | `db/guerra/mob_db_labirinto.yml` | os 14 monstros | `monta_ilusao_do_labirinto.py` |
+| 2 | `db/import/mob_skill_db.txt`, seção `LABIRINTO` | as habilidades deles | a mesma |
+| 3 | `npc/guerra/ilusao_do_labirinto_mapa.txt` | os 61 portais e o povoamento das 25 salas | a mesma |
+| 4 | `npc/guerra/ilusao_do_labirinto.txt` | a missão de acesso (6 NPCs + 4 Restos), a porta, os 4 Noviços, o MVP e a invencibilidade | à mão |
+
+Mais o `- Path:` no rodapé de `db/re/mob_db.yml` e as duas linhas `npc:` no
+`scripts_guerra.conf` — o `--conferir` da ferramenta reprova se faltar
+qualquer um dos dois.
+
+**O acoplamento que não se vê é o 2.** Aquele arquivo tem **dois donos** — a
+Glast Heim Sombria e este —, e não há segundo arquivo para onde correr: o
+`mob_readskilldb` lê `db/re/` e `db/import/` e mais nada. Por isso cada
+gerador troca só a sua seção, pelo `ferramentas/secao_de_arquivo.py`. Um
+gerador que reescreva o arquivo inteiro apaga as habilidades do outro **sem
+erro nenhum** — o monstro continua nascendo, só para de conjurar.
+
+**E há um quinto lugar que não é arquivo: o `loadevent`.** A missão esconde a
+Fenda, os quatro recrutas e os quatro Restos por jogador, e revelação por
+jogador morre na troca de mapa — então os dois mapas levam `mapflag loadevent`
+e há um `OnPCLoadMapEvent` que redecide quem vê o quê. Mexer na missão sem
+mexer no vigia deixa a porta sumindo para quem já a mereceu.
+
+**E o 3 depende do MAPA, não do gosto de quem escreve.** Os portais são os do
+`prt_maze03` do vendor, validados célula a célula contra o `map_cache.dat`; o
+povoamento é por sala porque o chão está partido em 26 pedaços. Se um dia o
+`map_cache` mudar — mapa novo do cliente, atualização do vendor — a ferramenta
+**recusa gerar** em vez de publicar labirinto sem saída.

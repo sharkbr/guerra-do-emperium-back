@@ -4452,3 +4452,109 @@ E o reinício é o que dispensa recarregador nenhum: o `@reloaditemdb` **antes**
 `@reloadscript` só seria preciso para aplicar isto com o servidor no ar (item
 novo sem o primeiro some da vitrine calado, `CLAUDE.md` §5). Pelo
 `implanta.sh` os quatro sobem do zero e leem tudo.
+
+## 1ai. A Ilusão do Labirinto — falta ver em jogo, e falta a economia (2026-09-11)
+
+A caverna está de pé no servidor local: 14 monstros, 61 portais, 400 monstros
+comuns nas 25 salas, os quatro Noviços e o Bafomé Caótico. O que foi conferido
+**pelo servidor** (sonda de `debugmes`, com o mapa carregado): os catorze
+carregam, os quatro Noviços nascem nas coordenadas do bRO, o mapa fica com 400
+comuns, e nenhum aviso de spawn ou de script no `log/map-msg_log.log`.
+
+**Nada disso foi visto por olho humano numa tela.** O que falta ver em jogo:
+
+0. **A missão de acesso inteira** (escrita na tarde de 2026-09-11, depois de o
+   dono entrar sem ela): a Irene na porta (`prt_fild01 136,370`), o Membro do
+   Clã Irene dentro do labirinto (`prt_maze01 99,20`), a Líder do Clã
+   Esmeralda em Prontera (`212,320`), os quatro Restos e as sete etapas. O que
+   mais precisa de olho:
+   - se a **Fenda não aparece** para quem não começou, e se **aparece** assim
+     que Esmeralda a revela — e, sobretudo, se ela **continua aparecendo**
+     depois de sair do mapa e voltar (é o vigia do `OnPCLoadMapEvent` que
+     responde por isso, e é a armadilha nova do `ARMADILHAS-SCRIPT.md`);
+   - se a **barra de conjuração** dos Restos é interrompida por dano de
+     verdade, com monstro de nível 177 em volta. No código o `progressbar`
+     morre no `pc_damage`, mas ninguém apanhou ainda para conferir;
+   - se o teleporte de saída, ao pegar o quarto Resto, cai ao lado de
+     Esmeralda (`prt_maze01 99,25`);
+   - se os quatro recrutas aparecem na entrada no passo 6 e **somem para quem
+     não fez a missão**;
+   - os sprites: `4_F_ERENE` (Membro do Clã Irene) e `4_F_08` (Líder do Clã
+     Esmeralda), os dois passados pelo dono em 2026-09-12; `4_F_ACOLYTE` na
+     Irene da porta, que ele conferiu e mandou não mexer; os **view ids dos
+     próprios monstros** 20521..20524 nos quatro recrutas, e `4_GHOST_STAND`
+     nos Restos. Todos conferidos no `npc.hpp` e no `npcidentity.lub`, mas
+     **arte conferida offline não é arte na tela** (§5).
+
+**E os quatro recrutas passaram a depender de PATCH.** Sprite de monstro num
+NPC resolve para `data\sprite\npc\<nome>.spr`, e a arte dos quatro só existia
+na pasta de monstro — é a armadilha dos Agentes da Liga. Os oito arquivos
+(`ill_andrea`, `ill_anes`, `ill_silvano`, `ill_cecilia`, `.spr` + `.act`)
+foram copiados do próprio `data.grf` para `cliente\data\sprite\npc\`, o que
+resolve **nesta máquina**. Para o jogador eles só existem depois de um
+`monta_patch.py` — e sem eles o que aparece é caixa de erro, não NPC sem
+sprite. É a §4.18, e é a única coisa desta caverna que precisa de patch.
+2. **A Fenda Retorcida** em `prt_maze01 99,23` — se o sprite
+   (`4_ENERGY_WHITE`) desenha, se o texto cabe, e se a trava de nível 170
+   recusa quem deve recusar;
+2. **A entrada e a volta** — entrar cai em `182,88`; a greta de volta fica em
+   `182,85` e devolve para `prt_maze01 99,25`. As duas são células andáveis
+   pelo `map_cache`, mas ninguém pisou nelas;
+3. **Os portais** — são 61, e quatro deles sorteiam o destino entre quatro. A
+   ferramenta prova que origem e destino são andáveis e que as 25 salas se
+   alcançam; o que ela **não** prova é que a área de toque de cada um pega
+   como deve. Caminhar de uma ponta à outra é o teste;
+4. **A invencibilidade do MVP** — os 10 segundos, a fala, o efeito, e se o "1
+   de dano" fica legível como mecânica e não como defeito. É o ponto da §4.21
+   e o que mais depende de ver na tela;
+5. **O renascimento de uma hora** dos Noviços e a reposição uma hora depois da
+   queda do MVP. São os dois prazos que ninguém vai esperar de propósito —
+   conferir pelo NPC, que lista quantos recrutas estão vagando;
+6. **O nome dos monstros na tela** — as linhas de spawn usam `--ja--`, então o
+   que deve aparecer é o `JapaneseName` (Bafinho Caótico, Sorrateiro Caótico,
+   Louva-Caos...). Se aparecer em inglês, é a armadilha da §5.
+
+E falta o **deploy**, como todo o resto — isto é servidor puro, não precisa de
+patch de cliente.
+
+### A segunda rodada: a economia
+
+Decidida com o dono no começo desta: primeiro a caverna, depois a economia.
+Fica para ela, e os números já estão medidos:
+
+- **o drop de mapa.** No bRO cada monstro do `prt_mz03_i` derruba, além do
+  drop normal, uma peça ilusional a **0,25%**, a **Pedra Ilusional** (25271) a
+  **0,1%** e o **Cubo do Labirinto** (100423) a **0,05%**. Cada monstro tem a
+  sua peça: Bafinho e Talo derrubam o Brilho Ilusional, Sorrateiro e Poporing
+  o Bazerald, os dois Mantis a Retalhadora, Mosca e Ghostring a Tae Goo Lyeon.
+  Isso mora em `map_drops.yml`, e aqui tem uma dobra: **drop de mapa não passa
+  pela taxa do servidor** (§5), e o nosso `db/guerra/map_drops.yml` é gerado
+  por `escala_drops_de_mapa.py` como espelho 50x do arquivo do vendor — que
+  não tem o `prt_mz03_i`. Ou seja: **não basta acrescentar, é preciso decidir
+  onde o nosso lado do mapa vive** antes de escrever a primeira linha;
+- **as missões diárias e semanais.** O Andrea dá as diárias
+  (`prt_maze01 97,21`), a Agnes as semanais (`97,25`) e o Silvano recebe o
+  relato (`101,25`). As doze missões e as recompensas estão na página do
+  bROwiki, e o dono tem os prints;
+- **a fabricação.** A Esmeralda (`prt_fild01 141,367`) troca equipamento +9
+  mais Pedras Ilusionais pelas oito peças ilusionais. Exige refino +9 e, em
+  alguns casos, cova;
+A **missão de acesso saiu desta lista**: foi escrita na tarde do mesmo dia, a
+pedido do dono, e está no `HISTORICO.md`.
+
+**Os quatro Noviços estão sem habilidade nenhuma.** Eles não têm monstro
+original de onde copiar, e o divine-pride publica a lista deles (a Agnes tem
+Pneuma, Chain Heal, Heal, Silêncio, Diminuir Agilidade, Muralha Sagrada,
+Teleporte e Golpe Fatal) — falta transcrever as colunas de taxa e estado para
+o `mob_skill_db`. Não impede nada: hoje eles batem e só.
+
+### E há uma ponta solta do vendor, que não é nossa
+
+A quest **3465** ("Illusion of Labyrinth 100 Kills") está **comentada** no
+`db/re/quest_db.yml` do rAthena, porque os alvos dela eram monstros que não
+existiam. Agora existem. Enquanto ela estiver comentada, o **Terrian**
+(`prt_fild01 131,364`, arquivo do vendor, hoje no ar) dá uma missão que faz
+`setquest 3465` de uma quest que o servidor não conhece. Descomentá-la é uma
+linha do nosso lado (`db/guerra/quest_db.yml`), mas **quest que o cliente não
+conhece derruba o cliente** (§5) — então antes disso é preciso passar pelo
+`monta_missoes_da_ordem.py`, ou confirmar que este cliente já tem a 3465.

@@ -204,3 +204,23 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   produz um arquivo de trabalho com as duas misturadas.
 
 - Ferramentas rodam em **Python 2.7** (`C:\Python27\python.exe`).
+
+- **Dois geradores que escrevem o MESMO arquivo se apagam em silêncio.** O
+  `db/import/mob_skill_db.txt` é o único lugar onde habilidade de monstro
+  nossa pode morar — o `mob_skill_db.txt` não é YAML, não tem rodapé
+  `Footer: Imports:`, e o `mob_readskilldb` (`src/map/mob.cpp:7184`) lê de
+  `db/re/` e `db/import/` e mais nada. Desde 2026-09-11 ele tem **dois**
+  donos: o `monta_mobs_da_sombria.py` e o `monta_ilusao_do_labirinto.py`.
+
+  Um gerador que reescreva o arquivo inteiro leva os monstros do outro junto,
+  e **nada denuncia**: monstro sem linha ali simplesmente não conjura. O
+  servidor sobe, o mapa povoa, o bicho anda e bate — só não usa habilidade
+  nenhuma. Ninguém abre um chamado por isso.
+
+  A saída é o `ferramentas/secao_de_arquivo.py`: cada gerador troca só a sua
+  seção, entre `//>>> INICIO <NOME>` e `//<<< FIM <NOME>`, e preserva o resto
+  byte a byte; o `--conferir` de cada um compara só a própria seção. **Na
+  migração cuidado com a sobra**: o conteúdo que já estava lá sem marca não é
+  de ninguém, e depois de os dois rodarem ele fica duplicado no arquivo — foi
+  preciso apagá-lo à mão uma vez, e um `mob_skill_db` com linha repetida dá
+  ao monstro a habilidade duas vezes, também sem erro.

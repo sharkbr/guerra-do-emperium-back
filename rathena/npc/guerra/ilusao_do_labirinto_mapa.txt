@@ -1,0 +1,362 @@
+//===== Guerra do Emperium ===================================
+//= Ilusao do Labirinto - portais e povoamento de prt_mz03_i
+//===========================================================
+//= ARQUIVO GERADO por ferramentas/monta_ilusao_do_labirinto.py.
+//= Editar a mao funciona ate a proxima geracao, que apaga tudo.
+//=
+//= A MECANICA NAO ESTA AQUI. A Fenda Retorcida, os quatro
+//= Novicos, o Bafome Caotico e a invencibilidade dele moram em
+//= npc/guerra/ilusao_do_labirinto.txt, que e escrito a mao.
+//=
+//= POR QUE O POVOAMENTO E SALA A SALA, E NAO `0,0`
+//=
+//= O chao andavel deste mapa esta partido em 26 pedacos que nao
+//= se tocam nem na diagonal - e um labirinto de portais, como o
+//= prt_maze03 de onde ele foi desenhado. 25 sao salas de verdade
+//= e o resto e ruido de borda. Spawn com `0,0` sorteia no ruido, e
+//= monstro sorteado la fica INALCANCAVEL sem uma linha de erro -
+//= e a armadilha do vis_h01, na secao 5 do CLAUDE.md.
+//=
+//= Cada sala recebe 2 de cada um dos 8 tipos comuns.
+//=
+//= Em spawn com area, `<xs>,<ys>` e RAIO+1 e nao lado: o mob_spawn
+//= chama map_search_freecell com xs-1 (mob.cpp:1149). As areas
+//= daqui sao a caixa exata de cada sala, calculada do map_cache.
+//=
+//= OS PORTAIS
+//=
+//= Sao os 61 portais internos que o vendor escreve para o
+//= prt_maze03, com o mesmo numero no nome (mazewarp5301 ->
+//= ilusaolab5301). Os dois mapas diferem em 340 celulas de 40.000, e
+//= o gerador confere que origem E destino dos 61 sao andaveis aqui,
+//= e que as 25 salas se alcancam a partir da entrada. Se um dia
+//= deixarem de ser, ele recusa gerar em vez de publicar labirinto
+//= sem saida.
+//=
+//= Fora do povoamento (ruido de borda, nenhum portal chega la):
+//=   pedaco 0, 399 celulas
+//===========================================================
+
+// --------------------------------------------------- portais
+prt_mz03_i,22,194,0	warp	ilusaolab5301	1,1,prt_mz03_i,175,48
+prt_mz03_i,5,186,0	warp	ilusaolab5302	1,1,prt_mz03_i,151,134
+prt_mz03_i,58,194,0	script	#ilusaolab5303	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;
+		case 1: warp "prt_mz03_i",137,128; end;
+		case 2: warp "prt_mz03_i",14,71; end;
+		case 3: warp "prt_mz03_i",54,8; end;
+	}
+}
+prt_mz03_i,102,165,0	warp	ilusaolab5304	1,1,prt_mz03_i,137,71
+prt_mz03_i,85,174,0	warp	ilusaolab5305	1,1,prt_mz03_i,14,47
+prt_mz03_i,154,181,0	warp	ilusaolab5306	1,1,prt_mz03_i,139,48
+prt_mz03_i,125,171,0	warp	ilusaolab5307	1,1,prt_mz03_i,105,111
+prt_mz03_i,175,165,0	warp	ilusaolab5308	1,1,prt_mz03_i,71,12
+prt_mz03_i,194,175,0	warp	ilusaolab5309	1,1,prt_mz03_i,191,139
+prt_mz03_i,18,154,0	warp	ilusaolab5310	1,1,prt_mz03_i,48,21
+prt_mz03_i,23,125,0	warp	ilusaolab5311	1,1,prt_mz03_i,177,71
+prt_mz03_i,5,140,0	warp	ilusaolab5312	1,1,prt_mz03_i,111,56
+prt_mz03_i,54,154,0	warp	ilusaolab5313	1,1,prt_mz03_i,142,111
+prt_mz03_i,63,125,0	warp	ilusaolab5314	1,1,prt_mz03_i,88,97
+prt_mz03_i,98,154,0	warp	ilusaolab5315	1,1,prt_mz03_i,99,31
+prt_mz03_i,114,145,0	warp	ilusaolab5316	1,1,prt_mz03_i,168,22
+prt_mz03_i,85,146,0	warp	ilusaolab5317	1,1,prt_mz03_i,22,88
+prt_mz03_i,137,125,0	warp	ilusaolab5318	1,1,prt_mz03_i,71,71
+prt_mz03_i,154,134,0	warp	ilusaolab5319	1,1,prt_mz03_i,8,186
+prt_mz03_i,194,139,0	warp	ilusaolab5320	1,1,prt_mz03_i,191,175
+prt_mz03_i,166,139,0	warp	ilusaolab5321	1,1,prt_mz03_i,63,88
+prt_mz03_i,17,114,0	warp	ilusaolab5322	1,1,prt_mz03_i,128,105
+prt_mz03_i,22,85,0	warp	ilusaolab5323	1,1,prt_mz03_i,88,146
+prt_mz03_i,63,114,0	warp	ilusaolab5324	1,1,prt_mz03_i,14,71
+prt_mz03_i,63,85,0	warp	ilusaolab5325	1,1,prt_mz03_i,169,139
+prt_mz03_i,74,97,0	warp	ilusaolab5326	1,1,prt_mz03_i,54,8
+prt_mz03_i,45,104,0	warp	ilusaolab5327	1,1,prt_mz03_i,96,48
+prt_mz03_i,105,114,0	warp	ilusaolab5328	1,1,prt_mz03_i,128,171
+prt_mz03_i,114,95,0	warp	ilusaolab5329	1,1,prt_mz03_i,176,8
+prt_mz03_i,85,97,0	warp	ilusaolab5330	1,1,prt_mz03_i,63,128
+prt_mz03_i,142,114,0	warp	ilusaolab5331	1,1,prt_mz03_i,54,151
+prt_mz03_i,125,105,0	warp	ilusaolab5332	1,1,prt_mz03_i,58,191
+prt_mz03_i,194,94,0	warp	ilusaolab5334	1,1,prt_mz03_i,151,22
+prt_mz03_i,168,94,0	warp	ilusaolab5335	1,1,prt_mz03_i,191,54
+prt_mz03_i,14,74,0	warp	ilusaolab5336	1,1,prt_mz03_i,63,111
+prt_mz03_i,14,45,0	warp	ilusaolab5337	1,1,prt_mz03_i,88,174
+prt_mz03_i,5,58,0	warp	ilusaolab5338	1,1,prt_mz03_i,191,15
+prt_mz03_i,74,74,0	script	#ilusaolab5339	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;
+		case 1: warp "prt_mz03_i",137,128; end;
+		case 2: warp "prt_mz03_i",14,71; end;
+		case 3: warp "prt_mz03_i",54,8; end;
+	}
+}
+prt_mz03_i,52,45,0	warp	ilusaolab5340	1,1,prt_mz03_i,16,31
+prt_mz03_i,104,74,0	warp	ilusaolab5341	1,1,prt_mz03_i,111,22
+prt_mz03_i,96,45,0	warp	ilusaolab5342	1,1,prt_mz03_i,48,104
+prt_mz03_i,114,56,0	warp	ilusaolab5343	1,1,prt_mz03_i,8,140
+prt_mz03_i,85,56,0	warp	ilusaolab5344	1,1,prt_mz03_i,176,31
+prt_mz03_i,137,74,0	warp	ilusaolab5345	1,1,prt_mz03_i,102,168
+prt_mz03_i,139,45,0	script	#ilusaolab5346	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;
+		case 1: warp "prt_mz03_i",137,128; end;
+		case 2: warp "prt_mz03_i",14,71; end;
+		case 3: warp "prt_mz03_i",54,8; end;
+	}
+}
+prt_mz03_i,177,74,0	warp	ilusaolab5347	1,1,prt_mz03_i,23,128
+prt_mz03_i,175,45,0	warp	ilusaolab5348	1,1,prt_mz03_i,22,191
+prt_mz03_i,194,54,0	warp	ilusaolab5349	1,1,prt_mz03_i,171,94
+prt_mz03_i,16,34,0	warp	ilusaolab5350	1,1,prt_mz03_i,52,48
+prt_mz03_i,23,5,0	warp	ilusaolab5351	1,1,prt_mz03_i,88,13
+prt_mz03_i,54,5,0	warp	ilusaolab5352	1,1,prt_mz03_i,71,97
+prt_mz03_i,74,12,0	warp	ilusaolab5353	1,1,prt_mz03_i,175,168
+prt_mz03_i,45,21,0	warp	ilusaolab5354	1,1,prt_mz03_i,18,151
+prt_mz03_i,99,34,0	warp	ilusaolab5355	1,1,prt_mz03_i,98,151
+prt_mz03_i,114,22,0	warp	ilusaolab5356	1,1,prt_mz03_i,104,71
+prt_mz03_i,85,13,0	warp	ilusaolab5357	1,1,prt_mz03_i,23,8
+prt_mz03_i,154,22,0	script	#ilusaolab5358	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;
+		case 1: warp "prt_mz03_i",137,128; end;
+		case 2: warp "prt_mz03_i",14,71; end;
+		case 3: warp "prt_mz03_i",54,8; end;
+	}
+}
+prt_mz03_i,176,34,0	warp	ilusaolab5359	1,1,prt_mz03_i,88,56
+prt_mz03_i,176,5,0	warp	ilusaolab5360	1,1,prt_mz03_i,111,95
+prt_mz03_i,194,15,0	warp	ilusaolab5361	1,1,prt_mz03_i,8,58
+prt_mz03_i,165,22,0	warp	ilusaolab5362	1,1,prt_mz03_i,111,145
+
+// A saida. No prt_maze03 esta celula leva ao andar de baixo; aqui ela
+// devolve o jogador para o lado de fora da Fenda Retorcida.
+prt_mz03_i,182,85,0	warp	ilusaolabsaida	1,1,prt_maze01,99,25
+
+// ------------------------------------------------ povoamento
+// O nome na tela vem da TERCEIRA COLUNA, e nao do mob_db: `--ja--`
+// e o que manda usar o JapaneseName, que e onde esta o portugues.
+// sala 1 - 466 celulas, de 10,4 a 30,35
+prt_mz03_i,16,21,15,18	monster	--ja--	20525,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20526,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20527,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20528,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20529,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20530,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20531,2,5000
+prt_mz03_i,16,21,15,18	monster	--ja--	20532,2,5000
+// sala 2 - 511 celulas, de 44,4 a 75,30
+prt_mz03_i,59,13,17,18	monster	--ja--	20525,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20526,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20527,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20528,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20529,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20530,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20531,2,5000
+prt_mz03_i,59,13,17,18	monster	--ja--	20532,2,5000
+// sala 3 - 386 celulas, de 84,4 a 115,35
+prt_mz03_i,89,13,27,23	monster	--ja--	20525,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20526,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20527,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20528,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20529,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20530,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20531,2,5000
+prt_mz03_i,89,13,27,23	monster	--ja--	20532,2,5000
+// sala 4 - 544 celulas, de 164,4 a 195,35
+prt_mz03_i,176,8,20,28	monster	--ja--	20525,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20526,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20527,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20528,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20529,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20530,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20531,2,5000
+prt_mz03_i,176,8,20,28	monster	--ja--	20532,2,5000
+// sala 5 - 549 celulas, de 126,5 a 155,35
+prt_mz03_i,148,21,23,17	monster	--ja--	20525,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20526,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20527,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20528,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20529,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20530,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20531,2,5000
+prt_mz03_i,148,21,23,17	monster	--ja--	20532,2,5000
+// sala 6 - 402 celulas, de 4,44 a 27,75
+prt_mz03_i,14,56,14,20	monster	--ja--	20525,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20526,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20527,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20528,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20529,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20530,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20531,2,5000
+prt_mz03_i,14,56,14,20	monster	--ja--	20532,2,5000
+// sala 7 - 627 celulas, de 46,44 a 75,75
+prt_mz03_i,68,65,23,22	monster	--ja--	20525,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20526,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20527,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20528,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20529,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20530,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20531,2,5000
+prt_mz03_i,68,65,23,22	monster	--ja--	20532,2,5000
+// sala 8 - 576 celulas, de 84,44 a 115,75
+prt_mz03_i,96,48,20,28	monster	--ja--	20525,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20526,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20527,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20528,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20529,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20530,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20531,2,5000
+prt_mz03_i,96,48,20,28	monster	--ja--	20532,2,5000
+// sala 9 - 668 celulas, de 129,44 a 150,75
+prt_mz03_i,138,57,13,19	monster	--ja--	20525,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20526,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20527,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20528,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20529,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20530,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20531,2,5000
+prt_mz03_i,138,57,13,19	monster	--ja--	20532,2,5000
+// sala 10 - 556 celulas, de 166,44 a 195,75
+prt_mz03_i,175,49,21,27	monster	--ja--	20525,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20526,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20527,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20528,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20529,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20530,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20531,2,5000
+prt_mz03_i,175,49,21,27	monster	--ja--	20532,2,5000
+// sala 11 - 333 celulas, de 11,84 a 28,115
+prt_mz03_i,18,109,11,26	monster	--ja--	20525,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20526,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20527,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20528,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20529,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20530,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20531,2,5000
+prt_mz03_i,18,109,11,26	monster	--ja--	20532,2,5000
+// sala 12 - 612 celulas, de 44,84 a 75,115
+prt_mz03_i,62,92,19,24	monster	--ja--	20525,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20526,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20527,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20528,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20529,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20530,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20531,2,5000
+prt_mz03_i,62,92,19,24	monster	--ja--	20532,2,5000
+// sala 13 - 457 celulas, de 124,84 a 152,115
+prt_mz03_i,142,106,19,23	monster	--ja--	20525,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20526,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20527,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20528,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20529,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20530,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20531,2,5000
+prt_mz03_i,142,106,19,23	monster	--ja--	20532,2,5000
+// sala 14 - 379 celulas, de 167,84 a 195,106
+prt_mz03_i,182,93,16,14	monster	--ja--	20525,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20526,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20527,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20528,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20529,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20530,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20531,2,5000
+prt_mz03_i,182,93,16,14	monster	--ja--	20532,2,5000
+// sala 15 - 493 celulas, de 84,91 a 115,115
+prt_mz03_i,95,96,21,20	monster	--ja--	20525,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20526,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20527,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20528,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20529,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20530,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20531,2,5000
+prt_mz03_i,95,96,21,20	monster	--ja--	20532,2,5000
+// sala 16 - 404 celulas, de 4,124 a 29,155
+prt_mz03_i,20,128,17,28	monster	--ja--	20525,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20526,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20527,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20528,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20529,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20530,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20531,2,5000
+prt_mz03_i,20,128,17,28	monster	--ja--	20532,2,5000
+// sala 17 - 485 celulas, de 48,124 a 69,155
+prt_mz03_i,58,142,12,19	monster	--ja--	20525,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20526,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20527,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20528,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20529,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20530,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20531,2,5000
+prt_mz03_i,58,142,12,19	monster	--ja--	20532,2,5000
+// sala 18 - 460 celulas, de 129,124 a 155,155
+prt_mz03_i,136,128,20,28	monster	--ja--	20525,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20526,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20527,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20528,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20529,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20530,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20531,2,5000
+prt_mz03_i,136,128,20,28	monster	--ja--	20532,2,5000
+// sala 19 - 603 celulas, de 164,129 a 195,150
+prt_mz03_i,171,138,25,13	monster	--ja--	20525,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20526,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20527,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20528,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20529,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20530,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20531,2,5000
+prt_mz03_i,171,138,25,13	monster	--ja--	20532,2,5000
+// sala 20 - 383 celulas, de 84,133 a 115,155
+prt_mz03_i,102,143,19,13	monster	--ja--	20525,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20526,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20527,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20528,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20529,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20530,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20531,2,5000
+prt_mz03_i,102,143,19,13	monster	--ja--	20532,2,5000
+// sala 21 - 514 celulas, de 4,164 a 31,195
+prt_mz03_i,22,186,19,23	monster	--ja--	20525,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20526,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20527,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20528,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20529,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20530,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20531,2,5000
+prt_mz03_i,22,186,19,23	monster	--ja--	20532,2,5000
+// sala 22 - 291 celulas, de 84,164 a 105,185
+prt_mz03_i,99,175,16,12	monster	--ja--	20525,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20526,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20527,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20528,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20529,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20530,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20531,2,5000
+prt_mz03_i,99,175,16,12	monster	--ja--	20532,2,5000
+// sala 23 - 294 celulas, de 124,164 a 155,187
+prt_mz03_i,128,173,28,15	monster	--ja--	20525,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20526,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20527,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20528,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20529,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20530,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20531,2,5000
+prt_mz03_i,128,173,28,15	monster	--ja--	20532,2,5000
+// sala 24 - 434 celulas, de 169,164 a 195,188
+prt_mz03_i,176,168,20,21	monster	--ja--	20525,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20526,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20527,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20528,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20529,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20530,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20531,2,5000
+prt_mz03_i,176,168,20,21	monster	--ja--	20532,2,5000
+// sala 25 - 313 celulas, de 45,178 a 71,195
+prt_mz03_i,58,189,14,12	monster	--ja--	20525,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20526,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20527,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20528,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20529,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20530,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20531,2,5000
+prt_mz03_i,58,189,14,12	monster	--ja--	20532,2,5000

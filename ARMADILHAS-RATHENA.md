@@ -418,3 +418,71 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   erros de senha recentes o bastante para terem chegado ao limite. **Errar
   para o lado seguro importa**: administrador que suspenda alguém por 15
   minutos vê o rótulo de trava e sabe o que fez; o contrário é que custa caro.
+
+- **Copiar as habilidades de um monstro para outro leva o ESCRAVO ERRADO
+  junto, e o mapa enche de bicho de outra era.** A linha de
+  `NPC_SUMMONSLAVE` no `mob_skill_db.txt` traz o **id do escravo** na coluna
+  `val1`, e quem copia a tabela de habilidades de um monstro base para uma
+  versão nova dele copia essa coluna sem pensar.
+
+  Medido em jogo em 2026-09-11, na estreia da Ilusão do Labirinto: o
+  Ghostring Caótico (20529, nível 173) herdou do Ghostring comum um
+  `idle,196,5,...,onspawn,0,1186` — cinco Cochichos (`WHISPER_BOSS`, nível
+  66, 2.570 de HP) **por Ghostring, no instante em que ele nasce**. Com 50
+  Ghostrings no mapa, **250 Cochichos**. O mapa tinha 654 monstros no lugar
+  dos 404 planejados.
+
+  **Nada denuncia.** Não há erro, não há aviso, e o `mobcount` do mapa conta
+  os invocados junto — o número só fica estranho para quem sabia quantos
+  monstros pôs lá. O sintoma para o jogador é pior que o número: um calabouço
+  de nível 170 povoado de monstro de campo.
+
+  A pergunta a fazer ao copiar habilidade é **"quem é o escravo, e ele existe
+  na versão nova?"**. Na Ilusão do Labirinto a regra ficou: escravo com
+  contraparte ilusional vira a contraparte (o Bafomé passou a invocar o
+  **nosso** Bafinho, 20525 e 20533, em vez do Bafinho comum); escravo sem
+  contraparte tem a linha **descartada** — e isso bateu com a aba Skills do
+  kRO nos três casos, que dá invocação ao MVP e nenhuma ao Ghostring e ao
+  Mantis ilusionais.
+
+- **Contar monstro de um mapa VAZIO devolve um número menor, e ele não é o do
+  mapa.** Com `dynamic_mobs: yes` (o padrão, e o nosso), as **128 primeiras**
+  linhas de spawn de cada mapa (`MAX_MOB_LIST_PER_MAP`, `src/map/map.hpp:72`)
+  vão para uma lista que só nasce quando um jogador entra; o que passar de
+  128 nasce na hora e fica (`npc.cpp:5392`). Num mapa com 200 linhas de
+  spawn, um `mobcount` sem jogador ali mede as 72 sobrantes e mais nada.
+
+  Medido em 2026-09-11 no `prt_mz03_i`: 234 com o mapa vazio, 400 — o número
+  certo — com `dynamic_mobs: no`. **Não é defeito**: é o que faz o servidor
+  não pagar por 400 monstros que ninguém está caçando. Mas quem for conferir
+  povoamento por sonda precisa saber disso, ou vai "consertar" spawn que está
+  certo.
+
+- **O divine-pride publica a faixa de ataque JÁ CALCULADA, e não o campo
+  `Attack` do `mob_db`.** Quem copiar o "Physical Attack: 3.767 - 5.466" da
+  página para o campo põe um número entre 1,4 e 1,5 vez maior que o certo, e
+  o monstro nasce batendo mais forte do que devia — sem nada para denunciar,
+  porque não existe valor "inválido" ali.
+
+  Para monstro, em renewal, o que a página mostra é:
+
+      faixa física mín = (Str + Level) + Attack  * 80/100   (`status.cpp:2524`)
+      faixa física máx = (Str + Level) + Attack  * 120/100  (`status.cpp:2543`)
+      faixa mágica mín = (Int + Level) + Attack2 * 70/100   (`status.cpp:2560`)
+      faixa mágica máx = (Int + Level) + Attack2 * 130/100
+
+  O `(Str + Level)` é o `status_base_atk` no ramo `default` de renewal
+  (`status.cpp:2487`), que é por onde monstro passa. **Dá para inverter**, e a
+  inversão é exata: as duas divisões inteiras só fecham juntas num valor, então
+  cada monstro tem **um único inteiro** que satisfaz as duas pontas. Foi assim
+  que saíram os `Attack` dos catorze da Ilusão do Labirinto, e a fórmula foi
+  conferida antes num monstro que existe dos dois lados (o `ILL_MERMAN`
+  20805, `Attack: 2801`: a fórmula prevê 2.547–3.668 e a página mostra
+  2.547–3.668).
+
+  **E a coluna "Element" daquela página é a tabela de resistência do kRO, não
+  a do rAthena** — ela não bate com o `db/re/attr_fix.yml` em nenhum nível,
+  então não serve para conferir o elemento de um monstro. O que serve é o
+  chip com o nome e o nível ("Dark 3", "Ghost 2"), e como segunda opinião o
+  elemento do monstro original: nos nove da Ilusão do Labirinto os dois
+  concordaram em sete.

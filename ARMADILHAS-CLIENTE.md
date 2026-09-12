@@ -669,6 +669,15 @@ segundo mapa desempata. **Validar num mapa simétrico não valida nada.**
   e o Morador do mesmo Festival passaram nessa checagem — esses o nosso GRF
   tem na pasta certa.
 
+  **E vale o dobro quando o view id escolhido é de um MONSTRO**, que é um
+  pedido comum ("o NPC tem de ser igual ao bicho"). O `poring.spr` está nas
+  **duas** pastas no GRF — `<monstro>\poring.spr` e `npc\poring.spr` —, e é
+  essa cópia que faz os NPCs de Poring dos scripts oficiais funcionarem. Ou
+  seja: o caso que dá certo dá certo por causa de uma cópia que alguém pôs
+  lá, e não porque o cliente saiba procurar na pasta de monstro. Monstro novo
+  — os da Ilusão do Labirinto, por exemplo — só tem a de monstro, e aí os
+  oito arquivos têm de ser copiados à mão (2026-09-12, os quatro recrutas).
+
 - **O padrão de fábrica das opções do cliente (`/showname` e os outros 36)
   mora em BYTECODE, e o arquivo que se acha primeiro é o errado.** São dois
   arquivos com nomes quase iguais e papéis opostos:

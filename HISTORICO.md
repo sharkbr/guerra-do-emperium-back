@@ -17923,3 +17923,249 @@ de Peso e de Traje, os cupons de estilista, a Goma de Mascar, as quatro
 Insígnias do Festival, as duas Cartas Seladas, os dois Cubos, o Cabresto. Todos
 falham do mesmo jeito calado. O Amuleto foi aberto porque foi o pedido; os
 outros 26 ficam como estão até haver decisão sobre eles.
+
+## A Ilusão do Labirinto existe (2026-09-11)
+
+O dono perguntou se a Ilusão do Labirinto já estava aqui e faltava só ligar.
+Não estava: o **mapa** estava — `prt_mz03_i` já ligado no
+`conf/maps_athena.conf` (linha 1383, descomentada), presente no
+`db/map_cache.dat`, com `.gat`, `.gnd`, `.rsw` e minimapa no cliente — e o
+**conteúdo** não existia em versão nenhuma do rAthena. Os catorze monstros
+(20520..20533) eram *placeholder comentado* no `db/re/mob_db.yml`: duas linhas
+cada, `Id` e `AegisName`, sem um status. Não havia spawn, não havia entrada, e
+a própria quest de caça (3465) está comentada no `quest_db` do vendor.
+
+Pior que não existir: **o mapa já era alcançável e estava vazio**. O nosso
+Teletransportador oferecia "Illusion of Labyrinth" e largava o jogador num mapa
+sem um monstro; e o Terrian, em `prt_fild01 131,364`, já dava a missão de matar
+100 monstros "no Labirinto Torcido, pela entrada aqui em frente" — uma entrada
+que não existia.
+
+**O que entrou nesta rodada**, decidido com o dono no começo: a caverna. Os 14
+monstros, os 61 portais, o povoamento das 25 salas, a entrada pela Fenda
+Retorcida (`prt_maze01 99,23`, a posição do bRO) com nível mínimo 170, os
+quatro Noviços e o Bafomé Caótico com a invencibilidade dele. A economia —
+Pedra Ilusional, drop de mapa e fabricação dos oito equipamentos ilusionais —
+ficou para a segunda rodada, no `PENDENCIAS.md`.
+
+### Os números são medidos, não derivados — e três deles ninguém publica
+
+Na Glast Heim Sombria havia regra: o `_H` é o monstro normal com Level +30, HP
+x2, EXP x2. **Aqui não há.** O ilusional é outro monstro, de nível 172 a 178, e
+cada campo teve de sair de algum lugar:
+
+- **status, HP, elemento, raça, tamanho e drops**: das páginas do divine-pride
+  dos catorze. Onze chegaram como screenshot do dono (em português do bRO) e
+  três por leitura direta. Onde as duas fontes se tocam elas concordam — HP e
+  defesa batem nos onze, e a lista de drops bate item a item: o "Corda Curta"
+  do print é o 25779 da página, o "Veneno de Cobra" é o 25773;
+- **`MvpExp`**: metade do `BaseExp`, que é a relação do próprio vendor no
+  Bafomé normal (1039: 218.089 e 109.044);
+- **`Attack` e `Attack2`**: **invertidos**. O divine-pride mostra a faixa já
+  calculada, e o campo não é publicado em lugar nenhum. A fórmula do renewal é
+  `(Str+Level) + Attack*80/100` a `(Str+Level) + Attack*120/100`
+  (`status.cpp:2524` e `:2543`), e as duas divisões inteiras só fecham juntas
+  num valor — **cada um dos catorze tem um único inteiro que satisfaz as duas
+  pontas**. A fórmula foi conferida antes num monstro que existe dos dois
+  lados, o `ILL_MERMAN` (20805): prevê 2.547–3.668 e a página mostra
+  2.547–3.668;
+- **tempos de andar e atacar**: do monstro original. Isso também foi medido,
+  porque o divine-pride publica `Speed` e `ASPD`, que são `1000/WalkSpeed` e
+  `1000/AttackMotion`: o `WalkSpeed` bate em **10 de 10** e o `AttackMotion` em
+  **9 de 10**. A exceção é o MVP, que mede 1,74 de ASPD contra os 768 do Bafomé
+  normal — e nessa a medição venceu. Os quatro Noviços não têm original, e os
+  dois campos que dão para medir (130 e 432) batem exatos com os da Lora
+  (2250), o único humanoide-chefe do vendor com esse par; os outros três
+  campos deles vieram de lá, e são a única parte escolhida e não medida.
+
+Duas conferências deram o contrário do esperado, e as duas viraram armadilha
+escrita: a coluna **Element** do divine-pride é a tabela de resistência do
+**kRO** e não bate com o `attr_fix.yml` do rAthena em nenhum dos nove — quem
+confere o elemento é o chip da página, com o original como segunda opinião (os
+dois concordam em sete dos nove). E o **`DamageTaken`** não entra: 66 dos 193
+MVPs do vendor têm o campo, mas **nenhum** dos seis MVPs ilusionais que já
+existiam aqui.
+
+### O mapa é um labirinto de portais, e foi isso que quase afundou a rodada
+
+O chão andável do `prt_mz03_i` está partido em **26 pedaços que não se tocam
+nem na diagonal** — 25 salas de umas 500 células mais 399 células de ruído
+espalhadas pela borda. Não é defeito: é o desenho do Labirinto da Floresta,
+onde quem liga uma sala na outra são os portais.
+
+Sem isso, duas coisas quebrariam caladas: spawn com `0,0` põe monstro no ruído,
+onde ninguém o alcança (a armadilha do `vis_h01`), e o jogador entra e fica
+preso numa sala de 500 células sem ver as outras 24.
+
+**A fiação não precisou ser inventada.** O `prt_mz03_i` é o `prt_maze03` com
+340 células de diferença em 40.000, e os 61 portais que o vendor escreve para o
+`prt_maze03` têm origem **e** destino andáveis no mapa ilusional — os 61,
+conferidos célula a célula contra o `map_cache.dat` do próprio servidor. Das 26
+salas, 25 se alcançam a partir da entrada; a 26ª é o ruído, e é a única que
+fica fora do povoamento.
+
+### Os 250 Cochichos, que só apareceram porque a sonda existia
+
+A sonda de `debugmes` no primeiro tique do relógio mediu **654 monstros** num
+mapa onde tinham sido postos 404. A diferença eram **250 Cochichos de nível
+66** (`WHISPER_BOSS`, 2.570 de HP), e a causa é uma linha que foi copiada sem
+pensar: o `NPC_SUMMONSLAVE` traz o **id do escravo do monstro original**, e o
+Ghostring comum invoca cinco Cochichos ao nascer. Cinquenta Ghostrings
+Caóticos, 250 Cochichos. Nada no log dizia nada.
+
+Pior do que o número: o Bafomé Caótico invocaria o Bafinho **normal**, de nível
+46 — e é exatamente para evitar isso que o `G_ILL_BAPHOMET_J` (20533) existe.
+
+A regra que ficou: invocação cujo escravo tem contraparte ilusional passa a
+invocar a contraparte (1101 → 20525, 1431 → 20533); invocação sem contraparte é
+descartada. As duas pontas batem com a aba Skills do kRO, conferida nos três:
+o Ghostring e o Mantis ilusionais **não invocam nada**, e o Bafomé invoca.
+Depois do conserto a sonda mediu **400 comuns e os quatro Noviços**.
+
+### A mecânica dos quatro Noviços
+
+Da página `Ilusão_do_Labirinto` do arquivo.browiki.org, que é a fonte do bRO:
+matar os quatro recrutas (Andrea, Agnes, Silvano e Cecília, nas coordenadas em
+que o bRO deixa os restos de cada um) invoca o Bafomé Caótico; cada Noviço
+renasce uma hora depois de morto; enquanto vivo, o MVP tem 5,5% de chance a
+cada 10 segundos de ficar invencível, e essa chance sobe até 17% conforme os
+Noviços renascidos caem com ele vivo.
+
+Três números a página não dá, e estão marcados como nossos no cabeçalho do
+arquivo: o **degrau** da chance (28,75 décimos de por cento, arredondado para
+29), a **chance de cair** ao fim dos 10 segundos (o complemento da de ativar) e
+**onde** o MVP nasce (99,103, o centro do labirinto, que é a sala onde Andrea
+caiu — e o mapa inteiro é avisado).
+
+A invencibilidade é `sc_start SC_INVINCIBLE` com GID, e não a habilidade
+`NPC_INVINCIBLE`, porque aquela dura 300 segundos no `skill_db` e o que se quer
+são dez. Ela funciona porque quem tem o status cai no `is_infinite_defense`
+(`battle.cpp:2940`) — o mesmo caminho das plantas, todo golpe entrega 1 de
+dano. E **ela fala**: o cliente de RO não desenha barra de vida de monstro, e 1
+de dano por golpe lê-se como defeito e não como mecânica (§4.21).
+
+### O que não precisou de nada
+
+Os oito equipamentos ilusionais, as dez cartas caóticas, a Pedra Ilusional e os
+cubos de refino **já existem no `item_db`**, e os oito já têm nome em português
+no `itemInfo.lua` deste cliente — conferido item a item. O encantador de
+Prontera (`prontera 90,115`) já aceita as oito peças e cobra 5 Pedras
+Ilusionais por cova. **Nada disto precisa de patch de cliente.**
+
+### A caverna passa a ser fechada por uma missão (2026-09-11, à tarde)
+
+O dono entrou no servidor, clicou na Fenda e estava dentro — sem missão
+nenhuma, só com o nível. E pediu o contrário: *"a caverna não deve ser
+acessível sem os passos da quest. Ao clicar na fenda devemos ter uma mensagem
+negativa. De preferência nem ver a fenda se não tiver iniciado a quest."*
+
+**A missão estava nos mesmos prints de onde saiu todo o resto.** Ela ficou de
+fora porque eu perguntei "missão fiel ou porta direta?" **antes de existir
+caverna nenhuma** — e naquele momento, sem nada construído, a porta direta era
+a resposta barata. Virou a regra 26 do `CLAUDE.md`: conteúdo que o bRO tranca
+atrás de missão de acesso entra trancado, e a pergunta certa ao trazer
+conteúdo de fora não é "vale a pena implementar a missão?" e sim "como se
+chega nisto no bRO?".
+
+**Os sete passos, como foram escritos naquele dia** (a disposição dos NPCs foi
+corrigida pelo dono no dia seguinte — ver a seção de 2026-09-12 abaixo): Irene
+(`prt_fild01 136,370`) conta dos quatro recrutas sumidos e manda falar com
+Esmeralda (`prontera 212,320`); Esmeralda vai para a frente do labirinto
+(`prt_maze01 99,20`) e **revela a Fenda**; dentro dela o jogador recolhe os
+quatro Restos, cada um com uma barra de conjuração que o dano interrompe
+(`progressbar`, e o `pc.cpp:9700` aborta a barra em `pc_damage` — é o que a
+página do bRO descreve); ao pegar o último ele é puxado para fora; Esmeralda
+reúne os espíritos, os quatro aparecem na entrada, e a conversa com Andrea
+encerra. **Sem recompensa de item, como no bRO** — a recompensa é o acesso.
+
+As coordenadas são as da página, inclusive as dos quatro Restos
+(`prt_mz03_i` 107,104 / 10,18 / 135,68 / 183,26), e as dos quatro recrutas na
+entrada são as que o bRO usa para as missões diárias e semanais — ou seja
+eles já estão de pé, no lugar certo, para a segunda rodada.
+
+**O estado é variável de personagem (`ilusao_labirinto`, 0 a 6) e não quest.**
+Quest que o cliente não conhece derruba o cliente (§5), e a janela de missões
+exigiria gerar a outra metade e mandar patch. É também o que o próprio vendor
+usa nas outras ilusionais (`illusion_moonlight` e irmãs).
+
+**Como a Fenda some.** `cloakonnpc` sem char_id no `OnInit` esconde de todo
+mundo a Fenda, os quatro recrutas e os quatro Restos; `cloakoffnpc` com
+char_id revela para um jogador. O que não estava óbvio, e é a armadilha nova
+escrita no `ARMADILHAS-SCRIPT.md`: **essa revelação por jogador morre quando
+ele troca de mapa**. Sem tratamento, quem terminasse a missão veria a porta
+sumir na primeira vez que saísse e voltasse — defeito que só apareceria para
+quem já tinha terminado o conteúdo. Por isso existe o vigia, com `loadevent`
+nos dois mapas e um `OnPCLoadMapEvent` que redecide a cada entrada.
+
+E cloak não é `disablenpc`: o NPC continua de pé e o **clique ainda funciona**.
+Por isso a Fenda tem, além da invisibilidade, uma recusa escrita para cada
+estado — que era o segundo pedido do dono.
+
+
+### Os sprites dos NPCs da missão (2026-09-12)
+
+O dono passou os que o bRO usa, e eles substituem os que eu tinha escolhido:
+
+| NPC | Antes | Agora |
+|---|---|---|
+| Membro do Clã Irene (`prt_fild01`) | `4_F_ACOLYTE` | **`4_F_ERENE`** (view 10337) |
+| Líder do Clã Esmeralda (Prontera e labirinto) | `1_F_PRIEST` | **`4_F_08`** (view 10095) |
+| Os quatro recrutas, na entrada | sprites de NPC | **o view id do próprio monstro**, 20521..20524 |
+
+Os nomes vieram junto, e são os da página: "Membro do Clã Irene" e "Líder do
+Clã Esmeralda". Os quatro recrutas viraram "Recruta Andrea" e irmãos, seguindo
+o mesmo padrão dos prints — isso o dono não pediu, e é para desfazer numa
+linha se não for o que ele quer.
+
+**Os dois primeiros não custaram nada** e os quatro últimos custaram a
+armadilha dos Agentes da Liga: view id de NPC resolve para
+`data\sprite\npc\<nome>.spr`, e a arte dos quatro ilusionais só existia na
+pasta de **monstro**. Sem os arquivos na pasta certa o cliente não desenha NPC
+sem sprite — ele abre caixa de erro apontando um caminho que ninguém digitou.
+
+Os oito arquivos (`ill_andrea`, `ill_anes`, `ill_silvano`, `ill_cecilia`,
+`.spr` + `.act`) saíram do nosso próprio `data.grf` para
+`cliente\data\sprite\npc\`. **É a única coisa desta caverna que precisa de
+patch** — o resto é servidor puro.
+
+A entrada do `ARMADILHAS-CLIENTE.md` ganhou o que faltava para a próxima vez:
+o `poring.spr` existe nas **duas** pastas do GRF, e é essa cópia que faz os
+NPCs de Poring dos scripts oficiais funcionarem. O caso que dá certo dá certo
+por causa de uma cópia que alguém pôs lá — não porque o cliente saiba procurar
+na pasta de monstro.
+
+E uma armadilha velha cobrou pedágio no caminho: escrever
+`cliente\\data\\sprite\\npc\\` dentro de um heredoc do Bash entregou
+`\n` ao Python, que virou **quebra de linha** no meio de um comentário do
+`scripts_guerra.conf` — o arquivo ficou com uma linha fora de comentário, que
+é erro fatal de parser. Está na §5 desde 2026-08-30, com este mesmo nome, e
+mesmo assim custou uma rodada.
+
+
+### Os três NPCs da missão, e uma rodada inteira perdida por eu não perguntar (2026-09-12)
+
+O dono passou os nomes e os sprites do bRO para **duas** NPCs: a que fica
+dentro do labirinto ("Membro do Clã Irene", `4_F_ERENE`) e a de Prontera
+("Líder do Clã Esmeralda", `4_F_08`). O arranjo final é este:
+
+| Onde | Nome | Sprite |
+|---|---|---|
+| `prt_fild01 136,370` | Irene | `4_F_ACOLYTE` |
+| `prt_maze01 99,20` | Membro do Clã Irene | `4_F_ERENE` |
+| `prontera 212,320` | Líder do Clã Esmeralda | `4_F_08` |
+
+**Eu apliquei a primeira troca na NPC errada** — na Irene da porta, que estava
+certa desde a primeira entrega e que ele não tinha citado. A partir daí foram
+três rodadas de conserto, e cada uma piorou, porque em vez de perguntar eu
+inferi: quando ele disse *"trocou a NPC no prt_fild01, essa não era pra
+mexer"*, eu li como "a Irene não é a do prt_fild01" e **mudei a NPC de mapa**;
+quando ele disse *"colocou duas líder, era uma só"*, eu **apaguei** a NPC de
+dentro do labirinto em vez de renomeá-la. As duas coisas destruíram trabalho
+que já estava correto, e a pergunta dele foi a que eu devia ter feito no
+começo: *"quando foi que eu te pedi pra mover a Irene?"*.
+
+**A regra que fica**, e ela é de método, não de RO: correção de dono que cabe
+em duas leituras, uma delas mexendo em coisa que ele não citou, **não se
+adivinha**. Aplica-se a parte inequívoca e pergunta-se o resto numa linha. O
+custo de perguntar é uma frase; o de errar foi uma sessão.
+

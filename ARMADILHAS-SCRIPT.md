@@ -470,3 +470,51 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   chama a Piranha (2070) de "Espírito da Água", o Jaguar (2072) de "Espírito
   da Terra" e o Toucan (2073) de "Espírito do Vento", que são nomes do evento
   do bRO e não descrevem os sprites. Está no `PENDENCIAS.md`.
+
+- **Mapa de labirinto pode ter o chão partido em salas que só os PORTAIS
+  ligam — e aí `0,0` no spawn não é só impreciso, é o que enche o mapa de
+  monstro inalcançável.** É a armadilha do `vis_h01` um degrau acima: lá o
+  ruído era uma linha solta de `.gat`; aqui o mapa inteiro é feito assim, de
+  propósito.
+
+  Medido em 2026-09-11 no `prt_mz03_i` (a Ilusão do Labirinto), pelo
+  `map_cache` do próprio servidor: 12.139 células andáveis em **26 pedaços que
+  não se tocam nem na diagonal** — 25 salas de umas 500 células mais 399
+  células de ruído espalhadas pela borda. Quem liga sala a sala são 61
+  portais. O `prt_maze01..03` original é o mesmo desenho, e é de lá que a
+  fiação foi copiada: os dois mapas diferem em 340 células de 40.000.
+
+  **O `mob_spawn` piora o caso quando a área está errada.** Se as 8 tentativas
+  dentro da área falham e a **célula central é parede**, ele sorteia no
+  **mapa inteiro** (`mob.cpp:1152`, 50 tentativas) — ou seja um centro em
+  parede transforma "spawn concentrado numa sala" em "spawn em qualquer
+  lugar, inclusive no ruído". Por isso o centro de cada área tem de ser
+  célula andável de verdade, e não o meio da caixa: o
+  `confere_celula.py --salas` devolve exatamente isso, o ponto de cada pedaço
+  mais longe de qualquer parede.
+
+  Antes de povoar mapa que você não desenhou: `confere_celula.py <mapa>
+  --salas`, e se vierem vários pedaços grandes, procure os portais antes de
+  escrever a primeira linha de spawn.
+
+- **NPC escondido por jogador volta a aparecer sozinho quando ele troca de
+  mapa.** O `cloakoffnpc "<npc>",<char_id>` (e o `cloakonnpc` na mesma forma)
+  vale *"until he/she leaves the map, logs out, or the npc option is changed"*
+  — está na própria doc (`doc/script_commands.txt`, `*cloakonnpc`), e é fácil
+  de não ler porque o comando funciona lindamente no teste, que é feito sem
+  sair do lugar.
+
+  O sintoma é assimétrico e cruel: quem **já fez** a missão volta a não ver a
+  porta assim que pisa fora e retorna — ou seja, o defeito só aparece para
+  quem terminou o conteúdo, e depois de ele ter funcionado uma vez. Nada dá
+  erro.
+
+  A saída é um vigia: `loadevent` nos mapas envolvidos e um
+  `OnPCLoadMapEvent` que **redecide** o que aquele jogador vê a cada entrada.
+  É o que a Ilusão do Labirinto faz com a Fenda Retorcida, com os quatro
+  recrutas e com os quatro Restos.
+
+  E vale lembrar o que cloak **não** é: não é `disablenpc`. O NPC continua de
+  pé, o `OnTimer` continua correndo, o `OnInit` já rodou — o que some é o
+  desenho e a área de toque. **O clique ainda funciona**, então NPC escondido
+  que não deva atender precisa recusar por escrito, e não por invisibilidade.

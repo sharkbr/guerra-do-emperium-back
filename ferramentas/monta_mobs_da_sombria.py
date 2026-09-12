@@ -94,6 +94,8 @@ import os
 import re
 import sys
 
+import secao_de_arquivo
+
 # Sem isto, imprimir "Carnical Sombrio" com cedilha derruba a ferramenta
 # DEPOIS de ela ja ter gravado os arquivos - CLAUDE.md secao 5. E o `or`
 # nao e enfeite: com a saida redirecionada, `sys.stdout.encoding` e None.
@@ -105,6 +107,14 @@ MOB_DB_RA = os.path.join(RAIZ, 'rathena', 'db', 're', 'mob_db.yml')
 SKILL_RA = os.path.join(RAIZ, 'rathena', 'db', 're', 'mob_skill_db.txt')
 SAIDA_MOB = os.path.join(RAIZ, 'rathena', 'db', 'guerra', 'mob_db_sombria.yml')
 SAIDA_SKILL = os.path.join(RAIZ, 'rathena', 'db', 'import', 'mob_skill_db.txt')
+
+# O mob_skill_db.txt tem DOIS donos desde 2026-09-11 - este e o
+# monta_ilusao_do_labirinto.py -, e nao ha segundo arquivo para onde correr: o
+# mob_readskilldb le db/re/ e db/import/ e mais nada. Por isso cada gerador
+# troca so a SUA secao, e preserva a do outro byte a byte. Quem reescrevesse o
+# arquivo inteiro apagaria os monstros do outro em silencio - monstro sem linha
+# aqui simplesmente nao conjura, sem erro, sem log.
+SECAO = 'SOMBRIA'
 
 # normal -> (id_H, AegisName_H, Name_H em ingles, nome PT do bRO)
 #
@@ -332,6 +342,12 @@ CABECA_SKILL = """\
 // Khalitzburg (2471) e os dois Comandantes (2473, 2474) nao tem habilidade
 // no vendor, entao os _H deles tambem nao tem.
 //
+// ESTE ARQUIVO TEM DOIS DONOS desde 2026-09-11: a outra secao e a da Ilusao
+// do Labirinto, gerada por monta_ilusao_do_labirinto.py. Cada gerador troca
+// so a propria secao (ferramentas/secao_de_arquivo.py) e preserva a do outro
+// byte a byte - um que reescrevesse o arquivo inteiro apagaria os monstros do
+// outro em silencio.
+//
 // MobID,Dummy value (info only),State,SkillID,SkillLv,Rate,CastTime,Delay,Cancelable,Target,Condition type,Condition value,val1,val2,val3,val4,val5,Emotion,Chat
 //===========================================================================
 
@@ -347,9 +363,11 @@ def gerar():
     finally:
         aberto.close()
 
+    velho = le(SAIDA_SKILL) if os.path.exists(SAIDA_SKILL) else ''
     aberto = open(SAIDA_SKILL, 'wb')
     try:
-        aberto.write(CABECA_SKILL + '\n'.join(skills) + '\n')
+        aberto.write(secao_de_arquivo.troca(
+            velho, SECAO, CABECA_SKILL + '\n'.join(skills) + '\n'))
     finally:
         aberto.close()
 
@@ -382,9 +400,15 @@ def conferir():
     esperado = CABECA_SKILL + '\n'.join(skills) + '\n'
     if not os.path.exists(SAIDA_SKILL):
         problemas.append('%s nao existe' % os.path.relpath(SAIDA_SKILL, RAIZ))
-    elif le(SAIDA_SKILL) != esperado:
-        problemas.append('%s esta diferente do que o gerador produz'
-                         % os.path.relpath(SAIDA_SKILL, RAIZ))
+    else:
+        atual = secao_de_arquivo.le(le(SAIDA_SKILL), SECAO)
+        if atual is None:
+            problemas.append('a secao %s nao esta em %s'
+                             % (SECAO, os.path.relpath(SAIDA_SKILL, RAIZ)))
+        elif atual != esperado:
+            problemas.append('a secao %s de %s esta diferente do que o gerador '
+                             'produz' % (SECAO,
+                                         os.path.relpath(SAIDA_SKILL, RAIZ)))
 
     rodape = le(os.path.join(RAIZ, 'rathena', 'db', 're', 'mob_db.yml'))
     if 'db/guerra/mob_db_sombria.yml' not in rodape:

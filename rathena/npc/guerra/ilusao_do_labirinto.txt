@@ -1,0 +1,800 @@
+//===== Guerra do Emperium ===================================
+//= Ilusão do Labirinto - a missão de acesso, a Fenda e o MVP
+//===========================================================
+//= Mapa prt_mz03_i, nível mínimo 170. A porta é a Fenda
+//= Retorcida, em prt_maze01 99,23 - a mesma posição do bRO -,
+//= e ela SÓ EXISTE para quem fez a missão de acesso.
+//===========================================================
+//
+//= O QUE ESTE ARQUIVO É, E O QUE ELE NÃO É
+//
+//= Aqui mora a MISSÃO DE ACESSO e a MECÂNICA: os NPCs da
+//= missão, os quatro Restos, a porta, os quatro Noviços com
+//= renascimento de uma hora, o Bafomé Caótico que só nasce
+//= quando os quatro caem, e a invencibilidade dele.
+//
+//= Os portais internos do labirinto e o povoamento das 25 salas
+//= NÃO estão aqui - são gerados em
+//= npc/guerra/ilusao_do_labirinto_mapa.txt por
+//= ferramentas/monta_ilusao_do_labirinto.py, junto com os
+//= catorze monstros. Aquele arquivo não se edita à mão.
+//
+//= POR QUE O MAPA PRECISA DOS DOIS ARQUIVOS
+//
+//= O chão andável do prt_mz03_i está partido em 26 pedaços que
+//= não se tocam: 25 salas e um punhado de ruído de borda. Quem
+//= liga uma sala na outra são os 61 portais do arquivo gerado.
+//= Sem eles o jogador entra e fica preso numa sala de 500
+//= células, sem erro nenhum no servidor para denunciar isso.
+//
+//= A MISSÃO DE ACESSO - E POR QUE ELA VEIO DEPOIS
+//
+//= A primeira versão desta caverna (2026-09-11, de manhã) abria
+//= a Fenda para qualquer um com nível 170. O dono entrou de
+//= primeira, sem missão nenhuma, e pediu o contrário: a caverna
+//= fechada atrás dos passos do bRO, e a Fenda NEM VISÍVEL para
+//= quem não começou. É o que está escrito abaixo.
+//
+//= Os sete passos são os da página Ilusão_do_Labirinto do
+//= arquivo.browiki.org, que é a fonte do bRO (regra 3 do
+//= CLAUDE.md), e as coordenadas são as de lá - com UMA correção
+//= do dono, em 2026-09-12:
+//
+//=   SÃO TRÊS NPCs, e cada um no seu lugar (nomes e sprites
+//=   conferidos em jogo pelo dono em 2026-09-12):
+//=
+//=     Irene                    prt_fild01 136,370  4_F_ACOLYTE
+//=     Membro do Clã Irene      prt_maze01 99,20    4_F_ERENE
+//=     Líder do Clã Esmeralda   prontera 212,320    4_F_08
+//=
+//=   A da PORTA é só "Irene", e é a que começa a missão. Quem
+//=   tem o título de clã é a de dentro do labirinto, que fica
+//=   na frente da greta e atende os passos 3 e 5. A Líder é
+//=   uma só e não sai de Prontera.
+//
+//=   1. falar com a Irene, na porta do Labirinto da Floresta
+//=      (prt_fild01 136,370), e aceitar ajudar;
+//=   2. encontrar a Líder do Clã Esmeralda em Prontera
+//=      (212,320);
+//=   3. entrar no labirinto e falar com o Membro do Clã Irene
+//=      (prt_maze01 99,20), que revela a Fenda Retorcida
+//=      (prt_maze01 99,23), logo abaixo dela;
+//=   4. entrar e recolher os quatro Restos, cada um com uma
+//=      barra de conjuração que o dano interrompe:
+//=        Andrea  107,104   Agnes    10,18
+//=        Silvano 135,68    Cecília 183,26
+//=   5. ao pegar o último, o jogador é puxado para fora e fala
+//=      com o Membro do Clã Irene de novo;
+//=   6. os quatro espíritos se reúnem na entrada;
+//=   7. falar com Andrea encerra a missão - sem recompensa de
+//=      item, como no bRO. A recompensa É o acesso.
+//
+//= O ESTADO MORA EM VARIÁVEL DE PERSONAGEM, E NÃO EM QUEST
+//
+//= `ilusao_labirinto` vai de 0 a 6, e `ilusao_labirinto_restos`
+//= é a máscara dos quatro Restos (1, 2, 4, 8).
+//
+//= Não é `setquest` de propósito: quest que o CLIENTE não
+//= conhece DERRUBA o cliente (CLAUDE.md §5), e a janela de
+//= missões exigiria gerar a outra metade com o
+//= monta_missoes_da_ordem.py e mandar patch. Variável de
+//= personagem é também o que o próprio vendor usa nas outras
+//= ilusionais (`illusion_moonlight` e irmãs, em
+//= npc/re/quests/quests_illusion_dungeons.txt).
+//
+//= COMO A FENDA FICA INVISÍVEL
+//
+//= `cloakonnpc` sem char_id esconde para todo mundo, e é o que
+//= o OnInit faz com a Fenda, com os quatro recrutas e com os
+//= quatro Restos. O `cloakoffnpc "<npc>",<char_id>` mostra para
+//= UM jogador - e dura só até ele trocar de mapa ou sair
+//= (doc/script_commands.txt, *cloakonnpc). Por isso existe o
+//= vigia lá embaixo, no OnPCLoadMapEvent, com `loadevent` nos
+//= dois mapas: é ele que redecide, a cada entrada de mapa, quem
+//= vê o quê.
+//
+//= Cloak não é `disablenpc`: o NPC continua de pé, os OnTimer
+//= continuam correndo e o clique ainda funciona - o que some é
+//= o desenho e a área de toque. Por isso a Fenda ainda responde
+//= com uma recusa a quem clicar nela sem ter a missão, que foi
+//= o segundo pedido do dono.
+//
+//= DE ONDE VEM A MECÂNICA DO CALABOUÇO
+//
+//= Da mesma página. O que ela diz, e está implementado abaixo:
+//
+//=   - para invocar o Bafomé Caótico é preciso eliminar os 4
+//=     Noviços - Andrea, Agnes, Silvano e Cecília;
+//=   - cada Noviço renasce uma hora depois de morto;
+//=   - uma hora após a derrota do MVP, os Noviços reaparecem;
+//=   - enquanto vivo, a cada 10 segundos o Bafomé tem 5,5% de
+//=     chance de ativar uma invencibilidade;
+//=   - se os Noviços renascerem e o MVP ainda estiver vivo, cada
+//=     morte de Noviço aumenta essa chance, até 17%;
+//=   - a invencibilidade dura 10 segundos, e ao fim deles há
+//=     chance de continuar ou de cair. Quanto maior a chance de
+//=     ativação, menor a de cair.
+//
+//= O QUE A PÁGINA NÃO DIZ, E FOI DECIDIDO AQUI
+//
+//= Quatro coisas, e é honesto que estejam separadas do resto:
+//
+//=   1. o PASSO da chance. A página dá as duas pontas (5,5% e
+//=      17%) e o gatilho (morte de Noviço), mas não o degrau.
+//=      São quatro Noviços, então o degrau é (170-55)/4 = 28,75
+//=      décimos de por cento, arredondado para 29 - com os
+//=      quatro mortos dá 171, que o teto corta em 170;
+//=   2. a CHANCE DE CAIR ao fim dos 10 segundos. A página só diz
+//=      que ela é menor quanto maior a de ativar. Aqui ela é o
+//=      complemento: cai com 100% menos a chance de ativação, ou
+//=      seja 94,5% no começo e 83% com os quatro mortos;
+//=   3. ONDE o MVP nasce. A página não diz. Nasce em 99,103, o
+//=      centro do labirinto - que é a mesma sala onde Andrea
+//=      caiu -, e o mapa inteiro é avisado quando isso acontece;
+//=   4. o SPRITE dos quatro Restos: `4_GHOST_STAND`, que é o
+//=      que o texto da página descreve - "ajude seus espíritos
+//=      voltarem para casa". Os outros seis NÃO são escolha
+//=      nossa; vieram do dono em 2026-09-12, dos prints do bRO.
+//
+//= OS SPRITES, E O QUE ELES CUSTAM DO LADO DO CLIENTE
+//
+//= A Irene é `4_F_ERENE` (view 10337) e as duas Esmeraldas são
+//= `4_F_08` (view 10095) - os dois com constante no npc.hpp, no
+//= npcidentity.lub deste cliente E com `.spr`/`.act` já em
+//= `data\sprite\npc\` do nosso GRF. Não custam nada.
+//
+//= Os quatro recrutas usam o SPRITE DO MONSTRO correspondente -
+//= os view ids 20521..20524, os mesmos ids do mob_db -, e isso
+//= custa: view id de NPC resolve para `data\sprite\npc\<nome>`,
+//= e a arte dos quatro só existia na pasta de MONSTRO. É a
+//= armadilha dos Agentes da Liga (ARMADILHAS-CLIENTE.md), que
+//= não falha calada: dá caixa de erro apontando um caminho que
+//= ninguém digitou.
+//
+//= Os oito arquivos (`ill_andrea`, `ill_anes`, `ill_silvano` e
+//= `ill_cecilia`, `.spr` + `.act`) foram copiados do próprio
+//= data.grf para `cliente\data\sprite\npc\`. Como moram no
+//= CLIENTE, só chegam ao jogador por PATCH (CLAUDE.md §4.18) -
+//= está no PENDENCIAS.md.
+//
+//= POR QUE A INVENCIBILIDADE É `sc_start` E NÃO A HABILIDADE
+//
+//= O NPC_INVINCIBLE do rAthena existe, mas o skill_db lhe dá
+//= `Duration1: 300000` - cinco minutos, e o que se quer são dez
+//= segundos. O `sc_start` aceita GID (doc/script_commands.txt,
+//= *sc_start) e permite dizer a duração exata.
+//
+//= E ela funciona: quem tem SC_INVINCIBLE cai no
+//= `is_infinite_defense` (src/map/battle.cpp:2940), que é o
+//= mesmo caminho das plantas - todo golpe entrega 1 de dano.
+//= Não depende do `invincible.nodamage` do battle conf, que
+//= está `no` e é outra coisa (aquele trata o caminho do
+//= status_damage).
+//
+//= POR QUE A INVENCIBILIDADE FALA
+//
+//= Porque o cliente de RO não desenha barra de vida de monstro,
+//= e 1 de dano por golpe lê-se como defeito e não como
+//= mecânica. É a regra 4.21 do CLAUDE.md: número que o jogador
+//= não enxerga precisa de retorno visual como PARTE da
+//= mecânica. Por isso o Bafomé anuncia quando fica intocável e
+//= quando deixa de estar, e o mapa inteiro é avisado a cada
+//= Noviço que cai com ele vivo - que é o que explica ao jogador
+//= por que ele está ficando mais duro.
+//
+//= O RELÓGIO É UM SÓ
+//
+//= Um `OnTimer10000` cuida de tudo: renascimento dos quatro,
+//= reposição depois do MVP e a rolagem da invencibilidade. O
+//= alternativo seria um temporizador por Noviço, e são quatro
+//= prazos independentes de uma hora - com um relógio só, o
+//= prazo vira comparação de `gettimetick(2)`, que sobrevive a
+//= `@reloadscript` mal e a leitura de código bem.
+//
+//===========================================================
+
+// ---------------------------------------------------------------------------
+// PASSO 1 - Irene, na PORTA do Labirinto da Floresta
+//
+// prt_fild01 136,370, a três células do portal que entra no prt_maze01
+// (136,373). Esta NPC é a do começo da missão, e o nome dela é só "Irene" -
+// quem tem o título de clã é a outra, lá dentro.
+// ---------------------------------------------------------------------------
+prt_fild01,136,370,4	script	Irene::IreneIlusaoLab	4_F_ACOLYTE,{
+	if (ilusao_labirinto >= 6) {
+		mes "[Irene]";
+		mes "Eles voltaram para casa por sua causa. O clã inteiro sabe disso.";
+		next;
+		mes "[Irene]";
+		mes "A greta continua lá dentro, e a nossa gente continua de guarda. Se você tem estômago para aquele lugar, ele é seu.";
+		close;
+	}
+	if (ilusao_labirinto >= 2) {
+		mes "[Irene]";
+		mes "A Esmeralda falou com você, então já sabe mais do que eu. Entre no labirinto e procure a nossa gente lá dentro - é com ela que você fala agora.";
+		close;
+	}
+	if (ilusao_labirinto == 1) {
+		mes "[Irene]";
+		mes "A Esmeralda é quem lidera o nosso clã, e é ela que sabe o que fazer. Procure por ela em ^4D4DFFProntera^000000, perto da Catedral.";
+		close;
+	}
+	mes "[Irene]";
+	mes "Perdão, você viu quatro recrutas passarem por aqui? Dois rapazes e duas moças, com a insígnia da Catedral de Prontera no ombro.";
+	next;
+	mes "[Irene]";
+	mes "Eles entraram no Labirinto da Floresta faz uma semana e não voltaram. A guarda já procurou, e diz que não há nada lá dentro além dos bichos de sempre.";
+	next;
+	if (BaseLevel < .Nivel) {
+		mes "[Irene]";
+		mes "Mas não adianta eu pedir ajuda a você. Perdão pela franqueza: o que quer que tenha levado os quatro levaria você junto.";
+		next;
+		mes "^4D4DFFÉ preciso nível de base " + .Nivel + " para entrar nesta história.^000000";
+		close;
+	}
+	mes "[Irene]";
+	mes "Só que a Esmeralda, que lidera o nosso clã, jura que consegue ouvir os quatro. Diz que eles chamam, e que o som vem de dentro de alguma coisa que não é o labirinto.";
+	next;
+	if (select("Posso ajudar.", "Não é problema meu.") == 2) {
+		mes "[Irene]";
+		mes "Eu entendo. Ninguém deve nada a desconhecido.";
+		close;
+	}
+	mes "[Irene]";
+	mes "Você faria isso? Então fale com a Esmeralda - ela está em ^4D4DFFProntera^000000, perto da Catedral. Diga que eu mandei.";
+	next;
+	mes "[Irene]";
+	mes "E se ela começar a falar de fendas e de mundos tortos, tenha paciência. Ela não está louca. Eu queria que estivesse.";
+	ilusao_labirinto = 1;
+	close;
+
+OnInit:
+	.Nivel = 170;
+	end;
+}
+
+// ---------------------------------------------------------------------------
+// PASSOS 3 e 5 - Membro do Clã Irene, DENTRO do labirinto
+//
+// prt_maze01 99,20, na frente da greta. É ela que revela a Fenda depois que o
+// jogador volta de Prontera, e é ela que recebe os quatro Restos no fim.
+// ---------------------------------------------------------------------------
+prt_maze01,99,20,4	script	Membro do Clã Irene::MembroClaIrene	4_F_ERENE,{
+	// passo 5: o jogador voltou com os quatro Restos
+	if (ilusao_labirinto == 4) {
+		mes "[Membro do Clã Irene]";
+		mes "Você trouxe. Os quatro.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Não chore por mim, eu já chorei o que tinha. Me dê um instante: a Esmeralda me ensinou o que dizer, e me fez repetir até eu não errar mais.";
+		next;
+		mes "^4D4DFFEla se ajoelha e fala baixo, numa língua que claramente não entende. O ar em volta da greta esfria.^000000";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Pronto. Eles estão aqui, deste lado, pela primeira vez em uma semana.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Vá falar com a ^4D4DFFAndrea^000000. Ela é a mais velha dos quatro, e é ela que vai querer dizer alguma coisa a você.";
+		ilusao_labirinto = 5;
+		// os quatro passam a existir para este jogador
+		cloakoffnpc "AndreaIlusaoLab", getcharid(0);
+		cloakoffnpc "AgnesIlusaoLab", getcharid(0);
+		cloakoffnpc "SilvanoIlusaoLab", getcharid(0);
+		cloakoffnpc "CeciliaIlusaoLab", getcharid(0);
+		close;
+	}
+	if (ilusao_labirinto == 5) {
+		mes "[Membro do Clã Irene]";
+		mes "Fale com a Andrea. Ela está esperando, e eu não vou roubar dela essa conversa.";
+		close;
+	}
+	if (ilusao_labirinto >= 6) {
+		mes "[Membro do Clã Irene]";
+		mes "Eu fico. Alguém tem que ficar olhando para essa greta, e agora o clã tem menos quatro pessoas para o turno.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Entre quando quiser. Só não se acostume com o que tem lá dentro.";
+		close;
+	}
+	if (ilusao_labirinto == 3) {
+		mes "[Membro do Clã Irene]";
+		mes "A greta está aberta para você. Traga o que restou deles - é tudo o que eu peço.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "São quatro, e estão longe uns dos outros. Lá dentro o caminho não é andar: é atravessar.";
+		close;
+	}
+	// passo 3: o jogador voltou de Prontera, e ela revela a Fenda
+	if (ilusao_labirinto == 2) {
+		mes "[Membro do Clã Irene]";
+		mes "Você foi mesmo falar com ela. E ela contou, não contou.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Então olhe para ali, para aquele pedaço de ar na frente da árvore. Olhe sem querer entender.";
+		next;
+		mes "^4D4DFFPor um instante não há nada. Depois há - uma greta de luz parada no ar, da altura de uma pessoa, como se alguém tivesse rasgado o dia e o remendo não coubesse.^000000";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Ela estava aí o tempo todo. A gente é que não sabia olhar.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "Do outro lado está o labirinto errado, o que a Esmeralda ouve. Traga o que restou dos quatro, e eu faço o que ela me ensinou.";
+		next;
+		mes "[Membro do Clã Irene]";
+		mes "^FF0000E uma coisa: lá dentro nada vai deixar você recolher em paz.^000000 Se levar dano no meio, você recomeça.";
+		ilusao_labirinto = 3;
+		cloakoffnpc "FendaRetorcida", getcharid(0);
+		close;
+	}
+	if (ilusao_labirinto == 1) {
+		mes "[Membro do Clã Irene]";
+		mes "A Irene mandou você falar com a Esmeralda, não foi? Então vá. Ela está em ^4D4DFFProntera^000000, perto da Catedral.";
+		close;
+	}
+	mes "[Membro do Clã Irene]";
+	mes "Este lugar não é para passeio. Se você não veio pelos quatro recrutas, volte por onde entrou.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+// PASSO 2 - Esmeralda, em Prontera. É a ÚNICA líder, e não sai daqui.
+// ---------------------------------------------------------------------------
+prontera,212,320,4	script	Líder do Clã Esmeralda::EsmeraldaPrt	4_F_08,{
+	if (ilusao_labirinto >= 3) {
+		mes "[Esmeralda]";
+		mes "A Irene está lá, na frente da greta. Ela sabe o que fazer com o que você trouxer.";
+		close;
+	}
+	if (ilusao_labirinto == 2) {
+		mes "[Esmeralda]";
+		mes "Volte para a Irene. Ela vai lhe mostrar a greta - agora que você sabe o que procurar, vai conseguir ver.";
+		close;
+	}
+	if (ilusao_labirinto == 0) {
+		mes "[Esmeralda]";
+		mes "Não hoje, por favor. Perdi quatro pessoas esta semana e não tenho conversa para dar a ninguém.";
+		close;
+	}
+	mes "[Esmeralda]";
+	mes "A Irene mandou você? Então ela finalmente encontrou alguém que não ri de mim.";
+	next;
+	mes "[Esmeralda]";
+	mes "Eu ouço os quatro. Não é saudade, não é culpa, não é o que o padre disse - eu ouço, do mesmo jeito que ouço você agora.";
+	next;
+	mes "[Esmeralda]";
+	mes "E o som não vem do labirinto. Vem de um lugar que é igual ao labirinto, e não é. Como uma casa que alguém desenhou de memória, errando os cômodos.";
+	next;
+	if (select("Como se chega lá?", "Isso não faz sentido.") == 2) {
+		mes "[Esmeralda]";
+		mes "Não faz mesmo. E eles continuam chamando.";
+		next;
+	}
+	mes "[Esmeralda]";
+	mes "Tem uma greta no ar, lá dentro. Eu passei três dias na frente dela sem conseguir tocá-la - ela não me deixa, e eu sou velha demais para insistir.";
+	next;
+	mes "[Esmeralda]";
+	mes "Mas talvez deixe você. Volte para a ^4D4DFFIrene^000000: eu já lhe ensinei o que dizer quando você trouxer os quatro de volta.";
+	ilusao_labirinto = 2;
+	close;
+}
+
+// ---------------------------------------------------------------------------
+// PASSO 4 - os quatro Restos, dentro do labirinto
+//
+// Cada um marca um bit de `ilusao_labirinto_restos`. O `close2` antes do
+// `progressbar` não é enfeite: a doc do comando avisa que cliente Ragexe
+// trava se a janela de diálogo ainda estiver aberta.
+// ---------------------------------------------------------------------------
+prt_mz03_i,107,104,4	script	Restos de Andrea#ilusaolab	4_GHOST_STAND,{
+	callfunc "F_IlusaoLabResto", 1, "Andrea";
+	end;
+}
+
+prt_mz03_i,10,18,4	script	Restos de Agnes#ilusaolab	4_GHOST_STAND,{
+	callfunc "F_IlusaoLabResto", 2, "Agnes";
+	end;
+}
+
+prt_mz03_i,135,68,4	script	Restos de Silvano#ilusaolab	4_GHOST_STAND,{
+	callfunc "F_IlusaoLabResto", 4, "Silvano";
+	end;
+}
+
+prt_mz03_i,183,26,4	script	Restos de Cecília::RestosCeciliaIlusaoLab	4_GHOST_STAND,{
+	callfunc "F_IlusaoLabResto", 8, "Cecília";
+	end;
+}
+
+function	script	F_IlusaoLabResto	{
+	.@bit = getarg(0);
+	.@nome$ = getarg(1);
+
+	if (ilusao_labirinto != 3) {
+		mes "^4D4DFFUma luz parada, do tamanho de alguém ajoelhado. Ela não responde a você.^000000";
+		close;
+	}
+	if (ilusao_labirinto_restos & .@bit) {
+		mes "^4D4DFFVocê já recolheu o que havia aqui.^000000";
+		close;
+	}
+	mes "^4D4DFFA luz tem a forma de alguém ajoelhado, de costas. Quando você chega perto, ela não foge - vira o que seria o rosto.^000000";
+	next;
+	mes "[" + .@nome$ + "]";
+	mes "...a senhora veio?";
+	next;
+	mes "^4D4DFFRecolher isto leva alguns segundos, e é preciso não sofrer dano nenhum enquanto durar.^000000";
+	next;
+	if (select("Recolher", "Agora não") == 2)
+		close;
+	close2;
+	progressbar "000000", 5;
+
+	// se o jogador levar dano ou andar, o progressbar aborta e o script morre
+	// aqui mesmo - o bit não é marcado, e ele recomeça
+	ilusao_labirinto_restos = ilusao_labirinto_restos | .@bit;
+	specialeffect EF_EXIT;
+	cloakonnpcself strnpcinfo(3);
+
+	if (ilusao_labirinto_restos != 15) {
+		.@faltam = 4;
+		if (ilusao_labirinto_restos & 1) .@faltam -= 1;
+		if (ilusao_labirinto_restos & 2) .@faltam -= 1;
+		if (ilusao_labirinto_restos & 4) .@faltam -= 1;
+		if (ilusao_labirinto_restos & 8) .@faltam -= 1;
+		mes "^4D4DFFA luz cabe na sua mão, e é fria. Faltam " + .@faltam + ".^000000";
+		close;
+	}
+
+	ilusao_labirinto = 4;
+	mes "^4D4DFFOs quatro estão com você, e o labirinto inteiro parece ter percebido isso.^000000";
+	next;
+	mes "^4D4DFFO chão puxa. Você é levado para fora sem escolher.^000000";
+	close2;
+	warp "prt_maze01", 99, 25;
+	end;
+}
+
+// ---------------------------------------------------------------------------
+// PASSO 7 - os quatro recrutas reunidos, na entrada
+//
+// Ficam nas posições em que o bRO os põe depois da missão - são eles que vão
+// dar as missões diárias e semanais na segunda rodada (PENDENCIAS.md).
+// ---------------------------------------------------------------------------
+prt_maze01,97,21,4	script	Recruta Andrea::AndreaIlusaoLab	20521,{
+	if (ilusao_labirinto < 5) {
+		mes "[Andrea]";
+		mes "...";
+		close;
+	}
+	if (ilusao_labirinto >= 6) {
+		mes "[Andrea]";
+		mes "A greta continua aberta, e nós continuamos aqui. Alguém tem que contar o que tem do outro lado.";
+		next;
+		mes "[Andrea]";
+		mes "Em breve vamos ter serviço para quem entra. Volte para falar comigo.";
+		close;
+	}
+	mes "[Andrea]";
+	mes "Então foi você.";
+	next;
+	mes "[Andrea]";
+	mes "Eu vou ser honesta, porque não sobrou tempo para o resto: nós fomos burros. Achamos que aquilo era um atalho, e entramos os quatro juntos, sem contar a ninguém.";
+	next;
+	mes "[Andrea]";
+	mes "O que está lá dentro não é bicho de labirinto. É o labirinto lembrado errado - com as nossas coisas dentro, e com uma coisa que usa a cara do Bafomé.";
+	next;
+	mes "[Andrea]";
+	mes "Não tenho o que lhe dar. A Esmeralda me disse que você não pediu nada, o que só me deixa pior.";
+	next;
+	mes "[Andrea]";
+	mes "Então fica isto: ^4D4DFFa greta é sua^000000. Entre quando quiser, e mate o que tiver a nossa cara. Principalmente o que tem a nossa cara.";
+	ilusao_labirinto = 6;
+	close;
+}
+
+prt_maze01,97,25,4	script	Recruta Agnes::AgnesIlusaoLab	20522,{
+	mes "[Agnes]";
+	if (ilusao_labirinto < 5) {
+		mes "...";
+		close;
+	}
+	mes "Eu curava os três. Foi a única coisa que continuei fazendo lá dentro, mesmo sem ter mais o que curar.";
+	next;
+	mes "[Agnes]";
+	mes "Se você for entrar, leve gente. A gente não levou.";
+	close;
+}
+
+prt_maze01,101,25,4	script	Recruta Silvano::SilvanoIlusaoLab	20523,{
+	mes "[Silvano]";
+	if (ilusao_labirinto < 5) {
+		mes "...";
+		close;
+	}
+	mes "Eu fui o primeiro a cair. Fiquei bravo com isso por uma semana inteira.";
+	next;
+	mes "[Silvano]";
+	mes "Quando encontrar uma coisa com a minha cara lá dentro, não hesite. Não sou eu. Eu estou aqui fora.";
+	close;
+}
+
+prt_maze01,101,21,4	script	Recruta Cecília::CeciliaIlusaoLab	20524,{
+	mes "[Cecília]";
+	if (ilusao_labirinto < 5) {
+		mes "...";
+		close;
+	}
+	mes "Eu desenhei o caminho todo, para não nos perdermos. O papel está lá dentro, em algum lugar, e o caminho que eu desenhei não existe mais.";
+	next;
+	mes "[Cecília]";
+	mes "Lá dentro não se anda: se atravessa. Guarde isso.";
+	close;
+}
+
+// ---------------------------------------------------------------------------
+// A FENDA - a porta, e o calabouço inteiro
+// ---------------------------------------------------------------------------
+prt_maze01,99,23,4	script	Fenda Retorcida::FendaRetorcida	4_ENERGY_WHITE,{
+	// quem não chegou no passo 3 não deveria nem estar vendo isto - mas cloak
+	// não é disablenpc, e clique ainda passa. Então a recusa é explícita.
+	if (ilusao_labirinto < 3) {
+		mes "[Fenda Retorcida]";
+		mes "Você estende a mão, e a luz recua - como se houvesse mais uma parede de vidro entre os seus dedos e ela.";
+		next;
+		mes "^4D4DFFEsta greta não se abre para você. Alguém do clã da Catedral de Prontera saberia por quê.^000000";
+		close;
+	}
+	if (ilusao_labirinto == 4) {
+		mes "[Fenda Retorcida]";
+		mes "A luz se fecha quando você chega perto, com uma pressa que parece educação.";
+		next;
+		mes "^4D4DFFO Membro do Clã Irene está esperando o que você trouxe.^000000";
+		close;
+	}
+	if (ilusao_labirinto == 5) {
+		mes "[Fenda Retorcida]";
+		mes "A greta continua ali, e pode esperar. Os quatro, não.";
+		next;
+		mes "^4D4DFFFale com Andrea.^000000";
+		close;
+	}
+	mes "[Fenda Retorcida]";
+	mes "Uma greta de luz parada no ar, da altura de uma pessoa. Do outro lado dá para ver a mesma floresta que está aqui - só que torta, e mais escura.";
+	next;
+	if (BaseLevel < .Nivel) {
+		mes "^4D4DFFÉ preciso nível de base " + .Nivel + " para atravessar.^000000";
+		close;
+	}
+	while (1) {
+		switch (select("Atravessar a fenda", "O que há do outro lado?", "Ficar aqui")) {
+		case 1:
+			mes "[Fenda Retorcida]";
+			mes "A luz se abre o bastante para um corpo passar.";
+			close2;
+			warp .Mapa$, .EntraX, .EntraY;
+			end;
+		case 2:
+			mes "[Fenda Retorcida]";
+			mes "O Labirinto da Floresta, do outro lado, ficou caótico. O que sobrou dos quatro recrutas ainda tem a forma deles, e não é mais eles.";
+			next;
+			mes "[Fenda Retorcida]";
+			mes "Quem derruba os quatro chama para o centro do labirinto o que os matou.";
+			next;
+			mes "[Fenda Retorcida]";
+			mes "^4D4DFFNeste momento:^000000";
+			.@vivos = 0;
+			for (.@i = 0; .@i < 4; .@i++)
+				if (.NovicoGid[.@i] > 0) .@vivos++;
+			if (.MvpGid > 0)
+				mes "- o ^FF0000Bafomé Caótico^000000 está no centro do labirinto.";
+			else
+				mes "- o Bafomé Caótico não foi chamado.";
+			mes "- com a cara dos recrutas, vagando: " + .@vivos + " de 4.";
+			next;
+			mes "[Fenda Retorcida]";
+			mes "A volta fica ao lado de onde você chegar - a mesma greta, do lado de dentro.";
+			next;
+			break;
+		case 3:
+			close;
+		}
+	}
+
+OnInit:
+	.Mapa$ = "prt_mz03_i";
+	.Nivel = 170;
+
+	// por onde se entra: a sala 14, que é a mesma por onde se entra no
+	// prt_maze03, e a única que tem a greta de volta
+	.EntraX = 182;
+	.EntraY = 88;
+
+	// os quatro, nas coordenadas em que o bRO deixa os restos de cada um
+	setarray .NovicoId[0], 20521, 20522, 20523, 20524;
+	setarray .NovicoX[0], 107, 10, 135, 183;
+	setarray .NovicoY[0], 104, 18, 68, 26;
+	setarray .NovicoNome$[0], "Andrea", "Agnes", "Silvano", "Cecília";
+
+	.MvpId = 20520;
+	.MvpX = 99;
+	.MvpY = 103;
+
+	.Renasce = 3600;        // uma hora, em segundos
+	.Duracao = 10000;       // a invencibilidade, em ms
+	.ChanceBase = 55;       // 5,5% em décimos de por cento
+	.ChancePasso = 29;      // cada Noviço morto com o MVP vivo
+	.ChanceTeto = 170;      // 17%
+
+	// A Fenda, os quatro recrutas e os quatro Restos nascem escondidos de
+	// TODO MUNDO. Quem os revela, por jogador, é o vigia lá embaixo.
+	cloakonnpc "FendaRetorcida";
+	cloakonnpc "AndreaIlusaoLab";
+	cloakonnpc "AgnesIlusaoLab";
+	cloakonnpc "SilvanoIlusaoLab";
+	cloakonnpc "CeciliaIlusaoLab";
+	cloakonnpc "Restos de Andrea#ilusaolab";
+	cloakonnpc "Restos de Agnes#ilusaolab";
+	cloakonnpc "Restos de Silvano#ilusaolab";
+	cloakonnpc "RestosCeciliaIlusaoLab";
+
+	for (.@i = 0; .@i < 4; .@i++)
+		callsub S_NasceNovico, .@i;
+	initnpctimer;
+	end;
+
+// O relógio único. Dez segundos é o passo da invencibilidade, e o
+// renascimento de uma hora só precisa de um prazo comparado.
+OnTimer10000:
+	// A sonda do lado do servidor, uma vez por subida do servidor. O `mobcount`
+	// com rótulo VAZIO conta quem nasceu por linha de spawn (os quatro Noviços
+	// têm rótulo e ficam de fora), e é a única medição que responde sem cliente
+	// - CLAUDE.md seção 4.21. Ela fica no primeiro tique e não no OnInit porque
+	// no OnInit o mapa ainda está nascendo, e lá o número sai pela metade.
+	// E `debugmes` e não `ShowInfo`: só o primeiro chega ao log, e mesmo assim
+	// só com o bit 4 do `console_msg_log` (nesta máquina ele é 3, então o lugar
+	// de ler isto é a JANELA do map-server).
+	if (.Sondou == 0) {
+		.Sondou = 1;
+		debugmes "Ilusao do Labirinto: " + mobcount(.Mapa$, "") + " monstros comuns no mapa, Novicos nos gids " + .NovicoGid[0] + "/" + .NovicoGid[1] + "/" + .NovicoGid[2] + "/" + .NovicoGid[3] + ".";
+	}
+	.@agora = gettimetick(2);
+	for (.@i = 0; .@i < 4; .@i++) {
+		if (.NovicoGid[.@i] > 0) continue;
+		if (.NovicoRenasce[.@i] == 0) continue;
+		if (.@agora < .NovicoRenasce[.@i]) continue;
+		callsub S_NasceNovico, .@i;
+	}
+	// uma hora depois da queda do MVP, os quatro voltam de uma vez
+	if (.MvpGid == 0 && .MvpMorreu > 0 && .@agora >= .MvpMorreu + .Renasce) {
+		.MvpMorreu = 0;
+		for (.@i = 0; .@i < 4; .@i++)
+			if (.NovicoGid[.@i] == 0) callsub S_NasceNovico, .@i;
+	}
+	if (.MvpGid > 0) callsub S_Invencibilidade;
+	setnpctimer 0;
+	end;
+
+OnNovicoMorre:
+	// `killedrid` é a CLASSE do monstro, que é o que identifica qual dos
+	// quatro caiu - o `killedgid` seria o da instância que acabou de morrer
+	.@qual = -1;
+	for (.@i = 0; .@i < 4; .@i++)
+		if (.NovicoId[.@i] == killedrid) .@qual = .@i;
+	if (.@qual < 0) end;
+
+	.NovicoGid[.@qual] = 0;
+	.NovicoRenasce[.@qual] = gettimetick(2) + .Renasce;
+
+	if (.MvpGid > 0) {
+		// morto com o MVP no mapa: é isto que endurece o Bafomé, e o
+		// jogador precisa ouvir, senão a mudança fica invisível
+		if (.Mortos < 4) .Mortos++;
+		mapannounce .Mapa$, "O que restava de " + .NovicoNome$[.@qual] + " se desfaz - e o Bafomé Caótico fica mais difícil de ferir.", bc_map;
+		end;
+	}
+
+	.@caidos = 0;
+	for (.@i = 0; .@i < 4; .@i++)
+		if (.NovicoGid[.@i] == 0) .@caidos++;
+	if (.@caidos == 4) callsub S_NasceMvp;
+	end;
+
+OnMvpMorre:
+	.MvpGid = 0;
+	.Invencivel = 0;
+	.Mortos = 0;
+	.MvpMorreu = gettimetick(2);
+	mapannounce .Mapa$, "O Bafomé Caótico foi derrotado. Em uma hora os quatro recrutas voltarão a vagar pelo labirinto.", bc_map;
+	debugmes "Ilusao do Labirinto: Bafome Caotico derrotado.";
+	end;
+
+S_NasceNovico:
+	// `callsub` abre escopo `.@` novo e VAZIO - as variáveis de quem chamou
+	// não chegam aqui, e por isso o índice vem por `getarg` (CLAUDE.md §5)
+	.@i = getarg(0);
+	monster .Mapa$, .NovicoX[.@i], .NovicoY[.@i], "--ja--", .NovicoId[.@i], 1, "FendaRetorcida::OnNovicoMorre";
+	.NovicoGid[.@i] = $@mobid[0];
+	.NovicoRenasce[.@i] = 0;
+	return;
+
+S_NasceMvp:
+	monster .Mapa$, .MvpX, .MvpY, "--ja--", .MvpId, 1, "FendaRetorcida::OnMvpMorre";
+	.MvpGid = $@mobid[0];
+	.Mortos = 0;
+	.Invencivel = 0;
+	mapannounce .Mapa$, "Os quatro recrutas caíram. O Bafomé Caótico surge no centro do labirinto, em " + .MvpX + "," + .MvpY + ".", bc_map;
+	debugmes "Ilusao do Labirinto: Bafome Caotico invocado.";
+	return;
+
+S_Invencibilidade:
+	.@chance = .ChanceBase + .ChancePasso * .Mortos;
+	if (.@chance > .ChanceTeto) .@chance = .ChanceTeto;
+
+	if (.Invencivel == 0) {
+		if (rand(1000) < .@chance) {
+			sc_start SC_INVINCIBLE, .Duracao, 1, 10000, 0, .MvpGid;
+			.Invencivel = 1;
+			unittalk .MvpGid, "Nada do que vocês têm me alcança agora.";
+			specialeffect EF_ENERGYCOAT, AREA, .MvpGid;
+		}
+		return;
+	}
+
+	// já está intocável: quanto maior a chance de ativar, menor a de cair
+	if (rand(1000) < 1000 - .@chance) {
+		sc_end SC_INVINCIBLE, .MvpGid;
+		.Invencivel = 0;
+		unittalk .MvpGid, "A casca cede... por enquanto.";
+		specialeffect EF_SUI_EXPLOSION, AREA, .MvpGid;
+		return;
+	}
+	// continua: renova por mais dez segundos, senão o status vence sozinho
+	sc_start SC_INVINCIBLE, .Duracao, 1, 10000, 0, .MvpGid;
+	return;
+}
+
+// ---------------------------------------------------------------------------
+// O VIGIA - quem vê o quê, a cada entrada de mapa
+//
+// O `cloakoffnpc` por jogador dura só até ele trocar de mapa ou sair
+// (doc/script_commands.txt, *cloakonnpc). Sem este vigia, a Fenda voltaria a
+// sumir para quem já fez a missão no instante em que ele pisasse fora - e
+// sumir calado é pior do que nunca ter aparecido.
+// ---------------------------------------------------------------------------
+-	script	IlusaoLabirintoVigia	-1,{
+	end;
+
+OnPCLoadMapEvent:
+	.@mapa$ = strcharinfo(3);
+
+	if (.@mapa$ == "prt_maze01") {
+		if (ilusao_labirinto >= 3)
+			cloakoffnpc "FendaRetorcida", getcharid(0);
+		if (ilusao_labirinto >= 5) {
+			cloakoffnpc "AndreaIlusaoLab", getcharid(0);
+			cloakoffnpc "AgnesIlusaoLab", getcharid(0);
+			cloakoffnpc "SilvanoIlusaoLab", getcharid(0);
+			cloakoffnpc "CeciliaIlusaoLab", getcharid(0);
+		}
+		end;
+	}
+
+	if (.@mapa$ == "prt_mz03_i") {
+		// os Restos só existem para quem está no passo 4, e só os que ainda
+		// não foram recolhidos
+		if (ilusao_labirinto != 3) end;
+		if ((ilusao_labirinto_restos & 1) == 0)
+			cloakoffnpc "Restos de Andrea#ilusaolab", getcharid(0);
+		if ((ilusao_labirinto_restos & 2) == 0)
+			cloakoffnpc "Restos de Agnes#ilusaolab", getcharid(0);
+		if ((ilusao_labirinto_restos & 4) == 0)
+			cloakoffnpc "Restos de Silvano#ilusaolab", getcharid(0);
+		if ((ilusao_labirinto_restos & 8) == 0)
+			cloakoffnpc "RestosCeciliaIlusaoLab", getcharid(0);
+		end;
+	}
+	end;
+}
+
+prt_maze01	mapflag	loadevent
+prt_mz03_i	mapflag	loadevent

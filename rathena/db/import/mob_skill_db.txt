@@ -1,3 +1,113 @@
+//>>> INICIO LABIRINTO
+//===========================================================================
+// Guerra do Emperium - habilidades dos monstros da Ilusao do Labirinto
+//===========================================================================
+//
+// GERADO por ferramentas/monta_ilusao_do_labirinto.py. Editar a mao morre na
+// proxima rodada.
+//
+// ESTE ARQUIVO TEM DOIS DONOS. A outra secao e a da Glast Heim Sombria, e
+// quem a escreve e o monta_mobs_da_sombria.py. Cada gerador troca so a
+// propria secao (ferramentas/secao_de_arquivo.py) - um que reescrevesse o
+// arquivo inteiro apagaria os monstros do outro em silencio, porque monstro
+// sem linha aqui simplesmente nao conjura, sem erro nenhum.
+//
+// As linhas sao as do monstro ORIGINAL de cada ilusional, com o id trocado.
+// Os quatro Novicos (20521..20524) nao tem original e por isso nao aparecem
+// aqui - esta no PENDENCIAS.md.
+//
+// A INVOCACAO E A UNICA LINHA QUE NAO SE COPIA CRUA. O NPC_SUMMONSLAVE traz o
+// id do escravo DO ORIGINAL, e copiar isso encheu o mapa de 250 Cochichos de
+// nivel 66 (o Ghostring comum invoca cinco por spawn) - medido em jogo em
+// 2026-09-11. Aqui, invocacao cujo escravo tem contraparte ilusional passa a
+// invocar a contraparte (1101 -> 20525, 1431 -> 20533) e invocacao sem
+// contraparte e descartada. As duas pontas batem com a aba Skills do kRO: o
+// Ghostring e o Mantis ilusionais nao invocam nada, e o Bafome Caotico invoca.
+//
+// MobID,Dummy value (info only),State,SkillID,SkillLv,Rate,CastTime,Delay,Cancelable,Target,Condition type,Condition value,val1,val2,val3,val4,val5,Emotion,Chat
+//===========================================================================
+20520,Chaos Baphomet@MO_BODYRELOCATION,chase,264,1,2000,200,1000,yes,target,always,0,,,,,,,
+20520,Chaos Baphomet@NPC_DARKSTRIKE,chase,340,10,2000,0,1000,yes,target,always,0,,,,,,,
+20520,Chaos Baphomet@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
+20520,Chaos Baphomet@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,,
+20520,Chaos Baphomet@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,29,
+20520,Chaos Baphomet@NPC_EARTHQUAKE,chase,653,5,10000,2000,30000,no,self,myhpltmaxrate,80,,,,,,6,
+20520,Chaos Baphomet@NPC_EARTHQUAKE,attack,653,5,10000,2000,30000,no,self,myhpltmaxrate,80,,,,,,6,
+20520,Chaos Baphomet@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6,
+20520,Chaos Baphomet@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,,
+20520,Chaos Baphomet@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,,
+20520,Chaos Baphomet@NPC_HELLJUDGEMENT,chase,662,5,10000,800,10000,no,self,always,0,,,,,,6,
+20520,Chaos Baphomet@NPC_HELLJUDGEMENT,attack,662,5,10000,800,10000,no,self,always,0,,,,,,6,
+20520,Chaos Baphomet@NPC_DARKBREATH,attack,202,5,2000,800,5000,no,target,always,0,,,,,,29,
+20520,Chaos Baphomet@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,,
+20520,Chaos Baphomet@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,,
+20520,Chaos Baphomet@NPC_SUMMONSLAVE,attack,196,6,10000,700,10000,no,self,slavele,3,20533,,,,,,
+20520,Chaos Baphomet@NPC_SUMMONSLAVE,idle,196,6,10000,700,10000,no,self,slavele,3,20533,,,,,,
+20520,Chaos Baphomet@NPC_SUMMONSLAVE,idle,196,4,10000,0,0,no,self,onspawn,0,20525,,,,,,
+20520,Chaos Baphomet@WZ_VERMILION,attack,85,21,2000,500,2000,no,target,always,0,,,,,,29,
+20520,Chaos Baphomet@WZ_VERMILION,chase,85,21,5000,500,2000,no,target,skillused,18,,,,,,29,
+20520,Chaos Baphomet@WZ_VERMILION,chase,85,21,2000,500,2000,no,target,always,0,,,,,,29,
+20520,Chaos Baphomet@NPC_ALLHEAL,attack,687,1,10000,3000,100000,no,self,damagedgt,50000,,,,,,,
+20520,Chaos Baphomet@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,50,,,,,,,
+20525,Chaos Baphomet Jr@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
+20525,Chaos Baphomet Jr@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29,
+20525,Chaos Baphomet Jr@SA_DISPELL,attack,289,1,0,0,30000,yes,target,always,0,,,,,,29,
+20525,Chaos Baphomet Jr@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,6,
+20525,Chaos Baphomet Jr@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
+20525,Chaos Baphomet Jr@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,29,
+20525,Chaos Baphomet Jr@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,29,
+20525,Chaos Baphomet Jr@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20525,Chaos Baphomet Jr@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,,
+20526,Chaos Side Winder@KN_PIERCE,attack,56,5,500,700,5000,no,target,always,0,,,,,,,
+20526,Chaos Side Winder@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,,
+20526,Chaos Side Winder@NPC_POISONATTACK,attack,188,3,500,500,5000,no,target,always,0,,,,,,,
+20527,Chaos Hunter Fly@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,always,0,,,,,,,
+20527,Chaos Hunter Fly@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,2,
+20527,Chaos Hunter Fly@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6,
+20527,Chaos Hunter Fly@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20527,Chaos Hunter Fly@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3885,,,,,
+20527,Chaos Hunter Fly@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,,
+20527,Chaos Hunter Fly@NPC_BLOODDRAIN,angry,199,1,500,0,5000,yes,target,always,0,,,,,,2,
+20527,Chaos Hunter Fly@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,6,
+20527,Chaos Hunter Fly@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20527,Chaos Hunter Fly@NPC_WINDATTACK,angry,187,1,2000,0,5000,yes,target,always,0,,,,,,,
+20528,Chaos Mantis@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6,
+20528,Chaos Mantis@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,6,
+20528,Chaos Mantis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20528,Chaos Mantis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3095,,,,,
+20529,Chaos Ghostring@AL_TELEPORT,attack,26,1,5000,0,5000,yes,self,myhpltmaxrate,30,,,,,,28,
+20529,Chaos Ghostring@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
+20529,Chaos Ghostring@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,28,
+20529,Chaos Ghostring@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,28,
+20529,Chaos Ghostring@NPC_INVISIBLE,attack,353,1,2000,200,5000,yes,self,always,0,,,,,,,
+20529,Chaos Ghostring@NPC_INVISIBLE,idle,353,1,2000,200,5000,yes,self,always,0,,,,,,,
+20529,Chaos Ghostring@NPC_INVISIBLE,chase,353,1,2000,200,5000,yes,self,always,0,,,,,,,
+20529,Chaos Ghostring@MG_SOULSTRIKE,chase,13,9,2000,500,5000,yes,target,always,0,,,,,,,
+20529,Chaos Ghostring@NPC_DARKBREATH,attack,202,4,500,800,5000,no,target,always,0,,,,,,28,
+20529,Chaos Ghostring@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,28,,,,,,
+20529,Chaos Ghostring@NPC_TELEKINESISATTACK,attack,191,5,500,0,5000,yes,target,always,0,,,,,,28,
+20530,Chaos Killer Mantis@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
+20530,Chaos Killer Mantis@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,,
+20530,Chaos Killer Mantis@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,6,
+20530,Chaos Killer Mantis@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6,
+20530,Chaos Killer Mantis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20530,Chaos Killer Mantis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,,
+20531,Chaos Poporing@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
+20531,Chaos Poporing@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,,
+20531,Chaos Poporing@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,,
+20532,Chaos Stem Worm@NPC_GUIDEDATTACK,attack,172,1,500,1000,20000,no,target,always,0,,,,,,,
+20532,Chaos Stem Worm@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6,
+20533,Chaos Baphomet Jr@NPC_DARKBREATH,angry,202,1,500,800,5000,no,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_DARKNESSATTACK,angry,190,2,500,500,5000,no,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_HALLUCINATION,follow,207,1,500,500,5000,yes,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_HALLUCINATION,angry,207,1,500,500,5000,yes,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_DARKBREATH,attack,202,1,500,800,5000,no,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,,
+20533,Chaos Baphomet Jr@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,,
+//<<< FIM LABIRINTO
+
+//>>> INICIO SOMBRIA
 //===========================================================================
 // Guerra do Emperium - habilidades dos monstros da Glast Heim Sombria
 //===========================================================================
@@ -24,6 +134,12 @@
 // As linhas sao as do monstro NORMAL correspondente com o id trocado. O
 // Khalitzburg (2471) e os dois Comandantes (2473, 2474) nao tem habilidade
 // no vendor, entao os _H deles tambem nao tem.
+//
+// ESTE ARQUIVO TEM DOIS DONOS desde 2026-09-11: a outra secao e a da Ilusao
+// do Labirinto, gerada por monta_ilusao_do_labirinto.py. Cada gerador troca
+// so a propria secao (ferramentas/secao_de_arquivo.py) e preserva a do outro
+// byte a byte - um que reescrevesse o arquivo inteiro apagaria os monstros do
+// outro em silencio.
 //
 // MobID,Dummy value (info only),State,SkillID,SkillLv,Rate,CastTime,Delay,Cancelable,Target,Condition type,Condition value,val1,val2,val3,val4,val5,Emotion,Chat
 //===========================================================================
@@ -106,3 +222,4 @@
 3150,Ominous Amdarais@NPC_CURSEATTACK,attack,181,5,4000,0,3000,no,target,always,0,,,,,,,
 3150,Ominous Amdarais@NPC_STUNATTACK,attack,179,5,2000,0,3000,no,target,always,0,,,,,,,
 3150,Ominous Amdarais@SM_MAGNUM,attack,7,25,10000,500,5000,yes,self,always,0,,,,,,,
+//<<< FIM SOMBRIA

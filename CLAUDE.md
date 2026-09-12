@@ -89,7 +89,7 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `conf/groups.yml` | um `- Path: conf/guerra/groups_guerra.yml` no rodapé, **antes** do `conf/import/groups.yml` que já estava lá (permissão de comando por grupo — hoje o `@autoloot` e irmãos para o grupo 0). Funciona por merge: o `parseBodyNode` procura o `Id` antes de criar (`src/map/pc_groups.cpp:74`), e grupo que já existe recebe os campos por cima — por isso o nosso arquivo não repete `Name` nem `Level` |
 | `db/item_combos.yml`, `db/re/reputation.yml`, `db/re/reputation_group.yml`, `db/attendance.yml`, `db/refine.yml`, `db/pet_db.yml` | um `- Path: db/guerra/...` no rodapé de cada. O do `pet_db` entrou em 2026-08-26 com a Anomalia Dimensional e aponta para `db/guerra/pet_db.yml`, hoje com um pet só — o Freeoni, que o rAthena traz **comentado** dos dois lados (a entrada de pet e o mob `PHREEONI2`, Id 20425). **Não existe `@reloadpetdb`:** mexer ali é reiniciar o map-server |
 | `db/re/item_db.yml` | **três** `- Path:` no rodapé, nesta ordem, e a ordem é a regra — cada um tem a última palavra sobre um campo. `db/guerra/item_db.yml` é o nosso, escrito à mão (itens próprios e overrides de campo). `db/guerra/item_db_indestrutivel.yml` é **gerado** por `ferramentas/marca_indestrutiveis.py` e repete o `Script:` inteiro de 27 itens com um `bonus bUnbreakable<slot>` a mais — sem ele a peça que a descrição promete indestrutível quebra (§4.19). `db/guerra/item_db_lojas.yml` é **gerado** por `ferramentas/zera_revenda_das_lojas.py` e põe `Buy: 1` em todo item de vitrine de Prontera (§4.16) |
-| `db/re/mob_db.yml` | **três** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s); `db/guerra/mob_db_sombria.yml` é o terceiro, **gerado** por `ferramentas/monta_mobs_da_sombria.py`, e traz os **catorze monstros da Glast Heim Sombria** (ids 3139..3152), que o vendor tem só como placeholder comentado e que o rAthena **nunca implementou, nem no master** |
+| `db/re/mob_db.yml` | **quatro** `- Path:` no rodapé, não um. `db/guerra/mob_db.yml` é o nome em português, **gerado** por `traduz_ptbr.py monstros` (reescreve o arquivo inteiro; editar à mão morre no próximo `--extrair`); `db/guerra/mob_db_guerra.yml` é o segundo, escrito à mão, para ajuste pontual de campo de combate (ex.: `Attack` de um guardião fora de castelo — ver o cabeçalho do arquivo e `PENDENCIAS.md` §1s); `db/guerra/mob_db_sombria.yml` é o terceiro, **gerado** por `ferramentas/monta_mobs_da_sombria.py`, e traz os **catorze monstros da Glast Heim Sombria** (ids 3139..3152), que o vendor tem só como placeholder comentado e que o rAthena **nunca implementou, nem no master**; `db/guerra/mob_db_labirinto.yml` é o quarto, **gerado** por `ferramentas/monta_ilusao_do_labirinto.py`, e traz os **catorze da Ilusão do Labirinto** (ids 20520..20533), na mesma situação — placeholder comentado, sem um status. A diferença é que ali havia regra de derivação e aqui não: são monstros próprios, medidos um a um, e o `Attack` de cada um foi **invertido** da fórmula do renewal porque ninguém o publica (§5) |
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `db/re/job_stats.yml` | o **`Footer: Imports:` inteiro**, com **dois** `- Path:`, e o primeiro deles não é nosso. `db/re/job_outfits.yml` é arquivo do **próprio rAthena** e estava **órfão**: o `JobDatabase::getDefaultLocation()` (`src/map/pc.cpp:13819`) aponta só para o `job_stats.yml`, então os treze `AlternateOutfits` (o "Roupa alternativa" do estilista) não eram lidos por ninguém e `job->alternate_outfits` ficava vazio para todo trabalho. `db/guerra/job_estilo_de_corpo.yml` é nosso e declara os ids 4332..4344 num `Jobs:`, porque a guarda `job_db.exists()` do `pc_changelook` reprova todo valor de estilo de corpo sem eles (§5). Sem os dois, o Cupom de Roupa some sem trocar nada |
 | `db/status.yml` | um `- Path: db/guerra/status.yml` no rodapé, **depois** do `db/re/status.yml` e **antes** do `db/import/status.yml` que já estavam lá. Aquele arquivo já tinha `Footer: Imports:` — é o despachante, e o `db/re/` é só mais um import dele. Funciona por merge fino: o `StatusDatabase::parseBodyNode` (`src/map/status.cpp:15903`) procura o `Status:` antes de criar, e dentro de `Flags:` cada bandeira é `set()`/`reset()` pelo nome — então o nosso arquivo lista só aquilo em que discordamos, sem repetir o resto do status. Hoje tem dez entradas, todas a mesma bandeira: o `RemoveOnRefresh` que faz a Runa Nauthiz remover os dezesseis efeitos que a descrição dela promete (§4.17 — o vendor tinha a metade da **imunidade** para a lista inteira e a da **remoção** só para seis). São dez e não nove porque a Petrificação são dois status, `StoneWait` (a contagem) e `Stone` (a pedra) |
@@ -590,6 +590,34 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
       clique: abrir, tirar a foto e fechar não tira o mouse de ninguém. O
       roteiro com clique só entra quando o que se testa **é** o clique.
 
+26. **Conteúdo que o bRO tranca atrás de uma missão de acesso entra
+    trancado — a missão faz parte do conteúdo, não é enfeite.** Decisão do
+    dono em 2026-09-11, sobre a Ilusão do Labirinto.
+
+    A caverna tinha estreado com a porta aberta para qualquer um com o nível
+    mínimo. A missão de acesso estava documentada, com os sete passos e as
+    coordenadas, nas mesmas páginas de onde saiu todo o resto — e ficou de
+    fora porque a pergunta "missão fiel ou porta direta?" foi feita **antes
+    de existir caverna nenhuma**, quando ela ainda parecia um enfeite caro.
+    O dono entrou de primeira, sem fazer nada, e pediu o contrário: *"a
+    caverna não deve ser acessível sem os passos da quest"*.
+
+    O que a regra pede, na ordem:
+    - **a trava é a missão, e não o nível.** Nível mínimo continua existindo
+      (é o que impede alguém de 90 entrar e morrer), mas ele é a segunda
+      trava, não a primeira;
+    - **a porta não se anuncia para quem não pode passar.** *"De preferência
+      nem ver a fenda se não tiver iniciado a quest"* — e como cloak não é
+      `disablenpc`, quem clicar mesmo assim precisa ouvir uma recusa escrita
+      (§5), e não uma porta que não responde;
+    - **a recompensa da missão de acesso é o acesso.** Não se inventa item de
+      prêmio onde o bRO não dá — a Ilusão do Labirinto não dá nada, e isso é
+      parte da história que os quatro recrutas contam no fim.
+
+    E a pergunta que a regra substitui, ao trazer conteúdo de fora: não é
+    "vale a pena implementar a missão?", é **"como se chega nisto no bRO?"**.
+    Se a resposta tem passos, eles são o conteúdo tanto quanto os monstros.
+
 ## 5. Armadilhas deste ambiente
 
 **Cada linha abaixo já custou horas.** O caso inteiro — sintoma, causa
@@ -625,6 +653,7 @@ Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, fe
 - Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está entre elas. Aspas duplas não protegem crase
 - `x += f()` em que `f` mexe em `x` perde o que `f` consumiu. O `+=` guarda o `x` de antes de avaliar a direita
 - No `.gitignore`, negar um arquivo dentro de pasta excluída NÃO tem efeito — e o `git status` não denuncia, porque o arquivo simplesmente continua…
+- Dois geradores que escrevem o MESMO arquivo se apagam em silêncio — o `db/import/mob_skill_db.txt` tem dois donos desde 2026-09-11, e monstro sem linha ali não conjura, sem erro nenhum
 - Ferramentas rodam em Python 2.7 (`C:\Python27\python.exe`)
 
 ### `ARMADILHAS-CLIENTE.md` — O cliente de RO
@@ -689,6 +718,8 @@ Comandos de script, variáveis e arrays, spawn, instância, unidades, sintaxe do
 - Comentário no fim de uma linha de spawn entra DENTRO do nome do evento. O `npc_parsesrcfile` enche o `w4` *"to end of line"* (`src/map/npc.cpp`)
 - Uma linha ruim mata o ARQUIVO INTEIRO, não a linha — inclusive linha de comentário
 - Em spawn com área, `<xs>,<ys>` NÃO é o lado do retângulo. O `mob_spawn` chama `map_search_freecell` com `xs-1` (`src/map/mob.cpp:1149`), que sorteia…
+- NPC escondido por jogador (`cloakoffnpc` com char_id) volta ao estado de todo mundo quando ele troca de mapa — e o sintoma só aparece para quem JÁ terminou o conteúdo
+- Mapa de labirinto pode ter o chão partido em salas que só os PORTAIS ligam — 26 pedaços no `prt_mz03_i` —, e centro de área em parede faz o `mob_spawn` sortear no mapa inteiro
 - Mapa pode ter pedaço andável solto, e `0,0` no spawn sorteia lá. O `vis_h01` tem 16.104 células no mapa de verdade mais 479 na linha y=239, ruído do…
 - `rand(1)` não devolve 0: ele MATA o script. O `buildin_rand` (`src/map/script.cpp:5604`) na forma de um argumento só faz `maximum -= 1` e então…
 - `getitem` com a mochila cheia LARGA O ITEM NO CHÃO. O `buildin_getitem` (`src/map/script.cpp`) chama `pc_additem`
@@ -741,6 +772,9 @@ Bancos em YAML, recarregadores, item_db, guardas do C++, operação dos quatro s
 - `login.state` e `login.unban_time` são INDEPENDENTES e o prazo barra primeiro — suspender quem estava bloqueado não solta ninguém quando o prazo vencer, e nada avisa
 - Escrever na `login` NÃO expulsa quem já está jogando: quem derruba a sessão é o pacote `0x2731`, que só sai pelo `@block`. E a conta de sexo `S` derruba o jogo inteiro se for punida
 - Conta suspensa pode ser castigo de gente OU a trava de senha errada (§4.23) — é a MESMA coluna, sem marca que as separe, e confundi-las faz punir de novo quem só esqueceu a senha
+- Copiar as habilidades de um monstro para outro leva o ESCRAVO ERRADO junto: o `NPC_SUMMONSLAVE` traz o id do escravo do ORIGINAL, e 50 Ghostrings de nível 173 encheram o mapa de 250 Cochichos de nível 66
+- Contar monstro de um mapa VAZIO devolve um número menor, e ele não é o do mapa — com `dynamic_mobs` as 128 primeiras linhas de spawn só nascem quando alguém entra
+- O divine-pride publica a faixa de ataque JÁ CALCULADA, e não o campo `Attack`: copiar de lá põe um número 1,4x maior, e não existe valor "inválido" para denunciar. Dá para inverter, e a inversão é exata
 - Varredura por `nome_db.` NÃO acha quem itera o banco de dentro da própria classe
 - O corpo de uma habilidade NÃO está mais no `skill.cpp` — cada uma tem classe própria em `src/map/skills/`
 - Parar SÓ o map-server para recompilar deixa o jogador travado no login, e a mensagem culpa o cliente
