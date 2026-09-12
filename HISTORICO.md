@@ -18169,3 +18169,39 @@ em duas leituras, uma delas mexendo em coisa que ele não citou, **não se
 adivinha**. Aplica-se a parte inequívoca e pergunta-se o resto numa linha. O
 custo de perguntar é uma frase; o de errar foi uma sessão.
 
+
+
+### Os recrutas ganharam o sprite de NPC oficial, e a caverna deixou de precisar de patch (2026-09-12)
+
+O dono passou os oito view ids que faltavam, e eles são os **sprites de NPC** da
+própria missão no cliente — não mais os view ids do `mob_db` que eu tinha usado:
+
+| NPC | Antes | Agora | Caído (os Restos) |
+|---|---|---|---|
+| Andrea | `20521` (mob) | **10310** `4_M_ANDREA` | **10311** `4_M_ANDREA_D` |
+| Agnes | `20522` (mob) | **10312** `4_F_ANES` | **10313** `4_F_ANES_D` |
+| Silvano | `20523` (mob) | **10314** `4_M_SILVANO` | **10315** `4_M_SILVANO_D` |
+| Cecília | `20524` (mob) | **10316** `4_F_CECILIA` | **10317** `4_F_CECILIA_D` |
+
+Os quatro Restos usavam `4_GHOST_STAND`, que era escolha minha; agora usam a
+versão **caída** de cada recruta, que é o que o bRO desenha. E o nome na tela
+perdeu o "Recruta ": são só "Andrea", "Agnes", "Silvano" e "Cecília" — o prefixo
+era meu, não do dono, e estava marcado no histórico do dia anterior como "para
+desfazer numa linha se não for o que ele quer". Era.
+
+**O nome ÚNICO não mudou.** O que vem depois do `::` (`AndreaIlusaoLab` e
+irmãos) é o que os quatro `cloakonnpc`/`cloakoffnpc` do passo 6 usam; trocar o
+nome de exibição não o toca, e é por isso que a troca coube em uma linha por NPC.
+
+**E o ganho de verdade foi apagar o patch.** Os oito `.spr`/`.act` oficiais
+(`4_m_andrea`, `4_m_andrea_d`, `4_f_anes`, …) já estão em `data\sprite\npc\` do
+nosso `data.grf`, **sem cifra** — conferido com `grf.py … find`. Enquanto os
+recrutas usavam o view id do monstro, a arte só existia na pasta de monstro e as
+oito cópias `ill_*` que eu tinha posto em `cliente\data\sprite\npc\` só chegariam
+ao jogador por `monta_patch.py`. Agora não chegam por nada: já estavam lá desde o
+download. As `ill_*` soltas ficaram órfãs e podem ser apagadas.
+
+A conferência foi a receita de sempre, e desta vez os três lados bateram com os
+números do dono sem um ajuste: `npc.hpp` (a enumeração a partir de
+`NPC_RANGE3_START = 10000`), `npcidentity.lub` do nosso GRF (10310..10317, os
+mesmos) e `jobname.lub` (os nomes de arquivo).

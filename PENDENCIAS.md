@@ -4479,21 +4479,26 @@ comuns, e nenhum aviso de spawn ou de script no `log/map-msg_log.log`.
      Esmeralda (`prt_maze01 99,25`);
    - se os quatro recrutas aparecem na entrada no passo 6 e **somem para quem
      não fez a missão**;
-   - os sprites: `4_F_ERENE` (Membro do Clã Irene) e `4_F_08` (Líder do Clã
-     Esmeralda), os dois passados pelo dono em 2026-09-12; `4_F_ACOLYTE` na
-     Irene da porta, que ele conferiu e mandou não mexer; os **view ids dos
-     próprios monstros** 20521..20524 nos quatro recrutas, e `4_GHOST_STAND`
-     nos Restos. Todos conferidos no `npc.hpp` e no `npcidentity.lub`, mas
-     **arte conferida offline não é arte na tela** (§5).
+   - os sprites, **todos passados pelo dono**: `4_F_ACOLYTE` na Irene da
+     porta (ele conferiu e mandou não mexer), `4_F_ERENE` no Membro do Clã
+     Irene, `4_F_08` na Líder do Clã Esmeralda e, desde 2026-09-12, os
+     **sprites de NPC oficiais da missão** nos outros oito —
+     `4_M_ANDREA`/`_D` (10310/10311), `4_F_ANES`/`_D` (10312/10313),
+     `4_M_SILVANO`/`_D` (10314/10315) e `4_F_CECILIA`/`_D` (10316/10317),
+     com os `_D` nos Restos. Conferidos no `npc.hpp`, no `npcidentity.lub` e
+     no `jobname.lub` deste cliente, e os oito `.spr`/`.act` estão no nosso
+     `data.grf` sem cifra — mas **arte conferida offline não é arte na
+     tela** (§5);
+   - os nomes na tela dos quatro, que perderam o "Recruta " no mesmo dia:
+     são só "Andrea", "Agnes", "Silvano" e "Cecília".
 
-**E os quatro recrutas passaram a depender de PATCH.** Sprite de monstro num
-NPC resolve para `data\sprite\npc\<nome>.spr`, e a arte dos quatro só existia
-na pasta de monstro — é a armadilha dos Agentes da Liga. Os oito arquivos
-(`ill_andrea`, `ill_anes`, `ill_silvano`, `ill_cecilia`, `.spr` + `.act`)
-foram copiados do próprio `data.grf` para `cliente\data\sprite\npc\`, o que
-resolve **nesta máquina**. Para o jogador eles só existem depois de um
-`monta_patch.py` — e sem eles o que aparece é caixa de erro, não NPC sem
-sprite. É a §4.18, e é a única coisa desta caverna que precisa de patch.
+**E esta caverna deixou de precisar de patch.** Enquanto os quatro recrutas
+usavam o view id do MONSTRO (20521..20524) a arte só existia na pasta de
+monstro — a armadilha dos Agentes da Liga —, e os oito `ill_*` copiados à mão
+para `cliente\data\sprite\npc\` teriam de viajar num `monta_patch.py` para
+existirem do lado do jogador. Com o sprite de NPC oficial os oito `.spr`/`.act`
+já estão no `data.grf` que todo mundo baixou: os `ill_*` soltos ficaram órfãos
+e podem ser apagados.
 2. **A Fenda Retorcida** em `prt_maze01 99,23` — se o sprite
    (`4_ENERGY_WHITE`) desenha, se o texto cabe, e se a trava de nível 170
    recusa quem deve recusar;

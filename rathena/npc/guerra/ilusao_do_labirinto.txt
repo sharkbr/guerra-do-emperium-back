@@ -117,7 +117,7 @@
 //
 //= O QUE A PÁGINA NÃO DIZ, E FOI DECIDIDO AQUI
 //
-//= Quatro coisas, e é honesto que estejam separadas do resto:
+//= Três coisas, e é honesto que estejam separadas do resto:
 //
 //=   1. o PASSO da chance. A página dá as duas pontas (5,5% e
 //=      17%) e o gatilho (morte de Noviço), mas não o degrau.
@@ -130,11 +130,13 @@
 //=      seja 94,5% no começo e 83% com os quatro mortos;
 //=   3. ONDE o MVP nasce. A página não diz. Nasce em 99,103, o
 //=      centro do labirinto - que é a mesma sala onde Andrea
-//=      caiu -, e o mapa inteiro é avisado quando isso acontece;
-//=   4. o SPRITE dos quatro Restos: `4_GHOST_STAND`, que é o
-//=      que o texto da página descreve - "ajude seus espíritos
-//=      voltarem para casa". Os outros seis NÃO são escolha
-//=      nossa; vieram do dono em 2026-09-12, dos prints do bRO.
+//=      caiu -, e o mapa inteiro é avisado quando isso acontece.
+//
+//= (Havia uma quarta: o SPRITE dos quatro Restos, que era
+//= `4_GHOST_STAND` por escolha nossa, pelo texto da página -
+//= "ajude seus espíritos voltarem para casa". O dono passou os
+//= `_D` oficiais em 2026-09-12 e ela saiu daqui: hoje TODOS os
+//= sprites desta missão vêm dele, dos prints do bRO.)
 //
 //= OS SPRITES, E O QUE ELES CUSTAM DO LADO DO CLIENTE
 //
@@ -143,19 +145,35 @@
 //= npcidentity.lub deste cliente E com `.spr`/`.act` já em
 //= `data\sprite\npc\` do nosso GRF. Não custam nada.
 //
-//= Os quatro recrutas usam o SPRITE DO MONSTRO correspondente -
-//= os view ids 20521..20524, os mesmos ids do mob_db -, e isso
-//= custa: view id de NPC resolve para `data\sprite\npc\<nome>`,
-//= e a arte dos quatro só existia na pasta de MONSTRO. É a
-//= armadilha dos Agentes da Liga (ARMADILHAS-CLIENTE.md), que
-//= não falha calada: dá caixa de erro apontando um caminho que
-//= ninguém digitou.
+//= Os quatro recrutas e os quatro Restos usam os SPRITES DE NPC
+//= oficiais da missão, e não mais os view ids do mob_db. Os
+//= oito pares vieram do dono em 2026-09-12:
 //
-//= Os oito arquivos (`ill_andrea`, `ill_anes`, `ill_silvano` e
-//= `ill_cecilia`, `.spr` + `.act`) foram copiados do próprio
-//= data.grf para `cliente\data\sprite\npc\`. Como moram no
-//= CLIENTE, só chegam ao jogador por PATCH (CLAUDE.md §4.18) -
-//= está no PENDENCIAS.md.
+//=     Andrea   10310  4_M_ANDREA    Restos  10311  ..._D
+//=     Agnes    10312  4_F_ANES      Restos  10313  ..._D
+//=     Silvano  10314  4_M_SILVANO   Restos  10315  ..._D
+//=     Cecília  10316  4_F_CECILIA   Restos  10317  ..._D
+//
+//= Os `_D` são a versão CAÍDA de cada um - é o que os Restos
+//= desenham agora, no lugar do `4_GHOST_STAND` genérico que
+//= estava aqui antes.
+//
+//= E isso ZEROU o custo de cliente desta caverna: os oito
+//= `.spr`/`.act` já estão em `data\sprite\npc\` do nosso
+//= data.grf, sem cifra - conferido em 2026-09-12 com
+//= `grf.py ... find`. Enquanto os recrutas usavam o view id do
+//= MONSTRO (20521..20524) a arte só existia na pasta de
+//= monstro, e os oito `ill_*` copiados à mão para
+//= `cliente\data\sprite\npc\` precisavam de PATCH para chegar
+//= ao jogador - era a armadilha dos Agentes da Liga
+//= (ARMADILHAS-CLIENTE.md). Com o sprite de NPC oficial a
+//= dependência acabou, e os `ill_*` soltos ficaram órfãos.
+//
+//= O nome na tela perdeu o "Recruta " no mesmo dia, pedido do
+//= dono: são "Andrea", "Agnes", "Silvano" e "Cecília". O nome
+//= ÚNICO - o que vem depois do `::` - não mudou: é ele que o
+//= `cloakonnpc` usa, e mexer nele quebraria os quatro
+//= `cloakoffnpc` do passo 6.
 //
 //= POR QUE A INVENCIBILIDADE É `sc_start` E NÃO A HABILIDADE
 //
@@ -385,22 +403,22 @@ prontera,212,320,4	script	Líder do Clã Esmeralda::EsmeraldaPrt	4_F_08,{
 // `progressbar` não é enfeite: a doc do comando avisa que cliente Ragexe
 // trava se a janela de diálogo ainda estiver aberta.
 // ---------------------------------------------------------------------------
-prt_mz03_i,107,104,4	script	Restos de Andrea#ilusaolab	4_GHOST_STAND,{
+prt_mz03_i,107,104,4	script	Restos de Andrea#ilusaolab	10311,{
 	callfunc "F_IlusaoLabResto", 1, "Andrea";
 	end;
 }
 
-prt_mz03_i,10,18,4	script	Restos de Agnes#ilusaolab	4_GHOST_STAND,{
+prt_mz03_i,10,18,4	script	Restos de Agnes#ilusaolab	10313,{
 	callfunc "F_IlusaoLabResto", 2, "Agnes";
 	end;
 }
 
-prt_mz03_i,135,68,4	script	Restos de Silvano#ilusaolab	4_GHOST_STAND,{
+prt_mz03_i,135,68,4	script	Restos de Silvano#ilusaolab	10315,{
 	callfunc "F_IlusaoLabResto", 4, "Silvano";
 	end;
 }
 
-prt_mz03_i,183,26,4	script	Restos de Cecília::RestosCeciliaIlusaoLab	4_GHOST_STAND,{
+prt_mz03_i,183,26,4	script	Restos de Cecília::RestosCeciliaIlusaoLab	10317,{
 	callfunc "F_IlusaoLabResto", 8, "Cecília";
 	end;
 }
@@ -460,7 +478,7 @@ function	script	F_IlusaoLabResto	{
 // Ficam nas posições em que o bRO os põe depois da missão - são eles que vão
 // dar as missões diárias e semanais na segunda rodada (PENDENCIAS.md).
 // ---------------------------------------------------------------------------
-prt_maze01,97,21,4	script	Recruta Andrea::AndreaIlusaoLab	20521,{
+prt_maze01,97,21,4	script	Andrea::AndreaIlusaoLab	10310,{
 	if (ilusao_labirinto < 5) {
 		mes "[Andrea]";
 		mes "...";
@@ -492,7 +510,7 @@ prt_maze01,97,21,4	script	Recruta Andrea::AndreaIlusaoLab	20521,{
 	close;
 }
 
-prt_maze01,97,25,4	script	Recruta Agnes::AgnesIlusaoLab	20522,{
+prt_maze01,97,25,4	script	Agnes::AgnesIlusaoLab	10312,{
 	mes "[Agnes]";
 	if (ilusao_labirinto < 5) {
 		mes "...";
@@ -505,7 +523,7 @@ prt_maze01,97,25,4	script	Recruta Agnes::AgnesIlusaoLab	20522,{
 	close;
 }
 
-prt_maze01,101,25,4	script	Recruta Silvano::SilvanoIlusaoLab	20523,{
+prt_maze01,101,25,4	script	Silvano::SilvanoIlusaoLab	10314,{
 	mes "[Silvano]";
 	if (ilusao_labirinto < 5) {
 		mes "...";
@@ -518,7 +536,7 @@ prt_maze01,101,25,4	script	Recruta Silvano::SilvanoIlusaoLab	20523,{
 	close;
 }
 
-prt_maze01,101,21,4	script	Recruta Cecília::CeciliaIlusaoLab	20524,{
+prt_maze01,101,21,4	script	Cecília::CeciliaIlusaoLab	10316,{
 	mes "[Cecília]";
 	if (ilusao_labirinto < 5) {
 		mes "...";
