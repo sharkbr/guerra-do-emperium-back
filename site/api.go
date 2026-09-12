@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 	"net/mail"
 	"strconv"
@@ -328,6 +329,13 @@ func (s *Servidor) trocaSenha(w http.ResponseWriter, r *http.Request) {
 		falha(w, http.StatusInternalServerError, "nao consegui trocar a senha")
 		return
 	}
+	// Fica no journal QUAL conta trocou. A linha de request do main.go so'
+	// tem IP e hora, e nao basta: em 2026-09-12 um jogador travado pela
+	// senha errada perguntou se alguem tinha trocado a senha dele, e a
+	// resposta so' saiu porque as tres trocas da historia eram anteriores a'
+	// conta. Com uma troca dentro do prazo, seria "alguem trocou, nao sei
+	// quem". Mesma linha para o PIN, logo abaixo - e' o mesmo tipo de pergunta.
+	log.Printf("conta %d (%s) trocou a senha, de %s", c.ID, c.Usuario, ipDe(r))
 	devolve(w, http.StatusOK, resposta{"ok": true})
 }
 
@@ -357,6 +365,7 @@ func (s *Servidor) recuperaPin(w http.ResponseWriter, r *http.Request) {
 		falha(w, http.StatusInternalServerError, "nao consegui apagar o PIN")
 		return
 	}
+	log.Printf("conta %d (%s) apagou o PIN, de %s", c.ID, c.Usuario, ipDe(r))
 	devolve(w, http.StatusOK, resposta{
 		"ok": true,
 		"mensagem": "PIN apagado. No proximo login o jogo vai pedir que voce " +

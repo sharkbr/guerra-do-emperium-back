@@ -146,6 +146,18 @@ ler e devolver na tela. Não devolvemos: mostrar põe o PIN no histórico do
 navegador e em qualquer print. Apagando, o cliente pede um novo no próximo login,
 o que resolve melhor o "esqueci".
 
+## Troca de senha e PIN apagado ficam no journal, com a conta
+
+Desde 2026-09-12 o `trocaSenha` e o `recuperaPin` escrevem uma linha própria no
+log — `conta <id> (<usuário>) trocou a senha, de <ip>` — além da linha de
+request que o `main.go` já escreve para tudo. Só a de request não bastava: ela
+tem IP e hora, e não diz **qual** conta. Naquele dia um jogador travado pela
+senha errada perguntou se alguém tinha trocado a senha dele, e a resposta só
+saiu porque as três trocas da história do site eram anteriores à criação da
+conta. Com uma troca dentro do prazo, seria "alguém trocou, não sei quem".
+
+Para responder: `journalctl -u guerra-site | grep "trocou a senha"`.
+
 ## A imagem de fundo
 
 Um lugar só: `web/estilo.css`, `.fundo { background-image }`. Enquanto não houver
