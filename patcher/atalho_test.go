@@ -101,6 +101,31 @@ func TestVideoConfigurado(t *testing.T) {
 	}
 }
 
+func TestGuidValido(t *testing.T) {
+	// O estado que custou o diagnóstico de 2026-09-12: o valor EXISTE, tem os
+	// 16 bytes de um GUID, e está todo zerado — nenhum adaptador D3D escolhido.
+	// Aceitar isso como "configurado" faz o instalador pular o Setup na
+	// reinstalação, e o jogo abre e morre com `Cannot init d3d`.
+	casos := []struct {
+		nome   string
+		dados  []byte
+		espera bool
+	}{
+		{"vazio", nil, false},
+		{"GUID zerado", make([]byte, 16), false},
+		{"GUID de verdade", []byte{0xe0, 0x3d, 0xe6, 0x84, 0xaa, 0x46, 0xcf, 0x11,
+			0x81, 0x6f, 0x00, 0x00, 0xc0, 0x20, 0x15, 0x6e}, true},
+		{"um byte só, no fim", []byte{0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 1}, true},
+	}
+	for _, c := range casos {
+		if guidValido(c.dados) != c.espera {
+			t.Errorf("guidValido(%s) = %v, esperava %v",
+				c.nome, !c.espera, c.espera)
+		}
+	}
+}
+
 func TestAreaDeTrabalhoExiste(t *testing.T) {
 	// Se esta pasta não for encontrada, o atalho iria para um caminho vazio e a
 	// instalação terminaria dizendo que criou um atalho que não existe.

@@ -397,6 +397,27 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   basta. O `Setup.exe` tem de rodar uma vez por máquina, e o atalho precisa do
   bit `SLDF_RUNAS_USER`. O instalador faz os dois (`patcher/video.go`).
 
+- **E o `Setup.exe` se recusa a abrir se houver QUALQUER Ragnarok aberto — o de
+  outro servidor inclusive — com uma caixa "Message" VAZIA.** A trava está em
+  `0x0041C8C3`: `FindWindowA("Ragnarok", "Ragnarok")` (classe **e** título), e
+  se achar mostra `MessageBoxA` e sai. O texto vem da chave `alreadyclient`
+  procurada no `System\LuaFiles514\MsgString.lub`, que **não existe** no arquivo
+  do kRO — daí a caixa sem uma letra dentro, que não diz o que houve nem o que
+  fazer. E `FindWindow` acha janela **minimizada, escondida ou de processo
+  pendurado**, então o jogador jura que não tem nada aberto.
+  O que fecha o diagnóstico é que esse é o **único** `MessageBoxA` do exe, que
+  ele não tem `RT_STRING` nenhum (logo a caixa não pode vir de MFC) e que o
+  cliente nunca usa `Message` como título — usa `Error`, `Alert`, `Lua Error`,
+  `TipBox`. Caixa "Message" vazia é sempre esta, e nunca outra coisa.
+  **E a trava mirava o alvo errado nas duas pontas**, porque a janela do NOSSO
+  cliente não se chama `Ragnarok`: em `0x00C107E1` o `GuerraDoEmperium.exe`
+  escreve a string `GuerraDoEmperium` (`0x00E29170`) no global `0x00F65DBC`, e
+  ela vai como classe **e** como título. Ou seja: o nosso jogo aberto não era
+  detectado, e o de outro servidor era. Corrigido em 2026-09-12 por
+  `ferramentas/ajusta_trava_do_setup.py`, que reaponta os dois `push` e dá texto
+  à caixa. O cliente faz o teste simétrico — `FindWindowA(NULL, "Ragnarok
+  Setup")` —, então **os dois nunca podem estar abertos ao mesmo tempo**.
+
 - **A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt`
   dentro do GRF — não no rAthena e não no exe.** Procurar `fuck`/`swear`/
   `badword` no `GuerraDoEmperium.exe` devolve zero e leva a concluir que o

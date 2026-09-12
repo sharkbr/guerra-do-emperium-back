@@ -29,7 +29,7 @@ import (
 
 // VERSAO é o número que o canal de auto-atualização compara. Sobe de um a cada
 // Atualizador novo publicado — ver auto.go e `patcher/LEIAME.md`.
-const VERSAO = 5
+const VERSAO = 6
 
 // Os valores padrão existem para o caso de o `Atualizador.ini` não vir no
 // pacote ou ser apagado: sem ini, o Atualizador ainda funciona na produção.
@@ -199,6 +199,20 @@ func instalacao(exe string, cfg config) {
 			// copiar para a pasta é este, e trocá-lo agora seria substituir um
 			// arquivo recém-gravado pela mesma versão.
 			aplicaPatches(j, destino, trabalho, cfg)
+
+			// E uma segunda tentativa de configurar o vídeo, agora com os
+			// patches aplicados. Na esmagadora maioria das vezes isto não faz
+			// nada: o `configuraVideo` sai na primeira linha se a chave já
+			// estiver gravada, e ela foi gravada no fim do `Instala`.
+			//
+			// Existe porque o `Setup.exe` que a BASE entrega é o do dia em que
+			// a base foi montada, e ele pode ser um que ainda não sabe se
+			// comportar — o da base de hoje se recusa a abrir, com uma caixa
+			// vazia, se houver Ragnarok de OUTRO servidor aberto (2026-09-12).
+			// Quem conserta isso é um patch, e patch só chega aqui, uma linha
+			// acima. Rodar o Setup só antes dos patches é usar de propósito a
+			// versão que a gente acabou de substituir.
+			configuraVideo(j, destino)
 		}()
 	}
 	j.Laco()

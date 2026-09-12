@@ -57,25 +57,45 @@ var caminhosDoSetup = []struct {
 	{`SOFTWARE\Gravity Soft\Ragnarok`, keyRead},
 }
 
-// VideoConfigurado diz se o `Setup.exe` já rodou nesta máquina.
+// VideoConfigurado diz se o `Setup.exe` já rodou nesta máquina COM RESULTADO.
 //
-// Na dúvida devolve TRUE. Um falso negativo mandaria o jogador para uma tela de
-// configuração que ele não precisava; um falso positivo apenas deixa o jogo
-// tentar abrir e falhar como falharia de qualquer jeito. Entre atrapalhar quem
-// está bem e não ajudar quem está mal, a escolha é a segunda.
+// **Não basta o valor existir.** O estado quebrado clássico é `GUIDDEVICE`
+// presente com 16 bytes ZERADOS — nenhum adaptador D3D escolhido —, e foi
+// exatamente o que esta máquina teve em 2026-07-30: a chave lá, o jogo morrendo
+// no `Cannot init d3d`. Numa reinstalação por cima de instalação velha, quem só
+// pergunta se o valor existe aceita esse estado como "configurado" e **pula o
+// Setup**, que é o único passo que consertaria. Foi por aí que um jogador chegou
+// ao problema em 2026-09-12.
+//
+// O erro que se prefere continua sendo o de sobra: abrir o Setup para quem não
+// precisava custa uma janela a mais na instalação; não abrir para quem precisava
+// custa um jogo que não abre e um diagnóstico que ninguém faz sozinho.
 func VideoConfigurado() bool {
 	for _, c := range caminhosDoSetup {
-		if leValor(c.caminho, "GUIDDEVICE", c.flags) {
+		if leGUID(c.caminho, "GUIDDEVICE", c.flags) {
 			return true
 		}
 	}
 	return false
 }
 
-// leValor abre a chave e vê se o valor existe. Não interessa o CONTEÚDO — se o
-// Setup gravou o GUID do dispositivo, ele rodou; e se rodou numa placa que
-// depois foi trocada, quem resolve é o próprio Setup, não nós.
-func leValor(caminho, valor string, flags uint32) bool {
+// guidValido: pelo menos um byte diferente de zero.
+//
+// Separado do registro de propósito — é a única regra aqui que dá para testar
+// sem depender do que esta máquina tem gravado.
+func guidValido(b []byte) bool {
+	for _, x := range b {
+		if x != 0 {
+			return true
+		}
+	}
+	return false
+}
+
+// leGUID abre a chave e lê o valor. O CONTEÚDO importa (ver acima); o que não
+// importa é qual placa está escrita ali — se o Setup rodou numa placa que depois
+// foi trocada, quem resolve é o próprio Setup, não nós.
+func leGUID(caminho, valor string, flags uint32) bool {
 	caminho16, err := syscall.UTF16PtrFromString(caminho)
 	if err != nil {
 		return false
@@ -97,6 +117,7 @@ func leValor(caminho, valor string, flags uint32) bool {
 	if err != nil {
 		return false
 	}
+	// Primeiro o tamanho, com lpData nulo; depois o valor.
 	var tamanho uint32
 	r, _, _ = procRegQueryValue.Call(
 		uintptr(chave),
@@ -104,5 +125,19 @@ func leValor(caminho, valor string, flags uint32) bool {
 		0, 0, 0,
 		uintptr(unsafe.Pointer(&tamanho)),
 	)
-	return r == 0 && tamanho > 0
+	if r != 0 || tamanho == 0 || tamanho > 64 {
+		return false
+	}
+	buf := make([]byte, tamanho)
+	r, _, _ = procRegQueryValue.Call(
+		uintptr(chave),
+		uintptr(unsafe.Pointer(valor16)),
+		0, 0,
+		uintptr(unsafe.Pointer(&buf[0])),
+		uintptr(unsafe.Pointer(&tamanho)),
+	)
+	if r != 0 || tamanho == 0 {
+		return false
+	}
+	return guidValido(buf[:tamanho])
 }

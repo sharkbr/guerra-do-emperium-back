@@ -169,12 +169,18 @@ Por isso a instalação faz três coisas que não são óbvias:
 2. cria o atalho com **`SLDF_RUNAS_USER`**, e o jogo herda o token elevado do
    Atualizador — um UAC só, na abertura;
 3. roda o **`Setup.exe` no fim da instalação e espera ele fechar**, porque o
-   cliente lê a chave na inicialização.
+   cliente lê a chave na inicialização — e **tenta de novo depois dos patches**,
+   o que é no-op quando a primeira deu certo. A segunda tentativa existe porque
+   o `Setup.exe` da BASE é o do dia em que a base foi montada, e conserto de
+   Setup chega por patch: rodá-lo só antes dos patches é usar de propósito a
+   versão que a gente acabou de substituir (2026-09-12).
 
 Detalhe da leitura: o Atualizador é 64-bit e o cliente é 32-bit, então a mesma
 chave tem dois nomes. O `video.go` tenta `KEY_WOW64_32KEY` e o caminho
-`WOW6432Node` explícito, e **na dúvida responde "configurado"** — abrir o Setup
-para quem não precisa é pior do que deixar o jogo tentar.
+`WOW6432Node` explícito. **E não basta o valor existir:** `GUIDDEVICE` com 16
+bytes zerados é "o Setup rodou e não escolheu adaptador nenhum", o estado que
+esta máquina teve em 2026-07-30 — aceitá-lo como configurado faz o instalador
+pular o Setup numa reinstalação e o jogo morrer no `Cannot init d3d`.
 
 ## 3. As decisões que não são óbvias
 

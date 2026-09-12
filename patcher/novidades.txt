@@ -95,3 +95,6 @@
 - Fragmento de Yggdrasil e Carta de Comodo, no Retoqueiro
 - As duas de Sagitario - a Coroa e a Diadema - passam a mostrar a cova que o servidor sempre deu: agora da para cartear
 - Sairam das lojas de carta as dez Cartas Autografo (Catherine, Crux Findel, Friedrich, Helmut, Isaac, Katrin, Kronecker, Meyer, Skia e Wolf) e a Carta Falquiria. Isso e do servidor: nao ha nada para baixar
+
+[0025] 2026-09-12  O configurador de video volta a abrir
+- Quem tem OUTRO Ragnarok instalado nao conseguia abrir o Setup, o programa que escolhe a placa de video e a resolucao: ele respondia com uma caixa vazia e fechava. Agora ele so reclama se o proprio Guerra do Emperium estiver aberto - e, quando reclama, diz o que fazer

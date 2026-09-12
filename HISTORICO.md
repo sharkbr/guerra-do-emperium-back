@@ -18205,3 +18205,147 @@ A conferência foi a receita de sempre, e desta vez os três lados bateram com o
 números do dono sem um ajuste: `npc.hpp` (a enumeração a partir de
 `NPC_RANGE3_START = 10000`), `npcidentity.lub` do nosso GRF (10310..10317, os
 mesmos) e `jobname.lub` (os nomes de arquivo).
+
+## O Setup recusava abrir por causa do Ragnarok de outro servidor (2026-09-12)
+
+Um amigo do dono reinstalou o jogo e não conseguiu abrir: `Cannot init d3d OR
+grf file has problem`. É o sintoma conhecido da configuração de vídeo que nunca
+foi gravada (`ARMADILHAS-CLIENTE.md`, a entrada do registro), e a receita é
+rodar o `Setup.exe`. Só que o Setup dele **não abria**: respondia com uma caixa
+de título `Message`, **sem uma letra dentro**, e fechava.
+
+### O que a caixa vazia era
+
+O `Setup.exe` inteiro tem **uma** chamada de `MessageBoxA`, em `0x0041C8F6`, e
+ela é guardada por um teste em `0x0041C8C3`:
+
+```
+FindWindowA("Ragnarok", "Ragnarok")   ; classe E titulo
+  -> MessageBoxA(NULL, msg("alreadyclient"), "Message", MB_OK) ; e sai
+```
+
+É a trava de "o jogo já está aberto" — a configuração de vídeo só vale na
+próxima abertura do cliente, e o cliente ainda reescreve parte da chave ao sair.
+O cliente faz o teste simétrico: `FindWindowA(NULL, "Ragnarok Setup")`, ou seja
+**os dois nunca podem estar abertos juntos**.
+
+O texto sai vazio porque vem da chave **`alreadyclient`** procurada no
+`System\LuaFiles514\MsgString.lub`, e esse arquivo — o do kRO, que é o nosso —
+**não tem essa chave**: só tem o `SetupMSG`, com as dicas da aba Opções.
+
+A pista que fechou o diagnóstico foi negativa: o exe **não tem `RT_STRING`**
+(nenhuma tabela de strings), então a caixa não podia vir de MFC; e o cliente
+nunca usa `Message` como título (usa `Error`, `Alert`, `Lua Error`, `TipBox`).
+
+### E a trava mirava o alvo errado nas duas pontas
+
+O nome da janela do nosso cliente **não é** `Ragnarok`. Em `0x00C107E1` o
+`GuerraDoEmperium.exe` escreve `0x00E29170` (a string `GuerraDoEmperium`) no
+global `0x00F65DBC`, e esse mesmo ponteiro vai como **classe** (no `WNDCLASS`
+do `RegisterClassA` em `0x008969E8`) **e como título** no `CreateWindowEx`. Foi
+patch de renomeação do cliente, e ele deixou a trava do Setup apontada para uma
+janela que não existe mais aqui. Resultado, nas duas pontas:
+
+- **o nosso jogo aberto não é detectado** — a trava está morta para nós;
+- **o cliente de qualquer outro servidor que ainda se chame `Ragnarok` é** — e
+  foi o que aconteceu: o amigo tinha outro servidor de RO aberto, e o nosso
+  Setup se recusava a abrir por causa da janela de um jogo alheio.
+
+Ele confirmou depois: *"era isso, ele tava com outro server que tinha ragnarok
+no nome"*.
+
+### O conserto — `ferramentas/ajusta_trava_do_setup.py`
+
+32 bytes, no mesmo espírito do `traduz_setup.py` (e reusando o `PE` dele):
+
+| o quê | como |
+|---|---|
+| os dois `push "Ragnarok"` | passam a apontar para `GuerraDoEmperium`, a classe **e** o título da nossa janela |
+| o título da caixa | `Guerra do Emperium` no lugar de `Message` |
+| as 22 instruções que montavam o texto | viram `push <literal>` + 17 NOP, com a frase escrita em cp1252 |
+
+**O comprimento do bloco não muda de propósito:** o `je +0x2A` logo acima pula
+exatamente por cima dele, e encurtar exigiria recalcular o salto. As strings
+novas vão para o padding do fim de `.text`, depois das que o `traduz_setup.py`
+já pôs lá (271 dos 492 bytes em uso agora).
+
+A ferramenta valida antes de gravar um byte: exige **um** casamento do bloco,
+que os dois `push` apontem para a mesma string, e que os dois `call [..]` sejam
+mesmo `FindWindowA` e `MessageBoxA` — resolvidos pela tabela de importação, não
+por fé no padrão de bytes. É idempotente, faz backup e recalcula o checksum do
+PE. Conferido no arquivo gravado: bytes, `LoadLibraryEx` como datafile, o
+diálogo 106 ainda encontrado (a tradução do `traduz_setup.py` sobreviveu) e o
+checksum recomputado batendo.
+
+Aplicado em `C:\GuerraDoEmperium\cliente\Setup.exe` em 2026-09-12
+(`Setup.exe.BACKUP-20260912-184333`).
+
+### O que a rodada deixou para o mesmo dia
+
+Três coisas, e as três foram feitas horas depois, ainda em 2026-09-12 — estão
+nas seções logo abaixo: publicar o patch (é cliente, `CLAUDE.md` §4.18), tirar a
+base do caminho (que acabou virando conserto de ordem no Atualizador, e não uma
+remontagem de 134 MB) e fechar o furo do `VideoConfigurado()`, que aceitava um
+`GUIDDEVICE` de 16 bytes **zerados** como "vídeo configurado" — exatamente o
+estado quebrado que esta máquina teve em 2026-07-30, e o que faz o instalador
+pular o Setup numa reinstalação.
+
+### A prova em tela, e o que ela pegou de brinde (2026-09-12)
+
+O patch de 32 bytes foi conferido com o Setup rodando de verdade, nos dois
+caminhos — e o roteiro lê o texto do controle estático da caixa, então a frase
+inteira sai no relatório em vez de ficar por conta de quem olhou:
+
+| lance | o que aconteceu |
+|---|---|
+| com uma janela de classe **e** título `GuerraDoEmperium` (um fixture em Go, invisível) | recusou, com a caixa `Guerra do Emperium` e o texto inteiro — acentos certos, o que confirma o cp1252 |
+| sem janela nenhuma | abriu o configurador, `Ragnarok Setup`, com *Config. Gráfica*, *Dimensão da Tela*, *Tela Cheia* — a tradução do `traduz_setup.py` intacta |
+
+O segundo lance só existiu numa **cópia** do exe patchada com um nome de janela
+que não existe em máquina nenhuma. O motivo é o achado de brinde: a primeira
+rodada recusou **sem janela falsa**, e a suspeita natural era sobra do teste
+anterior. Não era — havia um `GuerraDoEmperium.exe` de verdade aberto nesta
+máquina desde **2026-09-11 03:26**, esquecido de uma sessão anterior. Ou seja: o
+lance que parecia falho foi a melhor prova da rodada, porque mostrou a trava
+nova fazendo exatamente o que a velha **nunca** fez — reconhecer o nosso próprio
+cliente.
+
+E o teste desmentiu uma suposição minha sobre o ambiente: **este shell é
+elevado**, então o `Setup.exe` (manifesto `requireAdministrator`) abriu sem pedir
+UAC nenhum. O aviso da §4.25 continua valendo, e por outro motivo — a janela do
+Setup aparece na tela do dono do mesmo jeito.
+
+### O que foi publicado (2026-09-12)
+
+| peça | onde |
+|---|---|
+| **patch 0025** `O configurador de video volta a abrir` (só o `Setup.exe`, 240 KB) | canal de patches; `lista.txt` e `novidades.txt` no ar, zip respondendo 200 |
+| **Atualizador versão 6** | canal de auto-atualização (`Jogar-6.exe`) **e** bucket/CDN — os três sha256 conferidos e iguais (`81fa3a9d…`) |
+
+O bloco do patch no painel ganhou uma linha à mão explicando o caso em
+português de jogador. Pela §4.24 um conserto não precisa de `--nota`, mas o
+título sozinho — *"o configurador de vídeo volta a abrir"* — não diz a quem
+aquilo aconteceu, e quem tem outro RO instalado é justamente quem precisa ler.
+
+### As duas mudanças no Atualizador que foram junto
+
+**1. `VideoConfigurado()` passou a olhar o conteúdo** (`patcher/video.go`). Antes
+bastava o `GUIDDEVICE` existir com tamanho > 0; agora um GUID de 16 bytes
+zerados conta como **não configurado** — que é o estado real desta máquina em
+2026-07-30 e o que fazia o instalador pular o Setup numa reinstalação por cima
+de instalação velha. A regra saiu para uma função pura, `guidValido()`, com
+teste dos quatro casos (`atalho_test.go`), porque é a única parte que dá para
+testar sem depender do registro desta máquina.
+
+**2. A configuração de vídeo ganhou uma segunda tentativa DEPOIS dos patches**
+(`patcher/main.go`). A ordem antiga era `Instala()` → `configuraVideo()` →
+`aplicaPatches()`, ou seja a instalação rodava de propósito o `Setup.exe` que
+veio na base — a versão que o patch seguinte ia substituir. Agora há uma
+chamada a mais depois dos patches; ela é **no-op** quando o Setup da base já deu
+certo (o `configuraVideo` sai na primeira linha se a chave estiver gravada) e só
+entra em cena quando ele falhou, aí com o binário já corrigido.
+
+É por causa dela que **a base não precisou ser refeita**: ela continua
+entregando o Setup velho, e ele é substituído antes de importar. Refazer a base
+continua sendo uma opção, mas por outro motivo (encurtar a primeira abertura),
+e é decisão do dono — ela vira um retrato do cliente inteiro, não só do Setup.

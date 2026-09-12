@@ -65,6 +65,20 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   mão. Da mesma família da regra de medir o fim de linha antes de
   escrever, logo acima.
 
+- **Em regex de BYTES, byte de código que calha de ser metacaractere casa
+  outra coisa — e o padrão não erra, só não acha.** Procurar uma sequência de
+  instruções escrevendo os bytes crus (`'\x74\x2a'` para um `je +0x2a`) põe um
+  `*` literal no padrão, e `\x74\x2a` vira **"repita o `t`"**: o pedaço passa a
+  casar com string vazia, o resto desalinha e o resultado é *zero ocorrências*
+  numa busca que deveria achar uma. Os candidatos são comuns em código x86:
+  `0x2A *`, `0x2B +`, `0x3F ?`, `0x2E .`, `0x5C \`, `0x28/0x29 ()`,
+  `0x5B/0x5D []`, `0x7B/0x7D {}`, `0x7C |`, `0x5E ^`, `0x24 $`. Medido em
+  2026-09-12 ao localizar a trava do `Setup.exe`: o padrão inteiro devolvia 0, e
+  só bissecando pedaço a pedaço o `je` apareceu como culpado. **A saída é nunca
+  escrever o literal à mão:** montar o padrão com `re.escape()` nos trechos
+  literais e marcadores para os campos variáveis, como faz o `padrao()` do
+  `ferramentas/ajusta_trava_do_setup.py`.
+
 - **A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela.**
   As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`
   padrão deste MariaDB 12.3 é `utf8mb4` — e o rAthena só manda `SET NAMES` se

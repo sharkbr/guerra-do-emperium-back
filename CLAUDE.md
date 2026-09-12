@@ -641,6 +641,7 @@ Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, fe
 - Arquivo cp1252 salvo como UTF-8 vira `\xef\xbf\xbd` (U+FFFD) e o acento se perde para sempre. Não é mojibake reversível
 - E quem faz isso hoje é a FERRAMENTA DE EDIÇÃO do assistente. Ela lê e grava como UTF-8
 - E o `$` de um regex com `re.M` NÃO casa antes do `\r` — ele casa DEPOIS, deixando o `\r` dentro do grupo capturado
+- Em regex de BYTES, byte de código que calha de ser metacaractere casa outra coisa: `\x74\x2a` de um `je +0x2a` vira "repita o `t`", e a busca devolve zero sem erro nenhum
 - A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela. As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`…
 - `source` do mysql.exe quebra com barra invertida (`\U` = comando desconhecido). Usar barras normais no caminho
 - Compilar pela linha de comando exige `SolutionDir` explícito. O `map-server.vcxproj` tira os caminhos de include dessa variável, que só o `.sln`…
@@ -692,6 +693,7 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 - Quest que o cliente não conhece DERRUBA O CLIENTE. Não é "aparece sem título" — é caixa de erro de Lua, uma por missão e por atualização da janela…
 - O cabeçalho do `map_cache.dat` tem 8 bytes, não 6. É `uint32 file_size; uint16 map_count;` e o compilador o alinha em 8
 - Metade da configuração do cliente está no REGISTRO DO WINDOWS, e não no cliente. É a §4.9 um degrau adiante
+- O `Setup.exe` se recusa a abrir, com uma caixa "Message" VAZIA, se houver qualquer janela de Ragnarok — a de outro servidor inclusive, e escondida ou pendurada conta. E a janela do NOSSO cliente se chama `GuerraDoEmperium`, nas duas pontas
 - A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt` dentro do GRF — não no rAthena e não no exe
 - "Unknown Item" com sprite de maçã NUNCA é problema de servidor — e a pergunta que resolve é *quais* itens, não *por que aquele item*
 - O `identifiedResourceName` do bRO é o DESENHO, não a identidade do item — e dois itens diferentes o compartilham

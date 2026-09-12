@@ -185,6 +185,47 @@ par inglês. Ver a tabela completa de IDs no `PENDENCIAS.md`.
 renomear um exe em uso, então o caminho é patchar uma cópia e trocar por
 `mv`.
 
+## `ajusta_trava_do_setup.py` — faz a trava do `Setup.exe` olhar para a nossa janela
+
+```
+python ajusta_trava_do_setup.py <Setup.exe>              # aplica (faz backup antes)
+python ajusta_trava_do_setup.py <Setup.exe> --verificar  # só relata, não grava
+```
+
+O `Setup.exe` se recusa a abrir enquanto houver cliente de Ragnarok rodando — a
+configuração de vídeo só vale na próxima abertura do jogo, e o cliente reescreve
+parte da chave ao sair. O teste dele é `FindWindowA("Ragnarok", "Ragnarok")`,
+classe **e** título, e **era o alvo errado nas duas pontas**: a janela do nosso
+cliente se chama `GuerraDoEmperium` (o `GuerraDoEmperium.exe` escreve essa string
+no global `0x00F65DBC`, e ela vai como classe e como título), então o nosso jogo
+aberto não era detectado — e o cliente de outro servidor era. Um jogador não
+conseguiu abrir o Setup em 2026-09-12 por causa da janela de outro RO.
+
+E a caixa saía **vazia**: o texto vem da chave `alreadyclient` do
+`System\LuaFiles514\MsgString.lub`, que o arquivo do kRO não tem.
+
+São 32 bytes: os dois `push` da janela, o `push` do título da caixa
+(`Guerra do Emperium` no lugar de `Message`) e as 22 instruções que montavam o
+texto, trocadas por `push <literal>` + 17 NOP. **O comprimento do bloco não muda
+de propósito** — o `je +0x2A` logo acima pula por cima dele. As strings novas vão
+para o padding do fim de `.text`, depois das que o `traduz_setup.py` pôs lá (é o
+mesmo cave de 492 bytes; 271 em uso hoje).
+
+**Valida tudo antes de gravar um byte:** exige um único casamento do bloco, que
+os dois `push` apontem para a mesma string, e que os dois `call [..]` sejam mesmo
+`FindWindowA` e `MessageBoxA` — resolvidos pela tabela de importação. É
+idempotente, faz backup e recalcula o checksum do PE (reusa o `PE` do
+`traduz_setup.py`).
+
+**Para mudar o texto da caixa ou o nome da janela**, editar as constantes do
+topo. O texto é **cp1252** (`CLAUDE.md` §4.1): o `MessageBoxA` é ANSI.
+
+**Setup.exe é cliente** — só chega ao jogador por patch (`CLAUDE.md` §4.18). Foi
+o patch **0025**, de 2026-09-12. A BASE continua entregando o Setup do dia em que
+foi montada, mas isso deixou de importar: desde a versão 6 o Atualizador tenta
+configurar o vídeo **de novo depois de aplicar os patches** (`patcher/LEIAME.md`
+§2c), então o Setup que roda na prática é o corrigido.
+
 ## `estado_item.py` — onde um item existe, e o que quebra se o ID for trocado
 
 ```
