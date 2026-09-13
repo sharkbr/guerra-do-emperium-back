@@ -18199,7 +18199,17 @@ nosso `data.grf`, **sem cifra** — conferido com `grf.py … find`. Enquanto os
 recrutas usavam o view id do monstro, a arte só existia na pasta de monstro e as
 oito cópias `ill_*` que eu tinha posto em `cliente\data\sprite\npc\` só chegariam
 ao jogador por `monta_patch.py`. Agora não chegam por nada: já estavam lá desde o
-download. As `ill_*` soltas ficaram órfãs e podem ser apagadas.
+download. As `ill_*` soltas ficaram órfãs.
+
+**E foram apagadas em 2026-09-13**, ao preparar o deploy desta caverna. Os
+oito arquivos eram extração byte a byte dos `ill_*` da pasta de MONSTRO do nosso
+próprio `data.grf` — os tamanhos batem nos oito —, então nada se perdeu: um
+`grf.py getlike` os traz de volta. A cópia de segurança ficou em
+`C:\GuerraDoEmperium\_backups_removidos\ilusao_labirinto_sprites_orfaos_2026-09-13\`,
+na convenção do `REFERENCIA.md`. O motivo de apagar não é espaço: arquivo solto
+em `cliente\data\` **vence o GRF** (a regra do `DataFolderFirst`), então um
+`ill_*` esquecido ali é uma arma carregada para o dia em que alguém reaproveitar
+aquele nome.
 
 A conferência foi a receita de sempre, e desta vez os três lados bateram com os
 números do dono sem um ajuste: `npc.hpp` (a enumeração a partir de

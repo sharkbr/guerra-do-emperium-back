@@ -4497,8 +4497,9 @@ usavam o view id do MONSTRO (20521..20524) a arte só existia na pasta de
 monstro — a armadilha dos Agentes da Liga —, e os oito `ill_*` copiados à mão
 para `cliente\data\sprite\npc\` teriam de viajar num `monta_patch.py` para
 existirem do lado do jogador. Com o sprite de NPC oficial os oito `.spr`/`.act`
-já estão no `data.grf` que todo mundo baixou: os `ill_*` soltos ficaram órfãos
-e podem ser apagados.
+já estão no `data.grf` que todo mundo baixou. Os oito `ill_*` soltos ficaram
+órfãos e **foram apagados em 2026-09-13**, com cópia em
+`C:\GuerraDoEmperium\_backups_removidos\ilusao_labirinto_sprites_orfaos_2026-09-13\`.
 2. **A Fenda Retorcida** em `prt_maze01 99,23` — se o sprite
    (`4_ENERGY_WHITE`) desenha, se o texto cabe, e se a trava de nível 170
    recusa quem deve recusar;
