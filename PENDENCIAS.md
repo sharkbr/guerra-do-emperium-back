@@ -4731,3 +4731,36 @@ metade.** O par dele e o Pingente (490482), que saiu nesta rodada; o Adereco
 (32237), que entrou, faz conjunto com outras cinco pecas e nenhuma delas e o
 Broche. As saidas sao tirar o Broche tambem, repor o Pingente, ou deixar como
 esta — nenhuma e consequencia de regra, e por isso nada foi feito.
+
+---
+
+## 1am. As doze cores de roupa — o patch está no ar, falta o deploy (2026-09-13)
+
+O Edgard tinge em 16 cores (0..15) desde 2026-09-13, testado pelo dono em
+duas classes no DEV. O que está feito e o que falta, por destino (§0 do
+`RECEITAS.md`):
+
+| o quê | onde mora | estado |
+|---|---|---|
+| 4116 palettes (`cliente\data\palette\`) | cliente | **patch 0028 publicado** — o jogador recebe ao abrir o `Jogar.exe` |
+| `max_cloth_color: 15` (`conf/guerra/battle_guerra.txt`) | servidor | commitado; **falta `implanta.sh` (Mac) + `@reloadbattleconf`** |
+| `.teto = 15` (`npc/guerra/xanin_e_edgard.txt`) | servidor | commitado; **falta `implanta.sh` (Mac) + `@reloadscript`** |
+
+**A ordem entre patch e deploy não importa, mas o estado intermediário tem
+cara de bug:** enquanto o servidor de produção estiver com o `max_cloth_color`
+velho, quem já baixou o patch vê o Edgard oferecer "de 0 a 3" — nada quebra.
+Se fosse o contrário (deploy antes do patch), o Edgard ofereceria 4..15 e o
+cliente sem palette desenharia a cor padrão — também não quebra, mas parece
+que "não pegou".
+
+**Os dois recarregadores são obrigatórios e são dois.** O `@reloadscript` não
+recarrega o `battle_guerra.txt`; sem o `@reloadbattleconf` o `pc_changelook`
+capa em 7 calado e as cores 8..15 saem verdes (iguais à 7). Foi exatamente o
+sintoma do primeiro teste no DEV.
+
+**Fica em aberto, sem prazo:** a cor de roupa por **montaria** segue a lógica
+da Gravity (a juba do leão do Guardião Real muda de cor junto com a roupa, como
+nas oficiais 2 e 3), e as seis classes/trajes que saíram por heurística
+(Renegado, e quatro `costume_1`) só foram conferidas na prévia PNG, não em
+jogo. Se algum jogador relatar cor estranha numa classe, o `--previa --classe`
+do `tinge_roupas.py` mostra o que foi gerado em segundos.

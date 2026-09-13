@@ -486,3 +486,18 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   chip com o nome e o nível ("Dark 3", "Ghost 2"), e como segunda opinião o
   elemento do monstro original: nos nove da Ilusão do Labirinto os dois
   concordaram em sete.
+
+- **`max_cloth_color` capa CALADO, e o sintoma parece palette que falta — mas
+  com a cor errada.** O `pc_changelook` faz `val = cap_value(val,
+  MIN_CLOTH_COLOR, MAX_CLOTH_COLOR)` (`src/map/pc.cpp`, `case
+  LOOK_CLOTHES_COLOR`), sem log e sem retorno de erro; o `setlook` do script
+  devolve sucesso, o NPC mostra "cor 12" e o cliente recebe 7. Distinguir é
+  olhar **qual** cor aparece: palette ausente desenha a cor **padrão** (0);
+  teto do servidor desenha a **última permitida**. Em 2026-09-13 as cores
+  8..15 saíram todas verdes (a 7) no primeiro teste — o override
+  `max_cloth_color: 15` estava escrito em `conf/guerra/battle_guerra.txt` e o
+  map-server ainda tinha o 7 em memória, porque o `@reloadscript` do NPC não
+  recarrega config de batalha. É `@reloadbattleconf`, e são dois comandos
+  quando os dois lados mudam. O mesmo teto vale no `buildin_changelook` (ali
+  com `ShowError`) e no `status_calc_pc` (`status.cpp:14120`, outro
+  `cap_value` mudo).

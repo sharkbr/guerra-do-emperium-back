@@ -14,10 +14,13 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
 
 ---
 
-- **Entrada de GRF marcada como "DES" NÃO é entrada ausente.** O
-  `ferramentas/grf.py` recusa arquivo com o bit de cifra (`flags & 6`) com um
-  *"arquivo com DES: ..."*, e metade dos sprites antigos deste `data.grf` está
-  assim — inclusive `.spr`/`.act` de NPC que desenham perfeitamente em jogo. Ler
+- **Entrada de GRF marcada como "DES" NÃO é entrada ausente.** Até
+  2026-09-13 o `ferramentas/grf.py` recusava arquivo com o bit de cifra
+  (`flags & 6`) com um *"arquivo com DES: ..."* — desde então ele decifra (é
+  a porta do `src/common/des.cpp` do rAthena; ver a seção dele no
+  `ferramentas/LEIAME.md`), e o que sobra desta armadilha é a leitura errada
+  do erro em ferramenta antiga. Metade dos sprites antigos deste `data.grf`
+  está assim — inclusive `.spr`/`.act` de NPC que desenham perfeitamente em jogo. Ler
   isso como "o cliente não tem o sprite" **reprova sprite bom**, que é
   exatamente a conferência que a regra do view id manda fazer. O que prova
   presença é o **nome estar na tabela** do GRF (`grf.py <grf> find <padrão>`),
@@ -532,8 +535,9 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
 - **O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e
   tratar uma pasta nova como se já estivesse provada custa uma sessão
   inteira.** As pastas onde o override de `cliente\data\` comprovadamente vale
-  hoje são `System\`, `data\luafiles514\lua files\datainfo\` e as de sprite e
-  textura. Em 2026-08-26 a `data\luafiles514\lua files\effecttool\` foi usada
+  hoje são `System\`, `data\luafiles514\lua files\datainfo\`, as de sprite e
+  textura, e desde 2026-09-13 `data\palette\` (as 4116 palettes de cor de
+  roupa, provadas em jogo pelo dono). Em 2026-08-26 a `data\luafiles514\lua files\effecttool\` foi usada
   pela primeira vez — para pôr um emissor de partículas sob um NPC — e **quatro
   tentativas em jogo não desenharam nada**, incluindo uma que só clonava um
   emissor que já funcionava.
@@ -747,3 +751,25 @@ segundo mapa desempata. **Validar num mapa simétrico não valida nada.**
   Chutar o sentido pelo nome do comando inverte o padrão do servidor inteiro,
   e o erro só aparece na tela de quem instalar do zero — ninguém aqui o vê,
   porque esta máquina tem `savedata` próprio.
+
+- **Ler do GRF do bRO o que o nosso esconde atrás do DES devolve arquivo de
+  OUTRA revisão — e para palette isso é lixo na tela.** O reflexo de toda
+  ferramenta até 2026-09-13 era: entrada nossa cifrada, pega a do bRO, "é a
+  mesma revisão oficial". Medido nas palettes de corpo: **434 das 492**
+  cifradas no nosso são diferentes no bRO, e o sprite também difere (o
+  `기사_남.spr` tem 234065 bytes aqui e 234017 lá). Palette é tabela de cores
+  indexada pelo sprite: a do bRO sobre o nosso `.spr` desenha o Renegado
+  inteiro **magenta**, e é exatamente o que as cores 2 e 3 oficiais dele já
+  fazem neste cliente — a própria Gravity entrega palette de outra revisão.
+  Desde 2026-09-13 o `grf.py` lê DES e o desvio pelo bRO deixou de ser
+  necessário; o bRO é para o que o nosso **não tem**, não para o que o nosso
+  esconde.
+
+- **O nome da palette de uma classe NÃO é o nome do sprite dela, em dezoito
+  casos.** São duas tabelas do exe que envelheceram separadas: a Sentinela é
+  `레인저` na palette e `레인져` no sprite, o Sumo Sacerdote é `하이프리스트` e
+  `하이프리`, o Guardião Real é `로얄가드` e `가드`. Procurar o sprite pelo nome
+  da palette devolve "não existe" para classe que existe. A tabela completa é
+  o `APELIDO_SPRITE` do `ferramentas/tinge_roupas.py`, montada olhando a
+  lista de sprites de corpo do nosso GRF — e é lá que se acrescenta quando
+  uma classe nova chegar.

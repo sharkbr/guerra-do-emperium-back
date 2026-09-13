@@ -1056,6 +1056,10 @@ palette não dá erro** — o cliente desenha a cor padrão, e a conclusão erra
 achar que o NPC falhou. É a mesma armadilha do view id de NPC, uma camada
 adiante. Mudar o teto é trocar um número no `OnInit`.
 
+*(Valeu até 2026-09-13: desde então o teto é 15, com as cores 4..15 geradas
+por nós — ver a seção "Doze cores novas de roupa, e o `grf.py` aprende o
+DES".)*
+
 #### Mestre do Refino — a NPC já existia, em inglês e desligada
 
 `npc/re/merchants/ticket_refiner.txt`, o "Refine Master" do próprio rAthena.
@@ -18615,3 +18619,98 @@ conteudo dela -- quatro das nove linhas de `shop` sairam com o carriage return
 dentro da lista de itens. O que denuncia e o `git diff --stat`, e ele denuncia
 errado: uma mudanca de 88 linhas apareceu como 4137, o arquivo inteiro, porque
 com as quebras misturadas o git para de converter.
+
+---
+
+## Doze cores novas de roupa, e o `grf.py` aprende o DES (2026-09-13)
+
+Pedido do dono: *"colocar mais cores para colorir o personagem, hoje temos 3
+[...] servidores privados tinham, no bRO só tinha as 3"*. Entregue no mesmo
+dia, testado por ele em duas classes, e publicado como **patch 0028**.
+
+### O que o jogador vê
+
+O Edgard (`prontera 170,199`, `npc/guerra/xanin_e_edgard.txt`) passa do teto
+**3** para o teto **15**. As cores 4..15 são nossas e **iguais para toda
+classe**: 4 vermelho, 5 laranja, 6 amarelo, 7 verde, 8 verde-água, 9 azul, 10
+roxo, 11 rosa, 12 marrom, 13 branco, 14 cinza, 15 preto. As 0..3 continuam as
+da Gravity.
+
+### Por que era "a básica e mais duas"
+
+Cor de roupa é **palette**, não sprite (a seção do Edgard, acima, já explica).
+A Gravity fez poucas: classes base 0..4, 2ª e 3ª classes **0..3**, 4ª classes
+e trajes 0..7. O teto 3 era o único índice que toda classe tinha.
+
+### O gerador — `ferramentas/tinge_roupas.py`
+
+A ideia que tornou o trabalho automático: **as palettes oficiais denunciam
+onde está a roupa.** Entre a `_0.pal` e cada uma das outras só mudam os índices
+do tecido — 16 a 70 dos 256 —, e pele, cabelo e metal ficam iguais. A união
+dessas diferenças é a máscara; o script mede o matiz dominante da roupa (média
+circular, pesada por **área em pixels** × saturação × valor) e gira todos os
+índices da máscara pela mesma diferença até o alvo, com um piso de saturação.
+Branco, cinza e preto são multiplicadores de saturação e valor.
+
+Três refinamentos que a prévia (`--previa`, um PNG por classe com as oficiais e
+as nossas lado a lado, no quadro 0 do sprite) exigiu:
+
+1. **A base é a palette embutida no `.spr`**, não a `_0.pal`: é a que o cliente
+   desenha quando não carrega palette nenhuma, e as duas diferem em 4 a 60
+   índices em 146 das 270 classes/sexos.
+2. **O dominante é pesado por área.** A batina do Arcebispo é lavanda a 0,21 de
+   saturação em meia dúzia de índices que cobrem o sprite inteiro; sem a área o
+   dominante ia para o detalhe saturado de dez pixels, e a batina girava para
+   um tom e o detalhe para outro.
+3. **Retoque miúdo não é roupa.** O marrom do enfeite de cabeça do Arcebispo
+   muda 7 pontos entre a `_0` e a `_2`; girado junto com a batina virava verde.
+   Só entra na máscara o que a Gravity trocou por mais de 20 pontos.
+
+Cobertura: **343 classes/sexos, 4116 palettes**, incluindo montarias, Doram e
+os trajes alternativos (`costume_1..4`). Seis saem por heurística (Renegado e
+quatro trajes), porque as oficiais deles são tabelas de outra origem — e
+**as cores 2 e 3 oficiais do Renegado desenham o personagem magenta inteiro
+neste cliente**; a Gravity já entregava isso quebrado. Dezoito nomes de
+palette não são o nome do sprite (Sentinela é `레인저` na palette e `레인져`
+no sprite) e ganharam uma tabela de apelidos, montada olhando a lista de
+sprites de corpo do nosso GRF.
+
+### O que a rodada custou de descoberta
+
+**O `grf.py` passou a ler entradas com DES.** 492 das 1434 palettes de corpo
+do nosso `data.grf` estão cifradas, e o primeiro rascunho as lia do GRF do
+bRO, como todas as ferramentas anteriores fazem — até a medição: **434 das 492
+são diferentes no bRO** (sprite de outra revisão), e palette do bRO sobre
+sprite nosso desenha lixo. O "DES" do GRF é uma rodada só, sem chave, e o
+rAthena traz a implementação em `src/common/des.cpp` + `grf_decode` do
+`src/common/grfio.cpp`; a porta para Python tem 80 linhas, e a prova é o
+zlib — cifra errada não descomprime. Todas as ferramentas que desviavam para o
+bRO por causa do DES deixaram de precisar (a seção do `grf.py` no
+`ferramentas/LEIAME.md` lista quais).
+
+**O `DataFolderFirst` vale para `data\palette\`** — provado em jogo, e a
+pasta nunca tinha sido usada. As 4116 palettes vão soltas em
+`cliente\data\palette\¸ö\` (o nome coreano `몸` em mojibake, como
+`data\sprite\¾Ç¼¼»ç¸®\` já ia).
+
+**O `max_cloth_color` capa CALADO.** No primeiro teste as cores 8..15 saíram
+iguais à 7 (verde). Não era o cliente — sem palette ele desenha a cor
+padrão, não a 7 — era o `cap_value(val, 0, max_cloth_color)` do
+`pc_changelook`, com o 7 do rAthena ainda em memória. O override está em
+`conf/guerra/battle_guerra.txt` (`max_cloth_color: 15`) e entra com
+`@reloadbattleconf`; o `@reloadscript` do NPC não o alcança.
+
+### A decisão que fica registrada
+
+As cores 4..7 que a Gravity fez para as classes base e para as 4ª classes
+foram **sobrescritas** no disco (o GRF segue intacto), para "cor 6" ser amarelo
+em toda classe — o Edgard não tem como saber a classe de quem clica. Reverter
+é trocar a lista `CORES` da ferramenta.
+
+### Os três lugares, e o patch
+
+Cliente: `cliente\data\palette\` → **patch 0028** (`Doze cores novas de roupa`,
+4116 arquivos, 2,75 MB), publicado. Servidor: `conf/guerra/battle_guerra.txt`
+e `npc/guerra/xanin_e_edgard.txt` → deploy. O acoplamento dos três números
+(`ULTIMO_INDICE` da ferramenta, `max_cloth_color`, `.teto` do Edgard) está no
+`ARQUITETURA.md` §4.

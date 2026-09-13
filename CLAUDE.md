@@ -144,7 +144,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | Script de NPC | `@reloadscript` |
 | `db/` (item, conjunto) | `@reloaditemdb` — pega item **e** conjunto |
 | `npc/guerra/barters_guerra.yml` (loja de troca) | `@reloadbarterdb` — **não** é `@reloadscript` |
-| `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou) |
+| `conf/guerra/`, `battle_athena.conf` | `@reloadbattleconf` (chama `mob_reload()` sozinho se taxa de item mudou). **Cor de roupa (`max_cloth_color`) também é aqui**, e o `.teto` do Edgard pede `@reloadscript` à parte — são dois |
 | `conf/guerra/groups_guerra.yml` (permissão de comando) | `@reloadatcommand` — chama `pc_groups_reload()` (`src/map/atcommand.cpp:4422`). **Não** é `@reloadbattleconf` nem `@reloadscript` |
 | `db/guerra/reputation.yml` | **reiniciar o map-server** — `reputation_db.load()` só roda no `do_init_pc` |
 | `db/guerra/pet_db.yml` (pets) | **reiniciar o map-server** — não existe `@reloadpetdb`; o `pet_db.load()` só roda no `do_init_pet`. Login e char podem ficar de pé |
@@ -663,7 +663,9 @@ Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, fe
 
 GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch de exe, itemInfo, efeitos.
 
-- Entrada de GRF marcada como "DES" NÃO é entrada ausente. O `ferramentas/grf.py` recusa arquivo com o bit de cifra (`flags & 6`) com um
+- Entrada de GRF marcada como "DES" NÃO é entrada ausente — e desde 2026-09-13 o `ferramentas/grf.py` a decifra (porta do `des.cpp` do rAthena); antes recusava com *"arquivo com DES"*, e ferramenta antiga ainda desvia para o bRO por causa disso
+- Ler do GRF do bRO o que o nosso esconde atrás do DES devolve arquivo de OUTRA revisão: 434 das 492 palettes de corpo cifradas são diferentes lá, e palette do bRO sobre sprite nosso desenha o personagem magenta. O bRO é para o que o nosso NÃO TEM, não para o que ele esconde
+- O nome da PALETTE de uma classe não é o nome do SPRITE dela em dezoito casos (`레인저`/`레인져`, `하이프리스트`/`하이프리`, `로얄가드`/`가드`) — a tabela é o `APELIDO_SPRITE` do `tinge_roupas.py`
 - `.lub` do GRF é bytecode (header `\x1bLua`); os do ROenglishRE são texto puro. Comparar tamanho entre os dois não significa nada
 - O bRO entrega o MESMO arquivo em `.lua` e em `.lub`, e o legível pode estar velho. O reflexo é pegar o texto puro e poupar o desmonte de bytecode
 - `Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub` gerado compila
@@ -703,7 +705,7 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 - O `ClassNum` de ARMA no `itemInfo.lua` não vem do `View:` do `item_db` — ele vive só do lado do cliente
 - Nome e descrição do MESMO bloco do `itemInfo.lua` podem estar em línguas diferentes, e a ferramenta que resolve cada metade é outra
 - `unidentifiedResourceName` TERMINA em `identifiedResourceName`, e um regex sem lookbehind casa com a linha errada
-- O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e tratar uma pasta nova como se já estivesse provada custa uma sessão inteira
+- O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e tratar uma pasta nova como se já estivesse provada custa uma sessão inteira. Provadas: `System\`, `datainfo\`, sprite, textura e (2026-09-13) `data\palette\`
 - Dá para provar que o cliente ABRIU um arquivo, contornando a regra de uma hora do NTFS
 - O `EF_MAX` do rAthena NÃO é o teto de efeitos do cliente — é o do emulador, e ele está 900 efeitos atrasado
 - Antes de mexer no `effecttool` para pôr uma textura na tela, perguntar que EFEITO já a desenha
@@ -785,6 +787,7 @@ Bancos em YAML, recarregadores, item_db, guardas do C++, operação dos quatro s
 - Subir o servidor a partir de um shell que pode ser encerrado deixa os quatro processos órfãos
 - Mais de 5 conexões em 3 segundos do mesmo IP e o rAthena fecha a conexão **sem mandar pacote nenhum**, por 10 minutos — é o `ddos_count` do `packet_athena.conf`, e não há mensagem, log nem erro em lugar nenhum
 - O rAthena CALCULA a data do desbloqueio e a JOGA FORA: o `logclif_auth_failed` copiava `""` para o `unblock_time` do pacote, e a única recusa que o cliente desenha com data saía pela metade
+- `max_cloth_color` capa CALADO no `pc_changelook`: cor acima do teto sai igual à ÚLTIMA permitida (8..15 todas verdes como a 7), e não a padrão — que é a cara de palette ausente. O override está em `conf/guerra/battle_guerra.txt` e só entra com `@reloadbattleconf`; `@reloadscript` não o alcança
 - Toda recusa de nome de GRUPO chega como *"Já existe um grupo com este nome"*, inclusive com o nome livre: o `mapif_parse_CreateParty` usa a mesma resposta para nome repetido e para letra fora do `char_name_letters` — e a lista é byte a byte, por `strchr`
 
 ### `ARMADILHAS-COMBATE.md` — Combate e números

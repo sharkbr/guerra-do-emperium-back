@@ -365,3 +365,18 @@ guardiao_hit_max: 630
 // cliente decide nao desenhar nada - o vendor traz isso em 1882
 // itens, quase toda carta inclusive. Ver src/custom/brilho_da_carta.hpp.
 brilho_da_carta: 4
+
+// ---------------------------------------------------------------
+// COR DE ROUPA: 16 indices (0..15), e nao os 8 do rAthena
+// ---------------------------------------------------------------
+//
+// O `pc_changelook` faz `cap_value(val, min, max_cloth_color)` SEM
+// avisar (src/map/pc.cpp, case LOOK_CLOTHES_COLOR): com o padrao 7,
+// um `setlook LOOK_CLOTHES_COLOR, 15` vira 7 calado, e o Edgard
+// (npc/guerra/xanin_e_edgard.txt) pareceria travado na cor 7.
+//
+// O numero acompanha o ULTIMO_INDICE de ferramentas/tinge_roupas.py,
+// que e quem gera as palettes 4..15 para o cliente. Subir aqui sem
+// gerar palette nova nao da erro: o cliente desenha a cor padrao.
+// Pega com @reloadbattleconf.
+max_cloth_color: 15

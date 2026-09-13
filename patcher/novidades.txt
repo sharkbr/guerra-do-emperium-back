@@ -107,3 +107,7 @@
 - Selo de Copas, Selo de Espadas, Selo de Ouros e Selo de Bastoes
 - Bota Fantasma [1], Sapatilha Fantasma [1], Caneleira Fantasma [1] e Sapato Fantasma [1]
 - Adereco da Celine [1]
+
+[0028] 2026-09-13  Doze cores novas de roupa
+- Doze cores novas de roupa, iguais para toda classe: vermelho, laranja, amarelo, verde, verde-agua, azul, roxo, rosa, marrom, branco, cinza e preto
+- Onde: no Edgard, o estilista de roupa, em Prontera (170,199) - de graca e sem limite, como sempre

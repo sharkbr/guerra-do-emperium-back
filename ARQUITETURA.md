@@ -700,6 +700,24 @@ jogador um item **sem nome**, sem erro em lugar nenhum (`CLAUDE.md` §4.18).
 Formato, ordem de publicação e o canal separado do próprio Atualizador estão em
 `patcher/LEIAME.md`; o passo a passo, em `RECEITAS.md` §11.
 
+### Uma cor de roupa vive em 3 lugares, e o mesmo número tem de estar nos três
+
+| Onde | O quê | Quem escreve |
+|---|---|---|
+| `ferramentas/tinge_roupas.py` (`CORES`, `ULTIMO_INDICE`) | as palettes 4..15, geradas para `cliente\data\palette\` — **cliente, vai por patch** | a ferramenta (`--aplicar`) |
+| `conf/guerra/battle_guerra.txt` (`max_cloth_color`) | o teto que o `pc_changelook` aplica **calado** (`cap_value`) | a mão; `@reloadbattleconf` |
+| `npc/guerra/xanin_e_edgard.txt` (`.teto`) | até onde o Edgard oferece | a mão; `@reloadscript` |
+
+Os três divergindo **não dão erro**, e cada divergência tem uma cara:
+- teto do NPC acima do `max_cloth_color`: as cores acima do teto do servidor
+  saem **iguais à última permitida** (foi o "8..15 tudo verde" de 2026-09-13);
+- teto acima do que a ferramenta gerou: o cliente desenha a **cor padrão**
+  naqueles índices, e parece que o NPC não fez nada;
+- ferramenta gerou mais do que o NPC oferece: cor que existe e ninguém alcança.
+
+Acrescentar uma cor é: entrada nova em `CORES` → `--aplicar` → patch →
+`max_cloth_color` → `.teto` → deploy com os dois recarregadores.
+
 ### Uma tabela nova do site vive em 2 lugares, e o segundo não é o deploy
 
 | Onde | O quê |

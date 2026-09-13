@@ -1757,7 +1757,7 @@ teria perdido:
 Duas armadilhas do caminho, as duas de ferramenta e não de conteúdo:
 
 1. **No nosso `data.grf` o `moc_ruins.rsw` está com flag DES**, que o `grf.py`
-   não lê — o de Prontera não está. Por isso o mapa de **origem** sai do GRF do
+   não lia até 2026-09-13 — o de Prontera não está. Por isso o mapa de **origem** sai do GRF do
    bRO, onde ele é `flags=1`. Mesmo tamanho, 141758 bytes. O parâmetro existe
    para isso e tem esse default.
 2. **O `verificar()` do `rsw.py` compara contra os bytes de entrada**, então só
@@ -1862,8 +1862,28 @@ python grf.py <data.grf> getlike <padrao-ascii> <saida> [indice]
 Lê o header de 46 bytes, descomprime a tabela de arquivos com zlib e extrai por
 nome.
 
-**Limitação conhecida:** não lê entradas com flag DES (`flags & 6`). O GRF oficial
-da Gravity tem muitas — inclusive `data\texture\유저인터페이스\loading07.jpg`.
+**Desde 2026-09-13 lê as entradas com flag DES (`flags & 6`).** Até então
+recusava, e o GRF oficial da Gravity tem muitas — 978 das 2881 palettes, 640
+dos 910 `.rsw`, quase todo sprite de corpo das classes antigas, o
+`loading07.jpg` da UI. O "DES" do GRF não é o DES de verdade: é **uma rodada**,
+sem chave, mais um embaralhamento de bytes a cada sete blocos, sobre os bytes
+**comprimidos** (antes do zlib). Só os 20 primeiros blocos de 8 bytes são
+sempre cifrados; o resto é periódico, com o período escolhido pelo número de
+dígitos do tamanho comprimido. É a porta do `src/common/des.cpp` e do
+`grf_decode` do `src/common/grfio.cpp` do rAthena, que estão no vendor — as
+tabelas foram **copiadas** de lá, e a prova é o zlib: cifra errada não
+descomprime. Medido: 492 palettes cifradas lidas sem um erro, e um sprite de
+300 KB sai em 0,2 s.
+
+**O que isso muda nas outras ferramentas:** várias (`doura_arte.py`,
+`instala_visual.py`, `act.py`, `destroi_mapa.py`, `catalogo_cutins.py`) caem
+para o GRF do **bRO** quando a entrada nossa está cifrada, e as seções delas
+abaixo ainda descrevem esse desvio. Ele continua funcionando, mas **deixou de
+ser necessário — e em pelo menos um caso era errado**: 434 das 492 palettes de
+corpo cifradas no nosso são **diferentes** no bRO (sprite de outra revisão), e
+palette do bRO sobre sprite nosso desenha lixo. A regra desde então: **a
+fonte é o nosso GRF; o bRO é para o que o nosso não tem**, não para o que o
+nosso esconde.
 
 **Por que existe o `getlike`:** caminhos com trecho coreano não sobrevivem ao
 console do PowerShell até o `argv` do Python. O `getlike` casa por substring ASCII
@@ -1913,7 +1933,7 @@ O `.rsw` é o "mundo": luz, água, e a lista de objetos posicionados. Não guard
 geometria — os modelos são referências por nome para `.rsm` dentro do GRF. Por
 isso dá para tombar, afundar, clonar e remover prédio mexendo só nele, sem
 extrair `.rsm` nenhum (o que importa, porque `.rsm` no GRF oficial está atrás da
-flag DES que o `grf.py` ainda não lê; os arquivos de mapa **não** estão).
+flag DES, que o `grf.py` só lê desde 2026-09-13; os arquivos de mapa **não** estão).
 
 O `.gnd` é a malha do chão. O que interessa: **cada superfície tem cor BGRA
 própria**, multiplicada pela textura na hora de desenhar. Escurecer e amarelar
@@ -2056,7 +2076,8 @@ Conferido nos bytes crus do `GuerraDoEmperium.exe`, e batendo com o
 modelo num mapa basta o nome, mas para *escolher* um retrato é preciso vê-lo.
 742 dos arquivos da pasta estão cifrados, e a cifra bate justamente nos retratos
 clássicos (`job_*`, `aca_*`, `nov_*`, `moc_*`, quase todo `kafra_*`) — extrair só
-os livres dá amostra enviesada. Para pré-visualizar, um extrator com DES (GRF
+os livres dá amostra enviesada. Escrito antes de 2026-09-13, quando o `grf.py`
+ainda não lia DES — hoje ele lê. Para pré-visualizar, um extrator com DES (GRF
 Editor) ou o próprio jogo.
 
 ## `catalogo_ingame.py` — monta o mapa-catálogo
@@ -2203,7 +2224,8 @@ oficial copia junto o tamanho do lugar de origem.** A medida que decide é a
 outra, logo abaixo: a largura do `.rsm` contra o tamanho do lugar.
 
 **Use o GRF do bRO para essa varredura, não o nosso:** 640 dos 910 `.rsw` do
-nosso estão com DES e o `grf.py` não os lê. No do bRO estão todos limpos.
+nosso estão com DES e o `grf.py` não os lia (lê desde 2026-09-13). No do bRO
+estão todos limpos.
 
 ### Medir se o modelo cabe: é o `mede_rsm.py`, logo abaixo
 
@@ -2630,9 +2652,10 @@ nenhum.
 ### Três coisas que são armadilha
 
 - **A fonte é o GRF do bRO, não o nosso.** As entradas de arte de item no
-  `data.grf` de 2021-11-03 estão com DES (flags 3 e 5) e o `grf.py` não lê
-  arquivo cifrado. O do bRO é mais novo e não usa DES — o mesmo caminho que o
-  `instala_visual.py` já usava.
+  `data.grf` de 2021-11-03 estão com DES (flags 3 e 5) e o `grf.py` não lia
+  arquivo cifrado até 2026-09-13. O do bRO é mais novo e não usa DES — o mesmo
+  caminho que o `instala_visual.py` já usava. Hoje o desvio é desnecessário;
+  ver a seção do `grf.py`.
 - **A ordem dos canais muda entre os formatos**: BMP guarda BGRA, SPR guarda
   RGBA. Trocar transformaria o marrom da rampa em azul.
 - **Duas cores nunca são tocadas**: o magenta puro (255,0,255), que é a
@@ -4359,8 +4382,8 @@ Do **`map_cache.dat` do servidor**, que é o que o rAthena de fato lê — não 
 `.gat` do GRF. Dois motivos:
 
 1. metade dos `.gat` de mapa de instância está **cifrada com DES** no
-   `data.grf` (o `1@gl_k.gat` está), e o `grf.py` recusa. Ler dali devolveria
-   *"mapa não existe"* sobre um mapa que existe;
+   `data.grf` (o `1@gl_k.gat` está), e o `grf.py` recusava até 2026-09-13.
+   Ler dali devolveria *"mapa não existe"* sobre um mapa que existe;
 2. são **três** `map_cache` e o primeiro que tiver o mapa vence
    (`map.cpp:3922`). Ferramenta que abra só o `db/map_cache.dat` responde pelo
    mapa errado — a `prontera` de renewal, por exemplo, só existe no `db/re/`.
@@ -4549,3 +4572,79 @@ onde se dividir: o `mob_readskilldb` (`src/map/mob.cpp:7184`) lê `db/re/` e
 `db/import/` e mais nada. Cada gerador troca só a sua seção e preserva o resto
 byte a byte; o `--conferir` de cada um compara só a própria seção. Ver
 `ARMADILHAS-AMBIENTE.md` para o que acontece quando não se faz isso.
+
+## `tinge_roupas.py` — as cores de roupa que a Gravity não fez
+
+```
+python tinge_roupas.py --listar                       # classe a classe: oficiais, máscara, origem
+python tinge_roupas.py --previa <pasta>               # um PNG por classe, oficiais + nossas lado a lado
+python tinge_roupas.py --previa <pasta> --classe gisa_M   # só uma (nome romanizado ou coreano)
+python tinge_roupas.py --ensaio                       # o que --aplicar gravaria
+python tinge_roupas.py --aplicar                      # grava em cliente\data\palette\
+python tinge_roupas.py --conferir                     # sai 1 se faltar palette no disco
+python tinge_roupas.py --reverter --aplicar           # apaga o que este script gravou
+```
+
+**Gera as cores 4..15 de roupa para toda classe, sexo, montaria, Doram e traje
+alternativo** — 343 classes/sexos, 4116 palettes de 1 KB — a partir das poucas
+que a Gravity fez (0..4 nas classes base, 0..3 da 2ª classe em diante, 0..7 nas
+4ª). Entrou em 2026-09-13, a pedido do dono, e é o que está por trás do teto 15
+do Edgard.
+
+### Como se acha a roupa numa palette de 256 cores
+
+Não há campo que separe tecido de pele. Mas **as palettes oficiais denunciam**:
+entre a `_0.pal` e cada uma das outras só mudam os índices da roupa (16 a 70 dos
+256), e a união dessas diferenças é a máscara. Só ela é tocada. Três filtros,
+cada um por um caso medido:
+
+- diferença acima de **128 índices** é tabela de outra origem, não cor (a `_4`
+  do Cavaleiro muda 254) — descartada;
+- diferença abaixo de **20 pontos** num índice é retoque, não roupa (o enfeite
+  de cabeça do Arcebispo muda 7 e virava verde) — fora da máscara;
+- oficiais **todas iguais** à `_0` (casamento, Papai Noel, verão, hanbok,
+  Oktoberfest) é roupa que a Gravity não tinge — pulada.
+
+Quando as oficiais são todas de outra origem (Renegado, e quatro `costume_1`),
+a máscara vem de **heurística**: tudo que os quadros usam menos pele (matiz 8 a
+45°, saturação média, claro), contorno e cinza. Pinta metal junto; é o preço.
+
+### Como se tinge
+
+A **base** é a palette embutida no `.spr` (os 1024 bytes do fim), não a `_0.pal`
+— é a que o cliente desenha sem palette nenhuma, e as duas diferem em 4 a 60
+índices em 146 das 270 classes/sexos. Cada índice da máscara vira HSV; o script
+mede o matiz dominante da roupa (média circular, pesada por **área em pixels** ×
+saturação × valor — sem a área, a batina do Arcebispo perdia para um detalhe de
+dez pixels) e gira todos os índices pela mesma diferença até o alvo, com um piso
+de saturação de 0,55. Índice sem cor (saturação < 0,2) recebe o alvo direto.
+Branco, cinza, preto e marrom são multiplicadores de `s` e `v`. A lista `CORES`
+é a única coisa a editar para trocar ou acrescentar cor — e o `ULTIMO_INDICE`
+dela tem de bater com o `max_cloth_color` e com o `.teto` do Edgard
+(`ARQUITETURA.md` §4).
+
+### As três armadilhas que o script já contorna
+
+- **A fonte é o nosso GRF, e só ele.** 492 das 1434 palettes de corpo estão
+  com DES, e o primeiro rascunho as lia do bRO — até medir que 434 delas são
+  **diferentes** lá. Foi o que pôs o DES no `grf.py`.
+- **Dezoito palettes têm nome diferente do sprite** (`레인저`/`레인져`,
+  `하이프리스트`/`하이프리`, `로얄가드`/`가드`…): `APELIDO_SPRITE` liga os dois,
+  e sem ele o script cai para a `_0.pal` como base e não tem prévia.
+- **A pasta no disco é `¸ö`, não `몸`**: o cliente é ANSI e abre o nome CP949 do
+  GRF pela codepage 1252 desta máquina — o mesmo esquema de
+  `data\sprite\¾Ç¼¼»ç¸®\`. `decode('mbcs')` é a expressão exata disso.
+
+### Onde grava, e o que isso obriga
+
+Em `cliente\data\palette\`, que vence o GRF pelo `DataFolderFirst` (provado
+para esta pasta em jogo, 2026-09-13). **É mudança de cliente: vai por patch**
+(`CLAUDE.md` §4.18) — o 0028 levou as 4116. As oficiais 4..7 das classes base e
+das 4ª classes ficam sobrescritas no disco (intactas no GRF), para "cor 6" ser
+amarelo em toda classe; reverter é `--reverter --aplicar`.
+
+A prévia desenha o **quadro 0** do sprite (parado, de frente) com cada palette,
+em PNG cru escrito pelo próprio script (o `_png` do `doura_arte.py`). O nome do
+arquivo é o coreano romanizado (`기사` → `gisa`), porque o coreano não sobrevive
+ao console. Planejar todas as classes lê e desenrola todo sprite de corpo do GRF
+e leva um minuto; com `--classe` o filtro corre antes.

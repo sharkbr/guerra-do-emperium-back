@@ -92,24 +92,36 @@ prontera,172,199,4	script	Xanin	495,{
 //= que ele JA TEM no data.grf. O servidor so manda o numero do
 //= indice, com `setlook LOOK_CLOTHES_COLOR`.
 //=
-//= QUANTAS CORES EXISTEM - medido no nosso data.grf, contando
-//= os 1809 .pal de corpo, por classe e genero:
+//= QUANTAS CORES EXISTEM - a Gravity fez poucas, medido no nosso
+//= data.grf, por classe e genero:
 //=
 //=   classes base (Aprendiz, Espadachim, Mago, Arqueiro,
 //=   Novico, Mercador, Gatuno)          indices 0..4
 //=   2a e 3a classes                    indices 0..3
-//=   parte das classes novas            indices 0..7
+//=   4a classes e trajes alternativos   indices 0..7
 //=
-//= Por isso o teto aqui e 3, e nao o `max_cloth_color: 7` do
-//= conf/battle/client.conf: aquele numero e do SERVIDOR, e o
-//= servidor aceita qualquer indice e manda para um cliente que
-//= pode nao ter a palette. Indice sem palette NAO da erro - o
-//= cliente so desenha a cor padrao, e a conclusao errada e
-//= achar que o NPC falhou. Mesma armadilha do view id de NPC.
+//= Ate 2026-09-13 o teto aqui era 3, o unico indice que TODA
+//= classe tinha. Desde entao as cores 4..15 sao NOSSAS, geradas
+//= por ferramentas/tinge_roupas.py para toda classe e sexo (343
+//= classes/sexos, uma palette de 1 KB cada) e gravadas em
+//= cliente\data\palette\ - ou seja, chegam ao jogador por PATCH
+//= (CLAUDE.md 4.18), nao pelo deploy. A ordem e a mesma para todo
+//= mundo: 4 vermelho, 5 laranja, 6 amarelo, 7 verde, 8 verde-agua,
+//= 9 azul, 10 roxo, 11 rosa, 12 marrom, 13 branco, 14 cinza, 15
+//= preto. As 4..7 da Gravity (classes base e 4a classes) foram
+//= sobrescritas de proposito, para "cor 6" ser amarelo em toda
+//= classe - o cabecalho da ferramenta explica a escolha.
 //=
-//= Mudar o teto e trocar UM numero no OnInit, no fim do
-//= arquivo. Subir para 4 funciona nas classes base e nao
-//= funciona da 2a classe em diante.
+//= O teto aqui NAO e a unica trava: o `pc_changelook` capa o
+//= valor em `max_cloth_color` SEM avisar, e o padrao do rAthena
+//= e 7. O override esta em conf/guerra/battle_guerra.txt (15) e
+//= os dois numeros andam juntos com o ULTIMO_INDICE da ferramenta.
+//= Indice sem palette NAO da erro - o cliente so desenha a cor
+//= padrao, e a conclusao errada e achar que o NPC falhou. Mesma
+//= armadilha do view id de NPC.
+//=
+//= Mudar o teto e trocar UM numero no OnInit, no fim do arquivo -
+//= depois de gerar as palettes e de subir o battle_guerra.txt.
 //=
 //= A PREVIA e o jeito de todo estilista de RO e tem um custo
 //= conhecido: `setlook` aplica na hora. Quem fechar a janela
@@ -180,12 +192,14 @@ prontera,170,199,4	script	Edgard	509,{
 
 OnInit:
 	// O maior indice de cor de roupa que TODA classe deste
-	// servidor tem palette para desenhar. Ver a nota do
-	// cabecalho antes de mexer: 4 so vale nas classes base.
+	// servidor tem palette para desenhar: 0..3 da Gravity mais
+	// 4..15 nossas (ferramentas/tinge_roupas.py). Ver a nota do
+	// cabecalho antes de mexer - e o max_cloth_color tem de
+	// acompanhar (conf/guerra/battle_guerra.txt).
 	//
 	// E variavel de NPC (`.`) e nao temporaria (`.@`): a `.@`
 	// morre com o fim do OnInit e o clique acharia zero.
-	.teto = 3;
+	.teto = 15;
 
 	// Arma a fome. Ver "A FOME" no cabecalho desta secao.
 	initnpctimer;

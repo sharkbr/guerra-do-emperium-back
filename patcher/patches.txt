@@ -38,3 +38,4 @@
 0025	0025-o-configurador-de-video-volta-a-abrir.zip	6821a214bb8b0e7be8f174a540f7928d065804b405bfaf050deabdc05b9df554	240452	O configurador de video volta a abrir
 0026	0026-coroa-da-fe-plena-no-chapeleiro.zip	0826ad0301094ed5c4edb993dbfaa291455fbff02b443a97158fe091659d0376	2576947	Coroa da Fe Plena no Chapeleiro
 0027	0027-dez-itens-novos-nas-lojas-de-prontera.zip	53edb48d1922682ad0ca7bc0574065d772c8e33d818330bbbeaecacce134a8da	2708652	Dez itens novos nas lojas de Prontera
+0028	0028-doze-cores-novas-de-roupa.zip	c90ae76c96f19f89a339e767f3d07ef107194d7872e69b7e2692dcfb1d5b0a6f	2880088	Doze cores novas de roupa
