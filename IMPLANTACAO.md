@@ -824,8 +824,41 @@ O inverso da §9: trabalho que já está pronto e commitado, e que só falta um
 comando do lado da infra. **Ao concluir uma linha aqui, apague-a** e registre no
 `HISTORICO.md`, como manda o `CLAUDE.md` §7.
 
-*Nenhuma linha aberta hoje* — a última (ligar o botão Baixar ao instalador)
-foi aplicada em 2026-08-16 e está no `HISTORICO.md`.
+**A Ilusão do Labirinto e a Coroa da Fé Plena esperam um `implanta.sh`
+(2026-09-13).** Quatro commits estão em `origin/main` e nenhum deles chegou à
+produção. O que falta é **um comando só, do Mac** — não há patch pendente nem
+recompilação:
+
+```
+ferramentas/implanta.sh
+```
+
+- `f7267d6` + `a8484fb` — a **Ilusão do Labirinto** inteira: os 14 monstros
+  (`db/guerra/mob_db_labirinto.yml`), as habilidades deles
+  (`db/import/mob_skill_db.txt`), os 61 portais e o povoamento
+  (`npc/guerra/ilusao_do_labirinto_mapa.txt`) e a missão de acesso
+  (`npc/guerra/ilusao_do_labirinto.txt`). **Servidor puro** — conferido no
+  `data.grf` em 2026-09-13: os 14 ids (20520..20533) estão no
+  `npcidentity.lub`, e os 16 `.spr`/`.act` dos oito view ids de NPC
+  (10310..10317) mais `4_f_acolyte`, `4_f_erene`, `4_f_08` e
+  `4_energy_white` estão em `data\sprite\npc\` sem cifra. Nada a empacotar;
+- `a918482` — o journal do site (veio do Mac, e é a única coisa em `site/`:
+  o deploy vai recompilar o site, que custa segundos);
+- `b61599d` — a trava do Setup e o atalho do Atualizador. **Este não espera
+  nada**: o patch 0025 e o Atualizador versão 6 foram publicados em
+  2026-09-12, e o que o deploy leva daqui é só documentação e o
+  `patcher/`, que o servidor de jogo não lê;
+- `e925413` — a **Coroa da Fé Plena**: o `item_db`, o `Buy: 1` e a linha do
+  Chapeleiro. O **patch 0026 já está no ar** e o lado do cliente já chegou ao
+  jogador; sem o deploy a peça simplesmente não aparece na vitrine.
+
+**Não recompila o emulador.** O último commit a tocar `rathena/src/` é o
+`03012f7`, muito antes destes quatro — os ~67 min do build ficam de fora, e a
+janela de queda é o restart de 28 segundos.
+
+**E não precisa de recarregador nenhum depois**: o deploy reinicia os quatro,
+o que já cobre os dois passos que a §1aj do `PENDENCIAS.md` pede
+(`@reloaditemdb` e `@reloadscript`).
 
 ---
 
