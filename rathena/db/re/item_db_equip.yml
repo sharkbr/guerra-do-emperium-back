@@ -196492,7 +196492,7 @@ Body:
       }
   - Id: 450222
     AegisName: Requiescat_in_Pace
-    Name: "Epitáfio"
+    Name: Requiescat in Pace
     Type: Armor
     Weight: 1000
     Defense: 150
@@ -201288,7 +201288,7 @@ Body:
       }
   - Id: 460046
     AegisName: Black_Mithril_Guard
-    Name: "Escudo de Carvão"
+    Name: Black Mythril Guard
     Type: Armor
     Weight: 300
     Defense: 60
@@ -209481,7 +209481,7 @@ Body:
          bonus bShortAtkRate,15;
   - Id: 470294
     AegisName: aegis_470294
-    Name: Phantom Boots
+    Name: "Bota Fantasma"
     Type: Armor
     Weight: 200
     Slots: 1
@@ -209567,7 +209567,7 @@ Body:
          bonus2 bMagicAddEle,Ele_All,15;
   - Id: 470298
     AegisName: aegis_470298
-    Name: Phantom Sneakers
+    Name: "Sapatilha Fantasma"
     Type: Armor
     Weight: 200
     Slots: 1
@@ -222703,7 +222703,7 @@ Body:
       bonus2 bSubRace,RC_Undead,4;
   - Id: 490183
     AegisName: Military_Glove
-    Name: "Luvas Militares"
+    Name: Military Glove
     Type: Armor
     Buy: 20
     Weight: 100

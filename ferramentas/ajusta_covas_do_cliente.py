@@ -95,11 +95,19 @@ ITEM_DB = [os.path.join(RATHENA, 'db', 're', 'item_db_usable.yml'),
 #   entrada de 2021 do cliente desenhava zero. E o lado ruim da divergencia
 #   - a peca ACEITA carta e nao PARECE aceitar, entao o jogador nem tenta -,
 #   e por isso quem mudou foi o cliente, como nas quinze Armas Brutais.
+#
+#   Escudo de Carvao (2026-09-13) - relatado pelo dono como "esta com Slot".
+#   Era o lado inverso, e o mais barato: o itemInfo.lua E o bRO diziam ZERO,
+#   e so o nosso servidor dava a cova. Acertado no servidor, por override em
+#   db/guerra/item_db.yml, e por isso ele entra nesta lista sem que uma
+#   rodada deste script mude um byte do cliente - que e exatamente o que o
+#   --conferir tem de dizer.
 # -------------------------------------------------------------------------
 COVAS = [1328, 13147, 13342, 16082, 18171, 26141, 26206, 28033,
          28245, 28246, 28247, 28248, 28746, 32014, 32100,
          2979, 28572,
-         5739, 5740]
+         5739, 5740,
+         460046]
 
 
 class Erro(Exception):

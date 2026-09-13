@@ -68,8 +68,6 @@ Body:
     Buy: 1                # Magic_Reflector
   - Id: 2198
     Buy: 1                # Lapine_Shield
-  - Id: 2204
-    Buy: 1                # Glasses_
   - Id: 2289
     Buy: 1                # Poo_Poo_Hat
   - Id: 2423
@@ -1588,8 +1586,6 @@ Body:
     Buy: 1                # Vigilante_Bow
   - Id: 18171
     Buy: 1                # Blut_Bow
-  - Id: 18508
-    Buy: 1                # Garuda_Hat
   - Id: 18609
     Buy: 1                # Dark_Blindfold_
   - Id: 18728
@@ -2314,8 +2310,6 @@ Body:
     Buy: 1                # Lacma_R
   - Id: 28746
     Buy: 1                # Blut_Gladius
-  - Id: 28901
-    Buy: 1                # Mad_Bunny_K
   - Id: 28902
     Buy: 1                # Mad_Bunny_K_
   - Id: 28910
@@ -2498,6 +2492,8 @@ Body:
     Buy: 1                # Prta_Mil_Glove
   - Id: 32221
     Buy: 1                # Time_Overload_Ring
+  - Id: 32237
+    Buy: 1                # Celine_Brooch_K
   - Id: 32243
     Buy: 1                # Star_Force_Ring_TW
   - Id: 32247
@@ -2654,6 +2650,8 @@ Body:
     Buy: 1                # Victory_Wing_Ear_
   - Id: 400006
     Buy: 1                # Orcsuccessionhelm_TW
+  - Id: 400019
+    Buy: 1                # Detale_Helm_Guerra
   - Id: 400080
     Buy: 1                # C_Kriemhild_Crown_TW
   - Id: 400091
@@ -2684,8 +2682,6 @@ Body:
     Buy: 1                # C_Souvenirs_Of_Izlude
   - Id: 400175
     Buy: 1                # C_Campfire_Hat
-  - Id: 400177
-    Buy: 1                # Fafnir_Helm
   - Id: 400194
     Buy: 1                # NostalgiaCherryBlossom
   - Id: 400195
@@ -3226,14 +3222,20 @@ Body:
     Buy: 1                # C_Chocolat_Rabbit_Hair
   - Id: 420209
     Buy: 1                # C_Cookie_PinkRibbon
+  - Id: 420210
+    Buy: 1                # Heart_Ace_Melee
   - Id: 420211
     Buy: 1                # C_Sleep_RedSheep
   - Id: 420212
     Buy: 1                # C_Guardian_Claus
+  - Id: 420213
+    Buy: 1                # Spade_Ace_Melee
   - Id: 420218
     Buy: 1                # C_Wanderer_Curl_WH
   - Id: 420219
     Buy: 1                # C_Come_On_Melon
+  - Id: 420220
+    Buy: 1                # Diamond_Ace_Range
   - Id: 420221
     Buy: 1                # C_Skia_Two_Side_Up
   - Id: 420227
@@ -3254,6 +3256,8 @@ Body:
     Buy: 1                # C_GC_Hair_OM
   - Id: 420264
     Buy: 1                # C_Cat_Straight_Long_WH
+  - Id: 420269
+    Buy: 1                # Clover_Ace_Defense
   - Id: 420273
     Buy: 1                # C_Rose_Wave_BD
   - Id: 420274
@@ -3486,18 +3490,22 @@ Body:
     Buy: 1                # Prana_Boots
   - Id: 470274
     Buy: 1                # Twinhead_dragon_Boots
-  - Id: 470293
-    Buy: 1                # Virtue_Shoes_BR
+  - Id: 470294
+    Buy: 1                # aegis_470294
   - Id: 470296
     Buy: 1                # aegis_470296
+  - Id: 470298
+    Buy: 1                # aegis_470298
   - Id: 470300
     Buy: 1                # aegis_470300
   - Id: 470309
     Buy: 1                # Phantom_Greave
   - Id: 470318
     Buy: 1                # aegis_470318
-  - Id: 470321
-    Buy: 1                # Phantom_Shoes
+  - Id: 470320
+    Buy: 1                # Phantom_Greaves
+  - Id: 470322
+    Buy: 1                # Phantom_Shoes_
   - Id: 480009
     Buy: 1                # Virgo_Manteau_J
   - Id: 480022
@@ -3678,8 +3686,6 @@ Body:
     Buy: 1                # Ring_Of_Storm
   - Id: 490451
     Buy: 1                # Colar_Rubi_BR
-  - Id: 490482
-    Buy: 1                # Cel_Design_Pendant
   - Id: 490497
     Buy: 1                # Somatology_Glove
   - Id: 500005
@@ -3688,10 +3694,6 @@ Body:
     Buy: 1                # Copy_Gram
   - Id: 510064
     Buy: 1                # Ninjaken
-  - Id: 510146
-    Buy: 1                # Jurupari
-  - Id: 510147
-    Buy: 1                # Orc_Dagger_BR
   - Id: 510155
     Buy: 1                # Ceuci
   - Id: 520003

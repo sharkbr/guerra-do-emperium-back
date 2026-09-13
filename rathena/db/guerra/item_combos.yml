@@ -403,3 +403,46 @@ Body:
           - Cel_Design_Pendant   # 490482 - Pingente da Celine
     Script: |
       bonus2 bMagicAddEle,Ele_All,25;
+
+  # -----------------------------------------------------------------------
+  # AURA FANTASMA + OS DOIS CALCADOS NOVOS (470320 e 470322) - 2026-09-13
+  #
+  # Mesma receita do Sapato Fantasma (470321), mais acima, e pela mesma
+  # razao: os dois calcados foram criados por nos em db/guerra/item_db.yml
+  # e o db/re/item_combos.yml, que ja traz este conjunto para os pes que o
+  # vendor conhece, nao tem como cita-los.
+  #
+  # O QUE MUDA ENTRE OS DOIS E O ATRIBUTO, e nao e detalhe: a familia tem
+  # tres versoes deste conjunto, uma por atributo, e cada pe entra na sua.
+  # A descricao do bRO diz qual -
+  #
+  #   470322 Sapato Fantasma    "FOR base 130 ou mais"  -> grupo do 470293
+  #   470320 Caneleira Fantasma "SOR base 130 ou mais"  -> grupo do 470299
+  #
+  # Os dois Scripts sao COPIA EXATA do grupo correspondente do db/re/, sem
+  # uma virgula de diferenca; a unica mudanca e o calcado citado. Sao
+  # entradas separadas, e nao alternativas dentro do `- Combos:` deles,
+  # porque de um arquivo de import nao se acrescenta linha a uma entrada
+  # alheia - a mesma razao da Diadema, no topo deste arquivo. O efeito e o
+  # mesmo: so um calcado cabe por vez.
+  #
+  # Ao atualizar o rathena/, conferir estes dois contra o db/re/.
+  - Combos:
+      - Combo:
+          - Subject_Aura      # 19439  - Aura Fantasma
+          - Phantom_Shoes_    # 470322 - Sapato Fantasma [1]
+    Script: |
+      if (readparam(bStr)>=130) {
+         bonus bFixedCast,-500;
+         autobonus "{ bonus bStr,70; }",15,5000,BF_WEAPON;
+      }
+
+  - Combos:
+      - Combo:
+          - Subject_Aura      # 19439  - Aura Fantasma
+          - Phantom_Greaves   # 470320 - Caneleira Fantasma [1]
+    Script: |
+      if (readparam(bDex)>=130) {
+         bonus bFixedCast,-500;
+         autobonus "{ bonus bDex,70; }",15,5000,BF_WEAPON;
+      }

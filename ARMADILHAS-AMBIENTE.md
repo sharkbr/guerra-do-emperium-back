@@ -262,3 +262,48 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   um item do vendor, a pergunta é "ele tem nome em português no `db/re/`?" —
   se tem, o bloco precisa repeti-lo.** Rodar `nomes_pt_item_db.py --relatar` e
   olhar o `git diff` do `db/re/` depois de gravar é o que denuncia.
+
+
+- **Arquivo de NPC é CRLF, e script que junte as linhas com `
+` deixa um
+  `` NO MEIO da linha.** Os `.txt` de `npc/guerra/` chegam ao disco em CRLF
+  (`core.autocrlf=true` mais o `* text=auto` do `.gitattributes`: o repositório
+  guarda LF e o checkout devolve a quebra nativa). Ler com `open(p,'rb')` e
+  fazer `split('
+')` deixa um `` grudado no **fim de cada linha** — e isso
+  é invisível enquanto só se junta de volta com `'
+'.join(...)`.
+
+  Onde ele morde é ao mexer no **conteúdo** de uma linha. Numa linha de `shop`,
+  `ln.rsplit('	',1)[1].split(',')` faz do último item `400697:1`; acrescentar
+  um item depois dele produz `...,400697:1,400019:1` — um carriage return no
+  meio da lista, com o resto da linha do outro lado. E linha de comentário
+  acrescentada por esse mesmo script nasce **sem** ``, o que deixa o arquivo
+  com as duas quebras misturadas.
+
+  **A segunda metade é o que denuncia, e ela denuncia errado.** Com as quebras
+  misturadas o git para de converter e passa a comparar CRLF contra o LF do
+  blob: o `git diff --stat` de uma mudança de 88 linhas saiu com **4137**, o
+  arquivo inteiro, e a leitura natural disso é "apaguei o arquivo e reescrevi".
+  O aviso *"LF will be replaced by CRLF"* aparece junto e reforça o engano.
+
+  Medido em 2026-09-13, na leva de trocas do Mercado Contemporâneo. Não deu
+  erro em ferramenta nenhuma; as nove linhas de `shop` foram reescritas e
+  quatro saíram com o `` dentro.
+
+  A saída é uma linha, e serve para qualquer `.txt` de jogo:
+
+  ```python
+  d = open(p, 'rb').read()
+  d = d.replace('
+', '
+').replace('', '')   # trabalha em LF puro
+  ...                                              # edita à vontade
+  open(p, 'wb').write(d.replace('
+', '
+'))     # devolve CRLF
+  ```
+
+  **O `git diff --stat` é a conferência barata:** se o número de linhas bate
+  com o que você mexeu, a quebra sobreviveu; se ele traz o arquivo inteiro, não
+  sobreviveu — e aí não adianta olhar o diff, porque ele vai mostrar tudo.

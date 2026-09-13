@@ -4273,3 +4273,298 @@ Body:
     Name: "Amuleto de Ziegfried"
     Trade:
       NoMail: false
+
+  # ------------------------------------------------------------------
+  # TRES ITENS QUE NAO ENTREGAVAM O QUE A TELA PROMETE - 2026-09-13
+  #
+  # Relatados pelo dono em jogo, no mesmo dia, e sao tres defeitos de
+  # familias diferentes. O que os une e a fonte da correcao: a descricao
+  # do bRO, que o `itemInfo.lua` deste cliente ja mostra ao jogador
+  # (`estado_item.py --id <n> --descricao`). Entre trocar a descricao do
+  # cliente e trocar o efeito do servidor, trocar o servidor e o lado
+  # barato e o lado certo - e o mesmo argumento do override do 400287,
+  # la em cima.
+  # ------------------------------------------------------------------
+
+  - Id: 450222
+    # EPITAFIO. "Esta com os bonus de outro servidor", e estava mesmo: o
+    # vendor da resistencia e dano por RACA (Demonio, Humano, Doram) e um
+    # `bonus bDef,300` no refino +5 que nao existe em lugar nenhum da
+    # descricao. O bRO da dano por TAMANHO e atributos no +7. Mesmo ID,
+    # duas revisoes diferentes do item - o caso do 400287 de novo.
+    #
+    # A descricao do bRO, linha por linha, e o que este Script faz:
+    #   Indestrutivel em batalha             -> bUnbreakableArmor
+    #   Velocidade de ataque +10%            -> bAspdRate,10
+    #   Dano fisico e magico contra todos
+    #     os tamanhos +40%                   -> bAddSize/bMagicAddSize
+    #   A cada refino: resist. Veneno +2%    -> bSubEle,Ele_Poison,2*.@r
+    #   Refino +5: velocidade de movimento   -> bSpeedRate,25
+    #   Refino +5: resist. Humano e Doram +7%-> bSubRace,RC_Player_*
+    #   Refino +7: todos os atributos +10    -> bAllStats,10
+    #   DEFM 15                              -> bMdef,15
+    #
+    # DEF 150, Peso 1000 (= "Peso: 100" na tela, o cliente divide por 10)
+    # e `Slots: 1` batem com o db/re/ e com o bRO - por isso nao estao
+    # aqui. Campo omitido MANTEM o valor do vendor (ver o cabecalho desta
+    # secao).
+    #
+    # O conjunto com o Rancor Assassino (29724) e casado por AegisName e
+    # nao muda: continua no db/re/item_combos.yml, intocado.
+    AegisName: Requiescat_in_Pace
+    Name: "Epitáfio"
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bUnbreakableArmor;
+      bonus bAspdRate,10;
+      bonus2 bAddSize,Size_All,40;
+      bonus2 bMagicAddSize,Size_All,40;
+      bonus2 bSubEle,Ele_Poison,2*.@r;
+      if (.@r>=5) {
+         bonus bSpeedRate,25;
+         bonus2 bSubRace,RC_Player_Human,7;
+         bonus2 bSubRace,RC_Player_Doram,7;
+      }
+      if (.@r>=7)
+         bonus bAllStats,10;
+
+  - Id: 460046
+    # ESCUDO DE CARVAO. "Esta com Slot" - e o quarto caso de metade da
+    # configuracao no cliente (CLAUDE.md secao 4.9), pelo lado inverso e
+    # pior: o `itemInfo.lua` e o bRO dizem ZERO covas, e o servidor dava
+    # uma. O nome na tela sai sem `[1]`, a carta entra assim mesmo, e nada
+    # da erro. Como o cliente ja esta certo, aqui nao ha metade de cliente
+    # para acertar e NAO HA PATCH nesta correcao.
+    #
+    # `Slots: 0` ESCRITO e nao omitido: campo omitido mantem o valor do
+    # db/re/, entao omitir deixaria a cova. Mesma razao do Morango
+    # Cristalizado (2979), logo abaixo.
+    #
+    # OS TRES NUMEROS vieram junto, por decisao do dono em 2026-09-13 ao
+    # receber a medicao. O vendor multiplicava por tres o HP/SP por refino
+    # e antecipava os dois degraus em seis niveis:
+    #
+    #   descricao na tela        vendor       aqui
+    #   HP e SP max. por refino  3% (3*.@r)   1% (.@r)
+    #   Sagrado/Fantasma +20%    refino +5    refino +11
+    #   Nao pode ser empurrado   refino +7    refino +13
+    #
+    # O resto do Script e copia do db/re/ e continua igual - inclusive o
+    # `getskilllv("CR_TRUST")`, que e a linha "Ao aprender [Fe] nv.1:
+    # resistencia a Sagrado -20%" da descricao: com Fe o +20% zera.
+    AegisName: Black_Mithril_Guard
+    Name: "Escudo de Carvão"
+    Slots: 0
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableShield;
+      bonus2 bSubClass,Class_Boss,40;
+      bonus2 bSubClass,Class_Normal,40;
+      bonus bMaxHPrate,.@r;
+      bonus bMaxSPrate,.@r;
+      if (.@r>=11) {
+         bonus2 bSubEle,Ele_Holy,20-(getskilllv("CR_TRUST") > 0 ? 20 : 0);
+         bonus2 bSubEle,Ele_Ghost,20;
+         if (.@r>=13)
+            bonus bNoKnockback;
+      }
+
+  - Id: 490183
+    # LUVAS MILITARES. "Esta dropando diamante de 2 quilates como em
+    # outros servidores." Estava: o vendor tem, ao aprender [Isca Magica]
+    # nv.5, um par de `bonus2 bAddMonsterDropItem,731,30` e `,731,10` - o
+    # 731 e o Diamante de 2 quilates, que vale 6.000 z na revenda. Sao
+    # 0,3% + 0,1% de chance por monstro morto, o que numa sessao de caca
+    # vira dinheiro do nada.
+    #
+    # A descricao do bRO nao traz esse efeito, nem qualquer outro para
+    # [Isca Magica]. As outras cinco linhas do Script batem com ela uma a
+    # uma (VIT +7, dano por tamanho +10%, as tres habilidades por
+    # BaseLevel/2, [Artilharia Cacadora] nv.5, [Arremesso de Machado]
+    # nv.5 e [Erupcao de Magma] nv.5) - por isso o bloco inteiro do
+    # NC_MAGICDECOY sai e nada mais muda.
+    #
+    # O `Script:` e repetido INTEIRO porque o parseBodyNode substitui o
+    # campo, nao acrescenta - a mesma regra do
+    # ferramentas/marca_indestrutiveis.py.
+    #
+    # O conjunto com o Dinastia (29436) e casado por AegisName e nao muda.
+    AegisName: Military_Glove
+    Name: "Luvas Militares"
+    Script: |
+      bonus bVit,7;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"NC_AXETORNADO",BaseLevel/2;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",BaseLevel/2;
+      bonus2 bSkillAtk,"NC_POWERSWING",BaseLevel/2;
+      if (getskilllv("NC_SILVERSNIPER") == 5)
+         bonus2 bAddEle,Ele_All,10;
+      if (getskilllv("NC_AXEBOOMERANG") == 5) {
+         bonus bAspdRate,10;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+      if (getskilllv("NC_MAGMA_ERUPTION") == 5)
+         bonus bDelayrate,-30;
+
+  # ------------------------------------------------------------------
+  # TRES PECAS PEDIDAS PARA AS LOJAS QUE O VENDOR NAO TEM - 2026-09-13
+  #
+  # Pedido do dono no mesmo dia da leva de trocas do Mercado
+  # Contemporaneo. Sao placeholders, nao overrides: o nosso rAthena nao
+  # conhece nenhum dos tres IDs, entao nao ha versao do db/re/ sendo
+  # atropelada. Ao atualizar o rathena/, conferir se eles ja chegaram -
+  # ate la a nossa entrada e a unica que existe.
+  #
+  # Os numeros e os bonus saem todos da descricao do bRO
+  # (`estado_item.py --id <n> --descricao`), que traz cada efeito por
+  # extenso. O molde de forma vem de um vizinho do vendor, como manda a
+  # nota da primeira leva la em cima.
+  # ------------------------------------------------------------------
+
+  - Id: 400019
+    # ELMO DE DETALE [1]. Nome do bRO; `_Guerra` no AegisName porque este
+    # nome e NOSSO e provisorio - o `identifiedResourceName` do bRO
+    # ("Magic_Helm") e o DESENHO, nao a identidade do item, e nao serve
+    # de AegisName (CLAUDE.md secao 5).
+    #
+    # Descricao do bRO, linha por linha:
+    #   HP max. +10%                          -> bMaxHPrate,10
+    #   Resist. Fogo e Agua +10%              -> bSubEle,Ele_Fire/Water
+    #   A cada refino: HP max. +1%            -> +.@r
+    #   A cada refino: Fogo e Agua +3%        -> +3*.@r
+    #   Refino +8: DEFM +15                   -> bMdef,15
+    #   Refino +8: habilita [Congelar] nv.10  -> skill "WZ_FROSTNOVA",10
+    #   Refino +10: DEFM +30 adicional        -> bMdef,30
+    #   Refino +10: 7% de autoconjurar
+    #     [Proteger Terreno] nv.5 ao receber
+    #     dano magico                         -> bAutoSpellWhenHit
+    #   DEF 30, DEFM 15, Peso 100, nivel 99
+    #
+    # OS DOIS NOMES DE HABILIDADE foram resolvidos no skillinfolist.lub
+    # deste cliente, que e a tabela que o JOGO le (CLAUDE.md secao 4.12),
+    # e nenhum dos dois e o palpite: "Congelar" e o WZ_FROSTNOVA (Frost
+    # Nova) e nao o MG_FROSTDIVER, que ali se chama "Rajada Congelante";
+    # "Proteger Terreno" e o SA_LANDPROTECTOR.
+    #
+    # DEFM 15 vira `bonus bMdef,15` porque e assim que o renewal expressa
+    # MDEF de equipamento - o mesmo que o vendor faz no Epitafio (450222).
+    #
+    # A forma do autoconjurar e copia do proprio vendor: o conjunto
+    # Carta Detale + aegis_311439 (db/re/item_combos.yml) usa
+    # `bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",<lv>,70,BF_MAGIC,0`,
+    # com a taxa em decimos de por cento (70 = 7%).
+    #
+    # View 1917 e o `ClassNum` que o bRO da a este ID. SE O CHAPEU NAO
+    # DESENHAR na cabeca, o caminho e o `estende_accessoryid.py` antes do
+    # `instala_visual.py` - ver o cabecalho do mercado_contemporaneo.txt.
+    AegisName: Detale_Helm_Guerra
+    Name: "Elmo de Detale"
+    Type: Armor
+    Weight: 1000
+    Defense: 30
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    View: 1917
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bMaxHPrate,10+.@r;
+      bonus2 bSubEle,Ele_Fire,10+(3*.@r);
+      bonus2 bSubEle,Ele_Water,10+(3*.@r);
+      if (.@r>=8) {
+         bonus bMdef,15;
+         skill "WZ_FROSTNOVA",10;
+      }
+      if (.@r>=10) {
+         bonus bMdef,30;
+         bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",5,70,BF_MAGIC,0;
+      }
+
+  - Id: 470320
+    # CANELEIRA FANTASMA [1]. Molde: a familia FANTASMA inteira do vendor
+    # (470293-470300, 470317/470318) - todos `Weight: 200`, sem
+    # `Defense`, nivel 170, refinavel, o mesmo tripe de abertura e o mesmo
+    # `bFixedCast,-500` no +10. Este e o irmao de Velocidade de ataque no
+    # +8 com corpo a corpo no +12; o 470300 (Salto Fantasma) tem o mesmo
+    # +8 e fecha em `bLongAtkRate` - sao pares, nao o mesmo item.
+    #
+    # O irmao SEM cova (470319) nao existe nem no vendor nem nesta loja,
+    # e por isso nao foi criado.
+    AegisName: Phantom_Greaves
+    Name: "Caneleira Fantasma"
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bMaxHPrate,7;
+      bonus bMaxSPrate,7;
+      if (.@r>=8)
+         bonus bAspdRate,10;
+      if (.@r>=10)
+         bonus bFixedCast,-500;
+      if (.@r>=12)
+         bonus bShortAtkRate,15;
+    # Conjunto [Aura Fantasma] espelhado em db/guerra/item_combos.yml, na
+    # versao de DESTREZA - que e a do 470299/470300, nao a de FOR do
+    # Sapato Fantasma. A descricao do bRO diz "SOR base 130 ou mais".
+    #
+    # TODO os outros conjuntos da descricao ([Agudo Filo], [Ceifo
+    #      Cruzado] e irmaos): o vendor nao conhece nenhuma daquelas
+    #      armas, entao nao ha o que espelhar. Mesma razao do 470321.
+
+  - Id: 470322
+    # SAPATO FANTASMA [1]. E o MESMO item do 470321, logo acima, com cova
+    # - e o par sem cova / com cova que a familia inteira repete
+    # (470293/470294, 470295/470296, ...). O `_` final no AegisName e a
+    # convencao do proprio rAthena para a versao com cova.
+    #
+    # Script copiado do 470321 sem uma virgula de diferenca, de proposito:
+    # a descricao do bRO dos dois e a mesma palavra por palavra. Se um dia
+    # um deles mudar, os dois mudam.
+    #
+    # O 470321 SAIU DA LOJA na mesma leva em que este entrou (2026-09-13,
+    # pedido do dono) - mas continua existindo no servidor, porque quem ja
+    # comprou fica com ele.
+    AegisName: Phantom_Shoes_
+    Name: "Sapato Fantasma"
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,5;
+      bonus bMaxHPrate,7;
+      bonus bMaxSPrate,7;
+      if (.@r>=8)
+         bonus bDelayrate,-10;
+      if (.@r>=10)
+         bonus bFixedCast,-500;
+      if (.@r>=12) {
+         bonus bVit,10;
+         bonus bInt,10;
+         bonus2 bAddClass,Class_All,15;
+      }
+    # Conjunto [Aura Fantasma] espelhado em db/guerra/item_combos.yml, na
+    # versao de FORCA - a mesma do 470321.
+    #
+    # TODO os QUATRO conjuntos de arma ([Bate-Estacas Motorizado], [Chave
+    #      Maxi], [Estal], [Injetor Acoplavel]), pela mesma razao do
+    #      470321: o vendor nao conhece nenhum deles.

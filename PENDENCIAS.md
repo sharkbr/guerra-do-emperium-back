@@ -4644,3 +4644,76 @@ outra:
 `Name:`, e o `nomes_pt_item_db.py` pula todo id daquele arquivo. O conserto é
 uma linha `Name:` em cada bloco — ou ensinar o script a pular só quem
 **declara** `Name:`, que resolveria os oito de uma vez e é a saída mais limpa.
+
+## 1al. A leva de 2026-09-13 — falta ver em jogo, o patch e o deploy
+
+Tres itens consertados, doze fora das lojas e dez dentro (ver `HISTORICO.md`).
+**Tudo escrito, o map-server local subiu limpo e o `valida_visual.py` da 0
+faltando nos treze** — o que falta e o que esta maquina nao alcanca sozinha.
+
+### 1) Ver em jogo (no cliente de DEV, `GuerraDoEmperium.exe`)
+
+O que vale a pena conferir, em ordem de risco:
+
+- **Escudo de Carvao (460046)**: abrir a janela de encaixe de carta com ele
+  equipado ou na mochila. Nao deve mais aceitar carta. Lembrar da §4.7 — a
+  conta de teste e grupo 99 e ignora travas de item, mas cova nao e trava, e
+  aqui ela nao existe mais.
+- **Luvas Militares (490183)**: cacar um pouco com [Isca Magica] nv.5 e nao ver
+  diamante nenhum. A ausencia e dificil de provar, entao o sinal mais barato e
+  o outro lado: o resto do item tem de continuar funcionando (VIT +7, os tres
+  bonus de habilidade).
+- **Epitafio (450222)**: os bonus mudaram de familia inteira. O que se ve na
+  janela de status e o `bAllStats,10` no +7 e a velocidade no +5.
+- **Elmo de Detale (400019)**: e chapeu de topo com View 1917, e View novo e o
+  que costuma falhar. **Se ele nao desenhar na cabeca**, o caminho e
+  `estende_accessoryid.py --id 400019 --grf <bRO>` e depois
+  `instala_visual.py` — a arte esta 8 de 8, entao o que faltaria seria a
+  entrada de tabela.
+- **Os quatro Selos (420210, 420213, 420220, 420269)**: equipar os quatro. Tres
+  deles ganharam View novo nesta rodada (2374, 2383 e 2448).
+- **Os quatro calcados Fantasma (470294, 470298, 470320, 470322)**: nome e
+  icone certos na loja, e o `[1]` no nome.
+
+### 2) O patch de cliente — montado nao, so conferido
+
+**Seis mudancas desta rodada moram em `C:\GuerraDoEmperium\cliente\` e nao vao
+pelo deploy** (§4.18). O ensaio ja foi rodado e sao **35 arquivos, 23,6 MB
+crus**: o `itemInfo.lua` (cinco entradas novas), o `accessoryid.lub` e o
+`accname.lub` (os tres View novos) e 32 arquivos de arte.
+
+O comando esta pronto, com as notas que a §4.24 exige:
+
+```
+python ferramentas/monta_patch.py --nome "Dez itens novos nas lojas de Prontera" \
+    --nota "Elmo de Detale [1]" \
+    --nota "Selo de Copas, Selo de Espadas, Selo de Ouros e Selo de Bastoes" \
+    --nota "Bota Fantasma [1], Sapatilha Fantasma [1], Caneleira Fantasma [1] e Sapato Fantasma [1]" \
+    --nota "Adereco da Celine [1]" \
+    --desde 2026-09-13
+ferramentas/publica_patch.sh
+```
+
+**Nao foi montado de proposito**: a receita §11 manda testar em jogo antes, e o
+numero de um patch nunca se reaproveita. O ensaio (`--verificar`) nao gastou o
+0027.
+
+**O que NAO precisa de patch, e vale saber**: o Escudo de Carvao. Ele foi o
+unico dos tres consertos em que o cliente ja estava certo — o
+`ajusta_covas_do_cliente.py --conferir` confirma as duas metades de acordo com
+zero byte gravado.
+
+### 3) O deploy
+
+Servidor: `db/guerra/item_db.yml`, `db/guerra/item_combos.yml`,
+`db/guerra/item_db_lojas.yml`, `db/re/item_db_equip.yml` (os nomes do
+`nomes_pt_item_db.py`) e `npc/guerra/mercado_contemporaneo.txt`. Sai do Mac,
+por `ferramentas/implanta.sh`.
+
+### 4) Uma decisao que ficou para o dono
+
+**O Broche da Celine (28572) continua no Acessorista com o conjunto pela
+metade.** O par dele e o Pingente (490482), que saiu nesta rodada; o Adereco
+(32237), que entrou, faz conjunto com outras cinco pecas e nenhuma delas e o
+Broche. As saidas sao tirar o Broche tambem, repor o Pingente, ou deixar como
+esta — nenhuma e consequencia de regra, e por isso nada foi feito.

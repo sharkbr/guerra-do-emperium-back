@@ -18466,3 +18466,152 @@ armadilha subiu para o `ARMADILHAS-AMBIENTE.md` e para a §5.
 tocado aqui: 6814–6819 (as seis Almas de classe), 13139 (Revólver de Oxum) e
 2979 (Morango Cristalizado). Estão em `PENDENCIAS.md` — mexer neles é decidir
 oito nomes, e não era o pedido.
+
+## Tres itens que mentiam, e uma troca de doze por dez nas lojas (2026-09-13)
+
+Pedido do dono em tres listas na mesma mensagem: **tres itens que "nao estao
+funcionando como deveriam"**, **doze para sair das lojas** e **dez para
+entrar**. As tres estao feitas. O que sobra de licao da rodada nao esta em
+nenhuma delas: e que os tres defeitos relatados eram tres familias diferentes
+de divergencia entre a tela e o servidor, e **a fonte da correcao foi a mesma
+nos tres** -- a descricao do bRO, que o `itemInfo.lua` deste cliente ja mostra
+ao jogador.
+
+### Os tres itens, e por que cada um mentia
+
+| item | o relato | o que era |
+|---|---|---|
+| Epitafio (450222) | *"esta com os bonus de outro servidor"* | o vendor tem outra revisao do item |
+| Escudo de Carvao (460046) | *"esta com Slot"* | metade da configuracao no cliente, pelo lado inverso |
+| Luvas Militares (490183) | *"dropando diamante de 2 quilates"* | efeito que a descricao nao promete |
+
+**O Epitafio e o caso do 400287 de novo.** O `db/re/` da resistencia e dano por
+RACA (Demonio, Humano, Doram) e um `bonus bDef,300` no refino +5; a descricao do
+bRO da dano por TAMANHO, resistencia a Humano/Doram no +5 e todos os atributos
+no +7. Mesmo ID, duas revisoes do mesmo item -- e entre trocar a descricao do
+cliente e trocar o efeito do servidor, trocar o servidor continua sendo o lado
+barato e o lado certo.
+
+**O Escudo de Carvao e a §4.9 pelo lado inverso, e o mais barato de todos.** O
+`itemInfo.lua` e o bRO dizem ZERO covas; so o nosso servidor dava uma. O nome na
+tela sai sem o `[1]`, a carta entra assim mesmo, e nada da erro. Como o cliente
+ja estava certo, **nao houve metade de cliente para acertar e nao houve patch**
+-- o `ajusta_covas_do_cliente.py --conferir` confirma as duas metades de acordo
+com zero byte gravado, e o 460046 entrou na lista `COVAS` justamente para que
+essa conferencia exista da proxima vez.
+
+Ele veio com mais tres numeros, e esses **nao estavam no pedido**. A medicao foi
+levada ao dono e a decisao foi dele, no mesmo dia: alinhar tudo com o bRO.
+
+| descricao na tela | vendor | agora |
+|---|---|---|
+| HP e SP max. por refino | 3% (`3*.@r`) | 1% (`.@r`) |
+| Sagrado/Fantasma +20% | refino +5 | refino +11 |
+| Nao pode ser empurrado | refino +7 | refino +13 |
+
+**As Luvas Militares eram dinheiro do nada.** Ao aprender [Isca Magica] nv.5 o
+vendor dava `bonus2 bAddMonsterDropItem,731,30` mais `,731,10` -- o 731 e o
+Diamante de 2 quilates. Sao 0,3% + 0,1% por monstro morto, o que numa sessao de
+caca vira zeny sem origem. A descricao do bRO nao traz esse efeito nem nenhum
+outro para aquela habilidade, e as outras cinco linhas do `Script:` batem com
+ela uma a uma -- entao o bloco inteiro do `NC_MAGICDECOY` saiu e nada mais
+mudou.
+
+Os tres sao override em `db/guerra/item_db.yml`, e os tres carregam `Name:`
+escrito, que e a contrapartida documentada de um item do vendor ganhar bloco ali
+(o `nomes_pt_item_db.py` pula o balde `nossos`). A rodada de rotina daquele
+script devolveu os tres nomes do `db/re/` ao ingles, como previsto -- e o nome
+que o jogo mostra continua em portugues porque o override vence na mesclagem.
+
+### As doze que sairam, e as tres que ja tinham saido
+
+| loja | saiu |
+|---|---|
+| Chapeleiro | [MEGA] Elmo de Fafnir (400177), Coroa do Garuda (18508) |
+| Ocleiro | Oculos (2204) |
+| Senhor das Armas | Jurupari (510146), Adaga dos Orcs (510147) |
+| Escudeiro | Coelho Macabro (28901) |
+| Sapateiro | Bota Fantasma (470293), Sapato Fantasma (470321) |
+| Acessorista | Pingente da Celine (490482) |
+
+**As tres Capas ja estavam fora desde 2026-09-06.** Capa do Vento (20734),
+Flamejante (20735) e Mistica (20745) sairam do Capeiro com a Grandiosa (20747)
+quando viraram preco da Maquina da Diversidade do Festival de Brasilis. Ficou
+uma nota no bloco do Capeiro dizendo isso, para que ninguem procure duas vezes.
+
+**O que sai e so a vitrine.** Os itens continuam existindo, quem ja comprou fica
+com eles, e o 470321 mantem a entrada em `db/guerra/item_db.yml`.
+
+### As dez que entraram -- e seis nao existiam de algum lado
+
+| loja | entrou | o que faltava |
+|---|---|---|
+| Chapeleiro | Elmo de Detale [1] (400019) | tudo: servidor e cliente |
+| Retoqueiro | Selo de Copas (420210) | nada |
+| Retoqueiro | Selo de Espadas (420213) | arte + View 2374 |
+| Retoqueiro | Selo de Ouros (420220) | arte + View 2383 |
+| Retoqueiro | Selo de Bastoes (420269) | arte + View 2448 |
+| Sapateiro | Bota Fantasma [1] (470294) | entrada de cliente |
+| Sapateiro | Sapatilha Fantasma [1] (470298) | entrada de cliente + arte |
+| Sapateiro | Caneleira Fantasma [1] (470320) | tudo, e mais arte |
+| Sapateiro | Sapato Fantasma [1] (470322) | servidor e cliente |
+| Acessorista | Adereco da Celine [1] (32237) | nada |
+
+**Tres pecas nao existiam no nosso rAthena** e ganharam entrada em
+`db/guerra/item_db.yml`, com os bonus tirados da descricao do bRO: o Elmo de
+Detale, a Caneleira Fantasma e o Sapato Fantasma [1]. Os dois calcados sao a
+familia FANTASMA do vendor (470293-470300, 470317/470318), que segue um molde
+rigido -- peso 200, sem DEF, nivel 170, o mesmo tripe de abertura e o mesmo
+`bFixedCast,-500` no +10 --, e o que muda de pe para pe sao os degraus do +8 e
+do +12.
+
+**Os dois calcados novos exigiram o conjunto [Aura Fantasma] espelhado**, em
+`db/guerra/item_combos.yml`, e **o atributo nao e o mesmo nos dois**: aquele
+conjunto tem tres versoes na familia, uma por atributo, e a descricao do bRO diz
+qual. O Sapato Fantasma e FOR (grupo do 470293), a Caneleira e DES (grupo do
+470299). Copiar o mesmo Script nos dois teria dado um conjunto que nunca fecha,
+sem erro nenhum.
+
+**O Elmo de Detale pos duas habilidades no caminho, e as duas sao armadilha de
+traducao.** A descricao promete *"Habilita [Congelar] nv.10"* e *"7% de
+autoconjurar [Proteger Terreno] nv.5"*. Pelo `skillinfolist.lub` deste cliente,
+que e a tabela que o jogo le (§4.12): **"Congelar" e o `WZ_FROSTNOVA`**, nao o
+`MG_FROSTDIVER` -- esse ali se chama "Rajada Congelante" --, e "Proteger
+Terreno" e o `SA_LANDPROTECTOR`. O palpite errava o primeiro.
+
+**Tres dos quatro Selos precisaram das duas ferramentas na ordem.** Os View
+2374, 2383 e 2448 nao existiam no `accessoryid.lub` de 2021, e sem a entrada de
+tabela nao ha arquivo que o cliente va procurar -- e o caso que o
+`instala_visual.py` sozinho nao cura. Primeiro `estende_accessoryid.py`, so
+depois `instala_visual.py`. Fecharam 8 de 8.
+
+**O pedido chamou dois Selos de outro jeito**: "Selo de Ouro" e "Selo de Paus".
+Os nomes que entraram sao os que o `itemInfo.lua` deste cliente desenha -- Selo
+de Ouros e Selo de Bastoes --, porque e por eles que o jogador vai procurar.
+
+### O conjunto que ficou pela metade, e e para saber
+
+O **Broche da Celine (28572)** continua no Acessorista, e o conjunto dele e com
+o **Pingente (490482)**, que acaba de sair. O espelho em
+`db/guerra/item_combos.yml` fica de pe, porque o item nao deixou de existir --
+mas as duas pecas nao estao mais a venda juntas. E o Adereco da Celine **nao
+ocupa o lugar do Pingente** nesse conjunto: os conjuntos dele sao outros cinco,
+e nenhum cita o Broche. Nada disso da erro; o jogador so ve um numero menor.
+
+### O que a rodada custou de conferencia
+
+As 23 lojas dos tres mercados ficaram com 1837 itens depois das trocas, e o
+`zera_revenda_das_lojas.py --conferir` diz OK (ninguem revende por mais do que
+custa), o `marca_indestrutiveis.py` nao mudou um byte (nenhum dos treze itens
+mexidos promete indestrutivel sem o bonus), o `valida_visual.py` da **0 faltando
+nos treze**, e o map-server local subiu sem uma linha de erro sobre nenhum deles.
+
+### A armadilha que esta rodada deixou escrita
+
+Editar linha de `shop` com script Python custou uma volta e virou entrada no
+`ARMADILHAS-AMBIENTE.md`: **`.txt` de NPC esta em CRLF**, e ler em `rb`, cortar
+por `\n` e juntar com `\n` deixa um `\r` no meio da linha assim que se mexe no
+conteudo dela -- quatro das nove linhas de `shop` sairam com o carriage return
+dentro da lista de itens. O que denuncia e o `git diff --stat`, e ele denuncia
+errado: uma mudanca de 88 linhas apareceu como 4137, o arquivo inteiro, porque
+com as quebras misturadas o git para de converter.
