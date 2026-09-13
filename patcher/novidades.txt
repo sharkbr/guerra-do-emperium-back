@@ -101,3 +101,9 @@
 
 [0026] 2026-09-12  Coroa da Fe Plena no Chapeleiro
 - Coroa da Fe Plena, no Chapeleiro (Prontera 151,173) - elmo de topo com uma cova: ATQM que cresce com o refino, e no +14 ainda SPL +15 e dano magico +30%
+
+[0027] 2026-09-13  Dez itens novos nas lojas de Prontera
+- Elmo de Detale [1]
+- Selo de Copas, Selo de Espadas, Selo de Ouros e Selo de Bastoes
+- Bota Fantasma [1], Sapatilha Fantasma [1], Caneleira Fantasma [1] e Sapato Fantasma [1]
+- Adereco da Celine [1]
