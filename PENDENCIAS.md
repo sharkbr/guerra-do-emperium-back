@@ -4703,12 +4703,26 @@ unico dos tres consertos em que o cliente ja estava certo — o
 `ajusta_covas_do_cliente.py --conferir` confirma as duas metades de acordo com
 zero byte gravado.
 
-### 3) O deploy
+### 3) O deploy — tentado daqui, e parado pelos dois motivos de sempre
 
 Servidor: `db/guerra/item_db.yml`, `db/guerra/item_combos.yml`,
 `db/guerra/item_db_lojas.yml`, `db/re/item_db_equip.yml` (os nomes do
-`nomes_pt_item_db.py`) e `npc/guerra/mercado_contemporaneo.txt`. Sai do Mac,
-por `ferramentas/implanta.sh`.
+`nomes_pt_item_db.py`) e `npc/guerra/mercado_contemporaneo.txt`. **Tudo
+commitado e no `main`** (`e484570` e `8c7d1cb`), entao no Mac e so
+`ferramentas/implanta.sh`.
+
+O `implanta.sh` foi chamado daqui em 2026-09-13 e parou **antes de tocar no
+servidor**, nos dois pontos que o `ARMADILHAS-INFRA.md` ja descreve:
+
+1. **o pre-voo reprovou 24 arquivos por `\r`** — falso positivo do Windows. Ele
+   mede o diretorio de trabalho, e com `* text=auto` o checkout daqui entrega
+   CRLF de proposito. O que o Linux recebe e o **indice**, e ele e LF: o
+   `git ls-files --eol` responde `i/lf w/crlf` para os 24. Conferido item a
+   item nesta rodada, inclusive no `mercado_contemporaneo.txt`.
+2. **e mesmo passando, a chave desta maquina e `ragnarok`, nao `root`** — ela
+   existe so para o `publica_patch.sh`. O deploy sai do Mac, com a chave de la.
+
+Nada foi enviado, e nenhum deploy parcial aconteceu.
 
 ### 4) Uma decisao que ficou para o dono
 
