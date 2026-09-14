@@ -67,7 +67,12 @@
 //= assim e foi seguido ao pe da letra; em 2026-08-04 o dono do
 //= projeto mandou o texto inteiro, que e o que esta aqui.
 //=
-//= Sao DUAS telas, separadas pelo `next`, como o pedido pediu.
+//= Sao TRES telas, separadas pelo `next`: as duas do pedido de
+//= 2026-08-04 e a dica de 2026-09-13, pedida pelo dono quando as
+//= cores novas foram para o estilista - e o gato quem avisa que
+//= o Edgard so tinge de graca as cores do bRO. A frase e um `mes`
+//= so, por paragrafo (CLAUDE.md 4.22): quem quebra a linha e o
+//= cliente.
 //============================================================
 prontera,172,199,4	script	Xanin	495,{
 	mes "[Xanin]";
@@ -78,6 +83,9 @@ prontera,172,199,4	script	Xanin	495,{
 	mes "[Xanin]";
 	mes "Mas ele cismou com essa máquina, e";
 	mes "jura que vai colocar pra funcionar!";
+	next;
+	mes "[Xanin]";
+	mes "O Edgard pinta de graça as roupas que tinham no bRO. Se quiser as cores novas, vai ter que ir no Estilista.";
 	close;
 }
 
@@ -100,28 +108,35 @@ prontera,172,199,4	script	Xanin	495,{
 //=   2a e 3a classes                    indices 0..3
 //=   4a classes e trajes alternativos   indices 0..7
 //=
-//= Ate 2026-09-13 o teto aqui era 3, o unico indice que TODA
-//= classe tinha. Desde entao as cores 4..15 sao NOSSAS, geradas
-//= por ferramentas/tinge_roupas.py para toda classe e sexo (343
-//= classes/sexos, uma palette de 1 KB cada) e gravadas em
-//= cliente\data\palette\ - ou seja, chegam ao jogador por PATCH
-//= (CLAUDE.md 4.18), nao pelo deploy. A ordem e a mesma para todo
-//= mundo: 4 vermelho, 5 laranja, 6 amarelo, 7 verde, 8 verde-agua,
-//= 9 azul, 10 roxo, 11 rosa, 12 marrom, 13 branco, 14 cinza, 15
-//= preto. As 4..7 da Gravity (classes base e 4a classes) foram
-//= sobrescritas de proposito, para "cor 6" ser amarelo em toda
-//= classe - o cabecalho da ferramenta explica a escolha.
+//= O TETO AQUI E 3 DE PROPOSITO, E NAO E O TETO DO SERVIDOR. Desde
+//= 2026-09-13 existem as cores 4..15, NOSSAS, geradas por
+//= ferramentas/tinge_roupas.py para toda classe e sexo (343
+//= classes/sexos, uma palette de 1 KB cada), e desde 2026-09-14
+//= elas moram no guerra.grf do cliente (ferramentas/monta_grf.py) -
+//= chegam ao jogador por PATCH (CLAUDE.md 4.18). A ordem e a mesma
+//= para todo mundo: 4 vermelho, 5 laranja, 6 amarelo, 7 verde, 8
+//= verde-agua, 9 azul, 10 roxo, 11 rosa, 12 marrom, 13 branco, 14
+//= cinza, 15 preto.
 //=
-//= O teto aqui NAO e a unica trava: o `pc_changelook` capa o
-//= valor em `max_cloth_color` SEM avisar, e o padrao do rAthena
-//= e 7. O override esta em conf/guerra/battle_guerra.txt (15) e
-//= os dois numeros andam juntos com o ULTIMO_INDICE da ferramenta.
+//= Decisao do dono em 2026-09-13/14, depois de ver as doze em jogo:
+//= o Edgard, que e de graca, fica com as 0..3 da Gravity; as doze
+//= novas sao VENDIDAS na janela do estilista (o `openstylist` dos
+//= NPCs do vendor, npc/re/merchants/Extended_Stylist.txt), pelo
+//= Cupom de Tintura, como as 2..7 ja eram. As duas metades disso
+//= estao em db/guerra/stylist.yml (servidor) e no stylingshopinfo.lub
+//= gerado por ferramentas/estende_estilista.py (cliente). O patch
+//= 0028 saiu com o teto 15 aqui; ninguem perde nada: cor que o
+//= jogador ja escolheu continua no personagem.
+//=
+//= O teto do servidor e OUTRO numero: o `pc_changelook` capa o
+//= valor em `max_cloth_color` SEM avisar, e o padrao do rAthena e
+//= 7. O override esta em conf/guerra/battle_guerra.txt (15), e ele
+//= tem de acompanhar o ULTIMO_INDICE da ferramenta - nao este teto.
 //= Indice sem palette NAO da erro - o cliente so desenha a cor
 //= padrao, e a conclusao errada e achar que o NPC falhou. Mesma
 //= armadilha do view id de NPC.
 //=
-//= Mudar o teto e trocar UM numero no OnInit, no fim do arquivo -
-//= depois de gerar as palettes e de subir o battle_guerra.txt.
+//= Mudar o teto e trocar UM numero no OnInit, no fim do arquivo.
 //=
 //= A PREVIA e o jeito de todo estilista de RO e tem um custo
 //= conhecido: `setlook` aplica na hora. Quem fechar a janela
@@ -191,15 +206,13 @@ prontera,170,199,4	script	Edgard	509,{
 	}
 
 OnInit:
-	// O maior indice de cor de roupa que TODA classe deste
-	// servidor tem palette para desenhar: 0..3 da Gravity mais
-	// 4..15 nossas (ferramentas/tinge_roupas.py). Ver a nota do
-	// cabecalho antes de mexer - e o max_cloth_color tem de
-	// acompanhar (conf/guerra/battle_guerra.txt).
+	// As cores DE GRACA: as 0..3 da Gravity, que toda classe tem.
+	// As 4..15 existem e sao vendidas no estilista (ver o
+	// cabecalho) - subir isto aqui as daria de graca.
 	//
 	// E variavel de NPC (`.`) e nao temporaria (`.@`): a `.@`
 	// morre com o fim do OnInit e o clique acharia zero.
-	.teto = 15;
+	.teto = 3;
 
 	// Arma a fome. Ver "A FOME" no cabecalho desta secao.
 	initnpctimer;

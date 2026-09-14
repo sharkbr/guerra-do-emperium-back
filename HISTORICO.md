@@ -18714,3 +18714,81 @@ Cliente: `cliente\data\palette\` → **patch 0028** (`Doze cores novas de roupa`
 e `npc/guerra/xanin_e_edgard.txt` → deploy. O acoplamento dos três números
 (`ULTIMO_INDICE` da ferramenta, `max_cloth_color`, `.teto` do Edgard) está no
 `ARQUITETURA.md` §4.
+
+---
+
+## As cores novas vão para a estilista, e o exe é quem cortava a lista (2026-09-14)
+
+Continuação da seção anterior, no dia seguinte, com o patch 0028 já em
+produção e o pessoal testando. Três pedidos do dono, nesta ordem, e o
+terceiro custou a noite: **(1)** as cores estavam "escancaradas" em roupa
+clara; **(2)** o preto virava borrão; **(3)** *"quero na estilista — o
+Edgard continua com as 3, a estilista tem todas"*. E, no fim, um quarto:
+branco, cinza e preto saem da venda e viram as **cores nobres**, para uma
+quest futura.
+
+### (1) e (2): o piso de saturação cai com a luz
+
+O "neon" do Feiticeiro (roupa quase branca na base) era um piso de
+saturação **único**, 0,55, aplicado a índice de brilho 0,90–1,00. A Gravity
+não faz assim: medido nas palettes oficiais, ela põe s ≈ 0,27–0,30 nos
+índices claros, 0,45–0,60 nos médios e 0,60–0,69 nas sombras. O piso virou
+uma reta pelo valor (0,72 na sombra → 0,27 na luz), e o resultado no
+Feiticeiro saiu a um índice de distância do oficial. O branco (v × 1,55)
+levava tudo acima de 0,65 a branco puro e apagava as linhas; o preto (v ×
+0,35) espremia a roupa inteira entre 0,12 e 0,35. Os dois viraram curvas
+(`v^0,6` para o branco, `0,5 · v^1,3` para o preto), que clareiam ou
+escurecem sem achatar. Aprovado em jogo pelo dono nas duas rodadas.
+
+### (3): três hipóteses erradas antes da certa
+
+A janela do estilista (`openstylist`, os NPCs do vendor) tem duas metades
+(§4.9): `db/re/stylist.yml` no servidor e `stylingshopinfo.lub` no cliente,
+listando as mesmas opções por **posição**. As duas ganharam as cores novas
+(`db/guerra/stylist.yml` por rodapé; `ferramentas/estende_estilista.py`
+reconstrói o `.lub` inteiro em texto a partir do bytecode) — e a janela
+seguiu oferecendo **3 cores** (0, 2, 3) para o Cavaleiro Rúnico.
+
+O que se tentou, e o que cada tentativa provou:
+
+- **"O cliente não lê a pasta `stylingshop\`"** — lê. Um arquivo inválido
+  no lugar derrubou a janela com caixa de erro de Lua. A sonda de preço que
+  eu usava (cor de cabelo a 12345z) era **ambígua**: o "100000Zeny" da
+  janela era o item no carrinho, não a entrada 1 — sonda que pode ser lida
+  de dois jeitos não é sonda.
+- **"A janela só habilita palette que existe num GRF"** — não. Um
+  `guerra.grf` nosso, registrado no `DATA.INI` (o exe tem `GRFsFromIni`),
+  com as 4116 palettes e uma sonda (a cor 2 do Rúnico tingida de azul):
+  a janela **desenhou** a cor 2 azul (o GRF vale e tem prioridade) e
+  continuou listando 3. Classe base também deu 3, e o GRF tem 0..4 para
+  ela — a contagem não era de arquivo.
+- **A certa: é o exe.** Com o `capstone` instalado no Python 2.7 e um
+  leitor de PE de vinte linhas, o código depois de
+  `StylingShop_GetSizeInTable` em `UIStylingShopWnd` faz `mov ecx, 3` /
+  `cmovne eax, ecx` quando a lista é `BodyPalette` ou `DoramBodyPalette` e
+  a classe **não** é de 4ª (a função `0x85bd10` devolve verdadeiro só para
+  os trabalhos 4252..4299 e 4302..4329). Dois pontos idênticos, `0xbf5f78`
+  e `0xbf61f8`, e nenhum outro. É a Gravity cortando em 3 de propósito — e
+  o motivo de o kRO nunca ter mostrado mais.
+
+`ferramentas/destrava_estilista.py` troca os 3 bytes do `cmovne` por `nop`
+nos dois pontos, por **padrão de bytes** (exige exatamente dois acertos) e
+com backup ao lado. Seis bytes no exe, e a janela passou a listar as 16 para
+qualquer classe. O `guerra.grf` foi removido em seguida: a janela desenha as
+palettes pelo mesmo caminho do Edgard, que lê a pasta `data\`. A ferramenta
+que o montava não foi commitada.
+
+### O que ficou
+
+- **Edgard**: `.teto = 3`, de graça; o Xanin avisa que as novas são na
+  estilista.
+- **Estilista**: 0, 2..12 (13 cores), Cupom de Tintura nas novas —
+  `db/guerra/stylist.yml` (Index 8..12) + `stylingshopinfo.lub` (8..12) +
+  exe destravado.
+- **Cores nobres**: 13 branco, 14 cinza, 15 preto existem como palette e
+  ninguém alcança — `PENDENCIAS.md`, "Quest das cores nobres".
+- **Patch 0029**: 4116 palettes recalibradas, a tabela do estilista e o
+  `GuerraDoEmperium.exe` destravado (4118 arquivos, 16,3 MB crus). O exe
+  vai por patch sem problema: o Atualizador extrai antes de abrir o jogo.
+- **Servidor**: `db/guerra/stylist.yml`, o rodapé do `db/re/stylist.yml`
+  e o Edgard → deploy, `@reloadscript`.

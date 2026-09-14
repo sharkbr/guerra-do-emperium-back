@@ -427,3 +427,10 @@ Body:
         Value: 1
         CostsHuman:
             RequiredItem: Costume_Ticket
+
+# Guerra do Emperium: as cores de roupa 8..15 (ferramentas/tinge_roupas.py).
+# O `parseImports` e do YamlDatabase, nao deste leitor - o mesmo caminho do
+# quest_db.yml. Merge por Look e por Index (StylistDatabase::parseBodyNode).
+Footer:
+  Imports:
+    - Path: db/guerra/stylist.yml

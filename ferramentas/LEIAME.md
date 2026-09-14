@@ -4616,12 +4616,26 @@ A **base** é a palette embutida no `.spr` (os 1024 bytes do fim), não a `_0.pa
 índices em 146 das 270 classes/sexos. Cada índice da máscara vira HSV; o script
 mede o matiz dominante da roupa (média circular, pesada por **área em pixels** ×
 saturação × valor — sem a área, a batina do Arcebispo perdia para um detalhe de
-dez pixels) e gira todos os índices pela mesma diferença até o alvo, com um piso
-de saturação de 0,55. Índice sem cor (saturação < 0,2) recebe o alvo direto.
-Branco, cinza, preto e marrom são multiplicadores de `s` e `v`. A lista `CORES`
-é a única coisa a editar para trocar ou acrescentar cor — e o `ULTIMO_INDICE`
-dela tem de bater com o `max_cloth_color` e com o `.teto` do Edgard
-(`ARQUITETURA.md` §4).
+dez pixels) e gira todos os índices pela mesma diferença até o alvo. Índice sem
+cor (saturação < 0,2) recebe o alvo direto.
+
+**O piso de saturação cai com a luz** (`piso_de_saturacao`: reta de 0,72 na
+sombra a 0,27 na luz). A primeira versão usava um piso único de 0,55, e em
+produção o Feiticeiro — quase branco na base — saiu neon: 0,55 de saturação num
+índice de brilho 0,95 é exatamente isso. Os números da reta são os da Gravity,
+medidos nas palettes oficiais (s ≈ 0,27–0,30 nos índices claros, 0,45–0,60 nos
+médios, 0,60–0,69 nas sombras).
+
+**Branco, cinza e preto são curvas de valor (`gama`), não multiplicadores.**
+Branco por `v × 1,55` levava tudo acima de 0,65 a branco puro e apagava as
+linhas; preto por `v × 0,35` espremia a roupa entre 0,12 e 0,35 e virava borrão.
+Hoje: branco `v^0,6`, preto `0,5 · v^1,3`, cinza segue multiplicador — os três
+mantêm a ordem dos tons, então sombra continua sombra.
+
+A lista `CORES` é a única coisa a editar para trocar ou acrescentar cor — e o
+`ULTIMO_INDICE` dela tem de bater com o `max_cloth_color`; quem **oferece** cada
+cor é outra história (`ARQUITETURA.md` §4): 0..3 no Edgard, 4..12 na estilista,
+13..15 são as cores nobres e ninguém oferece.
 
 ### As três armadilhas que o script já contorna
 
@@ -4648,3 +4662,80 @@ em PNG cru escrito pelo próprio script (o `_png` do `doura_arte.py`). O nome do
 arquivo é o coreano romanizado (`기사` → `gisa`), porque o coreano não sobrevive
 ao console. Planejar todas as classes lê e desenrola todo sprite de corpo do GRF
 e leva um minuto; com `--classe` o filtro corre antes.
+
+## `estende_estilista.py` — as cores novas na janela do estilista (metade do cliente)
+
+```
+python estende_estilista.py                    # o que a tabela do GRF tem
+python estende_estilista.py --aplicar          # grava o stylingshopinfo.lub em cliente\data\
+python estende_estilista.py --aplicar --ate 9  # só até a cor 9 (para isolar defeito)
+python estende_estilista.py --conferir         # o arquivo no disco tem as 8..12? (sai 1 se não)
+```
+
+A janela do estilista (`openstylist`, os NPCs de
+`npc/re/merchants/Extended_Stylist.txt`) é a §4.9 em estado puro: o servidor tem
+`db/re/stylist.yml`, o cliente tem
+`data\luafiles514\lua files\stylingshop\stylingshopinfo.lub`, e os dois listam
+as mesmas opções **por posição** — o cliente manda o índice (1-based) do que o
+jogador escolheu, e o servidor cobra o que estiver naquela posição do yml.
+
+O `.lub` do GRF é bytecode e define as listas por chamadas
+(`StylingShop.AddBodyPalette(<cor>, {itid=6046, boxitid=16854})`, cores 0, 2..7;
+`AddDoramBodyPalette` para Doram). O script desmonta com o `luadis.py`,
+**reconstrói o arquivo inteiro** em Lua de texto (87 chamadas, cabelo e
+acessórios incluídos, na mesma ordem) e acrescenta as cores 8..12 nas duas
+listas de corpo com o mesmo cupom das 2..7. Reconstruir inteiro é o que garante
+que o resto continua igual ao GRF; o `luac -p` do ROenglishRE prova que compila.
+
+**A lista sozinha não basta — é o exe.** Com a lista certa e as palettes no
+lugar, a janela oferecia 3 cores para toda classe que não fosse de 4ª. É o
+`destrava_estilista.py`, abaixo. E as cores 13..15 ficam fora de propósito
+(`CORES_NOVAS = range(8, 13)`): são as cores nobres.
+
+A metade do servidor é `db/guerra/stylist.yml`, escrita à mão e importada pelo
+rodapé de `db/re/stylist.yml` (o mesmo caminho do `quest_db.yml`; merge por
+Look e por Index). Recarrega com `@reloadscript` — o `npc_reload` chama
+`stylist_db.reload()`. O cliente só relê o `.lub` ao abrir.
+
+## `destrava_estilista.py` — a janela do estilista para de cortar a lista em 3
+
+```
+python destrava_estilista.py              # travado ou destravado?
+python destrava_estilista.py --aplicar    # patcheia (backup ao lado)
+python destrava_estilista.py --reverter
+```
+
+**O que o exe faz.** Em `UIStylingShopWnd`, logo depois de
+`StylingShop_GetSizeInTable`:
+
+```
+00bf61e5  mov    eax, [tamanho da lista]
+00bf61e8  mov    ecx, 3
+00bf61ed  cmp    byte [flag], 0    ; flag = lista é BodyPalette/DoramBodyPalette
+00bf61f8  cmovne eax, ecx          ;   E a classe NÃO é de 4ª  →  tamanho = 3
+```
+
+A função `0x85bd10` devolve verdadeiro só para os trabalhos 4252..4299 e
+4302..4329 (as 4ª classes). Para todo o resto a lista de cor de roupa vira 3
+entradas (0, 2, 3), seja o que for que o lua diga — é a Gravity cortando de
+propósito, e o motivo de o kRO nunca ter mostrado mais. O mesmo trecho existe
+**duas** vezes (`0xbf5f78` e `0xbf61f8`), e só nelas.
+
+**O patch:** os 3 bytes do `cmovne eax, ecx` (`0F 45 C1`) viram `nop` nos dois
+pontos. Seis bytes. O script procura o **padrão** de 20 bytes em volta e exige
+exatamente dois acertos — exe de outra versão dá zero ou outro número, e ele
+recusa. Backup em `GuerraDoEmperium.exe.antes-de-destrava_estilista`.
+
+**Como foi achado, para a próxima vez que o cliente fizer algo que nenhum
+arquivo explica:** `pip install capstone==4.0.2` no Python 2.7 (funciona), um
+leitor de PE de vinte linhas (seções, RVA↔offset, xrefs de `imm32` na `.text`,
+callers por `E8 rel32`), e partir das **strings** — os nomes das funções Lua
+que a janela chama (`StylingShop_GetSizeInTable`) e os formatos de caminho das
+palettes. O `mov ecx, 3` estava a doze instruções do primeiro xref. Três
+hipóteses de arquivo (pasta não lida, texto vs bytecode, palette só em GRF)
+custaram uma noite; o exe custou meia hora.
+
+O exe é a única peça do cliente sem gerador versionado (`REFERENCIA.md`,
+"Patches do NEMO"); este script é a receita **deste** patch, e o `.epi` do NEMO
+não sabe dele — exe regravado pelo NEMO volta travado, e o script diz. Só se
+grava com o cliente fechado (§5).

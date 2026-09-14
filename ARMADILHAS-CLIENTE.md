@@ -536,8 +536,11 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   tratar uma pasta nova como se já estivesse provada custa uma sessão
   inteira.** As pastas onde o override de `cliente\data\` comprovadamente vale
   hoje são `System\`, `data\luafiles514\lua files\datainfo\`, as de sprite e
-  textura, e desde 2026-09-13 `data\palette\` (as 4116 palettes de cor de
-  roupa, provadas em jogo pelo dono). Em 2026-08-26 a `data\luafiles514\lua files\effecttool\` foi usada
+  textura, desde 2026-09-13 `data\palette\` (as 4116 palettes de cor de
+  roupa, provadas em jogo pelo dono) e desde 2026-09-14
+  `data\luafiles514\lua files\stylingshop\` (um arquivo inválido ali
+  derruba a janela do estilista com caixa de erro de Lua — a prova mais
+  barata que existe de que a pasta é lida E usada). Em 2026-08-26 a `data\luafiles514\lua files\effecttool\` foi usada
   pela primeira vez — para pôr um emissor de partículas sob um NPC — e **quatro
   tentativas em jogo não desenharam nada**, incluindo uma que só clonava um
   emissor que já funcionava.
@@ -773,3 +776,40 @@ segundo mapa desempata. **Validar num mapa simétrico não valida nada.**
   o `APELIDO_SPRITE` do `ferramentas/tinge_roupas.py`, montada olhando a
   lista de sprites de corpo do nosso GRF — e é lá que se acrescenta quando
   uma classe nova chegar.
+
+- **A janela do estilista corta a lista de cor de roupa em 3 no EXE, para
+  toda classe que não seja de 4ª — nenhuma tabela, lua ou palette muda
+  isso.** Em `UIStylingShopWnd`, logo depois de `StylingShop_GetSizeInTable`,
+  há `mov ecx, 3` / `cmovne eax, ecx` quando a lista é `BodyPalette` ou
+  `DoramBodyPalette` e a função `0x85bd10` (trabalho em 4252..4299 ou
+  4302..4329) diz que a classe **não** é de 4ª. Dois pontos idênticos
+  (`0xbf5f78` e `0xbf61f8`). O sintoma: 3 cores (0, 2, 3) para o Cavaleiro
+  Rúnico **e** para classe base, com 7, 8 ou 15 entradas no
+  `stylingshopinfo.lub`, com as palettes soltas em `data\` e dentro de um
+  GRF — o número não seguia nada que se pudesse editar. Custou uma noite
+  (2026-09-13/14) e três hipóteses erradas até abrir o exe com o `capstone`
+  (instalado no Python 2.7 para isso). `ferramentas/destrava_estilista.py`
+  troca os 3 bytes por `nop` nos dois pontos, por padrão de bytes e com
+  backup.
+
+- **Sonda que pode ser lida de dois jeitos não prova nada, e "o cliente
+  abriu o arquivo" continua não sendo "usou".** Para saber se o
+  `stylingshopinfo.lub` solto era lido, a sonda foi "cor de cabelo 1 a
+  12345z" — e o "100000Zeny" que a janela mostrava era o **item no
+  carrinho**, não a entrada 1. Duas rodadas de cliente reaberto para
+  concluir, errado, que a pasta não era lida. O que decidiu foi um arquivo
+  **inválido** no lugar: caixa de erro de Lua, janela vazia. Sonda boa é a
+  que só tem uma leitura possível — e quebrar de propósito é a mais barata
+  delas.
+
+- **`GRFsFromIni` está aplicado e um segundo GRF no `DATA.INI` funciona
+  (`0=guerra.grf`, `1=data.grf`, o de índice menor vence) — mas o
+  `DataFolderFirst` continua por cima dos dois, e um GRF nosso não foi
+  preciso para nada até hoje.** Medido em 2026-09-14: o cliente abre o GRF
+  (o arquivo fica travado enquanto ele roda) e desenha a palette de lá (a
+  cor 2 do Rúnico saiu azul por uma sonda dentro do GRF). Foi tentado sob a
+  hipótese, errada, de que a estilista só via palette em GRF. O escritor de
+  GRF (46 bytes de cabeçalho, dados em zlib, tabela em zlib no fim, nomes em
+  CP949) ficou fora do repositório de propósito — se um dia uma pasta do
+  cliente recusar o override solto de verdade, é meio dia para refazer, e o
+  `grf.py` lê o resultado para conferir.

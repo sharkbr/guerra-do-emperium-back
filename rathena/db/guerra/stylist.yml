@@ -1,0 +1,96 @@
+###########################################################################
+# Guerra do Emperium - As cores de roupa 8..12 na janela do estilista
+###########################################################################
+#
+# Este arquivo e NOSSO. Ele e encadeado a partir do `Footer: Imports:` de
+# db/re/stylist.yml, que ganhou o bloco em 2026-09-13 - aquele arquivo nao
+# tinha rodape nenhum. E seguro pelo mesmo motivo do quest_db.yml: o
+# `parseImports` mora no YamlDatabase (src/common/database.cpp), nao no
+# leitor de estilista.
+#
+# O MERGE E POR LOOK E POR INDEX (StylistDatabase::parseBodyNode, em
+# src/map/npc.cpp): o `Clothes_Color` do vendor ja existe com os Index 1..7
+# (valores 0, 2..7), e este arquivo so ACRESCENTA os Index 8..12. Nao repete
+# os do vendor - repetir sobrescreveria campo por campo, sem erro.
+#
+# INDEX E A POSICAO NA LISTA DO CLIENTE, 1-BASED, e nao a cor. O cliente
+# desenha a lista dele (stylingshopinfo.lub, gerado por
+# ferramentas/estende_estilista.py) e manda a posicao do que o jogador
+# escolheu; o servidor procura a posicao aqui. As duas listas tem de ter a
+# MESMA ORDEM - e a 4.9 do CLAUDE.md, e a divergencia nao da erro: cobra o
+# cupom e entrega outra cor. No cliente a lista e 0, 2, 3, 4, 5, 6, 7, 8..12,
+# entao a cor 8 e a 8a posicao, e assim por diante ate a 12 na 12a.
+#
+# AS CORES EM SI sao palettes no cliente, geradas por
+# ferramentas/tinge_roupas.py (4 vermelho, 5 laranja, 6 amarelo, 7 verde,
+# 8 verde-agua, 9 azul, 10 roxo, 11 rosa, 12 marrom, 13 branco, 14 cinza,
+# 15 preto), soltas em cliente\data\palette\. As 4..7 ja estavam na lista
+# do vendor (Index 4..7) e por isso nao aparecem aqui. O `max_cloth_color`
+# (conf/guerra/battle_guerra.txt) tem de ser 15, ou o pc_changelook capa
+# calado.
+#
+# AS CORES 13, 14 E 15 (branco, cinza, preto) FICAM DE FORA DE PROPOSITO:
+# sao as "cores nobres", decisao do dono em 2026-09-14 - existem como
+# palette, mas so se conquistam por uma quest que ainda nao existe
+# (PENDENCIAS.md, "Quest das cores nobres"). Por isso este arquivo para no
+# Index 12, e o stylingshopinfo.lub do cliente tambem.
+#
+# E A LISTA SO APARECE COM O EXE DESTRAVADO: o cliente corta a lista de cor
+# de roupa em 3 para toda classe que nao seja de 4a, no exe, e nao em
+# tabela nenhuma - ferramentas/destrava_estilista.py tira o corte.
+#
+# O CUPOM e o mesmo das cores 2..7: Clothing_Dye_Coupon (6046, Cupom de
+# Tintura), com a caixa CCloth_Dye_Coupon_Box (16854) como alternativa -
+# o cliente lista os dois no stylingshopinfo.lub (itid/boxitid) e o
+# servidor cobra o que tiver.
+#
+# Recarrega com @reloadscript: o npc_reload chama stylist_db.reload().
+###########################################################################
+
+Header:
+  Type: STYLIST_DB
+  Version: 1
+
+Body:
+  - Look: Clothes_Color
+    Options:
+      - Index: 8
+        Value: 8
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 9
+        Value: 9
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 10
+        Value: 10
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 11
+        Value: 11
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 12
+        Value: 12
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box

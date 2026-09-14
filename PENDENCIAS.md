@@ -4734,33 +4734,44 @@ esta — nenhuma e consequencia de regra, e por isso nada foi feito.
 
 ---
 
-## 1am. As doze cores de roupa — o patch está no ar, falta o deploy (2026-09-13)
+## 1am. As cores de roupa — patches 0028 e 0029 no ar, falta o deploy (2026-09-14)
 
-O Edgard tinge em 16 cores (0..15) desde 2026-09-13, testado pelo dono em
-duas classes no DEV. O que está feito e o que falta, por destino (§0 do
-`RECEITAS.md`):
+Estado por destino (§0 do `RECEITAS.md`), depois das duas rodadas
+(`HISTORICO.md`, seções de 2026-09-13 e 2026-09-14):
 
 | o quê | onde mora | estado |
 |---|---|---|
-| 4116 palettes (`cliente\data\palette\`) | cliente | **patch 0028 publicado** — o jogador recebe ao abrir o `Jogar.exe` |
-| `max_cloth_color: 15` (`conf/guerra/battle_guerra.txt`) | servidor | commitado; **falta `implanta.sh` (Mac) + `@reloadbattleconf`** |
-| `.teto = 15` (`npc/guerra/xanin_e_edgard.txt`) | servidor | commitado; **falta `implanta.sh` (Mac) + `@reloadscript`** |
+| 4116 palettes (pastel), tabela do estilista, exe destravado | cliente | **patch 0029 publicado** |
+| `max_cloth_color: 15` | `conf/guerra/battle_guerra.txt` | commitado (ontem); **falta `implanta.sh` (Mac) + `@reloadbattleconf`** |
+| `db/guerra/stylist.yml` + rodapé em `db/re/stylist.yml` | servidor | commitado; **falta `implanta.sh` + `@reloadscript`** |
+| Edgard `.teto = 3` + dica do Xanin | `npc/guerra/xanin_e_edgard.txt` | commitado; **falta `implanta.sh` + `@reloadscript`** |
 
-**A ordem entre patch e deploy não importa, mas o estado intermediário tem
-cara de bug:** enquanto o servidor de produção estiver com o `max_cloth_color`
-velho, quem já baixou o patch vê o Edgard oferecer "de 0 a 3" — nada quebra.
-Se fosse o contrário (deploy antes do patch), o Edgard ofereceria 4..15 e o
-cliente sem palette desenharia a cor padrão — também não quebra, mas parece
-que "não pegou".
+**Os dois recarregadores são obrigatórios e são dois.** O `@reloadscript`
+recarrega o NPC **e** o `stylist_db` (o `npc_reload` chama os dois), mas não
+o `battle_guerra.txt`; sem o `@reloadbattleconf` o `pc_changelook` capa em 7
+calado — cor 8..12 sairia igual à 7.
 
-**Os dois recarregadores são obrigatórios e são dois.** O `@reloadscript` não
-recarrega o `battle_guerra.txt`; sem o `@reloadbattleconf` o `pc_changelook`
-capa em 7 calado e as cores 8..15 saem verdes (iguais à 7). Foi exatamente o
-sintoma do primeiro teste no DEV.
+**Enquanto o deploy não sai**, quem já baixou o 0029 vê a estilista listar
+13 cores e o servidor recusar as 8..12 (não existem no yml de produção):
+cobra nada, muda nada. O Edgard de produção ainda oferece 0..15 de graça
+(o script de lá é o do 0028) — é o único efeito colateral, e some no deploy.
 
-**Fica em aberto, sem prazo:** a cor de roupa por **montaria** segue a lógica
-da Gravity (a juba do leão do Guardião Real muda de cor junto com a roupa, como
-nas oficiais 2 e 3), e as seis classes/trajes que saíram por heurística
-(Renegado, e quatro `costume_1`) só foram conferidas na prévia PNG, não em
-jogo. Se algum jogador relatar cor estranha numa classe, o `--previa --classe`
-do `tinge_roupas.py` mostra o que foi gerado em segundos.
+## 1an. Quest das cores nobres — branco, cinza e preto (2026-09-14)
+
+Decisão do dono em 2026-09-14: as cores de roupa **13 (branco), 14 (cinza)
+e 15 (preto)** são as "cores nobres" e **não se compram** — vão ser
+conquistadas por uma quest que ainda não existe. As palettes já estão no
+cliente (patch 0028/0029), o `max_cloth_color` já é 15, e nada as oferece:
+o Edgard para na 3 e a estilista na 12 (`db/guerra/stylist.yml` e
+`ferramentas/estende_estilista.py`, `CORES_NOVAS = range(8, 13)`).
+
+O que a quest precisa entregar é só um `setlook LOOK_CLOTHES_COLOR, 13`
+(ou 14, 15) no fim — o resto é história. Duas ressalvas para quem escrever:
+- **a cor não é item**: quem tinge de outra cor depois (Edgard, estilista)
+  perde a nobre e não tem como voltar sozinho. A quest precisa decidir se
+  é conquista permanente (uma variável de personagem que um NPC consulta
+  para retingir de graça) ou um prêmio de uma vez;
+- a §4.21: o jogador precisa saber que conquistou — a cor aparece na hora
+  pelo `setlook`, então esse caso é o fácil.
+
+Falta o dono desenhar a quest. Sem prazo.

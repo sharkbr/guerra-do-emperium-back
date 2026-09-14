@@ -152,6 +152,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/guerra/refine.yml`, `db/guerra/refine_evento.yml` | **reiniciar o map-server** — não existe `@reloadrefinedb`. Vale também para ligar/desligar o Evento de Refino, que é comentar a linha `- Path: db/guerra/refine_evento.yml` no rodapé de `db/refine.yml` |
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
+| `db/guerra/stylist.yml` (o que a estilista vende) | `@reloadscript` — o `npc_reload` chama `stylist_db.reload()` (`src/map/npc.cpp:6127`). A outra metade é o `stylingshopinfo.lub` do cliente, que só entra com o cliente reaberto |
 | `db/guerra/status.yml` (efeito de status) | `@reloadstatusdb` — chama `status_readdb(true)` (`src/map/atcommand.cpp:4481`). **Não** exige reiniciar, e **não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/map_drops.yml` (drop de mapa) | `@reloadmobdb` — é ele que chama `mob_reload()`, que refaz o `map_drop_db` (`src/map/mob.cpp:7216`). **Não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/instance_db.yml` (nome de instância) | `@reloadinstancedb` — existe, e **não** exige reiniciar. O nome é chave: o `instance_create` resolve por string, então rodar este **antes** do `@reloadscript` quando os dois lados mudaram juntos |
@@ -705,7 +706,9 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 - O `ClassNum` de ARMA no `itemInfo.lua` não vem do `View:` do `item_db` — ele vive só do lado do cliente
 - Nome e descrição do MESMO bloco do `itemInfo.lua` podem estar em línguas diferentes, e a ferramenta que resolve cada metade é outra
 - `unidentifiedResourceName` TERMINA em `identifiedResourceName`, e um regex sem lookbehind casa com a linha errada
-- O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e tratar uma pasta nova como se já estivesse provada custa uma sessão inteira. Provadas: `System\`, `datainfo\`, sprite, textura e (2026-09-13) `data\palette\`
+- O `DataFolderFirst` está provado para ALGUMAS pastas, não para todas — e tratar uma pasta nova como se já estivesse provada custa uma sessão inteira. Provadas: `System\`, `datainfo\`, sprite, textura, `data\palette\` e `stylingshop\`. A prova mais barata é um arquivo INVÁLIDO no lugar: se a janela quebra, a pasta é lida e usada
+- A janela do estilista corta a lista de cor de roupa em 3 NO EXE para toda classe que não é de 4ª (`cmovne eax, ecx` depois de `GetSizeInTable`, em dois pontos) — nenhum lua, yml ou palette muda isso; é o `ferramentas/destrava_estilista.py`
+- Sonda que pode ser lida de dois jeitos não prova nada: o "100000Zeny" da janela do estilista era o item no carrinho, não a entrada testada — duas rodadas perdidas. Quebrar o arquivo de propósito é a sonda mais barata e a única sem segunda leitura
 - Dá para provar que o cliente ABRIU um arquivo, contornando a regra de uma hora do NTFS
 - O `EF_MAX` do rAthena NÃO é o teto de efeitos do cliente — é o do emulador, e ele está 900 efeitos atrasado
 - Antes de mexer no `effecttool` para pôr uma textura na tela, perguntar que EFEITO já a desenha

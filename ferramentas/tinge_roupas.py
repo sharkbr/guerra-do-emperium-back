@@ -46,12 +46,22 @@ Quando o sprite nao existe com nome nenhum, a `_0.pal` serve de base.
 
 COMO SE TINGE. Cada indice da mascara vira HSV. A cor-alvo diz o matiz
 dominante que a roupa deve ter; o script mede o matiz dominante da roupa
-original (media circular, pesada por saturacao x valor) e desloca TODOS os
-indices pela mesma diferenca - assim um detalhe que era de outro tom que o
-tecido continua de outro tom, so que girado junto. Saturacao e valor sao
-multiplicados, e e isso que faz o preto, o branco e o cinza. Roupa que ja e
-cinza (saturacao dominante abaixo de 0.2) nao tem matiz para deslocar: ai o
-alvo e absoluto e a saturacao ganha um piso.
+original (media circular, pesada por AREA em pixels x saturacao x valor)
+e desloca TODOS os indices pela mesma diferenca - assim um detalhe que era
+de outro tom que o tecido continua de outro tom, so que girado junto.
+Indice sem cor (saturacao < 0.2) recebe o alvo direto. A saturacao ganha
+um PISO QUE CAI COM A LUZ (reta de 0.72 na sombra a 0.27 na luz, medida nas
+palettes oficiais - ver `piso_de_saturacao`): piso unico deixava roupa
+clara em neon, e foi o que o dono viu em producao no Feiticeiro. Branco,
+cinza e preto sao curvas de valor (`gama`) e multiplicadores de saturacao;
+branco por multiplicacao apagava as linhas, preto por multiplicacao virava
+borrao - as duas primeiras versoes, corrigidas em 2026-09-13/14.
+
+QUEM ALCANCA CADA COR: 0..3 de graca no Edgard; 4..12 por Cupom de Tintura
+na janela do estilista (ferramentas/estende_estilista.py +
+db/guerra/stylist.yml, com o exe destravado por
+ferramentas/destrava_estilista.py); 13..15 (branco, cinza, preto) sao as
+"cores nobres" e por enquanto ninguem alcanca - quest futura.
 
 ONDE ENTRAM AS CORES NOVAS: a partir do indice 4, para TODA classe, e isso
 e uma decisao. A alternativa era comecar depois da ultima oficial de cada
@@ -168,9 +178,12 @@ CORES = [
     (10, 'roxo', dict(h=272)),
     (11, 'rosa', dict(h=325)),
     (12, 'marrom', dict(h=25, s=0.75, v=0.62)),
-    (13, 'branco', dict(s=0.12, v=1.55)),
+    (13, 'branco', dict(s=0.15, gama=0.6)),
     (14, 'cinza', dict(s=0.08, v=0.9)),
-    (15, 'preto', dict(s=0.25, v=0.35)),
+    # preto e carvao com desenho, nao borrao: v x 0.35 (a primeira versao)
+    # punha a roupa inteira entre 0.12 e 0.35 e as linhas sumiam. A curva
+    # leva o topo a 0.50 e a sombra a 0.12 - a faixa dobra
+    (15, 'preto', dict(s=0.3, gama=1.3, v=0.5)),
 ]
 PRIMEIRO_INDICE = CORES[0][0]
 ULTIMO_INDICE = CORES[-1][0]
@@ -180,7 +193,21 @@ ULTIMO_INDICE = CORES[-1][0]
 DIFERENCA_MAXIMA = 128
 RETOQUE_MAXIMO = 20
 SATURACAO_CINZA = 0.2
-PISO_SATURACAO = 0.55
+
+# O piso de saturacao DEPENDE DO VALOR, e e uma reta: sombra ganha mais
+# saturacao que luz. Medido nas palettes oficiais (2026-09-13, Cavaleiro,
+# Feiticeiro e Arcebispo na cor 2): a Gravity poe s~0.27-0.30 nos indices
+# de v 0.86-1.00, s~0.45-0.60 nos de v 0.55-0.75 e s~0.60-0.69 nos de v
+# 0.33. Um piso unico (0.55, a primeira versao) deixava a luz da roupa
+# clara em s 0.55 com v 0.9 - o "neon" que o dono relatou em producao no
+# Feiticeiro, que e quase branco na base. Com a reta, o mesmo indice fica
+# em s 0.30, que e onde a Gravity o poria.
+PISO_SOMBRA = 0.72     # s minima em v = 0
+PISO_LUZ = 0.27        # s minima em v = 1
+
+
+def piso_de_saturacao(v):
+    return PISO_SOMBRA - (PISO_SOMBRA - PISO_LUZ) * v
 
 
 # ---------------------------------------------------------------- fontes
@@ -421,9 +448,13 @@ def tinge(pal, m, alvo, area):
             # o piso vale para TODO indice da mascara, e nao so para os
             # cinzas: a batina do Arcebispo e lavanda a 0.21 de saturacao,
             # e girar o matiz de um tom desses nao muda nada na tela
-            s = max(s, alvo.get('smin', PISO_SATURACAO))
+            s = max(s, piso_de_saturacao(v))
         s = min(1.0, s * alvo.get('s', 1.0))
-        v = min(1.0, v * alvo.get('v', 1.0))
+        # `gama` curva o valor sem achatar: o branco da primeira versao era
+        # v x 1.55, que levava tudo acima de 0.65 para 1.0 e apagava as
+        # linhas da roupa. v ** 0.6 clareia (0.33 -> 0.51, 0.7 -> 0.81) e
+        # continua monotono, entao sombra segue sendo sombra.
+        v = min(1.0, v ** alvo.get('gama', 1.0) * alvo.get('v', 1.0))
         r, g, b = colorsys.hsv_to_rgb(h, s, v)
         nova[j] = (int(round(r * 255)), int(round(g * 255)), int(round(b * 255)), a)
     return nova

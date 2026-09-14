@@ -114,6 +114,13 @@ print '\n'.join(sorted(set(re.findall(r'[A-Za-z][A-Za-z0-9_]{4,40}', d))))"
 | `EnableShowName`, `EnableSysMenu`, `EnableWho`, `GuildBrackets`, `AllowSpaceInGName`, `Allow65kHairs`, `MediumCamAngle`, `PlainTextDesc`, `RestoreIcon` | interface e jogo |
 | `NoNagle`, `SendClientFlags`, `FixLatestNCWin`, `FixChatAt`, `NoHourly`, `NoHelpMsg`, `HideBuildInfo`, `NoSerialDisplay`, `NoGravityLogo`, `NoGravityAds` | rede, avisos e telas da Gravity |
 
+**E um patch que NÃO é do NEMO:** `ferramentas/destrava_estilista.py`
+(2026-09-14) troca 6 bytes — dois `cmovne eax, ecx` por `nop` — para a
+janela do estilista listar mais de 3 cores de roupa. É por padrão de bytes,
+com backup em `GuerraDoEmperium.exe.antes-de-destrava_estilista`, e o `.epi`
+não sabe dele: exe regravado pelo NEMO perde o patch, e o script diz se está
+travado ou não.
+
 **Duas ressalvas.** Os nomes saem de um binário, então a fronteira de cada um
 pode levar um byte de lixo junto (`Allow65kHairs4`, `EnableDnsSupportP`) — o
 nome real é o prefixo. E o `.epi` guarda **quais** patches, não com que

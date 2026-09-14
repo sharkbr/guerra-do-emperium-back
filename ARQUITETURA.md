@@ -700,23 +700,29 @@ jogador um item **sem nome**, sem erro em lugar nenhum (`CLAUDE.md` §4.18).
 Formato, ordem de publicação e o canal separado do próprio Atualizador estão em
 `patcher/LEIAME.md`; o passo a passo, em `RECEITAS.md` §11.
 
-### Uma cor de roupa vive em 3 lugares, e o mesmo número tem de estar nos três
+### Uma cor de roupa vive em 5 lugares, e a lista da estilista tem um sexto que é o exe
 
 | Onde | O quê | Quem escreve |
 |---|---|---|
 | `ferramentas/tinge_roupas.py` (`CORES`, `ULTIMO_INDICE`) | as palettes 4..15, geradas para `cliente\data\palette\` — **cliente, vai por patch** | a ferramenta (`--aplicar`) |
 | `conf/guerra/battle_guerra.txt` (`max_cloth_color`) | o teto que o `pc_changelook` aplica **calado** (`cap_value`) | a mão; `@reloadbattleconf` |
-| `npc/guerra/xanin_e_edgard.txt` (`.teto`) | até onde o Edgard oferece | a mão; `@reloadscript` |
+| `npc/guerra/xanin_e_edgard.txt` (`.teto`) | até onde o Edgard tinge **de graça** (3) | a mão; `@reloadscript` |
+| `db/guerra/stylist.yml` (Index 8..12) | o que a **estilista** cobra, por posição na lista do cliente | a mão; `@reloadscript` (o `npc_reload` recarrega o `stylist_db`) |
+| `stylingshopinfo.lub` em `cliente\data\...\stylingshop\` | a lista que a estilista **desenha**, na mesma ordem do yml — **cliente, patch** | `ferramentas/estende_estilista.py` (`CORES_NOVAS`) |
+| `GuerraDoEmperium.exe` (6 bytes) | o corte da lista em 3 para classe que não é de 4ª — **cliente, patch** | `ferramentas/destrava_estilista.py` |
 
-Os três divergindo **não dão erro**, e cada divergência tem uma cara:
-- teto do NPC acima do `max_cloth_color`: as cores acima do teto do servidor
-  saem **iguais à última permitida** (foi o "8..15 tudo verde" de 2026-09-13);
-- teto acima do que a ferramenta gerou: o cliente desenha a **cor padrão**
-  naqueles índices, e parece que o NPC não fez nada;
-- ferramenta gerou mais do que o NPC oferece: cor que existe e ninguém alcança.
+As divergências **não dão erro**, e cada uma tem uma cara:
+- teto do NPC ou Index do yml acima do `max_cloth_color`: a cor sai
+  **igual à última permitida** (foi o "8..15 tudo verde" de 2026-09-13);
+- yml ou lua acima do que a ferramenta gerou: o cliente desenha a **cor
+  padrão** naquele índice, e parece que não fez nada;
+- lua e yml em ordens diferentes: cobra o cupom e entrega **outra cor**;
+- exe travado: a estilista lista **3** cores, seja o que for que o lua diga.
 
-Acrescentar uma cor é: entrada nova em `CORES` → `--aplicar` → patch →
-`max_cloth_color` → `.teto` → deploy com os dois recarregadores.
+Hoje: 0..3 no Edgard, 4..12 na estilista, 13..15 (as nobres) em ninguém.
+Acrescentar uma cor comprável é: `CORES` → `--aplicar` → `CORES_NOVAS` +
+`--aplicar` → Index no yml → `max_cloth_color` se passar de 15 → patch +
+deploy com os dois recarregadores.
 
 ### Uma tabela nova do site vive em 2 lugares, e o segundo não é o deploy
 
