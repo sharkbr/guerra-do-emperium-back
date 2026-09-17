@@ -246,11 +246,20 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     fontes: `skillinfolist.lub` (habilidade), `itemInfo.lua` do nosso cliente
     (item), `data\mapnametable.txt` (mapa) e `db/guerra/mob_db.yml` (monstro,
     gerado do `navi_mob_br.lub` do bRO). A regra vale **nos dois sentidos**:
-    `Mind Blaster` fica em inglês na Torre do Demônio porque é assim que o
-    cliente o mostra, e `Explosive Powder` vira **Pó Explosivo** e não
-    "Pólvora" porque é assim que o `itemInfo.lua` chama o item 6213. Nome que
-    não está em tabela nenhuma **fica em inglês** — inventar nome de lugar é
-    o que a regra 3 proíbe (caso vivo: `Ash Vacuum`).
+    `Mind Blaster` ficou em inglês na Torre do Demônio enquanto o cliente o
+    mostrava assim — e virou **Explosão da Mente** no dia em que a tabela
+    virou (2026-09-16, patch 0030), nos seis lugares em que o Loki o diz.
+    `Explosive Powder` vira **Pó Explosivo** e não "Pólvora" porque é assim
+    que o `itemInfo.lua` chama o item 6213. Nome que não está em tabela
+    nenhuma **fica em inglês** — inventar nome de lugar é o que a regra 3
+    proíbe (caso vivo: `Ash Vacuum`).
+
+    **E quando a tabela muda, o diálogo tem de acompanhar.** Em 2026-09-16 a
+    lista de habilidades trocou 219 nomes de uma vez; a varredura dos `.cat`
+    (linhas `+`) e de `npc/guerra/*.txt` pelos nomes velhos achou só dois —
+    `Signum Crusis` e `Mind Blaster`. A busca é um laço de regex pelos pares
+    velho→novo; refazê-la a cada rodada do `traduz_ptbr.py skills` que mude
+    nome custa um comando e evita NPC falando nome que a janela não usa.
 
     Duas consequências que já custaram retrabalho:
     - **Nome de criatura se traduz**, mesmo que o bicho apareça em inglês na

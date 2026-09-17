@@ -18884,3 +18884,35 @@ não descreve (2 casos).
 Idempotente, `luac -p` OK, zero U+FFFD. Patch 0031, só o `skilldescript.lub`
 (0,97 MB crus, 0,16 MB no zip). A Garra de Tigre agora diz na dica o que o
 servidor faz.
+
+### E os nomes nos diálogos dos NPCs — dois, não duzentos
+
+*"agora os nomes nos diálogos dos NPCs"*. A varredura foi um laço de regex
+(fronteira de palavra) pelos 162 pares velho→novo que não são habilidade de
+monstro nem de GM, sobre as linhas `+` dos 30 `.cat` e sobre
+`npc/guerra/*.txt`. Deu **quatro** ocorrências, duas delas em comentário:
+
+- **Signum Crusis → Signum Crucis** — o Sacerdote-guia de Prontera, três
+  textos, em `cidades.cat` e no `glossario.cat` (os dois têm de mudar: o
+  glossário reespalha o velho no próximo `--preencher --forcar`);
+- **Mind Blaster → Explosão da Mente** — o Loki na Torre do Demônio, seis
+  textos em `demonio.cat`. Era o exemplo da §4.12 de nome que **fica** em
+  inglês porque o cliente o mostrava assim; a tabela virou, o diálogo
+  acompanhou, e a §4.12 foi reescrita para contar a história inteira;
+- `Sede de Sangue` no cabeçalho do `tranqueiras.txt` é o `SC_BLOODYLUST`,
+  que continua com esse nome — falso positivo do `HAMI_BLOODLUST`;
+- `Magma Eruption` no cabeçalho do `album_de_cartas_de_taro.txt` era um
+  comentário datado ("não existe em português no nosso cliente") —
+  atualizado.
+
+**Reaplicar um catálogo já aplicado é restaurar do `.INGLES` primeiro.** O
+`--aplicar` lê o arquivo vivo e só tolera a segunda passada quando o texto
+já é a tradução atual; com a tradução mudada ele recusa ("o original
+mudou"), o que é a trava funcionando. `cp x.INGLES x` + `--aplicar` deu um
+`git diff` de exatamente 9 linhas nos dois scripts. Os outros 160 nomes
+não aparecem em diálogo nenhum — os catálogos cobrem cidades, Kafra,
+serviços e instâncias, e as missões de classe que citam habilidade
+(`cassino_missoes.cat` tem "Grand Cross" três vezes) estão sem tradução,
+então ficam em inglês pelo caminho normal.
+
+Sai por **deploy** (`prontera.txt`, `DevilTower.txt`), e é `@reloadscript`.

@@ -104,12 +104,12 @@
 //=   pela estrutura ([SKID.X] = { SkillName = "Y" }) em vez de
 //=   pela vizinhanca das strings.
 //=
-//= DOIS NOMES NAO EXISTEM EM PORTUGUES NO NOSSO CLIENTE: o
-//= `CR_GRANDCROSS` aparece como "Grand Cross" e o
-//= `NC_MAGMA_ERUPTION` como "Magma Eruption" - o bRO os traduziu e
-//= este kRO de 2021 nao. Nao ha nada a consertar aqui: quem
-//= escreve o nome na tela e a janela de habilidades do cliente,
-//= nao este arquivo.
+//= DOIS NOMES NAO EXISTIAM EM PORTUGUES NO NOSSO CLIENTE ate
+//= 2026-09-16: o `CR_GRANDCROSS` aparecia como "Grand Cross" e o
+//= `NC_MAGMA_ERUPTION` como "Magma Eruption". O patch 0030 trouxe
+//= os nomes do bRO ("Crux Magnum", "Erupcao de Magma"). Nao havia
+//= nem ha nada a consertar aqui: quem escreve o nome na tela e a
+//= janela de habilidades do cliente, nao este arquivo.
 //===== OS 5% DE SP saem da DESCRICAO, nao do browiki =========
 //= A descricao do proprio item, no itemInfo.lua deste cliente e no
 //= iteminfo_new.lub do bRO, comeca assim:

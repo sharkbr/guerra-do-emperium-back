@@ -4779,14 +4779,12 @@ Falta o dono desenhar a quest. Sem prazo.
 ## 1ao. Habilidades — o que sobrou da varredura de nomes (2026-09-16)
 
 Os patches 0030 (nomes) e 0031 (descrições) levaram a tradução (ver
-`HISTORICO.md`, 2026-09-16). Ficaram duas coisas, em ordem de peso:
+`HISTORICO.md`, 2026-09-16). Ficou uma coisa, mais o deploy do item 2:
 
 1. ~~A descrição~~ — feito no mesmo dia, patch 0031 (`HISTORICO.md`).
-2. **Os 219 nomes novos ainda não chegaram ao diálogo dos NPCs.** O
-   `traduz_npcs.py` confere nome de habilidade contra o `skillinfolist.lub`
-   (§4.12), então catálogo que cite "Precisão" ou "Adestrar Falcão" está
-   agora discordando da janela. Varrer os `.cat` pelos 219 nomes velhos e
-   reaplicar com `--forcar`. Sai por deploy.
+2. ~~O diálogo dos NPCs~~ — feito no mesmo dia: só dois nomes apareciam
+   (`Signum Crusis`, `Mind Blaster`), corrigidos nos `.cat` e reaplicados;
+   falta o **deploy** (`HISTORICO.md`).
 3. **Relatório de números por habilidade** (o pedido de "funcionam da mesma
    forma"). O servidor do bRO não se lê; o que se lê é a tabela por nível
    da descrição do bRO (área, alcance, SP, nível máximo) contra o

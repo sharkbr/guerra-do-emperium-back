@@ -1695,7 +1695,7 @@
 + "Loki: *Sorri* Claro que sim!!"
 #: npc/re/instances/DevilTower.txt#983 (npctalk)
 - "Loki: Mind blaster-!!!"
-+ "Loki: Mind Blaster-!!!"
++ "Loki: Explosão da Mente-!!!"
 #: npc/re/instances/DevilTower.txt#985 (npctalk)
 - "Young Girl: No..!! Don't hurt my Papa!!!"
 + "Menina: Não..!! Não machuque o meu Papai!!!"
@@ -1779,10 +1779,10 @@
 + "[Loki]"
 #: npc/re/instances/DevilTower.txt#1020 (mes)
 - "^4d4dffThe ones who are infernally blessed by demons are invincible. We can sever the blessing with Mind Blaster.^000000"
-+ "^4d4dffOs que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster.^000000"
++ "^4d4dffOs que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com a Explosão da Mente.^000000"
 #: npc/re/instances/DevilTower.txt#1021 (npctalk)
 - "Loki: The ones who are infernally blessed by demons are invincible. We can sever the blessing with Mind Blaster."
-+ "Loki: Os que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster."
++ "Loki: Os que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com a Explosão da Mente."
 #: npc/re/instances/DevilTower.txt#1022 (npctalk)
 - "Loki#tnmloki02"
 + ""
@@ -1791,10 +1791,10 @@
 + "[Loki]"
 #: npc/re/instances/DevilTower.txt#1024 (mes)
 - "You will be in charge of activating Mind Blaster."
-+ "Você vai ficar encarregado de ativar o Mind Blaster."
++ "Você vai ficar encarregado de ativar a Explosão da Mente."
 #: npc/re/instances/DevilTower.txt#1025 (npctalk)
 - "Loki: You will be in charge of activating Mind Blaster."
-+ "Loki: Você vai ficar encarregado de ativar o Mind Blaster."
++ "Loki: Você vai ficar encarregado de ativar a Explosão da Mente."
 #: npc/re/instances/DevilTower.txt#1026 (npctalk)
 - "Loki#tnmloki02"
 + ""
@@ -1803,7 +1803,7 @@
 + "^4d4dffLoki, Cruz Justiceira do Sindicato dos Assassinos, entrou no seu grupo."
 #: npc/re/instances/DevilTower.txt#1029 (mes)
 - "We have to get rid of the demonic Lord Knight by Mind Blasting him with Loki's skill.^000000"
-+ "Nós temos que acabar com o Cavaleiro Sagrado demoníaco usando o Mind Blaster com a habilidade do Loki.^000000"
++ "Nós temos que acabar com o Cavaleiro Sagrado demoníaco usando a Explosão da Mente, a habilidade do Loki.^000000"
 #: npc/re/instances/DevilTower.txt#1030 (mapannounce)
 - "Demon Worshipper's Voice: Such rubbish! Where did you hide yourself?"
 + "Voz do Adorador de Demônios: Que baboseira! Onde você se escondeu?"

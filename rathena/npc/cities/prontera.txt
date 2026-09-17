@@ -629,7 +629,7 @@ prt_church,103,71,0	script	Henson#pront	120,{
 	mes "Tem alguma dúvida sobre habilidades de Noviço e Sacerdote?";
 	while(1) {
 		next;
-		switch(select("Sobre Proteção Divina:Sobre Flagelo do Mal:Sobre Diminuir Agilidade:Sobre Signum Crusis:Sobre Escudo Sagrado:Sobre Revelação:Sobre Teleporte:Encerrar conversa.")) {
+		switch(select("Sobre Proteção Divina:Sobre Flagelo do Mal:Sobre Diminuir Agilidade:Sobre Signum Crucis:Sobre Escudo Sagrado:Sobre Revelação:Sobre Teleporte:Encerrar conversa.")) {
 		case 1:
 			mes "[Henson]";
 			mes "Para aumentar permanentemente sua Defesa contra Mortos-Vivos, aprenda ^6666CCProteção Divina^000000.";
@@ -651,7 +651,7 @@ prt_church,103,71,0	script	Henson#pront	120,{
 			mes "Primeiro é preciso ^6666CCProteção Divina nível 3^000000 para aprender Flagelo do Mal. Tenha isso em mente.";
 			next;
 			mes "[Henson]";
-			mes "Com ^6666CCFlagelo do Mal nível 3^000000 você poderá aprender ^6666CCSignum Crusis^000000, que reduz a Defesa de Mortos-Vivos e de monstros de propriedade Sombria.";
+			mes "Com ^6666CCFlagelo do Mal nível 3^000000 você poderá aprender ^6666CCSignum Crucis^000000, que reduz a Defesa de Mortos-Vivos e de monstros de propriedade Sombria.";
 			continue;
 		case 3:
 			mes "[Henson]";
@@ -662,7 +662,7 @@ prt_church,103,71,0	script	Henson#pront	120,{
 			continue;
 		case 4:
 			mes "[Henson]";
-			mes "^6666CCSignum Crusis^000000 reduz a Defesa de monstros Mortos-Vivos ou Sombrios. Tem alcance largo e pode ser bem poderosa.";
+			mes "^6666CCSignum Crucis^000000 reduz a Defesa de monstros Mortos-Vivos ou Sombrios. Tem alcance largo e pode ser bem poderosa.";
 			next;
 			mes "[Henson]";
 			mes "Porém é difícil de usar e tem taxa de sucesso baixa. Não se desespere se nem sempre funcionar.";

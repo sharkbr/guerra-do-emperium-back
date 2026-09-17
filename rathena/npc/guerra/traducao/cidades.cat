@@ -1062,7 +1062,7 @@
 + "Tem alguma dúvida sobre habilidades de Noviço e Sacerdote?"
 #: npc/cities/prontera.txt#352 (select)
 - "About Divine Protection:About Demon Bane:About Decrease AGI:About Signum Crusis :About Pneuma:About Ruwach:About Teleport:End conversation."
-+ "Sobre Proteção Divina:Sobre Flagelo do Mal:Sobre Diminuir Agilidade:Sobre Signum Crusis:Sobre Escudo Sagrado:Sobre Revelação:Sobre Teleporte:Encerrar conversa."
++ "Sobre Proteção Divina:Sobre Flagelo do Mal:Sobre Diminuir Agilidade:Sobre Signum Crucis:Sobre Escudo Sagrado:Sobre Revelação:Sobre Teleporte:Encerrar conversa."
 #: npc/cities/prontera.txt#353 (mes)
 - "[Henson]"
 + "[Henson]"
@@ -1104,7 +1104,7 @@
 + "[Henson]"
 #: npc/cities/prontera.txt#366 (mes)
 - "When you learn ^6666CCLevel 3 Demon Bane^000000, you will be able to learn ^6666CCSignum Crusis^000000, which lowers the Defense of Undead monsters, as well as monsters with the Dark property."
-+ "Com ^6666CCFlagelo do Mal nível 3^000000 você poderá aprender ^6666CCSignum Crusis^000000, que reduz a Defesa de Mortos-Vivos e de monstros de propriedade Sombria."
++ "Com ^6666CCFlagelo do Mal nível 3^000000 você poderá aprender ^6666CCSignum Crucis^000000, que reduz a Defesa de Mortos-Vivos e de monstros de propriedade Sombria."
 #: npc/cities/prontera.txt#367 (mes)
 - "[Henson]"
 + "[Henson]"
@@ -1122,7 +1122,7 @@
 + "[Henson]"
 #: npc/cities/prontera.txt#372 (mes)
 - "The ^6666CCSignum Crusis^000000 skill lowers the Defense of monsters with the Undead or Dark properties. It has a wide range and can be quite powerful."
-+ "^6666CCSignum Crusis^000000 reduz a Defesa de monstros Mortos-Vivos ou Sombrios. Tem alcance largo e pode ser bem poderosa."
++ "^6666CCSignum Crucis^000000 reduz a Defesa de monstros Mortos-Vivos ou Sombrios. Tem alcance largo e pode ser bem poderosa."
 #: npc/cities/prontera.txt#373 (mes)
 - "[Henson]"
 + "[Henson]"

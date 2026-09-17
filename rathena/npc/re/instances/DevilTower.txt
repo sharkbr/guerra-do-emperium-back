@@ -1777,7 +1777,7 @@ OnTimer31000:
 	specialeffect EF_BEGINSPELL3,AREA, 'loki$;
 	end;
 OnTimer33000:
-	npctalk "Loki: Mind Blaster-!!!", 'loki$;
+	npctalk "Loki: Explosão da Mente-!!!", 'loki$;
 	end;
 OnTimer34000:
 	enablenpc instance_npcname("Young Girl#tnm04");
@@ -1852,17 +1852,17 @@ OnTimer55500:
 	npctalk "Loki: O Cavaleiro Sagrado não é mais humano. Eu tenho que mandá-lo para a eternidade.", instance_npcname("Loki#tnmloki02");
 	next;
 	mes "[Loki]";
-	mes "^4d4dffOs que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster.^000000";
-	npctalk "Loki: Os que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com o Mind Blaster.", instance_npcname("Loki#tnmloki02");
+	mes "^4d4dffOs que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com a Explosão da Mente.^000000";
+	npctalk "Loki: Os que são abençoados pelo inferno dos demônios são invencíveis. Nós podemos romper a bênção com a Explosão da Mente.", instance_npcname("Loki#tnmloki02");
 	next;
 	mes "[Loki]";
-	mes "Você vai ficar encarregado de ativar o Mind Blaster.";
-	npctalk "Loki: Você vai ficar encarregado de ativar o Mind Blaster.", instance_npcname("Loki#tnmloki02");
+	mes "Você vai ficar encarregado de ativar a Explosão da Mente.";
+	npctalk "Loki: Você vai ficar encarregado de ativar a Explosão da Mente.", instance_npcname("Loki#tnmloki02");
 	next;
 	if (is_party_leader() == true && 'devil_tower == 13) {
 		disablenpc instance_npcname("Loki#tnmloki02");
 		mes "^4d4dffLoki, Cruz Justiceira do Sindicato dos Assassinos, entrou no seu grupo.";
-		mes "Nós temos que acabar com o Cavaleiro Sagrado demoníaco usando o Mind Blaster com a habilidade do Loki.^000000";
+		mes "Nós temos que acabar com o Cavaleiro Sagrado demoníaco usando a Explosão da Mente, a habilidade do Loki.^000000";
 		'devil_tower = 14;
 		mercenary_create 2937,1800000;// M_LOKI
 		mapannounce 'map_tnm3$, "Voz do Adorador de Demônios: Que baboseira! Onde você se escondeu?", bc_map,0xFF00;
