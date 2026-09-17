@@ -117,3 +117,8 @@
 - O Edgard volta a tingir de graca so as quatro cores originais do bRO
 - As doze cores novas ficaram mais suaves (tom pastel, como as do bRO) e o preto voltou a mostrar as dobras da roupa
 - Branco, cinza e preto sao as cores nobres: existem, mas so serao conquistadas numa quest que ainda vem
+
+[0030] 2026-09-16  Duzentas habilidades com o nome do bRO
+- 215 habilidades passam a ter o nome que tem no bRO de hoje, na janela de habilidades e na dica: Escapar (era Escape), Olhos de Coruja (era Precisao), Cotovelada Ascendente, Crux Magnum, Chute Rasteiro, Temporal de Flechas, Adestrar Ave
+- Classes que estavam inteiras em ingles e ficam em portugues: Rebelde (Farta Fortuna, Salto Etereo, Execucao...), Estrela Solar e Lunar, Ceifador de Almas, Invocador (Mordida, Pulo do Gato, Balaio de Gato...) e os retornos de Eclage, Nifflheim, Prontera, Glast Heim e Thanatos
+- O titulo da dica de cada habilidade passa a ser o mesmo nome da janela - antes 74 discordavam entre si

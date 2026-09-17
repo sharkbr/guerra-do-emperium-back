@@ -18792,3 +18792,78 @@ que o montava não foi commitada.
   vai por patch sem problema: o Atualizador extrai antes de abrir o jogo.
 - **Servidor**: `db/guerra/stylist.yml`, o rodapé do `db/re/stylist.yml`
   e o Edgard → deploy, `@reloadscript`.
+
+## Duzentas habilidades ganham o nome do bRO, e a ferramenta deixa de ler o `.lua` velho (2026-09-16)
+
+O relato do dono foi *"Escapar de Renegado está como Scape, entre outras"*,
+com o pedido de varrer **todas** as habilidades e bater id com nome contra o
+bRO — em vez de bater uma a uma na mão.
+
+### A medição
+
+O `data.grf` do bRO instalado aqui (exe de 2026-02, ou seja, o bRO **de
+hoje**) tem o `skillinfolist.lub` com 1253 nomes. Lido pelo
+`ptbr.tabelas()` (0,1 s) e comparado ao `skillinfolist.lub` do nosso
+cliente, chave a chave (`SKID.X`) e id a id (`skillid.lub` dos dois lados):
+
+- 1559 habilidades no nosso cliente, 1253 com nome no bRO;
+- **1028 iguais, 219 diferentes**, 0 divergências de id numérico;
+- as 219 eram de duas naturezas: classes **inteiras** em inglês (Rebelde,
+  Estrela Solar/Lunar, Ceifador de Almas, Invocador, os retornos de
+  Eclage/Nifflheim/Prontera/Glast Heim/Thanatos, as `NPC_WIDE*` de
+  monstro) e nomes que o bRO **trocou** desde a versão que tínhamos
+  (Precisão → Olhos de Coruja, Adestrar Falcão → Adestrar Ave, Rasteira →
+  Chute Rasteiro, Temporal de Mil Flechas → Temporal de Flechas, Signum
+  Crusis → Crucis, Cotovelada Asc**e**dente → Ascendente).
+
+### A causa era uma só, e já estava na §5
+
+O `traduz_ptbr.py skills` lia o `skillinfolist.lua` do bRO — o texto puro —
+e esse arquivo está **velho**: 1062 nomes, e nem tem `SC_ESCAPE`. É a
+armadilha *"o bRO entrega o mesmo arquivo em `.lua` e em `.lub`, e o
+legível pode estar velho"*, medida em 2026-08-28 no `stateiconinfo` e
+**escrita depois** de a parte `skills` ter sido feita — ninguém voltou para
+conferir as partes antigas. A rodada dos três nomes de Shura (2026-09-08)
+já tinha esbarrado nisso e corrigido **à mão** nos dois arquivos, o que
+deixou uma bomba: a ferramenta, ao rodar de novo, **desfez** o título da
+dica do `SR_KNUCKLEARROW` ("Pancada Corporal" → "Investida de Shura") —
+foi o primeiro `+2 bytes` do `--verificar` desta rodada.
+
+### O conserto — `ferramentas/traduz_ptbr.py`, parte `skills`
+
+1. O nome sai do **`.lub`** (bytecode), pelo `ptbr.tabelas()`, como as
+   partes mais novas (`monstros`, `efeitos`) já faziam.
+2. **O título da dica é nome.** A primeira linha de cada bloco do
+   `skilldescript.lub` passa a vir do mesmo `.lub` — para os blocos que o
+   `.lua` velho conhece (o corpo continua vindo de lá) **e** para os que ele
+   não conhece (só o primeiro literal é trocado; `RE_TITULO`). Antes disto,
+   74 dicas discordavam da própria janela.
+3. Quatro nomes ficam de fora, com o motivo no código (`SKILLS_FORA`): os
+   `GM_ITEM_ATKMAX/ATKMIN/MATKMAX/MATKMIN` estão **trocados entre si** no
+   bRO. Erro deles, e jogador não os vê.
+
+Resultado: 1243 nomes importados (215 mudaram), 193 títulos de dica
+alinhados, os dois arquivos passam no `Tools\luac.exe -p`, a ferramenta é
+idempotente de novo, e a comparação refeita dá **4 diferentes** — os quatro
+GM excluídos de propósito.
+
+### O que foi publicado
+
+**Patch 0030** — os dois `.lub` de `skillinfoz` (1,34 MB crus, 0,22 MB no
+zip), com três notas no painel. Nada de servidor mudou: o nome de habilidade
+que o **NPC** fala vem dos catálogos do `traduz_npcs.py` (§4.12), que
+conferem contra o `skillinfolist.lub` — os 219 novos nomes ainda **não**
+foram reaplicados lá (`PENDENCIAS.md`).
+
+### E a Garra de Tigre não é bug
+
+O segundo relato — *"no bRO aparecia um target no mouse; aqui já é
+carregada e usada sem alvo"* — é o rebalanceamento de Shura de 2020 do
+kRO. O `skilldescript.lub` do bRO **de hoje** diz *"causa dano físico corpo
+a corpo na área com base no HP e SP máx. do usuário"*, e o rAthena faz
+exatamente isso (`db/re/skill_db.yml:25056`, `TargetType: Self` +
+`SplashArea`). O nosso servidor está igual ao bRO atual; o que o dono lembra
+é o bRO de antes de 2020. **O que está errado é a descrição no nosso
+cliente**, que ainda é a de alvo único — vem do `skilldescript.lua`, o mesmo
+arquivo velho. Isso vai junto com a troca da fonte da descrição, que ficou
+em aberto (`PENDENCIAS.md`).

@@ -842,12 +842,35 @@ def _blocos_por_skid(dados):
 
 RE_SKILLNAME = re.compile(r'(SkillName = )(\[\[.*?\]\]|"' + VALOR + r'")')
 
+# Nomes que NAO se importam do bRO, com o motivo. Sao os quatro comandos de GM
+# de item: no `.lub` do bRO os quatro rotulos estao trocados entre si
+# (`GM_ITEM_ATKMIN` = "Max Physical item attack rate", `GM_ITEM_MATKMAX` =
+# "Minimize Physical item attack rate"...). Erro deles; o nosso ingles pelo
+# menos diz o que cada um faz, e jogador nao os ve.
+SKILLS_FORA = set(['SKID.GM_ITEM_ATKMAX', 'SKID.GM_ITEM_ATKMIN',
+                   'SKID.GM_ITEM_MATKMAX', 'SKID.GM_ITEM_MATKMIN'])
+
+# O primeiro literal de um bloco de descricao - o titulo da dica.
+RE_TITULO = re.compile(r'\{\s*"([^"]*)"')
+
 
 def parte_skills(verificar):
     u"""Nome e descricao de habilidade.
 
-    O bRO guarda os dois em texto puro dentro do GRF (`.lua`, nao `.lub`), o
-    que evita desmontar bytecode aqui.
+    **O nome sai do `skillinfolist.lub` (bytecode), nao do `.lua`.** O bRO
+    entrega os dois no GRF, e o legivel esta VELHO: em 2026-09-16 o `.lua`
+    tinha 1062 nomes e o `.lub` 1253 - faltavam no `.lua` o Rebelde inteiro,
+    Estrela Solar/Lunar, Ceifador de Almas, Invocador e o `SC_ESCAPE`, que por
+    isso ficou "Escape" em vez de "Escapar", e 219 nomes ao todo estavam
+    diferentes do bRO atual (CLAUDE.md par. 5, "o legivel pode estar velho").
+    O `ptbr.tabelas()` desmonta o bytecode em 0,1 s, entao nao ha motivo para o
+    atalho do texto puro.
+
+    A descricao ainda vem do `skilldescript.lua`, pelo mesmo atalho - e esta
+    igualmente velha (987 das 1150 diferem do `.lub`, parte so formatacao,
+    parte mecanica: a Garra de Tigre do `.lua` ainda e a de alvo unico, de
+    antes do rebalanceamento de 2020). Trocar a fonte dela e o proximo passo
+    (PENDENCIAS.md).
 
     **Do `skillinfolist` so o `SkillName` e trocado.** O resto do bloco -
     MaxLv, SpAmount, AttackRange, `_NeedSkillList` - e estrutura, e a nossa e
@@ -865,14 +888,17 @@ def parte_skills(verificar):
     alvo = ptbr.caminho('skillnome')
     dados = le(alvo)
     fonte = ptbr.do_bro(r'data\luafiles514\lua files\skillinfoz'
-                        r'\skillinfolist.lua')
+                        r'\skillinfolist.lub')
+    tabela = ptbr.tabelas(fonte).get('SKILL_INFO_LIST')
+    if not tabela:
+        raise Erro('skillinfolist.lub do bRO nao definiu SKILL_INFO_LIST')
     nomes = {}
-    for chave, ini, fim in ptbr.blocos_lua(fonte):
-        if not chave.startswith('SKID.'):
+    for chave, bloco in tabela.items():
+        chave = str(chave)    # `Sym`: no bytecode a chave e GETGLOBAL SKID + campo
+        if not chave.startswith('SKID.') or chave in SKILLS_FORA:
             continue
-        m = RE_SKILLNAME.search(fonte[ini:fim])
-        if m:
-            nomes[chave] = m.group(2).strip('[]"')
+        if isinstance(bloco, dict) and bloco.get('SkillName'):
+            nomes[chave] = bloco['SkillName']
     print '    %d nomes de habilidade no bRO' % len(nomes)
 
     trocadas = 0
@@ -908,10 +934,21 @@ def parte_skills(verificar):
     print '    %d descricoes de habilidade no bRO' % len(descr)
 
     trocadas = 0
+    titulos = 0
     saida = []
     pos = 0
     for chave, ini, fim in ptbr.blocos_lua(dados):
         if chave not in descr:
+            # O `.lua` velho nao conhece esta habilidade (Rebelde, Estrela,
+            # Invocador...). O corpo fica como esta, mas o TITULO e nome e o
+            # `.lub` o tem: troca-se so o primeiro literal do bloco.
+            if chave in nomes:
+                m = RE_TITULO.search(dados, ini, fim)
+                if m and m.group(1) != aspas(pt(nomes[chave])):
+                    saida.append(dados[pos:m.start(1)])
+                    saida.append(aspas(pt(nomes[chave])))
+                    pos = m.end(1)
+                    titulos += 1
             continue
         # Reescreve so a lista de strings, mantendo a indentacao daqui.
         linhas = re.findall(r'"((?:[^"\\]|\\.)*)"|\[\[(.*?)\]\]',
@@ -919,6 +956,13 @@ def parte_skills(verificar):
         linhas = [a or b for a, b in linhas]
         if not linhas:
             continue
+        # A primeira linha do bloco e o TITULO da dica, e titulo e nome: sai
+        # do `.lub`, como a lista. Sem isto o `.lua` velho poe "Investida de
+        # Shura" em cima de uma habilidade que a lista chama "Pancada
+        # Corporal" - foi o que desfez, em 2026-09-16, a correcao a mao dos
+        # tres nomes de Shura (HISTORICO.md).
+        if chave in nomes:
+            linhas[0] = nomes[chave]
         corpo = ',\r\n'.join('\t\t"%s"' % aspas(pt(l)) for l in linhas)
         novo = '[%s] = {\r\n%s\r\n\t}' % (chave, corpo)
         saida.append(dados[pos:ini])
@@ -926,7 +970,7 @@ def parte_skills(verificar):
         pos = fim
         trocadas += 1
     saida.append(dados[pos:])
-    print '    %d descricoes traduzidas' % trocadas
+    print '    %d descricoes traduzidas, %d titulos avulsos' % (trocadas, titulos)
     confere_blocos(dados, ''.join(saida), 'skilldescript')
     mudou += grava(alvo, ''.join(saida), verificar, 'skilldesc')
     return mudou

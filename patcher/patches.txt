@@ -40,3 +40,4 @@
 0027	0027-dez-itens-novos-nas-lojas-de-prontera.zip	53edb48d1922682ad0ca7bc0574065d772c8e33d818330bbbeaecacce134a8da	2708652	Dez itens novos nas lojas de Prontera
 0028	0028-doze-cores-novas-de-roupa.zip	c90ae76c96f19f89a339e767f3d07ef107194d7872e69b7e2692dcfb1d5b0a6f	2880088	Doze cores novas de roupa
 0029	0029-as-cores-novas-vao-para-a-estilista.zip	e6803595c26590b526f87fd7b85f933d65d76f5c3bcb6d92f983a2046c3abe52	7266640	As cores novas vao para a estilista
+0030	0030-duzentas-habilidades-com-o-nome-do-bro.zip	9d513eb1d36029cbf708c7cb296760858fae97d250a521f0f95be279af4ffd15	233976	Duzentas habilidades com o nome do bRO

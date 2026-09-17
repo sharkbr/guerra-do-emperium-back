@@ -4775,3 +4775,33 @@ O que a quest precisa entregar é só um `setlook LOOK_CLOTHES_COLOR, 13`
   pelo `setlook`, então esse caso é o fácil.
 
 Falta o dono desenhar a quest. Sem prazo.
+
+## 1ao. Habilidades — o que sobrou da varredura de nomes (2026-09-16)
+
+O patch 0030 levou os nomes (ver `HISTORICO.md`, 2026-09-16). Ficaram três
+coisas, em ordem de peso:
+
+1. **A descrição ainda vem do `skilldescript.lua` velho do bRO.** Medido:
+   987 das 1150 diferem do `.lub` — parte é formatação (o bRO reescreveu a
+   tabela por nível, `Nível l Área l HP l SP`), parte é mecânica: a Garra de
+   Tigre ainda está descrita como alvo único, quando o servidor (e o bRO de
+   hoje) é área ao redor do usuário. A troca é mecânica — a parte `skills`
+   já lê o `.lub` para o nome; é apontar `descr` para o `.lub` também
+   (`ptbr.tabelas()` + `ptbr.lista()` por bloco). **É decisão do dono**,
+   porque muda a cara de todas as dicas de uma vez. Sai por patch.
+2. **Os 219 nomes novos ainda não chegaram ao diálogo dos NPCs.** O
+   `traduz_npcs.py` confere nome de habilidade contra o `skillinfolist.lub`
+   (§4.12), então catálogo que cite "Precisão" ou "Adestrar Falcão" está
+   agora discordando da janela. Varrer os `.cat` pelos 219 nomes velhos e
+   reaplicar com `--forcar`. Sai por deploy.
+3. **Relatório de números por habilidade** (o pedido de "funcionam da mesma
+   forma"). O servidor do bRO não se lê; o que se lê é a tabela por nível
+   da descrição do bRO (área, alcance, SP, nível máximo) contra o
+   `skill_db.yml`. Pega diferença de número, não de comportamento — modo de
+   mira (cursor vs. instantâneo vs. chão) mora no **exe** de cada cliente,
+   sem tabela, e o nosso exe é kRO 2021-11-03 enquanto o rAthena implementa
+   rebalanceamentos posteriores. Só a tela decide esses.
+
+E uma sobra menor: 22 títulos de dica discordam da janela **fora** do
+conjunto do bRO (4ª classe do ROenglishRE, `CR_ALCHEMY` "Alquimia" ×
+"Alchemy"). Não vieram do bRO, então a ferramenta não os toca; ficam.

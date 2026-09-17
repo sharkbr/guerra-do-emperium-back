@@ -39,7 +39,12 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   família do catálogo velho da §4.13: o arquivo abre, tem conteúdo, e o que
   falta nele não existe para quem o lê. **Quem manda é o `.lub`** — é ele que
   o cliente do bRO carrega. Contar as entradas dos dois antes de escolher
-  custa um comando.
+  custa um comando. **E a armadilha alcança para trás:** a parte `skills` do
+  `traduz_ptbr.py` foi escrita antes desta linha e ninguém voltou para
+  conferi-la — em 2026-09-16 o `skillinfolist.lua` tinha 1062 nomes contra
+  1253 do `.lub`, e 219 habilidades estavam com nome diferente do bRO
+  (o "Escape" do Renegado entre elas). Ao anotar uma armadilha de fonte,
+  varrer as partes antigas que leem a mesma fonte.
 
 - **`Tools\luac.exe -p` do ROenglishRE é o único jeito de provar que um `.lub`
   gerado compila.**
