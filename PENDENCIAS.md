@@ -4724,13 +4724,11 @@ servidor**, nos dois pontos que o `ARMADILHAS-INFRA.md` ja descreve:
 
 Nada foi enviado, e nenhum deploy parcial aconteceu.
 
-### 4) Uma decisao que ficou para o dono
+### 4) ~~Uma decisao que ficou para o dono~~ — resolvida em 2026-09-17
 
-**O Broche da Celine (28572) continua no Acessorista com o conjunto pela
-metade.** O par dele e o Pingente (490482), que saiu nesta rodada; o Adereco
-(32237), que entrou, faz conjunto com outras cinco pecas e nenhuma delas e o
-Broche. As saidas sao tirar o Broche tambem, repor o Pingente, ou deixar como
-esta — nenhuma e consequencia de regra, e por isso nada foi feito.
+O Pingente da Celine (490482) **voltou ao Acessorista** por pedido do dono,
+na leva de 2026-09-17 (`HISTORICO.md`), e o conjunto com o Broche (28572)
+volta a estar inteiro na mesma vitrine. Sai com o deploy da §1ap.
 
 ---
 
@@ -4796,3 +4794,38 @@ Os patches 0030 (nomes) e 0031 (descrições) levaram a tradução (ver
 E uma sobra menor: 22 títulos de dica discordam da janela **fora** do
 conjunto do bRO (4ª classe do ROenglishRE, `CR_ALCHEMY` "Alquimia" ×
 "Alchemy"). Não vieram do bRO, então a ferramenta não os toca; ficam.
+
+## 1ap. Sete itens nas lojas — patch 0032 no ar, falta o deploy e ver em jogo (2026-09-17)
+
+A leva dos dez (`HISTORICO.md`, 2026-09-17): sete entraram, três já estavam.
+Estado por destino (§0 do `RECEITAS.md`):
+
+| o quê | onde mora | estado |
+|---|---|---|
+| entrada do Chicote Vibrato no `itemInfo.lua` + 4 arquivos de arte | cliente | **patch 0032 publicado** |
+| 580069 e 18795 em `db/guerra/item_db.yml` | servidor | commitado; **falta `implanta.sh` (Mac) + `@reloaditemdb`** |
+| `db/guerra/item_db_lojas.yml` (o `Buy: 1` dos sete) | servidor | commitado; **falta `implanta.sh` + `@reloaditemdb`** |
+| as quatro linhas de `shop` do `mercado_contemporaneo.txt` | servidor | commitado; **falta `implanta.sh` + `@reloadscript`** |
+
+**Os dois recarregadores são obrigatórios, e nesta ordem:** `@reloaditemdb`
+antes do `@reloadscript`. Ao contrário, o `npc_parse_shop` descarta o 580069 e
+o 18795 da vitrine por não estarem no `item_db` em memória (`CLAUDE.md` §5),
+calado.
+
+**Enquanto o deploy não sai**, quem já baixou o 0032 não vê nada de diferente:
+os sete só existem na vitrine de produção depois do `@reloadscript`, e o
+Chicote Vibrato só existe no servidor depois do `@reloaditemdb`. É a
+assimetria segura — patch antes do deploy não quebra nada.
+
+### O que olhar em jogo (cliente de DEV, `GuerraDoEmperium.exe`)
+
+- **Chicote Vibrato (580069)** — o único que faltava dos três lados. Comprar
+  no Senhor das Armas, equipar numa Andarilha e ver o desenho na mão (o
+  recurso é `Woe_Whip2_Z`, o mesmo do bRO). O `[Investigar]` da descrição
+  virou `bDefRatioAtkClass`, o mesmo do Arame Farpado (1993): não há como
+  ver na tela, só no dano contra alvo de DEF alta.
+- **Boné com Asinhas (18795)** — o servidor não o conhecia; o cliente já
+  tinha tudo. Equipar e ver se a cabeça desenha (View 913).
+- **Viola (32108) e Banjo Negro (32107)** — são de Menestrel (`Gender:
+  Male` no vendor); a conta de teste do sexo errado não equipa, e isso é o
+  esperado, não defeito.

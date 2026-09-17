@@ -4568,3 +4568,103 @@ Body:
     # TODO os QUATRO conjuntos de arma ([Bate-Estacas Motorizado], [Chave
     #      Maxi], [Estal], [Injetor Acoplavel]), pela mesma razao do
     #      470321: o vendor nao conhece nenhum deles.
+
+  # ------------------------------------------------------------------
+  # DUAS PECAS PEDIDAS PARA AS LOJAS QUE O VENDOR NAO TEM - 2026-09-17
+  #
+  # Pedido do dono de dez itens para o Mercado Contemporaneo: oito ja
+  # existiam no vendor (tres deles ja estavam a venda), e estes dois nao
+  # existem em item_db nenhum. Placeholders, nao overrides - ao atualizar
+  # o rathena/, conferir se eles chegaram; ate la a nossa entrada e a
+  # unica que existe.
+  #
+  # Os numeros e os bonus saem da descricao do bRO
+  # (`estado_item.py --id <n> --descricao`), e o molde de forma de um
+  # vizinho do vendor, como nas levas anteriores.
+  # ------------------------------------------------------------------
+
+  - Id: 580069
+    # CHICOTE VIBRATO [1]. Molde: o Arame Farpado (1993), o chicote do
+    # vendor cuja descricao no cliente abre com as MESMAS duas frases -
+    # "Mantem [Investigar] ativo" e "Drena N de SP" -, e por isso serve de
+    # dicionario. Descricao do bRO, linha por linha:
+    #   Mantem [Investigar] ativo              -> bDefRatioAtkClass,Class_All
+    #   Ao atacar, drena 5 de SP do usuario    -> bSPDrainValue,-5
+    #   Recarga de [Temporal de Flechas] -2 s  -> bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000
+    #   ATQ 180, Peso 120 (=1200 aqui), nivel de arma 4, nivel 105
+    #   Classes: Musas e evolucoes             -> BardDancer + Female
+    #
+    # "[Investigar]" NAO E HABILIDADE deste cliente - nao esta no
+    # skillinfolist.lub. E o nome que o bRO da ao efeito da Picareta de
+    # Gelo e da Carta Thanatos (dano proporcional a DEF do alvo), e nos
+    # tres o vendor escreve `bDefRatioAtkClass,Class_All`. A forma da
+    # recarga e a do Arco das Tempestades (18123), do mesmo vendor.
+    #
+    # Sem `View`: arma nao leva View no item_db - o ClassNum mora so no
+    # itemInfo.lua (CLAUDE.md secao 5), e veio do bRO pelo
+    # completa_iteminfo.py junto com o nome e a descricao, porque o
+    # cliente tambem nao conhecia o ID.
+    AegisName: Vibrato_Whip_Guerra
+    Name: "Chicote Vibrato"
+    Type: Weapon
+    SubType: Whip
+    Weight: 1200
+    Attack: 180
+    Range: 2
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 105
+    Refineable: true
+    Script: |
+      bonus bDefRatioAtkClass,Class_All;
+      bonus bSPDrainValue,-5;
+      bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+
+  - Id: 18795
+    # BONE COM ASINHAS [1]. O cliente ja tinha a entrada em portugues
+    # (itemInfo.lua, View 913); so o servidor nao conhecia o ID - o vendor
+    # pula do 18793 para o 18796. Descricao do bRO, linha por linha:
+    #   FOR +1, SOR +2                          -> bStr,1 / bDex,2
+    #   Dano fisico a distancia +5%             -> bLongAtkRate,5
+    #   Refino +7: dano de [Temporal] +15%      -> bSkillAtk,"WM_SEVERE_RAINSTORM",15
+    #   Refino +9: recarga de [Temporal] -2 s   -> bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000
+    #   DEF 5, Peso 20 (=200 aqui), nivel 100
+    #   Classes: Musas                          -> BardDancer + Female
+    #
+    # "Musas" sem "e evolucoes" e a Andarilha de 3a classe. Ficou
+    # BardDancer + Female como o vendor faz nos irmaos, porque o nivel
+    # minimo 100 ja deixa a Dancarina e a Cigana de fora sozinho - a
+    # transcendente para no 99.
+    #
+    # Molde de forma: o Elmo de Detale (400019), logo acima. View 913 e
+    # o de tres chapeus do proprio vendor, entao a tabela de visual do
+    # cliente ja o conhece - nao precisou de estende_accessoryid.py.
+    AegisName: Wing_Beret_Guerra
+    Name: "Boné com Asinhas"
+    Type: Armor
+    Weight: 200
+    Defense: 5
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 913
+    Script: |
+      .@r = getrefine();
+      bonus bStr,1;
+      bonus bDex,2;
+      bonus bLongAtkRate,5;
+      if (.@r>=7)
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      if (.@r>=9)
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;

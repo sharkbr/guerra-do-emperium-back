@@ -18916,3 +18916,78 @@ serviços e instâncias, e as missões de classe que citam habilidade
 então ficam em inglês pelo caminho normal.
 
 Sai por **deploy** (`prontera.txt`, `DevilTower.txt`), e é `@reloadscript`.
+
+## Sete itens entram nas lojas de Prontera, e o Pingente da Celine volta (2026-09-17)
+
+Pedido do dono: dez itens para as lojas. O `estado_item.py` respondeu em uma
+passada o que cada um custava, e os dez se dividiram em três baldes:
+
+| balde | itens | o que custou |
+|---|---|---|
+| **já estavam à venda** | Sapatilha Fantasma (470298), Salto Fantasma (470300), Abafador de Tempestades (480064) | nada — os dois calçados entraram em 2026-09-13, a capa desde a primeira leva |
+| **prontos dos três lados, só faltava a linha** | Viola (32108), Banjo Negro (32107), Pingente da Celine (490482), Jaqueta do Orgulho (20969), Espólio dos Artistas (400117) | uma linha de `shop` cada |
+| **não existiam no `item_db`** | Boné com Asinhas (18795), Chicote Vibrato (580069) | entrada em `db/guerra/item_db.yml` a partir da descrição do bRO |
+
+Onde cada um entrou foi o `Locations:` que decidiu (§4.14): os três de
+mão no **Senhor das Armas** (56 → 59), os dois de cabeça no **Chapeleiro**
+(56 → 58), a capa no **Capeiro** (40 → 41) e o pingente no **Acessorista**
+(83 → 84). As quatro notas de rodada estão nos blocos de cada loja do
+`mercado_contemporaneo.txt`.
+
+### Os dois que o vendor não tinha
+
+**O Chicote Vibrato faltava dos três lados** — `item_db`, `itemInfo.lua` e
+arte — e é o único da leva que pede patch. A descrição do bRO abre com
+*"Mantém [Investigar] ativo"*, e **[Investigar] não é habilidade deste
+cliente**: não está no `skillinfolist.lub`. É o nome que o bRO dá ao efeito
+da Picareta de Gelo e da Carta Thanatos (dano proporcional à DEF do alvo). O
+dicionário foi o Arame Farpado (1993), o chicote do vendor cuja descrição no
+cliente abre com as mesmas duas frases, e cujo `Script:` é
+`bDefRatioAtkClass,Class_All` + `bSPDrainValue,-3`. Daí o Vibrato:
+`bDefRatioAtkClass`, `bSPDrainValue,-5` e a recarga de [Temporal de Flechas]
+na forma do Arco das Tempestades (18123). A entrada de cliente veio do bRO
+pelo `completa_iteminfo.py` e os quatro arquivos de arte (`Woe_Whip2_Z`)
+pelo `instala_visual.py`; `valida_visual.py` deu 0 faltando.
+
+**O Boné com Asinhas é o caso inverso do de sempre:** o cliente já o tinha,
+em português e com os 8 arquivos de arte (View 913, que três chapéus do
+vendor já usam), e o **servidor** não — o `item_db_equip.yml` pula do 18793
+para o 18796. Entrada criada a partir da descrição do bRO (FOR +1, SOR +2,
+dano a distância +5%, os dois degraus de [Temporal de Flechas] no +7 e no
++9). Como nada mudou no cliente, ele não pede patch.
+
+Os dois levam `_Guerra` no AegisName, como o Elmo de Detale: são placeholders
+para um ID que o vendor ainda não conhece, e o nome é nosso e provisório.
+
+### O Pingente volta, e uma decisão em aberto se fecha
+
+O Pingente da Celine (490482) tinha **saído** do Acessorista em 2026-09-13, a
+pedido, e deixou o Broche da Celine (28572) à venda com o conjunto pela
+metade — a §1al.4 do `PENDENCIAS.md` listava as três saídas e dizia que a
+decisão era do dono. A decisão veio quatro dias depois na forma do pedido:
+repor o Pingente. Nada mudou no item — a arte continua a do Broche, por
+escolha, e a linha `bonus bSpl,3` continua inerte neste cliente.
+
+### O que foi conferido, e o que não
+
+- `zera_revenda_das_lojas.py` regerou o `item_db_lojas.yml` (1837 → 1844
+  itens) e o `--conferir` diz OK: nenhum dos sete revende por mais que
+  custa.
+- `marca_indestrutiveis.py --conferir` continua nos mesmos 30 de antes;
+  nenhum dos sete promete "Indestrutível" na descrição.
+- `ajusta_covas_do_cliente.py --conferir`: cliente e servidor concordam.
+- O map-server local subiu com os dois arquivos e **sem uma linha** sobre
+  os IDs ou as lojas. (Os dois erros de `db/guerra/item_db.yml` que ele
+  imprime — *Whips are always female-only* na linha 964 e *Musical
+  instruments are always male-only* na 1328 — são de entradas antigas e
+  já saíam antes desta rodada.)
+- **Não visto em jogo.** O que olhar está na §1ap do `PENDENCIAS.md`.
+
+### O patch 0032
+
+Leva o `itemInfo.lua` e os quatro arquivos do Chicote Vibrato — cinco
+arquivos, 2,47 MB no zip — e as quatro notas do painel listam os sete que
+entraram, não só o que foi para o zip: o jogador procura o item na loja, não
+o arquivo (§4.24). Publicado no mesmo dia. O lado do servidor (os dois
+`item_db`, o `item_db_lojas.yml` e as quatro linhas de `shop`) espera o
+`implanta.sh` do Mac, com `@reloaditemdb` **antes** do `@reloadscript`.

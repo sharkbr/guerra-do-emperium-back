@@ -1594,6 +1594,8 @@ Body:
     Buy: 1                # C_Hair_Of_The_Strong
   - Id: 18742
     Buy: 1                # C_MoonStar_Accessory
+  - Id: 18795
+    Buy: 1                # Wing_Beret_Guerra
   - Id: 18849
     Buy: 1                # Celines_Ribbon
   - Id: 18853
@@ -1764,6 +1766,8 @@ Body:
     Buy: 1                # Anony_As_Muffler
   - Id: 20954
     Buy: 1                # Cancer_Manteau_J
+  - Id: 20969
+    Buy: 1                # Rainbow_Muffler_Jp
   - Id: 20970
     Buy: 1                # Libra_Manteau_J
   - Id: 20971
@@ -2488,6 +2492,10 @@ Body:
     Buy: 1                # Variant_Viollin
   - Id: 32106
     Buy: 1                # Variant_Blade_Whip
+  - Id: 32107
+    Buy: 1                # Black_Circle
+  - Id: 32108
+    Buy: 1                # Antique_Cello
   - Id: 32206
     Buy: 1                # Prta_Mil_Glove
   - Id: 32221
@@ -2664,6 +2672,8 @@ Body:
     Buy: 1                # Victory_Ear_JP
   - Id: 400114
     Buy: 1                # Victory_Ear_JP_
+  - Id: 400117
+    Buy: 1                # BioWeapon_Helm_WM
   - Id: 400131
     Buy: 1                # C_Diadem_Of_Bruenhild
   - Id: 400133
@@ -3686,6 +3696,8 @@ Body:
     Buy: 1                # Ring_Of_Storm
   - Id: 490451
     Buy: 1                # Colar_Rubi_BR
+  - Id: 490482
+    Buy: 1                # Cel_Design_Pendant
   - Id: 490497
     Buy: 1                # Somatology_Glove
   - Id: 500005
@@ -3710,6 +3722,8 @@ Body:
     Buy: 1                # Ancient_Royal_Scepter
   - Id: 570070
     Buy: 1                # Erhu_BR
+  - Id: 580069
+    Buy: 1                # Vibrato_Whip_Guerra
   - Id: 590014
     Buy: 1                # Meer_Sceptre
   - Id: 590041
