@@ -126,3 +126,9 @@
 [0031] 2026-09-16  As dicas de habilidade sao as do bRO de hoje
 - 999 descricoes de habilidade passam a ser as do bRO atual, com a tabela por nivel (area, alcance, HP/SP) e o nome em ingles em cinza ao lado do titulo
 - Dicas que descreviam a regra antiga foram corrigidas - a Garra de Tigre, por exemplo, e area ao redor do usuario baseada no HP e SP maximos, como o servidor ja fazia, e nao alvo unico
+
+[0032] 2026-09-17  Sete itens novos nas lojas de Prontera
+- Chicote Vibrato [1], Viola [2] e Banjo Negro [2] no Senhor das Armas
+- Bone com Asinhas [1] e Espolio dos Artistas [1] no Chapeleiro
+- Jaqueta do Orgulho no Capeiro
+- Pingente da Celine [1] de volta ao Acessorista

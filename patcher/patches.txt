@@ -42,3 +42,4 @@
 0029	0029-as-cores-novas-vao-para-a-estilista.zip	e6803595c26590b526f87fd7b85f933d65d76f5c3bcb6d92f983a2046c3abe52	7266640	As cores novas vao para a estilista
 0030	0030-duzentas-habilidades-com-o-nome-do-bro.zip	9d513eb1d36029cbf708c7cb296760858fae97d250a521f0f95be279af4ffd15	233976	Duzentas habilidades com o nome do bRO
 0031	0031-as-dicas-de-habilidade-sao-as-do-bro-de-.zip	0ba8dbd5a5d97b4ade82174cbe3bb59aef54877d27dae74e0eda62bf87b3ae46	169283	As dicas de habilidade sao as do bRO de hoje
+0032	0032-sete-itens-novos-nas-lojas-de-prontera.zip	0a4846d5c4b6dc07b59998af5732e8e6e23802ec0cc5a79e4e6090b6571bc4e0	2588616	Sete itens novos nas lojas de Prontera
