@@ -122,3 +122,7 @@
 - 215 habilidades passam a ter o nome que tem no bRO de hoje, na janela de habilidades e na dica: Escapar (era Escape), Olhos de Coruja (era Precisao), Cotovelada Ascendente, Crux Magnum, Chute Rasteiro, Temporal de Flechas, Adestrar Ave
 - Classes que estavam inteiras em ingles e ficam em portugues: Rebelde (Farta Fortuna, Salto Etereo, Execucao...), Estrela Solar e Lunar, Ceifador de Almas, Invocador (Mordida, Pulo do Gato, Balaio de Gato...) e os retornos de Eclage, Nifflheim, Prontera, Glast Heim e Thanatos
 - O titulo da dica de cada habilidade passa a ser o mesmo nome da janela - antes 74 discordavam entre si
+
+[0031] 2026-09-16  As dicas de habilidade sao as do bRO de hoje
+- 999 descricoes de habilidade passam a ser as do bRO atual, com a tabela por nivel (area, alcance, HP/SP) e o nome em ingles em cinza ao lado do titulo
+- Dicas que descreviam a regra antiga foram corrigidas - a Garra de Tigre, por exemplo, e area ao redor do usuario baseada no HP e SP maximos, como o servidor ja fazia, e nao alvo unico

@@ -866,11 +866,13 @@ def parte_skills(verificar):
     O `ptbr.tabelas()` desmonta o bytecode em 0,1 s, entao nao ha motivo para o
     atalho do texto puro.
 
-    A descricao ainda vem do `skilldescript.lua`, pelo mesmo atalho - e esta
-    igualmente velha (987 das 1150 diferem do `.lub`, parte so formatacao,
-    parte mecanica: a Garra de Tigre do `.lua` ainda e a de alvo unico, de
-    antes do rebalanceamento de 2020). Trocar a fonte dela e o proximo passo
-    (PENDENCIAS.md).
+    A descricao sai do `skilldescript.lub` pelo mesmo motivo (desde
+    2026-09-16, um patch depois do nome): o `.lua` velho tinha 1018 blocos
+    contra 1150, e 987 deles diferiam - parte formatacao (o bRO reescreveu a
+    tabela por nivel), parte MECANICA: a Garra de Tigre do `.lua` ainda era
+    a de alvo unico, de antes do rebalanceamento de 2020, e o servidor (e o
+    bRO de hoje) e a de area ao redor do usuario. Dica que descreve outra
+    regra e a familia da par. 4.19 do CLAUDE.md.
 
     **Do `skillinfolist` so o `SkillName` e trocado.** O resto do bloco -
     MaxLv, SpAmount, AttackRange, `_NeedSkillList` - e estrutura, e a nossa e
@@ -881,6 +883,10 @@ def parte_skills(verificar):
     desfaria esse recorte.
 
     Do `skilldescript` o bloco inteiro e trocado, porque ali **tudo** e texto.
+    O titulo (primeira linha) ja vem do `.lub` com o nome em portugues e o
+    ingles em cinza - `Escapar ^777777(Escape)^000000` -, igual ao bRO. Bloco
+    que o `.lub` traz VAZIO (146, `CR_ALCHEMY` entre eles) fica como esta,
+    e so o titulo dele segue o nome da lista.
     """
     mudou = 0
 
@@ -926,11 +932,18 @@ def parte_skills(verificar):
     alvo = ptbr.caminho('skilldesc')
     dados = le(alvo)
     fonte = ptbr.do_bro(r'data\luafiles514\lua files\skillinfoz'
-                        r'\skilldescript.lua')
+                        r'\skilldescript.lub')
+    tabela = ptbr.tabelas(fonte).get('SKILL_DESCRIPT')
+    if not tabela:
+        raise Erro('skilldescript.lub do bRO nao definiu SKILL_DESCRIPT')
     descr = {}
-    for chave, ini, fim in ptbr.blocos_lua(fonte):
-        if chave.startswith('SKID.'):
-            descr[chave] = fonte[ini:fim]
+    for chave, bloco in tabela.items():
+        chave = str(chave)
+        if not chave.startswith('SKID.') or chave in SKILLS_FORA:
+            continue
+        linhas = ptbr.lista(bloco)
+        if linhas:    # bloco vazio no bRO nao apaga o nosso
+            descr[chave] = linhas
     print '    %d descricoes de habilidade no bRO' % len(descr)
 
     trocadas = 0
@@ -939,9 +952,11 @@ def parte_skills(verificar):
     pos = 0
     for chave, ini, fim in ptbr.blocos_lua(dados):
         if chave not in descr:
-            # O `.lua` velho nao conhece esta habilidade (Rebelde, Estrela,
-            # Invocador...). O corpo fica como esta, mas o TITULO e nome e o
-            # `.lub` o tem: troca-se so o primeiro literal do bloco.
+            # O bRO nao descreve esta habilidade (ou descreve com um bloco
+            # vazio), mas tem o NOME dela: o corpo fica como esta e so o
+            # titulo - o primeiro literal do bloco - segue a lista. Sem isto
+            # a dica discorda da janela, que foi o caso de 74 habilidades ate
+            # 2026-09-16.
             if chave in nomes:
                 m = RE_TITULO.search(dados, ini, fim)
                 if m and m.group(1) != aspas(pt(nomes[chave])):
@@ -951,19 +966,7 @@ def parte_skills(verificar):
                     titulos += 1
             continue
         # Reescreve so a lista de strings, mantendo a indentacao daqui.
-        linhas = re.findall(r'"((?:[^"\\]|\\.)*)"|\[\[(.*?)\]\]',
-                            descr[chave], re.S)
-        linhas = [a or b for a, b in linhas]
-        if not linhas:
-            continue
-        # A primeira linha do bloco e o TITULO da dica, e titulo e nome: sai
-        # do `.lub`, como a lista. Sem isto o `.lua` velho poe "Investida de
-        # Shura" em cima de uma habilidade que a lista chama "Pancada
-        # Corporal" - foi o que desfez, em 2026-09-16, a correcao a mao dos
-        # tres nomes de Shura (HISTORICO.md).
-        if chave in nomes:
-            linhas[0] = nomes[chave]
-        corpo = ',\r\n'.join('\t\t"%s"' % aspas(pt(l)) for l in linhas)
+        corpo = ',\r\n'.join('\t\t"%s"' % aspas(pt(l)) for l in descr[chave])
         novo = '[%s] = {\r\n%s\r\n\t}' % (chave, corpo)
         saida.append(dados[pos:ini])
         saida.append(novo)

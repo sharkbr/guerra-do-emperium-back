@@ -18853,7 +18853,7 @@ GM excluídos de propósito.
 zip), com três notas no painel. Nada de servidor mudou: o nome de habilidade
 que o **NPC** fala vem dos catálogos do `traduz_npcs.py` (§4.12), que
 conferem contra o `skillinfolist.lub` — os 219 novos nomes ainda **não**
-foram reaplicados lá (`PENDENCIAS.md`).
+foram reaplicados lá (`PENDENCIAS.md` 1ao).
 
 ### E a Garra de Tigre não é bug
 
@@ -18864,6 +18864,23 @@ a corpo na área com base no HP e SP máx. do usuário"*, e o rAthena faz
 exatamente isso (`db/re/skill_db.yml:25056`, `TargetType: Self` +
 `SplashArea`). O nosso servidor está igual ao bRO atual; o que o dono lembra
 é o bRO de antes de 2020. **O que está errado é a descrição no nosso
-cliente**, que ainda é a de alvo único — vem do `skilldescript.lua`, o mesmo
-arquivo velho. Isso vai junto com a troca da fonte da descrição, que ficou
-em aberto (`PENDENCIAS.md`).
+cliente**, que ainda era a de alvo único — vinha do `skilldescript.lua`, o
+mesmo arquivo velho. Corrigido na mesma noite, abaixo.
+
+### As descrições, no mesmo dia — patch 0031
+
+*"agora vamos para as descrições também"*. A parte `skills` passou a ler o
+`skilldescript.lub` do bRO pelo `ptbr.tabelas()` — 1150 blocos, dos quais
+146 vêm **vazios** (`{}`, `CR_ALCHEMY` entre eles) e ficam como estão, e os
+4 GM excluídos; sobram 1000, e **999** casaram com blocos nossos. O bRO
+escreve o título com o inglês em cinza ao lado
+(`Escapar ^777777(Escape)^000000`) e a tabela por nível em colunas
+(`Nível l Área l HP l SP`), e é assim que entrou — verbatim, pelo acordo de
+2026-08-02. A sobreposição do título pela lista, que a rodada dos nomes
+tinha posto, saiu: título e corpo agora vêm do mesmo arquivo e concordam
+por construção; o caminho "só o título" continua para os blocos que o bRO
+não descreve (2 casos).
+
+Idempotente, `luac -p` OK, zero U+FFFD. Patch 0031, só o `skilldescript.lub`
+(0,97 MB crus, 0,16 MB no zip). A Garra de Tigre agora diz na dica o que o
+servidor faz.

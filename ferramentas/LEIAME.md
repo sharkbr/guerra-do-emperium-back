@@ -903,7 +903,7 @@ Nenhum texto é traduzido por nós — tudo é importado, cumprindo o ACORDO de
 | `msgstrid` | rótulo de janela e de botão | `msgstring_br.lub` (bytecode) |
 | `msgtable` | mensagem de sistema e de erro | `data\msgstringtable.txt` |
 | `itens` | nome e descrição de item | `System\iteminfo_new.lub` |
-| `skills` | nome e descrição de habilidade | `skillinfolist.lub` (bytecode — o `.lua` ao lado está velho), `skilldescript.lua` |
+| `skills` | nome e descrição de habilidade | `skillinfolist.lub`, `skilldescript.lub` (bytecode — os `.lua` ao lado estão velhos) |
 | `quests` | o **fallback** do texto de quest | `data\questid2display.txt` |
 | `questinfo` | a janela de missões | `System\OngoingQuestInfoList_True.lub` |
 | `questreco` | a aba RECOMENDADAS | `System\RecommendedQuestInfoList_True.lub` |
@@ -1385,7 +1385,9 @@ antes e depois — pega o caso em que uma entrada engole a seguinte.
   habilidades ficaram com nome diferente do bRO por seis semanas. O título da
   dica (primeira linha de cada bloco do `skilldescript`) também sai desse
   `.lub`, porque título é nome; é o que impede a dica de discordar da janela.
-  A descrição em si **ainda** vem do `.lua` velho (`PENDENCIAS.md` 1ao).
+  A descrição vem do `skilldescript.lub` desde a mesma noite (patch 0031):
+  1150 blocos, 146 vazios que não apagam o nosso, e o título já sai de lá
+  com o inglês em cinza ao lado — `Escapar ^777777(Escape)^000000`.
 
 ### `ptbr.py` — a base que ele usa
 
