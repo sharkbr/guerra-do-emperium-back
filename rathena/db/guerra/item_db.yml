@@ -4794,7 +4794,10 @@ Body:
   # mudar, a conta deixa de cair no limiar exato - e o item passa a dar
   # "quase" um grau, sem erro nenhum.
   #
-  # SEM HOMUNCULO O ITEM VOLTA PARA A MOCHILA. O
+  # SEM HOMUNCULO O ITEM VOLTA PARA A MOCHILA - e VALE COM ELE EM
+  # DESCANSO, porque o `hom_vaporize` so marca a bandeira e nao
+  # solta o `sd->hd` (src/map/homunculus.cpp:259). A recusa so sai
+  # para quem nunca teve homunculo nenhum. O
   # `buildin_addhomintimacy` sai calado quando nao ha `sd->hd`
   # (src/map/script.cpp:16033): o item era consumido e nada acontecia.
   # Nao da para cancelar o consumo de um `Usable` - o `pc_useitem`
@@ -4811,7 +4814,7 @@ Body:
     AegisName: Homun_F_Tablet
     Script: |
       if (gethominfo(0) == 0) {
-         dispbottom "Você precisa ter um homúnculo invocado para usar o Suplemento Alimentar.";
+         dispbottom "Você precisa ter um homúnculo para usar o Suplemento Alimentar.";
          getitem 100371,1;
          end;
       }
