@@ -184,6 +184,18 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   armadilha do heredoc: **gerar texto por arquivo de script**, escrito com a
   ferramenta de escrita, e não por `-c` de uma linha.
 
+  **E a crase não é o único caractere que escapa: o `>` também.** Em
+  2026-09-22, um comentário que citava `sd->hd` dentro do mesmo tipo de
+  `python -c "..."` fez o Bash ler o `>` como **redirecionamento** — o
+  trecho sumiu do texto gravado e **um arquivo vazio chamado `hd`
+  nasceu na raiz do repositório**, que entrou no `git add -A` seguinte
+  sem ninguém notar. O sintoma é o mesmo da crase (o "ok" final sai,
+  e só um `command not found` solto denuncia), mais um arquivo novo que
+  o `git status` mostra como se fosse trabalho. Ponteiro de C, seta de
+  método e comparação são justamente o que se escreve em comentário deste
+  projeto — mais um motivo para a regra acima valer sempre, e não só
+  quando o texto tem crase.
+
 - **`x += f()` em que `f` mexe em `x` perde o que `f` consumiu.** O `+=` guarda
   o `x` de antes de avaliar a direita. Num leitor de arquivo binário,
   `self.p += 4 * self._u32()` joga fora os 4 bytes gastos para ler o próprio

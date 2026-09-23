@@ -661,7 +661,7 @@ Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, fe
 - Nome de NPC pode ter ESPAÇO, e um `\S+` no lugar dele perde arquivo inteiro. Os campos de uma linha de NPC são separados por TAB
 - Há arquivo de nome COREANO dentro do cliente, e ele quebra o Python 2 de duas maneiras diferentes
 - `valida_visual.le_item_db` devolve uma LISTA CHATA com o item DUAS vezes, uma por arquivo — e nem a primeira nem a última é a resposta certa
-- Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está entre elas. Aspas duplas não protegem crase
+- Crase dentro de `python -c "..."` chamado pelo Bash EXECUTA o que está entre elas. Aspas duplas não protegem crase — e o `>` de um `sd->hd` vira REDIRECIONAMENTO, que come o trecho e cria um arquivo `hd` na raiz
 - `x += f()` em que `f` mexe em `x` perde o que `f` consumiu. O `+=` guarda o `x` de antes de avaliar a direita
 - No `.gitignore`, negar um arquivo dentro de pasta excluída NÃO tem efeito — e o `git status` não denuncia, porque o arquivo simplesmente continua…
 - Dois geradores que escrevem o MESMO arquivo se apagam em silêncio — o `db/import/mob_skill_db.txt` tem dois donos desde 2026-09-11, e monstro sem linha ali não conjura, sem erro nenhum
