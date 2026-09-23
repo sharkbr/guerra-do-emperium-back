@@ -18991,3 +18991,83 @@ entraram, não só o que foi para o zip: o jogador procura o item na loja, não
 o arquivo (§4.24). Publicado no mesmo dia. O lado do servidor (os dois
 `item_db`, o `item_db_lojas.yml` e as quatro linhas de `shop`) espera o
 `implanta.sh` do Mac, com `@reloaditemdb` **antes** do `@reloadscript`.
+
+
+## Sete relatos de um jogador, e os dois que a arte de item explicava (2026-09-22)
+
+Um jogador mandou sete coisas de uma vez. Duas viraram correção no mesmo dia,
+uma virou ferramenta nova, e quatro ficaram esperando decisão do dono — estão
+na §1aq do `PENDENCIAS.md`, com o que já foi medido de cada uma.
+
+### A Mitra do Florescer (400566) dava o "+10 em tudo" só no refino 9
+
+Relato: *"não está dando todos os atributos +10 quando está no +0, porém os
+atributos são implementados caso esteja refinado"*. É a família da §4.19 —
+a descrição promete e o `Script:` não entrega —, e desta vez a descrição
+estava certa. O `itemInfo.lua` diz, sem condição nenhuma:
+
+```
+^0000ffTodos os atributos +10.^000000
+```
+
+e o `Script:` do vendor punha o `bonus bAllStats,10` **dentro** do
+`if (.@r>=9)`.
+
+O override está em `db/guerra/item_db.yml` e **move** a linha para a base em
+vez de duplicá-la: deixar nos dois lugares empilharia para +20 no refino 9,
+que nem a descrição nem o vendor prometem. O resto do `Script:` é cópia byte a
+byte, porque o `parseBodyNode` substitui o campo inteiro.
+
+**Três divergências entre o vendor e a descrição do bRO ficaram como estão**,
+de propósito, e estão escritas no cabeçalho do bloco: `bSubRace` Humano/Doram
+13 aqui contra 10 lá, o `bSubClass` Normal/Chefe 20 que a descrição não cita, e
+os degraus de refino +7/+9 aqui contra +10/+12 lá. Todas a favor do jogador, e
+nenhuma é o que foi relatado — mexer nelas seria nerf que ninguém pediu.
+
+### A Fragrant Flowers derrubava o cliente porque não tem arte
+
+Relato: *"o jogo dá erro e crasha assim que tenta vender ou tenta mover"*. Não
+era o item 1001089 em si: o `identifiedResourceName` dele no `itemInfo.lua` é
+`화이트카네이션` ("cravo branco"), e **os quatro arquivos de arte não existem
+nem no nosso GRF nem no do bRO**. Item sem arte entrega caixa de erro modal
+(§4.4) — a novidade é que isso vale para item que o jogador só *carrega*, e
+não só para item de vitrine.
+
+A saída foi apontar o recurso para o `카네이션꽃다발` (buquê de cravos), que o
+cliente já tem completo. É substituição, não tradução: o bRO não tem este ID,
+então não há arte "certa" para trazer (§4.3). O nome fica em inglês pelo mesmo
+motivo.
+
+### A varredura que o relato obrigou, e a ferramenta que ela virou
+
+Se um item de drop podia derrubar o cliente, valia perguntar quantos mais.
+`ferramentas/varre_arte_de_item.py` é a resposta: cruza o `itemInfo.lua` do
+nosso cliente com os quatro caminhos de arte que valem para **qualquer** item
+— os mesmos do `valida_visual.Cliente.caminhos(res, None)` —, e filtra pelos
+que algum monstro larga ou alguma loja vende.
+
+Deu **35**. Três deles o bRO tinha inteiros e foram copiados na hora (Acarajé
+12375, Armadilha de Frutas 101331, Suco de Frutas 1000889); mais a flor, são
+quatro resolvidos. **Os 31 restantes estão na §1aq** — o bRO não tem o id de
+nenhum deles.
+
+O `valida_visual.py` não pegava isto porque só lê `item_db_equip.yml`: chapéu,
+arma e acessório. Etc e Usable nunca passaram por conferência de arte, e a
+caixa de erro não pergunta o tipo do item.
+
+**A ferramenta caiu na armadilha do `unidentifiedResourceName` na primeira
+versão** — aquele campo termina em `identifiedResourceName`, e um regex solto
+casa com a linha errada (§5). Como os dois campos são iguais na esmagadora
+maioria dos itens, o engano só apareceu em quem *diverge* — que é justamente o
+que a ferramenta existe para achar. A correção é ancorar no começo da linha.
+
+### O patch 0033
+
+Treze arquivos, 2,49 MB no zip: o `itemInfo.lua` e os doze de arte dos três
+itens do bRO. Publicado no mesmo dia. **Não foi visto em jogo** — o que sustenta
+é o `estado_item.py` dizendo "arte 4 de 4 ok" nos quatro, o `luac.exe -p`
+aprovando o `itemInfo.lua` e os `.spr` copiados serem versão 2.1, a mesma de
+7463 dos 7479 sprites de item que o cliente já traz.
+
+O lado do servidor — o override da Mitra — espera o `implanta.sh` do Mac e um
+`@reloaditemdb`.

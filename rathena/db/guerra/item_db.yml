@@ -4668,3 +4668,52 @@ Body:
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       if (.@r>=9)
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+
+
+  # ------------------------------------------------------------------
+  # OVERRIDE - Mitra do Florescer (400566): o "+10 em tudo" sai do refino
+  #
+  # Nao e item nosso, e correcao de campo. Relatado por jogador em
+  # 2026-09-22: "nao esta dando todos os atributos +10 quando esta no
+  # +0, porem os atributos sao implementados caso esteja refinado".
+  #
+  # E a familia da CLAUDE.md 4.19 - a descricao promete e o `Script:`
+  # do vendor nao entrega. A descricao que o jogador le vem do
+  # itemInfo.lua do cliente e diz, sem condicao nenhuma:
+  #
+  #   ^0000ffTodos os atributos +10.^000000
+  #
+  # O vendor punha esse `bonus bAllStats,10` DENTRO do `if (.@r>=9)`.
+  # Aqui ele volta para a base e SAI de la: deixar nos dois empilharia
+  # para +20 no refino 9, que nem a descricao nem o vendor prometem.
+  #
+  # O resto e copia byte a byte do vendor, porque o `parseBodyNode`
+  # SUBSTITUI o `Script:` inteiro em vez de acrescentar. Tres outras
+  # divergencias entre o vendor e a descricao do bRO ficaram como
+  # estao, de proposito - todas a favor do jogador e nenhuma e o que
+  # foi relatado:
+  #   - `bSubRace` Humano/Doram 13 aqui, 10 na descricao;
+  #   - `bSubClass` Normal/Chefe 20, que a descricao nao cita;
+  #   - degraus de refino +7/+9 aqui, +10/+12 na descricao.
+  # ------------------------------------------------------------------
+  - Id: 400566
+    AegisName: Awaking_Bloom
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,10;
+      bonus bMdef,10;
+      bonus2 bSubClass,Class_Normal,20;
+      bonus2 bSubClass,Class_Boss,20;
+      bonus2 bSubRace,RC_Player_Human,13;
+      bonus2 bSubRace,RC_Player_Doram,13;
+      bonus bDelayrate,-2*.@r;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_All,15;
+         bonus2 bMagicAddEle,Ele_All,15;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         if (.@r>=9) {
+            bonus2 bAddEle,Ele_All,25;
+            bonus2 bMagicAddEle,Ele_All,25;
+         }
+      }

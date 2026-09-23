@@ -132,3 +132,9 @@
 - Bone com Asinhas [1] e Espolio dos Artistas [1] no Chapeleiro
 - Jaqueta do Orgulho no Capeiro
 - Pingente da Celine [1] de volta ao Acessorista
+
+[0033] 2026-09-22  Quatro itens deixam de derrubar o cliente
+- Fragrant Flowers, a flor que cai dos Napeo no Laboratorio Abandonado: mover ou vender derrubava o jogo
+- Acaraje
+- Armadilha de Frutas
+- Suco de Frutas

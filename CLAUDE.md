@@ -709,6 +709,7 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 - Metade da configuração do cliente está no REGISTRO DO WINDOWS, e não no cliente. É a §4.9 um degrau adiante
 - O `Setup.exe` se recusa a abrir, com uma caixa "Message" VAZIA, se houver qualquer janela de Ragnarok — a de outro servidor inclusive, e escondida ou pendurada conta. E a janela do NOSSO cliente se chama `GuerraDoEmperium`, nas duas pontas
 - A censura de palavrão do jogo é do CLIENTE, e mora em `data\manner.txt` dentro do GRF — não no rAthena e não no exe
+- Item que só CAI de monstro derruba o cliente igual a item de vitrine, e o `valida_visual.py` não o alcança: ele só lê `item_db_equip.yml`. Arrastar, vender ou largar Etc sem arte dá caixa de erro — a varredura é o `ferramentas/varre_arte_de_item.py`
 - "Unknown Item" com sprite de maçã NUNCA é problema de servidor — e a pergunta que resolve é *quais* itens, não *por que aquele item*
 - O `identifiedResourceName` do bRO é o DESENHO, não a identidade do item — e dois itens diferentes o compartilham
 - Gerador de entrada de cliente pode ter campo ZERO FIXO, e por seis itens seguidos isso pode estar certo

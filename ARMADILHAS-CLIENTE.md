@@ -453,6 +453,26 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   duas: cliente aberto **antes** de o arquivo mudar (§3 — só se lê na
   inicialização), ou o patch não chegou à máquina do jogador (§4.18).
 
+- **Item que só CAI de monstro derruba o cliente igual a item de vitrine — e
+  nenhuma conferência nossa olhava para ele.** A §4.4 ("validar arte antes de
+  pôr item na loja") nasceu de vitrine, e o `valida_visual.py` só lê
+  `item_db_equip.yml`: chapéu, arma e acessório. Etc e Usable nunca passaram
+  por conferência nenhuma. Mas a caixa de erro não pergunta o tipo do item nem
+  de onde ele veio — ela sai quando o cliente abre um arquivo que não existe, e
+  basta o jogador **arrastar, vender ou largar** o que está na mochila.
+  Chegou em 2026-09-22 como *"o jogo dá erro e crasha assim que tenta vender ou
+  tenta mover"*, sobre a **Fragrant Flowers (1001089)**, que cai do Napeo em
+  `amicitia2`. O `identifiedResourceName` dela é `화이트카네이션` ("cravo branco"),
+  e os **quatro** arquivos de arte não existem nem no nosso GRF nem no do bRO.
+  A varredura que o relato obrigou achou **35** itens obteníveis na mesma
+  situação — a ferramenta é o `ferramentas/varre_arte_de_item.py`, e ela é o
+  que impede a próxima vez. **Sinal de dívida barato: `resourceName` em ASCII
+  que parece um AegisName** (`Hot_Water_Drop_Gem`, `Fruits_Set_Trap`) — é marca
+  de entrada gerada pelo `completa_iteminfo.py` sobre id que o bRO não tem, e
+  aí a arte tende a faltar dos dois lados. Quando o bRO tem a arte, copiar
+  resolve; quando não tem, a saída é apontar o recurso para um desenho que o
+  cliente já traz — substituição consciente, não tradução (§4.3).
+
 - **O `identifiedResourceName` do bRO é o DESENHO, não a identidade do item —
   e dois itens diferentes o compartilham.** É a ponte que resolve o caso em que
   o mesmo item tem número diferente aqui e lá (o bRO renumerou muita coisa), e

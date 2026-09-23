@@ -2426,6 +2426,57 @@ O salto de 548 para 1902 não é regressão: é o que já estava quebrado e ning
 media. As diferenças pequenas na coluna do meio vêm das 25 entradas postas pelo
 `completa_iteminfo.py` e do ícone ter virado critério de quebra.
 
+## `varre_arte_de_item.py` — que item obtenível ainda derruba o cliente
+
+```
+python varre_arte_de_item.py           # a lista, e sai 1 se houver algum
+python varre_arte_de_item.py --tudo    # sem filtrar por obtenibilidade
+```
+
+O irmão do `valida_visual.py` para o resto do catálogo. Aquele só lê
+`item_db_equip.yml` — chapéu, arma e acessório —, e por isso **Etc e Usable
+nunca passaram por conferência de arte nenhuma**. A caixa de erro do cliente
+não pergunta o tipo do item: ela sai quando um arquivo que ele abre não
+existe, e basta o jogador arrastar, vender ou largar o que está na mochila.
+
+Confere os **quatro** caminhos que valem para qualquer item — os mesmos do
+`valida_visual.Cliente.caminhos(res, None)`:
+
+```
+data\sprite\<item>\<res>.spr             sprite do chão
+data\sprite\<item>\<res>.act             idem
+data\texture\<ui>\item\<res>.bmp         ícone do inventário   (modal)
+data\texture\<ui>\collection\<res>.bmp   ícone grande
+```
+
+**"Obtenível" é um piso, não um teto:** drop em `db/re/mob_db.yml` ou linha de
+loja em `npc/` (qualquer `shop`/`cashshop`/`itemshop`/`pointshop`/
+`marketshop`). Item que só sai de caixa, de missão ou de `getitem` em script
+não entra na conta — para esses, `--tudo`, que sobe de algumas dezenas para
+alguns milhares e inclui muito item que ninguém alcança.
+
+Nasceu do relato de 2026-09-22 sobre a **Fragrant Flowers (1001089)**, que cai
+do Napeo em `amicitia2` e derrubava o jogo ao ser movida ou vendida. A primeira
+medição deu **35** itens obteníveis sem arte; quatro saíram no patch 0033 e os
+31 restantes estão na §1aq-f do `PENDENCIAS.md`.
+
+**O `resourceName` em ASCII é o sinal de dívida mais barato** que a saída dá:
+`Hot_Water_Drop_Gem`, `Fruits_Set_Trap` e afins são o AegisName cru, marca de
+entrada escrita pelo `completa_iteminfo.py` sobre id que o bRO não tem — e aí
+a arte tende a faltar nos dois GRFs.
+
+Duas saídas, nesta ordem: **copiar a arte do bRO** quando ele a tem (os
+caminhos são os mesmos, e `grf.py` lê os dois lados), ou **apontar o
+`identifiedResourceName` do `itemInfo.lua` para um desenho que o cliente já
+traz**. A segunda é substituição consciente e vai no histórico; não é tradução,
+e a §4.3 continua valendo para o nome.
+
+**Cuidado ao mexer no regex do recurso:** `unidentifiedResourceName` termina em
+`identifiedResourceName`, e um padrão solto casa com a linha errada
+(`CLAUDE.md` §5). Como os dois campos são iguais na esmagadora maioria dos
+itens, o engano só aparece em quem diverge — que é exatamente o que esta
+ferramenta procura. O padrão ancora em `\n\t\t` de propósito.
+
 ## `instala_visual.py` — põe a arte de um chapéu no lugar certo
 
 ```
