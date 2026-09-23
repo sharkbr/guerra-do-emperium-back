@@ -838,3 +838,31 @@ segundo mapa desempata. **Validar num mapa simétrico não valida nada.**
   CP949) ficou fora do repositório de propósito — se um dia uma pasta do
   cliente recusar o override solto de verdade, é meio dia para refazer, e o
   `grf.py` lê o resultado para conferir.
+
+- **O `traduz_ptbr.py skills` DESFAZ habilidade nossa que reaproveite id do
+  cliente.** Medido em 2026-09-22, ao instalar as três passivas de
+  Sobrevivente (`CLAUDE.md` §4.27). As três ocupam ids que o cliente já
+  conhecia e o servidor não usava — 239, 240 e 241, que o `skillid.lub`
+  chama de `AM_BIOTECHNOLOGY`, `AM_CREATECREATURE` e `AM_CULTIVATION`.
+
+  O problema é que o bRO conhece esses mesmos ids, e **pelo nome velho**. O
+  `traduz_ptbr.py skills` troca o `SkillName` de cada bloco do
+  `skillinfolist.lub` e o bloco **inteiro** do `skilldescript.lub` a partir
+  da tabela do bRO; na próxima rodada dele, "Sobrevivente Caótico" volta a
+  ser "Cultivo" e a descrição volta a falar de embrião de Homunculus.
+
+  **Nada erra, e o servidor não muda de ideia:** a passiva continua dando
+  +10 em todos os atributos e +100 de ATQ. Só o que o jogador lê é que passa
+  a descrever outra coisa — e quem for conferir o efeito pela janela conclui
+  que a habilidade está quebrada.
+
+  É a mesma família da armadilha do `nomes_pt_item_db.py`, que desfaz o nome
+  em português de item que ganhou bloco em `db/guerra/item_db.yml` depois: os
+  dois reconstroem um arquivo inteiro a partir da fonte de fora, e o que é
+  nosso não está naquela fonte.
+
+  A saída é a mesma dos dois casos — uma ferramenta que reaplica, e o hábito
+  de rodá-la depois: `ferramentas/instala_habilidades_sobrevivente.py`. Ela é
+  idempotente (a chave `SKID.X` não muda, então ela acha o bloco do bRO e o
+  substitui de novo) e tem `--conferir`, que sai 1 se alguma das nove metades
+  — três nomes, três descrições, três ícones — estiver faltando.

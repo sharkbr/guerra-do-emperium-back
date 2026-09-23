@@ -1,0 +1,83 @@
+# Habilidades proprias da Guerra do Emperium
+#
+# Importado pelo rodape de `db/skill_db.yml` (o despachante), depois do
+# `db/re/skill_db.yml` e antes do `db/import/`. Merge por Id: o
+# `SkillDatabase::parseBodyNode` (`src/map/skill.cpp:14796`) procura o Id antes
+# de criar, entao Id que ja existe recebe os campos por cima e Id livre nasce
+# aqui.
+#
+# ---------------------------------------------------------------------------
+# POR QUE OS IDs SAO 239, 240 E 241 - e nao 8000 e seguintes
+# ---------------------------------------------------------------------------
+# O cliente NAO aprende habilidade nova pelo servidor. Ele conhece uma tabela
+# fixa - `SKID`, no `skillid.lub` dentro do GRF - e tudo (icone, nome,
+# descricao) e resolvido por ali. Id que o `SKID` nao tem vira `nil`, e
+# `[nil] = {...}` aborta o arquivo Lua inteiro: a janela de habilidades recebe
+# nil e o cliente morre em C++. Foi o estrago medido em 2026-07-30.
+#
+# Este cliente conhece 1788 SKIDs e o rAthena define 1635 habilidades - sobram
+# 203 ids que o cliente ja conhece e o servidor nao usa. Estes tres saem
+# dessa sobra:
+#
+#   239  AM_BIOTECHNOLOGY   240  AM_CREATECREATURE   241  AM_CULTIVATION
+#
+# Os tres foram conferidos em 2026-09-22 e passam nas quatro travas:
+#   - nao tem entrada no `db/re/skill_db.yml` (o servidor nunca os define);
+#   - so aparecem no `enum e_skill` do rAthena, em nenhum `.cpp`;
+#   - nenhum NPC ou `db/` do vendor os cita;
+#   - nao estao no `skilltreeview.lub` nem sao requisito de ninguem no
+#     `skillinfolist.lub` - ou seja, classe nenhuma os ve na arvore.
+#
+# O `Name:` daqui e nosso e nao precisa casar com a constante SKID: quem liga
+# os dois lados e o **Id**. O nome AEGIS que o cliente usa para achar o icone
+# mora no primeiro campo do bloco do `skillinfolist.lub`, e la ele tambem foi
+# trocado para o nome novo - os dois lados dizem a mesma coisa.
+#
+# ---------------------------------------------------------------------------
+# O EFEITO NAO ESTA AQUI
+# ---------------------------------------------------------------------------
+# Sao passivas: nao ha `Status:` nem `impl`. O bonus mora em
+# `src/custom/habilidades_sobrevivente.hpp`, aplicado no bloco "Absolute
+# modifiers from passive skills" do `status_calc_pc_` e no
+# `status_calc_weight` - o mesmo caminho do `AC_OWL` e do `MC_INCCARRY` do
+# rAthena. Mexer nos numeros e recompilar o map-server; nao existe recarregador
+# para isto.
+#
+# `IsQuest: true` diz a verdade sobre elas (vem de uma missao, nao de arvore de
+# classe) e tem um efeito pratico: e a flag que o `@questskill` exige
+# (`atcommand.cpp:3839`). Entao `@questskill 239` concede, `@lostskill 239`
+# tira - que e como se testa antes de a missao existir.
+#
+# CUIDADO com `MAX_SKILL`: e 1641 (`src/common/mmo.hpp:92`) e conta o total
+# carregado. Com estas tres sao 1639 - sobram DUAS vagas. A quarta habilidade
+# propria exige aumentar o define e recompilar os QUATRO binarios, porque
+# `mmo_charstatus::skill[MAX_SKILL]` e estrutura compartilhada.
+
+Header:
+  Type: SKILL_DB
+  Version: 4
+
+Body:
+  - Id: 239
+    Name: GUE_SOBREVIVENTE_PRAGMATICO
+    Description: Sobrevivente Pragmatico
+    MaxLevel: 1
+    TargetType: Passive
+    Flags:
+      IsQuest: true
+
+  - Id: 240
+    Name: GUE_SOBREVIVENTE_ASTUTO
+    Description: Sobrevivente Astuto
+    MaxLevel: 1
+    TargetType: Passive
+    Flags:
+      IsQuest: true
+
+  - Id: 241
+    Name: GUE_SOBREVIVENTE_CAOTICO
+    Description: Sobrevivente Caotico
+    MaxLevel: 1
+    TargetType: Passive
+    Flags:
+      IsQuest: true

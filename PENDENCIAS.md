@@ -4915,3 +4915,62 @@ antes do `@reloadscript`. Ao contrário, o `npc_parse_shop` descarta o 570069 da
 vitrine do Senhor das Armas por ele não estar no `item_db` em memória
 (`CLAUDE.md` §5), calado. Os seis Manuscritos já existem no vendor e sobrevivem
 à ordem errada, mas apareceriam com o nome em inglês do servidor.
+
+---
+
+## As três habilidades de Sobrevivente — falta a missão, o NPC e a trava (2026-09-22)
+
+A mecânica está pronta e **fechada para o jogador de propósito**: as três
+passivas existem no servidor, funcionam, e não há como obtê-las sem GM. Foi o
+pedido do dono — *"os jogadores ainda nao podem saber"*. O que foi feito está no
+`HISTORICO.md` (2026-09-22) e a regra que saiu dali é a §4.27 do `CLAUDE.md`.
+
+| Id | Habilidade | O que dá |
+|---|---|---|
+| 239 | Sobrevivente Pragmático | AGI +20, peso +2000 |
+| 240 | Sobrevivente Astuto | INT +20, ATQM +100 |
+| 241 | Sobrevivente Caótico | todos os atributos +10, ATQ +100 |
+
+Testar hoje: `@questskill 239` (ou 240, 241) concede; `@lostskill 239` tira.
+
+### 1. A missão e o NPC que ensina
+
+O dono disse que virão numa conversa seguinte, e que aí as duas pontas se ligam.
+Nada a fazer até lá — **mas duas coisas precisam estar na mesa quando for**:
+
+- **a trava de exclusividade.** A decisão é que o jogador escolhe **uma** das
+  três. Essa trava **não está no C++**, e é decisão consciente: ela pertence a
+  quem concede. Hoje, quem receber duas soma as duas — que é o que permite testar
+  cada uma isolada. O NPC da missão é que tem de recusar a segunda, e a pergunta
+  que vem junto é se a escolha pode ser refeita depois (e a que custo).
+- **a §4.26**, se a missão for trazida do bRO: conteúdo que o bRO tranca atrás
+  de missão de acesso entra trancado.
+
+### 2. Nada disso chegou ao jogador, e não deve chegar ainda
+
+O nome, a descrição e o ícone das três estão **só no cliente desta máquina**,
+instalados por `ferramentas/instala_habilidades_sobrevivente.py`. **Nenhum patch
+foi publicado**, e é o que mantém as três invisíveis: um jogador que abrisse o
+`skillinfolist.lub` do próprio cliente leria os três nomes.
+
+Quando a missão sair, o patch precisa levar `data\luafiles514\lua files\
+skillinfoz\` (os dois `.lub`) e os seis `.bmp` de ícone — e a ferramenta tem de
+ser rodada **antes** de montar o patch, porque qualquer `traduz_ptbr.py skills`
+no meio do caminho desfaz as três calado (`ARMADILHAS-CLIENTE.md`).
+
+### 3. O que o deploy espera
+
+Só servidor, e só quando a missão existir — não há pressa, porque sem NPC
+ninguém obtém as três:
+
+| o quê | onde mora | recarregador |
+|---|---|---|
+| o cadastro das três | `db/guerra/skill_db.yml` + o rodapé de `db/skill_db.yml` | `@reloadskilldb` |
+| o efeito | `src/custom/habilidades_sobrevivente.hpp` + 2 chamadas em `src/map/status.cpp` | **recompilar** |
+
+### 4. Sobram duas vagas de habilidade
+
+`MAX_SKILL` é 1641 (`src/common/mmo.hpp:92`) e há 1639 em uso. A quarta
+habilidade própria exige aumentar o define e recompilar os **quatro** binários —
+`mmo_charstatus::skill[MAX_SKILL]` é estrutura compartilhada. Vale saber antes de
+prometer a quarta, não depois.

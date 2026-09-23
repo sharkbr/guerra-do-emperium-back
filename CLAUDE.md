@@ -93,10 +93,11 @@ Os únicos enxertos permitidos em arquivo do rAthena, e os que existem hoje:
 | `db/re/quest_db.yml` | o **`Footer: Imports:` inteiro** — aquele arquivo não tinha rodapé nenhum. Seguro porque o `parseImports` mora no `YamlDatabase` (`src/common/database.cpp:176`), não no leitor de quest: vale para todo banco em YAML, e o mesmo caminho serve para qualquer `db/re/*.yml` que ainda não tenha rodapé |
 | `db/re/job_stats.yml` | o **`Footer: Imports:` inteiro**, com **dois** `- Path:`, e o primeiro deles não é nosso. `db/re/job_outfits.yml` é arquivo do **próprio rAthena** e estava **órfão**: o `JobDatabase::getDefaultLocation()` (`src/map/pc.cpp:13819`) aponta só para o `job_stats.yml`, então os treze `AlternateOutfits` (o "Roupa alternativa" do estilista) não eram lidos por ninguém e `job->alternate_outfits` ficava vazio para todo trabalho. `db/guerra/job_estilo_de_corpo.yml` é nosso e declara os ids 4332..4344 num `Jobs:`, porque a guarda `job_db.exists()` do `pc_changelook` reprova todo valor de estilo de corpo sem eles (§5). Sem os dois, o Cupom de Roupa some sem trocar nada |
 | `db/status.yml` | um `- Path: db/guerra/status.yml` no rodapé, **depois** do `db/re/status.yml` e **antes** do `db/import/status.yml` que já estavam lá. Aquele arquivo já tinha `Footer: Imports:` — é o despachante, e o `db/re/` é só mais um import dele. Funciona por merge fino: o `StatusDatabase::parseBodyNode` (`src/map/status.cpp:15903`) procura o `Status:` antes de criar, e dentro de `Flags:` cada bandeira é `set()`/`reset()` pelo nome — então o nosso arquivo lista só aquilo em que discordamos, sem repetir o resto do status. Hoje tem dez entradas, todas a mesma bandeira: o `RemoveOnRefresh` que faz a Runa Nauthiz remover os dezesseis efeitos que a descrição dela promete (§4.17 — o vendor tinha a metade da **imunidade** para a lista inteira e a da **remoção** só para seis). São dez e não nove porque a Petrificação são dois status, `StoneWait` (a contagem) e `Stone` (a pedra) |
+| `db/skill_db.yml` | um `- Path: db/guerra/skill_db.yml` no rodapé, **depois** do `db/re/skill_db.yml` e **antes** do `db/import/`. Aquele arquivo já era o despachante, com `Footer: Imports:` próprio. É por ali que entram **as nossas habilidades** — hoje as três de Sobrevivente (§4.27). O merge é por `Id`: o `SkillDatabase::parseBodyNode` (`src/map/skill.cpp:14796`) procura o Id antes de criar. **O Id não é livre:** tem de ser um que o `skillid.lub` do cliente já conheça, ou a janela de habilidades derruba o cliente (§5) |
 | `db/re/map_drops.yml` | o **`Footer: Imports:` inteiro**, pelo mesmo caminho do `quest_db.yml` acima — aquele arquivo também não tinha rodapé. Aponta para `db/guerra/map_drops.yml`, **gerado** por `ferramentas/escala_drops_de_mapa.py` (drop de mapa não passa pela taxa do servidor — ver §5) |
 | `src/map/clif.cpp` | **três** includes de `src/custom/` + **quatro** chamadas, comentadas no arquivo: `placa_de_venda_mostra`, o teto de refino nas duas pontas da janela de refino, e `brilho_da_carta` no `clif_dropflooritem` (o pilar de luz e o som quando cai carta — `src/custom/brilho_da_carta.hpp`) |
 | `src/map/battle.cpp` | **dois** includes de `src/custom/` + **sete** chamadas, todas comentadas no arquivo. Duas de `reducao_de_dano.hpp`: `reducao_alcanca_percentatk` (no bloco "Card Fix for target" — põe o `percentAtk` na redução, sem ela `bonus bAtkRate` fura toda resistência) e `reducao_piso` (dentro do `APPLY_CARDFIX` — teto configurável, 99% hoje, no lugar do `max(0, …)` que deixa a redução zerar o dano). Cinco de `reducao_geral.hpp`, a redução geral de 80% (`REDUCAO-DE-DANO.md` §1c): quatro de `reducao_pvp` — três dentro do `battle_calc_damage` (o caminho normal + as duas saídas antecipadas de habilidade que pula tudo) e uma no `battle_calc_return_damage`, para o reflexo — e **uma que SUBSTITUI linha do rAthena**, a única do projeto: dentro do `battle_calc_gvg_damage`, `reducao_isenta_habilidade(skill_id)` no lugar do `skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)`. **Substituição não sobrevive a merge por si** — se `INF2_IGNOREGVGREDUCTION` reaparecer ali depois de atualizar o vendor, o enxerto morreu calado |
-| `src/map/status.cpp` | um include de `src/custom/` + **duas** chamadas, comentadas no arquivo, as duas de `guardiao_do_castelo.hpp` (a escala do guardião pela defesa do castelo): `guardiao_tem_escala` num `flag\|=4` **acrescentado** ao lado do `guardup_lv` do rAthena — não substitui nada, e só existe porque sem flag nenhuma o `status_calc_mob_` sai antes, libera o `md->base_status` e passaria a escrever no status **compartilhado** do `mob_db`; e `guardiao_aplica_escala` no fim da mesma função, depois do bloco "Strengthen Guardians" e **antes** do `memcpy` final |
+| `src/map/status.cpp` | **dois** includes de `src/custom/` + **quatro** chamadas, todas comentadas no arquivo. Duas de `habilidades_sobrevivente.hpp` (as três passivas próprias — §4.27): `sobrevivente_aplica_bonus` no fim do bloco *"Absolute modifiers from passive skills"* do `status_calc_pc_`, na mesma forma do `AC_OWL` logo acima, e `sobrevivente_aplica_peso` dentro do `flag&CALCWT_MAXBONUS` do `status_calc_weight`, ao lado do `MC_INCCARRY`. As duas são acréscimo, não substituição. E duas de `guardiao_do_castelo.hpp` (a escala do guardião pela defesa do castelo): `guardiao_tem_escala` num `flag\|=4` **acrescentado** ao lado do `guardup_lv` do rAthena — não substitui nada, e só existe porque sem flag nenhuma o `status_calc_mob_` sai antes, libera o `md->base_status` e passaria a escrever no status **compartilhado** do `mob_db`; e `guardiao_aplica_escala` no fim da mesma função, depois do bloco "Strengthen Guardians" e **antes** do `memcpy` final |
 | `npc/scripts_guild.conf` | duas coisas. **(a)** 19 das 20 linhas de castelo da Guerra do Emperium 1 comentadas — só o `prtg_cas01.txt` (Kriemhild) fica. É o que tira Emperium, Kafra, Gerente e bandeiras dos castelos-museu de uma vez, e é também **o que limita a guerra ao Kriemhild**: sem o arquivo do castelo não há `Agit#<castelo>`, logo não nasce Emperium. Ver `npc/guerra/guardioes_dos_castelos.txt`. **Levou 279 bandeiras junto** — devolvidas por `npc/guerra/bandeiras_do_feudo.txt`, todas hasteando o dono do Kriemhild. **(b)** o `agit_controller.txt` comentado, substituído por `npc/guerra/horario_da_guerra.txt` (quinta 20–22, domingo 18–20, horário de Brasília). Nunca deixar os dois ligados |
 | `src/map/pc.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `estilo_de_corpo_resolve` no topo do `case LOOK_BODY2:` do `pc_changelook`, **antes** do `job_db.exists`. Acréscimo, não substituição. Traduz o valor legado 0/1 que o `db/re/stylist.yml` ainda manda para o Id do trabalho do visual alternativo — sem ela a UI de estilista come o Cupom de Roupa e não muda nada (`src/custom/estilo_de_corpo.hpp`) |
 | `src/map/mob.cpp` | um include de `src/custom/` + **uma** chamada, comentada no arquivo: `habilidade_de_monstro_proibida` no topo do laço do `mobskill_use`, **antes** do teste de recarga — monstro em mapa listado se comporta como se não tivesse aquela linha do `mob_skill_db`. Acréscimo, não substituição. Hoje a tabela tem uma entrada só: Instinto de Defesa (`ST_REJECTSWORD`) no Corredor Fantasma (`vis_h01`), que refletia 50% do dano do jogador sem passar por redução nenhuma (`src/custom/habilidade_proibida.hpp`) |
@@ -153,6 +154,7 @@ Errar o comando faz a mudança parecer que não pegou.
 | `db/guerra/attendance.yml` | `@reloadattendancedb` — mas o cliente **não** recarrega a metade dele |
 | `db/guerra/quest_db.yml` (missões da Ordem) | `@reloadquestdb` — e **não** é `@reloadscript`. O recado e a recompensa de cada missão moram no NPC, o alvo mora aqui; mudar os dois exige os dois comandos. **Missão nova exige também `ferramentas/monta_missoes_da_ordem.py` e reabrir o cliente** — sem a entrada de lá, pegar a missão derruba o cliente (§5) |
 | `db/guerra/stylist.yml` (o que a estilista vende) | `@reloadscript` — o `npc_reload` chama `stylist_db.reload()` (`src/map/npc.cpp:6127`). A outra metade é o `stylingshopinfo.lub` do cliente, que só entra com o cliente reaberto |
+| `db/guerra/skill_db.yml` (o cadastro de uma habilidade nossa) | `@reloadskilldb` — mas isso recarrega só o **cadastro** (nome, nível máximo, flags). O **efeito** das nossas três passivas é C++ (`src/custom/habilidades_sobrevivente.hpp`): mudar número de bônus é **recompilar**. E a metade do cliente (nome, descrição, ícone) é `ferramentas/instala_habilidades_sobrevivente.py` + **reabrir o cliente** |
 | `db/guerra/status.yml` (efeito de status) | `@reloadstatusdb` — chama `status_readdb(true)` (`src/map/atcommand.cpp:4481`). **Não** exige reiniciar, e **não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/map_drops.yml` (drop de mapa) | `@reloadmobdb` — é ele que chama `mob_reload()`, que refaz o `map_drop_db` (`src/map/mob.cpp:7216`). **Não** é `@reloaditemdb` nem `@reloadscript` |
 | `db/guerra/instance_db.yml` (nome de instância) | `@reloadinstancedb` — existe, e **não** exige reiniciar. O nome é chave: o `instance_create` resolve por string, então rodar este **antes** do `@reloadscript` quando os dois lados mudaram juntos |
@@ -628,6 +630,45 @@ podem ficar de pé. **Derrubar o servidor por causa de `db/` é desnecessário.*
     "vale a pena implementar a missão?", é **"como se chega nisto no bRO?"**.
     Se a resposta tem passos, eles são o conteúdo tanto quanto os monstros.
 
+27. **Habilidade nossa reaproveita um id que o CLIENTE já conhece — nunca um
+    id inventado.** O servidor aceita qualquer número: o rodapé de
+    `db/skill_db.yml` é nosso (§2) e o `parseBodyNode` cria a habilidade sem
+    reclamar. Quem não aceita é o cliente, e a recusa dele não é um aviso — é
+    uma queda.
+
+    O cliente não aprende habilidade pelo servidor. Ele tem uma tabela fixa,
+    o `SKID` do `skillid.lub` dentro do GRF, e resolve ícone, nome e descrição
+    só por ali. Id que o `SKID` não tem vira `nil`, `[nil] = {...}` é erro de
+    Lua que **aborta o arquivo inteiro**, a janela de habilidades recebe nil e
+    o cliente morre em C++ (medido em 2026-07-30).
+
+    A sobra que torna isso fácil: medido em 2026-09-22, este cliente conhece
+    **1788** ids e o rAthena define **1635** habilidades — **203 ids que o
+    cliente já conhece e o servidor não usa**, com ícone e animação prontos.
+    As três de Sobrevivente saíram dessa sobra (239, 240 e 241).
+
+    As quatro travas antes de escolher um id, todas baratas:
+    - não ter entrada no `db/re/skill_db.yml`;
+    - aparecer só no `enum e_skill`, em nenhum `.cpp` — constante existir não
+      é o mesmo que habilidade implementada;
+    - nenhum NPC ou `db/` do vendor citá-lo;
+    - **não estar no `skilltreeview.lub` nem ser requisito de ninguém no
+      `skillinfolist.lub`** — senão alguma classe passa a ver a habilidade
+      nova na árvore dela, com o nome novo, sem ninguém ter pedido.
+
+    E duas consequências que não se resolvem depois:
+    - **`MAX_SKILL` conta o total, não o maior id.** São 1641
+      (`src/common/mmo.hpp:92`) e 1639 estão em uso — sobram **duas** vagas.
+      A próxima habilidade própria exige aumentar o define e recompilar os
+      **quatro** binários, porque `mmo_charstatus::skill[MAX_SKILL]` é
+      estrutura compartilhada.
+    - **efeito passivo é C++, não YAML.** O `Status:` do `skill_db` só serve a
+      habilidade ativa, e o caminho genérico do rAthena
+      (`StatusSkillImpl`) passa apenas `val1 = nível` — não alcança peso, que
+      não tem status de efeito nenhum, nem ATQ plano, que mora em `val2`. O
+      lugar certo é o bloco *"Absolute modifiers from passive skills"* do
+      `status_calc_pc_`, ao lado do `AC_OWL`.
+
 ## 5. Armadilhas deste ambiente
 
 **Cada linha abaixo já custou horas.** O caso inteiro — sintoma, causa
@@ -726,6 +767,7 @@ GRF, .lub e bytecode Lua, tabelas do cliente, sprite e .act, .rsm e mapa, patch 
 - No `.rsw`, a posição do modelo vira célula com `altura/2 + pos.z/5` — com **`+`**, e o sinal errado espelha o mapa inteiro no eixo norte–sul. Em mapa simétrico o erro **não aparece**; quem decide são os pilares, que são célula fechada no `.gat`
 - O padrão de fábrica das opções do cliente (`/showname` e irmãs) mora em BYTECODE no `System\OptionInfo.lub`; o `savedata\OptionInfo.lua` é do jogador e vence — mudar o padrão só alcança quem ainda não jogou
 - E o sentido de `/showname` é o INVERSO do nome: `0` é a *Indicação de Nome 2*, a que mostra mais
+- O `traduz_ptbr.py skills` DESFAZ habilidade nossa que reaproveite id do cliente: ele reescreve o `SkillName` e o bloco de descrição a partir do bRO, e o bRO conhece aqueles ids pelo nome velho — a passiva continua valendo no servidor e a janela volta a chamá-la de "Cultivo", sem que nada erre. Rodar `ferramentas/instala_habilidades_sobrevivente.py` depois
 - Ler mojibake a olho num screenshot dá resposta plausível e errada. No balão acima, `°Ô½ÃÆÇ` (게시판, "quadro de avisos") e `ºÎ½ºÅÍ` (부스터, "Booster") são…
 
 ### `ARMADILHAS-SCRIPT.md` — Script de NPC do rAthena

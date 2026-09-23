@@ -148,4 +148,5 @@ Footer:
     Mode: Prerenewal
   - Path: db/re/skill_db.yml
     Mode: Renewal
+  - Path: db/guerra/skill_db.yml
   - Path: db/import/skill_db.yml

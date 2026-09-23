@@ -898,3 +898,29 @@ mexer no vigia deixa a porta sumindo para quem já a mereceu.
 povoamento é por sala porque o chão está partido em 26 pedaços. Se um dia o
 `map_cache` mudar — mapa novo do cliente, atualização do vendor — a ferramenta
 **recusa gerar** em vez de publicar labirinto sem saída.
+
+### Uma habilidade nossa vive em 4 lugares, e só 2 estão em git
+
+| # | Onde | O que põe | Chega ao jogador por |
+|---|---|---|---|
+| 1 | `db/guerra/skill_db.yml` + o rodapé de `db/skill_db.yml` | o cadastro: Id, nome, nível máximo, `IsQuest` | deploy, `@reloadskilldb` |
+| 2 | `src/custom/habilidades_sobrevivente.hpp` + as chamadas em `src/map/status.cpp` | **o efeito** | deploy + recompilar |
+| 3 | `skillinfoz\skillinfolist.lub` e `skilldescript.lub` do cliente | nome e descrição na janela | **patch** |
+| 4 | `data\texture\<ui>\item\<aegis>.bmp` do cliente | o ícone | **patch** |
+
+Os 3 e 4 são gerados por `ferramentas/instala_habilidades_sobrevivente.py`.
+
+**A chave que liga os quatro é o Id, e ele não é livre:** tem de ser um dos ids
+que o `skillid.lub` do cliente já conhece (`CLAUDE.md` §4.27). O cliente não
+aprende habilidade pelo servidor — id que ele não conhece derruba a janela de
+habilidades inteira, em C++.
+
+**O acoplamento que quebra calado é o 1 sem o 2:** o cadastro sozinho produz uma
+habilidade que o jogador aprende, que aparece na janela com ícone e descrição, e
+que **não faz nada**. Sendo passiva, não há nem o aviso de *"missing code case"*
+que uma ativa sem `impl` imprime no console.
+
+**E o 3 tem um dono a mais:** o `traduz_ptbr.py skills` reescreve aqueles dois
+`.lub` a partir do bRO e desfaz o que é nosso. É a mesma situação do
+`db/import/mob_skill_db.txt`, que tem dois geradores — com a diferença de que
+aqui o segundo dono é de fora. Rodar a ferramenta depois dele, sempre.

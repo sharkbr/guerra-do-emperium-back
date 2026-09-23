@@ -19360,3 +19360,108 @@ As sete notas do painel listam os sete pelo nome, com a loja de cada um ao lado
 O lado do servidor — o `db/guerra/item_db.yml`, o `item_db_lojas.yml` e as duas
 linhas de `shop` — espera o `implanta.sh` do Mac, com `@reloaditemdb` **antes**
 do `@reloadscript`.
+
+## As três habilidades de Sobrevivente (2026-09-22)
+
+Pedido do dono, na mesma conversa em que se apurou **se dá para criar
+habilidade**: três passivas de nível único.
+
+| Id | Habilidade | O que dá |
+|---|---|---|
+| 239 | Sobrevivente Pragmático | AGI +20, capacidade de peso +2000 |
+| 240 | Sobrevivente Astuto | INT +20, ATQM +100 |
+| 241 | Sobrevivente Caótico | todos os atributos +10, ATQ +100 |
+
+**Elas ainda não existem para o jogador**, e é assim de propósito: virão de uma
+missão que ainda não foi escrita, e o dono pediu que nada fique evidente até lá
+— *"os jogadores ainda nao podem saber"*. Nenhum patch foi publicado. O que está
+pronto é a mecânica, testável por GM.
+
+### A pergunta que veio antes: o servidor é barato, o cliente é o preço
+
+A apuração que abriu o trabalho (e que virou a §4.27 do `CLAUDE.md`) mediu três
+coisas que mudaram a conta:
+
+- **`db/skill_db.yml` já é despachante**, com `Footer: Imports:` próprio — nossa
+  habilidade entra por `db/guerra/skill_db.yml` sem reescrever arquivo do
+  vendor;
+- o rAthena tem uma pasta **`src/map/skills/custom/` oficial**, e o
+  `SkillFactoryCustom` é o primeiro da lista de fábricas, com o comentário do
+  próprio upstream: *"Always first to allow overwriting skills"*. Não foi
+  preciso usá-la — passiva não tem `impl` —, mas é o caminho pronto para a
+  primeira habilidade **ativa**;
+- o caro é o cliente, que não aprende habilidade nenhuma pelo servidor.
+
+E a medição que resolveu o caro: este cliente conhece **1788** ids e o rAthena
+define **1635** habilidades. Sobram **203 ids que o cliente já conhece e o
+servidor não usa** — com ícone, animação e entrada de nome prontos. As três
+saíram dali, o que dispensou mexer no `skillid.lub` (bytecode dentro do GRF) e
+eliminou de vez o risco de `SKID.X == nil`, que derruba o cliente.
+
+Os três escolhidos passaram nas quatro travas da §4.27 — sem entrada no
+`db/re/skill_db.yml`, citados só no `enum e_skill`, ausentes de todo NPC e `db/`
+do vendor, e **fora do `skilltreeview.lub`**, que é o que garante que classe
+nenhuma passe a ver a habilidade nova na árvore dela.
+
+### O efeito é C++, e foi aí que a apuração pagou
+
+O `skill_db` tem um campo `Status:`, e com ele uma habilidade ativa aplica um
+efeito pronto sem uma linha de código — é o que o `StatusSkillImpl`
+(`src/map/skills/skill_impl.cpp:57`) faz. **Não serve para estas três**, por dois
+motivos que só aparecem lendo o código: são passivas, e o caminho genérico passa
+apenas `val1 = nível` — não alcança peso, que não tem status de efeito nenhum, e
+nem ATQ plano, que os status guardam em `val2`.
+
+O lugar certo é o bloco *"Absolute modifiers from passive skills"* do
+`status_calc_pc_`, ao lado do `AC_OWL` que dá DEX; e, para o peso, o
+`status_calc_weight`, ao lado do `MC_INCCARRY`. Os dois enxertos estão em
+`src/custom/habilidades_sobrevivente.hpp` e na §2.
+
+**A unidade do peso é uma armadilha de uma linha:** `sd->max_weight` está em
+décimos do que a janela mostra — o `MC_INCCARRY` soma 2000 por nível e o jogador
+lê "+200". Os 2000 pedidos foram tratados como os **da tela** (20000 internos, o
+mesmo que Aumentar Capacidade no nível 10), e o código guarda o número pedido à
+vista, como `2000 * 10`.
+
+ATQ e ATQM entram em `sd->bonus.eatk` e `sd->bonus.ematk`, que são os mesmos
+campos em que `bonus bBaseAtk` e `bonus bMatk` de equipamento escrevem — ou seja,
+o bônus se comporta em toda fórmula do renewal como se viesse de uma peça.
+
+### Como se testa hoje, sem a missão
+
+`IsQuest: true` diz a verdade sobre elas e tem um efeito prático: é a flag que o
+`@questskill` exige (`atcommand.cpp:3839`).
+
+```
+@questskill 239   @questskill 240   @questskill 241
+@lostskill 239    (tira)
+```
+
+Conferido no boot: *"Done reading '3' entries in 'db/guerra/skill_db.yml'"*, sem
+warning. `MAX_SKILL` é 1641 e agora há 1639 em uso — **duas vagas**.
+
+### A metade do cliente, e a ferramenta que ela obrigou
+
+Nome, descrição e ícone foram instalados no cliente local por
+`ferramentas/instala_habilidades_sobrevivente.py`. Os ícones são reaproveitados,
+por escolha do dono: **Cair das Pétalas** para o Pragmático, **Telecinesia** para
+o Astuto e **Frenesi** para o Caótico.
+
+A ferramenta existe por uma armadilha medida no caminho: o `traduz_ptbr.py
+skills` reescreve esses dois `.lub` a partir do bRO, e o bRO conhece os três ids
+pelo nome velho — a próxima rodada dele **desfaz as três em silêncio**, deixando
+o efeito valendo e a janela descrevendo Cultivo. Está nas duas pontas
+(`ARMADILHAS-CLIENTE.md` e §5).
+
+E uma armadilha velha cobrou pedágio de novo, agora com testemunha: a primeira
+rodada gravou os acentos em UTF-8 porque o **script gerador** foi escrito pela
+ferramenta de edição do assistente, que grava UTF-8 — o `# -*- coding: cp1252
+-*-` no topo não muda o byte de um literal `str`. Quem pegou foi o round-trip, e
+por isso todo acento na ferramenta é escape de byte (`\xe1`, `\xf3`).
+
+### O que ficou em aberto
+
+A missão, o NPC que ensina e **a trava de exclusividade** — o dono decidiu que o
+jogador escolhe **uma** das três. Essa trava pertence a quem concede, não ao
+cálculo: hoje, quem tiver duas soma as duas, que é justamente o que permite
+testar cada uma isolada. Está no `PENDENCIAS.md`.

@@ -4799,3 +4799,57 @@ O exe é a única peça do cliente sem gerador versionado (`REFERENCIA.md`,
 "Patches do NEMO"); este script é a receita **deste** patch, e o `.epi` do NEMO
 não sabe dele — exe regravado pelo NEMO volta travado, e o script diz. Só se
 grava com o cliente fechado (§5).
+
+## `instala_habilidades_sobrevivente.py` — a metade de cliente das três passivas
+
+```
+python instala_habilidades_sobrevivente.py             # instala nome, descrição e ícone
+python instala_habilidades_sobrevivente.py --conferir  # só mede; sai 1 se faltar
+```
+
+As três habilidades de Sobrevivente (`CLAUDE.md` §4.27) moram em quatro lugares,
+e **só um deles está em git**: o cadastro em `db/guerra/skill_db.yml` e o efeito
+em `src/custom/habilidades_sobrevivente.hpp` são nossos e versionados; o nome, a
+descrição e o ícone estão dentro de `C:\GuerraDoEmperium\cliente\`, que não é.
+Esta ferramenta é a única cópia reproduzível dessa metade.
+
+**Ela não é um script de uma vez só, e o motivo é uma armadilha medida.** O
+`traduz_ptbr.py skills` reescreve esses mesmos dois `.lub` a partir do bRO, e o
+bRO conhece os ids 239, 240 e 241 pelo nome antigo (Biotecnologia, Criar
+Criatura, Cultivo). Toda rodada daquela ferramenta desfaz as três, em silêncio —
+o efeito continua valendo e a janela passa a descrever outra habilidade. O caso
+inteiro está em `ARMADILHAS-CLIENTE.md`. **Rodar esta depois daquela, sempre.**
+
+As três metades que ela escreve, por habilidade:
+
+| Metade | Arquivo | O que decide |
+|---|---|---|
+| nome na janela | `skillinfoz\skillinfolist.lub` | o `SkillName` do bloco |
+| nome AEGIS | o mesmo, primeiro campo do bloco | é por ele que o cliente busca a textura do ícone |
+| descrição | `skillinfoz\skilldescript.lub` | bloco inteiro |
+| ícone | `data\texture\<ui>\item\<aegis>.bmp` | copiado do GRF |
+
+O ícone de cada uma foi escolhido pelo dono em 2026-09-22, reaproveitando o
+desenho de uma habilidade que o cliente já tem: **Cair das Pétalas** (`MO_DODGE`)
+para o Pragmático, **Telecinesia** (`WL_TELEKINESIS_INTENSE`) para o Astuto e
+**Frenesi** (`LK_BERSERK`) para o Caótico. Cada um é gravado com **dois nomes** —
+o novo e o antigo (`am_cultivation.bmp` e `gue_sobrevivente_caotico.bmp`). O
+cliente resolve a textura pelo nome AEGIS do lua, mas não há prova de que ele
+nunca use o nome que o servidor manda no pacote da lista de habilidades; com os
+dois apontando para o mesmo desenho, os dois caminhos dão certo, e custa 1,6 KB.
+
+Duas travas, as duas pelo mesmo motivo — erro de encoding aqui não dá erro, dá
+acento perdido para sempre:
+
+- **todo acento no fonte é escape de byte** (`\xe1`, `\xf3`), nunca letra
+  acentuada. O `.lub` é cp1252 e a ferramenta de edição do assistente grava
+  UTF-8; foi assim que a primeira rodada saiu errada.
+- **round-trip antes de dar por feito:** relê os dois arquivos do disco, confere
+  os seis blocos byte a byte e recusa se achar `\xc3` colado num nome — que é o
+  primeiro byte de todo acento em UTF-8. Foi esta trava que pegou o erro acima.
+
+Rodar duas vezes não duplica nada: a chave (`SKID.AM_CULTIVATION`) não muda,
+então a segunda rodada acha o bloco que a primeira escreveu e o reescreve igual.
+
+**O cliente só lê isto na inicialização** — fechar e reabrir. E como tudo mora no
+cliente, nada disso chega ao jogador sem patch (`CLAUDE.md` §4.18).

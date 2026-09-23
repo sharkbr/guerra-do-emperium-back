@@ -37,6 +37,7 @@
 #include "script.hpp"
 
 #include <custom/guardiao_do_castelo.hpp>
+#include <custom/habilidades_sobrevivente.hpp>
 
 using namespace rathena;
 
@@ -3708,6 +3709,10 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 			sd->max_weight += 2000 * skill;
 		if (pc_ismadogear(sd))
 			sd->max_weight += 15000;
+
+		// O peso do Sobrevivente Pragmatico, ao lado do MC_INCCARRY acima.
+		// Ver src/custom/habilidades_sobrevivente.hpp.
+		sobrevivente_aplica_peso(sd);
 	}
 
 	// Update the client if the new weight calculations don't match
@@ -4307,6 +4312,11 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->int_ += skill;
 	if (pc_checkskill(sd, SU_POWEROFLAND) > 0)
 		base_status->int_ += 20;
+
+	// As tres passivas de Sobrevivente: status, ATQ e ATQM. Acrescimo ao bloco
+	// de bonus passivo do rAthena, na mesma forma das linhas acima.
+	// Ver src/custom/habilidades_sobrevivente.hpp.
+	sobrevivente_aplica_bonus(sd, base_status);
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
 	i = base_status->str + sd->status.str + sd->indexed_bonus.param_bonus[PARAM_STR] + sd->indexed_bonus.param_equip[PARAM_STR];
