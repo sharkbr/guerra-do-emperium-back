@@ -24,7 +24,7 @@
 //= alcance isso de outro arquivo. A posicao do NPC, essa sim
 //= sairia com um `movenpc` - foi so a chegada que obrigou.
 //===== O que mudou de fato ==================================
-//= CINCO linhas, em duas mudancas independentes.
+//= SETE linhas, em tres mudancas independentes.
 //=
 //= 1) ALBERTA (2026-08-08), tres linhas:
 //=
@@ -53,6 +53,33 @@
 //= ser um lugar de onde nao se sai. O menu usa ROTULO e nao
 //= indice, entao tirar a entrada nao deslocou as outras nove; a
 //= armadilha do CLAUDE.md secao 4.11 nao alcanca este caso.
+//=
+//= 3) O ABYSS LAKES 4 (2026-09-22), duas linhas ENCURTADAS:
+//=
+//=   setarray @c[2]     perdeu o par 169,159
+//=   Disp("Abyss Lakes",1,4)  ->  1,3
+//=
+//= Relato de jogador: "na caverna subterranea do lago do abismo
+//= (4) (abyss_04) nao ha nenhum tipo de monstros". Verdade, e a
+//= culpa nao e do menu sozinho: o rAthena NUNCA povoou aquele
+//= mapa. O npc/re/mobs/dungeons/abyss.txt vai do abyss_01 ao
+//= abyss_03 e para; nao ha warp, nao ha NPC, nao ha uma linha de
+//= spawn em npc/ inteiro. So o conf/maps_athena.conf o carrega -
+//= e isso basta para se cair dentro dele.
+//=
+//= O Warper do Euphy oferecia os quatro andares, e quem escolhia
+//= o 4 ia parar em 169,159 num mapa sem nada. Decisao do dono em
+//= 2026-09-22: tirar. Povoar exigiria a lista de monstros do
+//= abyss_04 do bRO, que nao esta nesta maquina - seria inventar,
+//= e a regra 3 do CLAUDE.md proibe.
+//=
+//= O `Restrict("RE",4)` da linha de cima FICA como o upstream o
+//= escreveu. Ele so age fora do renewal, onde bloquearia a opcao
+//= 4 - que agora nao existe -, entao e inerte aqui; mexer nele
+//= seria mudar comportamento de pre-renewal sem motivo.
+//=
+//= Os `naviregisterwarp` nao precisaram de nada: o upstream ja
+//= registrava so o 1, o 2 e o 3.
 //===== O que continua valendo do original ===================
 //= - O sprite das 45 duplicatas NAO esta aqui: quem troca 811
 //=   (Kafra) por 10007 (portal) e o npc/guerra/
@@ -76,7 +103,7 @@
 //= Este arquivo passa a NAO acompanhar o upstream. Se um dia o
 //= warper.txt do rAthena ganhar mapa novo ou correcao, ela tem
 //= de ser trazida a mao para ca. O diff e barato enquanto a
-//= diferenca forem as cinco linhas listadas acima - por isso elas
+//= diferenca forem as sete linhas listadas acima - por isso elas
 //= estao listadas uma a uma.
 //============================================================
 
@@ -421,8 +448,8 @@ D1: Restrict("RE");
 	setarray @c[2],253,244,145,278;
 	Disp("1st Floor - Comprehensive Lab:2nd Floor - Intensive Culture Room"); Pick("","amicitia1","amicitia2");
 D2: Restrict("RE",4);
-	setarray @c[2],261,272,275,270,116,27,169,159;
-	Disp("Abyss Lakes",1,4); Pick("abyss_");
+	setarray @c[2],261,272,275,270,116,27;
+	Disp("Abyss Lakes",1,3); Pick("abyss_");
 D3: setarray @c[2],228,11,34,41,119,14;
 	Disp("Amatsu Dungeon",1,3); Pick("ama_dun");
 D4: setarray @c[2],35,262,168,170;

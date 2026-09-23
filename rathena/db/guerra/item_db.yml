@@ -4717,3 +4717,116 @@ Body:
             bonus2 bMagicAddEle,Ele_All,25;
          }
       }
+
+
+  # ------------------------------------------------------------------
+  # OVERRIDE - Mente Maligna (7583): deixa de ser presa ao personagem
+  #
+  # Decisao do dono em 2026-09-22, sobre relato de jogador: "as mentes
+  # malignas do evento do labirinto das valquirias nao estao sendo
+  # negociaveis e colocados na kafra". A resposta foi *"tem que poder
+  # ser trocada entre jogadores, e poder ser posta a venda por loja de
+  # mercador. Nada de moeda nova"* - ou seja, solta-se ESTA, sem
+  # inventar um item-moeda intermediario.
+  #
+  # As sete travas sao do rAthena, nenhuma era nossa. Vao para `false`
+  # UMA A UMA porque o `parseBodyNode` do item_db so toca a bandeira que
+  # o arquivo cita (src/map/itemdb.cpp:938 em diante) - omitir uma aqui
+  # deixaria a do vendor de pe, calada.
+  #
+  # DUAS delas sao o pedido, e nao uma: a loja de mercador vende do
+  # CARRINHO, entao `NoCart` sozinho ja impediria. O `vending_openvending`
+  # ainda exige `itemdb_cantrade` (src/map/vending.cpp:348), que e o
+  # `NoTrade`. As outras cinco caem junto por coerencia: item que se
+  # troca e se vende nao tem por que nao poder ser largado, guardado ou
+  # enviado.
+  #
+  # O QUE ISTO MUDA NA ECONOMIA, por escrito: a Mente e a moeda das
+  # Valquirias de Malangdo (npc/guerra/valquirias_de_malangdo.txt) e a
+  # unica fonte dela e o 3o andar do Labirinto, a 25% por heroi selado.
+  # Solta, ela vira mercadoria: quem nao joga o Labirinto passa a
+  # comprar refino MEGA de quem joga. Foi a decisao, com o numero na
+  # mao.
+  #
+  # Revender em NPC nao cria dinheiro: `Buy: 10` do vendor faz o `Sell`
+  # valer 5 zeny (itemdb.cpp:1188), e ela nao esta em vitrine de
+  # Prontera, entao o `zera_revenda_das_lojas.py` nao a alcanca nem
+  # precisa alcancar.
+  # ------------------------------------------------------------------
+  - Id: 7583
+    AegisName: Evil_Mind
+    Trade:
+      NoDrop: false
+      NoTrade: false
+      NoCart: false
+      NoStorage: false
+      NoGuildStorage: false
+      NoMail: false
+      NoAuction: false
+
+  # ------------------------------------------------------------------
+  # OVERRIDE - Suplemento Alimentar (100371): passa a dar UM GRAU
+  #
+  # Decisao do dono em 2026-09-22 - *"vamos dar um nivel"* -, sobre
+  # relato de jogador de que o item "nao esta funcionando".
+  #
+  # Ele funcionava. O `Script:` do vendor era `addhomintimacy 100`, com
+  # um `// !TODO: Confirm increase amount` do proprio rAthena ao lado:
+  # cem pontos DE 100.000, exatamente o que uma alimentacao da
+  # (`hom_food`, src/map/homunculus.cpp:900). Um item que se produz com
+  # Preparar Pocao mais o 7144 e tres insumos valia uma Racao.
+  #
+  # OS SEIS DEGRAUS sao os do proprio emulador, o `intimacy_grades[]` de
+  # src/map/homunculus.cpp:41, lidos como o `hom_intimacy_intimacy2grade`
+  # os usa - ele compara com o MINIMO do grau seguinte:
+  #
+  #     400  Odio        1100  Desconfortavel   10100  Timido
+  #   25100  Neutro     75100  Cordial          91100  Leal
+  #
+  # O item leva a intimidade ao PROXIMO desses limiares, e nao um valor
+  # fixo: o salto de Neutro para Cordial e de ate 50.000 pontos e o de
+  # Leal para o teto e de 8.900, e um numero fixo so serviria para um
+  # dos seis. Quem ja esta em Leal vai para o teto de 100.000.
+  #
+  # A ESCALA NAO ATRAPALHA: o `hom_increase_intimacy` aplica o
+  # `homunculus_friendly_rate` antes de somar (homunculus.cpp:758), e
+  # nesta instalacao ele e 100 (conf/battle/homunc.conf:33). Se um dia
+  # mudar, a conta deixa de cair no limiar exato - e o item passa a dar
+  # "quase" um grau, sem erro nenhum.
+  #
+  # SEM HOMUNCULO O ITEM VOLTA PARA A MOCHILA. O
+  # `buildin_addhomintimacy` sai calado quando nao ha `sd->hd`
+  # (src/map/script.cpp:16033): o item era consumido e nada acontecia.
+  # Nao da para cancelar o consumo de um `Usable` - o `pc_useitem`
+  # chama o `pc_delitem` ANTES do `run_script` (src/map/pc.cpp) -, entao
+  # a saida e devolver. Trocar o `Type:` para `DelayConsume` resolveria
+  # sem devolucao, mas mudaria o tipo que o cliente ve num item do
+  # vendor, e nao vale o risco por uma borda.
+  #
+  # E ELE DIZ O QUE FEZ, que e a metade que faltava (CLAUDE.md 4.21):
+  # intimidade nao tem barra na tela, entao subir e nao subir produziam
+  # a mesma imagem. O `dispbottom` traz os dois numeros.
+  # ------------------------------------------------------------------
+  - Id: 100371
+    AegisName: Homun_F_Tablet
+    Script: |
+      if (gethominfo(0) == 0) {
+         dispbottom "Você precisa ter um homúnculo invocado para usar o Suplemento Alimentar.";
+         getitem 100371,1;
+         end;
+      }
+      .@antes = gethominfo(3);
+      setarray .@degrau[0], 400, 1100, 10100, 25100, 75100, 91100, 100000;
+      .@alvo = 100000;
+      for (.@n = 0; .@n < 7; .@n++)
+         if (.@degrau[.@n] > .@antes) {
+            .@alvo = .@degrau[.@n];
+            break;
+         }
+      if (.@alvo <= .@antes) {
+         dispbottom "A intimidade de " + gethominfo(2) + " já está no máximo.";
+         getitem 100371,1;
+         end;
+      }
+      addhomintimacy .@alvo - .@antes;
+      dispbottom "A intimidade de " + gethominfo(2) + " subiu de " + .@antes + " para " + gethominfo(3) + " - um grau inteiro.";

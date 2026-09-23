@@ -19071,3 +19071,147 @@ aprovando o `itemInfo.lua` e os `.spr` copiados serem versão 2.1, a mesma de
 
 O lado do servidor — o override da Mitra — espera o `implanta.sh` do Mac e um
 `@reloaditemdb`.
+
+
+## As cinco decisões sobre os relatos de 2026-09-22 (2026-09-22)
+
+No mesmo dia, o dono decidiu os cinco que tinham ficado em aberto na §1aq do
+`PENDENCIAS.md`. Três viraram código e duas ficam como estão.
+
+### A Mente Maligna (7583) passa a circular
+
+*"Tem que poder ser trocada entre jogadores, e poder ser posta a venda por
+loja de mercador. Nada de moeda nova."*
+
+As sete travas do vendor (`NoDrop`, `NoTrade`, `NoCart`, `NoStorage`,
+`NoGuildStorage`, `NoMail`, `NoAuction`) vão para `false` **uma a uma** num
+override em `db/guerra/item_db.yml` — o `parseBodyNode` do item_db só toca a
+bandeira que o arquivo cita (`src/map/itemdb.cpp:938` em diante), e omitir
+qualquer uma a deixaria de pé, calada.
+
+**O pedido são duas bandeiras, não uma.** A loja de mercador vende do
+**carrinho**, então o `NoCart` sozinho já impediria; e o `vending_openvending`
+ainda exige `itemdb_cantrade` (`src/map/vending.cpp:348`), que é o `NoTrade`.
+Quem soltasse só uma teria a loja abrindo e o item recusado, ou o item na
+mão e sem como pô-lo à venda. As outras cinco caíram junto por coerência.
+
+*"Nada de moeda nova"* foi lido como: solta-se **esta**, sem inventar um
+item-moeda intermediário para contornar a trava.
+
+O que isso muda está escrito no cabeçalho do bloco, porque é economia e não
+conserto: a Mente é a moeda das Valquírias de Malangdo e a única fonte dela é
+o 3º andar do Labirinto, a 25% por herói selado. Solta, quem não joga o
+Labirinto passa a comprar refino MEGA de quem joga. Foi a decisão, com o
+número à vista.
+
+Revender em NPC não cria dinheiro: `Buy: 10` faz o `Sell` valer 5 zeny
+(`itemdb.cpp:1188`), e ela não está em vitrine de Prontera — o
+`zera_revenda_das_lojas.py --conferir` continua em "OK" nos 1844.
+
+### O Suplemento Alimentar (100371) passa a dar um grau inteiro
+
+*"Vamos dar um nível."*
+
+O `Script:` do vendor era `addhomintimacy 100`, com um
+`// !TODO: Confirm increase amount` do próprio rAthena ao lado — cem pontos
+**de 100.000**, exatamente o que uma alimentação dá
+(`hom_food`, `src/map/homunculus.cpp:900`).
+
+O override leva a intimidade ao **próximo degrau**, e não soma um valor fixo.
+Os degraus são os do próprio emulador (`intimacy_grades[]`,
+`homunculus.cpp:41`), lidos como o `hom_intimacy_intimacy2grade` os usa — ele
+compara com o mínimo do grau seguinte:
+
+```
+   400  Ódio      1100  Desconfortável   10100  Tímido
+ 25100  Neutro    75100  Cordial          91100  Leal
+```
+
+**Número fixo não serviria:** o salto de Neutro para Cordial é de até 50.000
+pontos e o de Leal para o teto é de 8.900. Quem já está em Leal vai para o
+teto de 100.000.
+
+A escala não atrapalha porque o `homunculus_friendly_rate` desta instalação é
+100 (`conf/battle/homunc.conf:33`); se um dia mudar, a conta deixa de cair no
+limiar exato e o item passa a dar "quase" um grau, sem erro nenhum — está
+escrito no cabeçalho do bloco.
+
+**Duas coisas entraram que não foram pedidas, e são as regras da casa.** O
+item **volta para a mochila** quando não há homúnculo: o
+`buildin_addhomintimacy` sai calado sem `sd->hd`
+(`src/map/script.cpp:16033`), e não dá para cancelar o consumo de um `Usable`
+— o `pc_useitem` chama o `pc_delitem` **antes** do `run_script` —, então a
+saída é devolver com a recusa escrita. E ele **diz o que fez** num
+`dispbottom` com os dois números, que é a §4.21: intimidade não tem barra na
+tela, então subir e não subir produziam a mesma imagem — que é exatamente o
+que fez o relato chegar como *"não está funcionando"*.
+
+Trocar o `Type:` para `DelayConsume` resolveria a devolução sem devolver nada,
+mas mudaria o tipo que o cliente vê num item do vendor; não vale o risco por
+uma borda.
+
+### O Abyss Lakes 4 sai do menu da Teletransportadora
+
+*"Vamos tirar abyss04."*
+
+Duas linhas encurtadas em `npc/guerra/teletransportadora.txt`: o
+`setarray @c[2]` perde o par `169,159` e o `Disp("Abyss Lakes",1,4)` vira
+`1,3`. A contagem do cabeçalho do arquivo subiu de cinco para sete linhas de
+diferença do upstream, e a terceira mudança está descrita lá — é o que torna
+o diff contra o Warper do Euphy barato de refazer.
+
+O `Restrict("RE",4)` da linha acima **fica como o upstream o escreveu**: ele
+só age fora do renewal, onde bloquearia a opção 4 que agora não existe, então
+é inerte aqui. Mexer nele seria mudar comportamento de pré-renewal sem motivo.
+Os `naviregisterwarp` não precisaram de nada: o upstream já registrava só o 1,
+o 2 e o 3.
+
+Povoar o mapa ficou de fora por falta de fonte — a lista de monstros do
+`abyss_04` do bRO não está nesta máquina, e inventá-la é o que a regra 3
+proíbe.
+
+### A Pancada Corporal e a culinária ficam como estão
+
+*"Pancada deixa"* e *"relato da culinario deixa tambem"*. As duas são decisão
+de não agir, e estão aqui e não no `PENDENCIAS.md` porque decisão é conclusão.
+O que foi medido, para que ninguém meda de novo:
+
+- **Pancada Corporal (SR_KNUCKLEARROW)** — os números **batem** com o bRO. A
+  descrição do nosso cliente promete 600% no nível 1 e 700% contra chefe, e o
+  `src/map/skills/acolyte/knucklearrow.cpp` entrega `100 + 400 + 100*lv` e
+  `100 + 400 + 200*lv`. O que difere é o **movimento**, e ele é servidor, não
+  cliente: o `castendDamageId` leva o conjurador para a célula do alvo
+  (`skill_check_unit_movepos`) e depois empurra o **conjurador** uma célula
+  para trás (`skill_blown(src, src, ...)`); o dano sai 300 ms depois, num
+  `skill_addtimerskill`. O empurrão do alvo vem noutro ponto
+  (`skill.cpp:2659`), com bônus só se ele bater na parede. Mexer nisso é mexer
+  no `skill.cpp`, que é código de terceiros (§2).
+- **Culinária tradicional** — a mecânica está **inteira**: as 60 receitas dos
+  níveis 1 a 10 estão no `db/re/produce_db.txt`, nenhum ingrediente é
+  inalcançável, os temperos e os kits saem do Assistente de Chef de Prontera
+  (`npc/re/merchants/shops.txt:186`), e **qualquer kit serve para qualquer
+  nível** — o `skill_can_produce_mix` aceita todo `itemlv` entre 11 e 20
+  quando o gatilho está nessa faixa (`src/map/skill.cpp:12822`). O gargalo é
+  o **livro**: os de nível 6 a 10 só caem de monstro, e o de nível 10 cai a
+  0,01% de Maya Purple e de Doyen Irene. E há um segundo buraco, menor: a
+  descrição de cada livro de 5 a 10 promete **sete** receitas, e a sétima é o
+  "Rodízio Nível N" (itens 100075 a 100080), que existe no `item_db` e **não
+  tem receita nenhuma** no `produce_db.txt`.
+
+### O que foi conferido, e o que não
+
+- O map-server local subiu com os três arquivos e **sem uma linha** sobre o
+  400566, o 7583, o 100371 ou a Teletransportadora — nem erro de YAML, nem
+  erro de script. (Os dois `[Error]` de `db/guerra/item_db.yml` que ele
+  imprime, nas linhas 964 e 1328, são de entradas antigas.)
+- Os três comandos de script usados existem **neste** vendor
+  (`gethominfo`, `addhomintimacy`, `dispbottom`) — a §5 avisa que "existe no
+  rAthena" não é o mesmo que existir aqui.
+- Nem o `item_db_indestrutivel.yml` nem o `item_db_lojas.yml`, que vêm
+  **depois** do nosso no rodapé, citam o 7583 ou o 100371 — os overrides têm a
+  última palavra.
+- `zera_revenda_das_lojas.py --conferir`: OK nos 1844.
+  `marca_indestrutiveis.py --conferir`: os mesmos 30 de antes.
+- **Nada visto em jogo.** O que olhar está na §1aq do `PENDENCIAS.md`, e são
+  os quatro caminhos da Mente Maligna em separado — Kafra, troca, carrinho e
+  loja —, porque são guardas diferentes no C++.

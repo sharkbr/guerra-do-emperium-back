@@ -4830,150 +4830,43 @@ assimetria segura — patch antes do deploy não quebra nada.
   Male` no vendor); a conta de teste do sexo errado não equipa, e isso é o
   esperado, não defeito.
 
+## 1aq. Os sete relatos de 2026-09-22 — só falta o deploy, e uma varredura aberta
 
-## 1aq. Os sete relatos de 2026-09-22 — dois resolvidos, cinco esperando decisão
+Os sete estão decididos. O relato e a medição de cada um estão no
+`HISTORICO.md` (2026-09-22); aqui fica o que ainda não chegou ao jogador.
 
-O relato inteiro está no `HISTORICO.md` (2026-09-22). Aqui fica só o que
-continua aberto.
+### O que espera o `implanta.sh` (Mac)
 
-### O que já saiu
+Quatro mudanças de **servidor**, nenhuma de cliente — nada disto precisa de
+patch novo.
 
-| relato | estado |
-|---|---|
-| Mitra do Florescer (400566) sem o +10 no +0 | override em `db/guerra/item_db.yml`; **falta `implanta.sh` (Mac) + `@reloaditemdb`** |
-| Fragrant Flowers (1001089) derruba o cliente | **patch 0033 publicado**; nada mais a fazer |
+| o quê | onde mora | recarregador |
+|---|---|---|
+| Mitra do Florescer (400566): o `bonus bAllStats,10` sai do refino | `db/guerra/item_db.yml` | `@reloaditemdb` |
+| Mente Maligna (7583): as sete travas de comércio vão a `false` | `db/guerra/item_db.yml` | `@reloaditemdb` |
+| Suplemento Alimentar (100371): passa a dar um grau de intimidade | `db/guerra/item_db.yml` | `@reloaditemdb` |
+| Abyss Lakes 4 sai do menu da Teletransportadora | `npc/guerra/teletransportadora.txt` | `@reloadscript` |
 
-Em jogo, o que olhar da Mitra: equipar no **+0** e conferir que os seis
-atributos sobem 10. No **+9** eles têm de continuar subindo 10, e não 20 — é
-exatamente o que a correção evita.
+**O patch 0033 já está no ar** e resolve a Fragrant Flowers sozinho — aquele
+lado não depende do deploy.
 
-### 1aq-a. A Mente Maligna (7583) é presa ao personagem — mudar ou não?
+### O que olhar em jogo (cliente de DEV, `GuerraDoEmperium.exe`)
 
-Relato: *"as mentes malignas do evento do labirinto das valquírias não estão
-sendo negociáveis e colocados na kafra"*.
-
-Está certo, e é o vendor: o `db/re/item_db_etc.yml` dá ao 7583 `NoDrop`,
-`NoTrade`, `NoCart`, `NoStorage`, `NoGuildStorage`, `NoMail` e `NoAuction`.
-Nenhuma delas é nossa.
-
-**É decisão de economia, não conserto.** A Mente é a moeda das Valquírias de
-Malangdo (`npc/guerra/valquirias_de_malangdo.txt`) e a única fonte dela é o
-3º andar do Labirinto, a 25% por herói selado. Soltá-la cria um mercado:
-quem não joga o Labirinto passa a comprar refino MEGA de quem joga.
-
-As três saídas, da mais conservadora para a mais aberta:
-
-1. **só `NoStorage`/`NoGuildStorage`** — guardar na Kafra e no armazém de clã,
-   sem troca. Resolve metade do incômodo (mochila cheia) e não cria mercado.
-2. **soltar `NoStorage` e `NoTrade`** — troca entre jogadores, sem chão e sem
-   RoDEX. É o mercado, controlado.
-3. **soltar tudo** — vira item comum.
-
-O caminho de qualquer uma é um override em `db/guerra/item_db.yml` com o bloco
-`Trade:` inteiro (o leitor substitui o campo, não acrescenta), mais
-`@reloaditemdb`.
-
-### 1aq-b. O Suplemento Alimentar (100371) dá uma refeição de intimidade
-
-Relato: *"não está funcionando"*. Funciona — e é o que o torna pior de
-diagnosticar. Duas coisas medidas:
-
-- o `Script:` é `addhomintimacy 100`, e o próprio rAthena marca o valor com
-  `// !TODO: Confirm increase amount`. Cem pontos **de 100.000**: é o mesmo
-  que o `hom_food` dá por uma alimentação (`src/map/homunculus.cpp:900`).
-  Um item que se produz com Preparar Poção mais o 7144 e três insumos vale,
-  em intimidade, exatamente uma Ração;
-- o `buildin_addhomintimacy` sai calado quando **não há homúnculo invocado**
-  (`!(hd = sd->hd)`, `src/map/script.cpp:16033`). O item é consumido e nada
-  acontece. É a §4.21 em forma de item — o jogador não tem como saber.
-
-**O que decidir: quanto ele deve dar.** Não há fonte no bRO (a descrição do
-cliente só diz *"Increases the intimacy of your Homunculus"*) e o vendor
-declara que não sabe. Um número que fizesse sentido para o custo seria algo
-como 1.000 a 5.000 — mas é palpite, e palpite de economia é do dono.
-
-Independente do número, vale pôr o retorno visual: um `dispbottom` dizendo que
-a intimidade subiu, e uma recusa escrita quando não houver homúnculo.
-
-### 1aq-c. A Pancada Corporal (SR_KNUCKLEARROW) e a animação
-
-Relato: *"a animação da pancada corporal dos shuras está completamente
-diferente no estilo bRO ou LATAM"*.
-
-O que foi conferido e **bate** com o bRO: os números. A descrição do nosso
-cliente promete 600%/700% (chefe) no nível 1 e o
-`src/map/skills/acolyte/knucklearrow.cpp` entrega `100 + 400 + 100*lv`, ou
-seja os mesmos 600%, e `100 + 400 + 200*lv` contra chefe.
-
-O que é diferente é o **movimento**, e ele é servidor, não cliente: o
-`castendDamageId` leva o conjurador para a célula do alvo
-(`skill_check_unit_movepos`) e depois empurra o **conjurador** uma célula para
-trás (`skill_blown(src, src, ...)`); o dano sai 300 ms depois, num
-`skill_addtimerskill`. O empurrão do alvo vem noutro ponto
-(`skill.cpp:2659`), com bônus só se ele bater na parede.
-
-**Falta saber o que o jogador vê.** "Completamente diferente" pode ser o
-personagem escorregando para cima do alvo, pode ser o efeito visual do golpe,
-pode ser a ordem das duas coisas. Sem isso, qualquer mexida é chute — e mexer
-em movimento de habilidade é mexer no `skill.cpp`, que é código de terceiros
-(§2). **Pedir ao jogador um vídeo curto, ou a descrição do que ele esperava
-ver.**
-
-### 1aq-d. O abyss_04 não tem monstro nenhum, e a Teletransportadora leva lá
-
-Relato: *"na caverna subterrânea do lago do abismo (4) (abyss_04) não há
-nenhum tipo de monstros"*. Verdadeiro, e a origem é dupla:
-
-- o rAthena **nunca povoou** o `abyss_04`. O `npc/re/mobs/dungeons/abyss.txt`
-  vai do `abyss_01` ao `abyss_03` e para; não há warp, não há NPC, não há
-  linha de spawn em `npc/` inteiro. Só o `conf/maps_athena.conf` o carrega;
-- a nossa `teletransportadora.txt` oferece **quatro** andares
-  (`Disp("Abyss Lakes",1,4)`), e isso veio do Warper do Euphy byte a byte.
-  Quem escolhe o 4 cai em 169,159 num mapa vazio.
-
-As duas saídas:
-
-1. **tirar o 4 do menu** — `Disp("Abyss Lakes",1,3)` e a linha do
-   `naviregisterwarp`. Uma linha, e ninguém mais cai no vazio. É o que a
-   §4.3 recomenda: não inventar conteúdo que o bRO não tem aqui;
-2. **povoar** — exige a lista de monstros do `abyss_04` do bRO, que não está
-   nesta máquina. Seria inventar.
-
-**Recomendação: a 1.** A 2 fica para quando houver fonte.
-
-### 1aq-e. A culinária tradicional — os livros 6 a 10 é que são o gargalo
-
-Relato: *"não há como realizar a culinária tradicional (nível 1 ao 10) pois os
-itens para realizar o prato nível 9 por exemplo está desatualizado"*.
-
-O que foi medido, porque a mecânica **está** inteira:
-
-- o `db/re/produce_db.txt` tem as 60 receitas, seis por nível, dos níveis 1 a
-  10 (ItemLV 11 a 20). Nenhum ingrediente é inalcançável — os raros (Minhoca
-  Gorducha 632, Cenoura Arco-Íris 622, Flor da Ilusão 710) caem de monstro;
-- os temperos, molhos e panelas saem do **Assistente de Chef** de Prontera
-  (`npc/re/merchants/shops.txt:186`), junto dos kits 12125/12126/12127 e dos
-  livros de receita **1 a 5**;
-- qualquer kit serve para qualquer nível: o `skill_can_produce_mix` aceita
-  qualquer `itemlv` entre 11 e 20 quando o gatilho está nessa faixa
-  (`src/map/skill.cpp:12822`). Não é o kit que trava.
-
-**O que trava é o livro.** Os de nível 6 a 10 só caem de monstro, e o de
-nível 10 cai a **0,01%** de Maya Purple e de Doyen Irene — na prática,
-inalcançável. O de nível 9 é 1% do General Tartaruga e 0,01% de outros cinco.
-
-E há um segundo buraco, menor: a descrição de cada livro de 5 a 10 promete
-**sete** receitas, e a sétima é o **"Rodízio Nível N"** (itens 100075 a
-100080). Esses itens existem no `item_db` e **não têm receita nenhuma** no
-`produce_db.txt` — o livro promete um prato que o servidor não sabe fazer.
-
-Duas decisões, independentes:
-
-1. **como se consegue livro de 6 a 10?** Vender no Assistente de Chef (como
-   o bRO faz com os de 1 a 5) é o caminho curto e não mexe em taxa de drop;
-2. **o Rodízio entra?** Se sim, falta a receita, e ela teria de ser
-   inventada — não há fonte nesta máquina. Se não, a descrição do livro
-   continua prometendo o que não existe.
+- **Mitra do Florescer** — equipar no **+0** e conferir que os seis atributos
+  sobem 10. No **+9** eles têm de continuar subindo 10, e **não 20**: a
+  correção *move* a linha, não a duplica, e 20 seria o sinal de que alguém a
+  duplicou.
+- **Mente Maligna** — os quatro caminhos, porque são guardas diferentes no
+  C++: pôr na Kafra, trocar com outro personagem, **pôr no carrinho** e abrir
+  loja de mercador com ela. Os dois últimos são o pedido, e falham por motivos
+  separados se só uma das bandeiras tiver pegado.
+- **Suplemento Alimentar** — usar com homúnculo invocado e ler o `dispbottom`
+  com os dois números; o "depois" tem de cair **exatamente** num dos seis
+  degraus (400, 1100, 10100, 25100, 75100, 91100) ou em 100000. Usar **sem**
+  homúnculo tem de devolver o item com a recusa escrita.
+- **Teletransportadora** — o menu de Abyss Lakes tem de mostrar **três**
+  opções, e a 3ª continuar indo para `abyss_03` 116,27. Se aparecer quatro, o
+  `@reloadscript` não rodou.
 
 ### 1aq-f. Os 31 itens obteníveis que ainda derrubam o cliente
 
