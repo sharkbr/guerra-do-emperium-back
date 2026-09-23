@@ -4892,3 +4892,26 @@ alguém olhar produz item com desenho errado em série.
 Uma alternativa mais barata para a família das gemas: como são todos
 minério/cristal, uma arte só serve para os dezessete, e a diferença entre
 eles já está no nome.
+
+## 1ar. Os sete itens do pedido do jogador — só falta o deploy (2026-09-22)
+
+**Conferido em jogo pelo dono em 2026-09-22**, e o patch 0034 está no ar. O
+caso inteiro está no `HISTORICO.md` (2026-09-22); aqui fica só o que ainda
+não chegou ao jogador.
+
+### O que espera o `implanta.sh` (Mac)
+
+Três mudanças de **servidor**. Nada de cliente — o patch 0034 já levou o
+`itemInfo.lua`, e a arte dos sete foi na base de 2026-08-16.
+
+| o quê | onde mora | recarregador |
+|---|---|---|
+| Guitarra Vibrato (570069) + os seis `Name:` dos Manuscritos | `db/guerra/item_db.yml` | `@reloaditemdb` |
+| o `Buy: 1` dos sete | `db/guerra/item_db_lojas.yml` | `@reloaditemdb` |
+| as duas linhas de `shop` (Senhor das Armas e Acessorista) | `npc/guerra/mercado_contemporaneo.txt` | `@reloadscript` |
+
+**Os dois recarregadores são obrigatórios, e nesta ordem:** `@reloaditemdb`
+antes do `@reloadscript`. Ao contrário, o `npc_parse_shop` descarta o 570069 da
+vitrine do Senhor das Armas por ele não estar no `item_db` em memória
+(`CLAUDE.md` §5), calado. Os seis Manuscritos já existem no vendor e sobrevivem
+à ordem errada, mas apareceriam com o nome em inglês do servidor.

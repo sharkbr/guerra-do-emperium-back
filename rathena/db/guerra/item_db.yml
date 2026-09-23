@@ -4833,3 +4833,154 @@ Body:
       }
       addhomintimacy .@alvo - .@antes;
       dispbottom "A intimidade de " + gethominfo(2) + " subiu de " + .@antes + " para " + gethominfo(3) + " - um grau inteiro.";
+
+  # ------------------------------------------------------------------
+  # UMA PECA PEDIDA PARA A LOJA QUE O VENDOR NAO TEM - 2026-09-22
+  #
+  # Pedido de JOGADOR de tres coisas para as lojas de Prontera: o Anel
+  # das Tempestades (490427, que ja estava a venda no Acessorista desde
+  # 2026-08-16), os Manuscritos (os seis existem no vendor e so
+  # precisaram de entrada de cliente e da linha da loja) e esta.
+  # Placeholder, nao override - ao atualizar o rathena/, conferir se ele
+  # chegou; ate la a nossa entrada e a unica que existe.
+  #
+  # Os numeros e os bonus saem da descricao do bRO
+  # (`estado_item.py --id 570069 --descricao`), e o molde de forma e o
+  # ERHU (570070), instrumento do vendor que ja esta na MESMA loja e cuja
+  # descricao no bRO fecha com as MESMAS duas linhas - "Nivel da arma: 4"
+  # e "Classes: Trovadores e evolucoes". Foi de la que vieram o
+  # `SubType: Musical`, o bloco `Classes:` e o `Gender: Male`.
+  # ------------------------------------------------------------------
+
+  - Id: 570069
+    # GUITARRA VIBRATO [3]. Irma do CHICOTE VIBRATO (580069), que entrou
+    # em 2026-09-17 pelo mesmo caminho e tambem nao existia no vendor.
+    # Descricao do bRO, linha por linha:
+    #   A cada refino: velocidade de ataque +1%
+    #                                          -> bonus bAspdRate,.@r
+    #   A cada refino: dano magico de todas as
+    #     propriedades +1%                     -> bMagicAtkEle,Ele_All,.@r
+    #   +5: dano de [Ressonancia] +10%, conjuracao variavel -20%
+    #   +7: +20% de dano e -30% de conjuracao, ADICIONAIS
+    #   +9: +40% de dano e -50% de conjuracao, ADICIONAIS
+    #   ATQ 125, ATQM 200, Peso 60 (=600 aqui), nivel de arma 4,
+    #   nivel necessario 130, Classes: Trovadores e evolucoes
+    #
+    # [RESSONANCIA] E O `WM_REVERBERATION`, e o nome saiu da tabela que o
+    # JOGO le (CLAUDE.md 4.12): o skillinfolist.lub deste cliente chama
+    # `WM_REVERBERATION` de "Ressonancia" e `WM_DOMINION_IMPULSE` de
+    # "Ativar Ressonancia". Sao duas habilidades com nome parecido, e a
+    # descricao fala da primeira - a que solta os clusters, nao a que os
+    # detona.
+    #
+    # OS TRES DEGRAUS SAO ADITIVOS, e e por isso que sao tres `if`
+    # separados e nao um aninhado: a descricao diz "adicional" nos dois
+    # ultimos. No +9 o total e +70% de dano e -100% de conjuracao
+    # variavel, ou seja conjuracao instantanea de [Ressonancia]. Funciona
+    # porque o `pc_bonus_itembonus` (src/map/pc.cpp:3659) SOMA quando o id
+    # da habilidade ja esta na lista, tanto para o `skillatk` quanto para
+    # o `skillcastrate` - as tres linhas se empilham em vez de a ultima
+    # vencer.
+    #
+    # Sem `View`: arma nao leva View no item_db - o ClassNum mora so no
+    # itemInfo.lua (CLAUDE.md secao 5), e veio do bRO pelo
+    # completa_iteminfo.py junto com o nome e a descricao, porque o
+    # cliente tambem nao conhecia o ID. A arte (`Hs_Ba_Guitar`) ja estava
+    # nos 4 arquivos, medida pelo valida_visual.py depois da entrada.
+    AegisName: Vibrato_Guitar_Guerra
+    Name: "Guitarra Vibrato"
+    Type: Weapon
+    SubType: Musical
+    Weight: 600
+    Attack: 125
+    MagicAttack: 200
+    Range: 1
+    Slots: 3
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,.@r;
+      bonus2 bMagicAtkEle,Ele_All,.@r;
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",10;
+         bonus2 bVariableCastrate,"WM_REVERBERATION",-20;
+      }
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",20;
+         bonus2 bVariableCastrate,"WM_REVERBERATION",-30;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",40;
+         bonus2 bVariableCastrate,"WM_REVERBERATION",-50;
+      }
+
+  # ------------------------------------------------------------------
+  # SEIS OVERRIDES DE NOME - os Manuscritos (2026-09-22)
+  #
+  # Mesma entrega da Guitarra acima: um jogador pediu "todos os
+  # manuscritos que achar", e a familia e de seis - os `Record of Wrath`
+  # do vendor, ids 490170/490173/490175/490191/490192/490198, todos
+  # `Both_Accessory` de uma cova. Eles vao para o Acessorista
+  # (npc/guerra/mercado_contemporaneo.txt).
+  #
+  # O QUE ISTO CONSERTA: os seis estavam FORA do itemInfo.lua deste
+  # cliente, entao o `nomes_pt_item_db.py` nunca teve de onde tirar o
+  # nome em portugues e o `Name:` do vendor ficou em ingles. A entrada de
+  # cliente entrou nesta mesma rodada (completa_iteminfo.py), mas rodar o
+  # `nomes_pt_item_db.py` de novo agora reescreveria os tres item_db do
+  # vendor com as 16783 trocas que ele ainda tem pendentes - uma sessao
+  # por si, registrada em PENDENCIAS.md. Seis linhas aqui resolvem os seis
+  # sem abrir aquilo.
+  #
+  # POR QUE BLOCO SO DE `Name:` E SEGURO NESTES SEIS, e nao em geral: o
+  # perigo de override parcial no item_db e o `hasPriceValue` do
+  # itemdb.cpp:239, que grava `{has_buy, has_sell}` a CADA parse do mesmo
+  # Id - bloco sem preco apaga a derivacao `value_sell = value_buy/2` que
+  # o loadingFinished (itemdb.cpp:1185) faria. Foi o que zerou a revenda
+  # de 7126 itens quando esta ferramenta tentou o caminho do override (ver
+  # ferramentas/LEIAME.md). Aqui nao ha o que perder: NENHUM dos seis
+  # declara `Buy` nem `Sell` no vendor, os dois ja valem zero, e os seis
+  # sao `NoSell: true` por cima disso. Conferido um a um antes de escrever.
+  #
+  # E eles entram no balde "nossos" do `nomes_pt_item_db.py` a partir de
+  # agora, que e o comportamento certo justamente porque DECLARAM `Name:`
+  # - a armadilha do Amuleto de Ziegfried (PENDENCIAS.md 1ak) e o
+  # contrario, bloco daquele arquivo SEM `Name:`.
+  #
+  # Os nomes sao os que o cliente desenha, que e a regra (a fonte e o
+  # itemInfo.lua, nao o bRO - CLAUDE.md 4.12). Os dois concordam aqui.
+  # ------------------------------------------------------------------
+
+  - Id: 490170
+    AegisName: Record_Mage2_TW
+    Name: "Manuscrito dos Magos"
+
+  - Id: 490173
+    AegisName: Record_Sward2_TW
+    Name: "Manuscrito dos Espadachins"
+
+  - Id: 490175
+    AegisName: Record_Merchant2_TW
+    Name: "Manuscrito dos Mercadores"
+
+  - Id: 490191
+    AegisName: Record_Thief2_TW
+    Name: "Manuscrito dos Gatunos"
+
+  - Id: 490192
+    AegisName: Record_Acolyte2_TW
+    Name: "Manuscrito dos Noviços"
+
+  - Id: 490198
+    AegisName: Record_Acher2_TW
+    Name: "Manuscrito dos Arqueiros"

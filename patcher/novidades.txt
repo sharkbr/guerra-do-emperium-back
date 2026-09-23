@@ -138,3 +138,12 @@
 - Acaraje
 - Armadilha de Frutas
 - Suco de Frutas
+
+[0034] 2026-09-22  Sete itens novos nas lojas de Prontera
+- Guitarra Vibrato [3] - Senhor das Armas
+- Manuscrito dos Magos [1] - Acessorista
+- Manuscrito dos Espadachins [1] - Acessorista
+- Manuscrito dos Mercadores [1] - Acessorista
+- Manuscrito dos Gatunos [1] - Acessorista
+- Manuscrito dos Novicos [1] - Acessorista
+- Manuscrito dos Arqueiros [1] - Acessorista

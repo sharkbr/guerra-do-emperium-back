@@ -3668,10 +3668,22 @@ Body:
     Buy: 1                # Paracelsus_Glove
   - Id: 490159
     Buy: 1                # Rough_Core
+  - Id: 490170
+    Buy: 1                # Record_Mage2_TW
+  - Id: 490173
+    Buy: 1                # Record_Sward2_TW
+  - Id: 490175
+    Buy: 1                # Record_Merchant2_TW
   - Id: 490183
     Buy: 1                # Military_Glove
+  - Id: 490191
+    Buy: 1                # Record_Thief2_TW
+  - Id: 490192
+    Buy: 1                # Record_Acolyte2_TW
   - Id: 490193
     Buy: 1                # Traveler_Ring
+  - Id: 490198
+    Buy: 1                # Record_Acher2_TW
   - Id: 490242
     Buy: 1                # C_Valkyrie_Hair
   - Id: 490243
@@ -3720,6 +3732,8 @@ Body:
     Buy: 1                # Dead_Rod
   - Id: 550095
     Buy: 1                # Ancient_Royal_Scepter
+  - Id: 570069
+    Buy: 1                # Vibrato_Guitar_Guerra
   - Id: 570070
     Buy: 1                # Erhu_BR
   - Id: 580069

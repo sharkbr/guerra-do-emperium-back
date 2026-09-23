@@ -1632,6 +1632,34 @@ OnInit:
 // (470298), a Viola com o Salto (470300). Os quatro parceiros ja
 // estavam a venda ou entraram nesta mesma rodada; os dois instrumentos
 // eram a metade que faltava.
+// RODADA DE 2026-09-22: entrou 1, e a loja foi de 59 para 60.
+//   + 570069  Guitarra Vibrato             [3]  nao existia no vendor NEM no cliente
+//
+// O PEDIDO VEIO DE JOGADOR, e nao do dono - o que ja tinha acontecido
+// com relato de defeito, mas nao com pedido de vitrine. Foram tres
+// coisas, e so esta caiu aqui: os seis Manuscritos foram para o
+// Acessorista e o Anel das Tempestades (490427) nao precisou de nada -
+// ja estava naquela vitrine desde 2026-08-16.
+//
+// A GUITARRA VIBRATO e irma do CHICOTE VIBRATO (580069), que entrou em
+// 2026-09-17 nesta mesma loja e faltava dos mesmos tres lados. Aqui
+// faltavam dois: entrada em db/guerra/item_db.yml a partir da descricao
+// do bRO (o cabecalho da entrada de la traz a traducao linha a linha) e
+// entrada de cliente pelo completa_iteminfo.py. A arte (`Hs_Ba_Guitar`)
+// ja estava nos 4 arquivos - o valida_visual.py deu 4 de 4 assim que a
+// entrada de cliente existiu. Cliente so chega ao jogador por patch
+// (CLAUDE.md 4.18).
+//
+// O MOLDE DE FORMA FOI O ERHU (570070), que esta nesta mesma vitrine
+// desde 2026-08-18: mesmo `SubType: Musical`, mesmo `Classes: All_Third + Fourth`
+// e mesmo `Gender: Male`, porque a descricao do bRO dos dois fecha com a
+// mesma linha - "Classes: Trovadores e evolucoes".
+//
+// E A UNICA ARMA DESTA LOJA COM CONJURACAO INSTANTANEA EMBUTIDA: no
+// refino 9 os tres degraus somam -100% de conjuracao variavel de
+// [Ressonancia] (WM_REVERBERATION). E o que a descricao do bRO promete,
+// somada degrau a degrau, e nao invencao nossa. Sem conjunto nenhum -
+// nem no db/re/item_combos.yml, nem no nosso.
 prontera,151,167,4	script	Senhor das Armas	1_F_MERCHANT_02,{
 	callshop "Senhor das Armas#loja",0;
 	end;
@@ -1640,7 +1668,7 @@ OnInit:
 	placadevenda "Armas";
 	end;
 }
--	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,1132:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1,32013:1,590041:1,510064:1,550073:1,500005:1,16051:1,810011:1,18145:1,580069:1,32108:1,32107:1
+-	shop	Senhor das Armas#loja	-1,1328:1,32014:1,13147:1,13342:1,16082:1,18171:1,26141:1,26206:1,28033:1,28245:1,28246:1,28247:1,28248:1,28746:1,32100:1,21051:1,21053:1,500009:1,510155:1,550021:1,1132:1,13092:1,28739:1,550018:1,700102:1,700080:1,700069:1,1940:1,570070:1,1993:1,28617:1,540018:1,28025:1,26163:1,26150:1,32106:1,28251:1,28252:1,32105:1,1682:1,1672:1,1670:1,520003:1,550095:1,16074:1,590014:1,16026:1,32007:1,32013:1,590041:1,510064:1,550073:1,500005:1,16051:1,810011:1,18145:1,580069:1,32108:1,32107:1,570069:1
 
 // Armaduras. Os quatro IDs vieram prontos na lista e os quatro
 // conferiram: 450338 Algazarra, 450257 Mediadora Platinada,
@@ -2145,6 +2173,62 @@ OnInit:
 // metade, volta a ter as duas pecas na mesma vitrine. Nada mudou no
 // item nem no cliente - a arte continua a do Broche, por escolha, e a
 // linha de `bonus bSpl,3` continua inerte neste cliente (PENDENCIAS.md).
+// RODADA DE 2026-09-22: entraram 6, e a loja foi de 84 para 90.
+// A FAMILIA INTEIRA DOS MANUSCRITOS, a pedido de um JOGADOR - "todos os
+// manuscritos que achar". O pedido veio com o 490198 pelo ID e o resto
+// por extenso; sao seis, e a varredura dos 18845 nomes do bRO fechou em
+// seis.
+//   + 490170  Manuscrito dos Magos         [1]
+//   + 490173  Manuscrito dos Espadachins   [1]
+//   + 490175  Manuscrito dos Mercadores    [1]
+//   + 490191  Manuscrito dos Gatunos       [1]
+//   + 490192  Manuscrito dos Noviços       [1]
+//   + 490198  Manuscrito dos Arqueiros     [1]
+//
+// Os seis sao os `Record of Wrath` do vendor, `Both_Accessory` de uma
+// cova, nivel 100, `NoDrop` e `NoSell`. Estavam FORA do itemInfo.lua
+// deste cliente - apareceriam sem nome e sem icone. A entrada veio do
+// bRO pelo completa_iteminfo.py, e a arte deu 4 de 4 nos seis sem
+// copiar um arquivo.
+//
+// CINCO DELES DIVIDEM O MESMO DESENHO, e isso nao e defeito da
+// importacao: o `identifiedResourceName` do bRO e `Record_Mage2_TW` para
+// 490173, 490175, 490191, 490192 e 490198, e so o 490170 tem recurso
+// proprio (coreano). E a CLAUDE.md secao 5 - "o identifiedResourceName do
+// bRO e o DESENHO, nao a identidade do item".
+//
+// O `Name:` DO SERVIDOR VIROU PORTUGUES por seis overrides em
+// db/guerra/item_db.yml, e nao pelo nomes_pt_item_db.py: aquele script
+// reescreve os tres item_db do vendor e tem 16783 trocas pendentes, que e
+// uma sessao por si (PENDENCIAS.md). O cabecalho daquele bloco explica
+// por que bloco so de `Name:` e seguro NESTES seis e nao em geral.
+//
+// O QUE FICOU DE FORA, e por que:
+//   - os seis `Record of Destroy`, que sao a geracao anterior da mesma
+//     familia (32285, 32286, 32287, 32288, 490094 e 490095): NAO EXISTEM
+//     nos 18845 itens do bRO, entao nao ha nome em portugues para eles.
+//     E a CLAUDE.md 4.2 - ingles se detecta pela ausencia no bRO;
+//   - a Folha de Manuscrito (7526), que o bRO tem em portugues mas e
+//     `Type: Etc`, material. Estas nove lojas sao de equipamento, uma
+//     por slot.
+//
+// CONJUNTOS: cada Manuscrito tem tres familias de parceiro, e so uma
+// delas esta a venda. Com o `Record of Destroy` da mesma classe - o que
+// acabou de ficar de fora, logo acima. Com chapeus `Old_*`, que nao estao
+// em vitrine nossa. E com duas ou tres CARTAS DE MVP cada um, e essas
+// TODAS ja estao na loja Carta de MVP do mercado_de_cartas.txt:
+//
+//   Magos        Arquimaga Kathryne, Professora Celia
+//   Espadachins  Lorde Seyren, Paladino Randel
+//   Mercadores   Mestre Ferreiro Howard, Criador Flamel
+//   Gatunos      Algoz Eremes, Desordeira Gertie
+//   Novicos      Sumo Margaretha, Mestre Chen
+//   Arqueiros    Atiradora Cecil, Menestrel Alphoccio, Cigana Trentini
+//
+// Conferido id a id contra as linhas de `shop` de npc/guerra/*.txt, e nao
+// pelo nome: o `Clown_Card` se chama "Carta Menestrel Alphoccio" e o
+// `Stalker_Card` "Carta Desordeira Gertie" - adivinhar o nome pelo
+// AegisName erra na maioria.
 prontera,159,161,4	script	Acessorista	1_M_MERCHANT,{
 	callshop "Acessorista#loja",0;
 	end;
@@ -2153,4 +2237,4 @@ OnInit:
 	placadevenda "Acessórios";
 	end;
 }
--	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1,28565:1,28434:1,490098:1,2853:1,2979:1,32221:1,490250:1,490099:1,28492:1,32265:1,490130:1,490381:1,28410:1,28538:1,490451:1,28439:1,28411:1,490029:1,32243:1,490028:1,32264:1,490032:1,32253:1,32247:1,490010:1,32261:1,32267:1,490041:1,490009:1,32266:1,490034:1,32237:1,490482:1
+-	shop	Acessorista#loja	-1,490337:1,32258:1,490319:1,490290:1,32206:1,490367:1,490037:1,490104:1,28572:1,2980:1,32295:1,28322:1,28321:1,490113:1,490079:1,490159:1,490013:1,490193:1,490145:1,490083:1,28394:1,490243:1,490110:1,490096:1,490146:1,490497:1,490336:1,490141:1,490102:1,490272:1,490427:1,490118:1,490068:1,28430:1,28517:1,490043:1,2936:1,28379:1,28433:1,28598:1,28564:1,28533:1,28437:1,28531:1,490183:1,32262:1,28438:1,28491:1,32263:1,490038:1,28596:1,28565:1,28434:1,490098:1,2853:1,2979:1,32221:1,490250:1,490099:1,28492:1,32265:1,490130:1,490381:1,28410:1,28538:1,490451:1,28439:1,28411:1,490029:1,32243:1,490028:1,32264:1,490032:1,32253:1,32247:1,490010:1,32261:1,32267:1,490041:1,490009:1,32266:1,490034:1,32237:1,490482:1,490170:1,490173:1,490175:1,490191:1,490192:1,490198:1

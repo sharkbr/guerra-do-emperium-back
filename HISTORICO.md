@@ -19215,3 +19215,148 @@ O que foi medido, para que ninguém meda de novo:
 - **Nada visto em jogo.** O que olhar está na §1aq do `PENDENCIAS.md`, e são
   os quatro caminhos da Mente Maligna em separado — Kafra, troca, carrinho e
   loja —, porque são guardas diferentes no C++.
+
+
+## Sete itens de um pedido de jogador: a Guitarra e a família dos Manuscritos (2026-09-22)
+
+**O pedido não veio do dono, veio de um jogador** — o que já tinha acontecido
+com relato de defeito, mas não com pedido de vitrine. Três coisas: o **Anel da Tempestade (490427)**, o
+**Manuscrito dos Arqueiros (490198)** com o pedido explícito de *"aqui coloca
+todos os manuscritos que achar"*, e a **Guitarra Vibrato [3] (570069)**.
+
+Uma passada de `estado_item.py` nos três dividiu o trabalho em três baldes, e
+o primeiro custou zero:
+
+| balde | itens | o que custou |
+|---|---|---|
+| **já estava à venda** | Anel das Tempestades (490427) | nada — está no Acessorista desde a leva de 2026-08-16 |
+| **existiam no vendor, faltava o cliente e a linha** | os seis Manuscritos (490170, 490173, 490175, 490191, 490192, 490198) | `completa_iteminfo.py` + seis overrides de `Name:` + uma linha de `shop` |
+| **não existia em `item_db` nenhum** | Guitarra Vibrato (570069) | entrada em `db/guerra/item_db.yml` a partir da descrição do bRO |
+
+O `Locations:` decidiu onde cada um entrou (§4.14): os seis Manuscritos são
+`Both_Accessory` e foram para o **Acessorista** (84 → 90); a Guitarra é
+`Right_Hand`, `SubType: Musical`, e foi para o **Senhor das Armas** (59 → 60).
+
+### "Todos os manuscritos" são seis, e a varredura é o que prova
+
+O pedido dava um ID e a família por extenso. A varredura dos 18845 nomes do
+`iteminfo_new.lub` do bRO por *"Manuscrito"* devolveu **sete**, e um deles não
+entra: a **Folha de Manuscrito (7526)** é `Type: Etc`, material — e estas nove
+lojas são de equipamento, uma por slot.
+
+Os seis são os `Record of Wrath` do vendor, a segunda geração de uma família de
+doze. **A primeira geração ficou de fora por regra, não por esquecimento:** os
+seis `Record of Destroy` (32285, 32286, 32287, 32288, 490094 e 490095) **não
+existem nos 18845 itens do bRO**, então não há nome em português para eles — é a
+§4.2, *inglês se detecta pela ausência no bRO*.
+
+E isso deixa cada Manuscrito com o conjunto pela metade de propósito, porque o
+parceiro de cada um é justamente o `Record of Destroy` da mesma classe. Os
+outros parceiros são chapéus `Old_*`, fora de vitrine nossa, e **duas ou três
+cartas de MVP cada um — essas todas já à venda** na loja Carta de MVP do
+`mercado_de_cartas.txt`. Conferido id a id contra as linhas de `shop`, e não
+pelo nome: `Clown_Card` se chama *Carta Menestrel Alphoccio* e `Stalker_Card`
+*Carta Desordeira Gertie*, então adivinhar pelo AegisName erra na maioria.
+
+### Cinco dos seis dividem o mesmo desenho, e não é defeito
+
+O `identifiedResourceName` do bRO é **`Record_Mage2_TW` para cinco deles** —
+490173, 490175, 490191, 490192 e 490198 —, e só o 490170 tem recurso próprio
+(coreano). É a §5, *o `identifiedResourceName` do bRO é o DESENHO, não a
+identidade do item*. `valida_visual.py` deu 4 de 4 nos seis.
+
+**E a arte não precisa de patch**, o que é raro nesta família de entrega: os
+oito arquivos (`record_mage2_tw.*` e `hs_ba_guitar.*`) estão soltos em
+`cliente\data\` com data de **2026-08-01**, a rodada dos 272 arquivos do
+`instala_visual.py` — ou seja, entraram na **base** publicada em 2026-08-16,
+que empacota `data\` inteiro. Quem instalou já os tem. Conferido também que
+nenhum dos três recursos está no `data.grf`: eles existem *só* soltos, e é a
+base que os levou.
+
+### O `Name:` do servidor, e por que seis overrides em vez da ferramenta
+
+Os seis estavam **fora do `itemInfo.lua`** deste cliente, e o
+`nomes_pt_item_db.py` tira o nome de lá — sem entrada de cliente ele nunca teve
+de onde traduzir, e o `Name:` do vendor ficou em `Record of Wrath (Mage)`. A
+entrada de cliente entrou nesta rodada, mas **rodar a ferramenta agora
+reescreveria os três `item_db` do vendor com as 16783 trocas que ela ainda tem
+pendentes** (a §1ad do `PENDENCIAS.md`, nas três coisas que aquela sessão levantou e não resolveu) — uma sessão por si, e não era o
+pedido.
+
+A saída foram seis blocos de `Name:` em `db/guerra/item_db.yml`. **Bloco
+parcial de `item_db` é perigoso pelo `hasPriceValue`** (`itemdb.cpp:239`), que
+grava `{has_buy, has_sell}` a cada parse do mesmo Id e apagaria a derivação
+`value_sell = value_buy/2` do `loadingFinished` — foi o que zerou a revenda de
+7126 itens quando o `nomes_pt_item_db.py` tentou esse caminho. **Aqui não há o
+que perder, e foi conferido um a um:** nenhum dos seis declara `Buy` nem `Sell`
+no vendor, os dois já valem zero, e os seis são `NoSell: true` por cima disso.
+
+Efeito colateral bem-vindo: a partir de agora os seis caem no balde "nossos" do
+`nomes_pt_item_db.py`, e cair nele é **correto** porque eles declaram `Name:` —
+é o contrário da armadilha do Amuleto de Ziegfried (§1ak do `PENDENCIAS.md`),
+que é bloco daquele arquivo *sem* `Name:`.
+
+### A Guitarra Vibrato, irmã do Chicote
+
+Faltava dos dois lados que importam — `item_db` e `itemInfo.lua` —, e o molde
+de forma foi o **Erhu (570070)**, que está na mesma vitrine desde 2026-08-18 e
+cuja descrição no bRO fecha com a mesma linha: *"Classes: Trovadores e
+evoluções"*. De lá vieram `SubType: Musical`, `Classes: All_Third + Fourth` e
+`Gender: Male`.
+
+Os números saíram da descrição do bRO: ATQ 125, ATQM 200, peso 60, nível de
+arma 4, nível 130, três covas. Os bônus, linha a linha:
+
+- *a cada refino*: velocidade de ataque +1% → `bonus bAspdRate,.@r`; dano
+  mágico de todas as propriedades +1% → `bonus2 bMagicAtkEle,Ele_All,.@r`;
+- *+5, +7 e +9*: dano de **[Ressonância]** +10%, +20% e +40%, e conjuração
+  variável −20%, −30% e −50%.
+
+**[Ressonância] é o `WM_REVERBERATION`**, e o nome saiu da tabela que o jogo lê
+(§4.12): o `skillinfolist.lub` deste cliente chama `WM_REVERBERATION` de
+*Ressonância* e `WM_DOMINION_IMPULSE` de *Ativar Ressonância* — são duas
+habilidades de nome parecido, e a descrição fala da primeira.
+
+**Os três degraus são aditivos**, porque a descrição diz "adicional" nos dois
+últimos — por isso são três `if` separados e não um aninhado. No +9 somam **+70%
+de dano e −100% de conjuração variável**, ou seja conjuração instantânea de
+[Ressonância]. Funciona porque o `pc_bonus_itembonus` (`src/map/pc.cpp:3659`)
+**soma** quando o id da habilidade já está na lista, tanto no `skillatk` quanto
+no `skillcastrate` — a leitura intuitiva seria a última linha vencer, e não é.
+
+O AegisName é `Vibrato_Guitar_Guerra`, na convenção dos placeholders: ao
+atualizar o vendor, conferir se o ID chegou.
+
+### O que foi conferido, e o que não
+
+- `estado_item.py` nos sete: servidor, cliente, bRO e arte de acordo, e a linha
+  da loja apontada por arquivo e linha.
+- `zera_revenda_das_lojas.py` regerou o `item_db_lojas.yml` (1844 → 1851
+  itens, os sete novos com `Buy: 1`) e o `--conferir` diz OK.
+- `marca_indestrutiveis.py`: rodado, e **não mudou um byte** — nenhum dos sete
+  promete "Indestrutível" na descrição. O `--conferir` continua nos mesmos 30
+  e saindo 1, que é o estado de sempre: ele mede o `item_db` do vendor, não o
+  nosso override.
+- `ajusta_covas_do_cliente.py --conferir`: cliente e servidor concordam, e as
+  três covas da Guitarra batem dos dois lados.
+- O `Gender: Male` da Guitarra **evita** o aviso `Musical instruments are
+  always male-only` (`itemdb.cpp:1234`), que só sai quando o sexo declarado não
+  é masculino.
+- O `item_db.yml` foi lido de volta em cp1252 e passou por um parser de YAML
+  antes de entregar; as duas linhas de `shop` continuam a 523 e 790 bytes, bem
+  abaixo dos 2048 do `char w4`.
+- **Conferido em jogo pelo dono no mesmo dia**, que é o que o pedido de commit
+  afirma. Nada foi recarregado por mim: o map-server local estava de pé e ele
+  deu os dois comandos na sessão dele. O que sobra é o deploy — §1ar do
+  `PENDENCIAS.md`.
+
+### O patch 0034
+
+Leva **um arquivo só** — o `itemInfo.lua`, 2,46 MB no zip —, e isso é a notícia:
+patch de item novo costuma levar arte junto, e aqui a arte já estava na base.
+As sete notas do painel listam os sete pelo nome, com a loja de cada um ao lado
+(§4.24). Publicado no mesmo dia.
+
+O lado do servidor — o `db/guerra/item_db.yml`, o `item_db_lojas.yml` e as duas
+linhas de `shop` — espera o `implanta.sh` do Mac, com `@reloaditemdb` **antes**
+do `@reloadscript`.
