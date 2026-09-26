@@ -242,6 +242,13 @@ def levanta():
 
 def conferir():
     pendentes, isentos, sem_trava = levanta()
+    # O `levanta` mede contra o vendor, de proposito: e dali que o `gerar`
+    # copia o Script. Para conferir, o que vale e o jogo, e no jogo o arquivo
+    # gerado vence. Sem descontar o que ele ja cobre, o --conferir acusava a
+    # lista inteira e saia 1 para sempre (2026-09-25).
+    gerado = blocos_yml(SAIDA)
+    pendentes = [p for p in pendentes
+                 if p[0] not in gerado or p[3] not in gerado[p[0]]]
     for sid, nome, aegis, bonus, script in pendentes:
         print u'  %-8d %-28s %-10s %s' % (sid, aegis, bonus[12:], nome)
     print

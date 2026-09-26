@@ -1746,6 +1746,8 @@ Body:
     Buy: 1                # C_Orc_Hero_Helm
   - Id: 20397
     Buy: 1                # C_Jakk
+  - Id: 20472
+    Buy: 1                # C_Helm_Of_Angel
   - Id: 20506
     Buy: 1                # C_Invisible_Manteau
   - Id: 20612
@@ -2314,6 +2316,8 @@ Body:
     Buy: 1                # Lacma_R
   - Id: 28746
     Buy: 1                # Blut_Gladius
+  - Id: 28900
+    Buy: 1                # ShieldOfGuardsman
   - Id: 28902
     Buy: 1                # Mad_Bunny_K_
   - Id: 28910

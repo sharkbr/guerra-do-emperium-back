@@ -1786,6 +1786,12 @@ OnInit:
 //   + 460002  Escudo de Áries
 // RODADA DE 2026-09-13: saiu um, e a loja foi de 23 para 22.
 //   -  28901  Coelho Macabro               tirado a pedido
+// RODADA DE 2026-09-25: entrou 1, e a loja foi de 22 para 23.
+//   +  28900  Égide da Realeza     [1]  pedido como "escudo da realeza"
+// "Escudo da Realeza" nao existe com esse nome nem no bRO nem no
+// cliente; a Égide da Realeza (ShieldOfGuardsman) e o unico escudo
+// com "Realeza" no nome. `Left_Hand`, 4 de 4 de arte, nome PT no
+// itemInfo.lua - nao custou patch.
 prontera,159,167,4	script	Escudeiro	1_F_MERCHANT_01,{
 	callshop "Escudeiro#loja",0;
 	end;
@@ -1794,7 +1800,7 @@ OnInit:
 	placadevenda "Escudos";
 	end;
 }
--	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1,460000:1,2168:1,28944:1,28902:1,28956:1,460004:1,460014:1,460015:1,460002:1
+-	shop	Escudeiro#loja	-1,460074:1,460023:1,460025:1,460046:1,28962:1,28910:1,2185:1,2198:1,460052:1,460050:1,460003:1,28953:1,28946:1,460000:1,2168:1,28944:1,28902:1,28956:1,460004:1,460014:1,460015:1,460002:1,28900:1
 
 // ----- Fileira de baixo (y=161): capas, sapatos, acessorios --
 
