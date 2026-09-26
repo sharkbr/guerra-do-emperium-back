@@ -46,3 +46,4 @@
 0033	0033-quatro-itens-deixam-de-derrubar-o-client.zip	3822fdc4b917c814f638cef3895e2a99aa814775dc6322573e25cdb471926a13	2610827	Quatro itens deixam de derrubar o cliente
 0034	0034-sete-itens-novos-nas-lojas-de-prontera.zip	79726494f0c703fd6bba95ec499fa3dd512a64dbd95c7a5b322913aeef163b1d	2579198	Sete itens novos nas lojas de Prontera
 0035	0035-morroc-destruida.zip	366393cfd6b0403a22e43cb69037ecf5fd1d85dfb94ab3137f69a02464bc57f2	31300	Morroc destruida
+0036	0036-a-roleta-dos-caca-niqueis-do-cassino.zip	a8f2896e712255dab9339d4b8001cacf2aff6c4b677dffaf9716dc3566a162db	4374277	A roleta dos caca-niqueis do Cassino

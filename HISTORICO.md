@@ -19648,3 +19648,11 @@ Conferido offline: o map-server compila e linka limpo (numa pasta de
 rascunho, para não tocar no binário no ar), e o desvio foi aplicado numa
 **cópia** do exe e desmontado de volta. O exe de verdade não foi tocado —
 havia quatro clientes abertos. O que falta está no `PENDENCIAS.md` §0d.
+
+**Mesmo dia, depois do teste:** funcionou em jogo. O dono notou o "Success"
+da vitória saindo atrás da roleta, na mesma altura, e pediu-o 200 px acima.
+Não se achou quem o desenha: o `SlotMachine.spr` tem **Success** escrito no
+rolo do quadro 7 (a roleta parada em vitória), e existe o efeito
+`TamingSuccess.str` (número 167 do cliente), mas nenhuma chamada a ele
+apareceu no exe. Sem um print para decidir, o dono preferiu deixar assim. O
+exe saiu no **patch 0036**, idêntico ao do 0029 a menos do desvio.

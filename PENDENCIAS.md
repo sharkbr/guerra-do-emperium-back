@@ -113,33 +113,18 @@ continua desenhando a cidade inteira. Só muda se incomodar.
 
 ---
 
-## 0d. A Roleta do Cassino — falta o exe, a compilação e a tela (2026-09-26)
+## 0d. A Roleta do Cassino — só o deploy (2026-09-26)
 
-Os dezesseis caça-níqueis do salão leste do `cmd_in02` estão escritos
-(`npc/guerra/roleta_do_cassino.txt`, `src/custom/roleta_do_cassino.hpp`,
-`ferramentas/abre_roleta_do_cassino.py`) e **nada foi visto em jogo**. O
-map-server compilou limpo numa pasta de rascunho; o binário do servidor e o exe
-do cliente continuam os antigos. Na ordem:
+Testada e aprovada pelo dono em DEV; o exe foi aos jogadores no **patch 0036**,
+publicado. Falta o **deploy** do servidor (`implanta.sh`, do Mac): `src/` mudou,
+então é recompilar lá. Até o deploy, quem abrir o cliente novo e clicar numa
+máquina não acha NPC nenhum — o arquivo ainda não existe em produção, e nada
+quebra.
 
-1. **Fechar os clientes** e rodar `python ferramentas/abre_roleta_do_cassino.py
-   --aplicar` — sem isso a roleta não aparece (a máquina funciona às cegas:
-   cobra e, em 10 s, paga ou não). Em 2026-09-26 havia quatro clientes
-   abertos e o exe estava travado.
-2. **Recompilar e reiniciar o map-server** (`src/` mudou). É DEV, mas o dono
-   estava logado — ficou para ele.
-3. **Ver na tela**, que é o que nenhuma leitura de exe prova:
-   - a roleta abre ao escolher "Sim", **com a caixa do NPC fechando** por
-     cima (o `end` manda o `0xb6`; se ficar um botão "Fechar" na caixa, a
-     roleta ainda aceita clique — ver o comentário no fim da
-     `F_RoletaDoCassino`);
-   - o clique para a roleta no quadro certo — **ganhou** e **perdeu** têm de
-     parar em quadros diferentes, e o prêmio sai uns instantes depois;
-   - sem clique, ela para sozinha em 10 s, e **um clique depois disso não
-     troca o quadro** (é o que o `+0xb0 = 1` do desvio segura);
-   - capturar um pet de verdade continua funcionando — o `0x19f` agora passa
-     pelo nosso enxerto antes.
-4. **Patch** para os jogadores: o exe mudou, e mudança de cliente só chega
-   por `monta_patch.py` (`CLAUDE.md` §4.18). Com nota de novidade (§4.24).
+Ficou como está, por decisão do dono: o "Success" da vitória aparece atrás da
+roleta. Não se descobriu qual dos dois é (a palavra desenhada no quadro 7 do
+`SlotMachine.spr` ou o efeito `TamingSuccess.str`, que nenhum código achado
+dispara); ver `HISTORICO.md`, "A Roleta do Cassino".
 
 ---
 
