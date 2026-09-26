@@ -19528,3 +19528,26 @@ no `navi_npc_br.lub` na coordenada do nosso vendor.
 
 Pendências abertas — ver no jogo, a Academia, os três nomes próprios, o
 ordinal dos Assistentes — em `PENDENCIAS.md` §3.
+
+## O rank da Arena mostrava 1/43 com dois dentro (2026-09-26)
+
+Relato do dono: entrou na Arena de Prontera com só o fantasma lá dentro e o
+canto da tela dizia **1/43** — devia ser 1/2 ou 2/2.
+
+O N estava certo; o M não é contado, é um contador incremental do mapa
+(`users_pvp`) que a Cópia Explosiva do fantasma desregula, porque liga o mesmo
+bit de invisibilidade do `@hide` sem passar pelos lugares que mantêm a conta.
+Cada vez que o fantasma sai do mapa ou dá `@hide` dentro dos 1,5s da Cópia, o
+contador ganha um que nunca devolve. O caso inteiro está em
+`ARMADILHAS-RATHENA.md` (gatilho na §5 do `CLAUDE.md`).
+
+A correção não tapa os buracos um a um — qualquer status novo com
+`Invisible: true` os reabriria. O `users_pvp` é lido num lugar só, o
+`pc_calc_pvprank`; ali ele passa a ser **recontado** (jogadores visíveis no
+mapa, o mesmo critério que o N já usava) antes de ir ao cliente. Um enxerto em
+`src/map/pc.cpp` (tabela da §2), o código em `src/custom/rank_da_arena.hpp`.
+Conserta sozinho, no segundo seguinte, um mapa que já esteja desregulado.
+
+Consequência que é regra do rAthena, não nossa: o fantasma escondido não entra
+em nenhum dos dois lados da barra. Jogador sozinho com o fantasma de `@hide` vê
+**1/1**; com o fantasma visível, 1/2 ou 2/2.

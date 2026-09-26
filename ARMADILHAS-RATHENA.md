@@ -501,3 +501,18 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   quando os dois lados mudam. O mesmo teto vale no `buildin_changelook` (ali
   com `ShowError`) e no `status_calc_pc` (`status.cpp:14120`, outro
   `cap_value` mudo).
+- **O "M" do rank N/M de PvP é um contador INCREMENTAL, e todo status com
+  `Options: Invisible: true` o desregula para sempre.** O `mapdata->users_pvp`
+  não é contado: é somado no `clif_parse_LoadEndAck` e descontado no
+  `unit_remove_map`, no `pc_reg_received` e no `ACMD_FUNC(hide)`, cada um
+  olhando o `pc_isinvisible` naquele instante. A Cópia Explosiva
+  (`SC__FEINTBOMB`) liga e desliga o MESMO bit 0x40 pelo
+  `status_change_start/end`, que não sabem do contador — sair do mapa dentro
+  dos 1,5s, ou dar `@hide` com ela ligada, deixa um a mais que nunca volta
+  (só no reinício do map-server). O fantasma da arena faz as duas coisas por
+  rotina, e em 2026-09-26 o dono viu **1/43** com dois jogadores dentro. Não
+  há log, e o N continua certo — só o número depois da barra cresce.
+  Corrigido recontando onde é lido (`src/custom/rank_da_arena.hpp`, no
+  `pc_calc_pvprank`); a armadilha continua valendo para qualquer outro
+  contador do rAthena mantido por `++`/`--` em volta de um bit que status
+  também mexe.

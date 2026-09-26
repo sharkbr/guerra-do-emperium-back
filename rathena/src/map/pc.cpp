@@ -65,6 +65,7 @@
 #include "vending.hpp" // struct s_vending
 
 #include <custom/estilo_de_corpo.hpp>
+#include <custom/rank_da_arena.hpp>
 
 using namespace rathena;
 
@@ -12768,6 +12769,12 @@ int32 pc_calc_pvprank(map_session_data *sd)
 {
 	int32 old = sd->pvp_rank;
 	struct map_data *mapdata = map_getmapdata(sd->m);
+
+	// Guerra do Emperium: o users_pvp e um contador incremental que a
+	// Copia Explosiva desregula (liga o mesmo bit do @hide por fora dos
+	// caminhos que o mantem) - a arena chegou a mostrar "1/43" com dois
+	// dentro. Recontado aqui, onde e lido. Ver src/custom/rank_da_arena.hpp.
+	rank_da_arena_reconta( sd->m );
 
 	sd->pvp_rank=1;
 	map_foreachinmap(pc_calc_pvprank_sub,sd->m,BL_PC,sd);

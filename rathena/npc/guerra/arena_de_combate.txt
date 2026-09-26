@@ -143,6 +143,13 @@
 //= npc/guerra/honra_de_combate.txt, que grava em banco e aparece
 //= na placa de prontera 163,187. Os dois nao se falam - o rank
 //= interno vive so na memoria da sessao.
+//=
+//= O "M" (quantos estao no mapa) NAO vem daqui: e o users_pvp
+//= do rAthena, e ate 2026-09-26 ele era um contador que a Copia
+//= Explosiva do fantasma desregulava - a arena chegou a mostrar
+//= "1/43" com dois dentro. Hoje e recontado a cada calculo
+//= (src/custom/rank_da_arena.hpp). Fantasma de @hide nao conta
+//= em nenhum dos lados: sozinho com ele escondido, 1/1.
 //===== Por que ele ja esteve desligado ======================
 //= Ele passou o commit 7e81b45 desligado por `pvp_nocalcrank`,
 //= por medo de um choque de timers. O medo era do bloco de
