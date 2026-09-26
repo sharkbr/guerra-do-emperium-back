@@ -40,7 +40,7 @@
 //= por acento e sai lixo na tela.
 //=
 //= A Maca da Inocencia e o item 30999 (db/guerra/item_db.yml), entregue
-//= pelo Emissario da Ordem ainda no navio da introducao.
+//= pelo Emissario da Nova Ordem ainda no navio da introducao.
 //=
 //= Por que ATRIBUIR o nivel (`BaseLevel = 10`) e nao somar: a promessa
 //= e "level 10/10", um estado final, nao um ganho. Quem chega de nivel

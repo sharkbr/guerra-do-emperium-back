@@ -8,39 +8,39 @@
 //============================================================
 
 -	script	GuildWarehouse	-1,{
-	mes "[Warehouse Manager]";
-	mes "How are you? We are specialized in guild warehouses. This is our ^0000cdstory^000000:";
-	mes "Why can't guild members share a storage? We started off with that simple question.";
+	mes "[Agente do Armazém]";
+	mes "Como vai? Somos especialistas em armazéns de clã. Esta é a nossa ^0000cdhistória^000000:";
+	mes "Por que os membros de um clã não podem dividir um armazém? Começamos com essa pergunta simples.";
 	next;
-	mes "[Warehouse Manager]";
-	mes "You can open the warehouse for 1000 Zeny or look up the usage history of the guild.";
-	mes "How can I help you?";
+	mes "[Agente do Armazém]";
+	mes "Você pode abrir o armazém por 1000 zeny ou consultar o histórico de uso do clã.";
+	mes "Em que posso ajudar?";
 	next;
-	if( select( "Open guild warehouse:View warehouse usage history" ) == 1 ){
+	if( select( "Abrir o armazém do clã:Ver o histórico de uso do armazém" ) == 1 ){
 		.@guildid = getcharid( 2 );
 
 		if( .@guildid == 0 ){
-			mes "[Warehouse Manager]";
-			mes "The guild storage is only available for guild members.";
+			mes "[Agente do Armazém]";
+			mes "O armazém do clã só pode ser usado por membros do clã.";
 			close;
 		}
 
 		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 || !guild_has_permission( GUILD_PERM_STORAGE ) ){
-			mes "[Warehouse Manager]";
-			mes "It seems that it is not yet possible for your guild to use the guild warehouse or you do not have access permissions for the warehouse.";
-			mes "Please come back after checking the guild skill and the permission to access the warehouse.";
+			mes "[Agente do Armazém]";
+			mes "Parece que o seu clã ainda não pode usar o armazém, ou você não tem permissão de acesso a ele.";
+			mes "Volte depois de conferir a habilidade de clã e a permissão de acesso ao armazém.";
 			close;
 		}
 
 		if( Zeny < 1000 ){
-			mes "[Warehouse Manager]";
-			mes "I am afraid you do not have enough money to settle the fee.";
-			mes "The fee is 1000 Zeny.";
+			mes "[Agente do Armazém]";
+			mes "Receio que você não tenha dinheiro suficiente para pagar a taxa.";
+			mes "A taxa é de 1000 zeny.";
 			close;
 		}
 
-		mes "[Warehouse Manager]";
-		mes "I will open the guild storage for you then. Have a memorable time!";
+		mes "[Agente do Armazém]";
+		mes "Então vou abrir o armazém do clã para você. Aproveite!";
 		close2;
 
 		if( Zeny < 1000 ){
@@ -52,30 +52,30 @@
 			Zeny -= 1000;
 			end;
 		}else{
-			mes "[Warehouse Manager]";
-			mes "I am afraid someone else is using the warehouse right now.";
-			mes "Please try again after a while.";
+			mes "[Agente do Armazém]";
+			mes "Receio que outra pessoa esteja usando o armazém agora.";
+			mes "Tente de novo daqui a pouco.";
 			close;
 		}
 	}else{
 		.@guildid = getcharid( 2 );
 
 		if( .@guildid == 0 ){
-			mes "[Warehouse Manager]";
-			mes "The guild storage is only available for guild members.";
+			mes "[Agente do Armazém]";
+			mes "O armazém do clã só pode ser usado por membros do clã.";
 			close;
 		}
 
 		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 || !guild_has_permission( GUILD_PERM_STORAGE ) ){
-			mes "[Warehouse Manager]";
-			mes "It seems that it is not yet possible for your guild to use the guild warehouse or you do not have access permissions for the warehouse.";
-			mes "Please come back after checking the guild skill and the permission to access the warehouse.";
+			mes "[Agente do Armazém]";
+			mes "Parece que o seu clã ainda não pode usar o armazém, ou você não tem permissão de acesso a ele.";
+			mes "Volte depois de conferir a habilidade de clã e a permissão de acesso ao armazém.";
 			close;
 		}
 
-		mes "[Warehouse Manager]";
-		mes "I will show you the usage history of the warehouse. Usage history will be retained for up to 3 months.";
-		mes "Have a memorable time!";
+		mes "[Agente do Armazém]";
+		mes "Vou mostrar o histórico de uso do armazém. O histórico fica guardado por até 3 meses.";
+		mes "Aproveite!";
 		close2;
 		guildopenstorage_log();
 		end;
@@ -95,7 +95,7 @@ geffen,128,68,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#geffen	896
 gonryun,164,127,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#gonryun	896
 harboro1,288,212,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#harboro1	896
 hugel,91,158,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#hugel	896
-izlude,133,149,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#izlude	896
+izlude,133,149,3	duplicate(GuildWarehouse)	Agente do Armazém#izlude	896
 lighthalzen,162,102,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#lighthalzen	896
 louyang,210,111,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#louyang	896
 malaya,238,206,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#malaya	896

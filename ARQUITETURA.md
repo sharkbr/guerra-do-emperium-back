@@ -453,6 +453,25 @@ inglês cru. Restaurar o vendor e reaplicar o catálogo devolve o diálogo e
 mandar procurar o Paulão. Por isso `--aplicar brasilis` **sempre** é seguido
 de `renomeia_npcs_brasilis.py`, e o `--conferir` dele sai 1 quando falta.
 
+**Izlude tem o mesmo par, e nela o par é trava de funcionamento** (2026-09-26):
+`traduz_npcs.py --aplicar izlude` seguido de `renomeia_npcs_izlude.py` — e o
+segundo também depois de `--aplicar cidades`, porque o
+`npc/re/cities/izlude.txt` é dos dois grupos. A diferença para Brasilis está
+nos **Assistentes** (mercenários) de Prontera, Izlude e Payon: ali a palavra
+traduzida é **chave**. O gerente compara `strnpcinfo(2)` — a parte escondida do
+nome, depois do `#` — com `"Spear"/"Sword"/"Bow"`, e o Mercenary Switch monta
+`disablenpc "Mercenary Manager#" + <palavra>`. As duas metades:
+
+| metade | o que muda | quem escreve |
+|---|---|---|
+| o `setarray .@name$` (duas vezes, no `npc/other/mercenary_rent.txt`) | Spear/Sword/Bow → **Lanceiro/Espadachim/Arqueiro** | `izlude.cat` |
+| a parte escondida do nome e o prefixo do `disablenpc`, nos dois `mercenary_rent.txt` | `#Sword` → `#Espadachim`, `Mercenary Manager#` → `Gerente de Assistentes#` | `renomeia_npcs_izlude.py` |
+
+Só o catálogo: o gerente não acha o próprio tipo (o laço termina com o índice
+**fora** do array) e o GM não desliga nada. Só a ferramenta: o mesmo, ao
+contrário. Nenhum dos dois dá erro de carga — o sintoma é o NPC atender com o
+nome da guilda vazio.
+
 ### Um NPC do rAthena BIFURCADO vive em 3 lugares, e o terceiro é um instantâneo
 
 Quando a receita da §2 do `CLAUDE.md` não basta — `disablenpc` mais duplicata —

@@ -820,7 +820,7 @@ OnInit:
 
 lasa_fild01,102,342,7	script	Vigilante Aglio#doram12	HIDDEN_WARP_NPC,{ end; }
 
--	shop	Cat Paw Shrimp Merchant#shop::doram_shrimp	-1,515:-1,567:-1,11602:-1
+-	shop	Mercador Doram#shop::doram_shrimp	-1,515:-1,567:-1,11602:-1
 
 lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
 	if (lasagna_quest[0] == 5) {
@@ -1296,9 +1296,9 @@ lasagna,230,127,3	script	Vigilante Aglio#doram09	HIDDEN_WARP_NPC,{
 	}
 }
 
-izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
-	npctalk "Here are the shrimps, carrots and catnip!", "", bc_self;
-	switch( select( "Buy", "Sell", "Cancel" ) ) {
+izlude,117,165,3	script	Mercador Doram#iz	4_M_MERCAT1,{
+	npctalk "Temos camarão, cenoura e erva-de-gato!", "", bc_self;
+	switch( select( "Comprar", "Vender", "Cancelar" ) ) {
 	case 1:
 		callshop "doram_shrimp",1;
 		end;
@@ -1306,145 +1306,145 @@ izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
 		callshop "doram_shrimp",2;
 		end;
 	case 3:
-		npctalk "Come back again soon!", "", bc_self;
+		npctalk "Volte logo!", "", bc_self;
 		end;
 	}
 }
 
-alberta,111,159,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#alb	4_M_MERCAT1
-aldeba_in,89,56,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ald	4_M_MERCAT1
-amatsu,102,122,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ama	4_M_MERCAT1
+alberta,111,159,3	duplicate(Mercador Doram#iz)	Mercador Doram#alb	4_M_MERCAT1
+aldeba_in,89,56,3	duplicate(Mercador Doram#iz)	Mercador Doram#ald	4_M_MERCAT1
+amatsu,102,122,5	duplicate(Mercador Doram#iz)	Mercador Doram#ama	4_M_MERCAT1
 // ayo_in01,15,177
-brasilis,249,257,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#bra	4_M_MERCAT1
-comodo,103,136,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#com	4_M_MERCAT1
-dewata,193,169,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#dew	4_M_MERCAT1
-einbroch,164,316,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ein	4_M_MERCAT1
-ein_in01,194,22,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ein1	4_M_MERCAT1
-dic_in01,242,119,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#dic	4_M_MERCAT1
-ecl_in01,72,86,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ecl	4_M_MERCAT1
-geffen_in,75,140,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#gef	4_M_MERCAT1
-gonryun,147,88,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#gon	4_M_MERCAT1
-hugel,76,165,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#hug	4_M_MERCAT1
-izlude_a,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_a	4_M_MERCAT1
-izlude_b,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_b	4_M_MERCAT1
-izlude_c,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_c	4_M_MERCAT1
-izlude_d,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_d	4_M_MERCAT1
-lasagna,166,117,6	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#las	4_M_MERCAT1
-lhz_in02,29,219,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#lhz	4_M_MERCAT1
-lou_in02,241,168,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#lou	4_M_MERCAT1
-malaya,286,175,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#mal	4_M_MERCAT1
-mora,110,118,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#mora	4_M_MERCAT1
-morocc,169,105,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#moro	4_M_MERCAT1
-mosk_in,30,246,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#mosk	4_M_MERCAT1
-payon,155,96,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#pay	4_M_MERCAT1
-prontera,137,223,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#prt	4_M_MERCAT1
-ra_in01,243,272,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ra	4_M_MERCAT1
-um_in,104,118,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#um	4_M_MERCAT1
-ve_in,263,303,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ve	4_M_MERCAT1
-xmas_in,32,38,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#xma	4_M_MERCAT1
-yuno,205,116,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#yu	4_M_MERCAT1
+brasilis,249,257,3	duplicate(Mercador Doram#iz)	Mercador Doram#bra	4_M_MERCAT1
+comodo,103,136,3	duplicate(Mercador Doram#iz)	Mercador Doram#com	4_M_MERCAT1
+dewata,193,169,5	duplicate(Mercador Doram#iz)	Mercador Doram#dew	4_M_MERCAT1
+einbroch,164,316,3	duplicate(Mercador Doram#iz)	Mercador Doram#ein	4_M_MERCAT1
+ein_in01,194,22,3	duplicate(Mercador Doram#iz)	Mercador Doram#ein1	4_M_MERCAT1
+dic_in01,242,119,5	duplicate(Mercador Doram#iz)	Mercador Doram#dic	4_M_MERCAT1
+ecl_in01,72,86,3	duplicate(Mercador Doram#iz)	Mercador Doram#ecl	4_M_MERCAT1
+geffen_in,75,140,3	duplicate(Mercador Doram#iz)	Mercador Doram#gef	4_M_MERCAT1
+gonryun,147,88,5	duplicate(Mercador Doram#iz)	Mercador Doram#gon	4_M_MERCAT1
+hugel,76,165,5	duplicate(Mercador Doram#iz)	Mercador Doram#hug	4_M_MERCAT1
+izlude_a,117,165,3	duplicate(Mercador Doram#iz)	Mercador Doram#iz_a	4_M_MERCAT1
+izlude_b,117,165,3	duplicate(Mercador Doram#iz)	Mercador Doram#iz_b	4_M_MERCAT1
+izlude_c,117,165,3	duplicate(Mercador Doram#iz)	Mercador Doram#iz_c	4_M_MERCAT1
+izlude_d,117,165,3	duplicate(Mercador Doram#iz)	Mercador Doram#iz_d	4_M_MERCAT1
+lasagna,166,117,6	duplicate(Mercador Doram#iz)	Mercador Doram#las	4_M_MERCAT1
+lhz_in02,29,219,5	duplicate(Mercador Doram#iz)	Mercador Doram#lhz	4_M_MERCAT1
+lou_in02,241,168,5	duplicate(Mercador Doram#iz)	Mercador Doram#lou	4_M_MERCAT1
+malaya,286,175,3	duplicate(Mercador Doram#iz)	Mercador Doram#mal	4_M_MERCAT1
+mora,110,118,3	duplicate(Mercador Doram#iz)	Mercador Doram#mora	4_M_MERCAT1
+morocc,169,105,3	duplicate(Mercador Doram#iz)	Mercador Doram#moro	4_M_MERCAT1
+mosk_in,30,246,3	duplicate(Mercador Doram#iz)	Mercador Doram#mosk	4_M_MERCAT1
+payon,155,96,5	duplicate(Mercador Doram#iz)	Mercador Doram#pay	4_M_MERCAT1
+prontera,137,223,5	duplicate(Mercador Doram#iz)	Mercador Doram#prt	4_M_MERCAT1
+ra_in01,243,272,5	duplicate(Mercador Doram#iz)	Mercador Doram#ra	4_M_MERCAT1
+um_in,104,118,3	duplicate(Mercador Doram#iz)	Mercador Doram#um	4_M_MERCAT1
+ve_in,263,303,3	duplicate(Mercador Doram#iz)	Mercador Doram#ve	4_M_MERCAT1
+xmas_in,32,38,5	duplicate(Mercador Doram#iz)	Mercador Doram#xma	4_M_MERCAT1
+yuno,205,116,5	duplicate(Mercador Doram#iz)	Mercador Doram#yu	4_M_MERCAT1
 
-izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
-	mes "[Con-Chliina Crewman]";
-	mes "From the continent of Midgard to Far-Star!";
+izlude,195,213,5	script	Marinheiro#doi	4_M_MERCAT1,{
+	mes "[Marinheiro de Con-Chliina]";
+	mes "Do continente de Midgard até a Estrela Distante!";
 	next;
-	mes "[Con-Chliina Crewman]";
+	mes "[Marinheiro de Con-Chliina]";
 	if (Class == Job_Summoner)
 		.@cost = 200;
 	else
 		.@cost = 2000;
-	mes "Only ^0000cd" + .@cost + " Zenies^000000 to the port city Lasagna.";
+	mes "Só ^0000cd" + .@cost + " zeny^000000 até a cidade portuária de Lasagna.";
 	next;
-	if (select( "To Lasagna - " + .@cost + "z", "Cancel" ) == 2) {
-		mes "[Con-Chliina Crewman]";
-		mes "I see.";
+	if (select( "Para Lasagna - " + .@cost + "z", "Cancelar" ) == 2) {
+		mes "[Marinheiro de Con-Chliina]";
+		mes "Entendo.";
 		close;
 	}
 	if (Zeny < .@cost) {
-		mes "[Con-Chliina Crewman]";
-		mes "Not enough? How about checking how much he has?";
+		mes "[Marinheiro de Con-Chliina]";
+		mes "Não tem o bastante? Que tal conferir quanto você tem?";
 		close;
 	}
 	Zeny = Zeny - .@cost;
 	warp "lasagna",206,297;
 	end;
 }
-malangdo,218,81,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#dom	4_M_MERCAT1
-izlude_a,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doia	4_M_MERCAT1
-izlude_b,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doib	4_M_MERCAT1
-izlude_c,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doic	4_M_MERCAT1
-izlude_d,195,213,5	duplicate(Con-Chliina Crewman#doi)	Con-Chliina Crewman#doid	4_M_MERCAT1
+malangdo,218,81,5	duplicate(Marinheiro#doi)	Marinheiro#dom	4_M_MERCAT1
+izlude_a,195,213,5	duplicate(Marinheiro#doi)	Marinheiro#doia	4_M_MERCAT1
+izlude_b,195,213,5	duplicate(Marinheiro#doi)	Marinheiro#doib	4_M_MERCAT1
+izlude_c,195,213,5	duplicate(Marinheiro#doi)	Marinheiro#doic	4_M_MERCAT1
+izlude_d,195,213,5	duplicate(Marinheiro#doi)	Marinheiro#doid	4_M_MERCAT1
 
 izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 	if (Class == Job_Summoner) {
 		mes "[Vigilante Penne]";
-		mes "Hiya! Isn't it delightful to see the Farfalle Vigilante even here?";
+		mes "Oi! Não é uma delícia ver os Vigilantes Farfalle até aqui?";
 		next;
 		mes "[Vigilante Penne]";
-		mes "By the way, how's your settlement in this land coming along?";
-		mes "Have you been to ^4d4dffProntera^000000 or ^4d4dffPayon^000000 near here?";
+		mes "Aliás, como vai a sua adaptação a esta terra?";
+		mes "Já foi a ^4d4dffProntera^000000 ou a ^4d4dffPayon^000000, aqui perto?";
 		next;
 		mes "[Vigilante Penne]";
-		mes "There is a Paradise Group you might want to visit.";
-		mes "It doesn't hurt to go visit there.";
+		mes "Tem um tal de Grupo do Éden que você talvez queira visitar.";
+		mes "Não custa nada dar uma passada lá.";
 		close;
 	}
 	mes "[Vigilante Penne]";
-	mes "Humans always intrigue me with their peculiar look.";
-	mes "Like a big, hairless cat!";
+	mes "Os humanos sempre me intrigam com essa aparência esquisita.";
+	mes "Parecem um gatão sem pelo!";
 	next;
 	mes "[Vigilante Penne]";
-	mes "Me? Let me explain. I'm the proud member of the Farfalle Vigilante from the great Far-Star Continent.";
+	mes "Eu? Deixa eu explicar. Sou um orgulhoso membro dos Vigilantes Farfalle, do grande Continente da Estrela Distante.";
 	next;
-	switch( select( "Far-Star Continent?", "Farfalle Vigilante?", "Are you from the Cat Paw Commerce Group?" ) ) {
+	switch( select( "Continente da Estrela Distante?", "Vigilantes Farfalle?", "Você é da Companhia Comercial Pata de Gato?" ) ) {
 	case 1:
 		mes "[Vigilante Penne]";
-		mes "There are more continents other than Midgard.";
-		mes "The land we crossed from is called Far-Star.";
+		mes "Existem mais continentes além de Midgard.";
+		mes "A terra de onde viemos se chama Estrela Distante.";
 		next;
 		mes "[Vigilante Penne]";
-		mes "Well, we're no different because we thought there was only the Far-Star Continent under the sun.";
-		mes "The world sure is wide...";
+		mes "Bom, a gente não é diferente, porque achávamos que só existia o Continente da Estrela Distante debaixo do sol.";
+		mes "O mundo é mesmo grande...";
 		close;
 	case 2:
 		mes "[Vigilante Penne]";
-		mes "So, do you see this ribbon that goes perfectly well with this cool uniform?";
-		mes "(Show the below-neck area.)";
+		mes "E então, está vendo esta fita que combina perfeitamente com este uniforme maneiro?";
+		mes "(Mostra a área abaixo do pescoço.)";
 		next;
 		mes "[Vigilante Penne]";
-		mes "This is the symbol of our Farfalle Vigilante.";
-		mes "We are the legendary Vigilante Corp that protects Lasagna!";
+		mes "Este é o símbolo dos nossos Vigilantes Farfalle.";
+		mes "Somos a lendária Tropa de Vigilantes que protege Lasagna!";
 		next;
 		mes "[Vigilante Penne]";
-		mes "You have no idea how cool our leader Peperoncino can be...";
-		mes "We do all kinds of chores from handling the urchins at the port to maintaining the security of the village.";
+		mes "Você não faz ideia de como o nosso líder Peperoncino é incrível...";
+		mes "Fazemos todo tipo de serviço, de cuidar dos moleques do porto a manter a segurança da vila.";
 		next;
 		mes "[Vigilante Penne]";
-		mes "Moreover, you can come to this...Mid...Midgur...Midgar...";
-		mes "Anyway! You're allowed to come here only when the Farfalle Vigilante accepts.";
+		mes "E mais, você pode vir para esta... Mid... Midgur... Midgar...";
+		mes "Enfim! Só pode vir para cá quando os Vigilantes Farfalle aceitam.";
 		next;
-		mes "This proud cat is getting really talkative...";
+		mes "Esse gato orgulhoso está ficando bem falante...";
 		close2;
-		npctalk "Huh? Are you just passing by?", "", bc_self;
+		npctalk "Hein? Você só está de passagem?", "", bc_self;
 		end;
 	case 3:
 		mes "[Vigilante Penne]";
-		mes "No, That's not it!!";
-		mes "The Cat Paw Commerce Group is led by Captain Tomei-Tomas!";
+		mes "Não, não é nada disso!!";
+		mes "A Companhia Comercial Pata de Gato é comandada pelo Capitão Tomei-Tomas!";
 		next;
 		mes "[Vigilante Penne]";
-		mes "I'm with the Farfalle Vigilante commanded by Leader Peperoncino!";
+		mes "Eu sou dos Vigilantes Farfalle, comandados pelo Líder Peperoncino!";
 		next;
 		mes "[Vigilante Penne]";
-		mes "Oh, my days! So you haven't even been to Lasagna, have you?";
-		mes "Our great Captain Gamberri ventured here in person!";
+		mes "Minha nossa! Então você nunca foi a Lasagna, não é?";
+		mes "O nosso grande Capitão Gamberri veio até aqui em pessoa!";
 		next;
 		mes "[Vigilante Penne]";
-		mes "We are gracious enough to give humans like you a chance to go to the land of Lasagna.";
-		mes "Before long, this Midgur...Midgarr...?? This land will soon be controlled by us, the Dorams!";
+		mes "Somos generosos o bastante para dar a humanos como você a chance de ir à terra de Lasagna.";
+		mes "Daqui a pouco esta Midgur... Midgarr...?? Esta terra vai ser controlada por nós, os Dorams!";
 		next;
 		mes "[Vigilante Penne]";
-		mes "You'd better earn our favor. If you do, we might give you a job to clean anchovies in Lasagna!";
+		mes "É melhor cair nas nossas graças. Se cair, talvez a gente te dê um emprego limpando anchovas em Lasagna!";
 		close;
 	}
 }
@@ -2094,7 +2094,7 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	}
 	mes "Will you exchange it for " + .@cost + " " + mesitemlink( 25142, false ) + "?";
 	next;
-	if (select( "Exchange", "Cancel" ) == 2) {
+	if (select( "Exchange", "Cancelar" ) == 2) {
 		mes "[Yota Chara]";
 		mes "Did...did I misspeak, or what?";
 		mes "I'm not an expert but I did my best.";
@@ -2166,7 +2166,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 	mes "Whoa, a new weapon! New power!";
 	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for " + mesitemlink( 25142, false ) + "?";
 	next;
-	if (select( "Search", "Cancel" ) == 1) {
+	if (select( "Search", "Cancelar" ) == 1) {
 		setarray .@item_data[0],
 			1690, 1,	// Marvelous Foxtail Staff [3]
 			1691, 2,	// Wondrous Foxtail Staff [2]
@@ -2255,7 +2255,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	mes "Do you mind if I search you to see the items you have with you?";
 	mes "If I find an item suitable for Jogi, I'll pay " + mesitemlink( 25142, false ) + "....";
 	next;
-	if (select( "Search", "Cancel" ) == 1) {
+	if (select( "Search", "Cancelar" ) == 1) {
 		setarray .@item_data[0],	// keep the order
 			15156, 4,	// Elegant Doram Suit [1]
 			20790, 4,	// Elegant Doram Manteau [1]
@@ -2306,7 +2306,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 					close;
 				}
 				mes "[Dandi Chara]";
-				mes "Thank you.";
+				mes "Obrigado.";
 				mes "Can I look for something else?";
 				delitem .@item_data[.@i],1;
 				getitem 25142,.@item_data[.@i+1];// Doram token
@@ -2391,7 +2391,7 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	mes "Hey, if you give me " + .@needCoin + " " + mesitemlink( 25142, false ) + ", I'll fix this for you.";
 	mes "This should produce " + mesitemlink( .@next_charm_ID, false ) + ", I guess. How do you like it?";
 	next;
-	if (select( "Upgrade", "Cancel" ) == 2) {
+	if (select( "Upgrade", "Cancelar" ) == 2) {
 		mes "[Goma Chara]";
 		mes "As you please.";
 		close;
@@ -3861,7 +3861,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 
 lasagna,174,160,3	script	Vigilante Guide#lasa	4_DR_SOLDIER,5,5,{
 	mes "[Vigilante Guide]";
-	mes "Hello.";
+	mes "Olá.";
 	mes "The weather is good today, isn't it?";
 	mes "What can I do for you?";
 	next;
@@ -4664,7 +4664,7 @@ lasagna,205,325,5	script	Eggling#dorcon	4_M_MERCAT1,2,2,{
 		mes "Well, don't bring dishonor to the name of Doram, OK? However, since you have been trained here, you will be able to play your part wherever you are. Good luck.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		next;
 		mes "[Eggling]";
 		mes "Oh, I have a favor to ask you. Would you bring it to the ^0000cdSous Chef^000000. Can you do this for me? You will keep sailing on this ship from time to time, you know, right?";
@@ -4847,7 +4847,7 @@ lasagna,205,325,5	script	Eggling#dorcon	4_M_MERCAT1,2,2,{
 		mes "Wherever you go, it costs ^0000cd" + .@cost + " Zeny^000000.";
 		next;
 	}
-	switch( select( .@menu$[0], .@menu$[1], .@menu$[2], "Cancel" ) ) {
+	switch( select( .@menu$[0], .@menu$[1], .@menu$[2], "Cancelar" ) ) {
 	case 1:
 		mes "[Eggling]";
 		mes "Get in there.";
@@ -5063,7 +5063,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		npctalk "It is crucial to test your strength before setting off on an adventure.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "May I help you?";
+		mes "Posso ajudar?";
 		next;
 		mes "[Purser]";
 		mes "Look at Lasagna. What do you think?";
@@ -6019,7 +6019,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		npctalk "Everything depends on you.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I see.";
+		mes "Entendo.";
 		next;
 		mes "[Recorder]";
 		mes "Well, then. Have a safe trip.";
@@ -7508,7 +7508,7 @@ conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
 		mes "Let me drop by when I get time.";
 		next;
 		mes "[Sous Chef]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		completequest 14555;// Whole new world of taste
 		setquest 14563;// Free time
 		delitem 522,4;// Mastela Fruit
@@ -7642,7 +7642,7 @@ S_Check:
 		if ((.@i+2) >= .@arg_count)
 			.@tmp$ = "";
 		else if ((.@i+4) >= .@arg_count)
-			.@tmp$ = " and ";
+			.@tmp$ = " e ";
 		else
 			.@tmp$ = ", ";
 		.@string$ = .@string$ + getarg(.@i+1) + " " + getitemname( getarg(.@i) ) + .@tmp$;
@@ -8372,7 +8372,7 @@ OnTouch:
 lasa_in01,179,60,5	script	Chief Peperoncino#dorco	4_DR_PEPE,{
 	if (conch_in_recorder == 3) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "Hello.";
+		mes "Olá.";
 		next;
 		mes "[Chief Peperoncino]";
 		if (Class != Job_Summoner)
@@ -8997,7 +8997,7 @@ lasagna,248,105,5	script	Legalas#dorcon	4_RAGGLER,{
 		next;
 		mes "[Daldal]";
 		mes "Really? I didn't know.";
-		npctalk "Did you know?", "Daldal#dorcon01", bc_self;
+		npctalk "Você sabia?", "Daldal#dorcon01", bc_self;
 		next;
 		mes "[Gopara]";
 		mes "I did. But I couldn't help it.";

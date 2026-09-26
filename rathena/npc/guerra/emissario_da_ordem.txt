@@ -1,5 +1,5 @@
 //===== Guerra do Emperium ===================================
-//= Emissário da Ordem
+//= Emissário da Nova Ordem
 //===== Onde =================================================
 //= iz_int 18,32 - o navio da introducao, onde o personagem
 //= recem-criado nasce (start_point de conf/char_athena.conf e
@@ -16,9 +16,9 @@
 //= cinco, via duplicate() no fim do arquivo. Nao confundir com
 //= izlude/izlude_a..d, que sao as copias da CIDADE.
 //=
-//= O visual e o 405 (JT_4_M_YOUNGKNIGHT, sprite `4_M_YOUNGKNIGHT`),
-//= conferido no npcidentity.lub (405.0), no jobname.lub e no
-//= data.grf DESTE cliente - o .spr e o .act estao la.
+//= O visual e o 470 (JT_4_M_KNIGHT_SILVER, sprite `4_M_KNIGHT_SILVER`),
+//= pedido do dono em 2026-09-26. Ate entao era o 405
+//= (4_M_YOUNGKNIGHT), e o nome era "Emissário da Ordem".
 //=
 //= Os textos vao COM ACENTO, gravados em Latin-1 (ISO-8859-1),
 //= como os map_msg_*.conf do rAthena. O cliente desenha byte
@@ -68,7 +68,7 @@
 //= Quem acrescentar caminho de saida aqui tem de limpar tambem.
 //============================================================
 
-iz_int,18,32,4	script	Emissário da Ordem#iz_int	405,{
+iz_int,18,32,4	script	Emissário da Nova Ordem#iz_int	470,{
 
 	// O retrato acompanha a conversa inteira, entao e ligado antes de
 	// qualquer `mes` - e antes do desvio, para valer nos dois caminhos.
@@ -120,7 +120,7 @@ L_Embarque:
 	end;
 
 OnInit:
-	.npc$ = "[Emissário da Ordem]";
+	.npc$ = "[Emissário da Nova Ordem]";
 
 	// Maca da Inocencia (db/guerra/item_db.yml).
 	.Maca = 30999;
@@ -138,7 +138,7 @@ OnInit:
 
 // As outras quatro copias do navio. O nome exibido e o mesmo nas
 // cinco; o que vem depois do '#' o cliente nao desenha.
-iz_int01,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int01	405
-iz_int02,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int02	405
-iz_int03,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int03	405
-iz_int04,18,32,4	duplicate(Emissário da Ordem#iz_int)	Emissário da Ordem#iz_int04	405
+iz_int01,18,32,4	duplicate(Emissário da Nova Ordem#iz_int)	Emissário da Nova Ordem#iz_int01	470
+iz_int02,18,32,4	duplicate(Emissário da Nova Ordem#iz_int)	Emissário da Nova Ordem#iz_int02	470
+iz_int03,18,32,4	duplicate(Emissário da Nova Ordem#iz_int)	Emissário da Nova Ordem#iz_int03	470
+iz_int04,18,32,4	duplicate(Emissário da Nova Ordem#iz_int)	Emissário da Nova Ordem#iz_int04	470

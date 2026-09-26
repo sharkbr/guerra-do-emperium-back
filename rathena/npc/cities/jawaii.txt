@@ -98,7 +98,7 @@ jawaii,122,263,5	script	Mariner#toalbe	100,{
 		end;
 	}
 	mes "[Mariner]";
-	mes "Yeah...";
+	mes "É...";
 	mes "Try to enjoy your";
 	mes "vacation as much";
 	mes "as you can. We'll be";
@@ -266,7 +266,7 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 
 jawaii,108,199,5	script	Employee#antroom	74,{
 	mes "[Pine Oran]";
-	mes "Welcome to";
+	mes "Bem-vindo ao";
 	mes "the Antique room.";
 	next;
 	mes "[Pine Oran]";
@@ -367,7 +367,7 @@ jawaii,112,173,7	script	Employee#villroom	93,{
 	if (select("Use.:Cancel.") == 1) {
 		mes "[Larks Rania]";
 		if (Zeny > 999) {
-			mes "Thank you~";
+			mes "Obrigado~";
 			mes "Enjoy your stay.";
 			close2;
 			set Zeny, Zeny-1000;
@@ -389,47 +389,47 @@ jawaii,112,173,7	script	Employee#villroom	93,{
 }
 
 jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
-	mes "[Helper]";
-	mes "There is no place";
-	mes "better for having your";
-	mes "honeymoon than Jawaii.";
+	mes "[Agente Matrimonial]";
+	mes "Não existe lugar";
+	mes "melhor para a lua de mel";
+	mes "do que Jawaii.";
 	next;
-	mes "[Helper]";
-	mes "Why don't you make the best of your time here, and make a lot of sweet memories that you will cherish for years to come?";
+	mes "[Agente Matrimonial]";
+	mes "Por que não aproveitam ao máximo o tempo aqui e criam muitas lembranças doces para guardar pelos anos que virão?";
 	next;
-	mes "[Helper]";
-	mes "Mementos that remind you of your happy times can be your most precious possessions. Like your wedding ring, for instance, or the tuxedo and wedding dress worn during your wedding ceremony...";
+	mes "[Agente Matrimonial]";
+	mes "As lembranças dos momentos felizes podem ser os seus bens mais preciosos. Como a aliança, por exemplo, ou o smoking e o vestido de noiva usados na cerimônia...";
 	next;
-	mes "[Helper]";
-	mes "Even if the wedding ceremony";
-	mes "is over, isn't it nice to look back upon the happy memories of your marriage ceremony? With the magical photo album at a cheap price, now you can!";
+	mes "[Agente Matrimonial]";
+	mes "Mesmo depois da cerimônia,";
+	mes "não é bom relembrar os momentos felizes do casamento? Com o álbum de fotos mágico, a um preço camarada, agora vocês podem!";
 	next;
-	mes "[Helper]";
-	mes "Its name is...";
-	mes "'Sweet Memory of Marriage'!!";
+	mes "[Agente Matrimonial]";
+	mes "O nome dele é...";
+	mes "'Álbum de Fotos de Casamento'!!";
 	next;
-	mes "[Helper]";
-	mes "It will instantly bring you to the wedding hall with magic power!";
-	mes "And it only costs 50,000 zeny...";
+	mes "[Agente Matrimonial]";
+	mes "Com um poder mágico, ele leva vocês na hora ao salão de casamentos!";
+	mes "E custa só 50.000 zeny...";
 	next;
-	if (select("I shall buy it.:No, thanks.") == 1) {
-		mes "[Helper]";
+	if (select("Vou comprar.:Não, obrigado.") == 1) {
+		mes "[Agente Matrimonial]";
 		if (Zeny > 49999) {
 			set Zeny, Zeny-50000;
 			getitem 681,1;// Memory_Of_Wedding
-			mes "Thank you very much~!";
-			mes "Please remember, you";
-			mes "should use this with your";
-			mes "partner in a place that is";
-			mes "special to the both of you.";
+			mes "Muito obrigado~!";
+			mes "Lembre-se: vocês";
+			mes "devem usá-lo junto com";
+			mes "o seu par, num lugar";
+			mes "especial para os dois.";
 			close;
 		}
-		mes "'Sweet Memory of Marriage' is 50,000 zeny. But don't seem to have enough money with you right now. Maybe you and your partner could help each other to buy the Sweet Memory of Marriage?";
+		mes "O 'Álbum de Fotos de Casamento' custa 50.000 zeny, mas parece que você não tem dinheiro suficiente agora. Que tal você e o seu par se ajudarem a comprar o Álbum de Fotos de Casamento?";
 		close;
 	}
-	mes "[Helper]";
-	mes "Even if your relationship ends,";
-	mes "the memories the both of you have shared will remain forever...";
+	mes "[Agente Matrimonial]";
+	mes "Mesmo que o relacionamento acabe,";
+	mes "as lembranças que vocês dividiram ficam para sempre...";
 	close;
 }
 
@@ -540,7 +540,7 @@ OnSolo:
 
 jawaii_in,25,100,0	script	Employee#jaw4	724,{
 	mes "[Employee Itere]";
-	mes "Welcome to";
+	mes "Bem-vindo ao";
 	mes "Jawaii Tavern~";
 	if (getpartnerid()) {
 		next;
@@ -552,7 +552,7 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 		close;
 	}
 	else if (!getpartnerid()) {
-		mes "I hope you";
+		mes "Espero que você";
 		mes "enjoy your st--";
 		mes "Wait a minute...!";
 		next;
@@ -832,14 +832,14 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 }
 
 jawaii_in,28,124,0	script	Bartender#jaw	46,{
-	mes "[Bartender]";
-	mes "Welcome to the";
+	mes "[Barman]";
+	mes "Bem-vindo à";
 	mes "Jawaii Tavern bar.";
 	mes "What would you";
 	mes "like to drink?";
 	next;
 	if (Zeny < 99) {
-		mes "[Bartender]";
+		mes "[Barman]";
 		if (rand(1,100) > 29) {
 			mes "Hm, I'm sorry";
 			mes "but you do not";
@@ -850,17 +850,17 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 		mes "....Hmm...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Hey...!";
+		mes "Ei...!";
 		mes "Bartender...";
 		mes "Gimmie one more.";
 		next;
-		mes "[Bartender]";
+		mes "[Barman]";
 		mes "Okay...";
 		mes "It's on me.";
 		mes "Have a drink.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		close2;
 		percentheal -100,0;
 		end;
@@ -870,7 +870,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 		case 1:
 			set .@roof_jaw,.@roof_jaw+3;
 			if (.@roof_jaw > 9) {
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Hmmm...";
 				mes "You seem to have";
 				mes "had enough to drink.";
@@ -883,7 +883,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				input .@inputstr$;
 				mes .@inputstr$+"...";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "There you go...";
 				mes "Let me make";
 				mes "a ^0000FF'Special J&Z'^000000 for you.";
@@ -899,11 +899,11 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			if (Zeny > 99) set Zeny, Zeny-100;
 			switch(rand(4)) {
 			case 1:
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Hmm...";
 				mes "How about this cocktail?";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "I recommend";
 				mes "a '^0000FFBarcadie 150^000000.'";
 				mes "It's the drink of pirates!";
@@ -915,7 +915,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				next;
 				mes "^3355FFAlthough the glass is tiny and only holds a small amount, the liquid inside still smells pretty dangerous...^000000";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "It's strong and flammable,";
 				mes "so you might feel like your";
 				mes "throat is burning.";
@@ -926,17 +926,17 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				next;
 				break;
 			case 2:
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Hmm...";
 				mes "How about this cocktail?";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "I recommend a '^0000FFBlack Russian Double^000000.' It will make you dream of lying in a vast Russian field...";
 				next;
 				mes "^3355FFYou examined the large glass holding a dark brown liquid chilled with ice cubes. There's a faint sweetness in the aroma, as well";
 				mes "a musk that reminds you of an old, mustached man.^000000";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "I suggest you take your time";
 				mes "drinking this since it's very strong. The Black Russian Double is rumored to be the favorite drink of the Russian mafia.";
 				next;
@@ -948,22 +948,22 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				next;
 				break;
 			case 3:
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "So...";
 				mes "How about this..?";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Why don't you try";
 				mes "a '^0000FFKiss of Fire";
 				mes "the Spinbird Kick^000000?'";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Don't be fooled by its sweet scent or beautiful red color. This is one of the strongest drinks around.";
 				next;
 				mes "^3355FFYou receive a crystal cocktail glass with a little bit of sugar sprinkled around the rim. It has";
 				mes "a sweet fragrance that makes your mouth water. However, you can also feel that it is a dangerously strong cocktail.";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Lick the sugar before taking a sip. That will make it taste a little sweeter and will soften the taste.";
 				next;
 				mes "^3355FFYou carefully took a sip.^000000";
@@ -972,22 +972,22 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				next;
 				break;
 			Default:
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "I see...";
 				mes "Let me think";
 				mes "of something";
 				mes "you might like.";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "Okay, how about";
 				mes "a '^0000FFWhite Margarita'^000000?'";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "You will smell a sourish lemon scent which makes your mouth water. As you taste it, you will be filled with a pleasant, comforting warmth that spreads throughout your body.";
 				next;
 				mes "^3355FFYou receive a fancy cocktail glass with salt and lemon juice sprinkled on the rim. Its sour scent does make your mouth water. How could something so appetizing be dangerous?";
 				next;
-				mes "[Bartender]";
+				mes "[Barman]";
 				mes "It has a sweet and sour taste so it's favored by female customers";
 				mes "as well. I guarantee that you will enjoy its flavor.";
 				next;
@@ -1004,7 +1004,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			next;
 			mes "^3355FFYou received a simple glass containing a gray liquid. Although it smells faintly sweet, it looks like industrial strength liquor. It's time to summon your courage and take a sip~";
 			next;
-			mes "[Bartender]";
+			mes "[Barman]";
 			mes "That drink is bitter and sweet, just like life. Taste it with your tongue, don't drink it all at once.";
 			next;
 			mes "^3355FFYou slowly drank some";
@@ -1026,7 +1026,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			next;
 			mes "^3355FFThe Bartender brought a beautifully engraved glass holding a cobalt blue liquid and placed it in front of you. It smells pleasantly sweet and sour.";
 			next;
-			mes "[Bartender]";
+			mes "[Barman]";
 			mes "Once you taste this once, you almost can't stop drinking. It tastes so smooth and goes";
 			mes "down even smoother.";
 			next;
@@ -1051,7 +1051,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			next;
 			mes "^3355FFYou receive a tumbler filled with brown liquid. It a has a very thick, machine like smell. It kind of reminds you of gunpowder.^000000";
 			next;
-			mes "[Bartender]";
+			mes "[Barman]";
 			mes "It might look too big to drink at once, but I suggest that you finish it in one gulp. If you drink it slowly, you'll pass out.";
 			next;
 			mes "^3355FFYou firmly grabbed";
@@ -1068,14 +1068,14 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			callsub S_KillChar,1,.@roof_jaw;
 			mes "There are not many people who like this drink. But the ones that do like this drink, love it.";
 			next;
-			mes "[Bartender]";
+			mes "[Barman]";
 			mes "Although it has a beautiful, appetizing color, its appearance can be misleading. Most people feel cold and empty after having some";
 			mes "of this.";
 			next;
 			mes "^3355FFYou receive a crooked glass";
 			mes "filled with purple fluid. Although it smells pleasant, you have a strange feeling of disgust as you draw it closer to your face.";
 			next;
-			mes "[Bartender]";
+			mes "[Barman]";
 			mes "If you don't want to drink it, tell me now. But it might be good to try it once, just to experience it.";
 			next;
 			mes "^3355FFYou took a sip of it and sighed.^000000";
@@ -1097,7 +1097,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 S_KillChar:
 	.@roof_jaw = getarg(1);
 	if (.@roof_jaw > 8) {
-		mes "[Bartender]";
+		mes "[Barman]";
 		mes "It's on me.";
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -1109,10 +1109,10 @@ S_KillChar:
 	}
 	if (Zeny > 99) set Zeny, Zeny-100;
 	set .@roof_jaw,.@roof_jaw+getarg(0);
-	mes "[Bartender]";
+	mes "[Barman]";
 	mes "There you go.";
 	next;
-	mes "[Bartender]";
+	mes "[Barman]";
 	return;
 }
 
@@ -1400,7 +1400,7 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 // Izlude
 //============================================================
 -	script	::Honeymoon_Helper_Izlude	-1,{
-	mes "[Helper]";
+	mes "[Agente Matrimonial]";
 	mes "Newlyweds and";
 	mes "long time couples...";
 	mes "We invite you to Jawaii,";
@@ -1408,22 +1408,22 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	next;
 	switch(select("Jawaii?:Let's go to Jawaii~!:Cancel.")) {
 	case 1:
-		mes "[Helper]";
+		mes "[Agente Matrimonial]";
 		mes "There is an island far, far away from the Midgard continent.";
 		mes "It is a very quiet and beautiful island resort that only opens";
 		mes "its doors to couples.";
 		next;
-		mes "[Helper]";
+		mes "[Agente Matrimonial]";
 		mes "This is an exclusive travel offer to the special honeymoon resort for Midgard's citizens. The price, 100,000 zeny, may be expensive, but you really get what you pay for.";
 		next;
-		mes "[Helper]";
+		mes "[Agente Matrimonial]";
 		mes "I guarantee you that some of";
 		mes "the happiest moments you can";
 		mes "experience in your marriage will be on this island. Can you really put a price on that?";
 		close;
 
 	case 2:
-		mes "[Helper]";
+		mes "[Agente Matrimonial]";
 		if (!getpartnerid()) {
 			mes "Errm...";
 			mes "Unfortunately, singles are not allowed on the island. Why don't you go forget your loneliness in the Prontera pub?";
@@ -1442,11 +1442,11 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 		close;
 
 	case 3:
-		mes "[Helper]";
+		mes "[Agente Matrimonial]";
 		mes "There's there no better way to share special, secluded moments with your beloved than through";
 		mes "a secret trip to a remote, exotic area.";
 		next;
-		mes "[Helper]";
+		mes "[Agente Matrimonial]";
 		mes "A vacation in Jawaii could very well be the greatest gift that you could give to the one you love~";
 		close;
 	}

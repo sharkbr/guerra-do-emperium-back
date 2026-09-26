@@ -49,6 +49,18 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   2026-08-12; os dois foram baratos porque o `assert` da âncora parou o script
   antes de gravar.
 
+- **E a ferramenta de ESCRITA do assistente corta o espaço no fim de cada
+  linha.** O conteúdo sai gravado sem o `" "` final, calado. Em código isso não
+  pesa; em texto de jogo pesa, porque frase montada por concatenação depende
+  dele — `mes "Reset de " + .@str$` vira "Reset deAtributos". Medido em
+  2026-09-26, ao escrever as traduções de Izlude num `.tsv` intermediário: sete
+  frases da Hipnotizadora perderam o espaço antes da variável, e só apareceu
+  porque o script de junção comparava a borda do original com a da tradução.
+  **A saída é um marcador visível** no arquivo intermediário (`⎵`, U+23B5, que
+  não existe em cp1252 e portanto nunca é texto de jogo) trocado por espaço na
+  hora de gravar o destino, e uma trava que acuse quando o original termina
+  (ou começa) em espaço e a tradução não.
+
 - **E o `$` de um regex com `re.M` NÃO casa antes do `\r` — ele casa DEPOIS,
   deixando o `\r` dentro do grupo capturado.** Em arquivo CRLF, um
   `re.compile(r'^(.*)$', re.M)` devolve a linha **com o carriage return

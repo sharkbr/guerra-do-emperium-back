@@ -15,25 +15,25 @@
 
 /*
 -	script	::BulletinBoard_iz	-1,{
-	mes "[Izlude: The Satellite City]";
-	mes "Welcome to Izlude, the satellite of Prontera. Izlude was built to support Prontera's defense and to accomodate its burgeoning population.";
+	mes "[Izlude: A Cidade Satélite]";
+	mes "Bem-vindo a Izlude, a cidade satélite de Prontera. Izlude foi construída para apoiar a defesa de Prontera e para acomodar a sua população crescente.";
 	next;
-	mes "[Izlude: The Satellite City]";
-	mes "The main buildings here are to accomodate the growth of the Cryptura Academy.";
+	mes "[Izlude: A Cidade Satélite]";
+	mes "Os principais prédios daqui servem para acomodar o crescimento da Academia Criatura.";
 	next;
-	mes "[Izlude: The Satellite City]";
-	mes "Points of interest include the Swordman Association building which allows adventurers to change their job to Swordman, and the Battle Area that is East of Izlude.";
+	mes "[Izlude: A Cidade Satélite]";
+	mes "Entre os pontos de interesse estão o prédio da Associação dos Espadachins, onde aventureiros podem se tornar Espadachins, e a Arena, a leste de Izlude.";
 	next;
-	mes "[Izlude: The Satellite City]";
-	mes "At the docks, you may take a ship and travel to ^003399Alberta^000000 or ^660000Byalan Island^000000.";
+	mes "[Izlude: A Cidade Satélite]";
+	mes "No porto você pode pegar um navio para ^003399Alberta^000000 ou para a ^660000Ilha Byalan^000000.";
 	next;
-	mes "[Izlude: The Satellite City]";
-	mes "From Izlude, ^3355FFProntera^000000 is located to the Northwest, and ^006600Payon^000000 is located to the South. Enjoy your travels in the Rune-Midgarts Kingdom.";
+	mes "[Izlude: A Cidade Satélite]";
+	mes "De Izlude, ^3355FFProntera^000000 fica a noroeste e ^006600Payon^000000 fica ao sul. Boa viagem pelo Reino de Rune-Midgard.";
 	close;
 }
-izlude,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5	837
-izlude_a,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_a	837
-izlude_b,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_b	837
-izlude_c,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_c	837
-izlude_d,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_d	837
+izlude,25,103,0	duplicate(BulletinBoard_iz)	Quadro de Avisos#5	837
+izlude_a,25,103,0	duplicate(BulletinBoard_iz)	Quadro de Avisos#5_a	837
+izlude_b,25,103,0	duplicate(BulletinBoard_iz)	Quadro de Avisos#5_b	837
+izlude_c,25,103,0	duplicate(BulletinBoard_iz)	Quadro de Avisos#5_c	837
+izlude_d,25,103,0	duplicate(BulletinBoard_iz)	Quadro de Avisos#5_d	837
 */

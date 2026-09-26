@@ -1499,6 +1499,86 @@ traduzido — mora no `npc/merchants/inn.txt`, do grupo `servico`.
 **O nome exibido do NPC é outra ferramenta**, e é obrigatória depois de todo
 `--aplicar brasilis`: `renomeia_npcs_brasilis.py`, abaixo.
 
+### O grupo `izlude` — a cidade de chegada, e o que o `cidades` não pegava
+
+Entrou em 2026-09-26, por pedido do dono: todo personagem novo desembarca em
+`izlude` pelo Emissário da Nova Ordem, e o grupo `cidades` só traduzia a
+metade dos NPCs que ficam em pé ali (os de `npc/cities/izlude.txt` e do
+`re/`). A outra metade mora em arquivo de serviço ou de missão, espalhada pelo
+vendor: 18 arquivos, 2.333 textos traduzidos, 2.469 trocas no `--aplicar`.
+
+**O recorte foi do dono:** serviços + missões. A **Academia Criatura**
+(`npc/re/jobs/novice/academy.txt`, ~2.500 falas, 22 NPCs em Izlude — refinadores,
+encantadores, o casal, a família, o tutorial) ficou para depois, e está em
+`PENDENCIAS.md`.
+
+**Dois tipos de arquivo no grupo**, e o catálogo não os distingue: os pequenos
+entram **inteiros** (correio, Assistentes, aeroplano, guia, armazém de clã,
+quadros de aviso, Hipnotizadora, Help Me Shorty, Sr. Sorriso, Edgar); dos
+grandes só se traduziu o **bloco do NPC de Izlude**, como no
+`cassino_missoes` — Agente Matrimonial (`jawaii`), Odgnalam (`malangdo`),
+Oficial do Éden, Equipe de Promoções (`quests_13_1`), a entrada da Ilusão
+Submarina, o Velhaco/Ahman (`quests_lighthalzen`) e os três Doram. O
+`--estado` marca ~8% para sempre, e não é dívida: são 30 mil textos, a maior
+parte de cadeias inteiras que não são de Izlude.
+
+**Uma consequência do `--aplicar` que vale conhecer:** ele troca o texto em
+**todas** as ocorrências dele no arquivo, não só na do bloco. Então o
+`[Promotional Staff]` dos recrutadores de Prontera, Al De Baran e Geffen
+também virou `[Equipe de Promoções]`, com o diálogo deles ainda em inglês. É o
+mesmo mecanismo que protege o menu da Kafra (`tokens_intocaveis`), e o preço é
+esse.
+
+**Dois contextos novos**, os dois medidos antes de ligar e os dois nascendo
+vazios nos outros catálogos:
+
+- **`set .@var$,"..."`**, a forma antiga de atribuição (`RE_SET`, contexto
+  `atrib`). A Hipnotizadora guarda "Stat" ou "Skill" numa variável e a
+  interpola em sete frases; o "Stat" caía no catálogo por acaso (o
+  `if (.@str$ == "Stat")` casa com o `RE_ATRIB` pelo primeiro `=` do `==`) e o
+  "Skill" não. +131 pares em dez grupos.
+- **`F_Navi`**. O primeiro argumento é o rótulo que o jogador lê, e as guias o
+  passam direto a `callsub L_Mark, F_Navi("Kit Shop", ...)`, linha sem `mes`.
+  O segundo e o terceiro (coordenada e cor) entram junto e ficam **em branco
+  de propósito** — a mesma armadilha já descrita em `brasilis`. +20 pares.
+
+**Três armadilhas deste grupo:**
+
+- **`Spear`/`Sword`/`Bow`, nos Assistentes, são CHAVE.** O gerente compara
+  `strnpcinfo(2)` — a parte escondida do nome, depois do `#` — com a palavra, e
+  o Mercenary Switch monta `disablenpc "Mercenary Manager#" + <palavra>`. O
+  catálogo as traduz para **Lanceiro/Espadachim/Arqueiro** (os nomes dos
+  pergaminhos no bRO), e o `renomeia_npcs_izlude.py` troca a parte escondida
+  pelas mesmas três. Um lado sem o outro deixa o gerente sem achar o próprio
+  tipo e o GM sem conseguir desligar ninguém. Ver `ARQUITETURA.md` §4.
+- **O ordinal do menu de grau é inglês, e fica.** O menu é montado com
+  `callfunc("F_GetNumSuffix", i)`, que devolve "1st", "2nd"… de
+  `npc/other/Global_Functions.txt`. O nome da função é `callfunc` e o
+  `RE_TECNICO` o protege, e o texto do sufixo é `return`, que não é contexto.
+  O menu sai "1st - Assistente Espadachim". Idem o `F_InsertPlural` do
+  vendedor de poções (regra de plural inglesa, `CLAUDE.md` §5).
+- **"Mercenary" é "Assistente" no bRO, e não "Mercenário".** Mercenário é o
+  nome da classe Assassino (`map_msg_por.conf` 562). Os nomes do bRO para os
+  três NPCs são "Gerente de Assistentes" e "Itens para Assistentes".
+
+**Nomes que vieram de tabela**, para não reinventar na próxima rodada:
+"Izlude Dungeon" é **Túnel Submarino**, "Paradise Group" é **Grupo do Éden**
+e o Paramarket é o **Mercado Paralelo** (`mapnametable.txt`: `moc_para01`,
+`paramk`); o Coco é **Koko** e o Galapago é **Pingu** (`JapaneseName` de
+`db/guerra/mob_db.yml`). O item `Help Me Shorty` (23278) não tem nome em
+português nem no bRO — lá ele está em coreano — e fica em inglês.
+
+**Nomes que NÃO vieram de tabela, e são escolha nossa:** o sistema de *clan*
+virou **Irmandade**, porque "Clã" é *guild* no `msgstringtable.txt` e
+nenhuma tabela nomeia o outro; *Far-Star* virou **Estrela Distante**,
+*Farfalle Vigilante* virou **Vigilantes Farfalle** e *Cat Paw Commerce Group*
+virou **Companhia Comercial Pata de Gato**. Se o bRO aparecer com outros,
+trocar no catálogo.
+
+**O nome exibido é o `renomeia_npcs_izlude.py`, abaixo**, obrigatório depois
+de todo `--aplicar izlude` **e** de todo `--aplicar cidades` (o
+`npc/re/cities/izlude.txt` é dos dois grupos).
+
 ### Fonte separada de resultado
 
 Há um conflito com a CONVENÇÃO DE CUSTOMIZAÇÃO: diálogo traduzido não tem como
@@ -1731,6 +1811,39 @@ os dois nomes **exibidos**, `Crewman#bra1` e `Crewman#bra2`. Também ficam
 `inbathroom#bra` e `#Monkeybra` (nome vazio ou puramente técnico), e os
 nomes próprios que o próprio bRO manteve — Angelo, Pedro, Mariana, Fabio,
 Daniel, Poring, Iara.
+
+## `renomeia_npcs_izlude.py` — o nome que flutua sobre o NPC de Izlude
+
+```
+python renomeia_npcs_izlude.py             # aplica
+python renomeia_npcs_izlude.py --conferir  # só mede; sai 1 se faltar
+```
+
+Irmã da de Brasilis, e entrou em 2026-09-26 junto com o grupo `izlude`. 334
+trocas em 22 arquivos. A fonte é a mesma — o `navi_npc_br.lub` do bRO, por mapa
+e coordenada —, e o docstring lista cada decisão. A diferença é que aqui a
+tabela é **por arquivo**, e não uma lista só: as chaves de Izlude são
+específicas (`#izlude`, `#iz`) para não alcançar as cópias de Prontera e de
+Brasilis que **três NPCs nossos** citam pelo nome (`armazem_do_cla.txt`,
+`porteiro_do_treinamento.txt`, `festival_de_brasilis_encantes.txt`).
+
+Três coisas que ela faz e que não se veem no nome:
+
+- **Troca a parte escondida dos Assistentes** (`#Sword` → `#Espadachim` etc.),
+  nas três cidades. É a outra metade da chave descrita no grupo `izlude` do
+  `traduz_npcs.py`; sem ela o catálogo sozinho quebra o gerente.
+- **Traduz o menu do Oficial de Canal** ("Go to copy 2" → "Ir para a cópia 2").
+  É argumento de `callfunc`, que o catálogo não extrai, e a linha é a mesma da
+  declaração.
+- **Renomeia a cadeia inteira da Ilusão Submarina**, inclusive as cópias em
+  `iz_d04_i`, porque o catálogo já trocou os cabeçalhos (`[Gein]` → `[Gael]`)
+  no arquivo todo.
+
+**O que fica de propósito:** os nomes próprios de `npc/cities/izlude.txt`
+(Bonne, Red, Cebalis… — o bRO chama três deles de Paula, Dan e Rami, mas o
+diálogo do grupo `cidades` manteve o nome do vendor nos cabeçalhos), a
+Academia Criatura inteira (nome e diálogo entram juntos, depois) e o
+`Mercenary Switch`, que o bRO também deixa em inglês.
 
 ## `planta_adereco.py` — copia um adereço de um mapa para outro
 

@@ -9,82 +9,82 @@
 //============================================================
 
 // Starter
-izlude,173,210,3	script	Black Shadow#fgtg01	4_CENERE,5,5,{
+izlude,173,210,3	script	Sombra Negra#fgtg01	4_CENERE,5,5,{
 	if (isbegin_quest(14688) == 0 && BaseLevel < 31) {
-		mes "[Black Shadow]";
-		mes "Take me! You have to take responsibility for me for making eye contact!";
+		mes "[Sombra Negra]";
+		mes "Me leva! Você me olhou nos olhos, agora tem que se responsabilizar por mim!";
 		next;
-		mes "[Black Shadow]";
-		mes "If you take me, ^0000cdI'll help too^000000. I'll really help you in many ways! I'll teach you ^0000cda lot of things^000000!!";
+		mes "[Sombra Negra]";
+		mes "Se me levar, ^0000cdeu também ajudo^000000. Vou te ajudar de verdade em muita coisa! Vou te ensinar ^0000cdum monte de coisas^000000!!";
 		next;
-		mes "[Shorty Notice]";
-		mes "^EE0000If you choose to accompany Shorty, the item ^0000cd<Help Me Shorty>^EE0000 will be automatically placed in your inventory.";
+		mes "[Aviso do Shorty]";
+		mes "^EE0000Se escolher levar o Shorty com você, o item ^0000cd<Help Me Shorty>^EE0000 vai para o seu inventário automaticamente.";
 		next;
-		mes "[Shorty Notice]";
-		mes "If you use the <Help Me Shorty> item in your ^EE0000inventory, you can summon Shorty and get ^0000cdhelp and advice^EE0000 from it.";
+		mes "[Aviso do Shorty]";
+		mes "Usando o item <Help Me Shorty> do seu ^EE0000inventário, você invoca o Shorty e recebe ^0000cdajuda e conselhos^EE0000 dele.";
 		next;
-		mes "[Shorty Notice]";
-		mes "^EE0000When you reach level 31 or higher, you can receive a quest that takes you to Shorty. Completing this quest will send you away and receive a reward at the same time.";
+		mes "[Aviso do Shorty]";
+		mes "^EE0000Ao chegar ao nível 31 ou mais, você pode receber uma missão que leva o Shorty de volta. Ao terminá-la, ele vai embora e você recebe uma recompensa.";
 		next;
-		mes "[Shorty Notice]";
-		mes "^EE0000Before reaching level 31, you can send Shorty away at any time via the ^0000cd<Let's Break Up>^EE0000 menu, but you will never be able to make Shorty your ally again after that.";
+		mes "[Aviso do Shorty]";
+		mes "^EE0000Antes do nível 31, você pode mandar o Shorty embora a qualquer hora pelo menu ^0000cd<Vamos nos separar>^EE0000, mas depois disso nunca mais vai poder tê-lo como aliado.";
 		next;
-		if (select( "Well, let's go together.", "I don't want to go together." ) == 2) {
-			mes "[Black Shadow]";
-			mes "Can you do this without my help? You will surely not be able to walk ten steps and think of me. Isn't life about helping each other? It can't be like this.";
+		if (select( "Tudo bem, vamos juntos.", "Não quero ir junto." ) == 2) {
+			mes "[Sombra Negra]";
+			mes "Você consegue sem a minha ajuda? Aposto que não dá dez passos sem pensar em mim. A vida não é feita de ajudar uns aos outros? Não pode ser assim.";
 			close;
 		}
-		mes "[Black Shadow]";
-		mes "Phew- I'm glad. Are we friends now?";
+		mes "[Sombra Negra]";
+		mes "Ufa- Que alívio. Agora somos amigos?";
 		next;
-		mes "[Black Shadow]";
-		mes "By the way, what's with those eyes...? Are you afraid of me? I was doing this to stand out, wait a minute...";
+		mes "[Sombra Negra]";
+		mes "Aliás, que olhar é esse...? Está com medo de mim? Eu estava assim só para chamar atenção, espera um pouco...";
 		next;
 		cloakonnpcself();
-		cloakoffnpcself("Mysterious Creature#fgtg01" );
-		mes "[Black Shadow]";
-		mes "Is this enough?";
+		cloakoffnpcself("Criatura Misteriosa#fgtg01" );
+		mes "[Sombra Negra]";
+		mes "Assim está bom?";
 		next;
 		mes "[Shorty]";
-		mes "My name is Shorty!!";
+		mes "Meu nome é Shorty!!";
 		next;
 		mes "[Shorty]";
-		mes "What is your name?";
+		mes "E o seu nome, qual é?";
 		next;
-		select( "My name is " + strcharinfo(0) + "." );
+		select( "Meu nome é " + strcharinfo(0) + "." );
 		mes "[Shorty]";
-		mes "It's an easy name to say. Do you have a bag? That's the one you wear around your waist. It's just the right size for me to fit in.";
+		mes "É um nome fácil de falar. Você tem uma bolsa? Aquela que se usa na cintura. Tem o tamanho certinho para eu caber.";
 		next;
-		select( "You want to go in the bag?" );
+		select( "Você quer entrar na bolsa?" );
 		mes "[Shorty]";
-		mes "I can fit in your bag. What are you so surprised about? It won't be long. I'll be leaving soon.";
-		next;
-		mes "[Shorty]";
-		mes "Press ^0000cdALT+E^000000 to see the inside of the bag, press the consumption tab and I will be right there.";
+		mes "Eu caibo na sua bolsa. Por que o espanto? Não vai demorar. Logo eu vou embora.";
 		next;
 		mes "[Shorty]";
-		mes "When you want to call me, press ^0000cd<Help Me Shorty>^000000 twice quickly and I'll come out of your bag and help you. How about it? Isn't it great?";
+		mes "Aperte ^0000cdALT+E^000000 para ver o que tem dentro da bolsa, vá na aba de consumíveis e eu vou estar lá.";
 		next;
 		mes "[Shorty]";
-		mes "If you don't like me in the bag, take me to ^0000cdSalty^000000. That's my destination, so when the time comes, I will leave ^0000cdyour bag^000000.";
-		next;
-		select( "Where is that person?" );
-		mes "[Shorty]";
-		mes "I'll tell you later. I want to rest for now.";
+		mes "Quando quiser me chamar, clique duas vezes rápido em ^0000cd<Help Me Shorty>^000000 e eu saio da bolsa para te ajudar. Que tal? Não é demais?";
 		next;
 		mes "[Shorty]";
-		mes "Good luck in the future!";
+		mes "Se não quiser me carregar na bolsa, me leve até a ^0000cdSalty^000000. É para lá que eu vou, então, quando chegar a hora, eu saio da ^0000cdsua bolsa^000000.";
+		next;
+		select( "Onde fica essa pessoa?" );
+		mes "[Shorty]";
+		mes "Te conto depois. Agora eu quero descansar.";
+		next;
+		mes "[Shorty]";
+		mes "Boa sorte daqui para a frente!";
 		setquest 14688;
 		completequest 14688;
 		getitem 23278,1;	// HelpmeShorty
-		cloakonnpcself("Mysterious Creature#fgtg01" );
+		cloakonnpcself("Criatura Misteriosa#fgtg01" );
 		close;
 	}
 	end;
 
 OnTouch:
 	if (isbegin_quest(14688) == 0 && BaseLevel < 31)
-		npctalk "Save me! Hug me quickly! Save me!", "", bc_self;
+		npctalk "Me salva! Me abraça rápido! Me salva!", "", bc_self;
 	end;
 
 OnInit:
@@ -94,13 +94,13 @@ OnInit:
 }
 
 //izlude,173,210,3	script	Mysterious Creature#fgtg01	4_GALAPAGO,5,5,{	// unknown OnTouch effect
-izlude,173,210,3	duplicate(dummy_cloaked_npc)	Mysterious Creature#fgtg01	4_GALAPAGO
+izlude,173,210,3	duplicate(dummy_cloaked_npc)	Criatura Misteriosa#fgtg01	4_GALAPAGO
 
 izlude,161,199,0	script	#fgtg01	HIDDEN_WARP_NPC,3,5,{
 	end;
 OnTouch:
 	if (isbegin_quest(14688) == 0 && BaseLevel < 31)
-		cloakoffnpcself( "Black Shadow#fgtg01" );
+		cloakoffnpcself( "Sombra Negra#fgtg01" );
 	end;
 }
 izlude,194,209,0	duplicate(#fgtg01)	#fgtg02	HIDDEN_WARP_NPC,3,5
@@ -112,59 +112,59 @@ payon_in01,193,23,3	script	Chanmo#fgtg01	1_F_ORIENT_01,{
 	if (isbegin_quest(14693) == 1) {
 		cloakoffnpcself( "Shorty#fgtg004" );
 		mes "[Shorty]";
-		mes "Salty! Salty~ I'm here~ Did you wait? Did you wait a long time?";
+		mes "Salty! Salty~ Cheguei~ Me esperou? Esperou muito?";
 		next;
-		mes "[In the inn]";
+		mes "[Na estalagem]";
 		mes "......";
 		next;
 		mes "[Shorty]";
-		mes "Salty, Salty? Salty? Where have you been Salty?";
+		mes "Salty, Salty? Salty? Cadê você, Salty?";
 		next;
 		mes "[Chanmo]";
-		mes "Who are you talking about?";
+		mes "De quem você está falando?";
 		next;
 		mes "[Shorty]";
-		mes "I came to find Salty.. I came, but there is no Salty.";
+		mes "Eu vim procurar a Salty... Cheguei, mas não tem Salty nenhuma.";
 		next;
 		mes "[Chanmo]";
-		mes "Salty? Ah, you're talking about the woman who is staying in the room. I sent her on an errand.";
+		mes "Salty? Ah, você está falando da moça que está hospedada no quarto. Mandei ela fazer um serviço.";
 		next;
 		mes "[Shorty]";
-		mes "Errands? Why?";
+		mes "Serviço? Por quê?";
 		next;
 		mes "[Chanmo]";
-		mes "I'm bored. I sent her to get some jelly and acorns.";
+		mes "Eu estava entediada. Mandei ela buscar geleia e bolotas.";
 		next;
 		mes "[Shorty]";
-		mes "Hey! Where are you coming from? We came to see Salty, why did you send Salty away~";
+		mes "Ei! Quem você pensa que é? A gente veio ver a Salty, por que você mandou a Salty embora~";
 		next;
 		mes "[Chanmo]";
-		mes "I didn't force anyone to come, and I pulled Zug's head and rolled it over. So I sent him out.";
+		mes "Não obriguei ninguém a vir, e ela vivia me dando dor de cabeça. Então mandei ela sair.";
 		next;
 		mes "[Shorty]";
-		mes "Then can I wait here?";
+		mes "Então posso esperar aqui?";
 		next;
 		mes "[Chanmo]";
-		mes "If you're in a hurry, you can help. You can find the";
-		mes "<NAVI>[Coco's nest]<INFO>prt_fild10,318,191,0,101,0</INFO></NAVI> in the south-southwest of Prontera. You can get a bunch of acorns from Coco.";
+		mes "Se estiver com pressa, pode ajudar. Você encontra o";
+		mes "<NAVI>[Ninho do Koko]<INFO>prt_fild10,318,191,0,101,0</INFO></NAVI> ao sul-sudoeste de Prontera. O Koko tem bolotas de monte.";
 		next;
 		mes "[Shorty]";
-		mes "Hm.. Alright. Master, let's go too. To the Coco's nest.";
+		mes "Hum... Tá bom. Mestre, vamos também. Para o ninho do Koko.";
 		next;
-		select("Are you here?");
+		select("Você está aí?");
 		mes "[Shorty]";
-		mes "I miss Salty. Let's go see Salty.";
+		mes "Estou com saudade da Salty. Vamos ver a Salty.";
 		next;
-		select("Okay then.");
+		select("Então tá.");
 		mes "[Shorty]";
-		mes "Well then, let's go!!!";
+		mes "Então vamos!!!";
 		cloakonnpcself("Shorty#fgtg004");
 		completequest 14693;
 		setquest 14694;
 		close;
 	}
 	mes "[Chanmo]";
-	mes "I need to pick some acorn and jelly today.";
+	mes "Hoje eu preciso colher umas bolotas e fazer geleia.";
 	close;
 }
 
@@ -191,69 +191,69 @@ prt_fild10,298,212,0	duplicate(#salt01)	#salt08	HIDDEN_WARP_NPC,3,5
 prt_fild10,318,191,3	script	Salty#fgtg01	4_F_ALCHE_A,{
 	if (isbegin_quest(14694) == 1) {
 		mes "[Salty]";
-		mes "Alas! Acorns! Muk-muk, acorn jelly! What do you do with acorns? You eat acorn jelly~";
+		mes "Oba! Bolotas! Hmm, geleia de bolota! O que se faz com bolota? Se come geleia de bolota~";
 		next;
 		cloakoffnpcself( "Shorty#fgtg005" );
 		mes "[Shorty]";
-		mes "You look excited, Salty. Were you happy without me?";
+		mes "Você parece animada, Salty. Estava feliz sem mim?";
 		next;
 		mes "[Salty]";
-		mes "Huh? Uh-huh??? Shorty!!!!!!!!!!";
+		mes "Hã? Ahn??? Shorty!!!!!!!!!!";
 		next;
 		mes "[Shorty]";
-		mes "Did you have fun without me? Did you have fun without me...";
+		mes "Você se divertiu sem mim? Se divertiu sem mim...";
 		next;
 		mes "[Salty]";
-		mes "Shorty, why are you here? One day I received a letter saying you were leaving!!!";
+		mes "Shorty, o que você está fazendo aqui? Um dia eu recebi uma carta dizendo que você tinha ido embora!!!";
 		next;
 		mes "[Shorty]";
-		mes "There are a number of circumstances. This situation will be explained by my master here.";
+		mes "Aconteceu um monte de coisa. Quem vai explicar é o meu mestre aqui.";
 		next;
 		mes "[Salty]";
-		mes "What? You kidnapped our Shorty??";
+		mes "O quê? Você sequestrou o nosso Shorty??";
 		next;
-		select( "No, that's not it..." );
+		select( "Não, não é nada disso..." );
 		mes "[Salty]";
-		mes "Oh yeah? But Shorty! What's going on here?";
+		mes "Ah, é? Mas, Shorty! O que está acontecendo?";
 		next;
 		mes "[Shorty]";
-		mes "I went to Payon and came here because the grandmother who cooks muk said you went here.";
+		mes "Eu fui a Payon e vim para cá porque a vovó que faz geleia disse que você tinha vindo para cá.";
 		next;
 		mes "[Salty]";
-		mes "Okay! I'm on the verge of going too, but let's stop at Prontera for a while and then go to Payon. Let's go pack up some stuff and travel the continent!";
+		mes "Tá bom! Eu também estava quase indo, mas vamos passar um tempo em Prontera e depois ir a Payon. Vamos arrumar as coisas e viajar pelo continente!";
 		next;
 		mes "[Shorty]";
-		mes "Yeah! Master, the adventures we had together were fun!";
+		mes "Oba! Mestre, as aventuras que a gente viveu juntos foram divertidas!";
 		next;
 		mes "[Salty]";
-		mes "I have to say thank you. It looks like you were carrying Shorty in that little bag.";
+		mes "Tenho que te agradecer. Pelo jeito você carregou o Shorty nessa bolsinha.";
 		next;
 		mes "[Shorty]";
-		mes "Master, thank you so much.";
+		mes "Mestre, muito obrigado.";
 		next;
-		select( "Are you leaving?" );
+		select( "Você vai embora?" );
 		mes "[Shorty]";
-		mes "Our relationship will not end here. Remember that you met me. Salty, is there anything else? Something to remember.";
+		mes "A nossa amizade não termina aqui. Lembre-se de que me conheceu. Salty, tem mais alguma coisa? Uma lembrança.";
 		next;
 		mes "[Salty]";
-		mes "Uh-huh, something like that.";
+		mes "Ahn, tem uma coisa assim.";
 		next;
 		mes "[Shorty]";
-		mes "Is this all? Penguin? Penguin? Do you like penguins better than me?";
+		mes "Só isso? Pinguim? Pinguim? Você gosta mais de pinguim do que de mim?";
 		next;
 		mes "[Salty]";
-		mes "No, it's not... Originally I bought it in Paros to remember you, but now that I think about it, you're not a penguin, so I just kept it. Isn't it cute?";
+		mes "Não, não é isso... Eu comprei em Paros para lembrar de você, mas pensando bem você não é pinguim, então só guardei. Não é fofo?";
 		next;
 		mes "[Shorty]";
-		mes "Cute.";
+		mes "Fofo.";
 		next;
 		mes "[Salty]";
-		mes "I'll give this to you. Thanks for taking care of Shorty! Shorty, let's go!";
+		mes "Vou te dar isto. Obrigada por cuidar do Shorty! Shorty, vamos!";
 		next;
 		specialeffect EF_TELEPORTATION2;
 		cloakonnpcself();
 		mes "[Shorty]";
-		mes "Master, even if a lot of time passes, don't forget me and become a great adventurer who makes a name for yourself on the continent!";
+		mes "Mestre, mesmo que passe muito tempo, não se esqueça de mim e vire um grande aventureiro, famoso no continente todo!";
 		specialeffect EF_TELEPORTATION2, AREA, "Shorty#fgtg005";
 		cloakonnpcself( "Shorty#fgtg005" );
 		erasequest 14694;
@@ -279,30 +279,30 @@ prt_fild10,315,189,7	duplicate(dummy_cloaked_npc)	Shorty#fgtg005	4_GALAPAGO
 izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 	if (isbegin_quest(14689) == 0) {
 		mes "[Shorty]";
-		mes "Good job. If you need my help in the future, you can call me like this.";
+		mes "Muito bem. Se precisar da minha ajuda daqui para a frente, é só me chamar assim.";
 		next;
-		select( "How can you help me?" );
+		select( "Como você pode me ajudar?" );
 		mes "[Shorty]";
-		mes "After arriving here for the first time you didn't know anything, right? I'll teach you everything I know. ^0000cdAsk me anything!^000000";
-		next;
-		mes "[Shorty]";
-		mes "And I'll provide you with various good ^0000cdservices^000000 to help you with hunting.";
+		mes "Quando chegou aqui pela primeira vez, você não sabia nada, não é? Vou te ensinar tudo o que eu sei. ^0000cdPergunte o que quiser!^000000";
 		next;
 		mes "[Shorty]";
-		mes "The only thing I can do is ^0000cdincrease agility^000000 to move quickly, and ^0000cdblessing^000000 to increase strength, dexterity and intelligence, but it will definitely help, right?";
+		mes "E vou te oferecer vários ^0000cdserviços^000000 bons para ajudar na caçada.";
 		next;
 		mes "[Shorty]";
-		mes "Yeah! If you call me and don't say anything for a minute, I'll go back into the bag.";
+		mes "Tudo o que eu sei fazer é ^0000cdAumentar Agilidade^000000, para você se mover rápido, e ^0000cdBênção^000000, que aumenta força, destreza e inteligência, mas com certeza vai ajudar, né?";
 		next;
 		mes "[Shorty]";
-		mes "And when the business is over, just leave me be. I'll look around for you and go in the bag. I follow along very well.";
-		next;
-		select( "When are you going to find someone named Salty?" );
-		mes "[Shorty]";
-		mes "Not now, master. This Shorty, from the Galapagos knows grace. When you can take off your starter tee and start the adventure on your own, Shorty then goes away.";
+		mes "Ah! Se você me chamar e não disser nada por um minuto, eu volto para a bolsa.";
 		next;
 		mes "[Shorty]";
-		mes "At that time, even if you hold on to me and cry, I will leave you. Before that, you have to increase your level to about ^0000cdlevel 31^000000. Until then, let's do our best in the future.";
+		mes "E, quando acabar o assunto, é só me deixar. Eu dou uma volta por aí e entro na bolsa. Eu sei seguir direitinho.";
+		next;
+		select( "Quando você vai procurar essa tal de Salty?" );
+		mes "[Shorty]";
+		mes "Agora não, mestre. Este Shorty, lá das Galápagos, sabe ser educado. Quando você puder tirar a sua camiseta de novato e seguir a aventura por conta própria, aí o Shorty vai embora.";
+		next;
+		mes "[Shorty]";
+		mes "Nessa hora, mesmo que você me segure e chore, eu vou te deixar. Antes disso, você precisa subir até mais ou menos o ^0000cdnível 31^000000. Até lá, vamos dar o nosso melhor.";
 		setquest 14689;
 		completequest 14689;
 		next;
@@ -315,126 +315,126 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		if (BaseLevel < 31)
 			break;
 		mes "[Shorty]";
-		mes "You has grown wonderfully. So now I want to meet Salty. She'll be worried about me.";
+		mes "Você cresceu de um jeito maravilhoso. Então agora eu quero encontrar a Salty. Ela deve estar preocupada comigo.";
 		next;
-		select( "Now did you get that idea?" );
+		select( "Agora é que você pensou nisso?" );
 		mes "[Shorty]";
-		mes "The last letter from Salty said it was from ^0000cdPayon's inn^000000.";
+		mes "A última carta da Salty dizia que ela estava na ^0000cdestalagem de Payon^000000.";
 		next;
 		mes "[Shorty]";
-		mes "Let's go";
-		mes "find the <NAVI>[Inn]<INFO>payon_in01,193,23,0,101,0</INFO></NAVI> in Payon.";
+		mes "Vamos";
+		mes "procurar a <NAVI>[Estalagem]<INFO>payon_in01,193,23,0,101,0</INFO></NAVI> em Payon.";
 		setquest 14693;
 		close;
 	case 1:
 		break;
 	case 2:
 		mes "[Shorty]";
-		mes "Who are you? Who are you talking to me? I don't like people I don't know talking to or touching me.";
+		mes "Quem é você? Quem é você falando comigo? Não gosto que gente que eu não conheço fale comigo ou encoste em mim.";
 		close;
 	}
 	if (BaseLevel < 31) {
 		switch( rand(4) ) {
 		case 0:
 			mes "[Shorty]";
-			mes "Open the item window and you will see ^0000cdfour tabs^000000. Can you see it?";
+			mes "Abra a janela de itens e você vai ver ^0000cdquatro abas^000000. Está vendo?";
 			next;
 			mes "[Shorty]";
-			mes "If you drag and drop items that are not used frequently or should not be sold to NPCs, put them in the ^0000cd<Personal tab>, and press the trade lock button^000000 at the bottom, you will not accidentally sell these items.";
+			mes "Se arrastar os itens que você não usa muito, ou que não devem ser vendidos a NPC, para a ^0000cd<aba Pessoal>, e apertar o botão de trava de venda^000000 lá embaixo, você não vende esses itens sem querer.";
 			break;
 		case 1:
 			mes "[Shorty]";
-			mes "Master, have you ever pressed the ^0000cdF12 key^000000? Small white squares will float around.";
+			mes "Mestre, já apertou a ^0000cdtecla F12^000000? Aparecem uns quadradinhos brancos flutuando.";
 			next;
 			mes "[Shorty]";
-			mes "Drag the skill icon or item there. If you release it, you can use skills and icons quickly and easily by simply pressing the ^0000cdshortcut button^000000. It's really convenient.";
+			mes "Arraste um ícone de habilidade ou um item até lá. Soltando, dá para usar a habilidade ou o item de um jeito rápido e fácil, só apertando a ^0000cdtecla de atalho^000000. É muito prático.";
 			break;
 		case 2:
 			mes "[Shorty]";
-			mes "He said that if you don't need the hats or clothes you got at the academy, you can exchange them for useful stuff at the ^0000cdvending machine at the job change office for each job^000000.";
+			mes "Dizem que, se você não precisa dos chapéus ou das roupas que ganhou na academia, pode trocá-los por coisas úteis na ^0000cdmáquina de trocas do escritório de mudança de classe de cada classe^000000.";
 			next;
 			mes "[Shorty]";
-			mes "Salty also used it very well. I would like clams if possible.";
+			mes "A Salty também usava muito. Se der, eu queria mariscos.";
 			break;
 		case 3:
 			mes "[Shorty]";
-			mes "Let's leave after checking where the hunt was. There may be monster cards left.";
+			mes "Vamos sair depois de conferir onde foi a caçada. Pode ter sobrado carta de monstro.";
 			next;
 			mes "[Shorty]";
-			mes "This is a valuable tip that Salty taught me~ Do you have a monster card?";
+			mes "Esta é uma dica valiosa que a Salty me ensinou~ Você tem alguma carta de monstro?";
 			break;
 		}
-		setarray .@menu$[0], "Give me strength!", "Where should I go?", "Isn't there anything good?", "How do I take skills and stats?", "Tell me how to operate." ;
+		setarray .@menu$[0], "Me dá uma força!", "Para onde eu devo ir?", "Não tem nada de bom por aí?", "Como eu distribuo habilidades e atributos?", "Me ensina a mexer no jogo." ;
 	}
 	else {
 		switch( rand(4) ) {
 		case 0:
 			mes "[Shorty]";
-			mes "Master, did you know that besides the Midgard continent known to us, you can go to new and mysterious places by boat? Mainly Al... Al... Allegro?";
+			mes "Mestre, sabia que, além do continente de Midgard que a gente conhece, dá para ir de barco a lugares novos e misteriosos? Principalmente Al... Al... Allegro?";
 			next;
 			mes "[Shorty]";
-			mes "^0000cdAh! You can go by boat from Alberta^000000! Let's go later! Master! It's a new adventure!";
+			mes "^0000cdAh! Dá para ir de barco saindo de Alberta^000000! Vamos depois! Mestre! É uma aventura nova!";
 			break;
 		case 1:
 			mes "[Shorty]";
-			mes "I heard that there are quite a few dungeons that even a young adventurer like yourself can go too.";
+			mes "Ouvi dizer que tem bastante masmorra aonde até um aventureiro jovem como você pode ir.";
 			next;
-			select( "Why am I so stupid!" );
+			select( "Como eu sou burro!" );
 			mes "[Shorty]";
-			mes "Master, what you're saying? Anyway, underground waterways, Payon's caves, ant dungeons, and shipwrecks. Don't you want to become the ruler of the dungeon, master?";
+			mes "Mestre, o que você está dizendo? Enfim, os Esgotos de Prontera, a Caverna de Payon, o Formigueiro Infernal e o Navio Fantasma. Não quer virar o dono da masmorra, mestre?";
 			next;
-			select( "If you fight for me." );
+			select( "Se você lutar por mim." );
 			mes "[Shorty]";
-			mes "Master, you should save your body because you only have one life.";
+			mes "Mestre, é bom se cuidar, porque você só tem uma vida.";
 			break;
 		case 2:
 			mes "[Shorty]";
-			mes "Is master ready? I really want to go!";
+			mes "O mestre está pronto? Eu quero muito ir!";
 			next;
-			select( "What is it? Where is it?" );
+			select( "O que é? Onde fica?" );
 			mes "[Shorty]";
-			mes "You don't know Ohiso, Boiso, Saiso, ^0000cdParamarket^000000? What would master do without me, really?";
+			mes "Venha, veja, compre... Você não conhece o ^0000cdMercado Paralelo^000000? O que o mestre faria sem mim, sério?";
 			next;
 			mes "[Shorty]";
-			mes "Paramarket is a place that sells items that are hard to find in the market or street stalls in limited quantities and for a limited time. It is a very good place to do business.";
+			mes "O Mercado Paralelo é um lugar que vende itens difíceis de achar no mercado ou nas barracas de rua, em quantidade limitada e por tempo limitado. É um ótimo lugar para fazer negócio.";
 			next;
-			select( "How do I get there?" );
+			select( "Como eu chego lá?" );
 			mes "[Shorty]";
-			mes "Talk to the Paramarket Windman in ^0000cdParadise Corridor^000000 and he will send you there.";
+			mes "Fale com o Homem do Vento do Mercado Paralelo no ^0000cdCorredor do Éden^000000 e ele te manda para lá.";
 			break;
 		case 3:
 			mes "[Shorty]";
-			mes "Master, sometimes when you want to buy something from a street vendor, you may wonder if they are selling it now and who is selling it.";
+			mes "Mestre, às vezes, quando você quer comprar alguma coisa de um vendedor de rua, fica pensando se alguém está vendendo agora e quem está vendendo.";
 			next;
-			select( "That's right. I can't even look through all the stalls." );
+			select( "É mesmo. Não dá nem para olhar todas as barracas." );
 			mes "[Shorty]";
-			mes "In that case, you can use the ^0000cdcatalog^000000. Currently, it is said that ^0000cdvending machines in Paradise or Alberta's merchant^000000 are selling it.";
+			mes "Nesse caso, dá para usar o ^0000cdcatálogo^000000. Dizem que agora ele está à venda nas ^0000cdmáquinas do Grupo do Éden ou com o comerciante de Alberta^000000.";
 			next;
 			mes "[Shorty]";
-			mes "I want to go shopping today too.";
+			mes "Hoje eu também quero fazer compras.";
 			break;
 		}
-		setarray .@menu$[5], "Anything good?";
+		setarray .@menu$[5], "Alguma coisa boa?";
 	}
 	next;
 	mes "[Shorty]";
-	mes "Do you need more help from me?";
+	mes "Precisa de mais alguma ajuda minha?";
 	next;
-	switch( select( .@menu$[0], .@menu$[1], .@menu$[2], .@menu$[3], .@menu$[4], .@menu$[5 ], "Information guide", "I'm curious about what you're talking about.", "Break up now." ) ) {
+	switch( select( .@menu$[0], .@menu$[1], .@menu$[2], .@menu$[3], .@menu$[4], .@menu$[5 ], "Guia de informações", "Fiquei curioso com o que você disse.", "Vamos nos separar." ) ) {
 	case 1:
 		switch( checkquest(14695,PLAYTIME) ) {
 		case -1:
 			mes "[Shorty]";
-			mes "Master, I'll give you the help I promised you before. Increased agility and blessing.";
+			mes "Mestre, vou te dar a ajuda que prometi. Aumentar Agilidade e Bênção.";
 			next;
 			mes "[Shorty]";
-			mes "But I learned this over the shoulder, and once I do it, my soul gets tired, so I can't give it indefinitely. Although it can take me half an hour to refresh myself.";
+			mes "Mas eu aprendi isso de olhar os outros, e, cada vez que faço, a minha alma cansa, então não dá para fazer sem parar. Leva uma meia hora para eu me recuperar.";
 			next;
 			mes "[Shorty]";
-			mes "If you want to know when you can get it again, open the quest window with ALT+U and check the time displayed at the bottom.";
+			mes "Se quiser saber quando pode receber de novo, abra a janela de missões com ALT+U e veja o tempo que aparece lá embaixo.";
 			next;
 			mes "[Shorty]";
-			mes "Go! Master!!";
+			mes "Vai! Mestre!!";
 			npcskill "AL_INCAGI",10,99,60;
 			npcskill "AL_BLESSING",10,99,60;
 			setquest 14695;
@@ -442,11 +442,11 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		case 0:
 		case 1:
 			mes "[Shorty]";
-			mes "Master, it hasn't even been 30 minutes yet. I'm still struggling. I'll give you more strength if you get up, so please wait.";
+			mes "Mestre, ainda não deu nem 30 minutos. Eu ainda estou me recuperando. Te dou mais força quando eu levantar, então espere, por favor.";
 			close;
 		case 2:
 			mes "[Shorty]";
-			mes "Go! Master!!";
+			mes "Vai! Mestre!!";
 			npcskill "AL_INCAGI",10,99,60;
 			npcskill "AL_BLESSING",10,99,60;
 			erasequest 14695;
@@ -456,266 +456,266 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		end;
 	case 2:
 		mes "[Shorty]";
-		mes "What would you like to learn about master?";
+		mes "O que o mestre quer aprender?";
 		next;
-		switch( select( "The path of a novice adventurer!", "I want to help people around me.", "I don't like the set path.", "There is no place I want to go." ) ) {
+		switch( select( "O caminho do aventureiro novato!", "Quero ajudar as pessoas à minha volta.", "Não gosto de caminho pronto.", "Não tem nenhum lugar aonde eu queira ir." ) ) {
 		case 1:
 			mes "[Shorty]";
-			mes "I think I saw one ^0000cd<Thinking Archer>^000000 teacher near the entrance to Izlude, but he seemed to have a lot of thoughts. Why don't you go and ask what's going on? Let's go, let's go~";
+			mes "Acho que vi um professor, o ^0000cd<Arqueiro Pensativo>^000000, perto da entrada de Izlude, mas ele parecia com muita coisa na cabeça. Que tal ir perguntar o que está acontecendo? Vamos, vamos~";
 			close;
 		case 2:
 			mes "[Shorty]";
-			mes "Why don't you meet Paul and Anne at the outside ^0000cdProntera's West Gate ^000000? As I was passing by, I heard that they needed help.";
+			mes "Que tal encontrar o Paul e a Anne do lado de fora do ^0000cdPortão Oeste de Prontera ^000000? Quando eu passei por lá, ouvi que eles precisavam de ajuda.";
 			next;
 			mes "[Shorty]";
-			mes "Or why not listen to the anxious middle-aged man in ^0000cdPayon^000000?";
+			mes "Ou que tal ouvir aquele senhor aflito em ^0000cdPayon^000000?";
 			close;
 		case 3:
 			mes "[Shorty]";
-			mes "Pressing ^0000cdCtrl+`^000000 will open the map.";
+			mes "Apertando ^0000cdCtrl+`^000000, o mapa abre.";
 			next;
 			mes "[Shorty]";
-			mes "Do you see a box for selecting a region in the upper left corner?";
+			mes "Está vendo uma caixa para escolher a região, no canto de cima à esquerda?";
 			next;
 			mes "[Shorty]";
-			mes "After selecting the area you want to see, check the ^0000cdmonster tab^000000 in the upper right corner or press the ^0000cdTab key^000000, you will see the name and level of the monster most distributed in that area.";
+			mes "Depois de escolher a área que quer ver, confira a ^0000cdaba de monstros^000000 no canto de cima à direita, ou aperte a ^0000cdtecla Tab^000000, e vai aparecer o nome e o nível dos monstros mais comuns daquela área.";
 			next;
 			mes "[Shorty]";
-			mes "It would be better to go on an adventure to a place that matches the level of master. If there is ^0000cda lot of level difference with monsters^000000, you can't get 100% of the experience. You have to calculate the level difference as well, right?";
+			mes "O melhor é se aventurar num lugar que combine com o nível do mestre. Se houver ^0000cdmuita diferença de nível para os monstros^000000, você não ganha 100% da experiência. Tem que levar a diferença de nível em conta também, né?";
 			next;
 			mes "[Shorty]";
-			mes "If you press the town you want to go to, the navigation menu will appear. Press the ^0000cd<Guide to the target> button at the bottom^000000 and exit the map to get guidance.";
+			mes "Clicando na cidade aonde quer ir, aparece o menu de navegação. Aperte o ^0000cdbotão <Guiar até o destino> lá embaixo^000000 e feche o mapa para ser guiado.";
 			close;
 		case 4:
 			mes "[Shorty]";
-			mes "Master, are you bored? Then you can chat with the people around you.";
+			mes "Mestre, está entediado? Então pode conversar com as pessoas à sua volta.";
 			next;
 			mes "[Shorty]";
-			mes "Other than that, it would be okay to try ^0000cdParadise's quest^000000. Do you want to go to Paradise? They say they will give you a weapon if you go.";
+			mes "Fora isso, também dá para tentar a ^0000cdmissão do Grupo do Éden^000000. Quer ir ao Grupo do Éden? Dizem que eles te dão uma arma se você for.";
 			next;
 			mes "[Shorty]";
-			mes "Where do you want to go? Write ^0000cd/place^000000 in the chat window and compare your current location with the map that appears by pressing the ^0000cdCtrl+` keys^000000.";
+			mes "Aonde você quer ir? Digite ^0000cd/where^000000 na janela de chat e compare onde você está com o mapa que aparece ao apertar as ^0000cdteclas Ctrl+`^000000.";
 			next;
-			switch( select( "Prontera", "Geffen", "Payon", "Morroc", "Alberta", "Done" ) ) {
+			switch( select( "Prontera", "Geffen", "Payon", "Morroc", "Alberta", "Pronto" ) ) {
 			case 1:
 				mes "[Shorty]";
-				mes "Click on <NAVI>[Prontera]<INFO>prontera,124,76,0,101,0</INFO></NAVI> to find it.";
+				mes "Clique em <NAVI>[Prontera]<INFO>prontera,124,76,0,101,0</INFO></NAVI> para encontrar.";
 				break;
 			case 2:
 				mes "[Shorty]";
-				mes "Click on <NAVI>[Geffen]<INFO>geffen,132,66,0,101,0</INFO></NAVI> to find it.";
+				mes "Clique em <NAVI>[Geffen]<INFO>geffen,132,66,0,101,0</INFO></NAVI> para encontrar.";
 				break;
 			case 3:
 				mes "[Shorty]";
-				mes "Click on <NAVI>[Payon]<INFO>payon,177,111,0,101,0</INFO></NAVI> to find it.";
+				mes "Clique em <NAVI>[Payon]<INFO>payon,177,111,0,101,0</INFO></NAVI> para encontrar.";
 				break;
 			case 4:
 				mes "[Shorty]";
-				mes "Click on <NAVI>[Morroc: Paradise Space Traveler]<INFO>morocc,161,97,0,101,0</INFO></NAVI> to find it.";
+				mes "Clique em <NAVI>[Morroc: Viajante Espacial do Éden]<INFO>morocc,161,97,0,101,0</INFO></NAVI> para encontrar.";
 				next;
 				mes "[Shorty]";
-				mes "Morroc is where Paradise is, so wouldn't it be ok to walk around?";
+				mes "É em Morroc que fica o Grupo do Éden, então não é bom dar uma volta por lá?";
 				next;
 				mes "[Shorty]";
-				mes "Go to <NAVI>[Morroc Paradise]<INFO>morocc,206,285,0,101,0</INFO></NAVI>.";
+				mes "Vá ao <NAVI>[Grupo do Éden de Morroc]<INFO>morocc,206,285,0,101,0</INFO></NAVI>.";
 				break;
 			case 5:
 				mes "[Shorty]";
-				mes "Click on <NAVI>[Alberta]<INFO>alberta,124,67,0,101,0</INFO></NAVI> to find it.";
+				mes "Clique em <NAVI>[Alberta]<INFO>alberta,124,67,0,101,0</INFO></NAVI> para encontrar.";
 				break;
 			case 6:
 				mes "[Shorty]";
-				mes "Okay? Then I'll look around a bit and get back into the bag.";
+				mes "Certo? Então vou dar uma olhada por aí e volto para a bolsa.";
 				close;
 			}
 			next;
 			mes "[Shorty]";
-			mes "Go and register with Lime Ivenor first, then check the bulletin board next to it.";
+			mes "Primeiro vá se registrar com a Lime Evenor e depois dê uma olhada no quadro de avisos ao lado.";
 			next;
 			mes "[Shorty]";
-			mes "It would be nice to go around towns and fields to find and help people in need. Those who need help will find it easier to find with a <!> sign above their heads.";
+			mes "Também é bom rodar pelas cidades e pelos campos procurando quem precisa de ajuda. Quem precisa de ajuda é mais fácil de achar, com um sinal de <!> em cima da cabeça.";
 			close;
 		}
 		end;
 	case 3:
 		mes "[Shorty]";
-		mes "You didn't join the Paradise Club?";
+		mes "Você não entrou para o Grupo do Éden?";
 		next;
 		mes "[Shorty]";
-		mes "Do you want to go to ^0000cdParadise^000000? They say that if you go to Paradise, they will give you weapons.";
+		mes "Quer ir ao ^0000cdGrupo do Éden^000000? Dizem que, se você for ao Grupo do Éden, eles te dão armas.";
 		next;
 		mes "[Shorty]";
-		mes "Where do you want to go? Write /place in the chat window and compare your current location with the map that appears by pressing the ^0000cdCtrl+` keys^^000000. Where is the nearest?";
+		mes "Aonde você quer ir? Digite /where na janela de chat e compare onde você está com o mapa que aparece ao apertar as ^0000cdteclas Ctrl+`^^000000. Qual é o mais perto?";
 		next;
-		switch( select( "Prontera", "Geffen", "Payon", "Morroc", "Alberta", "Done" ) ) {
+		switch( select( "Prontera", "Geffen", "Payon", "Morroc", "Alberta", "Pronto" ) ) {
 		case 1:
 			mes "[Shorty]";
-			mes "Click on <NAVI>[Prontera]<INFO>prontera,124,76,0,101,0</INFO></NAVI> to find it.";
+			mes "Clique em <NAVI>[Prontera]<INFO>prontera,124,76,0,101,0</INFO></NAVI> para encontrar.";
 			break;
 		case 2:
 			mes "[Shorty]";
-			mes "Click on <NAVI>[Geffen]<INFO>geffen,132,66,0,101,0</INFO></NAVI> to find it.";
+			mes "Clique em <NAVI>[Geffen]<INFO>geffen,132,66,0,101,0</INFO></NAVI> para encontrar.";
 			break;
 		case 3:
 			mes "[Shorty]";
-			mes "Click on <NAVI>[Payon]<INFO>payon,177,111,0,101,0</INFO></NAVI> to find it.";
+			mes "Clique em <NAVI>[Payon]<INFO>payon,177,111,0,101,0</INFO></NAVI> para encontrar.";
 			break;
 		case 4:
 			mes "[Shorty]";
-			mes "Click on <NAVI>[Morroc: Paradise Space Traveler]<INFO>morocc,161,97,0,101,0</INFO></NAVI> to find it.";
+			mes "Clique em <NAVI>[Morroc: Viajante Espacial do Éden]<INFO>morocc,161,97,0,101,0</INFO></NAVI> para encontrar.";
 			next;
 			mes "[Shorty]";
-			mes "Morroc is where Paradise is, so wouldn't it be ok to walk around?";
+			mes "É em Morroc que fica o Grupo do Éden, então não é bom dar uma volta por lá?";
 			next;
 			mes "[Shorty]";
-			mes "Go to <NAVI>[Morroc Paradise]<INFO>morocc,206,285,0,101,0</INFO></NAVI>.";
+			mes "Vá ao <NAVI>[Grupo do Éden de Morroc]<INFO>morocc,206,285,0,101,0</INFO></NAVI>.";
 			break;
 		case 5:
 			mes "[Shorty]";
-			mes "Click on <NAVI>[Alberta]<INFO>alberta,124,67,0,101,0</INFO></NAVI> to find it.";
+			mes "Clique em <NAVI>[Alberta]<INFO>alberta,124,67,0,101,0</INFO></NAVI> para encontrar.";
 			break;
 		case 6:
 			mes "[Shorty]";
-			mes "Okay? Then I'll look around a bit and get back into the bag.";
+			mes "Certo? Então vou dar uma olhada por aí e volto para a bolsa.";
 			close;
 		}
 		next;
 		mes "[Shorty]";
-		mes "^0000cdGo and register with Lime Ivenor first^000000, and then talk to the Boyana Ur and Paradise Logistics staff on either side.";
+		mes "^0000cdPrimeiro vá se registrar com a Lime Evenor^000000 e depois fale com a Boyana Ur e com o pessoal da Logística do Éden, dos dois lados.";
 		next;
 		mes "[Shorty]";
-		mes "After some quests and training, they gave me equipment.";
+		mes "Depois de umas missões e de um treino, eles me deram equipamento.";
 		close;
 	case 4:
 		mes "[Shorty]";
-		mes "What are you curious about with status and skills?";
+		mes "O que você quer saber sobre atributos e habilidades?";
 		next;
-		switch( select( "I'm curious about skills.", "I'm curious about statuses.", "I'm not interested anymore." ) ) {
+		switch( select( "Quero saber das habilidades.", "Quero saber dos atributos.", "Não quero saber mais." ) ) {
 		case 1:
 			mes "[Shorty]";
-			mes "Press the ^0000cdAlt+S keys^000000 to bring up the skill list window.";
+			mes "Aperte as ^0000cdteclas Alt+S^000000 para abrir a janela da lista de habilidades.";
 			next;
 			mes "[Shorty]";
-			mes "If you check the item ^0000cd<View skill description> in the upper right corner^000000, you can view the description of the skill when you hover the mouse over the skill icon.";
+			mes "Marcando a opção ^0000cd<Ver descrição da habilidade> no canto de cima à direita^000000, dá para ler a descrição da habilidade passando o mouse sobre o ícone dela.";
 			next;
 			mes "[Shorty]";
-			mes "You can learn this skill by consuming ^0000cd<Skill Points>^000000 that can be obtained whenever your job level increases. You can check the skill points you have in the lower left corner of this window.";
+			mes "Você aprende a habilidade gastando os ^0000cd<Pontos de Habilidade>^000000 que ganha toda vez que o seu nível de classe sobe. Dá para ver os pontos que você tem no canto de baixo à esquerda desta janela.";
 			next;
 			mes "[Shorty]";
-			mes "Master currently has " + SkillPoint + " skill point " + (SkillPoint > 1 ? "s" : "") + ".";
+			mes "Pontos de habilidade que o mestre tem agora: " + SkillPoint + " ponto" + (SkillPoint > 1 ? "s" : "") + ".";
 			next;
 			mes "[Shorty]";
-			mes "Does master know about the skill tree? If master hovers the mouse over the skill they want to learn, the skills and skill levels to learn first will appear.";
+			mes "O mestre conhece a árvore de habilidades? Passando o mouse sobre a habilidade que quer aprender, aparecem as habilidades e os níveis que precisa aprender antes.";
 			next;
 			mes "[Shorty]";
-			mes "That's the skill tree. However, the skill points consumed when learning a skill are limited, so you can't learn all the skills.";
+			mes "Essa é a árvore de habilidades. Só que os pontos gastos para aprender habilidades são limitados, então não dá para aprender todas.";
 			next;
 			mes "[Shorty]";
-			mes "There are a total of 49 skill points that can be used for learning before master changes to a higher job. This condition is called stagnation.";
+			mes "São 49 pontos de habilidade no total para aprender antes de o mestre mudar para uma classe superior. Essa condição se chama estagnação.";
 			next;
 			mes "[Shorty]";
-			mes "^0000cdIf your job level is 40 you can change your job to a secondary job^000000, but it is recommended that you change jobs when you reach level 50.";
+			mes "^0000cdCom nível de classe 40 você já pode mudar para uma segunda classe^000000, mas o recomendado é mudar quando chegar ao nível 50.";
 			next;
 			mes "[Shorty]";
-			mes "Because it simplifies the transfer process. What greater reason could there be than this?";
+			mes "Porque isso simplifica o processo de transferência. Que motivo maior do que esse?";
 			next;
 			mes "[Shorty]";
-			mes "Don't worry too much if you think you've raised your skills incorrectly.";
+			mes "Não se preocupe muito se achar que distribuiu as habilidades errado.";
 			next;
 			mes "[Shorty]";
-			mes "You can reset it at any time until master changes to a higher job.";
+			mes "Dá para resetar a qualquer momento, até o mestre mudar para uma classe superior.";
 			next;
 			mes "[Shorty]";
-			mes "Go to <NAVI>[Izlude: The Hypnotist]<INFO>izlude,127,175,0,101,0</INFO></NAVI> for guidance.";
+			mes "Vá até a <NAVI>[Izlude: Hipnotizadora]<INFO>izlude,127,175,0,101,0</INFO></NAVI> para ser orientado.";
 			close;
 		case 2:
 			mes "[Shorty]";
-			mes "Let's see, master...";
+			mes "Deixa eu ver, mestre...";
 			next;
 			mes "[Shorty]";
-			mes "I heard that for Taekwon, you should raise mainly Str, Agi, and Dex. For more information,";
-			mes "please visit <NAVI>[Payon: Ahri]<INFO>payon,245,295,0,101,0</INFO></NAVI>.";
+			mes "Ouvi dizer que o Taekwon deve subir principalmente FOR, AGI e DES. Para mais informações,";
+			mes "visite a <NAVI>[Payon: Ahri]<INFO>payon,245,295,0,101,0</INFO></NAVI>.";
 			next;
 			mes "[Shorty]";
-			mes "Don't worry too much if you think you've raised your status incorrectly.";
+			mes "Não se preocupe muito se achar que distribuiu os atributos errado.";
 			next;
 			mes "[Shorty]";
-			mes "You can reset it at any time until master changes to a higher job.";
-			mes "Go to <NAVI>[Izlude: The Hypnotist]<INFO>izlude,127,175,0,101,0</INFO></NAVI> for guidance.";
+			mes "Dá para resetar a qualquer momento, até o mestre mudar para uma classe superior.";
+			mes "Vá até a <NAVI>[Izlude: Hipnotizadora]<INFO>izlude,127,175,0,101,0</INFO></NAVI> para ser orientado.";
 			close;
 		case 3:
 			mes "[Shorty]";
-			mes "Call me anytime if you have any questions. I'll look around a bit and get back into the bag.";
+			mes "Me chame quando quiser se tiver dúvidas. Vou dar uma olhada por aí e volto para a bolsa.";
 			close;
 		}
 		end;
 	case 5:
-		switch( select( "Basic Operation", "Shortcut Guide", "Cancel" ) ) {
+		switch( select( "Comandos básicos", "Guia de atalhos", "Cancelar" ) ) {
 		case 1:
 			while(1) {
 				mes "[Shorty]";
-				mes "What are you curious about?";
+				mes "O que você quer saber?";
 				next;
-				switch( select( "Move and Attack", "Talk with NPC", "Check Quest", "Check Status and Skills", "Unequip Equipment", "Trade" ) ) {
+				switch( select( "Andar e atacar", "Falar com NPC", "Ver missões", "Ver atributos e habilidades", "Equipar e desequipar", "Negociar" ) ) {
 				case 1:
 					mes "[Shorty]";
-					mes "^0000cd<Move>^000000 - Click the place you want to go ^0000cdwith the mouse^000000.";
-					mes "^0000cd<Attack>^000000 - Click the target ^0000cdto attack with the mouse^000000.";
+					mes "^0000cd<Andar>^000000 - Clique ^0000cdcom o mouse^000000 no lugar aonde quer ir.";
+					mes "^0000cd<Atacar>^000000 - Clique ^0000cdcom o mouse no alvo^000000 para atacar.";
 					next;
 					mes "[Shorty]";
-					mes "How is it? Simple, right? You can also move the viewpoint by holding down the right mouse button and rotating it.";
+					mes "Que tal? Simples, né? Também dá para girar a câmera segurando o botão direito do mouse e arrastando.";
 					break;
 				case 2:
 					mes "[Shorty]";
-					mes "<Conversation> - Click the target ^0000cdto chat with the mouse^000000.";
+					mes "<Conversar> - Clique ^0000cdcom o mouse em quem quer conversar^000000.";
 					next;
 					mes "[Shorty]";
-					mes "Sometimes you have to get close to talk to someone.";
+					mes "Às vezes é preciso chegar perto para falar com alguém.";
 					break;
 				case 3:
 					mes "[Shorty]";
-					mes "Click the ^0000cdquest icon in the main menu located in the upper left corner.";
-					mes "Shortcut: ^0000cdAlt+U^000000";
+					mes "Clique no ^0000cdícone de missões do menu principal, no canto de cima à esquerda.";
+					mes "Atalho: ^0000cdAlt+U^000000";
 					next;
 					mes "[Shorty]";
-					mes "When master receives a quest, the quest information is briefly displayed on the right side of the screen, so you can check it.";
+					mes "Quando o mestre recebe uma missão, as informações dela aparecem resumidas do lado direito da tela, para você acompanhar.";
 					next;
 					mes "[Shorty]";
-					mes "If there is a quest you do not want to see in the list of quests, place the mouse pointer over the title and press the right mouse button to send it to the pending tab.";
+					mes "Se tiver alguma missão que não quer ver na lista, ponha o mouse sobre o título e aperte o botão direito para mandá-la para a aba de pendentes.";
 					break;
 				case 4:
 					mes "[Shorty]";
-					mes "<Check status> - Click the ^0000cdstatus icon in the main menu located at the top left corner^000000.";
-					mes "Shortcut: ^0000cdAlt+A^000000";
+					mes "<Ver atributos> - Clique no ^0000cdícone de atributos do menu principal, no canto de cima à esquerda^000000.";
+					mes "Atalho: ^0000cdAlt+A^000000";
 					next;
 					mes "[Shorty]";
-					mes "<Check skill> - Click the ^0000cdskill icon in the main menu located at the top left corner^000000.";
-					mes "Shortcut: ^0000cdAlt+S^000000";
+					mes "<Ver habilidades> - Clique no ^0000cdícone de habilidades do menu principal, no canto de cima à esquerda^000000.";
+					mes "Atalho: ^0000cdAlt+S^000000";
 					next;
 					mes "[Shorty]";
-					mes "Don't forget! The skill has to be activated by double clicking the icon you want to use and is casted by pressing the left mouse button once!";
+					mes "Não se esqueça! A habilidade se ativa com dois cliques no ícone que você quer usar, e se lança com um clique do botão esquerdo!";
 					break;
 				case 5:
 					mes "[Shorty]";
-					mes "<Equip and unequip equipment> - Click the ^0000cdequipment icon in the main menu located at the top left corner^000000.";
-					mes "Shortcut: ^0000cdAlt+Q^000000";
+					mes "<Equipar e desequipar> - Clique no ^0000cdícone de equipamentos do menu principal, no canto de cima à esquerda^000000.";
+					mes "Atalho: ^0000cdAlt+Q^000000";
 					next;
 					mes "[Shorty]";
-					mes "Usually, you can equip and disarm by double-clicking the left mouse button in the inventory or equipment window.";
+					mes "Normalmente dá para equipar e desequipar com dois cliques do botão esquerdo, no inventário ou na janela de equipamentos.";
 					next;
 					mes "[Shorty]";
-					mes "Arrows and bullets can only be equipped by dragging them from the inventory to the character in the equipment window.";
+					mes "Flechas e balas só se equipam arrastando do inventário até o personagem, na janela de equipamentos.";
 					next;
 					mes "[Shorty]";
-					mes "If master becomes a Merchant, you can pull a cart, which can be borrowed from the Kafra Staff in each town.";
+					mes "Se o mestre virar Mercador, pode puxar um carrinho, que dá para alugar com a Funcionária Kafra de cada cidade.";
 					break;
 				case 6:
 					mes "[Shorty]";
-					mes "<Store Trade> - Click on the merchant NPC ^0000cdto trade^000000.";
-					mes "<User Transaction> - Right-click the player you want to trade with and select ^0000cdTrade^000000.";
+					mes "<Loja> - Clique no NPC comerciante ^0000cdpara negociar^000000.";
+					mes "<Entre jogadores> - Clique com o botão direito no jogador com quem quer negociar e escolha ^0000cdNegociar^000000.";
 					next;
 					mes "[Shorty]";
-					mes "<Buy and sell stalls> - Click the mouse on the stalls window.";
+					mes "<Comprar e vender em barracas> - Clique com o mouse na janela da barraca.";
 					break;
 				}
 				next;
@@ -724,50 +724,50 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		case 2:
 			while(1) {
 				mes "[Shorty]";
-				mes "What are you curious about?";
+				mes "O que você quer saber?";
 				next;
-				switch( select( "Tip of the Day", "Command List", "Skills and Items Shortcut Window", "Shortcut Key List and Registration", "Command List", "Emotion List" ) ) {
+				switch( select( "Dica do dia", "Lista de comandos", "Janela de atalhos de habilidades e itens", "Lista e registro de teclas de atalho", "Lista de comandos", "Lista de emoções" ) ) {
 				case 1:
 					mes "[Shorty]";
-					mes "Type ^0000cd/tip^000000 in the chat window.";
+					mes "Digite ^0000cd/tip^000000 na janela de chat.";
 					next;
 					mes "[Shorty]";
-					mes "A lot of life information is contained in this. Whenever I'm bored, I read these.";
+					mes "Tem muita dica útil aí dentro. Sempre que fico entediado, eu leio.";
 					break;
 				case 2:
 					mes "[Shorty]";
-					mes "Type ^0000cd/h^000000 in the chat window.";
+					mes "Digite ^0000cd/h^000000 na janela de chat.";
 					next;
 					mes "[Shorty]";
-					mes "You can see the necessary information for Novice adventurers.";
+					mes "Dá para ver as informações que o aventureiro Aprendiz precisa.";
 					break;
 				case 3:
 					mes "[Shorty]";
-					mes "Press the ^0000cdF12 key^000000 to register consumption items, skills, and equipment by dragging them to the shortcut window.";
+					mes "Aperte a ^0000cdtecla F12^000000 e arraste itens de consumo, habilidades e equipamentos para a janela de atalhos para registrá-los.";
 					next;
 					mes "[Shorty]";
-					mes "Did you know that quick item use and equipment replacement are essential for effective combat?";
+					mes "Sabia que usar item e trocar de equipamento rápido é essencial para lutar bem?";
 					break;
 				case 4:
 					mes "[Shorty]";
-					mes "Press the ^0000cdAlt+M keys^000000 to register frequently used shortcut commands~";
+					mes "Aperte as ^0000cdteclas Alt+M^000000 para registrar os comandos que você usa sempre~";
 					next;
 					mes "[Shorty]";
-					mes "I use this function to register frequently used commands.";
+					mes "Eu uso essa função para registrar os comandos que mais uso.";
 					break;
 				case 5:
 					mes "[Shorty]";
-					mes "Press the ^0000cdAlt+Y keys^000000 to check the command list and turn it ON/OFF.";
+					mes "Aperte as ^0000cdteclas Alt+Y^000000 para ver a lista de comandos e ligar ou desligar cada um.";
 					next;
 					mes "[Shorty]";
-					mes "You can check and turn on/off various options by master's choice.";
+					mes "Dá para ver e ligar ou desligar várias opções, do jeito que o mestre preferir.";
 					break;
 				case 6:
 					mes "[Shorty]";
-					mes "Press the ^0000cdAlt+L keys^000000 to view and use the list of emotions and shortcut commands.";
+					mes "Aperte as ^0000cdteclas Alt+L^000000 para ver e usar a lista de emoções e os comandos de atalho.";
 					next;
 					mes "[Shorty]";
-					mes "Master, do you know that conversation isn't just about words? Appropriate use of emotion makes the conversation richer.";
+					mes "Mestre, sabia que conversa não é só feita de palavras? Usar a emoção certa deixa a conversa mais rica.";
 					break;
 				}
 				next;
@@ -775,141 +775,141 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 			end;
 		case 3:
 			mes "[Shorty]";
-			mes "Yes. Call me again if you need me.";
+			mes "Isso. Me chame de novo se precisar.";
 			close;
 		}
 		end;
 	case 6:
 		mes "[Shorty]";
-		mes "Master doesn't want to succeed? Salty says she's training hard because she wants to succeed.";
+		mes "O mestre não quer evoluir? A Salty diz que está treinando muito porque quer evoluir.";
 		next;
 		mes "[Shorty]";
-		mes "The tradition is ^0000cdbeing born again in Valhalla and returning to Novice^000000. But it's not a normal Novice, it's called a High Novice.";
+		mes "A tradição é ^0000cdrenascer em Valhalla e voltar a ser Aprendiz^000000. Mas não um Aprendiz comum: é o chamado Aprendiz Transcendental.";
 		next;
 		mes "[Shorty]";
-		mes "In other words, it's evolution. People who have passed down say that there are many advantages to getting the job of the past again.";
+		mes "Ou seja, é uma evolução. Quem já passou por isso diz que refazer a classe de antes tem muitas vantagens.";
 		next;
 		mes "[Shorty]";
-		mes "There are many statuses, and above all, if you have a secondary job, you can increase your ^0000cdjob level to 70^000000. You will be able to use more skills.";
+		mes "Os atributos são muitos e, acima de tudo, numa segunda classe dá para subir o ^0000cdnível de classe até 70^000000. Você vai poder usar mais habilidades.";
 		next;
 		mes "[Shorty]";
-		mes "If you want to succeed, find a person named";
-		mes "<NAVI>[Metheus Sylph]<INFO>yuno_in02,88,164,0,101,0</INFO></NAVI> ^0000cdat Sage Academy in Yuno^000000, and he will guide you.";
+		mes "Se quiser evoluir, procure uma pessoa chamada";
+		mes "<NAVI>[Metheus Sylph]<INFO>yuno_in02,88,164,0,101,0</INFO></NAVI> ^0000cdna Academia de Sábios de Juno^000000, e ele vai te orientar.";
 		next;
 		mes "[Shorty]";
-		mes "If you're not interested in transcending, you can just change jobs. But he said that it's better to pass it on when you think about the future.";
+		mes "Se não tiver interesse em transcender, dá para só mudar de classe. Mas dizem que, pensando no futuro, é melhor transcender.";
 		next;
 		mes "[Shorty]";
-		mes "If you are not interested in changing jobs or transcending...";
+		mes "Se não tiver interesse nem em mudar de classe nem em transcender...";
 		next;
 		mes "[Shorty]";
-		mes "The continent is full of festivals all year round. How about participating in the festival when master is also free?";
+		mes "O continente tem festival o ano inteiro. Que tal participar de um festival quando o mestre estiver livre?";
 		next;
 		mes "[Shorty]";
-		mes "Now...";
+		mes "Agora...";
 		next;
 		mes "[Shorty]";
-		mes "I heard that there will be a winter hunting contest hosted by the royal family at the royal palace! I want to do a hunting contest! I want to do it! Fight monsters!!! Let's go to Prontera!!!!";
+		mes "Ouvi dizer que vai ter um torneio de caça de inverno organizado pela família real, no palácio! Eu quero participar do torneio! Quero sim! Lutar com monstros!!! Vamos para Prontera!!!!";
 		next;
 		mes "[Shorty]";
-		mes "I'll definitely take you with me, okay?";
+		mes "Você me leva junto, com certeza, tá?";
 		close;
 	case 7:
 		mes "[Shorty]";
-		mes "Master, I'll tell you the basics, but literally just the basics.";
+		mes "Mestre, vou te contar o básico, mas é o básico mesmo.";
 		next;
 		mes "[Shorty]";
-		mes "For more information";
-		mes "try using";
-		mes "<URL>[Rune Midgarts Library]<INFO>http://ro.gnjoy.com/guide/runemidgarts/,1024,768</INFO></URL>";
+		mes "Para mais informações,";
+		mes "experimente usar a";
+		mes "<URL>[Biblioteca de Rune-Midgard]<INFO>http://ro.gnjoy.com/guide/runemidgarts/,1024,768</INFO></URL>";
 		next;
 		mes "[Shorty]";
-		mes "What information are you curious about?";
+		mes "Que informação você quer?";
 		next;
-		switch( select("Location Information", "Quest Information", "Hunting Field Information", "System Information", "Cancel" ) ) {
+		switch( select("Lugares", "Missões", "Campos de caça", "Sistemas do jogo", "Cancelar" ) ) {
 		case 1:
 			while(1) {
 				mes "[Shorty]";
-				mes "Where are you curious?";
+				mes "Que lugar você quer conhecer?";
 				next;
-				switch( select( "Midgard Continent", "Far-Star Continent", "Malangdo", "Local Area", "Otherworld", "I'm not interested" ) ) {
+				switch( select( "Continente de Midgard", "Continente da Estrela Distante", "Malangdo", "Regiões distantes", "Outros mundos", "Não tenho interesse" ) ) {
 				case 1:
 					mes "[Shorty]";
-					mes "^0000cdMidgard Continent^000000 is said to have the greatest influence of the three kingdoms of Arunafelts, Schwaldzwald, and Rune-Midgarts. Each continent has an airship you can readily use.";
+					mes "Dizem que o ^0000cdContinente de Midgard^000000 é dominado por três reinos: Arunafeltz, Schwarzwald e Rune-Midgard. Cada um tem um Aeroplano que você pode usar à vontade.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdRune-Midgarts^000000. A kingdom ruled by seven royal families and the power of magic prevails.";
+					mes "^0000cdRune-Midgard^000000. Um reino governado por sete famílias reais, onde o poder da magia prevalece.";
 					next;
 					mes "[Shorty]";
-					mes "The capital is Prontera, the satellite city of Izlude, Geffen where wizards gather, Payon to the east, Alberta where you can go travel to different regions, Aldebaran with the clock tower, and Morroc.";
+					mes "A capital é Prontera; tem a cidade satélite de Izlude, Geffen, onde os magos se reúnem, Payon a leste, Alberta, de onde se viaja para outras regiões, Al De Baran, com a torre do relógio, e Morroc.";
 					next;
 					mes "[Shorty]";
-					mes "We met at Izlude in Rune-Midgarts Kingdom. Remember? Also Payon with Salty, and Paros from where I left. They're all in Rune-Midgats.";
+					mes "A gente se conheceu em Izlude, no Reino de Rune-Midgard. Lembra? E também Payon, com a Salty, e Paros, de onde eu saí. Fica tudo em Rune-Midgard.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdArunafelz^000000. This is a church that worships a goddess. So, there is a Pope. Of course, you can't meet anyone, but is it possible? Maybe we can meet at least once.";
+					mes "^0000cdArunafeltz^000000. É uma igreja que venera uma deusa. Então tem um Papa. Claro que não dá para encontrar qualquer um, mas será que dá? Quem sabe a gente consegue encontrar pelo menos uma vez.";
 					next;
 					mes "[Shorty]";
-					mes "Arunafelz has a temple capital, Rachel, and a canyon town, Veins.";
+					mes "Arunafeltz tem Rachel, a capital dos templos, e Veins, a cidade do cânion.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdSchwaldzwald^000000 Republic. As the name suggests, there is a president. The capital city, Yuno, is floating in the air, so it's worth a visit. It must be spectacular.";
+					mes "República de ^0000cdSchwarzwald^000000. Como o nome diz, tem um presidente. A capital, Juno, flutua no ar, então vale a visita. Deve ser espetacular.";
 					next;
 					mes "[Shorty]";
-					mes "And there is Lighthalzen, where the headquarters of Rekenberg is located, there is the mining town of Einbroch, the mines of Einbech, and there is also the rural village of Hugel.";
+					mes "E tem Lighthalzen, onde fica a sede da Rekenber, a cidade mineira de Einbroch, as minas de Einbech, e ainda o vilarejo rural de Hugel.";
 					next;
 					mes "[Shorty]";
-					mes "There are other Utan villages such as Umbala, or Niflheim, the land of the dead. It's a place I've always wanted to visit!";
+					mes "Tem também outros vilarejos, como Umbala, dos Utan, ou Nifflheim, a terra dos mortos. É um lugar que eu sempre quis visitar!";
 					break;
 				case 2:
 					mes "[Shorty]";
-					mes "Many people thought that there was only the continent of Midgard on this land, but one day, people appeared in the form of ^0000cdcats^000000. No one knew where they came from.";
+					mes "Muita gente achava que nesta terra só existia o continente de Midgard, mas um dia apareceram umas pessoas com forma de ^0000cdgato^000000. Ninguém sabia de onde tinham vindo.";
 					next;
 					mes "[Shorty]";
-					mes "These people, called Doram, are from a place far across the sea, the ^0000cdFar-Star Continent^000000. They said that the road was opened for them only recently.";
+					mes "Essas pessoas, chamadas Dorams, vêm de um lugar muito além do mar, o ^0000cdContinente da Estrela Distante^000000. Dizem que o caminho se abriu para eles há pouco tempo.";
 					next;
 					mes "[Shorty]";
-					mes "In the Far-Star Continent, the port city ^0000cdLasagna^000000 is the most famous. I want to go there too.";
+					mes "No Continente da Estrela Distante, a cidade portuária de ^0000cdLasagna^000000 é a mais famosa. Eu também quero ir lá.";
 					next;
 					mes "[Shorty]";
-					mes "To get here, take the boat from Malangdo or Izlude. Do you remember where we got off?";
+					mes "Para chegar lá, pegue o barco em Malangdo ou em Izlude. Lembra onde a gente desembarcou?";
 					break;
 				case 3:
 					mes "[Shorty]";
-					mes "You've seen people in the form of cats, called Dorams, who come and go. They haven't had their first contact with this Midgard continent, but now they have taken root and established themselves everywhere.";
+					mes "Você já viu umas pessoas com forma de gato, chamadas Dorams, indo e vindo. O primeiro contato deles com o continente de Midgard foi há pouco, mas agora já criaram raízes e se estabeleceram por toda parte.";
 					next;
 					mes "[Shorty]";
-					mes "It turns out that while sailing in a faraway place called the Far-Star continent, they met a storm and fell to a place called Malangdo. Literally, the ship fell from the sky.";
+					mes "Parece que, navegando num lugar distante chamado Continente da Estrela Distante, eles pegaram uma tempestade e caíram num lugar chamado Malangdo. O navio caiu do céu, literalmente.";
 					next;
 					mes "[Shorty]";
-					mes "Dorams have a lot of magical talents, so if you go to ^0000cdMalangdo^000000 you will have a good time.";
+					mes "Os Dorams têm muito talento para magia, então, se for a ^0000cdMalangdo^000000, você vai se divertir.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdYou can take the boat^000000 from Izlude. If you have Canned Malangdo that can be obtained in a special way, you can use it to travel to there.";
+					mes "^0000cdDá para pegar o barco^000000 em Izlude. Se tiver Peixes Enlatados de Malangdo, que se conseguem de um jeito especial, dá para usá-los para viajar até lá.";
 					break;
 				case 4:
 					mes "[Shorty]";
-					mes "If you want to feel the atmosphere of a foreign country, you should go to that ^0000cdlocal region^000000. ^0000cdIf you go to Alberta's dock^000000, you can meet the sailors who send people to each local region.";
+					mes "Se quiser sentir o clima de um país estrangeiro, vá a uma dessas ^0000cdregiões distantes^000000. ^0000cdNo porto de Alberta^000000 você encontra os marinheiros que levam as pessoas para cada região.";
 					next;
 					mes "[Shorty]";
-					mes "Amatsu, Kunlun, Moscovia, Brasilis, Ayothaya, Dewata, Port Malaya, Rock Ridge, etc. The unknown world is waiting for you.";
+					mes "Amatsu, Kunlun, Moscóvia, Brasilis, Ayothaya, Dewata, Porto Malaya, Rockridge e outros. O mundo desconhecido está te esperando.";
 					next;
 					mes "[Shorty]";
-					mes "Doesn't it make your heart flutter just by hearing the words? See you later, master.";
+					mes "Não dá um frio na barriga só de ouvir? Até mais, mestre.";
 					break;
 				case 5:
 					mes "[Shorty]";
-					mes "Uh, I know, here. If you go through the eastern part of Morroc or talk to Agent Catson in Paradise, they'll send you there.";
+					mes "Ah, eu sei, aqui. Se passar pela parte leste de Morroc, ou falar com o Agente Catson no Grupo do Éden, eles te mandam para lá.";
 					next;
 					mes "[Shorty]";
-					mes "You can meet people you've never seen before.";
+					mes "Você vai conhecer gente que nunca viu antes.";
 					next;
 					mes "[Shorty]";
-					mes "From the base of the Expeditionary Forces of the Three Kingdoms, you can go to Splendid, Eclage, Manuk or El Dicastes.";
+					mes "Da base do Acampamento da Expedição da Aliança dá para ir a Esplendor, Eclage, Manuka ou El Dicastes.";
 					break;
 				case 6:
 					mes "[Shorty]";
-					mes "Okay? Then I'll look around a bit and get back into the bag.";
+					mes "Certo? Então vou dar uma olhada por aí e volto para a bolsa.";
 					close;
 				}
 				next;
@@ -918,53 +918,53 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		case 2:
 			while(1) {
 				mes "[Shorty]";
-				mes "What quest are you curious about?";
+				mes "Que missão você quer conhecer?";
 				next;
-				switch( select( "General Quest", "Monthly Event", "Paradise", "I'm not interested" ) ) {
+				switch( select( "Missões comuns", "Evento do mês", "Grupo do Éden", "Não tenho interesse" ) ) {
 				case 1:
 					mes "[Shorty]";
-					mes "^0000cdWhy don't you meet Paul and Anne at^000000 the outside Prontera's West Gate? As I was passing by, I heard that they needed help.";
+					mes "^0000cdQue tal encontrar o Paul e a Anne^000000 do lado de fora do Portão Oeste de Prontera? Quando eu passei por lá, ouvi que eles precisavam de ajuda.";
 					next;
 					mes "[Shorty]";
-					mes "Or why not listen to the anxious middle-aged man from ^0000cdPayon^000000?";
+					mes "Ou que tal ouvir aquele senhor aflito de ^0000cdPayon^000000?";
 					next;
 					mes "[Shorty]";
-					mes "For more information on quests";
-					mes "see also";
-					mes "<URL>[Rune Midgarts Library]<INFO>http://ro.gnjoy.com/guide/runemidgarts/questlist.asp,1024,768</INFO></URL>";
+					mes "Para mais informações sobre missões,";
+					mes "veja também a";
+					mes "<URL>[Biblioteca de Rune-Midgard]<INFO>http://ro.gnjoy.com/guide/runemidgarts/questlist.asp,1024,768</INFO></URL>";
 					next;
 					mes "[Shorty]";
-					mes "You will be able to learn about the flow of this world and know what major events are happening.";
+					mes "Você vai entender como anda este mundo e saber quais grandes acontecimentos estão rolando.";
 					close;
 				case 2:
 					mes "[Shorty]";
-					mes "The continent is full of festivals all year round. How about participating in the festival when master is also free?";
+					mes "O continente tem festival o ano inteiro. Que tal participar de um festival quando o mestre estiver livre?";
 					next;
 					mes "[Shorty]";
-					mes "Now...";
+					mes "Agora...";
 					next;
 					mes "[Shorty]";
-					mes "I heard that there will be a winter hunting contest hosted by the royal family at the royal palace! want to do a hunting contest! I want to do it! Fight monsters!!! Let's go to Prontera!!!!";
+					mes "Ouvi dizer que vai ter um torneio de caça de inverno organizado pela família real, no palácio! Quero participar do torneio! Quero sim! Lutar com monstros!!! Vamos para Prontera!!!!";
 					next;
 					mes "[Shorty]";
-					mes "I'll definitely take you with me, okay?";
+					mes "Você me leva junto, com certeza, tá?";
 					break;
 				case 3:
 					mes "[Shorty]";
-					mes "^0000cdHave you been to Paradise^000000?";
+					mes "^0000cdVocê já foi ao Grupo do Éden^000000?";
 					next;
 					mes "[Shorty]";
-					mes "There are many quests waiting for master. Besides, they also provide equipment for beginners.";
+					mes "Tem muita missão esperando o mestre. E eles ainda dão equipamento para iniciantes.";
 					next;
 					mes "[Shorty]";
-					mes "Of course, it's not free, but you have to solve a simple quest from Paradise. Besides, they also rent out shadow equipment.";
+					mes "Claro que não é de graça: você precisa resolver uma missão simples do Grupo do Éden. Eles também alugam equipamento sombrio.";
 					next;
 					mes "[Shorty]";
-					mes "If you have any questions, go to the Paradise Office.";
+					mes "Se tiver alguma dúvida, vá ao escritório do Grupo do Éden.";
 					break;
 				case 4:
 					mes "[Shorty]";
-					mes "Okay? Then I'll look around a bit and get back into the bag.";
+					mes "Certo? Então vou dar uma olhada por aí e volto para a bolsa.";
 					close;
 				}
 				next;
@@ -973,63 +973,63 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		case 3:
 			while(1) {
 				mes "[Shorty]";
-				mes "I wonder where..";
+				mes "Onde será...";
 				next;
-				switch( select( "Field Hunting Guide", "Dungeon Guide", "Other Dungeon Guide", "Enough" ) ) {
+				switch( select( "Guia de caça nos campos", "Guia de masmorras", "Guia de outras masmorras", "Chega" ) ) {
 				case 1:
 					mes "[Shorty]";
-					mes "Press the ^0000cdCtrl+` keys^000000 to open a map.";
+					mes "Aperte as ^0000cdteclas Ctrl+`^000000 para abrir o mapa.";
 					next;
 					mes "[Shorty]";
-					mes "Do you see a box for selecting an area at the top left? After selecting the area you want to see, check the ^0000cdmonster tab^000000 in the upper right corner or press the ^0000cdTab key^000000, you will see the name and level of the monster most distributed in that area.";
+					mes "Está vendo uma caixa para escolher a área, no canto de cima à esquerda? Depois de escolher a área que quer ver, confira a ^0000cdaba de monstros^000000 no canto de cima à direita, ou aperte a ^0000cdtecla Tab^000000, e vai aparecer o nome e o nível dos monstros mais comuns daquela área.";
 					next;
 					mes "[Shorty]";
-					mes "It would be better to go on an adventure to a place that matches the level of master. ^0000cdIf there is a lot of level difference with monsters, you can't get 100% of the experience^000000. You have to calculate the level difference as well, right?";
+					mes "O melhor é se aventurar num lugar que combine com o nível do mestre. ^0000cdSe houver muita diferença de nível para os monstros, você não ganha 100% da experiência^000000. Tem que levar a diferença de nível em conta também, né?";
 					next;
 					mes "[Shorty]";
-					mes "If you press the town you want to go to, the navigation menu will appear. Press the ^0000cd<Guide to the target> button at the bottom^000000 and exit the map to get guidance.";
+					mes "Clicando na cidade aonde quer ir, aparece o menu de navegação. Aperte o ^0000cdbotão <Guiar até o destino> lá embaixo^000000 e feche o mapa para ser guiado.";
 					break;
 				case 2:
 					mes "[Shorty]";
-					mes "Press the ^0000cdCtrl+` keys^000000 to open a map.";
+					mes "Aperte as ^0000cdteclas Ctrl+`^000000 para abrir o mapa.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdDo you see a box where you can select an area^000000 in the upper left? If you select an area you want to check out then you will see it marked with a red box the map with ^0000cdthe name of the main dungeon^000000 written on it." ;
+					mes "^0000cdEstá vendo uma caixa para escolher a área^000000, no canto de cima à esquerda? Escolhendo a área que quer conferir, ela aparece marcada no mapa com um quadrado vermelho, com ^0000cdo nome da masmorra principal^000000 escrito." ;
 					next;
 					mes "[Shorty]";
-					mes "Then check the ^0000cdmonster tab in the upper right corner or press the Tab key^000000 to display the level of the dungeon.";
+					mes "Depois confira a ^0000cdaba de monstros no canto de cima à direita, ou aperte a tecla Tab^000000, para ver o nível da masmorra.";
 					next;
 					mes "[Shorty]";
-					mes "Sometimes, some dungeons can only be entered through special quests, so you need to gather information as well, alright?";
+					mes "Às vezes, algumas masmorras só se abrem com missões especiais, então é preciso juntar informação também, tá?";
 					next;
 					mes "[Shorty]";
-					mes "Why don't you try the underground waterway first? The Swordsman Guild is always recruiting, but I heard it's good for beginner adventurers to gain experience.";
+					mes "Que tal tentar primeiro os Esgotos de Prontera? A Associação dos Espadachins está sempre recrutando, e ouvi dizer que é um bom lugar para aventureiros iniciantes ganharem experiência.";
 					break;
 				case 3:
 					mes "[Shorty]";
-					mes "There are a lot of memorial dungeons, nightmare dungeons, illusion dungeons...etc.";
+					mes "Tem um monte de masmorras memoriais, masmorras de pesadelo, masmorras de ilusão... e por aí vai.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdMemorial Dungeon^000000";
-					mes "In addition to the regular dungeons, there are also special dungeons. Usually, they say that it is a special place created by an unknown power in this world.";
+					mes "^0000cdMasmorra Memorial^000000";
+					mes "Além das masmorras comuns, também existem masmorras especiais. Dizem que costumam ser lugares criados por um poder desconhecido deste mundo.";
 					next;
 					mes "[Shorty]";
-					mes "A lot of experienced adventurers usually go, but they say there are a few low-level places that can be reached with a little training. Either in Orc Village or Rachel...";
+					mes "Quem vai mais são os aventureiros experientes, mas dizem que tem alguns lugares de nível baixo onde se chega com um pouco de treino. Seja na Vila dos Orcs, seja em Rachel...";
 					next;
 					mes "[Shorty]";
-					mes "It is said to be located in villages and general fields, and there are many places called Dimensional Rifts.";
+					mes "Dizem que elas ficam nas vilas e nos campos, e muitos desses lugares se chamam Fendas Dimensionais.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdNightmare Dungeon^000000";
-					mes "It is said that it is a dungeon that is much more difficult of a challenge than a normal dungeon. Even the monsters are not like the monsters we know of. When you find the dungeon, if someone suspicious tells you that it will send you to a more difficult place, try it out." ;
+					mes "^0000cdMasmorra de Pesadelo^000000";
+					mes "Dizem que é uma masmorra muito mais difícil que uma masmorra comum. Nem os monstros são como os monstros que a gente conhece. Quando achar a masmorra, se alguém suspeito disser que te leva a um lugar mais difícil, experimente." ;
 					next;
 					mes "[Shorty]";
-					mes "^0000cdIllusion Dungeon^000000";
-					mes "No one knows what kind of dungeon these dungeons are. I guess it's something like a dream or a fantasy. There is a special stone that only comes from here, and everyone says that they aim for the stone and fight for it. They say that the stone can be exchanged for powerful weapons. ";
+					mes "^0000cdMasmorra de Ilusão^000000";
+					mes "Ninguém sabe direito que tipo de masmorra é essa. Acho que é algo como um sonho ou uma fantasia. Tem uma pedra especial que só sai de lá, e todo mundo diz que luta de olho nela. Dizem que a pedra pode ser trocada por armas poderosas. ";
 					break;
 				case 4:
 					mes "[Shorty]";
-					mes "Okay? Then I'll look around a bit and get back into the bag.";
+					mes "Certo? Então vou dar uma olhada por aí e volto para a bolsa.";
 					close;
 				}
 				next;
@@ -1038,107 +1038,107 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 		case 4:
 			while(1) {
 				mes "[Shorty]";
-				mes "So, what basic info do you want to know?";
-				mes "Refer to <URL>[guide]<INFO>http://ro.gnjoy.com/guide/systeminfo/,1024,768</INFO></URL> for the Basic.";
+				mes "Então, que informação básica você quer saber?";
+				mes "Veja o <URL>[guia]<INFO>http://ro.gnjoy.com/guide/systeminfo/,1024,768</INFO></URL> para o básico.";
 				next;
-				switch( select( "Party", "Guilds and Clans", "Smelt", "Enchant", "Family", "Chat" ) ) {
+				switch( select( "Grupo", "Clãs e Irmandades", "Refino", "Encantamento", "Família", "Chat" ) ) {
 				case 1:
 					mes "[Shorty]";
-					mes "Sometimes you would like to be with your friends, if they fight in dungeons, enjoy adventures together, or sometimes just sit and chat.";
+					mes "Às vezes você quer ficar com os amigos, seja lutando em masmorras, curtindo aventuras juntos ou só sentando para conversar.";
 					next;
 					mes "[Shorty]";
-					mes "In that case, make a party and do it together.";
+					mes "Nesse caso, forme um grupo e façam juntos.";
 					next;
 					mes "[Shorty]";
-					mes "The party window can be easily opened and with the ^0000cdAlt+Z keys^000000. When evenly distributing experience for hunting, the difference of ^0000cdlevel between party members^000000 can be equal to or less than 15.";
+					mes "A janela de grupo abre fácil com as ^0000cdteclas Alt+Z^000000. Para dividir a experiência da caçada por igual, a diferença de ^0000cdnível entre os membros do grupo^000000 pode ser de 15 ou menos.";
 					next;
 					mes "[Shorty]";
-					mes "If you click the circle on the left in the chat window at the bottom, you can designate a chat partner, and you can send a message only to party members there, so it's useful.";
+					mes "Clicando no círculo à esquerda da janela de chat lá embaixo, dá para escolher com quem conversar, e ali dá para mandar mensagem só para os membros do grupo, então é útil.";
 					break;
 				case 2:
 					mes "[Shorty]";
-					mes "Sometimes you will want to belong somewhere and feel a bond with someone. In that case, you just need to belong to a ^0000cdguild or clan^000000.";
+					mes "Às vezes você vai querer pertencer a algum lugar e sentir um laço com alguém. Nesse caso, é só entrar num ^0000cdclã ou numa irmandade^000000.";
 					next;
 					mes "[Shorty]";
-					mes "The biggest characteristic of a guild is a battle over a hideout. It is also called a siege.";
+					mes "A maior característica de um clã é a batalha por um castelo. Também se chama Guerra do Emperium.";
 					next;
 					mes "[Shorty]";
-					mes "You can enter a guild that has already been formed by invitation, or you can buy Empelium sold at the office to create a guild.";
+					mes "Dá para entrar num clã que já existe por convite, ou comprar o Emperium vendido no escritório para criar um clã.";
 					next;
 					mes "[Shorty]";
-					mes "In addition to the sense of belonging, the guild can enjoy various benefits such as the guild's own skills and dedicated warehouse.";
+					mes "Além do sentimento de pertencer, o clã aproveita vários benefícios, como habilidades próprias e um armazém só dele.";
 					next;
 					mes "[Shorty]";
-					mes "For details";
-					mes "refer to <URL>[Guild Guide]<INFO>http://ro.gnjoy.com/guide/systeminfo/systemGuild1.asp,1024,768</INFO></URL>";
+					mes "Para mais detalhes,";
+					mes "veja o <URL>[Guia de Clãs]<INFO>http://ro.gnjoy.com/guide/systeminfo/systemGuild1.asp,1024,768</INFO></URL>";
 					next;
 					mes "[Shorty]";
-					mes "If joining a guild is burdensome, then a ^0000cdclan^000000 would be good. It may be difficult to feel as close to others like in a guild, but the clan also has various benefits.";
+					mes "Se entrar num clã pesa demais, uma ^0000cdirmandade^000000 pode ser boa. Talvez não dê para se sentir tão próximo dos outros como num clã, mas a irmandade também tem vários benefícios.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdThe building in the lower left corner of Prontera Central Fountain^000000 is the Clan Headquarters, so take a look.";
+					mes "^0000cdO prédio no canto de baixo à esquerda da Fonte Central de Prontera^000000 é a Sede das Irmandades, dê uma olhada.";
 					break;
 				case 3:
 					mes "[Shorty]";
-					mes "Do you want to make the equipment you have stronger? In that case, you can find the ^0000cdsmelter^000000 in each town.";
+					mes "Quer deixar o seu equipamento mais forte? Nesse caso, procure o ^0000cdrefinador^000000 de cada cidade.";
 					next;
 					mes "[Shorty]";
-					mes "Smelting requires special items and zeny. It depends on the type and level of the equipment.";
+					mes "O refino pede itens especiais e zeny. Depende do tipo e do nível do equipamento.";
 					next;
 					mes "[Shorty]";
-					mes "One thing to be aware of is that there is a safe refinement level in smelting, and if you proceed with refining above a certain level, the equipment has a chance to be destroyed. You must have good luck.";
+					mes "Um cuidado: o refino tem um nível seguro, e, se você refinar acima de um certo nível, o equipamento pode ser destruído. Tem que ter sorte.";
 					next;
 					mes "[Shorty]";
-					mes "Oh, besides the smelter in each town, I heard that the^0000cd<Item Mall>^000000 offers a higher success chance of smelting.";
+					mes "Ah, além do refinador de cada cidade, ouvi dizer que a ^0000cd<Loja de Cash>^000000 oferece mais chance de sucesso no refino.";
 					next;
 					mes "[Shorty]";
-					mes "If you are curious, go to ^0000cd<cash sales guide>^000000 in each town. They will guide you there.";
+					mes "Se tiver curiosidade, vá ao ^0000cd<guia de vendas de cash>^000000 de cada cidade. Eles te orientam.";
 					break;
 				case 4:
 					mes "[Shorty]";
-					mes "If you want to make your equipment stronger or give it a special ability, why not try to ^0000cdenchant^000000 it?";
+					mes "Se quiser deixar o seu equipamento mais forte ou dar a ele uma habilidade especial, que tal ^0000cdencantá-lo^000000?";
 					next;
 					mes "[Shorty]";
-					mes "^0000cd<Malangdo>, <Item Mall>^000000, or ^0000cd<Seyablem> and <Leyablem>^000000 which can be found in major towns, are mainly doing this.";
+					mes "Quem mais faz isso são ^0000cd<Malangdo>, a <Loja de Cash>^000000, ou o ^0000cd<Seyablem> e o <Leyablem>^000000, que ficam nas cidades principais.";
 					next;
 					mes "[Shorty]";
-					mes "Equipment obtained from a specific dungeon or a specific area can only be ^0000cdenchanted^000000 from in that area.";
+					mes "Equipamento que sai de uma masmorra ou de uma área específica só pode ser ^0000cdencantado^000000 naquela mesma área.";
 					next;
 					mes "[Shorty]";
-					mes "However, not all equipment can be enchanted, so you should check the conditions carefully.";
+					mes "Mas nem todo equipamento pode ser encantado, então confira bem as condições.";
 					break;
 				case 5:
 					mes "[Shorty]";
-					mes "Are you sure you want to be with another person for the rest of your life? Then you can start a ^0000cdfamily^000000.";
+					mes "Tem certeza de que quer ficar com outra pessoa pelo resto da vida? Então dá para formar uma ^0000cdfamília^000000.";
 					next;
 					mes "[Shorty]";
-					mes "^0000cdYou can marry the person you like^000000, or you can adopt a ^0000cdchild^000000. It is also possible for you to be adopted as the child of another couple.";
+					mes "^0000cdVocê pode se casar com quem gosta^000000, ou adotar um ^0000cdfilho^000000. Também dá para ser adotado como filho de outro casal.";
 					next;
 					mes "[Shorty]";
-					mes "They say that you can gain special marriage skills to use as a family.";
+					mes "Dizem que dá para ganhar habilidades especiais de casamento para usar em família.";
 					next;
 					mes "[Shorty]";
-					mes "If you are interested in getting married, go to the Church of Prontera or the Wedding Hall of Lasagna. You will need some supplies before you can marry. The Church of Prontera can only marry humans.";
+					mes "Se tiver interesse em se casar, vá à Igreja de Prontera ou ao Salão de Casamentos de Lasagna. Você vai precisar de alguns itens antes de casar. A Igreja de Prontera só casa humanos.";
 					next;
 					mes "[Shorty]";
-					mes "Adoption requires a wedded couple's level to be 70 or higher and the child to be adopted is a Novice or a first class.";
+					mes "Para adotar, o casal precisa estar no nível 70 ou mais, e o filho adotado precisa ser Aprendiz ou de primeira classe.";
 					next;
 					mes "[Shorty]";
-					mes "The Family Division of the Prontera District Office says that you can purchase items necessary for a wedding or check with family-related matters, so if you need it, go check it out.";
+					mes "Dizem que no Departamento de Família da Prefeitura de Prontera dá para comprar os itens necessários para o casamento ou resolver assuntos de família, então, se precisar, dê uma passada lá.";
 					next;
 					mes "[Shorty]";
-					mes "You can refer to";
-					mes "<URL>[Family]<INFO>http://ro.gnjoy.com/guide/systeminfo/systemLovers1.asp,1024,768</INFO></URL> for more details.";
+					mes "Para mais detalhes, veja a";
+					mes "<URL>[Família]<INFO>http://ro.gnjoy.com/guide/systeminfo/systemLovers1.asp,1024,768</INFO></URL>.";
 					break;
 				case 6:
 					mes "[Shorty]";
-					mes "Can you see the message window at the bottom? You can chat with other people by entering your message there or you can also send other message types there as well.";
+					mes "Está vendo a janela de mensagens lá embaixo? Dá para conversar com outras pessoas digitando a mensagem ali, e também mandar outros tipos de mensagem.";
 					next;
 					mes "[Shorty]";
-					mes "If you want to chat with a small number of people who are neither party nor guild members, you can open a chat window.";
+					mes "Se quiser conversar com poucas pessoas que não são nem do grupo nem do clã, dá para abrir uma sala de chat.";
 					next;
 					mes "[Shorty]";
-					mes "You can simply open the chat window with the ^0000cdAlt+C keys^000000. You can also set the maximum number of participants and and a password.";
+					mes "A sala de chat abre fácil com as ^0000cdteclas Alt+C^000000. Dá também para definir o número máximo de participantes e uma senha.";
 					break;
 				}
 				next;
@@ -1146,58 +1146,58 @@ izlude,1,1,0	script	Shorty#fgtg01	4_GALAPAGO,{
 			end;
 		case 5:
 			mes "[Shorty]";
-			mes "Okay? Then I'll look around a bit and get back into the bag.";
+			mes "Certo? Então vou dar uma olhada por aí e volto para a bolsa.";
 			close;
 		}
 		end;
 	case 8:
 		mes "[Shorty]";
-		mes "Aww!!! I'm Shorty! What's my master's name?";
+		mes "Ahhh!!! Eu sou o Shorty! Qual é o nome do meu mestre?";
 		next;
-		select( "Master?" );
+		select( "Mestre?" );
 		mes "[Shorty]";
-		mes "The first person you meet should be called Master.";
+		mes "A primeira pessoa que a gente encontra se chama Mestre.";
 		next;
-		select( "Are you talking about a teacher?" );
+		select( "Você quer dizer professor?" );
 		mes "[Shorty]";
-		mes "Yeah. That's it. I'm Galapago Shorty, I'm a good talker.";
+		mes "É. Isso aí. Eu sou o Pingu Shorty, e falo muito bem.";
 		next;
-		select("Why are you here?" );
+		select("O que você está fazendo aqui?" );
 		mes "[Shorty]";
-		mes "Salty! Salty is my friend. I'm here to meet Salty. So you must take me to Salty.";
+		mes "A Salty! A Salty é minha amiga. Vim encontrar a Salty. Então você tem que me levar até ela.";
 		next;
 		mes "[Shorty]";
-		mes "Well then, let's go!";
+		mes "Então vamos!";
 		close;
 	case 9:
 		mes "[Shorty]";
-		mes "What...? Master...? What? Let's break up? Here? Now? Are you serious?";
+		mes "Quê...? Mestre...? O quê? Vamos nos separar? Aqui? Agora? É sério?";
 		next;
 		mes "[Shorty]";
-		mes "Is there anything you didn't like? Was I not quiet in my bag? Oh, that's what you didn't like, yes... Then there's nothing I can do.";
+		mes "Teve alguma coisa de que você não gostou? Eu não fiquei quietinho na bolsa? Ah, foi disso que você não gostou, né... Então não tem o que fazer.";
 		next;
 		mes "[Shorty]";
-		mes "Then you won't take me to ^0000cdSalty^000000? Salty will be grateful of you for taking me there. I'll pay thanks because Salty knows grace.";
+		mes "Então você não vai me levar até a ^0000cdSalty^000000? A Salty ia ficar agradecida se você me levasse. Eu te recompensaria, porque a Salty sabe ser grata.";
 		next;
-		if (select( "Let's go our separate ways.", "Let's go together until then." ) == 2) {
+		if (select( "Vamos seguir caminhos separados.", "Vamos juntos até lá." ) == 2) {
 			mes "[Shorty]";
-			mes "Okay. Well said, master. Even if I get stuck in the bag, I'll get out of it quickly.";
+			mes "Isso. Falou bonito, mestre. Mesmo que eu fique preso na bolsa, eu saio rapidinho.";
 			next;
 			mes "[Shorty]";
-			mes "Let's help each other a little bit more. Okay?";
+			mes "Vamos nos ajudar mais um pouco. Tá?";
 			close;
 		}
 		mes "[Shorty]";
-		mes "Yes. Master has a stone cold heart. Then there is nothing that can be done. I think our relationship ends here.";
+		mes "Tá. O mestre tem um coração de pedra. Então não tem o que fazer. Acho que a nossa amizade termina aqui.";
 		next;
 		mes "[Shorty]";
-		mes "I don't know how it was with you, but I enjoyed our time together.";
+		mes "Não sei como foi para você, mas eu gostei do nosso tempo juntos.";
 		next;
 		mes "[Shorty]";
-		mes "Stay healthy and I bid you well. I hope master will not forget that Galapago was there.";
+		mes "Fique com saúde, e tudo de bom. Espero que o mestre não se esqueça de que um dia teve um Pingu por perto.";
 		next;
 		mes "[Shorty]";
-		mes "Well then, master, goodbye. Goodbye!";
+		mes "Então tchau, mestre. Tchau!";
 		switch( isbegin_quest(14693) ) {
 		case 0:
 			setquest 14693;

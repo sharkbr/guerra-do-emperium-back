@@ -27,11 +27,11 @@
 //============================================================
 moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you lose some weight. -";
+		mes "- Espera aí!! -";
+		mes "- Você está carregando -";
+		mes "- itens demais. -";
+		mes "- Tente de novo -";
+		mes "- depois de aliviar o peso. -";
 		close;
 	}
 	if (countitem(6219) > 0) {
@@ -213,68 +213,68 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 	close;
 }
 
--	script	Eden Teleport Officer#0::eto	-1,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
+-	script	Oficial do Éden#0::eto	-1,{
+	mes "[Oficial do Éden]";
+	mes "Vocês que vagam por este mundo estranho sem rumo, escutem e venham até mim!";
+	mes "O Grupo do Éden está aqui para ajudar e vai te mostrar um grande futuro.";
 	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "You are eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
+	mes "[Oficial do Éden]";
+	mes "Não tem nada para fazer além de perder tempo?";
+	mes "Quer fazer algo de bom, mas ninguém te oferece trabalho?";
+	mes "Quer ser alguém que resolve problemas?";
+	mes "O Grupo do Éden está aqui para resolver o seu problema.";
 	next;
-	switch (select("Move to Eden Group.:Don't want to talk anymore.")) {
+	switch (select("Ir para o Grupo do Éden.:Não quero mais conversa.")) {
 	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
+		mes "[Oficial do Éden]";
+		mes "Vamos para a nossa base secreta!";
 		set nak_warp,strnpcinfo(2);
 		close2;
 		warp "moc_para01",31,14;
 		end;
 	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
+		mes "[Oficial do Éden]";
+		mes "Se não sabe o que fazer do seu futuro, pode me dizer sem medo. É só passar aqui e falar comigo! Certo?";
 		close;
 	}
 }
-prontera,124,76,3	duplicate(eto)	Eden Teleport Officer#1	729
-moc_ruins,68,164,3	duplicate(eto)	Eden Teleport Officer#2	729
-geffen,132,66,3	duplicate(eto)	Eden Teleport Officer#3	729
-alberta,124,67,3	duplicate(eto)	Eden Teleport Officer#4	729
-aldebaran,133,119,5	duplicate(eto)	Eden Teleport Officer#5	729
-izlude_in,68,162,1	duplicate(eto)	Eden Teleport Officer#6	729
-prt_church,103,78,3	duplicate(eto)	Eden Teleport Officer#7	729
-geffen_in,160,104,5	duplicate(eto)	Eden Teleport Officer#8	729
-moc_prydb1,53,126,3	duplicate(eto)	Eden Teleport Officer#9	729
-alberta_in,75,39,3	duplicate(eto)	Eden Teleport Officer#10	729
-payon_in02,58,58,1	duplicate(eto)	Eden Teleport Officer#11	729
-payon,177,111,3	duplicate(eto)	Eden Teleport Officer#12	729
-que_ng,33,73,3	duplicate(eto)	Eden Teleport Officer#13	729
-que_ng,144,161,5	duplicate(eto)	Eden Teleport Officer#14	729
-yuno,144,189,5	duplicate(eto)	Eden Teleport Officer#15	729
-rachel,125,144,3	duplicate(eto)	Eden Teleport Officer#16	729
-comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#17	729
-hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#18	729
-veins,220,109,4	duplicate(eto)	Eden Teleport Officer#19	729
-einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#20	729
-lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
-amatsu,100,145,5	duplicate(eto)	Eden Teleport Officer#22	729
-ayothaya,221,191,3	duplicate(eto)	Eden Teleport Officer#23	729
-louyang,224,107,3	duplicate(eto)	Eden Teleport Officer#24	729
-gonryun,162,122,5	duplicate(eto)	Eden Teleport Officer#25	729
-moscovia,209,197,5	duplicate(eto)	Eden Teleport Officer#26	729
-brasilis,191,224,3	duplicate(eto)	Eden Teleport Officer#27	729
-dewata,192,193,5	duplicate(eto)	Eden Teleport Officer#28	729
-morocc,161,97,5	duplicate(eto)	Eden Teleport Officer#29	729
-izlude,131,148,4	duplicate(eto)	Eden Teleport Officer#30	729
-izlude_a,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_a	729
-izlude_b,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_b	729
-izlude_c,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_c	729
-izlude_d,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_d	729
-umbala,105,158,3	duplicate(eto)	Eden Teleport Officer#31	729
-malaya,225,218,1	duplicate(eto)	Eden Teleport Officer#32	729
-verus04,116,243,0	duplicate(eto)	Eden Teleport Officer#33	729
+prontera,124,76,3	duplicate(eto)	Oficial do Éden#1	729
+moc_ruins,68,164,3	duplicate(eto)	Oficial do Éden#2	729
+geffen,132,66,3	duplicate(eto)	Oficial do Éden#3	729
+alberta,124,67,3	duplicate(eto)	Oficial do Éden#4	729
+aldebaran,133,119,5	duplicate(eto)	Oficial do Éden#5	729
+izlude_in,68,162,1	duplicate(eto)	Oficial do Éden#6	729
+prt_church,103,78,3	duplicate(eto)	Oficial do Éden#7	729
+geffen_in,160,104,5	duplicate(eto)	Oficial do Éden#8	729
+moc_prydb1,53,126,3	duplicate(eto)	Oficial do Éden#9	729
+alberta_in,75,39,3	duplicate(eto)	Oficial do Éden#10	729
+payon_in02,58,58,1	duplicate(eto)	Oficial do Éden#11	729
+payon,177,111,3	duplicate(eto)	Oficial do Éden#12	729
+que_ng,33,73,3	duplicate(eto)	Oficial do Éden#13	729
+que_ng,144,161,5	duplicate(eto)	Oficial do Éden#14	729
+yuno,144,189,5	duplicate(eto)	Oficial do Éden#15	729
+rachel,125,144,3	duplicate(eto)	Oficial do Éden#16	729
+comodo,202,151,4	duplicate(eto)	Oficial do Éden#17	729
+hugel,93,153,4	duplicate(eto)	Oficial do Éden#18	729
+veins,220,109,4	duplicate(eto)	Oficial do Éden#19	729
+einbroch,250,211,4	duplicate(eto)	Oficial do Éden#20	729
+lighthalzen,164,86,4	duplicate(eto)	Oficial do Éden#21	729
+amatsu,100,145,5	duplicate(eto)	Oficial do Éden#22	729
+ayothaya,221,191,3	duplicate(eto)	Oficial do Éden#23	729
+louyang,224,107,3	duplicate(eto)	Oficial do Éden#24	729
+gonryun,162,122,5	duplicate(eto)	Oficial do Éden#25	729
+moscovia,209,197,5	duplicate(eto)	Oficial do Éden#26	729
+brasilis,191,224,3	duplicate(eto)	Oficial do Éden#27	729
+dewata,192,193,5	duplicate(eto)	Oficial do Éden#28	729
+morocc,161,97,5	duplicate(eto)	Oficial do Éden#29	729
+izlude,131,148,4	duplicate(eto)	Oficial do Éden#30	729
+izlude_a,131,148,4	duplicate(eto)	Oficial do Éden#30::eto_iz_a	729
+izlude_b,131,148,4	duplicate(eto)	Oficial do Éden#30::eto_iz_b	729
+izlude_c,131,148,4	duplicate(eto)	Oficial do Éden#30::eto_iz_c	729
+izlude_d,131,148,4	duplicate(eto)	Oficial do Éden#30::eto_iz_d	729
+umbala,105,158,3	duplicate(eto)	Oficial do Éden#31	729
+malaya,225,218,1	duplicate(eto)	Oficial do Éden#32	729
+verus04,116,243,0	duplicate(eto)	Oficial do Éden#33	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
 OnTouch:

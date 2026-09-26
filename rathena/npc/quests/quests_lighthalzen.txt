@@ -209,7 +209,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 	if (lhz_boss == 6 || BaseLevel >= 60) {
 		if (lhz_sincube == 0) {
 			mes "[Fishbone]";
-			mes "What...?";
+			mes "O quê...?";
 			mes "Is there something";
 			mes "on my face? Quit looking";
 			mes "at me and let me do my work.";
@@ -509,7 +509,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 			}
 			mes "[Fishbone]";
 			mes "Great!";
-			mes "Okay then,";
+			mes "Certo, então";
 			mes "here we go!";
 			close2;
 			lhz_sincube = 7;
@@ -572,7 +572,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 				completequest 12014;// More missions
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "Yeah...";
+			mes "É...";
 			mes "I hope so,";
 			mes "anyway.";
 			next;
@@ -662,7 +662,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	HIDDEN_NPC,{
 			mes "sorts of information,";
 			mes "but they're all mixed up.^000000";
 			next;
-			if (select( "Rummage through the files.", "Cancel" ) == 1) {
+			if (select( "Rummage through the files.", "Cancelar" ) == 1) {
 				mes "^3355FFWhile you are";
 				mes "rummaging through";
 				mes "the files, a Red Key";
@@ -695,7 +695,7 @@ lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 		mes "your attention for some";
 		mes "inexplicably strange reason.^000000";
 		next;
-		if ( select("Look behind picture.", "Cancel" ) == 1) {
+		if ( select("Look behind picture.", "Cancelar" ) == 1) {
 			mes "^3355FFYou push and pull";
 			mes "with all your strength,";
 			mes "but the picture won't";
@@ -711,7 +711,7 @@ lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 		mes "your attention for some";
 		mes "inexplicably strange reason.^000000";
 		next;
-		if (select( "Look behind picture.", "Cancel" ) == 1) {
+		if (select( "Look behind picture.", "Cancelar" ) == 1) {
 			mes "^3355FFYou push and pull";
 			mes "with all your strength,";
 			mes "but this picture is too";
@@ -772,7 +772,7 @@ lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 	mes "^3355FFThere is a picture";
 	mes "hanging on the wall.^000000";
 	next;
-	if (select( "Look beneath picture.", "Cancel" ) == 1) {
+	if (select( "Look beneath picture.", "Cancelar" ) == 1) {
 		mes "^3355FFThere are some";
 		mes "numbers behind the";
 		mes "picture, but now there is";
@@ -836,7 +836,7 @@ lhz_cube,248,179,0	script	Chest#cube	HIDDEN_NPC,{
 		mes "there is a utility Axe";
 		mes "laid on top of it.^000000";
 		next;
-		if (select( "Take the utility Axe.", "Cancel" ) == 1) {
+		if (select( "Take the utility Axe.", "Cancelar" ) == 1) {
 			mes "^3355FFWithout shame or";
 			mes "an ounce of guilt, you";
 			mes "pick up the utility ^000000Axe^3355FF";
@@ -1019,7 +1019,7 @@ lhz_cube,244,201,0	script	Status Light#cube	HIDDEN_NPC,{
 		mes "is now off and the";
 		mes "bulb has cooled down.";
 		next;
-		if (select( "Smash the light bulb.", "Cancel" ) == 1) {
+		if (select( "Smash the light bulb.", "Cancelar" ) == 1) {
 			mes "^3355FFYou smash the";
 			mes "Status Light's bulb";
 			mes "and discover another key.";
@@ -1326,7 +1326,7 @@ lhz_cube,229,184,0	script	Goblet#cube	HIDDEN_NPC,{
 			mes "It looks like you";
 			mes "missed the party.^000000";
 			next;
-			if (select( "Examine the goblet.", "Cancel" ) == 1) {
+			if (select( "Examine the goblet.", "Cancelar" ) == 1) {
 				mes "^3355FFInside the goblet,";
 				mes "you find a ^000000Rusty Key^3355FF";
 				mes "which you decide to keep.";
@@ -1402,7 +1402,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	HIDDEN_NPC,{
 		mes "many drawers. Perhaps";
 		mes "something useful is inside?";
 		next;
-		if (select( "Open", "Cancel" ) == 1) {
+		if (select( "Open", "Cancelar" ) == 1) {
 			input .@input$;
 			mes "^3355FFUnfortunately, the";
 			mes "cabinet has been locked.";
@@ -1512,7 +1512,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 					mes "ground splits open, revealing";
 					mes "an underground staircase.^000000";
 					next;
-					if (select( "Go downstairs", "Cancel" ) == 1) {
+					if (select( "Go downstairs", "Cancelar" ) == 1) {
 						mes "^3355FFYou walk down";
 						mes "the long flight";
 						mes "of winding stairs...^000000";
@@ -1649,7 +1649,7 @@ lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 		mes "are now filled with the";
 		mes "objects you've inserted.^000000";
 		next;
-		if (select( "Open the box.", "Cancel" ) == 1) {
+		if (select( "Open the box.", "Cancelar" ) == 1) {
 			mes "^3355FFYou open the box";
 			mes "and find that there's";
 			mes "a small card labeled";
@@ -1676,7 +1676,7 @@ lhz_cube,250,184,0	script	Door#cube	HIDDEN_NPC,{
 	mes "^3355FFYou've come upon a";
 	mes "door that leads outside.^000000";
 	next;
-	if (select( "Exit", "Cancel" ) == 1) {
+	if (select( "Exit", "Cancelar" ) == 1) {
 		warp "lighthalzen",310,302;
 		end;
 	}
@@ -1942,7 +1942,7 @@ OnTouch_:
 		case 3: set .@number,3; set .@price,15000*3; break;
 		case 4:
 			mes "[Suspicious Guy]";
-			mes "Well...";
+			mes "Bom...";
 			mes "You're just gonna";
 			mes "let me go, then?";
 			mes "That's awful generous.";
@@ -4805,7 +4805,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 			mes "......";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "Well...";
+			mes "Bom...";
 			mes "This is awkward.";
 			delitem 7341,1; //Worn_Out_Pendant
 			set lhz_curse,24;
@@ -5040,7 +5040,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 						mes "your big brother return.";
 						next;
 						mes "[Setsu]";
-						mes "Yes...";
+						mes "Sim...";
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "Listen, when your brother";
@@ -5345,9 +5345,9 @@ lhz_in01,114,181,5	script	Representative#li_01	1_F_LIBRARYGIRL,{
 lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 	if (lhz_curse > 6) {
 		mes "[Representative]";
-		mes "Welcome to the";
+		mes "Bem-vindo à";
 		mes "Rekenber Corporation.";
-		mes "How may I help you?";
+		mes "Em que posso ajudar?";
 		next;
 		switch(select("Corporation History:Rekenber's Businesses")) {
 		case 1:
@@ -5415,9 +5415,9 @@ lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 	}
 	else {
 		mes "[Representative]";
-		mes "Welcome to the";
+		mes "Bem-vindo à";
 		mes "Rekenber Corporation.";
-		mes "How may I help you?";
+		mes "Em que posso ajudar?";
 		next;
 		switch(select("Building Information.")) {
 		case 1:
@@ -5941,7 +5941,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 						mes "Wolfchev's research in";
 						mes "the Regenschirm Laboratory?";
 						next;
-						switch(select("Yes:No")) {
+						switch(select("Sim:Não")) {
 						case 1:
 							break;
 						case 2:
@@ -5996,7 +5996,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 					else {
 						mes "[Sueii Slierre]";
 						mes "Evidence...?";
-						mes "I'm sorry, but you don't";
+						mes "Sinto muito, mas você não";
 						mes "seem to be carrying anything";
 						mes "that can be construed as proof.";
 						mes "I suggest you bring something that actually supports your claim.";
@@ -6049,7 +6049,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "Wolfchev's research in";
 			mes "the Regenschirm Laboratory?";
 			next;
-			switch(select("Yes:No")) {
+			switch(select("Sim:Não")) {
 			case 1:
 				break;
 			case 2:
@@ -6276,7 +6276,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 	if(!lhz_boss)
 	{
 		mes "[Ghalstein]";
-		mes "Hello there~";
+		mes "Olá~";
 		mes "Isn't Lighthalzen such";
 		mes "a wonder to behold with";
 		mes "all of its splendor and";
@@ -6413,7 +6413,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 		mes "that I was involved in some";
 		mes "kind of clandestine meeting.";
 		next;
-		switch( select( "Yes, I'm sure of it!","Well..." ) )
+		switch( select( "Yes, I'm sure of it!","Bom..." ) )
 		{
 			case 1:
 				mes "["+strcharinfo(0)+"]";
@@ -6455,7 +6455,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 								mes "to get really concerned.";
 								next;
 								mes "["+strcharinfo(0)+"]";
-								mes "I don't think I can";
+								mes "Acho que não consigo";
 								mes "ignore hearing about";
 								mes "any kind of dangerous";
 								mes "corporation, even if";
@@ -6513,7 +6513,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 
 			case 2:
 				mes "["+strcharinfo(0)+"]";
-				mes "Well...";
+				mes "Bom...";
 				mes "Now I don't know.";
 				mes "I suppose I could";
 				mes "be wrong, I guess.";
@@ -7259,7 +7259,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 				mes "Do you have an appointment";
 				mes "to meet with him today?";
 				next;
-				switch( select( "Yes","No" ) )
+				switch( select( "Sim","No" ) )
 				{
 					case 1:
 						mes "[Hes O'Neil]";
@@ -7351,7 +7351,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 				mes "Do you have an appointment";
 				mes "to meet with him today?";
 				next;
-				switch( select( "Yes","No" ) )
+				switch( select( "Sim","No" ) )
 				{
 					case 1:
 						mes "[Hes O'Neil]";
@@ -7428,7 +7428,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 	else if(lhz_boss < 21)
 	{
 		mes "[Hes O'Neil]";
-		mes "I'm sorry, but the";
+		mes "Sinto muito, mas o";
 		mes "president is currently";
 		mes "outside on business.";
 		mes "Please come back to";
@@ -7571,7 +7571,7 @@ yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 		mes "president. Thank you";
 		mes "for waiting all this time.";
 		next;
-		switch( select( "Thank you.","Who was that gentleman...?" ) )
+		switch( select( "Obrigado.","Who was that gentleman...?" ) )
 		{
 			case 1:
 				if(Sex == SEX_MALE) mes "A Mister "+strcharinfo(0)+"";
@@ -7631,8 +7631,8 @@ yuno_pre,69,79,4	script	Mr. President	4_M_PRESIDENT,{
 	if(checkweight(7342,1) != 1)
 	{
 		mes "- Wait a moment! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
+		mes "- Você está carregando -";
+		mes "- itens demais. -";
 		mes "- Please enlighten your weight -";
 		mes "- and try again. -";
 		close;
@@ -8268,7 +8268,7 @@ L_Mission:
 				break;
 		}
 		mes "[Karl]";
-		mes "What...?";
+		mes "O quê...?";
 		mes "I can't believe this!";
 		mes "How can our security";
 		mes "be breached like this?!";
@@ -8291,7 +8291,7 @@ L_Mission:
 	else if(lhz_boss == 41)
 	{
 		mes "[Karl]";
-		mes "No...";
+		mes "Não...";
 		mes "I can't...";
 		mes "Kurelle? We've";
 		mes "worked together,";
@@ -8491,7 +8491,7 @@ L_Mission:
 		mes "I hope you will make good use of it. ";
 		next;
 		mes "[Karl]";
-		mes "Let's see...";
+		mes "Vejamos...";
 		next;
 		mes "[Karl]";
 		mes "Oh! That's some interesting information.";
@@ -8597,23 +8597,23 @@ aldebaran,58,225,4	script	Kafra Employee#l1	4_F_KAFRA2,{
 
 	if(lhz_boss != 17)
 	{
-		mes "[Kafra Employee]";
-		mes "Welcome to the";
+		mes "[Funcionária Kafra]";
+		mes "Bem-vindo à";
 		mes "Kafra Headquarters.";
 		mes "Here in the heart of";
 		mes "Kafra's operations, you";
 		mes "can be provided with special";
 		mes "services offered nowhere else!";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "If you need anything,";
 		mes "please inquire the Kafra";
 		mes "Employees inside the building.";
 		mes "Thank you and have a good day~";
 		close;
 	}
-	mes "[Kafra Employee]";
-	mes "Good day~";
+	mes "[Funcionária Kafra]";
+	mes "Bom dia~";
 	mes "The Kafra Corporation is";
 	mes "always working to ensure";
 	mes "our customers' satisfaction.";
@@ -8622,7 +8622,7 @@ aldebaran,58,225,4	script	Kafra Employee#l1	4_F_KAFRA2,{
 	switch( select( "I have a question.","I'm fine, thanks." ) )
 	{
 		case 1:
-			mes "[Kafra Employee]";
+			mes "[Funcionária Kafra]";
 			mes "Sure, I'll answer your";
 			mes "question to the best of";
 			mes "my ability. However, I may";
@@ -8635,7 +8635,7 @@ aldebaran,58,225,4	script	Kafra Employee#l1	4_F_KAFRA2,{
 				case 1:
 					break;
 			}
-			mes "[Kafra Employee]";
+			mes "[Funcionária Kafra]";
 			mes "Oh, Benith? Sure, you";
 			mes "can find her here inside";
 			mes "Kafra Headquarters to the";
@@ -8643,8 +8643,8 @@ aldebaran,58,225,4	script	Kafra Employee#l1	4_F_KAFRA2,{
 			mes "a special uniform, so you";
 			mes "can spot her easily.";
 			next;
-			mes "[Kafra Employee]";
-			mes "Okay then,";
+			mes "[Funcionária Kafra]";
+			mes "Certo, então";
 			mes "have a good day!";
 			mes "Always remember";
 			mes "that the Kafra Service";
@@ -8652,7 +8652,7 @@ aldebaran,58,225,4	script	Kafra Employee#l1	4_F_KAFRA2,{
 			close;
 
 		case 2:
-			mes "[Kafra Employee]";
+			mes "[Funcionária Kafra]";
 			mes "Feel free to ask any";
 			mes "one of our conveniently";
 			mes "located employees if you";
@@ -8677,15 +8677,15 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 	}
 	if(lhz_boss < 17)
 	{
-		mes "[Kafra Employee]";
-		mes "Welcome to";
+		mes "[Funcionária Kafra]";
+		mes "Bem-vindo ao";
 		mes "Kafra Headquarters.";
 		mes "What's new with Kafra?";
 		mes "Glad you asked. Right now,";
 		mes "we're developing a brand new";
 		mes "program with Cool Event Corp.";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "This new program will";
 		mes "provide a direct teleport";
 		mes "service to dungeons for";
@@ -8693,7 +8693,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "valued customers. Is";
 		mes "that not... exciting?";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "Due to technical issues,";
 		mes "Kafra Corp and Cool Event";
 		mes "Corp cannot provide teleport";
@@ -8701,7 +8701,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "so one common teleport service";
 		mes "provider will be selected.";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "Therefore, elections will";
 		mes "be held to determine which";
 		mes "company will provide this";
@@ -8712,15 +8712,15 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 	}
 	else if(lhz_boss == 17)
 	{
-		mes "[Kafra Employee]";
-		mes "Welcome to";
+		mes "[Funcionária Kafra]";
+		mes "Bem-vindo ao";
 		mes "Kafra Headquarters.";
 		mes "What's new with Kafra?";
 		mes "Glad you asked. Right now,";
 		mes "we're developing a brand new";
 		mes "program with Cool Event Corp.";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "This new program will";
 		mes "provide a direct teleport";
 		mes "service to dungeons for";
@@ -8728,7 +8728,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "valued customers. Is";
 		mes "that not... exciting?";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "Due to technical issues,";
 		mes "Kafra Corp and Cool Event";
 		mes "Corp cannot provide teleport";
@@ -8736,7 +8736,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "so one common teleport service";
 		mes "provider will be selected.";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "We'd like to inform";
 		mes "you that the customers";
 		mes "will decide the teleport";
@@ -8744,7 +8744,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		mes "an election. Your vote will";
 		mes "be much appreciated.";
 		next;
-		mes "[Kafra Employee]";
+		mes "[Funcionária Kafra]";
 		mes "Remember to take part";
 		mes "in the polls that will be";
 		mes "taking place in the cities";
@@ -8754,7 +8754,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 		switch( select( "Okay.","I can't wait!" ) )
 		{
 			case 1:
-				mes "[Kafra Employee]";
+				mes "[Funcionária Kafra]";
 				mes "Uh oh...";
 				mes "Did you have a question?";
 				mes "In all honesty, I don't know";
@@ -8765,7 +8765,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 				switch( select( "Oh, that's okay then.","Are you Benith..?" ) )
 				{
 					case 1:
-						mes "[Kafra Employee]";
+						mes "[Funcionária Kafra]";
 						mes "*Whew!*";
 						mes "Oh good. Well, if you";
 						mes "do have any questions";
@@ -8841,12 +8841,12 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 				}
 
 			case 2:
-				mes "[Kafra Employee]";
+				mes "[Funcionária Kafra]";
 				mes "That makes one of u--";
 				mes "I mean, your participation";
 				mes "is very much appreciated.";
 				mes "Remember that Kafra is";
-				mes "always on your side.";
+				mes "sempre ao seu lado.";
 				close;
 		}
 	}
@@ -9315,7 +9315,7 @@ lhz_in01,93,45,4	script	Researcher#1	4_LGTSCIENCE,{
 			mes "cut a wire! So which one are";
 			mes "you gonna cut? Red or blue?";
 			next;
-			switch( select( "Red","Blue" ) )
+			switch( select( "Vermelha","Azul" ) )
 			{
 				case 1:
 					mes "[Researcher]";
@@ -9335,7 +9335,7 @@ lhz_in01,93,45,4	script	Researcher#1	4_LGTSCIENCE,{
 					mes "Is there anything";
 					mes "I can help you with?";
 					next;
-					switch( select( "No","Yes" ) )
+					switch( select( "No","Sim" ) )
 					{
 						case 1:
 							mes "[Lestin]";
@@ -9745,7 +9745,7 @@ lhz_in01,182,35,0	script	File Search Engine	HIDDEN_NPC,{
 		mes "specific file locations.";
 		next;
 L_Search:
-		switch( select( "Search Engine.","Cancel." ) )
+		switch( select( "Search Engine.","Cancelar." ) )
 		{
 			case 1:
 				mes "^663300- Search Engine Initiated -";
@@ -10757,7 +10757,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		mes "to talk to Garins, right?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "But...";
+		mes "Mas...";
 		mes "I thought you said";
 		mes "I'm not supposed to";
 		mes "tell anyone the details";
@@ -11030,14 +11030,14 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 
 lighthalzen,141,162,3	script	Old Man#reken	4_M_03,{
 
-	mes "[Old Man]";
+	mes "[Velho]";
 	mes "Lately, Kazien seems";
 	mes "to be having a hard time";
 	mes "managing his business.";
 	mes "Always complaining that";
 	mes "he lacks the manpower...";
 	next;
-	mes "[Old Man]";
+	mes "[Velho]";
 	mes "I don't know what kind of";
 	mes "business he's conducting,";
 	mes "but why don't you help him";
@@ -11049,7 +11049,7 @@ lighthalzen,141,162,3	script	Old Man#reken	4_M_03,{
 		set lhz_rekenber,1;
 		setquest 12007;
 	}
-	mes "[Old Man]";
+	mes "[Velho]";
 	mes "Well, if you're interested,";
 	mes "you can find Kazien inside";
 	mes "the corporation building.";
@@ -11500,7 +11500,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "Thanks, I appreciate it.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Excuse me, but";
+		mes "Com licença, mas";
 		mes "are you Lyozien?";
 		next;
 		cutin "lhz_ryo07",2;
@@ -11584,181 +11584,181 @@ OnStop:
 	if(lhz_rekenber > 21)
 	{
 		mes "[Ahman]";
-		mes "Oh, hello. I've heard";
-		mes "that you had to quit.";
-		mes "It's quite a pity, really.";
-		mes "If it weren't for you, some";
-		mes "of my packages would have";
-		mes "been destroyed by those thugs.";
+		mes "Ah, olá. Fiquei sabendo";
+		mes "que você teve de desistir.";
+		mes "É uma pena, de verdade.";
+		mes "Se não fosse por você, alguns";
+		mes "dos meus pacotes teriam";
+		mes "sido destruídos por aqueles bandidos.";
 		close;
 	}
 	else if(lhz_rekenber == 21)
 	{
 		mes "[Ahman]";
-		mes "Shouldn't you be";
-		mes "taking a break? Besides,";
-		mes "Lyozien is still waiting for";
-		mes "you on the Airship, isn't he?";
+		mes "Você não devia estar";
+		mes "descansando? Além disso,";
+		mes "o Lyozien ainda está te esperando";
+		mes "no Aeroplano, não está?";
 		close;
 	}
 	else if(lhz_rekenber == 20)
 	{
 		mes "[Ahman]";
-		mes "Oh, have my packages";
-		mes "arrived? Good, good.";
-		mes "I appreciate all of your";
-		mes "hard work. I'm surprised";
-		mes "they haven't hired you";
-		mes "full time by now.";
+		mes "Ah, os meus pacotes";
+		mes "chegaram? Ótimo, ótimo.";
+		mes "Agradeço todo o seu";
+		mes "trabalho. Me admira";
+		mes "ainda não terem te contratado";
+		mes "em tempo integral.";
 		next;
 		mes "[Ahman]";
-		mes "Is something the matter?";
-		mes "You seem really pale. Oh";
-		mes "well, you'll have plenty of";
-		mes "time to relax on the Airship.";
-		mes "Oh, and don't worry, I'll";
-		mes "take care of the packages.";
+		mes "Aconteceu alguma coisa?";
+		mes "Você está bem pálido. Bom,";
+		mes "vai ter bastante tempo";
+		mes "para relaxar no Aeroplano.";
+		mes "Ah, e não se preocupe,";
+		mes "eu cuido dos pacotes.";
 		set lhz_rekenber,21;
 		close;
 	}
 	else if (lhz_rekenber > 15 && lhz_rekenber < 20)
 	{
 		mes "[Ahman]";
-		mes "Oh, hello. I'm not";
-		mes "expecting any packages";
-		mes "at this moment, although";
-		mes "I'm aware that there are a";
-		mes "few deliveries in queue, but shouldn't you be in Lighthalzen?";
+		mes "Ah, olá. Não estou";
+		mes "esperando pacote nenhum";
+		mes "agora, embora saiba que há";
+		mes "algumas entregas na fila, mas...";
+		mes "você não devia estar em Lighthalzen?";
 		close;
 	}
 	else if(lhz_rekenber == 15)
 	{
 		mes "[Ahman]";
-		mes "Shouldn't you be on";
-		mes "your way and report to";
-		mes "Lyozien? You should hurry";
-		mes "before the Airship takes off.";
+		mes "Você não devia estar";
+		mes "a caminho para se apresentar";
+		mes "ao Lyozien? É melhor se apressar";
+		mes "antes que o Aeroplano decole.";
 		close;
 	}
 	else if(lhz_rekenber == 14)
 	{
 		mes "[Ahman]";
-		mes "Ah, it's you again.";
-		mes "I assume that means that";
-		mes "my packages have arrived";
-		mes "safely. Is that right?";
+		mes "Ah, você de novo.";
+		mes "Imagino que isso quer dizer";
+		mes "que os meus pacotes chegaram";
+		mes "em segurança. Certo?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Yes, that's right.";
-		mes "Actually, this time we ";
-		mes "were attacked by a group";
-		mes "of thugs, so I was wondering";
-		mes "if you knew anything about it... ";
+		mes "Isso mesmo.";
+		mes "Mas, desta vez, nós ";
+		mes "fomos atacados por um bando";
+		mes "de bandidos, e eu queria saber";
+		mes "se você sabe alguma coisa sobre isso... ";
 		next;
 		mes "[Ahman]";
-		mes "They attacked again?";
-		mes "Oh, that isn't good.";
-		mes "Well, I have no idea";
-		mes "what's going on. I wish";
-		mes "I had some idea of what";
-		mes "they were up to, really.";
+		mes "Atacaram de novo?";
+		mes "Ah, isso não é bom.";
+		mes "Bom, não faço ideia";
+		mes "do que está acontecendo. Queria";
+		mes "ter alguma ideia do que";
+		mes "eles estão tramando, sério.";
 		next;
 		set lhz_rekenber,15;
 		mes "[Ahman]";
-		mes "For now, you should";
-		mes "go and report to Lyozien.";
-		mes "I assume that you protected";
-		mes "my packages, so thank you";
-		mes "for your diligent work. Now, I shall pick up what I ordered...";
+		mes "Por enquanto, vá";
+		mes "se apresentar ao Lyozien.";
+		mes "Imagino que você protegeu";
+		mes "os meus pacotes, então obrigado";
+		mes "pelo trabalho dedicado. Agora vou buscar o que encomendei...";
 		close;
 	}
 	else if (lhz_rekenber > 10 && lhz_rekenber < 14)
 	{
 		mes "[Ahman]";
-		mes "Oh, it's you again.";
-		mes "Shouldn't you be getting";
-		mes "on the Airship and heading";
-		mes "back to the Schwarzwald";
-		mes "Republic? There are more";
-		mes "deliveries in queue, you know.";
+		mes "Ah, você de novo.";
+		mes "Você não devia estar";
+		mes "pegando o Aeroplano de volta";
+		mes "para a República";
+		mes "de Schwarzwald? Tem mais";
+		mes "entregas na fila, sabia?";
 		close;
 	}
 	else if(lhz_rekenber == 10)
 	{
 		mes "[Ahman]";
-		mes "Thank you for letting me";
-		mes "know that my order has arrived.";
-		mes "You should go back to Lyozien";
-		mes "now so you can finish your job.";
-		mes "Perhaps I'll see you again";
-		mes "sometime, adventurer.";
+		mes "Obrigado por me avisar";
+		mes "que a minha encomenda chegou.";
+		mes "Volte agora ao Lyozien";
+		mes "para terminar o seu trabalho.";
+		mes "Talvez a gente se veja de novo";
+		mes "algum dia, aventureiro.";
 		close;
 	}
 	else if(lhz_rekenber == 9)
 	{
-		mes "[Man]";
-		mes "Hmm, can you really";
-		mes "call this place an Airport?";
-		mes "It's far too small, wouldn't";
-		mes "you agree? Still, I kind of";
-		mes "enjoy sitting around here.";
+		mes "[Homem]";
+		mes "Hum, dá mesmo para chamar";
+		mes "isto aqui de aeroporto?";
+		mes "É pequeno demais, não acha?";
+		mes "Mesmo assim, até que eu";
+		mes "gosto de ficar sentado aqui.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Excuse me, but do";
-		mes "you know where I can";
-		mes "find a man named Ahman?";
-		mes "I have a message for him.";
+		mes "Com licença, você";
+		mes "sabe onde posso";
+		mes "encontrar um homem chamado Ahman?";
+		mes "Tenho um recado para ele.";
 		next;
 		mes "[Ahman]";
-		mes "I'm Ahman, how can--";
-		mes "Oh! You must be here to";
-		mes "tell me that my packages";
-		mes "have arrived. Am I correct?";
+		mes "Eu sou o Ahman, em que posso--";
+		mes "Ah! Você deve ter vindo";
+		mes "me dizer que os meus pacotes";
+		mes "chegaram. Acertei?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Y-yes. That's right.";
-		mes "Your packages have";
-		mes "arrived and they're";
-		mes "being guarded until";
-		mes "you come to pick them up.";
+		mes "S-sim. Isso mesmo.";
+		mes "Os seus pacotes";
+		mes "chegaram e estão";
+		mes "sendo guardados até";
+		mes "o senhor ir buscá-los.";
 		next;
 		mes "[Ahman]";
-		mes "Ah, that's very good to";
-		mes "know. Say, are you a new";
-		mes "worker for Lyozien and Kazien?";
-		mes "I don't believe I've seen you";
-		mes "around before. Have they finally started hiring part timers?";
+		mes "Ah, que bom";
+		mes "saber. Diga, você é";
+		mes "funcionário novo do Lyozien e do Kazien?";
+		mes "Acho que nunca te vi";
+		mes "por aqui. Eles finalmente começaram a contratar temporários?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Yes, that's right.";
-		mes "Actually, I'm working for";
-		mes "them part time. I heard";
-		mes "they were really busy, so";
-		mes "I sort of volunteered my time.";
+		mes "Isso mesmo.";
+		mes "Na verdade, estou trabalhando";
+		mes "para eles meio período. Fiquei";
+		mes "sabendo que estavam muito ocupados,";
+		mes "então meio que me ofereci.";
 		next;
 		mes "[Ahman]";
-		mes "Alright, alright.";
-		mes "I suppose that you";
-		mes "also don't know what's";
-		mes "being delivered in these";
-		mes "packages, just like Lyozien.";
+		mes "Certo, certo.";
+		mes "Imagino que você";
+		mes "também não saiba o que";
+		mes "vai dentro destes";
+		mes "pacotes, igual ao Lyozien.";
 		next;
 		mes "[Ahman]";
-		mes "Well, it's all confidential";
-		mes "information anyway, so don't";
-		mes "worry about it. Thank you for";
-		mes "notifying me about the delivery.^FFFFFF  ^000000 Now, you should go back and ";
-		mes "tell Lyozien. Take care now~";
+		mes "Bom, é tudo informação";
+		mes "confidencial mesmo, então não";
+		mes "se preocupe. Obrigado por";
+		mes "me avisar da entrega.^FFFFFF  ^000000 Agora volte e ";
+		mes "avise o Lyozien. Se cuida~";
 		set lhz_rekenber,10;
 		changequest 12012,12013;
 		close;
 	}
-	mes "[Man]";
-	mes "Hmm, can you really";
-	mes "call this place an Airport?";
-	mes "It's far too small, wouldn't";
-	mes "you agree? Still, I kind of";
-	mes "enjoy sitting around here.";
+	mes "[Homem]";
+	mes "Hum, dá mesmo para chamar";
+	mes "isto aqui de aeroporto?";
+	mes "É pequeno demais, não acha?";
+	mes "Mesmo assim, até que eu";
+	mes "gosto de ficar sentado aqui.";
 	close;
 }
 

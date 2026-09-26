@@ -946,7 +946,7 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 			close;
 		}
 		mes "[ Junghee ]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		mes "I understand why those ^0000FFfoxes are angry^000000, but this has to be done.";
 		setquest 7784;
 		close;
@@ -991,7 +991,7 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 			close;
 		}
 		mes "[ Junghee ]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		mes "I'll leave the ^0000FFAngry Soldiers^000000 to you.";
 		mes "Please send them to heaven.";
 		setquest 7786;
@@ -3233,7 +3233,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		mes "Here, I brought the things you asked.";
 		next;
 		mes "[Bomi]";
-		mes "Let's see...";
+		mes "Vejamos...";
 		next;
 		if (countitem(25268) < 10 || countitem(25269) < 10) {
 			mes "[Bomi]";
@@ -3244,7 +3244,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 			close;
 		}
 		mes "[Bomi]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		next;
 		mes "[" + .@player_name$ + "]";
 		mes "How's the mushroom?";
@@ -3550,7 +3550,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		mes "Did you guys make up? Dracula, the worst is over. You just need to rest and regain your energy.";
 		next;
 		mes "[Dracula]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		next;
 		mes "[King]";
 		mes "*Snort* You can't beat mushrooms, but you can save vampires.";
@@ -3699,7 +3699,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		mes "I couldn't get over the fact that I became a monster, but now I know better. I may not be a human anymore, but I'm still me.";
 		next;
 		mes "[Bomi]";
-		mes "Thank you.";
+		mes "Obrigado.";
 		next;
 		mes "[" + .@player_name$ + "]";
 		mes "I should go. It's time I report back.";
@@ -5322,7 +5322,7 @@ ice_d03_i,155,43,3	script(CLOAKED)	Zeith#frozen02	4_M_GUILLOTINE,{
 		mes "[^ff0000Vrid^000000]";
 		mes "Whew, thanks!";
 		mes "You're pretty good.";
-		mes "Thank you," + strcharinfo(0) + "!";
+		mes "Obrigado," + strcharinfo(0) + "!";
 		next;
 		mes "[^0000ffZeith^000000]";
 		mes "Let's get out of here.";
@@ -8511,7 +8511,7 @@ com_d02_i,238,266,4	script	Request Board#Lu	4_BOARD3,{
 			mes "Your request is in progress.";
 			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
 			next;
-			if (select( "Do not cancel", "Cancel" ) == 1)
+			if (select( "Do not cancel", "Cancelar" ) == 1)
 				end;
 			erasequest 5848;
 			mes "The request has been cancelled.";
@@ -8548,7 +8548,7 @@ com_d02_i,238,266,4	script	Request Board#Lu	4_BOARD3,{
 			mes "Your request is in progress.";
 			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
 			next;
-			if (select( "Do not cancel", "Cancel" ) == 1)
+			if (select( "Do not cancel", "Cancelar" ) == 1)
 				end;
 			erasequest 5850;
 			mes "The request has been cancelled.";
@@ -8584,7 +8584,7 @@ com_d02_i,238,266,4	script	Request Board#Lu	4_BOARD3,{
 			mes "Your request is in progress.";
 			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
 			next;
-			if (select( "Do not cancel", "Cancel" ) == 1)
+			if (select( "Do not cancel", "Cancelar" ) == 1)
 				end;
 			erasequest 5852;
 			mes "The request has been cancelled.";
@@ -8623,7 +8623,7 @@ com_d02_i,238,266,4	script	Request Board#Lu	4_BOARD3,{
 			mes "Your request is in progress.";
 			mes "You can cancel. However, if you cancel, the progress made so far will be lost. Are you sure you want to cancel?";
 			next;
-			if (select( "Do not cancel", "Cancel" ) == 1)
+			if (select( "Do not cancel", "Cancelar" ) == 1)
 				end;
 			erasequest 5854;
 			mes "The request has been cancelled.";
@@ -8719,33 +8719,33 @@ S_MenuHunt:
 //= Illusion of Underwater
 //============================================================
 // prt_in,157,66,4	script	Jerrymon#jerry	1_M_01,{
-prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
+prt_elib,57,18,4	script	Jeremias#jerry	1_M_01,{
 	if (ill_underwater == 0) {
-		mes "[Jerrymon]";
-		mes "Um... Uhm...";
+		mes "[Jeremias]";
+		mes "Hum... Hmm...";
 		next;
-		mes "[Jerrymon]";
-		mes "Oh, what a surprise!!";
+		mes "[Jeremias]";
+		mes "Oh, que surpresa!!";
 		next;
-		mes "[Jerrymon]";
-		mes "What's up? I'm busy right now, so I'll talk to you later.";
+		mes "[Jeremias]";
+		mes "O que foi? Estou ocupado agora, então a gente conversa depois.";
 		close;
 	}
 	if (ill_underwater == 1) {
-		mes "[Jerrymon]";
-		mes "Um... Uhm...";
+		mes "[Jeremias]";
+		mes "Hum... Hmm...";
 		next;
-		mes "[Jerrymon]";
-		mes "Oh, what a surprise!!";
+		mes "[Jeremias]";
+		mes "Oh, que surpresa!!";
 		next;
-		mes "[Jerrymon]";
-		mes "What's up? I'm a bit busy right now...";
+		mes "[Jeremias]";
+		mes "O que foi? Estou meio ocupado agora...";
 		next;
-		mes "[Jerrymon]";
-		mes "Ah, you're the one introduced by Raket. I've been waiting for you.";
-		mes "Can you show me your fishing rod?";
+		mes "[Jeremias]";
+		mes "Ah, você é quem a Laís indicou. Estava te esperando.";
+		mes "Pode me mostrar a sua vara de pescar?";
 		next;
-		mes "- Jerrymon began to examine the rod closely. -";
+		mes "- Jeremias começou a examinar a vara de perto. -";
 		next;
 		mes ".";
 		next;
@@ -8757,85 +8757,85 @@ prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
 		next;
 		mes ".....";
 		next;
-		mes "[Jerrymon]";
-		mes "Yes, that's right... this substance is just that... to discover it again like this...";
+		mes "[Jeremias]";
+		mes "Sim, é isso... esta substância é exatamente aquela... encontrá-la de novo assim...";
 		next;
-		select( "What material are you talking about?" );
-		mes "[Jerrymon]";
-		mes "Adventurer, do you know where the deepest part of the sea is?";
+		select( "De que substância você está falando?" );
+		mes "[Jeremias]";
+		mes "Aventureiro, você sabe onde fica o ponto mais fundo do mar?";
 		next;
-		select( "Well...??" );
-		mes "[Jerrymon]";
-		mes "It is a place called the ^4d4dffTrench^000000. To put it simply, you can think of it as a deep cliff in the sea.";
+		select( "Bem...??" );
+		mes "[Jeremias]";
+		mes "É um lugar chamado ^4d4dffFossa^000000. Resumindo, pense nele como um penhasco fundo dentro do mar.";
 		next;
-		mes "[Jerrymon]";
-		mes "It is known that there are hundreds of different types of trenches in the world's oceans.";
+		mes "[Jeremias]";
+		mes "Sabe-se que existem centenas de tipos de fossas nos oceanos do mundo.";
 		next;
-		mes "[Jerrymon]";
-		mes "The widest and deepest known trench is the ^4d4dffBahia Trench^000000 near Izlude.";
+		mes "[Jeremias]";
+		mes "A fossa mais larga e mais funda que se conhece é a ^4d4dffFossa de Bahia^000000, perto de Izlude.";
 		next;
-		mes "[Jerrymon]";
-		mes "There are rare life forms at the bottom of the trench, and marine scientists like myself have shown great interest and have been exploring them.";
+		mes "[Jeremias]";
+		mes "No fundo da fossa existem formas de vida raras, e cientistas marinhos como eu têm muito interesse nelas e vêm explorando o lugar.";
 		next;
-		mes "[Jerrymon]";
-		mes "Though shallow trenches can be explored to some extent.";
+		mes "[Jeremias]";
+		mes "As fossas rasas até dá para explorar um pouco.";
 		next;
-		mes "[Jerrymon]";
-		mes "But in the case of the Bahia Trench, scientists have calculated that scientifically, no life can exist because it is so incredibly deep.";
+		mes "[Jeremias]";
+		mes "Mas, no caso da Fossa de Bahia, os cientistas calcularam que nenhuma vida pode existir lá, de tão incrivelmente funda que ela é.";
 		next;
-		mes "[Jerrymon]";
-		mes "I recently found out that there is life in the Bahia Trench.";
+		mes "[Jeremias]";
+		mes "Há pouco tempo descobri que existe vida na Fossa de Bahia.";
 		next;
-		select( "How do you know that??" );
-		mes "[Jerrymon]";
-		mes "You can tell by the stone that contains my magic.";
+		select( "Como você sabe disso??" );
+		mes "[Jeremias]";
+		mes "Dá para saber pela pedra que guarda a minha magia.";
 		next;
-		select( "A stone with magical power?" );
-		mes "[Jerrymon]";
-		mes "Yes, I'm a mage-turned-oceanographer. I learned magic for oceanography.";
+		select( "Uma pedra com poder mágico?" );
+		mes "[Jeremias]";
+		mes "Isso, eu sou um mago que virou oceanógrafo. Aprendi magia para estudar o oceano.";
 		next;
-		mes "[Jerrymon]";
-		mes "Enchant a large boulder and make it fall to the floor where the trench exists.";
+		mes "[Jeremias]";
+		mes "Eu encanto uma pedra grande e a deixo cair até o fundo onde fica a fossa.";
 		next;
-		mes "[Jerrymon]";
-		mes "The magic on the dropped stone is connected to me, so by measuring the distance, I can get a little idea of how deep it is and what's going on near the stone.";
+		mes "[Jeremias]";
+		mes "A magia da pedra que caiu fica ligada a mim, então, medindo a distância, eu consigo ter uma ideia de quão fundo é e do que acontece perto da pedra.";
 		next;
-		mes "[Jerrymon]";
-		mes "To tell you what I found out...";
+		mes "[Jeremias]";
+		mes "Para te contar o que eu descobri...";
 		next;
-		mes "[Jerrymon]";
-		mes "The composition of normal sea water and deep sea water is almost the same. But the only difference is the deep sea of Bahia Trench.";
+		mes "[Jeremias]";
+		mes "A composição da água do mar comum e da água do mar profundo é quase a mesma. A única diferença é o mar profundo da Fossa de Bahia.";
 		next;
-		mes "[Jerrymon]";
-		mes "Should I say it's like water and oil? There's a section where they never mix.";
+		mes "[Jeremias]";
+		mes "Como água e óleo, digamos? Tem uma parte em que elas nunca se misturam.";
 		next;
-		mes "[Jerrymon]";
-		mes "A strong boundary was formed where they meet each other, and it felt as if the deep seawater in that section was desperately blocking the seawater coming down from above.";
+		mes "[Jeremias]";
+		mes "Onde elas se encontram formou-se uma fronteira forte, e parecia que a água profunda daquele trecho bloqueava desesperadamente a água que descia de cima.";
 		next;
-		mes "[Jerrymon]";
-		mes "The water pressure is also much lower than that of normal seawater, so it is assumed that it has a favorable environment for life.";
+		mes "[Jeremias]";
+		mes "A pressão da água também é bem mais baixa que a da água do mar comum, então imagino que seja um ambiente favorável à vida.";
 		next;
-		mes "[Jerrymon]";
-		mes "We call it ^4d4dffdeep seawater^000000";
+		mes "[Jeremias]";
+		mes "Nós a chamamos de ^4d4dffÁgua Abissal^000000";
 		next;
-		select( "Is this gloss related to what you said?" );
-		mes "[Jerrymon]";
-		mes "Yes! That's right!!";
-		mes "We only identified the existence of Abyssal Seawater deep in the Bahia Trench, and it was very difficult to obtain samples. This fishing rod has a lot of Abyssal Seawater on it...";
+		select( "Esse brilho tem a ver com o que você disse?" );
+		mes "[Jeremias]";
+		mes "Sim! Isso mesmo!!";
+		mes "Só confirmamos a existência da Água Abissal no fundo da Fossa de Bahia, e foi muito difícil conseguir amostras. Esta vara de pescar está coberta de Água Abissal...";
 		next;
-		mes "[Jerrymon]";
-		mes "Could you leave this fishing rod with me? I think I can figure something out if I extract this sea water and turn it into essence.";
+		mes "[Jeremias]";
+		mes "Pode deixar esta vara comigo? Acho que consigo descobrir alguma coisa se extrair essa água e transformá-la em essência.";
 		next;
-		mes "[Jerrymon]";
-		mes "Oh, and I heard that the fishing rod was found today. Can I ask you to check if there is another floating substance in the nearby sea?";
+		mes "[Jeremias]";
+		mes "Ah, e ouvi dizer que a vara foi encontrada hoje. Posso te pedir para ver se tem mais alguma coisa boiando no mar ali perto?";
 		next;
-		if (select( "Okay, I'll be back.", "I'm a bit busy right now..." ) == 2) {
-			mes "[Jerrymon]";
-			mes "Please come back to me when you're done!";
+		if (select( "Certo, já volto.", "Estou meio ocupado agora..." ) == 2) {
+			mes "[Jeremias]";
+			mes "Volte a falar comigo quando terminar!";
 			close;
 		}
-		mes "[Jerrymon]";
-		mes "Yes, thanks! I'll be waiting for you!!";
+		mes "[Jeremias]";
+		mes "Sim, obrigado! Vou te esperar!!";
 		close2;
 		if (countitem(25898) > 0)
 			delitem 25898,1;	// Siroods_Fish_Rod
@@ -8844,90 +8844,90 @@ prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
 		end;
 	}
 	if (ill_underwater == 2) {
-		mes "[Jerrymon]";
-		mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+		mes "[Jeremias]";
+		mes "Desculpe o incômodo, mas, por favor. Vou te esperar aqui.";
 		close;
 	}
 	if (ill_underwater == 3) {
 		if (countitem(25899) < 1) {
-			mes "[Jerrymon]";
-			mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+			mes "[Jeremias]";
+			mes "Desculpe o incômodo, mas, por favor. Vou te esperar aqui.";
 			close;
 		}
-		mes "[Jerrymon]";
-		mes "Ah, welcome, adventurer!";
+		mes "[Jeremias]";
+		mes "Ah, bem-vindo, aventureiro!";
 		next;
-		mes "[Jerrymon]";
-		mes "The investigation is going smoothly~";
-		mes "Hey, could you take a look at this?";
+		mes "[Jeremias]";
+		mes "A investigação vai de vento em popa~";
+		mes "Ei, pode dar uma olhada nisto?";
 		next;
-		mes "[Jerrymon]";
-		mes "See those two little water bottles here?";
+		mes "[Jeremias]";
+		mes "Está vendo esses dois frasquinhos de água aqui?";
 		next;
-		mes "[Jerrymon]";
-		mes "One side is normal seawater, and the other side is seawater mixed with seawater from the abyss buried in fishing rods. I'll try mixing these two.";
+		mes "[Jeremias]";
+		mes "Um tem água do mar comum, e o outro tem água do mar misturada com a água abissal que estava na vara de pescar. Vou tentar misturar as duas.";
 		next;
-		mes " - Jerrymon poured both waters into one bottle and began to shake them together. - ";
+		mes " - Jeremias despejou as duas águas num frasco só e começou a sacudir. - ";
 		next;
-		mes "[Jerrymon]";
-		mes "Now, look. As I said before, they don't mix at all, do they?";
+		mes "[Jeremias]";
+		mes "Agora, olhe. Como eu disse antes, elas não se misturam nada, não é?";
 		next;
-		mes "[Jerrymon]";
-		mes "This... this!!";
+		mes "[Jeremias]";
+		mes "Isto... isto!!";
 		next;
-		mes "[Jerrymon]";
-		mes "If you shake it like crazy!!";
+		mes "[Jeremias]";
+		mes "Se sacudir feito louco!!";
 		next;
-		mes "[Jerrymon]";
-		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Wow!!!!!!</FONT></FONT></B>";
+		mes "[Jeremias]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Uau!!!!!!</FONT></FONT></B>";
 		next;
-		mes "[Jerrymon]";
-		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Uwachachaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!</FONT></FONT></B>";
+		mes "[Jeremias]";
+		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Uaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!</FONT></FONT></B>";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "<FONT COLOR = E68F8F><FONT SIZE = 16><B>Ahhhhhhh!!!!!!</FONT></FONT></B>";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh...";
 		next;
-		select( "Oh, I'm going to catch someone, is it okay?" );
-		mes "[Jerrymon]";
-		mes "Keep... Whoa... Whoa... OK now.";
+		select( "Ah, é para eu segurar? Tudo bem?" );
+		mes "[Jeremias]";
+		mes "Segura... Uou... Uou... Pronto, agora sim.";
 		next;
-		mes "- Looking into the bottle Jerrymon is holding, I can clearly see the shape of the vortex. - ";
+		mes "- Olhando dentro do frasco que Jeremias segura, dá para ver com clareza a forma de um redemoinho. - ";
 		next;
-		mes "[Jerrymon]";
-		mes "Now, do you see this whirlpool!! This is the passage that connects to the bottom of the Bahia Trench!";
+		mes "[Jeremias]";
+		mes "Agora, está vendo este redemoinho!! Esta é a passagem que leva ao fundo da Fossa de Bahia!";
 		next;
-		select( "??? Isn't that just a whirlpool created by shaking it?" );
-		mes "[Jerrymon]";
-		mes "No. This is the stone that contains my magical power. Let's look at it.";
+		select( "??? Isso não é só um redemoinho de tanto sacudir?" );
+		mes "[Jeremias]";
+		mes "Não. Esta é a pedra que guarda a minha magia. Vamos ver.";
 		next;
-		mes " - Jerrymon put a glowing stone into the bottle. The glowing stone was sucked into the whirlpool inside the bottle and disappeared without a trace! - ";
+		mes " - Jeremias pôs uma pedra brilhante dentro do frasco. A pedra foi sugada pelo redemoinho e sumiu sem deixar rastro! - ";
 		next;
-		select( "No, how could it be?" );
-		mes "[Jerrymon]";
-		mes "Did I ever tell you that the stone that contains my magic can measure the distance to me?";
+		select( "Não, como pode?" );
+		mes "[Jeremias]";
+		mes "Eu já te disse que a pedra que guarda a minha magia consegue medir a distância até mim?";
 		next;
-		mes "[Jerrymon]";
-		mes "It feels the same as the last time I threw a pebble into the Bahia Trench..";
-		mes "If you follow this whirlpool, you may be able to find the owner of the fishing rod.";
+		mes "[Jeremias]";
+		mes "A sensação é a mesma da última vez que joguei uma pedrinha na Fossa de Bahia...";
+		mes "Se seguir esse redemoinho, talvez dê para encontrar o dono da vara de pescar.";
 		next;
-		mes "[Jerrymon]";
-		mes "The problem is... the amount of essence on a fishing rod can't make a whirlpool large enough for a person to fit in.";
+		mes "[Jeremias]";
+		mes "O problema é... a essência que tinha na vara não dá para fazer um redemoinho grande o bastante para uma pessoa passar.";
 		next;
-		select( "Is this amount okay?" );
-		mes "- Showed the ^4d4dff" + getitemname(25899) + "^000000 received from Gein to Jerrymon. - ";
+		select( "E esta quantidade, serve?" );
+		mes "- Você mostrou a Jeremias a ^4d4dff" + getitemname(25899) + "^000000 que recebeu do Gael. - ";
 		next;
-		mes "[Jerrymon]";
-		mes "Oh, just in case, I actually found it!";
+		mes "[Jeremias]";
+		mes "Oh, não é que você achou mesmo!";
 		next;
-		mes "[Jerrymon]";
-		mes "With this amount, I think I can create a vortex of fissures that normal people can enter. You can pass it to me.";
+		mes "[Jeremias]";
+		mes "Com esta quantidade, acho que consigo criar um redemoinho por onde uma pessoa comum passe. Pode me entregar.";
 		next;
-		mes "[Jerrymon]";
-		mes "The place is too small to do this much here, so let's do it in Izlude. In order to get help from your friends.";
-		mes "Then see you in Izlude!!";
+		mes "[Jeremias]";
+		mes "Aqui é pequeno demais para fazer tanto, então vamos fazer em Izlude. Assim os seus amigos ajudam.";
+		mes "Então até Izlude!!";
 		close2;
 		delitem 25899,1;	// E_Abyss1
 		ill_underwater = 4;
@@ -8936,12 +8936,12 @@ prt_elib,57,18,4	script	Jerrymon#jerry	1_M_01,{
 		end;
 	}
 	if (ill_underwater == 4) {
-		mes "[Jerrymon]";
-		mes "Then let's meet in Izlude!!";
+		mes "[Jeremias]";
+		mes "Então nos vemos em Izlude!!";
 		close;
 	}
-	mes "[Jerrymon]";
-	mes "I'm sorry to bother you, but please. I'll be waiting for you here.";
+	mes "[Jeremias]";
+	mes "Desculpe o incômodo, mas, por favor. Vou te esperar aqui.";
 	close;
 
 OnInit:
@@ -8951,261 +8951,261 @@ OnInit:
 }
 
 
-izlude,126,53,0	script	Sirood#SRD1	HIDDEN_WARP_NPC,4,4,{
+izlude,126,53,0	script	Sirud#SRD1	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
 	if (ill_underwater > 3)
-		cloakoffnpcself( "Jerrymon#jerry2" );
+		cloakoffnpcself( "Jeremias#jerry2" );
 	if (ill_underwater > 6)
-		cloakoffnpcself( "Sirood#SRD2" );
+		cloakoffnpcself( "Sirud#SRD2" );
 	end;
 }
-izlude,132,54,0	duplicate(Sirood#SRD1)	Jerrymon#jerry1	HIDDEN_WARP_NPC,4,4
+izlude,132,54,0	duplicate(Sirud#SRD1)	Jeremias#jerry1	HIDDEN_WARP_NPC,4,4
 
-izlude,126,53,4	script	Sirood#SRD2	1_M_04,{
-	mes "[Sirood]";
-	mes "Thank you very much, adventurer.";
+izlude,126,53,4	script	Sirud#SRD2	1_M_04,{
+	mes "[Sirud]";
+	mes "Muito obrigado, aventureiro.";
 	next;
-	mes "[Sirood]";
-	mes "I thought I'd never come back...";
+	mes "[Sirud]";
+	mes "Achei que nunca mais ia voltar...";
 	close;
 }
 
-izlude,129,49,4	script	Soup#Soup	1_M_02,{
+izlude,129,49,4	script	Canjica#Soup	1_M_02,{
 	if (ill_underwater < 5) {
-		mes "[Soup]";
-		mes "Hello, my name is Soup, a friend of Sirood who is missing.";
+		mes "[Canjica]";
+		mes "Olá, meu nome é Canjica, amigo do Sirud, que está desaparecido.";
 		next;
-		mes "[Soup]";
-		mes "The four of us, Sirood, Raket, Gein, and I often enjoyed fishing.";
+		mes "[Canjica]";
+		mes "Nós quatro, o Sirud, a Laís, o Gael e eu, adorávamos pescar juntos.";
 		next;
-		mes "[Soup]";
-		mes "That windy day... I had been feeling very guilty for not stopping Sirood from going fishing.";
+		mes "[Canjica]";
+		mes "Naquele dia de ventania... eu me sinto muito culpado por não ter impedido o Sirud de ir pescar.";
 		next;
-		mes "[Soup]";
-		mes "When I heard that Sirood's fishing pole was found, I jumped out.";
+		mes "[Canjica]";
+		mes "Quando soube que a vara de pescar do Sirud tinha sido encontrada, vim correndo.";
 		next;
-		mes "[Soup]";
-		mes "You must have a clue about something?";
+		mes "[Canjica]";
+		mes "Você deve ter alguma pista, não tem?";
 		close;
 	}
 	if (ill_underwater < 7) {
-		mes "[Soup]";
-		mes "I did my best.";
+		mes "[Canjica]";
+		mes "Eu fiz o meu melhor.";
 		next;
-		mes "[Soup]";
-		mes "Should Sirood come back safely?";
+		mes "[Canjica]";
+		mes "Será que o Sirud volta são e salvo?";
 		close;
 	}
-	mes "[Soup]";
-	mes "Sirood is back with us.";
+	mes "[Canjica]";
+	mes "O Sirud voltou para nós.";
 	next;
-	mes "[Soup]";
-	mes "Thanks to you, adventurer. Thank you very much.";
+	mes "[Canjica]";
+	mes "Graças a você, aventureiro. Muito obrigado.";
 	close;
 }
 
-izlude,135,51,4	script	Raket#Raket	1_F_MERCHANT_01,{
+izlude,135,51,4	script	Laís#Raket	1_F_MERCHANT_01,{
 	if (ill_underwater < 5) {
-		mes "[Raket]";
-		mes "It's been exactly 3 months since Sirood went missing.";
+		mes "[Laís]";
+		mes "Faz exatamente 3 meses que o Sirud desapareceu.";
 		next;
-		mes "[Raket]";
-		mes "Sirood's fishing rod was found.";
+		mes "[Laís]";
+		mes "Encontraram a vara de pescar do Sirud.";
 		next;
-		mes "[Raket]";
-		mes "I felt that way.";
+		mes "[Laís]";
+		mes "Eu senti isso.";
 		next;
-		select( "What do you think?" );
-		mes "[Raket]";
-		mes "Why is this only discovered now, isn't this a message from someone?";
+		select( "O que você acha?" );
+		mes "[Laís]";
+		mes "Por que só descobriram isso agora? Isso não é uma mensagem de alguém?";
 		next;
-		select( "Looking at it, it doesn't make sense." );
-		mes "[Raket]";
-		mes "Ha... It's just my delusion. I especially miss that child today.";
+		select( "Pensando bem, não faz sentido." );
+		mes "[Laís]";
+		mes "Ah... É só coisa da minha cabeça. Hoje estou com saudade demais daquele menino.";
 		close;
 	}
 	if (ill_underwater < 7) {
-		mes "[Raket]";
-		mes "Heh heh... It's so hard to use all your strength...";
+		mes "[Laís]";
+		mes "Heh heh... É tão difícil usar toda a força...";
 		next;
-		mes "[Raket]";
-		mes "But for Sirood's sake...";
+		mes "[Laís]";
+		mes "Mas, pelo Sirud...";
 		close;
 	}
-	mes "[Raket]";
-	mes "Thank you so much!!";
+	mes "[Laís]";
+	mes "Muito obrigada!!";
 	next;
-	mes "[Raket]";
-	mes "Now you can fish with Sirood again.";
+	mes "[Laís]";
+	mes "Agora dá para pescar com o Sirud de novo.";
 	next;
-	mes "[Raket]";
-	mes "I'm so glad...";
+	mes "[Laís]";
+	mes "Estou tão feliz...";
 	close;
 }
 
-izlude,132,49,5	script	Gein#Gein	4W_M_01,{
+izlude,132,49,5	script	Gael#Gein	4W_M_01,{
 	if (checkweight(1201,3) == 0) {
-		mes "You have too many items.";
-		mes "Please clean up your items and try again.";
+		mes "Você está com itens demais.";
+		mes "Arrume os seus itens e tente de novo.";
 		close;
 	}
 	if (BaseLevel < 140) {
-		mes "[Gein]";
-		mes "Haha... why did this only get discovered now??";
-		mes "It's impossible, this is...";
+		mes "[Gael]";
+		mes "Haha... por que só encontraram isso agora??";
+		mes "É impossível, isto é...";
 		next;
-		mes "- I feel serious anguish from this person. Let's come back after I've become level 140. -";
+		mes "- Dá para sentir uma angústia séria nesta pessoa. Vamos voltar quando estivermos no nível 140. -";
 		close;
 	}
 	if (ill_underwater == 0) {
-		mes "[Gein]";
-		mes "Haha...why did this only get discovered now??";
-		mes "It's impossible, this is...";
+		mes "[Gael]";
+		mes "Haha... por que só encontraram isso agora??";
+		mes "É impossível, isto é...";
 		next;
-		select( "Do you have any concerns?" );
-		mes "[Gein]";
-		mes "Oh, hello...";
+		select( "Algum problema?" );
+		mes "[Gael]";
+		mes "Ah, olá...";
 		next;
-		mes "- He is very fidgety with a fishing pole in his hand. It doesn't look like he's out fishing. - ";
+		mes "- Ele está muito inquieto, com uma vara de pescar na mão. Não parece que está pescando. - ";
 		next;
-		mes "[Gein]";
-		mes "This fishing rod belongs to my friend <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Sirood</FONT></FONT></B> who went missing three months ago. I found something!!!";
+		mes "[Gael]";
+		mes "Esta vara de pescar é do meu amigo <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Sirud</FONT></FONT></B>, que desapareceu há três meses. Eu achei uma coisa!!!";
 		next;
-		select( "Disappeared?" );
-		mes "[Gein]";
-		mes "Yes... Sirood is a fishing fanatic and came here to fish whenever he had a chance.";
+		select( "Desapareceu?" );
+		mes "[Gael]";
+		mes "Sim... O Sirud é fanático por pescaria e vinha pescar aqui sempre que tinha chance.";
 		next;
-		mes "[Gein]";
-		mes "Influenced by Sirood, we also fell in love with fishing, and the four of us often had a good time.";
+		mes "[Gael]";
+		mes "Por influência dele, a gente também se apaixonou pela pescaria, e nós quatro nos divertíamos muito.";
 		next;
-		mes "[Gein]";
-		mes "Sirood's passion for fishing was to the point that he invited us to go fishing even in the rain and wind.";
+		mes "[Gael]";
+		mes "A paixão do Sirud por pescar era tanta que ele chamava a gente para pescar até na chuva e no vento.";
 		next;
-		mes "[Gein]";
-		mes "The day Sirood went missing was exactly the same rainy and windy day. I put on my raincoat and went to go fishing.";
+		mes "[Gael]";
+		mes "O dia em que o Sirud desapareceu era um desses dias de chuva e vento. Ele vestiu a capa de chuva e foi pescar.";
 		next;
-		mes "[Gein]";
-		mes "We were invited to go out together, but they all declined.";
+		mes "[Gael]";
+		mes "Ele chamou a gente para ir junto, mas todo mundo recusou.";
 		next;
-		mes "[Gein]";
-		mes "Sirood went fishing alone and we haven't seen him since...";
+		mes "[Gael]";
+		mes "O Sirud foi pescar sozinho e nunca mais o vimos...";
 		next;
-		mes "[Gein]";
-		mes "I should have stopped you from leaving...";
+		mes "[Gael]";
+		mes "Eu devia ter impedido ele de ir...";
 		next;
-		mes "- Gein started talking again after wiping away tears for a moment. -";
+		mes "- Gael enxugou as lágrimas por um instante e voltou a falar. -";
 		next;
-		mes "[Gein]";
-		mes "The news of Sirood's disappearance immediately spread throughout Izlude and a large-scale search was conducted with a lot of time and manpower invested, but the search ended without finding any clues.";
+		mes "[Gael]";
+		mes "A notícia do desaparecimento do Sirud se espalhou na hora por Izlude, e fizeram uma grande busca, com muito tempo e muita gente, mas ela terminou sem nenhuma pista.";
 		next;
-		mes "[Gein]";
-		mes "After that, we got together and ran everywhere to find Sirood, but there was no result, and we were about to give up.";
+		mes "[Gael]";
+		mes "Depois disso, a gente se juntou e correu para todo lado procurando o Sirud, mas não deu em nada, e estávamos quase desistindo.";
 		next;
-		mes "[Gein]";
-		mes "But just now!!";
+		mes "[Gael]";
+		mes "Mas agora mesmo!!";
 		next;
-		mes "[Gein]";
-		mes "After 3 months!!!";
+		mes "[Gael]";
+		mes "Depois de 3 meses!!!";
 		next;
-		mes "[Gein]";
-		mes "Sirood's fishing pole has risen above sea level. His item was nowhere to be found during the search!";
+		mes "[Gael]";
+		mes "A vara de pescar do Sirud subiu à tona. Nada dele tinha aparecido durante a busca!";
 		next;
-		select( "Now, calm down... Are you sure it's Sirood's fishing rod?" );
-		mes "[Gein]";
-		mes "Yes, I'm sure! It's the fishing rod I've always seen.";
+		select( "Calma... Tem certeza de que é a vara de pescar do Sirud?" );
+		mes "[Gael]";
+		mes "Tenho certeza! É a vara que eu sempre via.";
 		next;
-		mes "[Gein]";
-		mes "This fishing rod was made by Sirood himself, so it is the only one. You can see the initials on the handle here, S.R.D!!";
+		mes "[Gael]";
+		mes "Esta vara foi feita pelo próprio Sirud, então é única. Dá para ver as iniciais no cabo, aqui, S.R.D!!";
 		next;
-		select( "Oh, then why now..." );
-		mes "[Gein]";
-		mes "I'm so surprised and shocked right now that I don't know what to do.";
+		select( "Ah, então por que agora..." );
+		mes "[Gael]";
+		mes "Estou tão surpreso e chocado agora que não sei o que fazer.";
 		next;
-		mes "- But looking closely at the fishing rod, I feel something different. This wooden fishing rod has been submerged in water for 3 months, but it still looks the same, and I can see a bit of shiny gloss... -";
+		mes "- Mas, olhando a vara de perto, dá para sentir algo diferente. Esta vara de madeira ficou 3 meses debaixo d'água, mas continua igual, e tem até um brilho... -";
 		next;
-		select( "Isn't this fishing rod a bit strange over there?" );
-		mes "[Gein]";
-		mes "Strange, what is it?";
+		select( "Essa vara de pescar não está meio estranha?" );
+		mes "[Gael]";
+		mes "Estranha, como assim?";
 		next;
-		mes "[Gein]";
-		mes "Uh...";
+		mes "[Gael]";
+		mes "Hã...";
 		next;
-		mes "[Gein]";
-		mes "Uh.....??";
+		mes "[Gael]";
+		mes "Hã.....??";
 		next;
-		mes "[Gein]";
-		mes "It's been submerged in water for 3 months... but it hasn't corroded at all. It's completely fine??";
+		mes "[Gael]";
+		mes "Ela ficou 3 meses debaixo d'água... e não apodreceu nada. Está perfeita??";
 		next;
-		mes "[Gein]";
-		mes "Hmm... And it seems to have a subtle glow... It seems like the fishing rod is coated?";
+		mes "[Gael]";
+		mes "Hum... E parece ter um brilho sutil... Será que a vara está coberta de alguma coisa?";
 		next;
-		mes "-The person who seemed to be Gein's friend who was listening to the story opened his mouth. -";
+		mes "-A pessoa que parecia ser amiga do Gael e ouvia a história abriu a boca. -";
 		next;
-		mes "[Raket]";
-		mes "Where is it, I want to see it!! What's wrong??";
+		mes "[Laís]";
+		mes "Cadê, eu quero ver!! O que foi??";
 		next;
-		mes "[Gein]";
-		mes "This fishing rod... It was submerged in the water for 3 months, but it was found in its original form, or worse, in a state of disrepair.";
+		mes "[Gael]";
+		mes "Esta vara... ficou 3 meses debaixo d'água, mas foi encontrada inteira, quando devia estar em pedaços.";
 		next;
-		mes "[Raket]";
-		mes "Ugh...";
+		mes "[Laís]";
+		mes "Hmm...";
 		next;
-		mes "[Raket]";
-		mes "Um...";
+		mes "[Laís]";
+		mes "Hum...";
 		next;
-		mes "- Raket looked intently at his fishing pole, then answered Gein. -";
+		mes "- Laís olhou fixamente para a vara de pescar e respondeu ao Gael. -";
 		next;
-		mes "[Raket]";
-		mes "I'm not sure either?";
+		mes "[Laís]";
+		mes "Eu também não tenho certeza...";
 		next;
-		mes "[Gein]";
-		mes "Certainly!! I don't know, but would you?";
+		mes "[Gael]";
+		mes "Claro!! Eu não sei, mas você saberia?";
 		next;
-		mes "[Raket]";
-		mes "Ummm... but I know someone who might know a little about this rod.";
+		mes "[Laís]";
+		mes "Hmmm... mas eu conheço alguém que talvez saiba um pouco sobre esta vara.";
 		next;
-		mes "[Gein]";
-		mes "Who??";
+		mes "[Gael]";
+		mes "Quem??";
 		next;
-		select( "Who?" );
-		mes "[Raket]";
-		mes "His name is <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Jerrymon</FONT></FONT></B>, a marine scientist. I've met my father a few times. I know you are in the East Library of Prontera.";
+		select( "Quem?" );
+		mes "[Laís]";
+		mes "O nome dele é <FONT COLOR = 4D4DFF><FONT SIZE = 16><B>Jeremias</FONT></FONT></B>, um cientista marinho. Ele já esteve algumas vezes com o meu pai. Sei que ele está na Biblioteca Leste de Prontera.";
 		next;
-		mes "[Gein]";
-		mes "Ah, ah... then... hey adventurer!! I'm sorry for the first meeting, but can I ask you a favor?? We can't get out of here in Izlude...";
+		mes "[Gael]";
+		mes "Ah, ah... então... ei, aventureiro!! Desculpe pedir logo no primeiro encontro, mas posso te pedir um favor?? A gente não pode sair aqui de Izlude...";
 		next;
-		mes "[Gein]";
-		mes "Please go see Jerrymon and show him this fishing rod...even if it's trivial...I hope he has some information..";
+		mes "[Gael]";
+		mes "Vá até o Jeremias, por favor, e mostre esta vara para ele... mesmo que seja uma bobagem... espero que ele saiba alguma coisa...";
 		next;
-		if (select( "Okay. Let's go.", "Sorry. I'm a bit busy right now..." ) == 2) {
-			mes "[Gein]";
-			mes "No... are you sure?";
+		if (select( "Certo. Vamos lá.", "Desculpe. Estou meio ocupado agora..." ) == 2) {
+			mes "[Gael]";
+			mes "Não... tem certeza?";
 			next;
-			mes "[Gein]";
-			mes "Are you turning around after hearing about this heartbreaking story and mysterious clue...";
+			mes "[Gael]";
+			mes "Vai dar as costas depois de ouvir essa história de partir o coração e essa pista misteriosa...";
 			close;
 		}
-		mes "[Gein]";
-		mes "Ugh... Thanks!";
+		mes "[Gael]";
+		mes "Ah... Obrigado!";
 		next;
-		mes "[Gein]";
-		mes "^4d4dffJerrymon^000000 should still be at the <NAVI>[East Library]<INFO>prontera,192,264,</INFO></NAVI> in Prontera.";
+		mes "[Gael]";
+		mes "O ^4d4dffJeremias^000000 ainda deve estar na <NAVI>[Biblioteca Leste]<INFO>prontera,192,264,</INFO></NAVI> de Prontera.";
 		next;
-		mes "[Gein]";
-		mes "Now, I'll give you the fishing rod, a keepsake from Sirood. Thank you...";
+		mes "[Gael]";
+		mes "Agora vou te dar a vara de pescar, uma lembrança do Sirud. Obrigado...";
 		next;
-		mes "[Raket]";
-		mes "What??? It's a keepsake!! You don't even know if Sirood is alive or dead!!";
+		mes "[Laís]";
+		mes "O quê??? Lembrança!! Você nem sabe se o Sirud está vivo ou morto!!";
 		next;
-		mes "[Gein]";
-		mes "Uhhh... yes I made a mistake, this is the fishing rod Sirood left behind. Please take good care of it.";
+		mes "[Gael]";
+		mes "Ahhh... é, falei errado. Esta é a vara de pescar que o Sirud deixou. Cuide bem dela, por favor.";
 		next;
-		mes "[Raket]";
-		mes "I'll tell Jerrymon about the contents in advance through my father!";
+		mes "[Laís]";
+		mes "Eu vou adiantar a história para o Jeremias por meio do meu pai!";
 		next;
-		mes "[Gein & Raket & Soup]";
-		mes "Thank you!!!";
+		mes "[Gael, Laís e Canjica]";
+		mes "Obrigado!!!";
 		close2;
 		getitem 25898,1;	// Siroods_Fish_Rod
 		ill_underwater = 1;
@@ -9213,48 +9213,48 @@ izlude,132,49,5	script	Gein#Gein	4W_M_01,{
 		end;
 	}
 	if (ill_underwater == 1) {
-		mes "[Gein]";
-		mes "You can go to Prontera's <NAVI>[East Library]<INFO>prontera,192,264,</INFO></NAVI> as Raket told you.";
+		mes "[Gael]";
+		mes "Pode ir à <NAVI>[Biblioteca Leste]<INFO>prontera,192,264,</INFO></NAVI> de Prontera, como a Laís disse.";
 		next;
-		mes "[Gein]";
-		mes "Take care of yourself!! I hope there is even the smallest clue...";
+		mes "[Gael]";
+		mes "Se cuida!! Espero que haja nem que seja a menor pista...";
 		close;
 	}
 	if (ill_underwater == 2) {
-		mes "[Gein]";
-		mes "Ah, you're here!!!";
+		mes "[Gael]";
+		mes "Ah, você chegou!!!";
 		next;
-		mes "[Gein]";
-		mes "Do you have any information about Sirood?";
+		mes "[Gael]";
+		mes "Tem alguma notícia do Sirud?";
 		next;
-		mes "- I relayed what I heard from Jerrymon. -";
+		mes "- Você contou o que ouviu do Jeremias. -";
 		next;
-		mes "[Gein]";
-		mes "Ah... I see, I've never heard of a trench before.";
+		mes "[Gael]";
+		mes "Ah... entendi, nunca tinha ouvido falar de fossa.";
 		next;
-		mes "[Gein]";
-		mes "I can't believe there's such a big and deep trench near Izlude...";
+		mes "[Gael]";
+		mes "Nem acredito que existe uma fossa tão grande e tão funda perto de Izlude...";
 		next;
-		mes "[Gein]";
-		mes "Oh, by the way, is there anything else you need for coming back here?";
+		mes "[Gael]";
+		mes "Ah, aliás, você precisa de mais alguma coisa, já que voltou aqui?";
 		next;
-		select( "I was wondering if there was anything else found besides the fishing rod." );
-		mes "[Gein]";
-		mes "Oh right!!";
+		select( "Queria saber se encontraram mais alguma coisa além da vara de pescar." );
+		mes "[Gael]";
+		mes "Ah, é!!";
 		next;
-		mes "[Gein]";
-		mes "It's a chunk scooped up with a landing net near where the fishing rod was found.";
+		mes "[Gael]";
+		mes "É um pedaço que pescamos com o puçá, perto de onde a vara foi encontrada.";
 		next;
-		mes " - This lump is what Jerrymon said.";
-		mes "^4d4dffIt must be the essence of the abyss^000000. - ";
+		mes " - Este pedaço é o que o Jeremias disse.";
+		mes "^4d4dffDeve ser a essência do abismo^000000. - ";
 		next;
-		mes "[Gein]";
-		mes "Something shiny and has the same feeling of Sirood's fishing rod, so I secured it for now.";
-		mes "Could this nugget help?";
+		mes "[Gael]";
+		mes "É uma coisa brilhante que passa a mesma sensação da vara do Sirud, então guardei por enquanto.";
+		mes "Será que este pedaço ajuda?";
 		next;
-		select( "Thanks, that would be a great help." );
-		mes "[Gein]";
-		mes "Are you going back to Jerrymon? Please be careful.";
+		select( "Obrigado, vai ajudar muito." );
+		mes "[Gael]";
+		mes "Vai voltar ao Jeremias? Tome cuidado, por favor.";
 		close2;
 		getitem 25899,1;	// E_Abyss1
 		ill_underwater = 3;
@@ -9262,23 +9262,23 @@ izlude,132,49,5	script	Gein#Gein	4W_M_01,{
 		end;
 	}
 	if (ill_underwater == 3) {
-		mes "[Gein]";
-		mes "I hope Sirood will appear in front of us intact, just as the fishing rod appeared intact...";
+		mes "[Gael]";
+		mes "Espero que o Sirud apareça inteiro na nossa frente, assim como a vara de pescar apareceu inteira...";
 		next;
-		mes "[Gein]";
-		mes "Please let me know if you have any new information!";
+		mes "[Gael]";
+		mes "Se tiver alguma notícia nova, me avise, por favor!";
 		close;
 	}
 	if (ill_underwater < 7) {
-		mes "[Gein]";
-		mes "Heh...heh...Hello adventurer, heh...heh... I'm so tired I can't move...";
+		mes "[Gael]";
+		mes "Ufa...ufa... Olá, aventureiro, ufa...ufa... Estou tão cansado que nem consigo me mexer...";
 		close;
 	}
-	mes "[Gein]";
-	mes "Thank you, adventurer.";
+	mes "[Gael]";
+	mes "Obrigado, aventureiro.";
 	next;
-	mes "[Gein]";
-	mes "To be able to meet Sirood again is like a dream.";
+	mes "[Gael]";
+	mes "Poder encontrar o Sirud de novo parece um sonho.";
 	close;
 
 OnInit:
@@ -9287,47 +9287,47 @@ OnInit:
 	end;
 }
 
-izlude,132,54,4	script(CLOAKED)	Jerrymon#jerry2	1_M_01,{
+izlude,132,54,4	script(CLOAKED)	Jeremias#jerry2	1_M_01,{
 	if (ill_underwater < 4)
 		end;
 	if (ill_underwater == 4) {
-		mes "[Jerrymon]";
-		mes "Ah you're here!!";
+		mes "[Jeremias]";
+		mes "Ah, você chegou!!";
 		next;
-		mes "[Jerrymon]";
-		mes "We are fully prepared while the adventurers are coming.";
+		mes "[Jeremias]";
+		mes "Deixamos tudo pronto enquanto o aventureiro vinha.";
 		next;
-		mes "- Gein gasps to say hello to his two friends. - ";
+		mes "- Gael, ofegante, cumprimenta os dois amigos. - ";
 		next;
-		mes "[Gein]";
-		mes "Ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha... ah, welcome adventurer.";
+		mes "[Gael]";
+		mes "Ufa ufa ufa ufa ufa ufa ufa ufa... ah, bem-vindo, aventureiro.";
 		next;
-		mes "[Gein]";
-		mes "I'm not sure what the principle is, but I stirred it diligently as Jerrymon-sama told me to!!";
+		mes "[Gael]";
+		mes "Não sei direito qual é o princípio, mas mexi com toda a dedicação, como o senhor Jeremias mandou!!";
 		next;
-		mes "[Raket & Soup]";
-		mes "Hee... hee... hee... ah... hello.";
+		mes "[Laís e Canjica]";
+		mes "Ufa... ufa... ufa... ah... olá.";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		specialeffect EF_MAP_MAGICZONE3;
-		mes "Okay, shall we begin?";
+		mes "Certo, vamos começar?";
 		next;
-		mes "[Jerrymon]";
-		mes "The whirlpool will be created soon.";
+		mes "[Jeremias]";
+		mes "O redemoinho vai se formar daqui a pouco.";
 		next;
-		mes "[Jerrymon]";
-		mes "Hold my hand when I give you a signal!!";
+		mes "[Jeremias]";
+		mes "Segure a minha mão quando eu der o sinal!!";
 		next;
-		select( "No, wait. Are you leaving right now?" );
-		mes "[Jerrymon]";
-		mes "Yes, yes, go ahead and don't think about it! Just trust me~~!!";
+		select( "Não, espera. Você vai agora mesmo?" );
+		mes "[Jeremias]";
+		mes "Sim, sim, vamos, não pense nisso! É só confiar em mim~~!!";
 		next;
-		mes "[Jerrymon]";
-		mes "Okay now. Take my hand!";
+		mes "[Jeremias]";
+		mes "Pronto, agora. Segure a minha mão!";
 		next;
 		specialeffect EF_CASTSPIN2, AREA;
-		mes "[Jerrymon]";
-		mes "Wow! It spins round and round~~!!";
+		mes "[Jeremias]";
+		mes "Uau! Gira, gira sem parar~~!!";
 		close2;
 		ill_underwater = 5;
 		erasequest 3409;
@@ -9335,27 +9335,27 @@ izlude,132,54,4	script(CLOAKED)	Jerrymon#jerry2	1_M_01,{
 		warp "iz_d04_i",130,227;
 		end;
 	}
-	mes "[Jerrymon]";
-	mes "Hello!!";
+	mes "[Jeremias]";
+	mes "Olá!!";
 	next;
-	mes "[Jerrymon]";
-	mes "Thanks to you, Adventurer, I am having a fun and exciting time every day.";
+	mes "[Jeremias]";
+	mes "Graças a você, aventureiro, todo dia é divertido e emocionante.";
 	next;
-	mes "[Jerrymon]";
-	mes "Would you like to go to the deep sea again? I will follow you!!";
+	mes "[Jeremias]";
+	mes "Quer ir ao fundo do mar de novo? Eu vou com você!!";
 	next;
-	if (select( "Please", "I'll go next time" ) == 2) {
-		mes "[Jerrymon]";
-		mes "Yeah... Then I'll be waiting for you.";
+	if (select( "Por favor", "Vou na próxima" ) == 2) {
+		mes "[Jeremias]";
+		mes "É... Então vou te esperar.";
 		close;
 	}
-	mes "[Jerrymon]";
+	mes "[Jeremias]";
 	specialeffect EF_MAP_MAGICZONE3;
-	mes "Good.";
+	mes "Ótimo.";
 	next;
 	specialeffect EF_CASTSPIN2;
-	mes "[Jerrymon]";
-	mes "Come on! Let's go~~!! Yay!!";
+	mes "[Jeremias]";
+	mes "Vamos lá! Vamos~~!! Oba!!";
 	close2;
 	specialeffect EF_CASTSPIN2, AREA;
 	warp "iz_d04_i",130,227;
@@ -9367,10 +9367,10 @@ OnInit:
 }
 
 
-iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
+iz_d04_i,127,228,4	script	Jeremias#jerry3	1_M_01,{
 	if (checkweight(1201,3) == 0) {
-		mes "You have too many items.";
-		mes "Please clean up your items and try again.";
+		mes "Você está com itens demais.";
+		mes "Arrume os seus itens e tente de novo.";
 		close;
 	}
 	if (ill_underwater < 5)
@@ -9378,68 +9378,68 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 	if (ill_underwater == 5) {
 		switch( checkquest(3411,HUNTING) ) {
 		case -1:
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Wow... this purple sea... it's fantastic!!!";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "It's so amazing that we can breathe without gills, there's no sea pressure, and even marine life that I've never seen before...!!!";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "There's more than one or two things to look into, I'll be busy.";
 			mes "Wow... so exciting!!! I think this is the most thrilling moment in my 14 years as an oceanographer!";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Lululala~~~";
 			next;
 			select( "Oh hey, I'm here to find Sirood..." );
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Ah, ah... that, right? That should take precedence.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "In order to bring Sirood back ashore, we need an additional ^4d4dff" + getitemname(25899) + "^000000. The question is how to get it...";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "I've been watching the deep sea creatures here, and I've seen some of them glow with the essence of the abyss.";
 			mes "And they seem to threaten us sometimes.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "In that sense, could you handle some of the deep sea creatures? Maybe we can get ^4d4dff" + getitemname(25899) + "^000000 from them.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
 			next;
 			if (select( "Okay", "I'll do it next time" ) == 2) {
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "Yes yes~ I'll be waiting for you here!";
 				close;
 			}
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Yes yes~ I'll be waiting for you here!";
 			close2;
 			setquest 3411;
 			end;
 		case 0:
 		case 1:
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Please take out 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "I'll be waiting for you here.";
 			close;
 		case 2:
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Thank you for your hard work, you also brought ^4d4dff" + getitemname(25899) + "^000000!! As expected, my prediction was correct.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "It looks like we only need about 10 ^4d4dff" + getitemname(25899) + "^000000 to send Sirood back ashore.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "If you collect them, I'll create a whirlpool for you.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Oh, and this is a stone I found while researching. I've been keeping it because it looks like something that could be used by adventurers, so please take it.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Then be careful!";
 			close2;
 			getitem 25271,2;	// IllusionStone
@@ -9453,40 +9453,40 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 	}
 	if (ill_underwater == 6) {
 		if (countitem(25899) < 10) {
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Please bring ^4d4dff10 " + getitemname(25899) + "^000000.";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "I'd like to save it myself, but as you can see I'm weak, heck.";
 			close;
 		}
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Thank you for your hard work!! You brought 10 ^4d4dff" + getitemname(25899) + "^000000.";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Would you like to go ashore now?";
 		next;
 		if (select( "Go ashore", "Not going up now" ) == 2) {
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Talk to me when you're ready to go ashore!";
 			close;
 		}
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "I found this again while waiting for adventurer. Please accept it!!";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Okay, let's condense this...";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Huh...!!";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Now, Adventurer and Sirood!! Can you help me?? Ehhh!!!!";
 		next;
 		mes "- A huge whirlpool was created in front of Jerrymon! -";
 		specialeffect EF_MAP_MAGICZONE3;
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Then I'll cross first!!! Follow me carefully!";
 		specialeffect EF_CASTSPIN2;
 		close2;
@@ -9503,43 +9503,43 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 
 	// daily
 	if ((checkquest(3414,PLAYTIME) == 0 || checkquest(3414,PLAYTIME) == 1) && (checkquest(3416,PLAYTIME) == 0 || checkquest(3416,PLAYTIME) == 1)) {
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "I have everything I need for today's survey, thank you!!";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Looks like you've finished your business. Would you like to move to Izlude?";
 		next;
 		if (select( "Move", "Do not move" ) == 2) {
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Please let me know if you need any help!";
 			close;
 		}
 		specialeffect EF_MAP_MAGICZONE3;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Okay, huh!";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "I'm going to cross~~ Ah!!";
 		specialeffect EF_CASTSPIN2;
 		close2;
 		warp "izlude",128,54;
 		end;
 	}
-	mes "[Jerrymon]";
+	mes "[Jeremias]";
 	mes "Hello, research is going well.";
 	next;
-	mes "[Jerrymon]";
+	mes "[Jeremias]";
 	mes "If we do well, we might be able to make the vortex linking here and Izlude last forever!";
 	next;
-	mes "[Jerrymon]";
+	mes "[Jeremias]";
 	mes "So, can you help me a bit more?";
 	next;
-	mes "[Jerrymon]";
+	mes "[Jeremias]";
 	mes "I need more ^4d4dff" + getitemname(25899) + "^000000, and I'd like you to take care of the ^4d4dffDeep Sea Creatures^000000 that get in the way of my research.";
 	next;
 	switch( select( "Okay", "I'll do it next time", "I want to go back to Izlude" ) ) {
 	case 1:
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Thanks!! Can you do something for me?";
 		next;
 
@@ -9606,28 +9606,28 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			}
 			switch( isbegin_quest(3413) ) {
 			case 0:
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "^4d4dff" + getitemname(25899) + "^000000 can be obtained from all the deep sea creatures here.";
 				mes "I need 10 right now.";
 				next;
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "Then take care of yourself~~!!";
 				close2;
 				setquest 3413;
 				end;
 			case 1:
 				if (countitem(25899) < 10) {
-					mes "[Jerrymon]";
+					mes "[Jeremias]";
 					mes "I need 10 ^4d4dff" + getitemname(25899) + "^000000.";
 					next;
-					mes "[Jerrymon]";
+					mes "[Jeremias]";
 					mes "Come back to me when you've collected all the essences!";
 					close;
 				}
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "You've collected all the " + getitemname(25899) + "!!";
 				next;
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "Thank you, I'll put it to good use in my research.";
 				close2;
 				delitem 25899,10;	// E_Abyss1
@@ -9653,24 +9653,24 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			}
 			switch( checkquest(3415,HUNTING) ) {
 			case -1:
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000 and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000 that roam around here.";
 				next;
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "Then take care of yourself~~!!";
 				close2;
 				setquest 3415;
 				end;
 			case 0:
 			case 1:
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "Please kill 10 each of ^4d4dff" + getmonsterinfo("ILL_SROPHO", MOB_NAME) + "^000000, ^4d4dff" + getmonsterinfo("ILL_DEVIACE", MOB_NAME) + "^000000, and ^4d4dff" + getmonsterinfo("ILL_MARSE", MOB_NAME) + "^000000.";
 				close;
 			case 2:
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "You've finished dealing with all the deep sea creatures, thank you for your hard work.";
 				next;
-				mes "[Jerrymon]";
+				mes "[Jeremias]";
 				mes "I'll get back to you if I need help. Thanks!!";
 				close2;
 				getitem 25271,1;	// IllusionStone
@@ -9681,24 +9681,24 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			}
 			end;
 		case 3:
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "The only person I can ask for is you...";
 			next;
-			mes "[Jerrymon]";
+			mes "[Jeremias]";
 			mes "Feel free to tell me if you change your mind!!";
 			close;
 		}
 		end;
 	case 2:
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "I'll be staying here for a while, so let me know if you change your mind!!";
 		close;
 	case 3:
 		specialeffect EF_MAP_MAGICZONE3;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "Okay, huh!";
 		next;
-		mes "[Jerrymon]";
+		mes "[Jeremias]";
 		mes "I'm going to cross~~ Ah!!";
 		specialeffect EF_CASTSPIN2;
 		close2;
@@ -9727,7 +9727,7 @@ OnInit:
 iz_d04_i,134,223,4	script	Jane#Jane01	1_F_01,{
 	if (ill_underwater < 6) {
 		mes "[???]";
-		mes "Hello.";
+		mes "Olá.";
 		next;
 		select( "Are you Sirood?" );
 		mes "[Jane]";
@@ -9781,59 +9781,59 @@ iz_d04_i,142,216,4	script	Sunrin#Sun01	4_F_03,{
 	close;
 }
 
-iz_d04_i,125,226,0	script	Sirood#SRD3	HIDDEN_WARP_NPC,4,4,{
+iz_d04_i,125,226,0	script	Sirud#SRD3	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
 	if (ill_underwater < 7 && isbegin_quest(3410) == 0)
-		cloakoffnpcself( "Sirood#SRD4" );
+		cloakoffnpcself( "Sirud#SRD4" );
 	end;
 }
 
-iz_d04_i,125,226,5	script(CLOAKED)	Sirood#SRD4	1_M_04,{
+iz_d04_i,125,226,5	script(CLOAKED)	Sirud#SRD4	1_M_04,{
 	if (ill_underwater != 5 && ill_underwater != 6)
 		end;
 	switch( isbegin_quest(3410) ) {
 	case 0:
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "Hello, Adventurer.";
 		next;
 		mes " - Sirood greeted me as if he had been waiting. -";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "It looks like the message I sent reached Izlude, I'm so glad...";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "About 3 months ago... I went fishing on a rainy and windy day.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "After I caught my first fish, I tripped and fell into the water while trying to get it out with a fishing pole.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "I was trying to swim as hard as I could to get out, but I felt something pulling me in with great force.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "What, it looked like a whirlpool... I thought I was going to die... and when I woke up, I found this place.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "I don't know why I can't breathe or why I don't feel hungry even if I don't eat.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "And observing the surroundings here, I could see small vortices forming occasionally.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "I had a hunch that it was the same kind of whirlpool I was swept into.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "The duration of the vortex is very short. It took me 2 months just to put my fishing rod with my name on it into the vortex.";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "Waiting for someone to discover...";
 		next;
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "Are you sure you came to me with that fishing rod as a clue?";
 		next;
 		select( "That's right" );
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "Ah, that's a relief... I'd appreciate it if you could take me with you when you return ashore.";
 		next;
 		mes "- I think we should talk to Jerrymon about the work to send Sirood ashore. - ";
@@ -9841,7 +9841,7 @@ iz_d04_i,125,226,5	script(CLOAKED)	Sirood#SRD4	1_M_04,{
 		setquest 3410;
 		end;
 	case 1:
-		mes "[Sirood]";
+		mes "[Sirud]";
 		mes "Adventurer, please take me with you when you return ashore.";
 		close;
 	case 2:
@@ -9891,7 +9891,7 @@ iz_d05_i,141,188,5	script	Guardian#guard2	4_M_KY_SOLD,{
 	mes "[Gatekeeper]";
 	mes "Hello, would you like to go upstairs again?";
 	next;
-	if (select( "Yes", "No" ) == 2) {
+	if (select( "Sim", "No" ) == 2) {
 		mes "[Gatekeeper]";
 		mes "Please talk to me again when you are ready to cross.";
 		close;
@@ -9905,8 +9905,8 @@ iz_d05_i,141,188,5	script	Guardian#guard2	4_M_KY_SOLD,{
 
 iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 	if (checkweight(1201,3) == 0) {
-		mes "You have too many items.";
-		mes "Please clean up your items and try again.";
+		mes "Você está com itens demais.";
+		mes "Arrume os seus itens e tente de novo.";
 		close;
 	}
 	if (BaseLevel < 180)
@@ -9930,7 +9930,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 	mes "[Kena]";
 	mes "The population of deep sea creatures is increasing. Adventurer, may I ask for your help?";
 	next;
-	if (select( "Yes", "No" ) == 2) {
+	if (select( "Sim", "No" ) == 2) {
 		mes "[Kena]";
 		mes "Oops...";
 		next;
@@ -9970,7 +9970,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 			mes "These monsters are quite ferocious, so be very careful.";
 			next;
 			mes "[Kena]";
-			mes "Thank you.";
+			mes "Obrigado.";
 			close2;
 			setquest 3417;
 			end;
@@ -10257,7 +10257,7 @@ anthell02,172,189,5	script	Yolanda#1F	HIDDEN_NPC,{
 		mes "But Maya is the ruler of dungeons.";
 		next;
 		mes "[Mirko]";
-		mes "Um...";
+		mes "Hum...";
 		next;
 		mes "[Yolanda]";
 		mes "If you can harm yourself...";
@@ -10517,7 +10517,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		mes "[Mirko]";
 		mes "Are you going to find Briashen again?";
 		next;
-		if (select( "Yes", "Later" ) == 2) {
+		if (select( "Sim", "Later" ) == 2) {
 			mes "[Mirko]";
 			mes "Sorry for the sudden request.";
 			mes "Anyway, the investigation hasn't been completed yet, so we're nervous...";
@@ -10550,7 +10550,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		erasequest 8722;
 		setquest 8723;
 		next;
-		if (select( "Yes", "Later" ) == 2) {
+		if (select( "Sim", "Later" ) == 2) {
 			mes "[Mirko]";
 			mes "I can't help it";
 			mes "It would be nice if we went together, but...";
@@ -10566,7 +10566,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		mes "[Mirko]";
 		mes "As Briashen asked, would you like to go downstairs to help him?";
 		next;
-		if (select( "Yes", "Later" ) == 2) {
+		if (select( "Sim", "Later" ) == 2) {
 			mes "[Mirko]";
 			mes "I can't help it";
 			mes "It would be nice if we went together, but...";
@@ -10622,7 +10622,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		mes "But Maya is the ruler of dungeons.";
 		next;
 		mes "[Mirko]";
-		mes "Um...";
+		mes "Hum...";
 		next;
 		mes "[Yolanda]";
 		mes "If you can harm yourself...";
@@ -10778,7 +10778,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 	mes "Would you like to go to the Garden of Perception?";
 	mes "Or do you have a request to take on?";
 	next;
-	switch( select( "Enter the Garden of Awareness", "Geology Survey", "Source of Power", "Same thing", "Shared Memory", "Cancel" ) ) {
+	switch( select( "Enter the Garden of Awareness", "Geology Survey", "Source of Power", "Same thing", "Shared Memory", "Cancelar" ) ) {
 	case 1:
 		mes "[Mirko]";
 		mes "Be careful.";
@@ -10845,7 +10845,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		}
 		if (isbegin_quest(8733) == 0) {
 			mes "[Mirko]";
-			mes "Sometimes if you defeat " + getmonsterinfo("ILL_ANDRE", MOB_NAME) + " or " + getmonsterinfo("ILL_DENIRO", MOB_NAME) + " who haunt the Garden of Perception";
+			mes "Sometimes if you defeat " + getmonsterinfo("ILL_ANDRE", MOB_NAME) + " ou " + getmonsterinfo("ILL_DENIRO", MOB_NAME) + " who haunt the Garden of Perception";
 			mes "you can get ^0000FF" + getitemname(1000505) + "^000000, can you collect about 20 of them?";
 			next;
 			if (select( "Accept", "Quit" ) == 2) {
@@ -10861,7 +10861,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		}
 		if (countitem(1000505) < 20) {
 			mes "[Mirko]";
-			mes "Hunt " + getmonsterinfo("ILL_ANDRE", MOB_NAME) + " and " + getmonsterinfo("ILL_DENIRO", MOB_NAME) + " from the Garden of Perception";
+			mes "Hunt " + getmonsterinfo("ILL_ANDRE", MOB_NAME) + " e " + getmonsterinfo("ILL_DENIRO", MOB_NAME) + " from the Garden of Perception";
 			mes "and collect 20 ^0000FF" + getitemname(1000505) + "^000000.";
 			close;
 		}
@@ -11856,7 +11856,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		}
 		mes "[Coughing young man]";
 		mes "...cough...";
-		mes "Thank you.";
+		mes "Obrigado.";
 		mes "Cough cough... cough";
 		next;
 		select( "You'd better take a break" );
@@ -12218,7 +12218,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "Do I have a hospital or a shop now?!";
 		next;
 		mes "[Steven]";
-		mes "Ugh...";
+		mes "Hmm...";
 		mes "Okay...okay!";
 		mes "Be quiet for now!";
 		mes "Can you hear something strange coming from the north?";
@@ -12232,7 +12232,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 	}
 	if (ill_teddy == 7) {
 		mes "[Steven]";
-		mes "Ugh...";
+		mes "Hmm...";
 		mes "Okay!";
 		mes "Be quiet for now!";
 		mes "Can you hear something strange coming from the north?";
@@ -12329,7 +12329,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 	switch( checkquest(11565,HUNTING) ) {
 	case -1:
 		mes "[Steven]";
-		mes "Ugh...";
+		mes "Hmm...";
 		mes "Where do these guys keep popping up?";
 		next;
 		mes "[Steven]";
@@ -12478,7 +12478,7 @@ OnTouch:
 		next;
 		mes "[Emperor of Nazarians]";
 		mes "People!!!";
-		mes "Welcome!";
+		mes "Bem-vindo!";
 		mes "Brave newly born soldiers!!!!";
 		cloakonnpcself( "??????#IBT_inB02_1" );
 		cloakoffnpcself( "??????#IBT_inB02_2" );

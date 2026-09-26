@@ -691,6 +691,7 @@ Shell, PowerShell, Python 2, encoding cp1252, regex, git, compilação local, fe
 - `Get-ChildItem -Include` sem curinga no caminho retorna vazio
 - Arquivo cp1252 salvo como UTF-8 vira `\xef\xbf\xbd` (U+FFFD) e o acento se perde para sempre. Não é mojibake reversível
 - E quem faz isso hoje é a FERRAMENTA DE EDIÇÃO do assistente. Ela lê e grava como UTF-8
+- E a ferramenta de ESCRITA do assistente corta o espaço no fim da linha, calado — texto intermediário de tradução perde o `" "` antes da variável concatenada ("Reset deAtributos")
 - E o `$` de um regex com `re.M` NÃO casa antes do `\r` — ele casa DEPOIS, deixando o `\r` dentro do grupo capturado
 - Em regex de BYTES, byte de código que calha de ser metacaractere casa outra coisa: `\x74\x2a` de um `je +0x2a` vira "repita o `t`", e a busca devolve zero sem erro nenhum
 - A conexão com o MariaDB nasce em `utf8mb4`, e byte acentuado morre nela. As 105 colunas de texto do banco são `latin1`, mas o `character_set_client`…

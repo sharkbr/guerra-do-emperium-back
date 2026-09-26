@@ -34,50 +34,50 @@
 // Onward to the New World :: ep13_gogo
 //============================================================ 
 function	script	Promotional_Staff	{
-	mes "[Promotional Staff]";
+	mes "[Equipe de Promoções]";
 	mes "We are looking for adventurers who are super curious and extremely brave.";
 	mes "Join us for a wonderful adventure!";
 	next;
-	mes "[Promotional Staff]";
+	mes "[Equipe de Promoções]";
 	mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
 	next;
 	switch(select("Yes.:No, thanks.")) {
 	case 1:
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "You're a real adventurer.";
 		mes "Good for you!";
 		mes "You won't regret it.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "I usually send adventurers to";
 		mes "newly found places for research.";
 		mes "It's quite challeging, as nobody's ever been to these places.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "The missions are quite dangerous,";
 		mes "so only those who are courageous";
 		mes "are qualified for the challenge";
 		mes "of this mission.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "I'm not sure that you're strong enough, but you seem brave. How about going to the kingdom receptionist? He should be in the first room of Prontera Castle.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "From what I've heard about this place... It's not a new continent.";
 		mes "I don't know where it is.";
 		mes "Hmm... Inside of the sky?";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Could just be a rumor,";
 		mes "but I don't know exactly.";
 		mes "It's not my business.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Anyway, I'm supposed to inform many adventurers about it.";
 		mes "There's no time to waste!";
 		close;
 	case 2:
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Huh, I thought you were a real adventurer. You're missing a big opportunity. You're definitely not brave. Absolutely not!";
 		close;
 	}
@@ -356,50 +356,50 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 
 aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 	if (ep13_ryu > 3) {
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Did you try out for the test, or are you already enjoying your adventures?";
 		close;
 	}
 	if (ep13_ryu == 3) {
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Just visit the ^FF0000Promotional Staff in Geffen^000000. You have no business with me anymore. Bless you. I wish you a safe adventure.";
 		close;
 	}
 	if (ep13_ryu == 2) {
 		if (countitem(909) < 300) {
-			mes "[Promotional Staff]";
+			mes "[Equipe de Promoções]";
 			mes "Don't forget to bring... ^FF0000300 Jellopy^000000.";
 			mes "Got it? ^FF0000300 Jellopy^000000!";
 			mes "Let me know once you got them.";
 			close;
 		}
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Hey! Let me know once you collect all of them.";
 		mes "Don't disturb me anymore. I'm a busy man... What a waste.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Hm? Did you bring all of them?";
 		mes "No! It's quite an annoying job";
 		mes "I'm impressed that you managed to do such a menial thing to bring 300 Jellopy!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "You have guts kid!";
 		mes "You're a good-willed person!";
 		mes "Ok, you win!";
 		mes "You pass!!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Adventurers like you";
 		mes "are not common";
 		mes "A hard-boiled soldier!";
 		mes "Stronger than me!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Now can you go to the";
 		mes "Promotional Staff in Geffen?";
 		mes "He will test you again.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "You know this isn't an easy quest.";
 		mes "You resolved to carry it out, didn't you?";
 		mes "Brace yourself for it.";
@@ -407,45 +407,45 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		delitem 909,300; //Jellopy
 		changequest 10058,10059;
 		set ep13_ryu,3;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Anyway you did the first step.";
 		mes "Bless you!";
 		close;
 	}
 	if (ep13_ryu == 1) {
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "We want the adventurers who are super curious and extremely brave. Join us for a wonderful adventure!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Hey, you're a well-versed person, right? Are you interested in my story?";
 		next;
-		select("I have something for you.");
-		mes "[Promotional Staff]";
+		select("Tenho uma coisa para você.");
+		mes "[Equipe de Promoções]";
 		mes "For me??";
 		mes "I hate annoying stuff.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Ahh... I sensed that I would get your request.";
 		mes "The recruiter sent you here to get tested?";
 		mes "Hmm.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Ah! They always push me,";
 		mes "to suffer from so much work";
 		mes "I live a hard life!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "My job is testing if you are strong and brave enough for this adventure.";
 		mes "What a bother!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "I will accept you if you bring me ^FF0000300 Jellopy^000000.";
 		mes "I believe that you can bring them to me.";
 		mes "Are you ready?";
 		next;
 		changequest 10057,10058;
 		set ep13_ryu,2;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Just go ahead and hunt monsters, or whatever and collect 300 jellopies.";
 		mes "Then we can go forward.";
 		close;
@@ -456,45 +456,45 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 
 geffen,90,67,3	script	Promotional Staff#gef	100,{
 	if (ep13_ryu > 6) {
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Did you take the test?";
 		mes "Or are you already enjoying your adventure?";
 		close;
 	}
 	if (ep13_ryu == 6) {
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "You didn't visit ^FF0000Izlude^000000, did you?";
 		mes "Or do you have any business in Geffen?";
 		close;
 	}
 	if (ep13_ryu == 5) {
 		if (countitem(723) == 0) {
-			mes "[Promotional Staff]";
+			mes "[Equipe de Promoções]";
 			mes "^FF00001 Ruby!!^000000.";
 			mes "Don't you forget it!";
 			mes "Hurry up! Time is zeny!";
 			close;
 		}
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Wow, you brought a genuine Jewel.";
 		mes "You are absolutely qualified.";
 		mes "I can tell these things.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Am I exaggerating?";
 		mes "It's true that you're";
 		mes "considerably strong.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Ok! My job is done.";
 		mes "Good job!!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Next step is Izlude!";
 		mes "You can get tested by the Promotional Staff there.";
 		mes "Hurry up!";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "The unknown place...";
 		mes "It is a very dangerous place so you must go through these tests before we can send you....";
 		mes "We're pretty picky.";
@@ -502,28 +502,28 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		delitem 723,1; //Cardinal_Jewel
 		changequest 10061,10062;
 		set ep13_ryu,6;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "I hope you can do it!";
-		mes "Good luck!";
+		mes "Boa sorte!";
 		close;
 	}
 	if (ep13_ryu == 4) {
 		if (countitem(721) == 0) {
-			mes "[Promotional Staff]";
+			mes "[Equipe de Promoções]";
 			mes "The one you should bring me is";
 			mes "^FF0000Emerald^000000. Can you get it?";
 			close;
 		}
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "You brought it so soon!";
 		mes "You're a real adventurer!";
 		mes "I will accept this Emerald as evidence.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "This isn't something I wanted to keep for myself.";
 		mes "You know that, right?";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Next bring me ^FF00001 Ruby^000000.";
 		mes "I can't judge you with only one jewel.";
 		mes "So I need one more stone.";
@@ -531,36 +531,36 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		delitem 721,1; //Azure_Jewel
 		changequest 10060,10061;
 		set ep13_ryu,5;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Please bring me a Ruby.";
 		mes "As I mentioned, this is the second request.";
 		mes "I will wait until you bring me a stone again.";
 		close;
 	}
 	if (ep13_ryu == 3) {
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "We are recruiting adventurers who are strong and curious. Try your life at something more challenging.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
 		next;
 		select("The Staff in Aldebaran sent me.");
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Oh he did?";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Ok, I guess that it's time for the second part of your test.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "I need you to gather some stones for me.";
 		next;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "I will accept you if you bring ^FF00001 Emerald^000000.";
 		mes "Are you ready?";
 		next;
 		changequest 10059,10060;
 		set ep13_ryu,4;
-		mes "[Promotional Staff]";
+		mes "[Equipe de Promoções]";
 		mes "Just bring me ^ff00001 Emerald^000000.";
 		mes "That isn't hard for you right?";
 		mes "Then we can go forward.";
@@ -572,130 +572,130 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 
 -	script	::PromotionalStaff_izlude	-1,{
 	if (ep13_ryu > 8) {
-		mes "[Promotional Staff]";
-		mes "I bless you for your future! May it be full of happiness!";
+		mes "[Equipe de Promoções]";
+		mes "Eu abençoo o seu futuro! Que ele seja cheio de felicidade!";
 		close;
 	}
 	if (ep13_ryu == 8) {
-		mes "[Promotional Staff]";
-		mes "The test is done!";
-		mes "If you have any other business, go to the palace.";
+		mes "[Equipe de Promoções]";
+		mes "O teste terminou!";
+		mes "Se tiver outro assunto, vá ao palácio.";
 		close;
 	}
 	if (ep13_ryu == 7) {
 		if (BaseLevel < 70) {
-			mes "[Promotional Staff]";
-			mes "You don't look that strong.";
-			mes "Nothing but skin and bones!";
-			mes "Not reliable.";
-			mes "You should level up more before";
-			mes "considering this adventure.";
+			mes "[Equipe de Promoções]";
+			mes "Você não parece tão forte assim.";
+			mes "É só pele e osso!";
+			mes "Não dá para confiar.";
+			mes "Você devia subir mais de nível antes";
+			mes "de pensar nessa aventura.";
 			next;
-			mes "[Promotional Staff]";
-			mes "I don't need adventurers who are";
-			mes "body-builders... but at least";
-			mes "someone not so little!!";
+			mes "[Equipe de Promoções]";
+			mes "Não preciso de aventureiros";
+			mes "marombeiros... mas pelo menos";
+			mes "alguém não tão franzino!!";
 			close;
 		}
-		mes "[Promotional Staff]";
-		mes "Wow! You are considerably";
-		mes "stronger than before!";
-		mes "Let me see...";
-		mes "You look different!";
+		mes "[Equipe de Promoções]";
+		mes "Uau! Você está bem";
+		mes "mais forte que antes!";
+		mes "Deixa eu ver...";
+		mes "Você está diferente!";
 		next;
-		mes "[Promotional Staff]";
-		mes "Um...";
+		mes "[Equipe de Promoções]";
+		mes "Hum...";
 		next;
-		mes "[Promotional Staff]";
-		mes "Ok, it's done!";
-		mes "You seemed a sore weak of a soul,";
-		mes "but now, you're quite stronger than";
-		mes "before. Great! You will do!!";
+		mes "[Equipe de Promoções]";
+		mes "Pronto, terminou!";
+		mes "Você parecia uma alma bem fraquinha,";
+		mes "mas agora está bem mais forte que";
+		mes "antes. Ótimo! Você serve!!";
 		next;
-		mes "[Promotional Staff]";
-		mes "We have quite high expectations to meet.";
-		mes "Though the new place is dangerous,";
-		mes "no need to check thoroughly";
-		mes "anymore.";
+		mes "[Equipe de Promoções]";
+		mes "Nossas exigências são bem altas.";
+		mes "O lugar novo é perigoso, mas";
+		mes "não é preciso conferir mais nada";
+		mes "a fundo.";
 		next;
-		mes "[Promotional Staff]";
-		mes "It's not a hell-hole!";
-		mes "Ukk!";
+		mes "[Equipe de Promoções]";
+		mes "Não é nenhum inferno!";
+		mes "Ugh!";
 		next;
-		mes "[Promotional Staff]";
-		mes "Anyway, just go back to the";
-		mes "Recruiter. I will forward to him";
-		mes "that you passed all the steps. Good";
-		mes "job, friend!";
+		mes "[Equipe de Promoções]";
+		mes "Enfim, volte ao";
+		mes "Recrutador. Eu aviso a ele";
+		mes "que você passou em todas as etapas. Bom";
+		mes "trabalho, amigo!";
 		next;
 		changequest 10063,10064;
 		set ep13_ryu,8;
-		mes "[Promotional Staff]";
-		mes "Bless all of your heart,";
-		mes "for your great future!";
+		mes "[Equipe de Promoções]";
+		mes "Abençoado seja o seu coração,";
+		mes "por um grande futuro!";
 		close;
 	}
 	if (ep13_ryu == 6) {
-		mes "[Promotional Staff]";
-		mes "We are recruiting adventurers";
-		mes "who are quite strong and curious.";
+		mes "[Equipe de Promoções]";
+		mes "Estamos recrutando aventureiros";
+		mes "bem fortes e curiosos.";
 		next;
-		mes "[Promotional Staff]";
-		mes "Hey, you're a knowledgeable adventurer. Are you interested in my story?";
+		mes "[Equipe de Promoções]";
+		mes "Ei, você é um aventureiro experiente. Tem interesse na minha história?";
 		next;
-		select("I have something for you.");
-		mes "[Promotional Staff]";
-		mes "Um, you're the one sent to be tested, correct? You are in the right place. I'm the Promotional Staff in Izlude.";
+		select("Tenho uma coisa para você.");
+		mes "[Equipe de Promoções]";
+		mes "Hum, você é quem mandaram para ser testado, certo? Veio ao lugar certo. Eu sou a Equipe de Promoções de Izlude.";
 		next;
-		mes "[Promotional Staff]";
-		mes "I guess you're qualified enough to go... I think no more testing is needed.";
+		mes "[Equipe de Promoções]";
+		mes "Acho que você já está qualificado para ir... Não precisa de mais testes.";
 		next;
-		mes "[Promotional Staff]";
-		mes "Let me see...";
+		mes "[Equipe de Promoções]";
+		mes "Deixa eu ver...";
 		next;
 		if (BaseLevel > 69) {
-			mes "[Promotional Staff]";
-			mes "I think you're good enough!";
-			mes "No more testing!!";
-			mes "Ok! You pass!";
+			mes "[Equipe de Promoções]";
+			mes "Acho que você é bom o bastante!";
+			mes "Chega de testes!!";
+			mes "Pronto! Você passou!";
 			next;
-			mes "[Promotional Staff]";
-			mes "We have quite high expectations to meet.";
-			mes "Though the new place is dangerous,";
-			mes "no need to check thoroughly right now.";
+			mes "[Equipe de Promoções]";
+			mes "Nossas exigências são bem altas.";
+			mes "O lugar novo é perigoso, mas";
+			mes "não é preciso conferir tudo a fundo agora.";
 			next;
-			mes "[Promotional Staff]";
-			mes "It's not a hell-hole!";
-			mes "Ukk...";
+			mes "[Equipe de Promoções]";
+			mes "Não é nenhum inferno!";
+			mes "Ugh...";
 			next;
-			mes "[Promotional Staff]";
-			mes "Anyway, just go back to the recruiter.";
-			mes "I will forward to him that you passed all the steps.";
-			mes "Good job, friend!";
+			mes "[Equipe de Promoções]";
+			mes "Enfim, volte ao recrutador.";
+			mes "Eu aviso a ele que você passou em todas as etapas.";
+			mes "Bom trabalho, amigo!";
 			next;
 			changequest 10062,10064;
 			set ep13_ryu,8;
-			mes "[Promotional Staff]";
-			mes "May Freya bless you,";
-			mes "for your great future!";
+			mes "[Equipe de Promoções]";
+			mes "Que Freya te abençoe,";
+			mes "por um grande futuro!";
 			close;
 		}
 		else {
-			mes "[Promotional Staff]";
+			mes "[Equipe de Promoções]";
 			mes "Hmm...";
 			next;
-			mes "[Promotional Staff]";
-			mes "You don't look that strong.";
-			mes "Nothing but skin and bones!";
-			mes "Not reliable.";
-			mes "I can't let you pass.";
+			mes "[Equipe de Promoções]";
+			mes "Você não parece tão forte assim.";
+			mes "É só pele e osso!";
+			mes "Não dá para confiar.";
+			mes "Não posso te deixar passar.";
 			next;
 			changequest 10062,10063;
 			set ep13_ryu,7;
-			mes "[Promotional Staff]";
-			mes "Please level up a little more. I";
-			mes "can't accept that you're strong";
-			mes "enough. Sorry.";
+			mes "[Equipe de Promoções]";
+			mes "Suba mais um pouco de nível, por favor.";
+			mes "Ainda não posso aceitar que você é forte";
+			mes "o bastante. Desculpe.";
 			close;
 		}
 	}
@@ -726,7 +726,7 @@ lhz_in01,136,260,5	script	Munkenro#1	967,{
 		next;
 		mes "[Munkenro]";
 		mes "You're a good buddy!";
-		mes "But...";
+		mes "Mas...";
 		next;
 		mes "[Munkenro]";
 		mes "We can't avoid this...";
@@ -1387,7 +1387,7 @@ lhz_in01,32,22,3	script	Officer A	109,{
 		mes "Your allies are there together.";
 		mes "Khkhkh!";
 		mes "Nevermind.";
-		mes "Bye.";
+		mes "Até mais.";
 		close;
 	}
 	if (ep13_ryu == 19) {
@@ -1496,7 +1496,7 @@ lhz_in01,30,24,5	script	Officer B	109,{
 		mes "Your allies are there together.";
 		mes "Khkhkh!";
 		mes "Nevermind.";
-		mes "Bye.";
+		mes "Até mais.";
 		close;
 	}
 	if (ep13_ryu == 19) {
@@ -1977,7 +1977,7 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 			mes "You must be a stranger here.";
 			mes "Is this your first visit here?";
 			next;
-			switch(select("Yes.:No.")) {
+			switch(select("Sim.:Não.")) {
 			case 1:
 				mes "[Marian]";
 				mes "As expected~";
@@ -2165,7 +2165,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 		mes "[Instructor Lugen]";
 		mes "Will you join the survey team?";
 		next;
-		switch(select("Yes.:No.")) {
+		switch(select("Sim.:Não.")) {
 		case 1:
 			mes "[Instructor Lugen]";
 			mes "Registration is simple.";
@@ -2197,7 +2197,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 		mes "[Instructor Lugen]";
 		mes "Will ou join the survey team?";
 		next;
-		switch(select("Yes.:No.")) {
+		switch(select("Sim.:Não.")) {
 		case 1:
 			mes "["+ strcharinfo(0) +"]";
 			mes "I will register...";
@@ -2578,7 +2578,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 		switch(select("Help him.:Just pass.")) {
 		case 1:
 			mes "["+ strcharinfo(0) +"]";
-			mes "May I help you?";
+			mes "Posso ajudar?";
 			next;
 			mes "[Instructor Lugen]";
 			mes "No, it's ok.";
@@ -2716,11 +2716,11 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 
 mid_camp,123,290,4	script	Otto#ep13bs	967,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you lose some weight. -";
+		mes "- Espera aí!! -";
+		mes "- Você está carregando -";
+		mes "- itens demais. -";
+		mes "- Tente de novo -";
+		mes "- depois de aliviar o peso. -";
 		close;
 	}
 	if (ep13_newbs == 23) {
@@ -3045,11 +3045,11 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 	}
 	if (ep13_newbs == 9) {
 		if (checkweight(1201,1) == 0) {
-			mes "- Wait a minute !! -";
-			mes "- Currently you're carrying -";
-			mes "- too many items with you. -";
-			mes "- Please try again -";
-			mes "- after you lose some weight. -";
+			mes "- Espera aí!! -";
+			mes "- Você está carregando -";
+			mes "- itens demais. -";
+			mes "- Tente de novo -";
+			mes "- depois de aliviar o peso. -";
 			close;
 		}
 		else {
@@ -3202,7 +3202,7 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 			mes "Hey, is that for me?";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "Yes...";
+			mes "Sim...";
 			emotion ET_SWEAT, playerattached();
 			next;
 			mes "[Jan]";
@@ -3444,11 +3444,11 @@ mid_camp,166,248,4	script	Sorcerer#ep13bs	937,{
 
 spl_fild02,348,76,0	script	Tree#ep13bs1::ep13tree	111,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you lose some weight. -";
+		mes "- Espera aí!! -";
+		mes "- Você está carregando -";
+		mes "- itens demais. -";
+		mes "- Tente de novo -";
+		mes "- depois de aliviar o peso. -";
 		close;
 	}
 	if (ep13_newbs == 6) {
@@ -3982,7 +3982,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 		else if (ep13_animal == 3) {
 			if ((countitem(713) > 0) && (countitem(523) > 4) && (countitem(938) > 29)) {
 				mes "[Rumis Block]";
-				mes "Thank you.";
+				mes "Obrigado.";
 				mes "you've brought the materials.";
 				next;
 				mes "[Rumis Block]";
@@ -4482,7 +4482,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			next;
 			select("What are you talking about?");
 			mes "[Botanist]";
-			mes "Well...";
+			mes "Bom...";
 			mes "I suppose I don't have the words to really describe such an amazing scene.";
 			next;
 			mes "[Botanist]";
@@ -4926,7 +4926,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 	mes "Good day. I'm here to protect the";
 	mes "peace and safety of explorers";
 	mes "working for United Midgard.";
-	mes "How may I help you?";
+	mes "Em que posso ajudar?";
 	next;
 	if ((checkquest(2158) == 2) && (checkquest(2159) == 2)) {
 		mes "["+strcharinfo(0)+"]";
@@ -6139,7 +6139,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				next;
 				mes "[Hue]";
 				mes "You'll experience some hard time talking to Hansenne... It'll be like testing your patience.";
-				mes "Good luck!";
+				mes "Boa sorte!";
 				set ep13_1_rhea,6;
 				getitem 6036,1; //Invite_To_Meeting
 				close;
@@ -6315,7 +6315,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			next;
 			mes "[Hue]";
 			mes "Please give this report to Ryosen.";
-			mes "Thank you.";
+			mes "Obrigado.";
 			set ep13_1_rhea,25;
 			getitem 6038,1; //Neat_Report
 			getitem 12320,1; //Pineapple_Juice
@@ -7026,7 +7026,7 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 	if (ep13_ryu > 99 || ep13_start > 99) {
 		if (ep13_alba < 1) {
 			mes "[Taab]";
-			mes "How may I help you?";
+			mes "Em que posso ajudar?";
 			next;
 			switch(select("What is this place?:I'm here for a job.:No, thanks.")) {
 			case 1:
@@ -7401,7 +7401,7 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 			set .@alba_check,checkquest(7047,PLAYTIME);
 			if (.@alba_check == -1) {
 				mes "[Taab]";
-				mes "Thank you for";
+				mes "Obrigado pela";
 				mes "helping me last time.";
 				mes "We have a constant";
 				mes "flow of part-time work.";
@@ -7427,7 +7427,7 @@ mid_camp,143,306,5	script	Breeder Taab#ep13_alba	946,{
 			}
 			else if (.@alba_check == 2) {
 				mes "[Taab]";
-				mes "Thank you for";
+				mes "Obrigado pela";
 				mes "helping me last time.";
 				mes "We have a constant";
 				mes "flow of part-time work.";
@@ -7611,7 +7611,7 @@ function Catwarp;
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Paw Agent]";
-			mes "Thank you.";
+			mes "Obrigado.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
@@ -7630,7 +7630,7 @@ function Catwarp;
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Paw Agent]";
-			mes "Thank you.";
+			mes "Obrigado.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
@@ -7649,23 +7649,23 @@ function Catwarp;
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Paw Agent]";
-			mes "Thank you.";
+			mes "Obrigado.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
+				mes "Sinto muito, mas você";
+				mes "precisa da habilidade";
+				mes "Habilidades Básicas nível 6 para";
+				mes "usar o Serviço de Armazém.";
 				close;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
 				mes "[Cat Paw Agent]";
-				mes "Thank you.";
+				mes "Obrigado.";
 				mes "Your storage will";
 				mes "be opened shortly.";
 				close2;
@@ -7674,7 +7674,7 @@ function Catwarp;
 			}
 			else {
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you don't";
+				mes "Sinto muito, mas você não";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
 				mes "service is 60 zeny.";
@@ -7696,23 +7696,23 @@ function Catwarp;
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Paw Agent]";
-			mes "Thank you.";
+			mes "Obrigado.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
+				mes "Sinto muito, mas você";
+				mes "precisa da habilidade";
+				mes "Habilidades Básicas nível 6 para";
+				mes "usar o Serviço de Armazém.";
 				close;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
 				mes "[Cat Paw Agent]";
-				mes "Thank you.";
+				mes "Obrigado.";
 				mes "Your storage will";
 				mes "be opened shortly.";
 				close2;
@@ -7721,7 +7721,7 @@ function Catwarp;
 			}
 			else {
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you don't";
+				mes "Sinto muito, mas você não";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
 				mes "service is 60 zeny.";
@@ -7818,23 +7818,23 @@ function Catwarp;
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Paw Agent]";
-			mes "Thank you.";
+			mes "Obrigado.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
+				mes "Sinto muito, mas você";
+				mes "precisa da habilidade";
+				mes "Habilidades Básicas nível 6 para";
+				mes "usar o Serviço de Armazém.";
 				close;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
 				mes "[Cat Paw Agent]";
-				mes "Thank you.";
+				mes "Obrigado.";
 				mes "Your storage will";
 				mes "be opened shortly.";
 				close2;
@@ -7843,7 +7843,7 @@ function Catwarp;
 			}
 			else {
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you don't";
+				mes "Sinto muito, mas você não";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
 				mes "service is 60 zeny.";
@@ -8225,7 +8225,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "Gorurung welcomes you with a happy purr.";
 				next;
 				mes "[Ferocious Gorurug]";
-				mes "Welcome!";
+				mes "Bem-vindo!";
 				mes "You're here to give me fishes, aren't you?";
 				close;
 			}
@@ -9305,7 +9305,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		mes "[Staff Officer Abidal]";
 		mes "On behalf of the expedition, I'd like to give you a mission. Would you like to accept it?";
 		next;
-		switch(select("Yes.:No.")) {
+		switch(select("Sim.:Não.")) {
 		case 1:
 			mes "[Staff Officer Abidal]";
 			mes "Thank you so much. I had a good feeling about you, and I was so sure that you'd be willing to help.";
@@ -10812,12 +10812,12 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 mid_camp,191,206,3	script	Manager#moc2_finder	852,{
 	mes "[Manager]";
 	mes "Everything's okay so far!";
-	mes "How may I help you?";
+	mes "Em que posso ajudar?";
 	next;
 	mes "[Manager]";
 	if (mao_morocc2 == 30) {
 		mes "Everything's okay so far!";
-		mes "How may I help you?";
+		mes "Em que posso ajudar?";
 		next;
 		mes "[Manager]";
 		mes "Did Captain Echinacea send you?";
@@ -10852,7 +10852,7 @@ mid_camp,191,206,3	script	Manager#moc2_finder	852,{
 	}
 	else if (mao_morocc2 == 31) {
 		mes "Everything's okay so far!";
-		mes "How may I help you?";
+		mes "Em que posso ajudar?";
 		next;
 		mes "[Manager]";
 		mes "Please report this to Captain Echinacea;";
@@ -11249,7 +11249,7 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 			mes "[Mr. Kidd]";
 			mes "Where's the scroll? Did you use it?";
 			next;
-			switch(select("Yes.:No.")) {
+			switch(select("Sim.:Não.")) {
 			case 1:
 				mes "[Mr. Kidd]";
 				mes "That scroll contains a teleportation spell.";
@@ -12168,7 +12168,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 			}
 			else {
 				mes "[Karred]";
-				mes "How may I help you?";
+				mes "Em que posso ajudar?";
 				mes "For your information, the 'recommendation' has lost its effect. You'd better go back.";
 				if (mao_morocc2 == 4) {
 					next;

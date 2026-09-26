@@ -172,7 +172,7 @@
 //= Facing 4 (sul), como a maioria das NPCs de dialogo do projeto.
 //=
 //= O nome tem cedilha e til, e isso ja tem precedente: "Maquina",
-//= "Emissario da Ordem", "Funcionaria Kafra" e "Area de
+//= "Emissario da Nova Ordem", "Funcionaria Kafra" e "Area de
 //= Treinamento" desenham normalmente com o patch AlwaysAscii.
 //=
 //= A FALA E DE CRIANCA DE PROPOSITO - "24!!", "ta funcionando",

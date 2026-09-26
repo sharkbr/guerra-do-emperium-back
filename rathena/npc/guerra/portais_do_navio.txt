@@ -6,7 +6,7 @@
 //===== Descricao ============================================
 //= Fecha os portais do navio da introducao (iz_int e as quatro
 //= copias). Depois disto so ha UM jeito de sair do mapa: falar
-//= com o Emissario da Ordem (npc/guerra/emissario_da_ordem.txt).
+//= com o Emissario da Nova Ordem (npc/guerra/emissario_da_ordem.txt).
 //===== A planta do navio ====================================
 //= O navio sao DOIS blocos andaveis, sem caminho de pe entre
 //= eles - so se passa de um para o outro por portal:
@@ -18,7 +18,7 @@
 //=      \_____ cabine (x 10-31) _____/        \__ conves __/
 //=
 //=  S 18,26  onde o personagem nasce (start_point)
-//=  E 18,32  o Emissario da Ordem
+//=  E 18,32  o Emissario da Nova Ordem
 //=  a 27,30  warp #room_out  -> 51,30 (A), o conves
 //=  b 47,30  warp #room_in   -> 22,30 (B), a cabine
 //=  X 56,15  #ship_out -> int_land: a SAIDA DO MAPA

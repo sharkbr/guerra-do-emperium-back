@@ -2983,6 +2983,30 @@ fechada, e é a maior: **19.260 falas**, das quais 10.903 distintas.
 | `classe2` | 235/12489 | 2% | **não começou** |
 | `jitterbug` | 1073/2406 | 45% | Sonho Sombrio — **começado, NÃO aplicado** |
 | `brasilis` | 1501/1625 | 92% | Brasilis — **fechado e aplicado** em 2026-09-07 |
+| `izlude` | 2333/30236 | 8% | Izlude, a cidade de chegada — o **recorte** (serviços + missões) **fechado e aplicado** em 2026-09-26; os 92% são cadeias de outros lugares nos mesmos arquivos, e não dívida |
+
+**Izlude — o que ficou aberto em 2026-09-26** (ver `ferramentas/LEIAME.md`,
+grupo `izlude`):
+
+- **Falta ver no jogo.** Nada foi carregado ainda: `@reloadscript`, e olhar o
+  console do map-server. O que merece o primeiro clique: o Gerente de
+  Assistentes (47,170) — o nome da guilda tem de sair "Espadachim", e não vazio
+  (é a chave de `ARQUITETURA.md` §4) —, a Hipnotizadora nos dois ramos
+  (Atributos e Habilidades) e o Oficial de Canal (122,105).
+- **A Academia Criatura** (`npc/re/jobs/novice/academy.txt`, ~2.500 falas, 22
+  NPCs em Izlude) — diálogo **e** nome ficaram para depois, por decisão do dono.
+  Nome e diálogo entram juntos: os nomes do bRO são quase todos outros
+  (Capitão Chobber, Bartolomeu, Casamenteira Meire, Zé Sentadinho…), e trocar
+  só o nome flutuante desencontra do cabeçalho `[Captain Carocc]`. O
+  `navi_npc_br.lub` já está lido; a tabela de coordenadas está no histórico.
+- **Bonne, Red e Cebalis** são Paula, Dan e Rami no bRO. Continuam com o nome
+  do vendor porque o `cidades.cat` os manteve nos cabeçalhos. Trocar exige
+  mexer nos dois lugares juntos.
+- **O ordinal do menu dos Assistentes ("1st", "2nd"…)** e o plural do vendedor
+  de poções continuam em inglês — vêm de `F_GetNumSuffix`/`F_InsertPlural`,
+  funções globais que o catálogo não alcança.
+- **"Irmandade"** para o sistema de *clan* é escolha nossa, sem tabela. Se o
+  bRO aparecer com outro nome, trocar no `izlude.cat`.
 
 **As instâncias entraram na frente em 2026-08-09**, com um desenho próprio:
 **um grupo por instância**, não um grupo `instancias` único — porque só se
@@ -3070,6 +3094,11 @@ O `ferramentas/LEIAME.md` tem o detalhe das travas e do formato. Duas regras que
   três personagens de Brasilis, então o diálogo traduzido já os chamava de
   Paulão, Jurema e Carmen. Nas outras cidades esse empurrão pode não existir,
   e aí o custo/benefício é outro.
+
+  **Em 2026-09-26, Izlude**, por pedido do dono — `renomeia_npcs_izlude.py`,
+  334 trocas. Lá a varredura de referência externa **não** deu zero: três NPCs
+  nossos citam nome do vendor, e as chaves foram feitas específicas de Izlude
+  para não alcançá-los. Ver `ferramentas/LEIAME.md`.
 - **`guerra` parado em 67%** não é por falta de tempo: os 469 que faltam são
   fragmentos de frase quebrada em várias linhas de `mes` do WoE:SE, que
   dependem do vizinho para ficar natural. Fechar exige olhar bloco a bloco, não

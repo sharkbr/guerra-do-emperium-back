@@ -90,6 +90,17 @@ CONTEXTOS = (
     # `literais_todos` numera TODOS os literais do arquivo, exibiveis ou nao,
     # justamente para esta lista poder crescer. Os pares novos nascem VAZIOS.
     'mapannounce', 'announce', 'unittalk',
+    # Entrou em 2026-09-26, com a Guia de Izlude. O primeiro argumento do
+    # `F_Navi` e o rotulo que o jogador le ("Kit Shop", "Forge"), e as guias
+    # o passam direto a um `callsub L_Mark, F_Navi(...)` - linha sem `mes`,
+    # que ficava fora do catalogo. A Guia dizia "vou marcar a localizacao de
+    # Kit Shop" no meio da frase em portugues.
+    #
+    # O SEGUNDO argumento e coordenada (`.@map$+",97,125"`, "izlude_in,72,98")
+    # e o terceiro e cor; os dois entram no catalogo junto e ficam EM BRANCO
+    # de proposito - e a mesma armadilha ja descrita no grupo `brasilis`.
+    # Blast radius medido: +20 pares (izlude 19, brasilis 1), todos vazios.
+    'F_Navi',
 )
 RE_CHAMADA = re.compile(
     r'\b(%s)\b([^\r\n;]*)' % '|'.join(CONTEXTOS))
@@ -118,6 +129,19 @@ RE_SETARRAY_TEXTO = re.compile(r'setarray\s+[.@$\w\[\]]*\$')
 # tambem nao andam: eles contam TODOS os literais, justamente para a lista de
 # contextos poder crescer (ver `literais_todos`).
 RE_ATRIB = re.compile(r'\.?@?[A-Za-z_]\w*\$\s*(?:\+)?=')
+
+# A MESMA atribuicao na forma antiga, `set .@str$,"Skill";`. Entrou em
+# 2026-09-26, com a Hipnotizadora de Izlude (npc/re/other/resetskill.txt):
+# ela guarda "Stat" ou "Skill" numa variavel e a interpola em sete frases.
+# O "Stat" ja caia no catalogo - por acaso, porque o `if (.@str$ == "Stat")`
+# casa com o RE_ATRIB pelo primeiro `=` do `==` -, e o "Skill" nao. Traduzir
+# so um dos dois dava "Reset de Atributos" num ramo e "Reset de Skill" no
+# outro. Mesmo contexto `atrib`, mesma doutrina de token interno.
+#
+# Blast radius medido antes de ligar: +131 pares em dez grupos (izlude 31,
+# guerra 29, polvo 19, orcs 15, bakonawa 13, cassino_missoes 11, sarah 7,
+# campal 3, comodo 2, pvp 1), todos nascendo VAZIOS.
+RE_SET = re.compile(r'\bset\s+\.?@?[A-Za-z_]\w*\$\s*,')
 
 GRUPOS = {
     'kafra': ['npc/kafras/functions_kafras.txt',
@@ -296,6 +320,63 @@ GRUPOS['brasilis'] = ['npc/cities/brasilis.txt',
                       'npc/re/guides/guides_brasilis.txt',
                       'npc/quests/quests_brasilis.txt']
 
+# IZLUDE - a cidade de chegada, o que o grupo `cidades` nao alcancava.
+#
+# Entrou em 2026-09-26, por pedido do dono: todo personagem novo desembarca
+# em `izlude` pelo Emissario da Nova Ordem (npc/guerra/emissario_da_ordem.txt),
+# e o que o `cidades` traduzia (npc/cities/izlude.txt e o re/) era so a
+# metade dos NPCs que ficam em pe ali. A outra metade mora em arquivo de
+# servico ou de missao, espalhada pelo vendor.
+#
+# O RECORTE e o do dono, no mesmo dia: servicos + missoes, e a Academia
+# Criatura (npc/re/jobs/novice/academy.txt, ~2.500 falas) fica para depois.
+#
+# Dois tipos de arquivo aqui, e o catalogo nao os distingue:
+#
+#   INTEIRO, porque e pequeno e tudo nele e o que o jogador ve em Izlude ou
+#   e o mesmo servico em outra cidade - correio, mercenarios, aeroplano, guia,
+#   armazem de cla, quadros de aviso, Hipnotizadora, Help Me Shorty, Sr.
+#   Sorriso, Edgar e o comerciante de pontos.
+#
+#   SO O BLOCO DO NPC, como no `cassino_missoes` - o resto fica vazio, que
+#   quer dizer "deixa em ingles":
+#
+#     npc/cities/jawaii.txt                        Honeymoon Helper
+#     npc/re/cities/malangdo.txt                   Odgnalam
+#     npc/re/quests/eden/eden_common.txt           Eden Teleport Officer
+#     npc/quests/quests_13_1.txt                   Promotional Staff
+#     npc/re/quests/quests_illusion_dungeons.txt   Sirood, Soup, Raket, Gein
+#                                                  (a entrada da Ilusao
+#                                                  Submarina, em izlude 126,53)
+#     npc/quests/quests_lighthalzen.txt            Scamp#iz
+#     npc/re/custom/lasagna/lasagna_npcs.txt       o mercador, o tripulante e
+#                                                  a Vigilante Penne
+#
+# Mesma consequencia do `cassino_missoes`: quem seguir uma dessas cadeias
+# ouve o NPC de Izlude em portugues e o resto dela em ingles. O `--estado`
+# marca este grupo bem abaixo de 100% para sempre; nao e divida.
+#
+# O NOME EXIBIDO dos NPCs nao sai daqui - ver renomeia_npcs_izlude.py, que
+# e obrigatorio depois de todo `--aplicar izlude`.
+GRUPOS['izlude'] = ['npc/other/mail.txt',
+                    'npc/other/mercenary_rent.txt',
+                    'npc/airports/izlude.txt',
+                    'npc/re/guides/guides_izlude.txt',
+                    'npc/re/merchants/3rd_trader.txt',
+                    'npc/re/merchants/guild_warehouse.txt',
+                    'npc/re/other/bulletin_boards.txt',
+                    'npc/re/other/resetskill.txt',
+                    'npc/re/quests/HelpMeShorty.txt',
+                    'npc/quests/mrsmile.txt',
+                    'npc/quests/quests_izlude.txt',
+                    'npc/cities/jawaii.txt',
+                    'npc/re/cities/malangdo.txt',
+                    'npc/re/quests/eden/eden_common.txt',
+                    'npc/quests/quests_13_1.txt',
+                    'npc/re/quests/quests_illusion_dungeons.txt',
+                    'npc/quests/quests_lighthalzen.txt',
+                    'npc/re/custom/lasagna/lasagna_npcs.txt']
+
 
 class Erro(Exception):
     pass
@@ -320,7 +401,7 @@ def literais_todos(dados):
             contexto = m.group(1)
             if contexto == 'setarray' and not RE_SETARRAY_TEXTO.search(limpa):
                 contexto = None
-        elif RE_ATRIB.search(limpa):
+        elif RE_ATRIB.search(limpa) or RE_SET.search(limpa):
             contexto = 'atrib'
         for lit in RE_LITERAL.finditer(linha):
             n += 1

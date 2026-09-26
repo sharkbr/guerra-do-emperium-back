@@ -19465,3 +19465,66 @@ A missão, o NPC que ensina e **a trava de exclusividade** — o dono decidiu qu
 jogador escolhe **uma** das três. Essa trava pertence a quem concede, não ao
 cálculo: hoje, quem tiver duas soma as duas, que é justamente o que permite
 testar cada uma isolada. Está no `PENDENCIAS.md`.
+
+## O Emissário da Nova Ordem, e Izlude em português (2026-09-26)
+
+Dois pedidos do dono no mesmo dia, os dois sobre o caminho do personagem
+novo — que nasce no navio (`iz_int` e as quatro cópias) e desembarca em
+Izlude.
+
+**O Emissário.** O NPC de 18,32 do navio passou a se chamar **Emissário da
+Nova Ordem** e a usar o sprite **470** (`JT_4_M_KNIGHT_SILVER`), no lugar do
+405 (`4_M_YOUNGKNIGHT`). Conferido antes de trocar: o 470 é a 70ª entrada
+depois de `NPC_RANGE2_START = 400` no `enum` de `src/map/npc.hpp`, o cliente
+tem `sprite\npc\4_m_knight_silver.spr/.act` no `data.grf` e a entrada
+`JT_4_M_KNIGHT_SILVER` no `npcidentity.lub`. Os comentários que citavam o
+nome velho (`cavaleira_apressada`, `portais_do_navio`, `crianca_de_comodo` e
+o índice) foram acertados.
+
+**Izlude.** O grupo `cidades` do `traduz_npcs.py` só alcançava a metade dos
+NPCs em pé na cidade. Um levantamento por arquivo carregado achou ~70 NPCs em
+`izlude`, em 25 arquivos do vendor, e mediu o diálogo de cada um pelo bloco
+dele (ou pelo bloco de origem, no caso de `duplicate`). A pergunta de recorte
+foi ao dono com os números — serviços ~600 falas, missões ~850, Academia
+Criatura ~2.500 — e a resposta foi **serviços + missões**, Academia depois.
+
+O que saiu, e onde cada decisão está escrita:
+
+- **Grupo `izlude`** no `traduz_npcs.py` (18 arquivos, 2.333 textos, 2.469
+  trocas), com o recorte por bloco do `cassino_missoes`. O detalhe — os dois
+  contextos novos (`set .@x$,"..."` e `F_Navi`), as três armadilhas e a lista
+  de nomes que vieram de tabela e dos que são escolha nossa — está em
+  `ferramentas/LEIAME.md`, grupo `izlude`.
+- **`ferramentas/renomeia_npcs_izlude.py`**, o nome flutuante (334 trocas), a
+  partir do `navi_npc_br.lub` do bRO por coordenada. Seção própria no LEIAME.
+- **A chave dos Assistentes** (Spear/Sword/Bow comparados com a parte
+  escondida do nome) virou acoplamento em `ARQUITETURA.md` §4.
+
+Três coisas que o trabalho ensinou e que não estão no código:
+
+- **O `--preencher` escreve em TODOS os catálogos**, não só no do grupo que se
+  está traduzindo. Rodado para encher o `izlude.cat`, ele mexeu em 17 outros
+  (275 linhas, quase todas `":"` → `":"`). Sem efeito em jogo, porque nenhum
+  deles foi reaplicado, mas fora do escopo — foi desfeito com `git checkout`
+  arquivo a arquivo. Quem usar o `--preencher` para um grupo só deve conferir o
+  `git status` de `npc/guerra/traducao/` depois.
+- **"Mercenary" é "Assistente" no bRO.** "Mercenário" é a classe Assassino
+  (`map_msg_por.conf` 562). Traduzir de cabeça teria posto o NPC chamando o
+  soldado de aluguel pelo nome de uma classe.
+- **Nome e cabeçalho andam juntos.** Por isso Bonne/Red/Cebalis (Paula, Dan e
+  Rami no bRO) e a Academia inteira ficaram com o nome do vendor: o diálogo
+  deles ou já estava traduzido com o nome velho, ou ainda não foi traduzido.
+
+Os nomes do bRO para os NPCs da Academia em Izlude, para quando chegar a vez
+dela (mapa `izlude`, coordenada do `navi_npc_br.lub`): Capitão Chobber
+(198,213; o nosso é o Captain Carocc), Bartolomeu (122,207), Guia da Cidade
+(120,207), Placa do Aeroplano (179,75), Arena (207,167), Quadro de Avisos
+(45,94), Instrutor Argus (140,260), Assistente Leoni (115,181), Casamenteira
+Meire (102,150), Genisvalda (95,146), Varsófio (97,147), Marlindson (97,144),
+Noivo Agamenon (99,138), Noiva Genetílides (97,138), Alquimista Ed (93,143),
+Ferreira Winry (147,131), Zé Sentadinho (148,122), Normalson (158,128). Os
+refinadores Han, Tadde e Locas e os encantadores Mounds e Almond não aparecem
+no `navi_npc_br.lub` na coordenada do nosso vendor.
+
+Pendências abertas — ver no jogo, a Academia, os três nomes próprios, o
+ordinal dos Assistentes — em `PENDENCIAS.md` §3.
