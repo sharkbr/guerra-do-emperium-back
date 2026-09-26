@@ -19583,3 +19583,24 @@ Três rodadas no mesmo dia:
 Conferido em jogo pelo dono e entregue: o mapa no **patch 0035**, os guardas
 pelo próximo deploy. As colisões ficaram como estavam — o `.gat` não foi
 tocado. Em aberto, só a decisão sobre o minimapa (`PENDENCIAS.md` §0c).
+
+## PvP nos campos de Sograt 7 e 12 (2026-09-26)
+
+Pedido do dono: PvP em `moc_fild07` e `moc_fild12` "com a mesma redução que a
+Arena de Prontera". O arquivo é `npc/guerra/pvp_de_sograt.txt`, só duas linhas
+de `mapflag pvp`. A redução veio junto e sozinha, porque o
+`src/custom/reducao_geral.hpp` depende só do mapflag.
+
+O que custou uma pergunta: os dois são campos de caça, com uns 300 monstros
+cada, e a redução alcançava **todo** dano no mapa, monstro inclusive. O próprio
+cabeçalho já previa esse dia. O dono decidiu na hora: redução **só entre
+jogadores**. Agora o `reducao_pvp()` sai sem reduzir quando qualquer das duas
+pontas, resolvida até o dono pelo `battle_get_master`, não é jogador. O que é
+de jogador (homúnculo, invocação, armadilha) continua reduzido. Na arena nada
+mudou, porque nenhum mapa `pvp` anterior tem monstro selvagem. A regra está em
+`REDUCAO-DE-DANO.md` §1c.
+
+Conferido offline: o `battle.cpp` compila com a mudança. Os dois mapas não
+tinham `pvp_nightmaredrop`, `pvp_nocalcrank` nem `nocostume`, então morrer lá não
+derruba item, o rank N/M aparece e traje continua visível. `pvp_exp: yes`
+mantém a EXP de caça.

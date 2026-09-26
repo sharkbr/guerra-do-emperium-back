@@ -1,0 +1,45 @@
+//===== Guerra do Emperium ===================================
+//= PvP de Sograt
+//===== Onde =================================================
+//= moc_fild07 e moc_fild12 - "Deserto de Sograt (7)" e
+//= "Deserto de Sograt (12)" no mapnametable do cliente. Nao ha
+//= NPC aqui: sao duas linhas de mapflag.
+//===== Descricao ============================================
+//= Liga o PvP nos dois campos, com a MESMA reducao de dano da
+//= Arena de Combate de Prontera (pvp_n_1-5). Pedido do dono em
+//= 2026-09-26.
+//=
+//= A reducao nao se escreve aqui: ela e do mapflag `pvp` e de
+//= nada mais (src/custom/reducao_geral.hpp, os cinco
+//= `pvp_dano_*` do conf/guerra/battle_guerra.txt). Ligar o
+//= `pvp` ja traz a reducao, e mudar o numero dela muda aqui e na
+//= arena juntos - e o ponto do pedido.
+//=
+//= O QUE ESTES DOIS MAPAS TEM DE DIFERENTE DA ARENA: sao campos
+//= de caca, com uns 300 monstros cada (npc/re/mobs/fields/
+//= morocc.txt). A reducao do reducao_geral.hpp alcancava TODO
+//= dano no mapa, monstro inclusive, e aqui isso deixaria cacar
+//= cinco vezes mais lento. Decisao do dono no mesmo dia: a
+//= reducao vale so entre jogadores (e o que e deles - homunculo,
+//= invocacao, armadilha). Monstro selvagem bate e apanha
+//= normal. Essa metade e C++, no reducao_geral.hpp, e so entra
+//= RECOMPILANDO; sem ela, este arquivo sozinho ja liga o PvP,
+//= mas com os monstros reduzidos junto.
+//=
+//= O que o `pvp` traz alem do combate, conferido no pc.cpp:
+//= - EXP de monstro continua valendo: `pvp_exp: yes` no
+//=   conf/battle/exp.conf (pc_gainexp);
+//= - o rank N/M da arena aparece tambem aqui (pc_calc_pvprank),
+//=   porque nao ha `pvp_nocalcrank`;
+//= - morrer NAO derruba item: `pvp_nightmaredrop` nao e ligado.
+//=
+//= Traje continua aparecendo: o `nocostume` que o rAthena poe
+//= nas arenas (ver visual_sempre_visivel.txt) nao vem com o
+//= `pvp`, e estes mapas nunca o tiveram.
+//===== Desligar =============================================
+//= Comentar a linha no scripts_guerra.conf e dar @reloadscript.
+//= Quem ja estava no mapa continua em PvP ate trocar de mapa.
+//============================================================
+
+moc_fild07	mapflag	pvp
+moc_fild12	mapflag	pvp

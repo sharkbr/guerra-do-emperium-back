@@ -77,6 +77,22 @@
 // `turbo_e_*` do Corrida Turbo (npc/mapflag/pvp.txt), e nenhum e mapa de caca.
 // Se um dia um campo com monstro receber o mapflag `pvp`, os monstros dele ficam
 // fracos junto, calados. E o mesmo comportamento que ele teria com `gvg`.
+// (Valeu ate 2026-09-26 - ver a secao seguinte.)
+//
+// ------------------------------------------- CAMPO DE CACA COM PVP (2026-09-26)
+//
+// O dia chegou: o dono ligou o PvP em `moc_fild07` e `moc_fild12` (Deserto de
+// Sograt, ~300 monstros cada - npc/guerra/pvp_de_sograt.txt) pedindo "a mesma
+// reducao que a Arena". Com a regra acima, cacar la ficaria cinco vezes mais
+// lento e os monstros cinco vezes mais fracos. Decisao do dono no mesmo dia: a
+// reducao vale SO ENTRE JOGADORES. Quem bate e quem toma sao resolvidos ate o
+// dono (`battle_get_master`) e os dois tem de ser jogador - homunculo,
+// mercenario, invocacao e armadilha continuam reduzidos, pelo mesmo motivo do
+// paragrafo anterior; monstro selvagem, em qualquer das duas pontas, nao.
+//
+// Na arena nada mudou: nenhum dos mapas `pvp` que existiam antes tem monstro
+// selvagem. A guerra NAO segue esta regra - la monstro continua reduzido, pelo
+// `battle_calc_gvg_damage` do rAthena, que nao passa por aqui.
 //
 // ------------------------------------------------------------- onde na conta
 //
@@ -195,6 +211,13 @@ inline int64 reducao_pvp(block_list& src, block_list& bl, int64 damage, uint16 s
 	// desta, e as duas se multiplicariam. Hoje nenhum mapa tem os dois
 	// mapflags, mas o dia em que tiver nao pode custar uma tarde de medicao.
 	if (mapdata_flag_gvg2(mapdata) || mapdata->getMapFlag(MF_BATTLEGROUND))
+		return damage;
+
+	// Monstro selvagem fica fora, nas duas direcoes - ver "CAMPO DE CACA COM
+	// PVP" no cabecalho. O `battle_get_master` sobe de homunculo, mercenario,
+	// invocacao e armadilha ate o dono, entao o que e de jogador continua
+	// reduzido; so sobra de fora quem nao tem jogador nenhum no fim da corrente.
+	if (battle_get_master(&src)->type != BL_PC || battle_get_master(&bl)->type != BL_PC)
 		return damage;
 
 	// Desligada por padrao - ver "NINGUEM ESCAPA" no cabecalho. Fica a chamada,

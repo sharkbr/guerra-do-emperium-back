@@ -155,12 +155,18 @@ chamadas:
 2. **Mapa que não é de guerra nem `pvp`.** Fora deles a redução não existe: campo
    aberto, masmorra e instância seguem intactos.
 
-**Não há exceção por tipo de atacante.** O caminho do `pk_mode` reduz só entre
-jogador e jogador; o nosso reduz tudo que acerta alguém no mapa — Homúnculo,
-mercenário, armadilha, invocação. É a paridade com a guerra, e é o que evita
-repetir o furo da §4f. **Consequência:** monstro em mapa `pvp` também bate 20%.
-Hoje isso não alcança nada — nenhum mapa `pvp` do servidor é mapa de caça —, mas
-campo com monstro que um dia receba o mapflag `pvp` fica fácil junto, calado.
+**Tudo que é de jogador entra, e monstro selvagem não.** O caminho do `pk_mode`
+reduz só entre jogador e jogador; o nosso reduz também o que é **de** jogador —
+Homúnculo, mercenário, armadilha, invocação —, resolvendo os dois lados até o
+dono pelo `battle_get_master`. É o que evita repetir o furo da §4f.
+
+Monstro selvagem fica fora **desde 2026-09-26**, nas duas direções: nem bate
+reduzido nem apanha reduzido. Até então a regra era "tudo no mapa", igual à
+guerra, e não alcançava nada porque nenhum mapa `pvp` tinha monstro. Mudou no
+dia em que o PvP foi ligado em dois campos de caça, `moc_fild07` e `moc_fild12`
+(`npc/guerra/pvp_de_sograt.txt`): com a regra velha, caçar lá ficaria cinco
+vezes mais lento. **A guerra não segue isto** — no castelo o monstro continua
+reduzido, pelo `battle_calc_gvg_damage` do rAthena.
 
 Valor muda com **`@reloadbattleconf`**, sem recompilar. `100` nos dez devolve o
 dano cheio.
