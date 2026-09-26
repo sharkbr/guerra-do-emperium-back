@@ -19604,3 +19604,47 @@ Conferido offline: o `battle.cpp` compila com a mudança. Os dois mapas não
 tinham `pvp_nightmaredrop`, `pvp_nocalcrank` nem `nocostume`, então morrer lá não
 derruba item, o rank N/M aparece e traje continua visível. `pvp_exp: yes`
 mantém a EXP de caça.
+
+## A Roleta do Cassino: os caça-níqueis da Casa Rosa (2026-09-26)
+
+Pedido do dono: um jogo novo no cassino, usando **só a roleta** que o cliente
+desenha ao capturar pet. Dezesseis máquinas no salão leste do `cmd_in02`;
+clicar dá *"BLIP BLIP BLIP... CLACK! Roleta funcionando"*, depois a oferta
+(10 Moedas Novas, ganhou leva 20) com Sim / Melhor não. No Sim as moedas
+saem, a roleta aparece girando e para no clique — ou sozinha em 10 s. Meio a
+meio. Era a pendência da "máquina caça-níquel" de 2026-08-12.
+
+**As máquinas já estavam no mapa.** As dezesseis células deram fechadas, em
+fileiras de célula sim, célula não — são os modelos de caça-níquel do próprio
+`cmd_in02`. O NPC ficou sprite 111 (invisível e clicável) em cima de cada um,
+e não o 563 que a pendência tinha separado.
+
+**O servidor não conseguia abrir a roleta, e isso custou a maior parte da
+sessão.** Lido no exe com capstone, a partir do RTTI
+`UIPetTamingDeceiveWnd`: quem abre a janela é o cliente, no clique do
+cursor de captura sobre o monstro; o `0x1a0` só mexe numa janela aberta; o
+clique na roleta manda `0x19f` ao servidor; e ela não para sozinha. O caso
+inteiro virou armadilha (`ARMADILHAS-CLIENTE.md`, gatilho na §5 do
+`CLAUDE.md`).
+
+A saída tem três peças (`ARQUITETURA.md` §4, "A roleta do cassino"):
+
+- `ferramentas/abre_roleta_do_cassino.py` — um desvio de 87 bytes no
+  tratador do `0x1a0`: resultado **2** abre a roleta; todo resultado marca a
+  janela como clicada antes de aplicar o quadro, para que os 10 s sem
+  clique parem igual a um clique. Para caber, a `.xdiff` cresceu em disco de
+  0x400 para 0x800.
+- `src/custom/roleta_do_cassino.hpp` — o comando `roletagira(<ganhou>,
+  "<NPC::Evento>")`, o timer dos 10 s, e um enxerto no `clif_parse_CatchPet`
+  que toma o `0x19f` quando há giro pendente.
+- `npc/guerra/roleta_do_cassino.txt` — cobra, sorteia, paga. O prêmio fica
+  numa variável **permanente** gravada no giro e só zerada no `getitem`; quem
+  cai com a roleta girando recebe no próximo login.
+
+Sem o desvio no exe a máquina funciona às cegas (cobra e, em 10 s, paga ou
+não), então jogador sem o patch não perde moeda.
+
+Conferido offline: o map-server compila e linka limpo (numa pasta de
+rascunho, para não tocar no binário no ar), e o desvio foi aplicado numa
+**cópia** do exe e desmontado de volta. O exe de verdade não foi tocado —
+havia quatro clientes abertos. O que falta está no `PENDENCIAS.md` §0d.

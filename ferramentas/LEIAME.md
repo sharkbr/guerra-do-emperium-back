@@ -1252,6 +1252,10 @@ tarde:
 O cache funciona por sorte estrutural: zero e justamente o estado inicial certo
 para ele. **Um mapa de alturas ali nao funcionaria** — seria lido como zeros.
 
+**Desde 2026-09-26 a `.xdiff` tem 0x800 em disco** (`abre_roleta_do_cassino.py`):
+o cache passou a vir do arquivo, zerado, e a metade que o carregador zera
+começa em `0x013B5800`. Nada muda para esta ferramenta.
+
 Os 64 bytes do mapa sao um vao entre dois stubs do NEMO (um acaba em
 `0x013B531A`, o outro comeca em `0x013B5360`). Antes de ocupar, foi conferido
 que nenhuma constante do exe aponta para la e que **nenhum `e8`/`e9` do `.text`
@@ -4912,6 +4916,45 @@ O exe é a única peça do cliente sem gerador versionado (`REFERENCIA.md`,
 "Patches do NEMO"); este script é a receita **deste** patch, e o `.epi` do NEMO
 não sabe dele — exe regravado pelo NEMO volta travado, e o script diz. Só se
 grava com o cliente fechado (§5).
+
+## `abre_roleta_do_cassino.py` — o servidor passa a poder abrir a roleta
+
+```
+python abre_roleta_do_cassino.py              # o exe tem o desvio?
+python abre_roleta_do_cassino.py --aplicar    # patcheia (backup ao lado)
+python abre_roleta_do_cassino.py --reverter   # volta ao backup
+python abre_roleta_do_cassino.py --mostrar    # desmonta o desvio (capstone)
+```
+
+A metade de cliente dos caça-níqueis do cassino
+(`npc/guerra/roleta_do_cassino.txt`). De fábrica, a roleta da captura de pet
+só abre no clique do cursor de captura sobre um monstro, e o `0x1a0` que o
+servidor manda só mexe numa roleta **já aberta** (`ARMADILHAS-CLIENTE.md`).
+O desvio troca os 6 bytes do `mov ecx, [janela]` do tratador do `0x1a0`
+(`0x007f9166`) por um salto para `0x013B5700`, onde:
+
+- **resultado 2** (que o rAthena nunca manda) com a janela fechada → abre a
+  janela `0x5b` do mesmo jeito que a captura abre, com alvo 0;
+- **resultado 0/1** com a janela aberta → marca a janela como clicada
+  (`+0x98 = 1`, `+0xb0 = 1`) e segue para o tratador original. É o que faz
+  os 10 s sem clique pararem a roleta igual a um clique.
+
+**Ele cresce a `.xdiff` em disco**, de 0x400 para 0x800 — o maior vão livre
+na metade que vinha do arquivo tinha 41 bytes e o desvio tem 87. A conta
+inteira, e por que o cache de HFONT do `ajusta_tamanho_fonte.py` não sofre,
+está na docstring e no `ARMADILHAS-CLIENTE.md`. O script recusa se houver
+qualquer byte não-zero depois da seção, se o tratador não aparecer
+exatamente uma vez, ou se o caminho de captura do exe não chamar o
+`MakeWindow` no endereço esperado.
+
+Achado por RTTI: `.?AVUIPetTamingDeceiveWnd@@` → vtable → os métodos próprios
+comparados com os da `UIWindow`; o id da janela saiu do `switch` do
+`MakeWindow` e o tratador do `0x1a0`, de quem lê o ponteiro da janela
+(`[0x00f816c4]`). A receita de desmontagem é a mesma do
+`destrava_estilista.py`.
+
+O `.epi` do NEMO não sabe deste desvio. Só se grava com o cliente fechado, e
+chega ao jogador por patch (`CLAUDE.md` §4.18).
 
 ## `instala_habilidades_sobrevivente.py` — a metade de cliente das três passivas
 

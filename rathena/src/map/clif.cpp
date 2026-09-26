@@ -63,6 +63,7 @@
 #include <custom/brilho_da_carta.hpp>
 #include <custom/placa_de_venda.hpp>
 #include <custom/refino.hpp>
+#include <custom/roleta_do_cassino.hpp>
 
 using namespace rathena;
 
@@ -14732,6 +14733,11 @@ void clif_parse_PetMenu(int32 fd, map_session_data *sd){
 /// Attempt to tame a monster (CZ_TRYCAPTURE_MONSTER).
 /// 019f <id>.L
 void clif_parse_CatchPet(int32 fd, map_session_data *sd){
+	// Guerra do Emperium: o 0x19f tambem e o clique na roleta do cassino
+	// (src/custom/roleta_do_cassino.hpp). Sem giro pendente, a captura segue.
+	if( roleta_do_cassino_clique( *sd ) )
+		return;
+
 	pet_catch_process_end(*sd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]));
 }
 

@@ -13,3 +13,4 @@
 // Guerra do Emperium
 BUILDIN_DEF(placadevenda,"s"),
 BUILDIN_DEF(efeitoespecial,"i??"),
+BUILDIN_DEF(roletagira,"is"),

@@ -554,6 +554,24 @@ cinco células fechadas para um modelo que o `.rsw` desenha.
 
 **E é `setwall`, não `setcell`** — só ele avisa o cliente. Ver `CLAUDE.md` §4.
 
+### A roleta do cassino vive em 3 lugares, e um deles é o EXE
+
+| Peça | Onde | O que faz |
+|---|---|---|
+| a máquina | `npc/guerra/roleta_do_cassino.txt` | cobra, sorteia, guarda o prêmio e paga |
+| o giro | `src/custom/roleta_do_cassino.hpp` (+ enxerto no `clif_parse_CatchPet`) | o comando `roletagira`, os 10 s e o clique |
+| a janela | `GuerraDoEmperium.exe`, por `ferramentas/abre_roleta_do_cassino.py` | faz o `0x1a0` = 2 abrir a roleta |
+
+O contrato entre as três é um número: o **2** do `0x1a0`
+(`ROLETA_DO_CASSINO_ABRE` no C++, o `cmp byte [eax+2], 2` no desvio). Mudar
+de um lado sem o outro não dá erro — a roleta simplesmente não aparece, e a
+máquina continua cobrando e pagando às cegas. Exe sem o desvio (jogador sem o
+patch, ou exe regravado pelo NEMO) é o mesmo sintoma.
+
+E o `0x19f` deixou de ser só da captura de pet: com giro pendente, é da
+roleta. Quem mexer no `clif_parse_CatchPet` tem de manter a ordem — o nosso
+teste antes do `pet_catch_process_end`.
+
 ### Um NPC com sprite corrigido vive em 2 lugares, e um deles é o cliente
 
 Nem todo sprite oficial está pronto para ser NPC. O `.act` diz a que altura o

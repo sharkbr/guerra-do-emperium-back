@@ -113,6 +113,36 @@ continua desenhando a cidade inteira. Só muda se incomodar.
 
 ---
 
+## 0d. A Roleta do Cassino — falta o exe, a compilação e a tela (2026-09-26)
+
+Os dezesseis caça-níqueis do salão leste do `cmd_in02` estão escritos
+(`npc/guerra/roleta_do_cassino.txt`, `src/custom/roleta_do_cassino.hpp`,
+`ferramentas/abre_roleta_do_cassino.py`) e **nada foi visto em jogo**. O
+map-server compilou limpo numa pasta de rascunho; o binário do servidor e o exe
+do cliente continuam os antigos. Na ordem:
+
+1. **Fechar os clientes** e rodar `python ferramentas/abre_roleta_do_cassino.py
+   --aplicar` — sem isso a roleta não aparece (a máquina funciona às cegas:
+   cobra e, em 10 s, paga ou não). Em 2026-09-26 havia quatro clientes
+   abertos e o exe estava travado.
+2. **Recompilar e reiniciar o map-server** (`src/` mudou). É DEV, mas o dono
+   estava logado — ficou para ele.
+3. **Ver na tela**, que é o que nenhuma leitura de exe prova:
+   - a roleta abre ao escolher "Sim", **com a caixa do NPC fechando** por
+     cima (o `end` manda o `0xb6`; se ficar um botão "Fechar" na caixa, a
+     roleta ainda aceita clique — ver o comentário no fim da
+     `F_RoletaDoCassino`);
+   - o clique para a roleta no quadro certo — **ganhou** e **perdeu** têm de
+     parar em quadros diferentes, e o prêmio sai uns instantes depois;
+   - sem clique, ela para sozinha em 10 s, e **um clique depois disso não
+     troca o quadro** (é o que o `+0xb0 = 1` do desvio segura);
+   - capturar um pet de verdade continua funcionando — o `0x19f` agora passa
+     pelo nosso enxerto antes.
+4. **Patch** para os jogadores: o exe mudou, e mudança de cliente só chega
+   por `monta_patch.py` (`CLAUDE.md` §4.18). Com nota de novidade (§4.24).
+
+---
+
 ## 1. Falta ver no jogo
 
 Tudo abaixo está **escrito, registrado no `scripts_guerra.conf` e conferido
@@ -1314,11 +1344,6 @@ se apurou, e vale para qualquer efeito futuro:
 
 ### O que ficou de fora, e foi decisão
 
-- **A máquina caça-níquel.** Pedida na mesma rodada e adiada pelo dono: a ideia
-  é reaproveitar a roleta que o cliente já desenha (a da captura de pet) em vez
-  de inventar interface, e isso é uma sessão inteira. O sprite está livre e
-  conferido: **563 (`2_SLOT_MACHINE`)**, o caça-níquel com letreiro JACKPOT.
-  Coordenada não foi escolhida.
 - **Treze falas curtas dos cinco NPCs de missão continuam em inglês** — `Wha...?`,
   `Hmm...`, `Excuse me.`, `Fine, fine.` e irmãs. Não é descuido: tradução vale
   por **texto** e não por ocorrência, e essas treze são compartilhadas com o

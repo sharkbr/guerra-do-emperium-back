@@ -223,13 +223,12 @@
 //= disablenpc de fora, pela receita do CLAUDE.md secao 2 - o
 //= comodo.txt continua byte a byte o do rAthena (a menos da
 //= traducao, que e outra coisa e tem .INGLES ao lado).
-//===== O que ainda NAO existe ===============================
-//= A MAQUINA CACA-NIQUEL. Foi pedida junto e ficou para outra
-//= sessao, por decisao do dono. A ideia e reaproveitar a roleta
-//= que o cliente ja desenha (a da captura de pet) em vez de
-//= inventar interface. O sprite existe e esta livre: 563
-//= (2_SLOT_MACHINE), o caca-niquel com letreiro JACKPOT.
-//= Registrado no PENDENCIAS.md.
+//===== Os caca-niqueis ======================================
+//= Nao moram aqui: sao o npc/guerra/roleta_do_cassino.txt,
+//= desde 2026-09-26 - dezesseis maquinas no salao leste, com a
+//= roleta da captura de pet. Ficaram fora deste arquivo porque
+//= precisam de C++ e de um desvio no exe, e desligar uma coisa
+//= nao deve desligar a outra.
 //============================================================
 
 //== As tres recepcionistas ==================================

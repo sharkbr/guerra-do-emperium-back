@@ -13,6 +13,7 @@
 
 #include <custom/placa_de_venda.hpp>
 #include <custom/efeito_do_cliente.hpp>
+#include <custom/roleta_do_cassino.hpp>
 
 //BUILDIN_FUNC(example)
 //{
@@ -103,5 +104,40 @@ BUILDIN_FUNC(efeitoespecial)
 		clif_specialeffect(bl, numero, target);
 	}
 
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// roletagira(<ganhou>, "<NPC::Evento>")
+///
+/// Abre no cliente a roleta da captura de pet, girando, e responde <ganhou>
+/// (1 ou 0) quando o jogador clica nela - ou quando passam 10 segundos sem
+/// clique. No momento do resultado roda <NPC::Evento> com o jogador anexado;
+/// e ali que se paga.
+///
+/// Devolve 0, sem abrir nada, se o personagem ja tem uma roleta girando. O
+/// script deve cobrar SO depois de receber 1.
+///
+/// O porque, o que o exe faz e o desvio que o faz abrir a janela estao em
+/// `src/custom/roleta_do_cassino.hpp`.
+BUILDIN_FUNC(roletagira)
+{
+	map_session_data* sd;
+
+	if (!script_rid2sd(sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	bool ganhou = script_getnum(st, 2) != 0;
+	const char* evento = script_getstr(st, 3);
+
+	if (strstr(evento, "::") == nullptr) {
+		ShowError("buildin_roletagira: evento \"%s\" sem \"::\" - "
+			"tem de ser \"<NPC>::<Evento>\".\n", evento);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, roleta_do_cassino_gira(*sd, ganhou, evento) ? 1 : 0);
 	return SCRIPT_CMD_SUCCESS;
 }

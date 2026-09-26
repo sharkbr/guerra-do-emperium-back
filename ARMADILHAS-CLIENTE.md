@@ -87,6 +87,44 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   calada — lê-se zero. Conferir `SizeOfRawData` antes de escolher onde pôr dado
   em patch de exe.
 
+  **Desde 2026-09-26 a `.xdiff` tem 0x800 em disco**, não 0x400: o
+  `ferramentas/abre_roleta_do_cassino.py` cresceu o `SizeOfRawData` para pôr
+  um desvio de 87 bytes em `0x013B5700`, porque o maior vão livre da metade
+  que vinha do arquivo tinha 41. Ela é a última seção e o que havia depois
+  dela eram 256 zeros, então nada andou de lugar; o cache de HFONT
+  (`0x013B5400`, 256 bytes) passou a vir do arquivo, **zerado**, que é o
+  estado de que ele precisa. A metade que não vem do arquivo agora começa em
+  `0x013B5800`. Exe restaurado de antes dessa data volta a 0x400 — conferir
+  de novo, não confiar no número daqui.
+
+- **O servidor NÃO consegue abrir a roleta da captura de pet — o pacote de
+  resultado só mexe numa roleta que já está aberta.** Medido em 2026-09-26 ao
+  fazer os caça-níqueis do cassino. A roleta é a janela `0x5b`
+  (`UIPetTamingDeceiveWnd`, arte `SlotMachine.spr`), e **quem a abre é o
+  próprio cliente**, no clique do cursor de captura sobre o monstro
+  (`0x007832c2`: `MakeWindow(0x5b)` + a mensagem `0x50` que guarda o alvo). O
+  `0x1a0` (`ZC_TRYCAPTURE_MONSTER`, tratador em `0x007f9160`) lê o ponteiro da
+  janela e, se for nulo, **não faz nada**: mandá-lo do servidor com a janela
+  fechada cai no vazio, sem erro. O `0x19e` também não serve — ele abre o
+  **cursor**, e o jogador ainda teria de clicar num monstro.
+
+  Três outras coisas do mesmo desenho, que parecem o contrário:
+  - **o clique na roleta VAI ao servidor**: é o `0x19f`, o mesmo pacote da
+    captura, com o alvo guardado na janela (`0x0057fcf0` → mensagem `0x95` do
+    `CGameMode` → `0x19f`). O servidor sabe quando o jogador parou.
+  - **ela não para sozinha.** O `10000` do construtor (`+0xa8`) parece um
+    limite de 10 s e não é relógio: é teto de velocidade de quadro. Sem
+    clique, gira para sempre.
+  - **o clique grava "ganhou" antes da resposta.** O tratador do clique põe
+    `+0xa4 = 7` (o quadro de sucesso) sem olhar nada, e só o `0x1a0`
+    corrige para 3. Resultado mandado sem clique, seguido de clique
+    atrasado, termina no quadro de sucesso na tela de quem perdeu.
+
+  A saída foi um desvio no exe (`ferramentas/abre_roleta_do_cassino.py`): o
+  `0x1a0` com resultado **2**, que o rAthena nunca manda, abre a janela; e todo
+  resultado marca a janela como clicada antes de aplicar o quadro. O lado do
+  servidor está em `rathena/src/custom/roleta_do_cassino.hpp`.
+
 - **O vão que decide onde centrar um modelo pode não estar nem no `.gat` nem
   no id de textura do `.gnd`.** Tapete, mosaico e faixa de piso costumam ser
   **outra região do mesmo `.bmp`**, escolhida pelas **coordenadas UV** da

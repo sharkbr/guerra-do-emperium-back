@@ -1,0 +1,169 @@
+//===== Guerra do Emperium ===================================
+//= A Roleta do Cassino - os caca-niqueis da Casa Rosa
+//===== Onde =================================================
+//= cmd_in02, salao leste (o primeiro andar do
+//= cassino_de_comodo.txt), DEZESSEIS maquinas em quatro
+//= fileiras de quatro:
+//=
+//=   y107   181 183 185 187      167 169 171 173
+//=   y101   165 167 169 171      184 186 188 190
+//=
+//= AS MAQUINAS SAO DO MAPA, nao nossas. As dezesseis celulas
+//= deram FECHADAS no map_cache (ferramentas/confere_celula.py,
+//= 2026-09-26), em fileiras de celula sim, celula nao: e o
+//= desenho dos caca-niqueis que o proprio cmd_in02 ja traz. Por
+//= isso o NPC e o sprite 111 (invisivel e clicavel) em cima de
+//= cada uma, e nao o 563 (2_SLOT_MACHINE) que a pendencia de
+//= 2026-08-12 tinha separado - poria uma maquina desenhada em
+//= cima de outra. NPC em celula fechada responde ao clique
+//= normalmente; quem precisa de celula andavel e quem anda.
+//===== O jogo ===============================================
+//= 10 Moedas Novas (30998) por giro. Ganhou, leva 20; perdeu,
+//= leva nada. MEIO A MEIO, rand(2), pedido do dono: a maquina
+//= devolve em media exatamente o que recebe, ao contrario das
+//= mesas de blackjack, que sao viciadas de proposito (ver o
+//= cabecalho do cassino_de_comodo.txt).
+//=
+//= As moedas saem ANTES de a roleta aparecer, e o resultado e
+//= sorteado ali tambem - o giro e so a revelacao.
+//===== A roleta ============================================
+//= E a roleta da captura de pet, que o cliente ja desenha. Ela
+//= aparece girando logo depois do "Sim" e para quando o jogador
+//= clica nela, ou sozinha em 10 segundos. Tres pecas fazem isso
+//= e so uma e script:
+//=
+//=   src/custom/roleta_do_cassino.hpp   o comando `roletagira`,
+//=       o timer dos 10 s e o clique (o pacote 0x19f), com o
+//=       porque inteiro medido no exe;
+//=   ferramentas/abre_roleta_do_cassino.py   o desvio no exe
+//=       que faz a roleta abrir quando o SERVIDOR pede - de
+//=       fabrica so o cursor de captura a abre;
+//=   este arquivo   cobrar, sortear e pagar.
+//=
+//= SEM O DESVIO NO EXE a maquina continua funcionando, as
+//= cegas: nenhuma roleta aparece, e em 10 segundos o resultado
+//= chega. Quem ainda nao recebeu o patch nao perde moeda.
+//===== O premio nao se perde ================================
+//= O premio fica em RoletaDoCassino_Premio, variavel PERMANENTE
+//= do personagem, gravada no momento do giro - e so zerada no
+//= mesmo instante em que o getitem entrega. Quem cai, fecha o
+//= jogo ou e desconectado com a roleta girando recebe no
+//= proximo login (OnPCLoginEvent). Variavel @ morreria com a
+//= sessao, e o premio junto.
+//=
+//= A Moeda Nova e NoDrop, entao o getitem nunca a larga no chao
+//= com a mochila cheia (a armadilha do CLAUDE.md secao 5).
+//===== Os numeros ===========================================
+//= Aposta, premio, espera e efeito moram no OnInit do
+//= RoletaDoCassino, uma linha cada. Os 10 segundos NAO: sao
+//= ROLETA_DO_CASSINO_ESPERA, em C++, e mudar exige recompilar.
+//============================================================
+
+//== O miolo: o numero de cada coisa, e o pagamento ===========
+-	script	RoletaDoCassino	-1,{
+	end;
+
+OnInit:
+	.moeda   = 30998;   // Moeda Nova, db/guerra/item_db.yml
+	.aposta  = 10;
+	.premio  = 20;
+	// A roleta freia em menos de um segundo depois do resultado e
+	// fica parada 2 s antes de fechar (medido no exe). O premio
+	// aparece no meio dessa pausa, com ela ainda na tela.
+	.pausa   = 1200;
+	.efeito  = 982;     // EF_THROW_MULTIPLE_COIN, o mesmo do blackjack
+	end;
+
+// Roda com o jogador anexado, na hora do resultado - chamado pelo
+// src/custom/roleta_do_cassino.hpp, no clique ou nos 10 s.
+OnParou:
+	sleep2 .pausa;
+	if (RoletaDoCassino_Premio > 0) {
+		callsub S_Paga;
+		specialeffect2 .efeito;
+	} else {
+		dispbottom "Não foi desta vez. A máquina engoliu as moedas.";
+	}
+	end;
+
+OnPCLoginEvent:
+	if (RoletaDoCassino_Premio > 0) {
+		dispbottom "A roleta da Casa Rosa parou enquanto você estava fora.";
+		callsub S_Paga;
+	}
+	end;
+
+// Zera e entrega no MESMO instante, sem nada que ceda a vez no meio:
+// assim nao ha janela em que o premio exista nos dois lugares, nem em
+// nenhum.
+S_Paga:
+	.@p = RoletaDoCassino_Premio;
+	RoletaDoCassino_Premio = 0;
+	getitem .moeda, .@p;
+	dispbottom "Você ganhou " + .@p + " " + ((.@p == 1) ? "Moeda Nova" : "Moedas Novas") + "!";
+	return;
+}
+
+//== A maquina ===============================================
+function	script	F_RoletaDoCassino	{
+	.@moeda  = getvariableofnpc(.moeda,  "RoletaDoCassino");
+	.@aposta = getvariableofnpc(.aposta, "RoletaDoCassino");
+	.@premio = getvariableofnpc(.premio, "RoletaDoCassino");
+
+	mes "[Caça-níquel]";
+	mes "BLIP BLIP BLIP... CLACK! Roleta funcionando.";
+	next;
+	mes "[Caça-níquel]";
+	mes "Você coloca ^0000FF" + .@aposta + "^000000 Moedas Novas. Se ganhar, leva ^0000FF" + .@premio + "^000000; se perder, tenta de novo.";
+	if (select("Sim:Melhor não") == 2)
+		end;
+
+	if (countitem(.@moeda) < .@aposta) {
+		mes "[Caça-níquel]";
+		mes "A fenda da máquina espera " + .@aposta + " Moedas Novas, e você não tem tantas.";
+		close;
+	}
+
+	.@ganhou = rand(2);
+
+	// `roletagira` devolve 0 se ja ha uma roleta deste personagem
+	// girando - e ai nada foi cobrado nem aberto. Cobrar SO depois.
+	if (!roletagira(.@ganhou, "RoletaDoCassino::OnParou")) {
+		mes "[Caça-níquel]";
+		mes "A roleta ainda está girando.";
+		close;
+	}
+	delitem .@moeda, .@aposta;
+	if (.@ganhou)
+		RoletaDoCassino_Premio += .@premio;
+
+	// SEM close2: ele so deixaria a roleta aparecer depois de um clique
+	// em "Fechar". O `end` fecha a caixa por cima da roleta ja aberta, e
+	// a roleta aceita clique mesmo com a caixa na tela - a unica trava
+	// do tratador do clique (0x0057fcf0) e uma global de interface que
+	// quase toda janela testa, e nao "dialogo de NPC aberto".
+	end;
+}
+
+//== As dezesseis maquinas ===================================
+// Facing 4 (sul) em todas: o sprite 111 nao desenha nada, e o
+// facing so importa para quem um dia trocar o sprite.
+cmd_in02,181,107,4	script	Caça-níquel#cas_rol01	111,{
+	callfunc "F_RoletaDoCassino";
+	end;
+}
+cmd_in02,183,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol02	111
+cmd_in02,185,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol03	111
+cmd_in02,187,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol04	111
+cmd_in02,167,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol05	111
+cmd_in02,169,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol06	111
+cmd_in02,171,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol07	111
+cmd_in02,173,107,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol08	111
+cmd_in02,165,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol09	111
+cmd_in02,167,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol10	111
+cmd_in02,169,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol11	111
+cmd_in02,171,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol12	111
+cmd_in02,184,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol13	111
+cmd_in02,186,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol14	111
+cmd_in02,188,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol15	111
+cmd_in02,190,101,4	duplicate(Caça-níquel#cas_rol01)	Caça-níquel#cas_rol16	111
