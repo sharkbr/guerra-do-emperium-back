@@ -743,6 +743,72 @@ alcançá-los, o caminho provável é acrescentar as entradas ao `itemInfo.lua`,
 
 ---
 
+## Morroc destruída — 2026-09-26
+
+Pedido do dono: a Morroc destruída do bRO, **com o meio da cidade intacto** —
+"prioridade é deixar ela destruída". O meio, escolhido por ele, é o
+**complexo murado** do centro.
+
+### Não existe mapa para copiar
+
+Varrido tudo o que o bRO tem nesta máquina: o `morocc.rsw` do `data.grf` dele
+é a cidade **inteira** (699 objetos, as mesmas `민가01a/b/c` do nosso, zero
+ruína); nenhum dos outros `.rsw` é uma cópia da cidade — as ruínas de Morroc só
+aparecem em `moc_ruins`, `dew_fild01` e `cmd_fild06–08`; e o `event.grf` (2010,
+GRF 0x102, lido com a porta do `decode_filename` do `grfio.cpp`) é só a versão
+de Natal de sete cidades. A Gravity desfez a destruição **no mapa**. Mesmo que
+ele existisse, viria com a cratera no centro, que é o que o dono não quer.
+
+### O kit de ruína vem em par com a peça intacta
+
+O que sobrou foram os modelos, todos no **nosso** GRF, em `model\모로코\`, e
+eles têm correspondência de planta com as peças da cidade (medido no
+`mede_rsm.py`, 0 byte sobrando em todos, nenhuma textura faltando):
+
+| Intacta | Planta (células) | Ruína usada | Planta |
+|---|---|---|---|
+| `민가01a`, `01c`, `03` | 14,2×11,3 / 14,8×20,8 / 11,9×8,8 | `민가폐허01c`, `01d` | 12,2×8,3 / 12,4×8,3 |
+| `민가01b` | 6,5×9,9 | `민가폐허01a` | 7,7×7,9 |
+| `민가02a`, `02b` | 11,1×6,0 / 10,4×4,7 | `민가폐허02b` | 10,3×4,6 |
+| `카펫상점` | 15,8×12,4 | `카펫상점폐허01`, `02` | 12,0×10,6 / 10,3×8,8 |
+| `성_벽` (muralha) | 2,0×8,0 | `성폐허102/202/106/206` | 2,6×5,0 / 2,1×4,2 |
+| `성_기둥` (pilar) | 4,5×4,5, alt 18 | `성폐허기둥01/02/04` | alt 12 / 4 / 11 |
+| `성_다리` (mureta) | 11,8×1,6 | `성폐허다리01/03/06/08` | 6,4 / 3,7 ×2,0 |
+| `성_홀`, `성_중앙` (torres) | 16,4×16,4 / 17,7×20,9 | `성폐허110/110b/110c` | 5,9 / 5,3 / 4,6 |
+
+**O nome engana nos pares de casa:** `민가폐허01a` não é a ruína da `민가01a` —
+ela tem metade da planta. Quem decidiu foi a medida.
+
+A muralha é o caso em que herdar a rotação é o que faz funcionar: a peça
+intacta e as quatro ruínas são todas compridas no Y, então o toco cai
+alinhado com o muro, e os 3 a 4 células que sobram de cada segmento de 8
+viram brecha.
+
+### O que ficou de pé, e por quê
+
+- **O complexo** — `preservar: (97, 113, 221, 229)`. As muretas estão em
+  x99–219, y115–227, com o centro do modelo **em cima** da linha; a folga de
+  2 células é para pegar a própria mureta. Ficaram 36 muretas, 10 pilares,
+  as 2 torres e o `성_중앙` de dentro, e as 4 estátuas.
+- **Os portões** (`성_입구`, `성_후문`) — o kit não tem ruína de portão.
+- **Os seis prédios de serviço** (`무기점`, `바드길드`, `술집`, `여관`,
+  `용병길드`) — têm porta ligada a interior pelo servidor, e são "as que
+  restam de pé" da ficção.
+- **As 35 portas** (`프론테라\문02/03`) foram **removidas**: todas estão a no
+  máximo 4,7 células de uma casa comum, e casa que vira entulho deixaria a
+  porta em pé no ar. Foi para isso que o `edita_mapa.py` ganhou a operação
+  `remover` e a caixa `preservar` nesta data.
+
+Resultado: 781 → 746 objetos, 293 instâncias trocadas, round-trip ok.
+
+### O que continua de fora
+
+A **colisão** é a da cidade inteira — o `.gat` não foi tocado, e a fronteira
+com o servidor (acima) continua valendo. O dono vai passar pelas colisões em
+jogo; a pendência está no `PENDENCIAS.md` §0c.
+
+---
+
 ## Ordem de trabalho proposta
 
 Revisada em 2026-07-31, depois da amostra. Os passos 1, 3 e 5 da lista original

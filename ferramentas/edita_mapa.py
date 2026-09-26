@@ -57,6 +57,48 @@ SOFA = u'prontera\\sofa_01.rsm'
 ESTATUA_03 = u'prontera\\prn_statue_03.rsm'
 ESTATUA_08 = u'prontera\\prn_statue_08.rsm'
 
+# -- Morroc: o kit de ruina da Gravity -----------------------------------
+#
+# O morocc do nosso GRF e o do bRO sao a cidade INTEIRA; a Morroc destruida
+# do episodio 13.1 nao existe mais como mapa em lugar nenhum desta maquina
+# (varridos os 910 .rsw do data.grf do bRO e o event.grf dele, 2026-09-26).
+# O que sobrou foram os MODELOS, e eles vem em par com a peca intacta --
+# `민가02b` 10,4 x 4,7 celulas, `민가폐허02b` 10,3 x 4,6. Os pares abaixo sairam
+# da planta medida (mede_rsm.py), nao so do nome: `민가폐허01a` tem 7,7 x 7,9 e
+# por isso substitui a `민가01b` (6,5 x 9,9), e nao a `민가01a` (14,2 x 11,3).
+#
+# **A colisao continua a da casa inteira** -- o .gat nao e tocado. Ruina menor
+# que a casa deixa celula bloqueada em volta do entulho; e a `민가01c` (14,8 x
+# 20,8, a maior) e a que mais sobra. Abrir celula e mexer no .gat, que puxa o
+# map_cache junto (CUSTOMIZACAO-VISUAL.md, "a fronteira com o servidor").
+M = u'모로코\\'
+CASA_01A, CASA_01B, CASA_01C = M + u'민가01a.rsm', M + u'민가01b.rsm', M + u'민가01c.rsm'
+CASA_02A, CASA_02B, CASA_03 = M + u'민가02a.rsm', M + u'민가02b.rsm', M + u'민가03.rsm'
+RUINA_CASA_01A, RUINA_CASA_01C, RUINA_CASA_01D = (
+    M + u'민가폐허01a.rsm', M + u'민가폐허01c.rsm', M + u'민가폐허01d.rsm')
+RUINA_CASA_02B = M + u'민가폐허02b.rsm'
+TAPETES = M + u'카펫상점.rsm'
+RUINA_TAPETES = [M + u'카펫상점폐허01.rsm', M + u'카펫상점폐허02.rsm']
+VARAL = u'외부소품\\빨랫줄.rsm'
+RUINA_VARAL = [M + u'폐허빨랫줄01.rsm', M + u'폐허빨랫줄02.rsm']
+# A muralha: `성_벽` tem 2 x 8 celulas, comprida no Y. As quatro ruinas abaixo
+# tambem sao compridas no Y (2,6 x 5,0 e 2,1 x 4,2), entao herdar a rotacao
+# mantem o segmento no alinhamento do muro -- e o que sobra entre um toco e
+# outro vira a brecha.
+MURALHA = M + u'성_벽.rsm'
+RUINA_MURALHA = [M + u'성폐허102.rsm', M + u'성폐허202.rsm',
+                 M + u'성폐허106.rsm', M + u'성폐허206.rsm']
+PILAR = M + u'성_기둥.rsm'
+RUINA_PILAR = [M + u'성폐허기둥01.rsm', M + u'성폐허기둥02.rsm', M + u'성폐허기둥04.rsm']
+MURETA = M + u'성_다리.rsm'   # "ponte" no nome; no mapa e a mureta comprida no X
+RUINA_MURETA = [M + u'성폐허다리01.rsm', M + u'성폐허다리03.rsm',
+                M + u'성폐허다리06.rsm', M + u'성폐허다리08.rsm']
+TORRES = [M + u'성_홀.rsm', M + u'성_중앙.rsm']
+RUINA_TORRE = [M + u'성폐허110.rsm', M + u'성폐허110b.rsm', M + u'성폐허110c.rsm']
+# As 35 portas sao todas de casa comum (a porta mais longe da casa dela esta
+# a 4,7 celulas), e casa que vira entulho nao pode deixar porta de pe.
+PORTAS = [u'프론테라\\문02.rsm', u'프론테라\\문03.rsm']
+
 RECEITA = {
     'izlude': {
         'substituir': [
@@ -279,6 +321,36 @@ RECEITA = {
             (ESTATUA_08, 176.5, 68.5, 0.0, 1.0),
         ],
     },
+    # Morroc destruida, com o COMPLEXO MURADO DO CENTRO intacto (decisao do
+    # dono em 2026-09-26: "prioridade e deixar ela destruida", o meio fica).
+    #
+    # O complexo e o retangulo de muretas `성_다리` de x99-219, y115-227, com
+    # um `성_기둥` em cada canto e as quatro estatuas `동상` dentro. A caixa
+    # preservada tem 2 celulas de folga para pegar a propria mureta, cujo
+    # centro esta EM CIMA da linha.
+    #
+    # FICAM DE PE, de proposito, fora do complexo:
+    #   - os PORTOES da muralha (`성_입구`, `성_후문`) -- o kit nao tem ruina
+    #     de portao, e sao eles que dizem por onde se entra;
+    #   - os seis PREDIOS DE SERVICO (`무기점`, `바드길드`, `술집`, `여관`,
+    #     `용병길드`) -- tem porta que o servidor liga a interior, e na ficcao
+    #     "as que restam de pe" sao justamente estas.
+    #   - placas, barris, caixotes, palmeiras.
+    'morocc': {
+        'preservar': [(97, 113, 221, 229)],
+        'substituir': [
+            ([CASA_01A, CASA_01C, CASA_03], [RUINA_CASA_01C, RUINA_CASA_01D], 1.00),
+            ([CASA_01B], [RUINA_CASA_01A], 1.00),
+            ([CASA_02A, CASA_02B], [RUINA_CASA_02B], 1.00),
+            ([TAPETES], RUINA_TAPETES, 1.00),
+            ([VARAL], RUINA_VARAL, 1.00),
+            ([MURALHA], RUINA_MURALHA, 1.00),
+            ([PILAR], RUINA_PILAR, 1.00),
+            ([MURETA], RUINA_MURETA, 1.00),
+            (TORRES, RUINA_TORRE, 1.00),
+        ],
+        'remover': [PORTAS],
+    },
 }
 
 # Ao trocar um modelo por outro de tipo diferente, a escala do original quase
@@ -293,13 +365,32 @@ def cp949(u):
     return u.encode('cp949')
 
 
+def celula(g, m):
+    """Inverso do `mundo()`: posição de um modelo -> célula de jogo."""
+    return (g.largura / 2.0 + (m.pos[0] - 2.5) / 5.0,
+            g.altura / 2.0 + (m.pos[2] - 2.5) / 5.0)
+
+
+def preservado(g, m, receita):
+    """True se o modelo cai numa caixa de `preservar` (x0, y0, x1, y1)."""
+    cx, cy = celula(g, m)
+    return any(x0 <= cx <= x1 and y0 <= cy <= y1
+               for x0, y0, x1, y1 in receita.get('preservar', []))
+
+
 def aplica(r, g, receita, rnd, relatorio):
     subs = receita.get('substituir', [])
     total_trocado = 0
 
     for origens, destinos, fracao in subs:
         chaves = set(sem_prefixo(cp949(o)) for o in origens)
-        alvos = [m for m in r.modelos if m.rsm in chaves]
+        todos = [m for m in r.modelos if m.rsm in chaves]
+        alvos = [m for m in todos if not preservado(g, m, receita)]
+        if len(alvos) < len(todos):
+            relatorio.append(u'  %d de %s ficam intactas (área preservada)'
+                             % (len(todos) - len(alvos),
+                                u'/'.join(o.rsplit(u'\\', 1)[-1][:-4]
+                                          for o in origens)))
         if not alvos:
             relatorio.append(u'  AVISO: nenhuma instância de %s'
                              % u', '.join(origens))
@@ -320,6 +411,19 @@ def aplica(r, g, receita, rnd, relatorio):
                fracao * 100,
                u', '.join(u'%s x%d' % (k.rsplit(u'\\', 1)[-1][:-4], v)
                           for k, v in sorted(conta.items()))))
+
+    # Remover vem DEPOIS de substituir e respeita a mesma área preservada:
+    # é para peça que só existia pendurada em outra (porta de casa), e que
+    # sobra flutuando quando a outra vira entulho.
+    for origens in receita.get('remover', []):
+        chaves = set(sem_prefixo(cp949(o)) for o in origens)
+        fora = [o for o in r.objetos if isinstance(o, Modelo)
+                and o.rsm in chaves and not preservado(g, o, receita)]
+        ids = set(id(o) for o in fora)
+        r.objetos = [o for o in r.objetos if id(o) not in ids]
+        relatorio.append(u'  %d instâncias de %s removidas'
+                         % (len(fora), u'/'.join(o.rsplit(u'\\', 1)[-1][:-4]
+                                                 for o in origens)))
 
     criados = 0
     for entrada in receita.get('acrescentar', []):
