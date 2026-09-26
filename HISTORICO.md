@@ -19551,3 +19551,35 @@ Conserta sozinho, no segundo seguinte, um mapa que já esteja desregulado.
 Consequência que é regra do rAthena, não nossa: o fantasma escondido não entra
 em nenhum dos dois lados da barra. Jogador sozinho com o fantasma de `@hide` vê
 **1/1**; com o fantasma visível, 1/2 ou 2/2.
+
+## Morroc destruída, com a muralha e o centro de pé (2026-09-26)
+
+Pedido do dono: a Morroc destruída do bRO, sem destruir o meio da cidade.
+
+**Não havia mapa para copiar.** O `morocc` do bRO é a cidade inteira como o
+nosso; nenhum outro `.rsw` do `data.grf` dele é cópia da cidade, e o
+`event.grf` (2010) só traz o Natal de sete cidades. O que sobrou do episódio
+foi o **kit de modelos de ruína**, no nosso próprio GRF e com par de planta
+para cada peça intacta. A cidade foi remontada trocando peça por peça pela
+receita `morocc` do `ferramentas/edita_mapa.py`, que ganhou nesta data as
+operações `preservar` (caixa que fica intacta) e `remover`. O caso inteiro,
+com a tabela de pares medidos, está no `CUSTOMIZACAO-VISUAL.md`, "Morroc
+destruída".
+
+Três rodadas no mesmo dia:
+
+1. Casas, lojas de tapete, varais **e a muralha externa** em ruína; complexo
+   murado do centro intacto; as 35 portas de casa removidas. Aprovado em jogo
+   — *"ficou muito bom, não vejo conflitos prejudiciais"* —, com uma exceção.
+2. **A muralha volta inteira**: *"quero que as redondezas de Morroc sejam
+   hostis (todos os mapas em volta vão ser PvP), então não faz sentido não ter
+   os muros de pé"*. Voltou o anel todo (segmentos, pilares, torres e
+   muretas das quinas), não só os `성_벽`.
+3. **Os 19 guardas "Olho do Deserto"** (`npc/guerra/olhos_do_deserto.txt`),
+   nas células que o dono passou, cada um contando a mesma ficção com outras
+   palavras: o meteoro, o povo do deserto reunido, Morroc independente, as
+   fronteiras que não são mais seguras.
+
+Conferido em jogo pelo dono e entregue: o mapa no **patch 0035**, os guardas
+pelo próximo deploy. As colisões ficaram como estavam — o `.gat` não foi
+tocado. Em aberto, só a decisão sobre o minimapa (`PENDENCIAS.md` §0c).

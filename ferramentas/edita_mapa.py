@@ -81,20 +81,14 @@ TAPETES = M + u'카펫상점.rsm'
 RUINA_TAPETES = [M + u'카펫상점폐허01.rsm', M + u'카펫상점폐허02.rsm']
 VARAL = u'외부소품\\빨랫줄.rsm'
 RUINA_VARAL = [M + u'폐허빨랫줄01.rsm', M + u'폐허빨랫줄02.rsm']
-# A muralha: `성_벽` tem 2 x 8 celulas, comprida no Y. As quatro ruinas abaixo
-# tambem sao compridas no Y (2,6 x 5,0 e 2,1 x 4,2), entao herdar a rotacao
-# mantem o segmento no alinhamento do muro -- e o que sobra entre um toco e
-# outro vira a brecha.
-MURALHA = M + u'성_벽.rsm'
-RUINA_MURALHA = [M + u'성폐허102.rsm', M + u'성폐허202.rsm',
-                 M + u'성폐허106.rsm', M + u'성폐허206.rsm']
-PILAR = M + u'성_기둥.rsm'
-RUINA_PILAR = [M + u'성폐허기둥01.rsm', M + u'성폐허기둥02.rsm', M + u'성폐허기둥04.rsm']
-MURETA = M + u'성_다리.rsm'   # "ponte" no nome; no mapa e a mureta comprida no X
-RUINA_MURETA = [M + u'성폐허다리01.rsm', M + u'성폐허다리03.rsm',
-                M + u'성폐허다리06.rsm', M + u'성폐허다리08.rsm']
-TORRES = [M + u'성_홀.rsm', M + u'성_중앙.rsm']
-RUINA_TORRE = [M + u'성폐허110.rsm', M + u'성폐허110b.rsm', M + u'성폐허110c.rsm']
+# A MURALHA NAO ENTRA -- nenhuma peca `성_*`. Decisao do dono em 2026-09-26,
+# depois de ver a primeira rodada com ela arruinada: os mapas em volta de
+# Morroc vao ser todos PvP, e cidade cercada de territorio hostil com o muro
+# no chao nao faz sentido. O anel nao e so o `성_벽`: os pilares `성_기둥` sao
+# as emendas, as torres `성_홀`/`성_중앙` e as muretas `성_다리` fecham as
+# quinas -- devolver so os segmentos deixaria buraco arruinado exatamente
+# nos cantos. Os pares medidos, se um dia a muralha voltar a cair, estao no
+# CUSTOMIZACAO-VISUAL.md ("Morroc destruida").
 # As 35 portas sao todas de casa comum (a porta mais longe da casa dela esta
 # a 4,7 celulas), e casa que vira entulho nao pode deixar porta de pe.
 PORTAS = [u'프론테라\\문02.rsm', u'프론테라\\문03.rsm']
@@ -330,8 +324,8 @@ RECEITA = {
     # centro esta EM CIMA da linha.
     #
     # FICAM DE PE, de proposito, fora do complexo:
-    #   - os PORTOES da muralha (`성_입구`, `성_후문`) -- o kit nao tem ruina
-    #     de portao, e sao eles que dizem por onde se entra;
+    #   - a MURALHA EXTERNA inteira, com portoes, pilares, torres e muretas
+    #     (ver o comentario das constantes, la em cima);
     #   - os seis PREDIOS DE SERVICO (`무기점`, `바드길드`, `술집`, `여관`,
     #     `용병길드`) -- tem porta que o servidor liga a interior, e na ficcao
     #     "as que restam de pe" sao justamente estas.
@@ -344,10 +338,6 @@ RECEITA = {
             ([CASA_02A, CASA_02B], [RUINA_CASA_02B], 1.00),
             ([TAPETES], RUINA_TAPETES, 1.00),
             ([VARAL], RUINA_VARAL, 1.00),
-            ([MURALHA], RUINA_MURALHA, 1.00),
-            ([PILAR], RUINA_PILAR, 1.00),
-            ([MURETA], RUINA_MURETA, 1.00),
-            (TORRES, RUINA_TORRE, 1.00),
         ],
         'remover': [PORTAS],
     },

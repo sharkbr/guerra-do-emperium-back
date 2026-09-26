@@ -45,3 +45,4 @@
 0032	0032-sete-itens-novos-nas-lojas-de-prontera.zip	0a4846d5c4b6dc07b59998af5732e8e6e23802ec0cc5a79e4e6090b6571bc4e0	2588616	Sete itens novos nas lojas de Prontera
 0033	0033-quatro-itens-deixam-de-derrubar-o-client.zip	3822fdc4b917c814f638cef3895e2a99aa814775dc6322573e25cdb471926a13	2610827	Quatro itens deixam de derrubar o cliente
 0034	0034-sete-itens-novos-nas-lojas-de-prontera.zip	79726494f0c703fd6bba95ec499fa3dd512a64dbd95c7a5b322913aeef163b1d	2579198	Sete itens novos nas lojas de Prontera
+0035	0035-morroc-destruida.zip	366393cfd6b0403a22e43cb69037ecf5fd1d85dfb94ab3137f69a02464bc57f2	31300	Morroc destruida

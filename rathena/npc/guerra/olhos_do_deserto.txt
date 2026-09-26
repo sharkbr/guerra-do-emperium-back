@@ -1,0 +1,132 @@
+//===== Guerra do Emperium ===================================
+//= Olhos do Deserto - os guardas de Morroc
+//===== Onde =================================================
+//= morocc, dezenove celulas espalhadas pela cidade destruida,
+//= todas fora do complexo murado do centro. As coordenadas
+//= vieram do dono em 2026-09-26; as dezenove foram conferidas
+//= no morocc.gat (andaveis) e contra todo NPC do vendor em
+//= morocc - duas ficam coladas em NPC do rAthena (148,87 no
+//= Shifty Assassin de 148,86 e 33,174 no Bulletin#Moc3 de
+//= 32,174), mas nenhum dos dois arquivos e carregado no
+//= renewal (npc/custom/etc/shifty_assassin.txt e
+//= npc/other/msg_boards.txt estao comentados). Nao ha
+//= sobreposicao.
+//===== Descricao ============================================
+//= A ficcao da Morroc destruida (CUSTOMIZACAO-VISUAL.md,
+//= "Morroc destruida"): depois do meteoro, o povo do deserto
+//= se reuniu e Morroc virou um estado independente, cercado de
+//= mapas PvP. Os guardas contam isso a quem passa, e so isso -
+//= nao vendem, nao teleportam, nao dao missao.
+//=
+//= Cada guarda diz a MESMA coisa com outras palavras, pedido do
+//= dono: o radical e "Depois que o meteoro caiu Morroc ficou
+//= destruida" e "O povo do deserto se reuniu e agora Morroc e
+//= um estado independente. As fronteiras nao sao mais seguras".
+//= As variacoes nao acrescentam fato nenhum a ficcao - nada de
+//= incendio, noite ou ceu se abrindo -, porque a ficcao do
+//= meteoro ja esta fechada e o que um guarda inventa vira
+//= canone para quem le.
+//===== Como =================================================
+//= Um molde invisivel (`-`) e dezenove `duplicate`. O numero
+//= depois do `#` e o que escolhe a fala: `strnpcinfo(2)` devolve
+//= o pedaco do NOME DE EXIBICAO depois do `#` (CLAUDE.md secao 5,
+//= ARMADILHAS-SCRIPT.md), e o cliente mostra so "Olho do
+//= Deserto". Numero sem fala correspondente cai na primeira e
+//= grita no console com `debugmes` - e o mesmo tipo de trava da
+//= regra 11 do CLAUDE.md: duas colunas paralelas (as duplicatas
+//= e as falas) conferidas uma contra a outra.
+//=
+//= As falas sao `.@` montadas no clique, e nao `.` no OnInit: as
+//= variaveis de NPC sao do SCRIPT, e o script e compartilhado
+//= pelas dezenove duplicatas.
+//===== Direcao ==============================================
+//= Todos em 4 (sul), que com a camera padrao desenha para
+//= baixo-direita - de frente para a tela. NPC de fala precisa
+//= olhar para o jogador, e nao para um ponto cardeal
+//= (ARMADILHAS-SCRIPT.md, "Facing de NPC"). E a quarta coluna de
+//= cada linha, para mudar um guarda so.
+//===== Sprite ===============================================
+//= 4_M_MOCASS2 (view 998), o assassino de Morroc - pedido do
+//= dono. Ja existe no cliente: o rAthena usa o mesmo sprite no
+//= An aide da Torre do Demonio e no Suspicious Man da missao de
+//= Rebeliao.
+//============================================================
+
+-	script	OlhoDoDeserto	-1,{
+	setarray .@fala1$[1],
+		"Depois que o meteoro caiu, Morroc ficou destruída.",
+		"Você viu o que restou? Foi o meteoro. Depois dele, Morroc ficou em ruínas.",
+		"O meteoro caiu, e Morroc virou isto que você está vendo.",
+		"Desde a queda do meteoro, Morroc é só escombro.",
+		"Forasteiro, olhe em volta. O meteoro caiu e Morroc foi destruída.",
+		"Eu estava aqui quando o meteoro caiu. Morroc não resistiu.",
+		"O meteoro caiu, e a Morroc que você conhecia acabou destruída.",
+		"Morroc ficou em pedaços depois que o meteoro caiu.",
+		"Não se engane com os muros de pé. Depois do meteoro, Morroc ficou destruída.",
+		"Foi o meteoro. Quando ele caiu, Morroc veio abaixo.",
+		"Depois que o meteoro caiu, sobrou pouco de Morroc.",
+		"Morroc foi destruída no dia em que o meteoro caiu.",
+		"Chegou agora? Então saiba: o meteoro caiu e Morroc ficou destruída.",
+		"O meteoro caiu e levou Morroc junto. Isto é o que restou.",
+		"Depois do meteoro, Morroc ficou destruída. Ninguém veio nos socorrer.",
+		"Olhe as casas. O meteoro caiu, e Morroc ficou destruída.",
+		"O meteoro caiu, e Morroc não passou de ruína desde então.",
+		"Depois que o meteoro caiu, Morroc ficou destruída. Mas ainda estamos aqui.",
+		"Somos os Olhos do Deserto. Depois que o meteoro caiu, Morroc ficou destruída.";
+	setarray .@fala2$[1],
+		"O povo do deserto se reuniu, e agora Morroc é um estado independente. As fronteiras não são mais seguras.",
+		"Quem sobreviveu no deserto se juntou, e hoje Morroc não responde a rei nenhum. As fronteiras não são mais seguras.",
+		"Os povos do deserto se uniram. Morroc agora é um estado independente, e as fronteiras deixaram de ser seguras.",
+		"Mas o povo do deserto não foi embora: se reuniu e fez de Morroc um estado independente. Cuidado com as fronteiras, elas não são mais seguras.",
+		"O povo do deserto se reuniu, e Morroc é independente agora. As fronteiras não são mais seguras: quem as cruza, cruza por conta própria.",
+		"Os que ficaram se reuniram, e Morroc se tornou um estado independente. As fronteiras já não são seguras.",
+		"Nós, o povo do deserto, nos reunimos. Morroc agora é um estado livre, e as fronteiras não são mais seguras.",
+		"O povo do deserto se juntou e declarou Morroc independente. Não confie nas fronteiras: elas não são mais seguras.",
+		"O povo do deserto se reuniu, e Morroc é agora um estado independente. Além destes muros, as fronteiras não são mais seguras.",
+		"O povo do deserto se reuniu, e hoje Morroc é um estado independente. As fronteiras, essas, não são mais seguras.",
+		"Mas o deserto cuida dos seus: o povo se reuniu e Morroc se tornou independente. As fronteiras não são mais seguras.",
+		"O povo do deserto se reuniu, e desde então Morroc é um estado independente. Fique atento: as fronteiras não são mais seguras.",
+		"O povo do deserto se uniu, e Morroc passou a ser um estado independente. As fronteiras não são mais seguras para ninguém.",
+		"O povo do deserto se reuniu em volta das ruínas. Morroc agora é um estado independente, e as fronteiras não são mais seguras.",
+		"Então o povo do deserto se reuniu, e Morroc se fez independente. As fronteiras não são mais seguras.",
+		"O povo do deserto se reuniu, e Morroc é hoje um estado independente. As fronteiras não são mais seguras, forasteiro.",
+		"O povo do deserto se reuniu e governa Morroc como um estado independente. As fronteiras não são mais seguras.",
+		"O povo do deserto se reuniu, e Morroc agora é um estado independente. Vigiamos as fronteiras porque elas não são mais seguras.",
+		"O povo do deserto se reuniu e fez de Morroc um estado independente. As fronteiras não são mais seguras, e é por isso que estamos aqui.";
+
+	// getarraysize conta o indice 0 vazio: 19 falas dao 20.
+	if (getarraysize(.@fala1$) != getarraysize(.@fala2$))
+		debugmes "olhos_do_deserto: " + getarraysize(.@fala1$) + " primeiras falas contra " + getarraysize(.@fala2$) + " segundas.";
+	.@n = atoi(strnpcinfo(2));
+	if (.@n < 1 || .@n >= getarraysize(.@fala1$)) {
+		debugmes "olhos_do_deserto: " + strnpcinfo(0) + " sem fala propria, usando a 1.";
+		.@n = 1;
+	}
+
+	mes "[Olho do Deserto]";
+	mes .@fala1$[.@n];
+	next;
+	mes "[Olho do Deserto]";
+	mes .@fala2$[.@n];
+	close;
+}
+
+morocc,289,207,4	duplicate(OlhoDoDeserto)	Olho do Deserto#1	4_M_MOCASS2
+morocc,251,158,4	duplicate(OlhoDoDeserto)	Olho do Deserto#2	4_M_MOCASS2
+morocc,267,129,4	duplicate(OlhoDoDeserto)	Olho do Deserto#3	4_M_MOCASS2
+morocc,286,102,4	duplicate(OlhoDoDeserto)	Olho do Deserto#4	4_M_MOCASS2
+morocc,246,49,4	duplicate(OlhoDoDeserto)	Olho do Deserto#5	4_M_MOCASS2
+morocc,206,74,4	duplicate(OlhoDoDeserto)	Olho do Deserto#6	4_M_MOCASS2
+morocc,151,45,4	duplicate(OlhoDoDeserto)	Olho do Deserto#7	4_M_MOCASS2
+morocc,148,87,4	duplicate(OlhoDoDeserto)	Olho do Deserto#8	4_M_MOCASS2
+morocc,91,80,4	duplicate(OlhoDoDeserto)	Olho do Deserto#9	4_M_MOCASS2
+morocc,52,54,4	duplicate(OlhoDoDeserto)	Olho do Deserto#10	4_M_MOCASS2
+morocc,52,119,4	duplicate(OlhoDoDeserto)	Olho do Deserto#11	4_M_MOCASS2
+morocc,33,174,4	duplicate(OlhoDoDeserto)	Olho do Deserto#12	4_M_MOCASS2
+morocc,57,205,4	duplicate(OlhoDoDeserto)	Olho do Deserto#13	4_M_MOCASS2
+morocc,85,280,4	duplicate(OlhoDoDeserto)	Olho do Deserto#14	4_M_MOCASS2
+morocc,24,288,4	duplicate(OlhoDoDeserto)	Olho do Deserto#15	4_M_MOCASS2
+morocc,115,263,4	duplicate(OlhoDoDeserto)	Olho do Deserto#16	4_M_MOCASS2
+morocc,160,289,4	duplicate(OlhoDoDeserto)	Olho do Deserto#17	4_M_MOCASS2
+morocc,205,268,4	duplicate(OlhoDoDeserto)	Olho do Deserto#18	4_M_MOCASS2
+morocc,240,258,4	duplicate(OlhoDoDeserto)	Olho do Deserto#19	4_M_MOCASS2

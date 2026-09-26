@@ -779,10 +779,12 @@ eles têm correspondência de planta com as peças da cidade (medido no
 **O nome engana nos pares de casa:** `민가폐허01a` não é a ruína da `민가01a` —
 ela tem metade da planta. Quem decidiu foi a medida.
 
-A muralha é o caso em que herdar a rotação é o que faz funcionar: a peça
-intacta e as quatro ruínas são todas compridas no Y, então o toco cai
-alinhado com o muro, e os 3 a 4 células que sobram de cada segmento de 8
-viram brecha.
+As linhas da muralha (as quatro de baixo) **não estão em uso**: a primeira
+rodada as aplicou e o dono as desfez no mesmo dia — ver abaixo. Ficam aqui
+porque a medida vale se a muralha um dia voltar a cair. Nela, herdar a
+rotação era o que fazia funcionar: a peça intacta e as quatro ruínas são
+todas compridas no Y, então o toco cai alinhado com o muro, e os 3 a 4
+células que sobram de cada segmento de 8 viram brecha.
 
 ### O que ficou de pé, e por quê
 
@@ -790,6 +792,13 @@ viram brecha.
   x99–219, y115–227, com o centro do modelo **em cima** da linha; a folga de
   2 células é para pegar a própria mureta. Ficaram 36 muretas, 10 pilares,
   as 2 torres e o `성_중앙` de dentro, e as 4 estátuas.
+- **A muralha externa inteira** — decisão do dono em 2026-09-26, depois de
+  ver a primeira rodada com ela arruinada: *"quero que as redondezas de
+  Morroc sejam hostis (todos os mapas em volta vão ser PvP), então não faz
+  sentido não ter os muros de pé"*. Voltou o anel todo, e não só os 116
+  segmentos `성_벽`: os 13 pilares de fora são as emendas, e as 5 torres e 9
+  muretas fecham as quinas e os portões. Devolver só os segmentos deixaria
+  buraco arruinado exatamente nos cantos.
 - **Os portões** (`성_입구`, `성_후문`) — o kit não tem ruína de portão.
 - **Os seis prédios de serviço** (`무기점`, `바드길드`, `술집`, `여관`,
   `용병길드`) — têm porta ligada a interior pelo servidor, e são "as que
@@ -799,13 +808,17 @@ viram brecha.
   porta em pé no ar. Foi para isso que o `edita_mapa.py` ganhou a operação
   `remover` e a caixa `preservar` nesta data.
 
-Resultado: 781 → 746 objetos, 293 instâncias trocadas, round-trip ok.
+Resultado: 781 → 746 objetos, 150 instâncias trocadas (casas, lojas de tapete e varais), round-trip ok. A primeira rodada, com a muralha, trocava 293.
 
 ### O que continua de fora
 
 A **colisão** é a da cidade inteira — o `.gat` não foi tocado, e a fronteira
-com o servidor (acima) continua valendo. O dono vai passar pelas colisões em
-jogo; a pendência está no `PENDENCIAS.md` §0c.
+com o servidor (acima) continua valendo. Visto em jogo pelo dono em
+2026-09-26 e deixado assim: *"não vejo conflitos prejudiciais"*. Saiu no
+**patch 0035**, com a muralha de pé.
+
+O que continua aberto é o minimapa, que ainda desenha a cidade inteira
+(`PENDENCIAS.md` §0c).
 
 ---
 

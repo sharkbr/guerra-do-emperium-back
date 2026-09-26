@@ -101,31 +101,15 @@ sonda é ler o 0x09F8 saindo do servidor.
 
 ---
 
-## 0c. Morroc destruída — falta ver no jogo (2026-09-26)
+## 0c. Morroc destruída — só o minimapa (2026-09-26)
 
-Montada pela receita `morocc` do `ferramentas/edita_mapa.py` e instalada **só
-no cliente de DEV**, como `cliente\data\morocc.rsw` solto. O complexo murado do
-centro (x97–221, y113–229) ficou intacto; o resto foi trocado pelo kit de ruína
-de Morroc. O caso inteiro está no `CUSTOMIZACAO-VISUAL.md`, seção "Morroc
-destruída".
+A cidade, a muralha de pé e os 19 guardas foram vistos e aprovados pelo dono
+em 2026-09-26, e o mapa saiu no patch — ver `HISTORICO.md`, "Morroc
+destruída". As colisões ficaram como estão: *"não vejo conflitos
+prejudiciais"*.
 
-O que falta, na ordem:
-
-1. **Olhar em jogo** (`@warp morocc 160 94`, fora do complexo). Conferir se
-   cada ruína caiu onde a casa estava — os pares saíram da planta medida, mas
-   encaixe só se prova na tela.
-2. **Passar pelas colisões com o dono.** O `.gat` não foi tocado: onde a casa
-   era maior que a ruína ficou célula bloqueada em volta do entulho (a
-   `민가01c`, 14,8 × 20,8, é a que mais sobra). **Fechar** célula é `setwall`
-   num NPC nosso, só servidor. **Abrir** célula é `.gat` novo no cliente
-   **e** `map_cache.dat` regerado no servidor, os dois juntos — sem o segundo,
-   o cliente anda onde o servidor não deixa.
-3. **Patch.** É arquivo de cliente: só chega ao jogador por
-   `monta_patch.py` + `publica_patch.sh` (§4.18). Não publicar antes do 1.
-4. **Minimapa** (`texture\유저인터페이스\map\morocc.bmp`) continua mostrando a
-   cidade inteira. Decidir se incomoda.
-
-Reverter é apagar o `cliente\data\morocc.rsw`.
+Fica uma decisão: o **minimapa** (`texture\유저인터페이스\map\morocc.bmp`)
+continua desenhando a cidade inteira. Só muda se incomodar.
 
 ---
 
