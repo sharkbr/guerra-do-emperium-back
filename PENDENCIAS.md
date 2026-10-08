@@ -34,7 +34,11 @@ chave do bucket só existe lá).
    `rclone copy spaces:ftn spaces:ftn/libraro --exclude "libraro/**" --s3-acl public-read`
    e conferir com `ferramentas/publica_cliente.sh --confere` (tem de listar os
    7 objetos e o CDN responder 200 em `/libraro/base.txt`).
-2. **Publicar o Atualizador 7** nos dois destinos (`RECEITAS.md` §11 — o
+2. ~~**Publicar o Atualizador 7**~~ — **FEITO em 2026-10-07**: canal
+   (`Jogar-7.exe`) e `libraro/Jogar.exe` com o mesmo sha256
+   (`6dfddc50…`). O CDN segura a cópia velha por até 600 s
+   (`Cache-Control: max-age=600`), então logo depois de subir o sha pela
+   URL limpa ainda é o do 6 — esperar, não reenviar. Era: publicar nos dois destinos (`RECEITAS.md` §11 — o
    passo 3 já sobe para `libraro/Jogar.exe`).
 3. **Trocar o botão Baixar** em produção: `SITE_DOWNLOAD_URL` em
    `/etc/guerra/site.env` para `https://cdn.filiponegrao.com.br/libraro/Jogar.exe`
