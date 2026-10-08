@@ -37,8 +37,8 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | **Patches publicados** | `https://libraro.filiponegrao.com.br/patch/` → `libraro:/var/www/patch/` (`lista.txt`, `novidades.txt`, os `.zip`, `patcher.txt`) |
 | Montar / publicar patch | `python ferramentas/monta_patch.py --nome "..." <caminhos>` e `ferramentas/publica_patch.sh` (`RECEITAS.md` §11) |
 | Publicar um `Jogar.exe` novo | **dois destinos, e um só não basta**: `publica_patch.sh --atualizador` (alcança quem já instalou) **e** o `rclone` para o bucket (de onde o site serve o botão Baixar). Passo a passo e a conferência de sha256 em `RECEITAS.md` §11b |
-| Site: URL do botão Baixar | `SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe` — o mesmo bucket da base, arquivo na raiz |
-| **Primeiro download (a base)** | `https://cdn.filiponegrao.com.br/` → bucket **`ftn`**, região **`tor1`** (Toronto), DigitalOcean Spaces com CDN. Serve `base.txt`, o `data.grf` e os `.zip` da base |
+| Site: URL do botão Baixar | `SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/libraro/Jogar.exe` — o mesmo bucket da base, na pasta `libraro/` |
+| **Primeiro download (a base)** | `https://cdn.filiponegrao.com.br/libraro/` → bucket **`ftn`**, pasta **`libraro/`**, região **`tor1`** (Toronto), DigitalOcean Spaces com CDN. Serve `base.txt`, o `data.grf` e os `.zip` da base. **O bucket é compartilhado com outros projetos desde 2026-10-07: nada nosso fica fora de `libraro/`** |
 | Chave do bucket | `C:\GuerraDoEmperium\spaces.env` — **fora do git**. Precisa de escopo de **escrita** no `ftn`; chave só-leitura lista e não sobe (`CLAUDE.md` §5) |
 | Uploader | `C:\GuerraDoEmperium\bin\rclone.exe` — binário único, sem instalação |
 | Montar / publicar a base | `python ferramentas/monta_cliente.py` e `ferramentas/publica_cliente.sh` (`RECEITAS.md` §12) |
@@ -66,6 +66,7 @@ ambiente entram aqui. Se for uma **regra** ("nunca faça X"), vai para o
 | `.lub` removidos e originais | `C:\GuerraDoEmperium\_backup_luafiles_roenglish\` |
 | **Subir / parar / conferir servidores** | `python ferramentas/servidor.py status\|subir\|parar\|reiniciar` — **são quatro**, não três |
 | Algo estranho no jogo? | `servidor.py status` primeiro — ele diz qual peça caiu e o que ela quebra |
+| **Bot fantasma da Arena (produção)** | `ferramentas/fantasma.sh status\|liga\|desliga\|reinicia\|log` — **do Mac**; o `liga` faz pré-voo e derruba openkore avulso antes de subir |
 
 ---
 

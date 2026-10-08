@@ -431,7 +431,7 @@ $("#botao-sair").onclick = async () => {
 /* ---------- endereco do download ----------
  * O botao entrega o INSTALADOR, que tem 9 MB - e nao o jogo, que tem
  * 3,4 GB. Quem baixa os 3,4 GB e' o proprio instalador, direto do
- * bucket (cdn.filiponegrao.com.br), com retomada se a conexao cair.
+ * bucket (cdn.filiponegrao.com.br/libraro/), com retomada se a conexao cair.
  *
  * Nada disso passa pelo nosso servidor, e o motivo e' de tamanho: sao
  * 3,4 GB POR JOGADOR, que sairiam pela mesma placa de rede que atende o

@@ -106,7 +106,7 @@ GuerraDoEmperium.exe"** ao clicar em JOGAR. Ver `PrecisaInstalar` no
 ```
 o jogador baixa Jogar.exe (9 MB)  ->  abre numa pasta vazia
   -> escolhe onde instalar, com o atalho já marcado
-  -> baixa a base (3,4 GB) de cdn.filiponegrao.com.br
+  -> baixa a base (3,4 GB) de cdn.filiponegrao.com.br/libraro/
   -> copia a si mesmo para lá, escreve o Jogar.ini, cria o atalho
   -> emenda nos patches publicados desde que a base foi montada
   -> JOGAR

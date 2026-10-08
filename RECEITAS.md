@@ -506,7 +506,7 @@ pelo canal.
    ```
 
 3. **O bucket**, de onde o site serve o botão Baixar
-   (`SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/Jogar.exe`):
+   (`SITE_DOWNLOAD_URL = https://cdn.filiponegrao.com.br/libraro/Jogar.exe`):
 
    ```bash
    set -a; . /c/GuerraDoEmperium/spaces.env; set +a
@@ -518,7 +518,7 @@ pelo canal.
           RCLONE_CONFIG_SPACES_ACL=public-read \
           RCLONE_CONFIG_SPACES_NO_CHECK_BUCKET=true
    /c/GuerraDoEmperium/bin/rclone.exe copyto patcher/Jogar.exe \
-       "spaces:$SPACES_BUCKET/Jogar.exe"
+       "spaces:$SPACES_BUCKET/libraro/Jogar.exe"
    ```
 
    O `public-read` e o `NO_CHECK_BUCKET` não são enfeite: sem o primeiro o
@@ -529,7 +529,7 @@ pelo canal.
 
    ```bash
    curl -s https://libraro.filiponegrao.com.br/patch/patcher.txt   # o do canal
-   curl -sL https://cdn.filiponegrao.com.br/Jogar.exe | sha256sum  # o do CDN
+   curl -sL https://cdn.filiponegrao.com.br/libraro/Jogar.exe | sha256sum  # o do CDN
    sha256sum patcher/Jogar.exe                                     # o local
    ```
 
@@ -547,7 +547,8 @@ quatro passos acima.
 
 Isto é o irmão da §11, e a diferença é o público: o patch fala com quem já tem
 o cliente, a base fala com quem não tem nada. São 3,4 GB e vão para o bucket
-(`cdn.filiponegrao.com.br`), não para o droplet.
+(`cdn.filiponegrao.com.br/libraro/` — o bucket é compartilhado, e tudo nosso
+mora nessa pasta), não para o droplet.
 
 **Na maioria das vezes você NÃO precisa disto.** Quem instala hoje recebe a base
 desta versão mais todos os patches publicados desde então, na primeira abertura.

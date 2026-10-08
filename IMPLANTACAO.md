@@ -728,7 +728,7 @@ alguém ter mexido, é defeito.
 | | |
 |---|---|
 | Site | `https://libraro.filiponegrao.com.br` — HTTP redireciona |
-| Botão Baixar | ~~pasta do Google Drive~~ → **o instalador**, `https://cdn.filiponegrao.com.br/Jogar.exe` — **no ar desde 2026-08-16** (`SITE_DOWNLOAD_URL` em `/etc/guerra/site.env`) |
+| Botão Baixar | ~~pasta do Google Drive~~ → **o instalador**, `https://cdn.filiponegrao.com.br/libraro/Jogar.exe` — **no ar desde 2026-08-16** (`SITE_DOWNLOAD_URL` em `/etc/guerra/site.env`) |
 | Portas do jogo | 6900, 6121, 5121 abertas |
 | 8888 | **fechada**, e o web-server responde pelo Apache na 80 e na 443 |
 | Serviços | os quatro do jogo + site + Apache + MariaDB, todos `active` |
@@ -797,24 +797,40 @@ unit escrita, e a **conta `fantasma` criada no banco de produção**
 (`account_id 2000037`, `group_id 20`, hash conferido contra o arquivo). O
 serviço está `disabled`, de propósito.
 
-Falta a única coisa que não sai daqui: **o personagem Renegado**. Ele não se
-cria por SQL — precisa do cliente, e o cliente é do Windows. São três passos,
-todos lá:
+~~Falta a única coisa que não sai daqui: **o personagem Renegado**.~~
+**FEITO no Windows, e conferido do Mac em 2026-09-03**: a conta tem
+**Fantasma do GVG**, slot 1, classe 4079 (Renegado transcendido), nível 199, e
+os dois insumos infinitos na mochila (30993 e 30992). Nada mais falta desta
+lista — o slot 1 bate com o `char 1` do `config.txt`, então nem o `char N` em
+`/etc/guerra/fantasma.txt` foi preciso.
 
-1. entrar com `fantasma` / `fant4smaArena26`, PIN `4728`, **apontando o cliente
-   para PRODUÇÃO** (`ferramentas/aponta_cliente.py --producao`), e criar um
-   **Renegado**;
-2. se ele não nascer no slot 1, pôr `char N` em `/etc/guerra/fantasma.txt` —
-   não no `config.txt`, que é versionado e o `instala.sh` sobrescreve;
-3. dar a ele os dois insumos infinitos, com o char-command `#`:
-   `#item <personagem> 30993 1` e `#item <personagem> 30992 1`.
+Quem confere isso hoje é uma tela só, e não meia dúzia de consultas:
 
-Sem os dois itens as habilidades do ciclo não saem e o fantasma vira só
-pancada normal — o `pvpGhost/README.md` §"Trocar o personagem" tem a tabela de
-qual item dispensa qual insumo.
+```
+ferramentas/fantasma.sh          # status
+```
 
-Depois disso o start é do dono, com a arena vazia:
-`systemctl enable --now guerra-fantasma`.
+O start continua sendo do dono, com a arena vazia — mas pelo comando que faz o
+pré-voo e derruba openkore avulso antes de subir:
+
+```
+ferramentas/fantasma.sh liga
+```
+
+**8. ⚠️ O bucket vai para a pasta `libraro/` — o código mudou no Mac, o bucket
+não** (2026-10-07). O bucket `ftn` passou a ser compartilhado com outros
+projetos e tudo deste mora em `libraro/`. O Mac já mudou `basePadrao` (com
+`VERSAO = 6`) em `patcher/main.go`, o `publica_cliente.sh` e os endereços do
+botão Baixar nos documentos — **mas os objetos continuam na raiz, e a chave do
+bucket só existe no Windows** (`C:\GuerraDoEmperium\spaces.env`). Enquanto
+isso não for feito, nada quebra: o exe publicado ainda é o 5, que lê a raiz.
+
+A ordem e os comandos estão no `PENDENCIAS.md` §0, passos 1 e 2 — **copiar a
+raiz para `libraro/` antes de publicar o Atualizador 6**, nunca o contrário:
+exe novo com a pasta vazia é instalação quebrada para todo jogador novo. O
+passo 3 (o `SITE_DOWNLOAD_URL` em produção) volta para o Mac **depois** que
+`https://cdn.filiponegrao.com.br/libraro/Jogar.exe` responder com o sha do
+Atualizador 6. O passo 4 (apagar a raiz) fica para semanas depois.
 
 ---
 

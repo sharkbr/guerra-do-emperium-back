@@ -90,7 +90,14 @@ export RCLONE_CONFIG_SPACES_ACL=public-read
 # existe. Medido em 2026-08-16, no primeiro upload.
 export RCLONE_CONFIG_SPACES_NO_CHECK_BUCKET=true
 
-REMOTO="spaces:$SPACES_BUCKET"
+# A pasta do projeto dentro do bucket. O bucket e' compartilhado com outros
+# projetos desde 2026-10-07, e cada um mora na sua pasta - nada deste script
+# escreve, lista ou confere fora dela. O `patcher/main.go` (`basePadrao`) e o
+# SITE_DOWNLOAD_URL do site tem a mesma pasta na URL; mudar aqui sem mudar la'
+# publica a base num lugar onde nenhum instalador procura.
+PASTA="${SPACES_PASTA:-libraro}"
+REMOTO="spaces:$SPACES_BUCKET/$PASTA"
+CDN="$SPACES_CDN/$PASTA"
 
 # As linhas do registro que valem: seis campos separados por TAB.
 linhas() { grep -v '^[[:space:]]*#' "$REGISTRO" | grep -v '^[[:space:]]*$'; }
@@ -178,7 +185,7 @@ publica() {
 
     printf '\n\033[1;32m%d pedaco(s) enviado(s), %d ja estavam la; a base esta no ar.\033[0m\n' \
         "$enviados" "$pulados"
-    printf 'Endereco do instalador: %s/base.txt\n' "$SPACES_CDN"
+    printf 'Endereco do instalador: %s/base.txt\n' "$CDN"
 }
 
 confere() {
@@ -204,9 +211,9 @@ confere() {
     # de DNS e certificado que nada mais aqui verifica.
     azul "== O CDN responde? =="
     local code
-    code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 -I "$SPACES_CDN/base.txt" 2>&1)" \
-        || { echo "     $SPACES_CDN nao respondeu"; return 0; }
-    echo "     $SPACES_CDN/base.txt -> HTTP $code"
+    code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 -I "$CDN/base.txt" 2>&1)" \
+        || { echo "     $CDN nao respondeu"; return 0; }
+    echo "     $CDN/base.txt -> HTTP $code"
 }
 
 case "${1:-}" in

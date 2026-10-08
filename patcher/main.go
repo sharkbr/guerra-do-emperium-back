@@ -43,11 +43,22 @@ const VERSAO = 6
 // subdomínio NOSSO (`cdn.filiponegrao.com.br`) e não o do provedor: ele fica
 // congelado dentro do exe que o jogador baixou, e trocar de provedor um dia
 // tem de ser mudar um CNAME, não republicar o instalador de todo mundo.
+//
+// A pasta `libraro/` existe desde 2026-10-07: o bucket deixou de ser só deste
+// projeto, e cada projeto mora na sua pasta. O CDN da DigitalOcean aponta o
+// domínio para a RAIZ do bucket — não há como apontá-lo para uma pasta —, então
+// a pasta tem de estar na URL.
 const (
 	urlPadrao  = "https://libraro.filiponegrao.com.br/patch/"
-	basePadrao = "https://cdn.filiponegrao.com.br/"
+	basePadrao = "https://cdn.filiponegrao.com.br/libraro/"
 	jogoPadrao = "GuerraDoEmperium.exe"
 )
+
+// baseAntiga é o endereço da base até 2026-10-07, quando ela morava na raiz do
+// bucket. Todo `Jogar.ini` escrito por uma instalação daquela época o traz, e
+// o `.ini` vence o valor embutido — sem esta troca, quem refizesse a
+// instalação pediria a base num lugar de onde ela vai sair.
+const baseAntiga = "https://cdn.filiponegrao.com.br/"
 
 // config é o `.ini` ao lado do exe. Formato chave=valor, uma por linha, `#`
 // comenta. Não é INI de seção — a simplicidade aqui vale mais que a convenção,
@@ -116,6 +127,9 @@ func leConfig(exe string) config {
 	}
 	if !strings.HasSuffix(c.base, "/") {
 		c.base += "/"
+	}
+	if c.base == baseAntiga {
+		c.base = basePadrao
 	}
 	return c
 }
