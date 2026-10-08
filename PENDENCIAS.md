@@ -25,7 +25,11 @@ dos modelos. **Os objetos continuam na raiz**, e a ordem abaixo é a que não
 deixa ninguém sem jogo no meio do caminho. Passos 1–3 rodam no **Windows** (a
 chave do bucket só existe lá).
 
-1. **Copiar** a raiz para `libraro/`, sem apagar nada. É cópia no servidor,
+1. ~~**Copiar** a raiz para `libraro/`~~ — **FEITO em 2026-10-07, no
+   Windows**: 7 objetos copiados no servidor, `rclone check` com 0 diferenças
+   contra a raiz, `--confere` lista os 7 e o CDN dá 200 em
+   `/libraro/base.txt`. A `libraro/Jogar.exe` ainda é o **6** (cópia da raiz)
+   até o passo 2. Era: **copiar** a raiz para `libraro/`, sem apagar nada. É cópia no servidor,
    não sai byte desta máquina:
    `rclone copy spaces:ftn spaces:ftn/libraro --exclude "libraro/**" --s3-acl public-read`
    e conferir com `ferramentas/publica_cliente.sh --confere` (tem de listar os
