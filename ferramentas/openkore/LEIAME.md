@@ -164,9 +164,12 @@ Se o personagem não nascer no slot 1, ponha `char N` no
 ### 6. Ligar, com a arena vazia
 
 ```
-ssh libraro 'systemctl enable --now guerra-fantasma'
-ssh libraro 'journalctl -u guerra-fantasma -f'
+ferramentas/fantasma.sh liga
 ```
+
+Do Mac, e é o comando do dia a dia — ver a seção abaixo. Ele confere
+antes de ligar, derruba openkore avulso se houver, e faz o
+`enable --now` só depois disso.
 
 E, se quiser o RSS real em Linux, que ainda é estimativa:
 
@@ -174,14 +177,67 @@ E, se quiser o RSS real em Linux, que ainda é estimativa:
 ssh libraro 'systemctl status guerra-fantasma | grep Memory'
 ```
 
+## `fantasma.sh` — ligar, desligar e olhar, do Mac
+
+```
+ferramentas/fantasma.sh                  # status — é o padrão
+ferramentas/fantasma.sh liga
+ferramentas/fantasma.sh desliga
+ferramentas/fantasma.sh reinicia
+ferramentas/fantasma.sh log [-f]
+```
+
+Escrito em 2026-09-03. Até então ligar era `ssh libraro 'systemctl
+enable --now guerra-fantasma'`, de cabeça — e o comando funciona, que é
+justamente o problema: **as três coisas que fazem o bot não jogar não
+estão no systemd.** Sem personagem ele trava na tela de seleção; sem os
+dois itens infinitos ele apanha sem lançar nada; com a senha de exemplo
+não loga. Nos três casos o `systemctl` diz *active* e o journal fica
+quase limpo — o sintoma aparece só para quem estiver na arena.
+
+O `status` responde isso numa tela: unit, processo, map-server, senha,
+conta, personagem (nome, classe, nível e **o slot conferido contra o
+`char N`**), os dois itens na mochila, e quantos jogadores estão no
+`pvpGhost_map` agora. O mapa e o slot ele lê do `config.txt` do próprio
+bot, não de uma constante — segunda cópia é o que diverge
+(`CLAUDE.md` §4.11).
+
+O `liga` roda esse mesmo retrato como pré-voo e **recusa** se faltar
+personagem, senha ou unit; o resto (map-server fora, item faltando,
+gente na arena) sai como aviso e segue. Para ligar apesar da recusa,
+`liga --mesmo-assim`.
+
+### Dois openkore ao mesmo tempo — a trava que motivou o script
+
+O openkore também se roda à mão (`perl openkore.pl`, é assim que ele
+nasceu no Windows), e um avulso pode ter ficado para trás num terminal
+ou numa sessão de teste. Dois processos com a **mesma conta** entram
+numa briga que não para: o segundo login chuta o primeiro, o
+`reconnect` do primeiro reconecta e chuta o segundo, e o par fica se
+derrubando enquanto o journal enche de reconexão. De fora parece "o bot
+pisca e some".
+
+Por isso `liga` e `reinicia` fazem, nesta ordem: **param o serviço,
+matam todo `openkore.pl` que sobrar (TERM, e `-9` só depois de 10s), e
+só então sobem o novo.** O `desliga` também mata os avulsos — "está
+desligado" com um bot solto jogando seria a pior das mensagens.
+
+O TERM antes do `-9` não é cerimônia: matar no meio do logout deixa o
+personagem preso *online* no char-server até o timeout dele.
+
 ### Desligar
 
 ```
-ssh libraro 'systemctl disable --now guerra-fantasma'
+ferramentas/fantasma.sh desliga
 ```
 
 Não derruba ninguém e não toca no jogo. O grupo 20 e os dois rótulos do
 visual ficam inertes.
+
+**O que o `fantasma.sh` não faz:** instalar (é o
+`implanta_fantasma.sh`) e atualizar o plugin (é o `implanta.sh`, pela
+seção 6b do `atualiza_servidor.sh`, que reaplica o delta **e**
+reinicia).
 
 ### Se o login for recusado sem explicação
 

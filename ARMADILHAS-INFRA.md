@@ -367,6 +367,19 @@ nova se escreve nas duas pontas:** o caso aqui, o gatilho na §5.
   entraria?" agora tem resposta de graça** — e o `--desde`, que é a via
   preguiçosa e a que mais traz arquivo tocado por engano, é justamente a que
   mais pede essa pergunta.
+- **`systemctl is-enabled` de uma unit DESABILITADA imprime `disabled` e ainda
+  sai 1** — então o reflexo `systemctl is-enabled X || echo desconhecida`
+  imprime **as duas coisas**, uma por linha, e o retrato do serviço sai
+  quebrado no meio. Vale igual para `is-active`, que imprime `inactive` e sai
+  3, e para o `is-failed`. O código de saída daqueles comandos responde *"está
+  ligada?"*, não *"consegui consultar?"* — e o `||` foi escrito achando que era
+  a segunda pergunta. Apareceu na primeira execução do `ferramentas/fantasma.sh`
+  em 2026-09-03: a linha `unit` saiu em três linhas, com `disabled`,
+  `desconhecida / inactive` e `inactive` empilhados. **A saída é capturar o
+  valor e só usar o padrão quando ele vier vazio** — vazio é o caso da unit que
+  não existe, que é a única pergunta que o `||` de fato queria fazer:
+  `v="$(systemctl is-active "$U" 2>/dev/null)"; printf '%s' "${v:-inactive}"`.
+
 - **`parseTime=true` no driver do MySQL sem `loc=Local` desloca TODA data em
   três horas, e a hora que sai é plausível.** Coluna `DATETIME` não guarda
   fuso: ela guarda `2026-09-10 20:14:00` e mais nada. Com `parseTime` ligado o

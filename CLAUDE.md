@@ -886,8 +886,8 @@ SSH, Ubuntu, MariaDB, DigitalOcean, DNS, cache HTTP, deploy, Atualizador e patch
 - O número de patch é compartilhado por DOIS arquivos, e o `monta_patch.py` lia só um: bloco escrito à mão no `novidades.txt` (o anúncio de um conserto que foi só de servidor) fazia o patch seguinte reusar aquele número, e o painel mostrava dois blocos iguais sem que nada errasse — CORRIGIDO em 2026-09-08
 - Resposta HTTP sem `Cache-Control` NÃO fica sem cache: o navegador inventa um — e quanto mais VELHO o arquivo, mais tempo a cópia velha vale
 - O `monta_patch.py` não tinha ensaio: rodar com `--nome` para "ver o que entraria" MONTA o zip, gasta o número e escreve nos dois registros — rodar duas vezes para reler a lista gastava dois. Ganhou `--verificar` em 2026-09-09
-
 - `parseTime=true` no driver do MySQL sem `loc=Local` desloca toda data em três horas, e a hora que sai é plausível. Os dois andam SEMPRE juntos
+- `systemctl is-enabled` de unit DESABILITADA imprime `disabled` **e sai 1** — então `is-enabled X || echo desconhecida` imprime as duas coisas, e o retrato do serviço sai quebrado. Igual no `is-active`
 
 ## 6. Caminho de LEITURA — leia só o que a tarefa pede
 

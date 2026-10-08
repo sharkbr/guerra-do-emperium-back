@@ -17783,6 +17783,80 @@ gatilho na §5.
 O `zera_revenda_das_lojas.py --conferir` e o `marca_indestrutiveis.py`
 fecharam sem nada a corrigir, e o map-server local subiu sem uma linha de erro
 de loja.
+## Ligar o fantasma virou comando, e o comando olha antes de ligar (2026-09-03)
+
+Pergunta do dono: *"como que eu ativo o bot fantasma na maquina? Nao temos um
+script daqui pra isso? precisamos"*. Não tínhamos: o `implanta_fantasma.sh`
+instala e **não liga** de propósito, e ligar era `ssh libraro 'systemctl enable
+--now guerra-fantasma'`, escrito de cabeça a cada vez.
+
+Nasceu o `ferramentas/fantasma.sh`, do Mac, com `status` (o padrão), `liga`,
+`desliga`, `reinicia` e `log [-f]`.
+
+### Por que um `systemctl` de cabeça não bastava
+
+Porque **as três coisas que fazem o bot não jogar não estão no systemd**. Sem
+personagem ele trava na tela de seleção; sem os dois insumos infinitos ele
+apanha sem lançar nada; com a senha de exemplo não loga. Nos três casos o
+`systemctl` diz *active*, o journal fica quase limpo, e o sintoma só aparece
+para quem estiver na arena — que é o pior lugar para descobrir.
+
+O `status` responde tudo numa tela: unit, processo, map-server, senha, conta,
+personagem (nome, classe, nível e o slot **conferido contra o `char N`**), os
+dois itens na mochila e quantos jogadores estão na arena agora. O `liga` roda
+esse mesmo retrato como pré-voo: recusa por falta de personagem, senha ou unit;
+avisa (e segue) por map-server fora, item faltando ou gente na arena. Para
+ligar apesar da recusa, `liga --mesmo-assim`.
+
+Duas decisões de fonte, as duas para não criar segunda cópia (`CLAUDE.md`
+§4.11): o **mapa da arena** sai do `pvpGhost_map` do `config.txt` do próprio
+bot, e o **slot esperado** sai do `char N` do `config.txt` mais o
+`/etc/guerra/fantasma.txt`, com a última atribuição vencendo — que é a regra do
+parser do openkore.
+
+### A trava que o dono pediu: dois openkore ao mesmo tempo
+
+Pedido no meio da escrita: *"esse comando tem que levar em consideração que já
+pode ter um openkore rodando, e aí no caso é derrubar e deixar só esse novo"*.
+
+O openkore também se roda à mão (`perl openkore.pl` — é assim que ele nasceu no
+Windows), e um avulso pode ficar para trás num terminal ou numa sessão de
+teste. Dois processos com a **mesma conta** entram numa briga que não para: o
+segundo login chuta o primeiro, o `reconnect` do primeiro reconecta e chuta o
+segundo. De fora parece "o bot pisca e some", e no servidor de jogo o rastro é
+o contador de login duplicado subindo.
+
+Então `liga` e `reinicia` fazem, nesta ordem: **param o serviço, matam todo
+`openkore.pl` que sobrar, e só então sobem o novo** — parar antes de matar é o
+que dispensa distinguir o `MainPID` dos demais no meio do caminho. O `desliga`
+também mata os avulsos: "está desligado" com um bot solto jogando seria a pior
+das mensagens. TERM primeiro, `-9` só depois de 10 segundos, porque matar no
+meio do logout deixa o personagem preso *online* no char-server até o timeout.
+
+Testado com um `openkore.pl` falso plantado no servidor: o `status` o denunciou
+como **AVULSO**, e o `desliga` o derrubou.
+
+### E o que estava aberto já não estava
+
+Ao montar o `status` apareceu que o item 7 da §9 do `IMPLANTACAO.md` — *"falta
+o personagem Renegado"* — já tinha sido feito no Windows: a conta 2000037 tem
+**Fantasma do GVG**, slot 1, classe 4079, nível 199, com a Tinta para Parede
+Infinita (30993) e o Pincel do Infinito (30992) na mochila. O slot 1 bate com o
+`char 1` versionado, então nem o `char N` da máquina foi preciso. A linha foi
+riscada lá.
+
+Produção segue `disabled` de propósito: o start é do dono, com a arena vazia, e
+agora é `ferramentas/fantasma.sh liga`.
+
+### Um detalhe de shell que valeu o teste
+
+`systemctl is-enabled` de uma unit desabilitada **imprime `disabled` e ainda
+sai 1** — então o reflexo `systemctl is-enabled X || echo desconhecida` imprime
+as duas coisas, uma por linha. Vale igual para o `is-active` com `inactive`
+(sai 3). A primeira execução do `status` mostrou a unit em três linhas por
+causa disso. Corrigido capturando o valor e só usando o padrão quando ele vem
+vazio, que é o caso de unit inexistente.
+
 ---
 
 ## O painel de usuários, e a trava que já não era mais de IP (2026-09-10)
