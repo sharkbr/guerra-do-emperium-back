@@ -19,7 +19,7 @@ Estado em 2026-08-08.
 
 O bucket `ftn` deixou de ser só nosso: outros projetos vão criar as pastas
 deles, e tudo deste mora em `libraro/`. **O código já aponta para lá** —
-`basePadrao` em `patcher/main.go` (com `VERSAO = 6`), o `publica_cliente.sh`
+`basePadrao` em `patcher/main.go` (com `VERSAO = 7`), o `publica_cliente.sh`
 (variável `PASTA`, sobrescrevível por `SPACES_PASTA`) e o `SITE_DOWNLOAD_URL`
 dos modelos. **Os objetos continuam na raiz**, e a ordem abaixo é a que não
 deixa ninguém sem jogo no meio do caminho. Passos 1–3 rodam no **Windows** (a
@@ -30,14 +30,14 @@ chave do bucket só existe lá).
    `rclone copy spaces:ftn spaces:ftn/libraro --exclude "libraro/**" --s3-acl public-read`
    e conferir com `ferramentas/publica_cliente.sh --confere` (tem de listar os
    7 objetos e o CDN responder 200 em `/libraro/base.txt`).
-2. **Publicar o Atualizador 6** nos dois destinos (`RECEITAS.md` §11 — o
+2. **Publicar o Atualizador 7** nos dois destinos (`RECEITAS.md` §11 — o
    passo 3 já sobe para `libraro/Jogar.exe`).
 3. **Trocar o botão Baixar** em produção: `SITE_DOWNLOAD_URL` em
    `/etc/guerra/site.env` para `https://cdn.filiponegrao.com.br/libraro/Jogar.exe`
    e reiniciar o **site** (não o jogo).
 4. **Só depois de um tempo, apagar a raiz.** Até lá ela atende o `Jogar.exe`
    velho que alguém baixou e ainda não abriu — ele pede a base na raiz. Quem
-   já instalou não depende dela: o Atualizador 6 chega pelo canal, e um
+   já instalou não depende dela: o Atualizador 7 chega pelo canal, e um
    `Jogar.ini` com o endereço antigo é trocado pelo novo na leitura
    (`baseAntiga` em `patcher/main.go`).
 

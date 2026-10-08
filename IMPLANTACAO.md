@@ -820,17 +820,17 @@ ferramentas/fantasma.sh liga
 **8. ⚠️ O bucket vai para a pasta `libraro/` — o código mudou no Mac, o bucket
 não** (2026-10-07). O bucket `ftn` passou a ser compartilhado com outros
 projetos e tudo deste mora em `libraro/`. O Mac já mudou `basePadrao` (com
-`VERSAO = 6`) em `patcher/main.go`, o `publica_cliente.sh` e os endereços do
+`VERSAO = 7`) em `patcher/main.go`, o `publica_cliente.sh` e os endereços do
 botão Baixar nos documentos — **mas os objetos continuam na raiz, e a chave do
 bucket só existe no Windows** (`C:\GuerraDoEmperium\spaces.env`). Enquanto
-isso não for feito, nada quebra: o exe publicado ainda é o 5, que lê a raiz.
+isso não for feito, nada quebra: o exe publicado ainda é o 6 (o do configurador de vídeo), que lê a raiz.
 
 A ordem e os comandos estão no `PENDENCIAS.md` §0, passos 1 e 2 — **copiar a
-raiz para `libraro/` antes de publicar o Atualizador 6**, nunca o contrário:
+raiz para `libraro/` antes de publicar o Atualizador 7**, nunca o contrário:
 exe novo com a pasta vazia é instalação quebrada para todo jogador novo. O
 passo 3 (o `SITE_DOWNLOAD_URL` em produção) volta para o Mac **depois** que
 `https://cdn.filiponegrao.com.br/libraro/Jogar.exe` responder com o sha do
-Atualizador 6. O passo 4 (apagar a raiz) fica para semanas depois.
+Atualizador 7. O passo 4 (apagar a raiz) fica para semanas depois.
 
 ---
 
